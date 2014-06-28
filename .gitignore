@@ -21,6 +21,9 @@ Bridge.NET.dev.sln
 packages/*
 !packages/repositories.config
 
+Libs/NRefactory/packages/*
+!Libs/NRefactory/packages/repositories.config
+
 # Build Folders (you can keep bin if you'd like, to store dlls and pdbs)
 [Bb]in/
 [Oo]bj/
@@ -137,4 +140,13 @@ Bridge.dev.sln
 
 # VS 2015
 /**/.vs
-Bridge.Frameworks.Builder.Sandbox.sln
+
+/assemblies/*
+!/assemblies/*.targets
+
+/Sandbox/Bridge.TestLibrary/build/*.js
+/Sandbox/CompanyX/Build/*.js
+/Extensions/Bridge.DateTime/Build/*
+
+.DS_Store
+/Bridge.NET.local.sln
