@@ -27,19 +27,45 @@
             return idx;
         },
 
-        get: function (indices) {
+        $get: function (indices) {
             var r = this[Bridge.Array.toIndex(this, indices)];
 
             return typeof r !== "undefined" ? r : this.$v;
         },
 
-        set: function (indices, value) {
+        get: function (arr, indices) {
+            var r = arr[Bridge.Array.toIndex(arr, indices)];
+
+            return typeof r !== "undefined" ? r : arr.$v;
+        },
+
+        $set: function (indices, value) {
             this[Bridge.Array.toIndex(this, indices)] = value;
+        },
+
+        set: function (arr, indices, value) {
+            arr[Bridge.Array.toIndex(arr, indices)] = value;
+        },
+
+        getLength: function (arr, dimension) {
+            if (dimension >= (arr.$s ? arr.$s.length : 1)) {
+                throw new Bridge.ArgumentException("Invalid dimension");
+            }
+
+            return arr.$s ? arr.$s[dimension] : arr.length;
+        },
+
+        getRank: function (arr) {
+            return arr.$s ? arr.$s.length : 1;
+        },
+
+        getLower: function (arr, d) {
+            return 0;
         },
 
         create: function (defvalue, initValues, sizes) {
             var arr = [],
-                length = arguments[2],
+                length = arguments.length > 2 ? 1 : 0,
                 i, s, v,
                 idx,
                 indices,
@@ -47,10 +73,10 @@
 
             arr.$v = defvalue;
             arr.$s = [];
-            arr.get = Bridge.Array.get;
-            arr.set = Bridge.Array.set;
+            arr.get = Bridge.Array.$get;
+            arr.set = Bridge.Array.$set;
 
-            for (i = 3; i < arguments.length; i++) {
+            for (i = 2; i < arguments.length; i++) {
                 length *= arguments[i];
                 arr.$s[i - 2] = arguments[i];
             }

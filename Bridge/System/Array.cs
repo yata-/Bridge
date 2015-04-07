@@ -124,9 +124,48 @@ namespace System
         { 
         }
 
+        [Template("Bridge.getEnumerator({this})")]
         public IEnumerator GetEnumerator()
         {
             return null;
+        }
+
+        [Template("Bridge.Array.get({this}, {*indices})")]
+        public object GetValue(params int[] indices)
+        {
+            return null;
+        }
+
+        [Template("Bridge.Array.set({this}, {value}, {*indices})")]
+        public void SetValue(object value, params int[] indices)
+        {
+        }
+
+        [Template("Bridge.Array.getLength({this}, {dimension})")]
+        public int GetLength(int dimension)
+        {
+            return 0;
+        }
+
+        public int Rank 
+        {
+            [Template("Bridge.Array.getRank({this})")]
+            get 
+            { 
+                return 0; 
+            } 
+        }
+
+        [Template("Bridge.Array.getLower({this}, {dimension})")]
+        public int GetLowerBound(int dimension)
+        {
+            return 0;
+        }
+
+        [Template("Bridge.Array.getLength({this}, {dimension}) - 1")]
+        public int GetUpperBound(int dimension)
+        {
+            return 0;
         }
     }
 }
