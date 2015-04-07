@@ -600,7 +600,8 @@
                     exclude = false;
 
                     for (j = 0; j < list2.length; j++) {
-                        if (list1[i] === list2[j] || (list1[i].$method === list2[j].$method && list1[i].$scope === list2[j].$scope)) {
+                        if (list1[i] === list2[j] ||
+                            ((list1[i].$method && (list1[i].$method === list2[j].$method)) && (list1[i].$scope && (list1[i].$scope === list2[j].$scope)))) {
                             exclude = true;
                             break;
                         }
