@@ -1,4 +1,6 @@
-﻿Bridge.define('Bridge.IEnumerable', { });
+﻿// @source /Collections/Interfaces.js
+
+Bridge.define('Bridge.IEnumerable', {});
 Bridge.define('Bridge.IEnumerator', { });
 Bridge.define('Bridge.IEqualityComparer', { });
 Bridge.define('Bridge.ICollection', {

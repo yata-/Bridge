@@ -1,4 +1,6 @@
-﻿Bridge.define("Bridge.CustomEnumerator", {
+﻿// @source /Collections/CustomEnumerator.js
+
+Bridge.define("Bridge.CustomEnumerator", {
     inherits: [Bridge.IEnumerator],
 
     constructor: function (moveNext, getCurrent, reset, dispose, scope) {
@@ -31,7 +33,8 @@
     },
 
     dispose: function () {
-        if (this.$dispose)
+        if (this.$dispose) {
             this.$dispose.call(this.scope);
+        }
     }
 });

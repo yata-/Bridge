@@ -1,7 +1,7 @@
 /*
- * @version   : 1.0.0 - Bridge.NET
+ * @version   : 1.1.0 - Bridge.NET
  * @author    : Object.NET, Inc. http://www.bridge.net/
- * @date      : 2015-03-23
+ * @date      : 2015-04-07
  * @copyright : Copyright (c) 2008-2015, Object.NET, Inc. (http://www.object.net/). All rights reserved.
  * @license   : See license.txt and https://github.com/bridgedotnet/Bridge.NET/blob/master/LICENSE.
  */
@@ -630,6 +630,7 @@
 
     Bridge = core;
 })();
+
 // @source Nullable.js
 
 (function () {
@@ -765,6 +766,7 @@
     Bridge.Nullable = nullable;
     Bridge.hasValue = Bridge.Nullable.hasValue;
 })();
+
 // @source String.js
 
 (function () {
@@ -916,6 +918,7 @@
 
     Bridge.String = string;
 })();
+
 // @source Class.js
 
 (function () {
@@ -1208,6 +1211,7 @@
     Bridge.Class = base;
     Bridge.define = Bridge.Class.define;
 })();
+
 // @source Exception.js
 
 Bridge.define('Bridge.Exception', {
@@ -3084,6 +3088,7 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
 
     Bridge.Date = date;
 })();
+
 // @source TimeSpan.js
 
 Bridge.define('Bridge.TimeSpan', {
@@ -3286,6 +3291,7 @@ Bridge.define('Bridge.TimeSpan', {
 });
 
 Bridge.Class.addExtend(Bridge.TimeSpan, [Bridge.IComparable$1(Bridge.TimeSpan), Bridge.IEquatable$1(Bridge.TimeSpan)]);
+
 // @source Text/StringBuilder.js
 
 Bridge.define('Bridge.Text.StringBuilder', {
@@ -3499,6 +3505,7 @@ Bridge.define('Bridge.Text.StringBuilder', {
         }
     }
 });
+
 // @source Browser.js
 
 (function () {
@@ -3626,7 +3633,9 @@ Bridge.define('Bridge.Text.StringBuilder', {
     Bridge.Browser = browser;
 })();
 
-Bridge.define('Bridge.IEnumerable', { });
+// @source /Collections/Interfaces.js
+
+Bridge.define('Bridge.IEnumerable', {});
 Bridge.define('Bridge.IEnumerator', { });
 Bridge.define('Bridge.IEqualityComparer', { });
 Bridge.define('Bridge.ICollection', {
@@ -3669,7 +3678,7 @@ Bridge.Class.generic('Bridge.IDictionary$2', function (TKey, TValue) {
     var $$name = Bridge.Class.genericName('Bridge.IDictionary$2', TKey, TValue);
 
     return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
-        inherits: [Bridge.IEnumerable$1(Bridge.KeyValuePair$2(TKey, TValue))],
+        inherits: [Bridge.IEnumerable$1(Bridge.KeyValuePair$2(TKey, TValue))]
     }));
 });
 
@@ -3680,6 +3689,9 @@ Bridge.Class.generic('Bridge.IList$1', function (T) {
         inherits: [Bridge.ICollection$1(T)]
     }));
 });
+
+// @source /Collections/CustomEnumerator.js
+
 Bridge.define("Bridge.CustomEnumerator", {
     inherits: [Bridge.IEnumerator],
 
@@ -3713,10 +3725,14 @@ Bridge.define("Bridge.CustomEnumerator", {
     },
 
     dispose: function () {
-        if (this.$dispose)
+        if (this.$dispose) {
             this.$dispose.call(this.scope);
+        }
     }
 });
+
+// @source /Collections/ArrayEnumerator.js
+
 Bridge.define('Bridge.ArrayEnumerator', {
     constructor: function (array) {
         this.array = array;
@@ -3737,6 +3753,9 @@ Bridge.define('Bridge.ArrayEnumerator', {
         this.index = -1;
     }
 });
+
+// @source /Collections/Comparer.js
+
 Bridge.Class.generic('Bridge.EqualityComparer$1', function (T) {
     var $$name = Bridge.Class.genericName('Bridge.EqualityComparer$1', T);
 
@@ -3759,6 +3778,9 @@ Bridge.Class.generic('Bridge.EqualityComparer$1', function (T) {
 });
 
 Bridge.EqualityComparer$1.default = new Bridge.EqualityComparer$1(Object)();
+
+// @source /Collections/Dictionary.js
+
 Bridge.Class.generic('Bridge.KeyValuePair$2', function (TKey, TValue) {
     var $$name = Bridge.Class.genericName('Bridge.KeyValuePair$2', TKey, TValue);
 
@@ -4006,6 +4028,9 @@ Bridge.Class.generic('Bridge.DictionaryCollection$1', function (T) {
         }
     }));
 });
+
+// @source /Collections/List.js
+
 Bridge.Class.generic('Bridge.List$1', function (T) {
     var $$name = Bridge.Class.genericName('Bridge.List$1', T);
 
@@ -4052,6 +4077,7 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
 
         addRange: function (items) {
             this.checkReadOnly();
+
             var array = Bridge.toArray(items),
                 i,
                 len;
@@ -4121,10 +4147,10 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
 
         insert: function (index, item) {
             this.checkReadOnly();
+
             if (index != 0) {
                 this.checkIndex(index);
             }
-
 
             if (Bridge.isArray(item)) {
                 for (var i = 0; i < item.length; i++) {
@@ -4230,6 +4256,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         }
     }));
 });
+
 // @source Task.js
 
 Bridge.define('Bridge.Task', {
@@ -4581,6 +4608,7 @@ Bridge.define('Bridge.TaskStatus', {
         faulted: 7
     }
 });
+
 // @source Validation.js
 
 (function () {
@@ -4698,6 +4726,7 @@ Bridge.define('Bridge.TaskStatus', {
 
     Bridge.Validation = validation;
 })();
+
 // @source Attribute.js
 
 Bridge.define('Bridge.Attribute', { });

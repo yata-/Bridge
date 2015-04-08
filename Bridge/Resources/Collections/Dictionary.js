@@ -1,4 +1,6 @@
-﻿Bridge.Class.generic('Bridge.KeyValuePair$2', function (TKey, TValue) {
+﻿// @source /Collections/Dictionary.js
+
+Bridge.Class.generic('Bridge.KeyValuePair$2', function (TKey, TValue) {
     var $$name = Bridge.Class.genericName('Bridge.KeyValuePair$2', TKey, TValue);
 
     return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
