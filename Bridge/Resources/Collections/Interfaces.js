@@ -41,7 +41,7 @@ Bridge.Class.generic('Bridge.IDictionary$2', function (TKey, TValue) {
     var $$name = Bridge.Class.genericName('Bridge.IDictionary$2', TKey, TValue);
 
     return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
-        inherits: [Bridge.IEnumerable$1(Bridge.KeyValuePair$2(TKey, TValue))],
+        inherits: [Bridge.IEnumerable$1(Bridge.KeyValuePair$2(TKey, TValue))]
     }));
 });
 
