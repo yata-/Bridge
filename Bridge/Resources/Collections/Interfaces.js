@@ -1,8 +1,8 @@
 ﻿// @source /Collections/Interfaces.js
 
-Bridge.define('Bridge.IEnumerable', {});
-Bridge.define('Bridge.IEnumerator', { });
-Bridge.define('Bridge.IEqualityComparer', { });
+Bridge.define('Bridge.IEnumerable');
+Bridge.define('Bridge.IEnumerator');
+Bridge.define('Bridge.IEqualityComparer');
 Bridge.define('Bridge.ICollection', {
     inherits: [Bridge.IEnumerable]
 });

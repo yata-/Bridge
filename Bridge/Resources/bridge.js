@@ -1453,25 +1453,25 @@ Bridge.define('Bridge.IFormattable', {
     }
 });
 
-Bridge.define('Bridge.IComparable', { });
+Bridge.define('Bridge.IComparable');
 
-Bridge.define('Bridge.IFormatProvider', { });
+Bridge.define('Bridge.IFormatProvider');
 
-Bridge.define('Bridge.ICloneable', { });
+Bridge.define('Bridge.ICloneable');
 
 Bridge.Class.generic('Bridge.IComparable$1', function (T) {
     var $$name = Bridge.Class.genericName('Bridge.IComparable$1', T);
 
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, { }));
+    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name));
 });
 
 Bridge.Class.generic('Bridge.IEquatable$1', function (T) {
     var $$name = Bridge.Class.genericName('Bridge.IEquatable$1', T);
 
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, { }));
+    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name));
 });
 
-Bridge.define('Bridge.IPromise', { });
+Bridge.define('Bridge.IPromise');
 
 // @source Globalization.js
 
@@ -3635,9 +3635,9 @@ Bridge.define('Bridge.Text.StringBuilder', {
 
 // @source /Collections/Interfaces.js
 
-Bridge.define('Bridge.IEnumerable', {});
-Bridge.define('Bridge.IEnumerator', { });
-Bridge.define('Bridge.IEqualityComparer', { });
+Bridge.define('Bridge.IEnumerable');
+Bridge.define('Bridge.IEnumerator');
+Bridge.define('Bridge.IEqualityComparer');
 Bridge.define('Bridge.ICollection', {
     inherits: [Bridge.IEnumerable]
 });
@@ -4729,15 +4729,16 @@ Bridge.define('Bridge.TaskStatus', {
 
 // @source Attribute.js
 
-Bridge.define('Bridge.Attribute', { });
+Bridge.define('Bridge.Attribute');
 
 // @source INotifyPropertyChanged.js
 
-Bridge.define('Bridge.INotifyPropertyChanged', {});
+Bridge.define('Bridge.INotifyPropertyChanged');
 
 Bridge.define('Bridge.PropertyChangedEventArgs', {
     constructor: function (propertyName) {
-        this.propertyName = propertyName;
+        this.proper
+        tyName = propertyName;
     }
 });
 
