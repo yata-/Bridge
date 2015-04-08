@@ -207,7 +207,7 @@ Bridge.define('Bridge.Text.StringBuilder', {
         }
 
         if (length > value.length - startIndex) {
-            throw new ArgumentOutOfRangeException("Index and length must refer to a location within the string");
+            throw new Bridge.ArgumentOutOfRangeException("Index and length must refer to a location within the string");
         }
     }
 });

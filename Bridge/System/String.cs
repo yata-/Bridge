@@ -586,6 +586,24 @@ namespace System
             return null;
         }
 
+        [Template("Bridge.String.indexOfAny({this}, {anyOf})")]
+        public int IndexOfAny(char[] anyOf)
+        {
+            return -1;
+        }
+
+        [Template("Bridge.String.indexOfAny({this}, {anyOf}, {startIndex})")]
+        public int IndexOfAny(char[] anyOf, int startIndex)
+        {
+            return -1;
+        }
+
+        [Template("Bridge.String.indexOfAny({this}, {anyOf}, {startIndex}, {count})")]
+        public int IndexOfAny(char[] anyOf, int startIndex, int count)
+        {
+            return -1;
+        }
+        
         public static bool operator ==(string s1, string s2)
         {
             return false;
