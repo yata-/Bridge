@@ -178,26 +178,79 @@ namespace System
         {
             return null;
         }
+        
+        /// <summary>
+        /// The indexOf() method returns the index within the calling String object of the first occurrence of the specified value. Returns -1 if the value is not found.
+        /// </summary>
+        /// <param name="searchValue">A character to search for.</param>
+        /// <returns>The zero-based index position of value if that character is found, or -1 if it is not.</returns>
+        [Template("Bridge.String.indexOf({this}, String.fromCharCode({searchValue}))")]
+        public int IndexOf(char searchValue)
+        {
+            return -1;
+        }
 
         /// <summary>
         /// The indexOf() method returns the index within the calling String object of the first occurrence of the specified value, starting the search at fromIndex. Returns -1 if the value is not found.
         /// </summary>
+        /// <param name="searchValue">A character to search for.</param>
+        /// <param name="fromIndex">The location within the calling string to start the search from.</param>
+        /// <returns>The zero-based index position of value if that character is found, or -1 if it is not.</returns>
+        [Template("Bridge.String.indexOf({this}, String.fromCharCode({searchValue}), {fromIndex})")]
+        public int IndexOf(char searchValue, int fromIndex)
+        {
+            return -1;
+        }
+
+        /// <summary>
+        /// The indexOf() method returns the index within the calling String object of the first occurrence of the specified value. Returns -1 if the value is not found.
+        /// </summary>
         /// <param name="searchValue">A string representing the value to search for.</param>
         /// <returns></returns>
+        [Template("Bridge.String.indexOf({this}, {searchValue})")]
         public int IndexOf(string searchValue) 
         { 
-            return 0; 
+            return -1; 
         }
 
         /// <summary>
         /// The indexOf() method returns the index within the calling String object of the first occurrence of the specified value, starting the search at fromIndex. Returns -1 if the value is not found.
         /// </summary>
         /// <param name="searchValue">A string representing the value to search for.</param>
-        /// <param name="fromIndex">The location within the calling string to start the search from. It can be any integer. The default value is 0. If fromIndex &lt; 0 the entire string is searched (same as passing 0). If fromIndex &gt;= searchValue.length, the method will return -1.</param>
+        /// <param name="fromIndex">The location within the calling string to start the search from.</param>
         /// <returns></returns>
+        [Template("Bridge.String.indexOf({this}, {searchValue}, {fromIndex})")]
         public int IndexOf(string searchValue, int fromIndex) 
         { 
-            return 0; 
+            return -1; 
+        }
+
+        /// <summary>
+        /// The indexOf() method returns the index within the calling String object of the first occurrence of the specified value. The search starts at a specified character position and
+        /// examines a specified number of character positions. Returns -1 if the value is not found.
+        /// </summary>
+        /// <param name="searchValue">A character to search for.</param>
+        /// <param name="fromIndex">The location within the calling string to start the search from.</param>
+        /// <param name="count">The number of character positions to examine.</param>
+        /// <returns></returns>
+        [Template("Bridge.String.indexOf({this}, String.fromCharCode({searchValue}), {fromIndex}, {count})")]
+        public int IndexOf(char searchValue, int fromIndex, int count)
+        {
+            return -1;
+        }
+
+        /// <summary>
+        /// The indexOf() method returns the index within the calling String object of the first occurrence of the specified value. The search starts at a specified character position and
+        /// examines a specified number of character positions. Returns -1 if the value is not found.
+        /// </summary>
+        /// <param name="searchValue">A string representing the value to search for.</param>
+        /// <param name="fromIndex">The location within the calling string to start the search from.</param>
+        /// <param name="count">The number of character positions to examine.</param>
+        /// <returns></returns>
+        [Template("Bridge.String.indexOf({this}, {searchValue}, {fromIndex}, {count})")]
+        public int IndexOf(string searchValue, int fromIndex, int count)
+        {
+            return -1;
         }
 
         /// <summary>
@@ -207,7 +260,7 @@ namespace System
         /// <returns></returns>
         public int LastIndexOf(string searchValue) 
         { 
-            return 0; 
+            return -1; 
         }
 
         /// <summary>
@@ -218,7 +271,7 @@ namespace System
         /// <returns></returns>
         public int LastIndexOf(string searchValue, int fromIndex) 
         { 
-            return 0; 
+            return -1; 
         }
 
         /// <summary>

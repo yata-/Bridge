@@ -145,7 +145,7 @@
         contains: function (str, value) {
             return str.indexOf(value) > -1;
         },
-
+        
         indexOfAny: function (str, anyOf) {
             if (anyOf == null) {
                 throw new Bridge.ArgumentNullException();
@@ -180,6 +180,45 @@
                 if (index > -1) {
                     return index + startIndex;
                 }
+            }
+
+            return -1;
+        },
+
+        indexOf: function (str, value) {
+            if (value == null) {
+                throw new Bridge.ArgumentNullException();
+            }
+            
+            if (str == null || str == "") {
+                return -1;
+            }
+
+            var startIndex = (arguments.length > 2) ? arguments[2] : 0;
+
+            if (startIndex < 0 || startIndex > str.length) {
+                throw new Bridge.ArgumentOutOfRangeException("startIndex", "startIndex cannot be less than zero and must refer to a location within the string");
+            }
+            
+            if (value == "") {
+                return startIndex;
+            }
+
+            var length = (arguments.length > 3) ? arguments[3] : str.length - startIndex;
+
+            if (length < 0) {
+                throw new Bridge.ArgumentOutOfRangeException("length", "must be non-negative");
+            }
+
+            if (length > str.length - startIndex) {
+                throw new Bridge.ArgumentOutOfRangeException("Index and length must refer to a location within the string");
+            }
+
+            var s = str.substr(startIndex, length);
+
+            var index = s.indexOf(value);
+            if (index > -1) {
+                return index + startIndex;
             }
 
             return -1;
