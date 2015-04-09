@@ -3223,16 +3223,10 @@ Bridge.define('Bridge.TimeSpan', {
             return new Bridge.TimeSpan(0);
         }
     },
-
-    $config : function () {
-        return {
-            fields: {
-                ticks: 0
-            }
-        };
-    },
-
+    
     constructor: function () {
+        this.ticks = 0;
+
         if (arguments.length == 1) {
             this.ticks = arguments[0];
         }
@@ -3390,17 +3384,16 @@ Bridge.Class.addExtend(Bridge.TimeSpan, [Bridge.IComparable$1(Bridge.TimeSpan), 
 // @source Text/StringBuilder.js
 
 Bridge.define('Bridge.Text.StringBuilder', {
-    $config: function () {
-        return {
-            fields: {
-                buffer: []
-            }
-        }
-    },
-
     constructor: function () {
+        this.buffer = [],
+        this.capacity = 16;
+
         if (arguments.length == 1) {
             this.append(arguments[0]);
+        }
+        else if (arguments.length == 2) {
+            this.append(arguments[0]);
+            this.setCapacity(arguments[1]);
         }
         else if (arguments.length == 3) {
             this.append(arguments[0], arguments[1], arguments[2]);
@@ -3418,6 +3411,20 @@ Bridge.define('Bridge.Text.StringBuilder', {
         this.buffer[0] = s;
 
         return s.length;
+    },
+
+    getCapacity: function () {
+        var length = this.getLength();
+
+        return (this.capacity > length) ? this.capacity : length;
+    },
+
+    setCapacity: function (value) {
+        var length = this.getLength();
+
+        if (value > length) {
+            this.capacity = value;
+        }
     },
 
     toString: function () {

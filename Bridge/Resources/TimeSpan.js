@@ -37,16 +37,10 @@ Bridge.define('Bridge.TimeSpan', {
             return new Bridge.TimeSpan(0);
         }
     },
-
-    $config : function () {
-        return {
-            fields: {
-                ticks: 0
-            }
-        };
-    },
-
+    
     constructor: function () {
+        this.ticks = 0;
+
         if (arguments.length == 1) {
             this.ticks = arguments[0];
         }
