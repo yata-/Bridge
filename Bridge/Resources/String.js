@@ -222,6 +222,24 @@
             }
 
             return -1;
+        },
+
+        compare: function (strA, strB) {
+            if (strA == null) {
+                return (strB == null) ? 0 : -1;
+            }
+
+            if (strB == null) {
+                return (strA == null) ? 0 : 1;
+            }
+
+            if (arguments.length == 3) {
+                if (!arguments[2]) {
+                    return strA.toLocaleUpperCase().localeCompare(strB.toLocaleUpperCase());
+                }
+            }
+
+            return strA.localeCompare(strB);
         }
     };
 

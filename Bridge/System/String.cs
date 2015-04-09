@@ -180,6 +180,62 @@ namespace System
         }
         
         /// <summary>
+        /// The compare() method compares two specified String objects and returns an integer that indicates their relative position in the sort order.
+        /// </summary>
+        /// <param name="strA">The first string to compare.</param>
+        /// <param name="strB">The second string to compare.</param>
+        /// <returns></returns>
+        [Template("Bridge.String.compare({strA}, {strB})")]
+        public static int Compare(string strA, string strB)
+        {
+            return 0;
+        }
+
+        /// <summary>
+        /// The compare() method compares two specified String objects, ignoring or honoring their case, and returns an integer that indicates their relative position in the sort order.
+        /// </summary>
+        /// <param name="strA">The first string to compare.</param>
+        /// <param name="strB">The second string to compare.</param>
+        /// <param name="ignoreCase">true to ignore case during the comparison; otherwise, false.</param>
+        /// <returns></returns>
+        [Template("Bridge.String.compare({strA}, {strB}, {ignoreCase})")]
+        public static int Compare(string strA, string strB, bool ignoreCase)
+        {
+            return 0;
+        }
+
+        /// <summary>
+        /// The compare() method compares substrings of two specified String objects and returns an integer that indicates their relative position in the sort order.
+        /// </summary>
+        /// <param name="strA">The first string to compare.</param>
+        /// <param name="indexA">The position of the substring within strA.</param>
+        /// <param name="strB">The second string to compare.</param>
+        /// <param name="indexB">The position of the substring within strB.</param>
+        /// <param name="length">The maximum number of characters in the substrings to compare.</param>
+        /// <returns></returns>
+        [Template("Bridge.String.compare({strA}.substr({indexA}, {length}), {strB}.substr({indexB}, {length}))")]
+        public static int Compare(string strA, int indexA, string strB, int indexB, int length)
+        {
+            return 0;
+        }
+
+        /// <summary>
+        /// The compare() method compares substrings of two specified String objects and returns an integer that indicates their relative position in the sort order.
+        /// </summary>
+        /// <param name="strA">The first string to compare.</param>
+        /// <param name="indexA">The position of the substring within strA.</param>
+        /// <param name="strB">The second string to compare.</param>
+        /// <param name="indexB">The position of the substring within strB.</param>
+        /// <param name="length">The maximum number of characters in the substrings to compare.</param>
+        /// <param name="ignoreCase">true to ignore case during the comparison; otherwise, false.</param>
+        /// <returns></returns>
+        [Template("Bridge.String.compare({strA}.substr({indexA}, {length}), {strB}.substr({indexB}, {length}), {ignoreCase})")]
+        public static int Compare(string strA, int indexA, string strB, int indexB, int length, bool ignoreCase)
+        {
+            return 0;
+        }
+                
+        /// <summary>
         /// The indexOf() method returns the index within the calling String object of the first occurrence of the specified value. Returns -1 if the value is not found.
         /// </summary>
         /// <param name="searchValue">A character to search for.</param>
