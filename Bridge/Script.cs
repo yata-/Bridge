@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Bridge;
+﻿using Bridge;
 using System;
+using System.Collections.Generic;
 
 namespace Bridge
 {
