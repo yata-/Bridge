@@ -986,11 +986,41 @@
         },
 
         // Create a new Class that inherits from this class
-        define: function (className, prop) {
+        define: function (className, gscope, prop) {
+            if (!prop) {
+                prop = gscope;
+                gscope = Bridge.global;
+            }
+
+            if (Bridge.isFunction(prop)) {
+                fn = function () {
+                    var args = Array.prototype.slice.call(arguments),
+                        name,
+                        obj,
+                        c;
+                    args.unshift(className);
+                    name = Bridge.Class.genericName.apply(null, args),
+                    c = Bridge.Class.cache[name]
+
+                    if (c) {
+                        return c;
+                    }
+
+                    obj = prop.apply(null, args.slice(1));
+                    obj.$cacheName = name;
+                    c = Bridge.define(name, obj);                    
+
+                    return  c;
+                };
+
+                return Bridge.Class.generic(className, gscope, fn);
+            }
+
             prop = prop || {};
             var extend = prop.$inherits || prop.inherits,
                 statics = prop.$statics || prop.statics,
                 base = extend ? extend[0].prototype : this.prototype,
+                cacheName = prop.$cacheName,
                 prototype,
                 nameParts,
                 scope = prop.$scope || Bridge.global,
@@ -998,7 +1028,8 @@
                 v,
                 ctorCounter,
                 isCtor,
-                name;
+                name,                
+                fn;
 
             if (Bridge.isFunction(extend)) {
                 extend = null;
@@ -1018,6 +1049,10 @@
             }
             else {
                 delete prop.statics;
+            }
+
+            if (prop.$cacheName) {
+                delete prop.$cacheName;
             }
 
             // The dummy class constructor
@@ -1107,6 +1142,10 @@
 
             prototype.$$name = className;        
 
+            if (cacheName) {
+                Bridge.Class.cache[cacheName] = Class;
+            }
+
             // Populate our constructed prototype object
             Class.prototype = prototype;
 
@@ -1138,8 +1177,8 @@
 
                 scope.$$inheritors.push(Class);
             }
-        
-            setTimeout(function () {
+
+            fn = function () {
                 if (Class.$initMembers) {
                     Class.$initMembers.call(Class);
                 }
@@ -1147,7 +1186,14 @@
                 if (Class.constructor) {
                     Class.constructor.call(Class);
                 }
-            }, 0);            
+            };
+
+            if (document.readyState == "complete" || document.readyState == "loaded") {
+                fn();
+            }
+            else {
+                setTimeout(fn, 0);
+            }            
 
             return Class;
         },
