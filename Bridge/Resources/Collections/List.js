@@ -1,3 +1,5 @@
+// @source /Collections/List.js
+
 Bridge.Class.generic('Bridge.List$1', function (T) {
     var $$name = Bridge.Class.genericName('Bridge.List$1', T);
 
@@ -44,6 +46,7 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
 
         addRange: function (items) {
             this.checkReadOnly();
+
             var array = Bridge.toArray(items),
                 i,
                 len;
@@ -113,10 +116,10 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
 
         insert: function (index, item) {
             this.checkReadOnly();
+
             if (index != 0) {
                 this.checkIndex(index);
             }
-
 
             if (Bridge.isArray(item)) {
                 for (var i = 0; i < item.length; i++) {

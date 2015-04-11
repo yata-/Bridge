@@ -1,7 +1,7 @@
 /*
- * @version   : 1.0.0 - Bridge.NET
+ * @version   : 1.2.0 - Bridge.NET
  * @author    : Object.NET, Inc. http://www.bridge.net/
- * @date      : 2015-03-23
+ * @date      : 2015-04-13
  * @copyright : Copyright (c) 2008-2015, Object.NET, Inc. (http://www.object.net/). All rights reserved.
  * @license   : See license.txt and https://github.com/bridgedotnet/Bridge.NET/blob/master/LICENSE.
  */
@@ -12,7 +12,7 @@
 (function () {
     var core = {
         global: (function () { return this; })(),
-		
+
         emptyFn: function () { },
 
         property : function (scope, name, v) {
@@ -293,7 +293,7 @@
 	                    else {
 	                        to[key](value);
 	                    }
-	                }	            	            
+	                }
 	                else {
 	                    var setter = "set" + key.charAt(0).toUpperCase() + key.slice(1);
 	                    if (typeof to[setter] == "function" && typeof value != "function") {
@@ -365,7 +365,7 @@
                     item = i.getCurrent();
                     result.push(item);
                 }
-	        }	    
+	        }
 
 	        return result;
 	    },
@@ -584,7 +584,7 @@
             },
 
             combine: function (fn1, fn2) {
-                if (!fn1 || !fn2) {                
+                if (!fn1 || !fn2) {
                     return fn1 || fn2;
                 }
 
@@ -604,7 +604,7 @@
                     result = [],
                     exclude,
                     i, j;
-            
+
                 for (i = list1.length - 1; i >= 0; i--) {
                     exclude = false;
 
@@ -630,6 +630,7 @@
 
     Bridge = core;
 })();
+
 // @source Nullable.js
 
 (function () {
@@ -765,6 +766,7 @@
     Bridge.Nullable = nullable;
     Bridge.hasValue = Bridge.Nullable.hasValue;
 })();
+
 // @source String.js
 
 (function () {
@@ -911,6 +913,102 @@
 
         contains: function (str, value) {
             return str.indexOf(value) > -1;
+        },
+        
+        indexOfAny: function (str, anyOf) {
+            if (anyOf == null) {
+                throw new Bridge.ArgumentNullException();
+            }
+
+            if (str == null || str == "") {
+                return -1;
+            }
+
+            var startIndex = (arguments.length > 2) ? arguments[2] : 0;
+
+            if (startIndex < 0) {
+                throw new Bridge.ArgumentOutOfRangeException("startIndex", "startIndex cannot be less than zero");
+            }
+
+            var length = (arguments.length > 3) ? arguments[3] : str.length - startIndex;
+
+            if (length < 0) {
+                throw new Bridge.ArgumentOutOfRangeException("length", "must be non-negative");
+            }
+           
+            if (length > str.length - startIndex) {
+                throw new Bridge.ArgumentOutOfRangeException("Index and length must refer to a location within the string");
+            }
+
+            var s = str.substr(startIndex, length);
+
+            for (var i = 0; i < anyOf.length; i++) {
+                var c = String.fromCharCode(anyOf[i]);
+
+                var index = s.indexOf(c);                
+                if (index > -1) {
+                    return index + startIndex;
+                }
+            }
+
+            return -1;
+        },
+
+        indexOf: function (str, value) {
+            if (value == null) {
+                throw new Bridge.ArgumentNullException();
+            }
+            
+            if (str == null || str == "") {
+                return -1;
+            }
+
+            var startIndex = (arguments.length > 2) ? arguments[2] : 0;
+
+            if (startIndex < 0 || startIndex > str.length) {
+                throw new Bridge.ArgumentOutOfRangeException("startIndex", "startIndex cannot be less than zero and must refer to a location within the string");
+            }
+            
+            if (value == "") {
+                return startIndex;
+            }
+
+            var length = (arguments.length > 3) ? arguments[3] : str.length - startIndex;
+
+            if (length < 0) {
+                throw new Bridge.ArgumentOutOfRangeException("length", "must be non-negative");
+            }
+
+            if (length > str.length - startIndex) {
+                throw new Bridge.ArgumentOutOfRangeException("Index and length must refer to a location within the string");
+            }
+
+            var s = str.substr(startIndex, length);
+
+            var index = s.indexOf(value);
+            if (index > -1) {
+                return index + startIndex;
+            }
+
+            return -1;
+        },
+
+        compare: function (strA, strB) {
+            if (strA == null) {
+                return (strB == null) ? 0 : -1;
+            }
+
+            if (strB == null) {
+                return (strA == null) ? 0 : 1;
+            }
+
+            if (arguments.length == 3) {
+                if (!arguments[2]) {
+                    return strA.toLocaleUpperCase().localeCompare(strB.toLocaleUpperCase());
+                }
+            }
+
+            return strA.localeCompare(strB);
         }
     };
 
@@ -1254,6 +1352,7 @@
     Bridge.Class = base;
     Bridge.define = Bridge.Class.define;
 })();
+
 // @source Exception.js
 
 Bridge.define('Bridge.Exception', {
@@ -1495,25 +1594,25 @@ Bridge.define('Bridge.IFormattable', {
     }
 });
 
-Bridge.define('Bridge.IComparable', { });
+Bridge.define('Bridge.IComparable');
 
-Bridge.define('Bridge.IFormatProvider', { });
+Bridge.define('Bridge.IFormatProvider');
 
-Bridge.define('Bridge.ICloneable', { });
+Bridge.define('Bridge.ICloneable');
 
 Bridge.Class.generic('Bridge.IComparable$1', function (T) {
     var $$name = Bridge.Class.genericName('Bridge.IComparable$1', T);
 
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, { }));
+    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name));
 });
 
 Bridge.Class.generic('Bridge.IEquatable$1', function (T) {
     var $$name = Bridge.Class.genericName('Bridge.IEquatable$1', T);
 
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, { }));
+    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name));
 });
 
-Bridge.define('Bridge.IPromise', { });
+Bridge.define('Bridge.IPromise');
 
 // @source Globalization.js
 
@@ -2646,7 +2745,7 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
             var df = (provider || Bridge.CultureInfo.getCurrentCulture()).getFormat(Bridge.DateTimeFormatInfo),
                 am = df.amDesignator,
                 pm = df.pmDesignator,
-                int = 0,
+                idx = 0,
                 index = 0,
                 i,
                 c,
@@ -2694,13 +2793,13 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
             
                 if (token == "yyyy" || token == "yy" || token == "y") {
                     if (token == "yyyy") {
-                        year = this.subparseInt(str, int, 4, 4);
+                        year = this.subparseInt(str, idx, 4, 4);
                     }
                     else if (token == "yy") {
-                        year = this.subparseInt(str, int, 2, 2);
+                        year = this.subparseInt(str, idx, 2, 2);
                     }
                     else if (token == "y") {
-                        year = this.subparseInt(str, int, 2, 4);
+                        year = this.subparseInt(str, idx, 2, 4);
                     }
 
                     if (year == null) {
@@ -2708,7 +2807,7 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
                         break;
                     }
 
-                    int += year.length;
+                    idx += year.length;
 
                     if (year.length == 2) {
                         year = ~~year;
@@ -2738,9 +2837,9 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
                     for (i = 0; i < names.length; i++) {
                         name = names[i];
 
-                        if (str.substring(int, int + name.length).toLowerCase() == name.toLowerCase()) {
+                        if (str.substring(idx, idx + name.length).toLowerCase() == name.toLowerCase()) {
                             month = (i % 12) + 1;
-                            int += name.length;
+                            idx += name.length;
 
                             break;
                         }
@@ -2753,7 +2852,7 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
                     }
                 }
                 else if (token == "MM" || token == "M") {
-                    month = this.subparseInt(str, int, token.length, 2);
+                    month = this.subparseInt(str, idx, token.length, 2);
 
                     if (month == null || month < 1 || month > 12) {
                         invalid = true;
@@ -2761,7 +2860,7 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
                         break;
                     }
 
-                    int += month.length;
+                    idx += month.length;
                 }
                 else if (token == "dddd" || token == "ddd") {
                     names = token === "ddd" ? df.abbreviatedDayNames : df.dayNames;
@@ -2769,15 +2868,15 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
                     for (i = 0; i < names.length; i++) {
                         name = names[i];
 
-                        if (str.substring(int, int + name.length).toLowerCase() == name.toLowerCase()) {                        
-                            int += name.length;
+                        if (str.substring(idx, idx + name.length).toLowerCase() == name.toLowerCase()) {                        
+                            idx += name.length;
 
                             break;
                         }
                     }
                 }
                 else if (token == "dd" || token == "d") {
-                    date = this.subparseInt(str, int, token.length, 2);
+                    date = this.subparseInt(str, idx, token.length, 2);
 
                     if (date == null || date < 1 || date > 31) {
                         invalid = true;
@@ -2785,10 +2884,10 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
                         break;
                     }
 
-                    int += date.length;
+                    idx += date.length;
                 }
                 else if (token == "hh" || token == "h") {
-                    hh = this.subparseInt(str, int, token.length, 2);
+                    hh = this.subparseInt(str, idx, token.length, 2);
 
                     if (hh == null || hh < 1 || hh > 12) {
                         invalid = true;
@@ -2796,10 +2895,10 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
                         break;
                     }
 
-                    int += hh.length;
+                    idx += hh.length;
                 }
                 else if (token == "HH" || token == "H") {
-                    hh = this.subparseInt(str, int, token.length, 2);
+                    hh = this.subparseInt(str, idx, token.length, 2);
 
                     if (hh == null || hh < 0 || hh > 23) {
                         invalid = true;
@@ -2807,19 +2906,19 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
                         break;
                     }
 
-                    int += hh.length;
+                    idx += hh.length;
                 }
                 else if (token == "mm" || token == "m") {
-                    mm = this.subparseInt(str, int, token.length, 2);
+                    mm = this.subparseInt(str, idx, token.length, 2);
 
                     if (mm == null || mm < 0 || mm > 59) {
                         return null;
                     }
 
-                    int += mm.length;
+                    idx += mm.length;
                 }
                 else if (token == "ss" || token == "s") {
-                    ss = this.subparseInt(str, int, token.length, 2);
+                    ss = this.subparseInt(str, idx, token.length, 2);
 
                     if (ss == null || ss < 0 || ss > 59) {
                         invalid = true;
@@ -2827,10 +2926,10 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
                         break;
                     }
 
-                    int += ss.length;
+                    idx += ss.length;
                 }
                 else if (token == "u") {
-                    ff = this.subparseInt(str, int, 1, 7);
+                    ff = this.subparseInt(str, idx, 1, 7);
 
                     if (ff == null) {
                         invalid = true;
@@ -2838,14 +2937,14 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
                         break;
                     }                
 
-                    int += ff.length;
+                    idx += ff.length;
 
                     if (ff.length > 3) {
                         ff = ff.substring(0, 3);
                     }
                 }
                 else if (token == "fffffff" || token == "ffffff" || token == "fffff" || token == "ffff" || token == "fff" || token == "ff" || token == "f") {
-                    ff = this.subparseInt(str, int, token.length, 7);
+                    ff = this.subparseInt(str, idx, token.length, 7);
 
                     if (ff == null) {
                         invalid = true;
@@ -2853,17 +2952,17 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
                         break;
                     }               
 
-                    int += ff.length;
+                    idx += ff.length;
 
                     if (ff.length > 3) {
                         ff = ff.substring(0, 3);
                     }
                 }
                 else if (token == "t") {
-                    if (str.substring(int, int + 1).toLowerCase() == am.charAt(0).toLowerCase()) {
+                    if (str.substring(idx, idx + 1).toLowerCase() == am.charAt(0).toLowerCase()) {
                         tt = am;
                     }
-                    else if (str.substring(int, int + 1).toLowerCase() == pm.charAt(0).toLowerCase()) {
+                    else if (str.substring(idx, idx + 1).toLowerCase() == pm.charAt(0).toLowerCase()) {
                         tt = pm;
                     }
                     else {
@@ -2872,13 +2971,13 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
                         break;
                     }
 
-                    int += 1;
+                    idx += 1;
                 }
                 else if (token == "tt") {
-                    if (str.substring(int, int + 2).toLowerCase() == am.toLowerCase()) {
+                    if (str.substring(idx, idx + 2).toLowerCase() == am.toLowerCase()) {
                         tt = am;
                     }
-                    else if (str.substring(int, int + 2).toLowerCase() == pm.toLowerCase()) {
+                    else if (str.substring(idx, idx + 2).toLowerCase() == pm.toLowerCase()) {
                         tt = pm;
                     }
                     else {
@@ -2887,10 +2986,10 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
                         break;
                     }
 
-                    int += 2;
+                    idx += 2;
                 }
                 else if (token == "z" || token == "zz") {
-                    sign = str.charAt(int);
+                    sign = str.charAt(idx);
 
                     if (sign == "-") {
                         neg = true;
@@ -2904,9 +3003,9 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
                         break;
                     }
 
-                    int++;
+                    idx++;
 
-                    zzh = this.subparseInt(str, int, 1, 2);
+                    zzh = this.subparseInt(str, idx, 1, 2);
 
                     if (zzh == null || zzh > 14) {
                         invalid = true;
@@ -2914,15 +3013,15 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
                         break;
                     }
 
-                    int += zzh.length;
+                    idx += zzh.length;
 
                     if (neg) {
                         zzh = -zzh;
                     }                
                 }
                 else if (token == "zzz") {
-                    name = str.substring(int, int + 6);
-                    int += 6;
+                    name = str.substring(idx, idx + 6);
+                    idx += 6;
 
                     if (name.length != 6) {
                         invalid = true;
@@ -2976,7 +3075,7 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
                     }                
                 }
                 else {
-                    name = str.substring(int, int + token.length);
+                    name = str.substring(idx, idx + token.length);
 
                     if ((!inQuotes && ((token == ":" && name != df.timeSeparator) ||
                         (token == "/" && name != df.dateSeparator))) ||
@@ -2991,7 +3090,7 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
                     }
 
                     if (token != "'" && token != '"' && token != "\\") {
-                        int += token.length;
+                        idx += token.length;
                     }
                     else {
                         if (inQuotes === false) {
@@ -3013,7 +3112,7 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
             }
         
             if (!invalid) {
-                if (int != str.length) {
+                if (idx != str.length) {
                     invalid = true;
                 }
                 else if (month == 2) {
@@ -3130,6 +3229,7 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
 
     Bridge.Date = date;
 })();
+
 // @source TimeSpan.js
 
 Bridge.define('Bridge.TimeSpan', {
@@ -3169,16 +3269,10 @@ Bridge.define('Bridge.TimeSpan', {
             return new Bridge.TimeSpan(0);
         }
     },
-
-    $config : function () {
-        return {
-            fields: {
-                ticks: 0
-            }
-        };
-    },
-
+    
     constructor: function () {
+        this.ticks = 0;
+
         if (arguments.length == 1) {
             this.ticks = arguments[0];
         }
@@ -3332,20 +3426,20 @@ Bridge.define('Bridge.TimeSpan', {
 });
 
 Bridge.Class.addExtend(Bridge.TimeSpan, [Bridge.IComparable$1(Bridge.TimeSpan), Bridge.IEquatable$1(Bridge.TimeSpan)]);
+
 // @source Text/StringBuilder.js
 
 Bridge.define('Bridge.Text.StringBuilder', {
-    $config: function () {
-        return {
-            fields: {
-                buffer: []
-            }
-        }
-    },
-
     constructor: function () {
+        this.buffer = [],
+        this.capacity = 16;
+
         if (arguments.length == 1) {
             this.append(arguments[0]);
+        }
+        else if (arguments.length == 2) {
+            this.append(arguments[0]);
+            this.setCapacity(arguments[1]);
         }
         else if (arguments.length == 3) {
             this.append(arguments[0], arguments[1], arguments[2]);
@@ -3363,6 +3457,20 @@ Bridge.define('Bridge.Text.StringBuilder', {
         this.buffer[0] = s;
 
         return s.length;
+    },
+
+    getCapacity: function () {
+        var length = this.getLength();
+
+        return (this.capacity > length) ? this.capacity : length;
+    },
+
+    setCapacity: function (value) {
+        var length = this.getLength();
+
+        if (value > length) {
+            this.capacity = value;
+        }
     },
 
     toString: function () {
@@ -3541,7 +3649,7 @@ Bridge.define('Bridge.Text.StringBuilder', {
         }
 
         if (length > value.length - startIndex) {
-            throw new ArgumentOutOfRangeException("Index and length must refer to a location within the string");
+            throw new Bridge.ArgumentOutOfRangeException("Index and length must refer to a location within the string");
         }
     }
 });
@@ -3672,9 +3780,11 @@ Bridge.define('Bridge.Text.StringBuilder', {
     Bridge.Browser = browser;
 })();
 
-Bridge.define('Bridge.IEnumerable', { });
-Bridge.define('Bridge.IEnumerator', { });
-Bridge.define('Bridge.IEqualityComparer', { });
+// @source /Collections/Interfaces.js
+
+Bridge.define('Bridge.IEnumerable');
+Bridge.define('Bridge.IEnumerator');
+Bridge.define('Bridge.IEqualityComparer');
 Bridge.define('Bridge.ICollection', {
     inherits: [Bridge.IEnumerable]
 });
@@ -3715,7 +3825,7 @@ Bridge.Class.generic('Bridge.IDictionary$2', function (TKey, TValue) {
     var $$name = Bridge.Class.genericName('Bridge.IDictionary$2', TKey, TValue);
 
     return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
-        inherits: [Bridge.IEnumerable$1(Bridge.KeyValuePair$2(TKey, TValue))],
+        inherits: [Bridge.IEnumerable$1(Bridge.KeyValuePair$2(TKey, TValue))]
     }));
 });
 
@@ -3726,6 +3836,9 @@ Bridge.Class.generic('Bridge.IList$1', function (T) {
         inherits: [Bridge.ICollection$1(T)]
     }));
 });
+
+// @source /Collections/CustomEnumerator.js
+
 Bridge.define("Bridge.CustomEnumerator", {
     inherits: [Bridge.IEnumerator],
 
@@ -3759,10 +3872,14 @@ Bridge.define("Bridge.CustomEnumerator", {
     },
 
     dispose: function () {
-        if (this.$dispose)
+        if (this.$dispose) {
             this.$dispose.call(this.scope);
+        }
     }
 });
+
+// @source /Collections/ArrayEnumerator.js
+
 Bridge.define('Bridge.ArrayEnumerator', {
     constructor: function (array) {
         this.array = array;
@@ -3783,6 +3900,9 @@ Bridge.define('Bridge.ArrayEnumerator', {
         this.index = -1;
     }
 });
+
+// @source /Collections/Comparer.js
+
 Bridge.Class.generic('Bridge.EqualityComparer$1', function (T) {
     var $$name = Bridge.Class.genericName('Bridge.EqualityComparer$1', T);
 
@@ -3805,6 +3925,9 @@ Bridge.Class.generic('Bridge.EqualityComparer$1', function (T) {
 });
 
 Bridge.EqualityComparer$1.default = new Bridge.EqualityComparer$1(Object)();
+
+// @source /Collections/Dictionary.js
+
 Bridge.Class.generic('Bridge.KeyValuePair$2', function (TKey, TValue) {
     var $$name = Bridge.Class.genericName('Bridge.KeyValuePair$2', TKey, TValue);
 
@@ -4052,6 +4175,9 @@ Bridge.Class.generic('Bridge.DictionaryCollection$1', function (T) {
         }
     }));
 });
+
+// @source /Collections/List.js
+
 Bridge.Class.generic('Bridge.List$1', function (T) {
     var $$name = Bridge.Class.genericName('Bridge.List$1', T);
 
@@ -4098,6 +4224,7 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
 
         addRange: function (items) {
             this.checkReadOnly();
+
             var array = Bridge.toArray(items),
                 i,
                 len;
@@ -4167,10 +4294,10 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
 
         insert: function (index, item) {
             this.checkReadOnly();
+
             if (index != 0) {
                 this.checkIndex(index);
             }
-
 
             if (Bridge.isArray(item)) {
                 for (var i = 0; i < item.length; i++) {
@@ -4276,6 +4403,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         }
     }));
 });
+
 // @source Task.js
 
 Bridge.define('Bridge.Task', {
@@ -4627,6 +4755,7 @@ Bridge.define('Bridge.TaskStatus', {
         faulted: 7
     }
 });
+
 // @source Validation.js
 
 (function () {
@@ -4744,17 +4873,19 @@ Bridge.define('Bridge.TaskStatus', {
 
     Bridge.Validation = validation;
 })();
+
 // @source Attribute.js
 
-Bridge.define('Bridge.Attribute', { });
+Bridge.define('Bridge.Attribute');
 
 // @source INotifyPropertyChanged.js
 
-Bridge.define('Bridge.INotifyPropertyChanged', {});
+Bridge.define('Bridge.INotifyPropertyChanged');
 
 Bridge.define('Bridge.PropertyChangedEventArgs', {
     constructor: function (propertyName) {
-        this.propertyName = propertyName;
+        this.proper
+        tyName = propertyName;
     }
 });
 

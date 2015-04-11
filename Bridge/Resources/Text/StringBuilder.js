@@ -1,17 +1,16 @@
 ﻿// @source Text/StringBuilder.js
 
 Bridge.define('Bridge.Text.StringBuilder', {
-    $config: function () {
-        return {
-            fields: {
-                buffer: []
-            }
-        }
-    },
-
     constructor: function () {
+        this.buffer = [],
+        this.capacity = 16;
+
         if (arguments.length == 1) {
             this.append(arguments[0]);
+        }
+        else if (arguments.length == 2) {
+            this.append(arguments[0]);
+            this.setCapacity(arguments[1]);
         }
         else if (arguments.length == 3) {
             this.append(arguments[0], arguments[1], arguments[2]);
@@ -29,6 +28,20 @@ Bridge.define('Bridge.Text.StringBuilder', {
         this.buffer[0] = s;
 
         return s.length;
+    },
+
+    getCapacity: function () {
+        var length = this.getLength();
+
+        return (this.capacity > length) ? this.capacity : length;
+    },
+
+    setCapacity: function (value) {
+        var length = this.getLength();
+
+        if (value > length) {
+            this.capacity = value;
+        }
     },
 
     toString: function () {
@@ -207,7 +220,7 @@ Bridge.define('Bridge.Text.StringBuilder', {
         }
 
         if (length > value.length - startIndex) {
-            throw new ArgumentOutOfRangeException("Index and length must refer to a location within the string");
+            throw new Bridge.ArgumentOutOfRangeException("Index and length must refer to a location within the string");
         }
     }
 });

@@ -1,4 +1,4 @@
-Bridge
+Bridge.NET
 =========
 
-A .NET to JavaScript transformation library
+Open Source C# to JavaScript Compiler

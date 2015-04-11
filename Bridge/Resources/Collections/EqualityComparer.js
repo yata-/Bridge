@@ -1,4 +1,6 @@
-﻿Bridge.Class.generic('Bridge.EqualityComparer$1', function (T) {
+﻿// @source /Collections/Comparer.js
+
+Bridge.Class.generic('Bridge.EqualityComparer$1', function (T) {
     var $$name = Bridge.Class.genericName('Bridge.EqualityComparer$1', T);
 
     return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {

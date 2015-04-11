@@ -178,26 +178,135 @@ namespace System
         {
             return null;
         }
+        
+        /// <summary>
+        /// The compare() method compares two specified String objects and returns an integer that indicates their relative position in the sort order.
+        /// </summary>
+        /// <param name="strA">The first string to compare.</param>
+        /// <param name="strB">The second string to compare.</param>
+        /// <returns></returns>
+        [Template("Bridge.String.compare({strA}, {strB})")]
+        public static int Compare(string strA, string strB)
+        {
+            return 0;
+        }
+
+        /// <summary>
+        /// The compare() method compares two specified String objects, ignoring or honoring their case, and returns an integer that indicates their relative position in the sort order.
+        /// </summary>
+        /// <param name="strA">The first string to compare.</param>
+        /// <param name="strB">The second string to compare.</param>
+        /// <param name="ignoreCase">true to ignore case during the comparison; otherwise, false.</param>
+        /// <returns></returns>
+        [Template("Bridge.String.compare({strA}, {strB}, {ignoreCase})")]
+        public static int Compare(string strA, string strB, bool ignoreCase)
+        {
+            return 0;
+        }
+
+        /// <summary>
+        /// The compare() method compares substrings of two specified String objects and returns an integer that indicates their relative position in the sort order.
+        /// </summary>
+        /// <param name="strA">The first string to compare.</param>
+        /// <param name="indexA">The position of the substring within strA.</param>
+        /// <param name="strB">The second string to compare.</param>
+        /// <param name="indexB">The position of the substring within strB.</param>
+        /// <param name="length">The maximum number of characters in the substrings to compare.</param>
+        /// <returns></returns>
+        [Template("Bridge.String.compare({strA}.substr({indexA}, {length}), {strB}.substr({indexB}, {length}))")]
+        public static int Compare(string strA, int indexA, string strB, int indexB, int length)
+        {
+            return 0;
+        }
+
+        /// <summary>
+        /// The compare() method compares substrings of two specified String objects and returns an integer that indicates their relative position in the sort order.
+        /// </summary>
+        /// <param name="strA">The first string to compare.</param>
+        /// <param name="indexA">The position of the substring within strA.</param>
+        /// <param name="strB">The second string to compare.</param>
+        /// <param name="indexB">The position of the substring within strB.</param>
+        /// <param name="length">The maximum number of characters in the substrings to compare.</param>
+        /// <param name="ignoreCase">true to ignore case during the comparison; otherwise, false.</param>
+        /// <returns></returns>
+        [Template("Bridge.String.compare({strA}.substr({indexA}, {length}), {strB}.substr({indexB}, {length}), {ignoreCase})")]
+        public static int Compare(string strA, int indexA, string strB, int indexB, int length, bool ignoreCase)
+        {
+            return 0;
+        }
+                
+        /// <summary>
+        /// The indexOf() method returns the index within the calling String object of the first occurrence of the specified value. Returns -1 if the value is not found.
+        /// </summary>
+        /// <param name="searchValue">A character to search for.</param>
+        /// <returns>The zero-based index position of value if that character is found, or -1 if it is not.</returns>
+        [Template("Bridge.String.indexOf({this}, String.fromCharCode({searchValue}))")]
+        public int IndexOf(char searchValue)
+        {
+            return -1;
+        }
 
         /// <summary>
         /// The indexOf() method returns the index within the calling String object of the first occurrence of the specified value, starting the search at fromIndex. Returns -1 if the value is not found.
         /// </summary>
+        /// <param name="searchValue">A character to search for.</param>
+        /// <param name="fromIndex">The location within the calling string to start the search from.</param>
+        /// <returns>The zero-based index position of value if that character is found, or -1 if it is not.</returns>
+        [Template("Bridge.String.indexOf({this}, String.fromCharCode({searchValue}), {fromIndex})")]
+        public int IndexOf(char searchValue, int fromIndex)
+        {
+            return -1;
+        }
+
+        /// <summary>
+        /// The indexOf() method returns the index within the calling String object of the first occurrence of the specified value. Returns -1 if the value is not found.
+        /// </summary>
         /// <param name="searchValue">A string representing the value to search for.</param>
         /// <returns></returns>
+        [Template("Bridge.String.indexOf({this}, {searchValue})")]
         public int IndexOf(string searchValue) 
         { 
-            return 0; 
+            return -1; 
         }
 
         /// <summary>
         /// The indexOf() method returns the index within the calling String object of the first occurrence of the specified value, starting the search at fromIndex. Returns -1 if the value is not found.
         /// </summary>
         /// <param name="searchValue">A string representing the value to search for.</param>
-        /// <param name="fromIndex">The location within the calling string to start the search from. It can be any integer. The default value is 0. If fromIndex &lt; 0 the entire string is searched (same as passing 0). If fromIndex &gt;= searchValue.length, the method will return -1.</param>
+        /// <param name="fromIndex">The location within the calling string to start the search from.</param>
         /// <returns></returns>
+        [Template("Bridge.String.indexOf({this}, {searchValue}, {fromIndex})")]
         public int IndexOf(string searchValue, int fromIndex) 
         { 
-            return 0; 
+            return -1; 
+        }
+
+        /// <summary>
+        /// The indexOf() method returns the index within the calling String object of the first occurrence of the specified value. The search starts at a specified character position and
+        /// examines a specified number of character positions. Returns -1 if the value is not found.
+        /// </summary>
+        /// <param name="searchValue">A character to search for.</param>
+        /// <param name="fromIndex">The location within the calling string to start the search from.</param>
+        /// <param name="count">The number of character positions to examine.</param>
+        /// <returns></returns>
+        [Template("Bridge.String.indexOf({this}, String.fromCharCode({searchValue}), {fromIndex}, {count})")]
+        public int IndexOf(char searchValue, int fromIndex, int count)
+        {
+            return -1;
+        }
+
+        /// <summary>
+        /// The indexOf() method returns the index within the calling String object of the first occurrence of the specified value. The search starts at a specified character position and
+        /// examines a specified number of character positions. Returns -1 if the value is not found.
+        /// </summary>
+        /// <param name="searchValue">A string representing the value to search for.</param>
+        /// <param name="fromIndex">The location within the calling string to start the search from.</param>
+        /// <param name="count">The number of character positions to examine.</param>
+        /// <returns></returns>
+        [Template("Bridge.String.indexOf({this}, {searchValue}, {fromIndex}, {count})")]
+        public int IndexOf(string searchValue, int fromIndex, int count)
+        {
+            return -1;
         }
 
         /// <summary>
@@ -207,7 +316,7 @@ namespace System
         /// <returns></returns>
         public int LastIndexOf(string searchValue) 
         { 
-            return 0; 
+            return -1; 
         }
 
         /// <summary>
@@ -218,7 +327,7 @@ namespace System
         /// <returns></returns>
         public int LastIndexOf(string searchValue, int fromIndex) 
         { 
-            return 0; 
+            return -1; 
         }
 
         /// <summary>
@@ -586,6 +695,24 @@ namespace System
             return null;
         }
 
+        [Template("Bridge.String.indexOfAny({this}, {anyOf})")]
+        public int IndexOfAny(char[] anyOf)
+        {
+            return -1;
+        }
+
+        [Template("Bridge.String.indexOfAny({this}, {anyOf}, {startIndex})")]
+        public int IndexOfAny(char[] anyOf, int startIndex)
+        {
+            return -1;
+        }
+
+        [Template("Bridge.String.indexOfAny({this}, {anyOf}, {startIndex}, {count})")]
+        public int IndexOfAny(char[] anyOf, int startIndex, int count)
+        {
+            return -1;
+        }
+        
         public static bool operator ==(string s1, string s2)
         {
             return false;
