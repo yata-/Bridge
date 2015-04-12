@@ -18,7 +18,7 @@ Bridge.Class.generic('Bridge.Dictionary$2', function (TKey, TValue) {
         inherits: [Bridge.IDictionary$2(TKey, TValue)],
 
         constructor: function (obj, comparer) {
-            this.comparer = comparer || Bridge.EqualityComparer$1.default;
+            this.comparer = comparer || Bridge.EqualityComparer$1.$default;
             this.clear();
 
             if (Bridge.is(obj, Bridge.Dictionary$2(TKey, TValue))) {
