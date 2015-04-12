@@ -20,6 +20,16 @@ namespace System.Text
         {
         }
 
+        public StringBuilder(string value, int capacity)
+        {
+        }
+
+        [Template("new Bridge.Text.StringBuilder(\"\", {capacity})")]
+        public StringBuilder(int capacity)
+            : this(string.Empty, capacity)
+        {
+        }
+
         public override string ToString()
         {
             return null;
@@ -34,7 +44,9 @@ namespace System.Text
         /// Gets or sets the length of the current StringBuilder object.
         /// </summary>
         public int Length { get; set; }
-       
+
+        public int Capacity { get; set; }
+
         public StringBuilder Append(bool value)
         {
             return new StringBuilder();

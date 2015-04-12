@@ -162,7 +162,7 @@ namespace System
             return 0;
         }
 
-        [Template("Bridge.Array.getLength({this}, {dimension}) - 1")]
+        [Template("(Bridge.Array.getLength({this}, {dimension}) - 1)")]
         public int GetUpperBound(int dimension)
         {
             return 0;

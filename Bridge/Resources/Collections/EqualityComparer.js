@@ -21,4 +21,4 @@ Bridge.Class.generic('Bridge.EqualityComparer$1', function (T) {
     }));
 });
 
-Bridge.EqualityComparer$1.default = new Bridge.EqualityComparer$1(Object)();
+Bridge.EqualityComparer$1.$default = new Bridge.EqualityComparer$1(Object)();

@@ -3,7 +3,7 @@
 (function () {
     var core = {
         global: (function () { return this; })(),
-		
+
         emptyFn: function () { },
 
         property : function (scope, name, v) {
@@ -284,7 +284,7 @@
 	                    else {
 	                        to[key](value);
 	                    }
-	                }	            	            
+	                }
 	                else {
 	                    var setter = "set" + key.charAt(0).toUpperCase() + key.slice(1);
 	                    if (typeof to[setter] == "function" && typeof value != "function") {
@@ -356,7 +356,7 @@
                     item = i.getCurrent();
                     result.push(item);
                 }
-	        }	    
+	        }
 
 	        return result;
 	    },
@@ -575,7 +575,7 @@
             },
 
             combine: function (fn1, fn2) {
-                if (!fn1 || !fn2) {                
+                if (!fn1 || !fn2) {
                     return fn1 || fn2;
                 }
 
@@ -595,7 +595,7 @@
                     result = [],
                     exclude,
                     i, j;
-            
+
                 for (i = list1.length - 1; i >= 0; i--) {
                     exclude = false;
 
