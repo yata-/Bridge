@@ -2528,7 +2528,7 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
                 hour = date.getHours(),
                 minute = date.getMinutes(),
                 second = date.getSeconds(),
-                millisecond = date.getMilliseconds,
+                millisecond = date.getMilliseconds(),
                 timezoneOffset = date.getTimezoneOffset(),
                 formats;
 
@@ -2766,7 +2766,8 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
                 names,
                 name,
                 invalid = false,
-                inQuotes = false;
+                inQuotes = false,
+                tokenMatched;
 
             if (str == null) {
                 throw new Bridge.ArgumentNullException("str");
@@ -2786,295 +2787,309 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
                 c = format.charAt(index);
                 token = "";
 
-                while ((format.charAt(index) == c) && (index < format.length)) {
+                if (inQuotes == "\\") {
                     token += c;
                     index++
                 }
-            
-                if (token == "yyyy" || token == "yy" || token == "y") {
-                    if (token == "yyyy") {
-                        year = this.subparseInt(str, idx, 4, 4);
-                    }
-                    else if (token == "yy") {
-                        year = this.subparseInt(str, idx, 2, 2);
-                    }
-                    else if (token == "y") {
-                        year = this.subparseInt(str, idx, 2, 4);
-                    }
-
-                    if (year == null) {
-                        invalid = true;
-                        break;
-                    }
-
-                    idx += year.length;
-
-                    if (year.length == 2) {
-                        year = ~~year;
-                        year = (year > 30 ? 1900 : 2000) + year;
-                    }
-                }
-                else if (token == "MMM" || token == "MMMM") {
-                    month = 0;
-
-                    if (token === "MMM") {
-                        if (this.isUseGenitiveForm(format, index, 3, "d")) {
-                            names = df.abbreviatedMonthGenitiveNames;
-                        }
-                        else {
-                            names = df.abbreviatedMonthNames;
-                        }
-                    }
-                    else {
-                        if (this.isUseGenitiveForm(format, index, 4, "d")) {
-                            names = df.monthGenitiveNames;
-                        }
-                        else {
-                            names = df.monthNames;
-                        }
-                    }                
-                
-                    for (i = 0; i < names.length; i++) {
-                        name = names[i];
-
-                        if (str.substring(idx, idx + name.length).toLowerCase() == name.toLowerCase()) {
-                            month = (i % 12) + 1;
-                            idx += name.length;
-
-                            break;
-                        }
-                    }
-
-                    if ((month < 1) || (month > 12)) {
-                        invalid = true;
-
-                        break;
-                    }
-                }
-                else if (token == "MM" || token == "M") {
-                    month = this.subparseInt(str, idx, token.length, 2);
-
-                    if (month == null || month < 1 || month > 12) {
-                        invalid = true;
-
-                        break;
-                    }
-
-                    idx += month.length;
-                }
-                else if (token == "dddd" || token == "ddd") {
-                    names = token === "ddd" ? df.abbreviatedDayNames : df.dayNames;
-
-                    for (i = 0; i < names.length; i++) {
-                        name = names[i];
-
-                        if (str.substring(idx, idx + name.length).toLowerCase() == name.toLowerCase()) {                        
-                            idx += name.length;
-
-                            break;
-                        }
-                    }
-                }
-                else if (token == "dd" || token == "d") {
-                    date = this.subparseInt(str, idx, token.length, 2);
-
-                    if (date == null || date < 1 || date > 31) {
-                        invalid = true;
-
-                        break;
-                    }
-
-                    idx += date.length;
-                }
-                else if (token == "hh" || token == "h") {
-                    hh = this.subparseInt(str, idx, token.length, 2);
-
-                    if (hh == null || hh < 1 || hh > 12) {
-                        invalid = true;
-
-                        break;
-                    }
-
-                    idx += hh.length;
-                }
-                else if (token == "HH" || token == "H") {
-                    hh = this.subparseInt(str, idx, token.length, 2);
-
-                    if (hh == null || hh < 0 || hh > 23) {
-                        invalid = true;
-
-                        break;
-                    }
-
-                    idx += hh.length;
-                }
-                else if (token == "mm" || token == "m") {
-                    mm = this.subparseInt(str, idx, token.length, 2);
-
-                    if (mm == null || mm < 0 || mm > 59) {
-                        return null;
-                    }
-
-                    idx += mm.length;
-                }
-                else if (token == "ss" || token == "s") {
-                    ss = this.subparseInt(str, idx, token.length, 2);
-
-                    if (ss == null || ss < 0 || ss > 59) {
-                        invalid = true;
-
-                        break;
-                    }
-
-                    idx += ss.length;
-                }
-                else if (token == "u") {
-                    ff = this.subparseInt(str, idx, 1, 7);
-
-                    if (ff == null) {
-                        invalid = true;
-
-                        break;
-                    }                
-
-                    idx += ff.length;
-
-                    if (ff.length > 3) {
-                        ff = ff.substring(0, 3);
-                    }
-                }
-                else if (token == "fffffff" || token == "ffffff" || token == "fffff" || token == "ffff" || token == "fff" || token == "ff" || token == "f") {
-                    ff = this.subparseInt(str, idx, token.length, 7);
-
-                    if (ff == null) {
-                        invalid = true;
-
-                        break;
-                    }               
-
-                    idx += ff.length;
-
-                    if (ff.length > 3) {
-                        ff = ff.substring(0, 3);
-                    }
-                }
-                else if (token == "t") {
-                    if (str.substring(idx, idx + 1).toLowerCase() == am.charAt(0).toLowerCase()) {
-                        tt = am;
-                    }
-                    else if (str.substring(idx, idx + 1).toLowerCase() == pm.charAt(0).toLowerCase()) {
-                        tt = pm;
-                    }
-                    else {
-                        invalid = true;
-
-                        break;
-                    }
-
-                    idx += 1;
-                }
-                else if (token == "tt") {
-                    if (str.substring(idx, idx + 2).toLowerCase() == am.toLowerCase()) {
-                        tt = am;
-                    }
-                    else if (str.substring(idx, idx + 2).toLowerCase() == pm.toLowerCase()) {
-                        tt = pm;
-                    }
-                    else {
-                        invalid = true;
-
-                        break;
-                    }
-
-                    idx += 2;
-                }
-                else if (token == "z" || token == "zz") {
-                    sign = str.charAt(idx);
-
-                    if (sign == "-") {
-                        neg = true;
-                    }
-                    else if (sign == "+") {
-                        neg = false;
-                    }
-                    else {
-                        invalid = true;
-
-                        break;
-                    }
-
-                    idx++;
-
-                    zzh = this.subparseInt(str, idx, 1, 2);
-
-                    if (zzh == null || zzh > 14) {
-                        invalid = true;
-
-                        break;
-                    }
-
-                    idx += zzh.length;
-
-                    if (neg) {
-                        zzh = -zzh;
-                    }                
-                }
-                else if (token == "zzz") {
-                    name = str.substring(idx, idx + 6);
-                    idx += 6;
-
-                    if (name.length != 6) {
-                        invalid = true;
-
-                        break;
-                    }
-
-                    sign = name.charAt(0);
-
-                    if (sign == "-") {
-                        neg = true;
-                    }
-                    else if (sign == "+") {
-                        neg = false;
-                    }
-                    else {
-                        invalid = true;
-
-                        break;
-                    }
-
-                    zzi = 1;
-                    zzh = this.subparseInt(name, zzi, 1, 2);
-
-                    if (zzh == null || zzh > 14) {
-                        invalid = true;
-
-                        break;
-                    }
-
-                    zzi += zzh.length;
-
-                    if (neg) {
-                        zzh = -zzh;
-                    }
-
-                    if (name.charAt(zzi) != df.timeSeparator) {
-                        invalid = true;
-
-                        break;
-                    }
-
-                    zzi++;
-
-                    zzm = this.subparseInt(name, zzi, 1, 2);
-
-                    if (zzm == null || zzh > 59) {
-                        invalid = true;
-
-                        break;
-                    }                
-                }
                 else {
+                    while ((format.charAt(index) == c) && (index < format.length)) {
+                        token += c;
+                        index++
+                    }
+                }
+
+                tokenMatched = true;
+
+                if (!inQuotes) {
+                    if (token == "yyyy" || token == "yy" || token == "y") {
+                        if (token == "yyyy") {
+                            year = this.subparseInt(str, idx, 4, 4);
+                        }
+                        else if (token == "yy") {
+                            year = this.subparseInt(str, idx, 2, 2);
+                        }
+                        else if (token == "y") {
+                            year = this.subparseInt(str, idx, 2, 4);
+                        }
+
+                        if (year == null) {
+                            invalid = true;
+                            break;
+                        }
+
+                        idx += year.length;
+
+                        if (year.length == 2) {
+                            year = ~~year;
+                            year = (year > 30 ? 1900 : 2000) + year;
+                        }
+                    }
+                    else if (token == "MMM" || token == "MMMM") {
+                        month = 0;
+
+                        if (token === "MMM") {
+                            if (this.isUseGenitiveForm(format, index, 3, "d")) {
+                                names = df.abbreviatedMonthGenitiveNames;
+                            }
+                            else {
+                                names = df.abbreviatedMonthNames;
+                            }
+                        }
+                        else {
+                            if (this.isUseGenitiveForm(format, index, 4, "d")) {
+                                names = df.monthGenitiveNames;
+                            }
+                            else {
+                                names = df.monthNames;
+                            }
+                        }
+
+                        for (i = 0; i < names.length; i++) {
+                            name = names[i];
+
+                            if (str.substring(idx, idx + name.length).toLowerCase() == name.toLowerCase()) {
+                                month = (i % 12) + 1;
+                                idx += name.length;
+
+                                break;
+                            }
+                        }
+
+                        if ((month < 1) || (month > 12)) {
+                            invalid = true;
+
+                            break;
+                        }
+                    }
+                    else if (token == "MM" || token == "M") {
+                        month = this.subparseInt(str, idx, token.length, 2);
+
+                        if (month == null || month < 1 || month > 12) {
+                            invalid = true;
+
+                            break;
+                        }
+
+                        idx += month.length;
+                    }
+                    else if (token == "dddd" || token == "ddd") {
+                        names = token === "ddd" ? df.abbreviatedDayNames : df.dayNames;
+
+                        for (i = 0; i < names.length; i++) {
+                            name = names[i];
+
+                            if (str.substring(idx, idx + name.length).toLowerCase() == name.toLowerCase()) {
+                                idx += name.length;
+
+                                break;
+                            }
+                        }
+                    }
+                    else if (token == "dd" || token == "d") {
+                        date = this.subparseInt(str, idx, token.length, 2);
+
+                        if (date == null || date < 1 || date > 31) {
+                            invalid = true;
+
+                            break;
+                        }
+
+                        idx += date.length;
+                    }
+                    else if (token == "hh" || token == "h") {
+                        hh = this.subparseInt(str, idx, token.length, 2);
+
+                        if (hh == null || hh < 1 || hh > 12) {
+                            invalid = true;
+
+                            break;
+                        }
+
+                        idx += hh.length;
+                    }
+                    else if (token == "HH" || token == "H") {
+                        hh = this.subparseInt(str, idx, token.length, 2);
+
+                        if (hh == null || hh < 0 || hh > 23) {
+                            invalid = true;
+
+                            break;
+                        }
+
+                        idx += hh.length;
+                    }
+                    else if (token == "mm" || token == "m") {
+                        mm = this.subparseInt(str, idx, token.length, 2);
+
+                        if (mm == null || mm < 0 || mm > 59) {
+                            return null;
+                        }
+
+                        idx += mm.length;
+                    }
+                    else if (token == "ss" || token == "s") {
+                        ss = this.subparseInt(str, idx, token.length, 2);
+
+                        if (ss == null || ss < 0 || ss > 59) {
+                            invalid = true;
+
+                            break;
+                        }
+
+                        idx += ss.length;
+                    }
+                    else if (token == "u") {
+                        ff = this.subparseInt(str, idx, 1, 7);
+
+                        if (ff == null) {
+                            invalid = true;
+
+                            break;
+                        }
+
+                        idx += ff.length;
+
+                        if (ff.length > 3) {
+                            ff = ff.substring(0, 3);
+                        }
+                    }
+                    else if (token == "fffffff" || token == "ffffff" || token == "fffff" || token == "ffff" || token == "fff" || token == "ff" || token == "f") {
+                        ff = this.subparseInt(str, idx, token.length, 7);
+
+                        if (ff == null) {
+                            invalid = true;
+
+                            break;
+                        }
+
+                        idx += ff.length;
+
+                        if (ff.length > 3) {
+                            ff = ff.substring(0, 3);
+                        }
+                    }
+                    else if (token == "t") {
+                        if (str.substring(idx, idx + 1).toLowerCase() == am.charAt(0).toLowerCase()) {
+                            tt = am;
+                        }
+                        else if (str.substring(idx, idx + 1).toLowerCase() == pm.charAt(0).toLowerCase()) {
+                            tt = pm;
+                        }
+                        else {
+                            invalid = true;
+
+                            break;
+                        }
+
+                        idx += 1;
+                    }
+                    else if (token == "tt") {
+                        if (str.substring(idx, idx + 2).toLowerCase() == am.toLowerCase()) {
+                            tt = am;
+                        }
+                        else if (str.substring(idx, idx + 2).toLowerCase() == pm.toLowerCase()) {
+                            tt = pm;
+                        }
+                        else {
+                            invalid = true;
+
+                            break;
+                        }
+
+                        idx += 2;
+                    }
+                    else if (token == "z" || token == "zz") {
+                        sign = str.charAt(idx);
+
+                        if (sign == "-") {
+                            neg = true;
+                        }
+                        else if (sign == "+") {
+                            neg = false;
+                        }
+                        else {
+                            invalid = true;
+
+                            break;
+                        }
+
+                        idx++;
+
+                        zzh = this.subparseInt(str, idx, 1, 2);
+
+                        if (zzh == null || zzh > 14) {
+                            invalid = true;
+
+                            break;
+                        }
+
+                        idx += zzh.length;
+
+                        if (neg) {
+                            zzh = -zzh;
+                        }
+                    }
+                    else if (token == "zzz") {
+                        name = str.substring(idx, idx + 6);
+                        idx += 6;
+
+                        if (name.length != 6) {
+                            invalid = true;
+
+                            break;
+                        }
+
+                        sign = name.charAt(0);
+
+                        if (sign == "-") {
+                            neg = true;
+                        }
+                        else if (sign == "+") {
+                            neg = false;
+                        }
+                        else {
+                            invalid = true;
+
+                            break;
+                        }
+
+                        zzi = 1;
+                        zzh = this.subparseInt(name, zzi, 1, 2);
+
+                        if (zzh == null || zzh > 14) {
+                            invalid = true;
+
+                            break;
+                        }
+
+                        zzi += zzh.length;
+
+                        if (neg) {
+                            zzh = -zzh;
+                        }
+
+                        if (name.charAt(zzi) != df.timeSeparator) {
+                            invalid = true;
+
+                            break;
+                        }
+
+                        zzi++;
+
+                        zzm = this.subparseInt(name, zzi, 1, 2);
+
+                        if (zzm == null || zzh > 59) {
+                            invalid = true;
+
+                            break;
+                        }
+                    }
+                    else {
+                        tokenMatched = false;
+                    }
+                }
+
+                if (inQuotes || !tokenMatched) {
                     name = str.substring(idx, idx + token.length);
 
                     if ((!inQuotes && ((token == ":" && name != df.timeSeparator) ||
