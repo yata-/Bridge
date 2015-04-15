@@ -20,16 +20,26 @@ namespace Bridge.Html5
 
         // TODO: Review summary to include parameters' info. From this point down to createPattern (~390)
         /// <summary>
-        /// Sets all pixels in the rectangle defined by starting point (x, y) and size (width, height) to transparent black, erasing any previously drawn content.
+        /// Sets all pixels in the rectangle defined by starting point (x, y) and size (width, height)
+        /// to transparent black, erasing any previously drawn content.
         /// </summary>
+        /// <param name="x">The x axis of the coordinate for the rectangle starting point.</param>
+        /// <param name="y">The y axis of the coordinate for the rectangle starting point.</param>
+        /// <param name="width">The rectangle's width.</param>
+        /// <param name="height">The rectangle's height.</param>
         public virtual void ClearRect(uint x, uint y, uint width, uint height)
         {
             return;
         }
 
         /// <summary>
-        /// Sets all pixels in the rectangle defined by starting point (x, y) and size (width, height) to transparent black, erasing any previously drawn content.
+        /// Sets all pixels in the rectangle defined by starting point (x, y) and size (width, height)
+        /// to transparent black, erasing any previously drawn content.
         /// </summary>
+        /// <param name="x">The x axis of the coordinate for the rectangle starting point.</param>
+        /// <param name="y">The y axis of the coordinate for the rectangle starting point.</param>
+        /// <param name="width">The rectangle's width.</param>
+        /// <param name="height">The rectangle's height.</param>
         public virtual void ClearRect(int x, int y, int width, int height)
         {
             return;
@@ -38,6 +48,10 @@ namespace Bridge.Html5
         /// <summary>
         /// Draws a filled rectangle at (x, y) position whose size is determined by width and height.
         /// </summary>
+        /// <param name="x">The x axis of the coordinate for the rectangle starting point.</param>
+        /// <param name="y">The y axis of the coordinate for the rectangle starting point.</param>
+        /// <param name="width">The rectangle's width.</param>
+        /// <param name="height">The rectangle's height.</param>
         public virtual void FillRect(uint x, uint y, uint width, uint height)
         {
             return;
@@ -46,22 +60,36 @@ namespace Bridge.Html5
         /// <summary>
         /// Draws a filled rectangle at (x, y) position whose size is determined by width and height.
         /// </summary>
+        /// <param name="x">The x axis of the coordinate for the rectangle starting point.</param>
+        /// <param name="y">The y axis of the coordinate for the rectangle starting point.</param>
+        /// <param name="width">The rectangle's width.</param>
+        /// <param name="height">The rectangle's height.</param>
         public virtual void FillRect(int x, int y, int width, int height)
         {
             return;
         }
 
         /// <summary>
-        /// Paints a rectangle which has a starting point at (x, y) and has a w width and an h height onto the canvas, using the current stroke style.
+        /// Paints a rectangle which has a starting point at (x, y) and has a w width and an h height
+        /// onto the canvas, using the current stroke style.
         /// </summary>
+        /// <param name="x">The x axis of the coordinate for the rectangle starting point.</param>
+        /// <param name="y">The y axis of the coordinate for the rectangle starting point.</param>
+        /// <param name="width">The rectangle's width.</param>
+        /// <param name="height">The rectangle's height.</param>
         public virtual void StrokeRect(uint x, uint y, uint width, uint height)
         {
             return;
         }
 
         /// <summary>
-        /// Paints a rectangle which has a starting point at (x, y) and has a w width and an h height onto the canvas, using the current stroke style.
+        /// Paints a rectangle which has a starting point at (x, y) and has a w width and an h height
+        /// onto the canvas, using the current stroke style.
         /// </summary>
+        /// <param name="x">The x axis of the coordinate for the rectangle starting point.</param>
+        /// <param name="y">The y axis of the coordinate for the rectangle starting point.</param>
+        /// <param name="width">The rectangle's width.</param>
+        /// <param name="height">The rectangle's height.</param>
         public virtual void StrokeRect(int x, int y, int width, int height)
         {
             return;
@@ -70,13 +98,26 @@ namespace Bridge.Html5
         #endregion
 
         /// <summary>
-        /// The following methods are provided for drawing text. See also the TextMetrics object for text properties.
+        /// The following methods are provided for drawing text. See also the TextMetrics object for
+        /// text properties.
         /// </summary>
         #region Drawing Text
 
         /// <summary>
         /// Draws (fills) a given text at the given (x,y) position.
+        // </summary>
         /// </summary>
+        /// <param name="text">
+        /// The text to render using the current font, textAlign, textBaseline, and direction values.
+        /// </param>
+        /// <param name="x">The x axis of the coordinate for the text starting point.</param>
+        /// <param name="y">The y axis of the coordinate for the text starting point.</param>
+        /// <param name="maxWidth">
+        /// The maximum width to draw. If specified, and the string is computed to be wider than
+        /// this width, the font is adjusted to use a more horizontally condensed font (if one is
+        /// available or if a reasonably readable one can be synthesized by scaling the current
+        /// font horizontally) or a smaller font.
+        /// </param>
         public virtual void FillText(string text, uint x, uint y, uint? maxWidth = null)
         {
             return;
@@ -85,6 +126,17 @@ namespace Bridge.Html5
         /// <summary>
         /// Draws (fills) a given text at the given (x,y) position.
         /// </summary>
+        /// <param name="text">
+        /// The text to render using the current font, textAlign, textBaseline, and direction values.
+        /// </param>
+        /// <param name="x">The x axis of the coordinate for the text starting point.</param>
+        /// <param name="y">The y axis of the coordinate for the text starting point.</param>
+        /// <param name="maxWidth">
+        /// The maximum width to draw. If specified, and the string is computed to be wider than
+        /// this width, the font is adjusted to use a more horizontally condensed font (if one is
+        /// available or if a reasonably readable one can be synthesized by scaling the current
+        /// font horizontally) or a smaller font.
+        /// </param>
         public virtual void FillText(string text, int x, int y, int? maxWidth = null)
         {
             return;
@@ -93,6 +145,17 @@ namespace Bridge.Html5
         /// <summary>
         /// Draws (strokes) a given text at the given (x, y) position.
         /// </summary>
+        /// <param name="text">
+        /// The text to render using the current font, textAlign, textBaseline, and direction values.
+        /// </param>
+        /// <param name="x">The x axis of the coordinate for the text starting point.</param>
+        /// <param name="y">The y axis of the coordinate for the text starting point.</param>
+        /// <param name="maxWidth">
+        /// The maximum width to draw. If specified, and the string is computed to be wider than
+        /// this width, the font is adjusted to use a more horizontally condensed font (if one is
+        /// available or if a reasonably readable one can be synthesized by scaling the current
+        /// font horizontally) or a smaller font.
+        /// </param>
         public virtual void StrokeText(string text, uint x, uint y, uint? maxWidth = null)
         {
             return;
@@ -101,6 +164,17 @@ namespace Bridge.Html5
         /// <summary>
         /// Draws (strokes) a given text at the given (x, y) position.
         /// </summary>
+        /// <param name="text">
+        /// The text to render using the current font, textAlign, textBaseline, and direction values.
+        /// </param>
+        /// <param name="x">The x axis of the coordinate for the text starting point.</param>
+        /// <param name="y">The y axis of the coordinate for the text starting point.</param>
+        /// <param name="maxWidth">
+        /// The maximum width to draw. If specified, and the string is computed to be wider than
+        /// this width, the font is adjusted to use a more horizontally condensed font (if one is
+        /// available or if a reasonably readable one can be synthesized by scaling the current
+        /// font horizontally) or a smaller font.
+        /// </param>
         public virtual void StrokeText(string text, int x, int y, int? maxWidth = null)
         {
             return;
@@ -109,6 +183,8 @@ namespace Bridge.Html5
         /// <summary>
         /// Returns a TextMetrics object.
         /// </summary>
+        /// <param name="text">The text to measure.</param>
+        /// <returns>A TextMetrics object.</returns>
         public virtual TextMetrics MeasureText(string text)
         {
             return null;
@@ -142,52 +218,71 @@ namespace Bridge.Html5
         public double MiterLimit;
 
         /// <summary>
-        /// Returns the current line dash pattern array containing an even number of non-negative numbers.
-        /// If the number, when setting the elements, was odd, the elements of the array get copied and
-        /// concatenated. For example, setting the line dash to [5, 15, 25] will result in getting back
-        /// [5, 15, 25, 5, 15, 25].
+        /// Gets the current line dash pattern.
         /// </summary>
+        /// <returns>
+        /// An Array. A list of numbers that specifies distances to alternately draw a line and a gap
+        /// (in coordinate space units). If the number, when setting the elements, was odd, the elements
+        /// of the array get copied and concatenated.
+        /// For example, setting the line dash to [5, 15, 25] will result in getting back
+        /// [5, 15, 25, 5, 15, 25].
+        /// </returns>
         public virtual double[] GetLineDash()
         {
             return null;
         }
 
         /// <summary>
-        /// Sets the current line dash pattern. If the number of elements in the array is odd, the elements
-        /// of the array get copied and concatenated. For example, [5, 15, 25] will become
-        /// [5, 15, 25, 5, 15, 25].
+        /// Sets the current line dash pattern.
         /// </summary>
+        /// <param name="segments">
+        /// An Array. A list of numbers that specifies distances to alternately draw a line and a gap
+        /// (in coordinate space units). If the number of elements in the array is odd, the elements
+        /// of the array get copied and concatenated.
+        /// For example, [5, 15, 25] will become [5, 15, 25, 5, 15, 25].
+        /// </param>
         public virtual void SetLineDash(double[] segments)
         {
             return;
         }
 
         /// <summary>
-        /// Sets the current line dash pattern. If the number of elements in the array is odd, the elements
-        /// of the array get copied and concatenated. For example, [5, 15, 25] will become
-        /// [5, 15, 25, 5, 15, 25].
+        /// Sets the current line dash pattern.
         /// </summary>
+        /// <param name="segments">
+        /// An Array. A list of numbers that specifies distances to alternately draw a line and a gap
+        /// (in coordinate space units). If the number of elements in the array is odd, the elements
+        /// of the array get copied and concatenated.
+        /// For example, [5, 15, 25] will become [5, 15, 25, 5, 15, 25].
+        /// </param>
         public virtual void SetLineDash(uint[] segments)
         {
             return;
         }
 
         /// <summary>
-        /// Sets the current line dash pattern. If the number of elements in the array is odd, the elements
-        /// of the array get copied and concatenated. For example, [5, 15, 25] will become
-        /// [5, 15, 25, 5, 15, 25].
+        /// Sets the current line dash pattern.
         /// </summary>
+        /// <param name="segments">
+        /// An Array. A list of numbers that specifies distances to alternately draw a line and a gap
+        /// (in coordinate space units). If the number of elements in the array is odd, the elements
+        /// of the array get copied and concatenated.
+        /// For example, [5, 15, 25] will become [5, 15, 25, 5, 15, 25].
+        /// </param>
         public virtual void SetLineDash(int[] segments)
         {
             return;
         }
 
         /// <summary>
-        /// Sets the current line dash pattern. If the number of elements in the array is odd, the elements
-        /// of the array get copied and concatenated. For example, [5, 15, 25] will become
-        /// [5, 15, 25, 5, 15, 25].
-        /// Format is: "[ 4.5, 2, 3.4, 8 ]"
+        /// Sets the current line dash pattern.
         /// </summary>
+        /// <param name="segments">
+        /// An Array. A list of numbers that specifies distances to alternately draw a line and a gap
+        /// (in coordinate space units). If the number of elements in the array is odd, the elements
+        /// of the array get copied and concatenated.
+        /// For example, [5, 15, 25] will become [5, 15, 25, 5, 15, 25].
+        /// </param>
         /// <remarks>Use this overload ONLY when you know what you're doing!</remarks>
         public virtual void SetLineDash(string segments)
         {
@@ -249,6 +344,11 @@ namespace Bridge.Html5
         /// <summary>
         /// Creates a linear gradient along the line given by the coordinates represented by the parameters.
         /// </summary>
+        /// <param name="x0">The x axis of the coordinate of the start point.</param>
+        /// <param name="y0">The y axis of the coordinate of the start point.</param>
+        /// <param name="x1">The x axis of the coordinate of the end point.</param>
+        /// <param name="y1">The y axis of the coordinate of the end point.</param>
+        /// <returns>A linear CanvasGradient initialized with the specified line.</returns>
         public virtual CanvasGradient CreateLinearGradient(uint x0, uint y0, uint x1, uint y1)
         {
             return null;
@@ -257,6 +357,11 @@ namespace Bridge.Html5
         /// <summary>
         /// Creates a linear gradient along the line given by the coordinates represented by the parameters.
         /// </summary>
+        /// <param name="x0">The x axis of the coordinate of the start point.</param>
+        /// <param name="y0">The y axis of the coordinate of the start point.</param>
+        /// <param name="x1">The x axis of the coordinate of the end point.</param>
+        /// <param name="y1">The y axis of the coordinate of the end point.</param>
+        /// <returns>A linear CanvasGradient initialized with the specified line.</returns>
         public virtual CanvasGradient CreateLinearGradient(int x0, int y0, int x1, int y1)
         {
             return null;
@@ -265,6 +370,11 @@ namespace Bridge.Html5
         /// <summary>
         /// Creates a linear gradient along the line given by the coordinates represented by the parameters.
         /// </summary>
+        /// <param name="x0">The x axis of the coordinate of the start point.</param>
+        /// <param name="y0">The y axis of the coordinate of the start point.</param>
+        /// <param name="x1">The x axis of the coordinate of the end point.</param>
+        /// <param name="y1">The y axis of the coordinate of the end point.</param>
+        /// <returns>A linear CanvasGradient initialized with the specified line.</returns>
         public virtual CanvasGradient CreateLinearGradient(double x0, double y0, double x1, double y1)
         {
             return null;
@@ -273,6 +383,13 @@ namespace Bridge.Html5
         /// <summary>
         /// Creates a radial gradient along the line given by the coordinates represented by the parameters.
         /// </summary>
+        /// <param name="x0">The x axis of the coordinate of the start circle.</param>
+        /// <param name="y0">The y axis of the coordinate of the start circle.</param>
+        /// <param name="r0">The radius of the start circle.</param>
+        /// <param name="x1">The x axis of the coordinate of the end circle.</param>
+        /// <param name="y1">The y axis of the coordinate of the end circle.</param>
+        /// <param name="r1">The radius of the end circle.</param>
+        /// <returns>A radial CanvasGradient initialized with the two specified circles.</returns>
         public virtual CanvasGradient CreateRadialGradient(uint x0, uint y0, uint r0, uint x1, uint y1, uint r1)
         {
             return null;
@@ -281,6 +398,13 @@ namespace Bridge.Html5
         /// <summary>
         /// Creates a radial gradient along the line given by the coordinates represented by the parameters.
         /// </summary>
+        /// <param name="x0">The x axis of the coordinate of the start circle.</param>
+        /// <param name="y0">The y axis of the coordinate of the start circle.</param>
+        /// <param name="r0">The radius of the start circle.</param>
+        /// <param name="x1">The x axis of the coordinate of the end circle.</param>
+        /// <param name="y1">The y axis of the coordinate of the end circle.</param>
+        /// <param name="r1">The radius of the end circle.</param>
+        /// <returns>A radial CanvasGradient initialized with the two specified circles.</returns>
         public virtual CanvasGradient CreateRadialGradient(int x0, int y0, int r0, int x1, int y1, int r1)
         {
             return null;
@@ -289,6 +413,13 @@ namespace Bridge.Html5
         /// <summary>
         /// Creates a radial gradient along the line given by the coordinates represented by the parameters.
         /// </summary>
+        /// <param name="x0">The x axis of the coordinate of the start circle.</param>
+        /// <param name="y0">The y axis of the coordinate of the start circle.</param>
+        /// <param name="r0">The radius of the start circle.</param>
+        /// <param name="x1">The x axis of the coordinate of the end circle.</param>
+        /// <param name="y1">The y axis of the coordinate of the end circle.</param>
+        /// <param name="r1">The radius of the end circle.</param>
+        /// <returns>A radial CanvasGradient initialized with the two specified circles.</returns>
         public virtual CanvasGradient CreateRadialGradient(double x0, double y0, double r0, double x1, double y1, double r1)
         {
             return null;
@@ -298,9 +429,37 @@ namespace Bridge.Html5
         /// Creates a pattern using the specified image (a CanvasImageSource). It repeats the source in the
         /// directions specified by the repetition argument. This method returns a CanvasPattern.
         /// </summary>
-        /// <param name="image"></param>
+        /// <param name="image">
+        /// A CanvasImageSource to be used as image to repeat. It can either be a:
+        /// • HTMLImageElement (<img>),
+        /// • HTMLVideoElement (<video>),
+        /// • HTMLCanvasElement (<canvas>),
+        /// • CanvasRenderingContext2D,
+        /// • ImageBitmap,
+        /// • ImageData, or a
+        /// • Blob.
+        /// </param>
         /// <param name="repetition"></param>
-        /// <returns></returns>
+        /// <returns>An opaque CanvasPattern object describing a pattern.</returns>
+        /// <remarks>
+        /// At the time of implementation, ImageBitmap had no documentation and Bridge.NET did not have
+        /// it defined inside.
+        /// </remarks>
+        public virtual CanvasPattern CreatePattern(string image, CanvasTypes.CanvasRepetitionTypes repetition)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Creates a pattern using the specified image (a CanvasImageSource). It repeats the source in the
+        /// directions specified by the repetition argument. This method returns a CanvasPattern.
+        /// </summary>
+        /// <param name="image">A ImageElement to be used as image to repeat.</param>
+        /// <param name="repetition">
+        /// A CanvasTypes.CanvasRepetitionType indicating how to repeat the image.
+        /// If repetition is an empty string ('') or null (but not undefined), repetition will be "repeat".
+        /// </param>
+        /// <returns>An opaque CanvasPattern object describing a pattern.</returns>
         public virtual CanvasPattern CreatePattern(ImageElement image, CanvasTypes.CanvasRepetitionTypes repetition)
         {
             return null;
@@ -310,9 +469,12 @@ namespace Bridge.Html5
         /// Creates a pattern using the specified image (a CanvasImageSource). It repeats the source in the
         /// directions specified by the repetition argument. This method returns a CanvasPattern.
         /// </summary>
-        /// <param name="image"></param>
-        /// <param name="repetition"></param>
-        /// <returns></returns>
+        /// <param name="image">A VideoElement to be used as image to repeat.</param>
+        /// <param name="repetition">
+        /// A CanvasTypes.CanvasRepetitionType indicating how to repeat the image.
+        /// If repetition is an empty string ('') or null (but not undefined), repetition will be "repeat".
+        /// </param>
+        /// <returns>An opaque CanvasPattern object describing a pattern.</returns>
         public virtual CanvasPattern CreatePattern(VideoElement image, CanvasTypes.CanvasRepetitionTypes repetition)
         {
             return null;
@@ -322,9 +484,12 @@ namespace Bridge.Html5
         /// Creates a pattern using the specified image (a CanvasImageSource). It repeats the source in the
         /// directions specified by the repetition argument. This method returns a CanvasPattern.
         /// </summary>
-        /// <param name="image"></param>
-        /// <param name="repetition"></param>
-        /// <returns></returns>
+        /// <param name="image">A CanvasElement to be used as image to repeat.</param>
+        /// <param name="repetition">
+        /// A CanvasTypes.CanvasRepetitionType indicating how to repeat the image.
+        /// If repetition is an empty string ('') or null (but not undefined), repetition will be "repeat".
+        /// </param>
+        /// <returns>An opaque CanvasPattern object describing a pattern.</returns>
         public virtual CanvasPattern CreatePattern(CanvasElement image, CanvasTypes.CanvasRepetitionTypes repetition)
         {
             return null;
@@ -334,9 +499,12 @@ namespace Bridge.Html5
         /// Creates a pattern using the specified image (a CanvasImageSource). It repeats the source in the
         /// directions specified by the repetition argument. This method returns a CanvasPattern.
         /// </summary>
-        /// <param name="image"></param>
-        /// <param name="repetition"></param>
-        /// <returns></returns>
+        /// <param name="image">A CanvasRenderingContext2D to be used as image to repeat.</param>
+        /// <param name="repetition">
+        /// A CanvasTypes.CanvasRepetitionType indicating how to repeat the image.
+        /// If repetition is an empty string ('') or null (but not undefined), repetition will be "repeat".
+        /// </param>
+        /// <returns>An opaque CanvasPattern object describing a pattern.</returns>
         public virtual CanvasPattern CreatePattern(CanvasRenderingContext2D image, CanvasTypes.CanvasRepetitionTypes repetition)
         {
             return null;
@@ -346,9 +514,12 @@ namespace Bridge.Html5
         /// Creates a pattern using the specified image (a CanvasImageSource). It repeats the source in the
         /// directions specified by the repetition argument. This method returns a CanvasPattern.
         /// </summary>
-        /// <param name="image"></param>
-        /// <param name="repetition"></param>
-        /// <returns></returns>
+        /// <param name="image">A ImageData object to be used as image to repeat.</param>
+        /// <param name="repetition">
+        /// A CanvasTypes.CanvasRepetitionType indicating how to repeat the image.
+        /// If repetition is an empty string ('') or null (but not undefined), repetition will be "repeat".
+        /// </param>
+        /// <returns>An opaque CanvasPattern object describing a pattern.</returns>
         /*
          * TODO: ImageData interface not implemented
         public virtual CanvasPattern CreatePattern(ImageData image, CanvasTypes.CanvasRepetitionTypes repetition)
@@ -361,26 +532,13 @@ namespace Bridge.Html5
         /// Creates a pattern using the specified image (a CanvasImageSource). It repeats the source in the
         /// directions specified by the repetition argument. This method returns a CanvasPattern.
         /// </summary>
-        /// <param name="image"></param>
-        /// <param name="repetition"></param>
-        /// <returns></returns>
+        /// <param name="image">A Blob to be used as image to repeat.</param>
+        /// <param name="repetition">
+        /// A CanvasTypes.CanvasRepetitionType indicating how to repeat the image.
+        /// If repetition is an empty string ('') or null (but not undefined), repetition will be "repeat".
+        /// </param>
+        /// <returns>An opaque CanvasPattern object describing a pattern.</returns>
         public virtual CanvasPattern CreatePattern(Blob image, CanvasTypes.CanvasRepetitionTypes repetition)
-        {
-            return null;
-        }
-
-        /// <summary>
-        /// Creates a pattern using the specified image (a CanvasImageSource). It repeats the source in the
-        /// directions specified by the repetition argument. This method returns a CanvasPattern.
-        /// </summary>
-        /// <param name="image"></param>
-        /// <param name="repetition"></param>
-        /// <returns></returns>
-        /// <remarks>
-        /// At the time of implementation, ImageBitmap had no documentation and Bridge.NET did not have
-        /// it defined inside.
-        /// </remarks>
-        public virtual CanvasPattern CreatePattern(string image, CanvasTypes.CanvasRepetitionTypes repetition)
         {
             return null;
         }
@@ -417,7 +575,8 @@ namespace Bridge.Html5
         #region Paths
 
         /// <summary>
-        /// Starts a new path by emptying the list of sub-paths. Call this method when you want to create a new path.
+        /// Starts a new path by emptying the list of sub-paths. Call this method when you want
+        /// to create a new path.
         /// </summary>
         public virtual void BeginPath()
         {
@@ -425,7 +584,9 @@ namespace Bridge.Html5
         }
 
         /// <summary>
-        /// Causes the point of the pen to move back to the start of the current sub-path. It tries to draw a straight line from the current point to the start. If the shape has already been closed or has only one point, this function does nothing.
+        /// Causes the point of the pen to move back to the start of the current sub-path. It tries
+        /// to draw a straight line from the current point to the start. If the shape has already been
+        /// closed or has only one point, this function does nothing.
         /// </summary>
         public virtual void ClosePath()
         {
@@ -569,7 +730,7 @@ namespace Bridge.Html5
         {
             return;
         }
-        
+
         /// <summary>
         /// Adds an arc to the path which is centered at (x, y) position with radius r starting at
         /// startAngle and ending at endAngle going in the given direction by anticlockwise
@@ -895,7 +1056,7 @@ namespace Bridge.Html5
         /// line styles, fill styles, shadow styles, text styles). The following methods help you to work with that state
         /// </summary>
         #region Canvas State
-        
+
         /// <summary>
         /// Saves the current drawing style state using a stack so you can revert any change you make to it
         /// using Restore().
