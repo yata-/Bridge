@@ -53,7 +53,9 @@
     <Compile Include="Interfaces\CanvasGradient.cs" />
     <Compile Include="Interfaces\CanvasPattern.cs" />
     <Compile Include="Interfaces\ImageData.cs" />
+    <Compile Include="Interfaces\Path2D.cs" />
     <Compile Include="Interfaces\SVGMatrix.cs" />
+    <Compile Include="Interfaces\SVGOperations.cs" />
     <Compile Include="Interfaces\Types\CanvasCompositeOperationType.cs" />
     <Compile Include="Interfaces\Types\CanvasContextTypes.cs" />
     <Compile Include="Interfaces\Types\CanvasTypes.cs" />

@@ -224,5 +224,20 @@ namespace Bridge.Html5
             Null
         }
 
+        [Ignore]
+        [Enum(Emit.StringNameLowerCase)]
+        [Name("String")]
+        public enum CanvasFillRule
+        {
+            /// <summary>
+            /// Default. The non-zero winding rule.
+            /// </summary>
+            NonZero,
+
+            /// <summary>
+            /// The even-odd winding rule.
+            /// </summary>
+            EvenOdd
+        }
     }
 }

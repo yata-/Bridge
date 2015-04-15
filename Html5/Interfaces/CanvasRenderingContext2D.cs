@@ -11,7 +11,7 @@ namespace Bridge.Html5
     /// To get an object of this interface, call getContext() on a <canvas>, supplying
     /// "CanvasContext2DType.CanvasRenderingContext2D" as the argument.
     /// </summary>
-    public class CanvasRenderingContext2D
+    public class CanvasRenderingContext2D : SVGOperations
     {
         /// <summary>
         /// There are three methods that immediately draw rectangles to the bitmap.
@@ -312,7 +312,8 @@ namespace Bridge.Html5
         public CanvasTypes.CanvasTextAlign TextAlign;
 
         /// <summary>
-        /// Baseline alignment setting. Possible values: top, hanging, middle, alphabetic (default), ideographic, bottom.
+        /// Baseline alignment setting. Possible values: top, hanging, middle, alphabetic (default),
+        /// ideographic, bottom.
         /// </summary>
         public CanvasTypes.CanvasTextBaselineAlign TextBaseline;
 
@@ -324,7 +325,8 @@ namespace Bridge.Html5
         #endregion
 
         /// <summary>
-        /// Fill styling is used for colors and styles inside shapes and stroke styling is used for the lines around shapes.
+        /// Fill styling is used for colors and styles inside shapes and stroke styling is used for
+        /// the lines around shapes.
         /// </summary>
         #region Fill and Stroke Styles
 
@@ -580,274 +582,7 @@ namespace Bridge.Html5
             return;
         }
 
-        /// <summary>
-        /// Causes the point of the pen to move back to the start of the current sub-path. It tries
-        /// to draw a straight line from the current point to the start. If the shape has already been
-        /// closed or has only one point, this function does nothing.
-        /// </summary>
-        public virtual void ClosePath()
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Moves the starting point of a new sub-path to the (x, y) coordinates.
-        /// </summary>
-        /// <param name="x">The x axis of the point</param>
-        /// <param name="y">The y axis of the point</param>
-        public virtual void MoveTo(uint x, uint y)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Moves the starting point of a new sub-path to the (x, y) coordinates.
-        /// </summary>
-        /// <param name="x">The x axis of the point</param>
-        /// <param name="y">The y axis of the point</param>
-        public virtual void MoveTo(int x, int y)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Moves the starting point of a new sub-path to the (x, y) coordinates.
-        /// </summary>
-        /// <param name="x">The x axis of the point</param>
-        /// <param name="y">The y axis of the point</param>
-        public virtual void MoveTo(double x, double y)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Connects the last point in the subpath to the x, y coordinates with a straight line.
-        /// </summary>
-        /// <param name="x">The x axis of the coordinate for the end of the line.</param>
-        /// <param name="y">The y axis of the coordinate for the end of the line.</param>
-        public virtual void LineTo(uint x, uint y)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Connects the last point in the subpath to the x, y coordinates with a straight line.
-        /// </summary>
-        /// <param name="x">The x axis of the coordinate for the end of the line.</param>
-        /// <param name="y">The y axis of the coordinate for the end of the line.</param>
-        public virtual void LineTo(int x, int y)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Connects the last point in the subpath to the x, y coordinates with a straight line.
-        /// </summary>
-        /// <param name="x">The x axis of the coordinate for the end of the line.</param>
-        /// <param name="y">The y axis of the coordinate for the end of the line.</param>
-        public virtual void LineTo(double x, double y)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Adds a cubic Bézier curve to the path. It requires three points. The first two points are control points and the third one is the end point. The starting point is the last point in the current path, which can be changed using moveTo() before creating the Bézier curve.
-        /// </summary>
-        /// <param name="cp1x">The x axis of the coordinate for the first control point.</param>
-        /// <param name="cp1y">The y axis of the coordinate for first control point.</param>
-        /// <param name="cp2x">The x axis of the coordinate for the second control point.</param>
-        /// <param name="cp2y">The y axis of the coordinate for the second control point.</param>
-        /// <param name="x">The x axis of the coordinate for the end point.</param>
-        /// <param name="y">The y axis of the coordinate for the end point.</param>
-        public virtual void BezierCurveTo(uint cp1x, uint cp1y, uint cp2x, uint cp2y, uint x, uint y)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Adds a cubic Bézier curve to the path. It requires three points. The first two points are control points and the third one is the end point. The starting point is the last point in the current path, which can be changed using moveTo() before creating the Bézier curve.
-        /// </summary>
-        /// <param name="cp1x">The x axis of the coordinate for the first control point.</param>
-        /// <param name="cp1y">The y axis of the coordinate for first control point.</param>
-        /// <param name="cp2x">The x axis of the coordinate for the second control point.</param>
-        /// <param name="cp2y">The y axis of the coordinate for the second control point.</param>
-        /// <param name="x">The x axis of the coordinate for the end point.</param>
-        /// <param name="y">The y axis of the coordinate for the end point.</param>
-        public virtual void BezierCurveTo(int cp1x, int cp1y, int cp2x, int cp2y, int x, int y)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Adds a cubic Bézier curve to the path. It requires three points. The first two points are control points and the third one is the end point. The starting point is the last point in the current path, which can be changed using moveTo() before creating the Bézier curve.
-        /// </summary>
-        /// <param name="cp1x">The x axis of the coordinate for the first control point.</param>
-        /// <param name="cp1y">The y axis of the coordinate for first control point.</param>
-        /// <param name="cp2x">The x axis of the coordinate for the second control point.</param>
-        /// <param name="cp2y">The y axis of the coordinate for the second control point.</param>
-        /// <param name="x">The x axis of the coordinate for the end point.</param>
-        /// <param name="y">The y axis of the coordinate for the end point.</param>
-        public virtual void BezierCurveTo(double cp1x, double cp1y, double cp2x, double cp2y, double x, double y)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Adds a quadratic Bézier curve to the current path.
-        /// </summary>
-        /// <param name="cpx">The x axis of the coordinate for the control point.</param>
-        /// <param name="cpy">The y axis of the coordinate for the control point.</param>
-        /// <param name="x">The x axis of the coordinate for the end point.</param>
-        /// <param name="y">The y axis of the coordinate for the end point.</param>
-        public virtual void QuadraticCurveTo(uint cpx, uint cpy, uint x, uint y)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Adds a quadratic Bézier curve to the current path.
-        /// </summary>
-        /// <param name="cpx">The x axis of the coordinate for the control point.</param>
-        /// <param name="cpy">The y axis of the coordinate for the control point.</param>
-        /// <param name="x">The x axis of the coordinate for the end point.</param>
-        /// <param name="y">The y axis of the coordinate for the end point.</param>
-        public virtual void QuadraticCurveTo(int cpx, int cpy, int x, int y)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Adds a quadratic Bézier curve to the current path.
-        /// </summary>
-        /// <param name="cpx">The x axis of the coordinate for the control point.</param>
-        /// <param name="cpy">The y axis of the coordinate for the control point.</param>
-        /// <param name="x">The x axis of the coordinate for the end point.</param>
-        /// <param name="y">The y axis of the coordinate for the end point.</param>
-        public virtual void QuadraticCurveTo(double cpx, double cpy, double x, double y)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Adds an arc to the path which is centered at (x, y) position with radius r starting at
-        /// startAngle and ending at endAngle going in the given direction by anticlockwise
-        /// (defaulting to clockwise).
-        /// </summary>
-        /// <param name="x">The x axis of the coordinate for the arc's center.</param>
-        /// <param name="y">The y axis of the coordinate for the arc's center.</param>
-        /// <param name="radius">The arc's radius.</param>
-        /// <param name="startAngle">
-        /// The starting point, measured from the x axis, from which it will be drawn, expressed in radians.
-        /// </param>
-        /// <param name="endAngle">The end arc's angle to which it will be drawn, expressed in radians.</param>
-        /// <param name="anticlockwise">
-        /// An optional Boolean which, if true, draws the arc anticlockwise (counter-clockwise), otherwise
-        /// in a clockwise direction.
-        /// </param>
-        public virtual void Arc(uint x, uint y, uint radius, double startAngle, double endAngle, bool anticlockwise = false)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Adds an arc to the path which is centered at (x, y) position with radius r starting at
-        /// startAngle and ending at endAngle going in the given direction by anticlockwise
-        /// (defaulting to clockwise).
-        /// </summary>
-        /// <param name="x">The x axis of the coordinate for the arc's center.</param>
-        /// <param name="y">The y axis of the coordinate for the arc's center.</param>
-        /// <param name="radius">The arc's radius.</param>
-        /// <param name="startAngle">
-        /// The starting point, measured from the x axis, from which it will be drawn, expressed in radians.
-        /// </param>
-        /// <param name="endAngle">The end arc's angle to which it will be drawn, expressed in radians.</param>
-        /// <param name="anticlockwise">
-        /// An optional Boolean which, if true, draws the arc anticlockwise (counter-clockwise), otherwise
-        /// in a clockwise direction.
-        /// </param>
-        public virtual void Arc(int x, int y, int radius, double startAngle, double endAngle, bool anticlockwise = false)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Adds an arc to the path which is centered at (x, y) position with radius r starting at
-        /// startAngle and ending at endAngle going in the given direction by anticlockwise
-        /// (defaulting to clockwise).
-        /// </summary>
-        /// <param name="x">The x axis of the coordinate for the arc's center.</param>
-        /// <param name="y">The y axis of the coordinate for the arc's center.</param>
-        /// <param name="radius">The arc's radius.</param>
-        /// <param name="startAngle">
-        /// The starting point, measured from the x axis, from which it will be drawn, expressed in radians.
-        /// </param>
-        /// <param name="endAngle">The end arc's angle to which it will be drawn, expressed in radians.</param>
-        /// <param name="anticlockwise">
-        /// An optional Boolean which, if true, draws the arc anticlockwise (counter-clockwise), otherwise
-        /// in a clockwise direction.
-        /// </param>
-        public virtual void Arc(double x, double y, double radius, double startAngle, double endAngle, bool anticlockwise = false)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Adds an arc to the path with the given control points and radius, connected to the previous point by a straight line.
-        /// </summary>
-        /// <param name="x1">The x axis of the coordinate for the first control point.</param>
-        /// <param name="y1">The y axis of the coordinate for the first control point.</param>
-        /// <param name="x2">The x axis of the coordinate for the second control point.</param>
-        /// <param name="y2">The y axis of the coordinate for the second control point.</param>
-        /// <param name="radius">The arc's radius.</param>
-        public virtual void ArcTo(uint x1, uint y1, uint x2, uint y2, double radius)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Adds an arc to the path with the given control points and radius, connected to the previous point by a straight line.
-        /// </summary>
-        /// <param name="x1">The x axis of the coordinate for the first control point.</param>
-        /// <param name="y1">The y axis of the coordinate for the first control point.</param>
-        /// <param name="x2">The x axis of the coordinate for the second control point.</param>
-        /// <param name="y2">The y axis of the coordinate for the second control point.</param>
-        /// <param name="radius">The arc's radius.</param>
-        public virtual void ArcTo(int x1, int y1, int x2, int y2, double radius)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Adds an arc to the path with the given control points and radius, connected to the previous point by a straight line.
-        /// </summary>
-        /// <param name="x1">The x axis of the coordinate for the first control point.</param>
-        /// <param name="y1">The y axis of the coordinate for the first control point.</param>
-        /// <param name="x2">The x axis of the coordinate for the second control point.</param>
-        /// <param name="y2">The y axis of the coordinate for the second control point.</param>
-        /// <param name="radius">The arc's radius.</param>
-        public virtual void ArcTo(double x1, double y1, double x2, double y2, double radius)
-        {
-            return;
-        }
-
-        // TODO: Continue updating from this point
-        /// <summary>
-        /// Adds an ellipse to the path which is centered at (x, y) position with the radii radiusX and radiusY starting at startAngle and ending at endAngle going in the given direction by anticlockwise (defaulting to clockwise).
-        /// </summary>
-        /// <remarks>This is experimental API that should not be used in production code.</remarks>
-        public virtual void Ellipse()
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Creates a path for a rectangle at position (x, y) with a size that is determined by width and height.
-        /// </summary>
-        public virtual void Rect()
-        {
-            return;
-        }
-
+        // All remaining methods here are inherited from SVGOperations, which are common to the Path2D interface.
         #endregion
 
         #region Drawing Paths
@@ -861,6 +596,29 @@ namespace Bridge.Html5
         }
 
         /// <summary>
+        /// Fills the subpaths with the specified fill rule.
+        /// </summary>
+        /// <param name="fillRule">
+        /// The algorithm by which to determine if a point is inside a path or outside a path.
+        /// </param>
+        public virtual void Fill(CanvasTypes.CanvasFillRule fillRule)
+        {
+            return;
+        }
+
+        /// <summary>
+        /// Fills the specified path with the specified fill rule.
+        /// </summary>
+        /// <param name="path">A Path2D path to fill.</param>
+        /// <param name="fillRule">
+        /// The algorithm by which to determine if a point is inside a path or outside a path.
+        /// </param>
+        public virtual void Fill(Path2D path, CanvasTypes.CanvasFillRule fillRule)
+        {
+            return;
+        }
+
+        /// <summary>
         /// Strokes the subpaths with the current stroke style.
         /// </summary>
         public virtual void Stroke()
@@ -869,9 +627,29 @@ namespace Bridge.Html5
         }
 
         /// <summary>
+        /// Strokes the subpaths with the current stroke style.
+        /// </summary>
+        /// <param name="path">A Path2D path to stroke.</param>
+        public virtual void Stroke(Path2D path)
+        {
+            return;
+        }
+
+        /// <summary>
         /// If a given element is focused, this method draws a focus ring around the current path.
         /// </summary>
-        public virtual void DrawFocusIfNeeded()
+        /// <param name="element">The element to check whether it is focused or not.</param>
+        public virtual void DrawFocusIfNeeded(Element element)
+        {
+            return;
+        }
+
+        /// <summary>
+        /// If a given element is focused, this method draws a focus ring around the current path.
+        /// </summary>
+        /// <param name="path">A Path2D path to use.</param>
+        /// <param name="element">The element to check whether it is focused or not.</param>
+        public virtual void DrawFocusIfNeeded(Path2D path, Element element)
         {
             return;
         }
@@ -879,13 +657,26 @@ namespace Bridge.Html5
         /// <summary>
         /// Scrolls the current path or a given path into the view.
         /// </summary>
-        public virtual void ScrollpathIntoView()
+        /// <remarks>This is experimental API that should not be used in production code.</remarks>
+        public virtual void ScrollPathIntoView()
         {
             return;
         }
 
         /// <summary>
-        /// Creates a clipping path from the current sub-paths. Everything drawn after clip() is called appears inside the clipping path only. For an example, see Clipping paths in the Canvas tutorial.
+        /// Scrolls the current path or a given path into the view.
+        /// </summary>
+        /// <param name="path">A Path2D path to use.</param>
+        /// <remarks>This is experimental API that should not be used in production code.</remarks>
+        public virtual void ScrollPathIntoView(Path2D path)
+        {
+            return;
+        }
+
+        /// <summary>
+        /// Creates a clipping path from the current sub-paths. Everything drawn after clip() is
+        /// called appears inside the clipping path only. For an example, see Clipping paths in
+        /// the Canvas tutorial.
         /// </summary>
         public virtual void Clip()
         {
@@ -893,9 +684,127 @@ namespace Bridge.Html5
         }
 
         /// <summary>
+        /// Creates a clipping path from the current sub-paths. Everything drawn after clip() is
+        /// called appears inside the clipping path only. For an example, see Clipping paths in
+        /// the Canvas tutorial.
+        /// </summary>
+        /// <param name="fillRule">
+        /// The algorithm by which to determine if a point is inside a path or outside a path.
+        /// </param>
+        public virtual void Clip(CanvasTypes.CanvasFillRule fillRule)
+        {
+            return;
+        }
+
+        /// <summary>
+        /// Creates a clipping path from the current sub-paths. Everything drawn after clip() is
+        /// called appears inside the clipping path only. For an example, see Clipping paths in
+        /// the Canvas tutorial.
+        /// </summary>
+        /// <param name="path">A Path2D path to clip.</param>
+        /// <param name="fillRule">
+        /// The algorithm by which to determine if a point is inside a path or outside a path.
+        /// </param>
+        public virtual void Clip(Path2D path, CanvasTypes.CanvasFillRule fillRule)
+        {
+            return;
+        }
+
+        /// <summary>
         /// Reports whether or not the specified point is contained in the current path.
         /// </summary>
-        public virtual bool IsPointInPath()
+        /// <param name="x">The X coordinate of the point to check.</param>
+        /// <param name="y">The Y coordinate of the point to check.</param>
+        /// <returns>
+        /// A Boolean, which is true if the specified point is contained in the current or specfied path,
+        /// otherwise false.
+        /// </returns>
+        public virtual bool IsPointInPath(uint x, uint y, CanvasTypes.CanvasFillRule? fillRule = null)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Reports whether or not the specified point is contained in the current path.
+        /// </summary>
+        /// <param name="x">The X coordinate of the point to check.</param>
+        /// <param name="y">The Y coordinate of the point to check.</param>
+        /// <returns>
+        /// A Boolean, which is true if the specified point is contained in the current or specfied path,
+        /// otherwise false.
+        /// </returns>
+        public virtual bool IsPointInPath(int x, int y, CanvasTypes.CanvasFillRule? fillRule = null)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Reports whether or not the specified point is contained in the current path.
+        /// </summary>
+        /// <param name="x">The X coordinate of the point to check.</param>
+        /// <param name="y">The Y coordinate of the point to check.</param>
+        /// <param name="fillRule">
+        /// The algorithm by which to determine if a point is inside a path or outside a path.
+        /// </param>
+        /// <returns>
+        /// A Boolean, which is true if the specified point is contained in the current or specfied path,
+        /// otherwise false.
+        /// </returns>
+        public virtual bool IsPointInPath(double x, double y, CanvasTypes.CanvasFillRule? fillRule = null)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Reports whether or not the specified point is contained in the current path.
+        /// </summary>
+        /// <param name="path">A Path2D path to use.</param>
+        /// <param name="x">The X coordinate of the point to check.</param>
+        /// <param name="y">The Y coordinate of the point to check.</param>
+        /// <param name="fillRule">
+        /// The algorithm by which to determine if a point is inside a path or outside a path.
+        /// </param>
+        /// <returns>
+        /// A Boolean, which is true if the specified point is contained in the current or specfied path,
+        /// otherwise false.
+        /// </returns>
+        public virtual bool IsPointInPath(Path2D path, uint x, uint y, CanvasTypes.CanvasFillRule? fillRule = null)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Reports whether or not the specified point is contained in the current path.
+        /// </summary>
+        /// <param name="path">A Path2D path to use.</param>
+        /// <param name="x">The X coordinate of the point to check.</param>
+        /// <param name="y">The Y coordinate of the point to check.</param>
+        /// <param name="fillRule">
+        /// The algorithm by which to determine if a point is inside a path or outside a path.
+        /// </param>
+        /// <returns>
+        /// A Boolean, which is true if the specified point is contained in the current or specfied path,
+        /// otherwise false.
+        /// </returns>
+        public virtual bool IsPointInPath(Path2D path, int x, int y, CanvasTypes.CanvasFillRule? fillRule = null)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Reports whether or not the specified point is contained in the current path.
+        /// </summary>
+        /// <param name="path">A Path2D path to use.</param>
+        /// <param name="x">The X coordinate of the point to check.</param>
+        /// <param name="y">The Y coordinate of the point to check.</param>
+        /// <param name="fillRule">
+        /// The algorithm by which to determine if a point is inside a path or outside a path.
+        /// </param>
+        /// <returns>
+        /// A Boolean, which is true if the specified point is contained in the current or specfied path,
+        /// otherwise false.
+        /// </returns>
+        public virtual bool IsPointInPath(Path2D path, double x, double y, CanvasTypes.CanvasFillRule? fillRule = null)
         {
             return false;
         }
@@ -903,7 +812,86 @@ namespace Bridge.Html5
         /// <summary>
         /// Reports whether or not the specified point is inside the area contained by the stroking of a path.
         /// </summary>
-        public virtual bool IsPointInStroke()
+        /// <param name="x">The X coordinate of the point to check.</param>
+        /// <param name="y">The Y coordinate of the point to check.</param>
+        /// <returns>
+        /// A Boolean, which is true if the point is inside the area contained by the stroking of a path,
+        /// otherwise false.
+        /// </returns>
+        public virtual bool IsPointInStroke(uint x, uint y)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Reports whether or not the specified point is inside the area contained by the stroking of a path.
+        /// </summary>
+        /// <param name="x">The X coordinate of the point to check.</param>
+        /// <param name="y">The Y coordinate of the point to check.</param>
+        /// <returns>
+        /// A Boolean, which is true if the point is inside the area contained by the stroking of a path,
+        /// otherwise false.
+        /// </returns>
+        public virtual bool IsPointInStroke(int x, int y)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Reports whether or not the specified point is inside the area contained by the stroking of a path.
+        /// </summary>
+        /// <param name="x">The X coordinate of the point to check.</param>
+        /// <param name="y">The Y coordinate of the point to check.</param>
+        /// <returns>
+        /// A Boolean, which is true if the point is inside the area contained by the stroking of a path,
+        /// otherwise false.
+        /// </returns>
+        public virtual bool IsPointInStroke(double x, double y)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Reports whether or not the specified point is inside the area contained by the stroking of a path.
+        /// </summary>
+        /// <param name="path">A Path2D path to use.</param>
+        /// <param name="x">The X coordinate of the point to check.</param>
+        /// <param name="y">The Y coordinate of the point to check.</param>
+        /// <returns>
+        /// A Boolean, which is true if the point is inside the area contained by the stroking of a path,
+        /// otherwise false.
+        /// </returns>
+        public virtual bool IsPointInStroke(Path2D path, uint x, uint y)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Reports whether or not the specified point is inside the area contained by the stroking of a path.
+        /// </summary>
+        /// <param name="path">A Path2D path to use.</param>
+        /// <param name="x">The X coordinate of the point to check.</param>
+        /// <param name="y">The Y coordinate of the point to check.</param>
+        /// <returns>
+        /// A Boolean, which is true if the point is inside the area contained by the stroking of a path,
+        /// otherwise false.
+        /// </returns>
+        public virtual bool IsPointInStroke(Path2D path, int x, int y)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Reports whether or not the specified point is inside the area contained by the stroking of a path.
+        /// </summary>
+        /// <param name="path">A Path2D path to use.</param>
+        /// <param name="x">The X coordinate of the point to check.</param>
+        /// <param name="y">The Y coordinate of the point to check.</param>
+        /// <returns>
+        /// A Boolean, which is true if the point is inside the area contained by the stroking of a path,
+        /// otherwise false.
+        /// </returns>
+        public virtual bool IsPointInStroke(Path2D path, double x, double y)
         {
             return false;
         }
@@ -919,8 +907,7 @@ namespace Bridge.Html5
         /// Current transformation matrix (SVGMatrix object).
         /// </summary>
         /// <remarks>This is experimental API that should not be used in production code.</remarks>
-        // TODO: define the SVGMatrix class based on https://developer.mozilla.org/en-US/docs/Web/API/SVGMatrix
-        public string CurrentTransform; // TODO: string here should be SVGMatrix
+        public SVGMatrix CurrentTransform;
 
         /// <summary>
         /// Adds a rotation to the transformation matrix. The angle argument represents a clockwise rotation angle and is expressed in radians.
