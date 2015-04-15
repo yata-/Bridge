@@ -520,13 +520,10 @@ namespace Bridge.Html5
         /// If repetition is an empty string ('') or null (but not undefined), repetition will be "repeat".
         /// </param>
         /// <returns>An opaque CanvasPattern object describing a pattern.</returns>
-        /*
-         * TODO: ImageData interface not implemented
         public virtual CanvasPattern CreatePattern(ImageData image, CanvasTypes.CanvasRepetitionTypes repetition)
         {
             return null;
         }
-        */
 
         /// <summary>
         /// Creates a pattern using the specified image (a CanvasImageSource). It repeats the source in the
