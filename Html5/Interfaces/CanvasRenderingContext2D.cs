@@ -11,6 +11,8 @@ namespace Bridge.Html5
     /// To get an object of this interface, call getContext() on a <canvas>, supplying
     /// "CanvasContext2DType.CanvasRenderingContext2D" as the argument.
     /// </summary>
+    [Ignore]
+    [Namespace(false)]
     public class CanvasRenderingContext2D : SVGOperations
     {
         /// <summary>

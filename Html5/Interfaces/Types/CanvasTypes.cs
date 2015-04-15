@@ -2,6 +2,8 @@
 
 namespace Bridge.Html5
 {
+    [Ignore]
+    [Name("Object")]
     public partial class CanvasTypes
     {
         /// <summary>

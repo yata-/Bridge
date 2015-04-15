@@ -15,6 +15,8 @@ namespace Bridge.Html5
     /// This interface was written so that both Path2D and CanvasRenderingContext2D could inherit their
     /// methods (which are the exact same).
     /// </summary>
+    [Ignore]
+    [Name("Object")]
     public abstract class SVGOperations
     {
         /// <summary>
