@@ -29,10 +29,10 @@ namespace Bridge.Html5
             /// </summary>
             Square,
 
-            // FIXME: emit bare null instead of "null"
             /// <summary>
             /// Clear the value, to revert back to browser's default.
             /// </summary>
+            [Template("null")]
             Null
         }
 
@@ -67,10 +67,10 @@ namespace Bridge.Html5
             /// </summary>
             Miter,
 
-            // FIXME: emit bare null instead of "null"
             /// <summary>
             /// Clear the value, to revert back to browser's default.
             /// </summary>
+            [Template("null")]
             Null
         }
 
@@ -111,6 +111,7 @@ namespace Bridge.Html5
             /// <summary>
             /// Clear the value, to revert back to browser's default.
             /// </summary>
+            [Template("null")]
             Null
         }
 
@@ -155,6 +156,7 @@ namespace Bridge.Html5
             /// <summary>
             /// Clear the value, to revert back to browser's default.
             /// </summary>
+            [Template("null")]
             Null
         }
 
@@ -179,10 +181,10 @@ namespace Bridge.Html5
             /// </summary>
             Inherit,
 
-            // FIXME: emit bare null instead of "null"
             /// <summary>
             /// Clear the value, to revert back to browser's default.
             /// </summary>
+            [Template("null")]
             Null
         }
 
@@ -215,11 +217,10 @@ namespace Bridge.Html5
             [Name("no-repeat")]
             NoRepeat,
 
-            // FIXME: emit bare null instead of "null"
             /// <summary>
             /// Clear the value, to revert back to browser's default.
             /// </summary>
-            [Name("")]
+            [Template("null")]
             Null
         }
 
