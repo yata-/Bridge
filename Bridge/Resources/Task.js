@@ -200,10 +200,12 @@ Bridge.define('Bridge.Task', {
         }
     },
 
-    continueWith: function (continuationAction) {
+    continueWith: function (continuationAction, raise) {
         var task = new Bridge.Task(),
             me = this,
-            fn = function () {
+            fn = raise ? function () {
+                task.setResult(continuationAction(me));
+            } : function () {
                 try {
                     task.setResult(continuationAction(me));
                 }
@@ -244,11 +246,14 @@ Bridge.define('Bridge.Task', {
     },
 
     runCallbacks: function () {
-        for (var i = 0; i < this.callbacks.length; i++) {
-            this.callbacks[i](this);
-        }
+        var me = this;
+        setTimeout(function () {
+            for (var i = 0; i < me.callbacks.length; i++) {
+                me.callbacks[i](me);
+            }
 
-        delete this.callbacks;
+            delete me.callbacks;
+        }, 0);       
     },
 
     complete: function (result) {

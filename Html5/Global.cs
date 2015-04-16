@@ -1586,7 +1586,7 @@ namespace Bridge.Html5
         [Template("Bridge.global")]
         public static WindowInstance Instance;
 
-        [Template("window")]
+        [Template("Bridge.global")]
         public static dynamic ToDynamic()
         {
             return null;
