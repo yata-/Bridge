@@ -11,6 +11,8 @@ namespace Bridge.Html5
     /// An SVGMatrix object can be designated as read only, which means that attempts to modify the
     /// object will result in an exception being thrown.
     /// </summary>
+    [Ignore]
+    [Namespace(false)]
     public class SVGMatrix
     {
         /// <summary>

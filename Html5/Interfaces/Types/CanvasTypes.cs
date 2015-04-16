@@ -2,6 +2,8 @@
 
 namespace Bridge.Html5
 {
+    [Ignore]
+    [Name("Object")]
     public partial class CanvasTypes
     {
         /// <summary>
@@ -29,10 +31,10 @@ namespace Bridge.Html5
             /// </summary>
             Square,
 
-            // FIXME: emit bare null instead of "null"
             /// <summary>
             /// Clear the value, to revert back to browser's default.
             /// </summary>
+            [Template("null")]
             Null
         }
 
@@ -67,10 +69,10 @@ namespace Bridge.Html5
             /// </summary>
             Miter,
 
-            // FIXME: emit bare null instead of "null"
             /// <summary>
             /// Clear the value, to revert back to browser's default.
             /// </summary>
+            [Template("null")]
             Null
         }
 
@@ -111,6 +113,7 @@ namespace Bridge.Html5
             /// <summary>
             /// Clear the value, to revert back to browser's default.
             /// </summary>
+            [Template("null")]
             Null
         }
 
@@ -155,6 +158,7 @@ namespace Bridge.Html5
             /// <summary>
             /// Clear the value, to revert back to browser's default.
             /// </summary>
+            [Template("null")]
             Null
         }
 
@@ -179,10 +183,10 @@ namespace Bridge.Html5
             /// </summary>
             Inherit,
 
-            // FIXME: emit bare null instead of "null"
             /// <summary>
             /// Clear the value, to revert back to browser's default.
             /// </summary>
+            [Template("null")]
             Null
         }
 
@@ -215,13 +219,27 @@ namespace Bridge.Html5
             [Name("no-repeat")]
             NoRepeat,
 
-            // FIXME: emit bare null instead of "null"
             /// <summary>
             /// Clear the value, to revert back to browser's default.
             /// </summary>
-            [Name("")]
+            [Template("null")]
             Null
         }
 
+        [Ignore]
+        [Enum(Emit.StringNameLowerCase)]
+        [Name("String")]
+        public enum CanvasFillRule
+        {
+            /// <summary>
+            /// Default. The non-zero winding rule.
+            /// </summary>
+            NonZero,
+
+            /// <summary>
+            /// The even-odd winding rule.
+            /// </summary>
+            EvenOdd
+        }
     }
 }

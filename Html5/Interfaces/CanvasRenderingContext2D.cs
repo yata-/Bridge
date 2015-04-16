@@ -11,7 +11,9 @@ namespace Bridge.Html5
     /// To get an object of this interface, call getContext() on a <canvas>, supplying
     /// "CanvasContext2DType.CanvasRenderingContext2D" as the argument.
     /// </summary>
-    public class CanvasRenderingContext2D
+    [Ignore]
+    [Namespace(false)]
+    public class CanvasRenderingContext2D : SVGOperations
     {
         /// <summary>
         /// There are three methods that immediately draw rectangles to the bitmap.
@@ -20,16 +22,26 @@ namespace Bridge.Html5
 
         // TODO: Review summary to include parameters' info. From this point down to createPattern (~390)
         /// <summary>
-        /// Sets all pixels in the rectangle defined by starting point (x, y) and size (width, height) to transparent black, erasing any previously drawn content.
+        /// Sets all pixels in the rectangle defined by starting point (x, y) and size (width, height)
+        /// to transparent black, erasing any previously drawn content.
         /// </summary>
+        /// <param name="x">The x axis of the coordinate for the rectangle starting point.</param>
+        /// <param name="y">The y axis of the coordinate for the rectangle starting point.</param>
+        /// <param name="width">The rectangle's width.</param>
+        /// <param name="height">The rectangle's height.</param>
         public virtual void ClearRect(uint x, uint y, uint width, uint height)
         {
             return;
         }
 
         /// <summary>
-        /// Sets all pixels in the rectangle defined by starting point (x, y) and size (width, height) to transparent black, erasing any previously drawn content.
+        /// Sets all pixels in the rectangle defined by starting point (x, y) and size (width, height)
+        /// to transparent black, erasing any previously drawn content.
         /// </summary>
+        /// <param name="x">The x axis of the coordinate for the rectangle starting point.</param>
+        /// <param name="y">The y axis of the coordinate for the rectangle starting point.</param>
+        /// <param name="width">The rectangle's width.</param>
+        /// <param name="height">The rectangle's height.</param>
         public virtual void ClearRect(int x, int y, int width, int height)
         {
             return;
@@ -38,6 +50,10 @@ namespace Bridge.Html5
         /// <summary>
         /// Draws a filled rectangle at (x, y) position whose size is determined by width and height.
         /// </summary>
+        /// <param name="x">The x axis of the coordinate for the rectangle starting point.</param>
+        /// <param name="y">The y axis of the coordinate for the rectangle starting point.</param>
+        /// <param name="width">The rectangle's width.</param>
+        /// <param name="height">The rectangle's height.</param>
         public virtual void FillRect(uint x, uint y, uint width, uint height)
         {
             return;
@@ -46,22 +62,36 @@ namespace Bridge.Html5
         /// <summary>
         /// Draws a filled rectangle at (x, y) position whose size is determined by width and height.
         /// </summary>
+        /// <param name="x">The x axis of the coordinate for the rectangle starting point.</param>
+        /// <param name="y">The y axis of the coordinate for the rectangle starting point.</param>
+        /// <param name="width">The rectangle's width.</param>
+        /// <param name="height">The rectangle's height.</param>
         public virtual void FillRect(int x, int y, int width, int height)
         {
             return;
         }
 
         /// <summary>
-        /// Paints a rectangle which has a starting point at (x, y) and has a w width and an h height onto the canvas, using the current stroke style.
+        /// Paints a rectangle which has a starting point at (x, y) and has a w width and an h height
+        /// onto the canvas, using the current stroke style.
         /// </summary>
+        /// <param name="x">The x axis of the coordinate for the rectangle starting point.</param>
+        /// <param name="y">The y axis of the coordinate for the rectangle starting point.</param>
+        /// <param name="width">The rectangle's width.</param>
+        /// <param name="height">The rectangle's height.</param>
         public virtual void StrokeRect(uint x, uint y, uint width, uint height)
         {
             return;
         }
 
         /// <summary>
-        /// Paints a rectangle which has a starting point at (x, y) and has a w width and an h height onto the canvas, using the current stroke style.
+        /// Paints a rectangle which has a starting point at (x, y) and has a w width and an h height
+        /// onto the canvas, using the current stroke style.
         /// </summary>
+        /// <param name="x">The x axis of the coordinate for the rectangle starting point.</param>
+        /// <param name="y">The y axis of the coordinate for the rectangle starting point.</param>
+        /// <param name="width">The rectangle's width.</param>
+        /// <param name="height">The rectangle's height.</param>
         public virtual void StrokeRect(int x, int y, int width, int height)
         {
             return;
@@ -70,13 +100,26 @@ namespace Bridge.Html5
         #endregion
 
         /// <summary>
-        /// The following methods are provided for drawing text. See also the TextMetrics object for text properties.
+        /// The following methods are provided for drawing text. See also the TextMetrics object for
+        /// text properties.
         /// </summary>
         #region Drawing Text
 
         /// <summary>
         /// Draws (fills) a given text at the given (x,y) position.
+        // </summary>
         /// </summary>
+        /// <param name="text">
+        /// The text to render using the current font, textAlign, textBaseline, and direction values.
+        /// </param>
+        /// <param name="x">The x axis of the coordinate for the text starting point.</param>
+        /// <param name="y">The y axis of the coordinate for the text starting point.</param>
+        /// <param name="maxWidth">
+        /// The maximum width to draw. If specified, and the string is computed to be wider than
+        /// this width, the font is adjusted to use a more horizontally condensed font (if one is
+        /// available or if a reasonably readable one can be synthesized by scaling the current
+        /// font horizontally) or a smaller font.
+        /// </param>
         public virtual void FillText(string text, uint x, uint y, uint? maxWidth = null)
         {
             return;
@@ -85,6 +128,17 @@ namespace Bridge.Html5
         /// <summary>
         /// Draws (fills) a given text at the given (x,y) position.
         /// </summary>
+        /// <param name="text">
+        /// The text to render using the current font, textAlign, textBaseline, and direction values.
+        /// </param>
+        /// <param name="x">The x axis of the coordinate for the text starting point.</param>
+        /// <param name="y">The y axis of the coordinate for the text starting point.</param>
+        /// <param name="maxWidth">
+        /// The maximum width to draw. If specified, and the string is computed to be wider than
+        /// this width, the font is adjusted to use a more horizontally condensed font (if one is
+        /// available or if a reasonably readable one can be synthesized by scaling the current
+        /// font horizontally) or a smaller font.
+        /// </param>
         public virtual void FillText(string text, int x, int y, int? maxWidth = null)
         {
             return;
@@ -93,6 +147,17 @@ namespace Bridge.Html5
         /// <summary>
         /// Draws (strokes) a given text at the given (x, y) position.
         /// </summary>
+        /// <param name="text">
+        /// The text to render using the current font, textAlign, textBaseline, and direction values.
+        /// </param>
+        /// <param name="x">The x axis of the coordinate for the text starting point.</param>
+        /// <param name="y">The y axis of the coordinate for the text starting point.</param>
+        /// <param name="maxWidth">
+        /// The maximum width to draw. If specified, and the string is computed to be wider than
+        /// this width, the font is adjusted to use a more horizontally condensed font (if one is
+        /// available or if a reasonably readable one can be synthesized by scaling the current
+        /// font horizontally) or a smaller font.
+        /// </param>
         public virtual void StrokeText(string text, uint x, uint y, uint? maxWidth = null)
         {
             return;
@@ -101,6 +166,17 @@ namespace Bridge.Html5
         /// <summary>
         /// Draws (strokes) a given text at the given (x, y) position.
         /// </summary>
+        /// <param name="text">
+        /// The text to render using the current font, textAlign, textBaseline, and direction values.
+        /// </param>
+        /// <param name="x">The x axis of the coordinate for the text starting point.</param>
+        /// <param name="y">The y axis of the coordinate for the text starting point.</param>
+        /// <param name="maxWidth">
+        /// The maximum width to draw. If specified, and the string is computed to be wider than
+        /// this width, the font is adjusted to use a more horizontally condensed font (if one is
+        /// available or if a reasonably readable one can be synthesized by scaling the current
+        /// font horizontally) or a smaller font.
+        /// </param>
         public virtual void StrokeText(string text, int x, int y, int? maxWidth = null)
         {
             return;
@@ -109,6 +185,8 @@ namespace Bridge.Html5
         /// <summary>
         /// Returns a TextMetrics object.
         /// </summary>
+        /// <param name="text">The text to measure.</param>
+        /// <returns>A TextMetrics object.</returns>
         public virtual TextMetrics MeasureText(string text)
         {
             return null;
@@ -142,52 +220,71 @@ namespace Bridge.Html5
         public double MiterLimit;
 
         /// <summary>
-        /// Returns the current line dash pattern array containing an even number of non-negative numbers.
-        /// If the number, when setting the elements, was odd, the elements of the array get copied and
-        /// concatenated. For example, setting the line dash to [5, 15, 25] will result in getting back
-        /// [5, 15, 25, 5, 15, 25].
+        /// Gets the current line dash pattern.
         /// </summary>
+        /// <returns>
+        /// An Array. A list of numbers that specifies distances to alternately draw a line and a gap
+        /// (in coordinate space units). If the number, when setting the elements, was odd, the elements
+        /// of the array get copied and concatenated.
+        /// For example, setting the line dash to [5, 15, 25] will result in getting back
+        /// [5, 15, 25, 5, 15, 25].
+        /// </returns>
         public virtual double[] GetLineDash()
         {
             return null;
         }
 
         /// <summary>
-        /// Sets the current line dash pattern. If the number of elements in the array is odd, the elements
-        /// of the array get copied and concatenated. For example, [5, 15, 25] will become
-        /// [5, 15, 25, 5, 15, 25].
+        /// Sets the current line dash pattern.
         /// </summary>
+        /// <param name="segments">
+        /// An Array. A list of numbers that specifies distances to alternately draw a line and a gap
+        /// (in coordinate space units). If the number of elements in the array is odd, the elements
+        /// of the array get copied and concatenated.
+        /// For example, [5, 15, 25] will become [5, 15, 25, 5, 15, 25].
+        /// </param>
         public virtual void SetLineDash(double[] segments)
         {
             return;
         }
 
         /// <summary>
-        /// Sets the current line dash pattern. If the number of elements in the array is odd, the elements
-        /// of the array get copied and concatenated. For example, [5, 15, 25] will become
-        /// [5, 15, 25, 5, 15, 25].
+        /// Sets the current line dash pattern.
         /// </summary>
+        /// <param name="segments">
+        /// An Array. A list of numbers that specifies distances to alternately draw a line and a gap
+        /// (in coordinate space units). If the number of elements in the array is odd, the elements
+        /// of the array get copied and concatenated.
+        /// For example, [5, 15, 25] will become [5, 15, 25, 5, 15, 25].
+        /// </param>
         public virtual void SetLineDash(uint[] segments)
         {
             return;
         }
 
         /// <summary>
-        /// Sets the current line dash pattern. If the number of elements in the array is odd, the elements
-        /// of the array get copied and concatenated. For example, [5, 15, 25] will become
-        /// [5, 15, 25, 5, 15, 25].
+        /// Sets the current line dash pattern.
         /// </summary>
+        /// <param name="segments">
+        /// An Array. A list of numbers that specifies distances to alternately draw a line and a gap
+        /// (in coordinate space units). If the number of elements in the array is odd, the elements
+        /// of the array get copied and concatenated.
+        /// For example, [5, 15, 25] will become [5, 15, 25, 5, 15, 25].
+        /// </param>
         public virtual void SetLineDash(int[] segments)
         {
             return;
         }
 
         /// <summary>
-        /// Sets the current line dash pattern. If the number of elements in the array is odd, the elements
-        /// of the array get copied and concatenated. For example, [5, 15, 25] will become
-        /// [5, 15, 25, 5, 15, 25].
-        /// Format is: "[ 4.5, 2, 3.4, 8 ]"
+        /// Sets the current line dash pattern.
         /// </summary>
+        /// <param name="segments">
+        /// An Array. A list of numbers that specifies distances to alternately draw a line and a gap
+        /// (in coordinate space units). If the number of elements in the array is odd, the elements
+        /// of the array get copied and concatenated.
+        /// For example, [5, 15, 25] will become [5, 15, 25, 5, 15, 25].
+        /// </param>
         /// <remarks>Use this overload ONLY when you know what you're doing!</remarks>
         public virtual void SetLineDash(string segments)
         {
@@ -217,7 +314,8 @@ namespace Bridge.Html5
         public CanvasTypes.CanvasTextAlign TextAlign;
 
         /// <summary>
-        /// Baseline alignment setting. Possible values: top, hanging, middle, alphabetic (default), ideographic, bottom.
+        /// Baseline alignment setting. Possible values: top, hanging, middle, alphabetic (default),
+        /// ideographic, bottom.
         /// </summary>
         public CanvasTypes.CanvasTextBaselineAlign TextBaseline;
 
@@ -229,7 +327,8 @@ namespace Bridge.Html5
         #endregion
 
         /// <summary>
-        /// Fill styling is used for colors and styles inside shapes and stroke styling is used for the lines around shapes.
+        /// Fill styling is used for colors and styles inside shapes and stroke styling is used for
+        /// the lines around shapes.
         /// </summary>
         #region Fill and Stroke Styles
 
@@ -249,6 +348,11 @@ namespace Bridge.Html5
         /// <summary>
         /// Creates a linear gradient along the line given by the coordinates represented by the parameters.
         /// </summary>
+        /// <param name="x0">The x axis of the coordinate of the start point.</param>
+        /// <param name="y0">The y axis of the coordinate of the start point.</param>
+        /// <param name="x1">The x axis of the coordinate of the end point.</param>
+        /// <param name="y1">The y axis of the coordinate of the end point.</param>
+        /// <returns>A linear CanvasGradient initialized with the specified line.</returns>
         public virtual CanvasGradient CreateLinearGradient(uint x0, uint y0, uint x1, uint y1)
         {
             return null;
@@ -257,6 +361,11 @@ namespace Bridge.Html5
         /// <summary>
         /// Creates a linear gradient along the line given by the coordinates represented by the parameters.
         /// </summary>
+        /// <param name="x0">The x axis of the coordinate of the start point.</param>
+        /// <param name="y0">The y axis of the coordinate of the start point.</param>
+        /// <param name="x1">The x axis of the coordinate of the end point.</param>
+        /// <param name="y1">The y axis of the coordinate of the end point.</param>
+        /// <returns>A linear CanvasGradient initialized with the specified line.</returns>
         public virtual CanvasGradient CreateLinearGradient(int x0, int y0, int x1, int y1)
         {
             return null;
@@ -265,6 +374,11 @@ namespace Bridge.Html5
         /// <summary>
         /// Creates a linear gradient along the line given by the coordinates represented by the parameters.
         /// </summary>
+        /// <param name="x0">The x axis of the coordinate of the start point.</param>
+        /// <param name="y0">The y axis of the coordinate of the start point.</param>
+        /// <param name="x1">The x axis of the coordinate of the end point.</param>
+        /// <param name="y1">The y axis of the coordinate of the end point.</param>
+        /// <returns>A linear CanvasGradient initialized with the specified line.</returns>
         public virtual CanvasGradient CreateLinearGradient(double x0, double y0, double x1, double y1)
         {
             return null;
@@ -273,6 +387,13 @@ namespace Bridge.Html5
         /// <summary>
         /// Creates a radial gradient along the line given by the coordinates represented by the parameters.
         /// </summary>
+        /// <param name="x0">The x axis of the coordinate of the start circle.</param>
+        /// <param name="y0">The y axis of the coordinate of the start circle.</param>
+        /// <param name="r0">The radius of the start circle.</param>
+        /// <param name="x1">The x axis of the coordinate of the end circle.</param>
+        /// <param name="y1">The y axis of the coordinate of the end circle.</param>
+        /// <param name="r1">The radius of the end circle.</param>
+        /// <returns>A radial CanvasGradient initialized with the two specified circles.</returns>
         public virtual CanvasGradient CreateRadialGradient(uint x0, uint y0, uint r0, uint x1, uint y1, uint r1)
         {
             return null;
@@ -281,6 +402,13 @@ namespace Bridge.Html5
         /// <summary>
         /// Creates a radial gradient along the line given by the coordinates represented by the parameters.
         /// </summary>
+        /// <param name="x0">The x axis of the coordinate of the start circle.</param>
+        /// <param name="y0">The y axis of the coordinate of the start circle.</param>
+        /// <param name="r0">The radius of the start circle.</param>
+        /// <param name="x1">The x axis of the coordinate of the end circle.</param>
+        /// <param name="y1">The y axis of the coordinate of the end circle.</param>
+        /// <param name="r1">The radius of the end circle.</param>
+        /// <returns>A radial CanvasGradient initialized with the two specified circles.</returns>
         public virtual CanvasGradient CreateRadialGradient(int x0, int y0, int r0, int x1, int y1, int r1)
         {
             return null;
@@ -289,6 +417,13 @@ namespace Bridge.Html5
         /// <summary>
         /// Creates a radial gradient along the line given by the coordinates represented by the parameters.
         /// </summary>
+        /// <param name="x0">The x axis of the coordinate of the start circle.</param>
+        /// <param name="y0">The y axis of the coordinate of the start circle.</param>
+        /// <param name="r0">The radius of the start circle.</param>
+        /// <param name="x1">The x axis of the coordinate of the end circle.</param>
+        /// <param name="y1">The y axis of the coordinate of the end circle.</param>
+        /// <param name="r1">The radius of the end circle.</param>
+        /// <returns>A radial CanvasGradient initialized with the two specified circles.</returns>
         public virtual CanvasGradient CreateRadialGradient(double x0, double y0, double r0, double x1, double y1, double r1)
         {
             return null;
@@ -298,9 +433,37 @@ namespace Bridge.Html5
         /// Creates a pattern using the specified image (a CanvasImageSource). It repeats the source in the
         /// directions specified by the repetition argument. This method returns a CanvasPattern.
         /// </summary>
-        /// <param name="image"></param>
+        /// <param name="image">
+        /// A CanvasImageSource to be used as image to repeat. It can either be a:
+        /// • HTMLImageElement (<img>),
+        /// • HTMLVideoElement (<video>),
+        /// • HTMLCanvasElement (<canvas>),
+        /// • CanvasRenderingContext2D,
+        /// • ImageBitmap,
+        /// • ImageData, or a
+        /// • Blob.
+        /// </param>
         /// <param name="repetition"></param>
-        /// <returns></returns>
+        /// <returns>An opaque CanvasPattern object describing a pattern.</returns>
+        /// <remarks>
+        /// At the time of implementation, ImageBitmap had no documentation and Bridge.NET did not have
+        /// it defined inside.
+        /// </remarks>
+        public virtual CanvasPattern CreatePattern(string image, CanvasTypes.CanvasRepetitionTypes repetition)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Creates a pattern using the specified image (a CanvasImageSource). It repeats the source in the
+        /// directions specified by the repetition argument. This method returns a CanvasPattern.
+        /// </summary>
+        /// <param name="image">A ImageElement to be used as image to repeat.</param>
+        /// <param name="repetition">
+        /// A CanvasTypes.CanvasRepetitionType indicating how to repeat the image.
+        /// If repetition is an empty string ('') or null (but not undefined), repetition will be "repeat".
+        /// </param>
+        /// <returns>An opaque CanvasPattern object describing a pattern.</returns>
         public virtual CanvasPattern CreatePattern(ImageElement image, CanvasTypes.CanvasRepetitionTypes repetition)
         {
             return null;
@@ -310,9 +473,12 @@ namespace Bridge.Html5
         /// Creates a pattern using the specified image (a CanvasImageSource). It repeats the source in the
         /// directions specified by the repetition argument. This method returns a CanvasPattern.
         /// </summary>
-        /// <param name="image"></param>
-        /// <param name="repetition"></param>
-        /// <returns></returns>
+        /// <param name="image">A VideoElement to be used as image to repeat.</param>
+        /// <param name="repetition">
+        /// A CanvasTypes.CanvasRepetitionType indicating how to repeat the image.
+        /// If repetition is an empty string ('') or null (but not undefined), repetition will be "repeat".
+        /// </param>
+        /// <returns>An opaque CanvasPattern object describing a pattern.</returns>
         public virtual CanvasPattern CreatePattern(VideoElement image, CanvasTypes.CanvasRepetitionTypes repetition)
         {
             return null;
@@ -322,9 +488,12 @@ namespace Bridge.Html5
         /// Creates a pattern using the specified image (a CanvasImageSource). It repeats the source in the
         /// directions specified by the repetition argument. This method returns a CanvasPattern.
         /// </summary>
-        /// <param name="image"></param>
-        /// <param name="repetition"></param>
-        /// <returns></returns>
+        /// <param name="image">A CanvasElement to be used as image to repeat.</param>
+        /// <param name="repetition">
+        /// A CanvasTypes.CanvasRepetitionType indicating how to repeat the image.
+        /// If repetition is an empty string ('') or null (but not undefined), repetition will be "repeat".
+        /// </param>
+        /// <returns>An opaque CanvasPattern object describing a pattern.</returns>
         public virtual CanvasPattern CreatePattern(CanvasElement image, CanvasTypes.CanvasRepetitionTypes repetition)
         {
             return null;
@@ -334,9 +503,12 @@ namespace Bridge.Html5
         /// Creates a pattern using the specified image (a CanvasImageSource). It repeats the source in the
         /// directions specified by the repetition argument. This method returns a CanvasPattern.
         /// </summary>
-        /// <param name="image"></param>
-        /// <param name="repetition"></param>
-        /// <returns></returns>
+        /// <param name="image">A CanvasRenderingContext2D to be used as image to repeat.</param>
+        /// <param name="repetition">
+        /// A CanvasTypes.CanvasRepetitionType indicating how to repeat the image.
+        /// If repetition is an empty string ('') or null (but not undefined), repetition will be "repeat".
+        /// </param>
+        /// <returns>An opaque CanvasPattern object describing a pattern.</returns>
         public virtual CanvasPattern CreatePattern(CanvasRenderingContext2D image, CanvasTypes.CanvasRepetitionTypes repetition)
         {
             return null;
@@ -346,41 +518,28 @@ namespace Bridge.Html5
         /// Creates a pattern using the specified image (a CanvasImageSource). It repeats the source in the
         /// directions specified by the repetition argument. This method returns a CanvasPattern.
         /// </summary>
-        /// <param name="image"></param>
-        /// <param name="repetition"></param>
-        /// <returns></returns>
-        /*
-         * TODO: ImageData interface not implemented
+        /// <param name="image">A ImageData object to be used as image to repeat.</param>
+        /// <param name="repetition">
+        /// A CanvasTypes.CanvasRepetitionType indicating how to repeat the image.
+        /// If repetition is an empty string ('') or null (but not undefined), repetition will be "repeat".
+        /// </param>
+        /// <returns>An opaque CanvasPattern object describing a pattern.</returns>
         public virtual CanvasPattern CreatePattern(ImageData image, CanvasTypes.CanvasRepetitionTypes repetition)
         {
             return null;
         }
-        */
 
         /// <summary>
         /// Creates a pattern using the specified image (a CanvasImageSource). It repeats the source in the
         /// directions specified by the repetition argument. This method returns a CanvasPattern.
         /// </summary>
-        /// <param name="image"></param>
-        /// <param name="repetition"></param>
-        /// <returns></returns>
+        /// <param name="image">A Blob to be used as image to repeat.</param>
+        /// <param name="repetition">
+        /// A CanvasTypes.CanvasRepetitionType indicating how to repeat the image.
+        /// If repetition is an empty string ('') or null (but not undefined), repetition will be "repeat".
+        /// </param>
+        /// <returns>An opaque CanvasPattern object describing a pattern.</returns>
         public virtual CanvasPattern CreatePattern(Blob image, CanvasTypes.CanvasRepetitionTypes repetition)
-        {
-            return null;
-        }
-
-        /// <summary>
-        /// Creates a pattern using the specified image (a CanvasImageSource). It repeats the source in the
-        /// directions specified by the repetition argument. This method returns a CanvasPattern.
-        /// </summary>
-        /// <param name="image"></param>
-        /// <param name="repetition"></param>
-        /// <returns></returns>
-        /// <remarks>
-        /// At the time of implementation, ImageBitmap had no documentation and Bridge.NET did not have
-        /// it defined inside.
-        /// </remarks>
-        public virtual CanvasPattern CreatePattern(string image, CanvasTypes.CanvasRepetitionTypes repetition)
         {
             return null;
         }
@@ -417,279 +576,15 @@ namespace Bridge.Html5
         #region Paths
 
         /// <summary>
-        /// Starts a new path by emptying the list of sub-paths. Call this method when you want to create a new path.
+        /// Starts a new path by emptying the list of sub-paths. Call this method when you want
+        /// to create a new path.
         /// </summary>
         public virtual void BeginPath()
         {
             return;
         }
 
-        /// <summary>
-        /// Causes the point of the pen to move back to the start of the current sub-path. It tries to draw a straight line from the current point to the start. If the shape has already been closed or has only one point, this function does nothing.
-        /// </summary>
-        public virtual void ClosePath()
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Moves the starting point of a new sub-path to the (x, y) coordinates.
-        /// </summary>
-        /// <param name="x">The x axis of the point</param>
-        /// <param name="y">The y axis of the point</param>
-        public virtual void MoveTo(uint x, uint y)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Moves the starting point of a new sub-path to the (x, y) coordinates.
-        /// </summary>
-        /// <param name="x">The x axis of the point</param>
-        /// <param name="y">The y axis of the point</param>
-        public virtual void MoveTo(int x, int y)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Moves the starting point of a new sub-path to the (x, y) coordinates.
-        /// </summary>
-        /// <param name="x">The x axis of the point</param>
-        /// <param name="y">The y axis of the point</param>
-        public virtual void MoveTo(double x, double y)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Connects the last point in the subpath to the x, y coordinates with a straight line.
-        /// </summary>
-        /// <param name="x">The x axis of the coordinate for the end of the line.</param>
-        /// <param name="y">The y axis of the coordinate for the end of the line.</param>
-        public virtual void LineTo(uint x, uint y)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Connects the last point in the subpath to the x, y coordinates with a straight line.
-        /// </summary>
-        /// <param name="x">The x axis of the coordinate for the end of the line.</param>
-        /// <param name="y">The y axis of the coordinate for the end of the line.</param>
-        public virtual void LineTo(int x, int y)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Connects the last point in the subpath to the x, y coordinates with a straight line.
-        /// </summary>
-        /// <param name="x">The x axis of the coordinate for the end of the line.</param>
-        /// <param name="y">The y axis of the coordinate for the end of the line.</param>
-        public virtual void LineTo(double x, double y)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Adds a cubic Bézier curve to the path. It requires three points. The first two points are control points and the third one is the end point. The starting point is the last point in the current path, which can be changed using moveTo() before creating the Bézier curve.
-        /// </summary>
-        /// <param name="cp1x">The x axis of the coordinate for the first control point.</param>
-        /// <param name="cp1y">The y axis of the coordinate for first control point.</param>
-        /// <param name="cp2x">The x axis of the coordinate for the second control point.</param>
-        /// <param name="cp2y">The y axis of the coordinate for the second control point.</param>
-        /// <param name="x">The x axis of the coordinate for the end point.</param>
-        /// <param name="y">The y axis of the coordinate for the end point.</param>
-        public virtual void BezierCurveTo(uint cp1x, uint cp1y, uint cp2x, uint cp2y, uint x, uint y)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Adds a cubic Bézier curve to the path. It requires three points. The first two points are control points and the third one is the end point. The starting point is the last point in the current path, which can be changed using moveTo() before creating the Bézier curve.
-        /// </summary>
-        /// <param name="cp1x">The x axis of the coordinate for the first control point.</param>
-        /// <param name="cp1y">The y axis of the coordinate for first control point.</param>
-        /// <param name="cp2x">The x axis of the coordinate for the second control point.</param>
-        /// <param name="cp2y">The y axis of the coordinate for the second control point.</param>
-        /// <param name="x">The x axis of the coordinate for the end point.</param>
-        /// <param name="y">The y axis of the coordinate for the end point.</param>
-        public virtual void BezierCurveTo(int cp1x, int cp1y, int cp2x, int cp2y, int x, int y)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Adds a cubic Bézier curve to the path. It requires three points. The first two points are control points and the third one is the end point. The starting point is the last point in the current path, which can be changed using moveTo() before creating the Bézier curve.
-        /// </summary>
-        /// <param name="cp1x">The x axis of the coordinate for the first control point.</param>
-        /// <param name="cp1y">The y axis of the coordinate for first control point.</param>
-        /// <param name="cp2x">The x axis of the coordinate for the second control point.</param>
-        /// <param name="cp2y">The y axis of the coordinate for the second control point.</param>
-        /// <param name="x">The x axis of the coordinate for the end point.</param>
-        /// <param name="y">The y axis of the coordinate for the end point.</param>
-        public virtual void BezierCurveTo(double cp1x, double cp1y, double cp2x, double cp2y, double x, double y)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Adds a quadratic Bézier curve to the current path.
-        /// </summary>
-        /// <param name="cpx">The x axis of the coordinate for the control point.</param>
-        /// <param name="cpy">The y axis of the coordinate for the control point.</param>
-        /// <param name="x">The x axis of the coordinate for the end point.</param>
-        /// <param name="y">The y axis of the coordinate for the end point.</param>
-        public virtual void QuadraticCurveTo(uint cpx, uint cpy, uint x, uint y)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Adds a quadratic Bézier curve to the current path.
-        /// </summary>
-        /// <param name="cpx">The x axis of the coordinate for the control point.</param>
-        /// <param name="cpy">The y axis of the coordinate for the control point.</param>
-        /// <param name="x">The x axis of the coordinate for the end point.</param>
-        /// <param name="y">The y axis of the coordinate for the end point.</param>
-        public virtual void QuadraticCurveTo(int cpx, int cpy, int x, int y)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Adds a quadratic Bézier curve to the current path.
-        /// </summary>
-        /// <param name="cpx">The x axis of the coordinate for the control point.</param>
-        /// <param name="cpy">The y axis of the coordinate for the control point.</param>
-        /// <param name="x">The x axis of the coordinate for the end point.</param>
-        /// <param name="y">The y axis of the coordinate for the end point.</param>
-        public virtual void QuadraticCurveTo(double cpx, double cpy, double x, double y)
-        {
-            return;
-        }
-        
-        /// <summary>
-        /// Adds an arc to the path which is centered at (x, y) position with radius r starting at
-        /// startAngle and ending at endAngle going in the given direction by anticlockwise
-        /// (defaulting to clockwise).
-        /// </summary>
-        /// <param name="x">The x axis of the coordinate for the arc's center.</param>
-        /// <param name="y">The y axis of the coordinate for the arc's center.</param>
-        /// <param name="radius">The arc's radius.</param>
-        /// <param name="startAngle">
-        /// The starting point, measured from the x axis, from which it will be drawn, expressed in radians.
-        /// </param>
-        /// <param name="endAngle">The end arc's angle to which it will be drawn, expressed in radians.</param>
-        /// <param name="anticlockwise">
-        /// An optional Boolean which, if true, draws the arc anticlockwise (counter-clockwise), otherwise
-        /// in a clockwise direction.
-        /// </param>
-        public virtual void Arc(uint x, uint y, uint radius, double startAngle, double endAngle, bool anticlockwise = false)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Adds an arc to the path which is centered at (x, y) position with radius r starting at
-        /// startAngle and ending at endAngle going in the given direction by anticlockwise
-        /// (defaulting to clockwise).
-        /// </summary>
-        /// <param name="x">The x axis of the coordinate for the arc's center.</param>
-        /// <param name="y">The y axis of the coordinate for the arc's center.</param>
-        /// <param name="radius">The arc's radius.</param>
-        /// <param name="startAngle">
-        /// The starting point, measured from the x axis, from which it will be drawn, expressed in radians.
-        /// </param>
-        /// <param name="endAngle">The end arc's angle to which it will be drawn, expressed in radians.</param>
-        /// <param name="anticlockwise">
-        /// An optional Boolean which, if true, draws the arc anticlockwise (counter-clockwise), otherwise
-        /// in a clockwise direction.
-        /// </param>
-        public virtual void Arc(int x, int y, int radius, double startAngle, double endAngle, bool anticlockwise = false)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Adds an arc to the path which is centered at (x, y) position with radius r starting at
-        /// startAngle and ending at endAngle going in the given direction by anticlockwise
-        /// (defaulting to clockwise).
-        /// </summary>
-        /// <param name="x">The x axis of the coordinate for the arc's center.</param>
-        /// <param name="y">The y axis of the coordinate for the arc's center.</param>
-        /// <param name="radius">The arc's radius.</param>
-        /// <param name="startAngle">
-        /// The starting point, measured from the x axis, from which it will be drawn, expressed in radians.
-        /// </param>
-        /// <param name="endAngle">The end arc's angle to which it will be drawn, expressed in radians.</param>
-        /// <param name="anticlockwise">
-        /// An optional Boolean which, if true, draws the arc anticlockwise (counter-clockwise), otherwise
-        /// in a clockwise direction.
-        /// </param>
-        public virtual void Arc(double x, double y, double radius, double startAngle, double endAngle, bool anticlockwise = false)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Adds an arc to the path with the given control points and radius, connected to the previous point by a straight line.
-        /// </summary>
-        /// <param name="x1">The x axis of the coordinate for the first control point.</param>
-        /// <param name="y1">The y axis of the coordinate for the first control point.</param>
-        /// <param name="x2">The x axis of the coordinate for the second control point.</param>
-        /// <param name="y2">The y axis of the coordinate for the second control point.</param>
-        /// <param name="radius">The arc's radius.</param>
-        public virtual void ArcTo(uint x1, uint y1, uint x2, uint y2, double radius)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Adds an arc to the path with the given control points and radius, connected to the previous point by a straight line.
-        /// </summary>
-        /// <param name="x1">The x axis of the coordinate for the first control point.</param>
-        /// <param name="y1">The y axis of the coordinate for the first control point.</param>
-        /// <param name="x2">The x axis of the coordinate for the second control point.</param>
-        /// <param name="y2">The y axis of the coordinate for the second control point.</param>
-        /// <param name="radius">The arc's radius.</param>
-        public virtual void ArcTo(int x1, int y1, int x2, int y2, double radius)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Adds an arc to the path with the given control points and radius, connected to the previous point by a straight line.
-        /// </summary>
-        /// <param name="x1">The x axis of the coordinate for the first control point.</param>
-        /// <param name="y1">The y axis of the coordinate for the first control point.</param>
-        /// <param name="x2">The x axis of the coordinate for the second control point.</param>
-        /// <param name="y2">The y axis of the coordinate for the second control point.</param>
-        /// <param name="radius">The arc's radius.</param>
-        public virtual void ArcTo(double x1, double y1, double x2, double y2, double radius)
-        {
-            return;
-        }
-
-        // TODO: Continue updating from this point
-        /// <summary>
-        /// Adds an ellipse to the path which is centered at (x, y) position with the radii radiusX and radiusY starting at startAngle and ending at endAngle going in the given direction by anticlockwise (defaulting to clockwise).
-        /// </summary>
-        /// <remarks>This is experimental API that should not be used in production code.</remarks>
-        public virtual void Ellipse()
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Creates a path for a rectangle at position (x, y) with a size that is determined by width and height.
-        /// </summary>
-        public virtual void Rect()
-        {
-            return;
-        }
-
+        // All remaining methods here are inherited from SVGOperations, which are common to the Path2D interface.
         #endregion
 
         #region Drawing Paths
@@ -703,6 +598,29 @@ namespace Bridge.Html5
         }
 
         /// <summary>
+        /// Fills the subpaths with the specified fill rule.
+        /// </summary>
+        /// <param name="fillRule">
+        /// The algorithm by which to determine if a point is inside a path or outside a path.
+        /// </param>
+        public virtual void Fill(CanvasTypes.CanvasFillRule fillRule)
+        {
+            return;
+        }
+
+        /// <summary>
+        /// Fills the specified path with the specified fill rule.
+        /// </summary>
+        /// <param name="path">A Path2D path to fill.</param>
+        /// <param name="fillRule">
+        /// The algorithm by which to determine if a point is inside a path or outside a path.
+        /// </param>
+        public virtual void Fill(Path2D path, CanvasTypes.CanvasFillRule fillRule)
+        {
+            return;
+        }
+
+        /// <summary>
         /// Strokes the subpaths with the current stroke style.
         /// </summary>
         public virtual void Stroke()
@@ -711,9 +629,29 @@ namespace Bridge.Html5
         }
 
         /// <summary>
+        /// Strokes the subpaths with the current stroke style.
+        /// </summary>
+        /// <param name="path">A Path2D path to stroke.</param>
+        public virtual void Stroke(Path2D path)
+        {
+            return;
+        }
+
+        /// <summary>
         /// If a given element is focused, this method draws a focus ring around the current path.
         /// </summary>
-        public virtual void DrawFocusIfNeeded()
+        /// <param name="element">The element to check whether it is focused or not.</param>
+        public virtual void DrawFocusIfNeeded(Element element)
+        {
+            return;
+        }
+
+        /// <summary>
+        /// If a given element is focused, this method draws a focus ring around the current path.
+        /// </summary>
+        /// <param name="path">A Path2D path to use.</param>
+        /// <param name="element">The element to check whether it is focused or not.</param>
+        public virtual void DrawFocusIfNeeded(Path2D path, Element element)
         {
             return;
         }
@@ -721,13 +659,26 @@ namespace Bridge.Html5
         /// <summary>
         /// Scrolls the current path or a given path into the view.
         /// </summary>
-        public virtual void ScrollpathIntoView()
+        /// <remarks>This is experimental API that should not be used in production code.</remarks>
+        public virtual void ScrollPathIntoView()
         {
             return;
         }
 
         /// <summary>
-        /// Creates a clipping path from the current sub-paths. Everything drawn after clip() is called appears inside the clipping path only. For an example, see Clipping paths in the Canvas tutorial.
+        /// Scrolls the current path or a given path into the view.
+        /// </summary>
+        /// <param name="path">A Path2D path to use.</param>
+        /// <remarks>This is experimental API that should not be used in production code.</remarks>
+        public virtual void ScrollPathIntoView(Path2D path)
+        {
+            return;
+        }
+
+        /// <summary>
+        /// Creates a clipping path from the current sub-paths. Everything drawn after clip() is
+        /// called appears inside the clipping path only. For an example, see Clipping paths in
+        /// the Canvas tutorial.
         /// </summary>
         public virtual void Clip()
         {
@@ -735,9 +686,127 @@ namespace Bridge.Html5
         }
 
         /// <summary>
+        /// Creates a clipping path from the current sub-paths. Everything drawn after clip() is
+        /// called appears inside the clipping path only. For an example, see Clipping paths in
+        /// the Canvas tutorial.
+        /// </summary>
+        /// <param name="fillRule">
+        /// The algorithm by which to determine if a point is inside a path or outside a path.
+        /// </param>
+        public virtual void Clip(CanvasTypes.CanvasFillRule fillRule)
+        {
+            return;
+        }
+
+        /// <summary>
+        /// Creates a clipping path from the current sub-paths. Everything drawn after clip() is
+        /// called appears inside the clipping path only. For an example, see Clipping paths in
+        /// the Canvas tutorial.
+        /// </summary>
+        /// <param name="path">A Path2D path to clip.</param>
+        /// <param name="fillRule">
+        /// The algorithm by which to determine if a point is inside a path or outside a path.
+        /// </param>
+        public virtual void Clip(Path2D path, CanvasTypes.CanvasFillRule fillRule)
+        {
+            return;
+        }
+
+        /// <summary>
         /// Reports whether or not the specified point is contained in the current path.
         /// </summary>
-        public virtual bool IsPointInPath()
+        /// <param name="x">The X coordinate of the point to check.</param>
+        /// <param name="y">The Y coordinate of the point to check.</param>
+        /// <returns>
+        /// A Boolean, which is true if the specified point is contained in the current or specfied path,
+        /// otherwise false.
+        /// </returns>
+        public virtual bool IsPointInPath(uint x, uint y, CanvasTypes.CanvasFillRule? fillRule = null)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Reports whether or not the specified point is contained in the current path.
+        /// </summary>
+        /// <param name="x">The X coordinate of the point to check.</param>
+        /// <param name="y">The Y coordinate of the point to check.</param>
+        /// <returns>
+        /// A Boolean, which is true if the specified point is contained in the current or specfied path,
+        /// otherwise false.
+        /// </returns>
+        public virtual bool IsPointInPath(int x, int y, CanvasTypes.CanvasFillRule? fillRule = null)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Reports whether or not the specified point is contained in the current path.
+        /// </summary>
+        /// <param name="x">The X coordinate of the point to check.</param>
+        /// <param name="y">The Y coordinate of the point to check.</param>
+        /// <param name="fillRule">
+        /// The algorithm by which to determine if a point is inside a path or outside a path.
+        /// </param>
+        /// <returns>
+        /// A Boolean, which is true if the specified point is contained in the current or specfied path,
+        /// otherwise false.
+        /// </returns>
+        public virtual bool IsPointInPath(double x, double y, CanvasTypes.CanvasFillRule? fillRule = null)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Reports whether or not the specified point is contained in the current path.
+        /// </summary>
+        /// <param name="path">A Path2D path to use.</param>
+        /// <param name="x">The X coordinate of the point to check.</param>
+        /// <param name="y">The Y coordinate of the point to check.</param>
+        /// <param name="fillRule">
+        /// The algorithm by which to determine if a point is inside a path or outside a path.
+        /// </param>
+        /// <returns>
+        /// A Boolean, which is true if the specified point is contained in the current or specfied path,
+        /// otherwise false.
+        /// </returns>
+        public virtual bool IsPointInPath(Path2D path, uint x, uint y, CanvasTypes.CanvasFillRule? fillRule = null)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Reports whether or not the specified point is contained in the current path.
+        /// </summary>
+        /// <param name="path">A Path2D path to use.</param>
+        /// <param name="x">The X coordinate of the point to check.</param>
+        /// <param name="y">The Y coordinate of the point to check.</param>
+        /// <param name="fillRule">
+        /// The algorithm by which to determine if a point is inside a path or outside a path.
+        /// </param>
+        /// <returns>
+        /// A Boolean, which is true if the specified point is contained in the current or specfied path,
+        /// otherwise false.
+        /// </returns>
+        public virtual bool IsPointInPath(Path2D path, int x, int y, CanvasTypes.CanvasFillRule? fillRule = null)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Reports whether or not the specified point is contained in the current path.
+        /// </summary>
+        /// <param name="path">A Path2D path to use.</param>
+        /// <param name="x">The X coordinate of the point to check.</param>
+        /// <param name="y">The Y coordinate of the point to check.</param>
+        /// <param name="fillRule">
+        /// The algorithm by which to determine if a point is inside a path or outside a path.
+        /// </param>
+        /// <returns>
+        /// A Boolean, which is true if the specified point is contained in the current or specfied path,
+        /// otherwise false.
+        /// </returns>
+        public virtual bool IsPointInPath(Path2D path, double x, double y, CanvasTypes.CanvasFillRule? fillRule = null)
         {
             return false;
         }
@@ -745,7 +814,86 @@ namespace Bridge.Html5
         /// <summary>
         /// Reports whether or not the specified point is inside the area contained by the stroking of a path.
         /// </summary>
-        public virtual bool IsPointInStroke()
+        /// <param name="x">The X coordinate of the point to check.</param>
+        /// <param name="y">The Y coordinate of the point to check.</param>
+        /// <returns>
+        /// A Boolean, which is true if the point is inside the area contained by the stroking of a path,
+        /// otherwise false.
+        /// </returns>
+        public virtual bool IsPointInStroke(uint x, uint y)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Reports whether or not the specified point is inside the area contained by the stroking of a path.
+        /// </summary>
+        /// <param name="x">The X coordinate of the point to check.</param>
+        /// <param name="y">The Y coordinate of the point to check.</param>
+        /// <returns>
+        /// A Boolean, which is true if the point is inside the area contained by the stroking of a path,
+        /// otherwise false.
+        /// </returns>
+        public virtual bool IsPointInStroke(int x, int y)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Reports whether or not the specified point is inside the area contained by the stroking of a path.
+        /// </summary>
+        /// <param name="x">The X coordinate of the point to check.</param>
+        /// <param name="y">The Y coordinate of the point to check.</param>
+        /// <returns>
+        /// A Boolean, which is true if the point is inside the area contained by the stroking of a path,
+        /// otherwise false.
+        /// </returns>
+        public virtual bool IsPointInStroke(double x, double y)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Reports whether or not the specified point is inside the area contained by the stroking of a path.
+        /// </summary>
+        /// <param name="path">A Path2D path to use.</param>
+        /// <param name="x">The X coordinate of the point to check.</param>
+        /// <param name="y">The Y coordinate of the point to check.</param>
+        /// <returns>
+        /// A Boolean, which is true if the point is inside the area contained by the stroking of a path,
+        /// otherwise false.
+        /// </returns>
+        public virtual bool IsPointInStroke(Path2D path, uint x, uint y)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Reports whether or not the specified point is inside the area contained by the stroking of a path.
+        /// </summary>
+        /// <param name="path">A Path2D path to use.</param>
+        /// <param name="x">The X coordinate of the point to check.</param>
+        /// <param name="y">The Y coordinate of the point to check.</param>
+        /// <returns>
+        /// A Boolean, which is true if the point is inside the area contained by the stroking of a path,
+        /// otherwise false.
+        /// </returns>
+        public virtual bool IsPointInStroke(Path2D path, int x, int y)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Reports whether or not the specified point is inside the area contained by the stroking of a path.
+        /// </summary>
+        /// <param name="path">A Path2D path to use.</param>
+        /// <param name="x">The X coordinate of the point to check.</param>
+        /// <param name="y">The Y coordinate of the point to check.</param>
+        /// <returns>
+        /// A Boolean, which is true if the point is inside the area contained by the stroking of a path,
+        /// otherwise false.
+        /// </returns>
+        public virtual bool IsPointInStroke(Path2D path, double x, double y)
         {
             return false;
         }
@@ -761,8 +909,7 @@ namespace Bridge.Html5
         /// Current transformation matrix (SVGMatrix object).
         /// </summary>
         /// <remarks>This is experimental API that should not be used in production code.</remarks>
-        // TODO: define the SVGMatrix class based on https://developer.mozilla.org/en-US/docs/Web/API/SVGMatrix
-        public string CurrentTransform; // TODO: string here should be SVGMatrix
+        public SVGMatrix CurrentTransform;
 
         /// <summary>
         /// Adds a rotation to the transformation matrix. The angle argument represents a clockwise rotation angle and is expressed in radians.
@@ -895,7 +1042,7 @@ namespace Bridge.Html5
         /// line styles, fill styles, shadow styles, text styles). The following methods help you to work with that state
         /// </summary>
         #region Canvas State
-        
+
         /// <summary>
         /// Saves the current drawing style state using a stack so you can revert any change you make to it
         /// using Restore().

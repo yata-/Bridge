@@ -375,21 +375,25 @@ namespace System
 			return false;
 		}
 
+        [Template("{a} < {b}")]
 		public static bool operator <(DateTime a, DateTime b) 
         {
 			return false;
 		}
 
+        [Template("{a} > {b}")]
 		public static bool operator >(DateTime a, DateTime b) 
         {
 			return false;
 		}
 
+        [Template("{a} <= {b}")]
 		public static bool operator <=(DateTime a, DateTime b) 
         {
 			return false;
 		}
 
+        [Template("{a} >= {b}")]
 		public static bool operator >=(DateTime a, DateTime b) 
         {
 			return false;
