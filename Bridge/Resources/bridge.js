@@ -1396,7 +1396,7 @@ Bridge.define('Bridge.Exception', {
                 return new Bridge.ArgumentOutOfRangeException(null, error.message, new Bridge.ErrorException(error));
             }
             else if (error instanceof Error) {
-                return new Bridge.ErrorException(o);
+                return new Bridge.ErrorException(error);
             }
             else {
                 return new Bridge.Exception(error ? error.toString() : null);
