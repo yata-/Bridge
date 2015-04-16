@@ -647,7 +647,8 @@ namespace Bridge.Html5
         /// <param name="dy">
         /// The Y coordinate in the destination canvas at which to place the top-left corner of the source image.
         /// </param>
-        public virtual void DrawImage(Any<ImageElement, VideoElement, CanvasElement, CanvasRenderingContext2D> image, Any<int, long, float, double> dx, Any<int, long, float, double> dy)
+        public virtual void DrawImage(Any<ImageElement, VideoElement, CanvasElement, CanvasRenderingContext2D> image,
+                                      Any<int, long, float, double> dx, Any<int, long, float, double> dy)
         {
             return;
         }
@@ -673,7 +674,9 @@ namespace Bridge.Html5
         /// The height to draw the image in the destination canvas. This allows scaling of the drawn image.
         /// If null, the image is not scaled in height when drawn.
         /// </param>
-        public virtual void DrawImage(Any<ImageElement, VideoElement, CanvasElement, CanvasRenderingContext2D> image, Any<int, long, float, double> dx, Any<int, long, float, double> dy, Any<int?, long?, float?, double?> dWidth, Any<int?, long?, float?, double?> dHeight)
+        public virtual void DrawImage(Any<ImageElement, VideoElement, CanvasElement, CanvasRenderingContext2D> image,
+                                      Any<int, long, float, double> dx, Any<int, long, float, double> dy,
+                                      Any<int?, long?, float?, double?> dWidth, Any<int?, long?, float?, double?> dHeight)
         {
             return;
         }
@@ -707,7 +710,11 @@ namespace Bridge.Html5
         /// The height to draw the image in the destination canvas. This allows scaling of the drawn image.
         /// If not specified or null, the image is not scaled in height when drawn.
         /// </param>
-        public virtual void DrawImage(Any<ImageElement, VideoElement, CanvasElement, CanvasRenderingContext2D> image, Any<int, long, float, double> sx, Any<int, long, float, double> sy, Any<int, long, float, double> dx, Any<int, long, float, double> dy, Any<int?, long?, float?, double?> dWidth = null, Any<int?, long?, float?, double?> dHeight = null)
+        public virtual void DrawImage(Any<ImageElement, VideoElement, CanvasElement, CanvasRenderingContext2D> image,
+                                      Any<int, long, float, double> sx, Any<int, long, float, double> sy,
+                                      Any<int, long, float, double> dx, Any<int, long, float, double> dy,
+                                      Any<int?, long?, float?, double?> dWidth = null,
+                                      Any<int?, long?, float?, double?> dHeight = null)
         {
             return;
         }
@@ -747,7 +754,13 @@ namespace Bridge.Html5
         /// The height to draw the image in the destination canvas. This allows scaling of the drawn image.
         /// If not specified or null, the image is not scaled in height when drawn.
         /// </param>
-        public virtual void DrawImage(Any<ImageElement, VideoElement, CanvasElement, CanvasRenderingContext2D> image, Any<int, long, float, double> sx, Any<int, long, float, double> sy, Any<int?, long?, float?, double?> sWidth, Any<int?, long?, float?, double?> sHeight, Any<int, long, float, double> dx, Any<int, long, float, double> dy, Any<int?, long?, float?, double?> dWidth = null, Any<int?, long?, float?, double?> dHeight = null)
+        public virtual void DrawImage(Any<ImageElement, VideoElement, CanvasElement, CanvasRenderingContext2D> image,
+                                      Any<int, long, float, double> sx, Any<int, long, float, double> sy,
+                                      Any<int?, long?, float?, double?> sWidth,
+                                      Any<int?, long?, float?, double?> sHeight,
+                                      Any<int, long, float, double> dx, Any<int, long, float, double> dy,
+                                      Any<int?, long?, float?, double?> dWidth = null,
+                                      Any<int?, long?, float?, double?> dHeight = null)
         {
             return;
         }
@@ -839,7 +852,9 @@ namespace Bridge.Html5
         /// <param name="dirtyHeight">
         /// Height of the rectangle to be painted, in the origin image data. Defaults to the height of the image data.
         /// </param>
-        public virtual void PutImageData(ImageData imagedata, int dx, int dy, Any<uint?, int?> dirtyX = null, Any<uint?, int?> dirtyY = null, Any<uint?, int?> dirtyWidth = null, Any<uint?, int?> dirtyHeight = null)
+        public virtual void PutImageData(ImageData imagedata, int dx, int dy, Any<uint?, int?> dirtyX = null,
+                                         Any<uint?, int?> dirtyY = null, Any<uint?, int?> dirtyWidth = null,
+                                         Any<uint?, int?> dirtyHeight = null)
         {
             return;
         }
@@ -857,8 +872,9 @@ namespace Bridge.Html5
         #endregion
 
         /// <summary>
-        /// The CanvasRenderingContext2D rendering context contains a variety of drawing style states (attributes for
-        /// line styles, fill styles, shadow styles, text styles). The following methods help you to work with that state
+        /// The CanvasRenderingContext2D rendering context contains a variety of drawing style states
+        /// (attributes for line styles, fill styles, shadow styles, text styles). The following methods
+        /// help you to work with that state.
         /// </summary>
         #region Canvas State
 
