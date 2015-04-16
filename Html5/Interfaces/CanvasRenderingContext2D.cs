@@ -901,7 +901,11 @@ namespace Bridge.Html5
         #endregion
 
         /// <summary>
-        /// Objects in the CanvasRenderingContext2D rendering context have a current transformation matrix and methods to manipulate it. The transformation matrix is applied when creating the current default path, painting text, shapes and Path2D objects. The methods listed below remain for historical and compatibility reasons as SVGMatrix objects are used in most parts of the API nowadays and will be used in the future instead.
+        /// Objects in the CanvasRenderingContext2D rendering context have a current transformation matrix
+        /// and methods to manipulate it. The transformation matrix is applied when creating the current
+        /// default path, painting text, shapes and Path2D objects. The methods listed below remain for
+        /// historical and compatibility reasons as SVGMatrix objects are used in most parts of the API
+        /// nowadays and will be used in the future instead.
         /// </summary>
         #region Transformations
 
@@ -912,9 +916,14 @@ namespace Bridge.Html5
         public SVGMatrix CurrentTransform;
 
         /// <summary>
-        /// Adds a rotation to the transformation matrix. The angle argument represents a clockwise rotation angle and is expressed in radians.
+        /// Adds a rotation to the transformation matrix. The angle argument represents a clockwise rotation
+        /// angle and is expressed in radians.
         /// </summary>
-        public virtual void Rotate()
+        /// <param name="angle">
+        /// The angle to rotate clockwise in radians. You can use degree * Math.PI / 180 if you want to
+        /// calculate from a degree value.
+        /// </param>
+        public virtual void Rotate(double angle)
         {
             return;
         }
@@ -922,39 +931,99 @@ namespace Bridge.Html5
         /// <summary>
         /// Adds a scaling transformation to the canvas units by x horizontally and by y vertically.
         /// </summary>
-        public virtual void Scale()
+        /// <param name="x">Scaling factor in the horizontal direction.</param>
+        /// <param name="y">Scaling factor in the vertical direction.</param>
+        public virtual void Scale(double x, double y)
         {
             return;
         }
 
         /// <summary>
-        /// Adds a translation transformation by moving the canvas and its origin x horizontally and y vertically on the grid.
+        /// Adds a translation transformation by moving the canvas and its origin x horizontally and
+        /// y vertically on the grid.
         /// </summary>
-        public virtual void Translate(uint x, uint y)
+        /// <param name="x">Distance to move in the horizontal direction.</param>
+        /// <param name="y">Distance to move in the vertical direction.</param>
+        public virtual void Translate(int x, int y)
         {
             return;
         }
 
         /// <summary>
-        /// Adds a translation transformation by moving the canvas and its origin x horizontally and y vertically on the grid.
+        /// Adds a translation transformation by moving the canvas and its origin x horizontally and
+        /// y vertically on the grid.
         /// </summary>
+        /// <param name="x">Distance to move in the horizontal direction.</param>
+        /// <param name="y">Distance to move in the vertical direction.</param>
         public virtual void Translate(double x, double y)
+        {
+            return;
+        }
+
+        /*
+         * Transformation matrix is described by:
+         * [ a c e ]
+         * [ b d f ]
+         * [ 0 0 1 ]
+         */
+        /// <summary>
+        /// Multiplies the current transformation matrix with the matrix described by its arguments.
+        /// Matrix is described by a 3x3 [ a c e // b d f // 0 0 1 ] (// means a matrix line break).
+        /// </summary>
+        /// <param name="a">m11: Horizontal scaling.</param>
+        /// <param name="b">m12: Horizontal skewing.</param>
+        /// <param name="c">m21: Vertical skewing.</param>
+        /// <param name="d">m22: Vertical scaling.</param>
+        /// <param name="e">dx: Horizontal moving.</param>
+        /// <param name="f">dy: Vertical moving.</param>
+        public virtual void Transform(int a, int b, int c, int d, int e, int f)
         {
             return;
         }
 
         /// <summary>
         /// Multiplies the current transformation matrix with the matrix described by its arguments.
+        /// Matrix is described by a 3x3 [ a c e // b d f // 0 0 1 ] (// means a matrix line break).
         /// </summary>
-        public virtual void Transform()
+        /// <param name="a">m11: Horizontal scaling.</param>
+        /// <param name="b">m12: Horizontal skewing.</param>
+        /// <param name="c">m21: Vertical skewing.</param>
+        /// <param name="d">m22: Vertical scaling.</param>
+        /// <param name="e">dx: Horizontal moving.</param>
+        /// <param name="f">dy: Vertical moving.</param>
+        public virtual void Transform(double a, double b, double c, double d, double e, double f)
         {
             return;
         }
 
         /// <summary>
-        /// Resets the current transform to the identity matrix, and then invokes the transform() method with the same arguments.
+        /// Resets the current transform to the identity matrix, and then invokes the transform()
+        /// method with the same arguments.
+        /// Matrix is described by a 3x3 [ a c e // b d f // 0 0 1 ] (// means a matrix line break).
         /// </summary>
-        public virtual void SetTransfrom()
+        /// <param name="a">m11: Horizontal scaling.</param>
+        /// <param name="b">m12: Horizontal skewing.</param>
+        /// <param name="c">m21: Vertical skewing.</param>
+        /// <param name="d">m22: Vertical scaling.</param>
+        /// <param name="e">dx: Horizontal moving.</param>
+        /// <param name="f">dy: Vertical moving.</param>
+        public virtual void SetTransfrom(int a, int b, int c, int d, int e, int f)
+        {
+            return;
+        }
+
+        /// <summary>
+        /// Resets the current transform to the identity matrix, and then invokes the transform()
+        /// method with the same arguments.
+        /// Matrix is described by a 3x3 [ a c e // b d f // 0 0 1 ] (// means a matrix line break).
+        /// </summary>
+        /// <param name="a">m11: Horizontal scaling.</param>
+        /// <param name="b">m12: Horizontal skewing.</param>
+        /// <param name="c">m21: Vertical skewing.</param>
+        /// <param name="d">m22: Vertical scaling.</param>
+        /// <param name="e">dx: Horizontal moving.</param>
+        /// <param name="f">dy: Vertical moving.</param>
+        public virtual void SetTransfrom(double a, double b, double c, double d, double e, double f)
         {
             return;
         }
@@ -973,7 +1042,8 @@ namespace Bridge.Html5
         #region Composing
 
         /// <summary>
-        /// Alpha value that is applied to shapes and images before they are composited onto the canvas. Default 1.0 (opaque).
+        /// Alpha value that is applied to shapes and images before they are composited onto the canvas.
+        /// Default 1.0 (opaque).
         /// </summary>
         public float GlobalAlpha;
 
@@ -987,9 +1057,119 @@ namespace Bridge.Html5
         #region Drawing Images
 
         /// <summary>
-        /// Draws the specified image. This method is available in multiple formats, providing a great deal of flexibility in its use.
+        /// Draws the specified image. This method is available in multiple formats, providing a great
+        /// deal of flexibility in its use.
         /// </summary>
-        public virtual void DrawImage()
+        /// <param name="image">
+        /// An element to draw into the context. The specification permits any canvas image source.
+        /// </param>
+        /// <param name="dx">
+        /// The X coordinate in the destination canvas at which to place the top-left corner of the source image.
+        /// </param>
+        /// <param name="dy">
+        /// The Y coordinate in the destination canvas at which to place the top-left corner of the source image.
+        /// </param>
+        public virtual void DrawImage(Any<ImageElement, VideoElement, CanvasElement, CanvasRenderingContext2D> image, Any<int, long, float, double> dx, Any<int, long, float, double> dy)
+        {
+            return;
+        }
+
+        /// <summary>
+        /// Draws the specified image. This method is available in multiple formats, providing a great
+        /// deal of flexibility in its use.
+        /// </summary>
+        /// <param name="image">
+        /// An element to draw into the context. The specification permits any canvas image source.
+        /// </param>
+        /// <param name="dx">
+        /// The X coordinate in the destination canvas at which to place the top-left corner of the source image.
+        /// </param>
+        /// <param name="dy">
+        /// The Y coordinate in the destination canvas at which to place the top-left corner of the source image.
+        /// </param>
+        /// <param name="dWidth">
+        /// The width to draw the image in the destination canvas. This allows scaling of the drawn image.
+        /// If null, the image is not scaled in height when drawn.
+        /// </param>
+        /// <param name="dHeight">
+        /// The height to draw the image in the destination canvas. This allows scaling of the drawn image.
+        /// If null, the image is not scaled in height when drawn.
+        /// </param>
+        public virtual void DrawImage(Any<ImageElement, VideoElement, CanvasElement, CanvasRenderingContext2D> image, Any<int, long, float, double> dx, Any<int, long, float, double> dy, Any<int?, long?, float?, double?> dWidth, Any<int?, long?, float?, double?> dHeight)
+        {
+            return;
+        }
+
+        /// <summary>
+        /// Draws the specified image. This method is available in multiple formats, providing a great
+        /// deal of flexibility in its use.
+        /// </summary>
+        /// <param name="image">
+        /// An element to draw into the context. The specification permits any canvas image source.
+        /// </param>
+        /// <param name="sx">
+        /// The X coordinate of the top left corner of the sub-rectangle of the source image to draw into
+        /// the destination context.
+        /// </param>
+        /// <param name="sy">
+        /// The Y coordinate of the top left corner of the sub-rectangle of the source image to draw into
+        /// the destination context.
+        /// </param>
+        /// <param name="dx">
+        /// The X coordinate in the destination canvas at which to place the top-left corner of the source image.
+        /// </param>
+        /// <param name="dy">
+        /// The Y coordinate in the destination canvas at which to place the top-left corner of the source image.
+        // </param>
+        /// <param name="dWidth">
+        /// The width to draw the image in the destination canvas. This allows scaling of the drawn image.
+        /// If not specified or null, the image is not scaled in height when drawn.
+        /// </param>
+        /// <param name="dHeight">
+        /// The height to draw the image in the destination canvas. This allows scaling of the drawn image.
+        /// If not specified or null, the image is not scaled in height when drawn.
+        /// </param>
+        public virtual void DrawImage(Any<ImageElement, VideoElement, CanvasElement, CanvasRenderingContext2D> image, Any<int, long, float, double> sx, Any<int, long, float, double> sy, Any<int, long, float, double> dx, Any<int, long, float, double> dy, Any<int?, long?, float?, double?> dWidth = null, Any<int?, long?, float?, double?> dHeight = null)
+        {
+            return;
+        }
+
+        /// <summary>
+        /// Draws the specified image. This method is available in multiple formats, providing a great
+        /// deal of flexibility in its use.
+        /// </summary>
+        /// <param name="image">
+        /// An element to draw into the context. The specification permits any canvas image source.
+        /// </param>
+        /// <param name="sx">
+        /// The X coordinate of the top left corner of the sub-rectangle of the source image to draw into
+        /// the destination context.
+        /// </param>
+        /// <param name="sy">
+        /// The Y coordinate of the top left corner of the sub-rectangle of the source image to draw into
+        /// the destination context.
+        /// </param>
+        /// <param name="sWidth">
+        /// The width of the sub-rectangle of the source image to draw into the destination context.
+        /// </param>
+        /// <param name="sHeight">
+        /// The height of the sub-rectangle of the source image to draw into the destination context.
+        /// </param>
+        /// <param name="dx">
+        /// The X coordinate in the destination canvas at which to place the top-left corner of the source image.
+        /// </param>
+        /// <param name="dy">
+        /// The Y coordinate in the destination canvas at which to place the top-left corner of the source image.
+        // </param>
+        /// <param name="dWidth">
+        /// The width to draw the image in the destination canvas. This allows scaling of the drawn image.
+        /// If not specified or null, the image is not scaled in height when drawn.
+        /// </param>
+        /// <param name="dHeight">
+        /// The height to draw the image in the destination canvas. This allows scaling of the drawn image.
+        /// If not specified or null, the image is not scaled in height when drawn.
+        /// </param>
+        public virtual void DrawImage(Any<ImageElement, VideoElement, CanvasElement, CanvasRenderingContext2D> image, Any<int, long, float, double> sx, Any<int, long, float, double> sy, Any<int?, long?, float?, double?> sWidth, Any<int?, long?, float?, double?> sHeight, Any<int, long, float, double> dx, Any<int, long, float, double> dy, Any<int?, long?, float?, double?> dWidth = null, Any<int?, long?, float?, double?> dHeight = null)
         {
             return;
         }
@@ -1002,25 +1182,86 @@ namespace Bridge.Html5
         #region Pixel Manipulation
 
         /// <summary>
-        /// Creates a new, blank ImageData object with the specified dimensions. All of the pixels in the new object are transparent black.
+        /// Creates a new, blank ImageData object with the specified dimensions. All of the pixels in the
+        /// new object are transparent black.
         /// </summary>
-        public virtual void CreateImageData()
+        /// <param name="width">The width to give the new ImageData object.</param>
+        /// <param name="height">The height to give the new ImageData object.</param>
+        /// <returns>
+        /// A new ImageData object with the specified width and height. The new object is filled with
+        /// transparent black pixels.
+        /// </returns>
+        public virtual ImageData CreateImageData(Any<uint, int> width, Any<uint, int> height)
         {
-            return;
+            return null;
         }
 
         /// <summary>
-        /// Returns an ImageData object representing the underlying pixel data for the area of the canvas denoted by the rectangle which starts at (sx, sy) and has an sw width and sh height.
+        /// Creates a new, blank ImageData object with the specified dimensions. All of the pixels in the
+        /// new object are transparent black.
         /// </summary>
-        public virtual void GetImageData()
+        /// <param name="imagedata">
+        /// An existing ImageData object from which to copy the width and height. The image itself is not copied.
+        /// </param>
+        /// <returns>
+        /// A new ImageData object with the specified width and height. The new object is filled with
+        /// transparent black pixels.
+        // </returns>
+        public virtual ImageData CreateImageData(ImageData imagedata)
         {
-            return;
+            return null;
         }
 
         /// <summary>
-        /// Paints data from the given ImageData object onto the bitmap. If a dirty rectangle is provided, only the pixels from that rectangle are painted.
+        /// Returns an ImageData object representing the underlying pixel data for the area of the canvas
+        /// denoted by the rectangle which starts at (sx, sy) and has an sw width and sh height.
         /// </summary>
-        public virtual void PutImageData()
+        /// <param name="sx">
+        /// The x axis of the coordinate for the rectangle startpoint from which the ImageData will be extracted.
+        /// </param>
+        /// <param name="sy">
+        /// The y axis of the coordinate for the rectangle endpoint from which the ImageData will be extracted.
+        /// </param>
+        /// <param name="sw">
+        /// The width of the rectangle from which the ImageData will be extracted.
+        /// </param>
+        /// <param name="sh">
+        /// The height of the rectangle from which the ImageData will be extracted.
+        /// </param>
+        /// <returns></returns>
+        public virtual ImageData GetImageData(Any<uint, int> sx, Any<uint, int> sy, Any<uint, int> sw, Any<uint, int> sh)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Paints data from the given ImageData object onto the bitmap. If a dirty rectangle is provided,
+        /// only the pixels from that rectangle are painted.
+        /// </summary>
+        /// <param name="imagedata">An imageData object containing the array of pixel values.</param>
+        /// <param name="dx">
+        /// Position offset in the target canvas context of the rectangle to be painted, relative to the
+        /// rectangle in the origin image data.
+        /// </param>
+        /// <param name="dy">
+        /// Position offset in the target canvas context of the rectangle to be painted, relative to the
+        /// rectangle in the origin image data.
+        /// </param>
+        /// <param name="dirtyX">
+        /// Position of the top left point of the rectangle to be painted, in the origin image data.
+        /// Defaults to the top left of the whole image data.
+        /// </param>
+        /// <param name="dirtyY">
+        /// Position of the top left point of the rectangle to be painted, in the origin image data.
+        /// Defaults to the top left of the whole image data.
+        /// </param>
+        /// <param name="dirtyWidth">
+        /// Width of the rectangle to be painted, in the origin image data. Defaults to the width of the image data.
+        /// </param>
+        /// <param name="dirtyHeight">
+        /// Height of the rectangle to be painted, in the origin image data. Defaults to the height of the image data.
+        /// </param>
+        public virtual void PutImageData(ImageData imagedata, int dx, int dy, Any<uint?, int?> dirtyX = null, Any<uint?, int?> dirtyY = null, Any<uint?, int?> dirtyWidth = null, Any<uint?, int?> dirtyHeight = null)
         {
             return;
         }
@@ -1072,8 +1313,12 @@ namespace Bridge.Html5
         /// <summary>
         /// Adds a hit region to the canvas.
         /// </summary>
+        /// <param name="options">
+        /// The options argument is optional. When provided, it is an CanvasHitRegionOptions
+        /// object with one or more of its properties set.
+        /// </param>
         /// <remarks>This is experimental API that should not be used in production code.</remarks>
-        public virtual void AddHitRegion()
+        public virtual void AddHitRegion(CanvasHitRegionOptions options = null)
         {
             return;
         }
@@ -1081,8 +1326,9 @@ namespace Bridge.Html5
         /// <summary>
         /// Removes the hit region with the specified id from the canvas.
         /// </summary>
+        /// <param name="id">A DOMString representing the id of the region that is to be removed.</param>
         /// <remarks>This is experimental API that should not be used in production code.</remarks>
-        public virtual void RemoveHitRegion()
+        public virtual void RemoveHitRegion(string id)
         {
             return;
         }
@@ -1105,5 +1351,55 @@ namespace Bridge.Html5
         /// Most of these APIs are deprecated and will be removed in the future.
         /// </summary>
         #endregion
+
+        // FIXME: Find a better place to define this class on. It is not an interface neither an element, but an
+        //        auxiliary object, used only on CanvasRenderingContext2D.
+        [Ignore]
+        [Name("Object")]
+        public class CanvasHitRegionOptions
+        {
+            /// <summary>
+            /// A Path2D object describing the area of the hit region. If not provided, the current path is used.
+            /// </summary>
+            public Path2D Path { get; set; }
+
+            /// <summary>
+            /// The fill rule to use (defaults to "nonzero").
+            /// </summary>
+            public CanvasTypes.CanvasFillRule fillRule { get; set; }
+
+            /// <summary>
+            /// The ID for this hit region to reference it for later use in events, for example.
+            /// </summary>
+            public string Id { get; set; }
+
+            /// <summary>
+            /// The ID of the parent region for cursor fallback and navigation by accessibility tools.
+            /// </summary>
+            public string ParentID { get; set; }
+
+            /// <summary>
+            /// The cursor to use when the mouse is over this region (defaults to "inherit").
+            /// Inherits the cursor of the parent hit region, if any, or the canvas element's cursor.
+            /// </summary>
+            public Cursor Cursor { get; set; } // FIXME: CSS/Cursor.cs has no 'inherit' option!
+
+            /// <summary>
+            /// An element (descendant of the canvas) to which events are to be routed. Defaults to null.
+            /// </summary>
+            public Element Control { get; set; }
+
+            /// <summary>
+            /// A text label for accessibility tools to use as a description of the region,
+            /// if there is no control. Defaults to null.
+            /// </summary>
+            public string Label { get; set; }
+
+            /// <summary>
+            /// An ARIA role for accessibility tools to determine how to represent this region,
+            /// if there is no control. Defaults to null.
+            /// </summary>
+            public string role { get; set; }
+        }
     }
 }
