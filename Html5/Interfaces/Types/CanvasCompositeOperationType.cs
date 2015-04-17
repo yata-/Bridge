@@ -167,6 +167,7 @@ namespace Bridge.Html5
             /// <summary>
             /// Clear the value, to revert back to browser's default.
             /// </summary>
+            [Template("null")]
             Null
         }
     }

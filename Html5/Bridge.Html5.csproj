@@ -21,6 +21,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>1591</NoWarn>
+    <DocumentationFile>bin\Debug\Bridge.Html5.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -52,7 +53,10 @@
     <Compile Include="Console.cs" />
     <Compile Include="Interfaces\CanvasGradient.cs" />
     <Compile Include="Interfaces\CanvasPattern.cs" />
+    <Compile Include="Interfaces\ImageData.cs" />
+    <Compile Include="Interfaces\Path2D.cs" />
     <Compile Include="Interfaces\SVGMatrix.cs" />
+    <Compile Include="Interfaces\SVGOperations.cs" />
     <Compile Include="Interfaces\Types\CanvasCompositeOperationType.cs" />
     <Compile Include="Interfaces\Types\CanvasContextTypes.cs" />
     <Compile Include="Interfaces\Types\CanvasTypes.cs" />

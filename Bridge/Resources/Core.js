@@ -287,6 +287,7 @@
 	                }
 	                else {
 	                    var setter = "set" + key.charAt(0).toUpperCase() + key.slice(1);
+
 	                    if (typeof to[setter] == "function" && typeof value != "function") {
 	                        to[setter](value);
 	                    }
@@ -306,12 +307,12 @@
 
 	    getEnumerator: function (obj) {
 	        if (obj && obj.getEnumerator) {
-	          return obj.getEnumerator();
+	            return obj.getEnumerator();
 	        }
 
 	        if ((Object.prototype.toString.call(obj) === '[object Array]') ||
                 (obj && Bridge.isDefined(obj.length))) {
-	          return new Bridge.ArrayEnumerator(obj);
+	            return new Bridge.ArrayEnumerator(obj);
 	        }
 	    
 	        throw new Bridge.InvalidOperationException('Cannot create enumerator');

@@ -9,6 +9,8 @@ namespace Bridge.Html5
     /// The TextMetrics interface represents the dimension of a text in the canvas, as created by the
     /// CanvasRenderingContext2D.measureText() method.
     /// </summary>
+    [Ignore]
+    [Namespace(false)]
     public class TextMetrics
     {
         /// <summary>
