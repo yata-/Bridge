@@ -37,12 +37,6 @@ namespace System
     }
 
     [Ignore]
-    public interface IDisposable 
-    {
-        void Dispose();
-    }
-
-    [Ignore]
     public struct RuntimeTypeHandle
     {
     }

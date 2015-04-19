@@ -54,3 +54,10 @@ Bridge.Class.generic('Bridge.IList$1', function (T) {
         inherits: [Bridge.ICollection$1(T)]
     }));
 });
+
+Bridge.Class.generic('Bridge.IComparer$1', function (T) {
+    var $$name = Bridge.Class.genericName('Bridge.IComparer$1', T);
+
+    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {        
+    }));
+});

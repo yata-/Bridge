@@ -16,6 +16,7 @@
   <file name="Collections/CustomEnumerator.js" path="Collections" />
   <file name="Collections/ArrayEnumerator.js" path="Collections" />
   <file name="Collections/EqualityComparer.js" path="Collections" />
+  <file name="Collections/Comparer.js" path="Collections" />
   <file name="Collections/Dictionary.js" path="Collections" />
   <file name="Collections/List.js" path="Collections" />
   <file name="Browser.js" />
@@ -24,6 +25,7 @@
   <file name="Attribute.js" />
   <file name="INotifyPropertyChanged.js" />
   <file name="Array.js" />
+  <file name="linq.js" />
   <target name="Bridge.NET" file="$output\bridge.js" debug="True">
     <include name="Init.js" />
     <include name="Core.js" />
@@ -42,6 +44,7 @@
     <include name="Collections/CustomEnumerator.js" />
     <include name="Collections/ArrayEnumerator.js" />
     <include name="Collections/EqualityComparer.js" />
+    <include name="Collections/Comparer.js" />
     <include name="Collections/Dictionary.js" />
     <include name="Collections/List.js" />
     <include name="Task.js" />
@@ -49,5 +52,6 @@
     <include name="Attribute.js" />
     <include name="INotifyPropertyChanged.js" />
     <include name="Array.js" />
+    <include name="linq.js" />
   </target>
 </project>

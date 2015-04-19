@@ -73,8 +73,17 @@
     <Compile Include="System\ArgumentNullException.cs" />
     <Compile Include="System\ArgumentException.cs" />
     <Compile Include="System\ArithmeticException.cs" />
+    <Compile Include="System\Collections\Generic\Comparer.cs" />
+    <Compile Include="System\Collections\Generic\IComparer.cs" />
     <Compile Include="System\Collections\Generic\IList.cs" />
     <Compile Include="System\Collections\ObjectModel\ReadOnlyCollection.cs" />
+    <Compile Include="System\Comparison.cs" />
+    <Compile Include="System\IDisposable.cs" />
+    <Compile Include="System\Linq\Enumerable.cs" />
+    <Compile Include="System\Linq\Grouping.cs" />
+    <Compile Include="System\Linq\EnumerableInstance.cs" />
+    <Compile Include="System\Linq\Lookup.cs" />
+    <Compile Include="System\Linq\OrderedEnumerable.cs" />
     <Compile Include="This.cs" />
     <Compile Include="System\OverflowException.cs" />
     <Compile Include="System\Globalization\CultureNotFoundException.cs" />
@@ -159,6 +168,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Array.js" />
+    <Content Include="Resources\Collections\Comparer.js" />
     <Content Include="Resources\Finally.js" />
     <Content Include="Resources\Init.js" />
     <Content Include="Resources\Attribute.js" />
@@ -174,6 +184,7 @@
     <Content Include="Resources\Exception.js" />
     <Content Include="Resources\INotifyPropertyChanged.js" />
     <Content Include="Resources\Date.js" />
+    <Content Include="Resources\linq.js" />
     <Content Include="Resources\Locales\ru-RU.js" />
     <Content Include="Resources\Text\StringBuilder.js" />
     <Content Include="Resources\TimeSpan.js" />

@@ -18,5 +18,7 @@ Bridge.define('Bridge.ArrayEnumerator', {
 
     reset: function () {
         this.index = -1;
-    }
+    },
+
+    dispose: Bridge.emptyFn
 });

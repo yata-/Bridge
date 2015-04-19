@@ -4,7 +4,7 @@ using Bridge;
 
 namespace System.Collections.Generic 
 {
-	[Name("Bridge.IList")]
+    [Namespace("Bridge")]
 	public interface IList<T> : ICollection<T> 
     {
 		T this[int index] 

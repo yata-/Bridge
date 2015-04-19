@@ -154,6 +154,11 @@ namespace System.Collections.Generic
         {
         }
 
+        [Template("sort(Bridge.fn.bind({comparer}, {comparer}.compare))")]
+        public void Sort(IComparer<T> comparer)
+        {
+        }
+
         public void Splice(int start, int deleteCount) 
         {
         }

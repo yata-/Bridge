@@ -35,3 +35,4 @@ Bridge.Class.generic('Bridge.IEquatable$1', function (T) {
 });
 
 Bridge.define('Bridge.IPromise');
+Bridge.define('Bridge.IDisposable');
