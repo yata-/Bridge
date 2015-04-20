@@ -38,25 +38,5 @@ namespace Bridge.Html5
             [Name("experimental-webgl")]
             Experimental_WebGL
         }
-
-        /// <summary>
-        /// Indicates the WebGL 2 (OpenGL ES 3.0) context on CanvaslElement.GetContext().
-        /// </summary>
-        [Ignore]
-        [Enum(Emit.StringNameLowerCase)]
-        [Name("String")]
-        public enum CanvasContextWebGL2Type
-        {
-            /// <summary>
-            /// WebGL2 -- available only on browsers that implement WebGL version 2 (OpenGL ES 3.0)
-            /// </summary>
-            WebGL2,
-
-            /// <summary>
-            /// Experimental WebGL2 -- available only on browsers that implement WebGL version 2 (OpenGL ES 3.0)
-            /// </summary>
-            [Name("experimental-webgl2")]
-            Experimental_WebGL2
-        }
     }
 }

@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Translator", "..\Bui
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.QUnit1", "..\Frameworks\QUnit1\Bridge.QUnit1.csproj", "{96CB97F5-1BAC-433D-B5CE-AD6E7B244F12}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.WebGL", "..\Frameworks\WebGL\Bridge.WebGL.csproj", "{476C2F05-4770-481C-90D1-8353E5F379DC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{96CB97F5-1BAC-433D-B5CE-AD6E7B244F12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96CB97F5-1BAC-433D-B5CE-AD6E7B244F12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96CB97F5-1BAC-433D-B5CE-AD6E7B244F12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{476C2F05-4770-481C-90D1-8353E5F379DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{476C2F05-4770-481C-90D1-8353E5F379DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{476C2F05-4770-481C-90D1-8353E5F379DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{476C2F05-4770-481C-90D1-8353E5F379DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,5 +89,6 @@ Global
 		{52AE9E3E-6929-4720-AB7A-F9F22B9A8972} = {47D6D365-36CE-43C2-91D0-5A071928C62A}
 		{44124331-C60A-4071-B387-4B8E71324B10} = {47D6D365-36CE-43C2-91D0-5A071928C62A}
 		{96CB97F5-1BAC-433D-B5CE-AD6E7B244F12} = {7C762820-1165-4EB4-B7A3-3BB45DF33CE7}
+		{476C2F05-4770-481C-90D1-8353E5F379DC} = {7C762820-1165-4EB4-B7A3-3BB45DF33CE7}
 	EndGlobalSection
 EndGlobal
