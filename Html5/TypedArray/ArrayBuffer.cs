@@ -10,6 +10,13 @@ namespace Bridge.Html5
 	public class ArrayBuffer 
     {
         /// <summary>
+        ///  The empty constuctor
+        /// </summary>
+        public ArrayBuffer()
+        {
+        }
+
+        /// <summary>
         /// The constructor accepts as input a byte length for the new buffer, and returns the newly-created ArrayBuffer object.
         /// </summary>
         /// <param name="length">The size, in bytes, of the array buffer to create.</param>
