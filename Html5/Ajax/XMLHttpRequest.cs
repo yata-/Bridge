@@ -20,7 +20,7 @@ namespace Bridge.Html5
         /// <summary>
         /// The state of the request
         /// </summary>
-        public readonly ReadyState ReadyState;
+        public readonly AjaxReadyState ReadyState;
 
         /// <summary>
         /// The response entity body according to responseType, as an ArrayBuffer, Blob, Document, JavaScript object (for "json"), or string. This is null if the request is not complete or was not successful.

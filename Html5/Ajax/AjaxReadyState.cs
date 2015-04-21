@@ -10,12 +10,12 @@ namespace Bridge.Html5
     public enum AjaxReadyState 
     {
 		/// <summary>
-        /// open()has not been called yet.
+        /// open() has not been called yet.
 		/// </summary>
         Unsent = 0,
 
         /// <summary>
-        /// send()has not been called yet.
+        /// send() has not been called yet.
         /// </summary>
         Opened = 1,
 
