@@ -20,7 +20,7 @@ namespace Bridge.Html5
         /// Reflects the height HTML attribute, specifying the height of the coordinate space in CSS pixels.
         /// </summary>
         public int Height;
-        
+
         /// <summary>
         /// Reflects the width HTML attribute, specifying the width of the coordinate space in CSS pixels.
         /// </summary>
@@ -30,8 +30,8 @@ namespace Bridge.Html5
         /// Returns a drawing context on the canvas, or null if the context ID is not supported. A drawing context lets you draw on the canvas. Calling getContext with "2d" returns a CanvasRenderingContext2D object, whereas calling it with "experimental-webgl" (or "webgl") returns a WebGLRenderingContext object. This context is only available on browsers that implement WebGL.
         /// </summary>
         /// <param name="contextId">The context's id</param>
-        /// <returns>A drawing context. A CanvasRenderingContext2D or a WebGLRenderingContext object.</returns>
-        public virtual Any<CanvasRenderingContext2D, WebGLRenderingContext> GetContext(string contextId) 
+        /// <returns>A drawing context. A CanvasRenderingContext2D, IWebGLRenderingContext or IWebGL2RenderingContext object.</returns>
+        public virtual Any<CanvasRenderingContext2D, IWebGLRenderingContext> GetContext(string contextId)
         {
             return null;
         }
@@ -54,19 +54,7 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="contextId">The context's id</param>
         /// <returns>A WebGLRenderingContext drawing context object.</returns>
-        public virtual WebGLRenderingContext GetContext(CanvasTypes.CanvasContextWebGLType contextId)
-        {
-            return null;
-        }
-
-        /// <summary>
-        /// Returns WebGL2RenderingContext drawing context on the canvas, or null if the context ID is not supported.
-        /// A drawing context lets you draw on the canvas. This context is only available on browsers that implement
-        /// WebGL 2 (OpenGL ES 3.0).
-        /// </summary>
-        /// <param name="contextId">The context's id</param>
-        /// <returns>A WebGL2RenderingContext drawing context object.</returns>
-        public virtual WebGL2RenderingContext GetContext(CanvasTypes.CanvasContextWebGL2Type contextId)
+        public virtual IWebGLRenderingContext GetContext(CanvasTypes.CanvasContextWebGLType contextId)
         {
             return null;
         }
@@ -79,7 +67,7 @@ namespace Bridge.Html5
         /// If the requested type is image/jpeg or image/webp, then the second argument, if it is between 0.0 and 1.0, is treated as indicating image quality; if the second argument is anything else, the default value for image quality is used. Other arguments are ignored.
         /// </summary>
         /// <returns>URL containing a representation of the image</returns>
-        public virtual string ToDataURL() 
+        public virtual string ToDataURL()
         {
             return null;
         }
@@ -93,7 +81,7 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="type">The format. Defaults to PNG.</param>
         /// <returns>URL containing a representation of the image</returns>
-        public virtual string ToDataURL(string type) 
+        public virtual string ToDataURL(string type)
         {
             return null;
         }
@@ -108,19 +96,14 @@ namespace Bridge.Html5
         /// <param name="type">The format. Defaults to PNG.</param>
         /// /// <param name="args">Any additional parameters</param>
         /// <returns>URL containing a representation of the image</returns>
-        public virtual string ToDataURL(string type, params object[] args) 
+        public virtual string ToDataURL(string type, params object[] args)
         {
             return null;
         }
     }
 
-    // TODO: Not implemented
-    public class WebGLRenderingContext
-    {
-    }
-
-    // TODO: Not implemented
-    public class WebGL2RenderingContext
-    {
-    }
+    /// <summary>
+    /// Implement this interface to use it with canvas.GetContext()
+    /// </summary>
+    public interface IWebGLRenderingContext { }
 }

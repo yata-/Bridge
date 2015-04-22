@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<project path="" name="Bridge.NET" author="Object.NET, Inc." version="1.2.1" copyright="@version   : 1.2.1 - Bridge.NET&#xD;&#xA;@author    : Object.NET, Inc. http://www.bridge.net/&#xD;&#xA;@date      : 2015-04-13&#xD;&#xA;@copyright : Copyright (c) 2008-2015, Object.NET, Inc. (http://www.object.net/). All rights reserved.&#xD;&#xA;@license   : See license.txt and https://github.com/bridgedotnet/Bridge.NET/blob/master/LICENSE." output="$project" source="False" minify="False" doc="False" master="true" zip="true">
+<project path="" name="Bridge.NET" author="Object.NET, Inc." version="1.3.0" copyright="@version   : 1.3.0 - Bridge.NET&#xD;&#xA;@author    : Object.NET, Inc. http://www.bridge.net/&#xD;&#xA;@date      : 2015-04-20&#xD;&#xA;@copyright : Copyright (c) 2008-2015, Object.NET, Inc. (http://www.object.net/). All rights reserved.&#xD;&#xA;@license   : See license.txt and https://github.com/bridgedotnet/Bridge.NET/blob/master/LICENSE." output="$project" source="False" minify="False" doc="False" master="true" zip="true">
   <file name="Init.js" />
   <file name="Core.js" />
   <file name="Nullable.js" />
