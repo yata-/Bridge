@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using Bridge;
 
 namespace System 
@@ -166,6 +167,30 @@ namespace System
         public int GetUpperBound(int dimension)
         {
             return 0;
+        }
+
+        [Template("(Bridge.Array.toEnumerable({this})")]
+        public IEnumerable ToEnumerable()
+        {
+            return null;
+        }
+
+        [Template("(Bridge.Array.toEnumerable({this})")]
+        public IEnumerable<T> ToEnumerable<T>()
+        {
+            return null;
+        }
+
+        [Template("(Bridge.Array.toEnumerator({this})")]
+        public IEnumerator ToEnumerator()
+        {
+            return null;
+        }
+
+        [Template("(Bridge.Array.toEnumerator({this})")]
+        public IEnumerator<T> ToEnumerator<T>()
+        {
+            return null;
         }
     }
 }

@@ -5052,6 +5052,18 @@ Bridge.define('Bridge.PropertyChangedEventArgs', {
             }
 
             return arr;
+        },
+
+        toEnumerable: function(array) {
+            return {
+                getEnumerator: function() {
+                    return new Bridge.ArrayEnumerator(array);
+                }
+            };
+        },
+
+        toEnumerator: function(array) {
+            return new Bridge.ArrayEnumerator(array);
         }
     };
 
