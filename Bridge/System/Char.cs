@@ -99,11 +99,15 @@ namespace System
         {
 			return false;
 		}
-
-        [Template("/\\s/.test(String.fromCharCode({ch}))")]
+                
 		public static bool IsWhiteSpace(char ch) 
         {
 			return false;
 		}
+
+        public static bool IsWhiteSpace(string s, int index)
+        {
+            return false;
+        }
 	}
 }

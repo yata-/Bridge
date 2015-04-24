@@ -3,6 +3,7 @@
   <file name="Init.js" />
   <file name="Core.js" />
   <file name="Nullable.js" />
+  <file name="Char.js" />
   <file name="String.js" />
   <file name="Class.js" />
   <file name="Exception.js" />
@@ -30,6 +31,7 @@
     <include name="Init.js" />
     <include name="Core.js" />
     <include name="Nullable.js" />
+    <include name="Char.js" />
     <include name="String.js" />
     <include name="Class.js" />
     <include name="Exception.js" />
