@@ -1359,7 +1359,7 @@ namespace System.Linq
 	    public static Lookup<TKey, TSource> ToLookup<TSource, TKey>(this IEnumerable<TSource> source,
 	        Func<TSource, TKey> keySelector, IEqualityComparer<TKey> comparer)
 	    {
-	        return null;
+	        return default(Lookup<TKey, TSource>);
 	    }
 
 	    [Template("Bridge.Linq.Enumerable.from({source}).toLookup({keySelector}, {elementSelector})")]
@@ -1487,16 +1487,16 @@ namespace System.Linq
 	        return null;
 	    }
 
-	    [Template("Bridge.Linq.Enumerable.from({source}).zip({other}, {selector})")]
-	    public static EnumerableInstance<TResult> Zip<TSource, TOther, TResult>(this IEnumerable<TSource> source,
-	        IEnumerable<TOther> other, Func<TSource, TOther, TResult> selector)
+	    [Template("Bridge.Linq.Enumerable.from({source}).zip({other}, {resultSelector})")]
+	    public static EnumerableInstance<TResult> Zip<TFirst, TSecond, TResult>(this IEnumerable<TFirst> first,
+            IEnumerable<TSecond> second, Func<TFirst, TSecond, TResult> resultSelector)
 	    {
 	        return null;
 	    }
 
-	    [Template("Bridge.Linq.Enumerable.from({source}).zip({other}, {selector})")]
-	    public static EnumerableInstance<TResult> Zip<TSource, TOther, TResult>(this IEnumerable<TSource> source,
-	        IEnumerable<TOther> other, Func<TSource, TOther, int, TResult> selector)
+        [Template("Bridge.Linq.Enumerable.from({first}).zip({second}, {resultSelector})")]
+	    public static EnumerableInstance<TResult> Zip<TFirst, TSecond, TResult>(this IEnumerable<TFirst> first,
+            IEnumerable<TSecond> second, Func<TFirst, TSecond, int, TResult> resultSelector)
 	    {
 	        return null;
 	    }
