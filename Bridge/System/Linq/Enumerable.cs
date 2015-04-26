@@ -3278,7 +3278,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// first or second is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).sequenceEqual({other})")]
+        [Template("Bridge.Linq.Enumerable.from({first}).sequenceEqual({second})")]
         public static bool SequenceEqual<TSource>(this IEnumerable<TSource> first, IEnumerable<TSource> second)
         {
             return default(bool);
@@ -3307,7 +3307,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// first or second is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).sequenceEqual({other}, {comparer})")]
+        [Template("Bridge.Linq.Enumerable.from({first}).sequenceEqual({second}, {comparer})")]
         public static bool SequenceEqual<TSource>(this IEnumerable<TSource> first, IEnumerable<TSource> second,
             IEqualityComparer<TSource> comparer)
         {
@@ -4583,7 +4583,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// first or second is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).zip({other}, {resultSelector})")]
+        [Template("Bridge.Linq.Enumerable.from({first}).zip({second}, {resultSelector})")]
         public static EnumerableInstance<TResult> Zip<TFirst, TSecond, TResult>(this IEnumerable<TFirst> first, IEnumerable<TSecond> second,
             Func<TFirst, TSecond, TResult> resultSelector)
         {
