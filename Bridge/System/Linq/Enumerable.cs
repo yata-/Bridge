@@ -1615,7 +1615,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// first or second is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).intersect({other})")]
+        [Template("Bridge.Linq.Enumerable.from({first}).intersect({second})")]
         public static EnumerableInstance<TSource> Intersect<TSource>(this IEnumerable<TSource> first, IEnumerable<TSource> second)
         {
             return default(EnumerableInstance<TSource>);
@@ -1646,7 +1646,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// first or second is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).intersect({other}, {comparer})")]
+        [Template("Bridge.Linq.Enumerable.from({first}).intersect({second}, {comparer})")]
         public static EnumerableInstance<TSource> Intersect<TSource>(this IEnumerable<TSource> first,
             IEnumerable<TSource> second, IEqualityComparer<TSource> comparer)
         {
