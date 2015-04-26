@@ -1692,7 +1692,7 @@ namespace System.Linq
         /// outer or inner or outerKeySelector or innerKeySelector or resultSelector
         /// is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({outer}).join({inner}, {outerKeySelector}, {innerKeySelector}, {resultSelector})")]
+        [Template("Bridge.Linq.Enumerable.from({this}).join({inner}, {outerKeySelector}, {innerKeySelector}, {resultSelector})")]
         public static EnumerableInstance<TResult> Join<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer,
             IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector,
             Func<TOuter, TInner, TResult> resultSelector)
@@ -1742,7 +1742,7 @@ namespace System.Linq
         /// outer or inner or outerKeySelector or innerKeySelector or resultSelector
         /// is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({outer}).join({inner}, {outerKeySelector}, {innerKeySelector}, {resultSelector}, {comparer})")]
+        [Template("Bridge.Linq.Enumerable.from({this}).join({inner}, {outerKeySelector}, {innerKeySelector}, {resultSelector}, {comparer})")]
         public static EnumerableInstance<TResult> Join<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer,
             IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector,
             Func<TOuter, TInner, TResult> resultSelector, IEqualityComparer<TKey> comparer)
