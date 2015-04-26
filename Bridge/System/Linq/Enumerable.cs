@@ -13,7 +13,7 @@ namespace System.Linq
         /// Applies an accumulator function over a sequence.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> to aggregate over.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; to aggregate over.
         /// </param>
         /// <param name="func">
         /// An accumulator function to be invoked on each element.
@@ -41,7 +41,7 @@ namespace System.Linq
         /// is used as the initial accumulator value.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> to aggregate over.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; to aggregate over.
         /// </param>
         /// <param name="seed">
         /// The initial accumulator value.
@@ -74,7 +74,7 @@ namespace System.Linq
         /// to select the result value.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> to aggregate over.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; to aggregate over.
         /// </param>
         /// <param name="seed">
         /// The initial accumulator value.
@@ -111,7 +111,7 @@ namespace System.Linq
         /// Determines whether all elements of a sequence satisfy a condition.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> that contains the elements to
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; that contains the elements to
         /// apply the predicate to.
         /// </param>
         /// <param name="predicate">
@@ -144,7 +144,7 @@ namespace System.Linq
         /// Determines whether a sequence contains any elements.
         /// </summary>
         /// <param name="source">
-        /// The System.Collections.Generic.IEnumerable<T> to check for emptiness.
+        /// The System.Collections.Generic.IEnumerable&lt;T&gt; to check for emptiness.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of source.
@@ -165,7 +165,7 @@ namespace System.Linq
         /// Determines whether any element of a sequence satisfies a condition.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> whose elements to apply the
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; whose elements to apply the
         /// predicate to.
         /// </param>
         /// <param name="predicate">
@@ -558,7 +558,7 @@ namespace System.Linq
         /// The type to cast the elements of source to.
         /// </typeparam>
         /// <returns>
-        /// An System.Collections.Generic.IEnumerable<T> that contains each element of
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; that contains each element of
         /// the source sequence cast to the specified type.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -630,7 +630,7 @@ namespace System.Linq
 
         /// <summary>
         /// Determines whether a sequence contains a specified element by using a specified
-        /// System.Collections.Generic.IEqualityComparer<T>.
+        /// System.Collections.Generic.IEqualityComparer&lt;T&gt;.
         /// </summary>
         /// <param name="source">
         /// A sequence in which to locate a value.
@@ -728,7 +728,7 @@ namespace System.Linq
         /// The type of the elements of source.
         /// </typeparam>
         /// <returns>
-        /// An System.Collections.Generic.IEnumerable<T> object that contains the default
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; object that contains the default
         /// value for the TSource type if source is empty; otherwise, source.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -754,7 +754,7 @@ namespace System.Linq
         /// The type of the elements of source.
         /// </typeparam>
         /// <returns>
-        /// An System.Collections.Generic.IEnumerable<T> that contains defaultValue if
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; that contains defaultValue if
         /// source is empty; otherwise, source.
         /// </returns>
         [Template("Bridge.Linq.Enumerable.from({source}).defaultIfEmpty({defaultValue})")]
@@ -775,7 +775,7 @@ namespace System.Linq
         /// The type of the elements of source.
         /// </typeparam>
         /// <returns>
-        /// An System.Collections.Generic.IEnumerable<T> that contains distinct elements
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; that contains distinct elements
         /// from the source sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -788,20 +788,20 @@ namespace System.Linq
         }
 
         /// <summary>
-        /// Returns distinct elements from a sequence by using a specified System.Collections.Generic.IEqualityComparer<T>
+        /// Returns distinct elements from a sequence by using a specified System.Collections.Generic.IEqualityComparer&lt;T&gt;
         /// to compare values.
         /// </summary>
         /// <param name="source">
         /// The sequence to remove duplicate elements from.
         /// </param>
         /// <param name="comparer">
-        /// An System.Collections.Generic.IEqualityComparer<T> to compare values.
+        /// An System.Collections.Generic.IEqualityComparer&lt;T&gt; to compare values.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of source.
         /// </typeparam>
         /// <returns>
-        /// An System.Collections.Generic.IEnumerable<T> that contains distinct elements
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; that contains distinct elements
         /// from the source sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -834,7 +834,7 @@ namespace System.Linq
         /// Returns the element at a specified index in a sequence.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> to return an element from.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; to return an element from.
         /// </param>
         /// <param name="index">
         /// The zero-based index of the element to retrieve.
@@ -863,7 +863,7 @@ namespace System.Linq
         /// if the index is out of range.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> to return an element from.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; to return an element from.
         /// </param>
         /// <param name="index">
         /// The zero-based index of the element to retrieve.
@@ -892,14 +892,14 @@ namespace System.Linq
 	    }
 
         /// <summary>
-        /// Returns an empty System.Collections.Generic.IEnumerable<T> that has the specified
+        /// Returns an empty System.Collections.Generic.IEnumerable&lt;T&gt; that has the specified
         /// type argument.
         /// </summary>
         /// <typeparam name="TResult">
-        /// The type to assign to the type parameter of the returned generic System.Collections.Generic.IEnumerable<T>.
+        /// The type to assign to the type parameter of the returned generic System.Collections.Generic.IEnumerable&lt;T&gt;.
         /// </typeparam>
         /// <returns>
-        /// An empty System.Collections.Generic.IEnumerable<T> whose type argument is
+        /// An empty System.Collections.Generic.IEnumerable&lt;T&gt; whose type argument is
         /// TResult.
         /// </returns>
         public static EnumerableInstance<TResult> Empty<TResult>()
@@ -912,11 +912,11 @@ namespace System.Linq
         /// comparer to compare values.
         /// </summary>
         /// <param name="first">
-        /// An System.Collections.Generic.IEnumerable<T> whose elements that are not
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; whose elements that are not
         /// also in second will be returned.
         /// </param>
         /// <param name="second">
-        /// An System.Collections.Generic.IEnumerable<T> whose elements that also occur
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; whose elements that also occur
         /// in the first sequence will cause those elements to be removed from the returned
         /// sequence.
         /// </param>
@@ -938,20 +938,20 @@ namespace System.Linq
         }
 
         /// <summary>
-        /// Produces the set difference of two sequences by using the specified System.Collections.Generic.IEqualityComparer<T>
+        /// Produces the set difference of two sequences by using the specified System.Collections.Generic.IEqualityComparer&lt;T&gt;
         /// to compare values.
         /// </summary>
         /// <param name="first">
-        /// An System.Collections.Generic.IEnumerable<T> whose elements that are not
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; whose elements that are not
         /// also in second will be returned.
         /// </param>
         /// <param name="second">
-        /// An System.Collections.Generic.IEnumerable<T> whose elements that also occur
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; whose elements that also occur
         /// in the first sequence will cause those elements to be removed from the returned
         /// sequence.
         /// </param>
         /// <param name="comparer">
-        /// An System.Collections.Generic.IEqualityComparer<T> to compare values.
+        /// An System.Collections.Generic.IEqualityComparer&lt;T&gt; to compare values.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of the input sequences.
@@ -981,7 +981,7 @@ namespace System.Linq
         /// Returns the first element of a sequence.
         /// </summary>
         /// <param name="source">
-        /// The System.Collections.Generic.IEnumerable<T> to return the first element
+        /// The System.Collections.Generic.IEnumerable&lt;T&gt; to return the first element
         /// of.
         /// </param>
         /// <typeparam name="TSource">
@@ -1006,7 +1006,7 @@ namespace System.Linq
         /// Returns the first element in a sequence that satisfies a specified condition.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> to return an element from.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; to return an element from.
         /// </param>
         /// <param name="predicate">
         /// A function to test each element for a condition.
@@ -1036,7 +1036,7 @@ namespace System.Linq
         /// contains no elements.
         /// </summary>
         /// <param name="source">
-        /// The System.Collections.Generic.IEnumerable<T> to return the first element
+        /// The System.Collections.Generic.IEnumerable&lt;T&gt; to return the first element
         /// of.
         /// </param>
         /// <typeparam name="TSource">
@@ -1059,7 +1059,7 @@ namespace System.Linq
         /// default value if no such element is found.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> to return an element from.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; to return an element from.
         /// </param>
         /// <param name="predicate">
         /// A function to test each element for a condition.
@@ -1167,7 +1167,7 @@ namespace System.Linq
         /// Groups the elements of a sequence according to a specified key selector function.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> whose elements to group.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; whose elements to group.
         /// </param>
         /// <param name="keySelector">
         /// A function to extract the key for each element.
@@ -1179,8 +1179,8 @@ namespace System.Linq
         /// The type of the key returned by keySelector.
         /// </typeparam>
         /// <returns>
-        /// An IEnumerable<IGrouping<TKey, TSource>> in C# or IEnumerable(Of IGrouping(Of
-        /// TKey, TSource)) in Visual Basic where each System.Linq.IGrouping<TKey,TElement>
+        /// An IEnumerable&lt;IGrouping&lt;TKey, TSource&gt;&gt; in C# or IEnumerable(Of IGrouping(Of
+        /// TKey, TSource)) in Visual Basic where each System.Linq.IGrouping&lt;TKey,TElement&gt;
         /// object contains a sequence of objects and a key.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -1198,7 +1198,7 @@ namespace System.Linq
         /// and creates a result value from each group and its key.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> whose elements to group.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; whose elements to group.
         /// </param>
         /// <param name="keySelector">
         /// A function to extract the key for each element.
@@ -1231,13 +1231,13 @@ namespace System.Linq
         /// and projects the elements for each group by using a specified function.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> whose elements to group.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; whose elements to group.
         /// </param>
         /// <param name="keySelector">
         /// A function to extract the key for each element.
         /// </param>
         /// <param name="elementSelector">
-        /// A function to map each source element to an element in the System.Linq.IGrouping<TKey,TElement>.
+        /// A function to map each source element to an element in the System.Linq.IGrouping&lt;TKey,TElement&gt;.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of source.
@@ -1246,11 +1246,11 @@ namespace System.Linq
         /// The type of the key returned by keySelector.
         /// </typeparam>
         /// <typeparam name="TElement">
-        /// The type of the elements in the System.Linq.IGrouping<TKey,TElement>.
+        /// The type of the elements in the System.Linq.IGrouping&lt;TKey,TElement&gt;.
         /// </typeparam>
         /// <returns>
-        /// An IEnumerable<IGrouping<TKey, TElement>> in C# or IEnumerable(Of IGrouping(Of
-        /// TKey, TElement)) in Visual Basic where each System.Linq.IGrouping<TKey,TElement>
+        /// An IEnumerable&lt;IGrouping&lt;TKey, TElement&gt;&gt; in C# or IEnumerable(Of IGrouping(Of
+        /// TKey, TElement)) in Visual Basic where each System.Linq.IGrouping&lt;TKey,TElement&gt;
         /// object contains a collection of objects of type TElement and a key.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -1268,13 +1268,13 @@ namespace System.Linq
         /// and compares the keys by using a specified comparer.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> whose elements to group.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; whose elements to group.
         /// </param>
         /// <param name="keySelector">
         /// A function to extract the key for each element.
         /// </param>
         /// <param name="comparer">
-        /// An System.Collections.Generic.IEqualityComparer<T> to compare keys.
+        /// An System.Collections.Generic.IEqualityComparer&lt;T&gt; to compare keys.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of source.
@@ -1283,8 +1283,8 @@ namespace System.Linq
         /// The type of the key returned by keySelector.
         /// </typeparam>
         /// <returns>
-        /// An IEnumerable<IGrouping<TKey, TSource>> in C# or IEnumerable(Of IGrouping(Of
-        /// TKey, TSource)) in Visual Basic where each System.Linq.IGrouping<TKey,TElement>
+        /// An IEnumerable&lt;IGrouping&lt;TKey, TSource&gt;&gt; in C# or IEnumerable(Of IGrouping(Of
+        /// TKey, TSource)) in Visual Basic where each System.Linq.IGrouping&lt;TKey,TElement&gt;
         /// object contains a collection of objects and a key.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -1303,7 +1303,7 @@ namespace System.Linq
         /// by using a specified comparer.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> whose elements to group.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; whose elements to group.
         /// </param>
         /// <param name="keySelector">
         /// A function to extract the key for each element.
@@ -1312,7 +1312,7 @@ namespace System.Linq
         /// A function to create a result value from each group.
         /// </param>
         /// <param name="comparer">
-        /// An System.Collections.Generic.IEqualityComparer<T> to compare keys with.
+        /// An System.Collections.Generic.IEqualityComparer&lt;T&gt; to compare keys with.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of source.
@@ -1341,13 +1341,13 @@ namespace System.Linq
         /// group are projected by using a specified function.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> whose elements to group.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; whose elements to group.
         /// </param>
         /// <param name="keySelector">
         /// A function to extract the key for each element.
         /// </param>
         /// <param name="elementSelector">
-        /// A function to map each source element to an element in an System.Linq.IGrouping<TKey,TElement>.
+        /// A function to map each source element to an element in an System.Linq.IGrouping&lt;TKey,TElement&gt;.
         /// </param>
         /// <param name="resultSelector">
         /// A function to create a result value from each group.
@@ -1359,7 +1359,7 @@ namespace System.Linq
         /// The type of the key returned by keySelector.
         /// </typeparam>
         /// <typeparam name="TElement">
-        /// The type of the elements in each System.Linq.IGrouping<TKey,TElement>.
+        /// The type of the elements in each System.Linq.IGrouping&lt;TKey,TElement&gt;.
         /// </typeparam>
         /// <typeparam name="TResult">
         /// The type of the result value returned by resultSelector.
@@ -1382,16 +1382,16 @@ namespace System.Linq
         /// by using a specified function.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> whose elements to group.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; whose elements to group.
         /// </param>
         /// <param name="keySelector">
         /// A function to extract the key for each element.
         /// </param>
         /// <param name="elementSelector">
-        /// A function to map each source element to an element in an System.Linq.IGrouping<TKey,TElement>.
+        /// A function to map each source element to an element in an System.Linq.IGrouping&lt;TKey,TElement&gt;.
         /// </param>
         /// <param name="comparer">
-        /// An System.Collections.Generic.IEqualityComparer<T> to compare keys.
+        /// An System.Collections.Generic.IEqualityComparer&lt;T&gt; to compare keys.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of source.
@@ -1400,11 +1400,11 @@ namespace System.Linq
         /// The type of the key returned by keySelector.
         /// </typeparam>
         /// <typeparam name="TElement">
-        /// The type of the elements in the System.Linq.IGrouping<TKey,TElement>.
+        /// The type of the elements in the System.Linq.IGrouping&lt;TKey,TElement&gt;.
         /// </typeparam>
         /// <returns>
-        /// An IEnumerable<IGrouping<TKey, TElement>> in C# or IEnumerable(Of IGrouping(Of
-        /// TKey, TElement)) in Visual Basic where each System.Linq.IGrouping<TKey,TElement>
+        /// An IEnumerable&lt;IGrouping&lt;TKey, TElement&gt;&gt; in C# or IEnumerable(Of IGrouping(Of
+        /// TKey, TElement)) in Visual Basic where each System.Linq.IGrouping&lt;TKey,TElement&gt;
         /// object contains a collection of objects of type TElement and a key.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -1425,19 +1425,19 @@ namespace System.Linq
         /// by using a specified function.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> whose elements to group.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; whose elements to group.
         /// </param>
         /// <param name="keySelector">
         /// A function to extract the key for each element.
         /// </param>
         /// <param name="elementSelector">
-        /// A function to map each source element to an element in an System.Linq.IGrouping<TKey,TElement>.
+        /// A function to map each source element to an element in an System.Linq.IGrouping&lt;TKey,TElement&gt;.
         /// </param>
         /// <param name="resultSelector">
         /// A function to create a result value from each group.
         /// </param>
         /// <param name="comparer">
-        /// An System.Collections.Generic.IEqualityComparer<T> to compare keys with.
+        /// An System.Collections.Generic.IEqualityComparer&lt;T&gt; to compare keys with.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of source.
@@ -1446,7 +1446,7 @@ namespace System.Linq
         /// The type of the key returned by keySelector.
         /// </typeparam>
         /// <typeparam name="TElement">
-        /// The type of the elements in each System.Linq.IGrouping<TKey,TElement>.
+        /// The type of the elements in each System.Linq.IGrouping&lt;TKey,TElement&gt;.
         /// </typeparam>
         /// <typeparam name="TResult">
         /// The type of the result value returned by resultSelector.
@@ -1496,7 +1496,7 @@ namespace System.Linq
         /// The type of the result elements.
         /// </typeparam>
         /// <returns>
-        /// An System.Collections.Generic.IEnumerable<T> that contains elements of type
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; that contains elements of type
         /// TResult that are obtained by performing a grouped join on two sequences.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -1513,7 +1513,7 @@ namespace System.Linq
 
         /// <summary>
         /// Correlates the elements of two sequences based on key equality and groups
-        /// the results. A specified System.Collections.Generic.IEqualityComparer<T>
+        /// the results. A specified System.Collections.Generic.IEqualityComparer&lt;T&gt;
         /// is used to compare keys.
         /// </summary>
         /// <param name="outer">
@@ -1533,7 +1533,7 @@ namespace System.Linq
         /// and a collection of matching elements from the second sequence.
         /// </param>
         /// <param name="comparer">
-        /// An System.Collections.Generic.IEqualityComparer<T> to hash and compare keys.
+        /// An System.Collections.Generic.IEqualityComparer&lt;T&gt; to hash and compare keys.
         /// </param>
         /// <typeparam name="TOuter">
         /// The type of the elements of the first sequence.
@@ -1548,7 +1548,7 @@ namespace System.Linq
         /// The type of the result elements.
         /// </typeparam>
         /// <returns>
-        /// An System.Collections.Generic.IEnumerable<T> that contains elements of type
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; that contains elements of type
         /// TResult that are obtained by performing a grouped join on two sequences.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -1598,11 +1598,11 @@ namespace System.Linq
         /// comparer to compare values.
         /// </summary>
         /// <param name="first">
-        /// An System.Collections.Generic.IEnumerable<T> whose distinct elements that
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; whose distinct elements that
         /// also appear in second will be returned.
         /// </param>
         /// <param name="second">
-        /// An System.Collections.Generic.IEnumerable<T> whose distinct elements that
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; whose distinct elements that
         /// also appear in the first sequence will be returned.
         /// </param>
         /// <typeparam name="TSource">
@@ -1622,19 +1622,19 @@ namespace System.Linq
         }
 
         /// <summary>
-        /// Produces the set intersection of two sequences by using the specified System.Collections.Generic.IEqualityComparer<T>
+        /// Produces the set intersection of two sequences by using the specified System.Collections.Generic.IEqualityComparer&lt;T&gt;
         /// to compare values.
         /// </summary>
         /// <param name="first">
-        /// An System.Collections.Generic.IEnumerable<T> whose distinct elements that
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; whose distinct elements that
         /// also appear in second will be returned.
         /// </param>
         /// <param name="second">
-        /// An System.Collections.Generic.IEnumerable<T> whose distinct elements that
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; whose distinct elements that
         /// also appear in the first sequence will be returned.
         /// </param>
         /// <param name="comparer">
-        /// An System.Collections.Generic.IEqualityComparer<T> to compare values.
+        /// An System.Collections.Generic.IEqualityComparer&lt;T&gt; to compare values.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of the input sequences.
@@ -1685,7 +1685,7 @@ namespace System.Linq
         /// The type of the result elements.
         /// </typeparam>
         /// <returns>
-        /// An System.Collections.Generic.IEnumerable<T> that has elements of type TResult
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; that has elements of type TResult
         /// that are obtained by performing an inner join on two sequences.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -1702,7 +1702,7 @@ namespace System.Linq
 
         /// <summary>
         /// Correlates the elements of two sequences based on matching keys. A specified
-        /// System.Collections.Generic.IEqualityComparer<T> is used to compare keys.
+        /// System.Collections.Generic.IEqualityComparer&lt;T&gt; is used to compare keys.
         /// </summary>
         /// <param name="outer">
         /// The first sequence to join.
@@ -1720,7 +1720,7 @@ namespace System.Linq
         /// A function to create a result element from two matching elements.
         /// </param>
         /// <param name="comparer">
-        /// An System.Collections.Generic.IEqualityComparer<T> to hash and compare keys.
+        /// An System.Collections.Generic.IEqualityComparer&lt;T&gt; to hash and compare keys.
         /// </param>
         /// <typeparam name="TOuter">
         /// The type of the elements of the first sequence.
@@ -1735,7 +1735,7 @@ namespace System.Linq
         /// The type of the result elements.
         /// </typeparam>
         /// <returns>
-        /// An System.Collections.Generic.IEnumerable<T> that has elements of type TResult
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; that has elements of type TResult
         /// that are obtained by performing an inner join on two sequences.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -1754,7 +1754,7 @@ namespace System.Linq
         /// Returns the last element of a sequence.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> to return the last element of.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; to return the last element of.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of source.
@@ -1778,7 +1778,7 @@ namespace System.Linq
         /// Returns the last element of a sequence that satisfies a specified condition.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> to return an element from.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; to return an element from.
         /// </param>
         /// <param name="predicate">
         /// A function to test each element for a condition.
@@ -1823,14 +1823,14 @@ namespace System.Linq
         /// contains no elements.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> to return the last element of.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; to return the last element of.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of source.
         /// </typeparam>
         /// <returns>
         /// default(TSource) if the source sequence is empty; otherwise, the last element
-        /// in the System.Collections.Generic.IEnumerable<T>.
+        /// in the System.Collections.Generic.IEnumerable&lt;T&gt;.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
         /// source is null.
@@ -1846,7 +1846,7 @@ namespace System.Linq
         /// value if no such element is found.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> to return an element from.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; to return an element from.
         /// </param>
         /// <param name="predicate">
         /// A function to test each element for a condition.
@@ -2703,7 +2703,7 @@ namespace System.Linq
         /// The type to filter the elements of the sequence on.
         /// </typeparam>
         /// <returns>
-        /// An System.Collections.Generic.IEnumerable<T> that contains elements from
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; that contains elements from
         /// the input sequence of type TResult.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -2738,7 +2738,7 @@ namespace System.Linq
         /// The type of the key returned by keySelector.
         /// </typeparam>
         /// <returns>
-        /// An System.Linq.IOrderedEnumerable<TElement> whose elements are sorted according
+        /// An System.Linq.IOrderedEnumerable&lt;TElement&gt; whose elements are sorted according
         /// to a key.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -2761,7 +2761,7 @@ namespace System.Linq
         /// A function to extract a key from an element.
         /// </param>
         /// <param name="comparer">
-        /// An System.Collections.Generic.IComparer<T> to compare keys.
+        /// An System.Collections.Generic.IComparer&lt;T&gt; to compare keys.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of source.
@@ -2770,7 +2770,7 @@ namespace System.Linq
         /// The type of the key returned by keySelector.
         /// </typeparam>
         /// <returns>
-        /// An System.Linq.IOrderedEnumerable<TElement> whose elements are sorted according
+        /// An System.Linq.IOrderedEnumerable&lt;TElement&gt; whose elements are sorted according
         /// to a key.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -2806,7 +2806,7 @@ namespace System.Linq
         /// The type of the key returned by keySelector.
         /// </typeparam>
         /// <returns>
-        /// An System.Linq.IOrderedEnumerable<TElement> whose elements are sorted in
+        /// An System.Linq.IOrderedEnumerable&lt;TElement&gt; whose elements are sorted in
         /// descending order according to a key.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -2830,7 +2830,7 @@ namespace System.Linq
         /// A function to extract a key from an element.
         /// </param>
         /// <param name="comparer">
-        /// An System.Collections.Generic.IComparer<T> to compare keys.
+        /// An System.Collections.Generic.IComparer&lt;T&gt; to compare keys.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of source.
@@ -2839,7 +2839,7 @@ namespace System.Linq
         /// The type of the key returned by keySelector.
         /// </typeparam>
         /// <returns>
-        /// An System.Linq.IOrderedEnumerable<TElement> whose elements are sorted in
+        /// An System.Linq.IOrderedEnumerable&lt;TElement&gt; whose elements are sorted in
         /// descending order according to a key.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -2938,7 +2938,7 @@ namespace System.Linq
         /// The number of sequential integers to generate.
         /// </param>
         /// <returns>
-        /// An IEnumerable<Int32> in C# or IEnumerable(Of Int32) in Visual Basic that
+        /// An IEnumerable&lt;Int32&gt; in C# or IEnumerable(Of Int32) in Visual Basic that
         /// contains a range of sequential integral numbers.
         /// </returns>
         /// <exception cref="System.ArgumentOutOfRangeException">
@@ -2998,7 +2998,7 @@ namespace System.Linq
         /// The type of the value to be repeated in the result sequence.
         /// </typeparam>
         /// <returns>
-        /// An System.Collections.Generic.IEnumerable<T> that contains a repeated value.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; that contains a repeated value.
         /// </returns>
         /// <exception cref="System.ArgumentOutOfRangeException">
         /// count is less than 0.
@@ -3071,7 +3071,7 @@ namespace System.Linq
         /// The type of the value returned by selector.
         /// </typeparam>
         /// <returns>
-        /// An System.Collections.Generic.IEnumerable<T> whose elements are the result
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; whose elements are the result
         /// of invoking the transform function on each element of source.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -3100,7 +3100,7 @@ namespace System.Linq
         /// The type of the value returned by selector.
         /// </typeparam>
         /// <returns>
-        /// An System.Collections.Generic.IEnumerable<T> whose elements are the result
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; whose elements are the result
         /// of invoking the transform function on each element of source.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -3114,7 +3114,7 @@ namespace System.Linq
         }
 
         /// <summary>
-        /// Projects each element of a sequence to an System.Collections.Generic.IEnumerable<T>
+        /// Projects each element of a sequence to an System.Collections.Generic.IEnumerable&lt;T&gt;
         /// and flattens the resulting sequences into one sequence.
         /// </summary>
         /// <param name="source">
@@ -3130,7 +3130,7 @@ namespace System.Linq
         /// The type of the elements of the sequence returned by selector.
         /// </typeparam>
         /// <returns>
-        /// An System.Collections.Generic.IEnumerable<T> whose elements are the result
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; whose elements are the result
         /// of invoking the one-to-many transform function on each element of the input
         /// sequence.
         /// </returns>
@@ -3145,7 +3145,7 @@ namespace System.Linq
         }
 
         /// <summary>
-        /// Projects each element of a sequence to an System.Collections.Generic.IEnumerable<T>,
+        /// Projects each element of a sequence to an System.Collections.Generic.IEnumerable&lt;T&gt;,
         /// and flattens the resulting sequences into one sequence. The index of each
         /// source element is used in the projected form of that element.
         /// </summary>
@@ -3163,7 +3163,7 @@ namespace System.Linq
         /// The type of the elements of the sequence returned by selector.
         /// </typeparam>
         /// <returns>
-        /// An System.Collections.Generic.IEnumerable<T> whose elements are the result
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; whose elements are the result
         /// of invoking the one-to-many transform function on each element of an input
         /// sequence.
         /// </returns>
@@ -3178,7 +3178,7 @@ namespace System.Linq
         }
 
         /// <summary>
-        /// Projects each element of a sequence to an System.Collections.Generic.IEnumerable<T>,
+        /// Projects each element of a sequence to an System.Collections.Generic.IEnumerable&lt;T&gt;,
         /// flattens the resulting sequences into one sequence, and invokes a result
         /// selector function on each element therein.
         /// </summary>
@@ -3201,7 +3201,7 @@ namespace System.Linq
         /// The type of the elements of the resulting sequence.
         /// </typeparam>
         /// <returns>
-        /// An System.Collections.Generic.IEnumerable<T> whose elements are the result
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; whose elements are the result
         /// of invoking the one-to-many transform function collectionSelector on each
         /// element of source and then mapping each of those sequence elements and their
         /// corresponding source element to a result element.
@@ -3217,7 +3217,7 @@ namespace System.Linq
         }
 
         /// <summary>
-        /// Projects each element of a sequence to an System.Collections.Generic.IEnumerable<T>,
+        /// Projects each element of a sequence to an System.Collections.Generic.IEnumerable&lt;T&gt;,
         /// flattens the resulting sequences into one sequence, and invokes a result
         /// selector function on each element therein. The index of each source element
         /// is used in the intermediate projected form of that element.
@@ -3242,7 +3242,7 @@ namespace System.Linq
         /// The type of the elements of the resulting sequence.
         /// </typeparam>
         /// <returns>
-        /// An System.Collections.Generic.IEnumerable<T> whose elements are the result
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; whose elements are the result
         /// of invoking the one-to-many transform function collectionSelector on each
         /// element of source and then mapping each of those sequence elements and their
         /// corresponding source element to a result element.
@@ -3262,10 +3262,10 @@ namespace System.Linq
         /// the default equality comparer for their type.
         /// </summary>
         /// <param name="first">
-        /// An System.Collections.Generic.IEnumerable<T> to compare to second.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; to compare to second.
         /// </param>
         /// <param name="second">
-        /// An System.Collections.Generic.IEnumerable<T> to compare to the first sequence.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; to compare to the first sequence.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of the input sequences.
@@ -3286,16 +3286,16 @@ namespace System.Linq
 
         /// <summary>
         /// Determines whether two sequences are equal by comparing their elements by
-        /// using a specified System.Collections.Generic.IEqualityComparer<T>.
+        /// using a specified System.Collections.Generic.IEqualityComparer&lt;T&gt;.
         /// </summary>
         /// <param name="first">
-        /// An System.Collections.Generic.IEnumerable<T> to compare to second.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; to compare to second.
         /// </param>
         /// <param name="second">
-        /// An System.Collections.Generic.IEnumerable<T> to compare to the first sequence.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; to compare to the first sequence.
         /// </param>
         /// <param name="comparer">
-        /// An System.Collections.Generic.IEqualityComparer<T> to use to compare elements.
+        /// An System.Collections.Generic.IEqualityComparer&lt;T&gt; to use to compare elements.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of the input sequences.
@@ -3333,7 +3333,7 @@ namespace System.Linq
         /// is not exactly one element in the sequence.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> to return the single element
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; to return the single element
         /// of.
         /// </param>
         /// <typeparam name="TSource">
@@ -3360,7 +3360,7 @@ namespace System.Linq
         /// and throws an exception if more than one such element exists.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> to return a single element from.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; to return a single element from.
         /// </param>
         /// <param name="predicate">
         /// A function to test an element for a condition.
@@ -3390,7 +3390,7 @@ namespace System.Linq
         /// in the sequence.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> to return the single element
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; to return the single element
         /// of.
         /// </param>
         /// <typeparam name="TSource">
@@ -3425,7 +3425,7 @@ namespace System.Linq
         /// if more than one element satisfies the condition.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> to return a single element from.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; to return a single element from.
         /// </param>
         /// <param name="predicate">
         /// A function to test an element for a condition.
@@ -3459,7 +3459,7 @@ namespace System.Linq
         /// remaining elements.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> to return elements from.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; to return elements from.
         /// </param>
         /// <param name="count">
         /// The number of elements to skip before returning the remaining elements.
@@ -3468,7 +3468,7 @@ namespace System.Linq
         /// The type of the elements of source.
         /// </typeparam>
         /// <returns>
-        /// An System.Collections.Generic.IEnumerable<T> that contains the elements that
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; that contains the elements that
         /// occur after the specified index in the input sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -3485,7 +3485,7 @@ namespace System.Linq
         /// and then returns the remaining elements.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> to return elements from.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; to return elements from.
         /// </param>
         /// <param name="predicate">
         /// A function to test each element for a condition.
@@ -3494,7 +3494,7 @@ namespace System.Linq
         /// The type of the elements of source.
         /// </typeparam>
         /// <returns>
-        /// An System.Collections.Generic.IEnumerable<T> that contains the elements from
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; that contains the elements from
         /// the input sequence starting at the first element in the linear series that
         /// does not pass the test specified by predicate.
         /// </returns>
@@ -3513,7 +3513,7 @@ namespace System.Linq
         /// logic of the predicate function.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> to return elements from.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; to return elements from.
         /// </param>
         /// <param name="predicate">
         /// A function to test each source element for a condition; the second parameter
@@ -3523,7 +3523,7 @@ namespace System.Linq
         /// The type of the elements of source.
         /// </typeparam>
         /// <returns>
-        /// An System.Collections.Generic.IEnumerable<T> that contains the elements from
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; that contains the elements from
         /// the input sequence starting at the first element in the linear series that
         /// does not pass the test specified by predicate.
         /// </returns>
@@ -3881,7 +3881,7 @@ namespace System.Linq
         /// The type of the elements of source.
         /// </typeparam>
         /// <returns>
-        /// An System.Collections.Generic.IEnumerable<T> that contains the specified
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; that contains the specified
         /// number of elements from the start of the input sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -3927,7 +3927,7 @@ namespace System.Linq
         /// The type of the elements of source.
         /// </typeparam>
         /// <returns>
-        /// An System.Collections.Generic.IEnumerable<T> that contains the elements from
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; that contains the elements from
         /// the input sequence that occur before the element at which the test no longer
         /// passes.
         /// </returns>
@@ -3955,7 +3955,7 @@ namespace System.Linq
         /// The type of the elements of source.
         /// </typeparam>
         /// <returns>
-        /// An System.Collections.Generic.IEnumerable<T> that contains elements from
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; that contains elements from
         /// the input sequence that occur before the element at which the test no longer
         /// passes.
         /// </returns>
@@ -3969,10 +3969,10 @@ namespace System.Linq
         }
 
         /// <summary>
-        /// Creates an array from a System.Collections.Generic.IEnumerable<T>.
+        /// Creates an array from a System.Collections.Generic.IEnumerable&lt;T&gt;.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> to create an array from.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; to create an array from.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of source.
@@ -3990,11 +3990,11 @@ namespace System.Linq
         }
 
         /// <summary>
-        /// Creates a System.Collections.Generic.Dictionary<TKey,TValue> from an System.Collections.Generic.IEnumerable<T>
+        /// Creates a System.Collections.Generic.Dictionary&lt;TKey,TValue&gt; from an System.Collections.Generic.IEnumerable&lt;T&gt;
         /// according to a specified key selector function.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> to create a System.Collections.Generic.Dictionary<TKey,TValue>
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; to create a System.Collections.Generic.Dictionary&lt;TKey,TValue&gt;
         /// from.
         /// </param>
         /// <param name="keySelector">
@@ -4007,7 +4007,7 @@ namespace System.Linq
         /// The type of the key returned by keySelector.
         /// </typeparam>
         /// <returns>
-        /// A System.Collections.Generic.Dictionary<TKey,TValue> that contains keys and
+        /// A System.Collections.Generic.Dictionary&lt;TKey,TValue&gt; that contains keys and
         /// values.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -4024,11 +4024,11 @@ namespace System.Linq
         }
 
         /// <summary>
-        /// Creates a System.Collections.Generic.Dictionary<TKey,TValue> from an System.Collections.Generic.IEnumerable<T>
+        /// Creates a System.Collections.Generic.Dictionary&lt;TKey,TValue&gt; from an System.Collections.Generic.IEnumerable&lt;T&gt;
         /// according to specified key selector and element selector functions.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> to create a System.Collections.Generic.Dictionary<TKey,TValue>
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; to create a System.Collections.Generic.Dictionary&lt;TKey,TValue&gt;
         /// from.
         /// </param>
         /// <param name="keySelector">
@@ -4047,7 +4047,7 @@ namespace System.Linq
         /// The type of the value returned by elementSelector.
         /// </typeparam>
         /// <returns>
-        /// A System.Collections.Generic.Dictionary<TKey,TValue> that contains values
+        /// A System.Collections.Generic.Dictionary&lt;TKey,TValue&gt; that contains values
         /// of type TElement selected from the input sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -4065,18 +4065,18 @@ namespace System.Linq
         }
 
         /// <summary>
-        /// Creates a System.Collections.Generic.Dictionary<TKey,TValue> from an System.Collections.Generic.IEnumerable<T>
+        /// Creates a System.Collections.Generic.Dictionary&lt;TKey,TValue&gt; from an System.Collections.Generic.IEnumerable&lt;T&gt;
         /// according to a specified key selector function and key comparer.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> to create a System.Collections.Generic.Dictionary<TKey,TValue>
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; to create a System.Collections.Generic.Dictionary&lt;TKey,TValue&gt;
         /// from.
         /// </param>
         /// <param name="keySelector">
         /// A function to extract a key from each element.
         /// </param>
         /// <param name="comparer">
-        /// An System.Collections.Generic.IEqualityComparer<T> to compare keys.
+        /// An System.Collections.Generic.IEqualityComparer&lt;T&gt; to compare keys.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of source.
@@ -4085,7 +4085,7 @@ namespace System.Linq
         /// The type of the keys returned by keySelector.
         /// </typeparam>
         /// <returns>
-        /// A System.Collections.Generic.Dictionary<TKey,TValue> that contains keys and
+        /// A System.Collections.Generic.Dictionary&lt;TKey,TValue&gt; that contains keys and
         /// values.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -4102,12 +4102,12 @@ namespace System.Linq
         }
 
         /// <summary>
-        /// Creates a System.Collections.Generic.Dictionary<TKey,TValue> from an System.Collections.Generic.IEnumerable<T>
+        /// Creates a System.Collections.Generic.Dictionary&lt;TKey,TValue&gt; from an System.Collections.Generic.IEnumerable&lt;T&gt;
         /// according to a specified key selector function, a comparer, and an element
         /// selector function.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> to create a System.Collections.Generic.Dictionary<TKey,TValue>
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; to create a System.Collections.Generic.Dictionary&lt;TKey,TValue&gt;
         /// from.
         /// </param>
         /// <param name="keySelector">
@@ -4117,7 +4117,7 @@ namespace System.Linq
         /// A transform function to produce a result element value from each element.
         /// </param>
         /// <param name="comparer">
-        /// An System.Collections.Generic.IEqualityComparer<T> to compare keys.
+        /// An System.Collections.Generic.IEqualityComparer&lt;T&gt; to compare keys.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of source.
@@ -4129,7 +4129,7 @@ namespace System.Linq
         /// The type of the value returned by elementSelector.
         /// </typeparam>
         /// <returns>
-        /// A System.Collections.Generic.Dictionary<TKey,TValue> that contains values
+        /// A System.Collections.Generic.Dictionary&lt;TKey,TValue&gt; that contains values
         /// of type TElement selected from the input sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -4187,17 +4187,17 @@ namespace System.Linq
 	    }
 
         /// <summary>
-        /// Creates a System.Collections.Generic.List<T> from an System.Collections.Generic.IEnumerable<T>.
+        /// Creates a System.Collections.Generic.List&lt;T&gt; from an System.Collections.Generic.IEnumerable&lt;T&gt;.
         /// </summary>
         /// <param name="source">
-        /// The System.Collections.Generic.IEnumerable<T> to create a System.Collections.Generic.List<T>
+        /// The System.Collections.Generic.IEnumerable&lt;T&gt; to create a System.Collections.Generic.List&lt;T&gt;
         /// from.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of source.
         /// </typeparam>
         /// <returns>
-        /// A System.Collections.Generic.List<T> that contains elements from the input
+        /// A System.Collections.Generic.List&lt;T&gt; that contains elements from the input
         /// sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -4210,11 +4210,11 @@ namespace System.Linq
         }
 
         /// <summary>
-        /// Creates a System.Linq.Lookup<TKey,TElement> from an System.Collections.Generic.IEnumerable<T>
+        /// Creates a System.Linq.Lookup&lt;TKey,TElement&gt; from an System.Collections.Generic.IEnumerable&lt;T&gt;
         /// according to a specified key selector function.
         /// </summary>
         /// <param name="source">
-        /// The System.Collections.Generic.IEnumerable<T> to create a System.Linq.Lookup<TKey,TElement>
+        /// The System.Collections.Generic.IEnumerable&lt;T&gt; to create a System.Linq.Lookup&lt;TKey,TElement&gt;
         /// from.
         /// </param>
         /// <param name="keySelector">
@@ -4227,7 +4227,7 @@ namespace System.Linq
         /// The type of the key returned by keySelector.
         /// </typeparam>
         /// <returns>
-        /// A System.Linq.Lookup<TKey,TElement> that contains keys and values.
+        /// A System.Linq.Lookup&lt;TKey,TElement&gt; that contains keys and values.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
         /// source or keySelector is null.
@@ -4240,11 +4240,11 @@ namespace System.Linq
         }
 
         /// <summary>
-        /// Creates a System.Linq.Lookup<TKey,TElement> from an System.Collections.Generic.IEnumerable<T>
+        /// Creates a System.Linq.Lookup&lt;TKey,TElement&gt; from an System.Collections.Generic.IEnumerable&lt;T&gt;
         /// according to specified key selector and element selector functions.
         /// </summary>
         /// <param name="source">
-        /// The System.Collections.Generic.IEnumerable<T> to create a System.Linq.Lookup<TKey,TElement>
+        /// The System.Collections.Generic.IEnumerable&lt;T&gt; to create a System.Linq.Lookup&lt;TKey,TElement&gt;
         /// from.
         /// </param>
         /// <param name="keySelector">
@@ -4263,7 +4263,7 @@ namespace System.Linq
         /// The type of the value returned by elementSelector.
         /// </typeparam>
         /// <returns>
-        /// A System.Linq.Lookup<TKey,TElement> that contains values of type TElement
+        /// A System.Linq.Lookup&lt;TKey,TElement&gt; that contains values of type TElement
         /// selected from the input sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -4277,18 +4277,18 @@ namespace System.Linq
         }
 
         /// <summary>
-        /// Creates a System.Linq.Lookup<TKey,TElement> from an System.Collections.Generic.IEnumerable<T>
+        /// Creates a System.Linq.Lookup&lt;TKey,TElement&gt; from an System.Collections.Generic.IEnumerable&lt;T&gt;
         /// according to a specified key selector function and key comparer.
         /// </summary>
         /// <param name="source">
-        /// The System.Collections.Generic.IEnumerable<T> to create a System.Linq.Lookup<TKey,TElement>
+        /// The System.Collections.Generic.IEnumerable&lt;T&gt; to create a System.Linq.Lookup&lt;TKey,TElement&gt;
         /// from.
         /// </param>
         /// <param name="keySelector">
         /// A function to extract a key from each element.
         /// </param>
         /// <param name="comparer">
-        /// An System.Collections.Generic.IEqualityComparer<T> to compare keys.
+        /// An System.Collections.Generic.IEqualityComparer&lt;T&gt; to compare keys.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of source.
@@ -4297,7 +4297,7 @@ namespace System.Linq
         /// The type of the key returned by keySelector.
         /// </typeparam>
         /// <returns>
-        /// A System.Linq.Lookup<TKey,TElement> that contains keys and values.
+        /// A System.Linq.Lookup&lt;TKey,TElement&gt; that contains keys and values.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
         /// source or keySelector is null.
@@ -4310,12 +4310,12 @@ namespace System.Linq
         }
 
         /// <summary>
-        /// Creates a System.Linq.Lookup<TKey,TElement> from an System.Collections.Generic.IEnumerable<T>
+        /// Creates a System.Linq.Lookup&lt;TKey,TElement&gt; from an System.Collections.Generic.IEnumerable&lt;T&gt;
         /// according to a specified key selector function, a comparer and an element
         /// selector function.
         /// </summary>
         /// <param name="source">
-        /// The System.Collections.Generic.IEnumerable<T> to create a System.Linq.Lookup<TKey,TElement>
+        /// The System.Collections.Generic.IEnumerable&lt;T&gt; to create a System.Linq.Lookup&lt;TKey,TElement&gt;
         /// from.
         /// </param>
         /// <param name="keySelector">
@@ -4325,7 +4325,7 @@ namespace System.Linq
         /// A transform function to produce a result element value from each element.
         /// </param>
         /// <param name="comparer">
-        /// An System.Collections.Generic.IEqualityComparer<T> to compare keys.
+        /// An System.Collections.Generic.IEqualityComparer&lt;T&gt; to compare keys.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of source.
@@ -4337,7 +4337,7 @@ namespace System.Linq
         /// The type of the value returned by elementSelector.
         /// </typeparam>
         /// <returns>
-        /// A System.Linq.Lookup<TKey,TElement> that contains values of type TElement
+        /// A System.Linq.Lookup&lt;TKey,TElement&gt; that contains values of type TElement
         /// selected from the input sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -4450,18 +4450,18 @@ namespace System.Linq
         /// Produces the set union of two sequences by using the default equality comparer.
         /// </summary>
         /// <param name="first">
-        /// An System.Collections.Generic.IEnumerable<T> whose distinct elements form
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; whose distinct elements form
         /// the first set for the union.
         /// </param>
         /// <param name="second">
-        /// An System.Collections.Generic.IEnumerable<T> whose distinct elements form
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; whose distinct elements form
         /// the second set for the union.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of the input sequences.
         /// </typeparam>
         /// <returns>
-        /// An System.Collections.Generic.IEnumerable<T> that contains the elements from
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; that contains the elements from
         /// both input sequences, excluding duplicates.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -4474,24 +4474,24 @@ namespace System.Linq
         }
 
         /// <summary>
-        /// Produces the set union of two sequences by using a specified System.Collections.Generic.IEqualityComparer<T>.
+        /// Produces the set union of two sequences by using a specified System.Collections.Generic.IEqualityComparer&lt;T&gt;.
         /// </summary>
         /// <param name="first">
-        /// An System.Collections.Generic.IEnumerable<T> whose distinct elements form
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; whose distinct elements form
         /// the first set for the union.
         /// </param>
         /// <param name="second">
-        /// An System.Collections.Generic.IEnumerable<T> whose distinct elements form
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; whose distinct elements form
         /// the second set for the union.
         /// </param>
         /// <param name="comparer">
-        /// The System.Collections.Generic.IEqualityComparer<T> to compare values.
+        /// The System.Collections.Generic.IEqualityComparer&lt;T&gt; to compare values.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of the input sequences.
         /// </typeparam>
         /// <returns>
-        /// An System.Collections.Generic.IEnumerable<T> that contains the elements from
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; that contains the elements from
         /// both input sequences, excluding duplicates.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -4508,7 +4508,7 @@ namespace System.Linq
         /// Filters a sequence of values based on a predicate.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> to filter.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; to filter.
         /// </param>
         /// <param name="predicate">
         /// A function to test each element for a condition.
@@ -4517,7 +4517,7 @@ namespace System.Linq
         /// The type of the elements of source.
         /// </typeparam>
         /// <returns>
-        /// An System.Collections.Generic.IEnumerable<T> that contains elements from
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; that contains elements from
         /// the input sequence that satisfy the condition.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -4533,7 +4533,7 @@ namespace System.Linq
         /// used in the logic of the predicate function.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> to filter.
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; to filter.
         /// </param>
         /// <param name="predicate">
         /// A function to test each source element for a condition; the second parameter
@@ -4543,7 +4543,7 @@ namespace System.Linq
         /// The type of the elements of source.
         /// </typeparam>
         /// <returns>
-        /// An System.Collections.Generic.IEnumerable<T> that contains elements from
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; that contains elements from
         /// the input sequence that satisfy the condition.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -4577,7 +4577,7 @@ namespace System.Linq
         /// The type of the elements of the result sequence.
         /// </typeparam>
         /// <returns>
-        /// An System.Collections.Generic.IEnumerable<T> that contains merged elements
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; that contains merged elements
         /// of two input sequences.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
