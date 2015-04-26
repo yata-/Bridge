@@ -4064,7 +4064,7 @@ Bridge.Comparer$1.$default = new Bridge.Comparer$1(Object)(function(x, y) {
         return 1;
     }
 
-    return Bridge.compare(a, b);
+    return Bridge.compare(x, y);
 });
 // @source /Collections/Dictionary.js
 
