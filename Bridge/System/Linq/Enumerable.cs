@@ -53,31 +53,31 @@ namespace System.Linq
 	        return false;
 	    }
 
-	    [Template("{source}.average()")]
+	    [Template("{this}.average()")]
 	    public static double Average(this EnumerableInstance<int> source)
 	    {
 	        return 0;
 	    }
 
-	    [Template("{source}.average()")]
+	    [Template("{this}.average()")]
 	    public static double Average(this EnumerableInstance<long> source)
 	    {
 	        return 0;
 	    }
 
-	    [Template("{source}.average()")]
+        [Template("{this}.average()")]
 	    public static float Average(this EnumerableInstance<float> source)
 	    {
 	        return 0;
 	    }
 
-	    [Template("{source}.average()")]
+        [Template("{this}.average()")]
 	    public static double Average(this EnumerableInstance<double> source)
 	    {
 	        return 0;
 	    }
 
-	    [Template("{source}.average()")]
+        [Template("{this}.average()")]
 	    public static decimal Average(this EnumerableInstance<decimal> source)
 	    {
 	        return 0;
@@ -595,31 +595,31 @@ namespace System.Linq
 	        return null;
 	    }
 
-	    [Template("{source}.max()")]
+	    [Template("{this}.max()")]
 	    public static int Max(this EnumerableInstance<int> source)
 	    {
 	        return 0;
 	    }
 
-	    [Template("{source}.max()")]
+        [Template("{this}.max()")]
 	    public static long Max(this EnumerableInstance<long> source)
 	    {
 	        return 0;
 	    }
 
-	    [Template("{source}.max()")]
+        [Template("{this}.max()")]
 	    public static float Max(this EnumerableInstance<float> source)
 	    {
 	        return 0;
 	    }
 
-	    [Template("{source}.max()")]
+        [Template("{this}.max()")]
 	    public static double Max(this EnumerableInstance<double> source)
 	    {
 	        return 0;
 	    }
 
-	    [Template("{source}.max()")]
+        [Template("{this}.max()")]
 	    public static decimal Max(this EnumerableInstance<decimal> source)
 	    {
 	        return 0;
@@ -721,31 +721,31 @@ namespace System.Linq
 	        return null;
 	    }
 
-	    [Template("{source}.min()")]
+	    [Template("{this}.min()")]
 	    public static int Min(this EnumerableInstance<int> source)
 	    {
 	        return 0;
 	    }
 
-	    [Template("{source}.min()")]
+	    [Template("{this}.min()")]
 	    public static long Min(this EnumerableInstance<long> source)
 	    {
 	        return 0;
 	    }
 
-	    [Template("{source}.min()")]
+	    [Template("{this}.min()")]
 	    public static float Min(this EnumerableInstance<float> source)
 	    {
 	        return 0;
 	    }
 
-	    [Template("{source}.min()")]
+	    [Template("{this}.min()")]
 	    public static double Min(this EnumerableInstance<double> source)
 	    {
 	        return 0;
 	    }
 
-	    [Template("{source}.min()")]
+	    [Template("{this}.min()")]
 	    public static decimal Min(this EnumerableInstance<decimal> source)
 	    {
 	        return 0;
@@ -1146,31 +1146,31 @@ namespace System.Linq
 	        return null;
 	    }
 
-	    [Template("{source}.sum()")]
+	    [Template("{this}.sum()")]
 	    public static int Sum(this EnumerableInstance<int> source)
 	    {
 	        return 0;
 	    }
 
-	    [Template("{source}.sum()")]
+	    [Template("{this}.sum()")]
 	    public static long Sum(this EnumerableInstance<long> source)
 	    {
 	        return 0;
 	    }
 
-	    [Template("{source}.sum()")]
+	    [Template("{this}.sum()")]
 	    public static float Sum(this EnumerableInstance<float> source)
 	    {
 	        return 0;
 	    }
 
-	    [Template("{source}.sum()")]
+	    [Template("{this}.sum()")]
 	    public static double Sum(this EnumerableInstance<double> source)
 	    {
 	        return 0;
 	    }
 
-	    [Template("{source}.sum()")]
+	    [Template("{this}.sum()")]
 	    public static decimal Sum(this EnumerableInstance<decimal> source)
 	    {
 	        return 0;
