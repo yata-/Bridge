@@ -10,13 +10,13 @@ namespace System.Linq
     {
         int Count
         {
-            [Name("count")]
+            [Template("count()")]
             get;
         }
 
         EnumerableInstance<TElement> this[TKey key]
         {
-            [Name("get")]
+            [Template("get()")]
             get;
         }
 

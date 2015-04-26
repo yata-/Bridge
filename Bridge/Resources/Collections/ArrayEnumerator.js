@@ -1,6 +1,7 @@
 ﻿// @source /Collections/ArrayEnumerator.js
 
 Bridge.define('Bridge.ArrayEnumerator', {
+    inherits: [Bridge.IEnumerator],
     constructor: function (array) {
         this.array = array;
         this.reset();
@@ -21,4 +22,15 @@ Bridge.define('Bridge.ArrayEnumerator', {
     },
 
     dispose: Bridge.emptyFn
+});
+
+Bridge.define('Bridge.ArrayEnumerable', {
+    inherits: [Bridge.IEnumerable],
+    constructor: function (array) {
+        this.array = array;
+    },
+
+    getEnumerator: function () {
+        return new Bridge.ArrayEnumerator(this.array);
+    }
 });

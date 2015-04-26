@@ -108,11 +108,7 @@
         },
 
         toEnumerable: function(array) {
-            return {
-                getEnumerator: function() {
-                    return new Bridge.ArrayEnumerator(array);
-                }
-            };
+            return new Bridge.ArrayEnumerable(array);
         },
 
         toEnumerator: function(array) {

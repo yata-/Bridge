@@ -3983,6 +3983,7 @@ Bridge.define("Bridge.CustomEnumerator", {
 // @source /Collections/ArrayEnumerator.js
 
 Bridge.define('Bridge.ArrayEnumerator', {
+    inherits: [Bridge.IEnumerator],
     constructor: function (array) {
         this.array = array;
         this.reset();
@@ -4005,6 +4006,16 @@ Bridge.define('Bridge.ArrayEnumerator', {
     dispose: Bridge.emptyFn
 });
 
+Bridge.define('Bridge.ArrayEnumerable', {
+    inherits: [Bridge.IEnumerable],
+    constructor: function (array) {
+        this.array = array;
+    },
+
+    getEnumerator: function () {
+        return new Bridge.ArrayEnumerator(this.array);
+    }
+});
 // @source /Collections/Comparer.js
 
 Bridge.Class.generic('Bridge.EqualityComparer$1', function (T) {
@@ -5134,11 +5145,7 @@ Bridge.define('Bridge.PropertyChangedEventArgs', {
         },
 
         toEnumerable: function(array) {
-            return {
-                getEnumerator: function() {
-                    return new Bridge.ArrayEnumerator(array);
-                }
-            };
+            return new Bridge.ArrayEnumerable(array);
         },
 
         toEnumerator: function(array) {
