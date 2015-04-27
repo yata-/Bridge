@@ -179,7 +179,7 @@ namespace Bridge.Html5
             RtL,
 
             /// <summary>
-            /// Default. The text direction is inherited from the <canvas> element or the Document as appropriate.
+            /// Default. The text direction is inherited from the &lt;canvas> element or the Document as appropriate.
             /// </summary>
             Inherit,
 

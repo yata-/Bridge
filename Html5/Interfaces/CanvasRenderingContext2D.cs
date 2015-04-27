@@ -8,17 +8,15 @@ namespace Bridge.Html5
 {
     /// <summary>
     /// The CanvasRenderingContext2D interface provides the 2D rendering context for the drawing surface of a
-    /// <canvas> element.
-    /// To get an object of this interface, call getContext() on a <canvas>, supplying
+    /// &lt;canvas> element.
+    /// To get an object of this interface, call getContext() on a &lt;canvas>, supplying
     /// "CanvasContext2DType.CanvasRenderingContext2D" as the argument.
     /// </summary>
     [Ignore]
     [Namespace(false)]
     public class CanvasRenderingContext2D : SVGOperations
     {
-        /// <summary>
-        /// There are three methods that immediately draw rectangles to the bitmap.
-        /// </summary>
+        // There are three methods that immediately draw rectangles to the bitmap.
         #region Drawing Rectangles
 
         // TODO: Review summary to include parameters' info. From this point down to createPattern (~390)
@@ -62,15 +60,12 @@ namespace Bridge.Html5
 
         #endregion
 
-        /// <summary>
-        /// The following methods are provided for drawing text. See also the TextMetrics object for
-        /// text properties.
-        /// </summary>
+        // The following methods are provided for drawing text. See also the TextMetrics object for
+        // text properties.
         #region Drawing Text
 
         /// <summary>
         /// Draws (fills) a given text at the given (x,y) position.
-        // </summary>
         /// </summary>
         /// <param name="text">
         /// The text to render using the current font, textAlign, textBaseline, and direction values.
@@ -119,9 +114,7 @@ namespace Bridge.Html5
 
         #endregion
 
-        /// <summary>
-        /// The following methods and properties control how lines are drawn.
-        /// </summary>
+        // The following methods and properties control how lines are drawn.
         #region Line Styles
 
         /// <summary>
@@ -180,9 +173,7 @@ namespace Bridge.Html5
 
         #endregion
 
-        /// <summary>
-        /// The following properties control how text is laid out.
-        /// </summary>
+        // The following properties control how text is laid out.
         #region Text Styles
 
         /// <summary>
@@ -208,10 +199,8 @@ namespace Bridge.Html5
 
         #endregion
 
-        /// <summary>
-        /// Fill styling is used for colors and styles inside shapes and stroke styling is used for
-        /// the lines around shapes.
-        /// </summary>
+        // Fill styling is used for colors and styles inside shapes and stroke styling is used for
+        // the lines around shapes.
         #region Fill and Stroke Styles
 
         /// <summary>
@@ -264,9 +253,9 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="image">
         /// A CanvasImageSource to be used as image to repeat. It can either be a:
-        /// • HTMLImageElement (<img>),
-        /// • HTMLVideoElement (<video>),
-        /// • HTMLCanvasElement (<canvas>),
+        /// • HTMLImageElement (&lt;img>),
+        /// • HTMLVideoElement (&lt;video>),
+        /// • HTMLCanvasElement (&lt;canvas>),
         /// • CanvasRenderingContext2D,
         /// • ImageBitmap (c# object for now),
         /// • ImageData, or a
@@ -311,9 +300,7 @@ namespace Bridge.Html5
 
         #endregion
 
-        /// <summary>
-        /// The following methods can be used to manipulate paths of objects.
-        /// </summary>
+        // The following methods can be used to manipulate paths of objects.
         #region Paths
 
         /// <summary>
@@ -458,6 +445,9 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="x">The X coordinate of the point to check.</param>
         /// <param name="y">The Y coordinate of the point to check.</param>
+        /// <param name="fillRule">
+        /// The algorithm by which to determine if a point is inside a path or outside a path.
+        /// </param>
         /// <returns>
         /// A Boolean, which is true if the specified point is contained in the current or specfied path,
         /// otherwise false.
@@ -518,13 +508,11 @@ namespace Bridge.Html5
 
         #endregion
 
-        /// <summary>
-        /// Objects in the CanvasRenderingContext2D rendering context have a current transformation matrix
-        /// and methods to manipulate it. The transformation matrix is applied when creating the current
-        /// default path, painting text, shapes and Path2D objects. The methods listed below remain for
-        /// historical and compatibility reasons as SVGMatrix objects are used in most parts of the API
-        /// nowadays and will be used in the future instead.
-        /// </summary>
+        // Objects in the CanvasRenderingContext2D rendering context have a current transformation matrix
+        // and methods to manipulate it. The transformation matrix is applied when creating the current
+        // default path, painting text, shapes and Path2D objects. The methods listed below remain for
+        // historical and compatibility reasons as SVGMatrix objects are used in most parts of the API
+        // nowadays and will be used in the future instead.
         #region Transformations
 
         /// <summary>
@@ -701,7 +689,7 @@ namespace Bridge.Html5
         /// </param>
         /// <param name="dy">
         /// The Y coordinate in the destination canvas at which to place the top-left corner of the source image.
-        // </param>
+        /// </param>
         /// <param name="dWidth">
         /// The width to draw the image in the destination canvas. This allows scaling of the drawn image.
         /// If not specified or null, the image is not scaled in height when drawn.
@@ -745,7 +733,7 @@ namespace Bridge.Html5
         /// </param>
         /// <param name="dy">
         /// The Y coordinate in the destination canvas at which to place the top-left corner of the source image.
-        // </param>
+        /// </param>
         /// <param name="dWidth">
         /// The width to draw the image in the destination canvas. This allows scaling of the drawn image.
         /// If not specified or null, the image is not scaled in height when drawn.
@@ -767,9 +755,7 @@ namespace Bridge.Html5
 
         #endregion
 
-        /// <summary>
-        /// See also the ImageData object.
-        /// </summary>
+        // See also the ImageData object.
         #region Pixel Manipulation
 
         /// <summary>
@@ -797,7 +783,7 @@ namespace Bridge.Html5
         /// <returns>
         /// A new ImageData object with the specified width and height. The new object is filled with
         /// transparent black pixels.
-        // </returns>
+        /// </returns>
         public virtual ImageData CreateImageData(ImageData imagedata)
         {
             return null;
@@ -871,11 +857,9 @@ namespace Bridge.Html5
 
         #endregion
 
-        /// <summary>
-        /// The CanvasRenderingContext2D rendering context contains a variety of drawing style states
-        /// (attributes for line styles, fill styles, shadow styles, text styles). The following methods
-        /// help you to work with that state.
-        /// </summary>
+        // The CanvasRenderingContext2D rendering context contains a variety of drawing style states
+        // (attributes for line styles, fill styles, shadow styles, text styles). The following methods
+        // help you to work with that state.
         #region Canvas State
 
         /// <summary>
@@ -897,7 +881,7 @@ namespace Bridge.Html5
 
         /// <summary>
         /// A read-only back-reference to the HTMLCanvasElement.
-        /// Might be null if it is not associated with a <canvas> element.
+        /// Might be null if it is not associated with a &lt;canvas> element.
         /// </summary>
         public readonly CanvasElement Canvas;
         #endregion

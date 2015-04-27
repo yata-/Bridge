@@ -4529,6 +4529,7 @@ namespace System.Linq
             return default(EnumerableInstance<TSource>);
         }
 
+        /// <summary>
         /// Filters a sequence of values based on a predicate. Each element's index is
         /// used in the logic of the predicate function.
         /// </summary>

@@ -164,7 +164,6 @@ namespace Bridge
         /// <summary>
         /// The eval() method evaluates JavaScript code represented as a string.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="expression">A string representing a JavaScript expression, statement, or sequence of statements. The expression can include variables and properties of existing objects.</param>
         /// <returns></returns>
         [Template("eval({0})")]

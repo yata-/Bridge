@@ -11,7 +11,7 @@ using Bridge;
 namespace Bridge.Html5
 {
     /// <summary>
-    /// The ImageData interface represents the underlying pixel data of an area of a <canvas> element.
+    /// The ImageData interface represents the underlying pixel data of an area of a &lt;canvas> element.
     /// It is created using the ImageData() constructor or creator methods on the CanvasRenderingContext2D
     /// object associated with a canvas: createImageData() and getImageData(). It can also be used to set
     /// a part of the canvas by using putImageData().
@@ -48,7 +48,6 @@ namespace Bridge.Html5
         /// a black rectangle is created. Note that this is the most common way to create such an object in
         /// workers as createImageData() is not available there.
         /// </summary>
-        /// <param name="array">A Uint8ClampedArray containing the underlying pixel representation of theimage.</param>
         /// <param name="width">An unsigned long representing the width of the represented image.</param>
         /// <param name="height">An unsigned long representing the height of the represented image.</param>
         /// <remarks>This is experimental API that should not be used in production code.</remarks>
