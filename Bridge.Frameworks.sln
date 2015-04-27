@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge", "Bridge\Bridge.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Html5", "Html5\Bridge.Html5.csproj", "{99DECD28-D3E3-4EA7-ACAE-AB5DFC9913BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.QUnit1", "..\Frameworks\QUnit1\Bridge.QUnit1.csproj", "{96CB97F5-1BAC-433D-B5CE-AD6E7B244F12}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.QUnit", "..\Frameworks\QUnit\Bridge.QUnit.csproj", "{96CB97F5-1BAC-433D-B5CE-AD6E7B244F12}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.WebGL", "..\Frameworks\WebGL\Bridge.WebGL.csproj", "{476C2F05-4770-481C-90D1-8353E5F379DC}"
 EndProject
