@@ -404,6 +404,18 @@ namespace System.Linq
             return 0;
         }
 
+        [Template("{this}.count()")]
+        public static long LongCount<TSource>()
+        {
+            return default(long);
+        }
+
+        [Template("{this}.count({predicate})")]
+        public static long LongCount<TSource>(Func<TSource, bool> predicate)
+        {
+            return default(long);
+        }
+
         [Template("{this}.lastOrDefault(null, Bridge.getDefaultValue({TElement}))")]
         public TElement LastOrDefault()
         {

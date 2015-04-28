@@ -1631,6 +1631,64 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Returns an System.Int64 that represents the total number of elements in a
+        /// sequence.
+        /// </summary>
+        /// <param name="source">
+        /// An System.Collections.Generic.IEnumerable<T> that contains the elements to
+        /// be counted.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The number of elements in the source sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The number of elements exceeds System.Int64.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).count()")]
+        public static long LongCount<TSource>(this IEnumerable<TSource> source)
+        {
+            return default(long);
+        }
+
+        /// <summary>
+        /// Returns an System.Int64 that represents how many elements in a sequence satisfy
+        /// a condition.
+        /// </summary>
+        /// <param name="source">
+        /// An System.Collections.Generic.IEnumerable<T> that contains the elements to
+        /// be counted.
+        /// </param>
+        /// <param name="predicate">
+        /// A function to test each element for a condition.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// A number that represents how many elements in the sequence satisfy the condition
+        /// in the predicate function.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or predicate is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The number of matching elements exceeds System.Int64.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).count({predicate})")]
+        public static long LongCount<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
+        {
+            return default(long);
+        }
+
+        /// <summary>
         /// Returns the last element of a sequence.
         /// </summary>
         /// <param name="source">
