@@ -3569,6 +3569,132 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Performs a subsequent ordering of the elements in a sequence in ascending
+        /// order according to a key.
+        /// </summary>
+        /// <param name="source">
+        /// An System.Linq.IOrderedEnumerable<TElement> that contains elements to sort.
+        /// </param>
+        /// <param name="keySelector">
+        /// A function to extract a key from each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <typeparam name="TKey">
+        /// The type of the key returned by keySelector.
+        /// </typeparam>
+        /// <returns>
+        /// An System.Linq.IOrderedEnumerable<TElement> whose elements are sorted according
+        /// to a key.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or keySelector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).thenBy({keySelector})")]
+        public static IOrderedEnumerable<TSource> ThenBy<TSource, TKey>(this IOrderedEnumerable<TSource> source, Func<TSource, TKey> keySelector)
+        {
+            return default(IOrderedEnumerable<TSource>);
+        }
+
+        /// <summary>
+        /// Performs a subsequent ordering of the elements in a sequence in ascending
+        /// order by using a specified comparer.
+        /// </summary>
+        /// <param name="source">
+        /// An System.Linq.IOrderedEnumerable<TElement> that contains elements to sort.
+        /// </param>
+        /// <param name="keySelector">
+        /// A function to extract a key from each element.
+        /// </param>
+        /// <param name="comparer">
+        /// An System.Collections.Generic.IComparer<T> to compare keys.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <typeparam name="TKey">
+        /// The type of the key returned by keySelector.
+        /// </typeparam>
+        /// <returns>
+        /// An System.Linq.IOrderedEnumerable<TElement> whose elements are sorted according
+        /// to a key.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or keySelector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).thenBy({keySelector}, {comparer})")]
+        public static IOrderedEnumerable<TSource> ThenBy<TSource, TKey>(this IOrderedEnumerable<TSource> source, Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
+        {
+            return default(IOrderedEnumerable<TSource>);
+        }
+
+        /// <summary>
+        /// Performs a subsequent ordering of the elements in a sequence in descending
+        /// order, according to a key.
+        /// </summary>
+        /// <param name="source">
+        /// An System.Linq.IOrderedEnumerable<TElement> that contains elements to sort.
+        /// </param>
+        /// <param name="keySelector">
+        /// A function to extract a key from each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <typeparam name="TKey">
+        /// The type of the key returned by keySelector.
+        /// </typeparam>
+        /// <returns>
+        /// An System.Linq.IOrderedEnumerable<TElement> whose elements are sorted in
+        /// descending order according to a key.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or keySelector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).thenByDescending({keySelector}, {comparer})")]
+        public static IOrderedEnumerable<TSource> ThenByDescending<TSource, TKey>(this IOrderedEnumerable<TSource> source, Func<TSource, TKey> keySelector)
+        {
+            return default(IOrderedEnumerable<TSource>);
+        }
+
+        /// <summary>
+        /// Performs a subsequent ordering of the elements in a sequence in descending
+        /// order by using a specified comparer.
+        /// </summary>
+        /// <param name="source">
+        /// An System.Linq.IOrderedEnumerable<TElement> that contains elements to sort.
+        /// </param>
+        /// <param name="keySelector">
+        /// A function to extract a key from each element.
+        /// </param>
+        /// <param name="comparer">
+        /// An System.Collections.Generic.IComparer<T> to compare keys.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <typeparam name="TKey">
+        /// The type of the key returned by keySelector.
+        /// </typeparam>
+        /// <returns>
+        /// An System.Linq.IOrderedEnumerable<TElement> whose elements are sorted in
+        /// descending order according to a key.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or keySelector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).thenByDescending({keySelector}, {comparer})")]
+        public static IOrderedEnumerable<TSource> ThenByDescending<TSource, TKey>(this IOrderedEnumerable<TSource> source, Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
+        {
+            return default(IOrderedEnumerable<TSource>);
+        }
+
+        /// <summary>
         /// Creates an array from a System.Collections.Generic.IEnumerable&lt;T&gt;.
         /// </summary>
         /// <param name="source">

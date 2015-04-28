@@ -818,6 +818,26 @@ namespace System.Linq
             return null;
         }
 
+        public static IOrderedEnumerable<TSource> ThenBy<TSource, TKey>(Func<TSource, TKey> keySelector)
+        {
+            return default(IOrderedEnumerable<TSource>);
+        }
+
+        public static IOrderedEnumerable<TSource> ThenBy<TSource, TKey>(Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
+        {
+            return default(IOrderedEnumerable<TSource>);
+        }
+
+        public static IOrderedEnumerable<TSource> ThenByDescending<TSource, TKey>(Func<TSource, TKey> keySelector)
+        {
+            return default(IOrderedEnumerable<TSource>);
+        }
+
+        public static IOrderedEnumerable<TSource> ThenByDescending<TSource, TKey>(Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
+        {
+            return default(IOrderedEnumerable<TSource>);
+        }
+
         public TElement[] ToArray()
         {
             return null;
