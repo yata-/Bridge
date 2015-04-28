@@ -605,6 +605,32 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Concatenates two sequences.
+        /// </summary>
+        /// <param name="first">
+        /// The first sequence to concatenate.
+        /// </param>
+        /// <param name="second">
+        /// The sequence to concatenate to the first sequence.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of the input sequences.
+        /// </typeparam>
+        /// <returns>
+        /// An System.Collections.Generic.IEnumerable<T> that contains the concatenated
+        /// elements of the two input sequences.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// first or second is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({first}).concat({second})")]
+        public static EnumerableInstance<TSource> Concat<TSource>(this IEnumerable<TSource> first, IEnumerable<TSource> second)
+        {
+            return default(EnumerableInstance<TSource>);
+        }
+
+        /// <summary>
         /// Determines whether a sequence contains a specified element by using the default
         /// equality comparer.
         /// </summary>

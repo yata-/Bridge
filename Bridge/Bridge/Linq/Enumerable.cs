@@ -38,14 +38,6 @@ namespace Bridge.Linq
         }
 
         // FIXME: absent from linq definitions!
-        [Template("Bridge.Linq.Enumerable.from({source}).concat({other})")]
-        public static EnumerableInstance<TSource> Concat<TSource>(this IEnumerable<TSource> source,
-            IEnumerable<TSource> other)
-        {
-            return null;
-        }
-
-        // FIXME: absent from linq definitions!
         public static EnumerableInstance<TResult> Cycle<TResult>(params TResult[] arguments)
         {
             return null;
