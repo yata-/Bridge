@@ -181,6 +181,44 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Returns the input typed as System.Collections.Generic.IEnumerable<T>.
+        /// </summary>
+        /// <param name="source">
+        /// The sequence to type as System.Collections.Generic.IEnumerable<T>.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The input sequence typed as System.Collections.Generic.IEnumerable<T>.
+        /// </returns>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source})")]
+        public static EnumerableInstance<TSource> AsEnumerable<TSource>(this EnumerableInstance<TSource> source)
+        {
+            return default(EnumerableInstance<TSource>);
+        }
+
+        /// <summary>
+        /// Returns the input typed as System.Collections.Generic.IEnumerable<T>.
+        /// </summary>
+        /// <param name="source">
+        /// The sequence to type as System.Collections.Generic.IEnumerable<T>.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The input sequence typed as System.Collections.Generic.IEnumerable<T>.
+        /// </returns>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source})")]
+        public static IEnumerable<TSource> AsEnumerable<TSource>(this IEnumerable<TSource> source)
+        {
+            return default(IEnumerable<TSource>);
+        }
+
+        /// <summary>
         /// Computes the average of a sequence of System.Decimal values.
         /// </summary>
         /// <param name="source">
