@@ -232,6 +232,10 @@
         },
 	
         cast: function (obj, type) {
+            if (obj === null) {
+                return null;
+            }
+
 	        var result = Bridge.as(obj, type);
 
 	        if (result == null) {
