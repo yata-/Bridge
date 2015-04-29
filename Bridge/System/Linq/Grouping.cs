@@ -5,7 +5,7 @@ namespace System.Linq
 {
     [Ignore]
     [IgnoreGeneric]
-    public interface IGrouping<out TKey, out TElement> : IEnumerable<TElement>
+    public interface IGrouping<out TKey, TElement> : IEnumerable<TElement>
     {
         TKey Key
         {
