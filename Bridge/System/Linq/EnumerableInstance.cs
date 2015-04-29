@@ -404,6 +404,18 @@ namespace System.Linq
             return 0;
         }
 
+        [Template("{this}.count()")]
+        public static long LongCount<TSource>()
+        {
+            return default(long);
+        }
+
+        [Template("{this}.count({predicate})")]
+        public static long LongCount<TSource>(Func<TSource, bool> predicate)
+        {
+            return default(long);
+        }
+
         [Template("{this}.lastOrDefault(null, Bridge.getDefaultValue({TElement}))")]
         public TElement LastOrDefault()
         {
@@ -804,6 +816,26 @@ namespace System.Linq
         public EnumerableInstance<TElement> TakeWhile(Func<TElement, int, bool> predicate)
         {
             return null;
+        }
+
+        public static IOrderedEnumerable<TSource> ThenBy<TSource, TKey>(Func<TSource, TKey> keySelector)
+        {
+            return default(IOrderedEnumerable<TSource>);
+        }
+
+        public static IOrderedEnumerable<TSource> ThenBy<TSource, TKey>(Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
+        {
+            return default(IOrderedEnumerable<TSource>);
+        }
+
+        public static IOrderedEnumerable<TSource> ThenByDescending<TSource, TKey>(Func<TSource, TKey> keySelector)
+        {
+            return default(IOrderedEnumerable<TSource>);
+        }
+
+        public static IOrderedEnumerable<TSource> ThenByDescending<TSource, TKey>(Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
+        {
+            return default(IOrderedEnumerable<TSource>);
         }
 
         public TElement[] ToArray()

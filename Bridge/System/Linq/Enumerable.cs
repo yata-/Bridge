@@ -181,6 +181,44 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Returns the input typed as System.Collections.Generic.IEnumerable<T>.
+        /// </summary>
+        /// <param name="source">
+        /// The sequence to type as System.Collections.Generic.IEnumerable<T>.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The input sequence typed as System.Collections.Generic.IEnumerable<T>.
+        /// </returns>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source})")]
+        public static EnumerableInstance<TSource> AsEnumerable<TSource>(this EnumerableInstance<TSource> source)
+        {
+            return default(EnumerableInstance<TSource>);
+        }
+
+        /// <summary>
+        /// Returns the input typed as System.Collections.Generic.IEnumerable<T>.
+        /// </summary>
+        /// <param name="source">
+        /// The sequence to type as System.Collections.Generic.IEnumerable<T>.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The input sequence typed as System.Collections.Generic.IEnumerable<T>.
+        /// </returns>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source})")]
+        public static IEnumerable<TSource> AsEnumerable<TSource>(this IEnumerable<TSource> source)
+        {
+            return default(IEnumerable<TSource>);
+        }
+
+        /// <summary>
         /// Computes the average of a sequence of System.Decimal values.
         /// </summary>
         /// <param name="source">
@@ -564,6 +602,32 @@ namespace System.Linq
         public static EnumerableInstance<TResult> Cast<TResult>(this IEnumerable source)
         {
             return default(EnumerableInstance<TResult>);
+        }
+
+        /// <summary>
+        /// Concatenates two sequences.
+        /// </summary>
+        /// <param name="first">
+        /// The first sequence to concatenate.
+        /// </param>
+        /// <param name="second">
+        /// The sequence to concatenate to the first sequence.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of the input sequences.
+        /// </typeparam>
+        /// <returns>
+        /// An System.Collections.Generic.IEnumerable<T> that contains the concatenated
+        /// elements of the two input sequences.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// first or second is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({first}).concat({second})")]
+        public static EnumerableInstance<TSource> Concat<TSource>(this IEnumerable<TSource> first, IEnumerable<TSource> second)
+        {
+            return default(EnumerableInstance<TSource>);
         }
 
         /// <summary>
@@ -1564,6 +1628,64 @@ namespace System.Linq
             Func<TOuter, TInner, TResult> resultSelector, IEqualityComparer<TKey> comparer)
         {
             return default(EnumerableInstance<TResult>);
+        }
+
+        /// <summary>
+        /// Returns an System.Int64 that represents the total number of elements in a
+        /// sequence.
+        /// </summary>
+        /// <param name="source">
+        /// An System.Collections.Generic.IEnumerable<T> that contains the elements to
+        /// be counted.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The number of elements in the source sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The number of elements exceeds System.Int64.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).count()")]
+        public static long LongCount<TSource>(this IEnumerable<TSource> source)
+        {
+            return default(long);
+        }
+
+        /// <summary>
+        /// Returns an System.Int64 that represents how many elements in a sequence satisfy
+        /// a condition.
+        /// </summary>
+        /// <param name="source">
+        /// An System.Collections.Generic.IEnumerable<T> that contains the elements to
+        /// be counted.
+        /// </param>
+        /// <param name="predicate">
+        /// A function to test each element for a condition.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// A number that represents how many elements in the sequence satisfy the condition
+        /// in the predicate function.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or predicate is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The number of matching elements exceeds System.Int64.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).count({predicate})")]
+        public static long LongCount<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
+        {
+            return default(long);
         }
 
         /// <summary>
@@ -3444,6 +3566,132 @@ namespace System.Linq
         public static EnumerableInstance<TSource> TakeWhile<TSource>(this IEnumerable<TSource> source, Func<TSource, int, bool> predicate)
         {
             return default(EnumerableInstance<TSource>);
+        }
+
+        /// <summary>
+        /// Performs a subsequent ordering of the elements in a sequence in ascending
+        /// order according to a key.
+        /// </summary>
+        /// <param name="source">
+        /// An System.Linq.IOrderedEnumerable<TElement> that contains elements to sort.
+        /// </param>
+        /// <param name="keySelector">
+        /// A function to extract a key from each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <typeparam name="TKey">
+        /// The type of the key returned by keySelector.
+        /// </typeparam>
+        /// <returns>
+        /// An System.Linq.IOrderedEnumerable<TElement> whose elements are sorted according
+        /// to a key.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or keySelector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).thenBy({keySelector})")]
+        public static IOrderedEnumerable<TSource> ThenBy<TSource, TKey>(this IOrderedEnumerable<TSource> source, Func<TSource, TKey> keySelector)
+        {
+            return default(IOrderedEnumerable<TSource>);
+        }
+
+        /// <summary>
+        /// Performs a subsequent ordering of the elements in a sequence in ascending
+        /// order by using a specified comparer.
+        /// </summary>
+        /// <param name="source">
+        /// An System.Linq.IOrderedEnumerable<TElement> that contains elements to sort.
+        /// </param>
+        /// <param name="keySelector">
+        /// A function to extract a key from each element.
+        /// </param>
+        /// <param name="comparer">
+        /// An System.Collections.Generic.IComparer<T> to compare keys.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <typeparam name="TKey">
+        /// The type of the key returned by keySelector.
+        /// </typeparam>
+        /// <returns>
+        /// An System.Linq.IOrderedEnumerable<TElement> whose elements are sorted according
+        /// to a key.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or keySelector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).thenBy({keySelector}, {comparer})")]
+        public static IOrderedEnumerable<TSource> ThenBy<TSource, TKey>(this IOrderedEnumerable<TSource> source, Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
+        {
+            return default(IOrderedEnumerable<TSource>);
+        }
+
+        /// <summary>
+        /// Performs a subsequent ordering of the elements in a sequence in descending
+        /// order, according to a key.
+        /// </summary>
+        /// <param name="source">
+        /// An System.Linq.IOrderedEnumerable<TElement> that contains elements to sort.
+        /// </param>
+        /// <param name="keySelector">
+        /// A function to extract a key from each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <typeparam name="TKey">
+        /// The type of the key returned by keySelector.
+        /// </typeparam>
+        /// <returns>
+        /// An System.Linq.IOrderedEnumerable<TElement> whose elements are sorted in
+        /// descending order according to a key.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or keySelector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).thenByDescending({keySelector}, {comparer})")]
+        public static IOrderedEnumerable<TSource> ThenByDescending<TSource, TKey>(this IOrderedEnumerable<TSource> source, Func<TSource, TKey> keySelector)
+        {
+            return default(IOrderedEnumerable<TSource>);
+        }
+
+        /// <summary>
+        /// Performs a subsequent ordering of the elements in a sequence in descending
+        /// order by using a specified comparer.
+        /// </summary>
+        /// <param name="source">
+        /// An System.Linq.IOrderedEnumerable<TElement> that contains elements to sort.
+        /// </param>
+        /// <param name="keySelector">
+        /// A function to extract a key from each element.
+        /// </param>
+        /// <param name="comparer">
+        /// An System.Collections.Generic.IComparer<T> to compare keys.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <typeparam name="TKey">
+        /// The type of the key returned by keySelector.
+        /// </typeparam>
+        /// <returns>
+        /// An System.Linq.IOrderedEnumerable<TElement> whose elements are sorted in
+        /// descending order according to a key.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or keySelector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).thenByDescending({keySelector}, {comparer})")]
+        public static IOrderedEnumerable<TSource> ThenByDescending<TSource, TKey>(this IOrderedEnumerable<TSource> source, Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
+        {
+            return default(IOrderedEnumerable<TSource>);
         }
 
         /// <summary>
