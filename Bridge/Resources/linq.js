@@ -1850,6 +1850,14 @@
         return this.select(selector).aggregate(0, function (a, b) { return a + b; });
     };
 
+    Enumerable.prototype.nullableSum = function (selector) {
+        if (this.any(Bridge.isNull)) {
+            return null;
+        }
+
+        return this.sum(selector);
+    };
+
     /* Paging Methods */
 
     Enumerable.prototype.elementAt = function (index) {

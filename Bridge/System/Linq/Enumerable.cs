@@ -4207,6 +4207,50 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Computes the sum of a sequence of nullable System.Decimal values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Decimal values to calculate the sum of.
+        /// </param>
+        /// <returns>
+        /// The sum of the values in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum is larger than System.Decimal.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableSum()")]
+        public static decimal? Sum(this EnumerableInstance<decimal?> source)
+        {
+            return default(decimal?);
+        }
+
+        /// <summary>
+        /// Computes the sum of a sequence of nullable System.Decimal values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Decimal values to calculate the sum of.
+        /// </param>
+        /// <returns>
+        /// The sum of the values in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum is larger than System.Decimal.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableSum()")]
+        public static decimal? Sum(this IEnumerable<decimal?> source)
+        {
+            return default(decimal?);
+        }
+
+        /// <summary>
         /// Computes the sum of a sequence of System.Decimal values.
         /// </summary>
         /// <param name="source">
@@ -4249,6 +4293,44 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Computes the sum of a sequence of nullable System.Double values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Double values to calculate the sum of.
+        /// </param>
+        /// <returns>
+        /// The sum of the values in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableSum()")]
+        public static double? Sum(this EnumerableInstance<double?> source)
+        {
+            return default(double?);
+        }
+
+        /// <summary>
+        /// Computes the sum of a sequence of nullable System.Double values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Double values to calculate the sum of.
+        /// </param>
+        /// <returns>
+        /// The sum of the values in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableSum()")]
+        public static double? Sum(this IEnumerable<double?> source)
+        {
+            return default(double?);
+        }
+
+        /// <summary>
         /// Computes the sum of a sequence of System.Double values.
         /// </summary>
         /// <param name="source">
@@ -4285,6 +4367,44 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Computes the sum of a sequence of nullable System.Single values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Single values to calculate the sum of.
+        /// </param>
+        /// <returns>
+        /// The sum of the values in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableSum()")]
+        public static float? Sum(this EnumerableInstance<float?> source)
+        {
+            return default(float?);
+        }
+
+        /// <summary>
+        /// Computes the sum of a sequence of nullable System.Single values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Single values to calculate the sum of.
+        /// </param>
+        /// <returns>
+        /// The sum of the values in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableSum()")]
+        public static float? Sum(this IEnumerable<float?> source)
+        {
+            return default(float?);
+        }
+
+        /// <summary>
         /// Computes the sum of a sequence of System.Single values.
         /// </summary>
         /// <param name="source">
@@ -4318,6 +4438,50 @@ namespace System.Linq
         public static float Sum(this IEnumerable<float> source)
         {
             return default(float);
+        }
+
+        /// <summary>
+        /// Computes the sum of a sequence of nullable System.Int32 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int32 values to calculate the sum of.
+        /// </param>
+        /// <returns>
+        /// The sum of the values in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum is larger than System.Int32.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableSum()")]
+        public static int? Sum(this EnumerableInstance<int?> source)
+        {
+            return default(int?);
+        }
+
+        /// <summary>
+        /// Computes the sum of a sequence of nullable System.Int32 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int32 values to calculate the sum of.
+        /// </param>
+        /// <returns>
+        /// The sum of the values in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum is larger than System.Int32.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableSum()")]
+        public static int? Sum(this IEnumerable<int?> source)
+        {
+            return default(int?);
         }
 
         /// <summary>
@@ -4363,6 +4527,50 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Computes the sum of a sequence of nullable System.Int64 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int64 values to calculate the sum of.
+        /// </param>
+        /// <returns>
+        /// The sum of the values in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum is larger than System.Int64.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableSum()")]
+        public static long? Sum(this EnumerableInstance<long?> source)
+        {
+            return default(long?);
+        }
+
+        /// <summary>
+        /// Computes the sum of a sequence of nullable System.Int64 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int64 values to calculate the sum of.
+        /// </param>
+        /// <returns>
+        /// The sum of the values in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum is larger than System.Int64.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableSum()")]
+        public static long? Sum(this IEnumerable<long?> source)
+        {
+            return default(long?);
+        }
+
+        /// <summary>
         /// Computes the sum of a sequence of System.Int64 values.
         /// </summary>
         /// <param name="source">
@@ -4405,6 +4613,35 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Computes the sum of the sequence of nullable System.Decimal values that are
+        /// obtained by invoking a transform function on each element of the input sequence.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values that are used to calculate a sum.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The sum of the projected values.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum is larger than System.Decimal.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableSum({selector})")]
+        public static decimal? Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal?> selector)
+        {
+            return default(decimal?);
+        }
+
+        /// <summary>
         /// Computes the sum of the sequence of System.Decimal values that are obtained
         /// by invoking a transform function on each element of the input sequence.
         /// </summary>
@@ -4433,6 +4670,32 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Computes the sum of the sequence of nullable System.Double values that are
+        /// obtained by invoking a transform function on each element of the input sequence.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values that are used to calculate a sum.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The sum of the projected values.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableSum({selector})")]
+        public static double? Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, double?> selector)
+        {
+            return default(double?);
+        }
+
+        /// <summary>
         /// Computes the sum of the sequence of System.Double values that are obtained
         /// by invoking a transform function on each element of the input sequence.
         /// </summary>
@@ -4455,6 +4718,32 @@ namespace System.Linq
         public static double Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, double> selector)
         {
             return default(double);
+        }
+
+        /// <summary>
+        /// Computes the sum of the sequence of nullable System.Single values that are
+        /// obtained by invoking a transform function on each element of the input sequence.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values that are used to calculate a sum.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The sum of the projected values.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableSum({selector})")]
+        public static float? Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, float?> selector)
+        {
+            return default(float?);
         }
 
         /// <summary>
@@ -4483,6 +4772,35 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Computes the sum of the sequence of nullable System.Int32 values that are
+        /// obtained by invoking a transform function on each element of the input sequence.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values that are used to calculate a sum.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The sum of the projected values.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum is larger than System.Int32.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableSum({selector})")]
+        public static int? Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, int?> selector)
+        {
+            return default(int?);
+        }
+
+        /// <summary>
         /// Computes the sum of the sequence of System.Int32 values that are obtained
         /// by invoking a transform function on each element of the input sequence.
         /// </summary>
@@ -4508,6 +4826,35 @@ namespace System.Linq
         public static int Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, int> selector)
         {
             return default(int);
+        }
+
+        /// <summary>
+        /// Computes the sum of the sequence of nullable System.Int64 values that are
+        /// obtained by invoking a transform function on each element of the input sequence.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values that are used to calculate a sum.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The sum of the projected values.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum is larger than System.Int64.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableSum({selector})")]
+        public static long? Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, long?> selector)
+        {
+            return default(long?);
         }
 
         /// <summary>
