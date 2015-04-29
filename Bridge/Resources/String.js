@@ -240,6 +240,24 @@
             }
 
             return strA.localeCompare(strB);
+        },
+
+        toCharArray: function (str, startIndex, length) {
+            if (startIndex < 0 || startIndex > str.length || startIndex > str.length - length) {
+                throw new Bridge.ArgumentOutOfRangeException("startIndex", "startIndex cannot be less than zero and must refer to a location within the string");
+            }
+
+            if (length < 0) {
+                throw new Bridge.ArgumentOutOfRangeException("length", "must be non-negative");
+            }
+
+            var arr = [];
+
+            for (var i = startIndex; i < startIndex + length; i++) {
+                arr.push(str.charCodeAt(i));
+            }
+
+            return arr;
         }
     };
 

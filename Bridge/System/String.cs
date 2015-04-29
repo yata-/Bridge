@@ -713,6 +713,18 @@ namespace System
             return -1;
         }
         
+        [Template("Bridge.String.toCharArray({this}, 0, {this}.length)")]
+        public char[] ToCharArray()
+        {
+            return null;
+        }
+
+        [Template("Bridge.String.toCharArray({this}, {startIndex}, {count})")]
+        public char[] ToCharArray(int startIndex, int count)
+        {
+            return null;
+        }
+
         public static bool operator ==(string s1, string s2)
         {
             return false;
