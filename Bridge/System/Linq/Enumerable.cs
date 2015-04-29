@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace System.Linq 
+namespace System.Linq
 {
 	[Ignore]
     [Name("Bridge.Linq.Enumerable")]
-	public static class Enumerable 
+	public static class Enumerable
     {
         /// <summary>
         /// Applies an accumulator function over a sequence.
@@ -219,6 +219,52 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Computes the average of a sequence of nullable System.Decimal values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Decimal values to calculate the average of.
+        /// </param>
+        /// <returns>
+        /// The average of the sequence of values, or null if the source sequence is
+        /// empty or contains only values that are null.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableAverage()")]
+        public static decimal? Average(this EnumerableInstance<decimal?> source)
+        {
+            return default(decimal?);
+        }
+
+        /// <summary>
+        /// Computes the average of a sequence of nullable System.Decimal values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Decimal values to calculate the average of.
+        /// </param>
+        /// <returns>
+        /// The average of the sequence of values, or null if the source sequence is
+        /// empty or contains only values that are null.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableAverage()")]
+        public static decimal? Average(this IEnumerable<decimal?> source)
+        {
+            return default(decimal?);
+        }
+
+        /// <summary>
         /// Computes the average of a sequence of System.Decimal values.
         /// </summary>
         /// <param name="source">
@@ -258,6 +304,46 @@ namespace System.Linq
         public static decimal Average(this IEnumerable<decimal> source)
         {
             return default(decimal);
+        }
+
+        /// <summary>
+        /// Computes the average of a sequence of nullable System.Double values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Double values to calculate the average of.
+        /// </param>
+        /// <returns>
+        /// The average of the sequence of values, or null if the source sequence is
+        /// empty or contains only values that are null.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableAverage()")]
+        public static double? Average(this EnumerableInstance<double?> source)
+        {
+            return default(double?);
+        }
+
+        /// <summary>
+        /// Computes the average of a sequence of nullable System.Double values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Double values to calculate the average of.
+        /// </param>
+        /// <returns>
+        /// The average of the sequence of values, or null if the source sequence is
+        /// empty or contains only values that are null.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableAverage()")]
+        public static double? Average(this IEnumerable<double?> source)
+        {
+            return default(double?);
         }
 
         /// <summary>
@@ -303,6 +389,46 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Computes the average of a sequence of nullable System.Single values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Single values to calculate the average of.
+        /// </param>
+        /// <returns>
+        /// The average of the sequence of values, or null if the source sequence is
+        /// empty or contains only values that are null.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableAverage()")]
+        public static float? Average(this EnumerableInstance<float?> source)
+        {
+            return default(float?);
+        }
+
+        /// <summary>
+        /// Computes the average of a sequence of nullable System.Single values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Single values to calculate the average of.
+        /// </param>
+        /// <returns>
+        /// The average of the sequence of values, or null if the source sequence is
+        /// empty or contains only values that are null.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableAverage()")]
+        public static float? Average(this IEnumerable<float?> source)
+        {
+            return default(float?);
+        }
+
+        /// <summary>
         /// Computes the average of a sequence of System.Single values.
         /// </summary>
         /// <param name="source">
@@ -342,6 +468,52 @@ namespace System.Linq
         public static float Average(this IEnumerable<float> source)
         {
             return default(float);
+        }
+
+        /// <summary>
+        /// Computes the average of a sequence of nullable System.Int32 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int32 values to calculate the average of.
+        /// </param>
+        /// <returns>
+        /// The average of the sequence of values, or null if the source sequence is
+        /// empty or contains only values that are null.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum of the elements in the sequence is larger than System.Int64.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableAverage()")]
+        public static double? Average(this EnumerableInstance<int?> source)
+        {
+            return default(double?);
+        }
+
+        /// <summary>
+        /// Computes the average of a sequence of nullable System.Int32 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int32 values to calculate the average of.
+        /// </param>
+        /// <returns>
+        /// The average of the sequence of values, or null if the source sequence is
+        /// empty or contains only values that are null.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum of the elements in the sequence is larger than System.Int64.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableAverage()")]
+        public static double? Average(this IEnumerable<int?> source)
+        {
+            return default(double?);
         }
 
         /// <summary>
@@ -387,6 +559,52 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Computes the average of a sequence of nullable System.Int64 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int64 values to calculate the average of.
+        /// </param>
+        /// <returns>
+        /// The average of the sequence of values, or null if the source sequence is
+        /// empty or contains only values that are null.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum of the elements in the sequence is larger than System.Int64.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableAverage()")]
+        public static double? Average(this EnumerableInstance<long?> source)
+        {
+            return default(double?);
+        }
+
+        /// <summary>
+        /// Computes the average of a sequence of nullable System.Int64 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int64 values to calculate the average of.
+        /// </param>
+        /// <returns>
+        /// The average of the sequence of values, or null if the source sequence is
+        /// empty or contains only values that are null.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum of the elements in the sequence is larger than System.Int64.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableAverage()")]
+        public static double? Average(this IEnumerable<long?> source)
+        {
+            return default(double?);
+        }
+
+        /// <summary>
         /// Computes the average of a sequence of System.Int64 values.
         /// </summary>
         /// <param name="source">
@@ -429,6 +647,37 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Computes the average of a sequence of nullable System.Decimal values that
+        /// are obtained by invoking a transform function on each element of the input
+        /// sequence.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to calculate the average of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The average of the sequence of values, or null if the source sequence is
+        /// empty or contains only values that are null.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableAverage({selector})")]
+        public static decimal? Average<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal?> selector)
+        {
+            return default(decimal?);
+        }
+
+        /// <summary>
         /// Computes the average of a sequence of System.Decimal values that are obtained
         /// by invoking a transform function on each element of the input sequence.
         /// </summary>
@@ -460,6 +709,34 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Computes the average of a sequence of nullable System.Double values that
+        /// are obtained by invoking a transform function on each element of the input
+        /// sequence.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to calculate the average of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The average of the sequence of values, or null if the source sequence is
+        /// empty or contains only values that are null.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableAverage({selector})")]
+        public static double? Average<TSource>(this IEnumerable<TSource> source, Func<TSource, double?> selector)
+        {
+            return default(double?);
+        }
+
+        /// <summary>
         /// Computes the average of a sequence of System.Double values that are obtained
         /// by invoking a transform function on each element of the input sequence.
         /// </summary>
@@ -485,6 +762,34 @@ namespace System.Linq
         public static double Average<TSource>(this IEnumerable<TSource> source, Func<TSource, double> selector)
         {
             return default(double);
+        }
+
+        /// <summary>
+        /// Computes the average of a sequence of nullable System.Single values that
+        /// are obtained by invoking a transform function on each element of the input
+        /// sequence.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to calculate the average of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The average of the sequence of values, or null if the source sequence is
+        /// empty or contains only values that are null.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableAverage({selector})")]
+        public static float? Average<TSource>(this IEnumerable<TSource> source, Func<TSource, float?> selector)
+        {
+            return default(float?);
         }
 
         /// <summary>
@@ -516,6 +821,36 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Computes the average of a sequence of nullable System.Int32 values that are
+        /// obtained by invoking a transform function on each element of the input sequence.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to calculate the average of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The average of the sequence of values, or null if the source sequence is
+        /// empty or contains only values that are null.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum of the elements in the sequence is larger than System.Int64.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableAverage({selector})")]
+        public static double? Average<TSource>(this IEnumerable<TSource> source, Func<TSource, int?> selector)
+        {
+            return default(double?);
+        }
+
+        /// <summary>
         /// Computes the average of a sequence of System.Int32 values that are obtained
         /// by invoking a transform function on each element of the input sequence.
         /// </summary>
@@ -544,6 +879,30 @@ namespace System.Linq
         public static double Average<TSource>(this IEnumerable<TSource> source, Func<TSource, int> selector)
         {
             return default(double);
+        }
+
+        /// <summary>
+        /// Computes the average of a sequence of nullable System.Int64 values that are
+        /// obtained by invoking a transform function on each element of the input sequence.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to calculate the average of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The average of the sequence of values, or null if the source sequence is
+        /// empty or contains only values that are null.
+        /// </returns>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableAverage({selector})")]
+        public static double? Average<TSource>(this IEnumerable<TSource> source, Func<TSource, long?> selector)
+        {
+            return default(double?);
         }
 
         /// <summary>
