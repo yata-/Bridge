@@ -193,7 +193,7 @@ namespace System.Linq
         /// The input sequence typed as System.Collections.Generic.IEnumerable<T>.
         /// </returns>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source})")]
+        [Template("{source}")]
         public static EnumerableInstance<TSource> AsEnumerable<TSource>(this EnumerableInstance<TSource> source)
         {
             return default(EnumerableInstance<TSource>);
@@ -212,7 +212,7 @@ namespace System.Linq
         /// The input sequence typed as System.Collections.Generic.IEnumerable<T>.
         /// </returns>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source})")]
+        [Template("{source}")]
         public static IEnumerable<TSource> AsEnumerable<TSource>(this IEnumerable<TSource> source)
         {
             return default(IEnumerable<TSource>);
