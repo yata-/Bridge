@@ -2846,6 +2846,48 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Returns the minimum value in a sequence of nullable System.Decimal values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Decimal values to determine the minimum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable<Decimal> in C# or Nullable(Of Decimal) in Visual
+        /// Basic that corresponds to the minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableMin()")]
+        public static decimal? Min(this EnumerableInstance<decimal?> source)
+        {
+            return default(decimal?);
+        }
+
+        /// <summary>
+        /// Returns the minimum value in a sequence of nullable System.Decimal values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Decimal values to determine the minimum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable<Decimal> in C# or Nullable(Of Decimal) in Visual
+        /// Basic that corresponds to the minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMin()")]
+        public static decimal? Min(this IEnumerable<decimal?> source)
+        {
+            return default(decimal?);
+        }
+
+        /// <summary>
         /// Returns the minimum value in a sequence of System.Decimal values.
         /// </summary>
         /// <param name="source">
@@ -2885,6 +2927,48 @@ namespace System.Linq
         public static decimal Min(this IEnumerable<decimal> source)
         {
             return default(decimal);
+        }
+
+        /// <summary>
+        /// Returns the minimum value in a sequence of nullable System.Double values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Double values to determine the minimum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable<Double> in C# or Nullable(Of Double) in Visual Basic
+        /// that corresponds to the minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableMin()")]
+        public static double? Min(this EnumerableInstance<double?> source)
+        {
+            return default(double?);
+        }
+
+        /// <summary>
+        /// Returns the minimum value in a sequence of nullable System.Double values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Double values to determine the minimum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable<Double> in C# or Nullable(Of Double) in Visual Basic
+        /// that corresponds to the minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMin()")]
+        public static double? Min(this IEnumerable<double?> source)
+        {
+            return default(double?);
         }
 
         /// <summary>
@@ -2930,6 +3014,48 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Returns the minimum value in a sequence of nullable System.Single values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Single values to determine the minimum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable<Single> in C# or Nullable(Of Single) in Visual Basic
+        /// that corresponds to the minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableMin()")]
+        public static float? Min(this EnumerableInstance<float?> source)
+        {
+            return default(float?);
+        }
+
+        /// <summary>
+        /// Returns the minimum value in a sequence of nullable System.Single values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Single values to determine the minimum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable<Single> in C# or Nullable(Of Single) in Visual Basic
+        /// that corresponds to the minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMin()")]
+        public static float? Min(this IEnumerable<float?> source)
+        {
+            return default(float?);
+        }
+
+        /// <summary>
         /// Returns the minimum value in a sequence of System.Single values.
         /// </summary>
         /// <param name="source">
@@ -2972,6 +3098,48 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Returns the minimum value in a sequence of nullable System.Int32 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int32 values to determine the minimum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable<Int32> in C# or Nullable(Of Int32) in Visual Basic
+        /// that corresponds to the minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableMin()")]
+        public static int? Min(this EnumerableInstance<int?> source)
+        {
+            return default(int?);
+        }
+
+        /// <summary>
+        /// Returns the minimum value in a sequence of nullable System.Int32 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int32 values to determine the minimum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable<Int32> in C# or Nullable(Of Int32) in Visual Basic
+        /// that corresponds to the minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMin()")]
+        public static int? Min(this IEnumerable<int?> source)
+        {
+            return default(int?);
+        }
+
+        /// <summary>
         /// Returns the minimum value in a sequence of System.Int32 values.
         /// </summary>
         /// <param name="source">
@@ -3011,6 +3179,48 @@ namespace System.Linq
         public static int Min(this IEnumerable<int> source)
         {
             return default(int);
+        }
+
+        /// <summary>
+        /// Returns the minimum value in a sequence of nullable System.Int64 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int64 values to determine the minimum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable<Int64> in C# or Nullable(Of Int64) in Visual Basic
+        /// that corresponds to the minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableMin()")]
+        public static long? Min(this EnumerableInstance<long?> source)
+        {
+            return default(long?);
+        }
+
+        /// <summary>
+        /// Returns the minimum value in a sequence of nullable System.Int64 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int64 values to determine the minimum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable<Int64> in C# or Nullable(Of Int64) in Visual Basic
+        /// that corresponds to the minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMin()")]
+        public static long? Min(this IEnumerable<long?> source)
+        {
+            return default(long?);
         }
 
         /// <summary>
@@ -3057,6 +3267,33 @@ namespace System.Linq
 
         /// <summary>
         /// Invokes a transform function on each element of a sequence and returns the
+        /// minimum nullable System.Decimal value.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to determine the minimum value of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The value of type Nullable<Decimal> in C# or Nullable(Of Decimal) in Visual
+        /// Basic that corresponds to the minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMin({selector})")]
+        public static decimal? Min<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal?> selector)
+        {
+            return default(decimal?);
+        }
+
+        /// <summary>
+        /// Invokes a transform function on each element of a sequence and returns the
         /// minimum System.Decimal value.
         /// </summary>
         /// <param name="source">
@@ -3081,6 +3318,33 @@ namespace System.Linq
         public static decimal Min<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal> selector)
         {
             return default(decimal);
+        }
+
+        /// <summary>
+        /// Invokes a transform function on each element of a sequence and returns the
+        /// minimum nullable System.Double value.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to determine the minimum value of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The value of type Nullable<Double> in C# or Nullable(Of Double) in Visual
+        /// Basic that corresponds to the minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMin({selector})")]
+        public static double? Min<TSource>(this IEnumerable<TSource> source, Func<TSource, double?> selector)
+        {
+            return default(double?);
         }
 
         /// <summary>
@@ -3113,6 +3377,33 @@ namespace System.Linq
 
         /// <summary>
         /// Invokes a transform function on each element of a sequence and returns the
+        /// minimum nullable System.Single value.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to determine the minimum value of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The value of type Nullable<Single> in C# or Nullable(Of Single) in Visual
+        /// Basic that corresponds to the minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMin({selector})")]
+        public static float? Min<TSource>(this IEnumerable<TSource> source, Func<TSource, float?> selector)
+        {
+            return default(float?);
+        }
+
+        /// <summary>
+        /// Invokes a transform function on each element of a sequence and returns the
         /// minimum System.Single value.
         /// </summary>
         /// <param name="source">
@@ -3141,6 +3432,33 @@ namespace System.Linq
 
         /// <summary>
         /// Invokes a transform function on each element of a sequence and returns the
+        /// minimum nullable System.Int32 value.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to determine the minimum value of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The value of type Nullable<Int32> in C# or Nullable(Of Int32) in Visual Basic
+        /// that corresponds to the minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMin({selector})")]
+        public static int? Min<TSource>(this IEnumerable<TSource> source, Func<TSource, int?> selector)
+        {
+            return default(int?);
+        }
+
+        /// <summary>
+        /// Invokes a transform function on each element of a sequence and returns the
         /// minimum System.Int32 value.
         /// </summary>
         /// <param name="source">
@@ -3165,6 +3483,33 @@ namespace System.Linq
         public static int Min<TSource>(this IEnumerable<TSource> source, Func<TSource, int> selector)
         {
             return default(int);
+        }
+
+        /// <summary>
+        /// Invokes a transform function on each element of a sequence and returns the
+        /// minimum nullable System.Int64 value.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to determine the minimum value of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The value of type Nullable<Int64> in C# or Nullable(Of Int64) in Visual Basic
+        /// that corresponds to the minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMin({selector})")]
+        public static long? Min<TSource>(this IEnumerable<TSource> source, Func<TSource, long?> selector)
+        {
+            return default(long?);
         }
 
         /// <summary>

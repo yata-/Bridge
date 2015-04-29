@@ -1825,6 +1825,14 @@
         return this.select(selector).aggregate(function (a, b) { return (a < b) ? a : b; });
     };
 
+    Enumerable.prototype.nullableMin = function (selector) {
+        if (this.any(Bridge.isNull)) {
+            return null;
+        }
+
+        return this.min(selector);
+    };
+
     Enumerable.prototype.maxBy = function (keySelector) {
         keySelector = Utils.createLambda(keySelector);
         return this.aggregate(function (a, b) { return (keySelector(a) > keySelector(b)) ? a : b; });
