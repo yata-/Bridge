@@ -1810,6 +1810,14 @@
         return this.select(selector).aggregate(function (a, b) { return (a > b) ? a : b; });
     };
 
+    Enumerable.prototype.nullableMax = function (selector) {
+        if (this.any(Bridge.isNull)) {
+            return null;
+        }
+
+        return this.max(selector);
+    };
+
     // Overload:function()
     // Overload:function(selector)
     Enumerable.prototype.min = function (selector) {

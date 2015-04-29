@@ -2151,6 +2151,48 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Returns the maximum value in a sequence of nullable System.Decimal values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Decimal values to determine the maximum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable<Decimal> in C# or Nullable(Of Decimal) in Visual
+        /// Basic that corresponds to the maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableMax()")]
+        public static decimal? Max(this EnumerableInstance<decimal?> source)
+        {
+            return default(decimal?);
+        }
+
+        /// <summary>
+        /// Returns the maximum value in a sequence of nullable System.Decimal values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Decimal values to determine the maximum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable<Decimal> in C# or Nullable(Of Decimal) in Visual
+        /// Basic that corresponds to the maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMax()")]
+        public static decimal? Max(this IEnumerable<decimal?> source)
+        {
+            return default(decimal?);
+        }
+
+        /// <summary>
         /// Returns the maximum value in a sequence of System.Decimal values.
         /// </summary>
         /// <param name="source">
@@ -2190,6 +2232,48 @@ namespace System.Linq
         public static decimal Max(this IEnumerable<decimal> source)
         {
             return default(decimal);
+        }
+
+        /// <summary>
+        /// Returns the maximum value in a sequence of nullable System.Double values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Double values to determine the maximum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable<Double> in C# or Nullable(Of Double) in Visual Basic
+        /// that corresponds to the maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableMax()")]
+        public static double? Max(this EnumerableInstance<double?> source)
+        {
+            return default(double?);
+        }
+
+        /// <summary>
+        /// Returns the maximum value in a sequence of nullable System.Double values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Double values to determine the maximum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable<Double> in C# or Nullable(Of Double) in Visual Basic
+        /// that corresponds to the maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMax()")]
+        public static double? Max(this IEnumerable<double?> source)
+        {
+            return default(double?);
         }
 
         /// <summary>
@@ -2235,6 +2319,48 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Returns the maximum value in a sequence of nullable System.Single values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Single values to determine the maximum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable<Single> in C# or Nullable(Of Single) in Visual Basic
+        /// that corresponds to the maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableMax()")]
+        public static float? Max(this EnumerableInstance<float?> source)
+        {
+            return default(float?);
+        }
+
+        /// <summary>
+        /// Returns the maximum value in a sequence of nullable System.Single values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Single values to determine the maximum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable<Single> in C# or Nullable(Of Single) in Visual Basic
+        /// that corresponds to the maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMax()")]
+        public static float? Max(this IEnumerable<float?> source)
+        {
+            return default(float?);
+        }
+
+        /// <summary>
         /// Returns the maximum value in a sequence of System.Single values.
         /// </summary>
         /// <param name="source">
@@ -2277,6 +2403,48 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Returns the maximum value in a sequence of nullable System.Int32 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int32 values to determine the maximum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable<Int32> in C# or Nullable(Of Int32) in Visual Basic
+        /// that corresponds to the maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableMax()")]
+        public static int? Max(this EnumerableInstance<int?> source)
+        {
+            return default(int?);
+        }
+
+        /// <summary>
+        /// Returns the maximum value in a sequence of nullable System.Int32 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int32 values to determine the maximum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable<Int32> in C# or Nullable(Of Int32) in Visual Basic
+        /// that corresponds to the maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMax()")]
+        public static int? Max(this IEnumerable<int?> source)
+        {
+            return default(int?);
+        }
+
+        /// <summary>
         /// Returns the maximum value in a sequence of System.Int32 values.
         /// </summary>
         /// <param name="source">
@@ -2316,6 +2484,48 @@ namespace System.Linq
         public static int Max(this IEnumerable<int> source)
         {
             return default(int);
+        }
+
+        /// <summary>
+        /// Returns the maximum value in a sequence of nullable System.Int64 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int64 values to determine the maximum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable<Int64> in C# or Nullable(Of Int64) in Visual Basic
+        /// that corresponds to the maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableMax()")]
+        public static long? Max(this EnumerableInstance<long?> source)
+        {
+            return default(long?);
+        }
+
+        /// <summary>
+        /// Returns the maximum value in a sequence of nullable System.Int64 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int64 values to determine the maximum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable<Int64> in C# or Nullable(Of Int64) in Visual Basic
+        /// that corresponds to the maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMax()")]
+        public static long? Max(this IEnumerable<long?> source)
+        {
+            return default(long?);
         }
 
         /// <summary>
@@ -2362,6 +2572,33 @@ namespace System.Linq
 
         /// <summary>
         /// Invokes a transform function on each element of a sequence and returns the
+        /// maximum nullable System.Decimal value.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to determine the maximum value of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The value of type Nullable<Decimal> in C# or Nullable(Of Decimal) in Visual
+        /// Basic that corresponds to the maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMax({selector})")]
+        public static decimal? Max<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal?> selector)
+        {
+            return default(decimal?);
+        }
+
+        /// <summary>
+        /// Invokes a transform function on each element of a sequence and returns the
         /// maximum System.Decimal value.
         /// </summary>
         /// <param name="source">
@@ -2386,6 +2623,33 @@ namespace System.Linq
         public static decimal Max<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal> selector)
         {
             return default(decimal);
+        }
+
+        /// <summary>
+        /// Invokes a transform function on each element of a sequence and returns the
+        /// maximum nullable System.Double value.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to determine the maximum value of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The value of type Nullable<Double> in C# or Nullable(Of Double) in Visual
+        /// Basic that corresponds to the maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMax({selector})")]
+        public static double? Max<TSource>(this IEnumerable<TSource> source, Func<TSource, double?> selector)
+        {
+            return default(double?);
         }
 
         /// <summary>
@@ -2418,6 +2682,33 @@ namespace System.Linq
 
         /// <summary>
         /// Invokes a transform function on each element of a sequence and returns the
+        /// maximum nullable System.Single value.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to determine the maximum value of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The value of type Nullable<Single> in C# or Nullable(Of Single) in Visual
+        /// Basic that corresponds to the maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMax({selector})")]
+        public static float? Max<TSource>(this IEnumerable<TSource> source, Func<TSource, float?> selector)
+        {
+            return default(float?);
+        }
+
+        /// <summary>
+        /// Invokes a transform function on each element of a sequence and returns the
         /// maximum System.Single value.
         /// </summary>
         /// <param name="source">
@@ -2446,6 +2737,33 @@ namespace System.Linq
 
         /// <summary>
         /// Invokes a transform function on each element of a sequence and returns the
+        /// maximum nullable System.Int32 value.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to determine the maximum value of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The value of type Nullable<Int32> in C# or Nullable(Of Int32) in Visual Basic
+        /// that corresponds to the maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMax({selector})")]
+        public static int? Max<TSource>(this IEnumerable<TSource> source, Func<TSource, int?> selector)
+        {
+            return default(int?);
+        }
+
+        /// <summary>
+        /// Invokes a transform function on each element of a sequence and returns the
         /// maximum System.Int32 value.
         /// </summary>
         /// <param name="source">
@@ -2470,6 +2788,33 @@ namespace System.Linq
         public static int Max<TSource>(this IEnumerable<TSource> source, Func<TSource, int> selector)
         {
             return default(int);
+        }
+
+        /// <summary>
+        /// Invokes a transform function on each element of a sequence and returns the
+        /// maximum nullable System.Int64 value.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to determine the maximum value of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The value of type Nullable<Int64> in C# or Nullable(Of Int64) in Visual Basic
+        /// that corresponds to the maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMax({selector})")]
+        public static long? Max<TSource>(this IEnumerable<TSource> source, Func<TSource, long?> selector)
+        {
+            return default(long?);
         }
 
         /// <summary>
