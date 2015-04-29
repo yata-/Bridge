@@ -6,6 +6,7 @@ namespace System.Collections
     [Namespace("Bridge")]
     public interface IEnumerable : IBridgeClass
     {
+        [Template("Bridge.getEnumerator({this})")]
         IEnumerator GetEnumerator();
     }
 }

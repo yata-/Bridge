@@ -127,8 +127,11 @@
             }
         },
 
-        getHashCode: function (value) {
+        getHashCode: function (value, safe) {
             if (Bridge.isEmpty(value, true)) {
+                if (safe) {
+                    return 0;
+                }
                 throw new Bridge.InvalidOperationException('HashCode cannot be calculated for empty value');
             }
 
