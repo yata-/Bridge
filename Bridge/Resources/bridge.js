@@ -7075,6 +7075,14 @@ Bridge.define('Bridge.PropertyChangedEventArgs', {
         return sum / count;
     };
 
+    Enumerable.prototype.nullableAverage = function (selector) {
+        if (this.any(Bridge.isNull)) {
+            return null;
+        }
+
+        return this.average(selector);
+    };
+
     // Overload:function()
     // Overload:function(predicate)
     Enumerable.prototype.count = function (predicate) {
