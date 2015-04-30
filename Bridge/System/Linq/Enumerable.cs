@@ -2142,6 +2142,111 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Invokes a transform function on each element of a sequence and returns the
+        /// maximum System.Int64 value.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to determine the maximum value of.
+        /// </param>        
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <exception cref="System.InvalidOperationException">
+        /// source contains no elements.
+        /// </exception>
+        [Template("Bridge.Linq.Enumerable.from({source}).max()")]
+        public static TSource Max<TSource>(this IEnumerable<TSource> source)
+        {
+            return default(TSource);
+        }
+
+        /// <summary>
+        /// Invokes a transform function on each element of a sequence and returns the
+        /// maximum System.Int64 value.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to determine the maximum value of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <exception cref="System.InvalidOperationException">
+        /// source contains no elements.
+        /// </exception>
+        [Template("Bridge.Linq.Enumerable.from({source}).max({selector})")]
+        public static TResult Max<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector)
+        {
+            return default(TResult);
+        }
+
+        /// <summary>
+        /// Returns the minimum TSource value.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to determine the minimum value of.
+        /// </param>        
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <exception cref="System.InvalidOperationException">
+        /// source contains no elements.
+        /// </exception>
+        [Template("Bridge.Linq.Enumerable.from({source}).min()")]
+        public static TSource Min<TSource>(this IEnumerable<TSource> source)
+        {
+            return default(TSource);
+        }
+
+        /// <summary>
+        /// Invokes a transform function on each element of a sequence and returns the
+        /// minimum TResult value.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to determine the minimum value of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <exception cref="System.InvalidOperationException">
+        /// source contains no elements.
+        /// </exception>
+        [Template("Bridge.Linq.Enumerable.from({source}).min({selector})")]
+        public static TResult Min<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector)
+        {
+            return default(TResult);
+        }
+
+        /// <summary>
         /// Returns the minimum value in a sequence of System.Decimal values.
         /// </summary>
         /// <param name="source">

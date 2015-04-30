@@ -104,7 +104,7 @@ namespace System
             return null;
         }
 
-        [Template("Bridge.getName({this})")]
+        [Template("Bridge.getTypeName({this})")]
         public virtual string GetClassName()
         {
             return null;

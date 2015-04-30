@@ -101,7 +101,7 @@
             prop = prop || {};
             var extend = prop.$inherits || prop.inherits,
                 statics = prop.$statics || prop.statics,
-                base = extend ? extend[0].prototype : this.prototype,
+                base,
                 cacheName = prop.$cacheName,
                 prototype,
                 nameParts,
@@ -113,10 +113,7 @@
                 name,                
                 fn;
 
-            if (Bridge.isFunction(extend)) {
-                extend = null;
-            }
-            else if (prop.$inherits) {
+            if (prop.$inherits) {
                 delete prop.$inherits;
             }
             else {
@@ -156,6 +153,13 @@
                     this.$$initCtor.apply(this, arguments);
                 }
             }
+
+            scope = Bridge.Class.set(scope, className, Class);
+            if (extend && Bridge.isFunction(extend)) {
+                extend = extend();
+            }
+
+            base = extend ? extend[0].prototype : this.prototype;
 
             // Instantiate a base class (but only create the instance,
             // don't run the init constructor)
@@ -240,9 +244,7 @@
                 for (name in statics) {
                     Class[name] = statics[name];
                 }
-            }
-
-            scope = Bridge.Class.set(scope, className, Class);
+            }            
 
             if (!extend) {
                 extend = [Object];

@@ -445,6 +445,16 @@ namespace System.Linq
             return null;
         }
 
+        public static TElement Max<TElement>()
+        {
+            return default(TElement);
+        }
+
+        public static TResult Max<TElement, TResult>(Func<TElement, TResult> selector)
+        {
+            return default(TResult);
+        }
+
         public int Max(Func<TElement, int> selector)
         {
             return 0;
@@ -498,6 +508,16 @@ namespace System.Linq
         public EnumerableInstance<TElement> Memoize()
         {
             return null;
+        }
+
+        public static TElement Min<TElement>()
+        {
+            return default(TElement);
+        }
+
+        public static TResult Min<TElement, TResult>(Func<TElement, TResult> selector)
+        {
+            return default(TResult);
         }
 
         public int Min(Func<TElement, int> selector)

@@ -225,8 +225,13 @@
             return null;
         },
 
-        getTypeName: function (type) {
-            return type.$$name || (type.toString().match(/^\s*function\s*([^\s(]+)/) || [])[1] || "Object";
+        getTypeName: function (obj) {
+            if (obj.$$name) {
+                return obj.$$name;
+            }
+
+            var results = (/function (.{1,})\(/).exec((obj).constructor.toString());
+            return (results && results.length > 1) ? results[1] : "Object";
         },
 
         is: function (obj, type, ignoreFn) {
@@ -534,8 +539,11 @@
             }
         },
 
-        compare: function (a, b) {
+        compare: function (a, b, safe) {
             if (!Bridge.isDefined(a, true)) {
+                if (safe) {
+                    return 0;
+                }
                 throw new Bridge.NullReferenceException();
             }
             else if (Bridge.isNumber(a) || Bridge.isString(a) || Bridge.isBoolean(a)) {
@@ -543,6 +551,10 @@
             }
             else if (Bridge.isDate(a)) {
                 return Bridge.compare(a.valueOf(), b.valueOf());
+            }
+
+            if (safe && !a.compareTo) {
+                return 0;
             }
 
             return a.compareTo(b);
@@ -596,16 +608,7 @@
 
             return s !== s.toLowerCase() && s === s.toUpperCase();
         },
-
-        getName: function (obj) {
-            if (obj.$$name) {
-                return obj.$$name;
-            }
-
-            var results = (/function (.{1,})\(/).exec((obj).constructor.toString());
-            return (results && results.length > 1) ? results[1] : "";
-        },
-
+        
         fn: {
             call: function (obj, fnName){
                 var args = Array.prototype.slice.call(arguments, 2);

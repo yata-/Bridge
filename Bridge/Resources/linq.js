@@ -1799,24 +1799,32 @@
     // Overload:function(selector)
     Enumerable.prototype.max = function (selector) {
         if (selector == null) selector = Functions.Identity;
-        return this.select(selector).aggregate(function (a, b) { return (a > b) ? a : b; });
+        return this.select(selector).aggregate(function (a, b) {
+            return (Bridge.compare(a, b, true) === 1) ? a : b;
+        });
     };
 
     // Overload:function()
     // Overload:function(selector)
     Enumerable.prototype.min = function (selector) {
         if (selector == null) selector = Functions.Identity;
-        return this.select(selector).aggregate(function (a, b) { return (a < b) ? a : b; });
+        return this.select(selector).aggregate(function (a, b) {
+            return (Bridge.compare(a, b, true) === -1) ? a : b;
+        });
     };
 
     Enumerable.prototype.maxBy = function (keySelector) {
         keySelector = Utils.createLambda(keySelector);
-        return this.aggregate(function (a, b) { return (keySelector(a) > keySelector(b)) ? a : b; });
+        return this.aggregate(function (a, b) {
+            return (Bridge.compare(keySelector(a), keySelector(b), true) === 1) ? a : b;
+        });
     };
 
     Enumerable.prototype.minBy = function (keySelector) {
         keySelector = Utils.createLambda(keySelector);
-        return this.aggregate(function (a, b) { return (keySelector(a) < keySelector(b)) ? a : b; });
+        return this.aggregate(function (a, b) {
+            return (Bridge.compare(keySelector(a), keySelector(b), true) === -1) ? a : b;
+        });
     };
 
     // Overload:function()
