@@ -7080,6 +7080,14 @@ Bridge.define('Bridge.PropertyChangedEventArgs', {
         return sum / count;
     };
 
+    Enumerable.prototype.nullableAverage = function (selector) {
+        if (this.any(Bridge.isNull)) {
+            return null;
+        }
+
+        return this.average(selector);
+    };
+
     // Overload:function()
     // Overload:function(predicate)
     Enumerable.prototype.count = function (predicate) {
@@ -7101,6 +7109,14 @@ Bridge.define('Bridge.PropertyChangedEventArgs', {
         });
     };
 
+    Enumerable.prototype.nullableMax = function (selector) {
+        if (this.any(Bridge.isNull)) {
+            return null;
+        }
+
+        return this.max(selector);
+    };
+
     // Overload:function()
     // Overload:function(selector)
     Enumerable.prototype.min = function (selector) {
@@ -7108,6 +7124,14 @@ Bridge.define('Bridge.PropertyChangedEventArgs', {
         return this.select(selector).aggregate(function (a, b) {
             return (Bridge.compare(a, b, true) === -1) ? a : b;
         });
+    };
+
+    Enumerable.prototype.nullableMin = function (selector) {
+        if (this.any(Bridge.isNull)) {
+            return null;
+        }
+
+        return this.min(selector);
     };
 
     Enumerable.prototype.maxBy = function (keySelector) {
@@ -7129,6 +7153,14 @@ Bridge.define('Bridge.PropertyChangedEventArgs', {
     Enumerable.prototype.sum = function (selector) {
         if (selector == null) selector = Functions.Identity;
         return this.select(selector).aggregate(0, function (a, b) { return a + b; });
+    };
+
+    Enumerable.prototype.nullableSum = function (selector) {
+        if (this.any(Bridge.isNull)) {
+            return null;
+        }
+
+        return this.sum(selector);
     };
 
     

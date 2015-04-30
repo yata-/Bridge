@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace System.Linq 
+namespace System.Linq
 {
 	[Ignore]
     [Name("Bridge.Linq.Enumerable")]
-	public static class Enumerable 
+	public static class Enumerable
     {
         /// <summary>
         /// Applies an accumulator function over a sequence.
@@ -181,16 +181,16 @@ namespace System.Linq
         }
 
         /// <summary>
-        /// Returns the input typed as System.Collections.Generic.IEnumerable<T>.
+        /// Returns the input typed as System.Collections.Generic.IEnumerable&lt;T&gt;.
         /// </summary>
         /// <param name="source">
-        /// The sequence to type as System.Collections.Generic.IEnumerable<T>.
+        /// The sequence to type as System.Collections.Generic.IEnumerable&lt;T&gt;.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of source.
         /// </typeparam>
         /// <returns>
-        /// The input sequence typed as System.Collections.Generic.IEnumerable<T>.
+        /// The input sequence typed as System.Collections.Generic.IEnumerable&lt;T&gt;.
         /// </returns>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
         [Template("{source}")]
@@ -200,22 +200,68 @@ namespace System.Linq
         }
 
         /// <summary>
-        /// Returns the input typed as System.Collections.Generic.IEnumerable<T>.
+        /// Returns the input typed as System.Collections.Generic.IEnumerable&lt;T&gt;.
         /// </summary>
         /// <param name="source">
-        /// The sequence to type as System.Collections.Generic.IEnumerable<T>.
+        /// The sequence to type as System.Collections.Generic.IEnumerable&lt;T&gt;.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of source.
         /// </typeparam>
         /// <returns>
-        /// The input sequence typed as System.Collections.Generic.IEnumerable<T>.
+        /// The input sequence typed as System.Collections.Generic.IEnumerable&lt;T&gt;.
         /// </returns>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
         [Template("{source}")]
         public static IEnumerable<TSource> AsEnumerable<TSource>(this IEnumerable<TSource> source)
         {
             return default(IEnumerable<TSource>);
+        }
+
+        /// <summary>
+        /// Computes the average of a sequence of nullable System.Decimal values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Decimal values to calculate the average of.
+        /// </param>
+        /// <returns>
+        /// The average of the sequence of values, or null if the source sequence is
+        /// empty or contains only values that are null.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableAverage()")]
+        public static decimal? Average(this EnumerableInstance<decimal?> source)
+        {
+            return default(decimal?);
+        }
+
+        /// <summary>
+        /// Computes the average of a sequence of nullable System.Decimal values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Decimal values to calculate the average of.
+        /// </param>
+        /// <returns>
+        /// The average of the sequence of values, or null if the source sequence is
+        /// empty or contains only values that are null.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableAverage()")]
+        public static decimal? Average(this IEnumerable<decimal?> source)
+        {
+            return default(decimal?);
         }
 
         /// <summary>
@@ -261,6 +307,46 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Computes the average of a sequence of nullable System.Double values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Double values to calculate the average of.
+        /// </param>
+        /// <returns>
+        /// The average of the sequence of values, or null if the source sequence is
+        /// empty or contains only values that are null.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableAverage()")]
+        public static double? Average(this EnumerableInstance<double?> source)
+        {
+            return default(double?);
+        }
+
+        /// <summary>
+        /// Computes the average of a sequence of nullable System.Double values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Double values to calculate the average of.
+        /// </param>
+        /// <returns>
+        /// The average of the sequence of values, or null if the source sequence is
+        /// empty or contains only values that are null.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableAverage()")]
+        public static double? Average(this IEnumerable<double?> source)
+        {
+            return default(double?);
+        }
+
+        /// <summary>
         /// Computes the average of a sequence of System.Double values.
         /// </summary>
         /// <param name="source">
@@ -300,6 +386,46 @@ namespace System.Linq
         public static double Average(this IEnumerable<double> source)
         {
             return default(double);
+        }
+
+        /// <summary>
+        /// Computes the average of a sequence of nullable System.Single values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Single values to calculate the average of.
+        /// </param>
+        /// <returns>
+        /// The average of the sequence of values, or null if the source sequence is
+        /// empty or contains only values that are null.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableAverage()")]
+        public static float? Average(this EnumerableInstance<float?> source)
+        {
+            return default(float?);
+        }
+
+        /// <summary>
+        /// Computes the average of a sequence of nullable System.Single values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Single values to calculate the average of.
+        /// </param>
+        /// <returns>
+        /// The average of the sequence of values, or null if the source sequence is
+        /// empty or contains only values that are null.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableAverage()")]
+        public static float? Average(this IEnumerable<float?> source)
+        {
+            return default(float?);
         }
 
         /// <summary>
@@ -345,6 +471,52 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Computes the average of a sequence of nullable System.Int32 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int32 values to calculate the average of.
+        /// </param>
+        /// <returns>
+        /// The average of the sequence of values, or null if the source sequence is
+        /// empty or contains only values that are null.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum of the elements in the sequence is larger than System.Int64.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableAverage()")]
+        public static double? Average(this EnumerableInstance<int?> source)
+        {
+            return default(double?);
+        }
+
+        /// <summary>
+        /// Computes the average of a sequence of nullable System.Int32 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int32 values to calculate the average of.
+        /// </param>
+        /// <returns>
+        /// The average of the sequence of values, or null if the source sequence is
+        /// empty or contains only values that are null.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum of the elements in the sequence is larger than System.Int64.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableAverage()")]
+        public static double? Average(this IEnumerable<int?> source)
+        {
+            return default(double?);
+        }
+
+        /// <summary>
         /// Computes the average of a sequence of System.Int32 values.
         /// </summary>
         /// <param name="source">
@@ -384,6 +556,52 @@ namespace System.Linq
         public static double Average(this IEnumerable<int> source)
         {
             return default(double);
+        }
+
+        /// <summary>
+        /// Computes the average of a sequence of nullable System.Int64 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int64 values to calculate the average of.
+        /// </param>
+        /// <returns>
+        /// The average of the sequence of values, or null if the source sequence is
+        /// empty or contains only values that are null.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum of the elements in the sequence is larger than System.Int64.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableAverage()")]
+        public static double? Average(this EnumerableInstance<long?> source)
+        {
+            return default(double?);
+        }
+
+        /// <summary>
+        /// Computes the average of a sequence of nullable System.Int64 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int64 values to calculate the average of.
+        /// </param>
+        /// <returns>
+        /// The average of the sequence of values, or null if the source sequence is
+        /// empty or contains only values that are null.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum of the elements in the sequence is larger than System.Int64.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableAverage()")]
+        public static double? Average(this IEnumerable<long?> source)
+        {
+            return default(double?);
         }
 
         /// <summary>
@@ -429,6 +647,37 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Computes the average of a sequence of nullable System.Decimal values that
+        /// are obtained by invoking a transform function on each element of the input
+        /// sequence.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to calculate the average of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The average of the sequence of values, or null if the source sequence is
+        /// empty or contains only values that are null.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableAverage({selector})")]
+        public static decimal? Average<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal?> selector)
+        {
+            return default(decimal?);
+        }
+
+        /// <summary>
         /// Computes the average of a sequence of System.Decimal values that are obtained
         /// by invoking a transform function on each element of the input sequence.
         /// </summary>
@@ -460,6 +709,34 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Computes the average of a sequence of nullable System.Double values that
+        /// are obtained by invoking a transform function on each element of the input
+        /// sequence.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to calculate the average of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The average of the sequence of values, or null if the source sequence is
+        /// empty or contains only values that are null.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableAverage({selector})")]
+        public static double? Average<TSource>(this IEnumerable<TSource> source, Func<TSource, double?> selector)
+        {
+            return default(double?);
+        }
+
+        /// <summary>
         /// Computes the average of a sequence of System.Double values that are obtained
         /// by invoking a transform function on each element of the input sequence.
         /// </summary>
@@ -485,6 +762,34 @@ namespace System.Linq
         public static double Average<TSource>(this IEnumerable<TSource> source, Func<TSource, double> selector)
         {
             return default(double);
+        }
+
+        /// <summary>
+        /// Computes the average of a sequence of nullable System.Single values that
+        /// are obtained by invoking a transform function on each element of the input
+        /// sequence.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to calculate the average of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The average of the sequence of values, or null if the source sequence is
+        /// empty or contains only values that are null.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableAverage({selector})")]
+        public static float? Average<TSource>(this IEnumerable<TSource> source, Func<TSource, float?> selector)
+        {
+            return default(float?);
         }
 
         /// <summary>
@@ -516,6 +821,36 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Computes the average of a sequence of nullable System.Int32 values that are
+        /// obtained by invoking a transform function on each element of the input sequence.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to calculate the average of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The average of the sequence of values, or null if the source sequence is
+        /// empty or contains only values that are null.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum of the elements in the sequence is larger than System.Int64.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableAverage({selector})")]
+        public static double? Average<TSource>(this IEnumerable<TSource> source, Func<TSource, int?> selector)
+        {
+            return default(double?);
+        }
+
+        /// <summary>
         /// Computes the average of a sequence of System.Int32 values that are obtained
         /// by invoking a transform function on each element of the input sequence.
         /// </summary>
@@ -544,6 +879,30 @@ namespace System.Linq
         public static double Average<TSource>(this IEnumerable<TSource> source, Func<TSource, int> selector)
         {
             return default(double);
+        }
+
+        /// <summary>
+        /// Computes the average of a sequence of nullable System.Int64 values that are
+        /// obtained by invoking a transform function on each element of the input sequence.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to calculate the average of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The average of the sequence of values, or null if the source sequence is
+        /// empty or contains only values that are null.
+        /// </returns>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableAverage({selector})")]
+        public static double? Average<TSource>(this IEnumerable<TSource> source, Func<TSource, long?> selector)
+        {
+            return default(double?);
         }
 
         /// <summary>
@@ -617,7 +976,7 @@ namespace System.Linq
         /// The type of the elements of the input sequences.
         /// </typeparam>
         /// <returns>
-        /// An System.Collections.Generic.IEnumerable<T> that contains the concatenated
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; that contains the concatenated
         /// elements of the two input sequences.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -1635,7 +1994,7 @@ namespace System.Linq
         /// sequence.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> that contains the elements to
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; that contains the elements to
         /// be counted.
         /// </param>
         /// <typeparam name="TSource">
@@ -1662,7 +2021,7 @@ namespace System.Linq
         /// a condition.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> that contains the elements to
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; that contains the elements to
         /// be counted.
         /// </param>
         /// <param name="predicate">
@@ -1792,6 +2151,48 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Returns the maximum value in a sequence of nullable System.Decimal values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Decimal values to determine the maximum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable&lt;Decimal&gt; in C# or Nullable(Of Decimal) in Visual
+        /// Basic that corresponds to the maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableMax()")]
+        public static decimal? Max(this EnumerableInstance<decimal?> source)
+        {
+            return default(decimal?);
+        }
+
+        /// <summary>
+        /// Returns the maximum value in a sequence of nullable System.Decimal values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Decimal values to determine the maximum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable&lt;Decimal&gt; in C# or Nullable(Of Decimal) in Visual
+        /// Basic that corresponds to the maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMax()")]
+        public static decimal? Max(this IEnumerable<decimal?> source)
+        {
+            return default(decimal?);
+        }
+
+        /// <summary>
         /// Returns the maximum value in a sequence of System.Decimal values.
         /// </summary>
         /// <param name="source">
@@ -1831,6 +2232,48 @@ namespace System.Linq
         public static decimal Max(this IEnumerable<decimal> source)
         {
             return default(decimal);
+        }
+
+        /// <summary>
+        /// Returns the maximum value in a sequence of nullable System.Double values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Double values to determine the maximum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable&lt;Double&gt; in C# or Nullable(Of Double) in Visual Basic
+        /// that corresponds to the maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableMax()")]
+        public static double? Max(this EnumerableInstance<double?> source)
+        {
+            return default(double?);
+        }
+
+        /// <summary>
+        /// Returns the maximum value in a sequence of nullable System.Double values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Double values to determine the maximum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable&lt;Double&gt; in C# or Nullable(Of Double) in Visual Basic
+        /// that corresponds to the maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMax()")]
+        public static double? Max(this IEnumerable<double?> source)
+        {
+            return default(double?);
         }
 
         /// <summary>
@@ -1876,6 +2319,48 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Returns the maximum value in a sequence of nullable System.Single values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Single values to determine the maximum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable&lt;Single&gt; in C# or Nullable(Of Single) in Visual Basic
+        /// that corresponds to the maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableMax()")]
+        public static float? Max(this EnumerableInstance<float?> source)
+        {
+            return default(float?);
+        }
+
+        /// <summary>
+        /// Returns the maximum value in a sequence of nullable System.Single values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Single values to determine the maximum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable&lt;Single&gt; in C# or Nullable(Of Single) in Visual Basic
+        /// that corresponds to the maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMax()")]
+        public static float? Max(this IEnumerable<float?> source)
+        {
+            return default(float?);
+        }
+
+        /// <summary>
         /// Returns the maximum value in a sequence of System.Single values.
         /// </summary>
         /// <param name="source">
@@ -1918,6 +2403,48 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Returns the maximum value in a sequence of nullable System.Int32 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int32 values to determine the maximum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable&lt;Int32&gt; in C# or Nullable(Of Int32) in Visual Basic
+        /// that corresponds to the maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableMax()")]
+        public static int? Max(this EnumerableInstance<int?> source)
+        {
+            return default(int?);
+        }
+
+        /// <summary>
+        /// Returns the maximum value in a sequence of nullable System.Int32 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int32 values to determine the maximum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable&lt;Int327gt; in C# or Nullable(Of Int32) in Visual Basic
+        /// that corresponds to the maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMax()")]
+        public static int? Max(this IEnumerable<int?> source)
+        {
+            return default(int?);
+        }
+
+        /// <summary>
         /// Returns the maximum value in a sequence of System.Int32 values.
         /// </summary>
         /// <param name="source">
@@ -1957,6 +2484,48 @@ namespace System.Linq
         public static int Max(this IEnumerable<int> source)
         {
             return default(int);
+        }
+
+        /// <summary>
+        /// Returns the maximum value in a sequence of nullable System.Int64 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int64 values to determine the maximum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable&lt;Int64&gt; in C# or Nullable(Of Int64) in Visual Basic
+        /// that corresponds to the maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableMax()")]
+        public static long? Max(this EnumerableInstance<long?> source)
+        {
+            return default(long?);
+        }
+
+        /// <summary>
+        /// Returns the maximum value in a sequence of nullable System.Int64 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int64 values to determine the maximum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable&lt;Int64&gt; in C# or Nullable(Of Int64) in Visual Basic
+        /// that corresponds to the maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMax()")]
+        public static long? Max(this IEnumerable<long?> source)
+        {
+            return default(long?);
         }
 
         /// <summary>
@@ -2003,6 +2572,33 @@ namespace System.Linq
 
         /// <summary>
         /// Invokes a transform function on each element of a sequence and returns the
+        /// maximum nullable System.Decimal value.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to determine the maximum value of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The value of type Nullable&lt;Decimal&gt; in C# or Nullable(Of Decimal) in Visual
+        /// Basic that corresponds to the maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMax({selector})")]
+        public static decimal? Max<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal?> selector)
+        {
+            return default(decimal?);
+        }
+
+        /// <summary>
+        /// Invokes a transform function on each element of a sequence and returns the
         /// maximum System.Decimal value.
         /// </summary>
         /// <param name="source">
@@ -2027,6 +2623,33 @@ namespace System.Linq
         public static decimal Max<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal> selector)
         {
             return default(decimal);
+        }
+
+        /// <summary>
+        /// Invokes a transform function on each element of a sequence and returns the
+        /// maximum nullable System.Double value.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to determine the maximum value of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The value of type Nullable&lt;Double&gt; in C# or Nullable(Of Double) in Visual
+        /// Basic that corresponds to the maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMax({selector})")]
+        public static double? Max<TSource>(this IEnumerable<TSource> source, Func<TSource, double?> selector)
+        {
+            return default(double?);
         }
 
         /// <summary>
@@ -2059,6 +2682,33 @@ namespace System.Linq
 
         /// <summary>
         /// Invokes a transform function on each element of a sequence and returns the
+        /// maximum nullable System.Single value.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to determine the maximum value of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The value of type Nullable&lt;Single&gt; in C# or Nullable(Of Single) in Visual
+        /// Basic that corresponds to the maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMax({selector})")]
+        public static float? Max<TSource>(this IEnumerable<TSource> source, Func<TSource, float?> selector)
+        {
+            return default(float?);
+        }
+
+        /// <summary>
+        /// Invokes a transform function on each element of a sequence and returns the
         /// maximum System.Single value.
         /// </summary>
         /// <param name="source">
@@ -2083,6 +2733,33 @@ namespace System.Linq
         public static float Max<TSource>(this IEnumerable<TSource> source, Func<TSource, float> selector)
         {
             return default(float);
+        }
+
+        /// <summary>
+        /// Invokes a transform function on each element of a sequence and returns the
+        /// maximum nullable System.Int32 value.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to determine the maximum value of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The value of type Nullable&lt;Int32&gt; in C# or Nullable(Of Int32) in Visual Basic
+        /// that corresponds to the maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMax({selector})")]
+        public static int? Max<TSource>(this IEnumerable<TSource> source, Func<TSource, int?> selector)
+        {
+            return default(int?);
         }
 
         /// <summary>
@@ -2115,6 +2792,33 @@ namespace System.Linq
 
         /// <summary>
         /// Invokes a transform function on each element of a sequence and returns the
+        /// maximum nullable System.Int64 value.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to determine the maximum value of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The value of type Nullable&lt;Int64&gt; in C# or Nullable(Of Int64) in Visual Basic
+        /// that corresponds to the maximum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMax({selector})")]
+        public static long? Max<TSource>(this IEnumerable<TSource> source, Func<TSource, long?> selector)
+        {
+            return default(long?);
+        }
+
+        /// <summary>
+        /// Invokes a transform function on each element of a sequence and returns the
         /// maximum System.Int64 value.
         /// </summary>
         /// <param name="source">
@@ -2139,6 +2843,48 @@ namespace System.Linq
         public static long Max<TSource>(this IEnumerable<TSource> source, Func<TSource, long> selector)
         {
             return default(long);
+        }
+
+        /// <summary>
+        /// Returns the minimum value in a sequence of nullable System.Decimal values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Decimal values to determine the minimum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable&lt;Decimal&gt; in C# or Nullable(Of Decimal) in Visual
+        /// Basic that corresponds to the minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableMin()")]
+        public static decimal? Min(this EnumerableInstance<decimal?> source)
+        {
+            return default(decimal?);
+        }
+
+        /// <summary>
+        /// Returns the minimum value in a sequence of nullable System.Decimal values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Decimal values to determine the minimum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable&lt;Decimal&gt; in C# or Nullable(Of Decimal) in Visual
+        /// Basic that corresponds to the minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMin()")]
+        public static decimal? Min(this IEnumerable<decimal?> source)
+        {
+            return default(decimal?);
         }
 
         /// <summary>
@@ -2289,6 +3035,48 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Returns the minimum value in a sequence of nullable System.Double values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Double values to determine the minimum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable&lt;Double&gt; in C# or Nullable(Of Double) in Visual Basic
+        /// that corresponds to the minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableMin()")]
+        public static double? Min(this EnumerableInstance<double?> source)
+        {
+            return default(double?);
+        }
+
+        /// <summary>
+        /// Returns the minimum value in a sequence of nullable System.Double values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Double values to determine the minimum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable&lt;Double&gt; in C# or Nullable(Of Double) in Visual Basic
+        /// that corresponds to the minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMin()")]
+        public static double? Min(this IEnumerable<double?> source)
+        {
+            return default(double?);
+        }
+
+        /// <summary>
         /// Returns the minimum value in a sequence of System.Double values.
         /// </summary>
         /// <param name="source">
@@ -2328,6 +3116,48 @@ namespace System.Linq
         public static double Min(this IEnumerable<double> source)
         {
             return default(double);
+        }
+
+        /// <summary>
+        /// Returns the minimum value in a sequence of nullable System.Single values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Single values to determine the minimum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable&lt;Single&gt; in C# or Nullable(Of Single) in Visual Basic
+        /// that corresponds to the minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableMin()")]
+        public static float? Min(this EnumerableInstance<float?> source)
+        {
+            return default(float?);
+        }
+
+        /// <summary>
+        /// Returns the minimum value in a sequence of nullable System.Single values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Single values to determine the minimum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable&lt;Single&gt; in C# or Nullable(Of Single) in Visual Basic
+        /// that corresponds to the minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMin()")]
+        public static float? Min(this IEnumerable<float?> source)
+        {
+            return default(float?);
         }
 
         /// <summary>
@@ -2373,6 +3203,48 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Returns the minimum value in a sequence of nullable System.Int32 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int32 values to determine the minimum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable&lt;Int32&gt; in C# or Nullable(Of Int32) in Visual Basic
+        /// that corresponds to the minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableMin()")]
+        public static int? Min(this EnumerableInstance<int?> source)
+        {
+            return default(int?);
+        }
+
+        /// <summary>
+        /// Returns the minimum value in a sequence of nullable System.Int32 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int32 values to determine the minimum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable&lt;Int32&gt; in C# or Nullable(Of Int32) in Visual Basic
+        /// that corresponds to the minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMin()")]
+        public static int? Min(this IEnumerable<int?> source)
+        {
+            return default(int?);
+        }
+
+        /// <summary>
         /// Returns the minimum value in a sequence of System.Int32 values.
         /// </summary>
         /// <param name="source">
@@ -2412,6 +3284,48 @@ namespace System.Linq
         public static int Min(this IEnumerable<int> source)
         {
             return default(int);
+        }
+
+        /// <summary>
+        /// Returns the minimum value in a sequence of nullable System.Int64 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int64 values to determine the minimum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable&lt;Int64&gt; in C# or Nullable(Of Int64) in Visual Basic
+        /// that corresponds to the minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableMin()")]
+        public static long? Min(this EnumerableInstance<long?> source)
+        {
+            return default(long?);
+        }
+
+        /// <summary>
+        /// Returns the minimum value in a sequence of nullable System.Int64 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int64 values to determine the minimum value
+        /// of.
+        /// </param>
+        /// <returns>
+        /// A value of type Nullable&lt;Int64&gt; in C# or Nullable(Of Int64) in Visual Basic
+        /// that corresponds to the minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMin()")]
+        public static long? Min(this IEnumerable<long?> source)
+        {
+            return default(long?);
         }
 
         /// <summary>
@@ -2458,6 +3372,33 @@ namespace System.Linq
 
         /// <summary>
         /// Invokes a transform function on each element of a sequence and returns the
+        /// minimum nullable System.Decimal value.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to determine the minimum value of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The value of type Nullable&lt;Decimal&gt; in C# or Nullable(Of Decimal) in Visual
+        /// Basic that corresponds to the minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMin({selector})")]
+        public static decimal? Min<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal?> selector)
+        {
+            return default(decimal?);
+        }
+
+        /// <summary>
+        /// Invokes a transform function on each element of a sequence and returns the
         /// minimum System.Decimal value.
         /// </summary>
         /// <param name="source">
@@ -2482,6 +3423,33 @@ namespace System.Linq
         public static decimal Min<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal> selector)
         {
             return default(decimal);
+        }
+
+        /// <summary>
+        /// Invokes a transform function on each element of a sequence and returns the
+        /// minimum nullable System.Double value.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to determine the minimum value of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The value of type Nullable&lt;Double&gt; in C# or Nullable(Of Double) in Visual
+        /// Basic that corresponds to the minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMin({selector})")]
+        public static double? Min<TSource>(this IEnumerable<TSource> source, Func<TSource, double?> selector)
+        {
+            return default(double?);
         }
 
         /// <summary>
@@ -2514,6 +3482,33 @@ namespace System.Linq
 
         /// <summary>
         /// Invokes a transform function on each element of a sequence and returns the
+        /// minimum nullable System.Single value.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to determine the minimum value of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The value of type Nullable&lt;Single&gt; in C# or Nullable(Of Single) in Visual
+        /// Basic that corresponds to the minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMin({selector})")]
+        public static float? Min<TSource>(this IEnumerable<TSource> source, Func<TSource, float?> selector)
+        {
+            return default(float?);
+        }
+
+        /// <summary>
+        /// Invokes a transform function on each element of a sequence and returns the
         /// minimum System.Single value.
         /// </summary>
         /// <param name="source">
@@ -2542,6 +3537,33 @@ namespace System.Linq
 
         /// <summary>
         /// Invokes a transform function on each element of a sequence and returns the
+        /// minimum nullable System.Int32 value.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to determine the minimum value of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The value of type Nullable&lt;Int32&gt; in C# or Nullable(Of Int32) in Visual Basic
+        /// that corresponds to the minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMin({selector})")]
+        public static int? Min<TSource>(this IEnumerable<TSource> source, Func<TSource, int?> selector)
+        {
+            return default(int?);
+        }
+
+        /// <summary>
+        /// Invokes a transform function on each element of a sequence and returns the
         /// minimum System.Int32 value.
         /// </summary>
         /// <param name="source">
@@ -2566,6 +3588,33 @@ namespace System.Linq
         public static int Min<TSource>(this IEnumerable<TSource> source, Func<TSource, int> selector)
         {
             return default(int);
+        }
+
+        /// <summary>
+        /// Invokes a transform function on each element of a sequence and returns the
+        /// minimum nullable System.Int64 value.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values to determine the minimum value of.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The value of type Nullable&lt;Int64&gt; in C# or Nullable(Of Int64) in Visual Basic
+        /// that corresponds to the minimum value in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableMin({selector})")]
+        public static long? Min<TSource>(this IEnumerable<TSource> source, Func<TSource, long?> selector)
+        {
+            return default(long?);
         }
 
         /// <summary>
@@ -3263,6 +4312,50 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Computes the sum of a sequence of nullable System.Decimal values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Decimal values to calculate the sum of.
+        /// </param>
+        /// <returns>
+        /// The sum of the values in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum is larger than System.Decimal.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableSum()")]
+        public static decimal? Sum(this EnumerableInstance<decimal?> source)
+        {
+            return default(decimal?);
+        }
+
+        /// <summary>
+        /// Computes the sum of a sequence of nullable System.Decimal values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Decimal values to calculate the sum of.
+        /// </param>
+        /// <returns>
+        /// The sum of the values in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum is larger than System.Decimal.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableSum()")]
+        public static decimal? Sum(this IEnumerable<decimal?> source)
+        {
+            return default(decimal?);
+        }
+
+        /// <summary>
         /// Computes the sum of a sequence of System.Decimal values.
         /// </summary>
         /// <param name="source">
@@ -3305,6 +4398,44 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Computes the sum of a sequence of nullable System.Double values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Double values to calculate the sum of.
+        /// </param>
+        /// <returns>
+        /// The sum of the values in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableSum()")]
+        public static double? Sum(this EnumerableInstance<double?> source)
+        {
+            return default(double?);
+        }
+
+        /// <summary>
+        /// Computes the sum of a sequence of nullable System.Double values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Double values to calculate the sum of.
+        /// </param>
+        /// <returns>
+        /// The sum of the values in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableSum()")]
+        public static double? Sum(this IEnumerable<double?> source)
+        {
+            return default(double?);
+        }
+
+        /// <summary>
         /// Computes the sum of a sequence of System.Double values.
         /// </summary>
         /// <param name="source">
@@ -3341,6 +4472,44 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Computes the sum of a sequence of nullable System.Single values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Single values to calculate the sum of.
+        /// </param>
+        /// <returns>
+        /// The sum of the values in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableSum()")]
+        public static float? Sum(this EnumerableInstance<float?> source)
+        {
+            return default(float?);
+        }
+
+        /// <summary>
+        /// Computes the sum of a sequence of nullable System.Single values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Single values to calculate the sum of.
+        /// </param>
+        /// <returns>
+        /// The sum of the values in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableSum()")]
+        public static float? Sum(this IEnumerable<float?> source)
+        {
+            return default(float?);
+        }
+
+        /// <summary>
         /// Computes the sum of a sequence of System.Single values.
         /// </summary>
         /// <param name="source">
@@ -3374,6 +4543,50 @@ namespace System.Linq
         public static float Sum(this IEnumerable<float> source)
         {
             return default(float);
+        }
+
+        /// <summary>
+        /// Computes the sum of a sequence of nullable System.Int32 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int32 values to calculate the sum of.
+        /// </param>
+        /// <returns>
+        /// The sum of the values in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum is larger than System.Int32.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableSum()")]
+        public static int? Sum(this EnumerableInstance<int?> source)
+        {
+            return default(int?);
+        }
+
+        /// <summary>
+        /// Computes the sum of a sequence of nullable System.Int32 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int32 values to calculate the sum of.
+        /// </param>
+        /// <returns>
+        /// The sum of the values in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum is larger than System.Int32.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableSum()")]
+        public static int? Sum(this IEnumerable<int?> source)
+        {
+            return default(int?);
         }
 
         /// <summary>
@@ -3419,6 +4632,50 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Computes the sum of a sequence of nullable System.Int64 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int64 values to calculate the sum of.
+        /// </param>
+        /// <returns>
+        /// The sum of the values in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum is larger than System.Int64.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("{this}.nullableSum()")]
+        public static long? Sum(this EnumerableInstance<long?> source)
+        {
+            return default(long?);
+        }
+
+        /// <summary>
+        /// Computes the sum of a sequence of nullable System.Int64 values.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of nullable System.Int64 values to calculate the sum of.
+        /// </param>
+        /// <returns>
+        /// The sum of the values in the sequence.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum is larger than System.Int64.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableSum()")]
+        public static long? Sum(this IEnumerable<long?> source)
+        {
+            return default(long?);
+        }
+
+        /// <summary>
         /// Computes the sum of a sequence of System.Int64 values.
         /// </summary>
         /// <param name="source">
@@ -3461,6 +4718,35 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Computes the sum of the sequence of nullable System.Decimal values that are
+        /// obtained by invoking a transform function on each element of the input sequence.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values that are used to calculate a sum.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The sum of the projected values.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum is larger than System.Decimal.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableSum({selector})")]
+        public static decimal? Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal?> selector)
+        {
+            return default(decimal?);
+        }
+
+        /// <summary>
         /// Computes the sum of the sequence of System.Decimal values that are obtained
         /// by invoking a transform function on each element of the input sequence.
         /// </summary>
@@ -3489,6 +4775,32 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Computes the sum of the sequence of nullable System.Double values that are
+        /// obtained by invoking a transform function on each element of the input sequence.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values that are used to calculate a sum.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The sum of the projected values.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableSum({selector})")]
+        public static double? Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, double?> selector)
+        {
+            return default(double?);
+        }
+
+        /// <summary>
         /// Computes the sum of the sequence of System.Double values that are obtained
         /// by invoking a transform function on each element of the input sequence.
         /// </summary>
@@ -3511,6 +4823,32 @@ namespace System.Linq
         public static double Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, double> selector)
         {
             return default(double);
+        }
+
+        /// <summary>
+        /// Computes the sum of the sequence of nullable System.Single values that are
+        /// obtained by invoking a transform function on each element of the input sequence.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values that are used to calculate a sum.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The sum of the projected values.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableSum({selector})")]
+        public static float? Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, float?> selector)
+        {
+            return default(float?);
         }
 
         /// <summary>
@@ -3539,6 +4877,35 @@ namespace System.Linq
         }
 
         /// <summary>
+        /// Computes the sum of the sequence of nullable System.Int32 values that are
+        /// obtained by invoking a transform function on each element of the input sequence.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values that are used to calculate a sum.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The sum of the projected values.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum is larger than System.Int32.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableSum({selector})")]
+        public static int? Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, int?> selector)
+        {
+            return default(int?);
+        }
+
+        /// <summary>
         /// Computes the sum of the sequence of System.Int32 values that are obtained
         /// by invoking a transform function on each element of the input sequence.
         /// </summary>
@@ -3564,6 +4931,35 @@ namespace System.Linq
         public static int Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, int> selector)
         {
             return default(int);
+        }
+
+        /// <summary>
+        /// Computes the sum of the sequence of nullable System.Int64 values that are
+        /// obtained by invoking a transform function on each element of the input sequence.
+        /// </summary>
+        /// <param name="source">
+        /// A sequence of values that are used to calculate a sum.
+        /// </param>
+        /// <param name="selector">
+        /// A transform function to apply to each element.
+        /// </param>
+        /// <typeparam name="TSource">
+        /// The type of the elements of source.
+        /// </typeparam>
+        /// <returns>
+        /// The sum of the projected values.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// source or selector is null.
+        /// </exception>
+        /// <exception cref="System.OverflowException">
+        /// The sum is larger than System.Int64.MaxValue.
+        /// </exception>
+        /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
+        [Template("Bridge.Linq.Enumerable.from({source}).nullableSum({selector})")]
+        public static long? Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, long?> selector)
+        {
+            return default(long?);
         }
 
         /// <summary>
@@ -3678,7 +5074,7 @@ namespace System.Linq
         /// order according to a key.
         /// </summary>
         /// <param name="source">
-        /// An System.Linq.IOrderedEnumerable<TElement> that contains elements to sort.
+        /// An System.Linq.IOrderedEnumerable&lt;TElement&gt; that contains elements to sort.
         /// </param>
         /// <param name="keySelector">
         /// A function to extract a key from each element.
@@ -3690,7 +5086,7 @@ namespace System.Linq
         /// The type of the key returned by keySelector.
         /// </typeparam>
         /// <returns>
-        /// An System.Linq.IOrderedEnumerable<TElement> whose elements are sorted according
+        /// An System.Linq.IOrderedEnumerable&lt;TElement&gt; whose elements are sorted according
         /// to a key.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -3708,13 +5104,13 @@ namespace System.Linq
         /// order by using a specified comparer.
         /// </summary>
         /// <param name="source">
-        /// An System.Linq.IOrderedEnumerable<TElement> that contains elements to sort.
+        /// An System.Linq.IOrderedEnumerable&lt;TElement&gt; that contains elements to sort.
         /// </param>
         /// <param name="keySelector">
         /// A function to extract a key from each element.
         /// </param>
         /// <param name="comparer">
-        /// An System.Collections.Generic.IComparer<T> to compare keys.
+        /// An System.Collections.Generic.IComparer&lt;T&gt; to compare keys.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of source.
@@ -3723,7 +5119,7 @@ namespace System.Linq
         /// The type of the key returned by keySelector.
         /// </typeparam>
         /// <returns>
-        /// An System.Linq.IOrderedEnumerable<TElement> whose elements are sorted according
+        /// An System.Linq.IOrderedEnumerable&lt;TElement&gt; whose elements are sorted according
         /// to a key.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -3741,7 +5137,7 @@ namespace System.Linq
         /// order, according to a key.
         /// </summary>
         /// <param name="source">
-        /// An System.Linq.IOrderedEnumerable<TElement> that contains elements to sort.
+        /// An System.Linq.IOrderedEnumerable&lt;TElement&gt; that contains elements to sort.
         /// </param>
         /// <param name="keySelector">
         /// A function to extract a key from each element.
@@ -3753,7 +5149,7 @@ namespace System.Linq
         /// The type of the key returned by keySelector.
         /// </typeparam>
         /// <returns>
-        /// An System.Linq.IOrderedEnumerable<TElement> whose elements are sorted in
+        /// An System.Linq.IOrderedEnumerable&lt;TElement&gt; whose elements are sorted in
         /// descending order according to a key.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -3771,13 +5167,13 @@ namespace System.Linq
         /// order by using a specified comparer.
         /// </summary>
         /// <param name="source">
-        /// An System.Linq.IOrderedEnumerable<TElement> that contains elements to sort.
+        /// An System.Linq.IOrderedEnumerable&lt;TElement&gt; that contains elements to sort.
         /// </param>
         /// <param name="keySelector">
         /// A function to extract a key from each element.
         /// </param>
         /// <param name="comparer">
-        /// An System.Collections.Generic.IComparer<T> to compare keys.
+        /// An System.Collections.Generic.IComparer&lt;T&gt; to compare keys.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of source.
@@ -3786,7 +5182,7 @@ namespace System.Linq
         /// The type of the key returned by keySelector.
         /// </typeparam>
         /// <returns>
-        /// An System.Linq.IOrderedEnumerable<TElement> whose elements are sorted in
+        /// An System.Linq.IOrderedEnumerable&lt;TElement&gt; whose elements are sorted in
         /// descending order according to a key.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
