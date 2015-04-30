@@ -181,16 +181,16 @@ namespace System.Linq
         }
 
         /// <summary>
-        /// Returns the input typed as System.Collections.Generic.IEnumerable<T>.
+        /// Returns the input typed as System.Collections.Generic.IEnumerable&lt;T&gt;.
         /// </summary>
         /// <param name="source">
-        /// The sequence to type as System.Collections.Generic.IEnumerable<T>.
+        /// The sequence to type as System.Collections.Generic.IEnumerable&lt;T&gt;.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of source.
         /// </typeparam>
         /// <returns>
-        /// The input sequence typed as System.Collections.Generic.IEnumerable<T>.
+        /// The input sequence typed as System.Collections.Generic.IEnumerable&lt;T&gt;.
         /// </returns>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
         [Template("{source}")]
@@ -200,16 +200,16 @@ namespace System.Linq
         }
 
         /// <summary>
-        /// Returns the input typed as System.Collections.Generic.IEnumerable<T>.
+        /// Returns the input typed as System.Collections.Generic.IEnumerable&lt;T&gt;.
         /// </summary>
         /// <param name="source">
-        /// The sequence to type as System.Collections.Generic.IEnumerable<T>.
+        /// The sequence to type as System.Collections.Generic.IEnumerable&lt;T&gt;.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of source.
         /// </typeparam>
         /// <returns>
-        /// The input sequence typed as System.Collections.Generic.IEnumerable<T>.
+        /// The input sequence typed as System.Collections.Generic.IEnumerable&lt;T&gt;.
         /// </returns>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
         [Template("{source}")]
@@ -976,7 +976,7 @@ namespace System.Linq
         /// The type of the elements of the input sequences.
         /// </typeparam>
         /// <returns>
-        /// An System.Collections.Generic.IEnumerable<T> that contains the concatenated
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; that contains the concatenated
         /// elements of the two input sequences.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -1994,7 +1994,7 @@ namespace System.Linq
         /// sequence.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> that contains the elements to
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; that contains the elements to
         /// be counted.
         /// </param>
         /// <typeparam name="TSource">
@@ -2021,7 +2021,7 @@ namespace System.Linq
         /// a condition.
         /// </summary>
         /// <param name="source">
-        /// An System.Collections.Generic.IEnumerable<T> that contains the elements to
+        /// An System.Collections.Generic.IEnumerable&lt;T&gt; that contains the elements to
         /// be counted.
         /// </param>
         /// <param name="predicate">
@@ -2158,7 +2158,7 @@ namespace System.Linq
         /// of.
         /// </param>
         /// <returns>
-        /// A value of type Nullable<Decimal> in C# or Nullable(Of Decimal) in Visual
+        /// A value of type Nullable&lt;Decimal&gt; in C# or Nullable(Of Decimal) in Visual
         /// Basic that corresponds to the maximum value in the sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -2179,7 +2179,7 @@ namespace System.Linq
         /// of.
         /// </param>
         /// <returns>
-        /// A value of type Nullable<Decimal> in C# or Nullable(Of Decimal) in Visual
+        /// A value of type Nullable&lt;Decimal&gt; in C# or Nullable(Of Decimal) in Visual
         /// Basic that corresponds to the maximum value in the sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -2242,7 +2242,7 @@ namespace System.Linq
         /// of.
         /// </param>
         /// <returns>
-        /// A value of type Nullable<Double> in C# or Nullable(Of Double) in Visual Basic
+        /// A value of type Nullable&lt;Double&gt; in C# or Nullable(Of Double) in Visual Basic
         /// that corresponds to the maximum value in the sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -2263,7 +2263,7 @@ namespace System.Linq
         /// of.
         /// </param>
         /// <returns>
-        /// A value of type Nullable<Double> in C# or Nullable(Of Double) in Visual Basic
+        /// A value of type Nullable&lt;Double&gt; in C# or Nullable(Of Double) in Visual Basic
         /// that corresponds to the maximum value in the sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -2326,7 +2326,7 @@ namespace System.Linq
         /// of.
         /// </param>
         /// <returns>
-        /// A value of type Nullable<Single> in C# or Nullable(Of Single) in Visual Basic
+        /// A value of type Nullable&lt;Single&gt; in C# or Nullable(Of Single) in Visual Basic
         /// that corresponds to the maximum value in the sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -2347,7 +2347,7 @@ namespace System.Linq
         /// of.
         /// </param>
         /// <returns>
-        /// A value of type Nullable<Single> in C# or Nullable(Of Single) in Visual Basic
+        /// A value of type Nullable&lt;Single&gt; in C# or Nullable(Of Single) in Visual Basic
         /// that corresponds to the maximum value in the sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -2410,7 +2410,7 @@ namespace System.Linq
         /// of.
         /// </param>
         /// <returns>
-        /// A value of type Nullable<Int32> in C# or Nullable(Of Int32) in Visual Basic
+        /// A value of type Nullable&lt;Int32&gt; in C# or Nullable(Of Int32) in Visual Basic
         /// that corresponds to the maximum value in the sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -2431,7 +2431,7 @@ namespace System.Linq
         /// of.
         /// </param>
         /// <returns>
-        /// A value of type Nullable<Int32> in C# or Nullable(Of Int32) in Visual Basic
+        /// A value of type Nullable&lt;Int327gt; in C# or Nullable(Of Int32) in Visual Basic
         /// that corresponds to the maximum value in the sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -2494,7 +2494,7 @@ namespace System.Linq
         /// of.
         /// </param>
         /// <returns>
-        /// A value of type Nullable<Int64> in C# or Nullable(Of Int64) in Visual Basic
+        /// A value of type Nullable&lt;Int64&gt; in C# or Nullable(Of Int64) in Visual Basic
         /// that corresponds to the maximum value in the sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -2515,7 +2515,7 @@ namespace System.Linq
         /// of.
         /// </param>
         /// <returns>
-        /// A value of type Nullable<Int64> in C# or Nullable(Of Int64) in Visual Basic
+        /// A value of type Nullable&lt;Int64&gt; in C# or Nullable(Of Int64) in Visual Basic
         /// that corresponds to the maximum value in the sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -2584,7 +2584,7 @@ namespace System.Linq
         /// The type of the elements of source.
         /// </typeparam>
         /// <returns>
-        /// The value of type Nullable<Decimal> in C# or Nullable(Of Decimal) in Visual
+        /// The value of type Nullable&lt;Decimal&gt; in C# or Nullable(Of Decimal) in Visual
         /// Basic that corresponds to the maximum value in the sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -2639,7 +2639,7 @@ namespace System.Linq
         /// The type of the elements of source.
         /// </typeparam>
         /// <returns>
-        /// The value of type Nullable<Double> in C# or Nullable(Of Double) in Visual
+        /// The value of type Nullable&lt;Double&gt; in C# or Nullable(Of Double) in Visual
         /// Basic that corresponds to the maximum value in the sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -2694,7 +2694,7 @@ namespace System.Linq
         /// The type of the elements of source.
         /// </typeparam>
         /// <returns>
-        /// The value of type Nullable<Single> in C# or Nullable(Of Single) in Visual
+        /// The value of type Nullable&lt;Single&gt; in C# or Nullable(Of Single) in Visual
         /// Basic that corresponds to the maximum value in the sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -2749,7 +2749,7 @@ namespace System.Linq
         /// The type of the elements of source.
         /// </typeparam>
         /// <returns>
-        /// The value of type Nullable<Int32> in C# or Nullable(Of Int32) in Visual Basic
+        /// The value of type Nullable&lt;Int32&gt; in C# or Nullable(Of Int32) in Visual Basic
         /// that corresponds to the maximum value in the sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -2804,7 +2804,7 @@ namespace System.Linq
         /// The type of the elements of source.
         /// </typeparam>
         /// <returns>
-        /// The value of type Nullable<Int64> in C# or Nullable(Of Int64) in Visual Basic
+        /// The value of type Nullable&lt;Int64&gt; in C# or Nullable(Of Int64) in Visual Basic
         /// that corresponds to the maximum value in the sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -2853,7 +2853,7 @@ namespace System.Linq
         /// of.
         /// </param>
         /// <returns>
-        /// A value of type Nullable<Decimal> in C# or Nullable(Of Decimal) in Visual
+        /// A value of type Nullable&lt;Decimal&gt; in C# or Nullable(Of Decimal) in Visual
         /// Basic that corresponds to the minimum value in the sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -2874,7 +2874,7 @@ namespace System.Linq
         /// of.
         /// </param>
         /// <returns>
-        /// A value of type Nullable<Decimal> in C# or Nullable(Of Decimal) in Visual
+        /// A value of type Nullable&lt;Decimal&gt; in C# or Nullable(Of Decimal) in Visual
         /// Basic that corresponds to the minimum value in the sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -2937,7 +2937,7 @@ namespace System.Linq
         /// of.
         /// </param>
         /// <returns>
-        /// A value of type Nullable<Double> in C# or Nullable(Of Double) in Visual Basic
+        /// A value of type Nullable&lt;Double&gt; in C# or Nullable(Of Double) in Visual Basic
         /// that corresponds to the minimum value in the sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -2958,7 +2958,7 @@ namespace System.Linq
         /// of.
         /// </param>
         /// <returns>
-        /// A value of type Nullable<Double> in C# or Nullable(Of Double) in Visual Basic
+        /// A value of type Nullable&lt;Double&gt; in C# or Nullable(Of Double) in Visual Basic
         /// that corresponds to the minimum value in the sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -3021,7 +3021,7 @@ namespace System.Linq
         /// of.
         /// </param>
         /// <returns>
-        /// A value of type Nullable<Single> in C# or Nullable(Of Single) in Visual Basic
+        /// A value of type Nullable&lt;Single&gt; in C# or Nullable(Of Single) in Visual Basic
         /// that corresponds to the minimum value in the sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -3042,7 +3042,7 @@ namespace System.Linq
         /// of.
         /// </param>
         /// <returns>
-        /// A value of type Nullable<Single> in C# or Nullable(Of Single) in Visual Basic
+        /// A value of type Nullable&lt;Single&gt; in C# or Nullable(Of Single) in Visual Basic
         /// that corresponds to the minimum value in the sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -3105,7 +3105,7 @@ namespace System.Linq
         /// of.
         /// </param>
         /// <returns>
-        /// A value of type Nullable<Int32> in C# or Nullable(Of Int32) in Visual Basic
+        /// A value of type Nullable&lt;Int32&gt; in C# or Nullable(Of Int32) in Visual Basic
         /// that corresponds to the minimum value in the sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -3126,7 +3126,7 @@ namespace System.Linq
         /// of.
         /// </param>
         /// <returns>
-        /// A value of type Nullable<Int32> in C# or Nullable(Of Int32) in Visual Basic
+        /// A value of type Nullable&lt;Int32&gt; in C# or Nullable(Of Int32) in Visual Basic
         /// that corresponds to the minimum value in the sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -3189,7 +3189,7 @@ namespace System.Linq
         /// of.
         /// </param>
         /// <returns>
-        /// A value of type Nullable<Int64> in C# or Nullable(Of Int64) in Visual Basic
+        /// A value of type Nullable&lt;Int64&gt; in C# or Nullable(Of Int64) in Visual Basic
         /// that corresponds to the minimum value in the sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -3210,7 +3210,7 @@ namespace System.Linq
         /// of.
         /// </param>
         /// <returns>
-        /// A value of type Nullable<Int64> in C# or Nullable(Of Int64) in Visual Basic
+        /// A value of type Nullable&lt;Int64&gt; in C# or Nullable(Of Int64) in Visual Basic
         /// that corresponds to the minimum value in the sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -3279,7 +3279,7 @@ namespace System.Linq
         /// The type of the elements of source.
         /// </typeparam>
         /// <returns>
-        /// The value of type Nullable<Decimal> in C# or Nullable(Of Decimal) in Visual
+        /// The value of type Nullable&lt;Decimal&gt; in C# or Nullable(Of Decimal) in Visual
         /// Basic that corresponds to the minimum value in the sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -3334,7 +3334,7 @@ namespace System.Linq
         /// The type of the elements of source.
         /// </typeparam>
         /// <returns>
-        /// The value of type Nullable<Double> in C# or Nullable(Of Double) in Visual
+        /// The value of type Nullable&lt;Double&gt; in C# or Nullable(Of Double) in Visual
         /// Basic that corresponds to the minimum value in the sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -3389,7 +3389,7 @@ namespace System.Linq
         /// The type of the elements of source.
         /// </typeparam>
         /// <returns>
-        /// The value of type Nullable<Single> in C# or Nullable(Of Single) in Visual
+        /// The value of type Nullable&lt;Single&gt; in C# or Nullable(Of Single) in Visual
         /// Basic that corresponds to the minimum value in the sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -3444,7 +3444,7 @@ namespace System.Linq
         /// The type of the elements of source.
         /// </typeparam>
         /// <returns>
-        /// The value of type Nullable<Int32> in C# or Nullable(Of Int32) in Visual Basic
+        /// The value of type Nullable&lt;Int32&gt; in C# or Nullable(Of Int32) in Visual Basic
         /// that corresponds to the minimum value in the sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -3499,7 +3499,7 @@ namespace System.Linq
         /// The type of the elements of source.
         /// </typeparam>
         /// <returns>
-        /// The value of type Nullable<Int64> in C# or Nullable(Of Int64) in Visual Basic
+        /// The value of type Nullable&lt;Int64&gt; in C# or Nullable(Of Int64) in Visual Basic
         /// that corresponds to the minimum value in the sequence.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -4969,7 +4969,7 @@ namespace System.Linq
         /// order according to a key.
         /// </summary>
         /// <param name="source">
-        /// An System.Linq.IOrderedEnumerable<TElement> that contains elements to sort.
+        /// An System.Linq.IOrderedEnumerable&lt;TElement&gt; that contains elements to sort.
         /// </param>
         /// <param name="keySelector">
         /// A function to extract a key from each element.
@@ -4981,7 +4981,7 @@ namespace System.Linq
         /// The type of the key returned by keySelector.
         /// </typeparam>
         /// <returns>
-        /// An System.Linq.IOrderedEnumerable<TElement> whose elements are sorted according
+        /// An System.Linq.IOrderedEnumerable&lt;TElement&gt; whose elements are sorted according
         /// to a key.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -4999,13 +4999,13 @@ namespace System.Linq
         /// order by using a specified comparer.
         /// </summary>
         /// <param name="source">
-        /// An System.Linq.IOrderedEnumerable<TElement> that contains elements to sort.
+        /// An System.Linq.IOrderedEnumerable&lt;TElement&gt; that contains elements to sort.
         /// </param>
         /// <param name="keySelector">
         /// A function to extract a key from each element.
         /// </param>
         /// <param name="comparer">
-        /// An System.Collections.Generic.IComparer<T> to compare keys.
+        /// An System.Collections.Generic.IComparer&lt;T&gt; to compare keys.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of source.
@@ -5014,7 +5014,7 @@ namespace System.Linq
         /// The type of the key returned by keySelector.
         /// </typeparam>
         /// <returns>
-        /// An System.Linq.IOrderedEnumerable<TElement> whose elements are sorted according
+        /// An System.Linq.IOrderedEnumerable&lt;TElement&gt; whose elements are sorted according
         /// to a key.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -5032,7 +5032,7 @@ namespace System.Linq
         /// order, according to a key.
         /// </summary>
         /// <param name="source">
-        /// An System.Linq.IOrderedEnumerable<TElement> that contains elements to sort.
+        /// An System.Linq.IOrderedEnumerable&lt;TElement&gt; that contains elements to sort.
         /// </param>
         /// <param name="keySelector">
         /// A function to extract a key from each element.
@@ -5044,7 +5044,7 @@ namespace System.Linq
         /// The type of the key returned by keySelector.
         /// </typeparam>
         /// <returns>
-        /// An System.Linq.IOrderedEnumerable<TElement> whose elements are sorted in
+        /// An System.Linq.IOrderedEnumerable&lt;TElement&gt; whose elements are sorted in
         /// descending order according to a key.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
@@ -5062,13 +5062,13 @@ namespace System.Linq
         /// order by using a specified comparer.
         /// </summary>
         /// <param name="source">
-        /// An System.Linq.IOrderedEnumerable<TElement> that contains elements to sort.
+        /// An System.Linq.IOrderedEnumerable&lt;TElement&gt; that contains elements to sort.
         /// </param>
         /// <param name="keySelector">
         /// A function to extract a key from each element.
         /// </param>
         /// <param name="comparer">
-        /// An System.Collections.Generic.IComparer<T> to compare keys.
+        /// An System.Collections.Generic.IComparer&lt;T&gt; to compare keys.
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of source.
@@ -5077,7 +5077,7 @@ namespace System.Linq
         /// The type of the key returned by keySelector.
         /// </typeparam>
         /// <returns>
-        /// An System.Linq.IOrderedEnumerable<TElement> whose elements are sorted in
+        /// An System.Linq.IOrderedEnumerable&lt;TElement&gt; whose elements are sorted in
         /// descending order according to a key.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
