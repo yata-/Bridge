@@ -51,6 +51,7 @@
     <Compile Include="ClientRectList.cs" />
     <Compile Include="CompatMode.cs" />
     <Compile Include="Console.cs" />
+    <Compile Include="TypedArray\Int8Array.cs" />
     <Compile Include="Interfaces\CanvasGradient.cs" />
     <Compile Include="Interfaces\CanvasPattern.cs" />
     <Compile Include="Interfaces\ImageData.cs" />
@@ -302,6 +303,7 @@
       <Name>Bridge</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent />
