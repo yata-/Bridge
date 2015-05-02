@@ -3,7 +3,7 @@ using Bridge;
 namespace System 
 {
 	/// <summary>
-	/// Specifies the custom string comparison implementation.
+    /// Specifies the culture, case, and sort rules to be used by certain overloads of the String.Compare and String.Equals methods.
 	/// </summary>
 	[Ignore]
     [Enum(Emit.Value)]
