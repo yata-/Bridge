@@ -86,6 +86,7 @@
     <Compile Include="System\Linq\EnumerableInstance.cs" />
     <Compile Include="System\Linq\Lookup.cs" />
     <Compile Include="System\Linq\OrderedEnumerable.cs" />
+    <Compile Include="System\StringComparison.cs" />
     <Compile Include="This.cs" />
     <Compile Include="System\OverflowException.cs" />
     <Compile Include="System\Globalization\CultureNotFoundException.cs" />

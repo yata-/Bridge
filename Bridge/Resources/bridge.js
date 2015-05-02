@@ -1118,6 +1118,14 @@
         },
 
         contains: function (str, value) {
+            if (value == null) {
+                throw new Bridge.ArgumentNullException();
+            }
+
+            if (str == null) {
+                return false;
+            }
+
             return str.indexOf(value) > -1;
         },
         
@@ -1209,7 +1217,7 @@
             }
 
             if (arguments.length == 3) {
-                if (!arguments[2]) {
+                if (arguments[2]) {
                     return strA.toLocaleUpperCase().localeCompare(strB.toLocaleUpperCase());
                 }
             }
