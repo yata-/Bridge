@@ -226,11 +226,20 @@
         },
 
         getTypeName: function (obj) {
+            var str;
+
             if (obj.$$name) {
                 return obj.$$name;
+            }            
+
+            if ((obj).constructor == Function) {
+                str = (obj).toString()
+            }
+            else {
+                str = (obj).constructor.toString();
             }
 
-            var results = (/function (.{1,})\(/).exec((obj).constructor.toString());
+            var results = (/function (.{1,})\(/).exec(str);
             return (results && results.length > 1) ? results[1] : "Object";
         },
 
@@ -288,7 +297,7 @@
 	        var result = Bridge.as(obj, type);
 
 	        if (result == null) {
-	            throw new Bridge.InvalidCastException('Unable to cast type ' + Bridge.getTypeName(obj.constructor) + ' to type ' + Bridge.getTypeName(type));
+	            throw new Bridge.InvalidCastException('Unable to cast type ' + Bridge.getTypeName(obj) + ' to type ' + Bridge.getTypeName(type));
 	        }
 
 	        return result;
