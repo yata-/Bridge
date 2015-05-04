@@ -85,7 +85,7 @@
 
         ready: function (fn) {
             if (typeof Bridge.global.jQuery !== 'undefined') {
-                $(fn);
+                Bridge.global.jQuery(fn);
             } else {
                 if (document.readyState == "complete" || document.readyState == "loaded") {
                     fn();
