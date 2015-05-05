@@ -51,6 +51,10 @@
     <Compile Include="ClientRectList.cs" />
     <Compile Include="CompatMode.cs" />
     <Compile Include="Console.cs" />
+    <Compile Include="TypedArray\Float32Array.cs" />
+    <Compile Include="TypedArray\Float64Array.cs" />
+    <Compile Include="TypedArray\Int16Array.cs" />
+    <Compile Include="TypedArray\Int32Array.cs" />
     <Compile Include="TypedArray\Int8Array.cs" />
     <Compile Include="Interfaces\CanvasGradient.cs" />
     <Compile Include="Interfaces\CanvasPattern.cs" />
@@ -291,6 +295,11 @@
     <Compile Include="TypedArray\ArrayBuffer.cs" />
     <Compile Include="TypedArray\ArrayBufferView.cs" />
     <Compile Include="TypedArray\DataView.cs" />
+    <Compile Include="TypedArray\Prototype.cs" />
+    <Compile Include="TypedArray\Uint16Array.cs" />
+    <Compile Include="TypedArray\Uint32Array.cs" />
+    <Compile Include="TypedArray\Uint8Array.cs" />
+    <Compile Include="TypedArray\Uint8ClampedArray.cs" />
     <Compile Include="URLSearchParams.cs" />
     <Compile Include="ValidityState.cs" />
     <Compile Include="Global.cs" />

@@ -1,48 +1,48 @@
 ﻿// The documentation for this class (on <summary> tags) was extracted from:
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array
-using System;
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array
 
 namespace Bridge.Html5
 {
     /// <summary>
-    /// Represents an array of twos-complement 8-bit signed integers. The contents are initialized to 0.
-    /// Once established, you can reference elements in the array using the object's methods, or using standard
-    /// array index syntax (that is, using bracket notation).
+    /// Represents an array of twos-complement 32-bit signed integers in the platform byte order.
+    /// If control over byte order is needed, use DataView instead. The contents are initialized to 0.
+    /// Once established, you can reference elements in the array using the object's methods, or using
+    /// standard array index syntax (that is, using bracket notation).
     /// </summary>
     [Ignore]
-    public class Int8Array
+    public class Int32Array
     {
         /// <summary>
-        /// Creates a new Int8Array of the specified length.
+        /// Creates a new Int32Array of the specified length.
         /// </summary>
         /// <param name="length">Length of array to create</param>
-        public Int8Array(int length)
+        public Int32Array(Any<int, long, uint, ulong> length)
         {
         }
 
         /// <summary>
-        /// Creates a new Int8Array out of the specified Int8Array.
+        /// Creates a new Int32Array out of the specified Int32Array.
         /// </summary>
-        /// <param name="typedArray">Int8Array to use as initial contents to the new array.</param>
-        public Int8Array(Int8Array typedArray)
+        /// <param name="typedArray">Int32Array to use as initial contents to the new array.</param>
+        public Int32Array(Int32Array typedArray)
         {
         }
 
         /// <summary>
-        /// Creates a new Int8Array out of the specified object.
+        /// Creates a new Int32Array out of the specified object.
         /// </summary>
         /// <param name="objectInstance">Object to be converted into the new array.</param>
-        public Int8Array(object objectInstance)
+        public Int32Array(object objectInstance)
         {
         }
 
         /// <summary>
-        /// Creates a new Int8Array out of the specified buffer and byteOffset with the specified length.
+        /// Creates a new Int32Array out of the specified buffer and byteOffset with the specified length.
         /// </summary>
         /// <param name="buffer">Arraybuffer to use as base for contents.</param>
         /// <param name="byteOffset">Optional. Position in the buffer to start reading data from.</param>
         /// <param name="length">Optional. Number of elements to consider while creating the array.</param>
-        public Int8Array(ArrayBuffer buffer, uint byteOffset = 0, uint length = 0)
+        public Int32Array(ArrayBuffer buffer, uint byteOffset = 0, uint length = 0)
         {
         }
 
@@ -51,16 +51,16 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="i">Index position in the array.</param>
         /// <returns>The element in the specified position.</returns>
-        public SByte this[Any<int, uint, long, ulong> i]
+        public int this[Any<int, long, uint, ulong> i]
         {
-            get { return default(SByte); }
+            get { return default(int); }
             set { }
         }
 
         #region Properties
 
         /// <summary>
-        /// Returns a number value of the element size. 1 in the case of an Int8Array.
+        /// Returns a number value of the element size. 1 in the case of an Int32Array.
         /// </summary>
         public const short BYTES_PER_ELEMENT = 1;
 
@@ -70,22 +70,22 @@ namespace Bridge.Html5
         public const short length = 3;
 
         /// <summary>
-        /// Returns the string value of the constructor name. In the case of the Int8Array type: "Int8Array".
+        /// Returns the string value of the constructor name. In the case of the Int32Array type: "Int32Array".
         /// </summary>
-        public const string name = "Int8Array";
+        public const string name = "Int32Array";
 
         /// <summary>
         /// Prototype for the TypedArray objects.
         /// </summary>
-        public readonly TypedArray.Prototype<Int8Array, SByte> Prototype;
+        public readonly TypedArray.Prototype<Int32Array, int> Prototype;
 
         #endregion
 
         #region Methods
 
-        // Int8Array.from() and Int8Array.of() are work in progress for ES6 and, at the time of the writing,
+        // Int32Array.from() and Int32Array.of() are work in progress for ES6 and, at the time of the writing,
         // were not ready for production environment. Thus, their definitions are not present here.
-        
+
         #endregion
     }
 }
