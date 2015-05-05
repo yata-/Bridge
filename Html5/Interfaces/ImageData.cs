@@ -1,11 +1,6 @@
 ﻿// The documentation for this class (on <summary> tags) was extracted from:
 // https://developer.mozilla.org/en-US/docs/Web/API/ImageData
 
-// TODO: Implement TypedArray and its underlying TypedArray.prototype and Uint8ClampedArray.
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray#Syntax
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/prototype
-
 using Bridge;
 
 namespace Bridge.Html5
@@ -39,7 +34,7 @@ namespace Bridge.Html5
         /// if an array is given: it will be inferred from its size and the given width.
         /// </param>
         /// <remarks>This is experimental API that should not be used in production code.</remarks>
-        public ImageData(object array, ulong width, ulong? height = null)
+        public ImageData(Uint8ClampedArray array, ulong width, ulong? height = null)
         {
         }
 
@@ -60,7 +55,7 @@ namespace Bridge.Html5
         /// A Uint8ClampedArray representing a one-dimensional array containing the data in the RGBA order,
         /// with integer values between 0 and 255 (included).
         /// </summary>
-        public readonly dynamic Data;
+        public readonly Uint8ClampedArray Data;
 
         /// <summary>
         /// An unsigned long representing the actual height, in pixels, of the ImageData.
