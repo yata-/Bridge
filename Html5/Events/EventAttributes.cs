@@ -35,6 +35,10 @@ namespace Bridge.Html5
         }
     }  
 
+    /// <summary>
+    /// Makes the method to be called once the page is loaded. If using jQuery2, triggers jQuery's event,
+    /// otherwise, uses DOMContentReady event from HTML5.
+    /// </summary>
     [Ignore]
     public class ReadyAttribute : EventAttribute
     {
