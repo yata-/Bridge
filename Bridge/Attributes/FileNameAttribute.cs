@@ -16,7 +16,7 @@ namespace Bridge
 
     /// <summary>
     /// The output folder path for generated JavaScript. A non-absolute path is concatenated with a project's root. 
-    /// Examples: "Bridge\\output\\", "..\\Bridge\\output\\", "c:\\output\\"
+    /// Examples: "Bridge/output/", "../Bridge/output/", "c:\\output\\"
     /// </summary>
     [Ignore]
     [AttributeUsage(AttributeTargets.Assembly)]
