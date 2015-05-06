@@ -30,7 +30,7 @@
                     return true;
                 }
             }
-	
+
             for (i = index + tokenLen; i < format.length && format[i] != patternToMatch; i++) {
             }
 
@@ -214,7 +214,7 @@
 			                break;
 			            case "zz":
 			            case "zzz":
-			                part = timezoneOffset / 60;			
+			                part = timezoneOffset / 60;
 			                part = ((part >= 0) ? "-" : "+") + Bridge.String.alignString(Math.floor(Math.abs(part)).toString(), 2, "0", 2);
 
 			                if (match == "zzz") {

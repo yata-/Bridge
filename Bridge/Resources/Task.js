@@ -142,7 +142,7 @@ Bridge.define('Bridge.Task', {
             callback = function (value) {
                 task.setResult(value);
             };
-	
+
             args.push(callback);
 
             target[method].apply(target, args);

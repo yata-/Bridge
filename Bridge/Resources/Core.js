@@ -260,7 +260,7 @@
 	            if (Bridge.isFunction(type.instanceOf)) {
 	                return type.instanceOf(obj);
 	            }
-            }	
+            }
 
             if ((obj.constructor == type) || (obj instanceof type)) {
 	            return true;
@@ -274,7 +274,7 @@
                 return false;
             }
 
-            var inheritors = type.$$inheritors;	
+            var inheritors = type.$$inheritors;
 
             for (var i = 0; i < inheritors.length; i++) {
                 if (Bridge.is(obj, inheritors[i])) {
@@ -284,11 +284,11 @@
 
             return false;
 	    },
-	
+
         as: function (obj, type) {
 	        return Bridge.is(obj, type) ? obj : null;
         },
-	
+
         cast: function (obj, type) {
             if (obj === null) {
                 return null;
@@ -302,7 +302,7 @@
 
 	        return result;
         },
-	
+
 	    apply: function (obj, values) {
 	        var names = Bridge.getPropertyNames(values, false);
 
@@ -376,7 +376,7 @@
                 (obj && Bridge.isDefined(obj.length))) {
 	            return new Bridge.ArrayEnumerator(obj);
 	        }
-	
+
 	        throw new Bridge.InvalidOperationException('Cannot create enumerator');
 	    },
 
