@@ -1225,12 +1225,43 @@
                 return (strA == null) ? 0 : 1;
             }
 
-            if (arguments.length == 3) {
-                if (arguments[2]) {
-                    return strA.toLocaleUpperCase().localeCompare(strB.toLocaleUpperCase());
+            if (arguments.length >= 3) {
+                if (!Bridge.isBoolean(arguments[2])) {
+                    // StringComparison
+                    switch (arguments[2]) {
+                        case 1: // CurrentCultureIgnoreCase
+                            return strA.localeCompare(strB, Bridge.CultureInfo.getCurrentCulture().name, { sensitivity: 'accent' });
+                            break;
+                        case 2: // InvariantCulture
+                            return strA.localeCompare(strB, Bridge.CultureInfo.invariantCulture.name);
+                            break;
+                        case 3: // InvariantCultureIgnoreCase
+                            return strA.localeCompare(strB, Bridge.CultureInfo.invariantCulture.name, { sensitivity: 'accent' });
+                        case 4: // Ordinal
+                            return (strA === strB) ? 0 : ((strA > strB) ? 1 : -1);
+                            break;
+                        case 5: // OrdinalIgnoreCase
+                            return (strA.toUpperCase() === strB.toUpperCase()) ? 0 : ((strA.toUpperCase() > strB.toUpperCase()) ? 1 : -1);
+                            break;
+                        case 0: // CurrentCulture
+                        default:
+                            break;
+                    }
+                }
+                else {
+                    // ignoreCase
+                    if (arguments[2]) {
+                        strA = strA.toLocaleUpperCase();
+                        strB = strB.toLocaleUpperCase();
+                    }
+
+                    if (arguments.length == 4) {
+                        // CultureInfo
+                        return strA.localeCompare(strB, arguments[3].name);
+                    }
                 }
             }
-
+            
             return strA.localeCompare(strB);
         },
 

@@ -1,5 +1,6 @@
 ﻿using Bridge;
 using System.Text.RegularExpressions;
+using System.Globalization;
 
 namespace System
 {
@@ -234,7 +235,31 @@ namespace System
         {
             return 0;
         }
-                
+        
+        [Template("Bridge.String.compare({strA}, {strB}, {comparisonType})")]
+        public static int Compare(string strA, string strB, StringComparison comparisonType)
+        {
+            return 0;
+        }
+
+        [Template("Bridge.String.compare({strA}, {strB}, {ignoreCase}, {culture})")]
+        public static int Compare(string strA, string strB, bool ignoreCase, CultureInfo culture)
+        {
+            return 0;
+        }
+
+        [Template("Bridge.String.compare({strA}.substr({indexA}, {length}), {strB}.substr({indexB}, {length}), {comparisonType})")]
+        public static int Compare(string strA, int indexA, string strB, int indexB, int length, StringComparison comparisonType)
+        {
+            return 0;
+        }
+
+        [Template("Bridge.String.compare({strA}.substr({indexA}, {length}), {strB}.substr({indexB}, {length}), {ignoreCase}, {culture})")]
+        public static int Compare(string strA, int indexA, string strB, int indexB, int length, bool ignoreCase, CultureInfo culture)
+        {
+            return 0;
+        }
+
         /// <summary>
         /// The indexOf() method returns the index within the calling String object of the first occurrence of the specified value. Returns -1 if the value is not found.
         /// </summary>
