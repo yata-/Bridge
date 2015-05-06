@@ -34,7 +34,7 @@ Bridge.define('Bridge.Exception', {
                 return error;
             }
 
-            if (error instanceof TypeError) {                
+            if (error instanceof TypeError) {
                 return new Bridge.NullReferenceException(error.message, new Bridge.ErrorException(error));
             }
             else if (error instanceof RangeError) {
@@ -128,7 +128,7 @@ Bridge.define('Bridge.CultureNotFoundException', {
 
             if (invalidCultureName) {
                 message += '\n' + invalidCultureName + ' is an invalid culture identifier.';
-            }            
+            }
         }
 
         Bridge.ArgumentException.prototype.$constructor.call(this, message, paramName, innerException);

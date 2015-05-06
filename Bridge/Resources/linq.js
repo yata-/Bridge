@@ -935,8 +935,8 @@
             var enumerator;
 
             return new IEnumerator(
-                function () { 
-					enumerator = Bridge.getEnumerator(source); 
+                function () {
+					enumerator = Bridge.getEnumerator(source);
 				},
                 function () {
                     while (enumerator.moveNext()) {
@@ -947,8 +947,8 @@
                     }
                     return false;
                 },
-                function () { 
-					Utils.dispose(enumerator); 
+                function () {
+					Utils.dispose(enumerator);
 				});
         });
     };

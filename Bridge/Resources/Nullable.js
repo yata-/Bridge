@@ -113,11 +113,11 @@
 
         not: function (a) {
 	        return Bridge.hasValue(a) ? !a : null;
-        },    
+        },
 
         pos: function (a) {
 	        return Bridge.hasValue(a) ? +a : null;
-        },    
+        },
 
         lift: function () {
 	        for (var i = 1; i < arguments.length; i++) {

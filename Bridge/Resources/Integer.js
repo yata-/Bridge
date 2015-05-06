@@ -11,7 +11,7 @@ Bridge.define('Bridge.Int', {
             return 0;
         },
 
-        format: function (number, format, provider) {            
+        format: function (number, format, provider) {
             var nf = (provider || Bridge.CultureInfo.getCurrentCulture()).getFormat(Bridge.NumberFormatInfo),
                 decimalSeparator = nf.numberDecimalSeparator,
                 groupSeparator = nf.numberGroupSeparator,
@@ -19,15 +19,15 @@ Bridge.define('Bridge.Int', {
                 precision,
                 groups,
                 fs;
-            
+
             if (!isFinite(number)) {
                 return Number.NEGATIVE_INFINITY == number ? nf.negativeInfinitySymbol : nf.positiveInfinitySymbol;
             }
-            
+
             if (!format) {
                 return this.defaultFormat(number, 0, 0, 15, nf, true);
             }
-            
+
             match = format.match(/^([a-zA-Z])(\d*)$/);
 
             if (match) {
@@ -50,7 +50,7 @@ Bridge.define('Bridge.Int', {
                             coefficient = Math.abs(number),
                             exponentPrefix = match[1],
                             exponentPrecision = 3,
-                            minDecimals, 
+                            minDecimals,
                             maxDecimals;
 
                         while (coefficient >= 10) {
@@ -103,7 +103,7 @@ Bridge.define('Bridge.Int', {
                         if (match[1] == "X") {
                             result = result.toUpperCase();
                         }
-                        
+
                         precision -= result.length;
 
                         while (precision-- > 0) {
@@ -172,8 +172,8 @@ Bridge.define('Bridge.Int', {
                 length,
                 part,
                 sep,
-                buffer = "";        
-            
+                buffer = "";
+
             roundingFactor = Math.pow(10, maxDecLen);
             str = "" + (Math.round(Math.abs(number) * roundingFactor) / roundingFactor);
 
@@ -251,10 +251,10 @@ Bridge.define('Bridge.Int', {
                 if (decimalPart) {
                     buffer += decimalPart;
                 }
-            }            
+            }
 
             if (number < 0) {
-                negPattern = Bridge.NumberFormatInfo[name + "NegativePatterns"][nf[name + "NegativePattern"]];                
+                negPattern = Bridge.NumberFormatInfo[name + "NegativePatterns"][nf[name + "NegativePattern"]];
 
                 return negPattern.replace("-", nf.negativeSign).replace("%", nf.percentSymbol).replace("$", nf.currencySymbol).replace("n", buffer);
             }
@@ -263,11 +263,11 @@ Bridge.define('Bridge.Int', {
 
                 return negPattern.replace("%", nf.percentSymbol).replace("$", nf.currencySymbol).replace("n", buffer);
             }
-        
+
             return buffer;
         },
 
-        customFormat: function (number, format, nf, noGroup) {        
+        customFormat: function (number, format, nf, noGroup) {
             var digits = 0,
                 forcedDigits = -1,
                 integralDigits = -1,
@@ -295,20 +295,20 @@ Bridge.define('Bridge.Int', {
 
             for (i = 0; i < format.length; i++) {
                 c = format.charAt(i);
-            
-                if (c == "'" || c == '"') {                
+
+                if (c == "'" || c == '"') {
                     i = format.indexOf(c, i + 1);
 
                     if (i < 0) {
                         break;
                     }
                 } else if (c == "\\") {
-                    i++;                
+                    i++;
                 } else {
                     if (c == "0" || c == "#") {
                         decimals += atDecimals;
 
-                        if (c == "0") {                            
+                        if (c == "0") {
                             if (atDecimals) {
                                 forcedDecimals = decimals;
                             } else if (forcedDigits < 0) {
@@ -332,7 +332,7 @@ Bridge.define('Bridge.Int', {
             number = "" + (Math.round(Math.abs(number) * roundingFactor) / roundingFactor);
 
             decimalIndex = number.indexOf(".");
-            integralDigits = decimalIndex < 0 ? number.length : decimalIndex;            
+            integralDigits = decimalIndex < 0 ? number.length : decimalIndex;
             i = integralDigits - digits;
 
             groupCfg = {
@@ -341,15 +341,15 @@ Bridge.define('Bridge.Int', {
             };
 
             inString = 0;
-        
+
             for (f = 0; f < format.length; f++) {
                 c = format.charAt(f);
 
                 if (c == "'" || c == '"') {
                     endIndex = format.indexOf(c, f + 1);
-                
+
                     buffer += format.substring(f + 1, endIndex < 0 ? format.length : endIndex);
-                
+
                     if (endIndex < 0) {
                         break;
                     }
@@ -372,7 +372,7 @@ Bridge.define('Bridge.Int', {
                             this.addGroup("0", groupCfg);
                         }
                         unused = 0;
-                    } else if (forcedDecimals-- > 0 || i < number.length) {                        
+                    } else if (forcedDecimals-- > 0 || i < number.length) {
                         this.addGroup(i >= number.length ? "0" : number.charAt(i), groupCfg);
                     }
 
@@ -391,7 +391,7 @@ Bridge.define('Bridge.Int', {
             if (isNegative < 0) {
                 buffer = "-" + buffer;
             }
-        
+
             return buffer;
         },
 
@@ -463,7 +463,7 @@ Bridge.define('Bridge.Int', {
             return true;
         },
 
-        parseInt: function (str, min, max, radix) {            
+        parseInt: function (str, min, max, radix) {
             if (str == null) {
                 throw new Bridge.ArgumentNullException("str");
             }

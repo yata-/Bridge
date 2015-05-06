@@ -58,12 +58,12 @@
                 value = "";
             }
 
-            if (formatStr && Bridge.is(value, Bridge.IFormattable)) {            
+            if (formatStr && Bridge.is(value, Bridge.IFormattable)) {
                 value = Bridge.format(value, formatStr);
             }
             else {
                 value = "" + value;
-            }        
+            }
 
             if (alignment) {
                 alignment = parseInt(alignment, 10);
@@ -75,7 +75,7 @@
             return Bridge.String.alignString(value.toString(), alignment);
         },
 
-        decodeBraceSequence: function (braces, remove) {        
+        decodeBraceSequence: function (braces, remove) {
             return braces.substr(0, (braces.length + (remove ? 0 : 1)) / 2);
         },
 
@@ -153,7 +153,7 @@
 
             return str.indexOf(value) > -1;
         },
-        
+
         indexOfAny: function (str, anyOf) {
             if (anyOf == null) {
                 throw new Bridge.ArgumentNullException();
@@ -174,7 +174,7 @@
             if (length < 0) {
                 throw new Bridge.ArgumentOutOfRangeException("length", "must be non-negative");
             }
-           
+
             if (length > str.length - startIndex) {
                 throw new Bridge.ArgumentOutOfRangeException("Index and length must refer to a location within the string");
             }
@@ -184,7 +184,7 @@
             for (var i = 0; i < anyOf.length; i++) {
                 var c = String.fromCharCode(anyOf[i]);
 
-                var index = s.indexOf(c);                
+                var index = s.indexOf(c);
                 if (index > -1) {
                     return index + startIndex;
                 }
@@ -197,7 +197,7 @@
             if (value == null) {
                 throw new Bridge.ArgumentNullException();
             }
-            
+
             if (str == null || str == "") {
                 return -1;
             }
@@ -207,7 +207,7 @@
             if (startIndex < 0 || startIndex > str.length) {
                 throw new Bridge.ArgumentOutOfRangeException("startIndex", "startIndex cannot be less than zero and must refer to a location within the string");
             }
-            
+
             if (value == "") {
                 return startIndex;
             }
@@ -277,7 +277,7 @@
                     }
                 }
             }
-            
+
             return strA.localeCompare(strB);
         },
 

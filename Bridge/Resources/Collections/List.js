@@ -219,7 +219,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
             if (list == null) {
                 throw new Bridge.ArgumentNullException("list");
             }
-            
+
             Bridge.ReadOnlyCollection$1.prototype.$constructor.call(this, list);
             this.readOnly = true;
         }
