@@ -33,7 +33,7 @@ namespace Bridge.Html5
         public HtmlEventAttribute(EventType eventName, string selector, HtmlEventTarget target = HtmlEventTarget.QuerySelector)
         {
         }
-    }  
+    }
 
     /// <summary>
     /// Makes the method to be called once the page is loaded. If using jQuery2, triggers jQuery's event,
@@ -58,5 +58,5 @@ namespace Bridge.Html5
         public ClickAttribute(string selector, HtmlEventTarget target = HtmlEventTarget.QuerySelector)
         {
         }
-    } 
+    }
 }

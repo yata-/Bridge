@@ -224,7 +224,7 @@
     <Compile Include="Elements\VideoElement.cs" />
     <Compile Include="ErrorEventHandler.cs" />
     <Compile Include="Errors\EvalError.cs" />
-    <Compile Include="Errors\RangeError .cs" />
+    <Compile Include="Errors\RangeError.cs" />
     <Compile Include="Errors\ReferenceError.cs" />
     <Compile Include="Errors\SyntaxError.cs" />
     <Compile Include="Errors\TypeError.cs" />
