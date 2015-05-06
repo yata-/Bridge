@@ -11,15 +11,15 @@ namespace Bridge.Html5
     public enum ObjectFit
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
         /// <summary>
         /// The replaced content is sized to fill the element's content box: the object's concrete object size is the element's used width and height.
         /// </summary>
-        Fill, 
-        
+        Fill,
+
         /// <summary>
         /// The replaced content is sized to maintain its aspect ratio while fitting within the element's content box: its concrete object size is resolved as a contain constraint against the element's used width and height.
         /// </summary>

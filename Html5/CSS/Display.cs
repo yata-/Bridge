@@ -19,8 +19,8 @@ namespace Bridge.Html5
         /// <summary>
         /// The element generates one or more inline element boxes.
         /// </summary>
-        Inline, 
-        
+        Inline,
+
         /// <summary>
         /// The element generates a block element box.
         /// </summary>
@@ -84,7 +84,7 @@ namespace Bridge.Html5
         /// </summary>
         [Name("table-header-group")]
         TableHeaderGroup,
-        
+
         /// <summary>
         /// Behaves like the &lt;tr&gt; HTML element
         /// </summary>

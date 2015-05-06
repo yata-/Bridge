@@ -3,12 +3,12 @@
 namespace Bridge.Html5
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     [Ignore]
     [Enum(Emit.Value)]
     [Name("Number")]
-    public enum RangeComparison 
+    public enum RangeComparison
     {
 		/// <summary>
         /// compares the start boundary-point of sourceRange to the start boundary-point of Range.

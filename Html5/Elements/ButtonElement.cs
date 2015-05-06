@@ -20,7 +20,7 @@ namespace Bridge.Html5
         /// </summary>
         [Name("autofocus")]
         public bool AutoFocus;
-        
+
         /// <summary>
         /// The control is disabled, meaning that it does not accept any clicks.
         /// </summary>
@@ -46,7 +46,7 @@ namespace Bridge.Html5
         /// The HTTP method that the browser uses to submit the form. If specified, this attribute overrides the method attribute of the &lt;form&gt; element that owns this element.
         /// </summary>
         public string FormMethod;
-        
+
         /// <summary>
         /// Indicates that the form is not to be validated when it is submitted. If specified, this attribute overrides the enctype attribute of the &lt;form&gt; element that owns this element.
         /// </summary>
@@ -68,10 +68,10 @@ namespace Bridge.Html5
         public string Name;
 
         /// <summary>
-        /// Indicates the behavior of the button. 
+        /// Indicates the behavior of the button.
         /// </summary>
         public ButtonType Type;
-        
+
         /// <summary>
         /// A localized message that describes the validation constraints that the control does not satisfy (if any). This attribute is the empty string if the control is not a candidate for constraint validation (willValidate is false), or it satisfies its constraints.
         /// </summary>
@@ -90,6 +90,6 @@ namespace Bridge.Html5
         /// <summary>
         /// Indicates whether the button is a candidate for constraint validation. It is false if any conditions bar it from constraint validation.
         /// </summary>
-        public readonly bool WillValidate;        
+        public readonly bool WillValidate;
     }
 }

@@ -1,12 +1,12 @@
 using Bridge;
 
-namespace System.Collections.Generic 
+namespace System.Collections.Generic
 {
     [Ignore]
     [Namespace("Bridge")]
     public class KeyValuePair<TKey, TValue> : IBridgeClass
     {
-        internal KeyValuePair() 
+        internal KeyValuePair()
         {
         }
 

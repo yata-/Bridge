@@ -20,8 +20,8 @@ namespace Bridge.Html5
         /// <summary>
         /// Fills each row in turn, adding new rows as necessary.
         /// </summary>
-        Rows, 
-        
+        Rows,
+
         /// <summary>
         /// Fills each column in turn, adding new columns as necessary.
         /// </summary>

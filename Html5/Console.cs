@@ -23,8 +23,8 @@ namespace Bridge.Html5
         }
 
         [Template("console.log()")]
-        public static void WriteLine() 
-        { 
+        public static void WriteLine()
+        {
         }
 
         [Template("console.log({value})")]
@@ -240,7 +240,7 @@ namespace Bridge.Html5
         }
 
         /// <summary>
-        /// Outputs a stack trace. 
+        /// Outputs a stack trace.
         /// </summary>
         public static void Trace()
         {
@@ -296,7 +296,7 @@ namespace Bridge.Html5
         }
 
         /// <summary>
-        /// Stops the specified timer and logs the elapsed time in seconds since its start. 
+        /// Stops the specified timer and logs the elapsed time in seconds since its start.
         /// </summary>
         /// <param name="name">The name of the timer to stop. Once stopped, the elapsed time is automatically displayed in the Web Console.</param>
         public static void TimeEnd(object name)

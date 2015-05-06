@@ -3,7 +3,7 @@
 namespace Bridge.Html5
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     [Ignore]
     [Enum(Emit.StringNameLowerCase)]
@@ -26,7 +26,7 @@ namespace Bridge.Html5
         /// </summary>
         [Name("no-change")]
         NoChange,
-        
+
         /// <summary>
         /// The dominant baseline-identifier and the baseline table remain the same, but the baseline-table font-size is changed to the value of the 'font-size' property on this element. This re-scales the baseline table for the current 'font-size'.
         /// </summary>

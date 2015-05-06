@@ -33,7 +33,7 @@ namespace Bridge.Html5
         public readonly string ResponseText;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public readonly XMLHttpRequestResponseType ResponseType;
 
@@ -180,7 +180,7 @@ namespace Bridge.Html5
         /// <param name="data"></param>
         public virtual void Send(DocumentInstance data)
         {
-        }       
+        }
 
         /// <summary>
         /// Sends the request. If the request is asynchronous (which is the default), this method returns as soon as the request is sent. If the request is synchronous, this method doesn't return until the response has arrived.

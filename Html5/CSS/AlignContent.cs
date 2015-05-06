@@ -7,11 +7,11 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Enum(Emit.StringNameLowerCase)]
-    [Name("String")]    
+    [Name("String")]
     public enum AlignContent
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         None,
 
@@ -31,7 +31,7 @@ namespace Bridge.Html5
         /// Lines are packed toward the center of the flex container. The lines are flushed with each other and aligned in the center of the flex container. Space between the cross-start edge of the flex container and first line and between cross-end of the flex container and the last line is the same.
         /// </summary>
         Center,
-        
+
         /// <summary>
         /// Lines are evenly distributed in the flex container. The spacing is done such as the space between two adjacent items is the same. Cross-start edge and cross-end edge of the flex container are flushed with respectively first and last line edges.
         /// </summary>
@@ -50,7 +50,7 @@ namespace Bridge.Html5
         Stretch,
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit
     }

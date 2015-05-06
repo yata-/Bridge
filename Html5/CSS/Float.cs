@@ -18,8 +18,8 @@ namespace Bridge.Html5
         /// <summary>
         /// Is a keyword indicating that the element must float on the left side of its containing block.
         /// </summary>
-        Left, 
-        
+        Left,
+
         /// <summary>
         /// Is a keyword indicating that the element must float on the right side of its containing block.
         /// </summary>

@@ -1,15 +1,15 @@
 using Bridge;
-namespace System 
+namespace System
 {
 	[Ignore]
     [Constructor("")]
-	public struct Nullable<T> where T : struct 
+	public struct Nullable<T> where T : struct
     {
 		[Template("{0}")]
-		public Nullable(T value) 
+		public Nullable(T value)
         {
 		}
-        
+
         public bool HasValue
         {
             [Template("Bridge.Nullable.hasValue({this})")]
@@ -18,7 +18,7 @@ namespace System
                 return false;
             }
         }
-        
+
         public T Value
         {
             [Template("Bridge.Nullable.getValue({this})")]
@@ -29,24 +29,24 @@ namespace System
         }
 
         [Template("Bridge.Nullable.getValueOrDefault({this})")]
-		public T GetValueOrDefault() 
+		public T GetValueOrDefault()
         {
 			return default(T);
 		}
 
         [Template("Bridge.Nullable.getValueOrDefault({this}, {0})")]
-		public T GetValueOrDefault(T defaultValue) 
+		public T GetValueOrDefault(T defaultValue)
         {
 			return default(T);
 		}
 
-		public static implicit operator T?(T value) 
+		public static implicit operator T?(T value)
         {
 			return null;
 		}
 
         [Template("Bridge.Nullable.getValue({this})")]
-		public static explicit operator T(T? value) 
+		public static explicit operator T(T? value)
         {
 			return default(T);
 		}

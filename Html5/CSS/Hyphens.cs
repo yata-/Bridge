@@ -11,7 +11,7 @@ namespace Bridge.Html5
     public enum Hyphens
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
@@ -23,8 +23,8 @@ namespace Bridge.Html5
         /// <summary>
         /// Words are broken for line-wrapping only where characters inside the word suggest line break opportunities. See Suggesting line break opportunities for details.
         /// </summary>
-        Manual, 
-        
+        Manual,
+
         /// <summary>
         /// The browser is free to automatically break words at appropriate hyphenation points, following whatever rules it chooses to use. Suggested line break opportunities, as covered in Suggesting line break opportunities, should be preferred over automatically selecting break points whenever possible.
         /// </summary>

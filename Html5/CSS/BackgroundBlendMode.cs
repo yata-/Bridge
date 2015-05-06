@@ -13,79 +13,79 @@ namespace Bridge.Html5
         /// <summary>
         /// Multiplies the complements of the backdrop and source color values, then complements the result.
         /// </summary>
-        Screen, 
-        
+        Screen,
+
         /// <summary>
         /// Multiplies or screens the colors, depending on the backdrop color value.
         /// </summary>
-        Overlay, 
-        
+        Overlay,
+
         /// <summary>
         /// Selects the darker of the backdrop and source colors.
         /// </summary>
-        Darken, 
-        
+        Darken,
+
         /// <summary>
         /// Selects the lighter of the backdrop and source colors.
         /// </summary>
-        Lighten, 
-        
+        Lighten,
+
         /// <summary>
         /// Brightens the backdrop color to reflect the source color
         /// </summary>
         [Name("color-dodge")]
-        ColorDodge, 
-        
+        ColorDodge,
+
         /// <summary>
         /// Darkens the backdrop color to reflect the source color.
         /// </summary>
         [Name("color-burn")]
-        ColorBurn, 
+        ColorBurn,
 
         /// <summary>
         /// Multiplies or screens the colors, depending on the source color value.
         /// </summary>
         [Name("hard-light")]
-        HardLight, 
+        HardLight,
 
         /// <summary>
         /// Darkens or lightens the colors, depending on the source color value.
         /// </summary>
         [Name("soft-light")]
-        SoftLight, 
-        
+        SoftLight,
+
         /// <summary>
         /// Subtracts the darker of the two constituent colors from the lighter color.
         /// </summary>
-        Difference, 
+        Difference,
 
         /// <summary>
-        /// Produces an effect similar to that of the Difference mode but lower in contrast. 
+        /// Produces an effect similar to that of the Difference mode but lower in contrast.
         /// </summary>
-        Exclusion, 
+        Exclusion,
 
         /// <summary>
         /// Creates a color with the hue of the source color and the saturation and luminosity of the backdrop color.
         /// </summary>
-        Hue, 
+        Hue,
 
         /// <summary>
         /// Creates a color with the saturation of the source color and the hue and luminosity of the backdrop color.
         /// </summary>
-        Saturation, 
+        Saturation,
 
         /// <summary>
         /// Creates a color with the hue and saturation of the source color and the luminosity of the backdrop color.
         /// </summary>
-        Color, 
+        Color,
 
         /// <summary>
         /// Creates a color with the luminosity of the source color and the hue and saturation of the backdrop color.
         /// </summary>
         Luminosity,
-        
+
         /// <summary>
-        /// This is the default attribute which specifies no blending. 
+        /// This is the default attribute which specifies no blending.
         /// </summary>
         Normal
     }

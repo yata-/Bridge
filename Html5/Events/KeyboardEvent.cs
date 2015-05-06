@@ -27,7 +27,7 @@ namespace Bridge.Html5
         public readonly bool AltKey;
 
         /// <summary>
-        /// The Unicode reference number of the key; this attribute is used only by the 'keypress' event. For keys whose char attribute contains multiple characters, this is the Unicode value of the first character in that attribute. In Firefox 26 this returns codes for printable characters. 
+        /// The Unicode reference number of the key; this attribute is used only by the 'keypress' event. For keys whose char attribute contains multiple characters, this is the Unicode value of the first character in that attribute. In Firefox 26 this returns codes for printable characters.
         /// </summary>
         public readonly int CharCode;
 
@@ -40,22 +40,22 @@ namespace Bridge.Html5
         /// true if the event is fired between after compositionstart and before compositionend.
         /// </summary>
         public readonly bool IsComposing;
-        
+
         /// <summary>
         /// Returns the Unicode value of a non-character key in a keypress event or any key in any other type of keyboard event.
-        /// 
+        ///
         /// In a keypress event, the Unicode value of the key pressed is stored in either the keyCode or charCode property, never both. If the key pressed generates a character (e.g. 'a'), charCode is set to the code of that character, respecting the letter case. (i.e. charCode takes into account whether the shift key is held down). Otherwise, the code of the pressed key is stored in keyCode.
-        /// 
+        ///
         /// keyCode is always set in the keydown and keyup events. In these cases, charCode is never set.
-        /// 
+        ///
         /// To get the code of the key regardless of whether it was stored in keyCode or charCode, query the which property.
-        /// 
+        ///
         /// Characters entered through an IME do not register through keyCode or charCode.
         /// </summary>
         public readonly int KeyCode;
 
         /// <summary>
-        /// The key value of the key represented by the event. If the value has a printed representation, this attribute's value is the same as the char attribute. Otherwise, it's one of the key value strings specified in {{anch("Key values")}}. If the key can't be identified, this is the string "Unidentified". See key names for the detail. In Firefox 26 this has a valid string for non-printable characters, and some printable characters (e.g. Tab, Enter). For regular characters it returns only "MozPrintableKey". charCode works and returns the character code. 
+        /// The key value of the key represented by the event. If the value has a printed representation, this attribute's value is the same as the char attribute. Otherwise, it's one of the key value strings specified in {{anch("Key values")}}. If the key can't be identified, this is the string "Unidentified". See key names for the detail. In Firefox 26 this has a valid string for non-printable characters, and some printable characters (e.g. Tab, Enter). For regular characters it returns only "MozPrintableKey". charCode works and returns the character code.
         /// </summary>
         public readonly string Key;
 
@@ -701,7 +701,7 @@ namespace Bridge.Html5
         public const int DOM_VK_ADD = 107;
 
         /// <summary>
-        ///  
+        ///
         /// </summary>
         [InlineConst]
         public const int DOM_VK_SEPARATOR = 108;
@@ -1234,7 +1234,7 @@ namespace Bridge.Html5
         [InlineConst]
         public const int DOM_VK_WIN_OEM_CLEAR = 254;
 
-        
+
         #endregion Key codes consts
     }
 
@@ -1265,25 +1265,25 @@ namespace Bridge.Html5
 
         /// <summary>
         /// Returns the Unicode value of a non-character key in a keypress event or any key in any other type of keyboard event.
-        /// 
+        ///
         /// In a keypress event, the Unicode value of the key pressed is stored in either the keyCode or charCode property, never both. If the key pressed generates a character (e.g. 'a'), charCode is set to the code of that character, respecting the letter case. (i.e. charCode takes into account whether the shift key is held down). Otherwise, the code of the pressed key is stored in keyCode.
-        /// 
+        ///
         /// keyCode is always set in the keydown and keyup events. In these cases, charCode is never set.
-        /// 
+        ///
         /// To get the code of the key regardless of whether it was stored in keyCode or charCode, query the which property.
-        /// 
+        ///
         /// Characters entered through an IME do not register through keyCode or charCode.
         /// </summary>
         public int KeyCode;
 
         /// <summary>
-        /// The Unicode reference number of the key; this attribute is used only by the 'keypress' event. For keys whose char attribute contains multiple characters, this is the Unicode value of the first character in that attribute. In Firefox 26 this returns codes for printable characters. 
+        /// The Unicode reference number of the key; this attribute is used only by the 'keypress' event. For keys whose char attribute contains multiple characters, this is the Unicode value of the first character in that attribute. In Firefox 26 this returns codes for printable characters.
         /// </summary>
         public int CharCode;
     }
 
     /// <summary>
-    /// These constants describe the location on the keyboard of key events. 
+    /// These constants describe the location on the keyboard of key events.
     /// </summary>
     [Ignore]
     [Enum(Emit.Value)]
@@ -1293,27 +1293,27 @@ namespace Bridge.Html5
         /// The key must not be distinguished between the left and right versions of the key, and was not pressed on the numeric keypad or a key that is considered to be part of the keypad.
         /// </summary>
         Standard = 0,
-        
+
         /// <summary>
         /// The key was the left-hand version of the key; for example, this is the value of the location attribute when the left-hand Control key is pressed on a standard 101 key US keyboard. This value is only used for keys that have more that one possible location on the keyboard.
         /// </summary>
         Left = 1,
-        
+
         /// <summary>
         /// The key was the right-hand version of the key; for example, this is the value of the location attribute when the right-hand Control key is pressed on a standard 101 key US keyboard. This value is only used for keys that have more that one possible location on the keyboard.
         /// </summary>
         Right = 2,
-        
+
         /// <summary>
         /// The key was on the numeric keypad, or has a virtual key code that corresponds to the numeric keypad.
         /// </summary>
         Numpad = 3,
-        
+
         /// <summary>
         /// The key was on a mobile device; this can be on either a physical keypad or a virtual keyboard.
         /// </summary>
         Mobile = 4,
-        
+
         /// <summary>
         /// The key was a button on a game controller or a joystick on a mobile device.
         /// </summary>

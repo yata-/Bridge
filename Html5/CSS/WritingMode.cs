@@ -11,7 +11,7 @@ namespace Bridge.Html5
     public enum WritingMode
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
@@ -19,8 +19,8 @@ namespace Bridge.Html5
         /// Indicates that lines may only break at normal word break points.
         /// </summary>
         [Name("horizontal-tb")]
-        HorizontalTB, 
-        
+        HorizontalTB,
+
         /// <summary>
         /// Content flows horizontally from right to left, vertically from top to bottom. The next horizontal line is positioned below the previous line.
         /// </summary>

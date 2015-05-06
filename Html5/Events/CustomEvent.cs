@@ -23,7 +23,7 @@ namespace Bridge.Html5
         public readonly object Detail;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="type"></param>
         /// <param name="canBubble"></param>

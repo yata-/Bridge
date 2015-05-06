@@ -1,6 +1,6 @@
 ﻿using Bridge;
 
-namespace Bridge.Html5 
+namespace Bridge.Html5
 {
 	/// <summary>
 	/// The NodeIterator interface represents an iterator over the members of a list of the nodes in a subtree of the DOM. The nodes will be returned in document order.
@@ -8,9 +8,9 @@ namespace Bridge.Html5
 	/// </summary>
     [Ignore]
     [Name("NodeIterator")]
-	public class NodeIterator 
+	public class NodeIterator
     {
-		internal NodeIterator() 
+		internal NodeIterator()
         {
 		}
 
@@ -20,7 +20,7 @@ namespace Bridge.Html5
         public readonly Node Root;
 
         /// <summary>
-        /// Returns an unsigned long being a bitmask made of constants describing the types of Node that must to be presented. Non-matching nodes are skipped, but their children may be included, if relevant. 
+        /// Returns an unsigned long being a bitmask made of constants describing the types of Node that must to be presented. Non-matching nodes are skipped, but their children may be included, if relevant.
         /// </summary>
         public readonly NodeFilter WhatToShow;
 
@@ -56,7 +56,7 @@ namespace Bridge.Html5
         /// Returns the next Node in the document, or null if there are none.
         /// </summary>
         /// <returns></returns>
-		public virtual Node NextNode() 
+		public virtual Node NextNode()
         {
 			return null;
 		}

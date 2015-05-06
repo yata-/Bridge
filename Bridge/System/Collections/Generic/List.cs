@@ -1,16 +1,16 @@
 using Bridge;
 
-namespace System.Collections.Generic 
+namespace System.Collections.Generic
 {
     [Ignore]
     [Namespace("Bridge")]
     public class List<T> : IList<T>, IBridgeClass
     {
-        public List() 
+        public List()
         {
         }
 
-        public List(IEnumerable<T> items) 
+        public List(IEnumerable<T> items)
         {
         }
 
@@ -27,9 +27,9 @@ namespace System.Collections.Generic
             }
         }
 
-        public int Count 
+        public int Count
         {
-            get 
+            get
             {
                 return 0;
             }
@@ -44,19 +44,19 @@ namespace System.Collections.Generic
         {
         }
 
-        public void Add(T item) 
+        public void Add(T item)
         {
         }
 
-        public void AddRange(IEnumerable<T> items) 
+        public void AddRange(IEnumerable<T> items)
         {
         }
 
-        public void Clear() 
+        public void Clear()
         {
         }
-        
-        public bool Contains(T item) 
+
+        public bool Contains(T item)
         {
             return false;
         }
@@ -66,12 +66,12 @@ namespace System.Collections.Generic
             return null;
         }
 
-        public IEnumerator<T> GetEnumerator() 
+        public IEnumerator<T> GetEnumerator()
         {
             return null;
         }
 
-        public List<T> GetRange(int index) 
+        public List<T> GetRange(int index)
         {
             return null;
         }
@@ -80,73 +80,73 @@ namespace System.Collections.Generic
             return null;
         }
 
-        public int IndexOf(T item) 
+        public int IndexOf(T item)
         {
             return 0;
         }
 
-        public int IndexOf(T item, int startIndex) 
+        public int IndexOf(T item, int startIndex)
         {
             return 0;
         }
 
-        public void Insert(int index, T item) 
+        public void Insert(int index, T item)
         {
         }
 
-        public void InsertRange(int index, IEnumerable<T> items) 
+        public void InsertRange(int index, IEnumerable<T> items)
         {
         }
 
-        public string Join() 
+        public string Join()
         {
             return null;
         }
 
-        public string Join(string delimiter) 
+        public string Join(string delimiter)
         {
             return null;
         }
 
-        public int LastIndexOf(object item) 
+        public int LastIndexOf(object item)
         {
             return 0;
         }
 
-        public int LastIndexOf(object item, int fromIndex) 
+        public int LastIndexOf(object item, int fromIndex)
         {
             return 0;
         }
 
-        public bool Remove(T item) 
+        public bool Remove(T item)
         {
             return false;
         }
 
-        public void RemoveAt(int index) 
+        public void RemoveAt(int index)
         {
         }
 
-        public List<T> RemoveRange(int index, int count) 
-        {
-            return null;
-        }
-
-        public void Reverse() 
-        {
-        }
-
-        public List<T> Slice(int start) 
+        public List<T> RemoveRange(int index, int count)
         {
             return null;
         }
 
-        public List<T> Slice(int start, int end) 
+        public void Reverse()
+        {
+        }
+
+        public List<T> Slice(int start)
         {
             return null;
         }
 
-       
+        public List<T> Slice(int start, int end)
+        {
+            return null;
+        }
+
+
         public void Sort() {
         }
 
@@ -159,15 +159,15 @@ namespace System.Collections.Generic
         {
         }
 
-        public void Splice(int start, int deleteCount) 
+        public void Splice(int start, int deleteCount)
         {
         }
 
-        public void Splice(int start, int deleteCount, IEnumerable<T> itemsToInsert) 
+        public void Splice(int start, int deleteCount, IEnumerable<T> itemsToInsert)
         {
         }
 
-        public void Unshift(params T[] items) 
+        public void Unshift(params T[] items)
         {
         }
 

@@ -11,32 +11,32 @@ namespace Bridge.Html5
     public enum FontStretch
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
         /// <summary>
         /// Specifies a normal font face.
         /// </summary>
-        Normal, 
-        
+        Normal,
+
         /// <summary>
         /// Specifies a font face more condensed than normal, with ultra-condensed as the most condensed.
         /// </summary>
         [Name("semi-condensed")]
-        SemiCondensed, 
-    
+        SemiCondensed,
+
         /// <summary>
         /// Specifies a font face more condensed than normal, with ultra-condensed as the most condensed.
         /// </summary>
-        Condensed,     
+        Condensed,
 
         /// <summary>
         /// Specifies a font face more condensed than normal, with ultra-condensed as the most condensed.
         /// </summary>
         [Name("extra-condensed")]
-        ExtraCondensed, 
-    
+        ExtraCondensed,
+
         /// <summary>
         /// Specifies a font face more condensed than normal, with ultra-condensed as the most condensed.
         /// </summary>
@@ -47,19 +47,19 @@ namespace Bridge.Html5
         /// Specifies a font face more expanded than normal, with ultra-expanded as the most expanded.
         /// </summary>
         [Name("semi-expanded")]
-        SemiExpanded, 
-    
+        SemiExpanded,
+
         /// <summary>
         /// Specifies a font face more expanded than normal, with ultra-expanded as the most expanded.
         /// </summary>
-        Expanded, 
-    
+        Expanded,
+
         /// <summary>
         /// Specifies a font face more expanded than normal, with ultra-expanded as the most expanded.
         /// </summary>
         [Name("extra-expanded")]
-        ExtraExpanded, 
-    
+        ExtraExpanded,
+
         /// <summary>
         /// Specifies a font face more expanded than normal, with ultra-expanded as the most expanded.
         /// </summary>

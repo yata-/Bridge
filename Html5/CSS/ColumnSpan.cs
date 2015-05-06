@@ -18,10 +18,10 @@ namespace Bridge.Html5
         /// <summary>
         /// The element spans across all columns. Content in the normal flow that appears before the element is automatically balanced across all columns before the element appears. The element establishes a new block formatting context.
         /// </summary>
-        All, 
-        
+        All,
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit
     }

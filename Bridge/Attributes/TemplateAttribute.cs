@@ -13,7 +13,7 @@ namespace Bridge
         {
         }
 
-        public TemplateAttribute(string format) 
+        public TemplateAttribute(string format)
         {
         }
     }

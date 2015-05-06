@@ -40,15 +40,15 @@ namespace Bridge.Html5
 
         /// <summary>
         /// Inserts a new cell into a table row and returns a reference to the cell.
-        /// If index is -1 or equal to the number of cells, the cell is appended as the last cell in the row. 
-        /// If index is greater than the number of cells, an IndexSizeError exception will result. 
+        /// If index is -1 or equal to the number of cells, the cell is appended as the last cell in the row.
+        /// If index is greater than the number of cells, an IndexSizeError exception will result.
         /// If index is omitted it defaults to -1.
         /// <param name="index">The cell index of the new cell. Defaults to -1.</param>
         /// <returns>Returns the TableDataCellElement representing the new cell of the row.</returns>
         /// </summary>
         public virtual TableDataCellElement InsertCell(int index = - 1)
         {
-            return null;   
+            return null;
         }
     }
 }

@@ -11,15 +11,15 @@ namespace Bridge.Html5
     public enum EmptyCells
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
         /// <summary>
         /// Is a keyword indicating that borders and backgrounds should be drawn like in a normal cells.
         /// </summary>
-        Show, 
-        
+        Show,
+
         /// <summary>
         /// Is a keyword indicating that no border or backgrounds should be drawn.
         /// </summary>

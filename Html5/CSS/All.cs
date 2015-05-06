@@ -11,7 +11,7 @@ namespace Bridge.Html5
     public enum All
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         None,
 

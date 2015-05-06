@@ -1,6 +1,6 @@
 ﻿using Bridge;
 
-namespace System 
+namespace System
 {
     /// <summary>
     /// The EvalError object indicates an error regarding the global eval() function.

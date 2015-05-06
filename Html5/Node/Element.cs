@@ -89,7 +89,7 @@ namespace Bridge.Html5
         public string Id;
 
         /// <summary>
-        /// The innerHTML sets or gets the HTML syntax describing the element's descendants.    
+        /// The innerHTML sets or gets the HTML syntax describing the element's descendants.
         /// </summary>
         public string InnerHTML;
 
@@ -168,14 +168,14 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="attributeName">name of the attribute whose value you want to get.</param>
         /// <returns>string containing the value of attributeName.</returns>
-        /// 
+        ///
         public virtual string GetAttribute(string attributeName)
         {
             return null;
         }
 
         /// <summary>
-        ///  returns the string value of the attribute with the specified namespace and name. If the named attribute does not exist, the value returned will either be null or "" (the empty string); 
+        ///  returns the string value of the attribute with the specified namespace and name. If the named attribute does not exist, the value returned will either be null or "" (the empty string);
         /// </summary>
         /// <param name="namespace">The namespace in which to look for the specified attribute.</param>
         /// <param name="attributeName"></param>
@@ -256,7 +256,7 @@ namespace Bridge.Html5
         }
 
         /// <summary>
-        /// Returns the first element that is a descendant of the element on which it is invoked that matches the specified group of selectors. 
+        /// Returns the first element that is a descendant of the element on which it is invoked that matches the specified group of selectors.
         /// </summary>
         /// <param name="selectors">selectors is a group of selectors to match on.</param>
         /// <returns></returns>

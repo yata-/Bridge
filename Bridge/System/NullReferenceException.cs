@@ -1,20 +1,20 @@
 using Bridge;
 
-namespace System 
+namespace System
 {
 	[Ignore]
 	[Namespace("Bridge")]
     public class NullReferenceException : Exception, IBridgeClass
     {
-		public NullReferenceException() 
+		public NullReferenceException()
         {
 		}
 
-		public NullReferenceException(string message) 
+		public NullReferenceException(string message)
         {
 		}
 
-		public NullReferenceException(string message, Exception innerException) 
+		public NullReferenceException(string message, Exception innerException)
         {
 		}
 	}

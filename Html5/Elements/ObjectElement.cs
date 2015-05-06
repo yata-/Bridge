@@ -20,42 +20,42 @@ namespace Bridge.Html5
         /// The active document of the object element's nested browsing context, if any; otherwise null.
         /// </summary>
         public readonly DocumentInstance ContentDocument;
-        
+
         /// <summary>
         /// The window proxy of the object element's nested browsing context, if any; otherwise null.
         /// </summary>
         public readonly WindowInstance ContentWindow;
-        
+
         /// <summary>
         /// Reflects the data HTML attribute, specifying the address of a resource's data.
         /// </summary>
         public string Data;
-        
+
         /// <summary>
         /// The object element's form owner, or null if there isn't one.
         /// </summary>
         public readonly FormElement Form;
-        
+
         /// <summary>
         /// Reflects the height HTML attribute, specifying the displayed height of the resource in CSS pixels.
         /// </summary>
         public int Height;
-        
+
         /// <summary>
         /// Reflects the name HTML attribute, specifying the name of of a browsing context.
         /// </summary>
         public string Name;
-        
+
         /// <summary>
         /// The position of the element in the tabbing navigation order for the current document.
         /// </summary>
         public new int TabIndex;
-        
+
         /// <summary>
         /// Reflects the type HTML attribute, specifying the MIME type of the resource.
         /// </summary>
         public string Type;
-        
+
         /// <summary>
         /// Reflects the typemustmatch HTML attribute, indicating if the resource specified by data must only be played if it matches the type attribute.
         /// </summary>

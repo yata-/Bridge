@@ -11,15 +11,15 @@ namespace Bridge.Html5
     public enum FontVariant
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
         /// <summary>
         /// Specifies a normal font face.
         /// </summary>
-        Normal, 
-        
+        Normal,
+
         /// <summary>
         /// Specifies a font that is labeled as a small-caps font. If a small-caps font is not available, Mozilla (Firefox) and other browsers will simulate a small-caps font, i.e. by taking a normal font and replacing the lowercase letters by scaled uppercase characters.
         /// </summary>

@@ -19,7 +19,7 @@ namespace Bridge.Html5
         /// The labeled control.
         /// </summary>
         public readonly Element Control;
-        
+
         /// <summary>
         /// The form owner of this label.
         /// </summary>

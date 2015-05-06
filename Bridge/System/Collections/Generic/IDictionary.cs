@@ -1,32 +1,32 @@
 ﻿using Bridge;
 
-namespace System.Collections.Generic 
+namespace System.Collections.Generic
 {
     [Ignore]
     [Namespace("Bridge")]
     public interface IDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>, IBridgeClass
     {
-		TValue this[TKey key] 
+		TValue this[TKey key]
         {
             [Template("get({0})")]
             get;
             [Template("set({0})")]
-            set; 
+            set;
         }
 
-		ICollection<TKey> Keys 
-        { 
-            get; 
+		ICollection<TKey> Keys
+        {
+            get;
         }
 
-		ICollection<TValue> Values 
-        { 
-            get; 
+		ICollection<TValue> Values
+        {
+            get;
         }
 
-		int Count 
-        { 
-            get; 
+		int Count
+        {
+            get;
         }
 
 		bool ContainsKey(TKey key);

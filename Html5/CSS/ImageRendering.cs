@@ -11,17 +11,17 @@ namespace Bridge.Html5
     public enum ImageRendering
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
         /// <summary>
         /// Default value, the image should be scaled with an algorithm that maximizes the appearance of the image. In particular, scaling algorithms that "smooth" colors are acceptable, such as bilinear interpolation. This is intended for images such as photos. Since version 1.9 (Firefox 3.0), Gecko uses bilinear resampling (high quality).
         /// </summary>
-        Auto, 
-        
+        Auto,
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [Name("crisp-edges")]
         CrispEdges,

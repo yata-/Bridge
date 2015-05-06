@@ -1,10 +1,10 @@
 using Bridge;
-namespace System.Globalization 
+namespace System.Globalization
 {
 	[Namespace("Bridge")]
     public sealed class CultureInfo : IFormatProvider, ICloneable, IBridgeClass
     {
-		public CultureInfo(string name) 
+		public CultureInfo(string name)
         {
 		}
 
@@ -32,18 +32,18 @@ namespace System.Globalization
         }
 
 		[FieldProperty]
-		public static CultureInfo InvariantCulture 
+		public static CultureInfo InvariantCulture
         {
-			get 
+			get
             {
 				return null;
 			}
 		}
 
 		[FieldProperty]
-		public string Name 
+		public string Name
         {
-			get 
+			get
             {
 				return null;
 			}
@@ -70,7 +70,7 @@ namespace System.Globalization
             set;
         }
 
-		public object GetFormat(Type formatType) 
+		public object GetFormat(Type formatType)
         {
 			return null;
 		}

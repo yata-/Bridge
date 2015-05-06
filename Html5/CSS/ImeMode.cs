@@ -11,15 +11,15 @@ namespace Bridge.Html5
     public enum ImeMode
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
         /// <summary>
         /// No change is made to the current input method editor state. This is the default.
         /// </summary>
-        Auto, 
-        
+        Auto,
+
         /// <summary>
         /// The IME state should be normal; this value can be used in a user style sheet to override the page setting. This value is not supported by Internet Explorer.
         /// </summary>

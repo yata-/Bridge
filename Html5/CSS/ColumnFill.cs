@@ -18,10 +18,10 @@ namespace Bridge.Html5
         /// <summary>
         /// Is a keyword indicating that content is equally divided between columns.
         /// </summary>
-        Balance, 
-        
+        Balance,
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit
     }

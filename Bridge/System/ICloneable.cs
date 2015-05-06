@@ -1,5 +1,5 @@
 using Bridge;
-namespace System 
+namespace System
 {
 	[Namespace("Bridge")]
 	[Ignore]

@@ -11,17 +11,17 @@ namespace Bridge.Html5
     public enum FontVariantPosition
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
         /// <summary>
         /// None of the features are enabled.
         /// </summary>
-        Normal, 
-        
+        Normal,
+
         /// <summary>
-        /// Enables display of subscript variants (OpenType feature: subs). 
+        /// Enables display of subscript variants (OpenType feature: subs).
         /// </summary>
         Sub,
 

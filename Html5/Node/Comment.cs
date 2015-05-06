@@ -15,7 +15,7 @@ namespace Bridge.Html5
         {
         }
 
-        public Comment(string data) 
+        public Comment(string data)
         {
 		}
     }

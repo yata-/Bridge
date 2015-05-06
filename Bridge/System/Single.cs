@@ -1,12 +1,12 @@
 using Bridge;
 
-namespace System 
+namespace System
 {
 	[Ignore]
 	[Name("Number")]
-    public struct Single : IComparable, IComparable<Single>, IEquatable<Single>, IFormattable 
+    public struct Single : IComparable, IComparable<Single>, IEquatable<Single>, IFormattable
     {
-        private Single(int i) 
+        private Single(int i)
         {
 		}
 
@@ -83,7 +83,7 @@ namespace System
             return false;
         }
 
-		public string ToExponential() 
+		public string ToExponential()
         {
 			return null;
 		}
@@ -92,22 +92,22 @@ namespace System
 			return null;
 		}
 
-		public string ToFixed() 
+		public string ToFixed()
         {
 			return null;
 		}
 
-		public string ToFixed(int fractionDigits) 
+		public string ToFixed(int fractionDigits)
         {
 			return null;
 		}
 
-		public string ToPrecision() 
+		public string ToPrecision()
         {
 			return null;
 		}
 
-		public string ToPrecision(int precision) 
+		public string ToPrecision(int precision)
         {
 			return null;
 		}

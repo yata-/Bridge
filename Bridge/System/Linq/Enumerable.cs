@@ -2893,7 +2893,7 @@ namespace System.Linq
         /// </summary>
         /// <param name="source">
         /// A sequence of values to determine the maximum value of.
-        /// </param>        
+        /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of source.
         /// </typeparam>
@@ -2945,7 +2945,7 @@ namespace System.Linq
         /// </summary>
         /// <param name="source">
         /// A sequence of values to determine the minimum value of.
-        /// </param>        
+        /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of source.
         /// </typeparam>

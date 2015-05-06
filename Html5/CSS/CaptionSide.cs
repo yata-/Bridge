@@ -11,7 +11,7 @@ namespace Bridge.Html5
     public enum CaptionSide
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         None,
 
@@ -24,9 +24,9 @@ namespace Bridge.Html5
         /// The caption box will be below the table.
         /// </summary>
         Bottom,
-        
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit
     }

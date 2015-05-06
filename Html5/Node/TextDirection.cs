@@ -18,8 +18,8 @@ namespace Bridge.Html5
         /// <summary>
         /// left-to-right
         /// </summary>
-        Ltr, 
-        
+        Ltr,
+
         /// <summary>
         /// right-to-left
         /// </summary>

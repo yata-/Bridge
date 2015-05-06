@@ -44,7 +44,7 @@ namespace Bridge.Html5
         /// The delta values are specified in pixels.
         /// </summary>
         Pixel = 0,
-        
+
         /// <summary>
         /// The delta values are specified in lines.
         /// </summary>

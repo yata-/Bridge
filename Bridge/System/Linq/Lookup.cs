@@ -2,7 +2,7 @@
 using Bridge;
 using System.Collections;
 
-namespace System.Linq 
+namespace System.Linq
 {
     [Ignore]
     [IgnoreGeneric]
@@ -25,39 +25,39 @@ namespace System.Linq
 
     [Ignore]
     [IgnoreGeneric]
-	public class Lookup<TKey, TElement> : ILookup<TKey, TElement> 
+	public class Lookup<TKey, TElement> : ILookup<TKey, TElement>
     {
-		internal Lookup() 
+		internal Lookup()
         {
         }
 
-		public int Count 
-        { 
-            get 
-            { 
-                return 0; 
-            } 
+		public int Count
+        {
+            get
+            {
+                return 0;
+            }
         }
 
-		public EnumerableInstance<TElement> this[TKey key] 
-        { 
-            get 
-            { 
-                return null; 
-            } 
+		public EnumerableInstance<TElement> this[TKey key]
+        {
+            get
+            {
+                return null;
+            }
         }
 
-		public bool Contains(TKey key) 
-        { 
-            return false; 
+		public bool Contains(TKey key)
+        {
+            return false;
         }
 
-		public IEnumerator<Grouping<TKey, TElement>> GetEnumerator() 
+		public IEnumerator<Grouping<TKey, TElement>> GetEnumerator()
         {
 			return null;
 		}
 
-		IEnumerator IEnumerable.GetEnumerator() 
+		IEnumerator IEnumerable.GetEnumerator()
         {
 			return null;
 		}

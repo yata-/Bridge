@@ -11,12 +11,12 @@ namespace Bridge.Html5
     public enum SelectionAlter
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Move,
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Extend
     }

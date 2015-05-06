@@ -21,19 +21,19 @@ namespace Bridge.Html5
         /// </summary>
         [Name("autofocus")]
         public bool AutoFocus;
-                
+
         /// <summary>
         /// Reflects the disabled HTML attribute, which indicates whether the control is disabled. If it is disabled, it does not accept clicks.
         /// </summary>
         public bool Disabled;
 
         /// <summary>
-        /// The form that this element is associated with. If this element is a descendant of a form element, then this attribute is the ID of that form element. If the element is not a descendant of a form element, then: 
+        /// The form that this element is associated with. If this element is a descendant of a form element, then this attribute is the ID of that form element. If the element is not a descendant of a form element, then:
         /// HTML5 The attribute can be the ID of any form element in the same document.
         /// HTML 4 The attribute is null.
         /// </summary>
         public readonly FormElement Form;
-        
+
         /// <summary>
         /// A list of label elements associated with this select element.
         /// </summary>
@@ -60,7 +60,7 @@ namespace Bridge.Html5
         public readonly OptionsCollection Options;
 
         /// <summary>
-        /// Reflects the required HTML attribute, which indicates whether the user is required to select a value before submitting the form. 
+        /// Reflects the required HTML attribute, which indicates whether the user is required to select a value before submitting the form.
         /// </summary>
         public bool Required;
 
@@ -70,7 +70,7 @@ namespace Bridge.Html5
         public int SelectedIndex;
 
         /// <summary>
-        /// The set of options that are selected. 
+        /// The set of options that are selected.
         /// </summary>
         public OptionsCollection SelectedOptions;
 
@@ -88,7 +88,7 @@ namespace Bridge.Html5
         /// The form control's type. When multiple is true, it returns select-multiple; otherwise, it returns select-one. Read only.
         /// </summary>
         public string Type;
-        
+
         /// <summary>
         /// A localized message that describes the validation constraints that the control does not satisfy (if any). This attribute is the empty string if the control is not a candidate for constraint validation (willValidate is false), or it satisfies its constraints. Read only.
         /// </summary>
@@ -161,7 +161,7 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="name">The name of the option to get.</param>
         /// <returns>
-        ///     - An OptionElement, if there is exactly one match. 
+        ///     - An OptionElement, if there is exactly one match.
         ///     - null if there are no matches.
         ///     - An OptionsCollection in tree order of nodes whose name or id attributes match the specified name.</returns>
         public virtual Any<OptionElement, OptionsCollection> NamedItem(string name)

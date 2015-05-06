@@ -1,6 +1,6 @@
 using Bridge;
 
-namespace Bridge.Html5 
+namespace Bridge.Html5
 {
 	/// <summary>
 	/// The ArrayBufferView type describes a particular view on the contents of an ArrayBuffer's data.
@@ -8,9 +8,9 @@ namespace Bridge.Html5
 	/// </summary>
 	[Ignore]
     [Name("ArrayBufferView")]
-	public class ArrayBufferView 
+	public class ArrayBufferView
     {
-		protected ArrayBufferView() 
+		protected ArrayBufferView()
         {
 		}
 

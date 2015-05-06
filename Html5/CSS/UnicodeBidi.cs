@@ -11,15 +11,15 @@ namespace Bridge.Html5
     public enum UnicodeBidi
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
         /// <summary>
         /// The element does not offer a additional level of embedding with respect to the bidirectional algorithm. For inline elements implicit reordering works across element boundaries.
         /// </summary>
-        Normal, 
-        
+        Normal,
+
         /// <summary>
         /// If the element is inline, this value opens an additional level of embedding with respect to the bidirectional algorithm. The direction of this embedding level is given by the direction property.
         /// </summary>

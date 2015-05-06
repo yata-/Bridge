@@ -9,7 +9,7 @@ namespace Bridge.Html5
     /// The HTMLFormElement interface provides methods to create and modify &lt;form&gt; elements; it inherits from properties and methods of the HTMLElement interface.
     /// </summary>
     [Ignore]
-    [Name("HTMLFormElement")]    
+    [Name("HTMLFormElement")]
     public class FormElement : Element, IEnumerable<Element>
     {
         [Template("document.createElement('form')")]
@@ -37,7 +37,7 @@ namespace Bridge.Html5
         /// All the form controls belonging to this form element.
         /// </summary>
         public readonly FormControlsCollection Elements;
-        
+
         /// <summary>
         /// The HTMLFormElement.enctype property represents the content type of the form element.
         /// </summary>

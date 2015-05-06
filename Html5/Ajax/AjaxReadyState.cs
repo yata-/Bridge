@@ -1,5 +1,5 @@
 ﻿using Bridge;
-namespace Bridge.Html5 
+namespace Bridge.Html5
 {
 	/// <summary>
     /// The state of the XMLHttpRequest
@@ -7,7 +7,7 @@ namespace Bridge.Html5
     [Ignore]
     [Enum(Emit.Value)]
     [Name("Number")]
-    public enum AjaxReadyState 
+    public enum AjaxReadyState
     {
 		/// <summary>
         /// open() has not been called yet.
@@ -23,7 +23,7 @@ namespace Bridge.Html5
         /// send() has been called, and headers and status are available.
         /// </summary>
         HeadersReceived = 2,
-        
+
         /// <summary>
         /// Downloading; responseText holds partial data.
         /// </summary>

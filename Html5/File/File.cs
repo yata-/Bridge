@@ -1,7 +1,7 @@
 ﻿using System;
 using Bridge;
 
-namespace Bridge.Html5 
+namespace Bridge.Html5
 {
 	/// <summary>
 	/// The File interface provides information about -- and access to the contents of -- files.
@@ -10,9 +10,9 @@ namespace Bridge.Html5
 	/// </summary>
     [Ignore]
     [Name("File")]
-    public class File : Blob 
+    public class File : Blob
     {
-		internal File() 
+		internal File()
         {
 		}
 

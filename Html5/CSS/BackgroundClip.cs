@@ -11,7 +11,7 @@ namespace Bridge.Html5
     public enum BackgroundClip
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         None,
 
@@ -32,9 +32,9 @@ namespace Bridge.Html5
         /// </summary>
         [Name("content-box")]
         ContentBox,
-        
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit
     }

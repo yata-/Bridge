@@ -23,7 +23,7 @@ namespace System
         public Usage Usage;
 
         /// <summary>
-        /// Which differences in the strings should lead to non-zero result values. 
+        /// Which differences in the strings should lead to non-zero result values.
         /// </summary>
         public Sensitivity Sensitivity;
 
@@ -48,7 +48,7 @@ namespace System
     /// </summary>
     [Ignore]
     [Enum(Emit.StringNameLowerCase)]
-    public enum CaseFirst 
+    public enum CaseFirst
     {
         Upper,
         Lower,
@@ -99,11 +99,11 @@ namespace System
     public enum LocaleMatcher
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Lookup,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [Name("best fit")]
         BestFit

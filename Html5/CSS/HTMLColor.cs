@@ -284,7 +284,7 @@ namespace Bridge.Html5
         /// rgb(105, 105, 105)
         /// </summary>
         DimGray,
-        
+
         /// <summary>
         /// rgb( 30, 144, 255)
         /// </summary>
@@ -652,7 +652,7 @@ namespace Bridge.Html5
 
         /// <summary>
         /// rgb(106,  90, 205)
-        /// </summary>        
+        /// </summary>
         SlateBlue,
 
         /// <summary>
@@ -718,6 +718,6 @@ namespace Bridge.Html5
         /// <summary>
         /// rgb(154, 205,  50)
         /// </summary>
-        YellowGreen       
+        YellowGreen
     }
 }

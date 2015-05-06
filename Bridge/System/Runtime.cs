@@ -339,20 +339,20 @@ namespace System.Runtime.CompilerServices
         {
         }
 
-        public static int OffsetToStringData 
-        { 
-            get 
-            { 
-                return 0; 
-            } 
+        public static int OffsetToStringData
+        {
+            get
+            {
+                return 0;
+            }
         }
 
-        public static int GetHashCode(object obj) 
-        { 
-            return 0; 
+        public static int GetHashCode(object obj)
+        {
+            return 0;
         }
     }
-    
+
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Class | AttributeTargets.Method)]
     [Ignore]
     public sealed class ExtensionAttribute : Attribute
@@ -365,32 +365,32 @@ namespace System.Runtime.CompilerServices
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter | AttributeTargets.ReturnValue)]
     [Ignore]
     public sealed class DynamicAttribute : Attribute
-    {        
-        public DynamicAttribute() 
-        { 
+    {
+        public DynamicAttribute()
+        {
         }
 
-        public DynamicAttribute(bool[] transformFlags) 
-        { 
+        public DynamicAttribute(bool[] transformFlags)
+        {
         }
-        public List<bool> TransformFlags 
-        { 
-            get 
-            { 
-                return null; 
-            } 
+        public List<bool> TransformFlags
+        {
+            get
+            {
+                return null;
+            }
         }
     }
 
     [Ignore]
     public class CallSite
     {
-        public CallSiteBinder Binder 
-        { 
-            get 
-            { 
-                return null; 
-            } 
+        public CallSiteBinder Binder
+        {
+            get
+            {
+                return null;
+            }
         }
 
         public static CallSite Create(Type delegateType, CallSiteBinder binder)
@@ -402,12 +402,12 @@ namespace System.Runtime.CompilerServices
     [Ignore]
     public sealed class CallSite<T> : CallSite where T : class
     {
-        public T Update 
-        { 
-            get 
-            { 
-                return null; 
-            } 
+        public T Update
+        {
+            get
+            {
+                return null;
+            }
         }
 
         public T Target;
@@ -421,12 +421,12 @@ namespace System.Runtime.CompilerServices
     [Ignore]
     public abstract class CallSiteBinder
     {
-        public static LabelTarget UpdateLabel 
-        { 
-            get 
-            { 
-                return null; 
-            } 
+        public static LabelTarget UpdateLabel
+        {
+            get
+            {
+                return null;
+            }
         }
 
         public T BindDelegate<T>(CallSite<T> site, object[] args) where T : class
@@ -475,12 +475,12 @@ namespace System.Runtime.CompilerServices
     [Ignore]
     public struct AsyncTaskMethodBuilder
     {
-        public Task Task 
-        { 
-            get 
-            { 
-                return null; 
-            } 
+        public Task Task
+        {
+            get
+            {
+                return null;
+            }
         }
 
         public static AsyncTaskMethodBuilder Create()
@@ -520,12 +520,12 @@ namespace System.Runtime.CompilerServices
     [Ignore]
     public struct AsyncTaskMethodBuilder<TResult>
     {
-        public Task<TResult> Task 
-        { 
-            get 
-            { 
-                return null; 
-            } 
+        public Task<TResult> Task
+        {
+            get
+            {
+                return null;
+            }
         }
 
         public static AsyncTaskMethodBuilder<TResult> Create()
@@ -685,27 +685,27 @@ namespace System.Linq.Expressions
     [Ignore]
     public sealed class LabelTarget
     {
-        internal LabelTarget() 
-        { 
+        internal LabelTarget()
+        {
         }
 
-        public string Name 
-        { 
-            get 
-            { 
-                return null; 
-            } 
-        
+        public string Name
+        {
+            get
+            {
+                return null;
+            }
+
         }
-        
-        public Type Type 
-        { 
-            get 
-            { 
-                return null; 
-            } 
-        }        
-    } 
+
+        public Type Type
+        {
+            get
+            {
+                return null;
+            }
+        }
+    }
 
     [Ignore]
     public enum ExpressionType

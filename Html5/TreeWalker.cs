@@ -1,6 +1,6 @@
 ﻿using Bridge;
 
-namespace Bridge.Html5 
+namespace Bridge.Html5
 {
     /// <summary>
     /// The TreeWalker object represents the nodes of a document subtree and a position within them.
@@ -8,9 +8,9 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("TreeWalker")]
-	public class TreeWalker 
+	public class TreeWalker
     {
-		internal TreeWalker() 
+		internal TreeWalker()
         {
 		}
 
@@ -20,7 +20,7 @@ namespace Bridge.Html5
         public readonly Node Root;
 
         /// <summary>
-        /// Returns an unsigned long being a bitmask made of constants describing the types of Node that must to be presented. Non-matching nodes are skipped, but their children may be included, if relevant. 
+        /// Returns an unsigned long being a bitmask made of constants describing the types of Node that must to be presented. Non-matching nodes are skipped, but their children may be included, if relevant.
         /// </summary>
         public readonly NodeFilter WhatToShow;
 
@@ -47,7 +47,7 @@ namespace Bridge.Html5
         /// Moves the current Node to the first visible child of the current node, and returns the found child. It also moves the current node to this child. If no such child exists, returns null and the current node is not changed.
 		/// </summary>
 		/// <returns></returns>
-		public virtual Node FirstChild() 
+		public virtual Node FirstChild()
         {
 			return null;
 		}
@@ -56,7 +56,7 @@ namespace Bridge.Html5
         /// Moves the current Node to the last visible child of the current node, and returns the found child. It also moves the current node to this child. If no such child exists, returns null and the current node is not changed.
         /// </summary>
         /// <returns></returns>
-		public virtual Node LastChild() 
+		public virtual Node LastChild()
         {
 			return null;
 		}
@@ -92,7 +92,7 @@ namespace Bridge.Html5
         /// Moves the current Node to the next visible node in the document order, and returns the found node. It also moves the current node to this one. If no such node exists, returns null and the current node is not changed.
         /// </summary>
         /// <returns></returns>
-		public virtual Node NextNode() 
+		public virtual Node NextNode()
         {
 			return null;
 		}

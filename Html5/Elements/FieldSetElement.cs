@@ -8,7 +8,7 @@ namespace Bridge.Html5
     /// The HTMLFieldSetElement interface special properties and methods (beyond the regular HTMLelement interface it also has available to it by inheritance) for manipulating the layout and presentation of field-set elements.
     /// </summary>
     [Ignore]
-    [Name("HTMLFieldSetElement")]    
+    [Name("HTMLFieldSetElement")]
     public class FieldSetElement : Element
     {
         [Template("document.createElement('fieldset')")]
@@ -31,7 +31,7 @@ namespace Bridge.Html5
         /// If the button is not a descendant of a form element, then the attribute can be the ID of any form element in the same document it is related to, or the null value if none matches.
         /// </summary>
         public readonly FormElement Form;
-        
+
         /// <summary>
         /// Reflects the name HTML attribute, containing the name of the field set, used for submitting the form.
         /// </summary>

@@ -1,39 +1,39 @@
 ﻿using Bridge;
 
-namespace System 
+namespace System
 {
     [Ignore]
-    public class Type 
+    public class Type
     {
         public static Type GetTypeFromHandle(RuntimeTypeHandle typeHandle)
         {
             return null;
-        } 
+        }
     }
 
     [Ignore]
-    public class ValueType 
-    { 
+    public class ValueType
+    {
     }
 
     [Ignore]
-    public class Enum 
-    { 
+    public class Enum
+    {
     }
 
     [Ignore]
-    public struct IntPtr 
-    { 
+    public struct IntPtr
+    {
     }
 
     [Ignore]
-    public struct UIntPtr 
-    { 
+    public struct UIntPtr
+    {
     }
 
     [Ignore]
-    public class ParamArrayAttribute 
-    { 
+    public class ParamArrayAttribute
+    {
     }
 
     [Ignore]

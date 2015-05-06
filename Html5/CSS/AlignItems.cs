@@ -11,7 +11,7 @@ namespace Bridge.Html5
     public enum AlignItems
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         None,
 
@@ -31,7 +31,7 @@ namespace Bridge.Html5
         /// The flex item's margin box is centered within the line on the cross-axis. If the cross-size of the item is larger than the flex container, it will overflow equally in both directions.
         /// </summary>
         Center,
-        
+
         /// <summary>
         /// All flex items are aligned such that their baselines align. The item with the largest distance between its cross-start margin edge and its baseline is flushed with the cross-start edge of the line.
         /// </summary>
@@ -43,7 +43,7 @@ namespace Bridge.Html5
         Stretch,
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit
     }

@@ -15,7 +15,7 @@ namespace Bridge.Html5
         Import = 3,
         Media = 4,
         FontFace = 5,
-        Page = 6,        
+        Page = 6,
         Keyframes = 7,
         Keyframe = 8,
         Namespace = 10,

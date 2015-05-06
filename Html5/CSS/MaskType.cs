@@ -11,15 +11,15 @@ namespace Bridge.Html5
     public enum MaskType
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
         /// <summary>
         /// Is a keyword indicating that the associated &lt;mask&gt; is a luminance mask, that is that its relative luminance values must be used when applying it.
         /// </summary>
-        Luminance, 
-        
+        Luminance,
+
         /// <summary>
         /// Is a keyword indicating that the associated &lt;mask&gt; is an alpha mask, that is that its alpha channel values must be used when applying it.
         /// </summary>

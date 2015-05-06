@@ -11,15 +11,15 @@ namespace Bridge.Html5
     public enum WhiteSpace
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
         /// <summary>
         /// Sequences of whitespace are collapsed. Newline characters in the source are handled as other whitespace. Breaks lines as necessary to fill line boxes.
         /// </summary>
-        Normal, 
-        
+        Normal,
+
         /// <summary>
         /// Collapses whitespace as for normal, but suppresses line breaks (text wrapping) within text.
         /// </summary>

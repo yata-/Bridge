@@ -1,20 +1,20 @@
 using Bridge;
 
-namespace System 
+namespace System
 {
 	[Ignore]
 	[Namespace("Bridge")]
     public class FormatException : Exception, IBridgeClass
     {
-		public FormatException() 
+		public FormatException()
         {
 		}
 
-		public FormatException(string message) 
+		public FormatException(string message)
         {
 		}
 
-		public FormatException(string message, Exception innerException) 
+		public FormatException(string message, Exception innerException)
         {
 		}
 	}

@@ -9,5 +9,5 @@ namespace Bridge
         public PriorityAttribute(int priority)
         {
         }
-    }    
+    }
 }

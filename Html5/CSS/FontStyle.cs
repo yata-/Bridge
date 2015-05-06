@@ -11,15 +11,15 @@ namespace Bridge.Html5
     public enum FontStyle
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
         /// <summary>
         /// Selects a font that is classified as normal within a font-family
         /// </summary>
-        Normal, 
-        
+        Normal,
+
         /// <summary>
         /// Selects a font that is labeled italic, if that is not available, one labeled oblique
         /// </summary>

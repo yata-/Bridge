@@ -21,9 +21,9 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-		public virtual ClientRect this[int index] 
+		public virtual ClientRect this[int index]
         {
-			get 
+			get
             {
 				return null;
 			}
@@ -35,7 +35,7 @@ namespace Bridge.Html5
         /// <param name="index"></param>
         /// <returns></returns>
 		[Name("item")]
-        public virtual ClientRect GetItem(int index) 
+        public virtual ClientRect GetItem(int index)
         {
 			return null;
 		}

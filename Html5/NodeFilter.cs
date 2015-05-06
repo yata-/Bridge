@@ -2,7 +2,7 @@
 
 using Bridge;
 
-namespace Bridge.Html5 
+namespace Bridge.Html5
 {
 	/// <summary>
     /// types of Node that must to be presented
@@ -11,7 +11,7 @@ namespace Bridge.Html5
     [Ignore]
     [Enum(Emit.Value)]
     [Name("Number")]
-	public enum NodeFilter 
+	public enum NodeFilter
     {
 		/// <summary>
         /// Shows all nodes.

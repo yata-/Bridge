@@ -3,7 +3,7 @@
 namespace Bridge.Html5
 {
     /// <summary>
-    /// The CSS justify-content property defines how a browser distributes available space between and around elements when aligning flex items in the main-axis of the current line. 
+    /// The CSS justify-content property defines how a browser distributes available space between and around elements when aligning flex items in the main-axis of the current line.
     /// </summary>
     [Ignore]
     [Enum(Emit.StringNameLowerCase)]
@@ -11,7 +11,7 @@ namespace Bridge.Html5
     public enum JustifyContent
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
@@ -19,8 +19,8 @@ namespace Bridge.Html5
         /// The flex items are packed starting from the main-start. Margins of the first flex item is flushed with the main-start edge of the line and each following flex item is flushed with the preceding.
         /// </summary>
         [Name("flex-start")]
-        FlexStart, 
-        
+        FlexStart,
+
         /// <summary>
         /// The flex items are packed starting from the main-end. The margin edge of the last flex item is flushed with the main-end edge of the line and each preceding flex item is flushed with the following.
         /// </summary>

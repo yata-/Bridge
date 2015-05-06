@@ -3,7 +3,7 @@
 namespace Bridge.Html5
 {
     /// <summary>
-    /// The background-repeat CSS property defines how background images are repeated. 
+    /// The background-repeat CSS property defines how background images are repeated.
     /// </summary>
     [Ignore]
     [Enum(Emit.StringNameLowerCase)]

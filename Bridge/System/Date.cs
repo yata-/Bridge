@@ -194,7 +194,7 @@ namespace System
             return 0;
         }
 
-        
+
 
         public virtual string ToDateString()
         {
@@ -441,6 +441,6 @@ namespace System
 
         public virtual void SetUTCFullYear(int year, int month, int date)
         {
-        }        
+        }
     }
 }

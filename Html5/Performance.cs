@@ -164,7 +164,7 @@ namespace Bridge.Html5
         }
 
         /// <summary>
-        /// Is an unsigned short containing a constant describing how the navigation to this page was done. 
+        /// Is an unsigned short containing a constant describing how the navigation to this page was done.
         /// </summary>
         public readonly PerformanceNavigationType Type;
 
@@ -175,7 +175,7 @@ namespace Bridge.Html5
     }
 
     /// <summary>
-    /// A constant describing how the navigation to this page was done. 
+    /// A constant describing how the navigation to this page was done.
     /// </summary>
     [Ignore]
     public enum PerformanceNavigationType
@@ -189,12 +189,12 @@ namespace Bridge.Html5
         /// The page was accessed by clicking the Reload button or via the Location.reload() method.
         /// </summary>
         Reload = 1,
-        
+
         /// <summary>
         /// The page was accessed by navigating into the history.
         /// </summary>
         BackForward = 2,
-        
+
         /// <summary>
         /// Any other way.
         /// </summary>

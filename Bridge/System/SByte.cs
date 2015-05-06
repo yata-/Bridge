@@ -1,12 +1,12 @@
 using Bridge;
 
-namespace System 
+namespace System
 {
     [Ignore]
 	[Name("Bridge.Int")]
-    public struct SByte : IComparable, IComparable<SByte>, IEquatable<SByte>, IFormattable 
+    public struct SByte : IComparable, IComparable<SByte>, IEquatable<SByte>, IFormattable
     {
-        private SByte(int i) 
+        private SByte(int i)
         {
 		}
 
@@ -72,7 +72,7 @@ namespace System
         }
 
 		[Template("Bridge.compare({this}, {other})")]
-		public int CompareTo(sbyte other) 
+		public int CompareTo(sbyte other)
         {
 			return 0;
 		}
@@ -84,7 +84,7 @@ namespace System
         }
 
         [Template("Bridge.equalsT({this}, {other})")]
-		public bool Equals(sbyte other) 
+		public bool Equals(sbyte other)
         {
 			return false;
 		}

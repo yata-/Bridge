@@ -11,20 +11,20 @@ namespace Bridge.Html5
     public enum TextTransform
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
         /// <summary>
-        /// Is a keyword forcing the first letter of each word to be converted to uppercase. 
+        /// Is a keyword forcing the first letter of each word to be converted to uppercase.
         /// </summary>
-        Capitalize, 
-        
+        Capitalize,
+
         /// <summary>
         /// Is a keyword forcing all characters to be converted to uppercase.
         /// </summary>
         UpperCase,
-        
+
         /// <summary>
         /// Is a keyword forcing all characters to be converted to lowercase.
         /// </summary>

@@ -2,26 +2,26 @@
 {
 	[Ignore,IgnoreGeneric,IgnoreCast]
     [Name("Object")]
-	public class Any<T1, T2> 
+	public class Any<T1, T2>
     {
-        public static implicit operator Any<T1, T2>(T1 t) 
-        { 
-            return null; 
-        }
-        
-        public static implicit operator Any<T1, T2>(T2 t) 
-        { 
-            return null; 
+        public static implicit operator Any<T1, T2>(T1 t)
+        {
+            return null;
         }
 
-        public static explicit operator T1(Any<T1, T2> value) 
-        { 
-            return default(T1); 
+        public static implicit operator Any<T1, T2>(T2 t)
+        {
+            return null;
         }
 
-        public static explicit operator T2(Any<T1, T2> value) 
-        { 
-            return default(T2); 
+        public static explicit operator T1(Any<T1, T2> value)
+        {
+            return default(T1);
+        }
+
+        public static explicit operator T2(Any<T1, T2> value)
+        {
+            return default(T2);
         }
 	}
 

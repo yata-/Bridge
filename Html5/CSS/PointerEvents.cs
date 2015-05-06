@@ -11,7 +11,7 @@ namespace Bridge.Html5
     public enum PointerEvents
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
@@ -54,7 +54,7 @@ namespace Bridge.Html5
         /// SVG only. The element can only be the target of a mouse event when the pointer is over the interior (i.e., fill) of the element. The values of the fill and visibility properties do not effect event processing.
         /// </summary>
         Fill,
-        
+
         /// <summary>
         /// SVG only. The element can only be the target of a mouse event when the pointer is over the perimeter (i.e., stroke) of the element. The values of the stroke and visibility properties do not effect event processing.
         /// </summary>

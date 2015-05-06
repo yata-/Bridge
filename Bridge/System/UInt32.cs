@@ -1,12 +1,12 @@
 using Bridge;
 
-namespace System 
+namespace System
 {
     [Ignore]
     [Name("Bridge.Int")]
-    public struct UInt32 : IComparable, IComparable<UInt32>, IEquatable<UInt32>, IFormattable 
+    public struct UInt32 : IComparable, IComparable<UInt32>, IEquatable<UInt32>, IFormattable
     {
-		private UInt32(int i) 
+		private UInt32(int i)
         {
 		}
 

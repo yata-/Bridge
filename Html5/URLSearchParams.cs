@@ -7,9 +7,9 @@ namespace Bridge.Html5
     /// </summary>
 	[Ignore]
     [Name("URLSearchParams")]
-	public partial class URLSearchParams 
+	public partial class URLSearchParams
     {
-		public URLSearchParams() 
+		public URLSearchParams()
         {
 		}
 
@@ -17,7 +17,7 @@ namespace Bridge.Html5
         /// Constructor returning a URLSearchParams object.
         /// </summary>
         /// <param name="init"></param>
-		public URLSearchParams(string init) 
+		public URLSearchParams(string init)
         {
 		}
 
@@ -25,34 +25,34 @@ namespace Bridge.Html5
         /// Copy constructor returning a URLSearchParams object.
         /// </summary>
         /// <param name="init"></param>
-		public URLSearchParams(URLSearchParams init) 
+		public URLSearchParams(URLSearchParams init)
         {
 		}
 
-		public virtual void Append(string name, string value) 
+		public virtual void Append(string name, string value)
         {
 		}
 
-		public virtual void Delete(string name) 
+		public virtual void Delete(string name)
         {
 		}
 
-		public virtual string Get(string name) 
-        {
-			return null;
-		}
-
-		public virtual string[] GetAll(string name) 
+		public virtual string Get(string name)
         {
 			return null;
 		}
 
-		public virtual bool Has(string name) 
+		public virtual string[] GetAll(string name)
+        {
+			return null;
+		}
+
+		public virtual bool Has(string name)
         {
 			return false;
 		}
 
-		public virtual void Set(string name, string value) 
+		public virtual void Set(string name, string value)
         {
 		}
 	}

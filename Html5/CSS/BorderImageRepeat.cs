@@ -18,8 +18,8 @@ namespace Bridge.Html5
         /// <summary>
         /// Keyword indicating that the image must be repeated until it fills the gap between the two borders.
         /// </summary>
-        Repeat, 
-        
+        Repeat,
+
         /// <summary>
         /// Keyword indicating that the image must be repeated until it fills the gap between the two borders. If the image doesn't fit after being repeated an integral number of times, the image is rescaled to fit.
         /// </summary>

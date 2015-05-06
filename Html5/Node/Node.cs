@@ -105,7 +105,7 @@ namespace Bridge.Html5
         /// <param name="deep">true if the children of the node should also be cloned, or false to clone only the specified node.</param>
         /// <returns>The new node that will be a clone of this node</returns>
         public virtual Node CloneNode(bool deep)
-        {            
+        {
             return null;
         }
 
@@ -195,6 +195,6 @@ namespace Bridge.Html5
         public virtual Node ReplaceChild(Node newChild, Node oldChild)
         {
             return null;
-        }        
+        }
     }
 }

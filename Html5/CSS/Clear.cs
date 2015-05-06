@@ -29,9 +29,9 @@ namespace Bridge.Html5
         /// The element is moved down to clear past both left and right floats.
         /// </summary>
         Both,
-        
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit
     }
