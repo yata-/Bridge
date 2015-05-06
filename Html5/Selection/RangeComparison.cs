@@ -24,10 +24,10 @@ namespace Bridge.Html5
         /// compares the end boundary-point of sourceRange to the end boundary-point of Range.
         /// </summary>
         EndToEnd = 2,
-		
+
         /// <summary>
         ///  compares the end boundary-point of sourceRange to the start boundary-point of Range.
         /// </summary>
-        EndToStart = 3		
+        EndToStart = 3
 	}
 }

@@ -19,6 +19,6 @@ namespace Bridge.Html5
 			set
             {
 			}
-		}		
+		}
 	}
 }

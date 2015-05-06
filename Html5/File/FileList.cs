@@ -14,7 +14,7 @@ namespace Bridge.Html5
 		internal FileList()
         {
 		}
-		
+
         /// <summary>
         /// Returns a File object representing the file at the specified index in the file list.
         /// </summary>
@@ -26,7 +26,7 @@ namespace Bridge.Html5
             {
 				return null;
 			}
-		}		
+		}
 
         /// <summary>
         /// Returns a File object representing the file at the specified index in the file list.

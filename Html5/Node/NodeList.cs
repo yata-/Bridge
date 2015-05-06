@@ -27,7 +27,7 @@ namespace Bridge.Html5
             {
 				return null;
 			}
-		}	
+		}
 
         /// <summary>
         /// Returns an item in the list by its index, or null if out-of-bounds. Equivalent to nodeList[idx].

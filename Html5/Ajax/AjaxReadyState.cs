@@ -32,6 +32,6 @@ namespace Bridge.Html5
         /// <summary>
         /// The operation is complete.
         /// </summary>
-        Done = 4	
+        Done = 4
 	}
 }

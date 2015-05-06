@@ -84,6 +84,6 @@ namespace Bridge.Html5
 		public virtual Blob Slice(long start, long end, string contentType)
         {
             return null;
-		}		
+		}
 	}
 }

@@ -27,6 +27,6 @@ namespace Bridge.Html5
 		/// <summary>
         /// The offset, in bytes, to the first byte of the view within the ArrayBuffer. Read only.
 		/// </summary>
-        public readonly long ByteOffset;		
+        public readonly long ByteOffset;
 	}
 }

@@ -1,7 +1,7 @@
 using Bridge;
 
 namespace System.Globalization
-{	
+{
 	[Ignore]
     [Namespace("Bridge")]
 	public sealed class DateTimeFormatInfo : IFormatProvider, ICloneable, IBridgeClass

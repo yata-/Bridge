@@ -12,13 +12,13 @@ namespace Bridge.Html5
 
         [Name("arraybuffer")]
         ArrayBuffer,
-		
+
         Blob,
-		
+
         Document,
-		
+
         Json,
-		
+
         Text
 	}
 }

@@ -182,7 +182,7 @@ namespace System.Threading.Tasks
     [Name("Bridge.Task")]
 	public class Task<TResult> : Task
     {
-		
+
         public Task(Func<TResult> function) : base(() => {})
         {
 		}

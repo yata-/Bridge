@@ -11,7 +11,7 @@ namespace Bridge.Html5
     [Ignore]
     [Name("MediaList")]
 	public class MediaList : IEnumerable<string>
-    {		
+    {
         internal MediaList()
         {
 		}
@@ -30,16 +30,16 @@ namespace Bridge.Html5
 
 		public virtual void DeleteMedium(string oldMedium)
         {
-		}		
+		}
 
         [Name("item")]
 		public virtual string GetItem(int index)
         {
 			return null;
 		}
-		
+
 		public readonly int Length;
-        		
+
 		public string MediaText;
 
         public virtual IEnumerator<string> GetEnumerator()

@@ -37,7 +37,7 @@ namespace Bridge.Html5
 		public virtual bool Contains(string str)
         {
 			return false;
-		}		
+		}
 
         /// <summary>
         ///  returns a DOMString (a string)

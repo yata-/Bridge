@@ -25,7 +25,7 @@ namespace System.Collections.ObjectModel
             {
                 return default(T);
             }
-        }		
+        }
 
 		public bool Contains(T value)
         {

@@ -41,6 +41,6 @@ namespace Bridge.Html5
         /// The image is not repeated (and hence the background image painting area will not necessarily been entirely covered). The position of the non-repeated background image is defined by the background-position CSS property.
         /// </summary>
         [Name("no-repeat")]
-        NoRepeat	
+        NoRepeat
     }
 }

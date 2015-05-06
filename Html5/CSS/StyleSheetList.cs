@@ -24,7 +24,7 @@ namespace Bridge.Html5
 				return null;
 			}
 		}
-		
+
         [Name("item")]
 		public virtual StyleSheet GetItem(int index)
         {

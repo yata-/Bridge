@@ -11,7 +11,7 @@ namespace Bridge.Html5
     {
 		internal CaretPosition()
         {
-		}				
+		}
 
         /// <summary>
         /// Returns a Node containing the found node at the caret's position.

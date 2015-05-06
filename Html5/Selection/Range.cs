@@ -252,6 +252,6 @@ namespace Bridge.Html5
         public virtual bool IsPointInRange(Node referenceNode, int offset)
         {
             return false;
-        }		
+        }
 	}
 }
