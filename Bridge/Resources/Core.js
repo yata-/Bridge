@@ -108,7 +108,7 @@
                 return(ret);
             }
 
-            var attachHandler = function () {            
+            var attachHandler = function () {
                 var ret = fn.call(elem, Bridge.global.event);
 
                 if (ret === false) {
@@ -147,11 +147,11 @@
                 return value.valueOf() & 0xFFFFFFFF;
             }
 
-            if (Bridge.isNumber(value)) {            
+            if (Bridge.isNumber(value)) {
                 value = value.toExponential();
 
                 return parseInt(value.substr(0, value.indexOf('e')).replace('.', ''), 10) & 0xFFFFFFFF;
-            }        
+            }
 
             if (Bridge.isString(value)) {
                 var hash = 0,
@@ -204,7 +204,7 @@
 
                 return result;
             }
-        
+
             return value.$$hashCode || (value.$$hashCode = (Math.random() * 0x100000000) | 0);
         },
 
@@ -230,7 +230,7 @@
 
             if (obj.$$name) {
                 return obj.$$name;
-            }            
+            }
 
             if ((obj).constructor == Function) {
                 str = (obj).toString()
@@ -260,7 +260,7 @@
 	            if (Bridge.isFunction(type.instanceOf)) {
 	                return type.instanceOf(obj);
 	            }
-            }	  
+            }
 
             if ((obj.constructor == type) || (obj instanceof type)) {
 	            return true;
@@ -274,7 +274,7 @@
                 return false;
             }
 
-            var inheritors = type.$$inheritors;	  
+            var inheritors = type.$$inheritors;
 
             for (var i = 0; i < inheritors.length; i++) {
                 if (Bridge.is(obj, inheritors[i])) {
@@ -284,11 +284,11 @@
 
             return false;
 	    },
-	
+
         as: function (obj, type) {
 	        return Bridge.is(obj, type) ? obj : null;
         },
-	
+
         cast: function (obj, type) {
             if (obj === null) {
                 return null;
@@ -302,7 +302,7 @@
 
 	        return result;
         },
-	
+
 	    apply: function (obj, values) {
 	        var names = Bridge.getPropertyNames(values, false);
 
@@ -376,7 +376,7 @@
                 (obj && Bridge.isDefined(obj.length))) {
 	            return new Bridge.ArrayEnumerator(obj);
 	        }
-	    
+
 	        throw new Bridge.InvalidOperationException('Cannot create enumerator');
 	    },
 
@@ -482,7 +482,7 @@
             if (typeof a == "object" && typeof b == "object") {
                 return (Bridge.getHashCode(a) === Bridge.getHashCode(b)) && Bridge.objectEquals(a, b);
             }
-        
+
             return a === b;
         },
 
@@ -538,7 +538,7 @@
                         if(!Bridge.equals(a[p], b[p])) {
                             return false;
                         }
-                    }                    
+                    }
                 }
 
                 return true;
@@ -579,7 +579,7 @@
             else if (Bridge.isDate(a)) {
                 return a.valueOf() === b.valueOf();
             }
-        
+
             return a.equalsT(b);
         },
 
@@ -617,7 +617,7 @@
 
             return s !== s.toLowerCase() && s === s.toUpperCase();
         },
-        
+
         fn: {
             call: function (obj, fnName){
                 var args = Array.prototype.slice.call(arguments, 2);

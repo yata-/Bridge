@@ -1,87 +1,87 @@
 using Bridge;
 
-namespace System.Text.RegularExpressions 
+namespace System.Text.RegularExpressions
 {
 	[Ignore]
 	[Name("RegExp")]
-	public sealed class Regex 
+	public sealed class Regex
     {
-		public Regex(string pattern) 
+		public Regex(string pattern)
         {
 		}
 
-		public Regex(string pattern, string flags) 
+		public Regex(string pattern, string flags)
         {
 		}
 
-		public int LastIndex 
+		public int LastIndex
         {
-			get 
+			get
             {
 				return 0;
 			}
-			set 
+			set
             {
 			}
 		}
 
-		public bool Global 
+		public bool Global
         {
             [Name("global")]
-			get 
+			get
             {
 				return false;
 			}
 		}
 
-		public bool IgnoreCase 
+		public bool IgnoreCase
         {
             [Name("ignoreCase")]
-			get 
+			get
             {
 				return false;
 			}
 		}
 
-		public bool Multiline 
+		public bool Multiline
         {
             [Name("multiline")]
-			get 
+			get
             {
 				return false;
 			}
 		}
 
-		public string Pattern 
+		public string Pattern
         {
             [Name("source")]
-			get 
+			get
             {
 				return null;
 			}
 		}
 
-		public string Source 
+		public string Source
         {
             [Name("source")]
-			get 
+			get
             {
 				return null;
 			}
 		}
 
-		public RegexMatch Exec(string s) 
+		public RegexMatch Exec(string s)
         {
 			return null;
 		}
 
-		public bool Test(string s) 
+		public bool Test(string s)
         {
 			return false;
 		}
 
 		[Template("Bridge.regexpEscape({s})")]
-		public static string Escape(string s) 
+		public static string Escape(string s)
         {
 			return null;
 		}

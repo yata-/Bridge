@@ -36,7 +36,7 @@ namespace Bridge.Html5
         public string CssText;
 
         /// <summary>
-        /// A code defining the type 
+        /// A code defining the type
         /// </summary>
         public readonly ushort CssValueType;
     }

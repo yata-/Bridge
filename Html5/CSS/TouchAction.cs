@@ -11,15 +11,15 @@ namespace Bridge.Html5
     public enum TouchAction
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
         /// <summary>
         /// The user agent MAY determine any permitted touch behaviors, such as panning and zooming manipulations of the viewport, for touches that begin on the element.
         /// </summary>
-        Auto, 
-        
+        Auto,
+
         /// <summary>
         /// Touches that begin on the element MUST NOT trigger default touch behaviors.
         /// </summary>

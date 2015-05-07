@@ -10,7 +10,7 @@ namespace Bridge.Html5
     /// <summary>
     /// The Geolocation interface represents an object able to programmatically obtain the position of the device. It gives Web content access to the location of the device. This allows a Web site or app offer customized results based on the user's location.
     /// An object with this interface is obtained using the NavigatorGeolocation.geolocation property implemented by the Navigator object.
-    /// 
+    ///
     /// Note: For security reasons, when a web page tries to access location information, the user is notified and asked to grant permission. Be aware that each browser has its own policies and methods for requesting this permission.
     /// </summary>
     [Ignore]

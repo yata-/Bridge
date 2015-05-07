@@ -11,7 +11,7 @@ namespace Bridge.Html5
     public enum TextDecoration
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
@@ -19,21 +19,21 @@ namespace Bridge.Html5
         /// Produces no text decoration.
         /// </summary>
         None,
-        
+
         /// <summary>
         /// Each line of text is underlined.
         /// </summary>
         Underline,
-        
+
         /// <summary>
         /// Each line of text has a line above it.
         /// </summary>
         Overline,
-        
+
         /// <summary>
         /// Each line of text has a line through the middle.
         /// </summary>
         [Name("line-through")]
-        LineThrough        
+        LineThrough
     }
 }

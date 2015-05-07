@@ -21,9 +21,9 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-		public virtual Node this[int index] 
+		public virtual Node this[int index]
         {
-			get 
+			get
             {
 				return null;
 			}

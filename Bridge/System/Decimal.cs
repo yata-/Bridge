@@ -1,10 +1,10 @@
 using Bridge;
 
-namespace System 
+namespace System
 {
 	[Ignore]
 	[Name("Number")]
-    public struct Decimal : IComparable, IComparable<Decimal>, IEquatable<Decimal>, IFormattable 
+    public struct Decimal : IComparable, IComparable<Decimal>, IEquatable<Decimal>, IFormattable
     {
         [Name("MAX_VALUE")]
         public const decimal MaxValue = 0;
@@ -19,12 +19,12 @@ namespace System
 		public const decimal MinusOne = -1;
 
 		[Template("{d}")]
-		public Decimal(double d) 
+		public Decimal(double d)
         {
 		}
 
         [Template("{i}")]
-		public Decimal(int i) 
+		public Decimal(int i)
         {
 		}
 
@@ -53,7 +53,7 @@ namespace System
 		}
 
 		[Template("Bridge.Int.format({this}, {format})")]
-		public string Format(string format) 
+		public string Format(string format)
         {
 			return null;
 		}
@@ -64,13 +64,13 @@ namespace System
             return null;
         }
 
-		public string ToString(int radix) 
+		public string ToString(int radix)
         {
 			return null;
 		}
 
         [Template("Bridge.Int.format({this}, {format})")]
-		public string ToString(string format) 
+		public string ToString(string format)
         {
 			return null;
 		}
@@ -107,278 +107,278 @@ namespace System
             return false;
         }
 
-		public string ToExponential() 
+		public string ToExponential()
         {
 			return null;
 		}
 
-		public string ToExponential(int fractionDigits) 
+		public string ToExponential(int fractionDigits)
         {
 			return null;
 		}
 
-		public string ToFixed() 
+		public string ToFixed()
         {
 			return null;
 		}
 
-		public string ToFixed(int fractionDigits) 
+		public string ToFixed(int fractionDigits)
         {
 			return null;
 		}
 
-		public string ToPrecision() 
+		public string ToPrecision()
         {
 			return null;
 		}
 
-		public string ToPrecision(int precision) 
+		public string ToPrecision(int precision)
         {
 			return null;
 		}
 
-		public static implicit operator decimal(byte value) 
+		public static implicit operator decimal(byte value)
         {
 			return 0;
 		}
 
-		public static implicit operator decimal(sbyte value) 
+		public static implicit operator decimal(sbyte value)
         {
 			return 0;
 		}
 
-		public static implicit operator decimal(short value) 
+		public static implicit operator decimal(short value)
         {
 			return 0;
 		}
 
-		public static implicit operator decimal(ushort value) 
+		public static implicit operator decimal(ushort value)
         {
 			return 0;
 		}
 
-		public static implicit operator decimal(char value) 
+		public static implicit operator decimal(char value)
         {
 			return 0;
 		}
 
-		public static implicit operator decimal(int value) 
+		public static implicit operator decimal(int value)
         {
 			return 0;
 		}
 
-		public static implicit operator decimal(uint value) 
+		public static implicit operator decimal(uint value)
         {
 			return 0;
 		}
 
-		public static implicit operator decimal(long value) 
+		public static implicit operator decimal(long value)
         {
 			return 0;
 		}
 
-		public static implicit operator decimal(ulong value) 
+		public static implicit operator decimal(ulong value)
         {
 			return 0;
 		}
 
-		public static explicit operator decimal(float value) 
+		public static explicit operator decimal(float value)
         {
 			return 0;
 		}
 
-		public static explicit operator decimal(double value) 
+		public static explicit operator decimal(double value)
         {
 			return 0;
 		}
 
-		public static explicit operator byte(decimal value) 
+		public static explicit operator byte(decimal value)
         {
 		  return 0;
 		}
 
-		public static explicit operator sbyte(decimal value) 
+		public static explicit operator sbyte(decimal value)
         {
 		  return 0;
 		}
 
-		public static explicit operator char(decimal value) 
+		public static explicit operator char(decimal value)
         {
 			return '\0';
 		}
 
-		public static explicit operator short(decimal value) 
+		public static explicit operator short(decimal value)
         {
 			return 0;
 		}
 
-		public static explicit operator ushort(decimal value) 
+		public static explicit operator ushort(decimal value)
         {
 			return 0;
 		}
 
-		public static explicit operator int(decimal value) 
+		public static explicit operator int(decimal value)
         {
 			return 0;
 		}
 
-		public static explicit operator uint(decimal value) 
+		public static explicit operator uint(decimal value)
         {
 			return 0;
 		}
 
-		public static explicit operator long(decimal value) 
+		public static explicit operator long(decimal value)
         {
 			return 0;
 		}
 
-		public static explicit operator ulong(decimal value) 
+		public static explicit operator ulong(decimal value)
         {
 			return 0;
 		}
 
-		public static explicit operator float(decimal value) 
+		public static explicit operator float(decimal value)
         {
 			return 0;
 		}
 
-		public static explicit operator double(decimal value) 
+		public static explicit operator double(decimal value)
         {
 			return 0;
 		}
 
-		public static decimal operator +(decimal d) 
+		public static decimal operator +(decimal d)
         {
 			return d;
 		}
 
-		public static decimal operator -(decimal d) 
+		public static decimal operator -(decimal d)
         {
 			return d;
 		}
 
-		public static decimal operator +(decimal d1, decimal d2) 
+		public static decimal operator +(decimal d1, decimal d2)
         {
 			return d1;
 		}
 
-		public static decimal operator -(decimal d1, decimal d2) 
+		public static decimal operator -(decimal d1, decimal d2)
         {
 			return d1;
 		}
 
-		public static decimal operator ++(decimal d) 
+		public static decimal operator ++(decimal d)
         {
 			return d;
 		}
 
-		public static decimal operator --(decimal d) 
+		public static decimal operator --(decimal d)
         {
 			return d;
 		}
 
-		public static decimal operator *(decimal d1, decimal d2) 
+		public static decimal operator *(decimal d1, decimal d2)
         {
 			return d1;
 		}
 
-		public static decimal operator /(decimal d1, decimal d2) 
+		public static decimal operator /(decimal d1, decimal d2)
         {
 			return d1;
 		}
 
-		public static decimal operator %(decimal d1, decimal d2) 
+		public static decimal operator %(decimal d1, decimal d2)
         {
 			return d1;
 		}
 
-		public static bool operator ==(decimal d1, decimal d2) 
+		public static bool operator ==(decimal d1, decimal d2)
         {
 			return false;
 		}
 
-		public static bool operator !=(decimal d1, decimal d2) 
+		public static bool operator !=(decimal d1, decimal d2)
         {
 			return false;
 		}
 
-		public static bool operator >(decimal d1, decimal d2) 
+		public static bool operator >(decimal d1, decimal d2)
         {
 			return false;
 		}
 
-		public static bool operator >=(decimal d1, decimal d2) 
+		public static bool operator >=(decimal d1, decimal d2)
         {
 			return false;
 		}
 
-		public static bool operator <(decimal d1, decimal d2) 
+		public static bool operator <(decimal d1, decimal d2)
         {
 			return false;
 		}
 
-		public static bool operator <=(decimal d1, decimal d2) 
+		public static bool operator <=(decimal d1, decimal d2)
         {
 			return false;
 		}
 
 		[Template("{d1} + {d2}")]
-		public static decimal Add(decimal d1, decimal d2) 
+		public static decimal Add(decimal d1, decimal d2)
         {
 			return 0;
 		}
 
         [Template("Math.ceil({d})")]
-		public static decimal Ceiling(decimal d) 
+		public static decimal Ceiling(decimal d)
         {
 			return 0;
 		}
 
         [Template("{d1} / {d2}")]
-		public static decimal Divide(decimal d1, decimal d2) 
+		public static decimal Divide(decimal d1, decimal d2)
         {
 			return 0;
 		}
 
 		[Template("Math.floor({d})")]
-		public static decimal Floor(decimal d) 
+		public static decimal Floor(decimal d)
         {
 			return 0;
 		}
 
 		[Template("{d1} % {d2}")]
-		public static decimal Remainder(decimal d1, decimal d2) 
+		public static decimal Remainder(decimal d1, decimal d2)
         {
 			return 0;
 		}
 
         [Template("{d1} * {d2}")]
-		public static decimal Multiply(decimal d1, decimal d2) 
+		public static decimal Multiply(decimal d1, decimal d2)
         {
 			return 0;
 		}
 
         [Template("-{d}")]
-		public static decimal Negate(decimal d) 
+		public static decimal Negate(decimal d)
         {
 			return 0;
 		}
 
         [Template("Math.round({d})")]
-		public static decimal Round(decimal d) 
+		public static decimal Round(decimal d)
         {
 			return 0;
 		}
 
         [Template("{d1} - {d2}")]
-		public static decimal Subtract(decimal d1, decimal d2) 
+		public static decimal Subtract(decimal d1, decimal d2)
         {
 			return 0;
 		}
 
 
         [Template("Bridge.compare({this}, {other})")]
-		public int CompareTo(decimal other) 
+		public int CompareTo(decimal other)
         {
 			return 0;
 		}
@@ -390,7 +390,7 @@ namespace System
         }
 
         [Template("Bridge.equalsT({this}, {other})")]
-		public bool Equals(decimal other) 
+		public bool Equals(decimal other)
         {
 			return false;
 		}

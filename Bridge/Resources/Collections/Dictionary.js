@@ -38,7 +38,7 @@ Bridge.Class.generic('Bridge.Dictionary$2', function (TKey, TValue) {
                     name = names[i];
                     this.add(name, obj[name]);
                 }
-            }  
+            }
         },
 
         getKeys: function () {
@@ -123,7 +123,7 @@ Bridge.Class.generic('Bridge.Dictionary$2', function (TKey, TValue) {
             }
             else {
                 this.entries[hash] = [entry];
-            }            
+            }
 
             this.count++;
         },
@@ -190,7 +190,7 @@ Bridge.Class.generic('Bridge.Dictionary$2', function (TKey, TValue) {
                 if (hashIndex >= hashes.length) {
                     return false;
                 }
-                    
+
                 keyIndex++;
 
                 return true;
@@ -239,7 +239,7 @@ Bridge.Class.generic('Bridge.DictionaryCollection$1', function (T) {
         add: function (v) {
             throw new Bridge.NotSupportedException();
         },
-        
+
         clear: function () {
             throw new Bridge.NotSupportedException();
         },

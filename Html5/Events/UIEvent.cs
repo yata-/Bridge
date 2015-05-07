@@ -19,10 +19,10 @@ namespace Bridge.Html5
 
         public UIEvent(string type, UIEventInit eventInit)
         {
-        }        
+        }
 
         /// <summary>
-        /// Returns additional numerical information about the event, depending on the type of event. 
+        /// Returns additional numerical information about the event, depending on the type of event.
         /// For mouse events, such as click, dblclick, mousedown, or mouseup, the detail property indicates how many times the mouse has been clicked in the same location for this event.
         /// For a dblclick event the value of detail is always 2.
         /// </summary>
@@ -37,7 +37,7 @@ namespace Bridge.Html5
         /// Event.BUBBLING_PHASE = 3
         /// </summary>
         public new readonly int EventPhase;
-        
+
         /// <summary>
         /// Returns the horizontal coordinate of the event relative to the current layer.
         /// LayerX takes scrolling of the page into account, and returns a value relative to the whole of the document, unless the event occurs inside a positioned element, where the returned value is relative to the top left of the positioned element.
@@ -49,7 +49,7 @@ namespace Bridge.Html5
         /// LayerY takes scrolling of the page into account, and returns a value relative to the whole of the document, unless the event occurs inside a positioned element, where the returned value is relative to the top left of the positioned element.
         /// </summary>
         public readonly int LayerY;
-        
+
         /// <summary>
         /// Returns the horizontal coordinate of the event relative to whole document.
         /// </summary>
@@ -66,9 +66,9 @@ namespace Bridge.Html5
         public readonly WindowInstance View;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        public string ReturnValue;        
+        public string ReturnValue;
     }
 
     [Ignore]

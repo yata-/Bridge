@@ -1,18 +1,18 @@
 using Bridge;
 
-namespace System.Collections 
+namespace System.Collections
 {
     [Ignore]
     [Namespace("Bridge")]
     public interface IEnumerator : IBridgeClass
     {
-        object Current 
+        object Current
         {
             get;
         }
 
         bool MoveNext();
-        
+
         void Reset();
     }
 }

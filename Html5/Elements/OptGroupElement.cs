@@ -23,6 +23,6 @@ namespace Bridge.Html5
         /// <summary>
         /// Set or get the label for the group.
         /// </summary>
-        public string Label;      
+        public string Label;
     }
 }

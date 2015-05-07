@@ -47,13 +47,13 @@ Bridge.define('Bridge.Text.StringBuilder', {
     toString: function () {
         var s = this.buffer.join('');
 
-        this.buffer = [];    
+        this.buffer = [];
         this.buffer[0] = s;
 
         if (arguments.length == 2) {
             var startIndex = arguments[0],
                 length = arguments[1];
-            
+
             this.checkLimits(s, startIndex, length);
 
             return s.substr(startIndex, length);
@@ -84,7 +84,7 @@ Bridge.define('Bridge.Text.StringBuilder', {
             // append a (startIndex, count) substring of value
             var startIndex = arguments[1],
                 count = arguments[2];
-            
+
             if (count == 0) {
                 return this;
             }
@@ -134,7 +134,7 @@ Bridge.define('Bridge.Text.StringBuilder', {
         this.checkLimits(s, startIndex, length);
 
         if (s.length == length && startIndex == 0) {
-            // Optimization.  If we are deleting everything  
+            // Optimization.  If we are deleting everything
             return this.clear();
         }
 
@@ -153,7 +153,7 @@ Bridge.define('Bridge.Text.StringBuilder', {
         }
 
         if (arguments.length == 3) {
-            // insert value repeated count times 
+            // insert value repeated count times
             var count = arguments[2];
 
             if (count == 0) {

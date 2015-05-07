@@ -48,8 +48,8 @@ Bridge.define('Bridge.Task', {
         whenAll: function (tasks) {
             var task = new Bridge.Task(),
                 result,
-                executing = tasks.length, 
-                cancelled = false, 
+                executing = tasks.length,
+                cancelled = false,
                 errors = [],
                 i;
 
@@ -65,7 +65,7 @@ Bridge.define('Bridge.Task', {
 
             result = new Array(tasks.length);
 
-            for (i = 0; i < tasks.length; i++) {                
+            for (i = 0; i < tasks.length; i++) {
                 tasks[i].$index = i;
                 tasks[i].continueWith(function (t) {
                     switch (t.status) {
@@ -76,7 +76,7 @@ Bridge.define('Bridge.Task', {
                             cancelled = true;
                             break;
                         case Bridge.TaskStatus.faulted:
-                            errors.push(t.error);                                
+                            errors.push(t.error);
                             break;
                         default:
                             throw new Bridge.InvalidOperationException('Invalid task status: ' + t.status);
@@ -142,7 +142,7 @@ Bridge.define('Bridge.Task', {
             callback = function (value) {
                 task.setResult(value);
             };
-	
+
             args.push(callback);
 
             target[method].apply(target, args);
@@ -253,7 +253,7 @@ Bridge.define('Bridge.Task', {
             }
 
             delete me.callbacks;
-        }, 0);       
+        }, 0);
     },
 
     complete: function (result) {
@@ -333,7 +333,7 @@ Bridge.define('Bridge.Task', {
             throw new Error('Task was already completed.');
         }
     },
-                                        
+
     dispose: function () {
     },
 

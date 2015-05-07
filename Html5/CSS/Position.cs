@@ -11,7 +11,7 @@ namespace Bridge.Html5
     public enum Position
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
@@ -38,6 +38,6 @@ namespace Bridge.Html5
         /// <summary>
         /// The box position is calculated according to the normal flow (this is called the position in normal flow). Then the box is offset relative to its flow root and containing block and in all cases, including table elements, does not affect the position of any following boxes. When a box B is stickily positioned, the position of the following box is calculated as though B were not offset. The effect of ‘position: sticky’ on table elements is the same as for ‘position: relative’.
         /// </summary>
-        Sticky 
+        Sticky
     }
 }

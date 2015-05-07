@@ -7,9 +7,9 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("StyleSheet")]
-	public class StyleSheet 
+	public class StyleSheet
     {
-		protected internal StyleSheet() 
+		protected internal StyleSheet()
         {
 		}
 
@@ -32,10 +32,10 @@ namespace Bridge.Html5
         // Returns a Node associating this style sheet with the current document.
         // </summary>
         public readonly Node OwnerNode;
-        
+
         /// <summary>
         /// Returns a StyleSheet including this one, if any; returns null if there aren't any.
-        /// </summary>        
+        /// </summary>
 		public readonly StyleSheet ParentStyleSheet;
 
         /// <summary>

@@ -27,7 +27,7 @@ namespace Bridge.Html5
         /// String containing the host, that is the hostname, a ':', and the port of the URL.
         /// </summary>
         public readonly string Host;
-        
+
         /// <summary>
         /// String containing the domain of the URL.
         /// </summary>

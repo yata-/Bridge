@@ -1,10 +1,10 @@
 using Bridge;
 
-namespace System 
+namespace System
 {
 	[Ignore, IgnoreCast]
 	[Name("Object")]
-	public struct Void 
+	public struct Void
     {
 	}
 }

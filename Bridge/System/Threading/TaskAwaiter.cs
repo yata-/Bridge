@@ -2,13 +2,13 @@
 using System.Runtime.CompilerServices;
 using Bridge;
 
-namespace System.Threading.Tasks 
+namespace System.Threading.Tasks
 {
 	[Ignore]
 	[Name("Bridge.Task")]
-	public class TaskAwaiter : INotifyCompletion 
+	public class TaskAwaiter : INotifyCompletion
     {
-		internal TaskAwaiter() 
+		internal TaskAwaiter()
         {
         }
 
@@ -22,20 +22,20 @@ namespace System.Threading.Tasks
         }
 
         [Name("continueWith")]
-		public void OnCompleted(Action continuation) 
+		public void OnCompleted(Action continuation)
         {
         }
 
-		public void GetResult() 
+		public void GetResult()
         {
         }
 	}
 
 	[Ignore]
 	[Name("Bridge.Task")]
-	public class TaskAwaiter<TResult> : INotifyCompletion 
+	public class TaskAwaiter<TResult> : INotifyCompletion
     {
-		internal TaskAwaiter() 
+		internal TaskAwaiter()
         {
         }
 
@@ -49,13 +49,13 @@ namespace System.Threading.Tasks
         }
 
         [Name("continueWith")]
-		public void OnCompleted(Action continuation) 
+		public void OnCompleted(Action continuation)
         {
         }
 
-		public TResult GetResult() 
-        { 
-            return default(TResult); 
+		public TResult GetResult()
+        {
+            return default(TResult);
         }
 	}
 }

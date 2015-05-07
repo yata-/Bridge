@@ -222,7 +222,7 @@ namespace Bridge.Html5
 
         /// <summary>
         /// DragEvent - HTML5
-        /// An element or text selection is being dragged over a valid drop target (every 350ms).   
+        /// An element or text selection is being dragged over a valid drop target (every 350ms).
         /// </summary>
         DragOver,
 
@@ -255,7 +255,7 @@ namespace Bridge.Html5
         /// Playback has stopped because the end of the media was reached.
         /// </summary>
         Ended,
-        
+
         /// <summary>
         /// TimeEvent - SVG
         /// A SMIL animation element ends.
@@ -266,24 +266,24 @@ namespace Bridge.Html5
         /// <summary>
         /// UIEvent - DOM L3
         /// A resource failed to load.
-        /// 
+        ///
         /// ProgressEvent - Progress and XMLHttpRequest
         /// Progression has failed.
-        /// 
+        ///
         /// Event - Offline
         /// An error occurred while downloading the cache manifest or updating the content of the application.
-        /// 
+        ///
         /// Event - WebSocket
         /// A WebSocket connection has been closed with prejudice (some data couldn't be sent for example).
-        /// 
+        ///
         /// Event - Server Sent Events
         /// An event source connection has been failed.
-        /// 
+        ///
         /// Event - IndexedDB
         /// A request caused an error and failed.
         /// </summary>
         Error,
-        
+
         /// <summary>
         /// FocusEvent - DOM L3
         /// An element has received focus (does not bubble).
@@ -371,7 +371,7 @@ namespace Bridge.Html5
         /// <summary>
         /// UIEvent - DOM L3
         /// A resource and its dependent resources have finished loading.
-        /// 
+        ///
         /// ProgressEvent - Progress and XMLHttpRequest
         /// Progression has been successful.
         /// </summary>
@@ -404,13 +404,13 @@ namespace Bridge.Html5
         /// <summary>
         /// MessageEvent - WebSocket
         /// A message is received through a WebSocket.
-        /// 
+        ///
         /// MessageEvent - Web Workers
         /// A message is received from a Web Worker.
-        /// 
+        ///
         /// MessageEvent - Web Messaging
         /// A message is received from a child (i)frame or a parent window.
-        /// 
+        ///
         /// MessageEvent - Server Sent Events
         /// A message is received through an event source.
         /// </summary>
@@ -485,7 +485,7 @@ namespace Bridge.Html5
         /// <summary>
         /// Event - WebSocket
         /// A WebSocket connection has been established.
-        /// 
+        ///
         /// Event - Server Sent Events
         /// An event source connection has been established.
         /// </summary>
@@ -554,7 +554,7 @@ namespace Bridge.Html5
         /// <summary>
         /// ProgressEvent - Progress and XMLHttpRequest
         /// In progress.
-        /// 
+        ///
         /// ProgressEvent - Offline
         /// The user agent is downloading resources listed by the manifest.
         /// </summary>
@@ -702,7 +702,7 @@ namespace Bridge.Html5
 
         /// <summary>
         /// ProgressEvent - XMLHttpRequest
-        ///  
+        ///
         /// </summary>
         Timeout,
 

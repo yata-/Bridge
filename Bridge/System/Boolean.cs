@@ -1,14 +1,14 @@
 ﻿using Bridge;
 
-namespace System 
+namespace System
 {
     [Ignore]
     [Name("Boolean")]
     [Constructor("!!")]
-    public struct Boolean 
+    public struct Boolean
     {
-        public Boolean(object value) 
-        { 
+        public Boolean(object value)
+        {
         }
     }
 }

@@ -23,15 +23,15 @@ namespace System.Collections.Generic
         public abstract int GetHashCode(T obj);
 
         [Template("{this}.equals({x}, {y})")]
-        bool IEqualityComparer.Equals(object x, object y) 
-        { 
-            return false; 
+        bool IEqualityComparer.Equals(object x, object y)
+        {
+            return false;
         }
 
         [Template("{this}.getHashCode({obj}, true)")]
-        int IEqualityComparer.GetHashCode(object obj) 
-        { 
-            return 0; 
+        int IEqualityComparer.GetHashCode(object obj)
+        {
+            return 0;
         }
     }
 }

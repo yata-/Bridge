@@ -1,6 +1,6 @@
 ﻿using Bridge;
 
-namespace System 
+namespace System
 {
     /// <summary>
     /// The RangeError object indicates an error when a value is not in the set or range of allowed values.
@@ -9,7 +9,7 @@ namespace System
     [Name("RangeError")]
     [Constructor("RangeError")]
     public class RangeException : Exception
-    {        
+    {
         public RangeException()
         {
         }

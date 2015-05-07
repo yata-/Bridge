@@ -11,15 +11,15 @@ namespace Bridge.Html5
     public enum TextRendering
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
         /// <summary>
         /// The browser makes educated guesses about when to optimize for speed, legibility, and geometric precision while drawing text. For differences in how this value is interpreted by the browser, see the compatibility table.
         /// </summary>
-        Auto, 
-        
+        Auto,
+
         /// <summary>
         /// The browser emphasizes rendering speed over legibility and geometric precision when drawing text. It disables kerning and ligatures.
         /// </summary>

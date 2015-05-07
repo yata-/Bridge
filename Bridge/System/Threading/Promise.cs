@@ -1,5 +1,5 @@
 using Bridge;
-namespace System.Threading.Tasks 
+namespace System.Threading.Tasks
 {
 	/// <summary>
 	/// CommonJS Promise/A interface
@@ -7,7 +7,7 @@ namespace System.Threading.Tasks
 	/// </summary>
 	[Ignore]
     [Name("Bridge.IPromise")]
-	public interface IPromise 
+	public interface IPromise
     {
 		/// <summary>
         /// Adds a fulfilledHandler to be called for completion of a promise.

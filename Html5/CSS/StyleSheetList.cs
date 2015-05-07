@@ -3,7 +3,7 @@
 using Bridge;
 using System.Collections;
 
-namespace Bridge.Html5 
+namespace Bridge.Html5
 {
     /// <summary>
     /// The StyleSheetList interface provides the abstraction of an ordered collection of style sheets.
@@ -13,20 +13,20 @@ namespace Bridge.Html5
     [Name("StyleSheetList")]
     public class StyleSheetList : IEnumerable<StyleSheet>
     {
-		internal StyleSheetList() 
+		internal StyleSheetList()
         {
 		}
 
-		public virtual StyleSheet this[int index] 
+		public virtual StyleSheet this[int index]
         {
-			get 
+			get
             {
 				return null;
 			}
 		}
-		
+
         [Name("item")]
-		public virtual StyleSheet GetItem(int index) 
+		public virtual StyleSheet GetItem(int index)
         {
 			return null;
 		}

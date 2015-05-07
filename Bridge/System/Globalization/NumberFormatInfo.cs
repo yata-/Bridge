@@ -1,19 +1,19 @@
 using Bridge;
 
-namespace System.Globalization 
+namespace System.Globalization
 {
 	[Namespace("Bridge")]
 	[Ignore]
     public sealed class NumberFormatInfo : IFormatProvider, ICloneable, IBridgeClass
     {
-		public NumberFormatInfo() 
+		public NumberFormatInfo()
         {
 		}
 
 		[FieldProperty]
-		public static NumberFormatInfo InvariantInfo 
+		public static NumberFormatInfo InvariantInfo
         {
-			get 
+			get
             {
 				return null;
 			}
@@ -35,153 +35,153 @@ namespace System.Globalization
         }
 
 		[FieldProperty]
-		public string PositiveSign 
+		public string PositiveSign
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-		public string NegativeInfinitySymbol 
+		public string NegativeInfinitySymbol
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-		public string PositiveInfinitySymbol 
+		public string PositiveInfinitySymbol
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-		public string PercentSymbol 
+		public string PercentSymbol
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-		public int[] PercentGroupSizes 
+		public int[] PercentGroupSizes
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-		public int PercentDecimalDigits 
+		public int PercentDecimalDigits
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-		public string PercentDecimalSeparator 
+		public string PercentDecimalSeparator
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-		public string PercentGroupSeparator 
+		public string PercentGroupSeparator
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-		public int PercentPositivePattern 
+		public int PercentPositivePattern
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-		public int PercentNegativePattern 
+		public int PercentNegativePattern
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-		public string CurrencySymbol 
+		public string CurrencySymbol
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-		public int[] CurrencyGroupSizes 
+		public int[] CurrencyGroupSizes
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-		public int CurrencyDecimalDigits 
+		public int CurrencyDecimalDigits
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-		public string CurrencyDecimalSeparator 
+		public string CurrencyDecimalSeparator
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-		public string CurrencyGroupSeparator 
+		public string CurrencyGroupSeparator
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-		public int CurrencyPositivePattern 
+		public int CurrencyPositivePattern
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-		public int CurrencyNegativePattern 
+		public int CurrencyNegativePattern
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-		public int[] NumberGroupSizes 
+		public int[] NumberGroupSizes
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-		public int NumberDecimalDigits 
+		public int NumberDecimalDigits
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-		public string NumberDecimalSeparator 
+		public string NumberDecimalSeparator
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-		public string NumberGroupSeparator 
+		public string NumberGroupSeparator
         {
             get;
             set;
 		}
 
-		public object GetFormat(Type formatType) 
+		public object GetFormat(Type formatType)
         {
 			return null;
 		}

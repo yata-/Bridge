@@ -1,6 +1,6 @@
 ﻿using Bridge;
 
-namespace System 
+namespace System
 {
     /// <summary>
     /// The SyntaxError object represents an error when trying to interpret syntactically invalid code.
@@ -9,7 +9,7 @@ namespace System
     [Name("SyntaxError")]
     [Constructor("SyntaxError")]
     public class SyntaxException : Exception
-    {        
+    {
         public SyntaxException()
         {
         }

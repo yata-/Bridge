@@ -122,7 +122,7 @@ Bridge.define("Bridge.DateTimeFormatInfo", {
         if (dayofweek < 0 || dayofweek > 6) {
             throw new Bridge.ArgumentOutOfRangeException("dayofweek");
         }
- 
+
         return this.dayNames[dayofweek];
     },
 
@@ -262,7 +262,7 @@ Bridge.define("Bridge.CultureInfo", {
             this.invariantCulture = Bridge.merge(new Bridge.CultureInfo("en-US"), {
                 englishName: "English (United States)",
                 nativeName: "English (United States)",
-                numberFormat: Bridge.NumberFormatInfo.invariantInfo, 
+                numberFormat: Bridge.NumberFormatInfo.invariantInfo,
                 dateTimeFormat: Bridge.DateTimeFormatInfo.invariantInfo
             });
             this.setCurrentCulture(this.invariantCulture);

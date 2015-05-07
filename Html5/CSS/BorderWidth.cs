@@ -14,19 +14,19 @@ namespace Bridge.Html5
         /// A thin border
         /// </summary>
         Thin,
- 
+
         /// <summary>
         /// A medium border
         /// </summary>
         Medium,
- 
+
         /// <summary>
         /// A thick border
         /// </summary>
         Thick,
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit
     }

@@ -3,7 +3,7 @@
 using Bridge;
 using System.Collections;
 
-namespace Bridge.Html5 
+namespace Bridge.Html5
 {
     /// <summary>
     /// A type returned by some APIs which contains a list of DOMString (strings).
@@ -12,7 +12,7 @@ namespace Bridge.Html5
     [Name("DOMStringList")]
 	public class DOMStringList : IEnumerable<string>
     {
-		internal DOMStringList() 
+		internal DOMStringList()
         {
 		}
 
@@ -21,9 +21,9 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-		public virtual string this[int index] 
+		public virtual string this[int index]
         {
-			get 
+			get
             {
 				return null;
 			}
@@ -34,10 +34,10 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
-		public virtual bool Contains(string str) 
+		public virtual bool Contains(string str)
         {
 			return false;
-		}		
+		}
 
         /// <summary>
         ///  returns a DOMString (a string)
@@ -45,7 +45,7 @@ namespace Bridge.Html5
         /// <param name="index"></param>
         /// <returns></returns>
 		[Name("item")]
-        public virtual string GetItem(int index) 
+        public virtual string GetItem(int index)
         {
 			return null;
 		}

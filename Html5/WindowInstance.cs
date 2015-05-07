@@ -25,7 +25,7 @@ namespace Bridge.Html5
         public readonly bool Closed;
 
         /// <summary>
-        /// Gets the arguments passed to the window (if it's a dialog box) at the time window.showModalDialog() was called. 
+        /// Gets the arguments passed to the window (if it's a dialog box) at the time window.showModalDialog() was called.
         /// </summary>
         public readonly object DialogArguments;
 
@@ -761,7 +761,7 @@ namespace Bridge.Html5
         }
 
         /// <summary>
-        /// The window.postMessage method safely enables cross-origin communication. 
+        /// The window.postMessage method safely enables cross-origin communication.
         /// </summary>
         /// <param name="message">Data to be sent to the other window.</param>
         /// <param name="targetOrigin">Specifies what the origin of otherWindow must be for the event to be dispatched, either as the literal string "*" (indicating no preference) or as a URI.</param>
@@ -770,7 +770,7 @@ namespace Bridge.Html5
         }
 
         /// <summary>
-        /// The window.postMessage method safely enables cross-origin communication. 
+        /// The window.postMessage method safely enables cross-origin communication.
         /// </summary>
         /// <param name="message">Data to be sent to the other window.</param>
         /// <param name="targetOrigin">Specifies what the origin of otherWindow must be for the event to be dispatched, either as the literal string "*" (indicating no preference) or as a URI.</param>

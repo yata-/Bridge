@@ -11,15 +11,15 @@ namespace Bridge.Html5
     public enum Direction
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
         /// <summary>
         /// The initial value of direction (that is, if not otherwise specified). Text and other elements go from left to right.
         /// </summary>
-        Ltr, 
-        
+        Ltr,
+
         /// <summary>
         /// Text and other elements go from right to left
         /// </summary>

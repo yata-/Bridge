@@ -21,7 +21,7 @@ namespace Bridge.Html5
         public readonly string Data;
 
         /// <summary>
-        /// The locale of current input method (for example, the keyboard layout locale if the composition is associated with IME). 
+        /// The locale of current input method (for example, the keyboard layout locale if the composition is associated with IME).
         /// </summary>
         public readonly string Locale;
     }

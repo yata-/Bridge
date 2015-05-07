@@ -1,6 +1,6 @@
 ﻿using Bridge;
 
-namespace System 
+namespace System
 {
     [Ignore]
     [Name("Bridge.ErrorException")]
@@ -14,10 +14,10 @@ namespace System
             }
         }
 
-        public ErrorException() 
+        public ErrorException()
         {
         }
-        
+
         public ErrorException(string message) : base(message)
         {
         }

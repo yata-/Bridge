@@ -6,7 +6,7 @@ namespace Bridge.Html5
 {
     /// <summary>
     /// Each web page loaded in the browser has its own document object. The Document interface serves as an entry point to the web page's content (the DOM tree, including elements such as body and table) and provides functionality global to the document (such as obtaining the page's URL and creating new elements in the document).
-    /// </summary>    
+    /// </summary>
     [Ignore]
     [Name("HTMLDocument")]
     public class DocumentInstance: Node
@@ -475,7 +475,7 @@ namespace Bridge.Html5
         public readonly DOMStringList StyleSheetSets;
 
         /// <summary>
-        /// Returns the currently focused element, that is, the element that will get keystroke events if the user types any. 
+        /// Returns the currently focused element, that is, the element that will get keystroke events if the user types any.
         /// </summary>
         public readonly Element ActiveElement;
 
@@ -1139,4 +1139,3 @@ namespace Bridge.Html5
         }
     }
 }
-    

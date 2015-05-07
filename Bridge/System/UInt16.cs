@@ -1,12 +1,12 @@
 using Bridge;
 
-namespace System 
+namespace System
 {
     [Ignore]
 	[Name("Bridge.Int")]
-    public struct UInt16 : IComparable, IComparable<UInt16>, IEquatable<UInt16>, IFormattable 
+    public struct UInt16 : IComparable, IComparable<UInt16>, IEquatable<UInt16>, IFormattable
     {
-		private UInt16(int i) 
+		private UInt16(int i)
         {
 		}
 
@@ -72,7 +72,7 @@ namespace System
         }
 
 		[Template("Bridge.compare({this}, {other})")]
-		public int CompareTo(ushort other) 
+		public int CompareTo(ushort other)
         {
 			return 0;
 		}
@@ -84,7 +84,7 @@ namespace System
         }
 
         [Template("Bridge.equalsT({this}, {other})")]
-		public bool Equals(ushort other) 
+		public bool Equals(ushort other)
         {
 			return false;
 		}

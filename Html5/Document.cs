@@ -551,7 +551,7 @@ namespace Bridge.Html5
         /// Returns the event handling code for the wheel event.
         /// </summary>
         [Name("onwheel")]
-        public static Delegate OnWheel;      
+        public static Delegate OnWheel;
 
         /// <summary>
         ///  EventHandler representing the code to be called when the abort event is raised.
@@ -906,7 +906,7 @@ namespace Bridge.Html5
         /// </summary>
         [Name("onwaiting")]
         public static Action<Event> OnWaiting;
-        
+
         #endregion Node implementation
 
         /// <summary>
@@ -975,7 +975,7 @@ namespace Bridge.Html5
         public static readonly DOMStringList StyleSheetSets;
 
         /// <summary>
-        /// Returns the currently focused element, that is, the element that will get keystroke events if the user types any. 
+        /// Returns the currently focused element, that is, the element that will get keystroke events if the user types any.
         /// </summary>
         public static readonly Element ActiveElement;
 

@@ -11,15 +11,15 @@ namespace Bridge.Html5
     public enum TextUnderlinePosition
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
         /// <summary>
         /// This keyword allows the browser to use an algorithm to choose between under and alphabetic.
         /// </summary>
-        Auto, 
-        
+        Auto,
+
         /// <summary>
         /// This keyword forces the line to be set below the alphabetic baseline, at a position where it won't cross any descender. This is useful to prevent chemical or mathematical formulas, which make a large use of subscripts, to be illegible.
         /// </summary>

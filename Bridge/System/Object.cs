@@ -7,47 +7,47 @@ namespace System
     [Constructor("{ }")]
     public class Object
     {
-        public virtual object this[string name] 
-        { 
+        public virtual object this[string name]
+        {
             [Ignore]
-            get 
-            { 
-                return null; 
+            get
+            {
+                return null;
             }
             [Ignore]
-            set 
-            { 
-            } 
-        }        
-
-        public virtual string ToString() 
-        { 
-            return null; 
+            set
+            {
+            }
         }
 
-        public virtual string ToLocaleString() 
-        { 
-            return null; 
+        public virtual string ToString()
+        {
+            return null;
         }
 
-        public virtual object ValueOf() 
-        { 
-            return null; 
+        public virtual string ToLocaleString()
+        {
+            return null;
         }
 
-        public virtual bool HasOwnProperty(object v) 
-        { 
-            return false; 
+        public virtual object ValueOf()
+        {
+            return null;
         }
 
-        public virtual bool IsPrototypeOf(object v) 
-        { 
-            return false; 
+        public virtual bool HasOwnProperty(object v)
+        {
+            return false;
         }
 
-        public virtual bool PropertyIsEnumerable(object v) 
-        { 
-            return false; 
+        public virtual bool IsPrototypeOf(object v)
+        {
+            return false;
+        }
+
+        public virtual bool PropertyIsEnumerable(object v)
+        {
+            return false;
         }
 
         [Template("Bridge.getType({this})")]
@@ -66,7 +66,7 @@ namespace System
         public virtual bool Equals(object o)
         {
             return false;
-        }        
+        }
 
         [Template("Bridge.equals({a}, {b})")]
         public static bool Equals(object a, object b)

@@ -3,7 +3,7 @@
 namespace Bridge.Html5
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     [Ignore]
     [Enum(Emit.StringNameLowerCase)]
@@ -11,15 +11,15 @@ namespace Bridge.Html5
     public enum Visibility
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
         /// <summary>
         /// Default value, the box is visible.
         /// </summary>
-        Visible, 
-        
+        Visible,
+
         /// <summary>
         /// The box is invisible (fully transparent, nothing is drawn), but still affects layout.  Descendants of the element will be visible if they have visibility:visible (this doesn't work in IE up to version 7).
         /// </summary>

@@ -11,15 +11,15 @@ namespace Bridge.Html5
     public enum FlexWrap
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
         /// <summary>
         /// The flex items are laid out in a single line which may cause the flex container to overflow. The cross-start is either equivalent to start or before depending flex-direction value.
-        /// </summary>        
-        NoWrap, 
-        
+        /// </summary>
+        NoWrap,
+
         /// <summary>
         /// The flex items break into multiple lines. The cross-start is either equivalent to start or before depending flex-direction value and the cross-end is the opposite of the specified cross-start.
         /// </summary>

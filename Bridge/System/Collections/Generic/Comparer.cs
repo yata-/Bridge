@@ -1,8 +1,8 @@
 using Bridge;
-namespace System.Collections.Generic 
+namespace System.Collections.Generic
 {
 	[Namespace("Bridge")]
-	public abstract class Comparer<T> 
+	public abstract class Comparer<T>
     {
 	    [FieldProperty]
 	    public static Comparer<T> Default

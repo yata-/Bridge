@@ -1,6 +1,6 @@
 using Bridge;
 
-namespace System.Collections 
+namespace System.Collections
 {
     [Ignore]
     [Namespace("Bridge")]

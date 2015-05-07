@@ -11,15 +11,15 @@ namespace Bridge.Html5
     public enum WordBreak
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
         /// <summary>
         /// Use the default line break rule.
         /// </summary>
-        Normal, 
-        
+        Normal,
+
         /// <summary>
         /// Word breaks may be inserted between any character for non-CJK (Chinese/Japanese/Korean) text.
         /// </summary>

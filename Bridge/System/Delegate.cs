@@ -1,44 +1,44 @@
 ﻿using Bridge;
 
-namespace System 
+namespace System
 {
     [Ignore,IgnoreCast]
     [Name("Function")]
-    public class Delegate 
+    public class Delegate
     {
         public readonly int Length = 0;
 
-        protected Delegate() 
-        { 
+        protected Delegate()
+        {
         }
 
-        public virtual object Apply(object thisArg) 
-        { 
-            return null; 
+        public virtual object Apply(object thisArg)
+        {
+            return null;
         }
 
         public virtual object Apply()
         {
             return null;
         }
-        public virtual object Apply(object thisArg, Array args) 
-        { 
-            return null; 
+        public virtual object Apply(object thisArg, Array args)
+        {
+            return null;
         }
 
-        public virtual object Call(object thisArg, params object[] args) 
-        { 
-            return null; 
+        public virtual object Call(object thisArg, params object[] args)
+        {
+            return null;
         }
         public virtual object Call(object thisArg)
         {
             return null;
         }
         public virtual object Call()
-        { 
-            return null; 
+        {
+            return null;
         }
-        
+
         [Template("Bridge.fn.combine({0}, {1});")]
         public static Delegate Combine(Delegate a, Delegate b)
         {
@@ -54,7 +54,7 @@ namespace System
 
     [Ignore,IgnoreCast]
     [Name("Function")]
-    public class MulticastDelegate : Delegate 
+    public class MulticastDelegate : Delegate
     {
         protected MulticastDelegate() { }
     }

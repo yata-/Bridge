@@ -20,7 +20,7 @@ namespace Bridge.Html5
         /// </summary>
         [Name("autofocus")]
         public bool AutoFocus;
-        
+
         /// <summary>
         /// Reflects the autofocus HTML attribute, indicating that the form control should have input focus when the page loads.
         /// </summary>
@@ -63,7 +63,7 @@ namespace Bridge.Html5
         public readonly string ValidationMessage;
 
         /// <summary>
-        /// The validity state that this element is in. 
+        /// The validity state that this element is in.
         /// </summary>
         public readonly ValidityState Validity;
 

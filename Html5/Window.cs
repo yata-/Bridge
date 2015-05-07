@@ -22,7 +22,7 @@ namespace Bridge.Html5
         public static readonly bool Closed;
 
         /// <summary>
-        /// Gets the arguments passed to the window (if it's a dialog box) at the time window.showModalDialog() was called. 
+        /// Gets the arguments passed to the window (if it's a dialog box) at the time window.showModalDialog() was called.
         /// </summary>
         public static readonly object DialogArguments;
 
@@ -187,7 +187,7 @@ namespace Bridge.Html5
         /// Returns a reference to the topmost window in the window hierarchy. This property is read only.
         /// </summary>
         public static readonly WindowInstance Top;
-        
+
         #endregion Properties
 
         #region Methods
@@ -469,7 +469,7 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="str">The text string for which to search.</param>
         /// <returns>true if the string is found; otherwise, false.</returns>
-        public static bool Find(string str) 
+        public static bool Find(string str)
         {
 			return false;
 		}
@@ -480,7 +480,7 @@ namespace Bridge.Html5
         /// <param name="str">The text string for which to search.</param>
         /// <param name="caseSensitive">Boolean value. If true, specifies a case-sensitive search.</param>
         /// <returns>true if the string is found; otherwise, false.</returns>
-		public static bool Find(string str, bool caseSensitive) 
+		public static bool Find(string str, bool caseSensitive)
         {
 			return false;
 		}
@@ -492,7 +492,7 @@ namespace Bridge.Html5
         /// <param name="caseSensitive">Boolean value. If true, specifies a case-sensitive search.</param>
         /// <param name="backwards">Boolean. If true, specifies a backward search.</param>
         /// <returns>true if the string is found; otherwise, false.</returns>
-		public static bool Find(string str, bool caseSensitive, bool backwards) 
+		public static bool Find(string str, bool caseSensitive, bool backwards)
         {
 			return false;
 		}
@@ -505,7 +505,7 @@ namespace Bridge.Html5
         /// <param name="backwards">Boolean. If true, specifies a backward search.</param>
         /// <param name="wrapAround">Boolean. If true, specifies a wrap around search.</param>
         /// <returns>true if the string is found; otherwise, false.</returns>
-		public static bool Find(string str, bool caseSensitive, bool backwards, bool wrapAround) 
+		public static bool Find(string str, bool caseSensitive, bool backwards, bool wrapAround)
         {
 			return false;
 		}
@@ -519,7 +519,7 @@ namespace Bridge.Html5
         /// <param name="wrapAround">Boolean. If true, specifies a wrap around search.</param>
         /// <param name="wholeWord">Boolean. If true, specifies a whole word search. </param>
         /// <returns>true if the string is found; otherwise, false.</returns>
-		public static bool Find(string str, bool caseSensitive, bool backwards, bool wrapAround, bool wholeWord) 
+		public static bool Find(string str, bool caseSensitive, bool backwards, bool wrapAround, bool wholeWord)
         {
 			return false;
 		}
@@ -534,7 +534,7 @@ namespace Bridge.Html5
         /// <param name="wholeWord">Boolean. If true, specifies a whole word search. </param>
         /// <param name="searchInFrames">Boolean. If true, specifies a search in frames.</param>
         /// <returns>true if the string is found; otherwise, false.</returns>
-		public static bool Find(string str, bool caseSensitive, bool backwards, bool wrapAround, bool wholeWord, bool searchInFrames) 
+		public static bool Find(string str, bool caseSensitive, bool backwards, bool wrapAround, bool wholeWord, bool searchInFrames)
         {
 			return false;
 		}
@@ -550,7 +550,7 @@ namespace Bridge.Html5
         /// <param name="searchInFrames">Boolean. If true, specifies a search in frames.</param>
         /// <param name="showDialog">Boolean. If true, specifies a show Dialog.</param>
         /// <returns>true if the string is found; otherwise, false.</returns>
-		public static bool Find(string str, bool caseSensitive, bool backwards, bool wrapAround, bool wholeWord, bool searchInFrames, bool showDialog) 
+		public static bool Find(string str, bool caseSensitive, bool backwards, bool wrapAround, bool wholeWord, bool searchInFrames, bool showDialog)
         {
 			return false;
 		}
@@ -765,7 +765,7 @@ namespace Bridge.Html5
         }
 
         /// <summary>
-        /// The window.postMessage method safely enables cross-origin communication. 
+        /// The window.postMessage method safely enables cross-origin communication.
         /// </summary>
         /// <param name="message">Data to be sent to the other window.</param>
         /// <param name="targetOrigin">Specifies what the origin of otherWindow must be for the event to be dispatched, either as the literal string "*" (indicating no preference) or as a URI.</param>
@@ -774,7 +774,7 @@ namespace Bridge.Html5
         }
 
         /// <summary>
-        /// The window.postMessage method safely enables cross-origin communication. 
+        /// The window.postMessage method safely enables cross-origin communication.
         /// </summary>
         /// <param name="message">Data to be sent to the other window.</param>
         /// <param name="targetOrigin">Specifies what the origin of otherWindow must be for the event to be dispatched, either as the literal string "*" (indicating no preference) or as a URI.</param>
@@ -1038,9 +1038,9 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="handler">the function you want to be called repeatedly.</param>
         /// <returns>a unique interval ID you can pass to clearInterval().</returns>
-        public static int SetInterval(Action handler) 
-        { 
-            return 0; 
+        public static int SetInterval(Action handler)
+        {
+            return 0;
         }
 
         /// <summary>
@@ -1049,42 +1049,9 @@ namespace Bridge.Html5
         /// <param name="handler">the function you want to be called repeatedly.</param>
         /// <param name="delay">the number of milliseconds (thousandths of a second) that the setInterval() function should wait before each call to func.</param>
         /// <returns>a unique interval ID you can pass to clearInterval().</returns>
-        public static int SetInterval(Action handler, int delay) 
-        { 
-            return 0; 
-        }
-
-        /// <summary>
-        /// Calls a function or executes a code snippet repeatedly, with a fixed time delay between each call to that function.
-        /// </summary>
-        /// <param name="handler">the function you want to be called repeatedly.</param>
-        /// <param name="delay">the number of milliseconds (thousandths of a second) that the setInterval() function should wait before each call to func.</param>
-        /// <param name="arguments"></param>
-        /// <returns>a unique interval ID you can pass to clearInterval().</returns>
-        public static int SetInterval(Action handler, int delay, params object[] arguments) 
-        { 
-            return 0; 
-        }
-
-        /// <summary>
-        /// Calls a function or executes a code snippet repeatedly, with a fixed time delay between each call to that function.
-        /// </summary>
-        /// <param name="handler">the function you want to be called repeatedly.</param>
-        /// <returns>a unique interval ID you can pass to clearInterval().</returns>
-        public static int SetInterval(string handler) 
-        { 
-            return 0; 
-        }
-
-        /// <summary>
-        /// Calls a function or executes a code snippet repeatedly, with a fixed time delay between each call to that function.
-        /// </summary>
-        /// <param name="handler">the function you want to be called repeatedly.</param>
-        /// <param name="delay">the number of milliseconds (thousandths of a second) that the setInterval() function should wait before each call to func.</param>
-        /// <returns>a unique interval ID you can pass to clearInterval().</returns>
-        public static int SetInterval(string handler, int delay) 
-        { 
-            return 0; 
+        public static int SetInterval(Action handler, int delay)
+        {
+            return 0;
         }
 
         /// <summary>
@@ -1094,9 +1061,30 @@ namespace Bridge.Html5
         /// <param name="delay">the number of milliseconds (thousandths of a second) that the setInterval() function should wait before each call to func.</param>
         /// <param name="arguments"></param>
         /// <returns>a unique interval ID you can pass to clearInterval().</returns>
-        public static int SetInterval(string handler, int delay, params object[] arguments) 
-        { 
-            return 0; 
+        public static int SetInterval(Action handler, int delay, params object[] arguments)
+        {
+            return 0;
+        }
+
+        /// <summary>
+        /// Calls a function or executes a code snippet repeatedly, with a fixed time delay between each call to that function.
+        /// </summary>
+        /// <param name="handler">the function you want to be called repeatedly.</param>
+        /// <returns>a unique interval ID you can pass to clearInterval().</returns>
+        public static int SetInterval(string handler)
+        {
+            return 0;
+        }
+
+        /// <summary>
+        /// Calls a function or executes a code snippet repeatedly, with a fixed time delay between each call to that function.
+        /// </summary>
+        /// <param name="handler">the function you want to be called repeatedly.</param>
+        /// <param name="delay">the number of milliseconds (thousandths of a second) that the setInterval() function should wait before each call to func.</param>
+        /// <returns>a unique interval ID you can pass to clearInterval().</returns>
+        public static int SetInterval(string handler, int delay)
+        {
+            return 0;
         }
 
         /// <summary>
@@ -1106,9 +1094,21 @@ namespace Bridge.Html5
         /// <param name="delay">the number of milliseconds (thousandths of a second) that the setInterval() function should wait before each call to func.</param>
         /// <param name="arguments"></param>
         /// <returns>a unique interval ID you can pass to clearInterval().</returns>
-        public static int SetInterval(Delegate handler, int delay, params object[] arguments) 
-        { 
-            return 0; 
+        public static int SetInterval(string handler, int delay, params object[] arguments)
+        {
+            return 0;
+        }
+
+        /// <summary>
+        /// Calls a function or executes a code snippet repeatedly, with a fixed time delay between each call to that function.
+        /// </summary>
+        /// <param name="handler">the function you want to be called repeatedly.</param>
+        /// <param name="delay">the number of milliseconds (thousandths of a second) that the setInterval() function should wait before each call to func.</param>
+        /// <param name="arguments"></param>
+        /// <returns>a unique interval ID you can pass to clearInterval().</returns>
+        public static int SetInterval(Delegate handler, int delay, params object[] arguments)
+        {
+            return 0;
         }
 
         /// <summary>
@@ -1116,9 +1116,9 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="handler"> the function you want to execute after delay milliseconds.</param>
         /// <returns> the numerical ID of the timeout, which can be used later with window.clearTimeout().</returns>
-        public static int SetTimeout(Action handler) 
-        { 
-            return 0; 
+        public static int SetTimeout(Action handler)
+        {
+            return 0;
         }
 
         /// <summary>
@@ -1127,9 +1127,9 @@ namespace Bridge.Html5
         /// <param name="handler"> the function you want to execute after delay milliseconds.</param>
         /// <param name="delay"> the number of milliseconds (thousandths of a second) that the function call should be delayed by. The actual delay may be longer;</param>
         /// <returns> the numerical ID of the timeout, which can be used later with window.clearTimeout().</returns>
-        public static int SetTimeout(Action handler, int delay) 
-        { 
-            return 0; 
+        public static int SetTimeout(Action handler, int delay)
+        {
+            return 0;
         }
 
         /// <summary>
@@ -1139,19 +1139,19 @@ namespace Bridge.Html5
         /// <param name="delay"> the number of milliseconds (thousandths of a second) that the function call should be delayed by. The actual delay may be longer;</param>
         /// <param name="arguments"></param>
         /// <returns> the numerical ID of the timeout, which can be used later with window.clearTimeout().</returns>
-        public static int SetTimeout(Action handler, int delay, params object[] arguments) 
-        { 
-            return 0; 
+        public static int SetTimeout(Action handler, int delay, params object[] arguments)
+        {
+            return 0;
         }
-        
+
         /// <summary>
         /// Calls a function or executes a code snippet after a specified delay.
         /// </summary>
         /// <param name="handler"> the function you want to execute after delay milliseconds.</param>
         /// <returns> the numerical ID of the timeout, which can be used later with window.clearTimeout().</returns>
-        public static int SetTimeout(string handler) 
-        { 
-            return 0; 
+        public static int SetTimeout(string handler)
+        {
+            return 0;
         }
 
         /// <summary>
@@ -1160,21 +1160,9 @@ namespace Bridge.Html5
         /// <param name="handler"> the function you want to execute after delay milliseconds.</param>
         /// <param name="delay"> the number of milliseconds (thousandths of a second) that the function call should be delayed by. The actual delay may be longer;</param>
         /// <returns> the numerical ID of the timeout, which can be used later with window.clearTimeout().</returns>
-        public static int SetTimeout(string handler, int delay) 
-        { 
-            return 0; 
-        }
-
-        /// <summary>
-        /// Calls a function or executes a code snippet after a specified delay.
-        /// </summary>
-        /// <param name="handler"> the function you want to execute after delay milliseconds.</param>
-        /// <param name="delay"> the number of milliseconds (thousandths of a second) that the function call should be delayed by. The actual delay may be longer;</param>
-        /// <param name="arguments"></param>
-        /// <returns> the numerical ID of the timeout, which can be used later with window.clearTimeout().</returns>
-        public static int SetTimeout(string handler, int delay, params object[] arguments) 
-        { 
-            return 0; 
+        public static int SetTimeout(string handler, int delay)
+        {
+            return 0;
         }
 
         /// <summary>
@@ -1184,9 +1172,21 @@ namespace Bridge.Html5
         /// <param name="delay"> the number of milliseconds (thousandths of a second) that the function call should be delayed by. The actual delay may be longer;</param>
         /// <param name="arguments"></param>
         /// <returns> the numerical ID of the timeout, which can be used later with window.clearTimeout().</returns>
-        public static int SetTimeout(Delegate handler, int delay, params object[] arguments) 
-        { 
-            return 0; 
+        public static int SetTimeout(string handler, int delay, params object[] arguments)
+        {
+            return 0;
+        }
+
+        /// <summary>
+        /// Calls a function or executes a code snippet after a specified delay.
+        /// </summary>
+        /// <param name="handler"> the function you want to execute after delay milliseconds.</param>
+        /// <param name="delay"> the number of milliseconds (thousandths of a second) that the function call should be delayed by. The actual delay may be longer;</param>
+        /// <param name="arguments"></param>
+        /// <returns> the numerical ID of the timeout, which can be used later with window.clearTimeout().</returns>
+        public static int SetTimeout(Delegate handler, int delay, params object[] arguments)
+        {
+            return 0;
         }
 
         /// <summary>
@@ -1194,9 +1194,9 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="uri"> the URI of the document to display in the dialog box.</param>
         /// <returns> a variant, indicating the returnValue property as set by the window of the document specified by uri.</returns>
-        public static object ShowModalDialog(string uri) 
-        { 
-            return null; 
+        public static object ShowModalDialog(string uri)
+        {
+            return null;
         }
 
         /// <summary>
@@ -1482,7 +1482,7 @@ namespace Bridge.Html5
         public static T Eval<T>(string expression)
         {
             return default(T);
-        }         
+        }
 
         /// <summary>
         /// The global isFinite() function determines whether the passed value is a finite number. If needed, the parameter is first converted to a number.

@@ -1,6 +1,6 @@
 ﻿using Bridge;
 
-namespace Bridge.Html5 
+namespace Bridge.Html5
 {
 	/// <summary>
 	/// The HTMLFormControlsCollection interface represents a collection of HTML form control elements. It provides one additional method besides the properties and methods inherited from HTMLCollection.
@@ -8,9 +8,9 @@ namespace Bridge.Html5
 	/// </summary>
     [Ignore]
     [Name("HTMLFormControlsCollection")]
-    public class FormControlsCollection : HTMLCollection 
+    public class FormControlsCollection : HTMLCollection
     {
-		internal FormControlsCollection() 
+		internal FormControlsCollection()
         {
 		}
 
@@ -19,9 +19,9 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-		public virtual Any<ElementList, Element> this[string name] 
+		public virtual Any<ElementList, Element> this[string name]
         {
-			get 
+			get
             {
 				return null;
 			}

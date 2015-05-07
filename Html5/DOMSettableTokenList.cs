@@ -2,7 +2,7 @@
 
 using Bridge;
 
-namespace Bridge.Html5 
+namespace Bridge.Html5
 {
     /// <summary>
     /// The class that extends DOMTokenList with settable .Value property

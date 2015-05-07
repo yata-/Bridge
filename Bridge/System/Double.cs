@@ -1,12 +1,12 @@
 using Bridge;
 
-namespace System 
+namespace System
 {
 	[Ignore]
 	[Name("Number")]
     public struct Double : IComparable, IComparable<Double>, IEquatable<Double>, IFormattable
     {
-		private Double(int i) 
+		private Double(int i)
         {
 		}
 
@@ -82,66 +82,66 @@ namespace System
             return false;
         }
 
-		public string ToExponential() 
+		public string ToExponential()
         {
 			return null;
 		}
 
-		public string ToExponential(int fractionDigits) 
+		public string ToExponential(int fractionDigits)
         {
 			return null;
 		}
 
-		public string ToFixed() 
+		public string ToFixed()
         {
 			return null;
 		}
 
-		public string ToFixed(int fractionDigits) 
+		public string ToFixed(int fractionDigits)
         {
 			return null;
 		}
 
-		public string ToPrecision() 
+		public string ToPrecision()
         {
 			return null;
 		}
 
-		public string ToPrecision(int precision) 
+		public string ToPrecision(int precision)
         {
 			return null;
 		}
 
 		[Template("({d} === Number.POSITIVE_INFINITY)")]
-		public static bool IsPositiveInfinity(double d) 
+		public static bool IsPositiveInfinity(double d)
         {
 			return false;
 		}
 
         [Template("({d} === Number.NEGATIVE_INFINITY)")]
-		public static bool IsNegativeInfinity(double d) 
+		public static bool IsNegativeInfinity(double d)
         {
 			return false;
 		}
 
 		[Template("(Math.abs({d}) === Number.POSITIVE_INFINITY)")]
-		public static bool IsInfinity(double d) 
+		public static bool IsInfinity(double d)
         {
 			return false;
 		}
 
-		public static bool IsFinite(double d) 
+		public static bool IsFinite(double d)
         {
 			return false;
 		}
 
-		public static bool IsNaN(double d) 
+		public static bool IsNaN(double d)
         {
 			return false;
 		}
 
 		[Template("Bridge.compare({this}, {other})")]
-		public int CompareTo(double other) 
+		public int CompareTo(double other)
         {
 			return 0;
 		}
@@ -153,7 +153,7 @@ namespace System
         }
 
         [Template("Bridge.equalsT({this}, {other})")]
-		public bool Equals(double other) 
+		public bool Equals(double other)
         {
 			return false;
 		}

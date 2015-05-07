@@ -27,7 +27,7 @@ namespace Bridge.Html5
         public const ushort DOCUMENT_RULE = 13;
         public const ushort FONT_FEATURE_VALUES_RULE = 14;
         public const ushort VIEWPORT_RULE = 15;
-        public const ushort REGION_STYLE_RULE = 16;        
+        public const ushort REGION_STYLE_RULE = 16;
 
         /// <summary>
         /// Represents the textual representation of the rule, e.g. "h1,h2 { font-size: 16pt }"
@@ -38,15 +38,15 @@ namespace Bridge.Html5
         /// Returns the containing rule, otherwise null. E.g. if this rule is a style rule inside an @media block, the parent rule would be that CSSMediaRule.
         /// </summary>
         public readonly CSSRule ParentRule;
-        
+
         /// <summary>
         /// Returns the CSSStyleSheet object for the style sheet that contains this rule
         /// </summary>
         public CSSStyleSheet ParentStyleSheet;
-        
+
         /// <summary>
         /// One of the Type constants indicating the type of CSS rule.
         /// </summary>
-        public readonly CSSRuleType Type;        
+        public readonly CSSRuleType Type;
     }
 }

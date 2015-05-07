@@ -3,7 +3,7 @@
 namespace Bridge.Html5
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     [Ignore]
     [Enum(Emit.StringNameLowerCase)]
@@ -11,17 +11,17 @@ namespace Bridge.Html5
     public enum BackfaceVisibility
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        Visible, 
-        
+        Visible,
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Hidden
     }

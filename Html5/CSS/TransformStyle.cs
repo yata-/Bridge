@@ -11,7 +11,7 @@ namespace Bridge.Html5
     public enum TransformStyle
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
@@ -19,8 +19,8 @@ namespace Bridge.Html5
         /// Indicates that the children of the element should be positioned in the 3D-space.
         /// </summary>
         [Name("preserve-3d")]
-        Preserve3D, 
-        
+        Preserve3D,
+
         /// <summary>
         /// Indicates that the children of the element are lying in the plane of the element itself.
         /// </summary>

@@ -41,7 +41,7 @@ namespace Bridge.Html5
         /// </summary>
         [Name("autofocus")]
         public bool AutoFocus;
-        
+
         /// <summary>
         /// This attribute should be defined as a unique value. If the value of the type attribute is search, previous search term values will persist in the dropdown across page load.
         /// </summary>
@@ -64,7 +64,7 @@ namespace Bridge.Html5
         public string DefaultValue;
 
         /// <summary>
-        /// Reflects the disabled HTML attribute, indicating that the control is not available for interaction. The input values will not be submitted with the form. See also readonly 
+        /// Reflects the disabled HTML attribute, indicating that the control is not available for interaction. The input values will not be submitted with the form. See also readonly
         /// </summary>
         public bool Disabled;
 
@@ -94,7 +94,7 @@ namespace Bridge.Html5
         /// Reflects the formmethod HTML attribute, containing the HTTP method that the browser uses to submit the form. If specified, this attribute overrides the method attribute of the &lt;form&gt; element that owns this element.
         /// </summary>
         public string FormMethod;
-        
+
         /// <summary>
         /// Reflects the formnovalidate HTML attribute, indicating that the form is not to be validated when it is submitted. If specified, this attribute overrides the novalidate attribute of the &lt;form&gt; element that owns this element.
         /// </summary>
@@ -159,7 +159,7 @@ namespace Bridge.Html5
         /// Reflects the placeholder HTML attribute, containing a hint to the user of what can be entered in the control. The placeholder text must not contain carriage returns or line-feeds. This attribute applies when the value of the type attribute is text, search, tel, url or email; otherwise it is ignored.
         /// </summary>
         public string Placeholder;
-        
+
         /// <summary>
         /// Reflects the readonly HTML attribute, indicating that the user cannot modify the value of the control.
         /// HTML5This is ignored if the value of the type attribute is hidden, range, color, checkbox, radio, file, or a button type.
@@ -210,7 +210,7 @@ namespace Bridge.Html5
         /// Reflects the type HTML attribute, indicating the type of control to display.
         /// </summary>
         public InputType Type;
-        
+
         /// <summary>
         /// A client-side image map.
         /// </summary>
@@ -222,7 +222,7 @@ namespace Bridge.Html5
         public readonly string ValidationMessage;
 
         /// <summary>
-        /// The validity state that this element is in. 
+        /// The validity state that this element is in.
         /// </summary>
         public readonly ValidityState Validity;
 
@@ -352,7 +352,7 @@ namespace Bridge.Html5
         /// if the method is not applicable to for the current type value.
         /// if the element has no step value.
         /// if the value cannot be converted to a number.
-        /// if the resulting value is above the max or below the min. 
+        /// if the resulting value is above the max or below the min.
         /// </summary>
         public virtual void StepDown()
         {
@@ -363,7 +363,7 @@ namespace Bridge.Html5
         /// if the method is not applicable to for the current type value.
         /// if the element has no step value.
         /// if the value cannot be converted to a number.
-        /// if the resulting value is above the max or below the min. 
+        /// if the resulting value is above the max or below the min.
         /// </summary>
         public virtual void StepDown(int n)
         {
@@ -393,7 +393,7 @@ namespace Bridge.Html5
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     [Ignore]
     [Enum(Emit.StringNameLowerCase)]

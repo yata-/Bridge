@@ -1,16 +1,16 @@
 using Bridge;
 
-namespace System.Collections.Generic 
+namespace System.Collections.Generic
 {
     [Ignore]
     [Namespace("Bridge")]
     public class Dictionary<TKey, TValue> : IDictionary<TKey, TValue>, IBridgeClass
     {
-        public Dictionary() 
+        public Dictionary()
         {
         }
 
-        public Dictionary(object obj) 
+        public Dictionary(object obj)
         {
         }
 
@@ -23,12 +23,12 @@ namespace System.Collections.Generic
         {
         }
 
-        public IEqualityComparer<TKey> Comparer 
-        { 
-            get 
-            { 
-                return null; 
-            } 
+        public IEqualityComparer<TKey> Comparer
+        {
+            get
+            {
+                return null;
+            }
         }
 
         public int Count
@@ -57,7 +57,7 @@ namespace System.Collections.Generic
 
         public TValue this[TKey key]
         {
-            [Template("get({0})")]            
+            [Template("get({0})")]
             get
             {
                 return default(TValue);
@@ -72,7 +72,7 @@ namespace System.Collections.Generic
         {
         }
 
-        public void Add(TKey key, TValue value) 
+        public void Add(TKey key, TValue value)
         {
         }
 
@@ -81,11 +81,11 @@ namespace System.Collections.Generic
             return default(TValue);
         }
 
-        public void Clear() 
+        public void Clear()
         {
         }
 
-        public bool ContainsKey(TKey key) 
+        public bool ContainsKey(TKey key)
         {
             return false;
         }
@@ -95,7 +95,7 @@ namespace System.Collections.Generic
             return false;
         }
 
-        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() 
+        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
         {
             return null;
         }
@@ -105,7 +105,7 @@ namespace System.Collections.Generic
             return null;
         }
 
-        public bool Remove(TKey key) 
+        public bool Remove(TKey key)
         {
             return false;
         }

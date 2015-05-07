@@ -1,12 +1,12 @@
 using Bridge;
 
-namespace System.Collections.Generic 
+namespace System.Collections.Generic
 {
     [Ignore]
     [Namespace("Bridge")]
     public interface ICollection<T> : IEnumerable<T>, IBridgeClass
     {
-        int Count 
+        int Count
         {
             get;
         }

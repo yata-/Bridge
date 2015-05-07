@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using Bridge;
 
-namespace System.Threading.Tasks 
-{    
+namespace System.Threading.Tasks
+{
     [Ignore]
     [Enum(Emit.Name)]
     [Namespace("Bridge")]
     public enum TaskStatus
     {
-        /// <summary> 
+        /// <summary>
         /// The task has been initialized but has not yet been scheduled.
         /// </summary>
         Created,
-        /// <summary> 
+        /// <summary>
         /// The task is waiting to be activated and scheduled internally by the .NET Framework infrastructure.
         /// </summary>
         WaitingForActivation,

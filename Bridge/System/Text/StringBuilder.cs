@@ -10,12 +10,12 @@ namespace System.Text
             : this(string.Empty)
         {
         }
-        
+
         public StringBuilder(string value)
             : this(value, 0, ((value != null) ? value.Length : 0))
         {
         }
-                
+
         public StringBuilder(string value, int startIndex, int length)
         {
         }
@@ -62,7 +62,7 @@ namespace System.Text
         {
             return new StringBuilder();
         }
-        
+
         public StringBuilder Append(decimal value)
         {
             return new StringBuilder();

@@ -1,7 +1,7 @@
 ﻿using Bridge;
 using System.Collections.Generic;
 
-namespace System 
+namespace System
 {
     [Ignore]
     [Name("Bridge.Exception")]
@@ -23,9 +23,9 @@ namespace System
         /// </summary>
         public virtual string Message
         {
-            get 
-            { 
-                return null; 
+            get
+            {
+                return null;
             }
         }
 
@@ -34,9 +34,9 @@ namespace System
         /// </summary>
         public virtual Exception InnerException
         {
-            get 
-            { 
-                return null; 
+            get
+            {
+                return null;
             }
         }
 
@@ -45,18 +45,18 @@ namespace System
         /// </summary>
         public virtual string StackTrace
         {
-            get 
-            { 
-                return null; 
+            get
+            {
+                return null;
             }
         }
 
 
-        public Exception() 
+        public Exception()
         {
         }
-        
-        public Exception(string message) 
+
+        public Exception(string message)
         {
         }
 

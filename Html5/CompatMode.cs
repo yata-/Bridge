@@ -11,12 +11,12 @@ namespace Bridge.Html5
     public enum CompatMode
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         BackCompat,
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         CSS1Compat
     }

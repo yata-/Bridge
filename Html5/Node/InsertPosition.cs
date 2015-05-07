@@ -28,6 +28,6 @@ namespace Bridge.Html5
         /// <summary>
         /// After the element itself.
         /// </summary>
-        AfterEnd	
+        AfterEnd
     }
 }

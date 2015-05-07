@@ -5,15 +5,15 @@ namespace System {
 	[Namespace("Bridge")]
     public class NotSupportedException : Exception, IBridgeClass
     {
-		public NotSupportedException() 
+		public NotSupportedException()
         {
 		}
 
-		public NotSupportedException(string message) 
+		public NotSupportedException(string message)
         {
 		}
 
-		public NotSupportedException(string message, Exception innerException) 
+		public NotSupportedException(string message, Exception innerException)
         {
 		}
 	}

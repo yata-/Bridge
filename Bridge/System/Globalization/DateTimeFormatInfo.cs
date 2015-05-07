@@ -1,19 +1,19 @@
 using Bridge;
 
-namespace System.Globalization 
-{	
+namespace System.Globalization
+{
 	[Ignore]
     [Namespace("Bridge")]
 	public sealed class DateTimeFormatInfo : IFormatProvider, ICloneable, IBridgeClass
     {
-		public DateTimeFormatInfo() 
+		public DateTimeFormatInfo()
         {
 		}
 
 		[FieldProperty]
-		public static DateTimeFormatInfo InvariantInfo 
+		public static DateTimeFormatInfo InvariantInfo
         {
-			get 
+			get
             {
 				return null;
 			}
@@ -29,70 +29,70 @@ namespace System.Globalization
 
 		[FieldProperty]
         [Name("pmDesignator")]
-		public string PMDesignator 
+		public string PMDesignator
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-		public string DateSeparator 
+		public string DateSeparator
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-		public string TimeSeparator 
+		public string TimeSeparator
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-        public string UniversalSortableDateTimePattern 
+        public string UniversalSortableDateTimePattern
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-		public string SortableDateTimePattern 
+		public string SortableDateTimePattern
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-		public string FullDateTimePattern 
+		public string FullDateTimePattern
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-		public string LongDatePattern 
+		public string LongDatePattern
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-		public string ShortDatePattern 
+		public string ShortDatePattern
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-		public string LongTimePattern 
+		public string LongTimePattern
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-		public string ShortTimePattern 
+		public string ShortTimePattern
         {
             get;
             set;
@@ -106,28 +106,28 @@ namespace System.Globalization
         }
 
 		[FieldProperty]
-		public string[] DayNames 
+		public string[] DayNames
         {
 			get;
             set;
 		}
 
 		[FieldProperty]
-        public string[] AbbreviatedDayNames 
+        public string[] AbbreviatedDayNames
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-        public string[] ShortestDayNames 
+        public string[] ShortestDayNames
         {
             get;
             set;
 		}
 
 		[FieldProperty]
-		public string[] MonthNames 
+		public string[] MonthNames
         {
             get;
             set;
@@ -141,7 +141,7 @@ namespace System.Globalization
         }
 
 		[FieldProperty]
-        public string[] AbbreviatedMonthNames 
+        public string[] AbbreviatedMonthNames
         {
             get;
             set;
@@ -183,7 +183,7 @@ namespace System.Globalization
             set;
         }
 
-		public object GetFormat(Type formatType) 
+		public object GetFormat(Type formatType)
         {
 			return null;
 		}
@@ -194,7 +194,7 @@ namespace System.Globalization
         }
 
         [FieldProperty]
-        public static DateTimeFormatInfo CurrentInfo 
+        public static DateTimeFormatInfo CurrentInfo
         {
             get
             {

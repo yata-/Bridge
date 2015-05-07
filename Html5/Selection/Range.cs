@@ -1,6 +1,6 @@
 ﻿using Bridge;
 
-namespace Bridge.Html5 
+namespace Bridge.Html5
 {
     /// <summary>
     /// The Range interface represents a fragment of a document that can contain nodes and parts of text nodes in a given document.
@@ -8,9 +8,9 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("Range")]
-	public partial class Range 
+	public partial class Range
     {
-		public Range() 
+		public Range()
         {
 		}
 
@@ -130,7 +130,7 @@ namespace Bridge.Html5
         /// Returns a DocumentFragment copying the nodes of a Range.
         /// </summary>
         /// <returns></returns>
-		public virtual DocumentFragment CloneContents() 
+		public virtual DocumentFragment CloneContents()
         {
 			return null;
 		}
@@ -182,7 +182,7 @@ namespace Bridge.Html5
         /// Returns a Range object with boundary points identical to the cloned Range.
         /// </summary>
         /// <returns></returns>
-		public virtual Range CloneRange() 
+		public virtual Range CloneRange()
         {
 			return null;
 		}
@@ -200,7 +200,7 @@ namespace Bridge.Html5
         /// <param name="referenceNode">The Node to compare with the Range.</param>
         /// <param name="offset">An integer greater than or equal to zero representing the offset inside the referenceNode.</param>
         /// <returns>returns -1, 0, or 1 depending on whether the referenceNode is before, the same as, or after the Range.</returns>
-        public virtual int ComparePoint(Node referenceNode, int offset) 
+        public virtual int ComparePoint(Node referenceNode, int offset)
         {
 			return 0;
 		}
@@ -210,7 +210,7 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="tagString">Text that contains text and tags to be converted to a document fragment.</param>
         /// <returns></returns>
-        public virtual DocumentFragment CreateContextualFragment(string tagString) 
+        public virtual DocumentFragment CreateContextualFragment(string tagString)
         {
 			return null;
 		}
@@ -252,6 +252,6 @@ namespace Bridge.Html5
         public virtual bool IsPointInRange(Node referenceNode, int offset)
         {
             return false;
-        }		
+        }
 	}
 }

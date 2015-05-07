@@ -4,9 +4,9 @@ namespace Bridge.Html5
 {
     [Ignore]
     [Name("ClientRect")]
-	public class ClientRect  
+	public class ClientRect
     {
-		public ClientRect() 
+		public ClientRect()
         {
 		}
 
@@ -38,6 +38,6 @@ namespace Bridge.Html5
         /// <summary>
         /// Height of the rectangle box (This is identical to bottom minus top). Read only.
         /// </summary>
-        public readonly double Height;        
+        public readonly double Height;
 	}
 }

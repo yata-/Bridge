@@ -11,15 +11,15 @@ namespace Bridge.Html5
     public enum BackgroundAttachment
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         None,
 
         /// <summary>
         /// This keyword means that the background is fixed with regard to the element itself and does not scroll with its contents. (It is effectively attached to the element's border.)
         /// </summary>
-        Scroll, 
-        
+        Scroll,
+
         /// <summary>
         /// This keyword means that the background is fixed with regard to the viewport. Even if an element has a scrolling mechanism, a ‘fixed’ background doesn't move with the element.
         /// </summary>
@@ -31,7 +31,7 @@ namespace Bridge.Html5
         Local,
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit
     }

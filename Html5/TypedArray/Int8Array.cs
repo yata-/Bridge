@@ -85,7 +85,7 @@ namespace Bridge.Html5
 
         // Int8Array.from() and Int8Array.of() are work in progress for ES6 and, at the time of the writing,
         // were not ready for production environment. Thus, their definitions are not present here.
-        
+
         #endregion
     }
 }

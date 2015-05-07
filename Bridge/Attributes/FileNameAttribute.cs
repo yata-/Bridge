@@ -9,14 +9,14 @@ namespace Bridge
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct | AttributeTargets.Interface)]
     public sealed class FileNameAttribute : Attribute
     {
-        public FileNameAttribute(string filename) 
-        { 
+        public FileNameAttribute(string filename)
+        {
         }
     }
 
     /// <summary>
-    /// The output folder path for generated JavaScript. A non-absolute path is concatenated with a project's root. 
-    /// Examples: "Bridge\\output\\", "..\\Bridge\\output\\", "c:\\output\\"
+    /// The output folder path for generated JavaScript. A non-absolute path is concatenated with a project's root.
+    /// Examples: "Bridge/output/", "../Bridge/output/", "c:\\output\\"
     /// </summary>
     [Ignore]
     [AttributeUsage(AttributeTargets.Assembly)]
@@ -66,7 +66,7 @@ namespace Bridge
         Module = 3,
 
         /// <summary>
-        /// The full namespace is used as the file name. For example, if "Demo.Utilities" is the namespace, the file name will be "Demo.Utilities.js". 
+        /// The full namespace is used as the file name. For example, if "Demo.Utilities" is the namespace, the file name will be "Demo.Utilities.js".
         /// </summary>
         Namespace = 4,
 

@@ -1,10 +1,10 @@
 using Bridge;
 
-namespace System 
+namespace System
 {
 	[Ignore]
 	[Name("Date")]
-    public struct DateTime : IComparable, IComparable<DateTime>, IEquatable<DateTime>, IFormattable 
+    public struct DateTime : IComparable, IComparable<DateTime>, IEquatable<DateTime>, IFormattable
     {
         [Template("new Date(864e13)")]
         public static readonly DateTime MaxValue = new DateTime(123);
@@ -16,7 +16,7 @@ namespace System
         /// Double value representing the number of milliseconds since 1 January 1970 00:00:00 UTC (Unix Epoch).
         /// </summary>
         /// <param name="value">The numberof milliseconds since 1 January 1970 00:00:00 UTC (Unix Epoch)</param>
-		public DateTime(long value) 
+		public DateTime(long value)
         {
 		}
 
@@ -24,7 +24,7 @@ namespace System
         /// String value representing a date. The string should be in a format recognized by the Date.parse() method (IETF-compliant RFC 2822 timestamps and also a version of ISO8601).
         /// </summary>
         /// <param name="dateString"></param>
-        public DateTime(string dateString) 
+        public DateTime(string dateString)
         {
 		}
 
@@ -34,7 +34,7 @@ namespace System
         }
 
 		[Template("new Date({year}, {month} - 1, {day})")]
-		public DateTime(int year, int month, int day) 
+		public DateTime(int year, int month, int day)
         {
 		}
 
@@ -94,34 +94,34 @@ namespace System
             return 0;
         }
 
-		public static DateTime Now 
-        { 
-            [Template("new Date()")] 
-            get 
-            { 
-                return default(DateTime); 
-            } 
+		public static DateTime Now
+        {
+            [Template("new Date()")]
+            get
+            {
+                return default(DateTime);
+            }
         }
 
-        public static DateTime UtcNow 
+        public static DateTime UtcNow
         {
-            [Template("Bridge.Date.utcNow()")] 
-            get 
-            { 
-                return default(DateTime); 
-            } 
+            [Template("Bridge.Date.utcNow()")]
+            get
+            {
+                return default(DateTime);
+            }
         }
-		public static DateTime Today 
-        { 
-            [Template("Bridge.Date.today()")] 
-            get 
-            { 
-                return default(DateTime); 
-            } 
+		public static DateTime Today
+        {
+            [Template("Bridge.Date.today()")]
+            get
+            {
+                return default(DateTime);
+            }
         }
 
 		[Template("Bridge.Date.format({this}, {format})")]
-		public string Format(string format) 
+		public string Format(string format)
         {
 			return null;
 		}
@@ -133,7 +133,7 @@ namespace System
         }
 
         [Template("Bridge.Date.format({this}, {format})")]
-		public string ToString(string format) 
+		public string ToString(string format)
         {
 			return null;
 		}
@@ -144,100 +144,100 @@ namespace System
             return null;
         }
 
-		public int GetDate() 
+		public int GetDate()
         {
 			return 0;
 		}
 
-		public int GetDay() 
+		public int GetDay()
         {
 			return 0;
 		}
 
-		public int GetFullYear() 
+		public int GetFullYear()
         {
 			return 0;
 		}
 
-		public int GetHours() 
+		public int GetHours()
         {
 			return 0;
 		}
 
-		public int GetMilliseconds() 
+		public int GetMilliseconds()
         {
 			return 0;
 		}
 
-		public int GetMinutes() 
+		public int GetMinutes()
         {
 			return 0;
 		}
 
 		[Template("{this}.getMonth() + 1")]
-		public int GetMonth() 
+		public int GetMonth()
         {
 			return 0;
 		}
 
-		public int GetSeconds() 
+		public int GetSeconds()
         {
 			return 0;
 		}
 
-		public long GetTime() 
+		public long GetTime()
         {
 			return 0;
 		}
 
-		public int GetTimezoneOffset() 
+		public int GetTimezoneOffset()
         {
 			return 0;
 		}
 
-        public int GetUTCDate() 
+        public int GetUTCDate()
         {
 			return 0;
 		}
 
-		public int GetUTCDay() 
+		public int GetUTCDay()
         {
 			return 0;
 		}
 
-		public int GetUTCFullYear() 
+		public int GetUTCFullYear()
         {
 			return 0;
 		}
 
-		public int GetUTCHours() 
+		public int GetUTCHours()
         {
 			return 0;
 		}
 
-		public int GetUTCMilliseconds() 
+		public int GetUTCMilliseconds()
         {
 			return 0;
 		}
 
-		public int GetUTCMinutes() 
+		public int GetUTCMinutes()
         {
 			return 0;
 		}
 
 		[Template("{this}.getUTCMonth() + 1")]
-		public int GetUtcMonth() 
+		public int GetUtcMonth()
         {
 			return 0;
 		}
 
-		public int GetUTCSeconds() 
+		public int GetUTCSeconds()
         {
 			return 0;
 		}
 
         [Template("Bridge.Date.parse({value})")]
-		public static DateTime Parse(string value) 
+		public static DateTime Parse(string value)
         {
 			return default(DateTime);
 		}
@@ -263,7 +263,7 @@ namespace System
         }
 
 		[Template("Bridge.Date.parseExact({value}, {format})")]
-		public static DateTime ParseExact(string value, string format) 
+		public static DateTime ParseExact(string value, string format)
         {
             return default(DateTime);
 		}
@@ -314,27 +314,27 @@ namespace System
             return false;
         }
 
-		public string ToDateString() 
+		public string ToDateString()
         {
 			return null;
 		}
 
-		public string ToLocaleDateString() 
+		public string ToLocaleDateString()
         {
 			return null;
 		}
 
-		public string ToLocaleTimeString() 
+		public string ToLocaleTimeString()
         {
 			return null;
 		}
 
-		public string ToTimeString() 
+		public string ToTimeString()
         {
 			return null;
 		}
 
-		public string ToUTCString() 
+		public string ToUTCString()
         {
 			return null;
 		}
@@ -352,211 +352,211 @@ namespace System
         }
 
         [Template("new Bridge.TimeSpan(({a} - {b}) * 10000)")]
-		public static TimeSpan operator -(DateTime a, DateTime b) 
+		public static TimeSpan operator -(DateTime a, DateTime b)
         {
             return default(TimeSpan);
 		}
 
 		[Template("new Bridge.TimeSpan(({this} - {value}) * 10000)")]
-		public TimeSpan Subtract(DateTime value) 
+		public TimeSpan Subtract(DateTime value)
         {
 			return default(TimeSpan);
 		}
 
 		[Template("Bridge.equals({a}, {b})")]
-		public static bool operator==(DateTime a, DateTime b) 
+		public static bool operator==(DateTime a, DateTime b)
         {
 			return false;
 		}
 
 		[Template("!Bridge.equals({a}, {b})")]
-		public static bool operator!=(DateTime a, DateTime b) 
+		public static bool operator!=(DateTime a, DateTime b)
         {
 			return false;
 		}
 
         [Template("{a} < {b}")]
-		public static bool operator <(DateTime a, DateTime b) 
+		public static bool operator <(DateTime a, DateTime b)
         {
 			return false;
 		}
 
         [Template("{a} > {b}")]
-		public static bool operator >(DateTime a, DateTime b) 
+		public static bool operator >(DateTime a, DateTime b)
         {
 			return false;
 		}
 
         [Template("{a} <= {b}")]
-		public static bool operator <=(DateTime a, DateTime b) 
+		public static bool operator <=(DateTime a, DateTime b)
         {
 			return false;
 		}
 
         [Template("{a} >= {b}")]
-		public static bool operator >=(DateTime a, DateTime b) 
+		public static bool operator >=(DateTime a, DateTime b)
         {
 			return false;
 		}
 
 		[Template("new Date({this}.valueOf())")]
-		public static explicit operator DateTime(Date dt) 
+		public static explicit operator DateTime(Date dt)
         {
 			return default(DateTime);
 		}
 
 		[Template("new Date({this}.valueOf())")]
-		public static explicit operator Date(DateTime dt) 
+		public static explicit operator Date(DateTime dt)
         {
 			return null;
 		}
 
-		public DateTime Date 
-        { 
-            [Template("new Date({this}.getFullYear(), {this}.getMonth(), {this}.getDate())")] 
-            get 
-            { 
-                return default(DateTime); 
-            } 
-        }
-
-		public int Day 
-        { 
-            [Template("{this}.getDate()")] 
-            get 
-            { 
-                return 0; 
-            } 
-        }
-
-		public DayOfWeek DayOfWeek 
+		public DateTime Date
         {
-            [Template("{this}.getDay()")] 
-            get 
-            { 
-                return 0; 
-            } 
+            [Template("new Date({this}.getFullYear(), {this}.getMonth(), {this}.getDate())")]
+            get
+            {
+                return default(DateTime);
+            }
         }
 
-		public int DayOfYear 
+		public int Day
         {
-            [Template("Math.ceil(({this} - new Date({this}.getFullYear(), 0, 1)) / 864e5)")] 
-            get 
-            { 
-                return 0; 
-            } 
+            [Template("{this}.getDate()")]
+            get
+            {
+                return 0;
+            }
         }
 
-		public int Hour 
+		public DayOfWeek DayOfWeek
         {
-            [Template("{this}.getHours()")] 
-            get 
-            { 
-                return 0; 
-            } 
+            [Template("{this}.getDay()")]
+            get
+            {
+                return 0;
+            }
         }
 
-		public int Millisecond 
-        { 
+		public int DayOfYear
+        {
+            [Template("Math.ceil(({this} - new Date({this}.getFullYear(), 0, 1)) / 864e5)")]
+            get
+            {
+                return 0;
+            }
+        }
+
+		public int Hour
+        {
+            [Template("{this}.getHours()")]
+            get
+            {
+                return 0;
+            }
+        }
+
+		public int Millisecond
+        {
             [Template("{this}.getMilliseconds()")]
-            get 
-            { 
-                return 0; 
-            } 
+            get
+            {
+                return 0;
+            }
         }
 
-		public int Minute 
-        { 
+		public int Minute
+        {
             [Template("{this}.getMinutes()")]
-            get 
-            { 
-                return 0; 
-            } 
+            get
+            {
+                return 0;
+            }
         }
 
-		public int Month 
+		public int Month
         {
-            [Template("{this}.getMonth() + 1")] 
-            get 
-            { 
-                return 0; 
-            } 
+            [Template("{this}.getMonth() + 1")]
+            get
+            {
+                return 0;
+            }
         }
 
-		public int Second 
+		public int Second
         {
-            [Template("{this}.getSeconds()")] 
-            get 
-            { 
-                return 0; 
-            } 
+            [Template("{this}.getSeconds()")]
+            get
+            {
+                return 0;
+            }
         }
 
-		public int Year 
-        { 
-            [Template("{this}.getFullYear()")] 
-            get 
-            { 
-                return 0; 
-            } 
+		public int Year
+        {
+            [Template("{this}.getFullYear()")]
+            get
+            {
+                return 0;
+            }
         }
 
 		[Template("new Date({this}.valueOf() + Math.round({value} * 864e5))")]
-		public DateTime AddDays(double value) 
+		public DateTime AddDays(double value)
         {
 			return default(DateTime);
 		}
 
         [Template("new Date({this}.valueOf() + Math.round({value} * 36e5))")]
-		public DateTime AddHours(double value) 
+		public DateTime AddHours(double value)
         {
 			return default(DateTime);
 		}
 
 		[Template("new Date({this}.valueOf() + Math.round({value}))")]
-		public DateTime AddMilliseconds(double value) 
+		public DateTime AddMilliseconds(double value)
         {
 			return default(DateTime);
 		}
 
 		[Template("new Date({this}.valueOf() + Math.round({value} * 6e4))")]
-		public DateTime AddMinutes(double value) 
+		public DateTime AddMinutes(double value)
         {
 			return default(DateTime);
 		}
 
 		[Template("new Date({this}.getFullYear(), {this}.getMonth() + {months}, {this}.getDate(), {this}.getHours(), {this}.getMinutes(), {this}.getSeconds(), {this}.getMilliseconds())")]
-		public DateTime AddMonths(int months) 
+		public DateTime AddMonths(int months)
         {
 			return default(DateTime);
 		}
 
 		[Template("new Date({this}.valueOf() + Math.round({value} * 1e3))")]
-		public DateTime AddSeconds(double value) 
+		public DateTime AddSeconds(double value)
         {
 			return default(DateTime);
 		}
 
 		[Template("new Date({this}.getFullYear() + {value}, {this}.getMonth(), {this}.getDate(), {this}.getHours(), {this}.getMinutes(), {this}.getSeconds(), {this}.getMilliseconds())")]
-		public DateTime AddYears(int value) 
+		public DateTime AddYears(int value)
         {
 			return default(DateTime);
 		}
 
 		[Template("new Date({year}, {month}, -1).getDate() + 1")]
-		public static int DaysInMonth(int year, int month) 
+		public static int DaysInMonth(int year, int month)
         {
 			return 0;
 		}
 
         [Template("new Date({year}, 2, -1).getDate() === 28")]
-		public static bool IsLeapYear(int year) 
+		public static bool IsLeapYear(int year)
         {
 			return false;
 		}
 
 		[Template("Bridge.compare({this}, {other})")]
-		public int CompareTo(DateTime other) 
+		public int CompareTo(DateTime other)
         {
 			return 0;
 		}
@@ -568,19 +568,19 @@ namespace System
         }
 
 		[Template("Bridge.compare({t1}, {t2})")]
-		public static int Compare(DateTime t1, DateTime t2) 
+		public static int Compare(DateTime t1, DateTime t2)
         {
 			return 0;
 		}
 
 		[Template("Bridge.equalsT({this}, {other})")]
-		public bool Equals(DateTime other) 
+		public bool Equals(DateTime other)
         {
 			return false;
 		}
 
 		[Template("Bridge.equalsT({t1}, {t2})")]
-		public static bool Equals(DateTime t1, DateTime t2) 
+		public static bool Equals(DateTime t1, DateTime t2)
         {
 			return false;
 		}

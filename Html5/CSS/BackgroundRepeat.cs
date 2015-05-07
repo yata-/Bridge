@@ -3,7 +3,7 @@
 namespace Bridge.Html5
 {
     /// <summary>
-    /// The background-repeat CSS property defines how background images are repeated. 
+    /// The background-repeat CSS property defines how background images are repeated.
     /// </summary>
     [Ignore]
     [Enum(Emit.StringNameLowerCase)]
@@ -41,6 +41,6 @@ namespace Bridge.Html5
         /// The image is not repeated (and hence the background image painting area will not necessarily been entirely covered). The position of the non-repeated background image is defined by the background-position CSS property.
         /// </summary>
         [Name("no-repeat")]
-        NoRepeat	
+        NoRepeat
     }
 }

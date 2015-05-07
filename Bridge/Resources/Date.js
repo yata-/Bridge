@@ -17,8 +17,8 @@
         isUseGenitiveForm: function (format, index, tokenLen, patternToMatch) {
 	        var i,
                 repeat = 0;
-        
-	        for (i = index - 1; i >= 0 && format[i] != patternToMatch; i--) { 
+
+	        for (i = index - 1; i >= 0 && format[i] != patternToMatch; i--) {
 	        }
 
             if (i >= 0) {
@@ -30,7 +30,7 @@
                     return true;
                 }
             }
-	
+
             for (i = index + tokenLen; i < format.length && format[i] != patternToMatch; i++) {
             }
 
@@ -50,7 +50,7 @@
 
         format: function (date, format, provider) {
             var me = this,
-                df = (provider || Bridge.CultureInfo.getCurrentCulture()).getFormat(Bridge.DateTimeFormatInfo),        
+                df = (provider || Bridge.CultureInfo.getCurrentCulture()).getFormat(Bridge.DateTimeFormatInfo),
                 year = date.getFullYear(),
                 month = date.getMonth(),
                 dayOfMonth = date.getDate(),
@@ -214,7 +214,7 @@
 			                break;
 			            case "zz":
 			            case "zzz":
-			                part = timezoneOffset / 60;			            
+			                part = timezoneOffset / 60;
 			                part = ((part >= 0) ? "-" : "+") + Bridge.String.alignString(Math.floor(Math.abs(part)).toString(), 2, "0", 2);
 
 			                if (match == "zzz") {
@@ -246,7 +246,7 @@
                 return new Date(dt);
             }
             return this.parseExact(value, null, provider);
-        },    
+        },
 
         parseExact: function (str, format, provider, silent) {
             if (!format) {
@@ -313,7 +313,7 @@
                 format = format.charAt(1);
             }
 
-            while (index < format.length) {            
+            while (index < format.length) {
                 c = format.charAt(index);
                 token = "";
 
@@ -655,7 +655,7 @@
             if (inQuotes) {
                 invalid = true;
             }
-        
+
             if (!invalid) {
                 if (idx != str.length) {
                     invalid = true;
@@ -684,7 +684,7 @@
 
                 throw new Bridge.FormatException("String does not contain a valid string representation of a date and time.");
             }
-        
+
             if (hh < 12 && tt == pm) {
                 hh = hh - 0 + 12;
             }
@@ -720,7 +720,7 @@
 
         tryParse: function (value, provider, result) {
             result.v = this.parseExact(value, null, provider, true);
-        
+
             if (result.v == null) {
                 result.v = new Date(-864e13);
 
@@ -752,12 +752,12 @@
         },
 
         toUTC: function (date) {
-            return new Date(date.getUTCFullYear(), 
-                            date.getUTCMonth(), 
-                            date.getUTCDate(), 
-                            date.getUTCHours(), 
-                            date.getUTCMinutes(), 
-                            date.getUTCSeconds(), 
+            return new Date(date.getUTCFullYear(),
+                            date.getUTCMonth(),
+                            date.getUTCDate(),
+                            date.getUTCHours(),
+                            date.getUTCMinutes(),
+                            date.getUTCSeconds(),
                             date.getUTCMilliseconds());
         },
 

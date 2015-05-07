@@ -11,46 +11,46 @@ namespace Bridge.Html5
     public enum ListStyleType
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
         Disc,
-        
+
         Circle,
-        
+
         Square,
-        
+
         Decimal,
-        
+
         [Name("decimal-leading-zero")]
         DecimalLeadingZero,
-        
+
         [Name("lower-roman")]
         LowerRoman,
-    
+
         [Name("upper-roman")]
         UpperRoman,
 
         [Name("lower-greek")]
         LowerGreek,
-        
+
         [Name("lower-latin")]
         LowerLatin,
-        
+
         [Name("upper-latin")]
         UpperLatin,
-        
+
         Armenian,
-        
+
         Georgian,
-        
+
         [Name("lower-alpha")]
         LowerAlpha,
 
         [Name("upper-alpha")]
         UpperAlpha,
-        
+
         None
     }
 }

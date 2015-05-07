@@ -28,7 +28,7 @@ namespace Bridge.Html5
         public bool Controls;
 
         /// <summary>
-        /// The CORS setting for this image element. 
+        /// The CORS setting for this image element.
         /// </summary>
         public string CrossOrigin;
 
@@ -110,7 +110,7 @@ namespace Bridge.Html5
         public readonly TimeRanges Played;
 
         /// <summary>
-        /// Reflects the preload HTML attribute, indicating what data should be preloaded, if any. 
+        /// Reflects the preload HTML attribute, indicating what data should be preloaded, if any.
         /// It may have one of the following values:
         ///     none: hints that either the author thinks that the user won't need to consult that video or that the server wants to minimize its traffic; in others terms this hint indicates that the video should not be cached.
         ///     metadata: hints that though the author thinks that the user won't need to consult that video, fetching the metadata (e.g. length) is reasonable.
@@ -155,7 +155,7 @@ namespace Bridge.Html5
         public double Volume;
 
         /// <summary>
-        /// Determines whether the specified media type can be played back. 
+        /// Determines whether the specified media type can be played back.
         /// Returns:
         ///
         ///     probably         : if the specified type appears to be playable.

@@ -1,12 +1,12 @@
 using Bridge;
 
-namespace System 
+namespace System
 {
     [Ignore]
 	[Name("Bridge.Int")]
-    public struct Byte : IComparable, IComparable<Byte>, IEquatable<Byte>, IFormattable 
+    public struct Byte : IComparable, IComparable<Byte>, IEquatable<Byte>, IFormattable
     {
-        private Byte(int i) 
+        private Byte(int i)
         {
 		}
 
@@ -17,19 +17,19 @@ namespace System
         public const byte MaxValue = 255;
 
         [Template("Bridge.Int.parseInt({s}, 0, 255)")]
-		public static byte Parse(string s) 
+		public static byte Parse(string s)
         {
 			return 0;
 		}
 
         [Template("Bridge.Int.parseInt({s}, 0, 255, {radix})")]
-		public static byte Parse(string s, int radix) 
+		public static byte Parse(string s, int radix)
         {
 			return 0;
 		}
 
         [Template("Bridge.Int.tryParseInt({s}, {result}, 0, 255)")]
-		public static bool TryParse(string s, out byte result) 
+		public static bool TryParse(string s, out byte result)
         {
 			result = 0;
 			return false;
@@ -42,7 +42,7 @@ namespace System
             return false;
         }
 
-		public string ToString(int radix) 
+		public string ToString(int radix)
         {
 			return null;
 		}
@@ -60,7 +60,7 @@ namespace System
         }
 
 		[Template("Bridge.Int.format({this}, {format})")]
-		public string ToString(string format) 
+		public string ToString(string format)
         {
 			return null;
 		}
@@ -72,7 +72,7 @@ namespace System
         }
 
 		[Template("Bridge.compare({this}, {other})")]
-		public int CompareTo(byte other) 
+		public int CompareTo(byte other)
         {
 			return 0;
 		}
@@ -84,7 +84,7 @@ namespace System
         }
 
         [Template("Bridge.equalsT({this}, {other})")]
-		public bool Equals(byte other) 
+		public bool Equals(byte other)
         {
 			return false;
 		}

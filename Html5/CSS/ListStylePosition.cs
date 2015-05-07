@@ -11,15 +11,15 @@ namespace Bridge.Html5
     public enum ListStylePosition
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
         /// <summary>
         /// The marker box is outside the principal block box.
         /// </summary>
-        Outside, 
-        
+        Outside,
+
         /// <summary>
         /// The marker box is the first inline box in the principal block box, after which the element's content flows.
         /// </summary>

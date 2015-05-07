@@ -3,7 +3,7 @@
 using Bridge;
 using System.Collections;
 
-namespace Bridge.Html5 
+namespace Bridge.Html5
 {
     /// <summary>
     /// This type represents a set of space-separated tokens.
@@ -21,9 +21,9 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-		public virtual string this[int index] 
+		public virtual string this[int index]
         {
-			get 
+			get
             {
 				return null;
 			}
@@ -54,7 +54,7 @@ namespace Bridge.Html5
         /// adds token to the underlying string
         /// </summary>
         /// <param name="token"></param>
-		public virtual void Add(string token) 
+		public virtual void Add(string token)
         {
 		}
 
@@ -62,7 +62,7 @@ namespace Bridge.Html5
         /// Remove token from the underlying string
         /// </summary>
         /// <param name="token"></param>
-		public virtual void Remove(string token) 
+		public virtual void Remove(string token)
         {
 		}
 
@@ -71,7 +71,7 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
-		public virtual bool Toggle(string token) 
+		public virtual bool Toggle(string token)
         {
 			return false;
 		}
@@ -82,7 +82,7 @@ namespace Bridge.Html5
         /// <param name="token"></param>
         /// <param name="force"></param>
         /// <returns></returns>
-		public virtual bool Toggle(string token, bool force) 
+		public virtual bool Toggle(string token, bool force)
         {
 			return false;
 		}

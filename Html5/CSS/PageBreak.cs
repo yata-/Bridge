@@ -11,15 +11,15 @@ namespace Bridge.Html5
     public enum PageBreak
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
         /// <summary>
         /// Initial value. Automatic page breaks (neither forced nor forbidden).
         /// </summary>
-        Auto, 
-        
+        Auto,
+
         /// <summary>
         /// Always force page breaks after the element.
         /// </summary>

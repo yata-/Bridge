@@ -11,15 +11,15 @@ namespace Bridge.Html5
     public enum VerticalAlign
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
         /// <summary>
         /// Aligns the baseline of the element with the baseline of its parent. The baseline of some replaced elements, like textarea is not specified by the HTML specification, meaning that their behavior with this keyword may change from one browser to the other.
         /// </summary>
-        Baseline, 
-        
+        Baseline,
+
         /// <summary>
         /// Aligns the baseline of the element with the subscript-baseline of its parent.
         /// </summary>

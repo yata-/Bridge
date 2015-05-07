@@ -17,7 +17,7 @@ namespace Bridge.Html5
         }
 
         /// <summary>
-        /// Returns an unsigned short representing the error code. 
+        /// Returns an unsigned short representing the error code.
         /// </summary>
         public readonly GeolocationErrorCode Code;
 
@@ -44,5 +44,5 @@ namespace Bridge.Html5
         /// The time allowed to acquire the geolocation, defined by PositionOptions.timeout information was reached before the information was obtained.
         /// </summary>
         Timeout = 3
-    } 
+    }
 }

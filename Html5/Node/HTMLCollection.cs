@@ -22,9 +22,9 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public virtual T this[int index] 
+        public virtual T this[int index]
         {
-			get 
+			get
             {
 				return null;
 			}
@@ -49,7 +49,7 @@ namespace Bridge.Html5
         /// <param name="index"></param>
         /// <returns></returns>
 		[Name("item")]
-        public virtual T GetItem(int index) 
+        public virtual T GetItem(int index)
         {
 			return null;
 		}

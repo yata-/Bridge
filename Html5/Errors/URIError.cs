@@ -1,6 +1,6 @@
 ﻿using Bridge;
 
-namespace System 
+namespace System
 {
     /// <summary>
     /// The URIError object represents an error when a global URI handling function was used in a wrong way.
@@ -9,7 +9,7 @@ namespace System
     [Name("URIError")]
     [Constructor("URIError")]
     public class URIException : Exception
-    {        
+    {
         public URIException()
         {
         }

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using Bridge;
 
-namespace System.Collections.Generic 
+namespace System.Collections.Generic
 {
     [Namespace("Bridge")]
-	public interface IList<T> : ICollection<T> 
+	public interface IList<T> : ICollection<T>
     {
-		T this[int index] 
+		T this[int index]
         {
             [Template("get({0})")]
             get;

@@ -6,8 +6,8 @@ namespace Bridge
     [AttributeUsage(AttributeTargets.Enum | AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Interface)]
     public sealed class CastAttribute : Attribute
     {
-        public CastAttribute(string value) 
-        { 
+        public CastAttribute(string value)
+        {
         }
     }
 }

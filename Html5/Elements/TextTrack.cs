@@ -153,7 +153,7 @@ namespace Bridge.Html5
     }
 
     /// <summary>
-    /// The TextTrackCue object represents the individual cues, and provides methods and properties to access the data and events to act on changes to cue state. 
+    /// The TextTrackCue object represents the individual cues, and provides methods and properties to access the data and events to act on changes to cue state.
     /// </summary>
     [Ignore]
     public class TextTrackCue // TODO: events?
@@ -179,7 +179,7 @@ namespace Bridge.Html5
         public readonly int StartTime;
 
         /// <summary>
-        /// Gets TextTrackCue text in un-parsed form. 
+        /// Gets TextTrackCue text in un-parsed form.
         /// </summary>
         public readonly string Text;
 
@@ -198,7 +198,7 @@ namespace Bridge.Html5
     }
 
     /// <summary>
-    /// TextTrackCueList represents a dynamically updating list of text track cues. 
+    /// TextTrackCueList represents a dynamically updating list of text track cues.
     /// </summary>
     [Ignore]
     public class TextTrackCueList : IEnumerable<TextTrackCue>
@@ -209,7 +209,7 @@ namespace Bridge.Html5
         public readonly int Length;
 
         /// <summary>
-        /// Returns the TextTrackCue (in cue order) for a specified id. 
+        /// Returns the TextTrackCue (in cue order) for a specified id.
         /// </summary>
         /// <param name="id">The id of the TextTrackCue</param>
         /// <returns>The TextTrackCue instance</returns>

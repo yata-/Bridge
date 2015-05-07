@@ -11,15 +11,15 @@ namespace Bridge.Html5
     public enum WordWrap
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
         /// <summary>
         /// Indicates that lines may only break at normal word break points.
         /// </summary>
-        Normal, 
-        
+        Normal,
+
         /// <summary>
         /// Indicates that normally unbreakable words may be broken at arbitrary points if there are no otherwise acceptable break points in the line.
         /// </summary>

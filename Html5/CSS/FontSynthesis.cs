@@ -18,8 +18,8 @@ namespace Bridge.Html5
         /// <summary>
         /// user agent is only allowed to synthesize bold font when not available but not oblique.
         /// </summary>
-        Weight, 
-        
+        Weight,
+
         /// <summary>
         /// user agent is only allowed to synthesize oblique font when not available but not bold.
         /// </summary>

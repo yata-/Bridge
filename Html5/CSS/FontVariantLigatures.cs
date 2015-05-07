@@ -11,15 +11,15 @@ namespace Bridge.Html5
     public enum FontVariantLigatures
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
         /// <summary>
         /// A value of ‘normal’ specifies that common default features are enabled, as described in detail in the next section. For OpenType fonts, common ligatures and contextual forms are on by default, discretionary and historical ligatures are not.
         /// </summary>
-        Normal, 
-        
+        Normal,
+
         /// <summary>
         /// Specifies that all types of ligatures and contextual forms covered by this property are explicitly disabled. In situations where ligatures are not considered necessary, this may improve the speed of text rendering.
         /// </summary>

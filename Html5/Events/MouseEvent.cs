@@ -33,9 +33,9 @@ namespace Bridge.Html5
         ///        0 for standard "click"; this is usually the left button for a right-handed mouse and right button for a left-handed mouse.
         ///        1 for middle button; this is usually a click on the scroll wheel's button.
         ///        2 for right button; this is usually a right-click on a right-handed mouse and left-click on a left-handed mouse.
-        ///        
+        ///
         /// Note: This convention is not followed in Internet Explorer prior to version 9: See QuirksMode for details (http://www.quirksmode.org/js/events_properties.html#button).
-        /// 
+        ///
         /// Notes
         ///
         /// Because mouse clicks are frequently intercepted by the user interface, it may be difficult to detect buttons other than those for a standard mouse click (usually the left button) in some circumstances.
@@ -48,7 +48,7 @@ namespace Bridge.Html5
         /// The buttons being pressed when the mouse event was fired
         /// Each button that can be pressed is representd by a given number (see below). If more than one button is pressed, the value of the buttons is combined to produce a new number. For example, if the right button (2) and the wheel button (4) are pressed, the value is equal to 2|4, which is 6.
         /// A number representing one or more buttons. For more than one button pressed, the values are combined.
-        /// 
+        ///
         /// 1  : Left button
         /// 2  : Right button
         /// 4  : Wheel button
@@ -73,7 +73,7 @@ namespace Bridge.Html5
         public readonly bool CtrlKey;
 
         /// <summary>
-        /// Returns additional numerical information about the event, depending on the type of event. 
+        /// Returns additional numerical information about the event, depending on the type of event.
         /// For mouse events, such as click, dblclick, mousedown, or mouseup, the detail property indicates how many times the mouse has been clicked in the same location for this event.
         /// For a dblclick event the value of detail is always 2.
         /// </summary>
@@ -166,27 +166,27 @@ namespace Bridge.Html5
         /// Returns the horizontal coordinate within the application's client area at which the event occurred (as opposed to the coordinates within the page). For example, clicking in the top-left corner of the client area will always result in a mouse event with a clientX value of 0, regardless of whether the page is scrolled horizontally.
         /// </summary>
         public int ClientX;
-        
+
         /// <summary>
         /// Returns the vertical coordinate within the application's client area at which the event occurred (as opposed to the coordinates within the page). For example, clicking in the top-left corner of the client area will always result in a mouse event with a clientY value of 0, regardless of whether the page is scrolled vertically.
         /// </summary>
         public int ClientY;
-        
+
         /// <summary>
-        /// Returns additional numerical information about the event, depending on the type of event. 
+        /// Returns additional numerical information about the event, depending on the type of event.
         /// </summary>
         public new int Detail;
-        
+
         /// <summary>
         /// The secondary target for the event, if there is one.
         /// </summary>
         public Element RelatedTarget;
-        
+
         /// <summary>
         /// Returns the horizontal coordinate of the event within the screen as a whole.
         /// </summary>
         public int ScreenX;
-        
+
         /// <summary>
         /// Returns the vertical coordinate of the event within the screen as a whole.
         /// </summary>

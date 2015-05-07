@@ -8,7 +8,7 @@ namespace System
     {
         [InlineConst]
         public const long TicksPerDay = 864000000000;
-        
+
         [InlineConst]
         public const long TicksPerHour = 36000000000;
 
@@ -102,7 +102,7 @@ namespace System
         }
 
 
-        public int Days 
+        public int Days
         {
             get
             {

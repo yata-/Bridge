@@ -17,7 +17,7 @@
                     this[value].apply(this, Array.prototype.slice.call(arguments, 1));
 
                     return;
-                }            
+                }
             }
 
             if (this.$constructor) {
@@ -25,7 +25,7 @@
             }
         },
 
-        initConfig: function (extend, base, cfg, statics, scope) {                
+        initConfig: function (extend, base, cfg, statics, scope) {
             scope.$initMembers = function () {
                 var name,
                     config;
@@ -44,7 +44,7 @@
 
                 if (config.properties) {
                     for (name in config.properties) {
-                        Bridge.property(this, name, config.properties[name]);                        
+                        Bridge.property(this, name, config.properties[name]);
                     }
                 }
 
@@ -90,7 +90,7 @@
 
                     obj = prop.apply(null, args.slice(1));
                     obj.$cacheName = name;
-                    c = Bridge.define(name, obj);                    
+                    c = Bridge.define(name, obj);
 
                     return  c;
                 };
@@ -110,7 +110,7 @@
                 v,
                 ctorCounter,
                 isCtor,
-                name,                
+                name,
                 fn;
 
             if (prop.$inherits) {
@@ -180,7 +180,7 @@
                         delete statics.config;
                     }
                 }
-            }        
+            }
 
             var instanceConfig = prop.$config || prop.config;
 
@@ -205,7 +205,7 @@
             // Copy the properties over onto the new prototype
             ctorCounter = 0;
 
-            for (name in prop) {            
+            for (name in prop) {
                 v = prop[name];
                 isCtor = name === "constructor";
 
@@ -226,7 +226,7 @@
                 prototype.$multipleCtors = true;
             }
 
-            prototype.$$name = className;        
+            prototype.$$name = className;
 
             if (cacheName) {
                 Bridge.Class.cache[cacheName] = Class;
@@ -244,7 +244,7 @@
                 for (name in statics) {
                     Class[name] = statics[name];
                 }
-            }            
+            }
 
             if (!extend) {
                 extend = [Object];
@@ -277,13 +277,13 @@
             }
             else {
                 setTimeout(fn, 0);
-            }            
+            }
 
             return Class;
         },
 
 
-        addExtend: function (cls, extend) {        
+        addExtend: function (cls, extend) {
             Array.prototype.push.apply(cls.$$inherits, extend);
 
             for (i = 0; i < extend.length; i++) {

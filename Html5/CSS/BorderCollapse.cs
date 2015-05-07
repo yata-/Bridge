@@ -11,22 +11,22 @@ namespace Bridge.Html5
     public enum BorderCollapse
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         None,
 
         /// <summary>
         /// Is a keyword requesting the use of the separated-border table rendering model. It is the default value.
         /// </summary>
-        Separate, 
-        
+        Separate,
+
         /// <summary>
         /// Is a keyword requesting the use of the collapsed-border table rendering model.
         /// </summary>
         Collapse,
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit
     }

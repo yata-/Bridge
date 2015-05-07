@@ -37,7 +37,7 @@ Bridge.define('Bridge.TimeSpan', {
             return new Bridge.TimeSpan(0);
         }
     },
-    
+
     constructor: function () {
         this.ticks = 0;
 
@@ -140,9 +140,9 @@ Bridge.define('Bridge.TimeSpan', {
                 return Bridge.String.alignString((t | 0).toString(), n || 2, "0", 2);
             };
 
-        if (formatStr) {            
+        if (formatStr) {
             return formatStr.replace(/dd?|HH?|hh?|mm?|ss?|tt?/g,
-                function (formatStr) {                    
+                function (formatStr) {
                     switch (formatStr) {
                         case "d":
                             return me.getDays();
@@ -171,8 +171,8 @@ Bridge.define('Bridge.TimeSpan', {
                     }
                 }
             );
-        }        
-        
+        }
+
         if (Math.abs(ticks) >= 864e9) {
             result += format(ticks / 864e9) + ".";
             ticks %= 864e9;

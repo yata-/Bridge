@@ -11,7 +11,7 @@ namespace Bridge.Html5
     public enum TextDecorationStyle
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Inherit,
 
@@ -26,7 +26,7 @@ namespace Bridge.Html5
         Double,
 
         /// <summary>
-        /// Draws a dotted line	 
+        /// Draws a dotted line
         /// </summary>
         Dotted,
 

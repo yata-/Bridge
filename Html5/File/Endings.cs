@@ -1,6 +1,6 @@
 ﻿using Bridge;
 
-namespace Bridge.Html5 
+namespace Bridge.Html5
 {
     /// <summary>
     /// Specifies how strings containing \n are to be written out.
@@ -13,7 +13,7 @@ namespace Bridge.Html5
         /// Endings unchanged
 		/// </summary>
         Transparent,
-		
+
         /// <summary>
         /// Endings changed to match host OS filesystem convention
         /// </summary>

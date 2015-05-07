@@ -21,7 +21,7 @@ namespace Bridge.Html5
         public string Abbr;
 
         /// <summary>
-        /// Is a DOMString representing an enumerated value indicating which cells the header cell applies to. 
+        /// Is a DOMString representing an enumerated value indicating which cells the header cell applies to.
         /// It reflects the scope attribute and has one of the following values: "row", "col", "colgroup", or "rowgroup". If the attribute is in the auto state, or if an invalid value is set for the attribute, scope will be returns the empty string, "".
         /// </summary>
         public TableHeaderCellScope Scope;

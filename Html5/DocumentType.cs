@@ -1,15 +1,15 @@
 ﻿using Bridge;
 
-namespace Bridge.Html5 
+namespace Bridge.Html5
 {
     /// <summary>
     /// The DocumentType interface represents a Node containing a doctype.
     /// </summary>
     [Ignore]
     [Name("DocumentType")]
-	public class DocumentType : Node 
+	public class DocumentType : Node
     {
-		internal DocumentType() 
+		internal DocumentType()
         {
 		}
 
@@ -32,8 +32,8 @@ namespace Bridge.Html5
         /// <summary>
         /// Removes the object from its parent children list.
         /// </summary>
-		public virtual void Remove() 
+		public virtual void Remove()
         {
-		}        
+		}
 	}
 }

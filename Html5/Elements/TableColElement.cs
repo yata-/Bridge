@@ -4,7 +4,7 @@ using Bridge;
 namespace Bridge.Html5
 {
     /// <summary>
-    /// The HTMLTableColElement interface provides special properties (beyond the HTMLElement interface it also has available to it inheritance) for manipulating single or grouped table column elements. 
+    /// The HTMLTableColElement interface provides special properties (beyond the HTMLElement interface it also has available to it inheritance) for manipulating single or grouped table column elements.
     /// The HTML element implementing this interface: &lt;col&gt; and &lt;colgroup&gt;.
     /// </summary>
     [Ignore]

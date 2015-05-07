@@ -32,7 +32,7 @@ namespace Bridge.Html5
         public string DefaultValue;
 
         /// <summary>
-        /// Reflects the disabled HTML attribute, indicating that the control is not available for interaction. The input values will not be submitted with the form. See also readonly 
+        /// Reflects the disabled HTML attribute, indicating that the control is not available for interaction. The input values will not be submitted with the form. See also readonly
         /// </summary>
         public bool Disabled;
 
@@ -100,7 +100,7 @@ namespace Bridge.Html5
         public readonly string ValidationMessage;
 
         /// <summary>
-        /// The validity state that this element is in. 
+        /// The validity state that this element is in.
         /// </summary>
         public readonly ValidityState Validity;
 
