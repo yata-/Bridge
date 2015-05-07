@@ -1181,7 +1181,7 @@
             if (value == null) {
                 throw new Bridge.ArgumentNullException();
             }
-            
+
             if (str == null || str == "") {
                 return -1;
             }
@@ -1191,9 +1191,9 @@
             if (startIndex < 0 || startIndex > str.length) {
                 throw new Bridge.ArgumentOutOfRangeException("startIndex", "startIndex cannot be less than zero and must refer to a location within the string");
             }
-            
+
             if (value == "") {
-                return startIndex;
+                return (arguments.length > 2) ? startIndex : 0;
             }
 
             var length = (arguments.length > 3) ? arguments[3] : str.length - startIndex;
@@ -1208,9 +1208,16 @@
 
             var s = str.substr(startIndex, length);
 
-            var index = s.indexOf(value);
+            var index = (arguments.length == 5 && arguments[4] % 2 != 0) ? s.toLocaleUpperCase().indexOf(value.toLocaleUpperCase()) : s.indexOf(value);
+
             if (index > -1) {
-                return index + startIndex;
+                if (arguments.length == 5) {
+                    // StringComparison
+                    return (Bridge.String.compare(value, s.substr(index, value.length), arguments[4]) == 0) ? index + startIndex : -1;
+                }
+                else {
+                    return index + startIndex;
+                }
             }
 
             return -1;

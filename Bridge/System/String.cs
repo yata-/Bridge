@@ -335,6 +335,49 @@ namespace System
         }
 
         /// <summary>
+        /// Reports the zero-based index of the first occurrence of the specified string in the current System.String object. A parameter specifies the type of search
+        //  to use for the specified string.
+        /// </summary>
+        /// <param name="searchValue">The string to search for.</param>
+        /// <param name="comparisonType">One of the enumeration values that specifies the rules for the search.</param>
+        /// <returns>The zero-based index position of value if that string is found, or -1 if it is not. If value is System.String.Empty, the return value is 0.</returns>
+        [Template("Bridge.String.indexOf({this}, {searchValue}, 0, {this}.length, {comparisonType})")]
+        public int IndexOf(string searchValue, StringComparison comparisonType)
+        {
+            return -1;
+        }
+
+        /// <summary>
+        /// Reports the zero-based index of the first occurrence of the specified string in the current System.String object. Parameters specify the starting search
+        //  position in the current string and the type of search to use for the specified string.
+        /// </summary>
+        /// <param name="searchValue">The string to search for.</param>
+        /// <param name="fromIndex">The search starting position.</param>
+        /// <param name="comparisonType">One of the enumeration values that specifies the rules for the search.</param>
+        /// <returns>The zero-based index position of value if that string is found, or -1 if it is not. If value is System.String.Empty, the return value is 0.</returns>
+        [Template("Bridge.String.indexOf({this}, {searchValue}, {fromIndex}, {this}.length, {comparisonType})")]
+        public int IndexOf(string searchValue, int fromIndex, StringComparison comparisonType)
+        {
+            return -1;
+        }
+
+        /// <summary>
+        /// Reports the zero-based index of the first occurrence of the specified string in the current System.String object. Parameters specify the starting search
+        //  position in the current string, the number of characters in the current string
+        //  to search, and the type of search to use for the specified string.
+        /// </summary>
+        /// <param name="searchValue">The string to search for.</param>
+        /// <param name="fromIndex">The search starting position.</param>
+        /// <param name="count">The number of character positions to examine.</param>
+        /// <param name="comparisonType">One of the enumeration values that specifies the rules for the search.</param>
+        /// <returns>The zero-based index position of value if that string is found, or -1 if it is not. If value is System.String.Empty, the return value is 0.</returns>
+        [Template("Bridge.String.indexOf({this}, {searchValue}, {fromIndex}, {count}, {comparisonType})")]
+        public int IndexOf(string searchValue, int fromIndex, int count, StringComparison comparisonType)
+        {
+            return -1;
+        }
+
+        /// <summary>
         /// The lastIndexOf() method returns the index within the calling String object of the last occurrence of the specified value, or -1 if not found. The calling string is searched backward, starting at fromIndex.
         /// </summary>
         /// <param name=" searchValue">A string representing the value to search for.</param>
