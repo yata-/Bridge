@@ -84,14 +84,20 @@
         },
 
         ready: function (fn) {
+            var delayfn = function () {
+                setTimeout(function () {
+                    fn();
+                }, 1);
+            };
+
             if (typeof Bridge.global.jQuery !== 'undefined') {
-                Bridge.global.jQuery(fn);
+                Bridge.global.jQuery(delayfn);
             } else {
                 if (document.readyState == "complete" || document.readyState == "loaded") {
-                    fn();
+                    delayfn();
                 }
                 else {
-                    Bridge.on('DOMContentLoaded', document, fn);
+                    Bridge.on('DOMContentLoaded', document, delayfn);
                 }
             }
         },
