@@ -51,6 +51,7 @@
     <Compile Include="ClientRectList.cs" />
     <Compile Include="CompatMode.cs" />
     <Compile Include="Console.cs" />
+    <Compile Include="String.cs" />
     <Compile Include="TypedArray\Float32Array.cs" />
     <Compile Include="TypedArray\Float64Array.cs" />
     <Compile Include="TypedArray\Int16Array.cs" />
@@ -312,7 +313,9 @@
       <Name>Bridge</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Reference Include="Bridge.Html5, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent />

@@ -690,7 +690,7 @@ namespace System
         }
 
         /// <summary>
-        /// The toLowerCase() method returns the calling string value converted to lowercase.
+        /// The toLower() method returns the calling string value converted to lowercase.
         /// </summary>
         /// <returns></returns>
         [Template("{this}.toLowerCase()")]
@@ -700,16 +700,7 @@ namespace System
         }
 
         /// <summary>
-        /// The toLocaleLowerCase() method returns the calling string value converted to lower case, according to any locale-specific case mappings.
-        /// </summary>
-        /// <returns></returns>        
-        public string ToLocaleLowerCase()
-        {
-            return null;
-        }
-
-        /// <summary>
-        /// The toUpperCase() method returns the calling string value converted to uppercase.
+        /// The toUpper() method returns the calling string value converted to uppercase.
         /// </summary>
         /// <returns></returns>
         [Template("{this}.toUpperCase()")]
@@ -723,15 +714,6 @@ namespace System
         /// </summary>
         /// <returns>The trimmed string</returns>
         public string Trim()
-        {
-            return null;
-        }
-
-        /// <summary>
-        /// The toLocaleUpperCase() method returns the calling string value converted to upper case, according to any locale-specific case mappings.
-        /// </summary>
-        /// <returns></returns>
-        public string ToLocaleUpperCase()
         {
             return null;
         }
