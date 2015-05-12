@@ -693,7 +693,8 @@ namespace System
         /// The toLowerCase() method returns the calling string value converted to lowercase.
         /// </summary>
         /// <returns></returns>
-        public string ToLowerCase()
+        [Template("{this}.toLowerCase()")]
+        public string ToLower()
         {
             return null;
         }
@@ -701,7 +702,7 @@ namespace System
         /// <summary>
         /// The toLocaleLowerCase() method returns the calling string value converted to lower case, according to any locale-specific case mappings.
         /// </summary>
-        /// <returns></returns>
+        /// <returns></returns>        
         public string ToLocaleLowerCase()
         {
             return null;
@@ -711,7 +712,8 @@ namespace System
         /// The toUpperCase() method returns the calling string value converted to uppercase.
         /// </summary>
         /// <returns></returns>
-        public string ToUpperCase()
+        [Template("{this}.toUpperCase()")]
+        public string ToUpper()
         {
             return null;
         }
