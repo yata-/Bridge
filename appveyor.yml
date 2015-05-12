@@ -202,7 +202,6 @@ on_finish:
   
 notifications:
 
-  # Email
   - provider: Email
     to:
       - vladimir@object.net
@@ -211,6 +210,14 @@ notifications:
       - dimitris@object.net
       - leonid@object.net
     on_build_status_changed: true
-    on_build_success: true
-    on_build_failure: true 
+    on_build_success: false
+    on_build_failure: true
+
+  - provider: Slack
+    auth_token:
+      secure: zSdvelf8KpJg8tlCgYGPNygKefpXDGYETPAy5LX/xNTKcvcyt0V0hU4ISNUIEEKE
+    channel: github
+    on_build_status_changed: true
+    on_build_success: false
+    on_build_failure: true
 
