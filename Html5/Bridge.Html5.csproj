@@ -313,9 +313,6 @@
       <Name>Bridge</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Bridge.Html5, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent />
