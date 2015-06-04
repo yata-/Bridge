@@ -1622,7 +1622,10 @@
         },
 
         set: function (scope, className, cls) {
-            var nameParts = className.split('.');
+            var nameParts = className.split('.'),
+                name,
+                key,
+                exists;
 
             for (i = 0; i < (nameParts.length - 1) ; i++) {
                 if (typeof scope[nameParts[i]] == 'undefined') {
@@ -1632,7 +1635,18 @@
                 scope = scope[nameParts[i]];
             }
 
-            scope[nameParts[nameParts.length - 1]] = cls;
+            name = nameParts[nameParts.length - 1];
+            exists = scope[name];
+
+            if (exists) {
+                for (key in exists) {
+                    if (typeof exists[key] === "function" && exists[key].$$name) {
+                        cls[key] = exists[key];
+                    }
+                }
+            }            
+
+            scope[name] = cls;
 
             return scope;
         },
