@@ -3,7 +3,9 @@
 namespace Bridge
 {
     /// <summary>
-    /// ScriptAttribute is instruction how to convert method declaration (signature + implementation) to javascript
+    /// ScriptAttribute specifies the method implementation that will be output to javascript
+    /// instead of its actual C# implementation. C# implementation is completely discarded if
+    /// this attribute is used.
     /// </summary>
     [Ignore]
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor)]
