@@ -205,6 +205,7 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>"$(ProjectDir)\Resources\build.bat"</PreBuildEvent>
+    <PreBuildEvent Condition="$(OS) != Unix">"$(ProjectDir)\Resources\build.bat"</PreBuildEvent>
+    <PreBuildEvent Condition="$(OS) == Unix">"$(ProjectDir)\Resources\build.sh"</PreBuildEvent>
   </PropertyGroup>
 </Project>
