@@ -1,4 +1,9 @@
 #! /bin/bash
+
+# TODO: Stop using JSBuild on windows and sed on linux and use internal
+#       Microsoft.Ajax.Utilities.Minifier to minify JavaScript code.
+#       This is already done during translation and left just for transition.
+
 jsbfile="Bridge.jsb"
 jsfile="bridge.js"
 jsminf="bridge.min.js"
@@ -43,19 +48,28 @@ for file in ${filelist}; do
 done
 
 cp "${tmpbrjs}" "${jsfile}"
-mv "${tmpbrjs}" "${jsminf}"
 
-echo "Minifying '${jsminf}'."
-sedcmd="s#(^|^.*[^:])//.*\$#\1#g;s/^ *//g;s/ *\$//g;s/  +/ /g;/^ *\$/d"
-if [ "$(uname -s)" == "Darwin" ]; then
- sed -i '' -E -e "s/	/ /g" "${jsminf}" # Replate tab chars
- LC_ALL=C sed -i '' -E -e "${sedcmd}" "${jsminf}"
-else
- # TODO: Check on linux!
- sed -i -E -e "s/\t/ /g" "${jsminf}" # Replace tab chars
- sed -i -E -e "${sedcmd}" "${jsminf}"
-fi
-cat "${jsminf}" | tr '\n' ' ' > "${tmpbrjs}"
-mv "${tmpbrjs}" "${jsminf}"
+function minify() {
+ mv "${tmpbrjs}" "${jsminf}"
+
+ echo "Minifying '${jsminf}'."
+ sedcmd="s#(^|^.*[^:])//.*\$#\1#g;s/^ *//g;s/ *\$//g;s/  +/ /g;/^ *\$/d"
+ if [ "$(uname -s)" == "Darwin" ]; then
+  sed -i '' -E -e "s/	/ /g" "${jsminf}" # Replate tab chars
+  LC_ALL=C sed -i '' -E -e "${sedcmd}" "${jsminf}"
+ else
+  # TODO: Check on linux!
+  sed -i -E -e "s/\t/ /g" "${jsminf}" # Replace tab chars
+  sed -i -E -e "${sedcmd}" "${jsminf}"
+ fi
+
+ # Removing line breaks from JavaScript files can break code in some situations.
+ #cat "${jsminf}" | tr '\n' ' ' > "${tmpbrjs}"
+ #mv "${tmpbrjs}" "${jsminf}"
+}
+
+# Minifying left just during the transition between resource and dynamic
+# minification.
+minify()
 
 echo "$(date) - Done building ${jsfile}."
