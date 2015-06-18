@@ -70,6 +70,6 @@ function minify() {
 
 # Minifying left just during the transition between resource and dynamic
 # minification.
-minify()
+minify
 
 echo "$(date) - Done building ${jsfile}."
