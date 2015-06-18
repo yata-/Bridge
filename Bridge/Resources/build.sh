@@ -50,7 +50,7 @@ done
 cp "${tmpbrjs}" "${jsfile}"
 
 function minify() {
- mv "${tmpbrjs}" "${jsminf}"
+ cp "${tmpbrjs}" "${jsminf}"
 
  echo "Minifying '${jsminf}'."
  sedcmd="s#(^|^.*[^:])//.*\$#\1#g;s/^ *//g;s/ *\$//g;s/  +/ /g;/^ *\$/d"
@@ -65,11 +65,13 @@ function minify() {
 
  # Removing line breaks from JavaScript files can break code in some situations.
  #cat "${jsminf}" | tr '\n' ' ' > "${tmpbrjs}"
- #mv "${tmpbrjs}" "${jsminf}"
+ #cp "${tmpbrjs}" "${jsminf}"
 }
 
 # Minifying left just during the transition between resource and dynamic
 # minification.
 minify
+
+rm "${tmpbrjs}"
 
 echo "$(date) - Done building ${jsfile}."
