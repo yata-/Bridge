@@ -305,6 +305,20 @@
             }
 
             return arr;
+        },
+
+        concatArray: function (strs) {
+            if (strs == null) {
+                throw new Bridge.ArgumentNullException();
+            }
+
+            var sb = new Bridge.Text.StringBuilder();
+
+            for (var i = 0; i < strs.length; i++) {
+                sb.append(strs[i]);
+            }
+
+            return sb.toString();
         }
     };
 

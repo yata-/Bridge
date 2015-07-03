@@ -91,10 +91,11 @@ namespace System
         /// <summary>
         /// The concat() method combines the text of two or more strings and returns a new string.
         /// </summary>
+        /// <param name="string1">Strings to concatenate to this string.</param>
         /// <param name="string2">Strings to concatenate to this string.</param>
-        /// <param name="string3">Strings to concatenate to this string.</param>
         /// <returns></returns>
-        public static string Concat(string string2, string string3)
+        [Template("{string1}.concat({string2})")]
+        public static string Concat(string string1, string string2)
         {
             return null;
         }
@@ -102,11 +103,12 @@ namespace System
         /// <summary>
         /// The concat() method combines the text of two or more strings and returns a new string.
         /// </summary>
+        /// <param name="string1">Strings to concatenate to this string.</param>
         /// <param name="string2">Strings to concatenate to this string.</param>
         /// <param name="string3">Strings to concatenate to this string.</param>
-        /// <param name="string4">Strings to concatenate to this string.</param>
         /// <returns></returns>
-        public static string Concat(string string2, string string3, string string4)
+        [Template("{string1}.concat({string2}, {string3})")]
+        public static string Concat(string string1, string string2, string string3)
         {
             return null;
         }
@@ -114,12 +116,13 @@ namespace System
         /// <summary>
         /// The concat() method combines the text of two or more strings and returns a new string.
         /// </summary>
+        /// <param name="string1">Strings to concatenate to this string.</param>
         /// <param name="string2">Strings to concatenate to this string.</param>
         /// <param name="string3">Strings to concatenate to this string.</param>
         /// <param name="string4">Strings to concatenate to this string.</param>
-        /// <param name="string5">Strings to concatenate to this string.</param>
         /// <returns></returns>
-        public static string Concat(string string2, string string3, string string4, string string5)
+        [Template("{string1}.concat({string2}, {string3}, {string4})")]
+        public static string Concat(string string1, string string2, string string3, string string4)
         {
             return null;
         }
@@ -129,6 +132,7 @@ namespace System
         /// </summary>
         /// <param name="strings">Strings to concatenate to this string.</param>
         /// <returns></returns>
+        [Template("Bridge.String.concatArray({strings})")]
         public static string Concat(params string[] strings)
         {
             return null;
@@ -140,6 +144,7 @@ namespace System
         /// <param name="object1">Strings to concatenate to this string.</param>
         /// <param name="object2">Strings to concatenate to this string.</param>
         /// <returns></returns>
+        [Template("Bridge.String.concatArray([{object1}, {object2}])")]
         public static string Concat(object object1, object object2)
         {
             return null;
@@ -152,6 +157,7 @@ namespace System
         /// <param name="object2">Strings to concatenate to this string.</param>
         /// <param name="object3">Strings to concatenate to this string.</param>
         /// <returns></returns>
+        [Template("Bridge.String.concatArray([{object1}, {object2}, {object3}])")]
         public static string Concat(object object1, object object2, object object3)
         {
             return null;
@@ -165,6 +171,7 @@ namespace System
         /// <param name="object3">Strings to concatenate to this string.</param>
         /// <param name="object4">Strings to concatenate to this string.</param>
         /// <returns></returns>
+        [Template("Bridge.String.concatArray([{object1}, {object2}, {object3}, {object4}])")]
         public static string Concat(object object1, object object2, object object3, object object4)
         {
             return null;
@@ -175,6 +182,7 @@ namespace System
         /// </summary>
         /// <param name="objects">Strings to concatenate to this string.</param>
         /// <returns></returns>
+        [Template("Bridge.String.concatArray({objects})")]
         public static string Concat(params object[] objects)
         {
             return null;
