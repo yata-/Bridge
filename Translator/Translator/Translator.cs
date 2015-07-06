@@ -202,6 +202,19 @@ namespace Bridge.Translator
                 }
             }
 
+            if (translatorInstance.AssemblyInfo.GenerateTypeScript)
+            {
+                resourceName = "Bridge.Resources.bridge.d.ts";
+
+                using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+                {
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        File.WriteAllText(Path.Combine(outputPath, "bridge.d.ts"), reader.ReadToEnd());
+                    }
+                }
+            }
+
             // Like above test: output minified if not beautified only == (out minified or out both)
             if (translatorInstance.AssemblyInfo.OutputFormatting != JavaScriptOutputType.Formatted)
             {

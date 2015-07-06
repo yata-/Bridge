@@ -72,7 +72,50 @@ namespace Bridge.Translator.TypeScript
                 }
             }
 
-            return typeInfo.Namespace;
+            var fileName = typeInfo.Namespace;
+
+            switch (this.Emitter.AssemblyInfo.FileNameCasing)
+            {
+                case FileNameCaseConvert.Lowercase:
+                    fileName = fileName.ToLower();
+                    break;
+                case FileNameCaseConvert.CamelCase:
+                    var sepList = new string[] { ".", System.IO.Path.DirectorySeparatorChar.ToString(), "\\", "/" };
+
+                    // Populate list only with needed separators, as usually we will never have all four of them
+                    var neededSepList = new List<string>();
+
+                    foreach (var separator in sepList)
+                    {
+                        if (fileName.Contains(separator.ToString()) && !neededSepList.Contains(separator))
+                        {
+                            neededSepList.Add(separator);
+                        }
+                    }
+
+                    // now, separating the filename string only by the used separators, apply lowerCamelCase
+                    if (neededSepList.Count > 0)
+                    {
+                        foreach (var separator in neededSepList)
+                        {
+                            var stringList = new List<string>();
+
+                            foreach (var str in fileName.Split(separator[0]))
+                            {
+                                stringList.Add(str.ToLowerCamelCase());
+                            }
+
+                            fileName = stringList.Join(separator);
+                        }
+                    }
+                    else
+                    {
+                        fileName = fileName.ToLowerCamelCase();
+                    }
+                    break;
+            }
+
+            return fileName;
         }
 
         private void TransformOutputs()

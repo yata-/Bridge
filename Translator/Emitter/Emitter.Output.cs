@@ -49,6 +49,7 @@ namespace Bridge.Translator
                 {
                     var moduleName = moduleOutputPair.Key;
                     var moduleOutput = moduleOutputPair.Value;
+                    AbstractEmitterBlock.RemovePenultimateEmptyLines(moduleOutput, true);
                     var str = moduleOutput.ToString();
                     moduleOutput.Length = 0;
 
@@ -74,29 +75,36 @@ namespace Bridge.Translator
                     moduleOutput.Append("], ");
 
 
-                    moduleOutput.Append("function (_, ");
+                    moduleOutput.Append("function (_");
 
                     if (output.ModuleDependencies.ContainsKey(moduleName) && output.ModuleDependencies[moduleName].Count > 0)
                     {
+                        moduleOutput.Append(", ");
                         output.ModuleDependencies[moduleName].Each(md =>
                         {
                             moduleOutput.Append(md.VariableName.IsNotEmpty() ? md.VariableName : md.DependencyName);
                             moduleOutput.Append(",");
                         });
+                        moduleOutput.Remove(moduleOutput.Length - 1, 1); // remove trailing comma
                     }
-                    moduleOutput.Remove(moduleOutput.Length - 1, 1); // remove trailing comma
+                    
                     moduleOutput.AppendLine(") {");
 
+                    string indent = str.StartsWith("    ") ? "" : "    ";
                     moduleOutput.Append("    ");
                     moduleOutput.AppendLine("var exports = { };");
-                    moduleOutput.Append(str);
+                    moduleOutput.Append(indent + str.Replace("\n", "\n" + indent));
                     moduleOutput.Append("    ");
-                    moduleOutput.AppendLine("return exports;");
+
+                    if (!str.Trim().EndsWith("\n"))
+                    {
+                        moduleOutput.AppendLine();
+                    }
+
+                    moduleOutput.AppendLine("    return exports;");
                     moduleOutput.AppendLine("});");
                 }
             }
         }
-
-
     }
 }
