@@ -173,6 +173,7 @@
     <Content Include="Resources\Array.js" />
     <Content Include="Resources\Collections\Comparer.js" />
     <Content Include="Resources\Finally.js" />
+    <Content Include="Resources\End.js" />
     <Content Include="Resources\Init.js" />
     <Content Include="Resources\Attribute.js" />
     <Content Include="Resources\Browser.js" />
@@ -202,7 +203,9 @@
     <EmbeddedResource Include="Resources\bridge.js" />
     <EmbeddedResource Include="Resources\bridge.min.js" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\bridge.d.ts" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent Condition="$(OS) != Unix">"$(ProjectDir)\Resources\build.bat"</PreBuildEvent>

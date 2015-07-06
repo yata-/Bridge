@@ -128,7 +128,7 @@ Bridge.define('Bridge.TimeSpan', {
     },
 
     format: function (formatStr, provider) {
-        return this.format(formatStr, provider);
+        return this.toString(formatStr, provider);
     },
 
     toString: function (formatStr, provider) {

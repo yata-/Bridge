@@ -46,7 +46,7 @@ Bridge.Class.generic('Bridge.Dictionary$2', function (TKey, TValue) {
         },
 
         getValues: function () {
-            return new Bridge.DictionaryCollection$1(TKey)(this, false);
+            return new Bridge.DictionaryCollection$1(TValue)(this, false);
         },
 
         clear: function () {

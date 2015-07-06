@@ -159,6 +159,7 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
 
             this.checkIndex(index);
             this.items.splice(index, 1);
+            return true;
         },
 
         removeAt: function (index) {
