@@ -201,12 +201,18 @@ namespace Bridge.Translator.TypeScript
                 return "Number";
             }
 
+            if (name == "String")
+            {
+                return "string";
+            }
+
             if (decodeRegex == null)
             {
                 replacements = new System.Collections.Generic.Dictionary<string, string>(4);
                 replacements.Add("\\(", "<");
                 replacements.Add("\\)", ">");
                 replacements.Add("Bridge.Int", "Number");
+                replacements.Add("String", "string");
 
                 decodeRegex = new Regex("(" + String.Join("|", replacements.Keys.ToArray()) + ")", RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.Multiline);
             }
