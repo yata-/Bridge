@@ -37,7 +37,7 @@ namespace Bridge.Contract
         public static string GetConfigPath(string configFileName, bool folderMode, string location)
         {
             var folder = folderMode ? location : Path.GetDirectoryName(location);
-            var path = folder + Path.DirectorySeparatorChar + "bridge" + Path.DirectorySeparatorChar + configFileName;
+            var path = folder + Path.DirectorySeparatorChar + "Bridge" + Path.DirectorySeparatorChar + configFileName;
 
             if (!File.Exists(path))
             {
