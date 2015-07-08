@@ -11,18 +11,24 @@ ts="$(date +%Y%m%d%H%M%S)"
 tmpbrjs="bridge-${ts}.js"
 
 echo "$(date) - Building ${jsfile} and ${jsminf}"
-cd ../../Resources || {
+if [ -d ../../Resources ]; then
+ cd ../../Resources
+else
  if [ ! -e "${jsbfile}" ]; then
   echo "Unable to move to ../../Resources. Current WD: '$(pwd)'."
   exit 1
  fi
  # else, we're probably running build.sh from the directory itself
-}
+fi
 
 if [ ! -e "${jsbfile}" ]; then
  echo "Unable to locate '${jsbfile}'."
  exit 1
 fi
+
+fileheader="/*
+ * $(grep 'copyright *=' "${jsbfile}" | head -n1 | sed "s/.*copyright *= *\"\([^\"]\+\)\".*/\1/g;s/&#xD;&#xA;/\n * /g")
+ */"
 
 filelist="$(cat "${jsbfile}" | grep "<include name=" | sed "s/^.*<include name=\"\(.*\)\" *\/>.*\$/\1/")"
 
@@ -34,12 +40,18 @@ if [ -e "${tmpbrjs}" ]; then
  }
 fi
 
+# Add BOM to the beginning of the file
+echo -ne "\xef\xbb\xbf" >> "${tmpbrjs}"
+
+# Insert header
+echo "${fileheader}" >> "${tmpbrjs}"
+
 for file in ${filelist}; do
  if [ -e "${file}" ]; then
 #  echo "
 #// @source ${file}
 #" >> "${tmpbrjs}"
-  cat "${file}" >> "${tmpbrjs}"
+  sed "1s/^\xef\xbb\xbf//" "${file}" >> "${tmpbrjs}"
   echo "" >> "${tmpbrjs}" # add EOL at EOF. :)
  else
   echo "File '${file}' not found."
