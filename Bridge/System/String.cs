@@ -94,7 +94,7 @@ namespace System
         /// <param name="string1">Strings to concatenate to this string.</param>
         /// <param name="string2">Strings to concatenate to this string.</param>
         /// <returns></returns>
-        [Template("{string1}.concat({string2})")]
+        [Template("[{string1}, {string2}].join('')")]
         public static string Concat(string string1, string string2)
         {
             return null;
@@ -107,7 +107,7 @@ namespace System
         /// <param name="string2">Strings to concatenate to this string.</param>
         /// <param name="string3">Strings to concatenate to this string.</param>
         /// <returns></returns>
-        [Template("{string1}.concat({string2}, {string3})")]
+        [Template("[{string1}, {string2}, {string3}].join('')")]
         public static string Concat(string string1, string string2, string string3)
         {
             return null;
@@ -121,7 +121,7 @@ namespace System
         /// <param name="string3">Strings to concatenate to this string.</param>
         /// <param name="string4">Strings to concatenate to this string.</param>
         /// <returns></returns>
-        [Template("{string1}.concat({string2}, {string3}, {string4})")]
+        [Template("[{string1}, {string2}, {string3}, {string4}].join('')")]
         public static string Concat(string string1, string string2, string string3, string string4)
         {
             return null;
@@ -132,7 +132,7 @@ namespace System
         /// </summary>
         /// <param name="strings">Strings to concatenate to this string.</param>
         /// <returns></returns>
-        [Template("Bridge.String.concatArray({strings})")]
+        [Template("[{strings}].toString().split(',').join('')")]
         public static string Concat(params string[] strings)
         {
             return null;
@@ -144,7 +144,7 @@ namespace System
         /// <param name="object1">Strings to concatenate to this string.</param>
         /// <param name="object2">Strings to concatenate to this string.</param>
         /// <returns></returns>
-        [Template("Bridge.String.concatArray([{object1}, {object2}])")]
+        [Template("[{object1}, {object2}].join('')")]
         public static string Concat(object object1, object object2)
         {
             return null;
@@ -157,7 +157,7 @@ namespace System
         /// <param name="object2">Strings to concatenate to this string.</param>
         /// <param name="object3">Strings to concatenate to this string.</param>
         /// <returns></returns>
-        [Template("Bridge.String.concatArray([{object1}, {object2}, {object3}])")]
+        [Template("[{object1}, {object2}, {object3}].join('')")]
         public static string Concat(object object1, object object2, object object3)
         {
             return null;
@@ -171,7 +171,7 @@ namespace System
         /// <param name="object3">Strings to concatenate to this string.</param>
         /// <param name="object4">Strings to concatenate to this string.</param>
         /// <returns></returns>
-        [Template("Bridge.String.concatArray([{object1}, {object2}, {object3}, {object4}])")]
+        [Template("[{object1}, {object2}, {object3}, {object4}].join('')")]
         public static string Concat(object object1, object object2, object object3, object object4)
         {
             return null;
@@ -182,7 +182,7 @@ namespace System
         /// </summary>
         /// <param name="objects">Strings to concatenate to this string.</param>
         /// <returns></returns>
-        [Template("Bridge.String.concatArray({objects})")]
+        [Template("[{objects}].toString().split(',').join('')")]
         public static string Concat(params object[] objects)
         {
             return null;
