@@ -34,8 +34,7 @@ namespace Bridge.Translator.TypeScript
                 this.WriteOpenParentheses();
                 this.Write("value");
                 this.WriteColon();
-                var retType = BridgeTypes.ToJsName(customEventDeclaration.ReturnType, this.Emitter);
-                retType = EmitBlock.HandleType(retType);
+                var retType = EmitBlock.GetJsName(customEventDeclaration.ReturnType, this.Emitter);
                 this.Write(retType);
                 this.WriteCloseParentheses();
                 this.WriteColon();

@@ -40,10 +40,8 @@ namespace Bridge.Translator.TypeScript
 
             if (name.IsEmpty())
             {
-                name = BridgeTypes.ToJsName(this.TypeInfo.Type, this.Emitter, false, true);
+                name = EmitBlock.GetJsName(this.TypeInfo.Type, this.Emitter, false, true);
             }
-
-            name = EmitBlock.HandleType(name);
 
             if (this.TypeInfo.Ctors.Count == 0)
             {
@@ -128,8 +126,7 @@ namespace Bridge.Translator.TypeScript
                 needComma = true;
                 this.Write(name);
                 this.WriteColon();
-                name = BridgeTypes.ToJsName(p.Type, this.Emitter);
-                name = EmitBlock.HandleType(name);
+                name = EmitBlock.GetJsName(p.Type, this.Emitter);
                 this.Write(name);
             }
 

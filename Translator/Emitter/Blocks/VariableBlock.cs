@@ -59,9 +59,9 @@ namespace Bridge.Translator
 
                 if (variable.Initializer.IsNull && !this.VariableDeclarationStatement.Type.IsVar())
                 {
-                    var typeDef = this.Emitter.GetTypeDefinition(this.VariableDeclarationStatement.Type);
+                    var typeDef = this.Emitter.GetTypeDefinition(this.VariableDeclarationStatement.Type, true);
 
-                    if (typeDef.IsValueType && !this.Emitter.Validator.IsIgnoreType(typeDef))
+                    if (typeDef != null && typeDef.IsValueType && !this.Emitter.Validator.IsIgnoreType(typeDef))
                     {
                         hasInitializer = true;
                     }

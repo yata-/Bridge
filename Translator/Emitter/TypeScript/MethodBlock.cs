@@ -86,8 +86,7 @@ namespace Bridge.Translator.TypeScript
             this.EmitMethodParameters(methodDeclaration.Parameters, methodDeclaration);
             this.WriteColon();           
             
-            var retType = BridgeTypes.ToJsName(methodDeclaration.ReturnType, this.Emitter);
-            retType = EmitBlock.HandleType(retType);
+            var retType = EmitBlock.GetJsName(methodDeclaration.ReturnType, this.Emitter);
             this.Write(retType);
 
             if (isGeneric)
@@ -117,8 +116,7 @@ namespace Bridge.Translator.TypeScript
                 needComma = true;
                 this.Write(name);
                 this.WriteColon();
-                name = BridgeTypes.ToJsName(p.Type, this.Emitter);
-                name = EmitBlock.HandleType(name);
+                name = EmitBlock.GetJsName(p.Type, this.Emitter);
                 this.Write(name);
             }
 

@@ -36,12 +36,11 @@ namespace Bridge.Translator.TypeScript
             {
                 foreach (var field in info.Fields)
                 {
-                    if (field.Entity.HasModifier(Modifiers.Public))
+                    if (field.Entity.HasModifier(Modifiers.Public) || this.TypeInfo.IsEnum)
                     {
                         this.Write(field.GetName(this.Emitter));
                         this.WriteColon();
-                        string typeName = BridgeTypes.ToJsName(field.Entity.ReturnType, this.Emitter);
-                        typeName = EmitBlock.HandleType(typeName);
+                        string typeName = this.TypeInfo.IsEnum ? "number" : EmitBlock.GetJsName(field.Entity.ReturnType, this.Emitter);
                         this.Write(typeName);
                         this.WriteSemiColon();
                         this.WriteNewLine();
@@ -94,8 +93,7 @@ namespace Bridge.Translator.TypeScript
             this.WriteOpenParentheses();
             this.Write("value");
             this.WriteColon();
-            string typeName = BridgeTypes.ToJsName(ev.Entity.ReturnType, this.Emitter);
-            typeName = EmitBlock.HandleType(typeName);
+            string typeName = EmitBlock.GetJsName(ev.Entity.ReturnType, this.Emitter);
             this.Write(typeName);
             this.WriteCloseParentheses();
             this.WriteColon();
@@ -115,8 +113,7 @@ namespace Bridge.Translator.TypeScript
             {
                 this.Write("value");
                 this.WriteColon();
-                string typeName = BridgeTypes.ToJsName(ev.Entity.ReturnType, this.Emitter);
-                typeName = EmitBlock.HandleType(typeName);
+                string typeName = EmitBlock.GetJsName(ev.Entity.ReturnType, this.Emitter);
                 this.Write(typeName);                
             }
 
@@ -129,8 +126,7 @@ namespace Bridge.Translator.TypeScript
             }
             else
             {
-                string typeName = BridgeTypes.ToJsName(ev.Entity.ReturnType, this.Emitter);
-                typeName = EmitBlock.HandleType(typeName);
+                string typeName = EmitBlock.GetJsName(ev.Entity.ReturnType, this.Emitter);
                 this.Write(typeName);                
             }
 

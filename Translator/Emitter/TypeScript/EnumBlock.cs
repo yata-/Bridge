@@ -31,10 +31,8 @@ namespace Bridge.Translator.TypeScript
 
             if (name.IsEmpty())
             {
-                name = BridgeTypes.ToJsName(this.TypeInfo.Type, this.Emitter, false, true);
+                name = Bridge.Translator.TypeScript.EmitBlock.GetJsName(this.TypeInfo.Type, this.Emitter, false, true);
             }
-
-            name = Bridge.Translator.TypeScript.EmitBlock.HandleType(name);
 
             this.Write("export enum ");
             this.Write(name);
@@ -58,7 +56,7 @@ namespace Bridge.Translator.TypeScript
 
                     if (field != lastField)
                     {
-                        this.WriteComma();                        
+                        this.Write(",");                        
                     }
 
                     this.WriteNewLine();

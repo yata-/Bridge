@@ -53,8 +53,7 @@ namespace Bridge.Translator.TypeScript
                 {
                     this.Write("value");
                     this.WriteColon();
-                    name = BridgeTypes.ToJsName(p.ReturnType, this.Emitter);
-                    name = EmitBlock.HandleType(name);
+                    name = EmitBlock.GetJsName(p.ReturnType, this.Emitter);
                     this.Write(name);
                 }   
              
@@ -67,8 +66,7 @@ namespace Bridge.Translator.TypeScript
                 }
                 else
                 {
-                    name = BridgeTypes.ToJsName(p.ReturnType, this.Emitter);
-                    name = EmitBlock.HandleType(name);
+                    name = EmitBlock.GetJsName(p.ReturnType, this.Emitter);
                     this.Write(name);
                 }
 

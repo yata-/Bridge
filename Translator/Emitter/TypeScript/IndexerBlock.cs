@@ -40,8 +40,7 @@ namespace Bridge.Translator.TypeScript
                 {
                     this.Write(", value");
                     this.WriteColon();
-                    name = BridgeTypes.ToJsName(indexerDeclaration.ReturnType, this.Emitter);
-                    name = EmitBlock.HandleType(name);
+                    name = EmitBlock.GetJsName(indexerDeclaration.ReturnType, this.Emitter);
                     this.Write(name);
                     this.WriteCloseParentheses();
                     this.WriteColon();
@@ -50,8 +49,7 @@ namespace Bridge.Translator.TypeScript
                 else
                 {
                     this.WriteColon();
-                    name = BridgeTypes.ToJsName(indexerDeclaration.ReturnType, this.Emitter);
-                    name = EmitBlock.HandleType(name);
+                    name = EmitBlock.GetJsName(indexerDeclaration.ReturnType, this.Emitter);
                     this.Write(name);
                 }
                 
@@ -77,8 +75,7 @@ namespace Bridge.Translator.TypeScript
                 needComma = true;
                 this.Write(name);
                 this.WriteColon();
-                name = BridgeTypes.ToJsName(p.Type, this.Emitter);
-                name = EmitBlock.HandleType(name);
+                name = EmitBlock.GetJsName(p.Type, this.Emitter);
                 this.Write(name);
             }
 

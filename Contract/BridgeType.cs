@@ -274,7 +274,7 @@ namespace Bridge.Contract
             return BridgeTypes.ToJsName(resolveResult.Type, emitter);
         }
 
-        private static string AddModule(string name, BridgeType type, out bool isCustomName)
+        public static string AddModule(string name, BridgeType type, out bool isCustomName)
         {
             isCustomName = false;
             var emitter = type.Emitter;
@@ -310,7 +310,7 @@ namespace Bridge.Contract
         private static System.Collections.Generic.Dictionary<string, string> replacements;
         private static Regex convRegex;
 
-        private static string ConvertName(string name)
+        public static string ConvertName(string name)
         {
             if (BridgeTypes.convRegex == null)
             {

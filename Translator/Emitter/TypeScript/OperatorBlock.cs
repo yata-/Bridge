@@ -43,8 +43,7 @@ namespace Bridge.Translator.TypeScript
 
             this.WriteColon();
 
-            var retType = BridgeTypes.ToJsName(operatorDeclaration.ReturnType, this.Emitter);
-            retType = EmitBlock.HandleType(retType);
+            var retType = EmitBlock.GetJsName(operatorDeclaration.ReturnType, this.Emitter);
             this.Write(retType);
 
             this.WriteSemiColon();
@@ -68,8 +67,7 @@ namespace Bridge.Translator.TypeScript
                 needComma = true;
                 this.Write(name);
                 this.WriteColon();
-                name = BridgeTypes.ToJsName(p.Type, this.Emitter);
-                name = EmitBlock.HandleType(name);
+                name = EmitBlock.GetJsName(p.Type, this.Emitter);
                 this.Write(name);
             }
 

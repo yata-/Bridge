@@ -55,6 +55,7 @@ namespace Bridge.Translator
                 this.WriteSpace();
                 this.BeginBlock();
                 this.WriteReturn(true);
+                this.Write("Bridge.fn.bind(this, ");
             }
 
             this.WriteFunction();
@@ -91,8 +92,9 @@ namespace Bridge.Translator
 
             if (methodDeclaration.TypeParameters.Count > 0)
             {
+                this.Write(");");
                 this.WriteNewLine();
-                this.EndBlock();
+                this.EndBlock();                
             }
 
             this.ClearLocalsMap(prevMap);

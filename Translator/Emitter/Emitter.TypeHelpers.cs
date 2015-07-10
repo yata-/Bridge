@@ -97,10 +97,11 @@ namespace Bridge.Translator
             return this.BridgeTypes.Get(type).TypeDefinition;
         }
 
-        public virtual TypeDefinition GetTypeDefinition(AstType reference)
+        public virtual TypeDefinition GetTypeDefinition(AstType reference, bool safe = false)
         {
             var resolveResult = this.Resolver.ResolveNode(reference, this) as TypeResolveResult;
-            return this.BridgeTypes.Get(resolveResult.Type).TypeDefinition;
+            var type = this.BridgeTypes.Get(resolveResult.Type, safe);
+            return type != null ? type.TypeDefinition :  null;
         }
 
         public virtual TypeDefinition GetBaseTypeDefinition()
