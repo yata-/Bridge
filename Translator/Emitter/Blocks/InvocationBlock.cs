@@ -232,7 +232,7 @@ namespace Bridge.Translator
                                     this.WriteComma();
                                 }
 
-                                new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
+                                new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, invocationExpression).Emit();
 
                                 this.WriteCloseParentheses();
                             }
@@ -394,7 +394,7 @@ namespace Bridge.Translator
                     }
 
                     this.WriteOpenParentheses();
-                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
+                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, invocationExpression).Emit();
                     this.WriteCloseParentheses();
                 }
             }
