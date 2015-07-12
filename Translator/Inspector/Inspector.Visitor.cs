@@ -28,7 +28,7 @@ namespace Bridge.Translator
         {
             if (!String.IsNullOrEmpty(this.Namespace))
             {
-                throw (Exception)this.CreateException(namespaceDeclaration, "Nested namespaces are not supported");
+                throw (EmitterException)this.CreateException(namespaceDeclaration, "Nested namespaces are not supported");
             }
 
             ValidateNamespace(namespaceDeclaration);
@@ -144,7 +144,7 @@ namespace Bridge.Translator
                 {
                     if (this.CurrentType.ClassType == ClassType.Enum)
                     {
-                        throw (Exception)this.CreateException(fieldDeclaration, "Enum items must be explicitly numbered");
+                        throw (EmitterException)this.CreateException(fieldDeclaration, "Enum items must be explicitly numbered");
                     }
 
                     initializer = this.GetDefaultFieldInitializer(fieldDeclaration.ReturnType);
