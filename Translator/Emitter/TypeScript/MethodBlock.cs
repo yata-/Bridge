@@ -117,6 +117,10 @@ namespace Bridge.Translator.TypeScript
                 this.Write(name);
                 this.WriteColon();
                 name = EmitBlock.GetJsName(p.Type, this.Emitter);
+                if (p.ParameterModifier == ParameterModifier.Out || p.ParameterModifier == ParameterModifier.Ref)
+                {
+                    name = "{v: " + name + "}";
+                }
                 this.Write(name);
             }
 

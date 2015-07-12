@@ -276,7 +276,14 @@ namespace Bridge.Translator.TypeScript
                 var last = method.Parameters.LastOrDefault();
                 foreach (var p in method.Parameters)
                 {
-                    sb.Append(EmitBlock.GetJsName(p.Type, emitter));
+                    var ptype = EmitBlock.GetJsName(p.Type, emitter);
+
+                    if (p.IsOut || p.IsRef)
+                    {
+                        ptype = "{v: " + ptype + "}";
+                    }
+
+                    sb.Append(p.Name + ": " + ptype);
                     if (p != last)
                     {
                         sb.Append(", ");
