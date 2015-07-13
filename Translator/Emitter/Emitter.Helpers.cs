@@ -199,7 +199,7 @@ namespace Bridge.Translator
                         ((isStatic && Emitter.IsReservedStaticName(name)) ||
                         Helpers.IsReservedWord(name)))
                     {
-                        name = "$" + name;
+                        name = Helpers.ChangeReservedWord(name);
                     }
                     return name;
                 }
@@ -216,7 +216,7 @@ namespace Bridge.Translator
                 ((isStatic && Emitter.IsReservedStaticName(name)) ||
                 Helpers.IsReservedWord(name)))
             {
-                name = "$" + name;
+                name = Helpers.ChangeReservedWord(name);
             }
 
             return name;
@@ -250,7 +250,7 @@ namespace Bridge.Translator
                     name = value.ToString();
                     if (!isIgnore && ((member.IsStatic && Emitter.IsReservedStaticName(name)) || Helpers.IsReservedWord(name)))
                     {
-                        name = "$" + name;
+                        name = Helpers.ChangeReservedWord(name);
                     }
                     return name;
                 }
@@ -282,7 +282,7 @@ namespace Bridge.Translator
                     name = value.ToString();
                     if (!isIgnore && ((member.IsStatic && Emitter.IsReservedStaticName(name)) || Helpers.IsReservedWord(name)))
                     {
-                        name = "$" + name;
+                        name = Helpers.ChangeReservedWord(name);
                     }
                     return name;
                 }
@@ -294,7 +294,7 @@ namespace Bridge.Translator
 
             if (!isIgnore && ((member.IsStatic && Emitter.IsReservedStaticName(name)) || Helpers.IsReservedWord(name)))
             {
-                name = "$" + name;
+                name = Helpers.ChangeReservedWord(name);
             }
 
             return name;
@@ -341,7 +341,7 @@ namespace Bridge.Translator
 
             if (Helpers.IsReservedWord(name))
             {
-                name = "$" + name;
+                name = Helpers.ChangeReservedWord(name);
             }
 
             return name;

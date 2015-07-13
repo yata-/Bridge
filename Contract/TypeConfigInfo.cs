@@ -56,7 +56,7 @@ namespace Bridge.Contract
 
                 if (Helpers.IsReservedWord(fieldName))
                 {
-                    fieldName = "$" + fieldName;
+                    fieldName = Helpers.ChangeReservedWord(fieldName);
                 }
             }
             return fieldName;

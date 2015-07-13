@@ -451,6 +451,16 @@ namespace Bridge.Contract
             return reservedWords.Contains(word);
         }
 
+        public static string ChangeReservedWord(string name)
+        {
+            if (name == "constructor")
+            {
+                return "$constructor$";
+            }
+
+            return "$" + name;
+        }
+
         public static object GetEnumValue(IEmitter emitter, IType type, object constantValue)
         {
             var enumMode = emitter.Validator.EnumEmitMode(type);
