@@ -85,23 +85,17 @@ namespace Bridge.Translator.TypeScript
                         ctorName = overloads.GetOverloadName();
                     }
 
-                    if (!isGeneric)
-                    {                        
-                        this.Write(ctorName);
-                        this.WriteColon();
-                        this.BeginBlock();
-                    }
+                    this.Write(ctorName);
+                    this.WriteColon();
+                    this.BeginBlock();
                     
                     this.WriteNew();
                     this.EmitMethodParameters(ctor.Parameters, ctor);
                     this.WriteColon();                    
 
                     this.Write(name);
-                    if(!isGeneric) 
-                    {
-                        this.WriteNewLine();
-                        this.EndBlock();
-                    }
+                    this.WriteNewLine();
+                    this.EndBlock();
 
                     this.WriteSemiColon();
                     this.WriteNewLine();
