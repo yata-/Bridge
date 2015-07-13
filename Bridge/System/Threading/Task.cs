@@ -176,9 +176,15 @@ namespace System.Threading.Tasks
         {
 			return null;
 		}
+
+        public static Task<TResult> FromPromise<TResult>(IPromise promise, Delegate resultHandler, Delegate errorHandler)
+        {
+            return null;
+        }
 	}
 
     [Ignore]
+    [IgnoreGeneric]
     [Name("Bridge.Task")]
 	public class Task<TResult> : Task
     {

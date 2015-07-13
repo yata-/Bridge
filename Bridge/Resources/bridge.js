@@ -5017,7 +5017,7 @@ Bridge.define('Bridge.Task', {
             return task;
         },
 
-        fromPromise: function (promise, handler) {
+        fromPromise: function (promise, handler, errorHandler) {
             var task = new Bridge.Task();
 
             if (!promise.then) {
@@ -5027,7 +5027,7 @@ Bridge.define('Bridge.Task', {
             promise.then(function () {
                 task.setResult(handler ? handler.apply(null, arguments) : arguments);
             }, function () {
-                task.setError(new Error(Array.prototype.slice.call(arguments, 0)));
+                task.setError(errorHandler ? errorHandler.apply(null, arguments) : new Error(Array.prototype.slice.call(arguments, 0)));
             });
 
             return task;
