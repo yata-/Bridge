@@ -446,7 +446,7 @@ namespace Bridge.Contract
                 }
 
                 var iCount1 = m1.ImplementedInterfaceMembers.Count;
-                var iCount2 = m1.ImplementedInterfaceMembers.Count;
+                var iCount2 = m2.ImplementedInterfaceMembers.Count;
                 if (iCount1 > 0 && iCount2 == 0)
                 {
                     return -1;
