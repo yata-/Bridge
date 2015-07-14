@@ -100,7 +100,7 @@ namespace Bridge.Contract
             return new OverloadsCollection(emitter, operatorDeclaration);
         }
 
-        public static OverloadsCollection Create(IEmitter emitter, IMember member, bool isSetter = false)
+        public static OverloadsCollection Create(IEmitter emitter, IMember member, bool isSetter = false, bool includeInline = false)
         {
             string key = (member.MemberDefinition != null ? member.MemberDefinition.GetHashCode().ToString() : member.GetHashCode().ToString()) + isSetter.GetHashCode().ToString();
             if (emitter.OverloadsCache.ContainsKey(key))
@@ -108,7 +108,7 @@ namespace Bridge.Contract
                 return emitter.OverloadsCache[key];
             }
 
-            return new OverloadsCollection(emitter, member, isSetter);
+            return new OverloadsCollection(emitter, member, isSetter, includeInline);
         }
 
         public IEmitter Emitter
@@ -178,6 +178,12 @@ namespace Bridge.Contract
         }
 
         public bool IsSetter
+        {
+            get;
+            private set;
+        }
+
+        public bool IncludeInline
         {
             get;
             private set;
@@ -312,7 +318,7 @@ namespace Bridge.Contract
             this.Emitter.OverloadsCache[operatorDeclaration.GetHashCode().ToString()] = this;
         }
 
-        private OverloadsCollection(IEmitter emitter, IMember member, bool isSetter = false)
+        private OverloadsCollection(IEmitter emitter, IMember member, bool isSetter = false, bool includeInline = false)
         {
             if (member is IMethod)
             {
@@ -348,6 +354,7 @@ namespace Bridge.Contract
                 this.JsName = this.Emitter.GetEntityName(member, false, true);
             }
 
+            this.IncludeInline = includeInline;
             this.Member = member;
             this.TypeDefinition = this.Member.DeclaringTypeDefinition;
             this.Type = this.Member.DeclaringType;
@@ -556,11 +563,14 @@ namespace Bridge.Contract
             {
                 var methods = typeDef.Methods.Where(m =>
                 {
-                    var inline = this.Emitter.GetInline(m);
-                    if (!string.IsNullOrWhiteSpace(inline))
+                    if (!this.IncludeInline)
                     {
-                        return false;
-                    }
+                        var inline = this.Emitter.GetInline(m);
+                        if (!string.IsNullOrWhiteSpace(inline))
+                        {
+                            return false;
+                        }
+                    }                    
 
                     var name = this.Emitter.GetEntityName(m, false, true);
                     if ((name == this.JsName || name == this.AltJsName) && m.IsStatic == this.Static &&
@@ -615,18 +625,21 @@ namespace Bridge.Contract
             {
                 var properties = typeDef.Properties.Where(p =>
                 {
-                    var inline = p.Getter != null ? this.Emitter.GetInline(p.Getter) : null;
-                    if (!string.IsNullOrWhiteSpace(inline))
+                    if (!this.IncludeInline)
                     {
-                        return false;
-                    }
+                        var inline = p.Getter != null ? this.Emitter.GetInline(p.Getter) : null;
+                        if (!string.IsNullOrWhiteSpace(inline))
+                        {
+                            return false;
+                        }
 
-                    inline = p.Setter != null ? this.Emitter.GetInline(p.Setter) : null;
-                    if (!string.IsNullOrWhiteSpace(inline))
-                    {
-                        return false;
+                        inline = p.Setter != null ? this.Emitter.GetInline(p.Setter) : null;
+                        if (!string.IsNullOrWhiteSpace(inline))
+                        {
+                            return false;
+                        }
                     }
-
+                    
                     bool eq = false;
                     if (p.IsStatic == this.Static)
                     {
@@ -859,7 +872,7 @@ namespace Bridge.Contract
             {
                 foreach (var iMember in definition.ImplementedInterfaceMembers)
                 {
-                    if (OverloadsCollection.Create(this.Emitter, iMember).GetOverloadName() != name)
+                    if (OverloadsCollection.Create(this.Emitter, iMember, false, true).GetOverloadName() != name)
                     {
                         string message = "Cannot translate interface ({2}) member '{0}' in '{1}' due name conflicts. Please rename methods or refactor your code";
                         throw new Exception(string.Format(message,definition.ToString(), definition.DeclaringType.ToString(), iMember.DeclaringType.ToString()));
