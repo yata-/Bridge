@@ -131,12 +131,13 @@ namespace Bridge.Translator
                 // If 'fileName' is an absolute path, Path.Combine will ignore the 'path' prefix.
                 string filePath = Path.Combine(path, fileName);
                 string extension = Path.GetExtension(filePath);
-                bool isJs = extension == Bridge.Translator.AssemblyInfo.JAVASCRIPT_EXTENSION;
+                bool isJs = extension == ('.' + Bridge.Translator.AssemblyInfo.JAVASCRIPT_EXTENSION);
 
                 System.IO.FileInfo file;
 
                 // We can only have Beautified, Minified or Both, so this test has inverted logic:
                 // output beautified if not minified only == (output beautified or output both)
+                // Check by @vladsch: Output anyway if the class is not a JavaScript file.
                 if (this.AssemblyInfo.OutputFormatting != JavaScriptOutputType.Minified || !isJs)
                 {
                     file = new System.IO.FileInfo(filePath);
@@ -146,6 +147,7 @@ namespace Bridge.Translator
                 }
 
                 // Like above test: output minified if not beautified only == (out minified or out both)
+                // Check by @vladsch: Output minified is allowed only and only if it is a JavaScript being output.
                 if (this.AssemblyInfo.OutputFormatting != JavaScriptOutputType.Formatted && isJs)
                 {
                     fileName = Path.GetFileNameWithoutExtension(filePath) + ".min" + extension;
