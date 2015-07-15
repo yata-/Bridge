@@ -198,7 +198,15 @@ namespace Bridge.Translator
 
                 if (isStatic)
                 {
-                    this.Write(BridgeTypes.ToJsName(member.DeclaringType, this.Emitter));
+                    if (memberResult != null)
+                    {
+                        this.Write(BridgeTypes.ToJsName(memberResult.Member.DeclaringType, this.Emitter));
+                    }
+                    else
+                    {
+                        this.Write(BridgeTypes.ToJsName(member.DeclaringType, this.Emitter));
+                    }
+                    
                 }
                 else
                 {

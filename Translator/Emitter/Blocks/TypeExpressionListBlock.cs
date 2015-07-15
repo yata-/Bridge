@@ -50,6 +50,11 @@ namespace Bridge.Translator
 
             foreach (var expr in expressions)
             {
+                if (expr.Inherited)
+                {
+                    continue;
+                }
+
                 this.Emitter.Translator.EmitNode = expr.AstType;
                 if (needComma)
                 {

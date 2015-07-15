@@ -257,7 +257,7 @@ namespace Bridge.Translator
 
                     for (int i = 0; i < typeParams.Count; i++)
                     {
-                        temp[i] = new TypeParamExpression(typeParams[i].Name, null, typeArgs[i]);
+                        temp[i] = new TypeParamExpression(typeParams[i].Name, null, typeArgs[i], true);
                     }
 
                     this.TypeArguments = this.TypeArguments.Concat(temp).ToArray();
@@ -532,11 +532,12 @@ namespace Bridge.Translator
 
     public class TypeParamExpression
     {
-        public TypeParamExpression(string name, AstType type, IType iType)
+        public TypeParamExpression(string name, AstType type, IType iType, bool inherited = false)
         {
             this.Name = name;
             this.AstType = type;
             this.IType = iType;
+            this.Inherited = inherited;
         }
 
         public string Name
@@ -552,6 +553,12 @@ namespace Bridge.Translator
         }
 
         public IType IType
+        {
+            get;
+            private set;
+        }
+
+        public bool Inherited
         {
             get;
             private set;
