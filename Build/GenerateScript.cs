@@ -126,6 +126,8 @@ namespace Bridge.Build
                 {
                     Bridge.Translator.Translator.ExtractCore(translator, outputPath);
                 }
+
+                translator.Plugins.AfterOutput(translator, outputPath, this.NoCore);
             }
             catch (EmitterException e)
             {

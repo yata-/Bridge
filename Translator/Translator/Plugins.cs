@@ -98,6 +98,14 @@ namespace Bridge.Translator
             }
         }
 
+        public void AfterOutput(ITranslator translator, string outputPath, bool nocore)
+        {
+            foreach (var plugin in this.Parts)
+            {
+                plugin.AfterOutput(translator, outputPath, nocore);
+            }
+        }
+
         public void BeforeTypesEmit(IEmitter emitter, IList<ITypeInfo> types)
         {
             foreach (var plugin in this.Parts)

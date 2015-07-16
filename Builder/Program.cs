@@ -178,6 +178,8 @@ namespace Bridge.Builder
                     Bridge.Translator.Translator.ExtractCore(translator, outputPath);
                 }
 
+                translator.Plugins.AfterOutput(translator, outputPath, !extractCore);
+
                 Console.WriteLine("Done.");
             }
             catch (EmitterException e)

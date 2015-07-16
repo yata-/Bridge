@@ -236,7 +236,7 @@ namespace Bridge.Translator
         {
             this.EmitInitMembers();
 
-            if (!this.TypeInfo.HasInstantiable)
+            if (!this.TypeInfo.HasInstantiable || this.Emitter.Plugins.HasConstructorInjectors(this))
             {
                 return;
             }

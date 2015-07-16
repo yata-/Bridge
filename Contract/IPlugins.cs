@@ -14,5 +14,6 @@ namespace Bridge.Contract
         void AfterTypesEmit(IEmitter emitter, IList<ITypeInfo> types);
         void BeforeTypeEmit(IEmitter emitter, ITypeInfo type);
         void AfterTypeEmit(IEmitter emitter, ITypeInfo type);
+        void AfterOutput(Bridge.Contract.ITranslator translator, string outputPath, bool nocore);
     }
 }

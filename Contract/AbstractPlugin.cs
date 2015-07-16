@@ -45,5 +45,9 @@ namespace Bridge.Contract
         public virtual void AfterTypeEmit(IEmitter emitter, ITypeInfo type)
         {
         }
+
+        public virtual void AfterOutput(ITranslator translator, string outputPath, bool nocore)
+        {
+        }
     }
 }
