@@ -5289,7 +5289,7 @@ Bridge.define('Bridge.TaskStatus', {
             checksum = 0;
 
             for (i = (2 - (value.length % 2)) ; i <= value.length; i += 2) {
-                checksum += parseInt(ccnum.charAt(i - 1));
+                checksum += parseInt(value.charAt(i - 1));
             }
 
             // Analyze odd digits in even length strings or even digits in odd length strings.
