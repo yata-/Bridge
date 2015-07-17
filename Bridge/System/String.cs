@@ -1,6 +1,7 @@
 ﻿using Bridge;
 using System.Text.RegularExpressions;
 using System.Globalization;
+using System.Collections;
 
 namespace System
 {
@@ -10,9 +11,16 @@ namespace System
     [Ignore]
     [Name("String")]
     [Constructor("String")]
-    public sealed class String
+    public sealed class String : IEnumerable
     {
-        public readonly int Length = 0;
+        [FieldProperty]
+        public int Length
+        {
+            get
+            {
+                return 0;
+            }
+        }
 
         [InlineConst]
         public const string Empty = "";
@@ -803,6 +811,12 @@ namespace System
             {
                 return default(char);
             }
+        }
+
+        [Template("Bridge.getEnumerator({this})")]
+        public IEnumerator GetEnumerator()
+        {
+            return null;
         }
     }
 }
