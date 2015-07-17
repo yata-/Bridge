@@ -497,6 +497,10 @@
             else if (Bridge.isNull(a) && Bridge.isNull(b)) {
                 return true;
             }
+            else if (Bridge.isNull(a) !== Bridge.isNull(b)) {
+                return false;
+            }
+
 
             if (typeof a == "object" && typeof b == "object") {
                 return (Bridge.getHashCode(a) === Bridge.getHashCode(b)) && Bridge.objectEquals(a, b);
@@ -924,6 +928,12 @@
 	                return null;
 	            }
 	        }
+
+	        if (arguments[0] == null)
+	            return null;
+
+	        if (arguments[0].apply == undefined)
+	            return arguments[0];
 
 	        return arguments[0].apply(null, Array.prototype.slice.call(arguments, 1));
         }
@@ -4038,6 +4048,38 @@ Bridge.define('Bridge.Text.StringBuilder', {
         }
     }
 });
+// @source Text/Regex.js
+
+(function () {
+    specials = [
+            // order matters for these
+                "-"
+            , "["
+            , "]"
+            // order doesn't matter for any of these
+            , "/"
+            , "{"
+            , "}"
+            , "("
+            , ")"
+            , "*"
+            , "+"
+            , "?"
+            , "."
+            , "\\"
+            , "^"
+            , "$"
+            , "|"
+    ],
+
+    regex = RegExp('[' + specials.join('\\') + ']', 'g');
+
+    var regexpEscape = function (s) {
+        return s.replace(regex, "\\$&");
+    };
+
+    Bridge.regexpEscape = regexpEscape;
+})();
 // @source Browser.js
 
 (function () {

@@ -191,6 +191,7 @@
     <Content Include="Resources\linq.js" />
     <Content Include="Resources\Locales\ru-RU.js" />
     <Content Include="Resources\Char.js" />
+    <Content Include="Resources\Text\Regex.js" />
     <Content Include="Resources\Text\StringBuilder.js" />
     <Content Include="Resources\TimeSpan.js" />
     <Content Include="Resources\Integer.js" />
@@ -205,6 +206,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\bridge.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Bridge.jsb" />
+    <None Include="Resources\build.bat" />
+    <None Include="Resources\build.sh" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
