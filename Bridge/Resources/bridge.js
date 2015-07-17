@@ -497,6 +497,10 @@
             else if (Bridge.isNull(a) && Bridge.isNull(b)) {
                 return true;
             }
+            else if (Bridge.isNull(a) !== Bridge.isNull(b)) {
+                return false;
+            }
+
 
             if (typeof a == "object" && typeof b == "object") {
                 return (Bridge.getHashCode(a) === Bridge.getHashCode(b)) && Bridge.objectEquals(a, b);
