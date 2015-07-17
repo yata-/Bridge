@@ -925,6 +925,12 @@
 	            }
 	        }
 
+	        if (arguments[0] == null)
+	            return null;
+
+	        if (arguments[0].apply == undefined)
+	            return arguments[0];
+
 	        return arguments[0].apply(null, Array.prototype.slice.call(arguments, 1));
         }
     };
