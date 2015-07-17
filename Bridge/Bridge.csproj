@@ -207,6 +207,11 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\bridge.d.ts" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Bridge.jsb" />
+    <None Include="Resources\build.bat" />
+    <None Include="Resources\build.sh" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent Condition="$(OS) != Unix">"$(ProjectDir)\Resources\build.bat"</PreBuildEvent>
