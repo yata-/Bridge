@@ -191,6 +191,7 @@
     <Content Include="Resources\linq.js" />
     <Content Include="Resources\Locales\ru-RU.js" />
     <Content Include="Resources\Char.js" />
+    <Content Include="Resources\Text\Regex.js" />
     <Content Include="Resources\Text\StringBuilder.js" />
     <Content Include="Resources\TimeSpan.js" />
     <Content Include="Resources\Integer.js" />

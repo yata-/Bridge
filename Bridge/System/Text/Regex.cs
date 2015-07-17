@@ -14,6 +14,8 @@ namespace System.Text.RegularExpressions
         {
 		}
 
+        [FieldProperty]
+        [Name("lastIndex")]
 		public int LastIndex
         {
 			get
@@ -25,52 +27,58 @@ namespace System.Text.RegularExpressions
 			}
 		}
 
+        [FieldProperty]
+        [Name("global")]
 		public bool Global
         {
-            [Name("global")]
 			get
             {
 				return false;
 			}
 		}
 
+        [FieldProperty]
+        [Name("ignoreCase")]
 		public bool IgnoreCase
         {
-            [Name("ignoreCase")]
 			get
             {
 				return false;
 			}
 		}
 
+        [FieldProperty]
+        [Name("multiline")]
 		public bool Multiline
         {
-            [Name("multiline")]
 			get
             {
 				return false;
 			}
 		}
 
+        [FieldProperty]
+        [Name("source")]
 		public string Pattern
         {
-            [Name("source")]
 			get
             {
 				return null;
 			}
 		}
 
+        [FieldProperty]
+        [Name("source")]
 		public string Source
         {
-            [Name("source")]
 			get
             {
 				return null;
 			}
 		}
 
-		public RegexMatch Exec(string s)
+        public string[] Exec(string s)
+		//public RegexMatch Exec(string s)
         {
 			return null;
 		}
