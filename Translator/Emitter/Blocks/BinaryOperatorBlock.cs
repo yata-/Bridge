@@ -1,6 +1,7 @@
 ﻿using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
+using ICSharpCode.NRefactory.TypeSystem;
 
 namespace Bridge.Translator
 {
@@ -128,10 +129,15 @@ namespace Bridge.Translator
 
             //bool nullable = NullableType.IsNullable(leftResolverResult.Type) || NullableType.IsNullable(rightResolverResult.Type);
             bool nullable = orr != null && orr.IsLiftedOperator;
+            bool isCoalescing = binaryOperatorExpression.Operator == BinaryOperatorType.NullCoalescing;
 
             if (nullable)
             {
                 this.Write(Bridge.Translator.Emitter.ROOT + ".Nullable.");
+            }
+            else if (isCoalescing)
+            {
+                this.Write(Bridge.Translator.Emitter.ROOT + ".");
             }
             else
             {
@@ -140,26 +146,43 @@ namespace Bridge.Translator
 
             if (!delegateOperator)
             {
-                if (!nullable)
+                if (!nullable && !isCoalescing)
                 {
                     this.WriteSpace();
                 }
-
+                bool isBool = NullableType.IsNullable(resolveOperator.Type) ? NullableType.GetUnderlyingType(resolveOperator.Type).IsKnownType(KnownTypeCode.Boolean) : resolveOperator.Type.IsKnownType(KnownTypeCode.Boolean);
                 switch (binaryOperatorExpression.Operator)
                 {
                     case BinaryOperatorType.Add:
                         this.Write(nullable ? "add" : "+");
                         break;
                     case BinaryOperatorType.BitwiseAnd:
-                        this.Write(nullable ? "band" : "&");
+                        if (isBool)
+                        {
+                            this.Write(nullable ? "and" : "&&");
+                        }
+                        else
+                        {
+                            this.Write(nullable ? "band" : "&");
+                        }
+                        
                         break;
                     case BinaryOperatorType.BitwiseOr:
-                        this.Write(nullable ? "bor" : "|");
+                        if (isBool)
+                        {
+                            this.Write(nullable ? "or" : "||");
+                        }
+                        else
+                        {
+                            this.Write(nullable ? "bor" : "|");
+                        }
                         break;
                     case BinaryOperatorType.ConditionalAnd:
                         this.Write(nullable ? "and" : "&&");
                         break;
                     case BinaryOperatorType.NullCoalescing:
+                        this.Write("coalesce");
+                        break;
                     case BinaryOperatorType.ConditionalOr:
                         this.Write(nullable ? "or" : "||");
                         break;
@@ -211,7 +234,7 @@ namespace Bridge.Translator
                 this.WriteComma();
             }
 
-            if (nullable)
+            if (nullable || isCoalescing)
             {
                 this.WriteOpenParentheses();
                 binaryOperatorExpression.Left.AcceptVisitor(this.Emitter);
@@ -224,7 +247,7 @@ namespace Bridge.Translator
 
             binaryOperatorExpression.Right.AcceptVisitor(this.Emitter);
 
-            if (delegateOperator || nullable)
+            if (delegateOperator || nullable || isCoalescing)
             {
                 this.WriteCloseParentheses();
             }

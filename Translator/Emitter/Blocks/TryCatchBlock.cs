@@ -254,7 +254,18 @@ namespace Bridge.Translator
                 this.WriteCloseParentheses();
                 this.WriteSpace();
 
+                this.BeginBlock();
+                this.Write(string.Format("{0} = Bridge.Exception.create({0});", varName));
+                this.WriteNewLine();
+                this.Emitter.NoBraceBlock = clause.Body;
                 clause.Body.AcceptVisitor(this.Emitter);
+                if (!this.Emitter.IsNewLine)
+                {
+                    this.WriteNewLine();
+                }
+                
+                this.EndBlock();
+                this.WriteNewLine();
 
                 this.PopLocals();
             }
