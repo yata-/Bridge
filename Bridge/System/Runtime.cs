@@ -312,6 +312,21 @@ namespace System.Runtime.Versioning
 
 namespace System.Runtime.CompilerServices
 {
+    [Ignore]
+    [AttributeUsage(AttributeTargets.Property)]
+    public class IndexerNameAttribute : Attribute
+    {
+        public IndexerNameAttribute(string indexerName)
+        {
+            this.Value = indexerName;
+        }
+        public string Value
+        {
+            get;
+            private set;
+        }
+    }
+
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Field)]
     public sealed class DecimalConstantAttribute : Attribute
     {

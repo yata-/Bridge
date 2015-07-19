@@ -374,6 +374,10 @@
 	    },
 
 	    getEnumerator: function (obj, suffix) {
+	        if (typeof obj === "string") {
+	            obj = Bridge.String.toCharArray(obj);
+	        }
+
 	        if (suffix && obj && obj["getEnumerator" + suffix]) {
 	            return obj["getEnumerator" + suffix].call(obj);
 	        }
@@ -630,6 +634,10 @@
             var s = String.fromCharCode(c);
 
             return s !== s.toLowerCase() && s === s.toUpperCase();
+        },
+
+        coalesce: function (a, b) {
+            return Bridge.hasValue(a) ? a : b;
         },
 
         fn: {

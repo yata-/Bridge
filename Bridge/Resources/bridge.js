@@ -383,6 +383,10 @@
 	    },
 
 	    getEnumerator: function (obj, suffix) {
+	        if (typeof obj === "string") {
+	            obj = Bridge.String.toCharArray(obj);
+	        }
+
 	        if (suffix && obj && obj["getEnumerator" + suffix]) {
 	            return obj["getEnumerator" + suffix].call(obj);
 	        }
@@ -639,6 +643,10 @@
             var s = String.fromCharCode(c);
 
             return s !== s.toLowerCase() && s === s.toUpperCase();
+        },
+
+        coalesce: function (a, b) {
+            return Bridge.hasValue(a) ? a : b;
         },
 
         fn: {
@@ -1322,6 +1330,14 @@
                 throw new Bridge.ArgumentOutOfRangeException("length", "must be non-negative");
             }
 
+            if (!Bridge.hasValue(startIndex)) {
+                startIndex = 0;
+            }
+
+            if (!Bridge.hasValue(length)) {
+                length = str.length;
+            }
+
             var arr = [];
 
             for (var i = startIndex; i < startIndex + length; i++) {
@@ -1329,6 +1345,13 @@
             }
 
             return arr;
+        },
+
+        replaceAll: function (str, a, b) {
+            a = a.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+            var reg = new RegExp(a, "g");
+
+            return str.replace(reg, b);
         }
     };
 

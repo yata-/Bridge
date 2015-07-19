@@ -298,6 +298,14 @@
                 throw new Bridge.ArgumentOutOfRangeException("length", "must be non-negative");
             }
 
+            if (!Bridge.hasValue(startIndex)) {
+                startIndex = 0;
+            }
+
+            if (!Bridge.hasValue(length)) {
+                length = str.length;
+            }
+
             var arr = [];
 
             for (var i = startIndex; i < startIndex + length; i++) {
@@ -305,6 +313,13 @@
             }
 
             return arr;
+        },
+
+        replaceAll: function (str, a, b) {
+            a = a.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+            var reg = new RegExp(a, "g");
+
+            return str.replace(reg, b);
         }
     };
 

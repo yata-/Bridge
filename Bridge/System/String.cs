@@ -2,6 +2,8 @@
 using System.Text.RegularExpressions;
 using System.Globalization;
 using System.Collections;
+using System.Runtime.CompilerServices;
+using System.Collections.Generic;
 
 namespace System
 {
@@ -11,7 +13,7 @@ namespace System
     [Ignore]
     [Name("String")]
     [Constructor("String")]
-    public sealed class String : IEnumerable
+    public sealed class String : IEnumerable, IEnumerable<char>
     {
         [FieldProperty]
         public int Length
@@ -531,6 +533,7 @@ namespace System
         /// <param name="substr">A String that is to be replaced by newSubStr.</param>
         /// <param name="newSubStr">The String that replaces the substring received from parameter #1. A number of special replacement patterns are supported; see the "Specifying a string as a parameter" section below.</param>
         /// <returns></returns>
+        [Template("Bridge.String.replaceAll({this}, {substr}, {newSubStr})")]
         public string Replace(string substr, string newSubStr)
         {
             return null;
@@ -542,6 +545,7 @@ namespace System
         /// <param name="substr">A String that is to be replaced by newSubStr.</param>
         /// <param name="callback"></param>
         /// <returns></returns>
+        [Template("Bridge.String.replaceAll({this}, {substr}, {callback})")]
         public string Replace(string substr, Delegate callback)
         {
             return null;
@@ -553,6 +557,7 @@ namespace System
         /// <param name="substr">A String that is to be replaced by newSubStr.</param>
         /// <param name="callback"></param>
         /// <returns></returns>
+        [Template("Bridge.String.replaceAll({this}, {substr}, {callback})")]
         public string Replace(string substr, Func<string, string> callback)
         {
             return null;
@@ -564,6 +569,7 @@ namespace System
         /// <param name="substr">A String that is to be replaced by newSubStr.</param>
         /// <param name="callback"></param>
         /// <returns></returns>
+        [Template("Bridge.String.replaceAll({this}, {substr}, {callback})")]
         public string Replace(string substr, Func<string, int, string> callback)
         {
             return null;
@@ -575,6 +581,7 @@ namespace System
         /// <param name="substr">A String that is to be replaced by newSubStr.</param>
         /// <param name="callback"></param>
         /// <returns></returns>
+        [Template("Bridge.String.replaceAll({this}, {substr}, {callback})")]
         public string Replace(string substr, Func<string, int, string, string> callback)
         {
             return null;
@@ -803,6 +810,7 @@ namespace System
             return false;
         }
 
+        [IndexerName("Chars")]
         public char this[int index]
         {
             [Ignore]
@@ -815,6 +823,12 @@ namespace System
 
         [Template("Bridge.getEnumerator({this})")]
         public IEnumerator GetEnumerator()
+        {
+            return null;
+        }
+
+        [Template("Bridge.getEnumerator({this})")]
+        IEnumerator<char> IEnumerable<char>.GetEnumerator()
         {
             return null;
         }
