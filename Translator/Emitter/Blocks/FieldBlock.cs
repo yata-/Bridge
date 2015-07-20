@@ -133,9 +133,10 @@ namespace Bridge.Translator
                 }
 
                 this.EnsureComma();
+                XmlToJsDoc.EmitComment(this, member.Entity);
                 this.Write(member.GetName(this.Emitter));
                 this.WriteColon();
-
+                
                 if (primitiveExpr != null && primitiveExpr.Value is AstType)
                 {
                     this.Write("new " + BridgeTypes.ToJsName((AstType)primitiveExpr.Value, this.Emitter) + "()");

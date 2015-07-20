@@ -20,6 +20,7 @@ namespace Bridge.Translator
 
         protected override void DoEmit()
         {
+            
             this.EmitIndexerMethod(this.IndexerDeclaration, this.IndexerDeclaration.Getter, false);
             this.EmitIndexerMethod(this.IndexerDeclaration, this.IndexerDeclaration.Setter, true);
         }
@@ -39,7 +40,8 @@ namespace Bridge.Translator
                 {
                     this.AddLocals(new ParameterDeclaration[] { new ParameterDeclaration { Name = "value" } }, accessor.Body);
                 }
-
+                
+                XmlToJsDoc.EmitComment(this, this.IndexerDeclaration);
                 var overloads = OverloadsCollection.Create(this.Emitter, indexerDeclaration, setter);
 
                 string name = overloads.GetOverloadName();

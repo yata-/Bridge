@@ -269,6 +269,7 @@ namespace Bridge.Translator
                     ctorName = overloads.GetOverloadName();
                 }
 
+                XmlToJsDoc.EmitComment(this, ctor);
                 this.Write(ctorName);
 
                 this.WriteColon();

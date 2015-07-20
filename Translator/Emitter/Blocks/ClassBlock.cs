@@ -35,6 +35,8 @@ namespace Bridge.Translator
 
         protected override void DoEmit()
         {
+            XmlToJsDoc.EmitComment(this, this.Emitter.Translator.EmitNode);
+            
             this.EmitClassHeader();
             if (this.TypeInfo.TypeDeclaration.ClassType != ClassType.Interface)
             {

@@ -88,6 +88,7 @@
   <ItemGroup>
     <Compile Include="Emitter\ArgumentsInfo.cs" />
     <Compile Include="Emitter\Blocks\AbstractEmitterBlock.Locals.cs" />
+    <Compile Include="Emitter\Blocks\AbstractCommentBlock.cs" />
     <Compile Include="Emitter\Blocks\AbstractMethodBlock.cs" />
     <Compile Include="Emitter\Blocks\AbstractObjectCreateBlock.cs" />
     <Compile Include="Emitter\Blocks\ArrayCreateBlock.cs" />

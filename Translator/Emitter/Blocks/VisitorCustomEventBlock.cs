@@ -36,7 +36,7 @@ namespace Bridge.Translator
                 var prevNamesMap = this.BuildLocalsNamesMap();
 
                 this.AddLocals(new ParameterDeclaration[] { new ParameterDeclaration { Name = "value" } }, accessor.Body);
-
+                XmlToJsDoc.EmitComment(this, this.CustomEventDeclaration);
                 var overloads = OverloadsCollection.Create(this.Emitter, customEventDeclaration, remover);
 
                 this.Write((remover ? "remove" : "add") + overloads.GetOverloadName());

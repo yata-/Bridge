@@ -35,6 +35,7 @@ namespace Bridge.Translator
 
             var typeDef = this.Emitter.GetTypeDefinition();
             var overloads = OverloadsCollection.Create(this.Emitter, methodDeclaration);
+            XmlToJsDoc.EmitComment(this, this.MethodDeclaration);
 
             if (overloads.HasOverloads)
             {

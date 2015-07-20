@@ -56,6 +56,7 @@ namespace Bridge.Translator
                     this.AddLocals(new ParameterDeclaration[] { new ParameterDeclaration { Name = "value" } }, accessor.Body);
                 }
 
+                XmlToJsDoc.EmitComment(this, this.PropertyDeclaration);
                 var overloads = OverloadsCollection.Create(this.Emitter, propertyDeclaration, setter);
                 string name = overloads.GetOverloadName();
                 this.Write((setter ? "set" : "get") + name);

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Bridge.Translator
 {
-    public class MethodBlock : AbstractMethodBlock
+    public class MethodBlock : AbstractEmitterBlock
     {
         public MethodBlock(IEmitter emitter, ITypeInfo typeInfo, bool staticBlock)
             : base(emitter, typeInfo.TypeDeclaration)
