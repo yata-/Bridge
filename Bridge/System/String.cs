@@ -71,6 +71,17 @@ namespace System
         /// <summary>
         /// The static String.fromCharCode() method returns a string created by using the specified sequence of Unicode values.
         /// </summary>
+        /// <returns>String.Empty</returns>
+        public static string FromCharCode()
+        {
+            return null;
+        }
+
+
+
+        /// <summary>
+        /// The static String.fromCharCode() method returns a string created by using the specified sequence of Unicode values.
+        /// </summary>
         /// <param name="numbers">A sequence of numbers that are Unicode values.</param>
         /// <returns></returns>
         public static string FromCharCode(params int[] numbers)
