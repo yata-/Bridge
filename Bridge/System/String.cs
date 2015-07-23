@@ -775,11 +775,124 @@ namespace System
             return false;
         }
 
-        [Template("Bridge.String.format({format}, {values})")]
-        public static string Format(string format, params object[] values)
+        /// Summary:
+        ///     Replaces the format item in a specified string with the string representation
+        ///     of a corresponding object in a specified array.
+        ///
+        /// Parameters:
+        ///   format:
+        ///     A composite format string.
+        ///
+        ///   args:
+        ///     An object array that contains zero or more objects to format.
+        ///
+        /// Returns:
+        ///     A copy of format in which the format items have been replaced by the string representation
+        ///     of the corresponding objects in args.
+        ///
+        [Template("Bridge.String.format({format}, {args})")]
+        public static string Format(string format, params object[] args)
         {
             return null;
         }
+
+        ///
+        /// Summary:
+        ///     Replaces one or more format items in a specified string with the string representation
+        ///     of a specified object.
+        ///
+        /// Parameters:
+        ///   format:
+        ///     A composite format string.
+        ///
+        ///   arg0:
+        ///     The object to format.
+        ///
+        /// Returns:
+        ///     A copy of format in which any format items are replaced by the string representation
+        ///     of arg0.
+        [Template("Bridge.String.format({format}, {arg0})")]
+        public static String Format(String format, object arg0)
+        {
+            return null;
+        }
+
+        ///
+        /// Summary:
+        ///     Replaces the format items in a specified string with the string representations
+        ///     of corresponding objects in a specified array. A parameter supplies culture-specific
+        ///     formatting information.
+        ///
+        /// Parameters:
+        ///   provider:
+        ///     An object that supplies culture-specific formatting information.
+        ///
+        ///   format:
+        ///     A composite format string.
+        ///
+        ///   args:
+        ///     An object array that contains zero or more objects to format.
+        ///
+        /// Returns:
+        ///     A copy of format in which the format items have been replaced by the string representation
+        ///     of the corresponding objects in args.
+        [Template("Bridge.String.format({format}, {args})")]
+        public static String Format(IFormatProvider provider, String format, params object[] args)
+        {
+            return null;
+        }
+
+        ///
+        /// Summary:
+        ///     Replaces the format items in a specified string with the string representation
+        ///     of two specified objects.
+        ///
+        /// Parameters:
+        ///   format:
+        ///     A composite format string.
+        ///
+        ///   arg0:
+        ///     The first object to format.
+        ///
+        ///   arg1:
+        ///     The second object to format.
+        ///
+        /// Returns:
+        ///     A copy of format in which format items are replaced by the string representations
+        ///     of arg0 and arg1.
+        [Template("Bridge.String.format({format}, {arg0}, {arg1})")]
+        public static String Format(String format, object arg0, object arg1)
+        {
+            return null;
+        }
+
+        ///
+        /// Summary:
+        ///     Replaces the format items in a specified string with the string representation
+        ///     of three specified objects.
+        ///
+        /// Parameters:
+        ///   format:
+        ///     A composite format string.
+        ///
+        ///   arg0:
+        ///     The first object to format.
+        ///
+        ///   arg1:
+        ///     The second object to format.
+        ///
+        ///   arg2:
+        ///     The third object to format.
+        ///
+        /// Returns:
+        ///     A copy of format in which the format items have been replaced by the string representations
+        ///     of arg0, arg1, and arg2.
+        [Template("Bridge.String.format({format}, {arg0}, {arg1}, {arg2)")]
+        public static String Format(String format, object arg0, object arg1, object arg2)
+        {
+            return null;
+        }
+
 
         [Template("Bridge.String.indexOfAny({this}, {anyOf})")]
         public int IndexOfAny(char[] anyOf)
