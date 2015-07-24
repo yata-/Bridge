@@ -240,12 +240,12 @@
 			    });
         },
 
-        parse: function (value, provider) {
+        parse: function (value, provider, silent) {
             var dt = Date.parse(value);
             if (!isNaN(dt)) {
                 return new Date(dt);
             }
-            return this.parseExact(value, null, provider);
+            return this.parseExact(value, null, provider, silent);
         },
 
         parseExact: function (str, format, provider, silent) {
@@ -719,7 +719,7 @@
         },
 
         tryParse: function (value, provider, result) {
-            result.v = this.parseExact(value, null, provider, true);
+            result.v = this.parse(value, provider, true);
 
             if (result.v == null) {
                 result.v = new Date(-864e13);
