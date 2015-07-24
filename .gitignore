@@ -132,3 +132,6 @@ Build/*.exe
 Build/*.nupkg
 Bridge.dev.sln
 *.userprefs
+
+# VS 2015
+/**/.vs
