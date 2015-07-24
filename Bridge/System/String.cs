@@ -365,7 +365,7 @@ namespace System
 
         /// <summary>
         /// Reports the zero-based index of the first occurrence of the specified string in the current System.String object. A parameter specifies the type of search
-        //  to use for the specified string.
+        ///  to use for the specified string.
         /// </summary>
         /// <param name="searchValue">The string to search for.</param>
         /// <param name="comparisonType">One of the enumeration values that specifies the rules for the search.</param>
@@ -378,7 +378,7 @@ namespace System
 
         /// <summary>
         /// Reports the zero-based index of the first occurrence of the specified string in the current System.String object. Parameters specify the starting search
-        //  position in the current string and the type of search to use for the specified string.
+        ///  position in the current string and the type of search to use for the specified string.
         /// </summary>
         /// <param name="searchValue">The string to search for.</param>
         /// <param name="fromIndex">The search starting position.</param>
@@ -392,8 +392,8 @@ namespace System
 
         /// <summary>
         /// Reports the zero-based index of the first occurrence of the specified string in the current System.String object. Parameters specify the starting search
-        //  position in the current string, the number of characters in the current string
-        //  to search, and the type of search to use for the specified string.
+        ///  position in the current string, the number of characters in the current string
+        ///  to search, and the type of search to use for the specified string.
         /// </summary>
         /// <param name="searchValue">The string to search for.</param>
         /// <param name="fromIndex">The search starting position.</param>
@@ -946,13 +946,19 @@ namespace System
         }
 
         [Template("Bridge.getEnumerator({this})")]
-        public IEnumerator GetEnumerator()
+        public CharEnumerator GetEnumerator()
         {
             return null;
         }
 
         [Template("Bridge.getEnumerator({this})")]
         IEnumerator<char> IEnumerable<char>.GetEnumerator()
+        {
+            return null;
+        }
+
+        [Template("Bridge.getEnumerator({this})")]
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return null;
         }

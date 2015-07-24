@@ -77,6 +77,7 @@
     <Compile Include="System\ArgumentNullException.cs" />
     <Compile Include="System\ArgumentException.cs" />
     <Compile Include="System\ArithmeticException.cs" />
+    <Compile Include="System\CharEnumerator.cs" />
     <Compile Include="System\Collections\Generic\Comparer.cs" />
     <Compile Include="System\Collections\Generic\IComparer.cs" />
     <Compile Include="System\Collections\Generic\IList.cs" />
