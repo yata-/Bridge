@@ -36,20 +36,6 @@ namespace Bridge.Build
             set;
         }
 
-        private bool changeCase = true;
-
-        public bool ChangeCase
-        {
-            get
-            {
-                return this.changeCase;
-            }
-            set
-            {
-                this.changeCase = value;
-            }
-        }
-
         public bool NoCore
         {
             get;
@@ -110,7 +96,6 @@ namespace Bridge.Build
                 translator.Configuration = this.Configuration;
                 translator.BridgeLocation = Path.Combine(this.AssembliesPath, "Bridge.dll");
                 translator.Rebuild = false;
-                translator.ChangeCase = this.ChangeCase;
                 translator.Log = this.LogMessage;
                 translator.Translate();
 

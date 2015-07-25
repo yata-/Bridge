@@ -14,6 +14,24 @@ namespace Bridge.Translator
             //this.AutoPropertyToField = true;
         }
 
+        private bool changeCase = true;
+
+        /// <summary>
+        /// False to preserve case of the first letter of emitted JavaScript fields (methods, constructors, etc.).
+        /// Defaults to true - the fields will start with a lowercase letter.
+        /// </summary>
+        public bool ChangeCase
+        {
+            get
+            {
+                return this.changeCase;
+            }
+            set
+            {
+                this.changeCase = value;
+            }
+        }
+
         /// <summary>
         /// A file name where JavaScript is generated to. If omitted, it is [Namespace_Name].js by default.
         /// Example: "MyBridgeNetLibrary.js"

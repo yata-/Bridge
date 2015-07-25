@@ -81,6 +81,7 @@ namespace Bridge.Contract
 
     public interface IAssemblyInfo
     {
+        bool ChangeCase { get; set; }
         System.Collections.Generic.List<IPluginDependency> Dependencies { get; set; }
         string FileName { get; set; }
         OutputBy OutputBy { get; set; }
@@ -94,5 +95,6 @@ namespace Bridge.Contract
         bool AutoPropertyToField { get; set; }
         string PluginsPath { get; set; }
         bool GenerateTypeScript { get; set; }
+
     }
 }

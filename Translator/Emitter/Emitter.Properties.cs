@@ -118,19 +118,6 @@ namespace Bridge.Translator
             set;
         }
 
-        private bool changeCase = true;
-        public bool ChangeCase
-        {
-            get
-            {
-                return this.changeCase;
-            }
-            set
-            {
-                this.changeCase = value;
-            }
-        }
-
         public int IteratorCount
         {
             get;

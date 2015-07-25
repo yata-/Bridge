@@ -72,7 +72,6 @@ namespace Bridge.Translator
             var emitter = this.CreateEmitter(resolver);
             emitter.Translator = this;
             emitter.AssemblyInfo = this.AssemblyInfo;
-            emitter.ChangeCase = this.ChangeCase;
             emitter.References = references;
             emitter.SourceFiles = this.SourceFiles;
             emitter.Log = this.Log;

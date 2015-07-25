@@ -97,12 +97,12 @@ namespace Bridge.Translator
 
                 if (hasInitializer)
                 {
-                    this.WriteObjectInitializer(objectCreateExpression.Initializer.Elements, this.Emitter.ChangeCase, type);
+                    this.WriteObjectInitializer(objectCreateExpression.Initializer.Elements, this.Emitter.AssemblyInfo.ChangeCase, type);
                     this.WriteSpace();
                 }
                 else if (this.Emitter.Validator.IsObjectLiteral(type))
                 {
-                    this.WriteObjectInitializer(null, this.Emitter.ChangeCase, type);
+                    this.WriteObjectInitializer(null, this.Emitter.AssemblyInfo.ChangeCase, type);
                     this.WriteSpace();
                 }
 

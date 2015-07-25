@@ -153,7 +153,7 @@ namespace Bridge.Translator
         {
             if (changeCase)
             {
-                changeCase = !this.IsNativeMember(member.FullName) ? this.ChangeCase : true;
+                changeCase = !this.IsNativeMember(member.FullName) ? this.AssemblyInfo.ChangeCase : true;
                 if (member is FieldDefinition && ((FieldDefinition)member).HasConstant && !member.DeclaringType.IsEnum)
                 {
                     changeCase = false;
@@ -261,7 +261,7 @@ namespace Bridge.Translator
 
         public virtual string GetEntityName(IEntity member, bool cancelChangeCase = false, bool ignoreInterface = false)
         {
-            bool changeCase = !this.IsNativeMember(member.FullName) ? this.ChangeCase : true;
+            bool changeCase = !this.IsNativeMember(member.FullName) ? this.AssemblyInfo.ChangeCase : true;
             if (member is IMember && this.IsMemberConst((IMember)member)/* || member.DeclaringType.Kind == TypeKind.Anonymous*/)
             {
                 changeCase = false;

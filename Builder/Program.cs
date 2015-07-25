@@ -37,7 +37,6 @@ namespace Bridge.Builder
             string bridgeLocation = null;
             bool rebuild = false;
             bool extractCore = true;
-            bool changeCase = true;
             string cfg = null;
             string source = null;
             string folder = Environment.CurrentDirectory;
@@ -52,7 +51,6 @@ namespace Bridge.Builder
                 Console.WriteLine("-cfg or -configuration   Configuration name, typically Debug/Release");
                 Console.WriteLine("-r or -rebuild           Force assembly rebuilding");
                 Console.WriteLine("-nocore                  Do not extract core javascript files");
-                Console.WriteLine("-c or -case              Do not change case of members");
 #if DEBUG
                 // This code and logic is only compiled in when building bridge.net in Debug configuration
                 Console.WriteLine("-d or -debug             Attach the builder to an visual studio debugging instance.");
@@ -88,10 +86,6 @@ namespace Bridge.Builder
                     case "-rebuild":
                     case "-r":
                         rebuild = true;
-                        break;
-                    case "-case":
-                    case "-c":
-                        changeCase = false;
                         break;
                     case "-nocore":
                         extractCore = false;
@@ -152,7 +146,6 @@ namespace Bridge.Builder
 
                 translator.BridgeLocation = bridgeLocation;
                 translator.Rebuild = rebuild;
-                translator.ChangeCase = changeCase;
                 translator.Log = LogMessage;
                 translator.Configuration = cfg;
                 translator.Translate();

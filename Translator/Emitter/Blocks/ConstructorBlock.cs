@@ -181,7 +181,7 @@ namespace Bridge.Translator
             this.WriteColon();
             this.BeginBlock();
 
-            var changeCase = this.Emitter.ChangeCase;
+            var changeCase = this.Emitter.AssemblyInfo.ChangeCase;
             var baseType = this.Emitter.GetBaseTypeDefinition();
 
             if (this.TypeInfo.InstanceConfig.HasConfigMembers)
@@ -281,7 +281,7 @@ namespace Bridge.Translator
                 this.BeginBlock();
 
                 var requireNewLine = false;
-                var changeCase = this.Emitter.ChangeCase;
+                var changeCase = this.Emitter.AssemblyInfo.ChangeCase;
 
                 if (baseType != null && (!this.Emitter.Validator.IsIgnoreType(baseType) || this.Emitter.Validator.IsBridgeClass(baseType)) ||
                     (ctor.Initializer != null && ctor.Initializer.ConstructorInitializerType == ConstructorInitializerType.This))

@@ -19,7 +19,6 @@ namespace Bridge.Contract
         bool AsyncExpressionHandling { get; set; }
         ICSharpCode.NRefactory.CSharp.SwitchStatement AsyncSwitch { get; set; }
         System.Collections.Generic.List<string> AsyncVariables { get; set; }
-        bool ChangeCase { get; set; }
         bool Comma { get; set; }
         int CompareTypeInfosByNameAndPriority(ITypeInfo x, ITypeInfo y);
         bool IsInheritedFrom(ITypeInfo x, ITypeInfo y);
