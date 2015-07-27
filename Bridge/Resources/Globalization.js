@@ -257,6 +257,17 @@ Bridge.define("Bridge.CultureInfo", {
     inherits: [Bridge.IFormatProvider, Bridge.ICloneable],
 
     statics: {
+        constructor: function() {
+            this.cultures = this.cultures || {};
+            this.invariantCulture = Bridge.merge(new Bridge.CultureInfo("en-US"), {
+                englishName: "English (United States)",
+                nativeName: "English (United States)",
+                numberFormat: Bridge.NumberFormatInfo.invariantInfo,
+                dateTimeFormat: Bridge.DateTimeFormatInfo.invariantInfo
+            });
+            this.setCurrentCulture(Bridge.CultureInfo.invariantCulture);
+        },
+
         getCurrentCulture: function () {
             return this.currentCulture;
         },
@@ -290,6 +301,10 @@ Bridge.define("Bridge.CultureInfo", {
 
     constructor: function (name) {
         this.name = name;
+        if (!Bridge.CultureInfo.cultures) {
+            Bridge.CultureInfo.cultures = {};
+        }
+
         if (Bridge.CultureInfo.cultures[name]) {
             Bridge.copy(this, Bridge.CultureInfo.cultures[name], [
                 "englishName",
@@ -322,12 +337,3 @@ Bridge.define("Bridge.CultureInfo", {
         ]);
     }
 });
-
-Bridge.CultureInfo.cultures = {};
-Bridge.CultureInfo.invariantCulture = Bridge.merge(new Bridge.CultureInfo("en-US"), {
-    englishName: "English (United States)",
-    nativeName: "English (United States)",
-    numberFormat: Bridge.NumberFormatInfo.invariantInfo,
-    dateTimeFormat: Bridge.DateTimeFormatInfo.invariantInfo
-});
-Bridge.CultureInfo.setCurrentCulture(Bridge.CultureInfo.invariantCulture);

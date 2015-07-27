@@ -6,7 +6,6 @@ namespace System
 {
     [Ignore]
     [Name("Array")]
-    [Cast("{$is: Bridge.Array.is")]
     public sealed class Array : IEnumerable, ICloneable
     {
         public readonly int Length = 0;
