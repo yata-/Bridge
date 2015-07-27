@@ -240,15 +240,15 @@
 			    });
         },
 
-        parse: function (value, provider, silent) {
+        parse: function (value, provider, utc, silent) {
             var dt = Date.parse(value);
             if (!isNaN(dt)) {
                 return new Date(dt);
             }
-            return this.parseExact(value, null, provider, silent);
+            return this.parseExact(value, null, provider, utc, silent);
         },
 
-        parseExact: function (str, format, provider, silent) {
+        parseExact: function (str, format, provider, utc, silent) {
             if (!format) {
                 format = ["G", "g", "F", "f", "D", "d", "R", "r", "s", "U", "u", "O", "o", "Y", "y", "M", "m", "T", "t"];
             }
@@ -258,7 +258,7 @@
                     d;
 
                 for (i = 0; i < format.length; i++) {
-                    d = Bridge.Date.parseExact(str, format[i], provider, true);
+                    d = Bridge.Date.parseExact(str, format[i], provider, utc, true);
 
                     if (d != null) {
                         return d;
@@ -692,7 +692,7 @@
                 hh -= 12;
             }
 
-            if (zzh == 0 && zzm == 0) {
+            if (zzh == 0 && zzm == 0 && !utc) {
                 return new Date(year, month - 1, date, hh, mm, ss, ff);
             }
 
@@ -718,8 +718,8 @@
             return null;
         },
 
-        tryParse: function (value, provider, result) {
-            result.v = this.parse(value, provider, true);
+        tryParse: function (value, provider, result, utc) {
+            result.v = this.parse(value, provider, utc, true);
 
             if (result.v == null) {
                 result.v = new Date(-864e13);
@@ -730,8 +730,8 @@
             return true;
         },
 
-        tryParseExact: function (value, format, provider, result) {
-            result.v = this.parseExact(value, format, provider, true);
+        tryParseExact: function (value, format, provider, result, utc) {
+            result.v = this.parseExact(value, format, provider, utc, true);
 
             if (result.v == null) {
                 result.v = new Date(-864e13);

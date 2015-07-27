@@ -62,7 +62,7 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
         },
 
         indexOf: function (item, startIndex) {
-            var i;
+            var i, el;
 
             if (!Bridge.isDefined(startIndex)) {
                 startIndex = 0;
@@ -73,7 +73,8 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
             }
 
             for (i = startIndex; i < this.items.length; i++) {
-                if (item === this.items[i]) {
+                el = this.items[i];
+                if (el === item || Bridge.EqualityComparer$1.$default.equals(el, item)) {
                     return i;
                 }
             }

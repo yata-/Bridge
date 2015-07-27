@@ -3145,15 +3145,15 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
 			    });
         },
 
-        parse: function (value, provider, silent) {
+        parse: function (value, provider, utc, silent) {
             var dt = Date.parse(value);
             if (!isNaN(dt)) {
                 return new Date(dt);
             }
-            return this.parseExact(value, null, provider, silent);
+            return this.parseExact(value, null, provider, utc, silent);
         },
 
-        parseExact: function (str, format, provider, silent) {
+        parseExact: function (str, format, provider, utc, silent) {
             if (!format) {
                 format = ["G", "g", "F", "f", "D", "d", "R", "r", "s", "U", "u", "O", "o", "Y", "y", "M", "m", "T", "t"];
             }
@@ -3163,7 +3163,7 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
                     d;
 
                 for (i = 0; i < format.length; i++) {
-                    d = Bridge.Date.parseExact(str, format[i], provider, true);
+                    d = Bridge.Date.parseExact(str, format[i], provider, utc, true);
 
                     if (d != null) {
                         return d;
@@ -3597,7 +3597,7 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
                 hh -= 12;
             }
 
-            if (zzh == 0 && zzm == 0) {
+            if (zzh == 0 && zzm == 0 && !utc) {
                 return new Date(year, month - 1, date, hh, mm, ss, ff);
             }
 
@@ -3623,8 +3623,8 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
             return null;
         },
 
-        tryParse: function (value, provider, result) {
-            result.v = this.parse(value, provider, true);
+        tryParse: function (value, provider, result, utc) {
+            result.v = this.parse(value, provider, utc, true);
 
             if (result.v == null) {
                 result.v = new Date(-864e13);
@@ -3635,8 +3635,8 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
             return true;
         },
 
-        tryParseExact: function (value, format, provider, result) {
-            result.v = this.parseExact(value, format, provider, true);
+        tryParseExact: function (value, format, provider, result, utc) {
+            result.v = this.parseExact(value, format, provider, utc, true);
 
             if (result.v == null) {
                 result.v = new Date(-864e13);
@@ -4768,7 +4768,7 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
         },
 
         indexOf: function (item, startIndex) {
-            var i;
+            var i, el;
 
             if (!Bridge.isDefined(startIndex)) {
                 startIndex = 0;
@@ -4779,7 +4779,8 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
             }
 
             for (i = startIndex; i < this.items.length; i++) {
-                if (item === this.items[i]) {
+                el = this.items[i];
+                if (el === item || Bridge.EqualityComparer$1.$default.equals(el, item)) {
                     return i;
                 }
             }
@@ -5600,11 +5601,17 @@ Bridge.define('Bridge.PropertyChangedEventArgs', {
         },
 
         indexOf: function(arr, item) {
-            var i, ln;
-            for (i = 0, ln = arr.length; i < ln; i++) {
-                if (arr[i] === item) {
-                    return i;
+            if (Bridge.isArray(arr)) {
+                var i, ln, el;
+                for (i = 0, ln = arr.length; i < ln; i++) {
+                    el = arr[i];
+                    if (el === item || Bridge.EqualityComparer$1.$default.equals(el, item)) {
+                        return i;
+                    }
                 }
+            }
+            else if (Bridge.isFunction(arr.indexOf)) {
+                return arr.indexOf(item);
             }
 
             return -1;

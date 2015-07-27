@@ -887,7 +887,7 @@ namespace System
         /// Returns:
         ///     A copy of format in which the format items have been replaced by the string representations
         ///     of arg0, arg1, and arg2.
-        [Template("Bridge.String.format({format}, {arg0}, {arg1}, {arg2)")]
+        [Template("Bridge.String.format({format}, {arg0}, {arg1}, {arg2})")]
         public static String Format(String format, object arg0, object arg1, object arg2)
         {
             return null;

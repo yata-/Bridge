@@ -58,37 +58,37 @@ namespace System
 		{
 		}
 
-        [Name("UTC")]
-        public static long UTC(int year, int month, int date, int hours, int minutes, int seconds, int ms)
+        [Template("Date.UTC({year}, {month} - 1, {day}, {hours}, {minutes}, {seconds}, {ms})")]
+        public static long UTC(int year, int month, int day, int hours, int minutes, int seconds, int ms)
         {
             return 0;
         }
 
-        [Name("UTC")]
-        public static long UTC(int year, int month, int date, int hours, int minutes, int seconds)
+        [Template("Date.UTC({year}, {month} - 1, {day}, {hours}, {minutes}, {seconds})")]
+        public static long UTC(int year, int month, int day, int hours, int minutes, int seconds)
         {
             return 0;
         }
 
-        [Name("UTC")]
-        public static long UTC(int year, int month, int date, int hours, int minutes)
+        [Template("Date.UTC({year}, {month} - 1, {day}, {hours}, {minutes})")]
+        public static long UTC(int year, int month, int day, int hours, int minutes)
         {
             return 0;
         }
 
-        [Name("UTC")]
-        public static long UTC(int year, int month, int date, int hours)
+        [Template("Date.UTC({year}, {month} - 1, {day}, {hours})")]
+        public static long UTC(int year, int month, int day, int hours)
         {
             return 0;
         }
 
-        [Name("UTC")]
-        public static long UTC(int year, int month, int date)
+        [Template("Date.UTC({year}, {month} - 1, {day})")]
+        public static long UTC(int year, int month, int day)
         {
             return 0;
         }
 
-        [Name("UTC")]
+        [Template("Date.UTC({year}, {month} - 1)")]
         public static long UTC(int year, int month)
         {
             return 0;
@@ -248,8 +248,27 @@ namespace System
             return default(DateTime);
         }
 
+        [Template("Bridge.Date.parse({value}, {provider}, {utc})")]
+        public static DateTime Parse(string value, IFormatProvider provider, bool utc)
+        {
+            return default(DateTime);
+        }
+
+        [Template("Bridge.Date.parse({value}, null, {utc})")]
+        public static DateTime Parse(string value, bool utc)
+        {
+            return default(DateTime);
+        }
+
         [Template("Bridge.Date.tryParse({value}, null, {result})")]
         public static bool TryParse(string value, out DateTime result)
+        {
+            result = default(DateTime);
+            return false;
+        }
+
+        [Template("Bridge.Date.tryParse({value}, null, {result}, {utc})")]
+        public static bool TryParse(string value, out DateTime result, bool utc)
         {
             result = default(DateTime);
             return false;
@@ -262,14 +281,33 @@ namespace System
             return false;
         }
 
+        [Template("Bridge.Date.tryParse({value}, {provider}, {result}, {utc})")]
+        public static bool TryParse(string value, IFormatProvider provider, out DateTime result, bool utc)
+        {
+            result = default(DateTime);
+            return false;
+        }
+
 		[Template("Bridge.Date.parseExact({value}, {format})")]
 		public static DateTime ParseExact(string value, string format)
         {
             return default(DateTime);
 		}
 
+        [Template("Bridge.Date.parseExact({value}, {format}, null, {utc})")]
+        public static DateTime ParseExact(string value, string format, bool utc)
+        {
+            return default(DateTime);
+        }
+
         [Template("Bridge.Date.parseExact({value}, {formats})")]
         public static DateTime ParseExact(string value, string[] formats)
+        {
+            return default(DateTime);
+        }
+
+        [Template("Bridge.Date.parseExact({value}, {formats}, null, {utc})")]
+        public static DateTime ParseExact(string value, string[] formats, bool utc)
         {
             return default(DateTime);
         }
@@ -280,14 +318,33 @@ namespace System
             return default(DateTime);
         }
 
+        [Template("Bridge.Date.parseExact({value}, {format}, {provider}, {utc})")]
+        public static DateTime ParseExact(string value, string format, IFormatProvider provider, bool utc)
+        {
+            return default(DateTime);
+        }
+
         [Template("Bridge.Date.parseExact({value}, {formats}, {provider})")]
         public static DateTime ParseExact(string value, string[] formats, IFormatProvider provider)
         {
             return default(DateTime);
         }
 
+        [Template("Bridge.Date.parseExact({value}, {formats}, {provider}, {utc})")]
+        public static DateTime ParseExact(string value, string[] formats, IFormatProvider provider, bool utc)
+        {
+            return default(DateTime);
+        }
+
         [Template("Bridge.Date.tryParseExact({value}, {format}, null, {result})")]
         public static bool TryParseExact(string value, string format, out DateTime result)
+        {
+            result = default(DateTime);
+            return false;
+        }
+
+        [Template("Bridge.Date.tryParseExact({value}, {format}, null, {result}, {utc})")]
+        public static bool TryParseExact(string value, string format, out DateTime result, bool utc)
         {
             result = default(DateTime);
             return false;
@@ -300,6 +357,13 @@ namespace System
             return false;
         }
 
+        [Template("Bridge.Date.tryParseExact({value}, {formats}, null, {result}, {utc})")]
+        public static bool TryParseExact(string value, string[] formats, out DateTime result, bool utc)
+        {
+            result = default(DateTime);
+            return false;
+        }
+
         [Template("Bridge.Date.tryParseExact({value}, {format}, {provider}, {result})")]
         public static bool TryParseExact(string value, string format, IFormatProvider provider, out DateTime result)
         {
@@ -307,8 +371,22 @@ namespace System
             return false;
         }
 
+        [Template("Bridge.Date.tryParseExact({value}, {format}, {provider}, {result}, {utc})")]
+        public static bool TryParseExact(string value, string format, IFormatProvider provider, out DateTime result, bool utc)
+        {
+            result = default(DateTime);
+            return false;
+        }
+
         [Template("Bridge.Date.tryParseExact({value}, {formats}, {provider}, {result})")]
         public static bool TryParseExact(string value, string[] formats, IFormatProvider provider, out DateTime result)
+        {
+            result = default(DateTime);
+            return false;
+        }
+
+        [Template("Bridge.Date.tryParseExact({value}, {formats}, {provider}, {result}, {utc})")]
+        public static bool TryParseExact(string value, string[] formats, IFormatProvider provider, out DateTime result, bool utc)
         {
             result = default(DateTime);
             return false;

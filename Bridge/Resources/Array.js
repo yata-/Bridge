@@ -176,11 +176,17 @@
         },
 
         indexOf: function(arr, item) {
-            var i, ln;
-            for (i = 0, ln = arr.length; i < ln; i++) {
-                if (arr[i] === item) {
-                    return i;
+            if (Bridge.isArray(arr)) {
+                var i, ln, el;
+                for (i = 0, ln = arr.length; i < ln; i++) {
+                    el = arr[i];
+                    if (el === item || Bridge.EqualityComparer$1.$default.equals(el, item)) {
+                        return i;
+                    }
                 }
+            }
+            else if (Bridge.isFunction(arr.indexOf)) {
+                return arr.indexOf(item);
             }
 
             return -1;
