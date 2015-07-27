@@ -52,7 +52,7 @@ namespace Bridge.Contract
             }
             else
             {
-                fieldName = emitter.AssemblyInfo.ChangeCase ? TypeConfigItem.ToLowerCamelCase(fieldName) : fieldName;
+                fieldName = emitter.AssemblyInfo.PreserveMemberCase ? fieldName : TypeConfigItem.ToLowerCamelCase(fieldName);
 
                 if (Helpers.IsReservedWord(fieldName))
                 {

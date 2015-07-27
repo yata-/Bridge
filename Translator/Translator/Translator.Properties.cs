@@ -56,20 +56,6 @@ namespace Bridge.Translator
             set;
         }
 
-        private bool changeCase = true;
-
-        public bool ChangeCase
-        {
-            get
-            {
-                return this.changeCase;
-            }
-            set
-            {
-                this.changeCase = value;
-            }
-        }
-
         private string msbuildVersion = "4.0.30319";
 
         public string MSBuildVersion

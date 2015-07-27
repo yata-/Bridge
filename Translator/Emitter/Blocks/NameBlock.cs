@@ -48,27 +48,31 @@ namespace Bridge.Translator
         protected virtual void EmitNameExpression(string name, Expression namedExpression, Expression expression)
         {
             var resolveResult = this.Emitter.Resolver.ResolveNode(namedExpression, this.Emitter);
-            var lowerCaseName = this.Emitter.AssemblyInfo.ChangeCase ? Object.Net.Utilities.StringUtils.ToLowerCamelCase(name) : name;
+
+            if (!this.Emitter.AssemblyInfo.PreserveMemberCase)
+            {
+                name = Object.Net.Utilities.StringUtils.ToLowerCamelCase(name);
+            }
 
             if (resolveResult != null && resolveResult is MemberResolveResult)
             {
                 var member = ((MemberResolveResult)resolveResult).Member;
-                lowerCaseName = this.Emitter.GetEntityName(member);
+                name = this.Emitter.GetEntityName(member);
 
                 var isProperty = member.SymbolKind == SymbolKind.Property;
 
                 if (!isProperty)
                 {
-                    this.Write(lowerCaseName);
+                    this.Write(name);
                 }
                 else
                 {
-                    this.Write(isProperty ? Helpers.GetPropertyRef(member, this.Emitter, !(expression is ArrayInitializerExpression)) : lowerCaseName);
+                    this.Write(isProperty ? Helpers.GetPropertyRef(member, this.Emitter, !(expression is ArrayInitializerExpression)) : name);
                 }
             }
             else
             {
-                this.Write(lowerCaseName);
+                this.Write(name);
             }
 
             this.WriteColon();

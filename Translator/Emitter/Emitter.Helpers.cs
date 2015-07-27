@@ -149,14 +149,15 @@ namespace Bridge.Translator
             return this.GetScriptArguments(attr);
         }
 
-        public virtual string GetDefinitionName(IMemberDefinition member, bool changeCase = true)
+        public virtual string GetDefinitionName(IMemberDefinition member, bool preserveMemberCase = false)
         {
-            if (changeCase)
+            if (!preserveMemberCase)
             {
-                changeCase = !this.IsNativeMember(member.FullName) ? this.AssemblyInfo.ChangeCase : true;
+                preserveMemberCase = !this.IsNativeMember(member.FullName) ? this.AssemblyInfo.PreserveMemberCase : false;
+
                 if (member is FieldDefinition && ((FieldDefinition)member).HasConstant && !member.DeclaringType.IsEnum)
                 {
-                    changeCase = false;
+                    preserveMemberCase = true;
                 }
             }
             string attrName = Bridge.Translator.Translator.Bridge_ASSEMBLY + ".NameAttribute";
@@ -204,14 +205,14 @@ namespace Bridge.Translator
                     return name;
                 }
 
-                changeCase = (bool)value;
+                preserveMemberCase = !(bool)value;
             }
 
             if (name.Contains("."))
             {
                 name = Object.Net.Utilities.StringUtils.RightOfRightmostOf(name, '.');
             }
-            name = changeCase ? Object.Net.Utilities.StringUtils.ToLowerCamelCase(name) : name;
+            name = preserveMemberCase ? name : Object.Net.Utilities.StringUtils.ToLowerCamelCase(name);
             if (!isIgnore &&
                 ((isStatic && Emitter.IsReservedStaticName(name)) ||
                 Helpers.IsReservedWord(name)))
@@ -259,12 +260,12 @@ namespace Bridge.Translator
             return null;
         }
 
-        public virtual string GetEntityName(IEntity member, bool cancelChangeCase = false, bool ignoreInterface = false)
+        public virtual string GetEntityName(IEntity member, bool forcePreserveMemberCase = false, bool ignoreInterface = false)
         {
-            bool changeCase = !this.IsNativeMember(member.FullName) ? this.AssemblyInfo.ChangeCase : true;
+            bool preserveMemberChange = !this.IsNativeMember(member.FullName) ? this.AssemblyInfo.PreserveMemberCase : false;
             if (member is IMember && this.IsMemberConst((IMember)member)/* || member.DeclaringType.Kind == TypeKind.Anonymous*/)
             {
-                changeCase = false;
+                preserveMemberChange = true;
             }
             var attr = member.Attributes.FirstOrDefault(a => a.AttributeType.FullName == Bridge.Translator.Translator.Bridge_ASSEMBLY + ".NameAttribute");
             bool isIgnore = member.DeclaringTypeDefinition != null && this.Validator.IsIgnoreType(member.DeclaringTypeDefinition);
@@ -287,10 +288,10 @@ namespace Bridge.Translator
                     return name;
                 }
 
-                changeCase = (bool)value;
+                preserveMemberChange = !(bool)value;
             }
 
-            name = changeCase && !cancelChangeCase ? Object.Net.Utilities.StringUtils.ToLowerCamelCase(name) : name;
+            name = !preserveMemberChange && !forcePreserveMemberCase ? Object.Net.Utilities.StringUtils.ToLowerCamelCase(name) : name;
 
             if (!isIgnore && ((member.IsStatic && Emitter.IsReservedStaticName(name)) || Helpers.IsReservedWord(name)))
             {
@@ -300,19 +301,19 @@ namespace Bridge.Translator
             return name;
         }
 
-        public virtual string GetEntityName(EntityDeclaration entity, bool cancelChangeCase = false, bool ignoreInterface = false)
+        public virtual string GetEntityName(EntityDeclaration entity, bool forcePreserveMemberCase = false, bool ignoreInterface = false)
         {
             var rr = this.Resolver.ResolveNode(entity, this) as MemberResolveResult;
 
             if (rr != null)
             {
-                return this.GetEntityName(rr.Member, cancelChangeCase, ignoreInterface);
+                return this.GetEntityName(rr.Member, forcePreserveMemberCase, ignoreInterface);
             }
 
             return null;
         }
 
-        public virtual string GetEntityName(ParameterDeclaration entity, bool cancelChangeCase = false)
+        public virtual string GetEntityName(ParameterDeclaration entity, bool forcePreserveMemberCase = false)
         {
             var name = entity.Name;
 

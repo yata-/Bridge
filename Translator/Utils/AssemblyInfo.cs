@@ -14,22 +14,14 @@ namespace Bridge.Translator
             //this.AutoPropertyToField = true;
         }
 
-        private bool changeCase = true;
-
         /// <summary>
-        /// False to preserve case of the first letter of emitted JavaScript fields (methods, constructors, etc.).
-        /// Defaults to true - the fields will start with a lowercase letter.
+        /// True to preserve case of the first letter of generated JavaScript members - methods, constructors, etc.
+        /// Defaults to false - the members will be forced to start with a lowercase letter.
         /// </summary>
-        public bool ChangeCase
+        public bool PreserveMemberCase
         {
-            get
-            {
-                return this.changeCase;
-            }
-            set
-            {
-                this.changeCase = value;
-            }
+            get;
+            set;
         }
 
         /// <summary>

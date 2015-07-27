@@ -97,12 +97,12 @@ namespace Bridge.Translator
 
                 if (hasInitializer)
                 {
-                    this.WriteObjectInitializer(objectCreateExpression.Initializer.Elements, this.Emitter.AssemblyInfo.ChangeCase, type);
+                    this.WriteObjectInitializer(objectCreateExpression.Initializer.Elements, this.Emitter.AssemblyInfo.PreserveMemberCase, type);
                     this.WriteSpace();
                 }
                 else if (this.Emitter.Validator.IsObjectLiteral(type))
                 {
-                    this.WriteObjectInitializer(null, this.Emitter.AssemblyInfo.ChangeCase, type);
+                    this.WriteObjectInitializer(null, this.Emitter.AssemblyInfo.PreserveMemberCase, type);
                     this.WriteSpace();
                 }
 
@@ -230,7 +230,7 @@ namespace Bridge.Translator
             Helpers.CheckValueTypeClone(invocationResolveResult, this.ObjectCreateExpression, this);
         }
 
-        protected virtual void WriteObjectInitializer(IEnumerable<Expression> expressions, bool changeCase, TypeDefinition type)
+        protected virtual void WriteObjectInitializer(IEnumerable<Expression> expressions, bool preserveMemberCase, TypeDefinition type)
         {
             bool needComma = false;
             List<string> names = new List<string>();
@@ -250,7 +250,7 @@ namespace Bridge.Translator
                     needComma = true;
                     string name = namedExression != null ? namedExression.Name : namedArgumentExpression.Name;
 
-                    if (changeCase)
+                    if (!preserveMemberCase)
                     {
                         name = Object.Net.Utilities.StringUtils.ToLowerCamelCase(name);
                     }
@@ -279,7 +279,7 @@ namespace Bridge.Translator
                         {
                             var name = member.GetName(this.Emitter);
 
-                            if (changeCase)
+                            if (!preserveMemberCase)
                             {
                                 name = Object.Net.Utilities.StringUtils.ToLowerCamelCase(name);
                             }

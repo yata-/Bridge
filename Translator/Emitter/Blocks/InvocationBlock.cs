@@ -305,7 +305,7 @@ namespace Bridge.Translator
                 else
                 {
                     string baseMethod = targetMember.MemberName;
-                    this.Write(name, ".prototype.", this.Emitter.AssemblyInfo.ChangeCase ? Object.Net.Utilities.StringUtils.ToLowerCamelCase(baseMethod) : baseMethod);
+                    this.Write(name, ".prototype.", this.Emitter.AssemblyInfo.PreserveMemberCase ? baseMethod : Object.Net.Utilities.StringUtils.ToLowerCamelCase(baseMethod));
                 }
 
                 if (!isIgnore && argsInfo.HasTypeArguments)
