@@ -1171,6 +1171,8 @@
                 return false;
             }
 
+            prefix = Bridge.String.escape(prefix);
+
             return str.match("^" + prefix) !== null;
         },
 
@@ -1182,6 +1184,8 @@
             if (suffix.length > str.length) {
                 return false;
             }
+
+            prefix = Bridge.String.escape(prefix);
 
             return str.match(suffix + "$") !== null;
         },
@@ -1359,8 +1363,12 @@
             return arr;
         },
 
+        escape: function(str) {
+            return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+        },
+
         replaceAll: function (str, a, b) {
-            a = a.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+            a = Bridge.String.escape(a);
             var reg = new RegExp(a, "g");
 
             return str.replace(reg, b);
