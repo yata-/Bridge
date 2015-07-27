@@ -44,6 +44,7 @@ namespace Bridge.Translator.TypeScript
 
             if (!accessor.IsNull && this.Emitter.GetInline(accessor) == null)
             {
+                XmlToJsDoc.EmitComment(this, this.PropertyDeclaration);
                 var p = (PropertyDeclaration)accessor.Parent;
                 var overloads = OverloadsCollection.Create(this.Emitter, propertyDeclaration, setter);
                 string name = overloads.GetOverloadName();
@@ -53,7 +54,7 @@ namespace Bridge.Translator.TypeScript
                 {
                     this.Write("value");
                     this.WriteColon();
-                    name = EmitBlock.GetJsName(p.ReturnType, this.Emitter);
+                    name = BridgeTypes.ToTypeScriptName(p.ReturnType, this.Emitter);
                     this.Write(name);
                 }   
              
@@ -66,7 +67,7 @@ namespace Bridge.Translator.TypeScript
                 }
                 else
                 {
-                    name = EmitBlock.GetJsName(p.ReturnType, this.Emitter);
+                    name = BridgeTypes.ToTypeScriptName(p.ReturnType, this.Emitter);
                     this.Write(name);
                 }
 

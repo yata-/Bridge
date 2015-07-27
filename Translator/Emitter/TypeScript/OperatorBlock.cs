@@ -26,7 +26,7 @@ namespace Bridge.Translator.TypeScript
 
         protected void EmitOperatorDeclaration(OperatorDeclaration operatorDeclaration)
         {
-            var typeDef = this.Emitter.GetTypeDefinition();
+            XmlToJsDoc.EmitComment(this, operatorDeclaration);
             var overloads = OverloadsCollection.Create(this.Emitter, operatorDeclaration);
 
             if (overloads.HasOverloads)
@@ -43,7 +43,7 @@ namespace Bridge.Translator.TypeScript
 
             this.WriteColon();
 
-            var retType = EmitBlock.GetJsName(operatorDeclaration.ReturnType, this.Emitter);
+            var retType = BridgeTypes.ToTypeScriptName(operatorDeclaration.ReturnType, this.Emitter);
             this.Write(retType);
 
             this.WriteSemiColon();
@@ -67,7 +67,7 @@ namespace Bridge.Translator.TypeScript
                 needComma = true;
                 this.Write(name);
                 this.WriteColon();
-                name = EmitBlock.GetJsName(p.Type, this.Emitter);
+                name = BridgeTypes.ToTypeScriptName(p.Type, this.Emitter);
                 this.Write(name);
             }
 

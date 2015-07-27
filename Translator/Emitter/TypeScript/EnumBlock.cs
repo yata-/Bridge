@@ -25,13 +25,12 @@ namespace Bridge.Translator.TypeScript
 
         protected override void DoEmit()
         {
-            TypeDefinition baseType = this.Emitter.GetBaseTypeDefinition();
             var typeDef = this.Emitter.GetTypeDefinition();
             string name = this.Emitter.Validator.GetCustomTypeName(typeDef);
 
             if (name.IsEmpty())
             {
-                name = Bridge.Translator.TypeScript.EmitBlock.GetJsName(this.TypeInfo.Type, this.Emitter, false, true);
+                name = BridgeTypes.ToTypeScriptName(this.TypeInfo.Type, this.Emitter, false, true);
             }
 
             this.Write("export enum ");

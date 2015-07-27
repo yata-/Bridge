@@ -352,5 +352,10 @@ namespace Bridge.Translator
             get;
             set;
         }
+
+        public IJsDoc JsDoc
+        {
+            get; set;
+        }
     }
 }

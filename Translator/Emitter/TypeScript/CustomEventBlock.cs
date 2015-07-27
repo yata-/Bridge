@@ -28,13 +28,14 @@ namespace Bridge.Translator.TypeScript
         {
             if (!accessor.IsNull && this.Emitter.GetInline(accessor) == null)
             {
+                XmlToJsDoc.EmitComment(this, customEventDeclaration);
                 var overloads = OverloadsCollection.Create(this.Emitter, customEventDeclaration, remover);
 
                 this.Write((remover ? "remove" : "add") + overloads.GetOverloadName());                
                 this.WriteOpenParentheses();
                 this.Write("value");
                 this.WriteColon();
-                var retType = EmitBlock.GetJsName(customEventDeclaration.ReturnType, this.Emitter);
+                var retType = BridgeTypes.ToTypeScriptName(customEventDeclaration.ReturnType, this.Emitter);
                 this.Write(retType);
                 this.WriteCloseParentheses();
                 this.WriteColon();

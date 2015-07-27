@@ -38,9 +38,10 @@ namespace Bridge.Translator.TypeScript
                 {
                     if (field.Entity.HasModifier(Modifiers.Public) || this.TypeInfo.IsEnum)
                     {
+                        XmlToJsDoc.EmitComment(this, field.Entity);
                         this.Write(field.GetName(this.Emitter));
                         this.WriteColon();
-                        string typeName = this.TypeInfo.IsEnum ? "number" : EmitBlock.GetJsName(field.Entity.ReturnType, this.Emitter);
+                        string typeName = this.TypeInfo.IsEnum ? "number" : BridgeTypes.ToTypeScriptName(field.Entity.ReturnType, this.Emitter);
                         this.Write(typeName);
                         this.WriteSemiColon();
                         this.WriteNewLine();
@@ -89,11 +90,12 @@ namespace Bridge.Translator.TypeScript
 
         private void WriteEvent(TypeConfigItem ev, string name)
         {
+            XmlToJsDoc.EmitComment(this, ev.Entity);
             this.Write(name);
             this.WriteOpenParentheses();
             this.Write("value");
             this.WriteColon();
-            string typeName = EmitBlock.GetJsName(ev.Entity.ReturnType, this.Emitter);
+            string typeName = BridgeTypes.ToTypeScriptName(ev.Entity.ReturnType, this.Emitter);
             this.Write(typeName);
             this.WriteCloseParentheses();
             this.WriteColon();
@@ -105,6 +107,7 @@ namespace Bridge.Translator.TypeScript
 
         private void WriteProp(TypeConfigItem ev, string name, bool getter)
         {
+            XmlToJsDoc.EmitComment(this, ev.Entity);
             this.Write(getter ? "get" : "set");
             this.Write(name);
             this.WriteOpenParentheses();
@@ -113,7 +116,7 @@ namespace Bridge.Translator.TypeScript
             {
                 this.Write("value");
                 this.WriteColon();
-                string typeName = EmitBlock.GetJsName(ev.Entity.ReturnType, this.Emitter);
+                string typeName = BridgeTypes.ToTypeScriptName(ev.Entity.ReturnType, this.Emitter);
                 this.Write(typeName);                
             }
 
@@ -126,7 +129,7 @@ namespace Bridge.Translator.TypeScript
             }
             else
             {
-                string typeName = EmitBlock.GetJsName(ev.Entity.ReturnType, this.Emitter);
+                string typeName = BridgeTypes.ToTypeScriptName(ev.Entity.ReturnType, this.Emitter);
                 this.Write(typeName);                
             }
 

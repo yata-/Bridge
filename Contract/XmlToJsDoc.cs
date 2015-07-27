@@ -5,6 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using ICSharpCode.NRefactory.Semantics;
+using ICSharpCode.NRefactory.TypeSystem;
+using ICSharpCode.NRefactory.TypeSystem.Implementation;
+using Newtonsoft.Json;
+using Object.Net.Utilities;
 
 namespace Bridge.Contract
 {
@@ -12,214 +17,724 @@ namespace Bridge.Contract
     {
         public static void EmitComment(IAbstractEmitterBlock block, AstNode node)
         {
-            var visitor = new DocumentationCommentVisitor(block.Emitter);
+            if (!block.Emitter.AssemblyInfo.JsDoc)
+            {
+                return;
+            }
+
+            var visitor = new DocumentationCommentVisitor();
             node.AcceptChildren(visitor);
 
-            if (visitor.Comments.Count > 0)
+            object value = null;
+            if (node is FieldDeclaration)
             {
-                StringBuilder sb = new StringBuilder();
-                foreach (var c in visitor.Comments)
-                {
-                    sb.AppendLine(c.Content);
-                }
+                var fieldDecl = (FieldDeclaration) node;
+                node = fieldDecl.Variables.First();
+                var initializer = fieldDecl.Variables.First().Initializer as PrimitiveExpression;
 
-                block.Write(block.WriteIndentToString(XmlToJsDoc.Convert(sb.ToString())));
-                block.WriteNewLine();
+                if (initializer != null)
+                {
+                    value = initializer.Value;
+                }
             }
+            else if (node is EventDeclaration)
+            {
+                var eventDecl = (EventDeclaration)node;
+                node = eventDecl.Variables.First();
+                var initializer = eventDecl.Variables.First().Initializer as PrimitiveExpression;
+
+                if (initializer != null)
+                {
+                    value = initializer.Value;
+                }
+            }
+
+            var rr = block.Emitter.Resolver.ResolveNode(node, block.Emitter);
+            string source = BuildCommentString(visitor.Comments);
+
+            var prop = node as PropertyDeclaration;
+            if (prop != null)
+            {
+                var memberResolveResult = rr as MemberResolveResult;
+                var rProp = memberResolveResult.Member as DefaultResolvedProperty;
+
+                var comment = new JsDocComment();
+                InitMember(comment, rProp.Getter, block.Emitter, null);
+                comment.Function = Helpers.GetPropertyRef(rProp, block.Emitter, false);
+                block.Write(block.WriteIndentToString(XmlToJsDoc.ReadComment(source, rr, block.Emitter, comment)));
+                block.WriteNewLine();
+
+                comment = new JsDocComment();
+                InitMember(comment, rProp.Setter, block.Emitter, null);
+                comment.Function = Helpers.GetPropertyRef(rProp, block.Emitter, true);
+                block.Write(block.WriteIndentToString(XmlToJsDoc.ReadComment(source, rr, block.Emitter, comment)));
+                block.WriteNewLine();
+                return;
+            }
+
+            block.Write(block.WriteIndentToString(XmlToJsDoc.Convert(source, rr, block.Emitter, value)));  
+
+            block.WriteNewLine();
         }
 
-        public static string Convert(string source)
+        private static string BuildCommentString(IList<Comment> comments)
+        {
+            if (comments.Count == 0)
+            {
+                return null;
+            }
+
+            StringBuilder sb = new StringBuilder();
+            foreach (var c in comments)
+            {
+                sb.AppendLine(c.Content);
+            }
+
+            return sb.ToString();
+        }
+
+        public static string Convert(string source, ResolveResult rr, IEmitter emitter, object value)
+        {
+            var comment = new JsDocComment();
+            XmlToJsDoc.InitComment(comment, rr, emitter, value);
+            
+            return ReadComment(source, rr, emitter, comment);
+        }
+
+        private static string ReadComment(string source, ResolveResult rr, IEmitter emitter, JsDocComment comment)
         {
             var xml = new StringBuilder("<comment>\n");
-            var descs = new List<string>();
-            var remarks = new List<string>();
-            var parameters = new List<XmlParam>();
-            var ret = new List<XmlParam>();                
-            var comment = new StringBuilder("/**\n");
-            var nameColumnWidth = 0;
-            var typeColumnWidth = 0;
-
-            foreach (var line in source.Split('\n'))
-	        {
-		        var trimmedLine = line.Trim();
-
-                if (string.IsNullOrEmpty(trimmedLine)) 
-                { 
-                    continue; 
-                }
-                
-                xml.Append(System.Text.RegularExpressions.Regex.Replace(line, @"\/\/\/\s*", "") + "\n");
-	        }    
-                
-            xml.Append("</comment>");
-
-            
-            var doc = new System.Xml.XmlDocument();
-            doc.LoadXml(xml.ToString());
-
-            foreach (XmlNode node in doc.GetElementsByTagName("summary"))
-	        {
-                descs.Add(node.InnerXml.Trim());
-	        }
-
-            if (descs.Count == 0) 
+            if (source != null)
             {
-                descs.Add("[description]");
+                foreach (var line in source.Split('\n'))
+                {
+                    var trimmedLine = line.Trim();
+
+                    if (string.IsNullOrEmpty(trimmedLine))
+                    {
+                        continue;
+                    }
+
+                    xml.Append(System.Text.RegularExpressions.Regex.Replace(line, @"\/\/\/\s*", "") + "\n");
+                }
+
+                xml.Append("</comment>");
+
+                var doc = new System.Xml.XmlDocument();
+                doc.LoadXml(xml.ToString());
+
+                foreach (XmlNode node in doc.GetElementsByTagName("summary"))
+                {
+                    comment.Descriptions.Add(HandleNode(node));
+                }
+
+                foreach (XmlNode node in doc.GetElementsByTagName("remark"))
+                {
+                    comment.Remarks.Add(HandleNode(node));
+                }
+
+                foreach (XmlNode node in doc.GetElementsByTagName("typeparam"))
+                {
+                    string name = null;
+                    var attr = node.Attributes["name"];
+                    if (attr != null)
+                    {
+                        name = attr.Value.Trim();
+                    }
+
+                    var param = comment.Parameters.FirstOrDefault(p => p.Name == name);
+                    if (param == null)
+                    {
+                        param = new JsDocParam
+                        {
+                            Name = "[name]",
+                            Type = "[type]"
+                        };
+
+                        comment.Parameters.Add(param);
+                    }
+
+                    attr = node.Attributes["type"];
+                    if (attr != null)
+                    {
+                        param.Type = attr.Value;
+                    }
+                    else if (rr != null)
+                    {
+                        param.Type = "Function";
+                    }
+
+                    var text = HandleNode(node);
+                    if (!string.IsNullOrEmpty(text))
+                    {
+                        param.Desc = text;
+                    }
+                }
+
+                foreach (XmlNode node in doc.GetElementsByTagName("param"))
+                {
+                    string name = null;
+                    var attr = node.Attributes["name"];
+                    if (attr != null)
+                    {
+                        name = attr.Value.Trim();
+                    }
+
+                    var param = comment.Parameters.FirstOrDefault(p => p.Name == name);
+                    if (param == null)
+                    {
+                        param = new JsDocParam
+                        {
+                            Name = "[name]",
+                            Type = "[type]"
+                        };
+
+                        comment.Parameters.Add(param);
+                    }
+
+                    attr = node.Attributes["type"];
+                    if (attr != null)
+                    {
+                        param.Type = attr.Value;
+                    }
+                    else if (rr != null)
+                    {
+                        param.Type = XmlToJsDoc.GetParamTypeName(param.Name, rr, emitter);
+                    }
+
+                    var text = HandleNode(node);
+                    if (!string.IsNullOrEmpty(text))
+                    {
+                        param.Desc = text;
+                    }
+                }
+
+                foreach (XmlNode node in doc.GetElementsByTagName("returns"))
+                {
+                    JsDocParam param = null;
+                    if (comment.Returns.Any())
+                    {
+                        param = comment.Returns.FirstOrDefault();
+                    }
+                    else
+                    {
+                        param = new JsDocParam
+                        {
+                            Type = "[type]"
+                        };
+
+                        comment.Returns.Add(param);
+                    }
+
+                    var attr = node.Attributes["name"];
+                    if (attr != null)
+                    {
+                        param.Name = attr.Value.Trim();
+                    }
+
+                    attr = node.Attributes["type"];
+                    if (attr != null)
+                    {
+                        param.Type = attr.Value.Trim();
+                    }
+                    else if (rr != null)
+                    {
+                        param.Type = XmlToJsDoc.GetParamTypeName(null, rr, emitter);
+                    }
+
+                    var text = HandleNode(node);
+                    if (!string.IsNullOrEmpty(text))
+                    {
+                        param.Desc = text;
+                    }
+                }
+
+                foreach (XmlNode node in doc.GetElementsByTagName("example"))
+                {
+                    var codeNodes = node.SelectNodes("code");
+                    StringBuilder sb = new StringBuilder();
+
+                    foreach (XmlNode codeNode in codeNodes)
+                    {
+                        sb.AppendLine(codeNode.InnerText);
+                        node.RemoveChild(codeNode);
+                    }
+
+                    var code = sb.ToString();
+                    var caption = HandleNode(node);
+                    comment.Examples.Add(new Tuple<string, string>(caption, code));
+                }
+
+                foreach (XmlNode node in doc.GetElementsByTagName("exception"))
+                {
+                    var attr = node.Attributes["cref"];
+                    var exceptionType = "";
+
+                    if (attr != null)
+                    {
+                        try
+                        {
+                            exceptionType = XmlToJsDoc.ToJavascriptName(emitter.BridgeTypes.Get(attr.InnerText).Type, emitter);
+                        }
+                        catch
+                        {
+                            // ignored
+                        }
+                    }
+                    
+                    var caption = HandleNode(node);
+                    comment.Throws.Add(new Tuple<string, string>(caption, exceptionType));
+                }
+
+                foreach (XmlNode node in doc.GetElementsByTagName("seealso"))
+                {
+                    var attr = node.Attributes["cref"];
+                    var cref = "";
+
+                    if (attr != null)
+                    {
+                        cref = attr.InnerText;
+                    }
+
+                    comment.SeeAlso.Add(cref);
+                }
+
+                foreach (XmlNode node in doc.GetElementsByTagName("value"))
+                {
+                    var valueParam = comment.Parameters.FirstOrDefault(p => p.Name == "value");
+                    if (valueParam != null)
+                    {
+                        valueParam.Desc = HandleNode(node);    
+                    }
+                }
             }
 
-            foreach (XmlNode node in doc.GetElementsByTagName("remark"))
-	        {
-                remarks.Add(HandleNode(node));
-	        }
-
-            foreach (XmlNode node in doc.GetElementsByTagName("param"))
-	        {
-                var param = new XmlParam 
-                {
-                    Name = "[name]",
-                    Type = "[type]",
-                    Desc = "[description]"
-                };
-
-                var attr = node.Attributes["name"];
-                if (attr != null) 
-                {
-                    param.Name = attr.Value.Trim();
-                }
-                
-                attr = node.Attributes["type"];
-                if (attr != null) 
-                {
-                    param.Type = attr.Value;
-                }
-
-                var text = HandleNode(node);
-                if (!string.IsNullOrEmpty(text)) 
-                {
-                    param.Desc = text;
-                }
-
-                parameters.Add(param);
-	        }
-
-            foreach (XmlNode node in doc.GetElementsByTagName("returns"))
-	        {
-                var param = new XmlParam 
-                {
-                    Type = "[type]",
-                    Desc = "[description]"
-                };
-
-                var attr = node.Attributes["name"];
-                if (attr != null) 
-                {
-                    param.Name = attr.Value.Trim();
-                }
-
-                attr = node.Attributes["type"];
-                if (attr != null) {
-                    param.Type = attr.Value.Trim();
-                }
-
-                var text = HandleNode(node);
-                if (!string.IsNullOrEmpty(text)) 
-                {
-                    param.Desc = text;
-                }
-
-                ret.Add(param);
-            }
-
-            var tmp = new List<XmlParam>(parameters);
-            tmp.AddRange(ret);
-            foreach(XmlParam param in tmp)
-            {
-                if (param.Type.Length > typeColumnWidth) 
-                {
-                    typeColumnWidth = param.Type.Length;
-                }
-
-                if (param.Name != null && param.Name.Length > nameColumnWidth) 
-                {
-                    nameColumnWidth = param.Name.Length;
-                }
-            }
-
-            typeColumnWidth += 4;
-            nameColumnWidth += 4;
-
-            comment.Append(" * " + string.Join("\n * ", descs.ToArray()) + "\n *\n");
-
-            if (remarks.Count > 0) 
-            {
-                comment.Append(" * " + string.Join("\n * ", remarks) + "\n *\n");
-            }
-
-            foreach(XmlParam param in parameters)
-            {
-                comment.Append(" * @param   {" + param.Type + "}");
-                comment.Append(new String(' ', typeColumnWidth - param.Type.Length));
-                comment.Append(param.Name);
-                comment.Append(new String(' ', nameColumnWidth - param.Name.Length));
-                comment.Append(param.Desc);
-                comment.AppendLine();
-            }
-
-            foreach (XmlParam param in ret)
-	        {
-                comment.Append(" * @return  {" + param.Type + "}");
-                comment.Append(new String(' ', typeColumnWidth - param.Type.Length));
-                comment.Append(new String(' ', nameColumnWidth));
-                comment.Append(param.Desc);
-                comment.AppendLine();
-	        }
-            
-            comment.Append(" */");
 
             return comment.ToString();
         }
 
         private static string HandleNode(XmlNode node)
         {
+            var cNodes = node.SelectNodes("c");
+            var codeNodes = node.SelectNodes("code");
+            var list = cNodes.Cast<XmlNode>().Concat<XmlNode>(codeNodes.Cast<XmlNode>());
+            
+            foreach (XmlNode cNode in list)
+            {
+                XmlElement pre = node.OwnerDocument.CreateElement("pre");
+                XmlElement code = node.OwnerDocument.CreateElement("code");
+                code.InnerXml = HandleNode(cNode);
+                pre.AppendChild(code);
+                node.ReplaceChild(pre, cNode);
+            }
+
+            cNodes = node.SelectNodes("para");
+            foreach (XmlNode cNode in cNodes)
+            {
+                XmlElement p = node.OwnerDocument.CreateElement("p");
+                p.InnerXml = HandleNode(cNode);
+                node.ReplaceChild(p, cNode);
+            }
+
+            list = node.SelectNodes("paramref").Cast<XmlNode>().Concat<XmlNode>(node.SelectNodes("typeparamref").Cast<XmlNode>());
+            foreach (XmlNode cNode in list)
+            {
+                XmlElement p = node.OwnerDocument.CreateElement("b");
+                var attr = node.Attributes["name"];
+                p.InnerXml = attr != null ? attr.InnerText : "";
+                node.ReplaceChild(p, cNode);
+            }
+
+            cNodes = node.SelectNodes("see");
+            foreach (XmlNode cNode in cNodes)
+            {
+                var attr = node.Attributes["cref"];
+                XmlText p = node.OwnerDocument.CreateTextNode(string.Format("{{@link {0}}}", attr != null ? attr.InnerText : ""));
+                node.ReplaceChild(p, cNode);
+            }
+
+            RemoveNodes(node, "include");
+            RemoveNodes(node, "list");
+            RemoveNodes(node, "permission");
+
+
             return node.InnerXml.Trim();
         }
 
-        class XmlParam
+        private static void RemoveNodes(XmlNode node, string tag)
         {
-            public string Name
+            XmlNodeList cNodes = node.SelectNodes(tag);
+            foreach (XmlNode cNode in cNodes)
             {
-                get;
-                set;
+                node.RemoveChild(cNode);
+            }
+        }
+
+        private static void InitComment(JsDocComment comment, ResolveResult rr, IEmitter emitter, object value)
+        {
+            if (rr is MemberResolveResult)
+            {
+                InitMember(comment, ((MemberResolveResult)rr).Member, emitter, value);
+            }
+            else if (rr is TypeResolveResult)
+            {
+                InitType(comment, rr.Type, emitter);
+            }
+        }
+
+        private static void InitType(JsDocComment comment, IType type, IEmitter emitter)
+        {
+            if (!emitter.JsDoc.Namespaces.Contains(type.Namespace))
+            {
+                emitter.JsDoc.Namespaces.Add(type.Namespace);
+                comment.Namespace = type.Namespace;
             }
 
-            public string Type
+            comment.Class = XmlToJsDoc.ToJavascriptName(type, emitter);
+            comment.Augments = XmlToJsDoc.GetTypeHierarchy(type, emitter);
+
+            var access = type as IHasAccessibility;
+            if (access != null)
             {
-                get;
-                set;
+                comment.IsPublic = access.IsPublic;
+                comment.IsPrivate = access.IsPrivate;
+                comment.IsProtected = access.IsProtected;
             }
 
-            public string Desc
+            var typeDef = type as ICSharpCode.NRefactory.TypeSystem.Implementation.DefaultResolvedTypeDefinition;
+            if (typeDef != null)
             {
-                get;
-                set;
+                comment.IsAbstract = typeDef.IsAbstract;
+                comment.IsStatic = typeDef.IsStatic;
             }
+
+            if (type.Kind == TypeKind.Enum)
+            {
+                comment.Enum = true;
+            }
+        }
+
+        private static void InitMember(JsDocComment comment, IMember member, IEmitter emitter, object value)
+        {
+            if (member != null)
+            {
+                var method = member as IMethod;
+                if (method != null)
+                {
+                    comment.This = XmlToJsDoc.ToJavascriptName(member.DeclaringType, emitter);
+                    if (method.IsConstructor)
+                    {
+                        comment.Constructs = comment.This;
+                    }
+
+                    if (method.TypeParameters != null && method.TypeParameters.Count > 0)
+                    {
+                        foreach (var param in method.TypeParameters)
+                        {
+                            var jsParam = new JsDocParam();
+                            jsParam.Name = param.Name;
+                            jsParam.Type = "Function";
+
+                            comment.Parameters.Add(jsParam);
+                        }
+                    }
+                }
+
+                comment.Override = member.IsOverride;
+
+                if (member is IParameterizedMember)
+                {
+                    var parameters = ((IParameterizedMember) member).Parameters;
+
+                    if (parameters != null && parameters.Count > 0)
+                    {
+                        foreach (var param in parameters)
+                        {
+                            var jsParam = new JsDocParam();
+                            jsParam.Name = param.Name;
+                            jsParam.Type = XmlToJsDoc.ToJavascriptName(param.Type, emitter);
+
+                            comment.Parameters.Add(jsParam);
+                        }
+                    }
+                }
+
+                var variable = member as IVariable;
+                if (variable != null)
+                {
+                    comment.MemberType = XmlToJsDoc.ToJavascriptName(variable.Type, emitter);
+                }
+                else
+                {
+                    comment.Returns.Add(new JsDocParam
+                    {
+                        Type = XmlToJsDoc.ToJavascriptName(member.ReturnType, emitter)
+                    });
+                }
+
+                var field = member as DefaultResolvedField;
+                if (field != null)
+                {
+                    comment.ReadOnly = field.IsReadOnly;
+                    comment.Const = field.IsConst;
+                    comment.Default = value ?? field.ConstantValue;
+                }
+
+                var ev = member as IEvent;
+                if (ev != null)
+                {
+                    comment.Event = XmlToJsDoc.ToJavascriptName(member.DeclaringType, emitter) + "#" + member.Name;
+                }
+
+                comment.MemberOf = XmlToJsDoc.ToJavascriptName(member.DeclaringType, emitter);
+                comment.IsPublic = member.IsPublic;
+                comment.IsPrivate = member.IsPrivate;
+                comment.IsProtected = member.IsProtected;
+
+                var entity = member as ICSharpCode.NRefactory.TypeSystem.Implementation.AbstractResolvedEntity;
+                if (entity != null)
+                {
+                    comment.IsAbstract = entity.IsAbstract;
+                    comment.IsStatic = entity.IsStatic;
+                }
+            }
+        }
+
+        private static string[] GetTypeHierarchy(IType type, IEmitter emitter)
+        {
+            var list = new List<string>();
+
+            foreach (var t in emitter.BridgeTypes.Get(type).TypeInfo.TypeDeclaration.BaseTypes)
+            {
+                var name = XmlToJsDoc.ToJavascriptName(t, emitter);
+
+                var rr = emitter.Resolver.ResolveNode(t, emitter);
+                if (rr.Type.Kind == TypeKind.Interface)
+                {
+                    name = "+" + name;
+                }
+
+                list.Add(name);
+            }
+
+            if (list.Count > 0 && list[0] == "Object")
+            {
+                list.RemoveAt(0);
+            }
+
+            if (list.Count == 0)
+            {
+                return null;
+            }
+
+            return list.ToArray();
+        }
+
+        private static string GetParamTypeName(string name, ResolveResult rr, IEmitter emitter)
+        {
+            IMember member = null;
+            if (rr is MemberResolveResult)
+            {
+                member = ((MemberResolveResult) rr).Member;
+            }
+
+            if (name == null)
+            {
+                return XmlToJsDoc.ToJavascriptName(member.ReturnType, emitter);
+            }
+
+            if (member is IParameterizedMember)
+            {
+                var paramMember = (IParameterizedMember) member;
+                var param = paramMember.Parameters.FirstOrDefault(p => p.Name == name);
+                if (param != null)
+                {
+                    return XmlToJsDoc.ToJavascriptName(param.Type, emitter);
+                }
+            }
+
+            return null;
+        }
+
+        public static string GetPrimitivie(PrimitiveType primitive)
+        {
+            if (primitive != null)
+            {
+                switch (primitive.KnownTypeCode)
+                {
+                    case KnownTypeCode.Void:
+                        return "void";
+                    case KnownTypeCode.Boolean:
+                        return "boolean";
+                    case KnownTypeCode.String:
+                        return "string";
+                    case KnownTypeCode.Decimal:
+                    case KnownTypeCode.Double:
+                    case KnownTypeCode.Byte:
+                    case KnownTypeCode.Char:
+                    case KnownTypeCode.Int16:
+                    case KnownTypeCode.Int32:
+                    case KnownTypeCode.Int64:
+                    case KnownTypeCode.SByte:
+                    case KnownTypeCode.Single:
+                    case KnownTypeCode.UInt16:
+                    case KnownTypeCode.UInt32:
+                    case KnownTypeCode.UInt64:
+                        return "number";
+                }
+            }
+
+            return null;
+        }
+
+        public static string ToJavascriptName(AstType astType, IEmitter emitter)
+        {
+            string name = null;
+            var primitive = astType as PrimitiveType;
+            name = XmlToJsDoc.GetPrimitivie(primitive);
+            if (name != null)
+            {
+                return name;
+            }
+
+            var composedType = astType as ComposedType;
+            if (composedType != null && composedType.ArraySpecifiers != null && composedType.ArraySpecifiers.Count > 0)
+            {
+                return "Array.<" + BridgeTypes.ToTypeScriptName(composedType.BaseType, emitter) + ">";
+            }
+
+            var simpleType = astType as SimpleType;
+            if (simpleType != null && simpleType.Identifier == "dynamic")
+            {
+                return "object";
+            }
+
+            var resolveResult = emitter.Resolver.ResolveNode(astType, emitter);
+            return XmlToJsDoc.ToJavascriptName(resolveResult.Type, emitter);
+        }
+
+        public static string ToJavascriptName(IType type, IEmitter emitter)
+        {
+            if (type.Kind == TypeKind.Delegate)
+            {
+                var delegateName = BridgeTypes.ConvertName(type.FullName);
+
+                if (!emitter.JsDoc.Callbacks.Contains(delegateName))
+                {
+                    var method = type.GetDelegateInvokeMethod();
+                    JsDocComment comment = new JsDocComment();
+
+                    var parameters = method.Parameters;
+
+                    if (parameters != null && parameters.Count > 0)
+                    {
+                        foreach (var param in parameters)
+                        {
+                            var jsParam = new JsDocParam();
+                            jsParam.Name = param.Name;
+                            jsParam.Type = XmlToJsDoc.ToJavascriptName(param.Type, emitter);
+
+                            comment.Parameters.Add(jsParam);
+                        }
+                    }
+
+                    comment.Returns.Add(new JsDocParam
+                    {
+                        Type = XmlToJsDoc.ToJavascriptName(method.ReturnType, emitter)
+                    });
+
+                    comment.Callback = delegateName;
+                    comment.MemberOf = type.Namespace;
+
+                    if (!emitter.JsDoc.Namespaces.Contains(type.Namespace))
+                    {
+                        emitter.JsDoc.Namespaces.Add(type.Namespace);
+                        comment.Namespace = type.Namespace;
+                    }
+                    
+                    emitter.JsDoc.Callbacks.Add(delegateName);
+                    emitter.Output.Insert(0, comment.ToString() + "\n\n");
+                }
+
+                return delegateName;
+            }
+
+            if (type.IsKnownType(KnownTypeCode.String))
+            {
+                return "string";
+            }
+
+            if (type.IsKnownType(KnownTypeCode.Boolean))
+            {
+                return "boolean";
+            }
+
+            if (type.IsKnownType(KnownTypeCode.Void))
+            {
+                return "void";
+            }
+
+            if (type.IsKnownType(KnownTypeCode.Byte) ||
+                type.IsKnownType(KnownTypeCode.Char) ||
+                type.IsKnownType(KnownTypeCode.Decimal) ||
+                type.IsKnownType(KnownTypeCode.Double) ||
+                type.IsKnownType(KnownTypeCode.Int16) ||
+                type.IsKnownType(KnownTypeCode.Int32) ||
+                type.IsKnownType(KnownTypeCode.Int64) ||
+                type.IsKnownType(KnownTypeCode.SByte) ||
+                type.IsKnownType(KnownTypeCode.Single) ||
+                type.IsKnownType(KnownTypeCode.UInt16) ||
+                type.IsKnownType(KnownTypeCode.UInt32) ||
+                type.IsKnownType(KnownTypeCode.UInt64))
+            {
+                return "number";
+            }
+
+            if (type.Kind == TypeKind.Array)
+            {
+                ICSharpCode.NRefactory.TypeSystem.ArrayType arrayType = (ICSharpCode.NRefactory.TypeSystem.ArrayType)type;
+                return "Array.<" + XmlToJsDoc.ToJavascriptName(arrayType.ElementType, emitter) + ">";
+            }
+
+            if (type.Kind == TypeKind.Dynamic)
+            {
+                return "object";
+            }
+
+            if (type.Kind == TypeKind.Enum && type.DeclaringType != null)
+            {
+                return "number";
+            }
+
+            if (NullableType.IsNullable(type))
+            {
+                return "?" + XmlToJsDoc.ToJavascriptName(NullableType.GetUnderlyingType(type), emitter);
+            }
+
+            BridgeType bridgeType = emitter.BridgeTypes.Get(type, true);
+            string name = BridgeTypes.ConvertName(type.FullName);
+            bool isCustomName = false;
+            if (bridgeType != null)
+            {
+                name = BridgeTypes.AddModule(name, bridgeType, out isCustomName);
+            }
+
+            if (!isCustomName && type.TypeArguments.Count > 0)
+            {
+                name += "$" + type.TypeArguments.Count;
+            }
+
+            return name;
         }
 
         class DocumentationCommentVisitor : DepthFirstAstVisitor
         {
-            public DocumentationCommentVisitor(IEmitter emitter)
+            public DocumentationCommentVisitor()
             {
                 this.Comments = new List<Comment>();
-                this.Emitter = emitter;
             }
 
             public List<Comment> Comments
-            {
-                get;
-                private set;
-            }
-
-            public IEmitter Emitter
             {
                 get;
                 private set;
@@ -236,6 +751,410 @@ namespace Bridge.Contract
                     this.Comments.Add(comment);
                 }
             }
+        }
+    }
+
+    public class JsDocComment
+    {
+        public JsDocComment()
+        {
+            this.Descriptions = new List<string>();
+            this.Parameters = new List<JsDocParam>();
+            this.Remarks = new List<string>();
+            this.Returns = new List<JsDocParam>();
+            this.Examples = new List<Tuple<string, string>>();
+            this.Throws = new List<Tuple<string, string>>();
+            this.SeeAlso = new List<string>();
+        }
+
+        public List<string> SeeAlso
+        {
+            get;
+            set;
+        }
+
+        public List<string> Descriptions
+        {
+            get; 
+            set;
+        }
+
+        public List<string> Remarks
+        {
+            get;
+            set;
+        }
+
+        public string[] Augments
+        {
+            get;
+            set;
+        }
+
+        public List<JsDocParam> Parameters
+        {
+            get;
+            set;
+        }
+
+        public List<JsDocParam> Returns
+        {
+            get;
+            set;
+        }
+
+        public bool IsPrivate
+        {
+            get; set;
+        }
+
+        public bool IsPublic
+        {
+            get;
+            set;
+        }
+
+        public bool IsProtected
+        {
+            get;
+            set;
+        }
+
+        public string This
+        {
+            get; 
+            set;
+        }
+
+        public string MemberOf
+        {
+            get;
+            set;
+        }
+
+        public string Class
+        {
+            get;
+            set;
+        }
+
+        public string Namespace
+        {
+            get; 
+            set;
+        }
+
+        public bool IsAbstract
+        {
+            get; 
+            set;
+        }
+
+        public bool IsStatic
+        {
+            get; 
+            set;
+        }
+
+        public string MemberType
+        {
+            get;
+            set;
+        }
+
+        public string Function
+        {
+            get;
+            set;
+        }
+
+        public bool Const
+        {
+            get; 
+            set;
+        }
+
+        public object Default
+        {
+            get;
+            set;
+        }
+
+        public string Callback
+        {
+            get; 
+            set;
+        }
+
+        public string Constructs
+        {
+            get;
+            set;
+        }
+
+        public bool Enum
+        {
+            get; 
+            set;
+        }
+
+        public bool Override
+        {
+            get;
+            set;
+        }
+
+        public string Event
+        {
+            get;
+            set;
+        }
+
+        public bool ReadOnly
+        {
+            get; 
+            set;
+        }
+
+        public List<Tuple<string, string>> Examples
+        {
+            get; 
+            set;
+        }
+
+        public List<Tuple<string, string>> Throws 
+        {
+            get;
+            set;
+        }
+
+        public override string ToString()
+        {
+            var comment = new StringBuilder();
+
+            if (!string.IsNullOrEmpty((Namespace)))
+            {
+                comment.AppendLine("/** @namespace " + this.Namespace + " */\n");
+            }
+           
+            comment.AppendLine("/**");
+
+            var nameColumnWidth = 0;
+            var typeColumnWidth = 0;
+
+            var tmp = new List<JsDocParam>(this.Parameters);
+            tmp.AddRange(this.Returns);
+            foreach (JsDocParam param in tmp)
+            {
+                if (param.Type.Length > typeColumnWidth)
+                {
+                    typeColumnWidth = param.Type.Length;
+                }
+
+                if (param.Name != null && param.Name.Length > nameColumnWidth)
+                {
+                    nameColumnWidth = param.Name.Length;
+                }
+            }
+
+            typeColumnWidth += 4;
+            nameColumnWidth += 4;
+
+            if (this.Descriptions.Count > 0)
+            {
+                comment.Append(" * " + string.Join("\n * ", this.Descriptions.ToArray()) + "\n *\n");    
+            }
+
+            if (this.Remarks.Count > 0)
+            {
+                comment.Append(" * " + string.Join("\n * ", this.Remarks) + "\n *\n");
+            }
+
+            if (this.IsStatic)
+            {
+                comment.AppendLine(" * @static");
+            }
+            else if (string.IsNullOrEmpty(this.Class) && string.IsNullOrEmpty(this.Callback))
+            {
+                comment.AppendLine(" * @instance");
+            }
+
+            if (this.IsAbstract)
+            {
+                comment.AppendLine(" * @abstract");
+            }
+
+            if (this.IsPublic)
+            {
+                comment.AppendLine(" * @public");
+            }
+
+            if (this.IsProtected)
+            {
+                comment.AppendLine(" * @protected");
+            }
+
+            if (this.IsPrivate)
+            {
+                comment.AppendLine(" * @private");
+            }
+
+            if (this.Override)
+            {
+                comment.AppendLine(" * @override");
+            }
+
+            if (this.ReadOnly)
+            {
+                comment.AppendLine(" * @readonly");
+            }
+
+            if (!string.IsNullOrEmpty(this.This))
+            {
+                comment.Append(" * @this ").AppendLine(this.This);
+            }
+
+            if (!string.IsNullOrEmpty(this.MemberOf))
+            {
+                comment.Append(" * @memberof ").AppendLine(this.MemberOf);
+            }
+
+            if (!string.IsNullOrEmpty(this.Class))
+            {
+                comment.AppendLine(" * @class " + this.Class);
+            }
+
+            if (!string.IsNullOrEmpty(this.Event))
+            {
+                comment.AppendLine(" * @event " + this.Event);
+            }
+
+            /*if (!string.IsNullOrEmpty(this.Constructs))
+            {
+                comment.Append(" * @constructs ").AppendLine(this.Constructs);
+            }*/
+
+            /*if (this.Enum)
+            {
+                comment.AppendLine(" * @enum {number}");
+            }*/
+
+            if (this.Const)
+            {
+                comment.AppendLine(" * @constant");
+            }
+
+            if (this.Default != null)
+            {
+                comment.AppendLine(" * @default " + JsonConvert.SerializeObject(this.Default));
+            }
+
+            if (!string.IsNullOrEmpty(this.Callback))
+            {
+                comment.AppendLine(" * @callback " + this.Callback);
+            }
+
+            if (!string.IsNullOrEmpty(this.Function))
+            {
+                comment.AppendLine(" * @function " + this.Function);
+            }
+
+            if (!string.IsNullOrEmpty(this.MemberType))
+            {
+                comment.AppendLine(" * @type " + this.MemberType);
+            }
+
+            if (this.Augments != null && this.Augments.Length > 0)
+            {
+                foreach (var augment in this.Augments)
+                {
+                    if (augment.StartsWith("+"))
+                    {
+                        comment.AppendLine(" * @implements  " + augment.Substring(1));
+                    }
+                    else
+                    {
+                        comment.AppendLine(" * @augments " + augment);    
+                    }
+                }
+            }
+
+            foreach (var example in this.Examples)
+            {
+                if (!string.IsNullOrEmpty(example.Item1))
+                {
+                    comment.AppendLine(" * @example " + example.Item1);
+                }
+                else
+                {
+                    comment.AppendLine(" * @example");    
+                }
+
+                comment.Append(" *" + string.Join("\n *", example.Item2.Split('\n')) + "\n *\n"); 
+            }
+
+            foreach (var exception in this.Throws)
+            {
+                if (!string.IsNullOrEmpty(exception.Item2))
+                {
+                    comment.Append(" * @throws {" + exception.Item2 + "} ");
+                }
+                else
+                {
+                    comment.Append(" * @throws ");
+                }
+
+                comment.AppendLine(exception.Item1);
+            }
+
+            foreach (JsDocParam param in this.Parameters)
+            {
+                comment.Append(" * @param   {" + param.Type + "}");
+                comment.Append(new String(' ', typeColumnWidth - param.Type.Length));
+                comment.Append(param.Name);
+                comment.Append(new String(' ', nameColumnWidth - param.Name.Length));
+                comment.Append(param.Desc);
+                comment.AppendLine();
+            }
+
+            foreach (JsDocParam param in this.Returns)
+            {
+                comment.Append(" * @return  {" + param.Type + "}");
+                comment.Append(new String(' ', typeColumnWidth - param.Type.Length));
+                comment.Append(new String(' ', nameColumnWidth));
+                comment.Append(param.Desc);
+                comment.AppendLine();
+            }
+
+            foreach (var see in this.SeeAlso)
+            {
+                comment.Append(" * @see {@link " + see + "}");
+            }
+
+            comment.Append(" */");
+
+            return comment.ToString();
+        }
+    }
+
+    public class JsDocParam
+    {
+        public string Name
+        {
+            get;
+            set;
+        }
+
+        public string Type
+        {
+            get;
+            set;
+        }
+
+        public string Desc
+        {
+            get;
+            set;
         }
     }
 }

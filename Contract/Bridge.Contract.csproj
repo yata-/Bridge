@@ -64,6 +64,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Bridge\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Object.Net.Utilities, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Bridge\packages\Object.NET.Utilities.2.5.0\lib\Object.Net.Utilities.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -88,6 +92,7 @@
     <Compile Include="IConstructorBlock.cs" />
     <Compile Include="IEmitterOutput.cs" />
     <Compile Include="IEmitterOutputs.cs" />
+    <Compile Include="IJsDoc.cs" />
     <Compile Include="IJumpInfo.cs" />
     <Compile Include="ILog.cs" />
     <Compile Include="IMemberResolver.cs" />

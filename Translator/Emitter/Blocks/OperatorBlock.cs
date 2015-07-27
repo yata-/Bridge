@@ -25,6 +25,7 @@ namespace Bridge.Translator
 
         protected void EmitOperatorDeclaration(OperatorDeclaration operatorDeclaration)
         {
+            XmlToJsDoc.EmitComment(this, operatorDeclaration);
             this.EnsureComma();
             this.ResetLocals();
             var prevMap = this.BuildLocalsMap();

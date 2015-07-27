@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Linq;
+using Object.Net.Utilities;
 
 namespace Bridge.Contract
 {
@@ -339,6 +340,262 @@ namespace Bridge.Contract
         public static string GetTypeDefinitionKey(string name)
         {
             return name.Replace("/", "+");
+        }
+
+        public static string ToTypeScriptName(AstType astType, IEmitter emitter, bool asDefinition = false, bool ignoreDependency = false)
+        {
+            string name = null;
+            var primitive = astType as PrimitiveType;
+            name = BridgeTypes.GetTsPrimitivie(primitive);
+            if (name != null)
+            {
+                return name;
+            }
+
+            var composedType = astType as ComposedType;
+            if (composedType != null && composedType.ArraySpecifiers != null && composedType.ArraySpecifiers.Count > 0)
+            {
+                return BridgeTypes.ToTypeScriptName(composedType.BaseType, emitter) + "[]";
+            }
+
+            var simpleType = astType as SimpleType;
+            if (simpleType != null && simpleType.Identifier == "dynamic")
+            {
+                return "any";
+            }
+
+            var resolveResult = emitter.Resolver.ResolveNode(astType, emitter);
+            return BridgeTypes.ToTypeScriptName(resolveResult.Type, emitter, asDefinition: asDefinition, ignoreDependency: ignoreDependency);
+        }
+
+        public static string ToTypeScriptName(IType type, IEmitter emitter, bool asDefinition = false, bool excludens = false, bool ignoreDependency = false)
+        {
+            if (type.Kind == TypeKind.Delegate)
+            {
+                var method = type.GetDelegateInvokeMethod();
+
+                StringBuilder sb = new StringBuilder();
+                sb.Append("{");
+                sb.Append("(");
+
+                var last = method.Parameters.LastOrDefault();
+                foreach (var p in method.Parameters)
+                {
+                    var ptype = BridgeTypes.ToTypeScriptName(p.Type, emitter);
+
+                    if (p.IsOut || p.IsRef)
+                    {
+                        ptype = "{v: " + ptype + "}";
+                    }
+
+                    sb.Append(p.Name + ": " + ptype);
+                    if (p != last)
+                    {
+                        sb.Append(", ");
+                    }
+                }
+
+                sb.Append(")");
+                sb.Append(": ");
+                sb.Append(BridgeTypes.ToTypeScriptName(method.ReturnType, emitter));
+                sb.Append("}");
+
+                return sb.ToString();
+            }
+
+            if (type.IsKnownType(KnownTypeCode.String))
+            {
+                return "string";
+            }
+
+            if (type.IsKnownType(KnownTypeCode.Boolean))
+            {
+                return "boolean";
+            }
+
+            if (type.IsKnownType(KnownTypeCode.Void))
+            {
+                return "void";
+            }
+
+            if (type.IsKnownType(KnownTypeCode.Byte) ||
+                type.IsKnownType(KnownTypeCode.Char) ||
+                type.IsKnownType(KnownTypeCode.Decimal) ||
+                type.IsKnownType(KnownTypeCode.Double) ||
+                type.IsKnownType(KnownTypeCode.Int16) ||
+                type.IsKnownType(KnownTypeCode.Int32) ||
+                type.IsKnownType(KnownTypeCode.Int64) ||
+                type.IsKnownType(KnownTypeCode.SByte) ||
+                type.IsKnownType(KnownTypeCode.Single) ||
+                type.IsKnownType(KnownTypeCode.UInt16) ||
+                type.IsKnownType(KnownTypeCode.UInt32) ||
+                type.IsKnownType(KnownTypeCode.UInt64))
+            {
+                return "number";
+            }
+
+            if (type.Kind == TypeKind.Array)
+            {
+                ICSharpCode.NRefactory.TypeSystem.ArrayType arrayType = (ICSharpCode.NRefactory.TypeSystem.ArrayType)type;
+                return BridgeTypes.ToTypeScriptName(arrayType.ElementType, emitter, asDefinition, excludens) + "[]";
+            }
+
+            if (type.Kind == TypeKind.Dynamic)
+            {
+                return "any";
+            }
+
+            if (type.Kind == TypeKind.Enum && type.DeclaringType != null && !excludens)
+            {
+                return "number";
+            }
+
+            if (NullableType.IsNullable(type))
+            {
+                return BridgeTypes.ToTypeScriptName(NullableType.GetUnderlyingType(type), emitter, asDefinition, excludens);
+            }
+
+            BridgeType bridgeType = emitter.BridgeTypes.Get(type, true);
+            string name = BridgeTypes.ConvertName(excludens ? type.Name : type.FullName);
+            bool isCustomName = false;
+            if (bridgeType != null)
+            {
+                if (!ignoreDependency && emitter.AssemblyInfo.OutputBy != OutputBy.Project &&
+                    bridgeType.TypeInfo != null && bridgeType.TypeInfo.Namespace != emitter.TypeInfo.Namespace)
+                {
+                    var info = BridgeTypes.GetNamespaceFilename(bridgeType.TypeInfo, emitter);
+                    var ns = info.Item1;
+                    var fileName = info.Item2;
+
+                    if (!emitter.CurrentDependencies.Any(d => d.DependencyName == fileName))
+                    {
+                        emitter.CurrentDependencies.Add(new ModuleDependency() { DependencyName = fileName });
+                    }
+                }
+
+                name = BridgeTypes.AddModule(name, bridgeType, out isCustomName);
+            }
+
+            if (!isCustomName && type.TypeArguments.Count > 0)
+            {
+                name += "$" + type.TypeArguments.Count;
+            }
+
+            if (!asDefinition && type.TypeArguments.Count > 0 && !Helpers.IsIgnoreGeneric(type, emitter))
+            {
+                StringBuilder sb = new StringBuilder(name);
+                bool needComma = false;
+                sb.Append("<");
+                foreach (var typeArg in type.TypeArguments)
+                {
+                    if (needComma)
+                    {
+                        sb.Append(",");
+                    }
+
+                    needComma = true;
+                    sb.Append(BridgeTypes.ToTypeScriptName(typeArg, emitter, asDefinition, excludens));
+                }
+                sb.Append(">");
+                name = sb.ToString();
+            }
+
+            return name;
+        }
+
+        public static string GetTsPrimitivie(PrimitiveType primitive)
+        {
+            if (primitive != null)
+            {
+                switch (primitive.KnownTypeCode)
+                {
+                    case KnownTypeCode.Void:
+                        return "void";
+                    case KnownTypeCode.Boolean:
+                        return "boolean";
+                    case KnownTypeCode.String:
+                        return "string";
+                    case KnownTypeCode.Decimal:
+                    case KnownTypeCode.Double:
+                    case KnownTypeCode.Byte:
+                    case KnownTypeCode.Char:
+                    case KnownTypeCode.Int16:
+                    case KnownTypeCode.Int32:
+                    case KnownTypeCode.Int64:
+                    case KnownTypeCode.SByte:
+                    case KnownTypeCode.Single:
+                    case KnownTypeCode.UInt16:
+                    case KnownTypeCode.UInt32:
+                    case KnownTypeCode.UInt64:
+                        return "number";
+                }
+            }
+
+            return null;
+        }
+
+        public static Tuple<string, string> GetNamespaceFilename(ITypeInfo typeInfo, IEmitter emitter)
+        {
+            var cas = emitter.BridgeTypes.Get(typeInfo.Key).TypeDefinition.CustomAttributes;
+            var fileName = typeInfo.Namespace;
+
+            // Search for an 'NamespaceAttribute' entry
+            foreach (var ca in cas)
+            {
+                if (ca.AttributeType.Name == "NamespaceAttribute" &&
+                    ca.ConstructorArguments.Count > 0 &&
+                    ca.ConstructorArguments[0].Value is string &&
+                    !string.IsNullOrWhiteSpace(ca.ConstructorArguments[0].Value.ToString()))
+                {
+                    fileName = ca.ConstructorArguments[0].Value.ToString();
+                    break;
+                }
+            }
+
+            var ns = fileName;
+
+            switch (emitter.AssemblyInfo.FileNameCasing)
+            {
+                case FileNameCaseConvert.Lowercase:
+                    fileName = fileName.ToLower();
+                    break;
+                case FileNameCaseConvert.CamelCase:
+                    var sepList = new string[] { ".", System.IO.Path.DirectorySeparatorChar.ToString(), "\\", "/" };
+
+                    // Populate list only with needed separators, as usually we will never have all four of them
+                    var neededSepList = new List<string>();
+
+                    foreach (var separator in sepList)
+                    {
+                        if (fileName.Contains(separator.ToString()) && !neededSepList.Contains(separator))
+                        {
+                            neededSepList.Add(separator);
+                        }
+                    }
+
+                    // now, separating the filename string only by the used separators, apply lowerCamelCase
+                    if (neededSepList.Count > 0)
+                    {
+                        foreach (var separator in neededSepList)
+                        {
+                            var stringList = new List<string>();
+
+                            foreach (var str in fileName.Split(separator[0]))
+                            {
+                                stringList.Add(str.ToLowerCamelCase());
+                            }
+
+                            fileName = stringList.Join(separator);
+                        }
+                    }
+                    else
+                    {
+                        fileName = fileName.ToLowerCamelCase();
+                    }
+                    break;
+            }
+
+            return new Tuple<string, string>(ns, fileName);
         }
     }
 }

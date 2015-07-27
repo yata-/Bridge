@@ -94,5 +94,6 @@ namespace Bridge.Contract
         BridgeTypes BridgeTypes { get; set; }
         ITranslator Translator { get; set; }
         void InitEmitter();
+        IJsDoc JsDoc { get; set;  }
     }
 }

@@ -40,7 +40,7 @@ namespace Bridge.Translator.TypeScript
 
             if (name.IsEmpty())
             {
-                name = EmitBlock.GetJsName(this.TypeInfo.Type, this.Emitter, false, true);
+                name = BridgeTypes.ToTypeScriptName(this.TypeInfo.Type, this.Emitter, false, true);
             }
 
             if (this.TypeInfo.Ctors.Count == 0)
@@ -60,6 +60,8 @@ namespace Bridge.Translator.TypeScript
                     return;
                 }
 
+                XmlToJsDoc.EmitComment(this, ctor);
+
                 this.Write("new ");
                 this.EmitMethodParameters(ctor.Parameters, ctor);
                 this.WriteColon();
@@ -76,7 +78,7 @@ namespace Bridge.Translator.TypeScript
                     {
                         continue;
                     }
-
+                    XmlToJsDoc.EmitComment(this, ctor);
                     var ctorName = "$constructor";
 
                     if (this.TypeInfo.Ctors.Count > 1 && ctor.Parameters.Count > 0)
@@ -120,7 +122,7 @@ namespace Bridge.Translator.TypeScript
                 needComma = true;
                 this.Write(name);
                 this.WriteColon();
-                name = EmitBlock.GetJsName(p.Type, this.Emitter);
+                name = BridgeTypes.ToTypeScriptName(p.Type, this.Emitter);
                 this.Write(name);
             }
 

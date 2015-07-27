@@ -172,5 +172,18 @@ namespace Bridge.Translator
             get; 
             set; 
         }
+
+        private bool jsDoc = true;
+        public bool JsDoc
+        {
+            get
+            {
+                return this.jsDoc;
+            }
+            set
+            {
+                this.jsDoc = value;
+            }
+        }
     }
 }

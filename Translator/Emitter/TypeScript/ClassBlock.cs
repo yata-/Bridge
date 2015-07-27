@@ -57,6 +57,8 @@ namespace Bridge.Translator.TypeScript
 
         protected override void DoEmit()
         {
+            XmlToJsDoc.EmitComment(this, this.Emitter.Translator.EmitNode);
+
             if (this.TypeInfo.IsEnum && this.TypeInfo.ParentType == null)
             {
                 new EnumBlock(this.Emitter, this.TypeInfo).Emit();
@@ -78,7 +80,7 @@ namespace Bridge.Translator.TypeScript
 
             if (name.IsEmpty())
             {
-                name = Bridge.Translator.TypeScript.EmitBlock.GetJsName(this.TypeInfo.Type, this.Emitter, false, true);
+                name = BridgeTypes.ToTypeScriptName(this.TypeInfo.Type, this.Emitter, false, true);
             }
 
             this.Write("export ");
@@ -108,7 +110,7 @@ namespace Bridge.Translator.TypeScript
 
             foreach (var t in this.TypeInfo.TypeDeclaration.BaseTypes)
             {
-                var name = Bridge.Translator.TypeScript.EmitBlock.GetJsName(t, this.Emitter);
+                var name = BridgeTypes.ToTypeScriptName(t, this.Emitter);
 
                 list.Add(name);
             }
@@ -232,7 +234,7 @@ namespace Bridge.Translator.TypeScript
 
                         if (name.IsEmpty())
                         {
-                            name = Bridge.Translator.TypeScript.EmitBlock.GetJsName(nestedType.Type, this.Emitter, false, true);
+                            name = BridgeTypes.ToTypeScriptName(nestedType.Type, this.Emitter, false, true);
                         }
 
                         this.Write(name);

@@ -25,6 +25,7 @@ namespace Bridge.Translator
             this.Validator = validator;
             this.AssignmentType = ICSharpCode.NRefactory.CSharp.AssignmentOperatorType.Any;
             this.UnaryOperatorType = ICSharpCode.NRefactory.CSharp.UnaryOperatorType.Any;
+            this.JsDoc = new JsDoc();
         }
 
         public virtual Dictionary<string, string> Emit()
@@ -32,6 +33,7 @@ namespace Bridge.Translator
             var blocks = this.GetBlocks();
             foreach (var block in blocks)
             {
+                this.JsDoc.Init();
                 block.Emit();
             }
 
