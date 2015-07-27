@@ -17,7 +17,7 @@ namespace Bridge.Contract
     {
         public static void EmitComment(IAbstractEmitterBlock block, AstNode node)
         {
-            if (!block.Emitter.AssemblyInfo.JsDoc)
+            if (!block.Emitter.AssemblyInfo.JsDoc || node.Parent == null)
             {
                 return;
             }
