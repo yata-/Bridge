@@ -84,6 +84,7 @@
     <Compile Include="System\Collections\ObjectModel\ReadOnlyCollection.cs" />
     <Compile Include="System\Comparison.cs" />
     <Compile Include="System\Environment.cs" />
+    <Compile Include="System\EventArgs.cs" />
     <Compile Include="System\IDisposable.cs" />
     <Compile Include="System\Linq\Enumerable.cs" />
     <Compile Include="System\Linq\Grouping.cs" />
@@ -216,6 +217,9 @@
     <None Include="Resources\Bridge.jsb" />
     <None Include="Resources\build.bat" />
     <None Include="Resources\build.sh" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
