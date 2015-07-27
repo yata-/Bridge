@@ -33,17 +33,18 @@
             return typeof r !== "undefined" ? r : this.$v;
         },
 
-        get: function (arr, indices) {
-            var r = arr[Bridge.Array.toIndex(arr, indices)];
+        get: function (arr) {
+            var r = arr[Bridge.Array.toIndex(arr, Array.prototype.slice.call(arguments, 1))];
 
             return typeof r !== "undefined" ? r : arr.$v;
         },
 
         $set: function (indices, value) {
-            this[Bridge.Array.toIndex(this, indices)] = value;
+            this[Bridge.Array.toIndex(this, Array.prototype.slice.call(indices, 0))] = value;
         },
 
-        set: function (arr, indices, value) {
+        set: function (arr, value) {
+            var indices = Array.prototype.slice.call(arguments, 2);
             arr[Bridge.Array.toIndex(arr, indices)] = value;
         },
 

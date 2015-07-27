@@ -218,9 +218,6 @@
     <None Include="Resources\build.bat" />
     <None Include="Resources\build.sh" />
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent Condition="$(OS) != Unix">"$(ProjectDir)\Resources\build.bat"</PreBuildEvent>

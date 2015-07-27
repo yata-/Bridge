@@ -132,13 +132,13 @@ namespace System
             return null;
         }
 
-        [Template("Bridge.Array.get({this}, {*indices})")]
+        [Template("Bridge.Array.get({this}, {indices})")]
         public object GetValue(params int[] indices)
         {
             return null;
         }
 
-        [Template("Bridge.Array.set({this}, {value}, {*indices})")]
+        [Template("Bridge.Array.set({this}, {value}, {indices})")]
         public void SetValue(object value, params int[] indices)
         {
         }
