@@ -1185,7 +1185,7 @@
                 return false;
             }
 
-            prefix = Bridge.String.escape(prefix);
+            suffix = Bridge.String.escape(suffix);
 
             return str.match(suffix + "$") !== null;
         },
