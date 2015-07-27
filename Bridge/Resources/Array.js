@@ -113,6 +113,120 @@
 
         toEnumerator: function(array) {
             return new Bridge.ArrayEnumerator(array);
+        },
+
+        is: function (obj, type) {
+            if (!Bridge.isArray(obj)) {
+                return false;
+            }
+
+            if ((obj.constructor == type) || (obj instanceof type)) {
+                return true;
+            }
+
+            if (type == Bridge.IEnumerable ||
+                type == Bridge.ICollection ||
+                type == Bridge.ICloneable ||
+                type.$$name && Bridge.String.startsWith(type.$$name, "Bridge.IEnumerable$1") ||
+                type.$$name && Bridge.String.startsWith(type.$$name, "Bridge.ICollection$1") ||
+                type.$$name && Bridge.String.startsWith(type.$$name, "Bridge.IList$1")) {
+                return true;
+            }
+
+            return false;
+        },
+
+        clone: function(arr) {
+            if (arr.length === 1) {
+                return [arr[0]];
+            }
+            else {
+                return arr.slice(0);
+            }
+        },
+
+        getCount: function(obj) {
+            if (Bridge.isArray(obj)) {
+                return obj.length;
+            }
+            else if (Bridge.isFunction(obj.getCount)) {
+                return obj.getCount();
+            }
+
+            return 0;
+        },
+
+        add: function (obj, item) {
+            if (Bridge.isArray(obj)) {
+                obj.push(item);
+            }
+            else if (Bridge.isFunction(obj.add)) {
+                obj.add(item);
+            }
+        },
+
+        clear: function (obj) {
+            if (Bridge.isArray(obj)) {
+                obj.length = 0;
+            }
+            else if (Bridge.isFunction(obj.clear)) {
+                obj.clear();
+            }
+        },
+
+        indexOf: function(arr, item) {
+            var i, ln;
+            for (i = 0, ln = arr.length; i < ln; i++) {
+                if (arr[i] === item) {
+                    return i;
+                }
+            }
+
+            return -1;
+        },
+
+        contains: function (obj, item) {
+            if (Bridge.isArray(obj)) {
+                return Bridge.Array.indexOf(obj, item) > -1;
+            }
+            else if (Bridge.isFunction(obj.contains)) {
+                return obj.contains(item);
+            }
+
+            return false;
+        },
+
+        remove: function (obj, item) {
+            if (Bridge.isArray(obj)) {
+                var index = Bridge.Array.indexOf(obj, item);
+                if (index > -1) {
+                    obj.splice(index, 1);
+                    return true;
+                }
+            }
+            else if (Bridge.isFunction(obj.remove)) {
+                return obj.remove(item);
+            }
+
+            return false;
+        },
+
+        insert: function (obj, index, item) {
+            if (Bridge.isArray(obj)) {
+                obj.splice(index, 0, item);
+            }
+            else if (Bridge.isFunction(obj.insert)) {
+                 obj.insert(index, item);
+            }
+        },
+
+        removeAt: function (obj, index) {
+            if (Bridge.isArray(obj)) {
+                obj.splice(index, 1);
+            }
+            else if (Bridge.isFunction(obj.removeAt)) {
+                obj.removeAt(index);
+            }
         }
     };
 

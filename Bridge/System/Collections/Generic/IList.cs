@@ -15,8 +15,13 @@ namespace System.Collections.Generic
             set;
 		}
 
+        [Template("Bridge.Array.indexOf({this}, {item})")]
 		int IndexOf(T item);
+
+        [Template("Bridge.Array.insert({this}, {index}, {item})")]
 		void Insert(int index, T item);
+
+        [Template("Bridge.Array.removeAt({this}, {index})")]
 		void RemoveAt(int index);
 	}
 }

@@ -6,7 +6,8 @@ namespace System
 {
     [Ignore]
     [Name("Array")]
-    public sealed class Array : IEnumerable
+    [Cast("{$is: Bridge.Array.is")]
+    public sealed class Array : IEnumerable, ICloneable
     {
         public readonly int Length = 0;
 
@@ -189,6 +190,12 @@ namespace System
 
         [Template("(Bridge.Array.toEnumerator({this})")]
         public IEnumerator<T> ToEnumerator<T>()
+        {
+            return null;
+        }
+
+        [Template("(Bridge.Array.clone({this})")]
+        public object Clone()
         {
             return null;
         }

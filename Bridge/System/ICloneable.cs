@@ -5,6 +5,7 @@ namespace System
 	[Ignore]
     public interface ICloneable : IBridgeClass
     {
+        [Template("Bridge.clone({this})")]
 		object Clone();
 	}
 }

@@ -8,6 +8,7 @@ namespace System.Collections
     {
         int Count
         {
+            [Template("Bridge.Array.getCount({this})")]
             get;
         }
     }

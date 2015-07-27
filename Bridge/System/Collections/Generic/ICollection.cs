@@ -8,12 +8,20 @@ namespace System.Collections.Generic
     {
         int Count
         {
+            [Template("Bridge.Array.getCount({this})")]
             get;
         }
 
+        [Template("Bridge.Array.add({this}, {item})")]
         void Add(T item);
+
+        [Template("Bridge.Array.clear({this})")]
         void Clear();
+
+        [Template("Bridge.Array.contains({this}, {item})")]
         bool Contains(T item);
+
+        [Template("Bridge.Array.remove({this}, {item})")]
         bool Remove(T item);
     }
 }

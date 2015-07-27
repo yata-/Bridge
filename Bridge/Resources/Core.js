@@ -44,6 +44,18 @@
             })(name);
         },
 
+        clone: function (obj) {
+            if (Bridge.isArray(obj)) {
+                return Bridge.Array.clone(obj);
+            }
+
+            if (Bridge.is(obj, Bridge.ICloneable)) {
+                return obj.clone();
+            }
+
+            return null;
+        },
+
         copy: function (to, from, keys, toIf) {
             if (typeof keys === 'string') {
                 keys = keys.split(/[,;\s]+/);
@@ -54,7 +66,7 @@
 
                 if (toIf !== true || to[name] === undefined) {
                     if (Bridge.is(from[name], Bridge.ICloneable)) {
-                        to[name] = from[name].clone();
+                        to[name] = Bridge.clone(from[name]);
                     }
                     else {
                         to[name] = from[name];
@@ -272,8 +284,8 @@
 	            return true;
             }
 
-            if (Bridge.isArray(obj) && type == Bridge.IEnumerable) {
-                return true;
+            if (Bridge.isArray(obj)) {
+                return Bridge.Array.is(obj, type);
             }
 
             if (!type.$$inheritors) {
