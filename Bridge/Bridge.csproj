@@ -85,6 +85,7 @@
     <Compile Include="System\Comparison.cs" />
     <Compile Include="System\Environment.cs" />
     <Compile Include="System\EventArgs.cs" />
+    <Compile Include="System\EventHandler.cs" />
     <Compile Include="System\IDisposable.cs" />
     <Compile Include="System\Linq\Enumerable.cs" />
     <Compile Include="System\Linq\Grouping.cs" />
