@@ -13,7 +13,7 @@
             if (this.$multipleCtors && arguments.length > 0 && typeof value == 'string') {
                 value = value === "constructor" ? "$constructor" : value;
 
-                if ((value === "$constructor" || Bridge.String.startsWith(value, "constructor\\$")) && Bridge.isFunction(this[value])) {
+                if ((value === "$constructor" || Bridge.String.startsWith(value, "constructor$")) && Bridge.isFunction(this[value])) {
                     this[value].apply(this, Array.prototype.slice.call(arguments, 1));
 
                     return;
@@ -233,7 +233,7 @@
                 isCtor = name === "constructor";
                 ctorName = isCtor ? "$constructor" : name;
 
-                if (Bridge.isFunction(v) && (isCtor || Bridge.String.startsWith(name, "constructor\\$"))) {
+                if (Bridge.isFunction(v) && (isCtor || Bridge.String.startsWith(name, "constructor$"))) {
                     ctorCounter++;
                     isCtor = true;
                 }
