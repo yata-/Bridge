@@ -3,6 +3,7 @@ using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Bridge.Translator
@@ -32,6 +33,7 @@ namespace Bridge.Translator
             IndexerExpression indexerExpression = this.IndexerExpression;
 
             IAttribute inlineAttr = null;
+            string inlineCode = null;
             var resolveResult = this.Emitter.Resolver.ResolveNode(indexerExpression, this.Emitter);
             var memberResolveResult = resolveResult as MemberResolveResult;
 
@@ -64,6 +66,44 @@ namespace Bridge.Translator
                 }
             }
 
+            if (inlineAttr != null)
+            {
+                var inlineArg = inlineAttr.PositionalArguments[0];
+
+                if (inlineArg.ConstantValue != null)
+                {
+                    inlineCode = inlineArg.ConstantValue.ToString();
+                }
+            }
+
+            if (inlineCode != null && inlineCode.Contains("{this}"))
+            {
+                this.Write("");
+                var oldBuilder = this.Emitter.Output;
+                this.Emitter.Output = new StringBuilder();
+                this.Emitter.IsAssignment = false;
+                this.Emitter.IsUnaryAccessor = false;
+                indexerExpression.Target.AcceptVisitor(this.Emitter);
+                this.Emitter.IsAssignment = oldIsAssignment;
+                this.Emitter.IsUnaryAccessor = oldUnary;
+                inlineCode = inlineCode.Replace("{this}", this.Emitter.Output.ToString());
+                this.Emitter.Output = oldBuilder;
+
+                this.PushWriter(inlineCode);
+                new ExpressionListBlock(this.Emitter, indexerExpression.Arguments, null).Emit();
+
+                if (!this.Emitter.IsAssignment)
+                {
+                    this.PopWriter();
+                }
+                else
+                {
+                    this.WriteComma();
+                }
+
+                return;
+            }
+
             if (inlineAttr != null || isIgnore)
             {
                 this.Emitter.IsAssignment = false;
@@ -75,14 +115,10 @@ namespace Bridge.Translator
 
             if (inlineAttr != null)
             {
-                var inlineCode = inlineAttr.PositionalArguments[0];
-
-                if (inlineCode.ConstantValue != null)
+                if (inlineCode != null)
                 {
-                    string code = inlineCode.ConstantValue.ToString();
-
                     this.WriteDot();
-                    this.PushWriter(code);
+                    this.PushWriter(inlineCode);
                     new ExpressionListBlock(this.Emitter, indexerExpression.Arguments, null).Emit();
 
                     if (!this.Emitter.IsAssignment)
