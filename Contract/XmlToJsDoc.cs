@@ -13,8 +13,18 @@ using Object.Net.Utilities;
 
 namespace Bridge.Contract
 {
+    public class XmlToJSConstants
+    {
+        /// <summary>
+        /// Emitted text's default line separator.
+        /// </summary>
+        public const char DEFAULT_LINE_SEPARATOR = '\n';
+    }
+
     public class XmlToJsDoc
     {
+        private const char newLine = Bridge.Contract.XmlToJSConstants.DEFAULT_LINE_SEPARATOR;
+
         public static void EmitComment(IAbstractEmitterBlock block, AstNode node)
         {
             if (!block.Emitter.AssemblyInfo.JsDoc || node.Parent == null)
@@ -87,7 +97,7 @@ namespace Bridge.Contract
             StringBuilder sb = new StringBuilder();
             foreach (var c in comments)
             {
-                sb.AppendLine(c.Content);
+                sb.Append(c.Content + newLine);
             }
 
             return sb.ToString();
@@ -103,10 +113,10 @@ namespace Bridge.Contract
 
         private static string ReadComment(string source, ResolveResult rr, IEmitter emitter, JsDocComment comment)
         {
-            var xml = new StringBuilder("<comment>\n");
+            var xml = new StringBuilder("<comment>" + newLine);
             if (source != null)
             {
-                foreach (var line in source.Split('\n'))
+                foreach (var line in source.Split(newLine))
                 {
                     var trimmedLine = line.Trim();
 
@@ -115,7 +125,7 @@ namespace Bridge.Contract
                         continue;
                     }
 
-                    xml.Append(System.Text.RegularExpressions.Regex.Replace(line, @"\/\/\/\s*", "") + "\n");
+                    xml.Append(System.Text.RegularExpressions.Regex.Replace(line, @"\/\/\/\s*", "") + newLine);
                 }
 
                 xml.Append("</comment>");
@@ -256,7 +266,7 @@ namespace Bridge.Contract
 
                     foreach (XmlNode codeNode in codeNodes)
                     {
-                        sb.AppendLine(codeNode.InnerText);
+                        sb.Append(codeNode.InnerText + newLine);
                         node.RemoveChild(codeNode);
                     }
 
@@ -653,7 +663,7 @@ namespace Bridge.Contract
                     }
                     
                     emitter.JsDoc.Callbacks.Add(delegateName);
-                    emitter.Output.Insert(0, comment.ToString() + "\n\n");
+                    emitter.Output.Insert(0, comment.ToString() + newLine + newLine);
                 }
 
                 return delegateName;
@@ -756,6 +766,8 @@ namespace Bridge.Contract
 
     public class JsDocComment
     {
+        private const char newLine = Bridge.Contract.XmlToJSConstants.DEFAULT_LINE_SEPARATOR;
+
         public JsDocComment()
         {
             this.Descriptions = new List<string>();
@@ -934,10 +946,10 @@ namespace Bridge.Contract
 
             if (!string.IsNullOrEmpty((Namespace)))
             {
-                comment.AppendLine("/** @namespace " + this.Namespace + " */\n");
+                comment.Append("/** @namespace " + this.Namespace + " */" + newLine + newLine);
             }
            
-            comment.AppendLine("/**");
+            comment.Append("/**" + newLine);
 
             var nameColumnWidth = 0;
             var typeColumnWidth = 0;
@@ -962,106 +974,106 @@ namespace Bridge.Contract
 
             if (this.Descriptions.Count > 0)
             {
-                comment.Append(" * " + string.Join("\n * ", this.Descriptions.ToArray()) + "\n *\n");    
+                comment.Append(" * " + string.Join(newLine +" * ", this.Descriptions.ToArray()) + newLine + " *" + newLine);    
             }
 
             if (this.Remarks.Count > 0)
             {
-                comment.Append(" * " + string.Join("\n * ", this.Remarks) + "\n *\n");
+                comment.Append(" * " + string.Join(newLine + " * ", this.Remarks) + newLine + " *" + newLine);
             }
 
             if (this.IsStatic)
             {
-                comment.AppendLine(" * @static");
+                comment.Append(" * @static" + newLine);
             }
             else if (string.IsNullOrEmpty(this.Class) && string.IsNullOrEmpty(this.Callback))
             {
-                comment.AppendLine(" * @instance");
+                comment.Append(" * @instance" + newLine);
             }
 
             if (this.IsAbstract)
             {
-                comment.AppendLine(" * @abstract");
+                comment.Append(" * @abstract" + newLine);
             }
 
             if (this.IsPublic)
             {
-                comment.AppendLine(" * @public");
+                comment.Append(" * @public" + newLine);
             }
 
             if (this.IsProtected)
             {
-                comment.AppendLine(" * @protected");
+                comment.Append(" * @protected" + newLine);
             }
 
             if (this.IsPrivate)
             {
-                comment.AppendLine(" * @private");
+                comment.Append(" * @private" + newLine);
             }
 
             if (this.Override)
             {
-                comment.AppendLine(" * @override");
+                comment.Append(" * @override" + newLine);
             }
 
             if (this.ReadOnly)
             {
-                comment.AppendLine(" * @readonly");
+                comment.Append(" * @readonly" + newLine);
             }
 
             if (!string.IsNullOrEmpty(this.This))
             {
-                comment.Append(" * @this ").AppendLine(this.This);
+                comment.Append(" * @this ").Append(this.This + newLine);
             }
 
             if (!string.IsNullOrEmpty(this.MemberOf))
             {
-                comment.Append(" * @memberof ").AppendLine(this.MemberOf);
+                comment.Append(" * @memberof ").Append(this.MemberOf + newLine);
             }
 
             if (!string.IsNullOrEmpty(this.Class))
             {
-                comment.AppendLine(" * @class " + this.Class);
+                comment.Append(" * @class " + this.Class + newLine);
             }
 
             if (!string.IsNullOrEmpty(this.Event))
             {
-                comment.AppendLine(" * @event " + this.Event);
+                comment.Append(" * @event " + this.Event + newLine);
             }
 
             /*if (!string.IsNullOrEmpty(this.Constructs))
             {
-                comment.Append(" * @constructs ").AppendLine(this.Constructs);
+                comment.Append(" * @constructs ").Append(this.Constructs + els);
             }*/
 
             /*if (this.Enum)
             {
-                comment.AppendLine(" * @enum {number}");
+                comment.Append(" * @enum {number}" + els);
             }*/
 
             if (this.Const)
             {
-                comment.AppendLine(" * @constant");
+                comment.Append(" * @constant" + newLine);
             }
 
             if (this.Default != null)
             {
-                comment.AppendLine(" * @default " + JsonConvert.SerializeObject(this.Default));
+                comment.Append(" * @default " + JsonConvert.SerializeObject(this.Default) + newLine);
             }
 
             if (!string.IsNullOrEmpty(this.Callback))
             {
-                comment.AppendLine(" * @callback " + this.Callback);
+                comment.Append(" * @callback " + this.Callback + newLine);
             }
 
             if (!string.IsNullOrEmpty(this.Function))
             {
-                comment.AppendLine(" * @function " + this.Function);
+                comment.Append(" * @function " + this.Function + newLine);
             }
 
             if (!string.IsNullOrEmpty(this.MemberType))
             {
-                comment.AppendLine(" * @type " + this.MemberType);
+                comment.Append(" * @type " + this.MemberType + newLine);
             }
 
             if (this.Augments != null && this.Augments.Length > 0)
@@ -1070,11 +1082,11 @@ namespace Bridge.Contract
                 {
                     if (augment.StartsWith("+"))
                     {
-                        comment.AppendLine(" * @implements  " + augment.Substring(1));
+                        comment.Append(" * @implements  " + augment.Substring(1) + newLine);
                     }
                     else
                     {
-                        comment.AppendLine(" * @augments " + augment);    
+                        comment.Append(" * @augments " + augment + newLine);
                     }
                 }
             }
@@ -1083,14 +1095,14 @@ namespace Bridge.Contract
             {
                 if (!string.IsNullOrEmpty(example.Item1))
                 {
-                    comment.AppendLine(" * @example " + example.Item1);
+                    comment.Append(" * @example " + example.Item1 + newLine);
                 }
                 else
                 {
-                    comment.AppendLine(" * @example");    
+                    comment.Append(" * @example" + newLine);
                 }
 
-                comment.Append(" *" + string.Join("\n *", example.Item2.Split('\n')) + "\n *\n"); 
+                comment.Append(" *" + string.Join(newLine + " *", example.Item2.Split(newLine)) + newLine + " *" + newLine); 
             }
 
             foreach (var exception in this.Throws)
@@ -1104,7 +1116,7 @@ namespace Bridge.Contract
                     comment.Append(" * @throws ");
                 }
 
-                comment.AppendLine(exception.Item1);
+                comment.Append(exception.Item1 + newLine);
             }
 
             foreach (JsDocParam param in this.Parameters)
@@ -1113,8 +1125,7 @@ namespace Bridge.Contract
                 comment.Append(new String(' ', typeColumnWidth - param.Type.Length));
                 comment.Append(param.Name);
                 comment.Append(new String(' ', nameColumnWidth - param.Name.Length));
-                comment.Append(param.Desc);
-                comment.AppendLine();
+                comment.Append(param.Desc + newLine);
             }
 
             foreach (JsDocParam param in this.Returns)
@@ -1122,8 +1133,7 @@ namespace Bridge.Contract
                 comment.Append(" * @return  {" + param.Type + "}");
                 comment.Append(new String(' ', typeColumnWidth - param.Type.Length));
                 comment.Append(new String(' ', nameColumnWidth));
-                comment.Append(param.Desc);
-                comment.AppendLine();
+                comment.Append(param.Desc + newLine);
             }
 
             foreach (var see in this.SeeAlso)
