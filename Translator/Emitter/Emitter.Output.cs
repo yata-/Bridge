@@ -87,7 +87,7 @@ namespace Bridge.Translator
                         });
                         moduleOutput.Remove(moduleOutput.Length - 1, 1); // remove trailing comma
                     }
-                    
+
                     moduleOutput.AppendLine(") {");
 
                     string indent = str.StartsWith("    ") ? "" : "    ";

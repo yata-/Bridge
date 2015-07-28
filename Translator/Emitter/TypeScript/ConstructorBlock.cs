@@ -90,10 +90,10 @@ namespace Bridge.Translator.TypeScript
                     this.Write(ctorName);
                     this.WriteColon();
                     this.BeginBlock();
-                    
+
                     this.WriteNew();
                     this.EmitMethodParameters(ctor.Parameters, ctor);
-                    this.WriteColon();                    
+                    this.WriteColon();
 
                     this.Write(name);
                     this.WriteNewLine();
@@ -102,7 +102,7 @@ namespace Bridge.Translator.TypeScript
                     this.WriteSemiColon();
                     this.WriteNewLine();
                 }
-            }            
+            }
         }
 
         protected virtual void EmitMethodParameters(IEnumerable<ParameterDeclaration> declarations, AstNode context)

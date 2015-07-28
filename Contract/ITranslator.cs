@@ -32,6 +32,6 @@ namespace Bridge.Contract
         EmitterException CreateExceptionFromLastNode();
         bool FolderMode { get; set; }
         string Source { get; set; }
-        bool Recursive { get; set; }        
+        bool Recursive { get; set; }
     }
 }

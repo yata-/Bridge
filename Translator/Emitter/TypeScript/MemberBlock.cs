@@ -56,7 +56,7 @@ namespace Bridge.Translator.TypeScript
                     if (ev.Entity.HasModifier(Modifiers.Public))
                     {
                         var name = ev.GetName(this.Emitter);
-                        if (name.StartsWith("$")) 
+                        if (name.StartsWith("$"))
                         {
                             name = name.Substring(1);
                         }
@@ -117,7 +117,7 @@ namespace Bridge.Translator.TypeScript
                 this.Write("value");
                 this.WriteColon();
                 string typeName = BridgeTypes.ToTypeScriptName(ev.Entity.ReturnType, this.Emitter);
-                this.Write(typeName);                
+                this.Write(typeName);
             }
 
             this.WriteCloseParentheses();
@@ -130,7 +130,7 @@ namespace Bridge.Translator.TypeScript
             else
             {
                 string typeName = BridgeTypes.ToTypeScriptName(ev.Entity.ReturnType, this.Emitter);
-                this.Write(typeName);                
+                this.Write(typeName);
             }
 
             this.WriteSemiColon();

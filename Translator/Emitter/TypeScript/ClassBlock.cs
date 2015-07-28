@@ -53,7 +53,7 @@ namespace Bridge.Translator.TypeScript
             private set;
         }
 
-        public int Position;        
+        public int Position;
 
         protected override void DoEmit()
         {
@@ -68,7 +68,7 @@ namespace Bridge.Translator.TypeScript
                 this.EmitClassHeader();
                 this.EmitBlock();
                 this.EmitClassEnd();
-            }            
+            }
         }
 
         protected virtual void EmitClassHeader()
@@ -87,7 +87,7 @@ namespace Bridge.Translator.TypeScript
             this.Write("interface ");
 
             this.JsName = name;
-            this.Write(this.JsName);               
+            this.Write(this.JsName);
 
             string extend = this.GetTypeHierarchy();
 
@@ -143,7 +143,7 @@ namespace Bridge.Translator.TypeScript
 
         protected virtual void EmitBlock()
         {
-            
+
           var typeDef = this.Emitter.GetTypeDefinition();
 
           new MemberBlock(this.Emitter, this.TypeInfo, false).Emit();
@@ -264,7 +264,7 @@ namespace Bridge.Translator.TypeScript
             {
                 this.WriteNewLine();
             }
-            
+
             this.EndBlock();
 
             if (!this.IsGeneric && this.TypeInfo.ParentType == null)
@@ -276,13 +276,13 @@ namespace Bridge.Translator.TypeScript
                 var isInterface = this.Emitter.TypeInfo.TypeDeclaration.ClassType == ICSharpCode.NRefactory.CSharp.ClassType.Interface;
                 if (isInterface)
                 {
-                    this.Write("Function");                    
+                    this.Write("Function");
                 }
                 else
                 {
                     this.Write(this.JsName + "Func");
                 }
-                
+
                 this.WriteSemiColon();
             }
 
@@ -337,14 +337,14 @@ namespace Bridge.Translator.TypeScript
                     }
 
                     this.Emitter.TypeInfo = nestedType;
-                    
+
                     var nestedTypes = this.AllTypes.Where(t => t.ParentType == nestedType);
                     new ClassBlock(this.Emitter, this.Emitter.TypeInfo, nestedTypes, this.AllTypes).Emit();
                     this.WriteNewLine();
                     if (nestedType != last)
                     {
                         this.WriteNewLine();
-                    }                    
+                    }
                 }
 
                 this.EndBlock();

@@ -206,7 +206,7 @@ namespace Bridge.Translator
                     {
                         this.Write(BridgeTypes.ToJsName(member.DeclaringType, this.Emitter));
                     }
-                    
+
                 }
                 else
                 {

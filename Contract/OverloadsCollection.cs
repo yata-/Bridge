@@ -570,7 +570,7 @@ namespace Bridge.Contract
                         {
                             return false;
                         }
-                    }                    
+                    }
 
                     var name = this.Emitter.GetEntityName(m, false, true);
                     if ((name == this.JsName || name == this.AltJsName) && m.IsStatic == this.Static &&
@@ -639,7 +639,7 @@ namespace Bridge.Contract
                             return false;
                         }
                     }
-                    
+
                     bool eq = false;
                     if (p.IsStatic == this.Static)
                     {

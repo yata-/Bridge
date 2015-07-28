@@ -55,7 +55,7 @@ namespace Bridge.Translator.TypeScript
 
                     if (field != lastField)
                     {
-                        this.Write(",");                        
+                        this.Write(",");
                     }
 
                     this.WriteNewLine();

@@ -28,7 +28,7 @@ namespace Bridge.Translator
         protected override void EmitConversionExpression()
         {
             var proto = false;
-            if (this.BaseReferenceExpression.Parent != null) 
+            if (this.BaseReferenceExpression.Parent != null)
             {
                 var rr = this.Emitter.Resolver.ResolveNode(this.BaseReferenceExpression.Parent, this.Emitter) as MemberResolveResult;
 
@@ -47,7 +47,7 @@ namespace Bridge.Translator
                         {
                             proto = true;
                         }
-                    }                    
+                    }
                 }
             }
 
@@ -59,7 +59,7 @@ namespace Bridge.Translator
             else
             {
                 this.WriteThis();
-            }            
+            }
         }
     }
 }

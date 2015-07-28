@@ -159,10 +159,10 @@ namespace Bridge.Translator
             set;
         }
 
-        public bool GenerateTypeScript 
-        { 
-            get; 
-            set; 
+        public bool GenerateTypeScript
+        {
+            get;
+            set;
         }
 
         private bool jsDoc = true;

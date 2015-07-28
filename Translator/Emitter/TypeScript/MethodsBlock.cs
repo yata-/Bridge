@@ -122,7 +122,7 @@ namespace Bridge.Translator.TypeScript
                 this.Write(structName);
                 this.WriteCloseParentheses();
                 this.WriteColon();
-                this.Write(structName);                    
+                this.Write(structName);
                 this.WriteSemiColon();
                 this.WriteNewLine();
                 return;

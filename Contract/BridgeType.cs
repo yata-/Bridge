@@ -256,7 +256,7 @@ namespace Bridge.Contract
             {
                 return "void";
             }
-            
+
             var composedType = astType as ComposedType;
 
             if (composedType != null && composedType.ArraySpecifiers != null && composedType.ArraySpecifiers.Count > 0)

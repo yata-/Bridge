@@ -48,7 +48,7 @@ namespace Bridge.Translator.TypeScript
                 var p = (PropertyDeclaration)accessor.Parent;
                 var overloads = OverloadsCollection.Create(this.Emitter, propertyDeclaration, setter);
                 string name = overloads.GetOverloadName();
-                this.Write((setter ? "set" : "get") + name);                
+                this.Write((setter ? "set" : "get") + name);
                 this.WriteOpenParentheses();
                 if (setter)
                 {
@@ -56,8 +56,8 @@ namespace Bridge.Translator.TypeScript
                     this.WriteColon();
                     name = BridgeTypes.ToTypeScriptName(p.ReturnType, this.Emitter);
                     this.Write(name);
-                }   
-             
+                }
+
                 this.WriteCloseParentheses();
                 this.WriteColon();
 

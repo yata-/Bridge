@@ -19,10 +19,10 @@ namespace Bridge.Translator.TypeScript
         }
 
         private string ns = null;
-        
+
         public EmitBlock(IEmitter emitter) : base(emitter, null)
         {
-            this.Emitter = emitter;            
+            this.Emitter = emitter;
         }
 
         protected virtual StringBuilder GetOutputForType(ITypeInfo typeInfo)
@@ -34,7 +34,7 @@ namespace Bridge.Translator.TypeScript
             if (this.ns != null && this.ns != ns)
             {
                 this.EndBlock();
-                this.WriteNewLine();                
+                this.WriteNewLine();
             }
 
             this.ns = ns;
@@ -82,7 +82,7 @@ namespace Bridge.Translator.TypeScript
                 }
 
                 var index = sb.ToString().IndexOf("\n");
-                
+
                 sb.Insert(index, depSb.ToString());
                 this.Emitter.CurrentDependencies.Clear();
             }
@@ -97,7 +97,7 @@ namespace Bridge.Translator.TypeScript
 
                 foreach (var item in this.Outputs)
                 {
-                    e.NonModuletOutput.AppendLine(item.Value.ToString());                    
+                    e.NonModuletOutput.AppendLine(item.Value.ToString());
                 }
 
                 this.Emitter.Outputs.Add(fileName, e);
@@ -111,9 +111,9 @@ namespace Bridge.Translator.TypeScript
                     e.NonModuletOutput = item.Value;
                     this.Emitter.Outputs.Add(fileName, e);
                 }
-            }            
+            }
         }
-        
+
         protected override void DoEmit()
         {
             this.Emitter.Writers = new Stack<Tuple<string, StringBuilder, bool, Action>>();
@@ -132,11 +132,11 @@ namespace Bridge.Translator.TypeScript
                 }
 
                 this.Emitter.Translator.EmitNode = type.TypeDeclaration;
-                
+
                 if (type.IsObjectLiteral)
                 {
                     continue;
-                }                
+                }
 
                 ITypeInfo typeInfo;
 
@@ -163,7 +163,7 @@ namespace Bridge.Translator.TypeScript
                 if (type != last)
                 {
                     this.WriteNewLine();
-                }                
+                }
             }
 
             this.InsertDependencies(this.Emitter.Output);

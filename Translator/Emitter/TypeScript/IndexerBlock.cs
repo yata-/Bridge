@@ -33,8 +33,8 @@ namespace Bridge.Translator.TypeScript
                 var overloads = OverloadsCollection.Create(this.Emitter, indexerDeclaration, setter);
 
                 string name = overloads.GetOverloadName();
-                this.Write((setter ? "set" : "get") + name);                
-                
+                this.Write((setter ? "set" : "get") + name);
+
                 this.EmitMethodParameters(indexerDeclaration.Parameters, indexerDeclaration, setter);
 
                 if (setter)
@@ -53,7 +53,7 @@ namespace Bridge.Translator.TypeScript
                     name = BridgeTypes.ToTypeScriptName(indexerDeclaration.ReturnType, this.Emitter);
                     this.Write(name);
                 }
-                
+
                 this.WriteSemiColon();
                 this.WriteNewLine();
             }
@@ -83,7 +83,7 @@ namespace Bridge.Translator.TypeScript
             if (!skipClose)
             {
                 this.WriteCloseParentheses();
-            }            
+            }
         }
     }
 }

@@ -263,7 +263,7 @@ namespace Bridge.Translator
                 {
                     this.WriteNewLine();
                 }
-                
+
                 this.EndBlock();
                 this.WriteNewLine();
 

@@ -82,7 +82,7 @@ namespace Bridge.Contract
                 return;
             }
 
-            block.Write(block.WriteIndentToString(XmlToJsDoc.Convert(source, rr, block.Emitter, value)));  
+            block.Write(block.WriteIndentToString(XmlToJsDoc.Convert(source, rr, block.Emitter, value)));
 
             block.WriteNewLine();
         }
@@ -107,7 +107,7 @@ namespace Bridge.Contract
         {
             var comment = new JsDocComment();
             XmlToJsDoc.InitComment(comment, rr, emitter, value);
-            
+
             return ReadComment(source, rr, emitter, comment);
         }
 
@@ -291,7 +291,7 @@ namespace Bridge.Contract
                             // ignored
                         }
                     }
-                    
+
                     var caption = HandleNode(node);
                     comment.Throws.Add(new Tuple<string, string>(caption, exceptionType));
                 }
@@ -314,7 +314,7 @@ namespace Bridge.Contract
                     var valueParam = comment.Parameters.FirstOrDefault(p => p.Name == "value");
                     if (valueParam != null)
                     {
-                        valueParam.Desc = HandleNode(node);    
+                        valueParam.Desc = HandleNode(node);
                     }
                 }
             }
@@ -328,7 +328,7 @@ namespace Bridge.Contract
             var cNodes = node.SelectNodes("c");
             var codeNodes = node.SelectNodes("code");
             var list = cNodes.Cast<XmlNode>().Concat<XmlNode>(codeNodes.Cast<XmlNode>());
-            
+
             foreach (XmlNode cNode in list)
             {
                 XmlElement pre = node.OwnerDocument.CreateElement("pre");
@@ -661,7 +661,7 @@ namespace Bridge.Contract
                         emitter.JsDoc.Namespaces.Add(type.Namespace);
                         comment.Namespace = type.Namespace;
                     }
-                    
+
                     emitter.JsDoc.Callbacks.Add(delegateName);
                     emitter.Output.Insert(0, comment.ToString() + newLine + newLine);
                 }
@@ -751,7 +751,7 @@ namespace Bridge.Contract
             }
 
             protected override void VisitChildren(AstNode node)
-            {                
+            {
             }
 
             public override void VisitComment(Comment comment)
@@ -787,7 +787,7 @@ namespace Bridge.Contract
 
         public List<string> Descriptions
         {
-            get; 
+            get;
             set;
         }
 
@@ -834,7 +834,7 @@ namespace Bridge.Contract
 
         public string This
         {
-            get; 
+            get;
             set;
         }
 
@@ -852,19 +852,19 @@ namespace Bridge.Contract
 
         public string Namespace
         {
-            get; 
+            get;
             set;
         }
 
         public bool IsAbstract
         {
-            get; 
+            get;
             set;
         }
 
         public bool IsStatic
         {
-            get; 
+            get;
             set;
         }
 
@@ -882,7 +882,7 @@ namespace Bridge.Contract
 
         public bool Const
         {
-            get; 
+            get;
             set;
         }
 
@@ -894,7 +894,7 @@ namespace Bridge.Contract
 
         public string Callback
         {
-            get; 
+            get;
             set;
         }
 
@@ -906,7 +906,7 @@ namespace Bridge.Contract
 
         public bool Enum
         {
-            get; 
+            get;
             set;
         }
 
@@ -924,17 +924,17 @@ namespace Bridge.Contract
 
         public bool ReadOnly
         {
-            get; 
+            get;
             set;
         }
 
         public List<Tuple<string, string>> Examples
         {
-            get; 
+            get;
             set;
         }
 
-        public List<Tuple<string, string>> Throws 
+        public List<Tuple<string, string>> Throws
         {
             get;
             set;
@@ -948,7 +948,7 @@ namespace Bridge.Contract
             {
                 comment.Append("/** @namespace " + this.Namespace + " */" + newLine + newLine);
             }
-           
+
             comment.Append("/**" + newLine);
 
             var nameColumnWidth = 0;
@@ -974,7 +974,7 @@ namespace Bridge.Contract
 
             if (this.Descriptions.Count > 0)
             {
-                comment.Append(" * " + string.Join(newLine +" * ", this.Descriptions.ToArray()) + newLine + " *" + newLine);    
+                comment.Append(" * " + string.Join(newLine +" * ", this.Descriptions.ToArray()) + newLine + " *" + newLine);
             }
 
             if (this.Remarks.Count > 0)
@@ -1102,7 +1102,7 @@ namespace Bridge.Contract
                     comment.Append(" * @example" + newLine);
                 }
 
-                comment.Append(" *" + string.Join(newLine + " *", example.Item2.Split(newLine)) + newLine + " *" + newLine); 
+                comment.Append(" *" + string.Join(newLine + " *", example.Item2.Split(newLine)) + newLine + " *" + newLine);
             }
 
             foreach (var exception in this.Throws)

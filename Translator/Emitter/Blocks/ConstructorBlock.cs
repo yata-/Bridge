@@ -364,7 +364,7 @@ namespace Bridge.Translator
                 else
                 {
                     name = BridgeTypes.ToJsName(baseType, this.Emitter);
-                }                
+                }
 
                 this.Write(name, ".prototype.");
                 this.Write(baseName);

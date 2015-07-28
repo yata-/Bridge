@@ -430,7 +430,7 @@ namespace Bridge.Translator
                             proto = true;
                         }
                     }
-                    
+
                     if (Helpers.IsFieldProperty(member.Member, this.Emitter))
                     {
                         this.Write(Helpers.GetPropertyRef(member.Member, this.Emitter));
@@ -478,7 +478,7 @@ namespace Bridge.Translator
                                 {
                                     this.WriteOpenParentheses();
                                     this.WriteCloseParentheses();
-                                }                                
+                                }
 
                                 if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
                                 {
@@ -506,7 +506,7 @@ namespace Bridge.Translator
                                 {
                                     this.WriteOpenParentheses();
                                     this.WriteCloseParentheses();
-                                }     
+                                }
                                 this.WriteComma();
 
                                 if (targetVar != null)
@@ -592,7 +592,7 @@ namespace Bridge.Translator
                             {
                                 this.WriteOpenParentheses();
                                 this.WriteCloseParentheses();
-                            }   
+                            }
                         }
                     }
                     else if (this.Emitter.AssignmentType != AssignmentOperatorType.Assign)
@@ -600,11 +600,11 @@ namespace Bridge.Translator
                         if(targetVar != null)
                         {
                             this.PushWriter(string.Concat(Helpers.GetPropertyRef(member.Member, this.Emitter, true),
-                                proto ? ".call(this, " : "(",                                
+                                proto ? ".call(this, " : "(",
                                 targetVar,
                                 ".",
                                 Helpers.GetPropertyRef(member.Member, this.Emitter, false),
-                                proto ? ".call(this)" : "()",                                
+                                proto ? ".call(this)" : "()",
                                 "{0})"), () => { this.RemoveTempVar(targetVar); });
                         }
                         else
@@ -638,7 +638,7 @@ namespace Bridge.Translator
                         else
                         {
                             this.PushWriter(Helpers.GetPropertyRef(member.Member, this.Emitter, true) + "({0})");
-                        }                        
+                        }
                     }
                 }
                 else if (member.Member.SymbolKind == SymbolKind.Field)

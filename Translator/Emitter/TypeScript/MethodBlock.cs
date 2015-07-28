@@ -82,7 +82,7 @@ namespace Bridge.Translator.TypeScript
                 this.WriteOpenBrace();
                 this.WriteSpace();
             }
-            
+
             this.EmitMethodParameters(methodDeclaration.Parameters, methodDeclaration);
             this.WriteColon();
 

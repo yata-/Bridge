@@ -165,7 +165,7 @@ namespace Bridge.Translator
                         {
                             this.Write(nullable ? "band" : "&");
                         }
-                        
+
                         break;
                     case BinaryOperatorType.BitwiseOr:
                         if (isBool)

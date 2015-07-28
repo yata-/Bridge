@@ -295,7 +295,7 @@ namespace Bridge.Translator
                 else
                 {
                     name = BridgeTypes.ToJsName(baseType, this.Emitter);
-                }      
+                }
 
                 if (resolveResult != null && resolveResult is InvocationResolveResult)
                 {

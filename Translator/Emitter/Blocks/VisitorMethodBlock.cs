@@ -95,7 +95,7 @@ namespace Bridge.Translator
             {
                 this.Write(");");
                 this.WriteNewLine();
-                this.EndBlock();                
+                this.EndBlock();
             }
 
             this.ClearLocalsMap(prevMap);

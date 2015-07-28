@@ -25,7 +25,7 @@ namespace Bridge.Translator
             this.FolderMode = true;
             this.Location = folder;
             this.AssemblyLocation = lib;
-            this.Validator = this.CreateValidator();            
+            this.Validator = this.CreateValidator();
         }
 
         public Dictionary<string, string> Translate()
@@ -185,7 +185,7 @@ namespace Bridge.Translator
         {
             var clrPath = translatorInstance.BridgeLocation;
             var assembly = System.Reflection.Assembly.UnsafeLoadFrom(clrPath);
-            
+
             string resourceName;
 
             // We can only have Beautified, Minified or Both, so this test has inverted logic:

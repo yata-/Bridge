@@ -19,7 +19,7 @@ namespace Bridge.Translator
             foreach (var p in declarations)
             {
                 var name = this.Emitter.GetEntityName(p);
-                
+
                 name = name.Replace(Bridge.Translator.Emitter.FIX_ARGUMENT_NAME, "");
 
                 if(this.Emitter.LocalsNamesMap != null && this.Emitter.LocalsNamesMap.ContainsKey(name))
