@@ -27,13 +27,18 @@ namespace Bridge.Contract
 
         public static void EmitComment(IAbstractEmitterBlock block, AstNode node)
         {
-            if (!block.Emitter.AssemblyInfo.JsDoc || node.Parent == null)
+            if (block.Emitter.AssemblyInfo.JsDoc == Bridge.Contract.JsDoc.None || node.Parent == null)
             {
                 return;
             }
 
             var visitor = new DocumentationCommentVisitor();
             node.AcceptChildren(visitor);
+
+            if (block.Emitter.AssemblyInfo.JsDoc == Bridge.Contract.JsDoc.Minimum && visitor.Comments.Count == 0)
+            {
+                return;
+            }
 
             object value = null;
             if (node is FieldDeclaration)

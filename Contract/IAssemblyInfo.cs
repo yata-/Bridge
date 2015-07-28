@@ -95,6 +95,6 @@ namespace Bridge.Contract
         bool AutoPropertyToField { get; set; }
         string PluginsPath { get; set; }
         bool GenerateTypeScript { get; set; }
-        bool JsDoc { get; set; }
+        JsDoc JsDoc { get; set; }
     }
 }

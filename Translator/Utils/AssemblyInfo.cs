@@ -165,8 +165,8 @@ namespace Bridge.Translator
             set;
         }
 
-        private bool jsDoc = true;
-        public bool JsDoc
+        private Bridge.Contract.JsDoc jsDoc = Bridge.Contract.JsDoc.Minimum;
+        public Bridge.Contract.JsDoc JsDoc
         {
             get
             {
