@@ -39,7 +39,9 @@
         },
 
         initConfig: function (extend, base, cfg, statics, scope) {
-            scope.$initMembers = function () {
+            var initFn,
+                isFn = Bridge.isFunction(cfg),
+                fn = function () {
                 var name,
                     config;
 
@@ -75,7 +77,21 @@
                 }
 
                 if (config.init) {
-                    config.init.apply(this, arguments);
+                    initFn = config.init;
+                }
+            };
+
+            if (!isFn) {
+                fn.apply(scope);
+            }
+
+            scope.$initMembers = function () {
+                if (isFn) {
+                    fn.apply(this);
+                }
+
+                if (initFn) {
+                    initFn.apply(this, arguments);
                 }
             };
         },
