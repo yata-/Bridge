@@ -1,9 +1,9 @@
 ﻿namespace Bridge.Contract
 {
-    public enum JsDoc
+    public enum DocumentationMode
     {
         None,
-        Minimum,
+        Basic,
         Full
     }
 }

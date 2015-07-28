@@ -27,7 +27,7 @@ namespace Bridge.Contract
 
         public static void EmitComment(IAbstractEmitterBlock block, AstNode node)
         {
-            if (block.Emitter.AssemblyInfo.JsDoc == Bridge.Contract.JsDoc.None || node.Parent == null)
+            if (block.Emitter.AssemblyInfo.GenerateDocumentation == Bridge.Contract.DocumentationMode.None || node.Parent == null)
             {
                 return;
             }
@@ -35,7 +35,7 @@ namespace Bridge.Contract
             var visitor = new DocumentationCommentVisitor();
             node.AcceptChildren(visitor);
 
-            if (block.Emitter.AssemblyInfo.JsDoc == Bridge.Contract.JsDoc.Minimum && visitor.Comments.Count == 0)
+            if (block.Emitter.AssemblyInfo.GenerateDocumentation == Bridge.Contract.DocumentationMode.Basic && visitor.Comments.Count == 0)
             {
                 return;
             }

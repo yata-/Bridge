@@ -165,16 +165,16 @@ namespace Bridge.Translator
             set;
         }
 
-        private Bridge.Contract.JsDoc jsDoc = Bridge.Contract.JsDoc.Minimum;
-        public Bridge.Contract.JsDoc JsDoc
+        private Bridge.Contract.DocumentationMode generateDocumentation = Bridge.Contract.DocumentationMode.Basic;
+        public Bridge.Contract.DocumentationMode GenerateDocumentation
         {
             get
             {
-                return this.jsDoc;
+                return this.generateDocumentation;
             }
             set
             {
-                this.jsDoc = value;
+                this.generateDocumentation = value;
             }
         }
     }
