@@ -130,16 +130,17 @@ namespace System
             return false;
         }
 
+        [Template("isFinite({d})")]
         public static bool IsFinite(float d)
         {
             return false;
         }
 
+        [Template("isNaN({d})")]
         public static bool IsNaN(float d)
         {
             return false;
         }
-
         [Template("Bridge.compare({this}, {other})")]
         public int CompareTo(float other)
         {

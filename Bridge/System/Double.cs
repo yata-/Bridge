@@ -130,11 +130,13 @@ namespace System
 			return false;
 		}
 
+        [Template("isFinite({d})")]
 		public static bool IsFinite(double d)
         {
 			return false;
 		}
 
+        [Template("isNaN({d})")]
 		public static bool IsNaN(double d)
         {
 			return false;

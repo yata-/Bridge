@@ -27,6 +27,12 @@ namespace System
         [InlineConst]
         public const string Empty = "";
 
+        [Template("String.fromCharCode.apply(null, {value})")]
+        public String(char[] value)
+        {
+            
+        }
+
         /// <summary>
         /// The String global object is a constructor for strings, or a sequence of characters.
         /// </summary>

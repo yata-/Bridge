@@ -9,9 +9,9 @@ namespace System.Collections.Generic
     {
 		T this[int index]
         {
-            [Template("get({0})")]
+            [Template("Bridge.Array.getItem({this}, {0})")]
             get;
-            [Template("set({0})")]
+            [Template("Bridge.Array.setItem({this}, {0})")]
             set;
 		}
 

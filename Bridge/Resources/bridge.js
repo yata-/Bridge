@@ -5659,8 +5659,37 @@ Bridge.define('Bridge.PropertyChangedEventArgs', {
             else if (Bridge.isFunction(obj.removeAt)) {
                 obj.removeAt(index);
             }
-        }
-    };
+        },
+
+        getItem: function (obj, idx) {
+            if (Bridge.isArray(obj)) {
+                return obj[idx];
+            }
+            else if (Bridge.isFunction(obj.get)) {
+                return obj.get(idx);
+            }
+            else if (Bridge.isFunction(obj.getItem)) {
+                return obj.getItem(idx);
+            }
+            else if (Bridge.isFunction(obj.get_Item)) {
+                return obj.get_Item(idx);
+            }
+        },
+
+        setItem: function (obj, idx, value) {
+            if (Bridge.isArray(obj)) {
+                obj[idx] = value;
+            }
+            else if (Bridge.isFunction(obj.set)) {
+                obj.set(idx, value);
+            }
+            else if (Bridge.isFunction(obj.setItem)) {
+                obj.setItem(idx, value);
+            }
+            else if (Bridge.isFunction(obj.set_Item)) {
+                obj.set_Item(idx, value);
+            }
+        }};
 
     Bridge.Array = array;
 })();
