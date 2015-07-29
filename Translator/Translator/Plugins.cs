@@ -12,9 +12,10 @@ namespace Bridge.Translator
 {
     public class Plugins : IPlugins
     {
-        public static IPlugins GetPlugins(ITranslator translator, IAssemblyInfo config)
+        public static string GetPluginPath(ITranslator translator, IAssemblyInfo config)
         {
             string path = null;
+
             if (!string.IsNullOrWhiteSpace(config.PluginsPath))
             {
                 path = Path.Combine(translator.FolderMode ? translator.Location : Path.GetDirectoryName(translator.Location), config.PluginsPath);
@@ -23,6 +24,13 @@ namespace Bridge.Translator
             {
                 path = Path.Combine(translator.FolderMode ? translator.Location : Path.GetDirectoryName(translator.Location), "Bridge" + Path.DirectorySeparatorChar + "plugins");
             }
+
+            return path;
+        }
+
+        public static IPlugins GetPlugins(ITranslator translator, IAssemblyInfo config)
+        {
+            var path = GetPluginPath(translator, config);
 
             if (!System.IO.Directory.Exists(path))
             {
