@@ -193,7 +193,8 @@ namespace Bridge.Translator
                 }
                 else
                 {
-                    this.Write(inline);
+                    //this.Write(inline);
+                    new InlineArgumentsBlock(this.Emitter, new ArgumentsInfo(this.Emitter, memberReferenceExpression, resolveResult), inline).Emit();
                 }
             }
             else

@@ -41,6 +41,10 @@ namespace Bridge.Translator
 
         protected virtual IList<Expression> GetExpressionsByKey(IEnumerable<NamedParamExpression> expressions, string key)
         {
+            if (expressions == null)
+            {
+                return new List<Expression>();
+            }
 
             if (Regex.IsMatch(key, "^\\d+$"))
             {

@@ -121,7 +121,7 @@ namespace Bridge.Translator
             }
         }
 
-        public ArgumentsInfo(IEmitter emitter, Expression expression)
+        public ArgumentsInfo(IEmitter emitter, Expression expression, ResolveResult rr = null)
         {
             this.Emitter = emitter;
             this.Expression = expression;
@@ -130,6 +130,11 @@ namespace Bridge.Translator
             this.ArgumentsNames = new string[] { "{this}" };
             this.ThisArgument = expression;
             this.CreateNamedExpressions(this.ArgumentsNames, this.ArgumentsExpressions);
+
+            if (rr is MemberResolveResult)
+            {
+                this.BuildTypedArguments((MemberResolveResult)rr);
+            }
         }
 
         public ArgumentsInfo(IEmitter emitter, ObjectCreateExpression objectCreateExpression)
@@ -207,6 +212,20 @@ namespace Bridge.Translator
                     this.TypeArguments[i] = new TypeParamExpression(typeParams[i].Name, list[i], null);
                 }
             }
+        }
+
+        private void BuildTypedArguments(MemberResolveResult rr)
+        {
+            var typeParams = rr.Member.DeclaringTypeDefinition.TypeParameters;
+            var typeArgs = rr.Member.DeclaringType.TypeArguments;
+            var temp = new TypeParamExpression[typeParams.Count];
+
+            for (int i = 0; i < typeParams.Count; i++)
+            {
+                temp[i] = new TypeParamExpression(typeParams[i].Name, null, typeArgs[i], true);
+            }
+
+            this.TypeArguments = temp;
         }
 
         private void BuildTypedArguments(Expression expression)
