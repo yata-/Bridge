@@ -10,6 +10,10 @@ namespace System.Collections.Generic
         {
         }
 
+        public List(int capacity): this()
+        {
+        }
+
         public List(IEnumerable<T> items)
         {
         }
