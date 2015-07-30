@@ -182,6 +182,10 @@
                 return hash;
             }
 
+            if (value.$$hashCode) {
+                return value.$$hashCode;
+            }
+
             if (typeof value == "object") {
                 var result = 0,
                     removeCache = false,
