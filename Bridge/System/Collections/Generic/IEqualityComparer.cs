@@ -17,7 +17,12 @@ namespace System.Collections.Generic
     [Namespace("Bridge")]
     public abstract class EqualityComparer<T> : IEqualityComparer<T>, IBridgeClass
     {
-        public static EqualityComparer<T> Default { get { return null; } }
+        [FieldProperty]
+        public static EqualityComparer<T> Default
+        {
+            [Template("new Bridge.EqualityComparer$1({T})()")]
+            get { return null; }
+        }
 
         public abstract bool Equals(T x, T y);
         public abstract int GetHashCode(T obj);
