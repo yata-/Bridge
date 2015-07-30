@@ -17,13 +17,11 @@ namespace System.Collections.Generic
     [Namespace("Bridge")]
     public abstract class EqualityComparer<T> : IEqualityComparer<T>, IBridgeClass
     {
+
         public static EqualityComparer<T> Default
         {
-            [Template("Bridge.EqualityComparer$1.$default")]
-            get
-            {
-                return null;
-            }
+            [Template("new Bridge.EqualityComparer$1({T})()")]
+            get { return null; }
         }
 
         public abstract bool Equals(T x, T y);

@@ -587,7 +587,7 @@
         new (obj: any, comparer?: IEqualityComparer$1<TKey>): Dictionary$2<TKey, TValue>;
     }
 
-    export interface List$1<T> extends ICollection$1<T> {
+     export interface List$1<T> extends ICollection$1<T>, IList$1<T> {
         getCount(): number;
         get(index: number): T;
         set(index: number, value: T): void;
@@ -596,6 +596,7 @@
         addRange(items: IEnumerable$1<T>);
         clear(): void;
         indexOf(item: T, startIndex?: number): number;
+        insertRange(index: number, items: IEnumerable$1<T>): void;
         contains(item: T): boolean;
         getEnumerator(): IEnumerator$1<T>;
         getRange(index: number, count?: number): List$1<T>;

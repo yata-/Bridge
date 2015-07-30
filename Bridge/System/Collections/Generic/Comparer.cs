@@ -2,16 +2,17 @@ using Bridge;
 namespace System.Collections.Generic
 {
 	[Namespace("Bridge")]
-	public abstract class Comparer<T>
+    public abstract class Comparer<T> : IComparer<T>
     {
-	    public static Comparer<T> Default
-	    {
-            [Template("Bridge.Comparer$1.$default")]
-	        get
-	        {
-	            return null;
-	        }
-	    }
+        
+        public static Comparer<T> Default
+        {
+            [Template("new Bridge.Comparer$1({T})(Bridge.Comparer$1.$default.fn)")]
+            get
+            {
+                return null;
+            }
+        }
 
 	    public abstract int Compare(T x, T y);
 

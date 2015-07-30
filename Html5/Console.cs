@@ -359,5 +359,31 @@ namespace Bridge.Html5
         public static void Dir(object obj)
         {
         }
+
+        /// <summary>
+        /// Displays an XML/HTML Element representation of the specified object if possible or the JavaScript Object view if it is not.
+        /// </summary>
+        /// <param name="node">An XML/HTML Element</param>
+        [Template("console.dirxml({node})")]
+        public static void DirXml(Node node)
+        {
+        }
+
+        /// <summary>
+        /// Displays tabular data as a table.
+        /// </summary>
+        /// <param name="data">The data to display. This must be either an array or an object.</param>
+        public static void Table(object data)
+        {
+        }
+
+        /// <summary>
+        /// Displays tabular data as a table.
+        /// </summary>
+        /// <param name="data">The data to display. This must be either an array or an object.</param>
+        /// <param name="columns">An array containing the names of columns to include in the output.</param>
+        public static void Table(object data, string[] columns)
+        {
+        }
     }
 }

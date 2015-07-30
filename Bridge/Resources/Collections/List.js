@@ -4,7 +4,7 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
     var $$name = Bridge.Class.genericName('Bridge.List$1', T);
 
     return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
-        inherits: [Bridge.ICollection$1(T), Bridge.ICollection],
+        inherits: [Bridge.ICollection$1(T), Bridge.ICollection, Bridge.IList$1(T)],
         constructor: function (obj) {
             if (Object.prototype.toString.call(obj) === '[object Array]') {
                 this.items = obj;
@@ -69,7 +69,7 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
             }
 
             if (startIndex != 0) {
-                this.checkIndex(index);
+                this.checkIndex(startIndex);
             }
 
             for (i = startIndex; i < this.items.length; i++) {
@@ -80,6 +80,20 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
             }
 
             return -1;
+        },
+
+        insertRange: function (index, items) {
+            this.checkReadOnly();
+
+            if (index != 0) {
+                this.checkIndex(index);
+            }
+
+            var array = Bridge.toArray(items);
+
+            for (var i = 0; i < array.length; i++) {
+                this.insert(index++, array[i]);
+            }
         },
 
         contains: function (item) {
@@ -156,7 +170,10 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
 
         remove: function (item) {
             this.checkReadOnly();
+
             var index = this.indexOf(item);
+            if (index < 0)
+                return false;
 
             this.checkIndex(index);
             this.items.splice(index, 1);
