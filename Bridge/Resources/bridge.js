@@ -167,7 +167,7 @@
             }
 
             if (Bridge.isBoolean(value)) {
-                return obj ? 1 : 0;
+                return value ? 1 : 0;
             }
 
             if (Bridge.isDate(value)) {
