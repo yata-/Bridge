@@ -311,7 +311,7 @@ namespace Bridge.Translator
             }
 
             var firstClause = true;
-            var writeElse = false;
+            var writeElse = true;
 
             foreach (var clause in tryCatchStatement.CatchClauses)
             {
@@ -323,9 +323,12 @@ namespace Bridge.Translator
                     this.WriteElse();
                 }
 
-                if (!isBaseException)
+                if (isBaseException)
                 {
-                    writeElse = true;
+                    writeElse = false;
+                }
+                else
+                {
                     this.WriteIf();
                     this.WriteOpenParentheses();
                     this.Write("Bridge.is($e, " + exceptionType + ")");
