@@ -4,6 +4,7 @@ namespace System
 {
     [Ignore]
 	[Name("Bridge.Int")]
+    [Constructor("Number")]
     public struct Int16 : IComparable, IComparable<Int16>, IEquatable<Int16>, IFormattable
     {
 		private Int16(int i)

@@ -4,6 +4,7 @@ namespace System
 {
 	[Ignore]
 	[Name("Number")]
+    [Constructor("Number")]
     public struct Decimal : IComparable, IComparable<Decimal>, IEquatable<Decimal>, IFormattable
     {
         [Name("MAX_VALUE")]
