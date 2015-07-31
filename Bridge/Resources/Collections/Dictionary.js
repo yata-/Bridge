@@ -102,6 +102,10 @@ Bridge.Class.generic('Bridge.Dictionary$2', function (TKey, TValue) {
             return entry.value;
         },
 
+        getItem: function (key) {
+            return get(key);
+        },
+
         set: function (key, value, add) {
             var entry = this.findEntry(key),
                 hash;
@@ -126,6 +130,10 @@ Bridge.Class.generic('Bridge.Dictionary$2', function (TKey, TValue) {
             }
 
             this.count++;
+        },
+
+        setItem: function (key, value, add) {
+            set(key, value, add);
         },
 
         add: function (key, value) {
