@@ -4,6 +4,7 @@ namespace System
 {
     [Ignore]
     [Name("Object")]
+    [IgnoreCast]
     [Constructor("{ }")]
     public class Object
     {
