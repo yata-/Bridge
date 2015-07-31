@@ -10,6 +10,7 @@
   <file name="Exception.js" />
   <file name="Interfaces.js" />
   <file name="Globalization.js" />
+  <file name="Locales/ru-RU.js" path="Locales" />
   <file name="Integer.js" />
   <file name="Date.js" />
   <file name="TimeSpan.js" />
@@ -39,6 +40,7 @@
     <include name="Exception.js" />
     <include name="Interfaces.js" />
     <include name="Globalization.js" />
+    <include name="Locales/ru-RU.js" />
     <include name="Integer.js" />
     <include name="Date.js" />
     <include name="TimeSpan.js" />
