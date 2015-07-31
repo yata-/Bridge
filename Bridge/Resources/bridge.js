@@ -973,6 +973,16 @@
 
 (function () {
     var char = {
+        charCodeAt: function (str, index) {
+            if (str == null)
+                throw new Bridge.ArgumentNullException();
+
+            if (str.length != 1)
+                throw new Bridge.FormatException("String must be exactly one character long");
+
+            return str.charCodeAt(index);
+        },
+
         isWhiteSpace: function (value) {
             return /\s/.test(value);
         },

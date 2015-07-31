@@ -28,7 +28,7 @@ namespace System
             return null;
         }
 
-		[Template("{s}.charCodeAt(0)")]
+        [Template("Bridge.Char.charCodeAt({s}, 0)")]
 		public static char Parse(string s)
         {
 			return '\0';
