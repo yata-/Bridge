@@ -4,6 +4,7 @@ namespace System
 {
 	[Ignore]
 	[Name("Number")]
+    [Constructor("Number")]
     public struct Single : IComparable, IComparable<Single>, IEquatable<Single>, IFormattable
     {
         private Single(int i)

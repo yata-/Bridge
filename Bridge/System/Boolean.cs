@@ -4,9 +4,10 @@ namespace System
 {
     [Ignore]
     [Name("Boolean")]
-    [Constructor("!!")]
+    //[Constructor("!!")]
     public struct Boolean
     {
+        [Template("!!")]
         public Boolean(object value)
         {
         }

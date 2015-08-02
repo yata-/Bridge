@@ -8,9 +8,9 @@ namespace System.Collections.Generic
     {
 		TValue this[TKey key]
         {
-            [Template("get({0})")]
+            [Template("getItem({0})")]
             get;
-            [Template("set({0})")]
+            [Template("setItem({0})")]
             set;
         }
 

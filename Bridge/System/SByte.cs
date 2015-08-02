@@ -4,6 +4,7 @@ namespace System
 {
     [Ignore]
 	[Name("Bridge.Int")]
+    [Constructor("Number")]
     public struct SByte : IComparable, IComparable<SByte>, IEquatable<SByte>, IFormattable
     {
         private SByte(int i)

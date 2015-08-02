@@ -4,6 +4,7 @@ namespace System
 {
     [Ignore]
     [Name("Bridge.Int")]
+    [Constructor("Number")]
     public struct Char : IComparable, IComparable<Char>, IEquatable<Char>, IFormattable
     {
 		private Char(int i)
@@ -28,7 +29,7 @@ namespace System
             return null;
         }
 
-		[Template("{s}.charCodeAt(0)")]
+        [Template("Bridge.Char.charCodeAt({s}, 0)")]
 		public static char Parse(string s)
         {
 			return '\0';
