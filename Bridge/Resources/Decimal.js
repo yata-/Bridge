@@ -2,6 +2,12 @@
 
 (function () {
     var decimal = {
+        null_d: {
+            $isDecimalNull: true,
+            toFloat: function() {
+                return null;
+            }
+        },
         ceil: function (a) {
             a = Bridge.Decimal.$(a);
             return Bridge.Decimal.$.round(a, 0, a.is_minus ? -1 : -2);
@@ -41,7 +47,7 @@
                 return Bridge.Decimal.$(a).add(b);
             }
 
-            return null;
+            return Bridge.Decimal.null_d;
         },
 
         div: function (a, b) {
@@ -49,31 +55,40 @@
                 return Bridge.Decimal.$(a).div(b);
             }
 
-            return null;
+            return Bridge.Decimal.null_d;
         },
 
         eq: function (a, b) {
-            if (!Bridge.hasValue(a)) {
-                return !Bridge.hasValue(b);
+            var hasA = Bridge.hasValue(a),
+                hasB = Bridge.hasValue(b);
+
+            if (hasA && hasB) {
+                return !Bridge.Decimal.$(a).compare(b);
             }
 
-            return Bridge.Decimal.$(a).compare(b) === 0;
+            return hasA === hasB;
         },
 
         gt: function (a, b) {
-            if (!Bridge.hasValue(a)) {
-                return !Bridge.hasValue(b);
+            var hasA = Bridge.hasValue(a),
+                hasB = Bridge.hasValue(b);
+
+            if (hasA && hasB) {
+                return Bridge.Decimal.$(a).compare(b) > 0;
             }
 
-            return Bridge.Decimal.$(a).compare(b) === 1;
+            return hasA === hasB;
         },
 
         gte: function (a, b) {
-            if (!Bridge.hasValue(a)) {
-                return !Bridge.hasValue(b);
+            var hasA = Bridge.hasValue(a),
+                hasB = Bridge.hasValue(b);
+
+            if (hasA && hasB) {
+                return Bridge.Decimal.$(a).compare(b) >= 0;
             }
 
-            return Bridge.Decimal.$(a).compare(b) >= 0;
+            return hasA === hasB;
         },
 
         neq: function(a, b) {
@@ -81,19 +96,25 @@
         },
 
         lt: function (a, b) {
-            if (!Bridge.hasValue(a)) {
-                return !Bridge.hasValue(b);
+            var hasA = Bridge.hasValue(a),
+                hasB = Bridge.hasValue(b);
+
+            if (hasA && hasB) {
+                return Bridge.Decimal.$(a).compare(b) < 0;
             }
 
-            return Bridge.Decimal.$(a).compare(b) === -1;
+            return hasA === hasB;
         },
 
         lte: function (a, b) {
-            if (!Bridge.hasValue(a)) {
-                return !Bridge.hasValue(b);
+            var hasA = Bridge.hasValue(a),
+                hasB = Bridge.hasValue(b);
+
+            if (hasA && hasB) {
+                return Bridge.Decimal.$(a).compare(b) <= 0;
             }
 
-            return Bridge.Decimal.$(a).compare(b) <= 0;
+            return hasA === hasB;
         },
 
         mod: function (a, b) {
@@ -101,7 +122,7 @@
                 return Bridge.Decimal.$(a).mod(b);
             }
 
-            return null;
+            return Bridge.Decimal.null_d;
         },
 
         mul: function (a, b) {
@@ -109,7 +130,7 @@
                 return Bridge.Decimal.$(a).mul(b);
             }
 
-            return null;
+            return Bridge.Decimal.null_d;
         },
 
         sub: function (a, b) {
@@ -117,7 +138,7 @@
                 return Bridge.Decimal.$(a).sub(b);
             }
 
-            return null;
+            return Bridge.Decimal.null_d;
         },
 
         dec: function (a) {
@@ -125,7 +146,7 @@
                 return Bridge.Decimal.$(a).sub(1);
             }
 
-            return null;
+            return Bridge.Decimal.null_d;
         },
 
         inc: function (a) {
@@ -133,7 +154,7 @@
                 return Bridge.Decimal.$(a).add(1);
             }
 
-            return null;
+            return Bridge.Decimal.null_d;
         },
 
         neg: function (a) {
@@ -141,7 +162,7 @@
                 return Bridge.Decimal.$(a).neg();
             }
 
-            return null;
+            return Bridge.Decimal.null_d;
         },
 
         pos: function (a) {
@@ -149,7 +170,7 @@
                 return Bridge.Decimal.$(a);
             }
 
-            return null;
+            return Bridge.Decimal.null_d;
         },
 
         abs: function (a) {
@@ -157,27 +178,27 @@
                 return Bridge.Decimal.$(a).abs();
             }
 
-            return null;
+            return Bridge.Decimal.null_d;
         },
 
         min: function (a, b) {
             if (Bridge.hasValue(a) && Bridge.hasValue(b)) {
                 a = Bridge.Decimal.$(a);
                 b = Bridge.Decimal.$(b);
-                return a.compareTo(b) < 0 ? a : b;
+                return a.compare(b) < 0 ? a : b;
             }
 
-            return null;
+            return Bridge.Decimal.null_d;
         },
         
         max: function (a, b) {
             if (Bridge.hasValue(a) && Bridge.hasValue(b)) {
                 a = Bridge.Decimal.$(a);
                 b = Bridge.Decimal.$(b);
-                return a.compareTo(b) > 0 ? a : b;
+                return a.compare(b) > 0 ? a : b;
             }
 
-            return null;
+            return Bridge.Decimal.null_d;
         }
     };
     Bridge.Decimal = decimal;
@@ -454,12 +475,17 @@
 
         var last_num = obj.sig[last_word_pos] % tmp2;
 
-        if (last_num > tmp2 / 2) {
-            round_up = true;
-        } else if (last_num == tmp2 / 2) {
-            if (!zero_flag || !(last_digit_is_even &&
-                                mode == Decimal.MidpointRounding.ToEven)) {
+        if (mode == -2) {
+            round_up = last_num != 0;
+        }
+        else if (mode >= 0) {
+            if (last_num > tmp2 / 2) {
                 round_up = true;
+            } else if (last_num == tmp2 / 2) {
+                if (!zero_flag || !(last_digit_is_even &&
+                                    mode == 0)) {
+                    round_up = true;
+                }
             }
         }
 
@@ -468,13 +494,13 @@
         if (round_up) {
             ret.sig[round_word_pos] += tmp;
             while (ret.sig[round_word_pos] == Decimal.one_word) {
-                    if (round_word_pos == Decimal.n - 1) {
-                            ret.sig[round_word_pos] /= 10;
-                            --ret.exp;
-                            break;
-                        } else {
-                        ret.sig[round_word_pos] = 0;
-                    }
+                if (round_word_pos == Decimal.n - 1) {
+                    ret.sig[round_word_pos] /= 10;
+                    --ret.exp;
+                    break;
+                } else {
+                    ret.sig[round_word_pos] = 0;
+                }
                 ++round_word_pos;
                 ++ret.sig[round_word_pos];
             }

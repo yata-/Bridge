@@ -83,13 +83,13 @@ namespace System
             return 0;
         }
 
-        [Template("Bridge.Decimal.round({d}).toFloat()")]
+        [Template("Bridge.Decimal.round({x}).toFloat()")]
         public static decimal Round(decimal x)
         {
             return 0;
         }
 
-        [Template("Bridge.Decimal.round({d}, {digits}).toFloat()")]
+        [Template("Bridge.Decimal.round({x}, {digits}).toFloat()")]
         public static decimal Round(decimal x, int digits)
         {
             return 0;
@@ -144,5 +144,11 @@ namespace System
         {
             return 0;
         }
+
+        [Template("Bridge.Int.trunc({d}).toFloat()")]
+        public static extern double Truncate(double d);
+
+        [Template("Bridge.Decimal.trunc({d}).toFloat()")]
+        public static extern decimal Truncate(decimal d);
     }
 }

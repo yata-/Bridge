@@ -3,7 +3,7 @@
 (function () {
     var nullable = {
         hasValue: function (obj) {
-            return (obj !== null) && (obj !== undefined);
+            return (obj !== null) && (obj !== undefined) && !obj.$isDecimalNull;
         },
 
         getValue: function (obj) {
