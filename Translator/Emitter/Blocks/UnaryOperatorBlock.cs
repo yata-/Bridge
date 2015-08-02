@@ -373,10 +373,7 @@ namespace Bridge.Translator
                         throw new EmitterException(unaryOperatorExpression, "Unsupported unary operator: " + unaryOperatorExpression.Operator.ToString());
                 }
 
-                if (isDecimal && !(op == UnaryOperatorType.Increment ||
-                 op == UnaryOperatorType.Decrement ||
-                 op == UnaryOperatorType.PostIncrement ||
-                 op == UnaryOperatorType.PostDecrement))
+                if (isDecimal && (op == UnaryOperatorType.Plus || op == UnaryOperatorType.Minus))
                 {
                     var parent = unaryOperatorExpression.Parent;
                     if (!(parent is BinaryOperatorExpression || parent is UnaryOperatorExpression))

@@ -268,7 +268,8 @@ namespace Bridge.Translator
                 this.WriteCloseParentheses();
             }
 
-            if (isDecimal)
+            var op = binaryOperatorExpression.Operator;
+            if (isDecimal && (op == BinaryOperatorType.Add || op == BinaryOperatorType.Divide || op == BinaryOperatorType.Modulus || op == BinaryOperatorType.Multiply || op == BinaryOperatorType.Subtract))
             {
                 var parent = binaryOperatorExpression.Parent;
                 if (!(parent is BinaryOperatorExpression || parent is UnaryOperatorExpression))
