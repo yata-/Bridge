@@ -132,10 +132,10 @@ namespace Bridge.Translator
             bool isDecimal = false;
             string root = Bridge.Translator.Emitter.ROOT + ".Nullable.";
 
-            if ((Helpers.IsDecimalType(leftResolverResult.Type, this.Emitter.Resolver) &&
+            if ((Helpers.IsDecimalType(leftResolverResult.Type, this.Emitter.Resolver) ||
                  Helpers.IsDecimalType(rightResolverResult.Type, this.Emitter.Resolver)) ||
 
-                (Helpers.IsDecimalType(this.Emitter.Resolver.Resolver.GetExpectedType(binaryOperatorExpression.Left), this.Emitter.Resolver) &&
+                (Helpers.IsDecimalType(this.Emitter.Resolver.Resolver.GetExpectedType(binaryOperatorExpression.Left), this.Emitter.Resolver) ||
                  Helpers.IsDecimalType(this.Emitter.Resolver.Resolver.GetExpectedType(binaryOperatorExpression.Right), this.Emitter.Resolver)))
             {
                 isDecimal = true;

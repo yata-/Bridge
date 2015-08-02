@@ -42,6 +42,49 @@ namespace Bridge.Translator
 
             var leftResolverResult = this.Emitter.Resolver.ResolveNode(assignmentExpression.Left, this.Emitter);
             var rightResolverResult = this.Emitter.Resolver.ResolveNode(assignmentExpression.Right, this.Emitter);
+            var orr = this.Emitter.Resolver.ResolveNode(assignmentExpression, this.Emitter) as OperatorResolveResult;
+
+            if (assignmentExpression.Operator == AssignmentOperatorType.Divide &&
+                (
+                    (Helpers.IsIntegerType(leftResolverResult.Type, this.Emitter.Resolver) &&
+                    Helpers.IsIntegerType(rightResolverResult.Type, this.Emitter.Resolver)) ||
+
+                    (Helpers.IsIntegerType(this.Emitter.Resolver.Resolver.GetExpectedType(assignmentExpression.Left), this.Emitter.Resolver) &&
+                    Helpers.IsIntegerType(this.Emitter.Resolver.Resolver.GetExpectedType(assignmentExpression.Right), this.Emitter.Resolver))
+                ))
+            {
+                this.Emitter.IsAssignment = true;
+                this.Emitter.AssignmentType = AssignmentOperatorType.Assign;
+                var oldValue1 = this.Emitter.ReplaceAwaiterByVar;
+                this.Emitter.ReplaceAwaiterByVar = true;
+                assignmentExpression.Left.AcceptVisitor(this.Emitter);
+
+                if (this.Emitter.Writers.Count == initCount)
+                {
+                    this.Write(" = ");
+                }
+
+                this.Emitter.ReplaceAwaiterByVar = oldValue1;
+                this.Emitter.AssignmentType = oldAssigmentType;
+                this.Emitter.IsAssignment = oldAssigment;
+
+                this.Write("Bridge.Int.div(");
+                assignmentExpression.Left.AcceptVisitor(this.Emitter);
+                this.Write(", ");
+                oldValue1 = this.Emitter.ReplaceAwaiterByVar;
+                this.Emitter.ReplaceAwaiterByVar = true;
+                assignmentExpression.Right.AcceptVisitor(this.Emitter);
+                this.Write(")");
+
+                this.Emitter.ReplaceAwaiterByVar = oldValue1;
+                this.Emitter.AsyncExpressionHandling = asyncExpressionHandling;
+
+                if (this.Emitter.Writers.Count > initCount)
+                {
+                    this.PopWriter();
+                }
+                return;
+            }
 
             if (assignmentExpression.Operator == AssignmentOperatorType.Add ||
                 assignmentExpression.Operator == AssignmentOperatorType.Subtract)
@@ -71,6 +114,24 @@ namespace Bridge.Translator
             }
 
 
+
+            bool nullable = orr != null && orr.IsLiftedOperator;
+            bool isDecimal = false;
+            string root = Bridge.Translator.Emitter.ROOT + ".Nullable.";
+
+            if (assignmentExpression.Operator != AssignmentOperatorType.Assign &&
+                (Helpers.IsDecimalType(leftResolverResult.Type, this.Emitter.Resolver) ||
+                 Helpers.IsDecimalType(rightResolverResult.Type, this.Emitter.Resolver) ||
+                 Helpers.IsDecimalType(this.Emitter.Resolver.Resolver.GetExpectedType(assignmentExpression.Left), this.Emitter.Resolver) ||
+                 Helpers.IsDecimalType(this.Emitter.Resolver.Resolver.GetExpectedType(assignmentExpression.Right), this.Emitter.Resolver)))
+            {
+                isDecimal = true;
+                nullable = false;
+                root = Bridge.Translator.Emitter.ROOT + ".Decimal.";
+            }
+
+            bool special = nullable || isDecimal;
+
             this.Emitter.IsAssignment = true;
             this.Emitter.AssignmentType = assignmentExpression.Operator;
             var oldValue = this.Emitter.ReplaceAwaiterByVar;
@@ -80,6 +141,10 @@ namespace Bridge.Translator
 
             if (!thisAssignment)
             {
+                if (special)
+                {
+                    this.Emitter.AssignmentType = AssignmentOperatorType.Assign;
+                }
                 assignmentExpression.Left.AcceptVisitor(this.Emitter);
             }
             else
@@ -98,49 +163,105 @@ namespace Bridge.Translator
 
             if (!delegateAssigment)
             {
-                switch (assignmentExpression.Operator)
+                if (!special)
                 {
-                    case AssignmentOperatorType.Assign:
-                        break;
-                    case AssignmentOperatorType.Add:
-                        this.Write("+");
-                        break;
-                    case AssignmentOperatorType.BitwiseAnd:
-                        this.Write("&");
-                        break;
-                    case AssignmentOperatorType.BitwiseOr:
-                        this.Write("|");
-                        break;
-                    case AssignmentOperatorType.Divide:
-                        this.Write("/");
-                        break;
-                    case AssignmentOperatorType.ExclusiveOr:
-                        this.Write("^");
-                        break;
-                    case AssignmentOperatorType.Modulus:
-                        this.Write("%");
-                        break;
-                    case AssignmentOperatorType.Multiply:
-                        this.Write("*");
-                        break;
-                    case AssignmentOperatorType.ShiftLeft:
-                        this.Write("<<");
-                        break;
-                    case AssignmentOperatorType.ShiftRight:
-                        this.Write(">>");
-                        break;
-                    case AssignmentOperatorType.Subtract:
-                        this.Write("-");
-                        break;
-                    default:
-                        throw new EmitterException(assignmentExpression, "Unsupported assignment operator: " + assignmentExpression.Operator.ToString());
+                    switch (assignmentExpression.Operator)
+                    {
+                        case AssignmentOperatorType.Assign:
+                            break;
+                        case AssignmentOperatorType.Add:
+                            this.Write("+");
+                            break;
+                        case AssignmentOperatorType.BitwiseAnd:
+                            this.Write("&");
+                            break;
+                        case AssignmentOperatorType.BitwiseOr:
+                            this.Write("|");
+                            break;
+                        case AssignmentOperatorType.Divide:
+                            this.Write("/");
+                            break;
+                        case AssignmentOperatorType.ExclusiveOr:
+                            this.Write("^");
+                            break;
+                        case AssignmentOperatorType.Modulus:
+                            this.Write("%");
+                            break;
+                        case AssignmentOperatorType.Multiply:
+                            this.Write("*");
+                            break;
+                        case AssignmentOperatorType.ShiftLeft:
+                            this.Write("<<");
+                            break;
+                        case AssignmentOperatorType.ShiftRight:
+                            this.Write(">>");
+                            break;
+                        case AssignmentOperatorType.Subtract:
+                            this.Write("-");
+                            break;
+                        default:
+                            throw new EmitterException(assignmentExpression,
+                                "Unsupported assignment operator: " + assignmentExpression.Operator.ToString());
+                    }
                 }
 
-                int count = this.Emitter.Writers.Count;
-
-                if (count == 0 && !thisAssignment)
+                if (special)
                 {
-                    this.Write("= ");
+                    if (this.Emitter.Writers.Count == initCount)
+                    {
+                        this.Write(" = ");
+                    }
+                    this.Write(root);
+
+                    switch (assignmentExpression.Operator)
+                    {
+                        case AssignmentOperatorType.Assign:
+                            break;
+                        case AssignmentOperatorType.Add:
+                            this.Write("add");
+                            break;
+                        case AssignmentOperatorType.BitwiseAnd:
+                            this.Write("band");
+                            break;
+                        case AssignmentOperatorType.BitwiseOr:
+                            this.Write("bor");
+                            break;
+                        case AssignmentOperatorType.Divide:
+                            this.Write("div");
+                            break;
+                        case AssignmentOperatorType.ExclusiveOr:
+                            this.Write("xor");
+                            break;
+                        case AssignmentOperatorType.Modulus:
+                            this.Write("mod");
+                            break;
+                        case AssignmentOperatorType.Multiply:
+                            this.Write("mul");
+                            break;
+                        case AssignmentOperatorType.ShiftLeft:
+                            this.Write("sl");
+                            break;
+                        case AssignmentOperatorType.ShiftRight:
+                            this.Write("sr");
+                            break;
+                        case AssignmentOperatorType.Subtract:
+                            this.Write("sub");
+                            break;
+                        default:
+                            throw new EmitterException(assignmentExpression,
+                                "Unsupported assignment operator: " + assignmentExpression.Operator.ToString());
+                    }
+
+                    this.WriteOpenParentheses();
+
+                    assignmentExpression.Left.AcceptVisitor(this.Emitter);
+                    this.Write(", ");
+                    }
+
+                int count = this.Emitter.Writers.Count;
+                if (count == 0 && !thisAssignment && !special)
+                {
+                    this.Write("= ");    
                 }
             }
             else if (!isEvent)
@@ -152,6 +273,11 @@ namespace Bridge.Translator
             this.Emitter.ReplaceAwaiterByVar = true;
 
             assignmentExpression.Right.AcceptVisitor(this.Emitter);
+
+            if (special)
+            {
+                this.WriteCloseParentheses();
+            }
 
             if (thisAssignment)
             {
