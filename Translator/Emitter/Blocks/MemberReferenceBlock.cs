@@ -455,6 +455,22 @@ namespace Bridge.Translator
                                     this.WriteOpenParentheses();
                                 }
 
+                                bool isDecimal = Helpers.IsDecimalType(member.Member.ReturnType, this.Emitter.Resolver);
+
+                                if (isDecimal)
+                                {
+                                    this.Write("Bridge.Decimal.");
+                                    if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
+                                    {
+                                        this.Write("add");
+                                    }
+                                    else
+                                    {
+                                        this.Write("sub");
+                                    }
+                                    this.WriteOpenParentheses();
+                                }
+
                                 if (targetVar != null)
                                 {
                                     this.Write(targetVar);
@@ -481,7 +497,11 @@ namespace Bridge.Translator
                                     this.WriteCloseParentheses();
                                 }
 
-                                if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
+                                if (isDecimal)
+                                {
+                                    this.WriteComma();
+                                }
+                                else if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
                                 {
                                     this.Write("+");
                                 }
@@ -491,6 +511,10 @@ namespace Bridge.Translator
                                 }
 
                                 this.Write("1");
+                                if (isDecimal)
+                                {
+                                    this.Write(").toFloat()");
+                                }
                                 this.WriteCloseParentheses();
                             }
                             else
@@ -534,10 +558,29 @@ namespace Bridge.Translator
                                     this.WriteOpenParentheses();
                                 }
 
-                                this.WriteOpenParentheses();
+                                bool isDecimal = Helpers.IsDecimalType(member.Member.ReturnType, this.Emitter.Resolver);
+
+                                if (isDecimal)
+                                {
+                                    this.Write("Bridge.Decimal.");
+                                    if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
+                                    {
+                                        this.Write("add");
+                                    }
+                                    else
+                                    {
+                                        this.Write("sub");
+                                    }
+                                    this.WriteOpenParentheses();
+                                }
+
                                 this.Write(valueVar);
 
-                                if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
+                                if (isDecimal)
+                                {
+                                    this.WriteComma();
+                                }
+                                else if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
                                 {
                                     this.Write("+");
                                 }
@@ -547,14 +590,38 @@ namespace Bridge.Translator
                                 }
 
                                 this.Write("1");
+                                if (isDecimal)
+                                {
+                                    this.Write(").toFloat()");
+                                }
                                 this.WriteCloseParentheses();
                                 this.WriteComma();
 
+                                bool isPreOp = this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment ||
+                                               this.Emitter.UnaryOperatorType == UnaryOperatorType.Decrement;
+                                if (isDecimal && isPreOp)
+                                {
+                                    this.Write("Bridge.Decimal.");
+                                    if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
+                                    {
+                                        this.Write("add");
+                                    }
+                                    else
+                                    {
+                                        this.Write("sub");
+                                    }
+                                    this.WriteOpenParentheses();
+                                }
+
                                 this.Write(valueVar);
 
-                                if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.Decrement)
+                                if (isPreOp)
                                 {
-                                    if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment)
+                                    if (isDecimal)
+                                    {
+                                        this.WriteComma();
+                                    }
+                                    else if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment)
                                     {
                                         this.Write("+");
                                     }
@@ -566,6 +633,10 @@ namespace Bridge.Translator
                                     this.Write("1");
                                 }
 
+                                if (isPreOp && isDecimal)
+                                {
+                                    this.Write(").toFloat()");
+                                }
                                 this.WriteCloseParentheses();
 
                                 if (valueVar != null)

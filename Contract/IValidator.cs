@@ -28,8 +28,8 @@ namespace Bridge.Contract
         bool HasAttribute(System.Collections.Generic.IEnumerable<ICSharpCode.NRefactory.TypeSystem.IAttribute> attributes, string name);
         bool HasAttribute(System.Collections.Generic.IEnumerable<Mono.Cecil.CustomAttribute> attributes, string name);
         bool IsDelegateOrLambda(ICSharpCode.NRefactory.Semantics.ResolveResult result);
-        bool IsIgnoreType(Mono.Cecil.ICustomAttributeProvider type);
-        bool IsIgnoreType(ICSharpCode.NRefactory.TypeSystem.ITypeDefinition typeDefinition);
+        bool IsIgnoreType(Mono.Cecil.ICustomAttributeProvider type, bool ignoreLiteral = false);
+        bool IsIgnoreType(ICSharpCode.NRefactory.TypeSystem.ITypeDefinition typeDefinition, bool ignoreLiteral = false);
         bool IsBridgeClass(Mono.Cecil.TypeDefinition type);
         bool IsInlineMethod(Mono.Cecil.MethodDefinition method);
         bool IsNameEnum(ICSharpCode.NRefactory.TypeSystem.Implementation.DefaultResolvedTypeDefinition type);

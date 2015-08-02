@@ -96,15 +96,22 @@ namespace Bridge.Translator
             var op = unaryOperatorExpression.Operator;
             var argResolverResult = this.Emitter.Resolver.ResolveNode(unaryOperatorExpression.Expression, this.Emitter);
             bool nullable = NullableType.IsNullable(argResolverResult.Type);
+            bool isDecimal = false;
 
-            if (nullable)
+            if (Helpers.IsDecimalType(argResolverResult.Type, this.Emitter.Resolver))
+            {
+                isDecimal = true;
+                nullable = false;
+            }
+
+            if (nullable || isDecimal)
             {
                 if (op != UnaryOperatorType.Increment &&
                     op != UnaryOperatorType.Decrement &&
                     op != UnaryOperatorType.PostIncrement &&
                     op != UnaryOperatorType.PostDecrement)
                 {
-                    this.Write(Bridge.Translator.Emitter.ROOT + ".Nullable.");
+                    this.Write(Bridge.Translator.Emitter.ROOT + (nullable ? ".Nullable." : ".Decimal."));
                 }
             }
 
@@ -122,7 +129,7 @@ namespace Bridge.Translator
 
             this.Emitter.UnaryOperatorType = op;
 
-            if (isAccessor &&
+            if ((isAccessor) &&
                 (op == UnaryOperatorType.Increment ||
                  op == UnaryOperatorType.Decrement ||
                  op == UnaryOperatorType.PostIncrement ||
@@ -130,7 +137,7 @@ namespace Bridge.Translator
             {
                 this.Emitter.IsUnaryAccessor = true;
 
-                if (nullable)
+                if (nullable || isDecimal)
                 {
                     this.Write("(Bridge.hasValue(");
                     this.Emitter.IsUnaryAccessor = false;
@@ -152,7 +159,7 @@ namespace Bridge.Translator
                 switch (op)
                 {
                     case UnaryOperatorType.BitNot:
-                        if (nullable)
+                        if (nullable || isDecimal)
                         {
                             this.Write("bnot(");
                             unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
@@ -165,12 +172,26 @@ namespace Bridge.Translator
                         }
                         break;
                     case UnaryOperatorType.Decrement:
-                        if (nullable)
+                        if (nullable || isDecimal)
                         {
                             this.Write("(Bridge.hasValue(");
                             unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
-                            this.Write(") ? --");
-                            unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
+                            this.Write(") ? ");
+                            if (isDecimal)
+                            {
+                                this.WriteOpenParentheses();
+                                unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
+                                this.Write(" = Bridge.Decimal.dec(");
+                                unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
+                                this.Write(").toFloat()");
+                                this.WriteCloseParentheses();
+                            }
+                            else
+                            {
+                                this.Write("--");
+                                unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
+                            }
+                            
                             this.Write(" : null)");
                         }
                         else
@@ -180,12 +201,25 @@ namespace Bridge.Translator
                         }
                         break;
                     case UnaryOperatorType.Increment:
-                        if (nullable)
+                        if (nullable || isDecimal)
                         {
                             this.Write("(Bridge.hasValue(");
                             unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
-                            this.Write(") ? ++");
-                            unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
+                            this.Write(") ? ");
+                            if (isDecimal)
+                            {
+                                this.WriteOpenParentheses();
+                                unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
+                                this.Write(" = Bridge.Decimal.inc(");
+                                unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
+                                this.Write(").toFloat()");
+                                this.WriteCloseParentheses();
+                            }
+                            else
+                            {
+                                this.Write("++");
+                                unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
+                            }
                             this.Write(" : null)");
                         }
                         else
@@ -195,7 +229,7 @@ namespace Bridge.Translator
                         }
                         break;
                     case UnaryOperatorType.Minus:
-                        if (nullable)
+                        if (nullable || isDecimal)
                         {
                             this.Write("neg(");
                             unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
@@ -208,7 +242,7 @@ namespace Bridge.Translator
                         }
                         break;
                     case UnaryOperatorType.Not:
-                        if (nullable)
+                        if (nullable || isDecimal)
                         {
                             this.Write("not(");
                             unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
@@ -221,7 +255,7 @@ namespace Bridge.Translator
                         }
                         break;
                     case UnaryOperatorType.Plus:
-                        if (nullable)
+                        if (nullable || isDecimal)
                         {
                             this.Write("pos(");
                             unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
@@ -234,13 +268,37 @@ namespace Bridge.Translator
 
                         break;
                     case UnaryOperatorType.PostDecrement:
-                        if (nullable)
+                        if (nullable || isDecimal)
                         {
                             this.Write("(Bridge.hasValue(");
                             unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
                             this.Write(") ? ");
-                            unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
-                            this.Write("-- : null)");
+                            if (isDecimal)
+                            {
+                                this.WriteOpenParentheses();
+                                var valueVar = this.GetTempVarName();
+
+                                this.Write(valueVar);
+                                this.Write(" = ");
+                                
+                                unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
+                                this.WriteComma();
+                                unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
+                                this.Write(" = Bridge.Decimal.dec(");
+                                unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
+                                this.Write(").toFloat()");
+                                this.WriteComma();
+                                this.Write(valueVar);
+                                this.WriteCloseParentheses();
+                                this.RemoveTempVar(valueVar);
+                            }
+                            else
+                            {
+                                unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
+                                this.Write("--)");
+                            }
+
+                            this.Write(" : null)");
                         }
                         else
                         {
@@ -249,13 +307,37 @@ namespace Bridge.Translator
                         }
                         break;
                     case UnaryOperatorType.PostIncrement:
-                        if (nullable)
+                        if (nullable || isDecimal)
                         {
                             this.Write("(Bridge.hasValue(");
                             unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
                             this.Write(") ? ");
-                            unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
-                            this.Write("++ : null)");
+                            if (isDecimal)
+                            {
+                                this.WriteOpenParentheses();
+                                var valueVar = this.GetTempVarName();
+
+                                this.Write(valueVar);
+                                this.Write(" = ");
+
+                                unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
+                                this.WriteComma();
+                                unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
+                                this.Write(" = Bridge.Decimal.inc(");
+                                unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
+                                this.Write(").toFloat()");
+                                this.WriteComma();
+                                this.Write(valueVar);
+                                this.WriteCloseParentheses();
+                                this.RemoveTempVar(valueVar);
+                            }
+                            else
+                            {
+                                unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
+                                this.Write("++)");
+                            }
+
+                            this.Write(" : null)");
                         }
                         else
                         {
@@ -289,6 +371,18 @@ namespace Bridge.Translator
                         break;
                     default:
                         throw new EmitterException(unaryOperatorExpression, "Unsupported unary operator: " + unaryOperatorExpression.Operator.ToString());
+                }
+
+                if (isDecimal && !(op == UnaryOperatorType.Increment ||
+                 op == UnaryOperatorType.Decrement ||
+                 op == UnaryOperatorType.PostIncrement ||
+                 op == UnaryOperatorType.PostDecrement))
+                {
+                    var parent = unaryOperatorExpression.Parent;
+                    if (!(parent is BinaryOperatorExpression || parent is UnaryOperatorExpression))
+                    {
+                        this.Write(".toFloat()");
+                    }
                 }
             }
 

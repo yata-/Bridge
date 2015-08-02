@@ -386,10 +386,25 @@ namespace Bridge.Translator
                 {
                     if (this.Emitter.IsUnaryAccessor)
                     {
+                        bool isDecimal = Helpers.IsDecimalType(memberResult.Member.ReturnType, this.Emitter.Resolver);
                         if (isStatement)
                         {
                             this.Write(Helpers.GetPropertyRef(memberResult.Member, this.Emitter, true));
                             this.WriteOpenParentheses();
+
+                            if (isDecimal)
+                            {
+                               this.Write("Bridge.Decimal.");
+                               if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
+                               {
+                                   this.Write("add");
+                               }
+                               else
+                               {
+                                   this.Write("sub");
+                               }
+                               this.WriteOpenParentheses();
+                            }
 
                             this.WriteTarget(memberResult);
 
@@ -397,16 +412,31 @@ namespace Bridge.Translator
                             this.WriteOpenParentheses();
                             this.WriteCloseParentheses();
 
-                            if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
+                            if (isDecimal)
                             {
-                                this.Write("+");
+                                this.WriteComma();
                             }
                             else
                             {
-                                this.Write("-");
+                                if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
+                                {
+                                    this.Write("+");
+                                }
+                                else
+                                {
+                                    this.Write("-");
+                                }
                             }
+                            
 
                             this.Write("1");
+                            
+                            if (isDecimal)
+                            {
+                                this.WriteCloseParentheses();
+                                this.Write(".toFloat()");
+                            }
+
                             this.WriteCloseParentheses();
                         }
                         else
@@ -419,26 +449,73 @@ namespace Bridge.Translator
                             this.WriteTarget(memberResult);
                             this.Write(Helpers.GetPropertyRef(memberResult.Member, this.Emitter, true));
                             this.WriteOpenParentheses();
+
+                            if (isDecimal)
+                            {
+                                this.Write("Bridge.Decimal.");
+                                if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
+                                {
+                                    this.Write("add");
+                                }
+                                else
+                                {
+                                    this.Write("sub");
+                                }
+                                this.WriteOpenParentheses();
+                            }
+
                             this.Write(valueVar);
 
-                            if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
+                            if (isDecimal)
                             {
-                                this.Write("+");
+                                this.WriteComma();
                             }
                             else
                             {
-                                this.Write("-");
+                                if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
+                                {
+                                    this.Write("+");
+                                }
+                                else
+                                {
+                                    this.Write("-");
+                                }
+                            }
+                            
+                            this.Write("1");
+                            
+                            if (isDecimal)
+                            {
+                                this.WriteCloseParentheses();
+                                this.Write(".toFloat()");
                             }
 
-                            this.Write("1");
                             this.WriteCloseParentheses();
                             this.WriteComma();
+
+                            if (isDecimal && (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.Decrement))
+                            {
+                                this.Write("Bridge.Decimal.");
+                                if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
+                                {
+                                    this.Write("add");
+                                }
+                                else
+                                {
+                                    this.Write("sub");
+                                }
+                                this.WriteOpenParentheses();
+                            }
 
                             this.Write(valueVar);
 
                             if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.Decrement)
                             {
-                                if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment)
+                                if (isDecimal)
+                                {
+                                    this.WriteComma();
+                                }
+                                else if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment)
                                 {
                                     this.Write("+");
                                 }
@@ -448,6 +525,12 @@ namespace Bridge.Translator
                                 }
 
                                 this.Write("1");
+
+                                if (isDecimal)
+                                {
+                                    this.WriteCloseParentheses();
+                                    this.Write(".toFloat()");
+                                }
                             }
 
                             this.WriteCloseParentheses();

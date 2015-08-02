@@ -264,7 +264,7 @@ namespace Bridge.Translator
                 }
             }
 
-            if (this.Emitter.Validator.IsObjectLiteral(type) && !this.Emitter.Validator.IsIgnoreType(type))
+            if (this.Emitter.Validator.IsObjectLiteral(type) && !this.Emitter.Validator.IsIgnoreType(type, true))
             {
                 var key = BridgeTypes.GetTypeDefinitionKey(type);
                 var tinfo = this.Emitter.Types.FirstOrDefault(t => t.Key == key);

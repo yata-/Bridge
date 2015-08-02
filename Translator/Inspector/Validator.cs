@@ -45,12 +45,12 @@ namespace Bridge.Translator
             this.CheckModuleDependenies(type, translator);
         }
 
-        public virtual bool IsIgnoreType(ICustomAttributeProvider type)
+        public virtual bool IsIgnoreType(ICustomAttributeProvider type, bool ignoreLiteral = false)
         {
             string ignoreAttr = Translator.Bridge_ASSEMBLY + ".IgnoreAttribute";
             string objectLiteralAttr = Translator.Bridge_ASSEMBLY + ".ObjectLiteralAttribute";
 
-            return this.HasAttribute(type.CustomAttributes, ignoreAttr) || this.HasAttribute(type.CustomAttributes, objectLiteralAttr);
+            return this.HasAttribute(type.CustomAttributes, ignoreAttr) || (!ignoreLiteral && this.HasAttribute(type.CustomAttributes, objectLiteralAttr));
         }
 
         public virtual bool IsBridgeClass(TypeDefinition type)
@@ -66,12 +66,12 @@ namespace Bridge.Translator
             return false;
         }
 
-        public virtual bool IsIgnoreType(ICSharpCode.NRefactory.TypeSystem.ITypeDefinition typeDefinition)
+        public virtual bool IsIgnoreType(ICSharpCode.NRefactory.TypeSystem.ITypeDefinition typeDefinition, bool ignoreLiteral = false)
         {
             string ignoreAttr = Translator.Bridge_ASSEMBLY + ".IgnoreAttribute";
             string objectLiteralAttr = Translator.Bridge_ASSEMBLY + ".ObjectLiteralAttribute";
 
-            return typeDefinition.Attributes.Any(attr => attr.Constructor!= null && ((attr.Constructor.DeclaringType.FullName == ignoreAttr) || (attr.Constructor.DeclaringType.FullName == objectLiteralAttr)));
+            return typeDefinition.Attributes.Any(attr => attr.Constructor != null && ((attr.Constructor.DeclaringType.FullName == ignoreAttr) || (!ignoreLiteral && attr.Constructor.DeclaringType.FullName == objectLiteralAttr)));
         }
 
         public virtual int EnumEmitMode(DefaultResolvedTypeDefinition type)

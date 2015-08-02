@@ -222,6 +222,13 @@ namespace Bridge.Contract
                 || type.Equals(resolver.Compilation.FindType(KnownTypeCode.Single));
         }
 
+        public static bool IsDecimalType(IType type, IMemberResolver resolver)
+        {
+            type = type.IsKnownType(KnownTypeCode.NullableOfT) ? ((ParameterizedType)type).TypeArguments[0] : type;
+
+            return type.Equals(resolver.Compilation.FindType(KnownTypeCode.Decimal));
+        }
+
         public static void CheckValueTypeClone(ResolveResult resolveResult, Expression expression, IAbstractEmitterBlock block)
         {
             if (resolveResult == null || resolveResult.IsError)

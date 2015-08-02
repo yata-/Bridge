@@ -127,13 +127,29 @@ namespace Bridge.Translator
                 }
             }
 
-            //bool nullable = NullableType.IsNullable(leftResolverResult.Type) || NullableType.IsNullable(rightResolverResult.Type);
             bool nullable = orr != null && orr.IsLiftedOperator;
             bool isCoalescing = binaryOperatorExpression.Operator == BinaryOperatorType.NullCoalescing;
+            bool isDecimal = false;
+            string root = Bridge.Translator.Emitter.ROOT + ".Nullable.";
 
-            if (nullable)
+            if ((Helpers.IsDecimalType(leftResolverResult.Type, this.Emitter.Resolver) &&
+                 Helpers.IsDecimalType(rightResolverResult.Type, this.Emitter.Resolver)) ||
+
+                (Helpers.IsDecimalType(this.Emitter.Resolver.Resolver.GetExpectedType(binaryOperatorExpression.Left), this.Emitter.Resolver) &&
+                 Helpers.IsDecimalType(this.Emitter.Resolver.Resolver.GetExpectedType(binaryOperatorExpression.Right), this.Emitter.Resolver)))
             {
-                this.Write(Bridge.Translator.Emitter.ROOT + ".Nullable.");
+                isDecimal = true;
+                nullable = false;
+                root = Bridge.Translator.Emitter.ROOT + ".Decimal.";
+            }
+
+            bool special = nullable || isCoalescing || isDecimal;
+            bool rootSpecial = nullable || isDecimal;
+
+
+            if (rootSpecial)
+            {
+                this.Write(root);
             }
             else if (isCoalescing)
             {
@@ -146,7 +162,7 @@ namespace Bridge.Translator
 
             if (!delegateOperator)
             {
-                if (!nullable && !isCoalescing)
+                if (!special)
                 {
                     this.WriteSpace();
                 }
@@ -154,76 +170,76 @@ namespace Bridge.Translator
                 switch (binaryOperatorExpression.Operator)
                 {
                     case BinaryOperatorType.Add:
-                        this.Write(nullable ? "add" : "+");
+                        this.Write(rootSpecial ? "add" : "+");
                         break;
                     case BinaryOperatorType.BitwiseAnd:
                         if (isBool)
                         {
-                            this.Write(nullable ? "and" : "&&");
+                            this.Write(rootSpecial ? "and" : "&&");
                         }
                         else
                         {
-                            this.Write(nullable ? "band" : "&");
+                            this.Write(rootSpecial ? "band" : "&");
                         }
 
                         break;
                     case BinaryOperatorType.BitwiseOr:
                         if (isBool)
                         {
-                            this.Write(nullable ? "or" : "||");
+                            this.Write(rootSpecial ? "or" : "||");
                         }
                         else
                         {
-                            this.Write(nullable ? "bor" : "|");
+                            this.Write(rootSpecial ? "bor" : "|");
                         }
                         break;
                     case BinaryOperatorType.ConditionalAnd:
-                        this.Write(nullable ? "and" : "&&");
+                        this.Write(rootSpecial ? "and" : "&&");
                         break;
                     case BinaryOperatorType.NullCoalescing:
                         this.Write("coalesce");
                         break;
                     case BinaryOperatorType.ConditionalOr:
-                        this.Write(nullable ? "or" : "||");
+                        this.Write(rootSpecial ? "or" : "||");
                         break;
                     case BinaryOperatorType.Divide:
-                        this.Write(nullable ? "div" : "/");
+                        this.Write(rootSpecial ? "div" : "/");
                         break;
                     case BinaryOperatorType.Equality:
-                        this.Write(nullable ? "eq" : "===");
+                        this.Write(rootSpecial ? "eq" : "===");
                         break;
                     case BinaryOperatorType.ExclusiveOr:
-                        this.Write(nullable ? "xor" : "^");
+                        this.Write(rootSpecial ? "xor" : "^");
                         break;
                     case BinaryOperatorType.GreaterThan:
-                        this.Write(nullable ? "gt" : ">");
+                        this.Write(rootSpecial ? "gt" : ">");
                         break;
                     case BinaryOperatorType.GreaterThanOrEqual:
-                        this.Write(nullable ? "gte" : ">=");
+                        this.Write(rootSpecial ? "gte" : ">=");
                         break;
                     case BinaryOperatorType.InEquality:
-                        this.Write(nullable ? "neq" : "!==");
+                        this.Write(rootSpecial ? "neq" : "!==");
                         break;
                     case BinaryOperatorType.LessThan:
-                        this.Write(nullable ? "lt" : "<");
+                        this.Write(rootSpecial ? "lt" : "<");
                         break;
                     case BinaryOperatorType.LessThanOrEqual:
-                        this.Write(nullable ? "lte" : "<=");
+                        this.Write(rootSpecial ? "lte" : "<=");
                         break;
                     case BinaryOperatorType.Modulus:
-                        this.Write(nullable ? "mod" : "%");
+                        this.Write(rootSpecial ? "mod" : "%");
                         break;
                     case BinaryOperatorType.Multiply:
-                        this.Write(nullable ? "mul" : "*");
+                        this.Write(rootSpecial ? "mul" : "*");
                         break;
                     case BinaryOperatorType.ShiftLeft:
-                        this.Write(nullable ? "sl" : "<<");
+                        this.Write(rootSpecial ? "sl" : "<<");
                         break;
                     case BinaryOperatorType.ShiftRight:
-                        this.Write(nullable ? "sr" : ">>");
+                        this.Write(rootSpecial ? "sr" : ">>");
                         break;
                     case BinaryOperatorType.Subtract:
-                        this.Write(nullable ? "sub" : "-");
+                        this.Write(rootSpecial ? "sub" : "-");
                         break;
                     default:
                         throw new EmitterException(binaryOperatorExpression, "Unsupported binary operator: " + binaryOperatorExpression.Operator.ToString());
@@ -234,7 +250,7 @@ namespace Bridge.Translator
                 this.WriteComma();
             }
 
-            if (nullable || isCoalescing)
+            if (special)
             {
                 this.WriteOpenParentheses();
                 binaryOperatorExpression.Left.AcceptVisitor(this.Emitter);
@@ -247,9 +263,18 @@ namespace Bridge.Translator
 
             binaryOperatorExpression.Right.AcceptVisitor(this.Emitter);
 
-            if (delegateOperator || nullable || isCoalescing)
+            if (delegateOperator || special)
             {
                 this.WriteCloseParentheses();
+            }
+
+            if (isDecimal)
+            {
+                var parent = binaryOperatorExpression.Parent;
+                if (!(parent is BinaryOperatorExpression || parent is UnaryOperatorExpression))
+                {
+                    this.Write(".toFloat()");
+                }
             }
         }
     }

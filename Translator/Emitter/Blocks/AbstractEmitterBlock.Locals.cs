@@ -207,6 +207,8 @@ namespace Bridge.Translator
                 name += ++i;
             }
 
+            name = "$t" + (i> 0 ? i.ToString() : "");
+
             this.IntroduceTempVar(name);
 
             return name;
