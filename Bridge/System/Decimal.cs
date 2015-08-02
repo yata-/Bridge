@@ -322,77 +322,88 @@ namespace System
 			return false;
 		}
 
-		[Template("{d1} + {d2}")]
+		[Template("Bridge.Decimal.add({d1}, {d2}).toFloat()")]
 		public static decimal Add(decimal d1, decimal d2)
         {
 			return 0;
 		}
 
-        [Template("Math.ceil({d})")]
+        [Template("Bridge.Decimal.ceil({d}).toFloat()")]
 		public static decimal Ceiling(decimal d)
         {
 			return 0;
 		}
 
-        [Template("{d1} / {d2}")]
+        [Template("Bridge.Decimal.div({d1}, {d2}).toFloat()")]
 		public static decimal Divide(decimal d1, decimal d2)
         {
 			return 0;
 		}
 
-		[Template("Math.floor({d})")]
+        [Template("Bridge.Decimal.floor({d}).toFloat()")]
 		public static decimal Floor(decimal d)
         {
 			return 0;
 		}
 
-		[Template("{d1} % {d2}")]
+        [Template("Bridge.Decimal.mod({d1}, {d2}).toFloat()")]
 		public static decimal Remainder(decimal d1, decimal d2)
         {
 			return 0;
 		}
 
-        [Template("{d1} * {d2}")]
+        [Template("Bridge.Decimal.mul({d1}, {d2}).toFloat()")]
 		public static decimal Multiply(decimal d1, decimal d2)
         {
 			return 0;
 		}
 
-        [Template("-{d}")]
+        [Template("Bridge.Decimal.neg({d}).toFloat()")]
 		public static decimal Negate(decimal d)
         {
 			return 0;
 		}
 
-        [Template("Math.round({d})")]
+        [Template("Bridge.Decimal.round({d}).toFloat()")]
 		public static decimal Round(decimal d)
         {
 			return 0;
 		}
 
-        [Template("{d1} - {d2}")]
+        [Template("Bridge.Decimal.round({d}, {decimals}, 0).toFloat()")]
+        public static extern decimal Round(decimal d, int decimals);
+
+        [Template("Bridge.Decimal.sub({d1}, {d2}).toFloat()")]
 		public static decimal Subtract(decimal d1, decimal d2)
         {
 			return 0;
 		}
 
-
-        [Template("Bridge.compare({this}, {other})")]
+        [Template("Bridge.Decimal.compare({this}, {other})")]
 		public int CompareTo(decimal other)
         {
 			return 0;
 		}
 
-        [Template("Bridge.compare({this}, {obj})")]
+        [Template("Bridge.Decimal.compare({this}, {obj})")]
         public int CompareTo(object obj)
         {
             return 0;
         }
 
-        [Template("Bridge.equalsT({this}, {other})")]
+        [Template("Bridge.Decimal.eq({this}, {other})")]
 		public bool Equals(decimal other)
         {
 			return false;
 		}
+
+        [Template("Bridge.Decimal.trunc({d}).toFloat()")]
+        public static extern decimal Truncate(decimal d);
+
+        [Template("Bridge.Decimal.compare({d1}, {d2})")]
+        public static extern int Compare(decimal d1, decimal d2);
+
+        [Template("Bridge.Decimal.eq({d1}, {d2})")]
+        public static extern bool Equals(decimal d1, decimal d2);
 	}
 }

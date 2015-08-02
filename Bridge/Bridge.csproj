@@ -179,6 +179,7 @@
     <None Include="AdditionalCompilerOptions.txt" />
     <Content Include="Resources\Array.js" />
     <Content Include="Resources\Collections\Comparer.js" />
+    <Content Include="Resources\Decimal.js" />
     <Content Include="Resources\Finally.js" />
     <Content Include="Resources\End.js" />
     <Content Include="Resources\Init.js" />

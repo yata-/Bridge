@@ -25,6 +25,9 @@ namespace System
             return 0;
         }
 
+        [Template("Bridge.Decimal.abs({l}).toFloat()")]
+        public static extern decimal Abs(decimal l);
+
         public static int Max(params int[] values)
         {
             return 0;
@@ -34,6 +37,9 @@ namespace System
         {
             return 0;
         }
+
+        [Template("Bridge.Decimal.max({a}, {b}).toFloat()")]
+        public static extern decimal Max(decimal a, decimal b);
 
         public static int Min(params int[] values)
         {
@@ -45,6 +51,9 @@ namespace System
             return 0;
         }
 
+        [Template("Bridge.Decimal.min({a}, {b}).toFloat()")]
+        public static extern decimal Min(decimal a, decimal b);
+
         public static double Random()
         {
             return 0;
@@ -55,17 +64,33 @@ namespace System
             return 0;
         }
 
-        public static double Ceil(double x)
-        {
-            return 0;
-        }
+        [Template("Bridge.Decimal.ceil({d}).toFloat()")]
+        public static extern decimal Ceiling(decimal d);
+
+        [Name("ceil")]
+        public static extern double Ceiling(double d);
 
         public static double Floor(double x)
         {
             return 0;
         }
 
+        [Template("Bridge.Decimal.floor({d}).toFloat()")]
+		public static extern decimal Floor(decimal d);
+
         public static double Round(double x)
+        {
+            return 0;
+        }
+
+        [Template("Bridge.Decimal.round({d}).toFloat()")]
+        public static decimal Round(decimal x)
+        {
+            return 0;
+        }
+
+        [Template("Bridge.Decimal.round({d}, {digits}).toFloat()")]
+        public static decimal Round(decimal x, int digits)
         {
             return 0;
         }

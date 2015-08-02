@@ -11,6 +11,7 @@
   <file name="Interfaces.js" />
   <file name="Globalization.js" />
   <file name="Integer.js" />
+  <file name="Decimal.js" />
   <file name="Date.js" />
   <file name="TimeSpan.js" />
   <file name="Text/StringBuilder.js" />
@@ -40,6 +41,7 @@
     <include name="Interfaces.js" />
     <include name="Globalization.js" />
     <include name="Integer.js" />
+    <include name="Decimal.js" />
     <include name="Date.js" />
     <include name="TimeSpan.js" />
     <include name="Text/StringBuilder.js" />
