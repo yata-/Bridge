@@ -285,7 +285,7 @@
 
         this.exp = exp;
         if (exp < -1) {
-            throw new Decimal.OverflowError();
+            throw new Bridge.OverflowException();
         }
 
         this.sig = Array();
@@ -317,14 +317,6 @@
     Decimal.decimal_digits = Decimal.decimal_digits_per_word * Decimal.n;
     Decimal.one_word = Decimal.pow(10.0, Decimal.decimal_digits_per_word);
     Decimal.two_words = Decimal.pow(10.0, (Decimal.decimal_digits_per_word * 2));
-
-    Decimal.OverflowError = function() {
-        this.message = "OverflowError";
-    };
-
-    Decimal.ZeroDivisionError = function() {
-        this.message = "ZeroDivisionError";
-    };
 
     Decimal.initConstants = function() {
         var tmp = "\\d{";
@@ -390,7 +382,7 @@
         obj.is_minus = is_minus;
 
         if (obj.exp < -1) {
-            throw new Decimal.OverflowError();
+            throw new Bridge.OverflowException();
         }
            
         var word_diff = Math.floor((exp - obj.exp + Decimal.decimal_digits) /
@@ -694,7 +686,7 @@
                                new Decimal(another));
 
         if (another_decimal.isZero()) {
-            throw new ZeroDivisionError();
+            throw new Bridge.DivideByZeroException();
         }
 
         var added = Decimal.n * 2;
