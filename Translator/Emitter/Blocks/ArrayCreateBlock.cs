@@ -44,7 +44,7 @@ namespace Bridge.Translator
             if (at.Dimensions > 1)
             {
                 this.Write("Bridge.Array.create(");
-                var defaultInitializer = new PrimitiveExpression(Inspector.GetDefaultFieldValue(arrayCreateExpression.Type, this.Emitter.Resolver), "?");
+                var defaultInitializer = new PrimitiveExpression(Inspector.GetDefaultFieldValue(at.ElementType), "?");
 
                 if (defaultInitializer == null)
                 {

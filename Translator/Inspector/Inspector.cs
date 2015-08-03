@@ -129,6 +129,38 @@ namespace Bridge.Translator
             return null;
         }
 
+        public static object GetDefaultFieldValue(IType type)
+        {
+            if (type.IsKnownType(KnownTypeCode.Int16) ||
+                type.IsKnownType(KnownTypeCode.Int32) ||
+                type.IsKnownType(KnownTypeCode.Int64) ||
+                type.IsKnownType(KnownTypeCode.UInt16) ||
+                type.IsKnownType(KnownTypeCode.UInt32) ||
+                type.IsKnownType(KnownTypeCode.UInt64) ||
+                type.IsKnownType(KnownTypeCode.Byte) ||
+                type.IsKnownType(KnownTypeCode.Double) ||
+                type.IsKnownType(KnownTypeCode.Decimal) ||
+                type.IsKnownType(KnownTypeCode.SByte) ||
+                type.IsKnownType(KnownTypeCode.Single) ||
+                type.IsKnownType(KnownTypeCode.Enum))
+            {
+                return 0;
+            }
+
+            if (type.IsKnownType(KnownTypeCode.Boolean))
+            {
+                return false;
+            }
+
+
+            if (type.Kind == TypeKind.Struct)
+            {
+                return type;
+            }
+
+            return null;
+        }
+
         protected virtual bool IsValidStaticInitializer(Expression expr)
         {
             if (expr.IsNull || expr is PrimitiveExpression)
