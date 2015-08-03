@@ -2330,7 +2330,7 @@ Bridge.define("Bridge.CultureInfo", {
     statics: {
         constructor: function() {
             this.cultures = this.cultures || {};
-            this.invariantCulture = Bridge.merge(new Bridge.CultureInfo("en-US"), {
+            this.invariantCulture = Bridge.merge(new Bridge.CultureInfo("en-US", true), {
                 englishName: "English (United States)",
                 nativeName: "English (United States)",
                 numberFormat: Bridge.NumberFormatInfo.invariantInfo,
@@ -2370,7 +2370,7 @@ Bridge.define("Bridge.CultureInfo", {
         }
     },
 
-    constructor: function (name) {
+    constructor: function (name, create) {
         this.name = name;
         if (!Bridge.CultureInfo.cultures) {
             Bridge.CultureInfo.cultures = {};
@@ -2384,6 +2384,9 @@ Bridge.define("Bridge.CultureInfo", {
                 "dateTimeFormat"
             ]);
         } else {
+            if (!create) {
+                throw new Bridge.CultureNotFoundException("name", name);
+            }
             Bridge.CultureInfo.cultures[name] = this;
         }
     },
@@ -2400,12 +2403,7 @@ Bridge.define("Bridge.CultureInfo", {
     },
 
     clone: function () {
-        return Bridge.copy(new Bridge.CultureInfo(this.name), this, [
-            "englishName",
-            "nativeName",
-            "numberFormat",
-            "dateTimeFormat"
-        ]);
+        return new Bridge.CultureInfo(this.name);
     }
 });
 // @source Integer.js
