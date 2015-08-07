@@ -193,7 +193,7 @@ namespace System
             return null;
         }
 
-        [Template("(Bridge.Array.clone({this})")]
+        [Template("(Bridge.Array.clone({this}))")]
         public object Clone()
         {
             return null;
