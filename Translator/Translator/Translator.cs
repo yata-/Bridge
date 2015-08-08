@@ -153,7 +153,7 @@ namespace Bridge.Translator
                     filePath = Path.Combine(Path.GetDirectoryName(filePath), fileName);
                     file = new System.IO.FileInfo(filePath);
                     file.Directory.Create();
-                    File.WriteAllText(file.FullName, minifier.MinifyJavaScript(code), System.Text.UTF8Encoding.UTF8);
+                    File.WriteAllText(file.FullName, minifier.MinifyJavaScript(code, new CodeSettings {  TermSemicolons = true }), System.Text.UTF8Encoding.UTF8);
                 }
             }
 
@@ -230,7 +230,7 @@ namespace Bridge.Translator
                             var code = reader.ReadToEnd();
                             var minifier = new Minifier();
 
-                            File.WriteAllText(Path.Combine(outputPath, "bridge.min.js"), minifier.MinifyJavaScript(code), System.Text.UTF8Encoding.UTF8);
+                            File.WriteAllText(Path.Combine(outputPath, "bridge.min.js"), minifier.MinifyJavaScript(code, new CodeSettings { TermSemicolons = true }), System.Text.UTF8Encoding.UTF8);
                         }
                     }
                 }
