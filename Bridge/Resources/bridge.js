@@ -9457,6 +9457,7 @@ Bridge.define('Bridge.PropertyChangedEventArgs', {
     Bridge.Linq = {};
     Bridge.Linq.Enumerable = Enumerable;
 })(this);
+// @source End.js
 
 // module export
 if (typeof define === "function" && define.amd) { // AMD
