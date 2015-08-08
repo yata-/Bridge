@@ -12,6 +12,9 @@ namespace Bridge.Translator.TypeScript
 {
     public class EmitBlock : AbstractEmitterBlock
     {
+        // This ensures a constant line separator throughout the application
+        private const char newLine = Bridge.Contract.XmlToJSConstants.DEFAULT_LINE_SEPARATOR;
+
         private Dictionary<string, StringBuilder> Outputs
         {
             get;
@@ -54,8 +57,7 @@ namespace Bridge.Translator.TypeScript
 
                 output = new StringBuilder();
                 this.Emitter.Output = output;
-                output.AppendLine(@"/// <reference path=""./bridge.d.ts"" />");
-                output.AppendLine();
+                output.Append(@"/// <reference path=""./bridge.d.ts"" />" + newLine + newLine);
                 output.Append("declare module " + ns + " ");
                 this.BeginBlock();
                 this.Outputs.Add(fileName, output);
@@ -77,7 +79,7 @@ namespace Bridge.Translator.TypeScript
 
                     if (d != last)
                     {
-                        depSb.AppendLine();
+                        depSb.Append(newLine);
                     }
                 }
 
@@ -97,7 +99,7 @@ namespace Bridge.Translator.TypeScript
 
                 foreach (var item in this.Outputs)
                 {
-                    e.NonModuletOutput.AppendLine(item.Value.ToString());
+                    e.NonModuletOutput.Append(item.Value.ToString() + newLine);
                 }
 
                 this.Emitter.Outputs.Add(fileName, e);
