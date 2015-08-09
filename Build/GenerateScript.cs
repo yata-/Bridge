@@ -105,14 +105,14 @@ namespace Bridge.Build
                     ? Path.Combine(Path.GetDirectoryName(this.ProjectPath), translator.AssemblyInfo.Output)
                     : this.OutputPath;
 
-                translator.SaveTo(outputPath, fileName);
-
                 if (!this.NoCore)
                 {
                     Bridge.Translator.Translator.ExtractCore(translator, outputPath);
                 }
 
                 translator.Plugins.AfterOutput(translator, outputPath, this.NoCore);
+
+                translator.SaveTo(outputPath, fileName);
             }
             catch (EmitterException e)
             {

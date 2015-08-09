@@ -162,9 +162,6 @@ namespace Bridge.Builder
                     outputPath = Path.Combine(!string.IsNullOrWhiteSpace(projectLocation) ? Path.GetDirectoryName(projectLocation) : folder, !string.IsNullOrWhiteSpace(translator.AssemblyInfo.Output) ? translator.AssemblyInfo.Output : path);
                 }
 
-                Console.WriteLine("Saving to " + outputPath);
-                translator.SaveTo(outputPath, Path.GetFileName(outputLocation));
-
                 if (extractCore)
                 {
                     Console.WriteLine("Extracting core scripts...");
@@ -172,6 +169,9 @@ namespace Bridge.Builder
                 }
 
                 translator.Plugins.AfterOutput(translator, outputPath, !extractCore);
+
+                Console.WriteLine("Saving to " + outputPath);
+                translator.SaveTo(outputPath, Path.GetFileName(outputLocation));
 
                 Console.WriteLine("Done.");
             }
