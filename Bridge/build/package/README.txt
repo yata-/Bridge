@@ -1,7 +1,7 @@
 ﻿Project          : Bridge
-Release Date     : 2015-07-14
-Current Version  : 1.7
-Previous Version : 1.6
+Release Date     : 2015-08-10
+Current Version  : 1.8
+Previous Version : 1.7
 
 Use Bridge.NET to build platform independent applications for mobile, web 
 and desktop. Run on iOS, Windows, Mac, Linux and billions of other devices 
@@ -26,11 +26,11 @@ IV.  CREDITS
 
 
 --------------------------------------------------------------------------
-I. SYSTEM REQUIREMENTS
+I. PROJECT REQUIREMENTS
 --------------------------------------------------------------------------
 
 1. Visual Studio 2012, 2013, and 2015
-3. .NET Framework 4.0, 4.5, 4.5.1, 4.5.3 and higher
+2. .NET Framework 4.0 or higher
 
 
 --------------------------------------------------------------------------
