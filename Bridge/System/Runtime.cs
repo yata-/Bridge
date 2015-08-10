@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -312,6 +313,17 @@ namespace System.Runtime.Versioning
 
 namespace System.Runtime.CompilerServices
 {
+    /// <summary>
+    /// If a constructor for a value type takes an instance of this type as a parameter, any attribute applied to that constructor will instead be applied to the default (undeclarable) constructor.
+    /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Ignore]
+    public sealed class DummyTypeUsedToAddAttributeToDefaultValueTypeConstructor
+    {
+        private DummyTypeUsedToAddAttributeToDefaultValueTypeConstructor() { }
+    }
+
+
     [Ignore]
     [AttributeUsage(AttributeTargets.Property)]
     public class IndexerNameAttribute : Attribute
@@ -818,5 +830,38 @@ namespace System.Diagnostics
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Constructor | AttributeTargets.Method)]
     public sealed class DebuggerStepThroughAttribute : Attribute
     {
+    }
+}
+
+namespace System.ComponentModel
+{
+    /// <summary>
+    /// This attribute marks a field, property, event or method as
+    /// "browsable", i.e. present in the type descriptor associated with
+    /// the type.
+    /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Event | AttributeTargets.Method, AllowMultiple = false)]
+    [Ignore]
+    public sealed class BrowsableAttribute : Attribute
+    {
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Enum | AttributeTargets.Constructor | AttributeTargets.Method | AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Event | AttributeTargets.Delegate | AttributeTargets.Interface)]
+    [Ignore]
+    public sealed class EditorBrowsableAttribute : Attribute
+    {
+        public extern EditorBrowsableAttribute(EditorBrowsableState state);
+        public extern EditorBrowsableState State { get; }
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Ignore]
+    public enum EditorBrowsableState
+    {
+        Always = 0,
+        Never = 1,
+        Advanced = 2
     }
 }

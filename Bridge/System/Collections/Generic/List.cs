@@ -4,7 +4,7 @@ namespace System.Collections.Generic
 {
     [Ignore]
     [Namespace("Bridge")]
-    public class List<T> : IList<T>, IBridgeClass
+    public class List<T> : IList<T>, IBridgeClass, IAccessorsIndexer
     {
         public List()
         {
@@ -20,12 +20,10 @@ namespace System.Collections.Generic
 
         public T this[int index]
         {
-            [Template("get({0})")]
             get
             {
                 return default(T);
             }
-            [Template("set({0})")]
             set
             {
             }

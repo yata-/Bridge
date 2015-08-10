@@ -1,410 +1,277 @@
+using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Bridge;
 
 namespace System
 {
-	[Ignore]
-	[Name("Number")]
-    [Constructor("Number")]
+    /// <summary>
+    /// The decimal data type.
+    /// </summary>
+    [Ignore]
+    [Name("Bridge.Decimal")]
+    [Constructor("Bridge.Decimal")]
     public struct Decimal : IComparable, IComparable<Decimal>, IEquatable<Decimal>, IFormattable
     {
-        [Name("MAX_VALUE")]
-        public const decimal MaxValue = 0;
-        [Name("MIN_VALUE")]
-        public const decimal MinValue = 0;
+        public const decimal Zero = 0;
+        public const decimal One = 1;
+        public const decimal MinusOne = -1;
 
-		[InlineConst]
-		public const decimal Zero = 0;
-        [InlineConst]
-		public const decimal One = 1;
-        [InlineConst]
-		public const decimal MinusOne = -1;
+        [Template("Bridge.Decimal(0)")]
+        private extern Decimal(DummyTypeUsedToAddAttributeToDefaultValueTypeConstructor _);
 
-		[Template("{d}")]
-		public Decimal(double d)
-        {
-		}
+        [Template("Bridge.Decimal({d})")]
+        public extern Decimal(double d);
 
-        [Template("{i}")]
-		public Decimal(int i)
-        {
-		}
+        [Template("Bridge.Decimal({i})")]
+        public extern Decimal(int i);
 
-        [Template("{i}")]
-		public Decimal(uint i)
-        {
-		}
+        [Template("Bridge.Decimal({i})")]
+        public extern Decimal(uint i);
 
-        [Template("{f}")]
-		public Decimal(float f)
-        {
-		}
+        [Template("Bridge.Decimal({f})")]
+        public extern Decimal(float f);
 
-        [Template("{n}")]
-		public Decimal(long n)
-        {
-		}
+        [Template("Bridge.Decimal({n})")]
+        public extern Decimal(long n);
 
-        [Template("{n}")]
-		public Decimal(ulong n)
-        {
-		}
+        [Template("Bridge.Decimal({n})")]
+        public extern Decimal(ulong n);
 
-		public Decimal(int lo, int mid, int hi, bool isNegative, byte scale)
-        {
-		}
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public extern Decimal(int lo, int mid, int hi, bool isNegative, byte scale);
 
-		[Template("Bridge.Int.format({this}, {format})")]
-		public string Format(string format)
-        {
-			return null;
-		}
+        [Template("Bridge.Int.format({this}.toFloat(), {format})")]
+        public extern string Format(string format);
 
-        [Template("Bridge.Int.format({this}, {format}, {provider})")]
-        public string Format(string format, IFormatProvider provider)
+        [Template("Bridge.Int.format({this}.toFloat(), {format}, {provider})")]
+        public extern string Format(string format, IFormatProvider provider);
+
+        [Template("Bridge.Int.format({this}.toFloat(), {format})")]
+        public string ToString(string format)
         {
             return null;
         }
 
-		public string ToString(int radix)
-        {
-			return null;
-		}
-
-        [Template("Bridge.Int.format({this}, {format})")]
-		public string ToString(string format)
-        {
-			return null;
-		}
-
-        [Template("Bridge.Int.format({this}, {format}, {provider})")]
+        [Template("Bridge.Int.format({this}.toFloat(), {format}, {provider})")]
         public string ToString(string format, IFormatProvider provider)
         {
             return null;
         }
 
-        [Template("Bridge.Int.parseFloat({s})")]
-        public static decimal Parse(string s)
+        [Template("Bridge.Int.format({this}.toFloat(), 'G', {provider})")]
+        public string ToString(IFormatProvider provider)
         {
-            return 0;
+            return null;
         }
 
-        [Template("Bridge.Int.parseFloat({s}, {provider})")]
-        public static decimal Parse(string s, IFormatProvider provider)
-        {
-            return 0;
-        }
+        [Template("Bridge.Decimal({value})")]
+        public static extern implicit operator decimal(byte value);
 
-        [Template("Bridge.Int.tryParseFloat({s}, null, {result})")]
-        public static bool TryParse(string s, out decimal result)
-        {
-            result = 0;
-            return false;
-        }
+        [Template("Bridge.Decimal({value})")]
+        public static extern implicit operator decimal(sbyte value);
 
-        [Template("Bridge.Int.tryParseFloat({s}, {provider}, {result})")]
-        public static bool TryParse(string s, IFormatProvider provider, out decimal result)
-        {
-            result = 0;
-            return false;
-        }
+        [Template("Bridge.Decimal({value})")]
+        public static extern implicit operator decimal(short value);
 
-		public string ToExponential()
-        {
-			return null;
-		}
+        [Template("Bridge.Decimal({value})")]
+        public static extern implicit operator decimal(ushort value);
 
-		public string ToExponential(int fractionDigits)
-        {
-			return null;
-		}
+        [Template("Bridge.Decimal({value})")]
+        public static extern implicit operator decimal(char value);
 
-		public string ToFixed()
-        {
-			return null;
-		}
+        [Template("Bridge.Decimal({value})")]
+        public static extern implicit operator decimal(int value);
 
-		public string ToFixed(int fractionDigits)
-        {
-			return null;
-		}
+        [Template("Bridge.Decimal({value})")]
+        public static extern implicit operator decimal(uint value);
 
-		public string ToPrecision()
-        {
-			return null;
-		}
+        [Template("Bridge.Decimal({value})")]
+        public static extern implicit operator decimal(long value);
 
-		public string ToPrecision(int precision)
-        {
-			return null;
-		}
+        [Template("Bridge.Decimal({value})")]
+        public static extern implicit operator decimal(ulong value);
 
-		public static implicit operator decimal(byte value)
-        {
-			return 0;
-		}
+        [Template("Bridge.Decimal({value})")]
+        public static extern explicit operator decimal(float value);
 
-		public static implicit operator decimal(sbyte value)
-        {
-			return 0;
-		}
+        [Template("Bridge.Decimal({value})")]
+        public static extern explicit operator decimal(double value);
 
-		public static implicit operator decimal(short value)
-        {
-			return 0;
-		}
+        [Template("Bridge.Decimal.toInt({value})")]
+        public static extern explicit operator byte(decimal value);
 
-		public static implicit operator decimal(ushort value)
-        {
-			return 0;
-		}
+        [Template("Bridge.Decimal.toInt({value})")]
+        public static extern explicit operator sbyte(decimal value);
 
-		public static implicit operator decimal(char value)
-        {
-			return 0;
-		}
+        [Template("Bridge.Decimal.toInt({value})")]
+        public static extern explicit operator char(decimal value);
 
-		public static implicit operator decimal(int value)
-        {
-			return 0;
-		}
+        [Template("Bridge.Decimal.toInt({value})")]
+        public static extern explicit operator short(decimal value);
 
-		public static implicit operator decimal(uint value)
-        {
-			return 0;
-		}
+        [Template("Bridge.Decimal.toInt({value})")]
+        public static extern explicit operator ushort(decimal value);
 
-		public static implicit operator decimal(long value)
-        {
-			return 0;
-		}
+        [Template("Bridge.Decimal.toInt({value})")]
+        public static extern explicit operator int(decimal value);
 
-		public static implicit operator decimal(ulong value)
-        {
-			return 0;
-		}
+        [Template("Bridge.Decimal.toInt({value})")]
+        public static extern explicit operator uint(decimal value);
 
-		public static explicit operator decimal(float value)
-        {
-			return 0;
-		}
+        [Template("Bridge.Decimal.toInt({value})")]
+        public static extern explicit operator long(decimal value);
 
-		public static explicit operator decimal(double value)
-        {
-			return 0;
-		}
+        [Template("Bridge.Decimal.toInt({value})")]
+        public static extern explicit operator ulong(decimal value);
 
-		public static explicit operator byte(decimal value)
-        {
-		  return 0;
-		}
+        [Template("{value}.toFloat()")]
+        public static extern explicit operator float(decimal value);
 
-		public static explicit operator sbyte(decimal value)
-        {
-		  return 0;
-		}
+        [Template("{value}.toFloat()")]
+        public static extern explicit operator double(decimal value);
 
-		public static explicit operator char(decimal value)
-        {
-			return '\0';
-		}
+        [Template("{d}.clone()")]
+        public static extern decimal operator +(decimal d);
 
-		public static explicit operator short(decimal value)
-        {
-			return 0;
-		}
+        [Template("{d}.neg()")]
+        public static extern decimal operator -(decimal d);
 
-		public static explicit operator ushort(decimal value)
-        {
-			return 0;
-		}
+        [Template("{d1}.add({d2})")]
+        public static extern decimal operator +(decimal d1, decimal d2);
 
-		public static explicit operator int(decimal value)
-        {
-			return 0;
-		}
+        [Template("{d1}.sub({d2})")]
+        public static extern decimal operator -(decimal d1, decimal d2);
 
-		public static explicit operator uint(decimal value)
-        {
-			return 0;
-		}
+        [Template("{d}.add(1)")]
+        public static extern decimal operator ++(decimal d);
 
-		public static explicit operator long(decimal value)
-        {
-			return 0;
-		}
+        [Template("{d}.sub(1)")]
+        public static extern decimal operator --(decimal d);
 
-		public static explicit operator ulong(decimal value)
-        {
-			return 0;
-		}
+        [Template("{d1}.mul({d2})")]
+        public static extern decimal operator *(decimal d1, decimal d2);
 
-		public static explicit operator float(decimal value)
-        {
-			return 0;
-		}
+        [Template("{d1}.div({d2})")]
+        public static extern decimal operator /(decimal d1, decimal d2);
 
-		public static explicit operator double(decimal value)
-        {
-			return 0;
-		}
+        [Template("{d1}.mod({d2})")]
+        public static extern decimal operator %(decimal d1, decimal d2);
 
-		public static decimal operator +(decimal d)
-        {
-			return d;
-		}
+        [Template("{d1}.equalsT({d2})")]
+        public static extern bool operator ==(decimal d1, decimal d2);
 
-		public static decimal operator -(decimal d)
-        {
-			return d;
-		}
+        [Template("{d1}.ne({d2})")]
+        public static extern bool operator !=(decimal d1, decimal d2);
 
-		public static decimal operator +(decimal d1, decimal d2)
-        {
-			return d1;
-		}
+        [Template("{d1}.gt({d2})")]
+        public static extern bool operator >(decimal d1, decimal d2);
 
-		public static decimal operator -(decimal d1, decimal d2)
-        {
-			return d1;
-		}
+        [Template("{d1}.gte({d2})")]
+        public static extern bool operator >=(decimal d1, decimal d2);
 
-		public static decimal operator ++(decimal d)
-        {
-			return d;
-		}
+        [Template("{d1}.lt({d2})")]
+        public static extern bool operator <(decimal d1, decimal d2);
 
-		public static decimal operator --(decimal d)
-        {
-			return d;
-		}
+        [Template("{d1}.lte({d2})")]
+        public static extern bool operator <=(decimal d1, decimal d2);
 
-		public static decimal operator *(decimal d1, decimal d2)
-        {
-			return d1;
-		}
+        [Template("{d1}.add({d2})")]
+        public static extern decimal Add(decimal d1, decimal d2);
 
-		public static decimal operator /(decimal d1, decimal d2)
-        {
-			return d1;
-		}
+        [Template("{d}.ceil()")]
+        public static extern decimal Ceiling(decimal d);
 
-		public static decimal operator %(decimal d1, decimal d2)
-        {
-			return d1;
-		}
+        [Template("{d1}.div({d2})")]
+        public static extern decimal Divide(decimal d1, decimal d2);
 
-		public static bool operator ==(decimal d1, decimal d2)
-        {
-			return false;
-		}
+        [Template("{d}.floor()")]
+        public static extern decimal Floor(decimal d);
 
-		public static bool operator !=(decimal d1, decimal d2)
-        {
-			return false;
-		}
+        [Template("{d1}.mod({d2})")]
+        public static extern decimal Remainder(decimal d1, decimal d2);
 
-		public static bool operator >(decimal d1, decimal d2)
-        {
-			return false;
-		}
+        [Template("{d1}.mul({d2})")]
+        public static extern decimal Multiply(decimal d1, decimal d2);
 
-		public static bool operator >=(decimal d1, decimal d2)
-        {
-			return false;
-		}
+        [Template("Bridge.Decimal(0).sub({d})")]
+        public static extern decimal Negate(decimal d);
 
-		public static bool operator <(decimal d1, decimal d2)
-        {
-			return false;
-		}
+        [Template("Bridge.Decimal({s})")]
+        public static extern decimal Parse(string s);
 
-		public static bool operator <=(decimal d1, decimal d2)
-        {
-			return false;
-		}
+        [Template("Bridge.Decimal({s}, {provider})")]
+        public static extern decimal Parse(string s, IFormatProvider provider);
 
-		[Template("Bridge.Decimal.add({d1}, {d2}).toFloat()")]
-		public static decimal Add(decimal d1, decimal d2)
-        {
-			return 0;
-		}
+        [Template("Bridge.Decimal.tryParse({s}, null, {result})")]
+        public static extern bool TryParse(string s, out decimal result);
 
-        [Template("Bridge.Decimal.ceil({d}).toFloat()")]
-		public static decimal Ceiling(decimal d)
-        {
-			return 0;
-		}
+        [Template("Bridge.Decimal.tryParse({s}, {provider}, {result})")]
+        public static extern bool TryParse(string s, IFormatProvider provider, out decimal result);
 
-        [Template("Bridge.Decimal.div({d1}, {d2}).toFloat()")]
-		public static decimal Divide(decimal d1, decimal d2)
-        {
-			return 0;
-		}
+        [Template("Bridge.Decimal.round({d}, 0, 0)")]
+        public static extern decimal Round(decimal d);
 
-        [Template("Bridge.Decimal.floor({d}).toFloat()")]
-		public static decimal Floor(decimal d)
-        {
-			return 0;
-		}
-
-        [Template("Bridge.Decimal.mod({d1}, {d2}).toFloat()")]
-		public static decimal Remainder(decimal d1, decimal d2)
-        {
-			return 0;
-		}
-
-        [Template("Bridge.Decimal.mul({d1}, {d2}).toFloat()")]
-		public static decimal Multiply(decimal d1, decimal d2)
-        {
-			return 0;
-		}
-
-        [Template("Bridge.Decimal.neg({d}).toFloat()")]
-		public static decimal Negate(decimal d)
-        {
-			return 0;
-		}
-
-        [Template("Bridge.Decimal.round({d}).toFloat()")]
-		public static decimal Round(decimal d)
-        {
-			return 0;
-		}
-
-        [Template("Bridge.Decimal.round({d}, {decimals}, 0).toFloat()")]
+        [Template("Bridge.Decimal.round({d}, {decimals}, 0)")]
         public static extern decimal Round(decimal d, int decimals);
 
-        [Template("Bridge.Decimal.sub({d1}, {d2}).toFloat()")]
-		public static decimal Subtract(decimal d1, decimal d2)
-        {
-			return 0;
-		}
+        [Template("Bridge.Decimal.round({d}, 0, {mode})")]
+        public static extern decimal Round(decimal d, MidpointRounding mode);
 
-        [Template("Bridge.Decimal.compare({this}, {other})")]
-		public int CompareTo(decimal other)
-        {
-			return 0;
-		}
+        [Template("Bridge.Decimal.round({d}, {decimals}, {mode})")]
+        public static extern decimal Round(decimal d, int decimals, MidpointRounding mode);
 
-        [Template("Bridge.Decimal.compare({this}, {obj})")]
-        public int CompareTo(object obj)
-        {
-            return 0;
-        }
-
-        [Template("Bridge.Decimal.eq({this}, {other})")]
-		public bool Equals(decimal other)
-        {
-			return false;
-		}
-
-        [Template("Bridge.Decimal.trunc({d}).toFloat()")]
+        [Template("{d}.trunc()")]
         public static extern decimal Truncate(decimal d);
 
-        [Template("Bridge.Decimal.compare({d1}, {d2})")]
+        [Template("{d1}.sub({d2})")]
+        public static extern decimal Subtract(decimal d1, decimal d2);
+
+        [Template("{this}.compareTo({other})")]
+        public extern int CompareTo(decimal other);
+
+        [Template("{d1}.compareTo({d2})")]
         public static extern int Compare(decimal d1, decimal d2);
 
-        [Template("Bridge.Decimal.eq({d1}, {d2})")]
+        public extern bool Equals(decimal other);
+
+        [Template("{d1}.equals({d2})")]
         public static extern bool Equals(decimal d1, decimal d2);
-	}
+
+        [Template("Bridge.Decimal.toInt({value})")]
+        public static extern byte ToByte(decimal value);
+
+        [Template("Bridge.Decimal.toInt({value})")]
+        public static extern sbyte ToSByte(decimal value);
+
+        [Template("Bridge.Decimal.toInt({value})")]
+        public static extern char ToChar(decimal value);
+
+        [Template("Bridge.Decimal.toInt({value})")]
+        public static extern short ToInt16(decimal value);
+
+        [Template("Bridge.Decimal.toInt({value})")]
+        public static extern ushort ToUInt16(decimal value);
+
+        [Template("Bridge.Decimal.toInt({value})")]
+        public static extern int ToInt32(decimal value);
+
+        [Template("Bridge.Decimal.toInt({value})")]
+        public static extern uint ToUInt32(decimal value);
+
+        [Template("Bridge.Decimal.toInt({value})")]
+        public static extern long ToInt64(decimal value);
+
+        [Template("Bridge.Decimal.toInt({value})")]
+        public static extern ulong ToUInt64(decimal value);
+
+        [Template("{value}.toFloat()")]
+        public static extern float ToSingle(decimal value);
+
+        [Template("{value}.toFloat()")]
+        public static extern double ToDouble(decimal value);
+
+        [Template("{this}.compareTo({obj})")]
+        public extern int CompareTo(object obj);
+    }
 }

@@ -87,11 +87,13 @@
     <Compile Include="System\EventArgs.cs" />
     <Compile Include="System\EventHandler.cs" />
     <Compile Include="System\IDisposable.cs" />
+    <Compile Include="System\IAccessorsIndexer.cs" />
     <Compile Include="System\Linq\Enumerable.cs" />
     <Compile Include="System\Linq\Grouping.cs" />
     <Compile Include="System\Linq\EnumerableInstance.cs" />
     <Compile Include="System\Linq\Lookup.cs" />
     <Compile Include="System\Linq\OrderedEnumerable.cs" />
+    <Compile Include="System\MidpointRounding.cs" />
     <Compile Include="System\StringComparison.cs" />
     <Compile Include="This.cs" />
     <Compile Include="System\OverflowException.cs" />

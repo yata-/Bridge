@@ -33,10 +33,18 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
             return this.items[index];
         },
 
+        getItem: function (index) {
+            return this.get(index);
+        },
+
         set: function (index, value) {
             this.checkReadOnly();
             this.checkIndex(index);
             this.items[index] = value;
+        },
+
+        setItem: function (index, value) {
+            this.set(index, value);
         },
 
         add: function (value) {

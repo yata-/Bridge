@@ -25,7 +25,7 @@ namespace System
             return 0;
         }
 
-        [Template("Bridge.Decimal.abs({l}).toFloat()")]
+        [Template("{l}.abs()")]
         public static extern decimal Abs(decimal l);
 
         public static int Max(params int[] values)
@@ -38,7 +38,7 @@ namespace System
             return 0;
         }
 
-        [Template("Bridge.Decimal.max({a}, {b}).toFloat()")]
+        [Template("Bridge.Decimal.max({a}, {b})")]
         public static extern decimal Max(decimal a, decimal b);
 
         public static int Min(params int[] values)
@@ -51,7 +51,7 @@ namespace System
             return 0;
         }
 
-        [Template("Bridge.Decimal.min({a}, {b}).toFloat()")]
+        [Template("Bridge.Decimal.min({a}, {b})")]
         public static extern decimal Min(decimal a, decimal b);
 
         public static double Random()
@@ -64,7 +64,7 @@ namespace System
             return 0;
         }
 
-        [Template("Bridge.Decimal.ceil({d}).toFloat()")]
+        [Template("{d}ceil()")]
         public static extern decimal Ceiling(decimal d);
 
         [Name("ceil")]
@@ -75,7 +75,7 @@ namespace System
             return 0;
         }
 
-        [Template("Bridge.Decimal.floor({d}).toFloat()")]
+        [Template("{d}.floor()")]
 		public static extern decimal Floor(decimal d);
 
         public static double Round(double x)
@@ -83,17 +83,23 @@ namespace System
             return 0;
         }
 
-        [Template("Bridge.Decimal.round({x}).toFloat()")]
+        [Template("Bridge.Decimal.round({x}, 0, 0)")]
         public static decimal Round(decimal x)
         {
             return 0;
         }
 
-        [Template("Bridge.Decimal.round({x}, {digits}).toFloat()")]
+        [Template("Bridge.Decimal.round({x}, {digits}, 0)")]
         public static decimal Round(decimal x, int digits)
         {
             return 0;
         }
+
+        [Template("Bridge.Decimal.round({d}, 0, {method})")]
+        public static extern decimal Round(decimal d, MidpointRounding method);
+
+        [Template("Bridge.Decimal.round({d}, {digits}, {method})")]
+        public static extern decimal Round(decimal d, int digits, MidpointRounding method);
 
         public static double Exp(double x)
         {
@@ -145,10 +151,13 @@ namespace System
             return 0;
         }
 
-        [Template("Bridge.Int.trunc({d}).toFloat()")]
+        [Template("Bridge.Int.trunc({d})")]
         public static extern double Truncate(double d);
 
-        [Template("Bridge.Decimal.trunc({d}).toFloat()")]
+        [Template("{d}.trunc()")]
         public static extern decimal Truncate(decimal d);
+
+        [Template("{value}.sign()")]
+        public static extern int Sign(decimal value);
     }
 }

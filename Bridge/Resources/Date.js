@@ -250,7 +250,7 @@
 
         parseExact: function (str, format, provider, utc, silent) {
             if (!format) {
-                format = ["G", "g", "F", "f", "D", "d", "R", "r", "s", "U", "u", "O", "o", "Y", "y", "M", "m", "T", "t"];
+                format = ["G", "g", "F", "f", "D", "d", "R", "r", "s", "S", "U", "u", "O", "o", "Y", "y", "M", "m", "T", "t"];
             }
 
             if (Bridge.isArray(format)) {

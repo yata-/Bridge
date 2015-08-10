@@ -37,8 +37,13 @@ namespace Bridge.Html5
         {
         }
 
-        [Template("console.log({value})")]
+        [Template("console.log({value}.toString())")]
         public static void WriteLine(decimal value)
+        {
+        }
+
+        [Template("console.log({value} && {value}.toString())")]
+        public static void WriteLine(decimal? value)
         {
         }
 
