@@ -149,6 +149,41 @@ namespace Bridge.Translator
                     }
                 }
 
+                var binaryOpExpr = expression.Parent as BinaryOperatorExpression;
+                if (binaryOpExpr != null)
+                {
+                    var idx = binaryOpExpr.Left == expression ? 0 : 1;
+                    var binaryOpRr = block.Emitter.Resolver.ResolveNode(binaryOpExpr, block.Emitter) as OperatorResolveResult;
+
+                    if (Helpers.IsDecimalType(binaryOpRr.Operands[idx].Type, block.Emitter.Resolver) && !Helpers.IsDecimalType(rr.Type, block.Emitter.Resolver))
+                    {
+                        block.Write("Bridge.Decimal");
+                        if (NullableType.IsNullable(binaryOpRr.Operands[idx].Type))
+                        {
+                            block.Write(".lift");
+                        }
+                        block.WriteOpenParentheses();
+                        return true;
+                    }
+                }
+
+                var assignmentExpr = expression.Parent as AssignmentExpression;
+                if (assignmentExpr != null)
+                {
+                    var assigmentRr = block.Emitter.Resolver.ResolveNode(assignmentExpr, block.Emitter) as OperatorResolveResult;
+
+                    if (Helpers.IsDecimalType(assigmentRr.Operands[1].Type, block.Emitter.Resolver) && !Helpers.IsDecimalType(rr.Type, block.Emitter.Resolver))
+                    {
+                        block.Write("Bridge.Decimal");
+                        if (NullableType.IsNullable(assigmentRr.Operands[1].Type))
+                        {
+                            block.Write(".lift");
+                        }
+                        block.WriteOpenParentheses();
+                        return true;
+                    }
+                }
+
                 var arrayInit = expression.Parent as ArrayInitializerExpression;
                 if (arrayInit != null)
                 {
