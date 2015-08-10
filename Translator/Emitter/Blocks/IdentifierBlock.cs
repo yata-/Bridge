@@ -196,24 +196,28 @@ namespace Bridge.Translator
                     }
                 }
 
-                if (isStatic)
+                if (!(resolveResult is TypeResolveResult))
                 {
-                    if (memberResult != null)
+                    if (isStatic)
                     {
-                        this.Write(BridgeTypes.ToJsName(memberResult.Member.DeclaringType, this.Emitter));
+                        if (memberResult != null)
+                        {
+                            this.Write(BridgeTypes.ToJsName(memberResult.Member.DeclaringType, this.Emitter));
+                        }
+                        else
+                        {
+                            this.Write(BridgeTypes.ToJsName(member.DeclaringType, this.Emitter));
+                        }
+
                     }
                     else
                     {
-                        this.Write(BridgeTypes.ToJsName(member.DeclaringType, this.Emitter));
+                        this.WriteThis();
                     }
 
+                    this.WriteDot();
                 }
-                else
-                {
-                    this.WriteThis();
-                }
-
-                this.WriteDot();
+                
 
                 if (method != null)
                 {
@@ -250,7 +254,7 @@ namespace Bridge.Translator
                         this.Write(appendAdditionalCode);
                     }
                 }
-                else
+                else if(memberResult != null)
                 {
                     bool isConst = this.Emitter.IsMemberConst(memberResult.Member);
 
@@ -289,6 +293,10 @@ namespace Bridge.Translator
                             this.Write(OverloadsCollection.Create(this.Emitter, memberResult.Member).GetOverloadName());
                         }
                     }
+                }
+                else if (resolveResult is TypeResolveResult)
+                {
+                    this.Write(BridgeTypes.ToJsName(((TypeResolveResult)resolveResult).Type, this.Emitter));
                 }
 
                 Helpers.CheckValueTypeClone(resolveResult, identifierExpression, this);
