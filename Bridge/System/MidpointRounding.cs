@@ -9,7 +9,9 @@ namespace System
     [Enum(Emit.Value)]
 	public enum MidpointRounding
 	{
-		ToEven = 0,
-		AwayFromZero = 1,
+        AwayFromZero = 0,
+		ToEven = 1,
+        Floor = 2,
+        Ceil = 3
 	}
 }
