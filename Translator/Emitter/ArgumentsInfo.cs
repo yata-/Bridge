@@ -149,42 +149,34 @@ namespace Bridge.Translator
             this.BuildTypedArguments(objectCreateExpression.Type);
         }
 
-        public ArgumentsInfo(IEmitter emitter, BinaryOperatorExpression binaryOperatorExpression, OperatorResolveResult operatorResolveResult)
+        public ArgumentsInfo(IEmitter emitter, AssignmentExpression assignmentExpression, OperatorResolveResult operatorResolveResult, IMethod method)
+        {
+            this.Emitter = emitter;
+            this.Expression = assignmentExpression;
+            this.OperatorResolveResult = operatorResolveResult;
+
+            this.BuildOperatorArgumentsList(new Expression[] { assignmentExpression.Left, assignmentExpression.Right }, operatorResolveResult.UserDefinedOperatorMethod ?? method);
+            this.BuildOperatorTypedArguments();
+        }
+
+        public ArgumentsInfo(IEmitter emitter, BinaryOperatorExpression binaryOperatorExpression, OperatorResolveResult operatorResolveResult, IMethod method)
         {
             this.Emitter = emitter;
             this.Expression = binaryOperatorExpression;
             this.OperatorResolveResult = operatorResolveResult;
 
-            if (operatorResolveResult.UserDefinedOperatorMethod != null)
-            {
-                this.BuildOperatorArgumentsList(new Expression[] { binaryOperatorExpression.Left, binaryOperatorExpression.Right });
-                this.BuildOperatorTypedArguments();
-            }
-            else
-            {
-                this.ArgumentsExpressions = new Expression[] { binaryOperatorExpression.Left, binaryOperatorExpression.Right };
-                this.ArgumentsNames = new string[] { "left", "right" };
-                this.CreateNamedExpressions(this.ArgumentsNames, this.ArgumentsExpressions);
-            }
+            this.BuildOperatorArgumentsList(new Expression[] { binaryOperatorExpression.Left, binaryOperatorExpression.Right }, operatorResolveResult.UserDefinedOperatorMethod ?? method);
+            this.BuildOperatorTypedArguments();
         }
 
-        public ArgumentsInfo(IEmitter emitter, UnaryOperatorExpression unaryOperatorExpression, OperatorResolveResult operatorResolveResult)
+        public ArgumentsInfo(IEmitter emitter, UnaryOperatorExpression unaryOperatorExpression, OperatorResolveResult operatorResolveResult, IMethod method)
         {
             this.Emitter = emitter;
             this.Expression = unaryOperatorExpression;
             this.OperatorResolveResult = operatorResolveResult;
 
-            if (operatorResolveResult.UserDefinedOperatorMethod != null)
-            {
-                this.BuildOperatorArgumentsList(new Expression[] { unaryOperatorExpression.Expression });
-                this.BuildOperatorTypedArguments();
-            }
-            else
-            {
-                this.ArgumentsExpressions = new Expression[] { unaryOperatorExpression.Expression };
-                this.ArgumentsNames = new string[] { "arg" };
-                this.CreateNamedExpressions(this.ArgumentsNames, this.ArgumentsExpressions);
-            }
+            this.BuildOperatorArgumentsList(new Expression[] { unaryOperatorExpression.Expression }, operatorResolveResult.UserDefinedOperatorMethod ?? method);
+            this.BuildOperatorTypedArguments();
         }
 
         private void BuildTypedArguments(AstType type)
@@ -393,14 +385,11 @@ namespace Bridge.Translator
             }
         }
 
-        private void BuildOperatorArgumentsList(IList<Expression> arguments)
+        private void BuildOperatorArgumentsList(IList<Expression> arguments, IMethod method)
         {
-            var resolveResult = this.OperatorResolveResult;
-
-            if (resolveResult != null)
+            if (method != null)
             {
-                var parameters = resolveResult.UserDefinedOperatorMethod.Parameters;
-                var resolvedMethod = resolveResult.UserDefinedOperatorMethod as IMethod;
+                var parameters = method.Parameters;
 
                 Expression[] result = new Expression[parameters.Count];
                 string[] names = new string[result.Length];

@@ -516,5 +516,118 @@ namespace Bridge.Contract
 
             return constantValue;
         }
+
+        public static string GetBinaryOperatorMethodName(BinaryOperatorType operatorType)
+        {
+            switch (operatorType)
+            {
+                case BinaryOperatorType.Any:
+                    return null;
+                case BinaryOperatorType.BitwiseAnd:
+                    return "op_BitwiseAnd";
+                case BinaryOperatorType.BitwiseOr:
+                    return "op_BitwiseOr";
+                case BinaryOperatorType.ConditionalAnd:
+                    return "op_LogicalAnd";
+                case BinaryOperatorType.ConditionalOr:
+                    return "op_LogicalOr";
+                case BinaryOperatorType.ExclusiveOr:
+                    return "op_ExclusiveOr";
+                case BinaryOperatorType.GreaterThan:
+                    return "op_GreaterThan";
+                case BinaryOperatorType.GreaterThanOrEqual:
+                    return "op_GreaterThanOrEqual";
+                case BinaryOperatorType.Equality:
+                    return "op_Equality";
+                case BinaryOperatorType.InEquality:
+                    return "op_Inequality";
+                case BinaryOperatorType.LessThan:
+                    return "op_LessThan";
+                case BinaryOperatorType.LessThanOrEqual:
+                    return "op_LessThanOrEqual";
+                case BinaryOperatorType.Add:
+                    return "op_Addition";
+                case BinaryOperatorType.Subtract:
+                    return "op_Subtraction";
+                case BinaryOperatorType.Multiply:
+                    return "op_Multiply";
+                case BinaryOperatorType.Divide:
+                    return "op_Division";
+                case BinaryOperatorType.Modulus:
+                    return "op_Modulus";
+                case BinaryOperatorType.ShiftLeft:
+                    return "LeftShift";
+                case BinaryOperatorType.ShiftRight:
+                    return "RightShift";
+                case BinaryOperatorType.NullCoalescing:
+                    return null;
+                default:
+                    throw new ArgumentOutOfRangeException("operatorType", operatorType, null);
+            }
+        }
+
+        public static string GetUnaryOperatorMethodName(UnaryOperatorType operatorType)
+        {
+            switch (operatorType)
+            {
+                case UnaryOperatorType.Any:
+                    return null;
+                case UnaryOperatorType.Not:
+                    return "op_LogicalNot";
+                case UnaryOperatorType.BitNot:
+                    return "op_OnesComplement";
+                case UnaryOperatorType.Minus:
+                    return "op_UnaryNegation";
+                case UnaryOperatorType.Plus:
+                    return "op_UnaryPlus";
+                case UnaryOperatorType.Increment:
+                case UnaryOperatorType.PostIncrement:
+                    return "op_Increment";
+                case UnaryOperatorType.Decrement:
+                case UnaryOperatorType.PostDecrement:
+                    return "op_Decrement";
+                case UnaryOperatorType.Dereference:
+                    return null;
+                case UnaryOperatorType.AddressOf:
+                    return null;
+                case UnaryOperatorType.Await:
+                    return null;
+                default:
+                    throw new ArgumentOutOfRangeException("operatorType", operatorType, null);
+            }
+        }
+
+        public static BinaryOperatorType TypeOfAssignment(AssignmentOperatorType operatorType)
+        {
+            switch (operatorType)
+            {
+                case AssignmentOperatorType.Assign:
+                    return BinaryOperatorType.Any;
+                case AssignmentOperatorType.Add:
+                    return BinaryOperatorType.Add;
+                case AssignmentOperatorType.Subtract:
+                     return BinaryOperatorType.Subtract;
+                case AssignmentOperatorType.Multiply:
+                     return BinaryOperatorType.Multiply;
+                case AssignmentOperatorType.Divide:
+                     return BinaryOperatorType.Divide;
+                case AssignmentOperatorType.Modulus:
+                     return BinaryOperatorType.Modulus;
+                case AssignmentOperatorType.ShiftLeft:
+                     return BinaryOperatorType.ShiftLeft;
+                case AssignmentOperatorType.ShiftRight:
+                     return BinaryOperatorType.ShiftRight;
+                case AssignmentOperatorType.BitwiseAnd:
+                     return BinaryOperatorType.BitwiseAnd;
+                case AssignmentOperatorType.BitwiseOr:
+                     return BinaryOperatorType.BitwiseOr;
+                case AssignmentOperatorType.ExclusiveOr:
+                     return BinaryOperatorType.ExclusiveOr;
+                case AssignmentOperatorType.Any:
+                     return BinaryOperatorType.Any;
+                default:
+                    throw new ArgumentOutOfRangeException("operatorType", operatorType, null);
+            }
+        }
     }
 }

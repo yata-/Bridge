@@ -76,10 +76,10 @@ namespace Bridge.Translator
             {
                 s = this.Emitter.ToJavaScript((int)(char)value);
             }
-            /*else if (value is decimal)
+            else if (value is decimal)
             {
-                s = "Bridge.Decimal(" + this.Emitter.ToJavaScript(value) + ")";
-            }*/
+                s = "Bridge.Decimal('" + this.Emitter.ToJavaScript(value) + "')";
+            }
             else
             {
                 s = this.Emitter.ToJavaScript(value);

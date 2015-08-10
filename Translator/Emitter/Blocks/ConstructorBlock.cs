@@ -298,12 +298,19 @@ namespace Bridge.Translator
                 {
                     if (ctor.Body.HasChildren)
                     {
+                        var beginPosition = this.Emitter.Output.Length;
                         if (requireNewLine)
                         {
                             this.WriteNewLine();
                         }
+                        
                         this.ConvertParamsToReferences(ctor.Parameters);
                         ctor.Body.AcceptChildren(this.Emitter);
+
+                        if (!this.Emitter.IsAsync)
+                        {
+                            this.EmitTempVars(beginPosition);
+                        }
                     }
                 }
                 else

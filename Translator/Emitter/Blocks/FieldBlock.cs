@@ -1,6 +1,7 @@
 ﻿using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using System.Collections.Generic;
+using ICSharpCode.NRefactory.TypeSystem;
 
 namespace Bridge.Translator
 {
@@ -110,6 +111,17 @@ namespace Bridge.Translator
             {
                 var primitiveExpr = member.Initializer as PrimitiveExpression;
                 var isNull = member.Initializer.IsNull || member.Initializer is NullReferenceExpression;
+                var isNullable = false;
+
+                if (primitiveExpr != null && primitiveExpr.Value is AstType)
+                {
+                    var itype = this.Emitter.Resolver.ResolveNode((AstType) primitiveExpr.Value, this.Emitter);
+
+                    if (NullableType.IsNullable(itype.Type))
+                    {
+                        isNullable = true;
+                    }
+                }
 
                 if (!isNull && (primitiveExpr == null || (primitiveExpr.Value is AstType)))
                 {
@@ -125,7 +137,14 @@ namespace Bridge.Translator
                     }
                     else
                     {
-                        value = "new " + BridgeTypes.ToJsName((AstType)primitiveExpr.Value, this.Emitter) + "()";
+                        if (isNullable)
+                        {
+                            value = "null";
+                        }
+                        else
+                        {
+                            value = "new " + BridgeTypes.ToJsName((AstType)primitiveExpr.Value, this.Emitter) + "()";
+                        }
                     }
 
                     this.Injectors.Add(string.Format(format, member.GetName(this.Emitter), value));
@@ -139,7 +158,14 @@ namespace Bridge.Translator
 
                 if (primitiveExpr != null && primitiveExpr.Value is AstType)
                 {
-                    this.Write("new " + BridgeTypes.ToJsName((AstType)primitiveExpr.Value, this.Emitter) + "()");
+                    if (isNullable)
+                    {
+                        this.Write("null");
+                    }
+                    else
+                    {
+                        this.Write("new " + BridgeTypes.ToJsName((AstType)primitiveExpr.Value, this.Emitter) + "()");    
+                    }
                 }
                 else
                 {

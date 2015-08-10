@@ -6,6 +6,7 @@ using System.Linq;
 using System.Collections.Generic;
 using ICSharpCode.NRefactory.Semantics;
 using System;
+using System.Linq.Expressions;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
 
 namespace Bridge.Contract

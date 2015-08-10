@@ -1,6 +1,9 @@
-﻿using Bridge.Contract;
+﻿using System;
+using System.Linq;
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
+using ICSharpCode.NRefactory.TypeSystem;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
 
 namespace Bridge.Translator
@@ -42,7 +45,11 @@ namespace Bridge.Translator
 
             var leftResolverResult = this.Emitter.Resolver.ResolveNode(assignmentExpression.Left, this.Emitter);
             var rightResolverResult = this.Emitter.Resolver.ResolveNode(assignmentExpression.Right, this.Emitter);
-            var orr = this.Emitter.Resolver.ResolveNode(assignmentExpression, this.Emitter) as OperatorResolveResult;
+            var rr = this.Emitter.Resolver.ResolveNode(assignmentExpression, this.Emitter);
+            var orr = rr as OperatorResolveResult;
+            bool isDecimal = Helpers.IsDecimalType(rr.Type, this.Emitter.Resolver);
+            var expectedType = this.Emitter.Resolver.Resolver.GetExpectedType(assignmentExpression);
+            bool isDecimalExpected = Helpers.IsDecimalType(expectedType, this.Emitter.Resolver);
 
             if (assignmentExpression.Operator == AssignmentOperatorType.Divide &&
                 (
@@ -113,24 +120,10 @@ namespace Bridge.Translator
                 }
             }
 
-
-
             bool nullable = orr != null && orr.IsLiftedOperator;
-            bool isDecimal = false;
             string root = Bridge.Translator.Emitter.ROOT + ".Nullable.";
 
-            if (assignmentExpression.Operator != AssignmentOperatorType.Assign &&
-                (Helpers.IsDecimalType(leftResolverResult.Type, this.Emitter.Resolver) ||
-                 Helpers.IsDecimalType(rightResolverResult.Type, this.Emitter.Resolver) ||
-                 Helpers.IsDecimalType(this.Emitter.Resolver.Resolver.GetExpectedType(assignmentExpression.Left), this.Emitter.Resolver) ||
-                 Helpers.IsDecimalType(this.Emitter.Resolver.Resolver.GetExpectedType(assignmentExpression.Right), this.Emitter.Resolver)))
-            {
-                isDecimal = true;
-                nullable = false;
-                root = Bridge.Translator.Emitter.ROOT + ".Decimal.";
-            }
-
-            bool special = nullable || isDecimal;
+            bool special = nullable;
 
             this.Emitter.IsAssignment = true;
             this.Emitter.AssignmentType = assignmentExpression.Operator;
@@ -141,7 +134,7 @@ namespace Bridge.Translator
 
             if (!thisAssignment)
             {
-                if (special)
+                if (special || (isDecimal && isDecimalExpected))
                 {
                     this.Emitter.AssignmentType = AssignmentOperatorType.Assign;
                 }
@@ -159,6 +152,23 @@ namespace Bridge.Translator
             if (this.Emitter.Writers.Count == 0 && !delegateAssigment && !thisAssignment)
             {
                 this.WriteSpace();
+            }
+
+            if (isDecimal && isDecimalExpected)
+            {
+                if (this.Emitter.Writers.Count == initCount)
+                {
+                    this.Write(" = ");
+                }
+
+                this.HandleDecimal(rr);
+
+                if (this.Emitter.Writers.Count > initCount)
+                {
+                    this.PopWriter();
+                }
+
+                return;
             }
 
             if (!delegateAssigment)
@@ -295,6 +305,104 @@ namespace Bridge.Translator
             if (delegateAssigment)
             {
                 this.WriteCloseParentheses();
+            }
+        }
+
+        private void HandleDecimal(ResolveResult resolveOperator)
+        {
+            if (this.AssignmentExpression.Operator == AssignmentOperatorType.Assign)
+            {
+                new ExpressionListBlock(this.Emitter,
+                        new Expression[] { this.AssignmentExpression.Right }, null).Emit();
+                return;
+            }
+
+
+            var orr = resolveOperator as OperatorResolveResult;
+            var method = orr != null ? orr.UserDefinedOperatorMethod : null;
+            var assigmentType = Helpers.TypeOfAssignment(this.AssignmentExpression.Operator);
+            if (orr != null && method == null)
+            {
+                var name = Helpers.GetBinaryOperatorMethodName(assigmentType);
+                var type = NullableType.IsNullable(orr.Type) ? NullableType.GetUnderlyingType(orr.Type) : orr.Type;
+                method = type.GetMethods(m => m.Name == name, GetMemberOptions.IgnoreInheritedMembers).FirstOrDefault();
+            }
+
+            if (method != null)
+            {
+                var inline = this.Emitter.GetInline(method);
+
+                if (orr.IsLiftedOperator)
+                {
+                    this.Write(Bridge.Translator.Emitter.ROOT + ".Nullable.");
+                    string action = "lift2";
+                    string op_name = null;
+
+                    switch (assigmentType)
+                    {
+                        case BinaryOperatorType.GreaterThan:
+                            op_name = "gt";
+                            break;
+                        case BinaryOperatorType.GreaterThanOrEqual:
+                            op_name = "gte";
+                            break;
+                        case BinaryOperatorType.Equality:
+                            op_name = "equals";
+                            break;
+                        case BinaryOperatorType.InEquality:
+                            op_name = "ne";
+                            break;
+                        case BinaryOperatorType.LessThan:
+                            op_name = "lt";
+                            break;
+                        case BinaryOperatorType.LessThanOrEqual:
+                            op_name = "lte";
+                            break;
+                        case BinaryOperatorType.Add:
+                            op_name = "add";
+                            break;
+                        case BinaryOperatorType.Subtract:
+                            op_name = "sub";
+                            break;
+                        case BinaryOperatorType.Multiply:
+                            op_name = "mul";
+                            break;
+                        case BinaryOperatorType.Divide:
+                            op_name = "div";
+                            break;
+                        case BinaryOperatorType.Modulus:
+                            op_name = "mod";
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+
+                    this.Write(action);
+                    this.WriteOpenParentheses();
+                    this.WriteScript(op_name);
+                    this.WriteComma();
+                    new ExpressionListBlock(this.Emitter,
+                        new Expression[] { this.AssignmentExpression.Left, this.AssignmentExpression.Right }, null).Emit();
+                    this.WriteCloseParentheses();
+                }
+                else if (!string.IsNullOrWhiteSpace(inline))
+                {
+                    new InlineArgumentsBlock(this.Emitter,
+                        new ArgumentsInfo(this.Emitter, this.AssignmentExpression, orr, method), inline).Emit();
+                }
+                else if (!this.Emitter.Validator.IsIgnoreType(method.DeclaringTypeDefinition))
+                {
+                    this.Write(BridgeTypes.ToJsName(method.DeclaringType, this.Emitter));
+                    this.WriteDot();
+
+                    this.Write(OverloadsCollection.Create(this.Emitter, method).GetOverloadName());
+
+                    this.WriteOpenParentheses();
+
+                    new ExpressionListBlock(this.Emitter,
+                        new Expression[] { this.AssignmentExpression.Left, this.AssignmentExpression.Right }, null).Emit();
+                    this.WriteCloseParentheses();
+                }
             }
         }
     }

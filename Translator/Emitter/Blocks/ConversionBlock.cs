@@ -2,6 +2,8 @@
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using System.Collections.Generic;
+using System.Linq;
+using ICSharpCode.NRefactory.TypeSystem;
 
 namespace Bridge.Translator
 {
@@ -90,6 +92,115 @@ namespace Bridge.Translator
             {
                 var rr = block.Emitter.Resolver.ResolveNode(expression, block.Emitter);
                 conversion = block.Emitter.Resolver.Resolver.GetConversion(expression);
+                var expectedType = block.Emitter.Resolver.Resolver.GetExpectedType(expression);
+
+                var invocationExpression = expression.Parent as InvocationExpression;
+                if (invocationExpression != null && invocationExpression.Arguments.Any(a => a == expression))
+                {
+                    var index = invocationExpression.Arguments.ToList().IndexOf(expression);
+                    var methodResolveResult = block.Emitter.Resolver.ResolveNode(invocationExpression, block.Emitter) as MemberResolveResult;
+
+                    var m = methodResolveResult.Member as IMethod;
+                    var arg = m.Parameters[index < m.Parameters.Count ? index : (m.Parameters.Count - 1)];
+
+                    if (Helpers.IsDecimalType(arg.Type, block.Emitter.Resolver) && !Helpers.IsDecimalType(rr.Type, block.Emitter.Resolver))
+                    {
+                        block.Write("Bridge.Decimal");
+                        if (NullableType.IsNullable(arg.Type))
+                        {
+                            block.Write(".lift");
+                        }
+                        block.WriteOpenParentheses();
+                        return true;
+                    }
+                }
+
+                var namedArgExpression = expression.Parent as NamedArgumentExpression;
+                if (namedArgExpression != null)
+                {
+                    var namedArgResolveResult = block.Emitter.Resolver.ResolveNode(namedArgExpression, block.Emitter) as NamedArgumentResolveResult;
+
+                    if (Helpers.IsDecimalType(namedArgResolveResult.Type, block.Emitter.Resolver) && !Helpers.IsDecimalType(rr.Type, block.Emitter.Resolver))
+                    {
+                        block.Write("Bridge.Decimal");
+                        if (NullableType.IsNullable(namedArgResolveResult.Type))
+                        {
+                            block.Write(".lift");
+                        }
+                        block.WriteOpenParentheses();
+                        return true;
+                    }
+                }
+
+                var namedExpression = expression.Parent as NamedExpression;
+                if (namedExpression != null)
+                {
+                    var namedResolveResult = block.Emitter.Resolver.ResolveNode(namedExpression, block.Emitter);
+
+                    if (Helpers.IsDecimalType(namedResolveResult.Type, block.Emitter.Resolver) && !Helpers.IsDecimalType(rr.Type, block.Emitter.Resolver))
+                    {
+                        block.Write("Bridge.Decimal");
+                        if (NullableType.IsNullable(namedResolveResult.Type))
+                        {
+                            block.Write(".lift");
+                        }
+                        block.WriteOpenParentheses();
+                        return true;
+                    }
+                }
+
+                var arrayInit = expression.Parent as ArrayInitializerExpression;
+                if (arrayInit != null)
+                {
+                    while (arrayInit.Parent is ArrayInitializerExpression)
+                    {
+                        arrayInit = (ArrayInitializerExpression)arrayInit.Parent;
+                    }
+
+                    IType elementType = null;
+                    var arrayCreate = arrayInit.Parent as ArrayCreateExpression;
+                    if (arrayCreate != null)
+                    {
+                        var rrArrayType = block.Emitter.Resolver.ResolveNode(arrayCreate.Type, block.Emitter);
+                        elementType = rrArrayType.Type;
+                    }
+                    else
+                    {
+                        var rrElemenet = block.Emitter.Resolver.ResolveNode(arrayInit.Parent, block.Emitter);
+                        var pt = rrElemenet.Type as ParameterizedType;
+                        if (pt != null && pt.TypeArguments.Count > 0)
+                        {
+                            elementType = pt.TypeArguments.First();
+                        }
+                    }
+
+                    if (Helpers.IsDecimalType(elementType, block.Emitter.Resolver) && !Helpers.IsDecimalType(rr.Type, block.Emitter.Resolver))
+                    {
+                        block.Write("Bridge.Decimal");
+                        if (NullableType.IsNullable(elementType))
+                        {
+                            block.Write(".lift");
+                        }
+                        block.WriteOpenParentheses();
+                        return true;
+                    }
+                }
+
+                if (Helpers.IsDecimalType(expectedType, block.Emitter.Resolver) && !Helpers.IsDecimalType(rr.Type, block.Emitter.Resolver))
+                {
+                    block.Write("Bridge.Decimal");
+                    if (NullableType.IsNullable(expectedType))
+                    {
+                        block.Write(".lift");
+                    }
+                    block.WriteOpenParentheses();
+                    return true;
+                }
+
+                if (Helpers.IsDecimalType(expectedType, block.Emitter.Resolver))
+                {
+                    return false;
+                }
 
                 if (conversion == null)
                 {
@@ -106,8 +217,8 @@ namespace Bridge.Translator
                 {
                     return false;
                 }
-
-                if (conversion.IsLifted && !isNumLifted)
+                bool isLifted = conversion.IsLifted && !isNumLifted && !(block is CastBlock);
+                if (isLifted)
                 {
                     block.Write("Bridge.Nullable.lift(");
                 }
@@ -121,7 +232,7 @@ namespace Bridge.Translator
                     if (conversion.IsExplicit && !string.IsNullOrWhiteSpace(inline))
                     {
                         // Still returns true if Nullable.lift( was written.
-                        return conversion.IsLifted;
+                        return isLifted;
                     }
 
                     if (!string.IsNullOrWhiteSpace(inline))
@@ -139,14 +250,14 @@ namespace Bridge.Translator
                             var unaryExpression = (UnaryOperatorExpression)expression;
                             var resolveOperator = block.Emitter.Resolver.ResolveNode(unaryExpression, block.Emitter);
                             OperatorResolveResult orr = resolveOperator as OperatorResolveResult;
-                            new InlineArgumentsBlock(block.Emitter, new ArgumentsInfo(block.Emitter, unaryExpression, orr), inline).Emit();
+                            new InlineArgumentsBlock(block.Emitter, new ArgumentsInfo(block.Emitter, unaryExpression, orr, method), inline).Emit();
                         }
                         else if (expression is BinaryOperatorExpression)
                         {
                             var binaryExpression = (BinaryOperatorExpression)expression;
                             var resolveOperator = block.Emitter.Resolver.ResolveNode(binaryExpression, block.Emitter);
                             OperatorResolveResult orr = resolveOperator as OperatorResolveResult;
-                            new InlineArgumentsBlock(block.Emitter, new ArgumentsInfo(block.Emitter, binaryExpression, orr), inline).Emit();
+                            new InlineArgumentsBlock(block.Emitter, new ArgumentsInfo(block.Emitter, binaryExpression, orr, method), inline).Emit();
                         }
                         else
                         {
@@ -156,14 +267,14 @@ namespace Bridge.Translator
                         block.DisableEmitConversionExpression = true;
 
                         // Still returns true if Nullable.lift( was written.
-                        return conversion.IsLifted;
+                        return isLifted;
                     }
                     else
                     {
                         if (method.DeclaringTypeDefinition != null && block.Emitter.Validator.IsIgnoreType(method.DeclaringTypeDefinition))
                         {
                             // Still returns true if Nullable.lift( was written.
-                            return conversion.IsLifted;
+                            return isLifted;
                         }
 
                         block.Write(BridgeTypes.ToJsName(method.DeclaringType, block.Emitter));
@@ -172,7 +283,7 @@ namespace Bridge.Translator
                         block.Write(OverloadsCollection.Create(block.Emitter, method).GetOverloadName());
                     }
 
-                    if (conversion.IsLifted)
+                    if (isLifted)
                     {
                         block.WriteComma();
                     }
@@ -184,7 +295,7 @@ namespace Bridge.Translator
                     return true;
                 }
                 // Still returns true if Nullable.lift( was written.
-                return conversion.IsLifted;
+                return isLifted;
             }
             catch
             {

@@ -97,6 +97,8 @@ namespace Bridge.Translator
 
                 switch (primitiveType.KnownTypeCode)
                 {
+                    case KnownTypeCode.Decimal:
+                        return 0m;
                     case KnownTypeCode.Int16:
                     case KnownTypeCode.Int32:
                     case KnownTypeCode.Int64:
@@ -105,7 +107,6 @@ namespace Bridge.Translator
                     case KnownTypeCode.UInt64:
                     case KnownTypeCode.Byte:
                     case KnownTypeCode.Double:
-                    case KnownTypeCode.Decimal:
                     case KnownTypeCode.SByte:
                     case KnownTypeCode.Single:
                         return 0;

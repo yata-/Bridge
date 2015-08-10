@@ -136,27 +136,49 @@ namespace Bridge.Translator
                 return;
             }
 
+            var expressionrr = this.Emitter.Resolver.ResolveNode(expression, this.Emitter);
+            var typerr = this.Emitter.Resolver.ResolveNode(type, this.Emitter);
+
+            if (expressionrr.Type.Equals(typerr.Type))
+            {
+                if (method == Bridge.Translator.Emitter.IS)
+                {
+                    this.WriteScript(true);
+                }
+                else
+                {
+                    expression.AcceptVisitor(this.Emitter);
+                }
+
+                return;
+            }
+
             bool isInlineCast;
             string castCode = this.GetCastCode(expression, type, out isInlineCast);
+            bool isNullable = NullableType.IsNullable(expressionrr.Type);
 
             if (isInlineCast)
             {
-                this.EmitInlineCast(expression, type, castCode);
+                this.EmitInlineCast(expression, type, castCode, isNullable);
                 return;
             }
 
             if (method == Bridge.Translator.Emitter.CAST)
             {
-                var resolveResult = this.Emitter.Resolver.ResolveNode(type, this.Emitter);
-
-                if (Helpers.IsIntegerType(resolveResult.Type, this.Emitter.Resolver))
+                if (Helpers.IsIntegerType(typerr.Type, this.Emitter.Resolver))
                 {
-                    var fromType = this.Emitter.Resolver.ResolveNode(this.CastExpression.Expression, this.Emitter).Type;
-
-                    if (fromType != null && Helpers.IsFloatType(fromType, this.Emitter.Resolver))
+                    if (expressionrr.Type != null && Helpers.IsFloatType(expressionrr.Type, this.Emitter.Resolver))
                     {
                         this.Write("Bridge.Int.trunc(");
+                        if (isNullable)
+                        {
+                            this.Write("Bridge.Nullable.getValue(");
+                        }
                         expression.AcceptVisitor(this.Emitter);
+                        if (isNullable)
+                        {
+                            this.WriteCloseParentheses();
+                        }
                         this.Write(")");
 
                         return;
@@ -192,7 +214,15 @@ namespace Bridge.Translator
             this.WriteDot();
             this.Write(method);
             this.WriteOpenParentheses();
+            if (isNullable)
+            {
+                this.Write("Bridge.Nullable.getValue(");
+            }
             expression.AcceptVisitor(this.Emitter);
+            if (isNullable)
+            {
+                this.WriteCloseParentheses();
+            }
 
             if (!hasValue)
             {
@@ -248,28 +278,17 @@ namespace Bridge.Translator
             string inline = null;
             isInline = false;
 
-            var method = exprResolveResult.Type.GetMethods().FirstOrDefault(m =>
+            var method = this.GetCastMethod(exprResolveResult.Type, resolveResult.Type, out inline);
+
+            if (method == null && (NullableType.IsNullable(exprResolveResult.Type) || NullableType.IsNullable(resolveResult.Type)))
             {
-                if (m.IsOperator && m.Name == "op_Explicit" &&
-                    m.Parameters.Count == 1 &&
-                    m.ReturnType.ReflectionName == resolveResult.Type.ReflectionName &&
-                    m.Parameters[0].Type.ReflectionName == exprResolveResult.Type.ReflectionName
-                    )
-                {
-                    string tmpInline = this.Emitter.GetInline(m);
-
-                    if (!string.IsNullOrWhiteSpace(tmpInline))
-                    {
-                        inline = tmpInline;
-                        return true;
-                    }
-                }
-
-                return false;
-            });
+                method = this.GetCastMethod(NullableType.IsNullable(exprResolveResult.Type) ? NullableType.GetUnderlyingType(exprResolveResult.Type) : exprResolveResult.Type,
+                                            NullableType.IsNullable(resolveResult.Type) ? NullableType.GetUnderlyingType(resolveResult.Type) : resolveResult.Type, out inline);
+            }
 
             if (inline != null)
             {
+                this.InlineMethod = method;
                 isInline = true;
                 return inline;
             }
@@ -306,16 +325,82 @@ namespace Bridge.Translator
             return null;
         }
 
-        protected virtual void EmitInlineCast(Expression expression, AstType astType, string castCode)
+        private IMethod GetCastMethod(IType fromType, IType toType, out string template)
+        {
+            string inline = null;
+            var method = fromType.GetMethods().FirstOrDefault(m =>
+            {
+                if (m.IsOperator && (m.Name == "op_Explicit" || m.Name == "op_Implicit") &&
+                    m.Parameters.Count == 1 &&
+                    m.ReturnType.ReflectionName == toType.ReflectionName &&
+                    m.Parameters[0].Type.ReflectionName == fromType.ReflectionName
+                    )
+                {
+                    string tmpInline = this.Emitter.GetInline(m);
+
+                    if (!string.IsNullOrWhiteSpace(tmpInline))
+                    {
+                        inline = tmpInline;
+                        return true;
+                    }
+                }
+
+                return false;
+            });
+
+            if (method == null)
+            {
+                method = toType.GetMethods().FirstOrDefault(m =>
+                {
+                    if (m.IsOperator && (m.Name == "op_Explicit" || m.Name == "op_Implicit") &&
+                        m.Parameters.Count == 1 &&
+                        m.ReturnType.ReflectionName == toType.ReflectionName &&
+                        m.Parameters[0].Type.ReflectionName == fromType.ReflectionName
+                        )
+                    {
+                        string tmpInline = this.Emitter.GetInline(m);
+
+                        if (!string.IsNullOrWhiteSpace(tmpInline))
+                        {
+                            inline = tmpInline;
+                            return true;
+                        }
+                    }
+
+                    return false;
+                });
+            }
+
+            template = inline;
+            return method;
+        }
+
+        protected virtual void EmitInlineCast(Expression expression, AstType astType, string castCode, bool isNullable)
         {
             this.Write("");
+            var name = "{" + this.InlineMethod.Parameters[0].Name + "}";
 
-            if (castCode.Contains("{this}"))
+            if (!castCode.Contains(name))
+            {
+                name = "{this}";
+            }
+
+            if (castCode.Contains(name))
             {
                 var oldBuilder = this.Emitter.Output;
                 this.Emitter.Output = new StringBuilder();
+
+                if (isNullable)
+                {
+                    this.Write("Bridge.Nullable.getValue(");
+                }
                 expression.AcceptVisitor(this.Emitter);
-                castCode = castCode.Replace("{this}", this.Emitter.Output.ToString());
+                if (isNullable)
+                {
+                    this.WriteCloseParentheses();
+                }
+
+                castCode = castCode.Replace(name, this.Emitter.Output.ToString());
                 this.Emitter.Output = oldBuilder;
             }
 
@@ -330,5 +415,7 @@ namespace Bridge.Translator
 
             this.Write(castCode);
         }
+
+        public IMethod InlineMethod { get; set; }
     }
 }
