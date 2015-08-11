@@ -752,7 +752,7 @@
             throw new Bridge.OverflowException();
         }
 
-        return v;
+        return i;
     };
 
     Decimal.min = function (a, b) {
@@ -771,6 +771,17 @@
             v.v = new Bridge.Decimal(0);
             return false;
         }
+    };
+
+    Decimal.toFloat = function (v) {
+        if (!v) {
+            return null;
+        }
+
+        var otherDecimal = (v instanceof Decimal ? v :
+                             new Decimal(v));
+
+        return otherDecimal.toFloat();
     };
 
     // Module

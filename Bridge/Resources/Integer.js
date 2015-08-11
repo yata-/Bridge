@@ -1,5 +1,62 @@
 ﻿// @source Integer.js
 
+/*(function() {
+    var createIntType = function(name, min, max) {
+        var type = Bridge.define(name, {
+            inherits: [Bridge.IComparable, Bridge.IFormattable],
+            statics: {
+                min: min,
+                max: max,
+
+                instanceOf: function (instance) {
+                    return typeof(instance) === 'number' && Math.round(instance, 0) == instance && instance >= min && instance <= max;
+                },
+                getDefaultValue: function () {
+                    return 0;
+                },
+                parse: function(s) {
+                    return Bridge.Int.parseInt(s, min, max);
+                },
+                tryParse: function(s, result) {
+                    return Bridge.Int.tryParseInt(s, result, min, max);
+                },
+                format: function(number, format, provider) {
+                    return Bridge.Int.format(number, format, provider);
+                }
+            }
+        });
+
+        Bridge.Class.addExtend(type, [Bridge.IComparable$1(type), Bridge.IEquatable$1(type)]);
+    };
+
+    createIntType('Bridge.Byte', 0, 255);
+    createIntType('Bridge.SByte', -128, 127);
+    createIntType('Bridge.Int16', -32768, 32767);
+    createIntType('Bridge.UInt16', 0, 65535);
+    createIntType('Bridge.Int32', -2147483648, 2147483647);
+    createIntType('Bridge.UInt32', 0, 4294967295);
+    createIntType('Bridge.Int64', -9223372036854775808, 9223372036854775807);
+    createIntType('Bridge.UInt64', 0, 18446744073709551615);
+    createIntType('Bridge.Char', 0, 65535);
+
+    Bridge.Char.tryParse = function (s, result) {
+        var b = s && s.length === 1;
+        result.v = b ? s.charCodeAt(0) : 0;
+        return b;
+    };
+
+    Bridge.Char.parse = function(s) {
+        if (!Bridge.hasValue(s)) {
+            throw new Bridge.ArgumentNullException('s');
+        }
+
+        if (s.length !== 1) {
+            throw new Bridge.FormatException();
+        }
+        return s.charCodeAt(0);
+    };
+})();*/
+
 Bridge.define('Bridge.Int', {
     inherits: [Bridge.IComparable, Bridge.IFormattable],
     statics: {
@@ -519,6 +576,65 @@ Bridge.define('Bridge.Int', {
             }
 
             return this.trunc(x / y);
+        },
+
+        mod: function (x, y) {
+            if (!Bridge.isNumber(x) || !Bridge.isNumber(y)) {
+                return null;
+            }
+
+            if (y === 0) {
+                throw new Bridge.DivideByZeroException();
+            }
+            return x % y;
+        },
+
+        check: function(x, type) {
+            if (Bridge.isNumber(x) && !type.instanceOf(x)) {
+                throw new Bridge.OverflowException();
+            }
+                
+            return x;
+        },
+
+        sxb: function (x) {
+            return x | (x & 0x80 ? 0xffffff00 : 0);
+        },
+
+        sxs: function (x) {
+            return x | (x & 0x8000 ? 0xffff0000 : 0);
+        },
+
+        clip8: function (x) {
+            return Bridge.isNumber(x) ? Bridge.Int.sxb(x & 0xff) : null;
+        },
+
+        clipu8: function (x) {
+            return Bridge.isNumber(x) ? x & 0xff : null;
+        },
+
+        clip16: function (x) {
+            return Bridge.isNumber(x) ? Bridge.Int.sxs(x & 0xffff) : null;
+        },
+
+        clipu16: function (x) {
+            return Bridge.isNumber(x) ? x & 0xffff : null;
+        },
+
+        clip32: function (x) {
+            return Bridge.isNumber(x) ? x | 0 : null;
+        },
+
+        clipu32: function (x) {
+            return Bridge.isNumber(x) ? x >>> 0 : null;
+        },
+
+        clip64: function (x) {
+            return Bridge.isNumber(x) ? (Math.floor(x / 0x100000000) | 0) * 0x100000000 + (x >>> 0) : null;
+        },
+
+        clipu64: function (x) {
+            return Bridge.isNumber(x) ? (Math.floor(x / 0x100000000) >>> 0) * 0x100000000 + (x >>> 0) : null;
         }
     }
 });

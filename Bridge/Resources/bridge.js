@@ -2432,6 +2432,8 @@ Bridge.define("Bridge.CultureInfo", {
 });
 // @source Integer.js
 
+
+
 Bridge.define('Bridge.Int', {
     inherits: [Bridge.IComparable, Bridge.IFormattable],
     statics: {
@@ -2951,6 +2953,65 @@ Bridge.define('Bridge.Int', {
             }
 
             return this.trunc(x / y);
+        },
+
+        mod: function (x, y) {
+            if (!Bridge.isNumber(x) || !Bridge.isNumber(y)) {
+                return null;
+            }
+
+            if (y === 0) {
+                throw new Bridge.DivideByZeroException();
+            }
+            return x % y;
+        },
+
+        check: function(x, type) {
+            if (Bridge.isNumber(x) && !type.instanceOf(x)) {
+                throw new Bridge.OverflowException();
+            }
+                
+            return x;
+        },
+
+        sxb: function (x) {
+            return x | (x & 0x80 ? 0xffffff00 : 0);
+        },
+
+        sxs: function (x) {
+            return x | (x & 0x8000 ? 0xffff0000 : 0);
+        },
+
+        clip8: function (x) {
+            return Bridge.isNumber(x) ? Bridge.Int.sxb(x & 0xff) : null;
+        },
+
+        clipu8: function (x) {
+            return Bridge.isNumber(x) ? x & 0xff : null;
+        },
+
+        clip16: function (x) {
+            return Bridge.isNumber(x) ? Bridge.Int.sxs(x & 0xffff) : null;
+        },
+
+        clipu16: function (x) {
+            return Bridge.isNumber(x) ? x & 0xffff : null;
+        },
+
+        clip32: function (x) {
+            return Bridge.isNumber(x) ? x | 0 : null;
+        },
+
+        clipu32: function (x) {
+            return Bridge.isNumber(x) ? x >>> 0 : null;
+        },
+
+        clip64: function (x) {
+            return Bridge.isNumber(x) ? (Math.floor(x / 0x100000000) | 0) * 0x100000000 + (x >>> 0) : null;
+        },
+
+        clipu64: function (x) {
+            return Bridge.isNumber(x) ? (Math.floor(x / 0x100000000) >>> 0) * 0x100000000 + (x >>> 0) : null;
         }
     }
 });
@@ -3711,7 +3772,7 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
             throw new Bridge.OverflowException();
         }
 
-        return v;
+        return i;
     };
 
     Decimal.min = function (a, b) {
@@ -3730,6 +3791,17 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
             v.v = new Bridge.Decimal(0);
             return false;
         }
+    };
+
+    Decimal.toFloat = function (v) {
+        if (!v) {
+            return null;
+        }
+
+        var otherDecimal = (v instanceof Decimal ? v :
+                             new Decimal(v));
+
+        return otherDecimal.toFloat();
     };
 
     // Module

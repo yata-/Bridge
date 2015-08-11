@@ -65,37 +65,37 @@ namespace System
             return null;
         }
 
-        [Template("Bridge.Decimal({value})")]
+        [Template("Bridge.Decimal.lift({value})")]
         public static extern implicit operator decimal(byte value);
 
-        [Template("Bridge.Decimal({value})")]
+        [Template("Bridge.Decimal.lift({value})")]
         public static extern implicit operator decimal(sbyte value);
 
-        [Template("Bridge.Decimal({value})")]
+        [Template("Bridge.Decimal.lift({value})")]
         public static extern implicit operator decimal(short value);
 
-        [Template("Bridge.Decimal({value})")]
+        [Template("Bridge.Decimal.lift({value})")]
         public static extern implicit operator decimal(ushort value);
 
-        [Template("Bridge.Decimal({value})")]
+        [Template("Bridge.Decimal.lift({value})")]
         public static extern implicit operator decimal(char value);
 
-        [Template("Bridge.Decimal({value})")]
+        [Template("Bridge.Decimal.lift({value})")]
         public static extern implicit operator decimal(int value);
 
-        [Template("Bridge.Decimal({value})")]
+        [Template("Bridge.Decimal.lift({value})")]
         public static extern implicit operator decimal(uint value);
 
-        [Template("Bridge.Decimal({value})")]
+        [Template("Bridge.Decimal.lift({value})")]
         public static extern implicit operator decimal(long value);
 
-        [Template("Bridge.Decimal({value})")]
+        [Template("Bridge.Decimal.lift({value})")]
         public static extern implicit operator decimal(ulong value);
 
-        [Template("Bridge.Decimal({value})")]
+        [Template("Bridge.Decimal.lift({value})")]
         public static extern explicit operator decimal(float value);
 
-        [Template("Bridge.Decimal({value})")]
+        [Template("Bridge.Decimal.lift({value})")]
         public static extern explicit operator decimal(double value);
 
         [Template("Bridge.Decimal.toInt({value})")]
@@ -125,10 +125,10 @@ namespace System
         [Template("Bridge.Decimal.toInt({value})")]
         public static extern explicit operator ulong(decimal value);
 
-        [Template("{value}.toFloat()")]
+        [Template("Bridge.Decimal.toFloat({value})")]
         public static extern explicit operator float(decimal value);
 
-        [Template("{value}.toFloat()")]
+        [Template("Bridge.Decimal.toFloat({value})")]
         public static extern explicit operator double(decimal value);
 
         [Template("{d}.clone()")]
@@ -265,10 +265,10 @@ namespace System
         [Template("Bridge.Decimal.toInt({value})")]
         public static extern ulong ToUInt64(decimal value);
 
-        [Template("{value}.toFloat()")]
+        [Template("Bridge.Decimal.toFloat({value})")]
         public static extern float ToSingle(decimal value);
 
-        [Template("{value}.toFloat()")]
+        [Template("Bridge.Decimal.toFloat({value})")]
         public static extern double ToDouble(decimal value);
 
         [Template("{this}.compareTo({obj})")]
