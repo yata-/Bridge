@@ -108,13 +108,13 @@ namespace System
             return 0;
         }
 
-        [Template("Bridge.Decimal.round({x}, 0, 0)")]
+        [Template("Bridge.Decimal.round({x}, 0, 1)")]
         public static decimal Round(decimal x)
         {
             return 0;
         }
 
-        [Template("Bridge.Decimal.round({x}, {digits}, 0)")]
+        [Template("Bridge.Decimal.round({x}, {digits}, 1)")]
         public static decimal Round(decimal x, int digits)
         {
             return 0;

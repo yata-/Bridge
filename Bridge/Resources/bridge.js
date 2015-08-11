@@ -3021,12 +3021,15 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
         provider = provider || Bridge.CultureInfo.getCurrentCulture();
         var nfInfo = provider && provider.getFormat(Bridge.NumberFormatInfo);
         var v_str = "";
-        if (v instanceof String) {
+        if (typeof v === 'string') {
             if (nfInfo && nfInfo.numberDecimalSeparator !== ".") {
                 v = v.replace(nfInfo.numberDecimalSeparator, ".");
             }
-            
-            v_str = v;
+
+            if (!/^\s*[+-]?(\d+|\d*\.\d+)(e[+-]?\d+)?\s*$/.test(v)) {
+                throw new Bridge.FormatException();
+            }
+            v_str = v.replace(/\s/g, '');
         } else {
             v_str = v.toString();
         }
