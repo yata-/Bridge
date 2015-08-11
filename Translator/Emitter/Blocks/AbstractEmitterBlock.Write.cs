@@ -1,6 +1,8 @@
 ﻿using Bridge.Contract;
 using System;
+using System.Globalization;
 using System.Text;
+using ICSharpCode.NRefactory.TypeSystem;
 
 namespace Bridge.Translator
 {
@@ -78,7 +80,7 @@ namespace Bridge.Translator
             }
             else if (value is decimal)
             {
-                s = "Bridge.Decimal('" + this.Emitter.ToJavaScript(value) + "')";
+                s = "Bridge.Decimal(" + this.DecimalConstant((decimal)value) + ")";
             }
             else
             {
@@ -87,6 +89,19 @@ namespace Bridge.Translator
 
             this.Emitter.Output.Append(s);
         }
+
+        public string DecimalConstant(decimal value)
+        {
+            if ((decimal)(double)value == value)
+            {
+                return this.Emitter.ToJavaScript((double)value);
+            }
+            else
+            {
+                return this.Emitter.ToJavaScript(value.ToString(CultureInfo.InvariantCulture));
+            }
+        }
+
 
         public virtual void WriteComma()
         {
