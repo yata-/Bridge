@@ -165,7 +165,7 @@ namespace Bridge.Translator
                     isNullable = !NullableType.GetUnderlyingType(expressionrr.Type).Equals(typerr.Type);
                 }
 
-                this.EmitInlineCast(expression, type, castCode, isNullable);
+                this.EmitInlineCast(expression, type, castCode, isNullable, isResultNullable);
                 return;
             }
 
@@ -387,7 +387,7 @@ namespace Bridge.Translator
             return method;
         }
 
-        protected virtual void EmitInlineCast(Expression expression, AstType astType, string castCode, bool isNullable)
+        protected virtual void EmitInlineCast(Expression expression, AstType astType, string castCode, bool isNullable, bool isResultNullable)
         {
             this.Write("");
             var name = "{" + this.InlineMethod.Parameters[0].Name + "}";
@@ -402,12 +402,12 @@ namespace Bridge.Translator
                 var oldBuilder = this.Emitter.Output;
                 this.Emitter.Output = new StringBuilder();
 
-                if (isNullable)
+                if (isNullable && !isResultNullable)
                 {
                     this.Write("Bridge.Nullable.getValue(");
                 }
                 expression.AcceptVisitor(this.Emitter);
-                if (isNullable)
+                if (isNullable && !isResultNullable)
                 {
                     this.WriteCloseParentheses();
                 }
