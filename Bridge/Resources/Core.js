@@ -267,13 +267,13 @@
             return (results && results.length > 1) ? results[1] : "Object";
         },
 
-        is: function (obj, type, ignoreFn) {
+        is: function (obj, type, ignoreFn, allowNull) {
 	        if (typeof type == "string") {
                 type = Bridge.unroll(type);
 	        }
 
             if (obj == null) {
-	            return false;
+                return !!allowNull;
             }
 
             if (ignoreFn !== true) {
@@ -309,16 +309,16 @@
             return false;
 	    },
 
-        as: function (obj, type) {
-	        return Bridge.is(obj, type) ? obj : null;
+        as: function (obj, type, allowNull) {
+	        return Bridge.is(obj, type, false, allowNull) ? obj : null;
         },
 
-        cast: function (obj, type) {
+        cast: function (obj, type, allowNull) {
             if (obj === null) {
                 return null;
             }
 
-	        var result = Bridge.as(obj, type);
+            var result = Bridge.as(obj, type, allowNull);
 
 	        if (result == null) {
 	            throw new Bridge.InvalidCastException('Unable to cast type ' + Bridge.getTypeName(obj) + ' to type ' + Bridge.getTypeName(type));

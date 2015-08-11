@@ -131,6 +131,13 @@
         }
     }
 
+    Decimal.$$name = "Bridge.Decimal";
+    Decimal.prototype.$$name = "Bridge.Decimal";
+
+    Decimal.$$inherits = [];
+    Bridge.Class.addExtend(Decimal, [Bridge.IComparable, Bridge.IFormattable, Bridge.IComparable$1(Decimal), Bridge.IEquatable$1(Decimal)]);
+    
+
     Decimal.getDefaultValue = function () {
         return Decimal(0);
     };

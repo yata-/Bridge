@@ -276,13 +276,13 @@
             return (results && results.length > 1) ? results[1] : "Object";
         },
 
-        is: function (obj, type, ignoreFn) {
+        is: function (obj, type, ignoreFn, allowNull) {
 	        if (typeof type == "string") {
                 type = Bridge.unroll(type);
 	        }
 
             if (obj == null) {
-	            return false;
+                return !!allowNull;
             }
 
             if (ignoreFn !== true) {
@@ -318,16 +318,16 @@
             return false;
 	    },
 
-        as: function (obj, type) {
-	        return Bridge.is(obj, type) ? obj : null;
+        as: function (obj, type, allowNull) {
+	        return Bridge.is(obj, type, false, allowNull) ? obj : null;
         },
 
-        cast: function (obj, type) {
+        cast: function (obj, type, allowNull) {
             if (obj === null) {
                 return null;
             }
 
-	        var result = Bridge.as(obj, type);
+            var result = Bridge.as(obj, type, allowNull);
 
 	        if (result == null) {
 	            throw new Bridge.InvalidCastException('Unable to cast type ' + Bridge.getTypeName(obj) + ' to type ' + Bridge.getTypeName(type));
@@ -1856,7 +1856,7 @@ Bridge.define('Bridge.Exception', {
     },
 
     toString: function () {
-        return this.getMessage();
+        return this.$$name + ": " + this.getMessage();
     },
 
     statics: {
@@ -3089,6 +3089,13 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
             this.is_minus = false;
         }
     }
+
+    Decimal.$$name = "Bridge.Decimal";
+    Decimal.prototype.$$name = "Bridge.Decimal";
+
+    Decimal.$$inherits = [];
+    Bridge.Class.addExtend(Decimal, [Bridge.IComparable, Bridge.IFormattable, Bridge.IComparable$1(Decimal), Bridge.IEquatable$1(Decimal)]);
+    
 
     Decimal.getDefaultValue = function () {
         return Decimal(0);

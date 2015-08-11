@@ -25,6 +25,11 @@ namespace System
             return 0;
         }
 
+        public static double Abs(long x)
+        {
+            return 0;
+        }
+
         [Template("{l}.abs()")]
         public static extern decimal Abs(decimal l);
 
@@ -38,6 +43,16 @@ namespace System
             return 0;
         }
 
+        public static double Max(params long[] values)
+        {
+            return 0;
+        }
+
+        public static double Max(params ulong[] values)
+        {
+            return 0;
+        }
+
         [Template("Bridge.Decimal.max({a}, {b})")]
         public static extern decimal Max(decimal a, decimal b);
 
@@ -47,6 +62,16 @@ namespace System
         }
 
         public static double Min(params double[] values)
+        {
+            return 0;
+        }
+
+        public static double Min(params long[] values)
+        {
+            return 0;
+        }
+
+        public static double Min(params ulong[] values)
         {
             return 0;
         }
