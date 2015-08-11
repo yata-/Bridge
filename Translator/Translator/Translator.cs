@@ -153,7 +153,7 @@ namespace Bridge.Translator
                     filePath = Path.Combine(Path.GetDirectoryName(filePath), fileName);
                     file = new System.IO.FileInfo(filePath);
                     file.Directory.Create();
-                    //File.WriteAllText(file.FullName, minifier.MinifyJavaScript(code, new CodeSettings {  TermSemicolons = true }), System.Text.UTF8Encoding.UTF8);
+                    File.WriteAllText(file.FullName, minifier.MinifyJavaScript(code, new CodeSettings {  TermSemicolons = true }), System.Text.UTF8Encoding.UTF8);
                 }
             }
 
