@@ -83,6 +83,14 @@
             v_str = v_str.substring(1);
         }
 
+        if (v_str.length > 29 && v_str.indexOf(".") > -1) {
+            v_str = v_str.substring(0, 29);
+            var lastChar = v_str.charAt(v_str - 1);
+            if (lastChar == ".") {
+                v_str = v_str.substring(0, 28);
+            }
+        }
+
         var exp = 0;
         var e_pos = v_str.indexOf("e");
         if (e_pos != -1) {
