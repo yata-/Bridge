@@ -25,7 +25,7 @@ Bridge.define('Bridge.Exception', {
     },
 
     toString: function () {
-        return this.$$name + ": " + this.getMessage();
+        return this.getMessage();
     },
 
     statics: {
