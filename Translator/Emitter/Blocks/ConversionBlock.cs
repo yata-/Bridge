@@ -4,6 +4,7 @@ using ICSharpCode.NRefactory.Semantics;
 using System.Collections.Generic;
 using System.Linq;
 using ICSharpCode.NRefactory.TypeSystem;
+using ICSharpCode.NRefactory.TypeSystem.Implementation;
 
 namespace Bridge.Translator
 {
@@ -196,8 +197,15 @@ namespace Bridge.Translator
                     var arrayCreate = arrayInit.Parent as ArrayCreateExpression;
                     if (arrayCreate != null)
                     {
-                        var rrArrayType = block.Emitter.Resolver.ResolveNode(arrayCreate.Type, block.Emitter);
-                        elementType = rrArrayType.Type;
+                        var rrArrayType = block.Emitter.Resolver.ResolveNode(arrayCreate, block.Emitter);
+                        if (rrArrayType.Type is TypeWithElementType)
+                        {
+                            elementType = ((TypeWithElementType)rrArrayType.Type).ElementType;
+                        }
+                        else
+                        {
+                            elementType = rrArrayType.Type;
+                        }
                     }
                     else
                     {
@@ -223,13 +231,24 @@ namespace Bridge.Translator
 
                 if (Helpers.IsDecimalType(expectedType, block.Emitter.Resolver) && !Helpers.IsDecimalType(rr.Type, block.Emitter.Resolver))
                 {
-                    block.Write("Bridge.Decimal");
-                    if (NullableType.IsNullable(expectedType))
+                    var castExpr = expression.Parent as CastExpression;
+                    ResolveResult castTypeRr = null;
+                    if (castExpr != null)
                     {
-                        block.Write(".lift");
+                        castTypeRr = block.Emitter.Resolver.ResolveNode(castExpr.Type, block.Emitter);
                     }
-                    block.WriteOpenParentheses();
-                    return true;
+
+
+                    if (castTypeRr == null || !Helpers.IsDecimalType(castTypeRr.Type, block.Emitter.Resolver))
+                    {
+                        block.Write("Bridge.Decimal");
+                        if (NullableType.IsNullable(expectedType))
+                        {
+                            block.Write(".lift");
+                        }
+                        block.WriteOpenParentheses();
+                        return true;
+                    }
                 }
 
                 if (Helpers.IsDecimalType(expectedType, block.Emitter.Resolver))

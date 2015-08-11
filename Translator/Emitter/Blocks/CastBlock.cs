@@ -156,9 +156,15 @@ namespace Bridge.Translator
             bool isInlineCast;
             string castCode = this.GetCastCode(expression, type, out isInlineCast);
             bool isNullable = NullableType.IsNullable(expressionrr.Type);
+            bool isResultNullable = NullableType.IsNullable(typerr.Type);
 
             if (isInlineCast)
             {
+                if (isNullable)
+                {
+                    isNullable = !NullableType.GetUnderlyingType(expressionrr.Type).Equals(typerr.Type);
+                }
+
                 this.EmitInlineCast(expression, type, castCode, isNullable);
                 return;
             }
@@ -170,12 +176,12 @@ namespace Bridge.Translator
                     if (expressionrr.Type != null && Helpers.IsFloatType(expressionrr.Type, this.Emitter.Resolver))
                     {
                         this.Write("Bridge.Int.trunc(");
-                        if (isNullable)
+                        if (isNullable && !isResultNullable)
                         {
                             this.Write("Bridge.Nullable.getValue(");
                         }
                         expression.AcceptVisitor(this.Emitter);
-                        if (isNullable)
+                        if (isNullable && !isResultNullable)
                         {
                             this.WriteCloseParentheses();
                         }
@@ -214,12 +220,12 @@ namespace Bridge.Translator
             this.WriteDot();
             this.Write(method);
             this.WriteOpenParentheses();
-            if (isNullable)
+            if (isNullable && !isResultNullable)
             {
                 this.Write("Bridge.Nullable.getValue(");
             }
             expression.AcceptVisitor(this.Emitter);
-            if (isNullable)
+            if (isNullable && !isResultNullable)
             {
                 this.WriteCloseParentheses();
             }
@@ -236,6 +242,12 @@ namespace Bridge.Translator
                 {
                     this.EmitCastType(type);
                 }
+            }
+
+            if (isResultNullable && method != Bridge.Translator.Emitter.IS)
+            {
+                this.WriteComma();
+                this.WriteScript(true);
             }
 
             this.WriteCloseParentheses();

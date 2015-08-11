@@ -92,6 +92,12 @@ namespace Bridge.Translator
                 return;
             }
 
+            if (Helpers.IsDecimalType(resolveOperator.Type, this.Emitter.Resolver))
+            {
+                isDecimal = true;
+                isDecimalExpected = true;
+            }
+
             if (isDecimal && isDecimalExpected)
             {
                 this.HandleDecimal(resolveOperator);
@@ -252,7 +258,7 @@ namespace Bridge.Translator
                             unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
                             this.Write(") ? ");
                             unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
-                            this.Write("--)");
+                            this.Write("--");
                             this.Write(" : null)");
                         }
                         else
@@ -268,7 +274,7 @@ namespace Bridge.Translator
                             unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
                             this.Write(") ? ");
                             unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
-                            this.Write("++)");
+                            this.Write("++");
                             this.Write(" : null)");
                         }
                         else
