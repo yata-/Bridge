@@ -92,14 +92,21 @@ namespace Bridge.Translator
 
         public string DecimalConstant(decimal value)
         {
+            string s = null;
             if ((decimal)(double)value == value)
             {
-                return this.Emitter.ToJavaScript((double)value);
+                s = this.Emitter.ToJavaScript((double)value);
+                if (CultureInfo.InstalledUICulture.CompareInfo.IndexOf(s, "e", CompareOptions.IgnoreCase) > -1)
+                {
+                    s = this.Emitter.ToJavaScript(s);
+                }
             }
             else
             {
-                return this.Emitter.ToJavaScript(value.ToString(CultureInfo.InvariantCulture));
+                s = this.Emitter.ToJavaScript(value.ToString(CultureInfo.InvariantCulture));
             }
+
+            return s;
         }
 
 
