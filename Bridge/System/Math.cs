@@ -53,8 +53,8 @@ namespace System
             return 0;
         }
 
-        [Template("Bridge.Decimal.max({a}, {b})")]
-        public static extern decimal Max(decimal a, decimal b);
+        [Template("Bridge.Decimal.max({*values})")]
+        public static extern decimal Max(params decimal[] values);
 
         public static int Min(params int[] values)
         {
@@ -76,8 +76,8 @@ namespace System
             return 0;
         }
 
-        [Template("Bridge.Decimal.min({a}, {b})")]
-        public static extern decimal Min(decimal a, decimal b);
+        [Template("Bridge.Decimal.min({*values})")]
+        public static extern decimal Min(params decimal[] values);
 
         public static double Random()
         {
@@ -108,25 +108,46 @@ namespace System
             return 0;
         }
 
-        [Template("Bridge.Decimal.round({x}, 0, 1)")]
+        [Template("Bridge.Decimal.round({x}, 1)")]
         public static decimal Round(decimal x)
         {
             return 0;
         }
 
-        [Template("Bridge.Decimal.round({x}, {digits}, 1)")]
-        public static decimal Round(decimal x, int digits)
+        [Template("Bridge.Decimal.round({d}, {method})")]
+        public static extern decimal Round(decimal d, MidpointRounding method);
+
+        public static double Exp(double x)
         {
             return 0;
         }
 
-        [Template("Bridge.Decimal.round({d}, 0, {method})")]
-        public static extern decimal Round(decimal d, MidpointRounding method);
+        [Template("{x}.exponential()")]
+        public static decimal Exp(decimal x)
+        {
+            return 0;
+        }
 
-        [Template("Bridge.Decimal.round({d}, {digits}, {method})")]
-        public static extern decimal Round(decimal d, int digits, MidpointRounding method);
+        [Template("{x}.ln()")]
+        public static decimal Ln(decimal x)
+        {
+            return 0;
+        }
 
-        public static double Exp(double x)
+        [Template("{x}.log({logBase})")]
+        public static decimal Log(decimal x, decimal logBase)
+        {
+            return 0;
+        }
+
+        [Template("{x}.pow({y})")]
+        public static decimal Pow(decimal x, decimal y)
+        {
+            return 0;
+        }
+
+        [Template("{x}.sqrt()")]
+        public static decimal Sqrt(decimal x)
         {
             return 0;
         }
