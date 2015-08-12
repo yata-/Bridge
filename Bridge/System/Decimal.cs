@@ -238,7 +238,7 @@ namespace System
         [Template("Bridge.Decimal.tryParse({s}, {provider}, {result})")]
         public static extern bool TryParse(string s, IFormatProvider provider, out decimal result);
 
-        [Template("Bridge.Decimal.round({d}, 0, 1)")]
+        [Template("Bridge.Decimal.round({d}, 1)")]
         public static extern decimal Round(decimal d);
 
         [Template("Bridge.Decimal.round({d}, {mode})")]
