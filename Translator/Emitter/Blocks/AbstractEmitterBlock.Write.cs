@@ -93,7 +93,17 @@ namespace Bridge.Translator
         public string DecimalConstant(decimal value)
         {
             string s = null;
-            if ((decimal)(double)value == value)
+            bool similar = false;
+
+            try
+            {
+                similar = (decimal) (double) value == value;
+            }
+            catch
+            {
+            }
+
+            if (similar)
             {
                 s = this.Emitter.ToJavaScript((double)value);
                 if (CultureInfo.InstalledUICulture.CompareInfo.IndexOf(s, "e", CompareOptions.IgnoreCase) > -1)
