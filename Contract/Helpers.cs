@@ -222,8 +222,14 @@ namespace Bridge.Contract
                 || type.Equals(resolver.Compilation.FindType(KnownTypeCode.Single));
         }
 
-        public static bool IsDecimalType(IType type, IMemberResolver resolver)
+        public static bool IsDecimalType(IType type, IMemberResolver resolver, bool allowArray = false)
         {
+            if (allowArray && type.Kind == TypeKind.Array)
+            {
+                var elements = (TypeWithElementType) type;
+                type = elements.ElementType;
+            }
+
             type = type.IsKnownType(KnownTypeCode.NullableOfT) ? ((ParameterizedType)type).TypeArguments[0] : type;
 
             return type.Equals(resolver.Compilation.FindType(KnownTypeCode.Decimal));

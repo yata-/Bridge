@@ -104,7 +104,7 @@ namespace Bridge.Translator
                     var m = methodResolveResult.Member as IMethod;
                     var arg = m.Parameters[index < m.Parameters.Count ? index : (m.Parameters.Count - 1)];
 
-                    if (Helpers.IsDecimalType(arg.Type, block.Emitter.Resolver) && !Helpers.IsDecimalType(rr.Type, block.Emitter.Resolver))
+                    if (Helpers.IsDecimalType(arg.Type, block.Emitter.Resolver, arg.IsParams) && !Helpers.IsDecimalType(rr.Type, block.Emitter.Resolver))
                     {
                         block.Write("Bridge.Decimal");
                         if (NullableType.IsNullable(arg.Type))
