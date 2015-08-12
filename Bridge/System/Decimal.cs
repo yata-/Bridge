@@ -345,10 +345,24 @@ namespace System
         public static void SetConfig(DecimalConfig config)
         {
         }
+
+        public extern string ToFormat();
+
+        public extern string ToFormat(int dp);
+
+        public extern string ToFormat(int dp, MidpointRounding rm);
+
+        public extern string ToFormat(int dp, MidpointRounding rm, IFormatProvider provider);
+
+        public extern string ToFormat(int dp, MidpointRounding rm, DecimalFormatConfig config);
+
+        [Template("toFormat(null, null,{config})")]
+        public extern string ToFormat(DecimalFormatConfig config);
     }
 
     [Name("Object")]
     [Constructor("{ }")]
+    [Ignore]
     public class DecimalConfig
     {
         /// <summary>
@@ -396,5 +410,46 @@ namespace System
         /// The modulo mode used when calculating the modulus: a mod n.
         /// </summary>
         public int Modulo;
+
+        /// <summary>
+        /// The format object configures the format of the string returned by the toFormat method.
+        /// </summary>
+        public DecimalFormatConfig Format;
+    }
+
+    [Name("Object")]
+    [Constructor("{ }")]
+    [Ignore]
+    public class DecimalFormatConfig
+    {
+        /// <summary>
+        /// the decimal separator
+        /// </summary>
+        public string DecimalSeparator;
+
+        /// <summary>
+        /// the grouping separator of the integer part of the number
+        /// </summary>
+        public string GroupSeparator;
+
+        /// <summary>
+        /// the primary grouping size of the integer part of the number
+        /// </summary>
+        public int GroupSize;
+
+        /// <summary>
+        /// the secondary grouping size of the integer part of the number
+        /// </summary>
+        public int SecondaryGroupSize;
+
+        /// <summary>
+        /// the grouping separator of the fraction part of the number
+        /// </summary>
+        public string FractionGroupSeparator;
+
+        /// <summary>
+        /// the grouping size of the fraction part of the number
+        /// </summary>
+        public int FractionGroupSize;
     }
 }

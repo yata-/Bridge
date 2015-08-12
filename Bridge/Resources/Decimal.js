@@ -66,7 +66,6 @@
         if (!format && !provider) {
             return this.value.toString();
         }
-
         return Bridge.Int.format(this.toFloat(), format, provider);
     };
 
@@ -75,7 +74,7 @@
     };
 
     Bridge.Decimal.prototype.format = function (fmt, provider) {
-        return this.toString(fmt, provider);
+        return Bridge.Int.format(this.toFloat(), format, provider);
     };
 
     Bridge.Decimal.prototype.decimalPlaces = function () {
@@ -343,6 +342,31 @@
 
     Bridge.Decimal.prototype.toSignificantDigits = function (dp, rm) {
         return new Bridge.Decimal(this.value.toSignificantDigits(dp, rm));
+    };
+
+    Bridge.Decimal.prototype.toFormat = function (dp, rm, provider) {
+        var old = Bridge.$Decimal.format,
+            d;
+
+        if (provider && !provider.getFormat) {
+            var oldConfig = Bridge.merge({}, old || {});
+            Bridge.$Decimal.format = Bridge.merge(oldConfig, provider);
+            d = this.value.toFormat(dp, rm);
+        } else {
+            provider = provider || Bridge.CultureInfo.getCurrentCulture();
+            var nfInfo = provider && provider.getFormat(Bridge.NumberFormatInfo);
+            if (nfInfo) {
+                Bridge.$Decimal.format.decimalSeparator = nfInfo.numberDecimalSeparator;
+                Bridge.$Decimal.format.groupSeparator = nfInfo.numberGroupSeparator;
+                Bridge.$Decimal.format.groupSize = nfInfo.numberGroupSizes[0];
+            }
+
+            d = this.value.toFormat(dp, rm);
+        }
+        
+        
+        Bridge.$Decimal.format = old;
+        return d;
     };
 
     Bridge.$Decimal.config({ precision: 29 });
