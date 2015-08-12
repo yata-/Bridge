@@ -89,7 +89,7 @@ namespace System
             return 0;
         }
 
-        [Template("{d}ceil()")]
+        [Template("{d}.ceil()")]
         public static extern decimal Ceiling(decimal d);
 
         [Name("ceil")]
