@@ -344,6 +344,10 @@
         return new Bridge.Decimal(this.value.toSignificantDigits(dp, rm));
     };
 
+    Bridge.Decimal.prototype.valueOf = function () {
+        return this.value.valueOf();
+    };
+
     Bridge.Decimal.prototype.toFormat = function (dp, rm, provider) {
         var old = Bridge.$Decimal.format,
             d;

@@ -865,3 +865,31 @@ namespace System.ComponentModel
         Advanced = 2
     }
 }
+
+namespace System.Threading
+{
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Ignore]
+    public static class Interlocked
+    {
+        public static extern int CompareExchange(ref int location1, int value, int comparand);
+        public static extern T CompareExchange<T>(ref T location1, T value, T comparand) where T : class;
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Ignore]
+    public static class Monitor
+    {
+        public static extern void Enter(object obj);
+        public static extern void Enter(object obj, ref bool b);
+        public static extern void Exit(object obj);
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Ignore]
+    public class Thread
+    {
+        public extern int ManagedThreadId { get; }
+        public static extern Thread CurrentThread { get; }
+    }
+}
