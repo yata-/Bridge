@@ -108,7 +108,7 @@
     Bridge.Decimal.round = function (obj, mode) {
         obj = Bridge.Decimal.create(obj);
 
-        var old = Decimal.rounding;
+        var old = Bridge.$Decimal.rounding;
         Bridge.$Decimal.rounding = mode;
         var d = new Bridge.Decimal(obj.value.round());
         Bridge.$Decimal.rounding = old;
