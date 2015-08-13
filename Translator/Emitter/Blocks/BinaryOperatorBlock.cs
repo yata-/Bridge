@@ -101,7 +101,7 @@ namespace Bridge.Translator
                 isDecimalExpected = true;
             }
 
-            if (isDecimal && isDecimalExpected)
+            if (isDecimal && isDecimalExpected && binaryOperatorExpression.Operator != BinaryOperatorType.NullCoalescing)
             {
                 this.HandleDecimal(resolveOperator);
                 return;
