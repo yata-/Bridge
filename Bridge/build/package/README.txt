@@ -1,5 +1,5 @@
 ﻿Project          : Bridge
-Release Date     : 2015-08-10
+Release Date     : 2015-08-17
 Current Version  : 1.8
 Previous Version : 1.7
 
