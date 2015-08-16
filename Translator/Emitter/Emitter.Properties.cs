@@ -357,5 +357,11 @@ namespace Bridge.Translator
         {
             get; set;
         }
+
+        public IType ReturnType
+        {
+            get;
+            set;
+        }
     }
 }

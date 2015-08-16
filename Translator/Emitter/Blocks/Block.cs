@@ -78,6 +78,12 @@ namespace Bridge.Translator
             set;
         }
 
+        private IType OldReturnType
+        {
+            get;
+            set;
+        }
+
         protected override void DoEmit()
         {
             if ((!this.WrapByFn.HasValue || this.WrapByFn.Value) && (this.BlockStatement.Parent is ForStatement ||
@@ -211,6 +217,12 @@ namespace Bridge.Translator
                 YieldBlock.EmitYield(this, this.ReturnType);
             }
 
+            if (this.IsMethodBlock)
+            {
+                this.OldReturnType = this.Emitter.ReturnType;
+                this.Emitter.ReturnType = this.ReturnType;
+            }
+
             this.BlockStatement.Children.ToList().ForEach(child => child.AcceptVisitor(this.Emitter));
         }
 
@@ -221,6 +233,11 @@ namespace Bridge.Translator
             if (this.IsYield)
             {
                 YieldBlock.EmitYieldReturn(this, this.ReturnType);
+            }
+
+            if (this.IsMethodBlock)
+            {
+                this.Emitter.ReturnType = this.OldReturnType;
             }
 
             if (!this.NoBraces && (!this.Emitter.IsAsync || (!this.AsyncNoBraces && this.BlockStatement.Parent != this.Emitter.AsyncBlock.Node)))

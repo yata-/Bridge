@@ -46,7 +46,17 @@ namespace Bridge.Translator
             }
             else
             {
-                new BreakBlock(this.Emitter, this.YieldBreakStatement).Emit();
+                if (this.YieldBreakStatement.GetParent<ForStatement>() == null &&
+                    this.YieldBreakStatement.GetParent<ForeachStatement>() == null &&
+                    this.YieldBreakStatement.GetParent<WhileStatement>() == null &&
+                    this.YieldBreakStatement.GetParent<DoWhileStatement>() == null)
+                {
+                    YieldBlock.EmitYieldReturn(this, this.Emitter.ReturnType);
+                }
+                else
+                {
+                    new BreakBlock(this.Emitter, this.YieldBreakStatement).Emit();    
+                }
             }
         }
 

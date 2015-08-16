@@ -196,7 +196,18 @@ namespace Bridge.Translator
                     }
                 }
 
-                if (!(resolveResult is TypeResolveResult))
+                bool isConst = false;
+                bool isInlineConst = false;
+                if (memberResult != null)
+                {
+                    isConst = this.Emitter.IsMemberConst(memberResult.Member);
+                    if (isConst)
+                    {
+                        isInlineConst = this.Emitter.IsInlineConst(memberResult.Member);
+                    }
+                }
+
+                if (!(resolveResult is TypeResolveResult) && !isInlineConst)
                 {
                     if (isStatic)
                     {
@@ -256,9 +267,7 @@ namespace Bridge.Translator
                 }
                 else if(memberResult != null)
                 {
-                    bool isConst = this.Emitter.IsMemberConst(memberResult.Member);
-
-                    if (isConst && this.Emitter.IsInlineConst(memberResult.Member))
+                    if (isInlineConst)
                     {
                         this.WriteScript(memberResult.ConstantValue);
                     }
