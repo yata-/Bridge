@@ -508,6 +508,13 @@ namespace Bridge.Contract
                     return string.Compare(this.MemberToString(m1), this.MemberToString(m2));
                 }
 
+                var a1 = this.GetAccessibilityWeight(m1.Accessibility);
+                var a2 = this.GetAccessibilityWeight(m2.Accessibility);
+                if (a1 != a2)
+                {
+                    return a1.CompareTo(a2);
+                }
+
                 var v1 = m1 is IField ? 1 : (m1 is IEvent ? 2 : (m1 is IMethod ? 3 : 4));
                 var v2 = m2 is IField ? 1 : (m2 is IEvent ? 2 : (m2 is IMethod ? 3 : 4));
 
@@ -523,9 +530,40 @@ namespace Bridge.Contract
                 {
                    //return name1.Length.CompareTo(name2.Length);
                 }
-
+                
                 return string.Compare(name1, name2);
             });
+        }
+
+        protected virtual int GetAccessibilityWeight(Accessibility a)
+        {
+            int w = 0;
+            switch (a)
+            {
+                case Accessibility.None:
+                    w = 4;
+                    break;
+                case Accessibility.Private:
+                    w = 4;
+                    break;
+                case Accessibility.Public:
+                    w = 1;
+                    break;
+                case Accessibility.Protected:
+                    w = 3;
+                    break;
+                case Accessibility.Internal:
+                    w = 2;
+                    break;
+                case Accessibility.ProtectedOrInternal:
+                    w = 2;
+                    break;
+                case Accessibility.ProtectedAndInternal:
+                    w = 3;
+                    break;
+            }
+
+            return w;
         }
 
         protected virtual string MemberToString(IMember member)
