@@ -676,13 +676,15 @@ namespace Bridge.Contract
                     bool eq = false;
                     if (p.IsStatic == this.Static)
                     {
+                        var getterIgnore = p.Getter != null && this.Emitter.Validator.HasAttribute(p.Getter.Attributes, "Bridge.IgnoreAttribute");
+                        var setterIgnore = p.Setter != null && this.Emitter.Validator.HasAttribute(p.Setter.Attributes, "Bridge.IgnoreAttribute");
                         var getterName = p.Getter != null ? Helpers.GetPropertyRef(p, this.Emitter, false, true, true) : null;
                         var setterName = p.Setter != null ? Helpers.GetPropertyRef(p, this.Emitter, true, true, true) : null;
-                        if (getterName != null && (getterName == this.JsName || getterName == this.AltJsName))
+                        if (!getterIgnore && getterName != null && (getterName == this.JsName || getterName == this.AltJsName))
                         {
                             eq = true;
                         }
-                        else if (setterName != null && (setterName == this.JsName || setterName == this.AltJsName))
+                        else if (!setterIgnore && setterName != null && (setterName == this.JsName || setterName == this.AltJsName))
                         {
                             eq = true;
                         }
