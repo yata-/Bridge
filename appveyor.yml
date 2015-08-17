@@ -161,12 +161,10 @@ after_test:
 
 # to run your custom scripts instead of automatic tests
 test_script:
-  - nunit-console ""c:\projects\Builder\Builder\TranslatorTests\bin\Debug\Bridge.Translator.Tests.dll"
   #- echo This is my custom test script
 
 # to disable automatic tests 
-#test: off
-
+test: on
 
 # scripts to run before deployment
 before_deploy:
