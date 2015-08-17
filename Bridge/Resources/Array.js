@@ -108,6 +108,17 @@
             return arr;
         },
 
+        init: function(size, value) {
+            var arr = new Array(size),
+                isFn = Bridge.isFunction(value);
+
+            for (var i = 0; i < size; i++) {
+                arr[i] = isFn ? value() : value;
+            }
+
+            return arr;
+        },
+
         toEnumerable: function(array) {
             return new Bridge.ArrayEnumerable(array);
         },

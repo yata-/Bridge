@@ -4,6 +4,7 @@ using Bridge;
 
 namespace System.Collections.Generic
 {
+    [Ignore]
     [Namespace("Bridge")]
 	public interface IList<T> : ICollection<T>
     {

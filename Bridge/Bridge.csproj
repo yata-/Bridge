@@ -81,6 +81,7 @@
     <Compile Include="System\Collections\Generic\Comparer.cs" />
     <Compile Include="System\Collections\Generic\IComparer.cs" />
     <Compile Include="System\Collections\Generic\IList.cs" />
+    <Compile Include="System\Collections\Generic\ISet.cs" />
     <Compile Include="System\Collections\ObjectModel\ReadOnlyCollection.cs" />
     <Compile Include="System\Comparison.cs" />
     <Compile Include="System\Environment.cs" />
@@ -221,6 +222,9 @@
     <None Include="Resources\Bridge.jsb" />
     <None Include="Resources\build.bat" />
     <None Include="Resources\build.sh" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

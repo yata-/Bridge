@@ -84,6 +84,11 @@ namespace System
             return 0;
         }
 
+        public static double Sqrt(int x)
+        {
+            return 0;
+        }
+
         public static double Sqrt(double x)
         {
             return 0;
