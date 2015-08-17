@@ -862,6 +862,17 @@ namespace Bridge.Contract
 
             var attr = this.Emitter.GetAttribute(definition.Attributes, "Bridge.NameAttribute");
 
+            if (attr == null && definition is IProperty)
+            {
+                var prop = (IProperty)definition;
+                var acceessor = this.IsSetter ? prop.Setter : prop.Getter;
+
+                if (acceessor != null)
+                {
+                    attr = this.Emitter.GetAttribute(acceessor.Attributes, "Bridge.NameAttribute");
+                }
+            }
+
             if (attr != null || (definition.DeclaringTypeDefinition != null && definition.DeclaringTypeDefinition.Kind != TypeKind.Interface && this.Emitter.Validator.IsIgnoreType(definition.DeclaringTypeDefinition)))
             {
                 return name;
