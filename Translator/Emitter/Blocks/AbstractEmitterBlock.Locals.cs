@@ -204,7 +204,7 @@ namespace Bridge.Translator
 
             while (this.Emitter.TempVariables.ContainsKey(name))
             {
-                name += ++i;
+                name = "$t" + ++i;
             }
 
             name = "$t" + (i> 0 ? i.ToString() : "");

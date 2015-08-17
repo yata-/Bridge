@@ -189,8 +189,8 @@ namespace Bridge.Translator
                 return;
             }
 
-            //var iteratorName = this.GetNextIteratorName();
-            var iteratorName = this.AddLocal(this.GetTempVarName(), AstType.Null);
+            var iteratorVar = this.GetTempVarName();
+            var iteratorName = this.AddLocal(iteratorVar, AstType.Null);
 
             //this.WriteVar();
             this.Write(iteratorName, " = ", Bridge.Translator.Emitter.ROOT);
