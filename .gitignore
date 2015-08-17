@@ -150,3 +150,5 @@ Bridge.dev.sln
 
 .DS_Store
 /Bridge.NET.local.sln
+/TranslatorTests/obj
+/TranslatorTests/bin
