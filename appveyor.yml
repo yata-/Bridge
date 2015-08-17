@@ -66,7 +66,7 @@ install:
 platform: Any CPU
 
 # build Configuration, i.e. Debug, Release, etc.
-configuration: Debug
+configuration: Release
 
 build:
   # parallel: true                  # enable MSBuild parallel builds
@@ -164,7 +164,9 @@ test_script:
   #- echo This is my custom test script
 
 # to disable automatic tests 
-test: on
+test:
+   assemblies:
+    - Builder\TranslatorTests\bin\$(configuration)\Bridge.Translator.Tests.dll
 
 # scripts to run before deployment
 before_deploy:
