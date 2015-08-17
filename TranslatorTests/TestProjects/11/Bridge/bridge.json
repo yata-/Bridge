@@ -1,0 +1,4 @@
+{
+  "output": "bridge\\output",
+  "generateTypeScript": "true"
+}
