@@ -592,12 +592,13 @@ namespace Bridge.Contract
             return sb.ToString();
         }
 
-        protected virtual List<IMethod> GetMethodOverloads()
+        protected virtual List<IMethod> GetMethodOverloads(List<IMethod> list = null, ITypeDefinition typeDef = null)
         {
-            List<IMethod> list = new List<IMethod>();
-            var typeDef = this.TypeDefinition;
+            bool isTop = list == null;
+            list = list ?? new List<IMethod>();
+            typeDef = typeDef ?? this.TypeDefinition;
 
-            while (typeDef != null)
+            if (typeDef != null)
             {
                 var methods = typeDef.Methods.Where(m =>
                 {
@@ -634,32 +635,26 @@ namespace Bridge.Contract
 
                 if (this.Inherit)
                 {
-                    var baseTypeDefinition = typeDef.DirectBaseTypes.FirstOrDefault();
+                    var baseTypeDefinitions = typeDef.DirectBaseTypes.Where(t => t.Kind == typeDef.Kind);
 
-                    if (baseTypeDefinition != null && baseTypeDefinition.Kind == typeDef.Kind)
+                    foreach (var baseTypeDef in baseTypeDefinitions)
                     {
-                        typeDef = baseTypeDefinition.GetDefinition();
+                        var result = this.GetMethodOverloads(list, baseTypeDef.GetDefinition());
+                        list.AddRange(result);
                     }
-                    else
-                    {
-                        typeDef = null;
-                    }
-                }
-                else
-                {
-                    typeDef = null;
                 }
             }
 
-            return list;
+            return isTop ? list.Distinct().ToList() : list;
         }
 
-        protected virtual List<IProperty> GetPropertyOverloads()
+        protected virtual List<IProperty> GetPropertyOverloads(List<IProperty> list = null, ITypeDefinition typeDef = null)
         {
-            List<IProperty> list = new List<IProperty>();
-            var typeDef = this.TypeDefinition;
+            bool isTop = list == null;
+            list = list ?? new List<IProperty>();
+            typeDef = typeDef ?? this.TypeDefinition;
 
-            while (typeDef != null)
+            if (typeDef != null)
             {
                 var properties = typeDef.Properties.Where(p =>
                 {
@@ -710,32 +705,26 @@ namespace Bridge.Contract
 
                 if (this.Inherit)
                 {
-                    var baseTypeDefinition = typeDef.DirectBaseTypes.FirstOrDefault();
+                    var baseTypeDefinitions = typeDef.DirectBaseTypes.Where(t => t.Kind == typeDef.Kind);
 
-                    if (baseTypeDefinition != null && baseTypeDefinition.Kind == typeDef.Kind)
+                    foreach (var baseTypeDef in baseTypeDefinitions)
                     {
-                        typeDef = baseTypeDefinition.GetDefinition();
+                        var result = this.GetPropertyOverloads(list, baseTypeDef.GetDefinition());
+                        list.AddRange(result);
                     }
-                    else
-                    {
-                        typeDef = null;
-                    }
-                }
-                else
-                {
-                    typeDef = null;
                 }
             }
 
-            return list;
+            return isTop ? list.Distinct().ToList() : list;
         }
 
-        protected virtual List<IField> GetFieldOverloads()
+        protected virtual List<IField> GetFieldOverloads(List<IField> list = null, ITypeDefinition typeDef = null)
         {
-            List<IField> list = new List<IField>();
-            var typeDef = this.TypeDefinition;
+            bool isTop = list == null;
+            list = list ?? new List<IField>();
+            typeDef = typeDef ?? this.TypeDefinition;
 
-            while (typeDef != null)
+            if (typeDef != null)
             {
                 var fields = typeDef.Fields.Where(f =>
                 {
@@ -758,32 +747,26 @@ namespace Bridge.Contract
 
                 if (this.Inherit)
                 {
-                    var baseTypeDefinition = typeDef.DirectBaseTypes.FirstOrDefault();
+                    var baseTypeDefinitions = typeDef.DirectBaseTypes.Where(t => t.Kind == typeDef.Kind);
 
-                    if (baseTypeDefinition != null && baseTypeDefinition.Kind == typeDef.Kind)
+                    foreach (var baseTypeDef in baseTypeDefinitions)
                     {
-                        typeDef = baseTypeDefinition.GetDefinition();
+                        var result = this.GetFieldOverloads(list, baseTypeDef.GetDefinition());
+                        list.AddRange(result);
                     }
-                    else
-                    {
-                        typeDef = null;
-                    }
-                }
-                else
-                {
-                    typeDef = null;
                 }
             }
 
-            return list;
+            return isTop ? list.Distinct().ToList() : list;
         }
 
-        protected virtual List<IEvent> GetEventOverloads()
+        protected virtual List<IEvent> GetEventOverloads(List<IEvent> list = null, ITypeDefinition typeDef = null)
         {
-            List<IEvent> list = new List<IEvent>();
-            var typeDef = this.TypeDefinition;
+            bool isTop = list == null;
+            list = list ?? new List<IEvent>();
+            typeDef = typeDef ?? this.TypeDefinition;
 
-            while (typeDef != null)
+            if (typeDef != null)
             {
                 var events = typeDef.Events.Where(e =>
                 {
@@ -831,24 +814,17 @@ namespace Bridge.Contract
 
                 if (this.Inherit)
                 {
-                    var baseTypeDefinition = typeDef.DirectBaseTypes.FirstOrDefault();
+                    var baseTypeDefinitions = typeDef.DirectBaseTypes.Where(t => t.Kind == typeDef.Kind);
 
-                    if (baseTypeDefinition != null && baseTypeDefinition.Kind == typeDef.Kind)
+                    foreach (var baseTypeDef in baseTypeDefinitions)
                     {
-                        typeDef = baseTypeDefinition.GetDefinition();
+                        var result = this.GetEventOverloads(list, baseTypeDef.GetDefinition());
+                        list.AddRange(result);
                     }
-                    else
-                    {
-                        typeDef = null;
-                    }
-                }
-                else
-                {
-                    typeDef = null;
                 }
             }
 
-            return list;
+            return isTop ? list.Distinct().ToList() : list;
         }
 
         private string overloadName;

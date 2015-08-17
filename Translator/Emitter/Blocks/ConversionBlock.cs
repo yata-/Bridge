@@ -236,13 +236,25 @@ namespace Bridge.Translator
                     {
                         var rrElemenet = block.Emitter.Resolver.ResolveNode(arrayInit.Parent, block.Emitter);
                         var pt = rrElemenet.Type as ParameterizedType;
-                        if (pt != null && pt.TypeArguments.Count > 0)
+                        if (pt != null)
                         {
-                            elementType = pt.TypeArguments.First();
+                            elementType = pt.TypeArguments.Count > 0 ? pt.TypeArguments.First() : null;
+                        }
+                        else
+                        {
+                            var arrayType = rrElemenet.Type as TypeWithElementType;
+                            if (arrayType != null)
+                            {
+                                elementType = arrayType.ElementType;
+                            }
+                            else
+                            {
+                                elementType = rrElemenet.Type;
+                            }
                         }
                     }
 
-                    if (Helpers.IsDecimalType(elementType, block.Emitter.Resolver) && !Helpers.IsDecimalType(rr.Type, block.Emitter.Resolver))
+                    if (elementType != null && Helpers.IsDecimalType(elementType, block.Emitter.Resolver) && !Helpers.IsDecimalType(rr.Type, block.Emitter.Resolver))
                     {
                         if (expression.IsNull)
                         {

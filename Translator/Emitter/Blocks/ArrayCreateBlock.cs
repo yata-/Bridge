@@ -34,8 +34,27 @@ namespace Bridge.Translator
 
             if (arrayCreateExpression.Initializer.IsNull && rank == 1)
             {
-                this.Write("new Array(");
+                this.Write("Bridge.Array.init(");
                 arrayCreateExpression.Arguments.First().AcceptVisitor(this.Emitter);
+                this.WriteComma();
+
+                var def = Inspector.GetDefaultFieldValue(at.ElementType);
+                if (def == at.ElementType)
+                {
+                    this.WriteFunction();
+                    this.WriteOpenCloseParentheses();
+                    this.BeginBlock();
+                    this.WriteReturn(true);
+                    this.Write("new " + BridgeTypes.ToJsName(at.ElementType, this.Emitter) + "()");
+                    this.WriteSemiColon();
+                    this.WriteNewLine();
+                    this.EndBlock();
+                }
+                else
+                {
+                    this.WriteScript(def);
+                }
+
                 this.Write(")");
 
                 return;
