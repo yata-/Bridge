@@ -66,7 +66,7 @@ install:
 platform: Any CPU
 
 # build Configuration, i.e. Debug, Release, etc.
-configuration: Release
+configuration: Debug
 
 build:
   # parallel: true                  # enable MSBuild parallel builds
