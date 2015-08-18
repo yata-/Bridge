@@ -445,12 +445,12 @@ namespace System.Linq
             return null;
         }
 
-        public static TElement Max<TElement>()
+        public static TSource Max<TSource>()
         {
-            return default(TElement);
+            return default(TSource);
         }
 
-        public static TResult Max<TElement, TResult>(Func<TElement, TResult> selector)
+        public static TResult Max<TSource, TResult>(Func<TSource, TResult> selector)
         {
             return default(TResult);
         }
@@ -510,12 +510,12 @@ namespace System.Linq
             return null;
         }
 
-        public static TElement Min<TElement>()
+        public static TSource Min<TSource>()
         {
-            return default(TElement);
+            return default(TSource);
         }
 
-        public static TResult Min<TElement, TResult>(Func<TElement, TResult> selector)
+        public static TResult Min<TSource, TResult>(Func<TSource, TResult> selector)
         {
             return default(TResult);
         }

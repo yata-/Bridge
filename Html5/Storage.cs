@@ -20,7 +20,7 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public virtual object this[string key]
+        public override object this[string key]
         {
             get {
                 return null;

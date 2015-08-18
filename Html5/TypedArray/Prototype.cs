@@ -15,10 +15,10 @@ namespace Bridge.Html5.TypedArray
     {
         #region Properties
         //TODO: Identify how to represent the Func<x,TypedArray> ctor.
-        /// <summary>
-        /// Returns the function that created an instance's prototype. This is one the corresponding
-        /// typed array type functions by default.
-        /// </summary>
+        // <summary>
+        // Returns the function that created an instance's prototype. This is one the corresponding
+        // typed array type functions by default.
+        // </summary>
         //public Func<x, TypedArray> buffer;
 
         /// <summary>
@@ -74,11 +74,11 @@ namespace Bridge.Html5.TypedArray
             return;
         }
 
-        /// <summary>
-        /// Returns a new Array Iterator object that contains the key/value pairs for each index in the array.
-        /// </summary>
-        /// <returns>A new Array Iterator object that contains the key/value pairs for each index in the array.</returns>
-        /// <remarks>This is experimental ECMAScript 6 API that should not be used in production code.</remarks>
+        // <summary>
+        // Returns a new Array Iterator object that contains the key/value pairs for each index in the array.
+        // </summary>
+        // <returns>A new Array Iterator object that contains the key/value pairs for each index in the array.</returns>
+        // <remarks>This is experimental ECMAScript 6 API that should not be used in production code.</remarks>
         //public TypedArray Entries();
 
         /// <summary>
@@ -545,7 +545,7 @@ namespace Bridge.Html5.TypedArray
         /// are separated by a locale-specific String (such as a comma “,”).
         /// </summary>
         /// <returns>A localized string representing the array and its elements.</returns>
-        public string ToLocaleString()
+        public override string ToLocaleString()
         {
             return default(string);
         }
@@ -554,7 +554,7 @@ namespace Bridge.Html5.TypedArray
         /// Joins the array and returns one string containing each array element separated by commas.
         /// </summary>
         /// <returns>A string representing the array and its elements.</returns>
-        public string ToString()
+        public override string ToString()
         {
             return default(string);
         }

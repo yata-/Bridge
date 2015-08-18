@@ -39,7 +39,7 @@ namespace System.Collections.Generic
             }
         }
 
-        public ICollection<TKey> Keys
+        public new ICollection<TKey> Keys
         {
             get
             {

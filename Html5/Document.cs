@@ -1643,7 +1643,7 @@ namespace Bridge.Html5
         public static DocumentInstance Instance;
 
         [Template("document")]
-        public static dynamic ToDynamic()
+        public new static dynamic ToDynamic()
         {
             return null;
         }

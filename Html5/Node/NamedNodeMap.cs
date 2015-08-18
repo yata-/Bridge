@@ -34,7 +34,7 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public virtual Node this[string name]
+        public new virtual Node this[string name]
         {
             get
             {

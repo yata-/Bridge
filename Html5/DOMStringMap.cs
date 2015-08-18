@@ -10,7 +10,7 @@ namespace Bridge.Html5
         {
 		}
 
-		public virtual string this[string name]
+		public new virtual string this[string name]
         {
 			get
             {
