@@ -61,10 +61,6 @@ namespace Bridge.Contract
         System.Collections.Generic.Dictionary<string, string> LocalsNamesMap { get; set; }
         System.Collections.Generic.Stack<System.Collections.Generic.Dictionary<string, ICSharpCode.NRefactory.CSharp.AstType>> LocalsStack { get; set; }
         Action<string, string> Log { get; set; }
-        void LogError(string message);
-        void LogMessage(string level, string message);
-        void LogMessage(string message);
-        void LogWarning(string message);
         System.Collections.Generic.IEnumerable<Mono.Cecil.MethodDefinition> MethodsGroup { get; set; }
         System.Collections.Generic.Dictionary<int, System.Text.StringBuilder> MethodsGroupBuilder { get; set; }
         ICSharpCode.NRefactory.CSharp.AstNode NoBraceBlock { get; set; }

@@ -265,14 +265,6 @@ namespace Bridge.Translator
 			}
         }
 
-        public virtual void VisitEmptyExpression(EmptyExpression emptyExpression)
-        {
-            if (this.ThrowException)
-			{
-				throw (Exception)this.CreateException(emptyExpression);
-			}
-        }
-
         public virtual void VisitEmptyStatement(EmptyStatement emptyStatement)
         {
             if (this.ThrowException)

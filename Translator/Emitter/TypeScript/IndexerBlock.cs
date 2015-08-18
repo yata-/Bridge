@@ -59,7 +59,7 @@ namespace Bridge.Translator.TypeScript
             }
         }
 
-        protected virtual void EmitMethodParameters(IEnumerable<ParameterDeclaration> declarations, AstNode context, bool skipClose)
+        protected override void EmitMethodParameters(IEnumerable<ParameterDeclaration> declarations, AstNode context, bool skipClose)
         {
             this.WriteOpenParentheses();
             bool needComma = false;
