@@ -415,7 +415,7 @@ namespace System
         /// <summary>
         /// The lastIndexOf() method returns the index within the calling String object of the last occurrence of the specified value, or -1 if not found. The calling string is searched backward, starting at fromIndex.
         /// </summary>
-        /// <param name=" searchValue">A string representing the value to search for.</param>
+        /// <param name="searchValue">A string representing the value to search for.</param>
         /// <returns></returns>
         public int LastIndexOf(string searchValue)
         {
@@ -425,7 +425,7 @@ namespace System
         /// <summary>
         /// The lastIndexOf() method returns the index within the calling String object of the last occurrence of the specified value, or -1 if not found. The calling string is searched backward, starting at fromIndex.
         /// </summary>
-        /// <param name=" searchValue">A string representing the value to search for.</param>
+        /// <param name="searchValue">A string representing the value to search for.</param>
         /// <param name="fromIndex">The location within the calling string to start the search at, indexed from left to right. It can be any integer. The default value is searchValue.length - 1. If fromIndex &lt; 0 or fromIndex &gt;= searchValue.length, the method will return -1.</param>
         /// <returns></returns>
         public int LastIndexOf(string searchValue, int fromIndex)
