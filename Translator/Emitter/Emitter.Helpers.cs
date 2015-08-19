@@ -239,6 +239,11 @@ namespace Bridge.Translator
                 }
             }
 
+            if (member == null)
+            {
+                return null;
+            }
+
             var attr = member.Attributes.FirstOrDefault(a => a.AttributeType.FullName == Bridge.Translator.Translator.Bridge_ASSEMBLY + ".NameAttribute");
             bool isIgnore = member.DeclaringTypeDefinition != null && this.Validator.IsIgnoreType(member.DeclaringTypeDefinition);
             string name;
