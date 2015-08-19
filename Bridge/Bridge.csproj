@@ -28,7 +28,8 @@
     <WarningLevel>4</WarningLevel>
     <NoStdLib>true</NoStdLib>
     <Prefer32Bit>false</Prefer32Bit>
-    <NoWarn>1591</NoWarn>
+    <NoWarn>1591, 0626, 0824, 0660, 0661</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -39,8 +40,9 @@
     <WarningLevel>4</WarningLevel>
     <NoStdLib>true</NoStdLib>
     <Prefer32Bit>false</Prefer32Bit>
-    <NoWarn>1591</NoWarn>
+    <NoWarn>1591, 0626, 0824, 0660, 0661</NoWarn>
     <DocumentationFile>bin\Release\Bridge.xml</DocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <NoStdLib>True</NoStdLib>
@@ -224,9 +226,6 @@
     <None Include="Resources\Bridge.jsb" />
     <None Include="Resources\build.bat" />
     <None Include="Resources\build.sh" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

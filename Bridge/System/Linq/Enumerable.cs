@@ -2925,6 +2925,9 @@ namespace System.Linq
         /// <typeparam name="TSource">
         /// The type of the elements of source.
         /// </typeparam>
+        /// <typeparam name="TResult">
+        /// The type of the elements in result.
+        /// </typeparam>
         /// <returns>
         /// The maximum value in the sequence.
         /// </returns>
@@ -2976,6 +2979,9 @@ namespace System.Linq
         /// </param>
         /// <typeparam name="TSource">
         /// The type of the elements of source.
+        /// </typeparam>
+        /// <typeparam name="TResult">
+        /// The type of the elements in result.
         /// </typeparam>
         /// <returns>
         /// The minimum value in the sequence.

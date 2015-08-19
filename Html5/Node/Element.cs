@@ -158,7 +158,7 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="e">Required. Reference to an event object to be dispatched.</param>
         /// <returns>Boolean that indicates whether the default action of the event was not canceled.</returns>
-        public virtual bool DispatchEvent(Event e)
+        public new virtual bool DispatchEvent(Event e)
         {
             return false;
         }

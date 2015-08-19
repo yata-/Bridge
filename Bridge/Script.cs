@@ -340,7 +340,7 @@ namespace Bridge
         }
 
         [GlobalTarget("Bridge.global")]
-        public static dynamic ToDynamic()
+        public new static dynamic ToDynamic()
         {
             return null;
         }
