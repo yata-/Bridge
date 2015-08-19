@@ -161,7 +161,7 @@ namespace Bridge.Translator
                 {
                     var parser = new ICSharpCode.NRefactory.CSharp.CSharpParser();
                     var syntaxTree = parser.Parse(reader, fileName);
-
+                    
                     if (parser.HasErrors)
                     {
                         foreach (var error in parser.Errors)

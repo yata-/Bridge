@@ -161,7 +161,27 @@ namespace Bridge.Translator
 
                     if (csharpInvocation != null)
                     {
-                        invocationResult = csharpInvocation.IsExtensionMethodInvocation ? csharpInvocation : null;
+                        if (csharpInvocation.IsExtensionMethodInvocation)
+                        {
+                            invocationResult = csharpInvocation;
+                            var resolvedMethod = invocationResult.Member as IMethod;
+                            if (resolvedMethod != null && resolvedMethod.IsExtensionMethod)
+                            {
+                                string inline = this.Emitter.GetInline(resolvedMethod);
+                                bool isNative = this.IsNativeMethod(resolvedMethod);
+
+                                if (string.IsNullOrWhiteSpace(inline) && isNative)
+                                {
+                                    invocationResult = null;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            invocationResult = null;
+                        }
+
+                        
 
                         if (this.IsEmptyPartialInvoking(csharpInvocation.Member as IMethod))
                         {
@@ -198,6 +218,7 @@ namespace Bridge.Translator
                         if (resolvedMethod != null && resolvedMethod.IsExtensionMethod)
                         {
                             string inline = this.Emitter.GetInline(resolvedMethod);
+                            bool isNative = this.IsNativeMethod(resolvedMethod);
 
                             if (!string.IsNullOrWhiteSpace(inline))
                             {
@@ -209,7 +230,7 @@ namespace Bridge.Translator
                                 this.Emitter.Output = savedBuilder;
                                 new InlineArgumentsBlock(this.Emitter, argsInfo, inline).Emit();
                             }
-                            else
+                            else if (!isNative)
                             {
                                 string name = BridgeTypes.ToJsName(resolvedMethod.DeclaringType, this.Emitter) + "." + this.Emitter.GetEntityName(resolvedMethod);
                                 var isIgnoreClass = resolvedMethod.DeclaringTypeDefinition != null && this.Emitter.Validator.IsIgnoreType(resolvedMethod.DeclaringTypeDefinition);
@@ -237,10 +258,13 @@ namespace Bridge.Translator
                                 this.WriteCloseParentheses();
                             }
 
-                            this.Emitter.ReplaceAwaiterByVar = oldValue;
-                            this.Emitter.AsyncExpressionHandling = oldAsyncExpressionHandling;
+                            if (!string.IsNullOrWhiteSpace(inline) || !isNative)
+                            {
+                                this.Emitter.ReplaceAwaiterByVar = oldValue;
+                                this.Emitter.AsyncExpressionHandling = oldAsyncExpressionHandling;
 
-                            return;
+                                return;
+                            }
                         }
                     }
                 }
@@ -401,6 +425,14 @@ namespace Bridge.Translator
 
             this.Emitter.ReplaceAwaiterByVar = oldValue;
             this.Emitter.AsyncExpressionHandling = oldAsyncExpressionHandling;
+        }
+
+        private bool IsNativeMethod(IMethod resolvedMethod)
+        {
+            return this.Emitter.Validator.HasAttribute(resolvedMethod.Attributes, "Bridge.NativeMethodAttribute") ||
+                   (resolvedMethod.DeclaringTypeDefinition != null &&
+                   (this.Emitter.Validator.HasAttribute(resolvedMethod.DeclaringTypeDefinition.Attributes, "Bridge.NativeMethodAttribute") ||
+                    this.Emitter.Validator.HasAttribute(resolvedMethod.DeclaringTypeDefinition.Attributes, "Bridge.IgnoreAttribute")));
         }
     }
 }

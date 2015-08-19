@@ -85,6 +85,7 @@ namespace Bridge.Translator
             bool isDecimalExpected = Helpers.IsDecimalType(expectedType, this.Emitter.Resolver);
             bool isDecimal = Helpers.IsDecimalType(resolveOperator.Type, this.Emitter.Resolver);
             OperatorResolveResult orr = resolveOperator as OperatorResolveResult;
+            int count = this.Emitter.Writers.Count;
 
             if (resolveOperator is ConstantResolveResult)
             {
@@ -162,6 +163,11 @@ namespace Bridge.Translator
                 }
                 
                 this.Emitter.IsUnaryAccessor = oldAccessor;
+
+                if (this.Emitter.Writers.Count > count)
+                {
+                    this.PopWriter();
+                }
             }
             else
             {
@@ -309,6 +315,11 @@ namespace Bridge.Translator
                         break;
                     default:
                         throw new EmitterException(unaryOperatorExpression, "Unsupported unary operator: " + unaryOperatorExpression.Operator.ToString());
+                }
+
+                if (this.Emitter.Writers.Count > count)
+                {
+                    this.PopWriter();
                 }
             }
 
