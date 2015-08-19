@@ -109,7 +109,7 @@ namespace Bridge.Translator
             ResolveResult resolveResult = null;
             ResolveResult expressionResolveResult = null;
 
-            if (identifierExpression.Parent is InvocationExpression && (((InvocationExpression)(identifierExpression.Parent)).Target == identifierExpression))
+            /*if (identifierExpression.Parent is InvocationExpression && (((InvocationExpression)(identifierExpression.Parent)).Target == identifierExpression))
             {
                 resolveResult = this.Emitter.Resolver.ResolveNode(identifierExpression.Parent, this.Emitter);
                 expressionResolveResult = this.Emitter.Resolver.ResolveNode(identifierExpression, this.Emitter);
@@ -117,7 +117,9 @@ namespace Bridge.Translator
             else
             {
                 resolveResult = this.Emitter.Resolver.ResolveNode(identifierExpression, this.Emitter);
-            }
+            }*/
+
+            resolveResult = this.Emitter.Resolver.ResolveNode(identifierExpression, this.Emitter);
 
             var id = identifierExpression.Identifier;
 
