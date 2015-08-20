@@ -25,17 +25,11 @@ namespace Bridge.Translator.Tests
             { "bridge.min.js", CompareMode.Presence}
         };
 
-        private static string CombineRelativePath(string absolutePath, string relativePath)
-        {
-            var di = new DirectoryInfo(absolutePath + relativePath);
-
-            return di.FullName;
-        }
 
         private void GetPaths(string folder)
         {
             ProjectFileName = "test" + ".csproj";
-            ProjectFolder = CombineRelativePath(Directory.GetCurrentDirectory(), @"\..\..\TestProjects\" + folder);
+            ProjectFolder = FileHelper.GetRelativeToCurrentDirPath(@"\..\..\TestProjects", folder);
 
             ProjectFilePath = Path.Combine(ProjectFolder, ProjectFileName);
 
