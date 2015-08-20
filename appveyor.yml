@@ -165,9 +165,9 @@ after_test:
   # - nunit-console "c:\projects\Builder\TranslatorTests\bin\Debug\Bridge.Translator.Tests.dll"
 
 # to disable automatic tests 
-test:
-   assemblies:
-    - builder\translatortests\bin\$(configuration)\bridge.translator.tests.dll
+# test:
+   # assemblies:
+    # - builder\translatortests\bin\$(configuration)\bridge.translator.tests.dll
 
 # scripts to run before deployment
 before_deploy:
