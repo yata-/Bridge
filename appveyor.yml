@@ -181,6 +181,11 @@ deploy_script:
 # to disable deployment
 #deploy: off
 
+artifacts:
+  - path: c:\projects\Builder\TranslatorTests\bin\$(configuration)\testProjectsBuild.*
+    name: TranslatorTestProjectsBuildLog
+    type: zip
+
 #---------------------------------#
 #        global handlers          #
 #---------------------------------#
