@@ -11,6 +11,11 @@ namespace Bridge.Translator.Tests
     [TestFixture]
     class OutputTest
     {
+        private const string LogFileNameWithoutExtention = "testProjectsBuild";
+        private const string BuildArguments = "/flp:Verbosity=diagnostic;LogFile=" + LogFileNameWithoutExtention + ".log;Append"
+                                              + " /flp1:warningsonly;LogFile=" + LogFileNameWithoutExtention + ".wrn;Append"
+                                              + " /flp2:errorsonly;LogFile=" + LogFileNameWithoutExtention + ".err;Append";
+
         public string ProjectFileName { get; set; }
         public string ProjectFolder { get; set; }
 
@@ -37,6 +42,16 @@ namespace Bridge.Translator.Tests
             ReferenceFolder = Path.Combine(ProjectFolder, @"Bridge\Reference");
         }
 
+        [TestFixtureSetUp]
+        public void TestFixtureSetUp()
+        {
+            var logFiles = Directory.GetFiles(Directory.GetCurrentDirectory(), LogFileNameWithoutExtention + ".*", SearchOption.AllDirectories);
+            foreach (var logFile in logFiles)
+            {
+                File.Delete(logFile);
+            }
+        }
+
         [TestCase("01", false, TestName = "OutputTest for project 01 - Default")]
         [TestCase("02", true, TestName = "OutputTest for project 02 - outputFormatting Formatted")]
         [TestCase("03", true, TestName = "OutputTest for project 03 - outputFormatting Minified")]
@@ -58,7 +73,8 @@ namespace Bridge.Translator.Tests
 
             var translator = new TranslatorRunner()
             {
-                ProjectLocation = ProjectFilePath
+                ProjectLocation = ProjectFilePath,
+                BuildArguments = OutputTest.BuildArguments
             };
 
             try

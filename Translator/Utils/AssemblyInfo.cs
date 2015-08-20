@@ -177,5 +177,11 @@ namespace Bridge.Translator
                 this.generateDocumentation = value;
             }
         }
+
+        /// <summary>
+        /// The BuildArguments will be added to the command line that build project files. It is useful for debugging, logging etc.
+        /// For example, "/fileLogger /fileLoggerParameters:Append;"
+        /// </summary>
+        public string BuildArguments { get; set; }
     }
 }

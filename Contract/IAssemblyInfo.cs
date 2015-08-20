@@ -96,5 +96,6 @@ namespace Bridge.Contract
         string PluginsPath { get; set; }
         bool GenerateTypeScript { get; set; }
         DocumentationMode GenerateDocumentation { get; set; }
+        string BuildArguments { get; set; }
     }
 }

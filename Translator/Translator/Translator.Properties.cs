@@ -56,6 +56,8 @@ namespace Bridge.Translator
             set;
         }
 
+        public string BuildArguments { get; set; }
+
         private string msbuildVersion = "4.0.30319";
 
         public string MSBuildVersion

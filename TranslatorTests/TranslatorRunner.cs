@@ -9,6 +9,7 @@ namespace Bridge.Translator.Tests
     class TranslatorRunner
     {
         public string ProjectLocation { get; set; }
+        public string BuildArguments { get; set; }
 
         void LogMessage(string level, string message)
         {
@@ -50,6 +51,8 @@ namespace Bridge.Translator.Tests
             var outputLocation = Path.ChangeExtension(ProjectLocation, "js");
 
             var translator = new Bridge.Translator.Translator(ProjectLocation);
+
+            translator.BuildArguments = this.BuildArguments;
             translator.Log = LogMessage;
             translator.Rebuild = true;
 
