@@ -182,8 +182,16 @@ deploy_script:
 #deploy: off
 
 artifacts:
-  - path: c:\projects\Builder\TranslatorTests\bin\$(configuration)\testProjectsBuild.*
+  - path: TranslatorTests\bin\$(configuration)\testProjectsBuild.log
     name: TranslatorTestProjectsBuildLog
+    type: zip
+
+  - path: TranslatorTests\bin\$(configuration)\testProjectsBuild.err
+    name: TranslatorTestProjectsBuildErr
+    type: zip
+
+  - path: TranslatorTests\bin\$(configuration)\testProjectsBuild.wrn
+    name: TranslatorTestProjectsBuildWrn
     type: zip
 
 #---------------------------------#
