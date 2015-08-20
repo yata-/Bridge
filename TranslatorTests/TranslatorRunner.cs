@@ -10,32 +10,9 @@ namespace Bridge.Translator.Tests
     {
         public string ProjectLocation { get; set; }
 
-        public TranslatorRunner()
-        {
-
-        }
-
         void LogMessage(string level, string message)
         {
-            //level = level ?? "message";
-            //switch (level.ToLowerInvariant())
-            //{
-            //    case "message":
-            //        Console.ForegroundColor = ConsoleColor.Gray;
-            //        Console.WriteLine("Message: {0}", message);
-            //        Console.ResetColor();
-            //        break;
-            //    case "warning":
-            //        Console.ForegroundColor = ConsoleColor.DarkYellow;
-            //        Console.WriteLine("Warning: {0}", message);
-            //        Console.ResetColor();
-            //        break;
-            //    case "error":
-            //        Console.ForegroundColor = ConsoleColor.Red;
-            //        Console.WriteLine("Error: {0}", message);
-            //        Console.ResetColor();
-            //        break;
-            //}
+            SimpleLogger.Instance.WriteLine("{0}: {1}", level.ToUpper(), message);
         }
 
         private static string FindBridgeDllPathByConfiguration(string configurationName)
@@ -73,13 +50,13 @@ namespace Bridge.Translator.Tests
             var outputLocation = Path.ChangeExtension(ProjectLocation, "js");
 
             var translator = new Bridge.Translator.Translator(ProjectLocation);
-            translator.BridgeLocation = FindBridgeDllPath();
+            translator.Log = LogMessage;
+            translator.Rebuild = true;
 
+            translator.BridgeLocation = FindBridgeDllPath();
             if (translator.BridgeLocation == null)
                 Bridge.Translator.Exception.Throw("Unable to determine Bridge project output path");
 
-            translator.Rebuild = true;
-            translator.Log = LogMessage;
             translator.Translate();
 
             string path = string.IsNullOrWhiteSpace(Path.GetFileName(outputLocation)) ? outputLocation : Path.GetDirectoryName(outputLocation);
