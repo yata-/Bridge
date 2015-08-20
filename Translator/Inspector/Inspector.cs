@@ -117,6 +117,11 @@ namespace Bridge.Translator
 
             var resolveResult = resolver.ResolveNode(type, null);
 
+            if (!resolveResult.IsError && NullableType.IsNullable(resolveResult.Type))
+            {
+                return null;
+            }
+
             if (!resolveResult.IsError && resolveResult.Type.Kind == TypeKind.Enum)
             {
                 return 0;
@@ -146,6 +151,11 @@ namespace Bridge.Translator
                 type.IsKnownType(KnownTypeCode.Enum))
             {
                 return 0;
+            }
+
+            if (NullableType.IsNullable(type))
+            {
+                return null;
             }
 
             if (type.IsKnownType(KnownTypeCode.Boolean))
@@ -223,7 +233,7 @@ namespace Bridge.Translator
         /// <summary>
         /// Validates the type's namespace attribute (if present) against conflicts with Bridge.NET's namespaces.
         /// </summary>
-        /// <param name="type">The TypeDefinition object of the validated item.</param>
+        /// <param name="tpDecl">The TypeDefinition object of the validated item.</param>
         private void ValidateNamespace(TypeDeclaration tpDecl)
         {
             ICSharpCode.NRefactory.CSharp.Attribute nsAt;
@@ -242,7 +252,7 @@ namespace Bridge.Translator
         /// <summary>
         /// Validates the namespace name against conflicts with Bridge.NET's namespaces.
         /// </summary>
-        /// <param name="type">The NamespaceDefinition object of the validated item.</param>
+        /// <param name="nsDecl">The NamespaceDefinition object of the validated item.</param>
         private void ValidateNamespace(NamespaceDeclaration nsDecl)
         {
             if (Bridge.Translator.Inspector.IsConflictingNamespace(nsDecl.FullName))
