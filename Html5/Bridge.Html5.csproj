@@ -54,6 +54,7 @@
     <Compile Include="ClientRectList.cs" />
     <Compile Include="CompatMode.cs" />
     <Compile Include="Console.cs" />
+    <Compile Include="Elements\TemplateElement.cs" />
     <Compile Include="String.cs" />
     <Compile Include="TypedArray\Float32Array.cs" />
     <Compile Include="TypedArray\Float64Array.cs" />
