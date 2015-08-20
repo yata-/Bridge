@@ -1181,7 +1181,7 @@ namespace Bridge.Html5
         /// <summary>
         /// Creates a new comment node and returns it.
         /// </summary>
-        /// <param name="comment    ">string containing the data to be added to the Comment.</param>
+        /// <param name="comment">string containing the data to be added to the Comment.</param>
         /// <returns>Comment node.</returns>
         public static Comment CreateComment(string comment)
         {
