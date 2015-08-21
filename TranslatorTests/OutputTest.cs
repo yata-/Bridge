@@ -42,6 +42,11 @@ namespace Bridge.Translator.Tests
             ReferenceFolder = Path.Combine(ProjectFolder, @"Bridge\Reference");
         }
 
+        void LogInfo(string message)
+        {
+            SimpleLogger.Instance.LogInfo(message);
+        }
+
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
@@ -70,6 +75,16 @@ namespace Bridge.Translator.Tests
         public void Test(string folder, bool useSpecialFileCompare)
         {
             GetPaths(folder);
+
+            LogInfo("OutputTest Project " + folder);
+
+            LogInfo("\tProjectFileName " + ProjectFileName);
+            LogInfo("\tProjectFolder " + ProjectFolder);
+
+            LogInfo("\tProjectFilePath " + ProjectFilePath);
+
+            LogInfo("\tOutputFolder " + OutputFolder);
+            LogInfo("\tReferenceFolder " + ReferenceFolder);
 
             var translator = new TranslatorRunner()
             {

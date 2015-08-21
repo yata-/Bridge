@@ -63,6 +63,15 @@ namespace Bridge.Translator.Tests
             Writer.Flush();
         }
 
+        public void LogInfo(string s)
+        {
+            WriteLine("INFO: " + s);
+        }
+
+        public void LogInfo(string format, params object[] arg)
+        {
+            WriteLine("INFO: " + format, arg);
+        }
 
         public void Dispose()
         {

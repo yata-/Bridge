@@ -16,6 +16,11 @@ namespace Bridge.Translator.Tests
             SimpleLogger.Instance.WriteLine("{0}: {1}", level.ToUpper(), message);
         }
 
+        void LogInfo(string message)
+        {
+            SimpleLogger.Instance.LogInfo(message);
+        }
+
         private static string FindBridgeDllPathByConfiguration(string configurationName)
         {
             var bridgeProjectPath = FileHelper.GetRelativeToCurrentDirPath(@"\..\..\..\..\Bridge\Bridge\Bridge.csproj");
@@ -56,9 +61,16 @@ namespace Bridge.Translator.Tests
             translator.Log = LogMessage;
             translator.Rebuild = true;
 
+            LogInfo("\t\tProjectLocation: " + ProjectLocation);
+            LogInfo("\t\tBuildArguments: " + BuildArguments);
+
             translator.BridgeLocation = FindBridgeDllPath();
             if (translator.BridgeLocation == null)
+            {
                 Bridge.Translator.Exception.Throw("Unable to determine Bridge project output path");
+            }
+
+            LogInfo("\t\tBridgeLocation: " + translator.BridgeLocation);
 
             translator.Translate();
 
@@ -68,11 +80,10 @@ namespace Bridge.Translator.Tests
                                     Path.Combine(Path.GetDirectoryName(ProjectLocation), translator.AssemblyInfo.Output) :
                                     path;
 
+            LogInfo("\t\toutputDir: " + outputDir);
             translator.SaveTo(outputDir, Path.GetFileName(outputLocation));
 
-            outputLocation = outputDir;
-
-            return outputLocation;
+            return outputDir;
         }
     }
 }
