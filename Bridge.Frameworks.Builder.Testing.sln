@@ -87,6 +87,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "typeScriptHtml", "..\Testin
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Translator.Tests", "..\Builder\TranslatorTests\Bridge.Translator.Tests.csproj", "{6E1D7559-DAA0-41B7-B0E5-8E106072D704}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DE78B8B7-C0F5-415B-A70B-02194433F450} = {DE78B8B7-C0F5-415B-A70B-02194433F450}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
