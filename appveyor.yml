@@ -182,17 +182,21 @@ deploy_script:
 #deploy: off
 
 artifacts:
-  - path: TranslatorTests\bin\$(configuration)\testProjectsBuild.log
+  - path: '**\testProjectsBuild.log'
     name: TranslatorTestProjectsBuildLog
     type: zip
 
-  - path: TranslatorTests\bin\$(configuration)\testProjectsBuild.err
+  - path: '**\testProjectsBuild.err'
     name: TranslatorTestProjectsBuildErr
     type: zip
 
-  - path: TranslatorTests\bin\$(configuration)\testProjectsBuild.wrn
+  - path: '**\testProjectsBuild.wrn'
     name: TranslatorTestProjectsBuildWrn
     type: zip
+	
+  - path: '**\Bridge.Translator.Tests.run.log'
+    name: TranslatorTestRunLog
+    type: zip	
 
 #---------------------------------#
 #        global handlers          #

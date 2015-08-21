@@ -73,7 +73,7 @@ namespace Bridge.Translator.Tests
                 Bridge.Translator.Exception.Throw("Unable to determine Bridge project output path");
             }
 
-            translator.BuildArguments = this.BuildArguments + @"/p:Platform=AnyCPU /p:OutDir=bin\" + configuration + @"\";
+            translator.BuildArguments = this.BuildArguments + @" /p:Platform=AnyCPU /p:OutDir=bin\" + configuration + "\\";
             translator.Configuration = configuration;
 
             LogInfo("\t\tBuildArguments: " + translator.BuildArguments);
