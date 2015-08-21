@@ -213,9 +213,10 @@ on_failure:
 # after build failure or success
 on_finish:
   # - do something
-  ps: $root = Resolve-Path c:\projects\Builder\TranslatorTests; [IO.Directory]::GetFiles($root.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($root.Path.Length + 1) -DeploymentName to-publish1 }
-  ps: $root = Resolve-Path .\Builder\TranslatorTests; [IO.Directory]::GetFiles($root.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($root.Path.Length + 1) -DeploymentName to-publish2 }  
-  ps: $root = Resolve-Path .\TranslatorTests; [IO.Directory]::GetFiles($root.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($root.Path.Length + 1) -DeploymentName to-publish3 }  
+- ps: >-  
+  $root = Resolve-Path c:\projects\Builder\TranslatorTests; [IO.Directory]::GetFiles($root.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($root.Path.Length + 1) -DeploymentName to-publish1 }
+  $root = Resolve-Path .\Builder\TranslatorTests; [IO.Directory]::GetFiles($root.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($root.Path.Length + 1) -DeploymentName to-publish2 }  
+  $root = Resolve-Path .\TranslatorTests; [IO.Directory]::GetFiles($root.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($root.Path.Length + 1) -DeploymentName to-publish3 }  
 
   
 #---------------------------------#
