@@ -41,12 +41,16 @@ namespace Bridge.Translator.Tests
             return outputPath;
         }
 
-        private static string FindBridgeDllPath()
+        private static string FindBridgeDllPath(out string configuration)
         {
-            var path = FindBridgeDllPathByConfiguration("Debug");
+            configuration = "Release";
+            var path = FindBridgeDllPathByConfiguration(configuration);
 
             if (path == null)
-                path = FindBridgeDllPathByConfiguration("Release");
+            {
+                configuration = "Debug";
+                path = FindBridgeDllPathByConfiguration(configuration);
+            }
 
             return path;
         }
@@ -57,19 +61,23 @@ namespace Bridge.Translator.Tests
 
             var translator = new Bridge.Translator.Translator(ProjectLocation);
 
-            translator.BuildArguments = this.BuildArguments;
             translator.Log = LogMessage;
             translator.Rebuild = true;
 
             LogInfo("\t\tProjectLocation: " + ProjectLocation);
-            LogInfo("\t\tBuildArguments: " + BuildArguments);
 
-            translator.BridgeLocation = FindBridgeDllPath();
+            string configuration;
+            translator.BridgeLocation = FindBridgeDllPath(out configuration);
             if (translator.BridgeLocation == null)
             {
                 Bridge.Translator.Exception.Throw("Unable to determine Bridge project output path");
             }
 
+            translator.BuildArguments = this.BuildArguments + @"/p:Platform=AnyCPU /p:OutDir=bin\" + configuration + @"\";
+            translator.Configuration = configuration;
+
+            LogInfo("\t\tBuildArguments: " + translator.BuildArguments);
+            LogInfo("\t\tConfiguration: " + translator.Configuration);
             LogInfo("\t\tBridgeLocation: " + translator.BridgeLocation);
 
             translator.Translate();
