@@ -193,7 +193,7 @@ artifacts:
   - path: '**\testProjectsBuild.wrn'
     name: TranslatorTestProjectsBuildWrn
     type: zip
-	
+
   - path: '**\Bridge.Translator.Tests.run.log'
     name: TranslatorTestRunLog
     type: zip	
