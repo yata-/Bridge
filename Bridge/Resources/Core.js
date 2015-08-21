@@ -105,7 +105,7 @@
             if (typeof Bridge.global.jQuery !== 'undefined') {
                 Bridge.global.jQuery(delayfn);
             } else {
-                if (document.readyState == "complete" || document.readyState == "loaded") {
+                if (!document || document.readyState == "complete" || document.readyState == "loaded") {
                     delayfn();
                 }
                 else {

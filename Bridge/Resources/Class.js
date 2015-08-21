@@ -217,7 +217,7 @@
             if (instanceConfig && !Bridge.isFunction(instanceConfig)) {
                 Bridge.Class.initConfig(extend, base, instanceConfig, false, prop);                
 
-                if (document.readyState == "complete" || document.readyState == "loaded") {
+                if (document && (document.readyState == "complete" || document.readyState == "loaded")) {
                     Bridge.Class.createAccessors(instanceConfig, prototype);
                 }
                 else {
@@ -331,7 +331,7 @@
                 }
             };
 
-            if (document.readyState == "complete" || document.readyState == "loaded") {
+            if (document && (document.readyState == "complete" || document.readyState == "loaded")) {
                 fn();
             }
             else {

@@ -114,7 +114,7 @@
             if (typeof Bridge.global.jQuery !== 'undefined') {
                 Bridge.global.jQuery(delayfn);
             } else {
-                if (document.readyState == "complete" || document.readyState == "loaded") {
+                if (!document || document.readyState == "complete" || document.readyState == "loaded") {
                     delayfn();
                 }
                 else {
@@ -1634,7 +1634,7 @@
             if (instanceConfig && !Bridge.isFunction(instanceConfig)) {
                 Bridge.Class.initConfig(extend, base, instanceConfig, false, prop);                
 
-                if (document.readyState == "complete" || document.readyState == "loaded") {
+                if (document && (document.readyState == "complete" || document.readyState == "loaded")) {
                     Bridge.Class.createAccessors(instanceConfig, prototype);
                 }
                 else {
@@ -1748,7 +1748,7 @@
                 }
             };
 
-            if (document.readyState == "complete" || document.readyState == "loaded") {
+            if (document && (document.readyState == "complete" || document.readyState == "loaded")) {
                 fn();
             }
             else {
@@ -4636,6 +4636,10 @@ Bridge.define('Bridge.Text.StringBuilder', {
 // @source Browser.js
 
 (function () {
+	if(!document) {
+		return;
+	}
+	
     var check = function (regex) {
         return regex.test(navigator.userAgent);
     },

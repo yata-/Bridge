@@ -1,6 +1,10 @@
 ﻿// @source Browser.js
 
 (function () {
+	if(!document) {
+		return;
+	}
+	
     var check = function (regex) {
         return regex.test(navigator.userAgent);
     },
