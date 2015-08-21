@@ -51,7 +51,7 @@ namespace Bridge.Translator
 
                 if (p.ExitCode != 0)
                 {
-                    Bridge.Translator.Exception.Throw("Compilation was not successful, exit code - " + p.ExitCode);
+                    Bridge.Translator.Exception.Throw("Compilation was not successful, exit code - {0}; FileName - {1}; Arguments - {2}.", p.ExitCode, info.FileName, info.Arguments);
                 }
             }
         }
