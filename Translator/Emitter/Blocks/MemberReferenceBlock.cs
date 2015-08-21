@@ -410,7 +410,7 @@ namespace Bridge.Translator
                 }
                 else if (!string.IsNullOrEmpty(inline))
                 {
-                    if (resolveResult is InvocationResolveResult || (member.Member.SymbolKind == SymbolKind.Property && this.Emitter.IsAssignment))
+                    if (resolveResult is InvocationResolveResult)
                     {
                         this.PushWriter(inline);
                     }

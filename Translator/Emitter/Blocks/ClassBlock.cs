@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Bridge.Contract;
+﻿using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using Mono.Cecil;
 using Object.Net.Utilities;
 using System.Linq;
 using System.Text.RegularExpressions;
-using ICSharpCode.NRefactory.Semantics;
-using ICSharpCode.NRefactory.TypeSystem;
-using ICSharpCode.NRefactory.TypeSystem.Implementation;
 
 namespace Bridge.Translator
 {
@@ -197,87 +192,8 @@ namespace Bridge.Translator
 
             this.WriteCloseParentheses();
             this.WriteSemiColon();
-            var onParseMethods = this.GetOnParseMethods();
-            foreach (var method in onParseMethods)
-            {
-                this.WriteNewLine();
-                this.Write(method);
-            }
-
             this.WriteNewLine();
             this.WriteNewLine();
-        }
-
-        protected virtual IEnumerable<string> GetOnParseMethods()
-        {
-            var methods = this.TypeInfo.InstanceMethods;
-
-            foreach (var methodGroup in methods)
-            {
-                foreach (var method in methodGroup.Value)
-                {
-                    foreach (var attrSection in method.Attributes)
-                    {
-                        foreach (var attr in attrSection.Attributes)
-                        {
-                            var rr = this.Emitter.Resolver.ResolveNode(attr.Type, this.Emitter);
-                            if (rr.Type.FullName == "Bridge.OnParseAttribute")
-                            {
-                                throw new EmitterException(attr, "Instance method cannot be OnParse method");
-                            }
-                        }
-                    }
-                }
-            }
-
-            methods = this.TypeInfo.StaticMethods;
-            List<string> list = new List<string>();
-
-            foreach (var methodGroup in methods)
-            {
-                foreach (var method in methodGroup.Value)
-                {
-                    MemberResolveResult rrMember = null;
-                    IMethod rrMethod = null;
-                    foreach (var attrSection in method.Attributes)
-                    {
-                        foreach (var attr in attrSection.Attributes)
-                        {
-                            var rr = this.Emitter.Resolver.ResolveNode(attr.Type, this.Emitter);
-                            if (rr.Type.FullName == "Bridge.OnParseAttribute")
-                            {
-                                if (rrMember == null)
-                                {
-                                    rrMember = this.Emitter.Resolver.ResolveNode(method, this.Emitter) as MemberResolveResult;
-                                    rrMethod = rrMember != null ? rrMember.Member as IMethod : null;
-                                }
-
-                                if (rrMethod != null)
-                                {
-                                    if (rrMethod.TypeParameters.Count > 0)
-                                    {
-                                        throw new EmitterException(method, "OnParse method cannot be generic");
-                                    }
-
-                                    if (rrMethod.Parameters.Count > 0)
-                                    {
-                                        throw new EmitterException(method, "OnParse method should not have parameters");
-                                    }
-
-                                    if (rrMethod.ReturnType.Kind != TypeKind.Void)
-                                    {
-                                        throw new EmitterException(method, "OnParse method should not return anything");
-                                    }
-
-                                    list.Add(BridgeTypes.ToJsName(rrMethod.DeclaringTypeDefinition, this.Emitter) + "." + this.Emitter.GetEntityName(method) + "();");
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            return list;
         }
     }
 }

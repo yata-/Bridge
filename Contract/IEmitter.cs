@@ -92,6 +92,5 @@ namespace Bridge.Contract
         void InitEmitter();
         IJsDoc JsDoc { get; set;  }
         IType ReturnType { get; set; }
-        string GetEntityNameFromAttr(IEntity member, bool setter = false);
     }
 }
