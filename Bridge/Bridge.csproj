@@ -216,7 +216,6 @@
     <Content Include="Resources\Core.js" />
     <Content Include="Resources\Validation.js" />
     <EmbeddedResource Include="Resources\bridge.js" />
-    <EmbeddedResource Include="Resources\bridge.min.js" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\bridge.d.ts" />

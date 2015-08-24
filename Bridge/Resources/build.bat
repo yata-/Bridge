@@ -2,7 +2,7 @@
 rem this script concatenates all files specified in <include name=<what> />
 rem tags on Bridge.jsb file into a single bridge.js file.
 
-rem TODO: remove UTF8 BOM from between files
+cd %~dp0
 
 type dostools\utfbom.txt > newbridge.js
 
@@ -18,4 +18,6 @@ for /F "usebackq delims=" %%l in (`findstr /c:"include name=" Bridge.jsb`) do (
  type dostools\unixnl.txt >> newbridge.js
 )
 
-rem ren newbridge.js bridge.js
+..\..\packages\BOMStrip.1.0.0\tools\BOMStrip.exe newbridge.js
+
+ren newbridge.js bridge.js
