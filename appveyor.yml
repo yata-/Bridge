@@ -181,22 +181,6 @@ deploy_script:
 # to disable deployment
 #deploy: off
 
-artifacts:
-  - path: '**\testProjectsBuild.log'
-    name: TranslatorTestProjectsBuildLog
-    type: zip
-
-  - path: '**\testProjectsBuild.err'
-    name: TranslatorTestProjectsBuildErr
-    type: zip
-
-  - path: '**\testProjectsBuild.wrn'
-    name: TranslatorTestProjectsBuildWrn
-    type: zip
-
-  - path: '**\Bridge.Translator.Tests.run.log'
-    name: TranslatorTestRunLog
-    type: zip	
 
 #---------------------------------#
 #        global handlers          #
@@ -212,13 +196,7 @@ on_failure:
 
 # after build failure or success
 on_finish:
-- ps: $root1 = Resolve-Path .\TranslatorTests\TestProjects\01\bin\Release; [IO.Directory]::GetFiles($root1.Path, 'Bridge.dll', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($root1.Path.Length + 1) -DeploymentName to-publish4 }  
-  # $root = Resolve-Path .\TranslatorTests\bin\Release; [IO.Directory]::GetFiles($root.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($root.Path.Length + 1) -DeploymentName to-publish3 }  
-  
-  
-  # $root = Resolve-Path c:\projects\Builder\TranslatorTests; [IO.Directory]::GetFiles($root.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($root.Path.Length + 1) -DeploymentName to-publish1 }
-  # $root = Resolve-Path .\Builder\TranslatorTests; [IO.Directory]::GetFiles($root.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($root.Path.Length + 1) -DeploymentName to-publish2 }  
-  
+- ps: $root = Resolve-Path .\TranslatorTests\bin\Release; [IO.Directory]::GetFiles($root.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($root.Path.Length + 1) -DeploymentName to-publish3 }  
 
   
 #---------------------------------#
