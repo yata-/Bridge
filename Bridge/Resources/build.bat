@@ -1,4 +1,21 @@
-"%~dp0\JSBuilder\JSBuildConsole.exe" /path="%~dp0\Bridge.jsb"
+@echo off
+rem this script concatenates all files specified in <include name=<what> />
+rem tags on Bridge.jsb file into a single bridge.js file.
 
-move /y "%~dp0\bridge.js" "%~dp0\bridge.min.js"
-move /y "%~dp0\bridge-debug.js" "%~dp0\bridge.js"
+rem TODO: remove UTF8 BOM from between files
+
+type dostools\utfbom.txt > newbridge.js
+
+set "sep=include name"
+setlocal EnableDelayedExpansion
+for /F "usebackq delims=" %%l in (`findstr /c:"include name=" Bridge.jsb`) do (
+ set "line=%%l"
+ set "value=!line:*%sep%=!"
+ set "value=!value:~2!
+ set "value=!value:/=\!"
+ echo Merging !value!
+ type !value! >> newbridge.js
+ type dostools\unixnl.txt >> newbridge.js
+)
+
+rem ren newbridge.js bridge.js
