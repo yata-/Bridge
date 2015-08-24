@@ -81,30 +81,6 @@ for file in ${filelist}; do
 done
 
 cp "${tmpbrjs}" "${jsfile}"
-
-function minify() {
- cp "${tmpbrjs}" "${jsminf}"
-
- echo "Minifying '${jsminf}'."
- sedscp="s#(^|^.*[^:])//.*\$#\1#g;s/^ *//g;s/ *\$//g;s/  +/ /g;/^ *\$/d"
- if ${osx}; then
-  ${sedcmd} -i '' -e "s/$(echo -ne "\t")/ /g" "${jsminf}" # Replate tab chars
-  LC_ALL=C ${sedcmd} -i '' -e "${sedscp}" "${jsminf}"
- else
-  # TODO: Check on linux!
-  ${sedcmd} -i -e "s/\t/ /g" "${jsminf}" # Replace tab chars
-  ${sedcmd} -i -e "${sedscp}" "${jsminf}"
- fi
-
- # Removing line breaks from JavaScript files can break code in some situations.
- #cat "${jsminf}" | tr '\n' ' ' > "${tmpbrjs}"
- #cp "${tmpbrjs}" "${jsminf}"
-}
-
-# Minifying left just during the transition between resource and dynamic
-# minification.
-minify
-
 rm "${tmpbrjs}"
 
 echo "$(date) - Done building ${jsfile}."
