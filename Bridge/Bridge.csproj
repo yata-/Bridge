@@ -52,7 +52,6 @@
     <AdditionalExplicitAssemblyReferences />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Attributes\NativeMethodAttribute.cs" />
     <Compile Include="Attributes\GlobalTargetAttribute.cs" />
     <Compile Include="Attributes\IgnoreCastAttribute.cs" />
     <Compile Include="Attributes\IgnoreGenericAttribute.cs" />
