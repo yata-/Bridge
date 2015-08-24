@@ -20,4 +20,5 @@ for /F "usebackq delims=" %%l in (`findstr /c:"include name=" Bridge.jsb`) do (
 
 ..\..\packages\BOMStrip.1.0.0\tools\BOMStrip.exe newbridge.js
 
-ren newbridge.js bridge.js
+copy /y newbridge.js bridge.js
+del newbridge.js
