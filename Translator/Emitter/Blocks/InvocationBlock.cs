@@ -158,12 +158,13 @@ namespace Bridge.Translator
                     var csharpInvocation = targetResolve as CSharpInvocationResolveResult;
 
                     InvocationResolveResult invocationResult;
-
+                    bool isExtensionMethodInvocation = false;
                     if (csharpInvocation != null)
                     {
                         if (csharpInvocation.IsExtensionMethodInvocation)
                         {
                             invocationResult = csharpInvocation;
+                            isExtensionMethodInvocation = true;
                             var resolvedMethod = invocationResult.Member as IMethod;
                             if (resolvedMethod != null && resolvedMethod.IsExtensionMethod)
                             {
@@ -220,46 +221,77 @@ namespace Bridge.Translator
                             string inline = this.Emitter.GetInline(resolvedMethod);
                             bool isNative = this.IsNativeMethod(resolvedMethod);
 
-                            if (!string.IsNullOrWhiteSpace(inline))
+                            if (isExtensionMethodInvocation)
                             {
-                                this.Write("");
-                                StringBuilder savedBuilder = this.Emitter.Output;
-                                this.Emitter.Output = new StringBuilder();
-                                this.WriteThisExtension(invocationExpression.Target);
-                                argsInfo.ThisArgument = this.Emitter.Output.ToString();
-                                this.Emitter.Output = savedBuilder;
-                                new InlineArgumentsBlock(this.Emitter, argsInfo, inline).Emit();
-                            }
-                            else if (!isNative)
-                            {
-                                string name = BridgeTypes.ToJsName(resolvedMethod.DeclaringType, this.Emitter) + "." + this.Emitter.GetEntityName(resolvedMethod);
-                                var isIgnoreClass = resolvedMethod.DeclaringTypeDefinition != null && this.Emitter.Validator.IsIgnoreType(resolvedMethod.DeclaringTypeDefinition);
-
-                                this.Write(name);
-
-                                if (!isIgnoreClass && argsInfo.HasTypeArguments)
+                                if (!string.IsNullOrWhiteSpace(inline))
                                 {
+                                    this.Write("");
+                                    StringBuilder savedBuilder = this.Emitter.Output;
+                                    this.Emitter.Output = new StringBuilder();
+                                    this.WriteThisExtension(invocationExpression.Target);
+                                    argsInfo.ThisArgument = this.Emitter.Output.ToString();
+                                    this.Emitter.Output = savedBuilder;
+                                    new InlineArgumentsBlock(this.Emitter, argsInfo, inline).Emit();
+                                }
+                                else if (!isNative)
+                                {
+                                    string name = BridgeTypes.ToJsName(resolvedMethod.DeclaringType, this.Emitter) + "." + this.Emitter.GetEntityName(resolvedMethod);
+                                    var isIgnoreClass = resolvedMethod.DeclaringTypeDefinition != null && this.Emitter.Validator.IsIgnoreType(resolvedMethod.DeclaringTypeDefinition);
+
+                                    this.Write(name);
+
+                                    if (!isIgnoreClass && argsInfo.HasTypeArguments)
+                                    {
+                                        this.WriteOpenParentheses();
+                                        new TypeExpressionListBlock(this.Emitter, argsInfo.TypeArguments).Emit();
+                                        this.WriteCloseParentheses();
+                                    }
+
                                     this.WriteOpenParentheses();
-                                    new TypeExpressionListBlock(this.Emitter, argsInfo.TypeArguments).Emit();
+
+                                    this.WriteThisExtension(invocationExpression.Target);
+
+                                    if (argsCount > 0)
+                                    {
+                                        this.WriteComma();
+                                    }
+
+                                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, invocationExpression).Emit();
+
                                     this.WriteCloseParentheses();
                                 }
 
-                                this.WriteOpenParentheses();
-
-                                this.WriteThisExtension(invocationExpression.Target);
-
-                                if (argsCount > 0)
+                                if (!string.IsNullOrWhiteSpace(inline) || !isNative)
                                 {
-                                    this.WriteComma();
+                                    this.Emitter.ReplaceAwaiterByVar = oldValue;
+                                    this.Emitter.AsyncExpressionHandling = oldAsyncExpressionHandling;
+
+                                    return;
+                                }
+                            }
+                            else if (isNative)
+                            {
+                                if (!string.IsNullOrWhiteSpace(inline))
+                                {
+                                    this.Write("");
+                                    StringBuilder savedBuilder = this.Emitter.Output;
+                                    this.Emitter.Output = new StringBuilder();
+                                    this.WriteThisExtension(invocationExpression.Target);
+                                    argsInfo.ThisArgument = this.Emitter.Output.ToString();
+                                    this.Emitter.Output = savedBuilder;
+                                    new InlineArgumentsBlock(this.Emitter, argsInfo, inline).Emit();
+                                }
+                                else
+                                {
+                                    argsExpressions.First().AcceptVisitor(this.Emitter);
+                                    this.WriteDot();
+                                    string name = this.Emitter.GetEntityName(resolvedMethod);
+                                    this.Write(name);
+                                    this.WriteOpenParentheses();
+                                    new ExpressionListBlock(this.Emitter, argsExpressions.Skip(1), paramsArg, invocationExpression).Emit();
+                                    this.WriteCloseParentheses();
                                 }
 
-                                new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, invocationExpression).Emit();
-
-                                this.WriteCloseParentheses();
-                            }
-
-                            if (!string.IsNullOrWhiteSpace(inline) || !isNative)
-                            {
                                 this.Emitter.ReplaceAwaiterByVar = oldValue;
                                 this.Emitter.AsyncExpressionHandling = oldAsyncExpressionHandling;
 
