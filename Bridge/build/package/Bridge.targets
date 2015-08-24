@@ -10,6 +10,7 @@
 
   <Target Name="AfterBuild">
     <GenerateScript
+	  DefineConstants="$(DefineConstants)"
       OutputPath="$(OutputPath)"
       Configuration="$(Configuration)"
       Assembly="@(IntermediateAssembly)"
