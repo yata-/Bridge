@@ -202,34 +202,16 @@ namespace Bridge.Translator
             var clrPath = translatorInstance.BridgeLocation;
             var assembly = System.Reflection.Assembly.UnsafeLoadFrom(clrPath);
 
-            string resourceName;
-
             // We can only have Beautified, Minified or Both, so this test has inverted logic:
             // output beautified if not minified only == (output beautified or output both)
             if (translatorInstance.AssemblyInfo.OutputFormatting != JavaScriptOutputType.Minified)
             {
-                resourceName = "Bridge.Resources.bridge.js";
-
-                using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-                {
-                    using (StreamReader reader = new StreamReader(stream))
-                    {
-                        File.WriteAllText(Path.Combine(outputPath, "bridge.js"), reader.ReadToEnd());
-                    }
-                }
+                ExtractResourceAndWriteToFile(outputPath, assembly, "Bridge.Resources.bridge.js", "bridge.js");
             }
 
             if (translatorInstance.AssemblyInfo.GenerateTypeScript)
             {
-                resourceName = "Bridge.Resources.bridge.d.ts";
-
-                using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-                {
-                    using (StreamReader reader = new StreamReader(stream))
-                    {
-                        File.WriteAllText(Path.Combine(outputPath, "bridge.d.ts"), reader.ReadToEnd());
-                    }
-                }
+                ExtractResourceAndWriteToFile(outputPath, assembly, "Bridge.Resources.bridge.d.ts", "bridge.d.ts");
             }
 
             // Like above test: output minified if not beautified only == (out minified or out both)
@@ -237,20 +219,32 @@ namespace Bridge.Translator
             {
                 if (!nodebug)
                 {
-                    resourceName = "Bridge.Resources.bridge.js";
-
-                    using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-                    {
-                        using (StreamReader reader = new StreamReader(stream))
-                        {
-                            var code = reader.ReadToEnd();
-                            var minifier = new Minifier();
-
-                            File.WriteAllText(Path.Combine(outputPath, "bridge.min.js"), minifier.MinifyJavaScript(code, new CodeSettings { TermSemicolons = true }), System.Text.UTF8Encoding.UTF8);
-                        }
-                    }
+                    ExtractResourceAndWriteToFile(outputPath, assembly, "Bridge.Resources.bridge.js", "bridge.min.js", (reader) => { var minifier = new Minifier(); return minifier.MinifyJavaScript(reader.ReadToEnd(), new CodeSettings { TermSemicolons = true }); });
                 }
             }
+        }
+
+        private static void ExtractResourceAndWriteToFile(string outputPath, Assembly assembly, string resourceName, string fileName, Func<StreamReader, string> preHandler = null)
+        {
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    EnsureDirectoryExistsCreateAndWriteFile(outputPath, reader, fileName, preHandler);
+                }
+            }
+        }
+
+        private static void EnsureDirectoryExistsCreateAndWriteFile(string outputPath, StreamReader reader, string fileName, Func<StreamReader, string> preHandler)
+        {
+            var filePath = Path.Combine(outputPath, fileName);
+
+            var file = new System.IO.FileInfo(filePath);
+            file.Directory.Create();
+
+            var content = preHandler != null ? preHandler(reader) : reader.ReadToEnd();
+
+            File.WriteAllText(file.FullName, content, System.Text.UTF8Encoding.UTF8);
         }
 
         public EmitterException CreateExceptionFromLastNode()
