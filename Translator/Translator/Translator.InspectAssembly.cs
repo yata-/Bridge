@@ -160,6 +160,15 @@ namespace Bridge.Translator
                 using (var reader = new StreamReader(fileName))
                 {
                     var parser = new ICSharpCode.NRefactory.CSharp.CSharpParser();
+
+                    if (this.DefineConstants != null && this.DefineConstants.Count > 0)
+                    {
+                        foreach (var defineConstant in this.DefineConstants)
+                        {
+                            parser.CompilerSettings.ConditionalSymbols.Add(defineConstant);
+                        }
+                    }
+
                     var syntaxTree = parser.Parse(reader, fileName);
                     
                     if (parser.HasErrors)

@@ -50,12 +50,6 @@ namespace Bridge.Translator
             protected set;
         }
 
-        public string Configuration
-        {
-            get;
-            set;
-        }
-
         public string BuildArguments { get; set; }
 
         private string msbuildVersion = "4.0.30319";
@@ -153,6 +147,24 @@ namespace Bridge.Translator
         }
 
         public bool Recursive
+        {
+            get;
+            set;
+        }
+
+        public string Configuration
+        {
+            get;
+            set;
+        }
+
+        public List<string> DefineConstants
+        {
+            get;
+            set;
+        }
+
+        public bool FromTask
         {
             get;
             set;

@@ -13,7 +13,6 @@ namespace Bridge.Contract
         IAssemblyInfo AssemblyInfo { get; set; }
         string AssemblyLocation { get; }
         string BridgeLocation { get; set; }
-        string Configuration { get; set; }
         string GetCode();
         string Location { get; }
         Action<string, string> Log { get; set; }
@@ -33,5 +32,7 @@ namespace Bridge.Contract
         bool FolderMode { get; set; }
         string Source { get; set; }
         bool Recursive { get; set; }
+        string Configuration { get; set; }
+        List<string> DefineConstants { get; set; }
     }
 }

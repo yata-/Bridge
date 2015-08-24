@@ -12,11 +12,16 @@ namespace Bridge.Translator
         {
             var doc = XDocument.Load(Location, LoadOptions.SetLineInfo);
 
-            ValidateProject(doc);
+            this.ValidateProject(doc);
 
             this.BuildAssemblyLocation(doc);
             this.SourceFiles = this.GetSourceFiles(doc);
             this.ParsedSourceFiles = new List<ParsedSourceFile>();
+
+            if (!this.FromTask)
+            {
+                this.ReadDefineConstants(doc);
+            }
         }
 
         protected virtual void ReadFolderFiles()
@@ -145,6 +150,38 @@ namespace Bridge.Translator
             }
 
             return result;
+        }
+
+        protected virtual void ReadDefineConstants(XDocument doc)
+        {
+            var result = new List<string>();
+
+            var nodeList = doc.Descendants().Where(n =>
+            {
+                if (n.Name.LocalName != "PropertyGroup")
+                {
+                    return false;
+                }
+
+                var attr = n.Attribute("Condition");
+                return attr == null || attr.Value.Contains(this.Configuration);
+            });
+
+            foreach (var node in nodeList)
+            {
+                var constants = from n in node.Descendants()
+                            where n.Name.LocalName == "DefineConstants"
+                               select n.Value;
+                foreach (var constant in constants)
+                {
+                    if (!string.IsNullOrWhiteSpace(constant))
+                    {
+                        this.DefineConstants.AddRange(constant.Split(';').Select(s => s.Trim()).Where(s => s != ""));
+                    }
+                }
+            }
+
+            this.DefineConstants = this.DefineConstants.Distinct().ToList();
         }
 
         protected virtual string GetAssemblyName(XDocument doc)

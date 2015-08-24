@@ -2,6 +2,7 @@
 using Microsoft.Build.Utilities;
 using System;
 using System.IO;
+using System.Linq;
 using Bridge.Contract;
 
 namespace Bridge.Build
@@ -43,6 +44,12 @@ namespace Bridge.Build
         }
 
         public string Configuration
+        {
+            get;
+            set;
+        }
+
+        public string DefineConstants
         {
             get;
             set;
@@ -92,8 +99,15 @@ namespace Bridge.Build
             Bridge.Translator.Translator translator = null;
             try
             {
-                translator = new Bridge.Translator.Translator(this.ProjectPath);
+                translator = new Bridge.Translator.Translator(this.ProjectPath, true);
                 translator.Configuration = this.Configuration;
+
+                if (this.DefineConstants != null)
+                {
+                    translator.DefineConstants.AddRange(this.DefineConstants.Split(';').Select(s => s.Trim()).Where(s => s != ""));
+                    translator.DefineConstants = translator.DefineConstants.Distinct().ToList();
+                }
+
                 translator.BridgeLocation = Path.Combine(this.AssembliesPath, "Bridge.dll");
                 translator.Rebuild = false;
                 translator.Log = this.LogMessage;

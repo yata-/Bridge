@@ -3,6 +3,7 @@ using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -12,10 +13,12 @@ namespace Bridge.Translator
     {
         public const string Bridge_ASSEMBLY = "Bridge";
 
-        public Translator(string location)
+        public Translator(string location, bool fromTask = false)
         {
             this.Location = location;
             this.Validator = this.CreateValidator();
+            this.DefineConstants = new List<string>(){"BRIDGE"};
+            this.FromTask = fromTask;
         }
 
         public Translator(string folder, string source, bool recursive, string lib)
@@ -26,11 +29,24 @@ namespace Bridge.Translator
             this.Location = folder;
             this.AssemblyLocation = lib;
             this.Validator = this.CreateValidator();
+            this.DefineConstants = new List<string>() { "BRIDGE" };
         }
 
         public Dictionary<string, string> Translate()
         {
             var config = this.ReadConfig();
+
+            if (!string.IsNullOrWhiteSpace(config.Configuration))
+            {
+                this.Configuration = config.Configuration;
+            }
+
+            if (config.DefineConstants != null && config.DefineConstants.Count > 0)
+            {
+                this.DefineConstants.AddRange(config.DefineConstants);
+                this.DefineConstants = this.DefineConstants.Distinct().ToList();
+            }
+
             this.Plugins = Bridge.Translator.Plugins.GetPlugins(this, config);
             this.Plugins.OnConfigRead(config);
 

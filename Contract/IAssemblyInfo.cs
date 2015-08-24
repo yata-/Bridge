@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Bridge.Contract
 {
@@ -97,5 +98,7 @@ namespace Bridge.Contract
         bool GenerateTypeScript { get; set; }
         DocumentationMode GenerateDocumentation { get; set; }
         string BuildArguments { get; set; }
+        string Configuration { get; set; }
+        List<string> DefineConstants { get; set; }
     }
 }

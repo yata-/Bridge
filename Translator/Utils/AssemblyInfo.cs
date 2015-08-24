@@ -11,7 +11,6 @@ namespace Bridge.Translator
         public AssemblyInfo()
         {
             this.Dependencies = new List<IPluginDependency>();
-            //this.AutoPropertyToField = true;
         }
 
         /// <summary>
@@ -183,5 +182,8 @@ namespace Bridge.Translator
         /// For example, "/fileLogger /fileLoggerParameters:Append;"
         /// </summary>
         public string BuildArguments { get; set; }
+
+        public string Configuration { get; set; }
+        public List<string> DefineConstants { get; set; }
     }
 }

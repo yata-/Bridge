@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using Bridge.Contract;
 
@@ -42,6 +43,7 @@ namespace Bridge.Builder
             string folder = Environment.CurrentDirectory;
             bool recursive = false;
             string lib = null;
+            string def = null;
 
             if (args.Length == 0)
             {
@@ -82,6 +84,10 @@ namespace Bridge.Builder
                     case "-cfg":
                     case "-configuration":
                         cfg = args[++i];
+                        break;
+                    case "-def":
+                    case "-define":
+                        def = args[++i];
                         break;
                     case "-rebuild":
                     case "-r":
@@ -148,6 +154,11 @@ namespace Bridge.Builder
                 translator.Rebuild = rebuild;
                 translator.Log = LogMessage;
                 translator.Configuration = cfg;
+                if (def != null)
+                {
+                    translator.DefineConstants.AddRange(def.Split(';').Select(s => s.Trim()).Where(s => s != ""));
+                    translator.DefineConstants = translator.DefineConstants.Distinct().ToList();
+                }
                 translator.Translate();
 
                 string path = string.IsNullOrWhiteSpace(Path.GetFileName(outputLocation)) ? outputLocation : Path.GetDirectoryName(outputLocation);
