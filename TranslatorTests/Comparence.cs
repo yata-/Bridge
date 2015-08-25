@@ -105,7 +105,7 @@ namespace Bridge.Translator.Tests
                     sb.AppendLine();
                     sb.AppendLine("DIFF for " + diff.ToString());
                     sb.AppendLine();
-                    sb.AppendLine(diffText);
+                    sb.AppendLine("|" + diffText + "|");
                 }
                 catch (Exception ex)
                 {
@@ -156,10 +156,7 @@ namespace Bridge.Translator.Tests
 
             }
 
-            //if (cd.Result != CompareResult.TheSame)
-            //{
-                comparence.Add(file.Name, cd);
-            //}
+            comparence.Add(file.Name, cd);
         }
 
         private static string AnyDifference(string file1, string file2)
@@ -169,7 +166,7 @@ namespace Bridge.Translator.Tests
                 using (Stream s2 = new FileStream(file2, FileMode.Open, FileAccess.Read, FileShare.Read))
                 {
                     if (s1.Length != s2.Length)
-                        return string.Format("Length difference {0} vs {1}", s1.Length, s2.Length);
+                        return string.Format("Length difference {0} vs {1}", s2.Length, s1.Length);
 
                     int i = 0;
                     while (i < s1.Length)
@@ -177,7 +174,7 @@ namespace Bridge.Translator.Tests
                         var b1 = s1.ReadByte();
                         var b2 = s2.ReadByte();
                         if ( b1 != b2 )
-                            return string.Format("Content difference found at {0} with {1} vs {2}", i, b1, b2);
+                            return string.Format("Content difference found at {0} with {1} vs {2}", i, b2, b1);
 
                         i++;
                     }
