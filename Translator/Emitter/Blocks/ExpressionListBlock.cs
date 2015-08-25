@@ -36,7 +36,13 @@ namespace Bridge.Translator
 
         protected override void DoEmit()
         {
+            var oldIsAssignment = this.Emitter.IsAssignment;
+            var oldUnary = this.Emitter.IsUnaryAccessor;
+            this.Emitter.IsAssignment = false;
+            this.Emitter.IsUnaryAccessor = false;
             this.EmitExpressionList(this.Expressions, this.ParamExpression);
+            this.Emitter.IsAssignment = oldIsAssignment;
+            this.Emitter.IsUnaryAccessor = oldUnary;
         }
 
         protected virtual void EmitExpressionList(IEnumerable<Expression> expressions, Expression paramArg)

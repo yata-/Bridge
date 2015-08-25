@@ -123,7 +123,11 @@ namespace Bridge.Translator
                 {
                     this.WriteDot();
                     this.PushWriter(inlineCode);
+                    this.Emitter.IsAssignment = false;
+                    this.Emitter.IsUnaryAccessor = false;
                     new ExpressionListBlock(this.Emitter, indexerExpression.Arguments, null).Emit();
+                    this.Emitter.IsAssignment = oldIsAssignment;
+                    this.Emitter.IsUnaryAccessor = oldUnary;
 
                     if (!this.Emitter.IsAssignment)
                     {
@@ -509,7 +513,11 @@ namespace Bridge.Translator
                     {
                         this.Write(name);
                         this.WriteOpenParentheses();
+                        this.Emitter.IsAssignment = false;
+                        this.Emitter.IsUnaryAccessor = false;
                         new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
+                        this.Emitter.IsAssignment = oldIsAssignment;
+                        this.Emitter.IsUnaryAccessor = oldUnary;
                         this.PushWriter(", {0})");
                     }
                 }
@@ -532,9 +540,13 @@ namespace Bridge.Translator
                 }
                 else
                 {
+                    this.Emitter.IsAssignment = false;
+                    this.Emitter.IsUnaryAccessor = false;
                     this.WriteOpenBracket();
                     index.AcceptVisitor(this.Emitter);
                     this.WriteCloseBracket();
+                    this.Emitter.IsAssignment = oldIsAssignment;
+                    this.Emitter.IsUnaryAccessor = oldUnary;
                 }
             }
         }
