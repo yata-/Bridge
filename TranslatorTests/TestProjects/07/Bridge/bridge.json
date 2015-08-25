@@ -1,4 +1,5 @@
 {
-  output: "bridge\\output",
-  module: "MyModule"
+  "output": "Bridge\\output",
+  "cleanOutputFolderBeforeBuild": true,
+  "module": "MyModule"
 }

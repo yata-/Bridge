@@ -1,5 +1,6 @@
 {
-  "output": "bridge\\output",
+  "output": "Bridge\\output",
+  "cleanOutputFolderBeforeBuild": true,
   "fileName": "code.js",
   "outputBy":  "project"
 }

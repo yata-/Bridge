@@ -1,4 +1,5 @@
 {
-  output: "bridge\\output",
-  outputBy: "Project"
+  "output": "Bridge\\output",
+  "cleanOutputFolderBeforeBuild": true,
+  "outputBy": "Project"
 }

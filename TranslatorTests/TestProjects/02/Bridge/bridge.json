@@ -1,4 +1,5 @@
 {
-  output: "bridge\\output",
-  outputFormatting: "Formatted"
+  "output": "Bridge\\output",
+  "cleanOutputFolderBeforeBuild": true,
+  "outputFormatting": "Formatted"
 }

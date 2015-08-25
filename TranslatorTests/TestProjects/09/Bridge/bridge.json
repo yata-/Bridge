@@ -1,4 +1,5 @@
 {
-  output: "bridge\\output",
-  fileNameCasing: "CamelCase"
+  "output": "Bridge\\output",
+  "cleanOutputFolderBeforeBuild": true,
+  "fileNameCasing": "CamelCase"
 }

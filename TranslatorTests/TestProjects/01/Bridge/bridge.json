@@ -1,3 +1,4 @@
 {
-    output: "Bridge\\output"
+    "output": "Bridge\\output",
+    "cleanOutputFolderBeforeBuild": true
 }
