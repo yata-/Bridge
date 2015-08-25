@@ -55,6 +55,11 @@ namespace Bridge.Translator.Tests
             return path;
         }
 
+        private string WrapBuildArguments(string configuration)
+        {
+            return this.BuildArguments + @" /p:Platform=AnyCPU /p:OutDir=bin\" + configuration + "\\";
+        }
+
         public string Translate()
         {
             var outputLocation = Path.ChangeExtension(ProjectLocation, "js");
@@ -73,7 +78,7 @@ namespace Bridge.Translator.Tests
                 Bridge.Translator.Exception.Throw("Unable to determine Bridge project output path");
             }
 
-            translator.BuildArguments = this.BuildArguments + @" /p:Platform=AnyCPU /p:OutDir=bin\" + configuration + "\\";
+            translator.BuildArguments = WrapBuildArguments(configuration);
             translator.Configuration = configuration;
 
             LogInfo("\t\tBuildArguments: " + translator.BuildArguments);
@@ -112,7 +117,7 @@ namespace Bridge.Translator.Tests
                 Bridge.Translator.Exception.Throw("Unable to determine Bridge project output path");
             }
 
-            translator.BuildArguments = this.BuildArguments;
+            translator.BuildArguments = WrapBuildArguments(configuration);
             translator.Configuration = configuration;
 
             LogInfo("\t\tBuildArguments: " + translator.BuildArguments);
