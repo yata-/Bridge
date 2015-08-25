@@ -119,6 +119,12 @@ namespace Bridge.Build
                     ? Path.Combine(Path.GetDirectoryName(this.ProjectPath), translator.AssemblyInfo.Output)
                     : this.OutputPath;
 
+                if (translator.AssemblyInfo != null && translator.AssemblyInfo.CleanOutputFolderBeforeBuild)
+                {
+                    Console.WriteLine("Cleaning output folder before extracting scripts...");
+                    CleanDirectory(outputPath);
+                }
+
                 if (!this.NoCore)
                 {
                     Bridge.Translator.Translator.ExtractCore(translator, outputPath);
@@ -150,6 +156,22 @@ namespace Bridge.Build
             }
 
             return success;
+        }
+
+        private static void CleanDirectory(string outputPath)
+        {
+            var outputDirectory = new DirectoryInfo(outputPath);
+            if (outputDirectory.Exists)
+            {
+                foreach (var file in outputDirectory.GetFiles())
+                {
+                    file.Delete();
+                }
+                foreach (var dir in outputDirectory.GetDirectories())
+                {
+                    dir.Delete(true);
+                }
+            }
         }
     }
 }

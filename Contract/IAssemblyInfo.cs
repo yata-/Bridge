@@ -100,5 +100,6 @@ namespace Bridge.Contract
         string BuildArguments { get; set; }
         string Configuration { get; set; }
         List<string> DefineConstants { get; set; }
+        bool CleanOutputFolderBeforeBuild { get; set; }
     }
 }
