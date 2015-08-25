@@ -73,6 +73,16 @@ namespace Bridge.Translator.Tests
             WriteLine("INFO: " + format, arg);
         }
 
+        public void LogWarning(string s)
+        {
+            WriteLine("WARNING: " + s);
+        }
+
+        public void LogWarning(string format, params object[] arg)
+        {
+            WriteLine("WARNING: " + format, arg);
+        }
+
         public void Dispose()
         {
             Writer.Close();

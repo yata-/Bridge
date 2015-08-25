@@ -15,6 +15,14 @@ namespace Bridge.Translator.Tests
         public bool InReference { get; set; }
         public string Difference { get; set; }
         public CompareResult Result { get; set; }
+
+        public override string ToString()
+        {
+            if (InReference)
+                return string.Format("Output file {0} compared with Reference file {1}. Difference: {2}.", Name, Result, Difference);
+            else
+                return string.Format("Reference file {0} compared with Output file {1}. Difference: {2}.", Name, Result, Difference);
+        }
     }
 
     enum CompareMode
@@ -33,6 +41,11 @@ namespace Bridge.Translator.Tests
 
     class FolderComparer
     {
+        private static void LogWarning(string message)
+        {
+            SimpleLogger.Instance.LogWarning(message);
+        }
+
         public static List<Comparence> CompareFolders(string referenceFolder, string outputFolder, Dictionary<string, CompareMode> specialFiles)
         {
             var referenceDirectory = new DirectoryInfo(referenceFolder);
@@ -54,6 +67,51 @@ namespace Bridge.Translator.Tests
             }
 
             return comparence.Values.Where(x => x.Result != CompareResult.TheSame).ToList();
+        }
+
+        public static void LogDifferences(string diffName, List<Comparence> comparence)
+        {
+            var differ = new DiffMatchPatch.diff_match_patch();
+            differ.Diff_Timeout = 10;
+
+            var sb = new StringBuilder(diffName);
+            sb.AppendLine();
+
+            foreach (var diff in comparence)
+            {
+                if (diff.Result != CompareResult.HasContentDifferences)
+                    continue;
+
+                try
+                {
+                    var file1Content = FolderComparer.ReadFile(diff.File1FullPath);
+                    if (file1Content == null)
+                    {
+                        sb.AppendLine(string.Format("DIFF Could not get detailed diff for {0}. Content is null.}", diff.File1FullPath));
+                        continue;
+                    }
+
+                    var file2Content = FolderComparer.ReadFile(diff.File2FullPath);
+                    if (file2Content == null)
+                    {
+                        sb.AppendLine(string.Format("DIFF Could not get detailed diff for {0}. Content is null.}", diff.File2FullPath));
+                        continue;
+                    }
+
+
+                    var differences = differ.diff_main(file1Content, file2Content);
+                    var diffHtml = differ.diff_prettyHtml(differences, true);
+
+                    sb.AppendLine("DIFF for " + diff.ToString());
+                    sb.AppendLine(diffHtml);
+                }
+                catch (Exception ex)
+                {
+                    sb.AppendLine(string.Format("DIFF Could not get detailed diff for {0}. Exception: {1}", diff.ToString(), ex.Message));
+                }
+            }
+
+            LogWarning(sb.ToString());
         }
 
         private static void HandleFile(string folder1, string folder2, Dictionary<string, CompareMode> specialFiles, Dictionary<string, Comparence> comparence, FileInfo file, bool inReference)
@@ -124,6 +182,20 @@ namespace Bridge.Translator.Tests
             }
 
             return null;
+        }
+
+        public static string ReadFile(string fullFileName)
+        {
+            if (!File.Exists(fullFileName))
+                return null;
+
+            using (Stream stream = new FileStream(fullFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    return reader.ReadToEnd();
+                }
+            }
         }
     }
 }

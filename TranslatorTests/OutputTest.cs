@@ -117,14 +117,10 @@ namespace Bridge.Translator.Tests
                     var sb = new StringBuilder();
                     foreach (var diff in comparence)
                     {
-                        if (diff.InReference)
-                            sb.AppendFormat("Output file {0} compared with Reference file {1}. Difference: {2}.", diff.Name, diff.Result, diff.Difference);
-                        else
-                            sb.AppendFormat("Reference file {0} compared with Output file {1}. Difference: {2}.", diff.Name, diff.Result, diff.Difference);
-
-                        sb.AppendLine();
-
+                        sb.AppendLine(diff.ToString());
                     }
+
+                    FolderComparer.LogDifferences("Project " + folder + " differences:", comparence);
 
                     Assert.Fail(sb.ToString());
                 }
