@@ -82,14 +82,14 @@ namespace Bridge.Translator.Tests
 
             translator.Translate();
 
-            string path = string.IsNullOrWhiteSpace(Path.GetFileName(outputLocation)) ? outputLocation : Path.GetDirectoryName(outputLocation);
+            string path = Path.GetDirectoryName(outputLocation);
 
             string outputDir = !string.IsNullOrWhiteSpace(translator.AssemblyInfo.Output) ?
                                     Path.Combine(Path.GetDirectoryName(ProjectLocation), translator.AssemblyInfo.Output) :
                                     path;
 
             LogInfo("\t\toutputDir: " + outputDir);
-            translator.SaveTo(outputDir, Path.GetFileName(outputLocation));
+            translator.SaveTo(outputDir, Path.GetFileNameWithoutExtension(outputLocation));
 
             return outputDir;
         }
