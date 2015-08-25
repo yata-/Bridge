@@ -9,6 +9,17 @@ namespace Bridge.Translator
 {
     public partial class Emitter
     {
+        protected virtual void WriteNewLine(StringBuilder sb)
+        {
+            sb.Append("\n");
+        }
+
+        protected virtual void WriteNewLine(StringBuilder sb, string text)
+        {
+            sb.Append(text);
+            sb.Append("\n");
+        }
+
         protected virtual Dictionary<string, string> TransformOutputs()
         {
             this.WrapToModules();
@@ -25,7 +36,7 @@ namespace Bridge.Translator
 
                 foreach (var moduleOutput in output.ModuleOutput)
                 {
-                    output.NonModuletOutput.AppendLine(moduleOutput.Value.ToString());
+                    WriteNewLine(output.NonModuletOutput, moduleOutput.Value.ToString());
                 }
 
                 if (this.AssemblyInfo.Output.IsNotEmpty())
@@ -88,20 +99,20 @@ namespace Bridge.Translator
                         moduleOutput.Remove(moduleOutput.Length - 1, 1); // remove trailing comma
                     }
 
-                    moduleOutput.AppendLine(") {");
+                    WriteNewLine(moduleOutput, ") {");
 
                     string indent = str.StartsWith("    ") ? "" : "    ";
                     moduleOutput.Append("    ");
-                    moduleOutput.AppendLine("var exports = { };");
+                    WriteNewLine(moduleOutput, "var exports = { };");
                     moduleOutput.Append(indent + str.Replace("\n", "\n" + indent));
 
                     if (!str.Trim().EndsWith("\n"))
                     {
-                        moduleOutput.AppendLine();
+                        WriteNewLine(moduleOutput);
                     }
 
-                    moduleOutput.AppendLine("    return exports;");
-                    moduleOutput.AppendLine("});");
+                    WriteNewLine(moduleOutput, "    return exports;");
+                    WriteNewLine(moduleOutput, "});");
                 }
             }
         }
