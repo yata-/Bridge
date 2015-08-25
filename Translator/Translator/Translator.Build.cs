@@ -36,7 +36,7 @@ namespace Bridge.Translator
             }
         }
 
-        protected virtual void BuildAssembly()
+        public virtual void BuildAssembly()
         {
             var info = new ProcessStartInfo()
             {

@@ -57,22 +57,22 @@ namespace Bridge.Translator.Tests
             }
         }
 
-        [TestCase("01", false, TestName = "OutputTest for project 01 - Default")]
-        [TestCase("02", true, TestName = "OutputTest for project 02 - outputFormatting Formatted")]
-        [TestCase("03", true, TestName = "OutputTest for project 03 - outputFormatting Minified")]
-        [TestCase("04", true, TestName = "OutputTest for project 04 - outputBy Class")]
-        [TestCase("05", true, TestName = "OutputTest for project 05 - outputBy Namespace")]
-        [TestCase("06", true, TestName = "OutputTest for project 06 - outputBy Project")]
-        [TestCase("07", true, TestName = "OutputTest for project 07 - module")]
-        [TestCase("08", true, TestName = "OutputTest for project 08 - fileNameCasing Lowercase")]
-        [TestCase("09", true, TestName = "OutputTest for project 09 - fileNameCasing CamelCase")]
-        [TestCase("10", true, TestName = "OutputTest for project 10 - fileNameCasing None")]
-        [TestCase("11", true, TestName = "OutputTest for project 11 - generateTypeScript")]
-        [TestCase("12", true, TestName = "OutputTest for project 12 - generateDocumentation Full")]
-        [TestCase("13", true, TestName = "OutputTest for project 13 - generateDocumentation Basic")]
-        [TestCase("14", true, TestName = "OutputTest for project 14 - preserveMemberCase")]
-        [TestCase("15", true, TestName = "OutputTest for project 15 - filename")]
-        public void Test(string folder, bool useSpecialFileCompare)
+        [TestCase("01", true, false, TestName = "OutputTest for project 01 - Default")]
+        [TestCase("02", false, true, TestName = "OutputTest for project 02 - outputFormatting Formatted")]
+        [TestCase("03", true, true, TestName = "OutputTest for project 03 - outputFormatting Minified")]
+        [TestCase("04", true, true, TestName = "OutputTest for project 04 - outputBy Class")]
+        [TestCase("05", true, true, TestName = "OutputTest for project 05 - outputBy Namespace")]
+        [TestCase("06", true, true, TestName = "OutputTest for project 06 - outputBy Project")]
+        [TestCase("07", true, true, TestName = "OutputTest for project 07 - module")]
+        [TestCase("08", true, true, TestName = "OutputTest for project 08 - fileNameCasing Lowercase")]
+        [TestCase("09", true, true, TestName = "OutputTest for project 09 - fileNameCasing CamelCase")]
+        [TestCase("10", true, true, TestName = "OutputTest for project 10 - fileNameCasing None")]
+        [TestCase("11", true, true, TestName = "OutputTest for project 11 - generateTypeScript")]
+        [TestCase("12", true, true, TestName = "OutputTest for project 12 - generateDocumentation Full")]
+        [TestCase("13", true, true, TestName = "OutputTest for project 13 - generateDocumentation Basic")]
+        [TestCase("14", true, true, TestName = "OutputTest for project 14 - preserveMemberCase")]
+        [TestCase("15", true, true, TestName = "OutputTest for project 15 - filename")]
+        public void Test(string folder, bool isToTranslate, bool useSpecialFileCompare)
         {
             GetPaths(folder);
 
@@ -94,11 +94,18 @@ namespace Bridge.Translator.Tests
 
             try
             {
-                translator.Translate();
+                if (isToTranslate)
+                {
+                    translator.Translate();
+                }
+                else
+                {
+                    translator.Build();
+                }
             }
             catch (Exception ex)
             {
-                Assert.Fail("Could not translate the project {0}. Exception occurred: {1}.", folder, ex.Message);
+                Assert.Fail("Could not {0} the project {1}. Exception occurred: {2}.", isToTranslate ? "translate" : "build", folder, ex.Message);
             }
 
             try

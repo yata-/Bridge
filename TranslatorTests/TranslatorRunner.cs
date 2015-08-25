@@ -93,5 +93,33 @@ namespace Bridge.Translator.Tests
 
             return outputDir;
         }
+
+        public void Build()
+        {
+            var outputLocation = Path.ChangeExtension(ProjectLocation, "js");
+
+            var translator = new Bridge.Translator.Translator(ProjectLocation);
+
+            translator.Log = LogMessage;
+            //translator.Rebuild = true;
+
+            LogInfo("\t\tProjectLocation: " + ProjectLocation);
+
+            string configuration;
+            translator.BridgeLocation = FindBridgeDllPath(out configuration);
+            if (translator.BridgeLocation == null)
+            {
+                Bridge.Translator.Exception.Throw("Unable to determine Bridge project output path");
+            }
+
+            translator.BuildArguments = this.BuildArguments;
+            translator.Configuration = configuration;
+
+            LogInfo("\t\tBuildArguments: " + translator.BuildArguments);
+            LogInfo("\t\tConfiguration: " + translator.Configuration);
+            LogInfo("\t\tBridgeLocation: " + translator.BridgeLocation);
+
+            translator.BuildAssembly();
+        }
     }
 }
