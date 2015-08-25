@@ -8,7 +8,7 @@ define("MyModule", ["bridge"], function (_) {
                 Value1: 0
             }
         }
-    });    
+    });
     return exports;
 });
 
