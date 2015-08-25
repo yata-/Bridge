@@ -100,10 +100,12 @@ namespace Bridge.Translator.Tests
 
 
                     var differences = differ.diff_main(file1Content, file2Content);
-                    var diffHtml = differ.diff_prettyHtml(differences, true);
+                    var diffText = differ.DiffText(differences, true);
 
+                    sb.AppendLine();
                     sb.AppendLine("DIFF for " + diff.ToString());
-                    sb.AppendLine(diffHtml);
+                    sb.AppendLine();
+                    sb.AppendLine(diffText);
                 }
                 catch (Exception ex)
                 {
@@ -111,6 +113,7 @@ namespace Bridge.Translator.Tests
                 }
             }
 
+            SimpleLogger.Instance.WriteLine(string.Empty);
             LogWarning(sb.ToString());
         }
 

@@ -1576,6 +1576,35 @@ namespace DiffMatchPatch
             return html.ToString();
         }
 
+        public string DiffText(List<Diff> diffs, bool noEqual = false)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (Diff d in diffs)
+            {
+                string replacement = null;
+                switch (d.operation)
+                {
+                    case Operation.INSERT:
+                        replacement = "+";
+                        break;
+                    case Operation.DELETE:
+                        replacement = "-";
+                        break;
+                    case Operation.EQUAL:
+                        if (!noEqual)
+                            replacement = "=";
+                        break;
+                }
+
+                if (replacement != null)
+                {
+                    var text = d.text.Replace("\n", "\n" + replacement);
+                    sb.Append(text);
+                }
+            }
+            return sb.ToString();
+        }
+
         /**
          * Compute and return the source text (all equalities and deletions).
          * @param diffs List of Diff objects.
