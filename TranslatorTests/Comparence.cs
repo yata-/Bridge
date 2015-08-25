@@ -13,8 +13,8 @@ namespace Bridge.Translator.Tests
         public string File1FullPath { get; set; }
         public string File2FullPath { get; set; }
         public bool InReference { get; set; }
+        public string Difference { get; set; }
         public CompareResult Result { get; set; }
-
     }
 
     enum CompareMode
@@ -86,7 +86,9 @@ namespace Bridge.Translator.Tests
 
                 cd.Result = CompareResult.HasContentDifferences;
 
-                if (!AnyDifference(cd.File1FullPath, cd.File2FullPath))
+                cd.Difference = AnyDifference(cd.File1FullPath, cd.File2FullPath);;
+
+                if (cd.Difference == null)
                 {
                     cd.Result = CompareResult.TheSame;
                 }
@@ -99,27 +101,29 @@ namespace Bridge.Translator.Tests
             //}
         }
 
-        private static bool AnyDifference(string file1, string file2)
+        private static string AnyDifference(string file1, string file2)
         {
             using (Stream s1 = new FileStream(file1, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
                 using (Stream s2 = new FileStream(file2, FileMode.Open, FileAccess.Read, FileShare.Read))
                 {
                     if (s1.Length != s2.Length)
-                        return true;
+                        return string.Format("Length difference {0} vs {1}", s1.Length, s2.Length);
 
                     int i = 0;
                     while (i < s1.Length)
                     {
-                        if (s1.ReadByte() != s2.ReadByte())
-                            return true;
+                        var b1 = s1.ReadByte();
+                        var b2 = s2.ReadByte();
+                        if ( b1 != b2 )
+                            return string.Format("Content difference found at {0} with {1} vs {2}", i, b1, b2);
 
                         i++;
                     }
                 }
             }
 
-            return false;
+            return null;
         }
     }
 }
