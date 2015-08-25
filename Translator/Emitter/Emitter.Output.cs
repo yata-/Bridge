@@ -94,7 +94,6 @@ namespace Bridge.Translator
                     moduleOutput.Append("    ");
                     moduleOutput.AppendLine("var exports = { };");
                     moduleOutput.Append(indent + str.Replace("\n", "\n" + indent));
-                    moduleOutput.Append("    ");
 
                     if (!str.Trim().EndsWith("\n"))
                     {
