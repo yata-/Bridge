@@ -13,8 +13,8 @@ namespace Bridge.Translator.Tests
     {
         private const string LogFileNameWithoutExtention = "testProjectsBuild";
         private const string BuildArguments = "/flp:Verbosity=diagnostic;LogFile=" + LogFileNameWithoutExtention + ".log;Append"
-                                              + " /flp1:warningsonly;LogFile=" + LogFileNameWithoutExtention + ".wrn;Append"
-                                              + " /flp2:errorsonly;LogFile=" + LogFileNameWithoutExtention + ".err;Append";
+                                              + " /flp1:warningsonly;LogFile=" + LogFileNameWithoutExtention + "Warnings.log;Append"
+                                              + " /flp2:errorsonly;LogFile=" + LogFileNameWithoutExtention + "Errors.log;Append";
 
         public string ProjectFileName { get; set; }
         public string ProjectFolder { get; set; }
