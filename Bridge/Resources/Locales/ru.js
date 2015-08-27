@@ -1,6 +1,6 @@
-﻿Bridge.merge(new Bridge.CultureInfo("ru-RU", true), {
-    englishName: "Russian (Russia)",
-    nativeName: "русский (Россия)",
+﻿Bridge.merge(new Bridge.CultureInfo("ru", true), {
+    englishName: "Russian",
+    nativeName: "русский",
 
     numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
         naNSymbol: "NaN",

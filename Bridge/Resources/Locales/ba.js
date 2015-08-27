@@ -1,6 +1,6 @@
-﻿Bridge.merge(new Bridge.CultureInfo("ru-RU", true), {
-    englishName: "Russian (Russia)",
-    nativeName: "русский (Россия)",
+﻿Bridge.merge(new Bridge.CultureInfo("ba", true), {
+    englishName: "Bashkir",
+    nativeName: "Башҡорт",
 
     numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
         naNSymbol: "NaN",
@@ -30,23 +30,23 @@
     }),
 
     dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
-        abbreviatedDayNames: ["Вс","Пн","Вт","Ср","Чт","Пт","Сб"],
-        abbreviatedMonthGenitiveNames: ["янв","фев","мар","апр","мая","июн","июл","авг","сен","окт","ноя","дек",""],
-        abbreviatedMonthNames: ["янв","фев","мар","апр","май","июн","июл","авг","сен","окт","ноя","дек",""],
+        abbreviatedDayNames: ["Йш","Дш","Шш","Шр","Кс","Йм","Шб"],
+        abbreviatedMonthGenitiveNames: ["ғин","фев","мар","апр","май","июн","июл","авг","сен","окт","ноя","дек",""],
+        abbreviatedMonthNames: ["ғин","фев","мар","апр","май","июн","июл","авг","сен","окт","ноя","дек",""],
         amDesignator: "",
         dateSeparator: ".",
-        dayNames: ["воскресенье","понедельник","вторник","среда","четверг","пятница","суббота"],
+        dayNames: ["Йәкшәмбе","Дүшәмбе","Шишәмбе","Шаршамбы","Кесаҙна","Йома","Шәмбе"],
         firstDayOfWeek: 1,
-        fullDateTimePattern: "d MMMM yyyy 'г.' H:mm:ss",
-        longDatePattern: "d MMMM yyyy 'г.'",
+        fullDateTimePattern: "d MMMM yyyy 'й' H:mm:ss",
+        longDatePattern: "d MMMM yyyy 'й'",
         longTimePattern: "H:mm:ss",
         monthDayPattern: "d MMMM",
-        monthGenitiveNames: ["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря",""],
-        monthNames: ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь",""],
+        monthGenitiveNames: ["ғинуар","февраль","март","апрель","май","июнь","июль","август","сентябрь","октябрь","ноябрь","декабрь",""],
+        monthNames: ["ғинуар","февраль","март","апрель","май","июнь","июль","август","сентябрь","октябрь","ноябрь","декабрь",""],
         pmDesignator: "",
         rfc1123: "ddd, dd MMM yyyy HH':'mm':'ss 'GMT'",
-        shortDatePattern: "dd.MM.yyyy",
-        shortestDayNames: ["Вс","Пн","Вт","Ср","Чт","Пт","Сб"],
+        shortDatePattern: "dd.MM.yy",
+        shortestDayNames: ["Йш","Дш","Шш","Шр","Кс","Йм","Шб"],
         shortTimePattern: "H:mm",
         sortableDateTimePattern: "yyyy'-'MM'-'dd'T'HH':'mm':'ss",
         sortableDateTimePattern1: "yyyy'-'MM'-'dd",
