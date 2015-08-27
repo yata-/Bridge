@@ -1325,6 +1325,10 @@
             return -1;
         },
 
+        equals: function() {
+            return Bridge.String.compare.apply(this, arguments) == 0;
+        },
+
         compare: function (strA, strB) {
             if (strA == null) {
                 return (strB == null) ? 0 : -1;
