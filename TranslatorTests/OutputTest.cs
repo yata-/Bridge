@@ -57,21 +57,22 @@ namespace Bridge.Translator.Tests
             }
         }
 
-        [TestCase("01", true, false, TestName = "OutputTest for project 01 - Default")]
-        [TestCase("02", false, true, TestName = "OutputTest for project 02 - outputFormatting Formatted")]
-        [TestCase("03", true, true, TestName = "OutputTest for project 03 - outputFormatting Minified")]
-        [TestCase("04", true, true, TestName = "OutputTest for project 04 - outputBy Class")]
-        [TestCase("05", true, true, TestName = "OutputTest for project 05 - outputBy Namespace")]
-        [TestCase("06", true, true, TestName = "OutputTest for project 06 - outputBy Project")]
-        [TestCase("07", true, true, TestName = "OutputTest for project 07 - module")]
-        [TestCase("08", true, true, TestName = "OutputTest for project 08 - fileNameCasing Lowercase")]
-        [TestCase("09", true, true, TestName = "OutputTest for project 09 - fileNameCasing CamelCase")]
-        [TestCase("10", true, true, TestName = "OutputTest for project 10 - fileNameCasing None")]
-        [TestCase("11", true, true, TestName = "OutputTest for project 11 - generateTypeScript")]
-        [TestCase("12", true, true, TestName = "OutputTest for project 12 - generateDocumentation Full")]
-        [TestCase("13", true, true, TestName = "OutputTest for project 13 - generateDocumentation Basic")]
-        [TestCase("14", true, true, TestName = "OutputTest for project 14 - preserveMemberCase")]
-        [TestCase("15", true, true, TestName = "OutputTest for project 15 - filename")]
+        [TestCase("01", true, false, TestName = "OutputTest 01 - Bridge.json Default")]
+        [TestCase("02", false, true, TestName = "OutputTest 02 - Bridge.json outputFormatting Formatted")]
+        [TestCase("03", true, true, TestName = "OutputTest 03 - Bridge.json outputFormatting Minified")]
+        [TestCase("04", true, true, TestName = "OutputTest 04 - Bridge.json outputBy Class")]
+        [TestCase("05", true, true, TestName = "OutputTest 05 - Bridge.json outputBy Namespace")]
+        [TestCase("06", true, true, TestName = "OutputTest 06 - Bridge.json outputBy Project")]
+        [TestCase("07", true, true, TestName = "OutputTest 07 - Bridge.json module")]
+        [TestCase("08", true, true, TestName = "OutputTest 08 - Bridge.json fileNameCasing Lowercase")]
+        [TestCase("09", true, true, TestName = "OutputTest 09 - Bridge.json fileNameCasing CamelCase")]
+        [TestCase("10", true, true, TestName = "OutputTest 10 - Bridge.json fileNameCasing None")]
+        [TestCase("11", true, true, TestName = "OutputTest 11 - Bridge.json generateTypeScript")]
+        [TestCase("12", true, true, TestName = "OutputTest 12 - Bridge.json generateDocumentation Full")]
+        [TestCase("13", true, true, TestName = "OutputTest 13 - Bridge.json generateDocumentation Basic")]
+        [TestCase("14", true, true, TestName = "OutputTest 14 - Bridge.json preserveMemberCase")]
+        [TestCase("15", true, true, TestName = "OutputTest 15 - Bridge.json filename")]
+        [TestCase("16", true, true, TestName = "OutputTest 16 - Issues")]
         public void Test(string folder, bool isToTranslate, bool useSpecialFileCompare)
         {
             GetPaths(folder);
