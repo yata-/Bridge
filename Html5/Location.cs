@@ -21,47 +21,47 @@ namespace Bridge.Html5
         /// <summary>
         /// String containing the protocol scheme of the URL, including the final ':'.
         /// </summary>
-        public readonly string Protocol;
+        public string Protocol;
 
         /// <summary>
         /// String containing the host, that is the hostname, a ':', and the port of the URL.
         /// </summary>
-        public readonly string Host;
+        public string Host;
 
         /// <summary>
         /// String containing the domain of the URL.
         /// </summary>
-        public readonly string HostName;
+        public string HostName;
 
         /// <summary>
         /// String containing the port number of the URL.
         /// </summary>
-        public readonly string Port;
+        public string Port;
 
         /// <summary>
         /// String containing an initial '/' followed by the path of the URL.
         /// </summary>
-        public readonly string PathName;
+        public string PathName;
 
         /// <summary>
         /// String containing a '?' followed by the parameters of the URL.
         /// </summary>
-        public readonly string Search;
+        public string Search;
 
         /// <summary>
         /// String containing a '#' followed by the fragment identifier of the URL.
         /// </summary>
-        public readonly string Hash;
+        public string Hash;
 
         /// <summary>
         /// String containing the username specified before the domain name.
         /// </summary>
-        public readonly string Username;
+        public string Username;
 
         /// <summary>
         /// String containing the password specified before the domain name.
         /// </summary>
-        public readonly string Password;
+        public string Password;
 
         /// <summary>
         /// String containing the canonical form of the origin of the specific location.
