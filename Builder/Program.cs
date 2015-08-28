@@ -53,6 +53,7 @@ namespace Bridge.Builder
                 Console.WriteLine("-cfg or -configuration   Configuration name, typically Debug/Release");
                 Console.WriteLine("-r or -rebuild           Force assembly rebuilding");
                 Console.WriteLine("-nocore                  Do not extract core javascript files");
+                Console.WriteLine("-def or -define          Defines project constants. For example, \"CONSTANT1;CONSTANT2\" ");
 #if DEBUG
                 // This code and logic is only compiled in when building bridge.net in Debug configuration
                 Console.WriteLine("-d or -debug             Attach the builder to an visual studio debugging instance.");
