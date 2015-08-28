@@ -183,13 +183,14 @@ namespace Bridge.Translator
         /// </summary>
         public string BuildArguments { get; set; }
 
-        public string Configuration { get; set; }
-        public List<string> DefineConstants { get; set; }
-
         /// <summary>
         /// Deletes files and folders from output directory before build (before extracting scripts after translation).
         /// It is useful to replace BeforeBuild event if it just contain commands to clean the output folder.
         /// </summary>
         public bool CleanOutputFolderBeforeBuild { get; set; }
+
+        public string Configuration { get; set; }
+
+        public List<string> DefineConstants { get; set; }
     }
 }
