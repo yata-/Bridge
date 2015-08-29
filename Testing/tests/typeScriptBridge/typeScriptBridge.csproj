@@ -66,8 +66,8 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <PropertyGroup>
-    <PostBuildEvent Condition="$(OS) != Unix">"$(ProjectDir)..\..\..\Builder\Builder\$(OutDir)Bridge.Builder.exe" -p "$(ProjectPath)" -b "$(ProjectDir)$(OutDir)Bridge.dll"</PostBuildEvent>
-    <PostBuildEvent Condition="$(OS) == Unix">mono "$(ProjectDir)../../../Builder/Builder/$(OutDir)Bridge.Builder.exe" -p "$(ProjectDir)/$(MSBuildProjectFile)" -b "$(ProjectDir)$(OutDir)Bridge.dll"</PostBuildEvent>
+    <PostBuildEvent Condition="$(OS) != Unix">"$(ProjectDir)..\..\..\Compiler\Builder\$(OutDir)Bridge.Builder.exe" -p "$(ProjectPath)" -b "$(ProjectDir)$(OutDir)Bridge.dll"</PostBuildEvent>
+    <PostBuildEvent Condition="$(OS) == Unix">mono "$(ProjectDir)../../../Compiler/Builder/$(OutDir)Bridge.Builder.exe" -p "$(ProjectDir)/$(MSBuildProjectFile)" -b "$(ProjectDir)$(OutDir)Bridge.dll"</PostBuildEvent>
     <AddAdditionalExplicitAssemblyReferences>false</AddAdditionalExplicitAssemblyReferences>
     <AdditionalExplicitAssemblyReferences />
   </PropertyGroup>
