@@ -11,9 +11,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Builder", "Builder", "{47D6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.jQuery2", "..\Frameworks\jQuery2\Bridge.jQuery2.csproj", "{BCCFB816-2F7F-4693-A16B-2BC0A7B39085}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Build", "..\Builder\Build\Bridge.Build.csproj", "{28703D12-116A-4968-BD85-F26D7F7E7DA4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Build", "Compiler\Build\Bridge.Build.csproj", "{28703D12-116A-4968-BD85-F26D7F7E7DA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Builder", "..\Builder\Builder\Bridge.Builder.csproj", "{243BB709-3912-4C65-82D4-787A5E2201D7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Builder", "Compiler\Builder\Bridge.Builder.csproj", "{243BB709-3912-4C65-82D4-787A5E2201D7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Bootstrap3", "..\Frameworks\Bootstrap3\Bridge.Bootstrap3.csproj", "{E2C8A4F9-8525-40E6-A076-38F91F602975}"
 EndProject
@@ -21,13 +21,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge", "Bridge\Bridge.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Html5", "Html5\Bridge.Html5.csproj", "{99DECD28-D3E3-4EA7-ACAE-AB5DFC9913BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Contract", "..\Builder\Contract\Bridge.Contract.csproj", "{52AE9E3E-6929-4720-AB7A-F9F22B9A8972}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Contract", "Compiler\Contract\Bridge.Contract.csproj", "{52AE9E3E-6929-4720-AB7A-F9F22B9A8972}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Translator", "..\Builder\Translator\Bridge.Translator.csproj", "{44124331-C60A-4071-B387-4B8E71324B10}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Translator", "Compiler\Translator\Bridge.Translator.csproj", "{44124331-C60A-4071-B387-4B8E71324B10}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{4466FE4E-78E3-46A8-BAA4-C304D7FFABD9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "..\Testing\tests\client\client.csproj", "{306AD788-87E9-4DF9-A216-95948E024BC8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Testing\tests\client\client.csproj", "{306AD788-87E9-4DF9-A216-95948E024BC8}"
 	ProjectSection(ProjectDependencies) = postProject
 		{243BB709-3912-4C65-82D4-787A5E2201D7} = {243BB709-3912-4C65-82D4-787A5E2201D7}
 		{28703D12-116A-4968-BD85-F26D7F7E7DA4} = {28703D12-116A-4968-BD85-F26D7F7E7DA4}
@@ -44,20 +44,20 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "www", "http://localhost:621
 		UseIISExpress = "true"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_62185"
-		Debug.AspNetCompiler.PhysicalPath = "..\Testing\www\"
+		Debug.AspNetCompiler.PhysicalPath = "Testing\www\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_62185\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.VirtualPath = "/localhost_62185"
-		Release.AspNetCompiler.PhysicalPath = "..\Testing\www\"
+		Release.AspNetCompiler.PhysicalPath = "Testing\www\"
 		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_62185\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		SlnRelativePath = "..\Testing\www\"
+		SlnRelativePath = "Testing\www\"
 	EndProjectSection
 	ProjectSection(ProjectDependencies) = postProject
 		{306AD788-87E9-4DF9-A216-95948E024BC8} = {306AD788-87E9-4DF9-A216-95948E024BC8}
@@ -71,7 +71,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{42D82A
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "typeScriptBridge", "..\Testing\tests\typeScriptBridge\typeScriptBridge.csproj", "{518C57D4-62CC-47F7-A310-23405F5ED3AD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "typeScriptBridge", "Testing\tests\typeScriptBridge\typeScriptBridge.csproj", "{518C57D4-62CC-47F7-A310-23405F5ED3AD}"
 	ProjectSection(ProjectDependencies) = postProject
 		{243BB709-3912-4C65-82D4-787A5E2201D7} = {243BB709-3912-4C65-82D4-787A5E2201D7}
 		{28703D12-116A-4968-BD85-F26D7F7E7DA4} = {28703D12-116A-4968-BD85-F26D7F7E7DA4}
@@ -81,12 +81,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "typeScriptBridge", "..\Test
 		{E2C8A4F9-8525-40E6-A076-38F91F602975} = {E2C8A4F9-8525-40E6-A076-38F91F602975}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "typeScriptHtml", "..\Testing\tests\typeScriptHtml\typeScriptHtml.csproj", "{411D4BE8-B1F0-4F61-9AD1-00250D9CC4FA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "typeScriptHtml", "Testing\tests\typeScriptHtml\typeScriptHtml.csproj", "{411D4BE8-B1F0-4F61-9AD1-00250D9CC4FA}"
 	ProjectSection(ProjectDependencies) = postProject
 		{518C57D4-62CC-47F7-A310-23405F5ED3AD} = {518C57D4-62CC-47F7-A310-23405F5ED3AD}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Translator.Tests", "..\Builder\TranslatorTests\Bridge.Translator.Tests.csproj", "{6E1D7559-DAA0-41B7-B0E5-8E106072D704}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Translator.Tests", "Compiler\TranslatorTests\Bridge.Translator.Tests.csproj", "{6E1D7559-DAA0-41B7-B0E5-8E106072D704}"
 	ProjectSection(ProjectDependencies) = postProject
 		{DE78B8B7-C0F5-415B-A70B-02194433F450} = {DE78B8B7-C0F5-415B-A70B-02194433F450}
 	EndProjectSection

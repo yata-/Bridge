@@ -11,7 +11,7 @@
     <AssemblyName>ClientTestLibrary</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\Bridge\</SolutionDir>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -92,11 +92,11 @@
     <None Include="Bridge\bridge.json" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Bridge\Bridge\Bridge.csproj">
+    <ProjectReference Include="..\..\..\Bridge\Bridge.csproj">
       <Project>{de78b8b7-c0f5-415b-a70b-02194433f450}</Project>
       <Name>Bridge</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Bridge\Html5\Bridge.Html5.csproj">
+    <ProjectReference Include="..\..\..\Html5\Bridge.Html5.csproj">
       <Project>{99decd28-d3e3-4ea7-acae-ab5dfc9913bd}</Project>
       <Name>Bridge.Html5</Name>
     </ProjectReference>
@@ -120,7 +120,7 @@
     <AdditionalExplicitAssemblyReferences />
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>xcopy "$(ProjectDir)..\..\..\Bridge\Bridge\Resources\Locales\*.js" "$(ProjectDir)..\..\www\js\locales" /c /q /y</PreBuildEvent>
+    <PreBuildEvent>xcopy "$(ProjectDir)..\..\..\Bridge\Resources\Locales\*.js" "$(ProjectDir)..\..\www\js\locales" /c /q /y</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -23,7 +23,7 @@ namespace Bridge.Translator.Tests
 
         private static string FindBridgeDllPathByConfiguration(string configurationName)
         {
-            var bridgeProjectPath = FileHelper.GetRelativeToCurrentDirPath(@"\..\..\..\..\Bridge\Bridge\Bridge.csproj");
+            var bridgeProjectPath = FileHelper.GetRelativeToCurrentDirPath(@"\..\..\..\..\Bridge\Bridge.csproj");
 
             var outputPath = FileHelper.ReadProjectOutputFolder(configurationName, bridgeProjectPath);
 

@@ -11,7 +11,7 @@
     <AssemblyName>TestProject</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">\..\..\..\Bridge\</SolutionDir>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">\..\..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -43,11 +43,11 @@
   <ItemGroup>
     <Reference Include="Bridge">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Bridge\Bridge\bin\$(Configuration)\Bridge.dll</HintPath>
+      <HintPath>..\..\..\..\Bridge\bin\$(Configuration)\Bridge.dll</HintPath>
     </Reference>
     <Reference Include="Bridge.Html5">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Bridge\Html5\bin\$(Configuration)\Bridge.Html5.dll</HintPath>
+      <HintPath>..\..\..\..\Html5\bin\$(Configuration)\Bridge.Html5.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
