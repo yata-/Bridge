@@ -130,8 +130,11 @@ UpgradeLog*.XML
 
 /Bridge.NET.local.sln
 
+###########################
 # Testing section
+###########################
 /Testing/output/
+/Testing/www/js/locales/*.js
 
 #NUNIT
 *.VisualState.xml
