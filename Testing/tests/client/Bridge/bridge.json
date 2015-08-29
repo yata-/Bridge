@@ -1,0 +1,4 @@
+{
+    output: "..\\..\\www\\js",
+    outputBy: "Class"
+}
