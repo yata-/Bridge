@@ -37,13 +37,13 @@ init:
   - git config --global core.autocrlf input
 
 # clone directory
-clone_folder: c:\projects\Builder
+clone_folder: c:\projects\Bridge
 
 # fetch repository as zip archive
 shallow_clone: false                 # default is "false"
 
 # set clone depth
-clone_depth: 20                      # clone entire repository history if not defined
+clone_depth: 30                      # clone entire repository history if not defined
 
 # environment variables
 environment:
@@ -54,7 +54,6 @@ environment:
 
 # scripts that run after cloning repository
 install:
-  - cmd: git.exe clone -q --progress -v  --depth 20 --branch=master "https://github.com/bridgedotnet/Builder" "c:\projects\Builder"
   - cmd: git.exe clone -q --progress -v  --depth 20 --branch=master "https://github.com/bridgedotnet/Frameworks" "c:\projects\Frameworks"
   - cmd: git.exe clone -q --progress -v  --depth 20 --branch=master "https://github.com/bridgedotnet/Testing" "c:\projects\Testing"
 
@@ -160,14 +159,15 @@ before_test:
 after_test:
 
 # to run your custom scripts instead of automatic tests
-# test_script:
-  # #- echo This is my custom test script
-  # - nunit-console "c:\projects\Builder\TranslatorTests\bin\Debug\Bridge.Translator.Tests.dll"
+test_script:
+  #- echo This is my custom test script
+  - nunit-console "c:\projects\Bridge\Compiler\TranslatorTests\bin\Release\Bridge.Translator.Tests.dll"
 
 # to disable automatic tests 
 # test:
    # assemblies:
     # - builder\translatortests\bin\$(configuration)\bridge.translator.tests.dll
+
 
 # scripts to run before deployment
 before_deploy:
@@ -198,7 +198,7 @@ on_failure:
 on_finish:
 - ps: $root = Resolve-Path .\TranslatorTests\bin\Release; [IO.Directory]::GetFiles($root.Path, '*.log', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($root.Path.Length + 1) -DeploymentName TranslatorTestsLog }  
 
-  
+
 #---------------------------------#
 #         notifications           #
 #---------------------------------#
@@ -222,3 +222,4 @@ notifications:
     on_build_status_changed: true
     on_build_success: true
     on_build_failure: true
+
