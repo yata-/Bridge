@@ -100,17 +100,12 @@
       <Project>{99decd28-d3e3-4ea7-acae-ab5dfc9913bd}</Project>
       <Name>Bridge.Html5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Frameworks\QUnit\Bridge.QUnit.csproj">
+    <ProjectReference Include="..\..\..\..\Frameworks\QUnit\Bridge.QUnit.csproj">
       <Project>{96cb97f5-1bac-433d-b5ce-ad6e7b244f12}</Project>
       <Name>Bridge.QUnit</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Bridge\output\readme.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Bridge\build\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <PropertyGroup>
@@ -120,7 +115,14 @@
     <AdditionalExplicitAssemblyReferences />
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>xcopy "$(ProjectDir)..\..\..\Bridge\Resources\Locales\*.js" "$(ProjectDir)..\..\www\js\locales" /c /q /y</PreBuildEvent>
+    <PostBuildEvent Condition="$(OS) != Unix">
+      del /F /Q "$(ProjectDir)..\..\..\..\Testing\www\js\locales\*.js"
+      xcopy "$(ProjectDir)..\..\..\Bridge\Resources\Locales\*.js" "$(ProjectDir)..\..\..\..\Testing\www\js\locales" /c /q /y
+    </PostBuildEvent>
+    <PostBuildEvent Condition="$(OS) == Unix">
+      rm -f "$(ProjectDir)../../../../Testing/www/js/locales/*.js"
+      cp -p "$(ProjectDir)../../../Bridge/Resources/Locales/*.js" "$(ProjectDir)../../../../Testing/www/js/locales"
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

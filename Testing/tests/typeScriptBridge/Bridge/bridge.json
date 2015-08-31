@@ -1,6 +1,6 @@
 {
-    //output: "Bridge\\output",
-    "output": "..\\..\\www\\typescript\\",
+    "output": "..\\..\\..\\..\\Testing\\www\\typescript",
+    "cleanOutputFolderBeforeBuild": true,
     "outputBy": "Namespace",
     "generateTypeScript": "true"
 }
