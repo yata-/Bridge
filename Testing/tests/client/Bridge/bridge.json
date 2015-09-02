@@ -1,5 +1,5 @@
 {
-    "output": "..\\..\\..\\..\\Testing\\www\\js",
+    "output": "..\\..\\www\\js",
     "cleanOutputFolderBeforeBuild": true,
     "outputBy": "Class"
 }
