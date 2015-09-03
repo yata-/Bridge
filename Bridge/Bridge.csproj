@@ -101,6 +101,7 @@
     <Compile Include="System\Linq\OrderedEnumerable.cs" />
     <Compile Include="System\MidpointRounding.cs" />
     <Compile Include="System\StringComparison.cs" />
+    <Compile Include="System\Version.cs" />
     <Compile Include="This.cs" />
     <Compile Include="System\OverflowException.cs" />
     <Compile Include="System\Globalization\CultureNotFoundException.cs" />
@@ -184,6 +185,7 @@
     <Compile Include="System\Void.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\Version.js" />
     <None Include="AdditionalCompilerOptions.txt" />
     <Content Include="Resources\Array.js" />
     <Content Include="Resources\Collections\Comparer.js" />

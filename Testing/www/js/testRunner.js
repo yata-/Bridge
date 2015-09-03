@@ -57,6 +57,13 @@ Bridge.define('ClientTestLibrary.RunTests', {
             QUnit.test("Try/Catch/Finally caught exceptions", ClientTestLibrary.TestTryCatchFinallyBlocks.caughtExceptions);
             QUnit.test("Try/Catch/Finally thrown exceptions", ClientTestLibrary.TestTryCatchFinallyBlocks.thrownExceptions);
 
+            QUnit.module("System");
+            QUnit.test("Version TestConstructors", ClientTestLibrary.TestVersion.testConstructors);
+            QUnit.test("Version Equals and GetHashCode", ClientTestLibrary.TestVersion.testEqualsGetHashCode);
+            QUnit.test("Version ToString", ClientTestLibrary.TestVersion.testToString);
+            QUnit.test("Version Parse", ClientTestLibrary.TestVersion.testParse);
+            QUnit.test("Version Operators", ClientTestLibrary.TestVersion.testOperators);
+
             QUnit.module("Issues");
             QUnit.test("#169", ClientTestLibrary.TestBridgeIssues.n169);
             QUnit.test("#240", ClientTestLibrary.TestBridgeIssues.n240);
