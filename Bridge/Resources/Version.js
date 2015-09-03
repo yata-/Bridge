@@ -112,16 +112,22 @@ Bridge.define('System.Version', {
             return !(System.Version.op_Equality(v1, v2));
         },
         op_LessThan: function (v1, v2) {
-            if (v1 === null)
-                throw new Bridge.ArgumentNullException("v1");
+            if (v1 === null && v2 === null)
+                return false;
 
-            return (v1.compareTo(v2) < 0);
+            if (v2 === null)
+                return (v1.compareTo(v2) < 0);
+
+            return (v2.compareTo(v1) > 0);
         },
         op_LessThanOrEqual: function (v1, v2) {
-            if (v1 === null)
-                throw new Bridge.ArgumentNullException("v1");
+            if (v1 === null && v2 === null)
+                return false;
 
-            return (v1.compareTo(v2) <= 0);
+            if (v2 === null)
+                return (v1.compareTo(v2) <= 0);
+
+            return (v2.compareTo(v1) >= 0);
         },
         op_GreaterThan: function (v1, v2) {
             return (System.Version.op_LessThan(v2, v1));
@@ -204,10 +210,14 @@ Bridge.define('System.Version', {
         return this._Revision;
     },
     getMajorRevision: function () {
-        return Bridge.cast((this._Revision >> 16), Bridge.Int);
+        return this._Revision >> 16;
     },
     getMinorRevision: function () {
-        return Bridge.cast((this._Revision & 65535), Bridge.Int);
+        var n = this._Revision & 65535;
+        if (n > 32767) {
+            n = -((n & 32767) ^ 32767) - 1;
+        }
+        return n;
     },
     clone: function () {
         var v = new System.Version("constructor");
@@ -217,75 +227,54 @@ Bridge.define('System.Version', {
         v._Revision = this._Revision;
         return (v);
     },
+    compareInternal: function(v) {
+        if (this._Major !== v._Major)
+            if (this._Major > v._Major)
+                return 1;
+            else
+                return -1;
+
+        if (this._Minor !== v._Minor)
+            if (this._Minor > v._Minor)
+                return 1;
+            else
+                return -1;
+
+        if (this._Build !== v._Build)
+            if (this._Build > v._Build)
+                return 1;
+            else
+                return -1;
+
+        if (this._Revision !== v._Revision)
+            if (this._Revision > v._Revision)
+                return 1;
+            else
+                return -1;
+
+        return 0;
+    },
     compareTo$1: function (version) {
         if (version === null) {
             return 1;
         }
 
         var v = Bridge.as(version, System.Version);
-        if (System.Version.op_Equality(v, null)) {
+        if (v === null) {
             throw new Bridge.ArgumentException("version should be of System.Version type");
         }
 
-        if (this._Major !== v._Major)
-            if (this._Major > v._Major)
-                return 1;
-            else 
-                return -1;
-
-        if (this._Minor !== v._Minor)
-            if (this._Minor > v._Minor)
-                return 1;
-            else 
-                return -1;
-
-        if (this._Build !== v._Build)
-            if (this._Build > v._Build)
-                return 1;
-            else 
-                return -1;
-
-        if (this._Revision !== v._Revision)
-            if (this._Revision > v._Revision)
-                return 1;
-            else 
-                return -1;
-
-        return 0;
+        return this.compareInternal(v);
     },
     compareTo: function (value) {
-        if (System.Version.op_Equality(value, null))
+        if (value === null)
             return 1;
 
-        if (this._Major !== value._Major)
-            if (this._Major > value._Major)
-                return 1;
-            else 
-                return -1;
-
-        if (this._Minor !== value._Minor)
-            if (this._Minor > value._Minor)
-                return 1;
-            else 
-                return -1;
-
-        if (this._Build !== value._Build)
-            if (this._Build > value._Build)
-                return 1;
-            else 
-                return -1;
-
-        if (this._Revision !== value._Revision)
-            if (this._Revision > value._Revision)
-                return 1;
-            else 
-                return -1;
-
-        return 0;
+        return this.compareInternal(value);
     },
     equals: function (obj) {
         var v = Bridge.as(obj, System.Version);
-        if (System.Version.op_Equality(v, null))
+        if (v === null)
             return false;
 
         // check that major, minor, build & revision numbers match
@@ -294,19 +283,8 @@ Bridge.define('System.Version', {
 
         return true;
     },
-    equals: function (obj) {
-        if (System.Version.op_Equality(obj, null))
-            return false;
-
-        // check that major, minor, build & revision numbers match
-        if ((this._Major !== obj._Major) || (this._Minor !== obj._Minor) || (this._Build !== obj._Build) || (this._Revision !== obj._Revision))
-            return false;
-
-        return true;
-    },
     getHashCode: function () {
-        // Let's assume that most version numbers will be pretty small and just
-        // OR some lower order bits together.
+        // Let's assume that most version numbers will be pretty small and just OR some lower order bits together.
 
         var accumulator = 0;
 
@@ -327,17 +305,17 @@ Bridge.define('System.Version', {
     toString$1: function (fieldCount) {
         var sb;
         switch (fieldCount) {
-            case 0: 
+            case 0:
                 return ("");
-            case 1: 
+            case 1:
                 return (this._Major.toString());
-            case 2: 
+            case 2:
                 sb = new Bridge.Text.StringBuilder();
                 System.Version.appendPositiveNumber(this._Major, sb);
                 sb.append(String.fromCharCode(46));
                 System.Version.appendPositiveNumber(this._Minor, sb);
                 return sb.toString();
-            default: 
+            default:
                 if (this._Build === -1)
                     throw new Bridge.ArgumentException("Build should be > 0 if fieldCount > 2", "fieldCount");
                 if (fieldCount === 3) {
@@ -400,13 +378,13 @@ Bridge.define('System.Version.VersionResult', {
     },
     getVersionParseException: function () {
         switch (this.m_failure) {
-            case System.Version.ParseFailureKind.argumentNullException: 
+            case System.Version.ParseFailureKind.argumentNullException:
                 return new Bridge.ArgumentNullException(this.m_argumentName);
-            case System.Version.ParseFailureKind.argumentException: 
+            case System.Version.ParseFailureKind.argumentException:
                 return new Bridge.ArgumentException("VersionString");
-            case System.Version.ParseFailureKind.argumentOutOfRangeException: 
+            case System.Version.ParseFailureKind.argumentOutOfRangeException:
                 return new Bridge.ArgumentOutOfRangeException(this.m_exceptionArgument, "Cannot be < 0");
-            case System.Version.ParseFailureKind.formatException: 
+            case System.Version.ParseFailureKind.formatException:
                 try {
                     Bridge.Int.parseInt(this.m_exceptionArgument, -2147483648, 2147483647);
                 }
@@ -426,7 +404,7 @@ Bridge.define('System.Version.VersionResult', {
                     }
                 }
                 return new Bridge.FormatException("InvalidString");
-            default: 
+            default:
                 return new Bridge.ArgumentException("VersionString");
         }
     },

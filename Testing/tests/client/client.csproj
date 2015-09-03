@@ -66,6 +66,7 @@
     <Compile Include="Tests\MarkupCheckRequired.cs" />
     <Compile Include="Tests\NotCompiling.cs" />
     <Compile Include="Tests\RunTests.cs" />
+    <Compile Include="Tests\SystemFunctions\TestVersion.cs" />
     <Compile Include="Tests\SystemFunctions\TestDateFunctions.cs" />
     <Compile Include="Tests\SystemFunctions\TestStringBuilderFunctions.cs" />
     <Compile Include="Tests\SystemFunctions\TestStringFunctions.cs" />
@@ -91,7 +92,6 @@
       <Name>Bridge.QUnit</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <PropertyGroup>
