@@ -343,6 +343,8 @@
 
 
         addExtend: function (cls, extend) {
+            var i,
+                scope;
             Array.prototype.push.apply(cls.$$inherits, extend);
 
             for (i = 0; i < extend.length; i++) {
@@ -360,7 +362,8 @@
             var nameParts = className.split('.'),
                 name,
                 key,
-                exists;
+                exists,
+                i;
 
             for (i = 0; i < (nameParts.length - 1) ; i++) {
                 if (typeof scope[nameParts[i]] == 'undefined') {

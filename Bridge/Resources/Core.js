@@ -1,8 +1,8 @@
 // @source Core.js
 
-(function () {
+(function (globals) {
     var core = {
-        global: (function () { return this; })(),
+        global: globals,
 
         emptyFn: function () { },
 
@@ -815,5 +815,5 @@
         }
     }
 
-    Bridge = core;
-})();
+    globals.Bridge = core;
+})(this);
