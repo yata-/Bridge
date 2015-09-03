@@ -205,6 +205,7 @@
     <Content Include="Resources\INotifyPropertyChanged.js" />
     <Content Include="Resources\Date.js" />
     <Content Include="Resources\linq.js" />
+    <EmbeddedResource Include="Resources\list" />
     <Content Include="Resources\Locales\ru-RU.js" />
     <Content Include="Resources\Char.js" />
     <Content Include="Resources\Text\Regex.js" />

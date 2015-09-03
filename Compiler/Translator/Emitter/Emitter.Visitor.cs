@@ -318,5 +318,10 @@ namespace Bridge.Translator
         {
             new UsingBlock(this, usingStatement).Emit();
         }
+
+        public override void VisitUncheckedExpression(UncheckedExpression uncheckedExpression)
+        {
+            uncheckedExpression.Expression.AcceptVisitor(this);
+        }
     }
 }

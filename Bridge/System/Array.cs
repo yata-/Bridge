@@ -74,6 +74,10 @@ namespace System
             return 0;
         }
 
+        public string Join()
+        {
+            return null;
+        }
 
         public string Join(string separator)
         {
@@ -198,5 +202,26 @@ namespace System
         {
             return null;
         }
+
+        [Template("Bridge.Array.init({count}, {value})")]
+        public static extern T[] Repeat<T>(T value, int count);
+
+        [Template("Bridge.Array.fill({dst}, {T}.getDefaultValue || Bridge.getDefaultValue({T}), {index}, {count})")]
+        public static extern void Clear<T>(T[] dst, int index, int count);
+
+        [Template("Bridge.Array.copy({src}, {spos}, {dst}, {dpos}, {len})")]
+        public static extern void Copy(Array src, int spos, Array dst, int dpos, int len);
+
+        [Template("Bridge.Array.copy({src}, 0, {dst}, 0, {len})")]
+        public static extern void Copy(Array src, Array dst, int len);
+
+        [Template("Bridge.Array.resize({array}, {newSize}, {T}.getDefaultValue || Bridge.getDefaultValue({T}))")]
+        public static extern void Resize<T>(T[] array, int newSize);
+
+        [Template("Bridge.Array.reverse({array})")]
+        public static extern void Reverse(Array array);
+
+        [Template("Bridge.Array.reverse({array}, {index}, {length})")]
+        public static extern void Reverse(Array array, int index, int length);
     }
 }

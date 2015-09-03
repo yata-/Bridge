@@ -169,5 +169,11 @@ namespace Bridge.Translator
             get;
             set;
         }
+		
+		public virtual IEnumerable<AssemblyDefinition> References
+        {
+            get;
+            set;
+        }
     }
 }

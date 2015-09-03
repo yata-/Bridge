@@ -11,6 +11,7 @@ namespace Bridge.Translator
         public AssemblyInfo()
         {
             this.Dependencies = new List<IPluginDependency>();
+            this.InjectScriptToAssembly = true;
         }
 
         /// <summary>
@@ -192,5 +193,7 @@ namespace Bridge.Translator
         public string Configuration { get; set; }
 
         public List<string> DefineConstants { get; set; }
+		
+		public bool InjectScriptToAssembly { get; set; }
     }
 }
