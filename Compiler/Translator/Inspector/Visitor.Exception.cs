@@ -40,7 +40,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(accessor);
+				throw (System.Exception)this.CreateException(accessor);
 			}
         }
 
@@ -48,7 +48,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(anonymousMethodExpression);
+				throw (System.Exception)this.CreateException(anonymousMethodExpression);
 			}
         }
 
@@ -56,7 +56,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(anonymousTypeCreateExpression);
+				throw (System.Exception)this.CreateException(anonymousTypeCreateExpression);
 			}
         }
 
@@ -64,7 +64,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(arrayCreateExpression);
+				throw (System.Exception)this.CreateException(arrayCreateExpression);
 			}
         }
 
@@ -72,7 +72,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(arrayInitializerExpression);
+				throw (System.Exception)this.CreateException(arrayInitializerExpression);
 			}
         }
 
@@ -80,7 +80,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(arraySpecifier);
+				throw (System.Exception)this.CreateException(arraySpecifier);
 			}
         }
 
@@ -88,7 +88,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(asExpression);
+				throw (System.Exception)this.CreateException(asExpression);
 			}
         }
 
@@ -96,7 +96,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(assignmentExpression);
+				throw (System.Exception)this.CreateException(assignmentExpression);
 			}
         }
 
@@ -109,7 +109,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(baseReferenceExpression);
+				throw (System.Exception)this.CreateException(baseReferenceExpression);
 			}
         }
 
@@ -117,7 +117,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(binaryOperatorExpression);
+				throw (System.Exception)this.CreateException(binaryOperatorExpression);
 			}
         }
 
@@ -125,7 +125,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(blockStatement);
+				throw (System.Exception)this.CreateException(blockStatement);
 			}
         }
 
@@ -133,7 +133,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(breakStatement);
+				throw (System.Exception)this.CreateException(breakStatement);
 			}
         }
 
@@ -141,7 +141,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(caseLabel);
+				throw (System.Exception)this.CreateException(caseLabel);
 			}
         }
 
@@ -149,7 +149,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(castExpression);
+				throw (System.Exception)this.CreateException(castExpression);
 			}
         }
 
@@ -157,7 +157,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(catchClause);
+				throw (System.Exception)this.CreateException(catchClause);
 			}
         }
 
@@ -165,7 +165,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(checkedExpression);
+				throw (System.Exception)this.CreateException(checkedExpression);
 			}
         }
 
@@ -173,7 +173,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(checkedStatement);
+				throw (System.Exception)this.CreateException(checkedStatement);
 			}
         }
 
@@ -181,7 +181,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(composedType);
+				throw (System.Exception)this.CreateException(composedType);
 			}
         }
 
@@ -189,7 +189,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(conditionalExpression);
+				throw (System.Exception)this.CreateException(conditionalExpression);
 			}
         }
 
@@ -197,7 +197,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(constructorDeclaration);
+				throw (System.Exception)this.CreateException(constructorDeclaration);
 			}
         }
 
@@ -205,7 +205,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(constructorInitializer);
+				throw (System.Exception)this.CreateException(constructorInitializer);
 			}
         }
 
@@ -213,7 +213,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(continueStatement);
+				throw (System.Exception)this.CreateException(continueStatement);
 			}
         }
 
@@ -221,7 +221,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(customEventDeclaration);
+				throw (System.Exception)this.CreateException(customEventDeclaration);
 			}
         }
 
@@ -229,7 +229,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(delegateDeclaration);
+				throw (System.Exception)this.CreateException(delegateDeclaration);
 			}
         }
 
@@ -237,7 +237,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(destructorDeclaration);
+				throw (System.Exception)this.CreateException(destructorDeclaration);
 			}
         }
 
@@ -245,7 +245,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(directionExpression);
+				throw (System.Exception)this.CreateException(directionExpression);
 			}
         }
 
@@ -253,7 +253,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(doWhileStatement);
+				throw (System.Exception)this.CreateException(doWhileStatement);
 			}
         }
 
@@ -261,7 +261,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(documentationReference);
+				throw (System.Exception)this.CreateException(documentationReference);
 			}
         }
 
@@ -269,7 +269,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(emptyStatement);
+				throw (System.Exception)this.CreateException(emptyStatement);
 			}
         }
 
@@ -277,7 +277,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(enumMemberDeclaration);
+				throw (System.Exception)this.CreateException(enumMemberDeclaration);
 			}
         }
 
@@ -285,7 +285,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(eventDeclaration);
+				throw (System.Exception)this.CreateException(eventDeclaration);
 			}
         }
 
@@ -293,7 +293,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(expressionStatement);
+				throw (System.Exception)this.CreateException(expressionStatement);
 			}
         }
 
@@ -301,7 +301,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(externAliasDeclaration);
+				throw (System.Exception)this.CreateException(externAliasDeclaration);
 			}
         }
 
@@ -309,7 +309,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(fieldDeclaration);
+				throw (System.Exception)this.CreateException(fieldDeclaration);
 			}
         }
 
@@ -317,7 +317,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(fixedFieldDeclaration);
+				throw (System.Exception)this.CreateException(fixedFieldDeclaration);
 			}
         }
 
@@ -325,7 +325,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(fixedStatement);
+				throw (System.Exception)this.CreateException(fixedStatement);
 			}
         }
 
@@ -333,7 +333,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(fixedVariableInitializer);
+				throw (System.Exception)this.CreateException(fixedVariableInitializer);
 			}
         }
 
@@ -341,7 +341,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(forStatement);
+				throw (System.Exception)this.CreateException(forStatement);
 			}
         }
 
@@ -349,7 +349,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(foreachStatement);
+				throw (System.Exception)this.CreateException(foreachStatement);
 			}
         }
 
@@ -357,7 +357,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(gotoCaseStatement);
+				throw (System.Exception)this.CreateException(gotoCaseStatement);
 			}
         }
 
@@ -365,7 +365,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(gotoDefaultStatement);
+				throw (System.Exception)this.CreateException(gotoDefaultStatement);
 			}
         }
 
@@ -373,7 +373,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(gotoStatement);
+				throw (System.Exception)this.CreateException(gotoStatement);
 			}
         }
 
@@ -381,7 +381,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(identifierExpression);
+				throw (System.Exception)this.CreateException(identifierExpression);
 			}
         }
 
@@ -389,7 +389,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(ifElseStatement);
+				throw (System.Exception)this.CreateException(ifElseStatement);
 			}
         }
 
@@ -397,7 +397,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(indexerDeclaration);
+				throw (System.Exception)this.CreateException(indexerDeclaration);
 			}
         }
 
@@ -405,7 +405,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(indexerExpression);
+				throw (System.Exception)this.CreateException(indexerExpression);
 			}
         }
 
@@ -413,7 +413,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(invocationExpression);
+				throw (System.Exception)this.CreateException(invocationExpression);
 			}
         }
 
@@ -421,7 +421,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(isExpression);
+				throw (System.Exception)this.CreateException(isExpression);
 			}
         }
 
@@ -429,7 +429,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(labelStatement);
+				throw (System.Exception)this.CreateException(labelStatement);
 			}
         }
 
@@ -437,7 +437,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(lambdaExpression);
+				throw (System.Exception)this.CreateException(lambdaExpression);
 			}
         }
 
@@ -445,7 +445,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(lockStatement);
+				throw (System.Exception)this.CreateException(lockStatement);
 			}
         }
 
@@ -453,7 +453,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(memberReferenceExpression);
+				throw (System.Exception)this.CreateException(memberReferenceExpression);
 			}
         }
 
@@ -461,7 +461,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(methodDeclaration);
+				throw (System.Exception)this.CreateException(methodDeclaration);
 			}
         }
 
@@ -469,7 +469,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(namedArgumentExpression);
+				throw (System.Exception)this.CreateException(namedArgumentExpression);
 			}
         }
 
@@ -477,7 +477,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(namedExpression);
+				throw (System.Exception)this.CreateException(namedExpression);
 			}
         }
 
@@ -485,7 +485,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(namespaceDeclaration);
+				throw (System.Exception)this.CreateException(namespaceDeclaration);
 			}
         }
 
@@ -493,7 +493,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(objectCreateExpression);
+				throw (System.Exception)this.CreateException(objectCreateExpression);
 			}
         }
 
@@ -501,7 +501,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(parameterDeclaration);
+				throw (System.Exception)this.CreateException(parameterDeclaration);
 			}
         }
 
@@ -509,7 +509,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(parenthesizedExpression);
+				throw (System.Exception)this.CreateException(parenthesizedExpression);
 			}
         }
 
@@ -522,7 +522,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(pointerReferenceExpression);
+				throw (System.Exception)this.CreateException(pointerReferenceExpression);
 			}
         }
 
@@ -530,7 +530,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(primitiveExpression);
+				throw (System.Exception)this.CreateException(primitiveExpression);
 			}
         }
 
@@ -538,7 +538,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(propertyDeclaration);
+				throw (System.Exception)this.CreateException(propertyDeclaration);
 			}
         }
 
@@ -546,7 +546,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(queryContinuationClause);
+				throw (System.Exception)this.CreateException(queryContinuationClause);
 			}
         }
 
@@ -554,7 +554,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(queryExpression);
+				throw (System.Exception)this.CreateException(queryExpression);
 			}
         }
 
@@ -562,7 +562,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(queryFromClause);
+				throw (System.Exception)this.CreateException(queryFromClause);
 			}
         }
 
@@ -570,7 +570,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(queryGroupClause);
+				throw (System.Exception)this.CreateException(queryGroupClause);
 			}
         }
 
@@ -578,7 +578,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(queryJoinClause);
+				throw (System.Exception)this.CreateException(queryJoinClause);
 			}
         }
 
@@ -586,7 +586,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(queryLetClause);
+				throw (System.Exception)this.CreateException(queryLetClause);
 			}
         }
 
@@ -594,7 +594,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(queryOrderClause);
+				throw (System.Exception)this.CreateException(queryOrderClause);
 			}
         }
 
@@ -602,7 +602,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(queryOrdering);
+				throw (System.Exception)this.CreateException(queryOrdering);
 			}
         }
 
@@ -610,7 +610,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(querySelectClause);
+				throw (System.Exception)this.CreateException(querySelectClause);
 			}
         }
 
@@ -618,7 +618,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(queryWhereClause);
+				throw (System.Exception)this.CreateException(queryWhereClause);
 			}
         }
 
@@ -626,7 +626,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(returnStatement);
+				throw (System.Exception)this.CreateException(returnStatement);
 			}
         }
 
@@ -634,7 +634,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(sizeOfExpression);
+				throw (System.Exception)this.CreateException(sizeOfExpression);
 			}
         }
 
@@ -642,7 +642,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(stackAllocExpression);
+				throw (System.Exception)this.CreateException(stackAllocExpression);
 			}
         }
 
@@ -650,7 +650,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(switchSection);
+				throw (System.Exception)this.CreateException(switchSection);
 			}
         }
 
@@ -658,7 +658,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(switchStatement);
+				throw (System.Exception)this.CreateException(switchStatement);
 			}
         }
 
@@ -666,7 +666,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(syntaxTree);
+				throw (System.Exception)this.CreateException(syntaxTree);
 			}
         }
 
@@ -674,7 +674,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(textNode);
+				throw (System.Exception)this.CreateException(textNode);
 			}
         }
 
@@ -682,7 +682,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(thisReferenceExpression);
+				throw (System.Exception)this.CreateException(thisReferenceExpression);
 			}
         }
 
@@ -690,7 +690,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(throwStatement);
+				throw (System.Exception)this.CreateException(throwStatement);
 			}
         }
 
@@ -698,7 +698,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(tryCatchStatement);
+				throw (System.Exception)this.CreateException(tryCatchStatement);
 			}
         }
 
@@ -706,7 +706,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(typeDeclaration);
+				throw (System.Exception)this.CreateException(typeDeclaration);
 			}
         }
 
@@ -714,7 +714,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(typeOfExpression);
+				throw (System.Exception)this.CreateException(typeOfExpression);
 			}
         }
 
@@ -722,7 +722,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(typeReferenceExpression);
+				throw (System.Exception)this.CreateException(typeReferenceExpression);
 			}
         }
 
@@ -730,7 +730,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(unaryOperatorExpression);
+				throw (System.Exception)this.CreateException(unaryOperatorExpression);
 			}
         }
 
@@ -738,7 +738,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(uncheckedExpression);
+				throw (System.Exception)this.CreateException(uncheckedExpression);
 			}
         }
 
@@ -746,7 +746,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(uncheckedStatement);
+				throw (System.Exception)this.CreateException(uncheckedStatement);
 			}
         }
 
@@ -754,7 +754,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(undocumentedExpression);
+				throw (System.Exception)this.CreateException(undocumentedExpression);
 			}
         }
 
@@ -762,7 +762,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(unsafeStatement);
+				throw (System.Exception)this.CreateException(unsafeStatement);
 			}
         }
 
@@ -770,7 +770,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(usingDeclaration);
+				throw (System.Exception)this.CreateException(usingDeclaration);
 			}
         }
 
@@ -778,7 +778,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(usingStatement);
+				throw (System.Exception)this.CreateException(usingStatement);
 			}
         }
 
@@ -786,7 +786,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(variableDeclarationStatement);
+				throw (System.Exception)this.CreateException(variableDeclarationStatement);
 			}
         }
 
@@ -794,7 +794,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(variableInitializer);
+				throw (System.Exception)this.CreateException(variableInitializer);
 			}
         }
 
@@ -802,7 +802,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(whileStatement);
+				throw (System.Exception)this.CreateException(whileStatement);
 			}
         }
 
@@ -810,7 +810,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(whitespaceNode);
+				throw (System.Exception)this.CreateException(whitespaceNode);
 			}
         }
 
@@ -818,7 +818,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(yieldBreakStatement);
+				throw (System.Exception)this.CreateException(yieldBreakStatement);
 			}
         }
 
@@ -826,7 +826,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
 			{
-				throw (Exception)this.CreateException(yieldReturnStatement);
+				throw (System.Exception)this.CreateException(yieldReturnStatement);
 			}
         }
 
@@ -834,7 +834,7 @@ namespace Bridge.Translator
         {
             if (this.ThrowException)
             {
-                throw (Exception)this.CreateException(errorNode);
+                throw (System.Exception)this.CreateException(errorNode);
             }
         }
     }
