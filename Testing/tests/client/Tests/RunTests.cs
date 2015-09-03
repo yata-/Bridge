@@ -61,6 +61,13 @@ namespace ClientTestLibrary
             QUnit.Test("Try/Catch/Finally caught exceptions", TestTryCatchFinallyBlocks.CaughtExceptions);
             QUnit.Test("Try/Catch/Finally thrown exceptions", TestTryCatchFinallyBlocks.ThrownExceptions);
 
+            QUnit.Module("System");
+            QUnit.Test("Version TestConstructors", TestVersion.TestConstructors);
+            QUnit.Test("Version Equals and GetHashCode", TestVersion.TestEqualsGetHashCode);
+            QUnit.Test("Version ToString", TestVersion.TestToString);
+            QUnit.Test("Version Parse", TestVersion.TestParse);
+            QUnit.Test("Version Operators", TestVersion.TestOperators);
+
             QUnit.Module("Issues");
             QUnit.Test("#169", TestBridgeIssues.N169);
             QUnit.Test("#240", TestBridgeIssues.N240);
