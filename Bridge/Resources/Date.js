@@ -65,7 +65,7 @@
             format = format || "G";
 
             if (format.length == 1) {
-                formats = df.getAllDateTimePatterns(format, true);
+                var formats = df.getAllDateTimePatterns(format, true);
                 format = formats ? formats[0] : format;
             }
             else if (format.length == 2 && format.charAt(0) == "%") {
@@ -306,7 +306,7 @@
             format = format || "G";
 
             if (format.length == 1) {
-                formats = df.getAllDateTimePatterns(format, true);
+                var formats = df.getAllDateTimePatterns(format, true);
                 format = formats ? formats[0] : format;
             }
             else if (format.length == 2 && format.charAt(0) == "%") {

@@ -6,12 +6,12 @@
  * @license   : See license.txt and https://github.com/bridgedotnet/Bridge.NET/blob/master/LICENSE. 
  */ 
 
-
+"use strict";
 // @source Core.js
 
-(function () {
+(function (globals) {
     var core = {
-        global: (function () { return this; })(),
+        global: globals,
 
         emptyFn: function () { },
 
@@ -824,8 +824,8 @@
         }
     }
 
-    Bridge = core;
-})();
+    globals.Bridge = core;
+})(this);
 
 // @source Nullable.js
 
@@ -1764,6 +1764,8 @@
 
 
         addExtend: function (cls, extend) {
+            var i,
+                scope;
             Array.prototype.push.apply(cls.$$inherits, extend);
 
             for (i = 0; i < extend.length; i++) {
@@ -1781,7 +1783,8 @@
             var nameParts = className.split('.'),
                 name,
                 key,
-                exists;
+                exists,
+                i;
 
             for (i = 0; i < (nameParts.length - 1) ; i++) {
                 if (typeof scope[nameParts[i]] == 'undefined') {
@@ -3527,7 +3530,7 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
             format = format || "G";
 
             if (format.length == 1) {
-                formats = df.getAllDateTimePatterns(format, true);
+                var formats = df.getAllDateTimePatterns(format, true);
                 format = formats ? formats[0] : format;
             }
             else if (format.length == 2 && format.charAt(0) == "%") {
@@ -3768,7 +3771,7 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
             format = format || "G";
 
             if (format.length == 1) {
-                formats = df.getAllDateTimePatterns(format, true);
+                var formats = df.getAllDateTimePatterns(format, true);
                 format = formats ? formats[0] : format;
             }
             else if (format.length == 2 && format.charAt(0) == "%") {
@@ -4663,7 +4666,7 @@ Bridge.define('Bridge.Text.StringBuilder', {
 // @source Text/Regex.js
 
 (function () {
-    specials = [
+    var specials = [
             // order matters for these
                 "-"
             , "["
@@ -4684,9 +4687,9 @@ Bridge.define('Bridge.Text.StringBuilder', {
             , "|"
     ],
 
-    regex = RegExp('[' + specials.join('\\') + ']', 'g');
+    regex = RegExp('[' + specials.join('\\') + ']', 'g'),
 
-    var regexpEscape = function (s) {
+    regexpEscape = function (s) {
         return s.replace(regex, "\\$&");
     };
 
