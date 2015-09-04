@@ -10,7 +10,7 @@ namespace System.Collections.Generic
         {
         }
 
-        [Template("new Bridge.Dictionary$2({TKey},TValue)()")]
+        [Template("new Bridge.Dictionary$2({TKey}, {TValue})()")]
         public extern Dictionary(int capacity);
 
         [Template("new Bridge.Dictionary$2({TKey}, {TValue})(null, {comparer})")]
