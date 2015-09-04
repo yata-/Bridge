@@ -636,5 +636,46 @@ namespace ClientTestLibrary
             assert.Equal(_dictOfTests["a"].Id, "a", "First element is a");
             assert.Equal(_dictOfTests["b"].Id, "b", "Second element is b");
         }
+
+        // Bridge[#406]
+        public static void N406(Assert assert)
+        {
+            const string TESTA = "TESTA";
+            const string TESTB = "TESTB";
+            const string TESTC = "TESTC";
+            const string TESTD = "TESTD";
+            const string TESTE = "TESTE";
+            const string TESTF = "TESTF";
+            const string TESTG = "TESTG";
+
+            var test = TESTD;
+            string result = null;
+            switch (test)
+            {
+                case TESTA:
+                    result = TESTA;
+                    break;
+                case TESTB:
+                    result = TESTB;
+                    break;
+                case TESTC:
+                    result = TESTC;
+                    break;
+                case TESTD:
+                    result = TESTD;
+                    break;
+                case TESTE:
+                    result = TESTE;
+                    break;
+                case TESTF:
+                    result = TESTF;
+                    break;
+                case TESTG:
+                    result = TESTG;
+                    break;
+            }
+
+            assert.Equal(result, "TESTD", "TESTD");
+        }
     }
 }
