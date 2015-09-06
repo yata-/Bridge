@@ -111,9 +111,15 @@ namespace Bridge.Translator
                     if (!isEvent)
                     {
                         this.Emitter.IsAssignment = true;
+                        this.Emitter.AssignmentType = AssignmentOperatorType.Assign;
                         assignmentExpression.Left.AcceptVisitor(this.Emitter);
                         this.Emitter.IsAssignment = false;
-                        this.Write(" = ");
+
+                        if (this.Emitter.Writers.Count == initCount)
+                        {
+                            this.Write(" = ");
+                        }
+
                         this.Write(Bridge.Translator.Emitter.ROOT + "." + (add ? Bridge.Translator.Emitter.DELEGATE_COMBINE : Bridge.Translator.Emitter.DELEGATE_REMOVE));
                         this.WriteOpenParentheses();
                     }
@@ -138,7 +144,18 @@ namespace Bridge.Translator
                 {
                     this.Emitter.AssignmentType = AssignmentOperatorType.Assign;
                 }
+
+                if (delegateAssigment)
+                {
+                    this.Emitter.IsAssignment = false;
+                }
+
                 assignmentExpression.Left.AcceptVisitor(this.Emitter);
+
+                if (delegateAssigment)
+                {
+                    this.Emitter.IsAssignment = true;
+                }
             }
             else
             {
@@ -299,7 +316,11 @@ namespace Bridge.Translator
 
             if (this.Emitter.Writers.Count > initCount)
             {
-                this.PopWriter();
+                var writerCount = this.Emitter.Writers.Count;
+                for (int i = initCount; i < writerCount; i++)
+                {
+                    this.PopWriter();
+                }
             }
 
             if (delegateAssigment)
