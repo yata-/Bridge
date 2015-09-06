@@ -12,21 +12,21 @@ namespace System
 		}
 
 		[Name("MAX_VALUE")]
-		public const double MaxValue = 0;
+		public static readonly double MaxValue = 0;
         [Name("MIN_VALUE")]
-        public const decimal MinValue = 0;
+        public static readonly decimal MinValue = 0;
 
 		[InlineConst]
 		public const double Epsilon = 4.94065645841247E-324;
 
         [Name("NEGATIVE_INFINITY")]
-        public const double NegativeInfinity = 0;
+        public static readonly double NegativeInfinity = 0;
 
         [Name("POSITIVE_INFINITY")]
-        public const double PositiveInfinity = 0;
+        public static readonly double PositiveInfinity = 0;
 
 		[Name("NaN")]
-		public const double NaN = 0;
+		public static readonly double NaN = 0;
 
         [Template("Bridge.Int.format({this}, {format})")]
         public string Format(string format)
