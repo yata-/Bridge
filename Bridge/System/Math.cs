@@ -6,13 +6,28 @@ namespace System
     [Name("Math")]
     public static class Math
     {
+        [Name(false)]
         public static readonly double E = 0;
+
+        [Name(false)]
         public static readonly double LN10 = 0;
+
+        [Name(false)]
         public static readonly double LN2 = 0;
+
+        [Name(false)]
         public static readonly double LOG2E = 0;
+
+        [Name(false)]
         public static readonly double LOG10E = 0;
+
+        [Name(false)]
         public static readonly double PI = 0;
+
+        [Name(false)]
         public static readonly double SQRT1_2 = 0;
+
+        [Name(false)]
         public static readonly double SQRT2 = 0;
 
         public static int Abs(int x)

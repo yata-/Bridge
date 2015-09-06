@@ -15,10 +15,19 @@ namespace System
     [Constructor("Bridge.Decimal")]
     public struct Decimal : IComparable, IComparable<Decimal>, IEquatable<Decimal>, IFormattable
     {
+        [Name(false)]
         public static readonly decimal Zero = 0;
+
+        [Name(false)]
         public static readonly decimal One = 1;
+
+        [Name(false)]
         public static readonly decimal MinusOne = -1;
+
+        [Name(false)]
         public static readonly decimal MaxValue = 0;
+
+        [Name(false)]
         public static readonly decimal MinValue = 0;
 
         [Template("Bridge.Decimal(0)")]
