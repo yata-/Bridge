@@ -551,6 +551,43 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
             assert.equal(_dictOfTests.getCount(), 2, "All items added");
             assert.equal(_dictOfTests.get("a").getId(), "a", "First element is a");
             assert.equal(_dictOfTests.get("b").getId(), "b", "Second element is b");
+        }        ,
+        n406: function (assert) {
+            var TESTA = "TESTA";
+            var TESTB = "TESTB";
+            var TESTC = "TESTC";
+            var TESTD = "TESTD";
+            var TESTE = "TESTE";
+            var TESTF = "TESTF";
+            var TESTG = "TESTG";
+
+            var test = TESTD;
+            var result = null;
+            switch (test) {
+                case TESTA: 
+                    result = TESTA;
+                    break;
+                case TESTB: 
+                    result = TESTB;
+                    break;
+                case TESTC: 
+                    result = TESTC;
+                    break;
+                case TESTD: 
+                    result = TESTD;
+                    break;
+                case TESTE: 
+                    result = TESTE;
+                    break;
+                case TESTF: 
+                    result = TESTF;
+                    break;
+                case TESTG: 
+                    result = TESTG;
+                    break;
+            }
+
+            assert.equal(result, "TESTD", "TESTD");
         }
     }
 });
