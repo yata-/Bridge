@@ -28,6 +28,92 @@ namespace Bridge.Translator
             this.VisitAssignmentExpression();
         }
 
+        protected bool ResolveOperator(AssignmentExpression assignmentExpression, OperatorResolveResult orr, int initCount)
+        {
+            var method = orr != null ? orr.UserDefinedOperatorMethod : null;
+
+            if (method != null)
+            {
+                var inline = this.Emitter.GetInline(method);
+
+                if (!string.IsNullOrWhiteSpace(inline))
+                {
+                    if (this.Emitter.Writers.Count == initCount)
+                    {
+                        this.Write("= ");
+                    }
+
+                    new InlineArgumentsBlock(this.Emitter,
+                        new ArgumentsInfo(this.Emitter, assignmentExpression, orr, method), inline).Emit();
+
+                    if (this.Emitter.Writers.Count > initCount)
+                    {
+                        this.PopWriter();
+                    }
+                    return true;
+                }
+                else if (!this.Emitter.Validator.IsIgnoreType(method.DeclaringTypeDefinition))
+                {
+                    if (this.Emitter.Writers.Count == initCount)
+                    {
+                        this.Write("= ");
+                    }
+
+                    if (orr.IsLiftedOperator)
+                    {
+                        this.Write(Bridge.Translator.Emitter.ROOT + ".Nullable.lift(");
+                    }
+
+                    this.Write(BridgeTypes.ToJsName(method.DeclaringType, this.Emitter));
+                    this.WriteDot();
+
+                    this.Write(OverloadsCollection.Create(this.Emitter, method).GetOverloadName());
+
+                    if (orr.IsLiftedOperator)
+                    {
+                        this.WriteComma();
+                    }
+                    else
+                    {
+                        this.WriteOpenParentheses();
+                    }
+
+                    new ExpressionListBlock(this.Emitter,
+                        new Expression[] { assignmentExpression.Left, assignmentExpression.Right }, null).Emit();
+                    this.WriteCloseParentheses();
+
+                    if (this.Emitter.Writers.Count > initCount)
+                    {
+                        this.PopWriter();
+                    }
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        protected bool IsUserOperator(OperatorResolveResult orr)
+        {
+            var method = orr != null ? orr.UserDefinedOperatorMethod : null;
+
+            if (method != null)
+            {
+                var inline = this.Emitter.GetInline(method);
+
+                if (!string.IsNullOrWhiteSpace(inline))
+                {
+                    return true;
+                }
+                else if (!this.Emitter.Validator.IsIgnoreType(method.DeclaringTypeDefinition))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         protected void VisitAssignmentExpression()
         {
             AssignmentExpression assignmentExpression = this.AssignmentExpression;
@@ -50,6 +136,7 @@ namespace Bridge.Translator
             bool isDecimal = Helpers.IsDecimalType(rr.Type, this.Emitter.Resolver);
             var expectedType = this.Emitter.Resolver.Resolver.GetExpectedType(assignmentExpression);
             bool isDecimalExpected = Helpers.IsDecimalType(expectedType, this.Emitter.Resolver);
+            bool isUserOperator = this.IsUserOperator(orr);
 
             if (assignmentExpression.Operator == AssignmentOperatorType.Divide &&
                 (
@@ -134,7 +221,7 @@ namespace Bridge.Translator
 
             if (!thisAssignment)
             {
-                if (special || (isDecimal && isDecimalExpected))
+                if (special || (isDecimal && isDecimalExpected) || isUserOperator)
                 {
                     this.Emitter.AssignmentType = AssignmentOperatorType.Assign;
                 }
@@ -168,6 +255,11 @@ namespace Bridge.Translator
                     this.PopWriter();
                 }
 
+                return;
+            }
+
+            if (this.ResolveOperator(assignmentExpression, orr, initCount))
+            {
                 return;
             }
 

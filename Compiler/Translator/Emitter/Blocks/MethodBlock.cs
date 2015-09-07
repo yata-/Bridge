@@ -99,7 +99,18 @@ namespace Bridge.Translator
                 structName = BridgeTypes.ToJsName(this.TypeInfo.Type, this.Emitter);
             }
 
-            if (this.TypeInfo.InstanceConfig.Fields.Count == 0)
+            var fields = this.TypeInfo.InstanceConfig.Fields;
+            var props = this.TypeInfo.InstanceConfig.Properties.Where(ent =>
+            {
+                var p = ent.Entity as PropertyDeclaration;
+
+                return p != null && p.Getter != null && p.Getter.Body.IsNull && p.Setter != null && p.Setter.Body.IsNull;
+            });
+
+            var list = fields.ToList();
+            list.AddRange(props);
+
+            if (list.Count == 0)
             {
                 this.EnsureComma();
                 this.Write("$clone: function (to) { return this; }");
@@ -114,7 +125,7 @@ namespace Bridge.Translator
                 this.BeginBlock();
                 this.Write("var hash = 17;");
 
-                foreach (var field in this.TypeInfo.InstanceConfig.Fields)
+                foreach (var field in list)
                 {
                     string fieldName = field.GetName(this.Emitter);
 
@@ -151,7 +162,7 @@ namespace Bridge.Translator
 
                 bool and = false;
 
-                foreach (var field in this.TypeInfo.InstanceConfig.Fields)
+                foreach (var field in list)
                 {
                     string fieldName = field.GetName(this.Emitter);
 
@@ -182,7 +193,7 @@ namespace Bridge.Translator
             this.Write(structName);
             this.Write("();");
 
-            foreach (var field in this.TypeInfo.InstanceConfig.Fields)
+            foreach (var field in list)
             {
                 this.WriteNewLine();
                 string fieldName = field.GetName(this.Emitter);

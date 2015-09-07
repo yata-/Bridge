@@ -344,7 +344,7 @@ namespace Bridge.Translator
                             var memberTargetrr = targetrr as MemberResolveResult;
                             bool isField = memberTargetrr != null && memberTargetrr.Member is IField && (memberTargetrr.TargetResult is ThisResolveResult || memberTargetrr.TargetResult is LocalResolveResult);
 
-                            if (!(targetrr is ThisResolveResult || targetrr is LocalResolveResult || isField))
+                            if (!(targetrr is ThisResolveResult || targetrr is TypeResolveResult || targetrr is LocalResolveResult || isField))
                             {
                                 targetVar = this.GetTempVarName();
 
