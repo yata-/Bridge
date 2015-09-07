@@ -309,6 +309,17 @@ namespace ClientTestLibrary
     }
 
     [FileName("testBridgeIssues.js")]
+    struct Bridge407
+    {
+        public int A { get; set; }
+
+        public static Bridge407 operator +(Bridge407 x, Bridge407 y)
+        {
+            return new Bridge407() { A = x.A + y.A };
+        }
+    }
+
+    [FileName("testBridgeIssues.js")]
     enum Bridge422
     {
         first = 0,
@@ -816,6 +827,20 @@ namespace ClientTestLibrary
             EnsureNumber(assert, SingleNaN, "NaN", "SingleNaNin expression");
             EnsureNumber(assert, SingleNegativeInfinity, "-Infinity", "SingleNegativeInfinityin expression");
             EnsureNumber(assert, SinglePositiveInfinity, "Infinity", "SinglePositiveInfinityin expression");
+        }
+
+
+        // Bridge[#407]
+        public static void N407(Assert assert)
+        {
+            Bridge407 vec = new Bridge407() { A = 1 };
+            vec += new Bridge407() { A = 2 };
+
+            assert.Equal(vec.A, 3, "Vec.A = 3");
+
+            int a = 2;
+            a += 5;
+            assert.Equal(a, 7, "a = 7");
         }
 
         // Bridge[#422]
