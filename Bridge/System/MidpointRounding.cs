@@ -10,7 +10,7 @@ namespace System
 	public enum MidpointRounding
 	{
         AwayFromZero = 0,
-		ToEven = 1,
+		ToEven = 6,
         Floor = 2,
         Ceil = 3
 	}

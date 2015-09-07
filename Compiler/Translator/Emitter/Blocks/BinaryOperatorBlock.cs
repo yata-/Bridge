@@ -114,8 +114,6 @@ namespace Bridge.Translator
                 return;
             }
 
-            
-
             if (binaryOperatorExpression.Operator == BinaryOperatorType.Divide &&
                 (
                     (Helpers.IsIntegerType(leftResolverResult.Type, this.Emitter.Resolver) &&

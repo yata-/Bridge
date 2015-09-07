@@ -308,6 +308,25 @@ namespace ClientTestLibrary
         public int data { get; set; }
     }
 
+    [FileName("testBridgeIssues.js")]
+    struct Bridge407
+    {
+        public int A { get; set; }
+
+        public static Bridge407 operator +(Bridge407 x, Bridge407 y)
+        {
+            return new Bridge407() { A = x.A + y.A };
+        }
+    }
+
+    [FileName("testBridgeIssues.js")]
+    enum Bridge422
+    {
+        first = 0,
+        next = 100,
+        afterNext,
+    }
+
     // Tests Bridge GitHub issues
     class TestBridgeIssues
     {
@@ -635,6 +654,215 @@ namespace ClientTestLibrary
             assert.Equal(_dictOfTests.Count, 2, "All items added");
             assert.Equal(_dictOfTests["a"].Id, "a", "First element is a");
             assert.Equal(_dictOfTests["b"].Id, "b", "Second element is b");
+        }
+
+        // Bridge[#406]
+        public static void N406(Assert assert)
+        {
+            const string TESTA = "TESTA";
+            const string TESTB = "TESTB";
+            const string TESTC = "TESTC";
+            const string TESTD = "TESTD";
+            const string TESTE = "TESTE";
+            const string TESTF = "TESTF";
+            const string TESTG = "TESTG";
+
+            var test = TESTD;
+            string result = null;
+            switch (test)
+            {
+                case TESTA:
+                    result = TESTA;
+                    break;
+                case TESTB:
+                    result = TESTB;
+                    break;
+                case TESTC:
+                    result = TESTC;
+                    break;
+                case TESTD:
+                    result = TESTD;
+                    break;
+                case TESTE:
+                    result = TESTE;
+                    break;
+                case TESTF:
+                    result = TESTF;
+                    break;
+                case TESTG:
+                    result = TESTG;
+                    break;
+            }
+
+            assert.Equal(result, "TESTD", "TESTD");
+        }
+
+        // Bridge[#409]
+        public static void N409(Assert assert)
+        {
+            decimal a = Math.Round(3.5M);
+            EnsureNumber(assert, a, "4", "Math.Round(3.5M)");
+
+            decimal b = Math.Round(4.5M);
+            EnsureNumber(assert, b, "4", "Math.Round(4.5M)");
+        }
+
+        // Bridge[#406]
+        private static void EnsureNumber(Assert assert, object actual, string expected, string message)
+        {
+            assert.Equal(actual.ToString(), expected, message);
+        }
+        public static void N410(Assert assert)
+        {
+            // Decimal consts
+            var DecimalZero = decimal.Zero;
+            var DecimalOne = decimal.One;
+            var DecimalMinusOne = decimal.MinusOne;
+            var DecimalMaxValue = decimal.MaxValue;
+            var DecimalMinValue = decimal.MinValue;
+
+            EnsureNumber(assert, DecimalZero, "0", "DecimalZero");
+            EnsureNumber(assert, DecimalOne, "1", "DecimalOne");
+            EnsureNumber(assert, DecimalMinusOne, "-1", "DecimalMinusOne");
+            EnsureNumber(assert, DecimalMaxValue, "7.9228162514264337593543950335e+28", "DecimalMaxValue");
+            EnsureNumber(assert, DecimalMinValue, "-7.9228162514264337593543950335e+28", "DecimalMinValue");
+
+            // Decimal consts in expressions
+            DecimalZero = decimal.Zero + 0;
+            DecimalOne = decimal.One + 0; ;
+            DecimalMinusOne = decimal.MinusOne + 0; ;
+            DecimalMaxValue = decimal.MaxValue + 0; ;
+            DecimalMinValue = decimal.MinValue + 0; ;
+
+            EnsureNumber(assert, DecimalZero, "0", "DecimalZeroin expression");
+            EnsureNumber(assert, DecimalOne, "1", "DecimalOnein expression");
+            EnsureNumber(assert, DecimalMinusOne, "-1", "DecimalMinusOnein expression");
+            EnsureNumber(assert, DecimalMaxValue, "7.9228162514264337593543950335e+28", "DecimalMaxValuein expression");
+            EnsureNumber(assert, DecimalMinValue, "-7.9228162514264337593543950335e+28", "DecimalMinValuein expression");
+
+            // Double consts
+            var DoubleMaxValue = double.MaxValue;
+            var DoubleMinValue = double.MinValue;
+            var DoubleEpsilon = double.Epsilon;
+            var DoubleNegativeInfinity = double.NegativeInfinity;
+            var DoublePositiveInfinity = double.PositiveInfinity;
+            var DoubleNaN = double.NaN;
+
+            EnsureNumber(assert, DoubleMaxValue, "1.7976931348623157e+308", "DoubleMaxValue");
+            EnsureNumber(assert, DoubleMinValue, "5e-324", "DoubleMinValue");
+            EnsureNumber(assert, DoubleEpsilon, "5e-324", "DoubleEpsilon");
+            EnsureNumber(assert, DoubleNegativeInfinity, "-Infinity", "DoubleNegativeInfinity");
+            EnsureNumber(assert, DoublePositiveInfinity, "Infinity", "DoublePositiveInfinity");
+            EnsureNumber(assert, DoubleNaN, "NaN", "DoubleNaN");
+
+            // Double consts in expressions
+            DoubleMaxValue = double.MaxValue + 0;
+            DoubleMinValue = double.MinValue + 0;
+            DoubleEpsilon = double.Epsilon + 0;
+            DoubleNegativeInfinity = double.NegativeInfinity + 0;
+            DoublePositiveInfinity = double.PositiveInfinity + 0;
+            DoubleNaN = double.NaN + 0;
+
+            EnsureNumber(assert, DoubleMaxValue, "1.7976931348623157e+308", "DoubleMaxValuein expression");
+            EnsureNumber(assert, DoubleMinValue, "5e-324", "DoubleMinValuein expression");
+            EnsureNumber(assert, DoubleEpsilon, "5e-324", "DoubleEpsilonin expression");
+            EnsureNumber(assert, DoubleNegativeInfinity, "-Infinity", "DoubleNegativeInfinityin expression");
+            EnsureNumber(assert, DoublePositiveInfinity, "Infinity", "DoublePositiveInfinityin expression");
+            EnsureNumber(assert, DoubleNaN, "NaN", "DoubleNaNin expression");
+
+            // Math consts
+            var MathE = Math.E;
+            var MathLN10 = Math.LN10;
+            var MathLN2 = Math.LN2;
+            var MathLOG2E = Math.LOG2E;
+            var MathLOG10E = Math.LOG10E;
+            var MathPI = Math.PI;
+            var MathSQRT1_2 = Math.SQRT1_2;
+            var MathSQRT2 = Math.SQRT2;
+
+            EnsureNumber(assert, MathE, "2.718281828459045", "MathE");
+            EnsureNumber(assert, MathLN10, "2.302585092994046", "MathLN10");
+            EnsureNumber(assert, MathLN2, "0.6931471805599453", "MathLN2");
+            EnsureNumber(assert, MathLOG2E, "1.4426950408889634", "MathLOG2E");
+            EnsureNumber(assert, MathLOG10E, "0.4342944819032518", "MathLOG10E");
+            EnsureNumber(assert, MathPI, "3.141592653589793", "MathPI");
+            EnsureNumber(assert, MathSQRT1_2, "0.7071067811865476", "MathSQRT1_2");
+            EnsureNumber(assert, MathSQRT2, "1.4142135623730951", "MathSQRT2");
+
+            // Math consts in expression
+            MathE = Math.E + 0;
+            MathLN10 = Math.LN10 + 0;
+            MathLN2 = Math.LN2 + 0;
+            MathLOG2E = Math.LOG2E + 0;
+            MathLOG10E = Math.LOG10E + 0;
+            MathPI = Math.PI + 0;
+            MathSQRT1_2 = Math.SQRT1_2 + 0;
+            MathSQRT2 = Math.SQRT2 + 0;
+
+            EnsureNumber(assert, MathE, "2.718281828459045", "MathEin expression");
+            EnsureNumber(assert, MathLN10, "2.302585092994046", "MathLN10in expression");
+            EnsureNumber(assert, MathLN2, "0.6931471805599453", "MathLN2in expression");
+            EnsureNumber(assert, MathLOG2E, "1.4426950408889634", "MathLOG2Ein expression");
+            EnsureNumber(assert, MathLOG10E, "0.4342944819032518", "MathLOG10Ein expression");
+            EnsureNumber(assert, MathPI, "3.141592653589793", "MathPIin expression");
+            EnsureNumber(assert, MathSQRT1_2, "0.7071067811865476", "MathSQRT1_2in expression");
+            EnsureNumber(assert, MathSQRT2, "1.4142135623730951", "MathSQRT2in expression");
+
+            // Single consts
+            var SingleMaxValue = float.MaxValue;
+            var SingleMinValue = float.MinValue;
+            var SingleEpsilon = float.Epsilon;
+            var SingleNaN = float.NaN;
+            var SingleNegativeInfinity = float.NegativeInfinity;
+            var SinglePositiveInfinity = float.PositiveInfinity;
+
+            EnsureNumber(assert, SingleMaxValue, "3.40282347e+38", "SingleMaxValue");
+            EnsureNumber(assert, SingleMinValue, "-3.40282347e+38", "SingleMinValue");
+            EnsureNumber(assert, SingleEpsilon, "1.401298e-45", "SingleEpsilon");
+            EnsureNumber(assert, SingleNaN, "NaN", "SingleNaN");
+            EnsureNumber(assert, SingleNegativeInfinity, "-Infinity", "SingleNegativeInfinity");
+            EnsureNumber(assert, SinglePositiveInfinity, "Infinity", "SinglePositiveInfinity");
+
+            // Single consts in expression
+           SingleMaxValue = float.MaxValue+ 0;
+           SingleMinValue = float.MinValue+ 0;
+           SingleEpsilon = float.Epsilon+ 0;
+           SingleNaN = float.NaN+ 0;
+           SingleNegativeInfinity = float.NegativeInfinity+ 0;
+           SinglePositiveInfinity = float.PositiveInfinity+ 0;
+
+            EnsureNumber(assert, SingleMaxValue, "3.40282347e+38", "SingleMaxValuein expression");
+            EnsureNumber(assert, SingleMinValue, "-3.40282347e+38", "SingleMinValuein expression");
+            EnsureNumber(assert, SingleEpsilon, "1.401298e-45", "SingleEpsilonin expression");
+            EnsureNumber(assert, SingleNaN, "NaN", "SingleNaNin expression");
+            EnsureNumber(assert, SingleNegativeInfinity, "-Infinity", "SingleNegativeInfinityin expression");
+            EnsureNumber(assert, SinglePositiveInfinity, "Infinity", "SinglePositiveInfinityin expression");
+        }
+
+
+        // Bridge[#407]
+        public static void N407(Assert assert)
+        {
+            Bridge407 vec = new Bridge407() { A = 1 };
+            vec += new Bridge407() { A = 2 };
+
+            assert.Equal(vec.A, 3, "Vec.A = 3");
+
+            int a = 2;
+            a += 5;
+            assert.Equal(a, 7, "a = 7");
+        }
+
+        // Bridge[#422]
+        public static void N422(Assert assert)
+        {
+            var v0 = Bridge422.first;
+            var v100 = Bridge422.next;
+            var v101 = Bridge422.afterNext;
+
+            assert.Equal(v0, 0, "Bridge422.first");
+            assert.Equal(v100, 100, "Bridge422.next");
+            assert.Equal(v101, 101, "Bridge422.afterNext");
         }
     }
 }
