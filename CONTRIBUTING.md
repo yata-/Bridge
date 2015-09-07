@@ -60,7 +60,7 @@ If you turn out to be a **bug squashing** and **feature adding** magical wizard.
 
 We are a fully distributed company with [team members](http://object.net/#team) spread across Earth. All positions are Remote.
 
-Additional Resources
+## Additional Resources
 
 1. [Contributor License Agreement](http://bridge.net/cla)
 2. [Issue tracker](https://github.com/bridgedotnet/Bridge/issues)
