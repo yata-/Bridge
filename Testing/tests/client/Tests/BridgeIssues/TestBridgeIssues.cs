@@ -320,6 +320,19 @@ namespace ClientTestLibrary
     }
 
     [FileName("testBridgeIssues.js")]
+    public class Bridge418
+    {
+        public delegate int MyDelegate(int data);
+
+        public MyDelegate Delegate { get; set; }
+
+        public int CallDelegate(int data)
+        {
+            return Delegate(data);
+        }
+    }
+
+    [FileName("testBridgeIssues.js")]
     enum Bridge422
     {
         first = 0,
@@ -851,6 +864,16 @@ namespace ClientTestLibrary
             int a = 2;
             a += 5;
             assert.Equal(a, 7, "a = 7");
+        }
+
+        // Bridge[#418]
+        public static void N418(Assert assert)
+        {
+            var t = new Bridge418();
+            t.Delegate += (i) => i * 2;
+            var r = t.CallDelegate(10);
+
+            assert.Equal(r, 20, "Delegate added and called var r = t.CallDelegate(10);");
         }
 
         // Bridge[#422]
