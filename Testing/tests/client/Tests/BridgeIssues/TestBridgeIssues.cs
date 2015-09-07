@@ -710,6 +710,19 @@ namespace ClientTestLibrary
             assert.Equal(result, "TESTD", "TESTD");
         }
 
+        // Bridge[#407]
+        public static void N407(Assert assert)
+        {
+            Bridge407 vec = new Bridge407() { A = 1 };
+            vec += new Bridge407() { A = 2 };
+
+            assert.Equal(vec.A, 3, "Vec.A = 3");
+
+            int a = 2;
+            a += 5;
+            assert.Equal(a, 7, "a = 7");
+        }
+
         // Bridge[#409]
         public static void N409(Assert assert)
         {
@@ -720,7 +733,7 @@ namespace ClientTestLibrary
             EnsureNumber(assert, b, "4", "Math.Round(4.5M)");
         }
 
-        // Bridge[#406]
+        // Bridge[#410]
         private static void EnsureNumber(Assert assert, object actual, string expected, string message)
         {
             assert.Equal(actual.ToString(), expected, message);
@@ -852,20 +865,6 @@ namespace ClientTestLibrary
             EnsureNumber(assert, SinglePositiveInfinity, "Infinity", "SinglePositiveInfinityin expression");
         }
 
-
-        // Bridge[#407]
-        public static void N407(Assert assert)
-        {
-            Bridge407 vec = new Bridge407() { A = 1 };
-            vec += new Bridge407() { A = 2 };
-
-            assert.Equal(vec.A, 3, "Vec.A = 3");
-
-            int a = 2;
-            a += 5;
-            assert.Equal(a, 7, "a = 7");
-        }
-
         // Bridge[#418]
         public static void N418(Assert assert)
         {
@@ -886,6 +885,15 @@ namespace ClientTestLibrary
             assert.Equal(v0, 0, "Bridge422.first");
             assert.Equal(v100, 100, "Bridge422.next");
             assert.Equal(v101, 101, "Bridge422.afterNext");
+        }
+
+        // Bridge[#422]
+        public static void N428(Assert assert)
+        {
+            var number2 = 11.37m;
+            var sum = "0.13 + " + number2;
+
+            assert.Equal(sum, "0.13 + 11.37", "0.13 + 11.37");
         }
     }
 }

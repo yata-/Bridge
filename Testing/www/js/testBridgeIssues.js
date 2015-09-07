@@ -240,6 +240,58 @@ Bridge.define('ClientTestLibrary.Bridge395', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge407', {
+    statics: {
+        op_Addition: function (x, y) {
+            return Bridge.merge(new ClientTestLibrary.Bridge407(), {
+                setA: x.getA() + y.getA()
+            } );
+        }
+    },
+    config: {
+        properties: {
+            A: 0
+        }
+    },
+    constructor: function () {
+    },
+    getHashCode: function () {
+        var hash = 17;
+        hash = hash * 23 + (this.A == null ? 0 : Bridge.getHashCode(this.A));
+        return hash;
+    },
+    equals: function (o) {
+        if (!Bridge.is(o,ClientTestLibrary.Bridge407)) {
+            return false;
+        }
+        return Bridge.equals(this.A, o.A);
+    },
+    $clone: function (to) {
+        var s = to || new ClientTestLibrary.Bridge407();
+        s.A = this.A;
+        return s;
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge418', {
+    config: {
+        properties: {
+            Delegate: null
+        }
+    },
+    callDelegate: function (data) {
+        return this.getDelegate()(data);
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge422', {
+    statics: {
+        first: 0,
+        next: 100,
+        afterNext: 101
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
@@ -588,6 +640,183 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
             }
 
             assert.equal(result, "TESTD", "TESTD");
+        },
+        n407: function (assert) {
+            var vec = Bridge.merge(new ClientTestLibrary.Bridge407(), {
+                setA: 1
+            } );
+            vec = ClientTestLibrary.Bridge407.op_Addition(vec.$clone(), Bridge.merge(new ClientTestLibrary.Bridge407(), {
+                setA: 2
+            } ));
+
+            assert.equal(vec.getA(), 3, "Vec.A = 3");
+
+            var a = 2;
+            a += 5;
+            assert.equal(a, 7, "a = 7");
+        },
+        n409: function (assert) {
+            var a = Bridge.Decimal.round(Bridge.Decimal(3.5), 6);
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, a, "4", "Math.Round(3.5M)");
+
+            var b = Bridge.Decimal.round(Bridge.Decimal(4.5), 6);
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, b, "4", "Math.Round(4.5M)");
+        },
+        ensureNumber: function (assert, actual, expected, message) {
+            assert.equal(actual.toString(), expected, message);
+        },
+        n410: function (assert) {
+            // Decimal consts
+            var DecimalZero = Bridge.Decimal.Zero;
+            var DecimalOne = Bridge.Decimal.One;
+            var DecimalMinusOne = Bridge.Decimal.MinusOne;
+            var DecimalMaxValue = Bridge.Decimal.MaxValue;
+            var DecimalMinValue = Bridge.Decimal.MinValue;
+
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DecimalZero, "0", "DecimalZero");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DecimalOne, "1", "DecimalOne");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DecimalMinusOne, "-1", "DecimalMinusOne");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DecimalMaxValue, "7.9228162514264337593543950335e+28", "DecimalMaxValue");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DecimalMinValue, "-7.9228162514264337593543950335e+28", "DecimalMinValue");
+
+            // Decimal consts in expressions
+            DecimalZero  = Bridge.Decimal.Zero.add(Bridge.Decimal(0));
+            DecimalOne  = Bridge.Decimal.One.add(Bridge.Decimal(0));
+            ;
+            DecimalMinusOne  = Bridge.Decimal.MinusOne.add(Bridge.Decimal(0));
+            ;
+            DecimalMaxValue  = Bridge.Decimal.MaxValue.add(Bridge.Decimal(0));
+            ;
+            DecimalMinValue  = Bridge.Decimal.MinValue.add(Bridge.Decimal(0));
+            ;
+
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DecimalZero, "0", "DecimalZeroin expression");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DecimalOne, "1", "DecimalOnein expression");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DecimalMinusOne, "-1", "DecimalMinusOnein expression");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DecimalMaxValue, "7.9228162514264337593543950335e+28", "DecimalMaxValuein expression");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DecimalMinValue, "-7.9228162514264337593543950335e+28", "DecimalMinValuein expression");
+
+            // Double consts
+            var DoubleMaxValue = Number.MAX_VALUE;
+            var DoubleMinValue = Number.MIN_VALUE;
+            var DoubleEpsilon = 4.94065645841247E-324;
+            var DoubleNegativeInfinity = Number.NEGATIVE_INFINITY;
+            var DoublePositiveInfinity = Number.POSITIVE_INFINITY;
+            var DoubleNaN = Number.NaN;
+
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DoubleMaxValue, "1.7976931348623157e+308", "DoubleMaxValue");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DoubleMinValue, "5e-324", "DoubleMinValue");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DoubleEpsilon, "5e-324", "DoubleEpsilon");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DoubleNegativeInfinity, "-Infinity", "DoubleNegativeInfinity");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DoublePositiveInfinity, "Infinity", "DoublePositiveInfinity");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DoubleNaN, "NaN", "DoubleNaN");
+
+            // Double consts in expressions
+            DoubleMaxValue = Number.MAX_VALUE + 0;
+            DoubleMinValue = Number.MIN_VALUE + 0;
+            DoubleEpsilon = 4.94065645841247E-324;
+            DoubleNegativeInfinity = Number.NEGATIVE_INFINITY + 0;
+            DoublePositiveInfinity = Number.POSITIVE_INFINITY + 0;
+            DoubleNaN = Number.NaN + 0;
+
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DoubleMaxValue, "1.7976931348623157e+308", "DoubleMaxValuein expression");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DoubleMinValue, "5e-324", "DoubleMinValuein expression");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DoubleEpsilon, "5e-324", "DoubleEpsilonin expression");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DoubleNegativeInfinity, "-Infinity", "DoubleNegativeInfinityin expression");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DoublePositiveInfinity, "Infinity", "DoublePositiveInfinityin expression");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DoubleNaN, "NaN", "DoubleNaNin expression");
+
+            // Math consts
+            var MathE = Math.E;
+            var MathLN10 = Math.LN10;
+            var MathLN2 = Math.LN2;
+            var MathLOG2E = Math.LOG2E;
+            var MathLOG10E = Math.LOG10E;
+            var MathPI = Math.PI;
+            var MathSQRT1_2 = Math.SQRT1_2;
+            var MathSQRT2 = Math.SQRT2;
+
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathE, "2.718281828459045", "MathE");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathLN10, "2.302585092994046", "MathLN10");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathLN2, "0.6931471805599453", "MathLN2");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathLOG2E, "1.4426950408889634", "MathLOG2E");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathLOG10E, "0.4342944819032518", "MathLOG10E");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathPI, "3.141592653589793", "MathPI");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathSQRT1_2, "0.7071067811865476", "MathSQRT1_2");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathSQRT2, "1.4142135623730951", "MathSQRT2");
+
+            // Math consts in expression
+            MathE = Math.E + 0;
+            MathLN10 = Math.LN10 + 0;
+            MathLN2 = Math.LN2 + 0;
+            MathLOG2E = Math.LOG2E + 0;
+            MathLOG10E = Math.LOG10E + 0;
+            MathPI = Math.PI + 0;
+            MathSQRT1_2 = Math.SQRT1_2 + 0;
+            MathSQRT2 = Math.SQRT2 + 0;
+
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathE, "2.718281828459045", "MathEin expression");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathLN10, "2.302585092994046", "MathLN10in expression");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathLN2, "0.6931471805599453", "MathLN2in expression");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathLOG2E, "1.4426950408889634", "MathLOG2Ein expression");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathLOG10E, "0.4342944819032518", "MathLOG10Ein expression");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathPI, "3.141592653589793", "MathPIin expression");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathSQRT1_2, "0.7071067811865476", "MathSQRT1_2in expression");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathSQRT2, "1.4142135623730951", "MathSQRT2in expression");
+
+            // Single consts
+            var SingleMaxValue = 3.40282347E+38;
+            var SingleMinValue = -3.40282347E+38;
+            var SingleEpsilon = 1.401298E-45;
+            var SingleNaN = Number.NaN;
+            var SingleNegativeInfinity = Number.NEGATIVE_INFINITY;
+            var SinglePositiveInfinity = Number.POSITIVE_INFINITY;
+
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, SingleMaxValue, "3.40282347e+38", "SingleMaxValue");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, SingleMinValue, "-3.40282347e+38", "SingleMinValue");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, SingleEpsilon, "1.401298e-45", "SingleEpsilon");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, SingleNaN, "NaN", "SingleNaN");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, SingleNegativeInfinity, "-Infinity", "SingleNegativeInfinity");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, SinglePositiveInfinity, "Infinity", "SinglePositiveInfinity");
+
+            // Single consts in expression
+            SingleMaxValue = 3.40282347E+38;
+            SingleMinValue = -3.40282347E+38;
+            SingleEpsilon = 1.401298E-45;
+            SingleNaN = Number.NaN + 0;
+            SingleNegativeInfinity = Number.NEGATIVE_INFINITY + 0;
+            SinglePositiveInfinity = Number.POSITIVE_INFINITY + 0;
+
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, SingleMaxValue, "3.40282347e+38", "SingleMaxValuein expression");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, SingleMinValue, "-3.40282347e+38", "SingleMinValuein expression");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, SingleEpsilon, "1.401298e-45", "SingleEpsilonin expression");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, SingleNaN, "NaN", "SingleNaNin expression");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, SingleNegativeInfinity, "-Infinity", "SingleNegativeInfinityin expression");
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, SinglePositiveInfinity, "Infinity", "SinglePositiveInfinityin expression");
+        },
+        n418: function (assert) {
+            var t = new ClientTestLibrary.Bridge418();
+            t.setDelegate(Bridge.fn.combine(t.getDelegate(), function (i) {
+                return i * 2;
+            }));
+            var r = t.callDelegate(10);
+
+            assert.equal(r, 20, "Delegate added and called var r = t.CallDelegate(10);");
+        },
+        n422: function (assert) {
+            var v0 = ClientTestLibrary.Bridge422.first;
+            var v100 = ClientTestLibrary.Bridge422.next;
+            var v101 = ClientTestLibrary.Bridge422.afterNext;
+
+            assert.equal(v0, 0, "Bridge422.first");
+            assert.equal(v100, 100, "Bridge422.next");
+            assert.equal(v101, 101, "Bridge422.afterNext");
+        },
+        n428: function (assert) {
+            var number2 = Bridge.Decimal(11.37);
+            var sum = "0.13 + " + number2;
+
+            assert.equal(sum, "0.13 + 11.37", "0.13 + 11.37");
         }
     }
 });
