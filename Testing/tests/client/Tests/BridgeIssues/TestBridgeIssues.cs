@@ -697,6 +697,16 @@ namespace ClientTestLibrary
             assert.Equal(result, "TESTD", "TESTD");
         }
 
+        // Bridge[#409]
+        public static void N409(Assert assert)
+        {
+            decimal a = Math.Round(3.5M);
+            EnsureNumber(assert, a, "4", "Math.Round(3.5M)");
+
+            decimal b = Math.Round(4.5M);
+            EnsureNumber(assert, b, "4", "Math.Round(4.5M)");
+        }
+
         // Bridge[#406]
         private static void EnsureNumber(Assert assert, object actual, string expected, string message)
         {

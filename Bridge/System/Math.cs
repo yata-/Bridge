@@ -128,7 +128,7 @@ namespace System
             return 0;
         }
 
-        [Template("Bridge.Decimal.round({x}, 1)")]
+        [Template("Bridge.Decimal.round({x}, 6)")]
         public static decimal Round(decimal x)
         {
             return 0;
