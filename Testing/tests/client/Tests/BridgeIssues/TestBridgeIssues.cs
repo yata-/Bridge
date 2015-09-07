@@ -308,6 +308,14 @@ namespace ClientTestLibrary
         public int data { get; set; }
     }
 
+    [FileName("testBridgeIssues.js")]
+    enum Bridge422
+    {
+        first = 0,
+        next = 100,
+        afterNext,
+    }
+
     // Tests Bridge GitHub issues
     class TestBridgeIssues
     {
@@ -808,6 +816,18 @@ namespace ClientTestLibrary
             EnsureNumber(assert, SingleNaN, "NaN", "SingleNaNin expression");
             EnsureNumber(assert, SingleNegativeInfinity, "-Infinity", "SingleNegativeInfinityin expression");
             EnsureNumber(assert, SinglePositiveInfinity, "Infinity", "SinglePositiveInfinityin expression");
+        }
+
+        // Bridge[#422]
+        public static void N422(Assert assert)
+        {
+            var v0 = Bridge422.first;
+            var v100 = Bridge422.next;
+            var v101 = Bridge422.afterNext;
+
+            assert.Equal(v0, 0, "Bridge422.first");
+            assert.Equal(v100, 100, "Bridge422.next");
+            assert.Equal(v101, 101, "Bridge422.afterNext");
         }
     }
 }
