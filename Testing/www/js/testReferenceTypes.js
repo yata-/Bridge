@@ -1,5 +1,6 @@
 ﻿/* global Bridge */
 
+"use strict";
 Bridge.define('ClientTestLibrary.Class68', {
     x: 0,
     y: 1,

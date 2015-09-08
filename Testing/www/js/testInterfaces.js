@@ -1,5 +1,6 @@
 ﻿/* global Bridge */
 
+"use strict";
 Bridge.define('ClientTestLibrary.TestInterfaces', {
     statics: {
         testInterfaceMethodAndProperty: function (assert) {
