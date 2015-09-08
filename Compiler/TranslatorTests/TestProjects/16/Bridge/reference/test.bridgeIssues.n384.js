@@ -1,5 +1,6 @@
 ﻿/* global Bridge */
 
+"use strict";
 Bridge.define('Test.BridgeIssues.N384.N384');
 
 Bridge.define('Test.BridgeIssues.N384.N384.App', {
