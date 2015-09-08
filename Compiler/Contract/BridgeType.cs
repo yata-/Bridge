@@ -355,7 +355,7 @@ namespace Bridge.Contract
             var composedType = astType as ComposedType;
             if (composedType != null && composedType.ArraySpecifiers != null && composedType.ArraySpecifiers.Count > 0)
             {
-                return BridgeTypes.ToTypeScriptName(composedType.BaseType, emitter) + "[]";
+                return BridgeTypes.ToTypeScriptName(composedType.BaseType, emitter) + string.Concat(Enumerable.Repeat("[]", composedType.ArraySpecifiers.Count));
             }
 
             var simpleType = astType as SimpleType;
