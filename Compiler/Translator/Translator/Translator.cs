@@ -13,6 +13,7 @@ namespace Bridge.Translator
     {
         public const string Bridge_ASSEMBLY = "Bridge";
         private static readonly Encoding OutputEncoding = System.Text.UTF8Encoding.UTF8;
+        private static readonly CodeSettings MinifierCodeSettings = new CodeSettings { TermSemicolons = true, StrictMode = true };
 
         public Translator(string location, bool fromTask = false)
         {
@@ -163,8 +164,9 @@ namespace Bridge.Translator
                 {
                     fileName = Path.GetFileNameWithoutExtension(fileName) + ".min" + extension;
 
-                    string header = GetOutputHeader(false, isJs);
-                    WriteOutput(path, fileName, header, minifier.MinifyJavaScript(code, new CodeSettings { TermSemicolons = true }));
+                    // Minifier will add "use strict" as option StrictMode = true is used
+                    string header = GetOutputHeader(false, false);
+                    WriteOutput(path, fileName, header, minifier.MinifyJavaScript(code, MinifierCodeSettings));
                 }
             }
 
@@ -193,7 +195,14 @@ namespace Bridge.Translator
         private static FileInfo WriteOutput(string outputPath, string fileName, string header, string code)
         {
             var file = CreateFile(outputPath, fileName);
-            File.WriteAllText(file.FullName, header + code, OutputEncoding);
+
+            // No need to perform redundant concatenation if header is empty
+            if (!string.IsNullOrWhiteSpace(header))
+            {
+                code = header + code;
+            }
+
+            File.WriteAllText(file.FullName, code, OutputEncoding);
 
             return file;
         }
@@ -230,7 +239,7 @@ namespace Bridge.Translator
             {
                 if (!nodebug)
                 {
-                    ExtractResourceAndWriteToFile(outputPath, assembly, "Bridge.Resources.bridge.js", "bridge.min.js", (reader) => { var minifier = new Minifier(); return minifier.MinifyJavaScript(reader.ReadToEnd(), new CodeSettings { TermSemicolons = true }); });
+                    ExtractResourceAndWriteToFile(outputPath, assembly, "Bridge.Resources.bridge.js", "bridge.min.js", (reader) => { var minifier = new Minifier(); return minifier.MinifyJavaScript(reader.ReadToEnd(), MinifierCodeSettings); });
                 }
             }
         }
