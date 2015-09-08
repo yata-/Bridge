@@ -154,13 +154,17 @@ namespace Bridge.Translator
             }
         }
 
-        private int enumValue = 0;
+        private int enumValue = -1;
 
         public virtual int LastEnumValue
         {
             get
             {
-                return enumValue++;
+                return this.enumValue;
+            }
+            set
+            {
+                this.enumValue = value;
             }
         }
 

@@ -4925,6 +4925,10 @@ Bridge.define("Bridge.CustomEnumerator", {
         return this.$getCurrent.call(this.scope);
     },
 
+    getCurrent$1: function () {
+        return this.$getCurrent.call(this.scope);
+    },
+
     reset: function () {
         if (this.$reset) {
             this.$reset.call(this.scope);
@@ -4954,6 +4958,10 @@ Bridge.define('Bridge.ArrayEnumerator', {
     },
 
     getCurrent: function () {
+        return this.array[this.index];
+    },
+
+    getCurrent$1: function () {
         return this.array[this.index];
     },
 
@@ -6654,6 +6662,38 @@ Bridge.define('Bridge.PropertyChangedEventArgs', {
             }
         },
 
+        fill: function (dst, val, index, count) {
+            if (index < 0 || count < 0 || (index + count) > dst.length) {
+                throw new Bridge.ArgumentException();
+            }
+
+            var isFn = Bridge.isFunction(val);
+            while (--count >= 0) {
+                dst[index + count] = isFn ? val() : val;
+            }
+        },
+
+        copy: function (src, spos, dst, dpos, len) {
+            if (spos < 0 || dpos < 0 || len < 0) {
+                throw new Bridge.ArgumentOutOfRangeException();
+            }
+
+            if (len > (src.length - spos) || len > (dst.length - dpos)) {
+                throw new Bridge.ArgumentException();
+            }
+
+            if (spos < dpos && src === dst) {
+                while (--len >= 0) {
+                    dst[dpos + len] = src[spos + len];
+                }
+            }
+            else {
+                for (var i = 0; i < len; i++) {
+                    dst[dpos + i] = src[spos + i];
+                }
+            }
+        },
+
         indexOf: function(arr, item) {
             if (Bridge.isArray(arr)) {
                 var i, ln, el;
@@ -6743,7 +6783,62 @@ Bridge.define('Bridge.PropertyChangedEventArgs', {
             else if (Bridge.isFunction(obj.set_Item)) {
                 obj.set_Item(idx, value);
             }
-        }};
+        },
+
+        resize: function (arr, newSize, val) {
+            if (newSize < 0) {
+                throw new Bridge.ArgumentOutOfRangeException("newSize", null, null, newSize);
+            }
+
+            var oldSize = 0,
+                isFn = Bridge.isFunction(val);
+
+            if (!arr) {
+                arr = new Array(newSize);
+            } else {
+                oldSize = arr.length;
+                arr.length = newSize;
+            }
+
+            for (var i = oldSize; i < newSize; i++) {
+                arr[i] = isFn ? val() : val;
+            }
+        },
+
+        reverse: function(arr, index, length) {
+            if (!array) {
+                throw new Bridge.ArgumentNullException("arr");
+            }
+
+            if (!index && index !== 0) {
+                index = 0;
+                length = arr.length;
+            }
+
+            if (index < 0 || length < 0) {
+                throw new Bridge.ArgumentOutOfRangeException((index < 0 ? "index" : "length"), "Non-negative number required.");
+            }
+
+            if ((array.length - index) < length) {
+                throw new Bridge.ArgumentException("Offset and length were out of bounds for the array or count is greater than the number of elements from index to the end of the source collection.");
+            }
+
+            if (Bridge.Array.getRank(arr) !== 1) {
+                throw new Bridge.Exception("Only single dimension arrays are supported here.");
+            }
+ 
+            var i = index,
+                j = index + length - 1;
+
+            while (i < j) {
+                var temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+                i++;
+                j--;
+            }
+        }
+    };
 
     Bridge.Array = array;
 })();

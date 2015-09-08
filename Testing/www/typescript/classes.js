@@ -1,5 +1,6 @@
 ﻿/* global Bridge */
 
+"use strict";
 Bridge.define('Classes.Animal', {
     name: null,
     constructor: function () {

@@ -55,7 +55,7 @@ environment:
 # scripts that run after cloning repository
 install:
   - cmd: git.exe clone -q --progress -v  --depth 20 --branch=master "https://github.com/bridgedotnet/Frameworks" "c:\projects\Frameworks"
-  - cmd: git.exe clone -q --progress -v  --depth 20 --branch=master "https://github.com/bridgedotnet/Testing" "c:\projects\Testing"
+#  - cmd: git.exe clone -q --progress -v  --depth 20 --branch=master "https://github.com/bridgedotnet/Testing" "c:\projects\Testing"
 
 #---------------------------------#
 #       build configuration       #
@@ -98,7 +98,7 @@ before_test:
       #$ChutzpahPath = "${ChutzpahDir}" + "\chutzpah.console.exe"
       $ChutzpahPath = "c:\projects\Bridge\packages\Chutzpah.4.0.1\tools\chutzpah.console.exe"
       
-      $ChutzpahHtml = "c:\projects\" + "Testing\www\index.html"
+      $ChutzpahHtml = "c:\projects\" + "Bridge\Testing\www\index.html"
       
       $Exe = "${ChutzpahPath}"
       

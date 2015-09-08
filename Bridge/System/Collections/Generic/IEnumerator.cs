@@ -8,7 +8,6 @@ namespace System.Collections.Generic
     {
         new T Current
         {
-            [Name("getCurrent")]
             get;
         }
     }

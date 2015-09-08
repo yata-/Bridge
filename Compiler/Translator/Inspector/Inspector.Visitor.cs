@@ -353,7 +353,16 @@ namespace Bridge.Translator
             Expression initializer = enumMemberDeclaration.Initializer;
             if (enumMemberDeclaration.Initializer.IsNull)
             {
-                initializer = new PrimitiveExpression(this.CurrentType.LastEnumValue);
+                initializer = new PrimitiveExpression(++this.CurrentType.LastEnumValue);
+            }
+            else
+            {
+                var rr = this.Resolver.ResolveNode(enumMemberDeclaration.Initializer, null) as ConstantResolveResult;
+                if (rr != null)
+                {
+                    initializer = new PrimitiveExpression(rr.ConstantValue);
+                    this.CurrentType.LastEnumValue = (int)rr.ConstantValue;
+                }
             }
 
             this.CurrentType.StaticConfig.Fields.Add(new TypeConfigItem

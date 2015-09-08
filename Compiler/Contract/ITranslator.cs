@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ICSharpCode.NRefactory.CSharp;
+using Mono.Cecil;
 
 namespace Bridge.Contract
 {
@@ -34,5 +35,6 @@ namespace Bridge.Contract
         bool Recursive { get; set; }
         string Configuration { get; set; }
         List<string> DefineConstants { get; set; }
+		IEnumerable<AssemblyDefinition> References { get; set; }
     }
 }

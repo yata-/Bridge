@@ -1,5 +1,6 @@
 ﻿/* global Bridge */
 
+"use strict";
 Bridge.define('Misc.A.Class1', {
     getInt: function (i) {
         return i;

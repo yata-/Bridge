@@ -6,12 +6,15 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Mono.Cecil;
+using Object.Net.Utilities;
 
 namespace Bridge.Translator
 {
     public partial class Translator : ITranslator
     {
         public const string Bridge_ASSEMBLY = "Bridge";
+        public const string BridgeResourcesList = "Bridge.Resources.list";
         private static readonly Encoding OutputEncoding = System.Text.UTF8Encoding.UTF8;
         private static readonly CodeSettings MinifierCodeSettings = new CodeSettings { TermSemicolons = true, StrictMode = true };
 
@@ -94,6 +97,7 @@ namespace Bridge.Translator
             emitter.SourceFiles = this.SourceFiles;
             emitter.Log = this.Log;
             emitter.Plugins = this.Plugins;
+            this.References = references;
             this.Plugins.BeforeEmit(emitter, this);
             this.Outputs = emitter.Emit();
             this.Plugins.AfterEmit(emitter, this);
@@ -117,6 +121,7 @@ namespace Bridge.Translator
         public virtual void SaveTo(string path, string defaultFileName)
         {
             var minifier = new Minifier();
+            var files = new Dictionary<string, string>();
             foreach (var item in this.Outputs)
             {
                 string fileName = item.Key;
@@ -155,7 +160,8 @@ namespace Bridge.Translator
                 if (this.AssemblyInfo.OutputFormatting != JavaScriptOutputType.Minified || !isJs)
                 {
                     string header = GetOutputHeader(isJs, isJs);
-                    WriteOutput(path, fileName, header, code);
+                    var file = WriteOutput(path, fileName, header, code);
+                    files.Add(fileName, file.FullName);
                 }
 
                 // Like above test: output minified if not beautified only == (out minified or out both)
@@ -170,6 +176,11 @@ namespace Bridge.Translator
                 }
             }
 
+            if (this.AssemblyInfo.InjectScriptToAssembly)
+            {
+                this.InjectResources(files);
+            }
+
             if (!string.IsNullOrWhiteSpace(this.AssemblyInfo.AfterBuild))
             {
                 try
@@ -182,6 +193,47 @@ namespace Bridge.Translator
                         exc.Message + "\nStack trace:\n" + exc.StackTrace);
                 }
             }
+        }
+
+        protected virtual void InjectResources(Dictionary<string, string> files)
+        {
+            if (files == null || files.Count == 0)
+            {
+                return;
+            }
+
+            var assemblyDef = this.AssemblyDefinition;
+            var resources = assemblyDef.MainModule.Resources;
+            var resourcesList = new List<string>();
+
+            foreach (var file in files)
+            {
+                var name = file.Key;
+                name = this.NormalizePath(name);
+                var newResource = new EmbeddedResource(name, ManifestResourceAttributes.Public, File.ReadAllBytes(file.Value));
+                resources.Add(newResource);
+                resourcesList.Add(file.Key + ":" + name);
+            }
+
+            StringBuilder sb = new StringBuilder();
+            foreach (var res in resourcesList)
+            {
+                sb.Append(res).Append("+");
+            }
+            sb.Remove(sb.Length - 1, 1);
+
+            var listResources = new EmbeddedResource(Translator.BridgeResourcesList, ManifestResourceAttributes.Public, System.Text.Encoding.UTF8.GetBytes(sb.ToString()));
+            resources.Add(listResources);
+
+            assemblyDef.Write(this.AssemblyLocation);
+        }
+
+        private string NormalizePath(string value)
+        {
+            value = value.Replace(@"\", ".");
+            string path = value.LeftOfRightmostOf('.').LeftOfRightmostOf('.');
+            string name = value.Substring(path.Length);
+            return path.Replace('-', '_') + name;
         }
 
         private static string GetOutputHeader(bool needGlobalComment, bool needStrictModeInstruction)
@@ -219,48 +271,69 @@ namespace Bridge.Translator
 
         public static void ExtractCore(Translator translatorInstance, string outputPath, bool nodebug = false)
         {
-            var clrPath = translatorInstance.BridgeLocation;
-            var assembly = System.Reflection.Assembly.UnsafeLoadFrom(clrPath);
-
-            // We can only have Beautified, Minified or Both, so this test has inverted logic:
-            // output beautified if not minified only == (output beautified or output both)
-            if (translatorInstance.AssemblyInfo.OutputFormatting != JavaScriptOutputType.Minified)
+            foreach (var reference in translatorInstance.References)
             {
-                ExtractResourceAndWriteToFile(outputPath, assembly, "Bridge.Resources.bridge.js", "bridge.js");
-            }
+                var listRes = reference.MainModule.Resources.FirstOrDefault(r => r.Name == Translator.BridgeResourcesList);
 
-            if (translatorInstance.AssemblyInfo.GenerateTypeScript)
-            {
-                ExtractResourceAndWriteToFile(outputPath, assembly, "Bridge.Resources.bridge.d.ts", "bridge.d.ts");
-            }
-
-            // Like above test: output minified if not beautified only == (out minified or out both)
-            if (translatorInstance.AssemblyInfo.OutputFormatting != JavaScriptOutputType.Formatted)
-            {
-                if (!nodebug)
+                if (listRes != null)
                 {
-                    ExtractResourceAndWriteToFile(outputPath, assembly, "Bridge.Resources.bridge.js", "bridge.min.js", (reader) => { var minifier = new Minifier(); return minifier.MinifyJavaScript(reader.ReadToEnd(), MinifierCodeSettings); });
+                    string resourcesStr = null;
+                    using (var resourcesStream = ((EmbeddedResource) listRes).GetResourceStream())
+                    {
+                        using (StreamReader reader = new StreamReader(resourcesStream))
+                        {
+                            resourcesStr = reader.ReadToEnd();
+                        }
+                    }
+
+                    //var resourcesStr = enc.GetString(((EmbeddedResource) listRes).GetResourceData());
+                    var resources = resourcesStr.Split('+');
+
+                    foreach (var res in resources)
+                    {
+                        var parts = res.Split(':');
+                        var fileName = parts[0].Trim();
+                        var resName = parts[1].Trim();
+                        bool isTs = resName.EndsWith(".d.ts");
+                        bool isJs = resName.EndsWith(".js");
+
+                        if (!isTs && translatorInstance.AssemblyInfo.OutputFormatting != JavaScriptOutputType.Minified)
+                        {
+                            ExtractResourceAndWriteToFile(outputPath, reference, resName, fileName);
+                        }
+
+                        if (isTs && translatorInstance.AssemblyInfo.GenerateTypeScript)
+                        {
+                            ExtractResourceAndWriteToFile(outputPath, reference, resName, fileName);
+                        }
+
+                        if (isJs && translatorInstance.AssemblyInfo.OutputFormatting != JavaScriptOutputType.Formatted)
+                        {
+                            if (!nodebug)
+                            {
+                                ExtractResourceAndWriteToFile(outputPath, reference, resName, fileName.ReplaceLastInstanceOf(".js", ".min.js"), (content) => { var minifier = new Minifier(); return minifier.MinifyJavaScript(content, MinifierCodeSettings); });
+                            }
+                        }
+                    }
                 }
             }
         }
 
-        private static void ExtractResourceAndWriteToFile(string outputPath, Assembly assembly, string resourceName, string fileName, Func<StreamReader, string> preHandler = null)
+        private static void ExtractResourceAndWriteToFile(string outputPath, AssemblyDefinition assembly, string resourceName, string fileName, Func<string, string> preHandler = null)
         {
-            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            var res = assembly.MainModule.Resources.FirstOrDefault(r => r.Name == resourceName);
+
+            string resourcesStr = null;
+            using (var resourcesStream = ((EmbeddedResource)res).GetResourceStream())
             {
-                using (StreamReader reader = new StreamReader(stream))
+                using (StreamReader reader = new StreamReader(resourcesStream))
                 {
-                    EnsureDirectoryExistsCreateAndWriteFile(outputPath, reader, fileName, preHandler);
+                    resourcesStr = reader.ReadToEnd();
                 }
             }
-        }
+            var content = preHandler != null ? preHandler(resourcesStr) : resourcesStr;
 
-        private static void EnsureDirectoryExistsCreateAndWriteFile(string outputPath, StreamReader reader, string fileName, Func<StreamReader, string> preHandler)
-        {
             var file = CreateFile(outputPath, fileName);
-
-            var content = preHandler != null ? preHandler(reader) : reader.ReadToEnd();
-
             File.WriteAllText(file.FullName, content, OutputEncoding);
         }
 

@@ -17,6 +17,10 @@ Bridge.define('Bridge.ArrayEnumerator', {
         return this.array[this.index];
     },
 
+    getCurrent$1: function () {
+        return this.array[this.index];
+    },
+
     reset: function () {
         this.index = -1;
     },

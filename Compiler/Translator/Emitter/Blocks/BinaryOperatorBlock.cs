@@ -95,7 +95,7 @@ namespace Bridge.Translator
                 return;
             }
 
-            if (!(expectedType.IsKnownType(KnownTypeCode.String) && binaryOperatorExpression.Operator == BinaryOperatorType.Add) && (Helpers.IsDecimalType(leftResolverResult.Type, this.Emitter.Resolver) || Helpers.IsDecimalType(rightResolverResult.Type, this.Emitter.Resolver)))
+            if (!((expectedType.IsKnownType(KnownTypeCode.String) || resolveOperator.Type.IsKnownType(KnownTypeCode.String)) && binaryOperatorExpression.Operator == BinaryOperatorType.Add) && (Helpers.IsDecimalType(leftResolverResult.Type, this.Emitter.Resolver) || Helpers.IsDecimalType(rightResolverResult.Type, this.Emitter.Resolver)))
             {
                 isDecimal = true;
                 isDecimalExpected = true;
@@ -113,8 +113,6 @@ namespace Bridge.Translator
             {
                 return;
             }
-
-            
 
             if (binaryOperatorExpression.Operator == BinaryOperatorType.Divide &&
                 (

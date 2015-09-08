@@ -187,3 +187,4 @@ AutoTest.Net/
 FakesAssemblies/
 *.ts
 *.d.ts
+/Bridge.dev.sln
