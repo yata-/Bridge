@@ -12,12 +12,13 @@ namespace Bridge.Translator
     public partial class Translator : ITranslator
     {
         public const string Bridge_ASSEMBLY = "Bridge";
+        private static readonly Encoding OutputEncoding = System.Text.UTF8Encoding.UTF8;
 
         public Translator(string location, bool fromTask = false)
         {
             this.Location = location;
             this.Validator = this.CreateValidator();
-            this.DefineConstants = new List<string>(){"BRIDGE"};
+            this.DefineConstants = new List<string>() { "BRIDGE" };
             this.FromTask = fromTask;
         }
 
@@ -144,32 +145,26 @@ namespace Bridge.Translator
                 }
 
                 // If 'fileName' is an absolute path, Path.Combine will ignore the 'path' prefix.
-                string filePath = Path.Combine(path, fileName);
-                string extension = Path.GetExtension(filePath);
+                string extension = Path.GetExtension(fileName);
                 bool isJs = extension == ('.' + Bridge.Translator.AssemblyInfo.JAVASCRIPT_EXTENSION);
-
-                System.IO.FileInfo file;
 
                 // We can only have Beautified, Minified or Both, so this test has inverted logic:
                 // output beautified if not minified only == (output beautified or output both)
                 // Check by @vladsch: Output anyway if the class is not a JavaScript file.
                 if (this.AssemblyInfo.OutputFormatting != JavaScriptOutputType.Minified || !isJs)
                 {
-                    file = new System.IO.FileInfo(filePath);
-                    file.Directory.Create();
-                    string header = isJs ? "/* global Bridge */\n\n" : "";
-                    File.WriteAllText(file.FullName, header + code, System.Text.UTF8Encoding.UTF8);
+                    string header = GetOutputHeader(isJs, isJs);
+                    WriteOutput(path, fileName, header, code);
                 }
 
                 // Like above test: output minified if not beautified only == (out minified or out both)
                 // Check by @vladsch: Output minified is allowed only and only if it is a JavaScript being output.
                 if (this.AssemblyInfo.OutputFormatting != JavaScriptOutputType.Formatted && isJs)
                 {
-                    fileName = Path.GetFileNameWithoutExtension(filePath) + ".min" + extension;
-                    filePath = Path.Combine(Path.GetDirectoryName(filePath), fileName);
-                    file = new System.IO.FileInfo(filePath);
-                    file.Directory.Create();
-                    File.WriteAllText(file.FullName, minifier.MinifyJavaScript(code, new CodeSettings {  TermSemicolons = true }), System.Text.UTF8Encoding.UTF8);
+                    fileName = Path.GetFileNameWithoutExtension(fileName) + ".min" + extension;
+
+                    string header = GetOutputHeader(false, isJs);
+                    WriteOutput(path, fileName, header, minifier.MinifyJavaScript(code, new CodeSettings { TermSemicolons = true }));
                 }
             }
 
@@ -185,6 +180,22 @@ namespace Bridge.Translator
                         exc.Message + "\nStack trace:\n" + exc.StackTrace);
                 }
             }
+        }
+
+        private static string GetOutputHeader(bool needGlobalComment, bool needStrictModeInstruction)
+        {
+            string header = needGlobalComment ? "/* global Bridge */\n\n" : string.Empty;
+            header = header + (needStrictModeInstruction ? "\"use strict\";\n" : string.Empty);
+
+            return header;
+        }
+
+        private static FileInfo WriteOutput(string outputPath, string fileName, string header, string code)
+        {
+            var file = CreateFile(outputPath, fileName);
+            File.WriteAllText(file.FullName, header + code, OutputEncoding);
+
+            return file;
         }
 
         protected virtual Emitter CreateEmitter(IMemberResolver resolver)
@@ -237,14 +248,21 @@ namespace Bridge.Translator
 
         private static void EnsureDirectoryExistsCreateAndWriteFile(string outputPath, StreamReader reader, string fileName, Func<StreamReader, string> preHandler)
         {
+            var file = CreateFile(outputPath, fileName);
+
+            var content = preHandler != null ? preHandler(reader) : reader.ReadToEnd();
+
+            File.WriteAllText(file.FullName, content, OutputEncoding);
+        }
+
+        private static FileInfo CreateFile(string outputPath, string fileName)
+        {
             var filePath = Path.Combine(outputPath, fileName);
 
             var file = new System.IO.FileInfo(filePath);
             file.Directory.Create();
 
-            var content = preHandler != null ? preHandler(reader) : reader.ReadToEnd();
-
-            File.WriteAllText(file.FullName, content, System.Text.UTF8Encoding.UTF8);
+            return file;
         }
 
         public EmitterException CreateExceptionFromLastNode()
