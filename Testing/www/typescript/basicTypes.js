@@ -1,5 +1,6 @@
 ﻿/* global Bridge */
 
+"use strict";
 Bridge.define('BasicTypes.BasicTypes', {
     boolValue: true,
     stringValue: "Some string value",

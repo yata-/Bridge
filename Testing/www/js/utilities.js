@@ -1,5 +1,6 @@
 ﻿/* global Bridge */
 
+"use strict";
 Bridge.define('ClientTestLibrary.Utilities.BrowserHelper', {
     statics: {
         isPhantomJs: function () {

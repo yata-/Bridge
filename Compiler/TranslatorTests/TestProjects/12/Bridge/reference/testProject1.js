@@ -1,5 +1,6 @@
 ﻿/* global Bridge */
 
+"use strict";
 /** @namespace TestProject1 */
 
 /**
