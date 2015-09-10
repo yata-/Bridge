@@ -102,5 +102,10 @@ namespace Bridge.Contract
         List<string> DefineConstants { get; set; }
         bool CleanOutputFolderBeforeBuild { get; set; }
         bool InjectScriptToAssembly { get; set; }
+        string Locales { get; set; }
+        string LocalesOutput { get; set; }
+        string LocalesFileName { get; set; }
+        bool CombineLocales { get; set; }
+        bool CombineScripts { get; set; }
     }
 }

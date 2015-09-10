@@ -15,6 +15,7 @@ namespace Bridge.Translator
     {
         public const string Bridge_ASSEMBLY = "Bridge";
         public const string BridgeResourcesList = "Bridge.Resources.list";
+        public const string LocalesPrefix = "Bridge.Resources.Locales.";
 
         public Translator(string location, bool fromTask = false)
         {
@@ -96,11 +97,45 @@ namespace Bridge.Translator
             emitter.Log = this.Log;
             emitter.Plugins = this.Plugins;
             this.References = references;
+            this.SortReferences();
             this.Plugins.BeforeEmit(emitter, this);
             this.Outputs = emitter.Emit();
             this.Plugins.AfterEmit(emitter, this);
 
             return this.Outputs;
+        }
+
+        protected virtual void SortReferences()
+        {
+            var list = this.References.ToList();
+            list.Sort((r1, r2) =>
+            {
+                if (r1.Name.Name == "Bridge")
+                {
+                    return -1;
+                }
+
+                if (r2.Name.Name == "Bridge")
+                {
+                    return 1;
+                }
+
+                var references1 = r1.MainModule.AssemblyReferences;
+                var references2 = r2.MainModule.AssemblyReferences;
+
+                if (references1.Any(r => r.FullName == r2.FullName))
+                {
+                    return 1;
+                }
+
+                if (references2.Any(r => r.FullName == r1.FullName))
+                {
+                    return -1;
+                }
+                return 0;
+            });
+
+            this.References = list;
         }
 
         public virtual string GetCode()
@@ -163,7 +198,7 @@ namespace Bridge.Translator
                     file = new System.IO.FileInfo(filePath);
                     file.Directory.Create();
                     string header = isJs ? "/* global Bridge */\n\n" : "";
-                    File.WriteAllText(file.FullName, header + code, System.Text.UTF8Encoding.UTF8);
+                    this.SaveToFile(file.FullName, header + code);
                     files.Add(fileName, file.FullName);
                 }
 
@@ -175,7 +210,7 @@ namespace Bridge.Translator
                     var filePathMin = Path.Combine(Path.GetDirectoryName(filePath), fileNameMin);
                     file = new System.IO.FileInfo(filePathMin);
                     file.Directory.Create();
-                    File.WriteAllText(file.FullName, minifier.MinifyJavaScript(code, new CodeSettings {  TermSemicolons = true }), System.Text.UTF8Encoding.UTF8);
+                    this.SaveToFile(file.FullName, minifier.MinifyJavaScript(code, new CodeSettings { TermSemicolons = true }));
                 }
             }
 
@@ -249,9 +284,9 @@ namespace Bridge.Translator
             return new Validator();
         }
 
-        public static void ExtractCore(Translator translatorInstance, string outputPath, bool nodebug = false)
+        public void ExtractCore(string outputPath, bool nodebug = false)
         {
-            foreach (var reference in translatorInstance.References)
+            foreach (var reference in this.References)
             {
                 var listRes = reference.MainModule.Resources.FirstOrDefault(r => r.Name == Translator.BridgeResourcesList);
                 
@@ -277,29 +312,172 @@ namespace Bridge.Translator
                         bool isTs = resName.EndsWith(".d.ts");
                         bool isJs = resName.EndsWith(".js");
 
-                        if (!isTs && translatorInstance.AssemblyInfo.OutputFormatting != JavaScriptOutputType.Minified)
+                        if (!isTs && this.AssemblyInfo.OutputFormatting != JavaScriptOutputType.Minified)
                         {
-                            ExtractResourceAndWriteToFile(outputPath, reference, resName, fileName);
+                            this.ExtractResourceAndWriteToFile(outputPath, reference, resName, fileName);
                         }
 
-                        if (isTs && translatorInstance.AssemblyInfo.GenerateTypeScript)
+                        if (isTs && this.AssemblyInfo.GenerateTypeScript)
                         {
-                            ExtractResourceAndWriteToFile(outputPath, reference, resName, fileName);
+                            this.ExtractResourceAndWriteToFile(outputPath, reference, resName, fileName);
                         }
 
-                        if (isJs && translatorInstance.AssemblyInfo.OutputFormatting != JavaScriptOutputType.Formatted)
+                        if (isJs && this.AssemblyInfo.OutputFormatting != JavaScriptOutputType.Formatted)
                         {
                             if (!nodebug)
                             {
-                                ExtractResourceAndWriteToFile(outputPath, reference, resName, fileName.ReplaceLastInstanceOf(".js", ".min.js"), (content) => { var minifier = new Minifier(); return minifier.MinifyJavaScript(content, new CodeSettings { TermSemicolons = true }); });
+                                this.ExtractResourceAndWriteToFile(outputPath, reference, resName, fileName.ReplaceLastInstanceOf(".js", ".min.js"), (content) => { var minifier = new Minifier(); return minifier.MinifyJavaScript(content, new CodeSettings { TermSemicolons = true }); });
                             }
                         }
                     }
                 }
             }
+
+            if (!string.IsNullOrWhiteSpace(this.AssemblyInfo.Locales))
+            {
+                StringBuilder bufferjs = null;
+                StringBuilder bufferjsmin = null;
+                if (this.AssemblyInfo.CombineLocales && !this.AssemblyInfo.CombineScripts)
+                {
+                    bufferjs = new StringBuilder();
+                    bufferjsmin = new StringBuilder();
+                }
+
+                var bridgeAssembly = this.References.FirstOrDefault(r => r.Name.Name == "Bridge");
+                var localesRes = bridgeAssembly.MainModule.Resources.Where(r => r.Name.StartsWith(Translator.LocalesPrefix)).Cast<EmbeddedResource>();
+                var locales = this.AssemblyInfo.Locales.Split(';');
+                foreach (var locale in locales)
+                {
+                    if (locale == "all")
+                    {
+                        this.ExtractLocale(localesRes, outputPath, nodebug, bufferjs, bufferjsmin);
+                        break;
+                    }
+                    else if (locale.Contains("*"))
+                    {
+                        var name = Translator.LocalesPrefix + locale.SubstringUpToFirst('*');
+                        this.ExtractLocale(localesRes.Where(r => r.Name.StartsWith(name)), outputPath, nodebug, bufferjs, bufferjsmin);
+                    }
+                    else
+                    {
+                        var name = Translator.LocalesPrefix + locale + ".js";
+                        this.ExtractLocale(localesRes.First(r => r.Name == name), outputPath, nodebug, bufferjs, bufferjsmin);
+                    }
+                }
+
+                if ((bufferjs != null && bufferjs.Length > 0) || (bufferjsmin != null && bufferjsmin.Length > 0))
+                {
+                    if (!string.IsNullOrWhiteSpace(this.AssemblyInfo.LocalesOutput))
+                    {
+                        outputPath = Path.Combine(outputPath, this.AssemblyInfo.LocalesOutput);
+                    }
+
+                    var defaultFileName = this.AssemblyInfo.LocalesFileName ?? "Bridge.Locales.js";
+                    var fileName = defaultFileName.Replace(":", "_");
+                    var oldFNlen = fileName.Length;
+                    while (Path.IsPathRooted(fileName))
+                    {
+                        fileName = fileName.TrimStart(Path.DirectorySeparatorChar, '/', '\\');
+                        if (fileName.Length == oldFNlen)
+                        {
+                            break;
+                        }
+                        oldFNlen = fileName.Length;
+                    }
+
+                    var filePath = Path.Combine(outputPath, fileName);
+                    var file = new System.IO.FileInfo(filePath);
+                    file.Directory.Create();
+
+                    if (bufferjs != null && bufferjs.Length > 0)
+                    {
+                        File.WriteAllText(filePath, bufferjs.ToString(), System.Text.Encoding.UTF8);
+                    }
+
+                    if (bufferjsmin != null && bufferjsmin.Length > 0)
+                    {
+                        File.WriteAllText(filePath.ReplaceLastInstanceOf(".js", ".min.js"), bufferjsmin.ToString(), System.Text.Encoding.UTF8);
+                    }
+                }
+            }
         }
 
-        private static void ExtractResourceAndWriteToFile(string outputPath, AssemblyDefinition assembly, string resourceName, string fileName, Func<string, string> preHandler = null)
+        protected virtual void ExtractLocale(IEnumerable<EmbeddedResource> res, string outputPath, bool nodebug, StringBuilder bufferjs, StringBuilder bufferjsmin)
+        {
+            foreach (var r in res)
+            {
+                this.ExtractLocale(r, outputPath, nodebug, bufferjs, bufferjsmin);
+            }
+        }
+
+        protected virtual void ExtractLocale(EmbeddedResource res, string outputPath, bool nodebug, StringBuilder bufferjs, StringBuilder bufferjsmin)
+        {
+            var fileName = res.Name.Substring(Translator.LocalesPrefix.Length);
+            if (!string.IsNullOrWhiteSpace(this.AssemblyInfo.LocalesOutput))
+            {
+                outputPath = Path.Combine(outputPath, this.AssemblyInfo.LocalesOutput);
+            }
+
+            var filePath = Path.Combine(outputPath, fileName);
+
+            var file = new System.IO.FileInfo(filePath);
+            file.Directory.Create();
+
+            string resourcesStr = null;
+            string resourcesStrMin = null;
+            using (var resourcesStream = ((EmbeddedResource)res).GetResourceStream())
+            {
+                using (StreamReader reader = new StreamReader(resourcesStream))
+                {
+                    resourcesStr = reader.ReadToEnd();
+                }
+            }
+
+            if (this.AssemblyInfo.OutputFormatting != JavaScriptOutputType.Formatted && !nodebug)
+            {
+                var minifier = new Minifier();
+                resourcesStrMin = minifier.MinifyJavaScript(resourcesStr, new CodeSettings {TermSemicolons = true});
+            }
+
+            if (this.AssemblyInfo.CombineLocales)
+            {
+                if (this.AssemblyInfo.CombineScripts)
+                {
+                    if (this.AssemblyInfo.OutputFormatting != JavaScriptOutputType.Minified)
+                    {
+                        this.SaveToFile(file.FullName, resourcesStr);
+                    }
+                    if (resourcesStrMin != null)
+                    {
+                        this.SaveToFile(file.FullName.ReplaceLastInstanceOf(".js", ".min.js"), resourcesStrMin);
+                    }
+                }
+                else
+                {
+                    if (this.AssemblyInfo.OutputFormatting != JavaScriptOutputType.Minified)
+                    {
+                        bufferjs.AppendLine(resourcesStr);
+                    }
+                    if (resourcesStrMin != null)
+                    {
+                        bufferjsmin.Append(resourcesStrMin);
+                    }
+                }
+            }
+            else
+            {
+                if (this.AssemblyInfo.OutputFormatting != JavaScriptOutputType.Minified)
+                {
+                    File.WriteAllText(file.FullName, resourcesStr, System.Text.Encoding.UTF8);
+                }
+                if (resourcesStrMin != null)
+                {
+                    File.WriteAllText(file.FullName.ReplaceLastInstanceOf(".js", ".min.js"), resourcesStrMin, System.Text.Encoding.UTF8);    
+                }
+            }
+        }
+
+        protected virtual void ExtractResourceAndWriteToFile(string outputPath, AssemblyDefinition assembly, string resourceName, string fileName, Func<string, string> preHandler = null)
         {
             var res = assembly.MainModule.Resources.FirstOrDefault(r => r.Name == resourceName);
 
@@ -308,7 +486,6 @@ namespace Bridge.Translator
             var file = new System.IO.FileInfo(filePath);
             file.Directory.Create();
 
-            //var resourcesStr = System.Text.Encoding.UTF8.GetString(((EmbeddedResource)res).GetResourceData());
             string resourcesStr = null;
             using (var resourcesStream = ((EmbeddedResource)res).GetResourceStream())
             {
@@ -318,12 +495,108 @@ namespace Bridge.Translator
                 }
             }
             var content = preHandler != null ? preHandler(resourcesStr) : resourcesStr;
-            File.WriteAllText(file.FullName, content, System.Text.UTF8Encoding.UTF8);
+            this.SaveToFile(file.FullName, content);
         }
 
         public EmitterException CreateExceptionFromLastNode()
         {
             return this.EmitNode != null ? new EmitterException(this.EmitNode) : null;
+        }
+
+        private StringBuilder jsbuffer;
+        private StringBuilder jsminbuffer;
+        private List<string> removeList;
+        protected virtual void SaveToFile(string fileName, string content)
+        {
+            bool isTs = fileName.EndsWith(".d.ts");
+
+            if (this.AssemblyInfo.CombineScripts && !isTs)
+            {
+                bool isJs = fileName.EndsWith(".js");
+                bool isMinJs = isJs && fileName.EndsWith(".min.js");
+                StringBuilder buffer;
+
+                bool append = false;
+                if (isMinJs)
+                {
+                    if (this.jsminbuffer == null)
+                    {
+                        this.jsminbuffer = new StringBuilder();
+                    }
+                    buffer = this.jsminbuffer;
+                    append = true;
+                }
+                else
+                {
+                    if (this.jsbuffer == null)
+                    {
+                        this.jsbuffer = new StringBuilder();
+                    }
+                    buffer = this.jsbuffer;
+                }
+
+                if (append)
+                {
+                    buffer.Append(content);
+                }
+                else
+                {
+                    buffer.AppendLine(content);
+                }
+                
+                if (this.removeList == null)
+                {
+                    this.removeList = new List<string>();
+                }
+                this.removeList.Add(fileName);
+            }
+
+            File.WriteAllText(fileName, content, System.Text.Encoding.UTF8);
+        }
+
+        public void Flush(string path, string defaultFileName)
+        {
+            if (this.removeList != null)
+            {
+                foreach (var f in this.removeList)
+                {
+                    File.Delete(f);
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(this.AssemblyInfo.FileName))
+            {
+                defaultFileName = this.AssemblyInfo.FileName;
+            }
+
+            if (!defaultFileName.EndsWith(".js"))
+            {
+                defaultFileName = defaultFileName + ".js";
+            }
+
+            var fileName = defaultFileName.Replace(":", "_");
+            var oldFNlen = fileName.Length;
+            while (Path.IsPathRooted(fileName))
+            {
+                fileName = fileName.TrimStart(Path.DirectorySeparatorChar, '/', '\\');
+                if (fileName.Length == oldFNlen)
+                {
+                    break;
+                }
+                oldFNlen = fileName.Length;
+            }
+
+            string filePath = Path.Combine(path, fileName);
+
+            if (this.jsbuffer != null && this.jsbuffer.Length > 0)
+            {
+                File.WriteAllText(filePath, this.jsbuffer.ToString(), System.Text.Encoding.UTF8); 
+            }
+
+            if (this.jsminbuffer != null && this.jsminbuffer.Length > 0)
+            {
+                File.WriteAllText(filePath.ReplaceLastInstanceOf(".js", ".min.js"), this.jsminbuffer.ToString(), System.Text.Encoding.UTF8);
+            }
         }
     }
 }
