@@ -1,9 +1,13 @@
-﻿using Bridge.Contract;
+﻿using System;
+using System.Collections.Generic;
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using Mono.Cecil;
 using Object.Net.Utilities;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ICSharpCode.NRefactory.Semantics;
+using ICSharpCode.NRefactory.TypeSystem;
 
 namespace Bridge.Translator
 {
@@ -48,7 +52,19 @@ namespace Bridge.Translator
 
         protected virtual void EmitClassHeader()
         {
-            TypeDefinition baseType = this.Emitter.GetBaseTypeDefinition();
+            var beforeDefineMethods = this.GetBeforeDefineMethods();
+
+            if (beforeDefineMethods.Any())
+            {
+                foreach (var method in beforeDefineMethods)
+                {
+                    this.WriteNewLine();
+                    this.Write(method);
+                }
+
+                this.WriteNewLine();
+            }
+
             var typeDef = this.Emitter.GetTypeDefinition();
             string name = this.Emitter.Validator.GetCustomTypeName(typeDef);
             this.IsGeneric = typeDef.GenericParameters.Count > 0;
@@ -134,7 +150,7 @@ namespace Bridge.Translator
 
         protected virtual void EmitStaticBlock()
         {
-            if (this.TypeInfo.HasStatic)
+            if (this.TypeInfo.HasRealStatic(this.Emitter))
             {
                 this.EnsureComma();
 
@@ -192,8 +208,115 @@ namespace Bridge.Translator
 
             this.WriteCloseParentheses();
             this.WriteSemiColon();
+
+            var afterDefineMethods = this.GetAfterDefineMethods();
+            foreach (var method in afterDefineMethods)
+            {
+                this.WriteNewLine();
+                this.Write(method);
+            }
+
             this.WriteNewLine();
             this.WriteNewLine();
+        }
+
+        protected virtual IEnumerable<string> GetDefineMethods(string prefix, Func<MethodDeclaration, IMethod, string> fn)
+        {
+            var methods = this.TypeInfo.InstanceMethods;
+            var attrName = "Bridge." + prefix + "DefineAttribute";
+
+            foreach (var methodGroup in methods)
+            {
+                foreach (var method in methodGroup.Value)
+                {
+                    foreach (var attrSection in method.Attributes)
+                    {
+                        foreach (var attr in attrSection.Attributes)
+                        {
+                            var rr = this.Emitter.Resolver.ResolveNode(attr.Type, this.Emitter);
+                            if (rr.Type.FullName == attrName)
+                            {
+                                throw new EmitterException(attr, "Instance method cannot be "+ prefix + "Define method");
+                            }
+                        }
+                    }
+                }
+            }
+
+            methods = this.TypeInfo.StaticMethods;
+            List<string> list = new List<string>();
+
+            foreach (var methodGroup in methods)
+            {
+                foreach (var method in methodGroup.Value)
+                {
+                    MemberResolveResult rrMember = null;
+                    IMethod rrMethod = null;
+                    foreach (var attrSection in method.Attributes)
+                    {
+                        foreach (var attr in attrSection.Attributes)
+                        {
+                            var rr = this.Emitter.Resolver.ResolveNode(attr.Type, this.Emitter);
+                            if (rr.Type.FullName == attrName)
+                            {
+                                if (rrMember == null)
+                                {
+                                    rrMember = this.Emitter.Resolver.ResolveNode(method, this.Emitter) as MemberResolveResult;
+                                    rrMethod = rrMember != null ? rrMember.Member as IMethod : null;
+                                }
+
+                                if (rrMethod != null)
+                                {
+                                    if (rrMethod.TypeParameters.Count > 0)
+                                    {
+                                        throw new EmitterException(method, prefix + "Define method cannot be generic");
+                                    }
+
+                                    if (rrMethod.Parameters.Count > 0)
+                                    {
+                                        throw new EmitterException(method, prefix + "Define method should not have parameters");
+                                    }
+
+                                    if (rrMethod.ReturnType.Kind != TypeKind.Void)
+                                    {
+                                        throw new EmitterException(method, prefix + "Define method should not return anything");
+                                    }
+
+                                    list.Add(fn(method, rrMethod));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return list;
+        }
+
+        protected virtual IEnumerable<string> GetBeforeDefineMethods()
+        {
+            return this.GetDefineMethods("Before",
+                (method, rrMethod) =>
+                {
+                    this.PushWriter("(fucntion(){0})();");
+                    this.ResetLocals();
+                    var prevMap = this.BuildLocalsMap();
+                    var prevNamesMap = this.BuildLocalsNamesMap();
+
+                    method.Body.AcceptVisitor(this.Emitter);
+
+                    this.ClearLocalsMap(prevMap);
+                    this.ClearLocalsNamesMap(prevNamesMap);
+                    return this.PopWriter(true);
+                });
+        }
+
+        protected virtual IEnumerable<string> GetAfterDefineMethods()
+        {
+            return this.GetDefineMethods("After",
+                (method, rrMethod) =>
+                    BridgeTypes.ToJsName(rrMethod.DeclaringTypeDefinition, this.Emitter) + "." +
+                    this.Emitter.GetEntityName(method) + "();");
         }
     }
 }

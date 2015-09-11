@@ -63,6 +63,7 @@
     <Compile Include="Attributes\AllowAttribute.cs" />
     <Compile Include="Attributes\ConstructorAttribute.cs" />
     <Compile Include="Attributes\TemplateAttribute.cs" />
+    <Compile Include="Attributes\AfterDefineAttribute.cs" />
     <Compile Include="Attributes\ModuleDependencyAttribute.cs" />
     <Compile Include="Attributes\ModuleAttribute.cs" />
     <Compile Include="Attributes\CastAttribute.cs" />

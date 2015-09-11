@@ -38,6 +38,7 @@ namespace Bridge.Contract
         string GetInline(ICSharpCode.NRefactory.TypeSystem.IEntity entity);
         string GetInline(Mono.Cecil.ICustomAttributeProvider provider);
         Tuple<bool, bool, string> GetInlineCode(ICSharpCode.NRefactory.CSharp.InvocationExpression node);
+        bool IsForbiddenInvocation(InvocationExpression node);
         string GetDefinitionName(IMemberDefinition member, bool changeCase = true);
         System.Collections.Generic.IEnumerable<string> GetScript(ICSharpCode.NRefactory.CSharp.EntityDeclaration method);
         int GetPriority(Mono.Cecil.TypeDefinition type);

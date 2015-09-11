@@ -56,6 +56,12 @@ namespace Bridge.Translator
         protected void VisitInvocationExpression()
         {
             InvocationExpression invocationExpression = this.InvocationExpression;
+
+            if (this.Emitter.IsForbiddenInvocation(invocationExpression))
+            {
+                throw new EmitterException(invocationExpression, "This method cannot be invoked directly");
+            }
+
             var oldValue = this.Emitter.ReplaceAwaiterByVar;
             var oldAsyncExpressionHandling = this.Emitter.AsyncExpressionHandling;
 

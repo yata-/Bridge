@@ -25,6 +25,18 @@ namespace Bridge.Translator
 
         protected void VisitMethodDeclaration(MethodDeclaration methodDeclaration)
         {
+            foreach (var attrSection in methodDeclaration.Attributes)
+            {
+                foreach (var attr in attrSection.Attributes)
+                {
+                    var rr = this.Emitter.Resolver.ResolveNode(attr.Type, this.Emitter);
+                    if (rr.Type.FullName == "Bridge.BeforeDefineAttribute")
+                    {
+                        return;
+                    }
+                }
+            }
+
             this.EnsureComma();
             this.ResetLocals();
 

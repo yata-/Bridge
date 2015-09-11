@@ -3,6 +3,7 @@ using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.TypeSystem;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Bridge.Translator
 {
@@ -141,6 +142,46 @@ namespace Bridge.Translator
                        || this.StaticCtor != null
                        || this.Operators.Count > 0;
             }
+        }
+
+        public bool HasRealStatic(IEmitter emitter)
+        {
+            var result = this.StaticConfig.HasMembers
+                       || this.StaticProperties.Count > 0
+                       || this.StaticCtor != null
+                       || this.Operators.Count > 0;
+
+            if (result)
+            {
+                return true;
+            }
+
+            if (this.StaticMethods.Any(group =>
+            {
+                foreach (var method in group.Value)
+                {
+                    if (method.Attributes.Count == 0)
+                    {
+                        return true;
+                    }
+
+                    foreach (var attrSection in method.Attributes)
+                    {
+                        if (attrSection.Attributes.Select(attr => emitter.Resolver.ResolveNode(attr.Type, emitter))
+                                .Any(rr => rr.Type.FullName != "Bridge.BeforeDefineAttribute"))
+                        {
+                            return true;
+                        }
+                    }
+                }
+
+                return false;
+            }))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public bool HasInstantiable
