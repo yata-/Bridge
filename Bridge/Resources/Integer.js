@@ -397,7 +397,7 @@ Bridge.define('Bridge.Int', {
                 sep: noGroup ? "" : nf[name + "GroupSeparator"]
             };
 
-            inString = 0;
+            var inString = 0;
 
             for (f = 0; f < format.length; f++) {
                 c = format.charAt(f);
