@@ -426,7 +426,7 @@ namespace Bridge.Translator
                     {
                         var prop = member.Member as IProperty;
 
-                        if (prop != null && prop.IsVirtual)
+                        if (prop != null && (prop.IsVirtual || prop.IsOverride))
                         {
                             proto = true;
                         }
