@@ -340,6 +340,33 @@ namespace ClientTestLibrary
         afterNext,
     }
 
+    [FileName("testBridgeIssues.js")]
+    public class Bridge436First
+    {
+        public virtual string ToObject()
+        {
+            return "1";
+        }
+    }
+
+    [FileName("testBridgeIssues.js")]
+    public class Bridge436Second : Bridge436First
+    {
+        public override string ToObject()
+        {
+            return base.ToObject() + "2";
+        }
+    }
+
+    [FileName("testBridgeIssues.js")]
+    public class Bridge436Third : Bridge436Second
+    {
+        public override string ToObject()
+        {
+            return base.ToObject() + "3";
+        }
+    }
+
     // Tests Bridge GitHub issues
     class TestBridgeIssues
     {
@@ -894,6 +921,19 @@ namespace ClientTestLibrary
             var sum = "0.13 + " + number2;
 
             assert.Equal(sum, "0.13 + 11.37", "0.13 + 11.37");
+        }
+
+        // Bridge[#436]
+        public static void N436(Assert assert)
+        {
+            var b1 = new Bridge436First();
+            assert.Equal(b1.ToObject(), "1", "Bridge436First.ToObject()");
+
+            var b2 = new Bridge436Second();
+            assert.Equal(b2.ToObject(), "12", "Bridge436Second.ToObject()");
+
+            var b3 = new Bridge436Third();
+            assert.Equal(b3.ToObject(), "123", "Bridge436Third.ToObject()");
         }
     }
 }
