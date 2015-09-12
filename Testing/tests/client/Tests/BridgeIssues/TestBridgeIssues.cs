@@ -367,6 +367,22 @@ namespace ClientTestLibrary
         }
     }
 
+    [FileName("testBridgeIssues.js")]
+    public class Bridge439
+    {
+        private event Action<string> _dispatcher;
+
+        public void Register(Action<string> callback)
+        {
+            _dispatcher += callback;
+        }
+
+        public void CallDispatcher(string s)
+        {
+            _dispatcher(s);
+        }
+    }
+
     // Tests Bridge GitHub issues
     class TestBridgeIssues
     {
@@ -877,12 +893,12 @@ namespace ClientTestLibrary
             EnsureNumber(assert, SinglePositiveInfinity, "Infinity", "SinglePositiveInfinity");
 
             // Single consts in expression
-           SingleMaxValue = float.MaxValue+ 0;
-           SingleMinValue = float.MinValue+ 0;
-           SingleEpsilon = float.Epsilon+ 0;
-           SingleNaN = float.NaN+ 0;
-           SingleNegativeInfinity = float.NegativeInfinity+ 0;
-           SinglePositiveInfinity = float.PositiveInfinity+ 0;
+            SingleMaxValue = float.MaxValue + 0;
+            SingleMinValue = float.MinValue + 0;
+            SingleEpsilon = float.Epsilon + 0;
+            SingleNaN = float.NaN + 0;
+            SingleNegativeInfinity = float.NegativeInfinity + 0;
+            SinglePositiveInfinity = float.PositiveInfinity + 0;
 
             EnsureNumber(assert, SingleMaxValue, "3.40282347e+38", "SingleMaxValuein expression");
             EnsureNumber(assert, SingleMinValue, "-3.40282347e+38", "SingleMinValuein expression");
@@ -934,6 +950,20 @@ namespace ClientTestLibrary
 
             var b3 = new Bridge436Third();
             assert.Equal(b3.ToObject(), "123", "Bridge436Third.ToObject()");
+        }
+
+        // Bridge[#439]
+        public static void N439(Assert assert)
+        {
+            var b = new Bridge439();
+            string accumulator = string.Empty;
+            b.Register((s) => { accumulator = accumulator + s; });
+
+            b.CallDispatcher("1");
+            assert.Equal(accumulator, "1", "accumulator 1");
+
+            b.CallDispatcher("2");
+            assert.Equal(accumulator, "12", "accumulator 12");
         }
     }
 }

@@ -313,6 +313,20 @@ Bridge.define('ClientTestLibrary.Bridge436Third', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge439', {
+    config: {
+        events: {
+            _dispatcher: null
+        }
+    },
+    register: function (callback) {
+        this.add_dispatcher(callback);
+    },
+    callDispatcher: function (s) {
+        this._dispatcher(s);
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
@@ -848,6 +862,19 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
 
             var b3 = new ClientTestLibrary.Bridge436Third();
             assert.equal(b3.toObject(), "123", "Bridge436Third.ToObject()");
+        },
+        n439: function (assert) {
+            var b = new ClientTestLibrary.Bridge439();
+            var accumulator = "";
+            b.register(function (s) {
+                accumulator = accumulator + s;
+            });
+
+            b.callDispatcher("1");
+            assert.equal(accumulator, "1", "accumulator 1");
+
+            b.callDispatcher("2");
+            assert.equal(accumulator, "12", "accumulator 12");
         }
     }
 });
