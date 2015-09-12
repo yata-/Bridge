@@ -939,6 +939,14 @@ namespace ClientTestLibrary
             assert.Equal(sum, "0.13 + 11.37", "0.13 + 11.37");
         }
 
+        // Bridge[#435]
+        public static void N435(Assert assert)
+        {
+            int i = 0;
+            assert.Equal(i.Format("E"), "0E+000", "i.Format(\"E\")");
+            assert.Equal(i.Format("a"), "a", "Test custom formatting in \"use strict\" mode");
+        }
+
         // Bridge[#436]
         public static void N436(Assert assert)
         {

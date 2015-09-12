@@ -853,6 +853,11 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
 
             assert.equal(sum, "0.13 + 11.37", "0.13 + 11.37");
         },
+        n435: function (assert) {
+            var i = 0;
+            assert.equal(Bridge.Int.format(i, "E"), "0E+000", "i.Format(\"E\")");
+            assert.equal(Bridge.Int.format(i, "a"), "a", "Test custom formatting in \"use strict\" mode");
+        },
         n436: function (assert) {
             var b1 = new ClientTestLibrary.Bridge436First();
             assert.equal(b1.toObject(), "1", "Bridge436First.ToObject()");
