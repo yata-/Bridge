@@ -232,7 +232,7 @@ namespace Bridge.Translator
                     this.Emitter.AssignmentType = AssignmentOperatorType.Assign;
                 }
 
-                if (delegateAssigment)
+                if (delegateAssigment && !isEvent)
                 {
                     this.Emitter.IsAssignment = false;
                 }
