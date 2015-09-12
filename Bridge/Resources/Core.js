@@ -124,7 +124,7 @@
                 }
 
                 return(ret);
-            }
+            };
 
             var attachHandler = function () {
                 var ret = fn.call(elem, Bridge.global.event);
@@ -135,7 +135,7 @@
                 }
 
                 return (ret);
-            }
+            };
 
             if (elem.addEventListener) {
                 elem.addEventListener(event, listenHandler, false);
@@ -257,7 +257,7 @@
             }
 
             if ((obj).constructor == Function) {
-                str = (obj).toString()
+                str = (obj).toString();
             }
             else {
                 str = (obj).constructor.toString();
@@ -676,7 +676,7 @@
 
                 if (arguments.length === 2) {
                     fn = function () {
-                        return method.apply(obj, arguments)
+                        return method.apply(obj, arguments);
                     };
                 }
                 else {
@@ -812,7 +812,7 @@
             F.prototype = o;
 
             return new F();
-        }
+        };
     }
 
     globals.Bridge = core;
