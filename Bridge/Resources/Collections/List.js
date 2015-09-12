@@ -134,7 +134,7 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
                 result.push(this.items[i]);
             }
 
-            return result;
+            return new Bridge.List$1(T)(result);
         },
 
         insert: function (index, item) {
