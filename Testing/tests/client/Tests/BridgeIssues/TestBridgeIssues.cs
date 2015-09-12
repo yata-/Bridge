@@ -340,6 +340,49 @@ namespace ClientTestLibrary
         afterNext,
     }
 
+    [FileName("testBridgeIssues.js")]
+    public class Bridge436First
+    {
+        public virtual string ToObject()
+        {
+            return "1";
+        }
+    }
+
+    [FileName("testBridgeIssues.js")]
+    public class Bridge436Second : Bridge436First
+    {
+        public override string ToObject()
+        {
+            return base.ToObject() + "2";
+        }
+    }
+
+    [FileName("testBridgeIssues.js")]
+    public class Bridge436Third : Bridge436Second
+    {
+        public override string ToObject()
+        {
+            return base.ToObject() + "3";
+        }
+    }
+
+    [FileName("testBridgeIssues.js")]
+    public class Bridge439
+    {
+        private event Action<string> _dispatcher;
+
+        public void Register(Action<string> callback)
+        {
+            _dispatcher += callback;
+        }
+
+        public void CallDispatcher(string s)
+        {
+            _dispatcher(s);
+        }
+    }
+
     // Tests Bridge GitHub issues
     class TestBridgeIssues
     {
@@ -850,12 +893,12 @@ namespace ClientTestLibrary
             EnsureNumber(assert, SinglePositiveInfinity, "Infinity", "SinglePositiveInfinity");
 
             // Single consts in expression
-           SingleMaxValue = float.MaxValue+ 0;
-           SingleMinValue = float.MinValue+ 0;
-           SingleEpsilon = float.Epsilon+ 0;
-           SingleNaN = float.NaN+ 0;
-           SingleNegativeInfinity = float.NegativeInfinity+ 0;
-           SinglePositiveInfinity = float.PositiveInfinity+ 0;
+            SingleMaxValue = float.MaxValue + 0;
+            SingleMinValue = float.MinValue + 0;
+            SingleEpsilon = float.Epsilon + 0;
+            SingleNaN = float.NaN + 0;
+            SingleNegativeInfinity = float.NegativeInfinity + 0;
+            SinglePositiveInfinity = float.PositiveInfinity + 0;
 
             EnsureNumber(assert, SingleMaxValue, "3.40282347e+38", "SingleMaxValuein expression");
             EnsureNumber(assert, SingleMinValue, "-3.40282347e+38", "SingleMinValuein expression");
@@ -894,6 +937,33 @@ namespace ClientTestLibrary
             var sum = "0.13 + " + number2;
 
             assert.Equal(sum, "0.13 + 11.37", "0.13 + 11.37");
+        }
+
+        // Bridge[#436]
+        public static void N436(Assert assert)
+        {
+            var b1 = new Bridge436First();
+            assert.Equal(b1.ToObject(), "1", "Bridge436First.ToObject()");
+
+            var b2 = new Bridge436Second();
+            assert.Equal(b2.ToObject(), "12", "Bridge436Second.ToObject()");
+
+            var b3 = new Bridge436Third();
+            assert.Equal(b3.ToObject(), "123", "Bridge436Third.ToObject()");
+        }
+
+        // Bridge[#439]
+        public static void N439(Assert assert)
+        {
+            var b = new Bridge439();
+            string accumulator = string.Empty;
+            b.Register((s) => { accumulator = accumulator + s; });
+
+            b.CallDispatcher("1");
+            assert.Equal(accumulator, "1", "accumulator 1");
+
+            b.CallDispatcher("2");
+            assert.Equal(accumulator, "12", "accumulator 12");
         }
     }
 }
