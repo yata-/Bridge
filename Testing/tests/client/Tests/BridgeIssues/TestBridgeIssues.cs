@@ -960,6 +960,14 @@ namespace ClientTestLibrary
             assert.Equal(b3.ToObject(), "123", "Bridge436Third.ToObject()");
         }
 
+        // Bridge[#438]
+        public static void N438(Assert assert)
+        {
+            List<int> magic = new List<int>() { 0, 1, 2, 3, 4 };
+            List<int> epic = magic.GetRange(0, 3);
+            assert.Equal(epic.GetType().GetClassName(), "Bridge.List$1$Bridge.Int", "epic.GetType().GetClassName()");
+        }
+
         // Bridge[#439]
         public static void N439(Assert assert)
         {
