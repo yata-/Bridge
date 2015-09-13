@@ -144,7 +144,7 @@ namespace Bridge.Translator.Tests
 
         private static void HandleFile(string folder1, string folder2, Dictionary<string, CompareMode> specialFiles, Dictionary<string, Comparence> comparence, FileInfo file, bool inReference, bool ignoreSame = true)
         {
-            if (comparence.ContainsKey(file.FullName))
+            if (comparence.ContainsKey(file.Name))
                 return;
 
             var cd = new Comparence
@@ -185,7 +185,7 @@ namespace Bridge.Translator.Tests
                 }
             }
 
-            comparence.Add(file.FullName, cd);
+            comparence.Add(file.Name, cd);
         }
 
         private static string AnyDifference(string file1, string file2)
