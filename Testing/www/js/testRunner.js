@@ -1,5 +1,6 @@
 ﻿/* global Bridge */
 
+"use strict";
 Bridge.define('ClientTestLibrary.RunTests', {
     statics: {
         config: {
@@ -94,6 +95,9 @@ Bridge.define('ClientTestLibrary.RunTests', {
             QUnit.test("#418", ClientTestLibrary.TestBridgeIssues.n418);
             QUnit.test("#422", ClientTestLibrary.TestBridgeIssues.n422);
             QUnit.test("#428", ClientTestLibrary.TestBridgeIssues.n428);
+            QUnit.test("#435", ClientTestLibrary.TestBridgeIssues.n435);
+            QUnit.test("#436", ClientTestLibrary.TestBridgeIssues.n436);
+            QUnit.test("#439", ClientTestLibrary.TestBridgeIssues.n439);
 
             QUnit.module("LINQ");
             QUnit.test("Aggregate operators", ClientTestLibrary.Linq.TestLinqAggregateOperators.test);

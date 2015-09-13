@@ -1,5 +1,6 @@
 ﻿/* global Bridge */
 
+"use strict";
 Bridge.define('ClientTestLibrary.Bridge169', {
     statics: {
         number: 0,
@@ -289,6 +290,40 @@ Bridge.define('ClientTestLibrary.Bridge422', {
         first: 0,
         next: 100,
         afterNext: 101
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge436First', {
+    toObject: function () {
+        return "1";
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge436Second', {
+    inherits: [ClientTestLibrary.Bridge436First],
+    toObject: function () {
+        return ClientTestLibrary.Bridge436First.prototype.toObject.call(this) + "2";
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge436Third', {
+    inherits: [ClientTestLibrary.Bridge436Second],
+    toObject: function () {
+        return ClientTestLibrary.Bridge436Second.prototype.toObject.call(this) + "3";
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge439', {
+    config: {
+        events: {
+            _dispatcher: null
+        }
+    },
+    register: function (callback) {
+        this.add_dispatcher(callback);
+    },
+    callDispatcher: function (s) {
+        this._dispatcher(s);
     }
 });
 
@@ -817,6 +852,34 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
             var sum = "0.13 + " + number2;
 
             assert.equal(sum, "0.13 + 11.37", "0.13 + 11.37");
+        },
+        n435: function (assert) {
+            var i = 0;
+            assert.equal(Bridge.Int.format(i, "E"), "0E+000", "i.Format(\"E\")");
+            assert.equal(Bridge.Int.format(i, "a"), "a", "Test custom formatting in \"use strict\" mode");
+        },
+        n436: function (assert) {
+            var b1 = new ClientTestLibrary.Bridge436First();
+            assert.equal(b1.toObject(), "1", "Bridge436First.ToObject()");
+
+            var b2 = new ClientTestLibrary.Bridge436Second();
+            assert.equal(b2.toObject(), "12", "Bridge436Second.ToObject()");
+
+            var b3 = new ClientTestLibrary.Bridge436Third();
+            assert.equal(b3.toObject(), "123", "Bridge436Third.ToObject()");
+        },
+        n439: function (assert) {
+            var b = new ClientTestLibrary.Bridge439();
+            var accumulator = "";
+            b.register(function (s) {
+                accumulator = accumulator + s;
+            });
+
+            b.callDispatcher("1");
+            assert.equal(accumulator, "1", "accumulator 1");
+
+            b.callDispatcher("2");
+            assert.equal(accumulator, "12", "accumulator 12");
         }
     }
 });

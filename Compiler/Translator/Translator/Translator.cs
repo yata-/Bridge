@@ -15,13 +15,15 @@ namespace Bridge.Translator
     {
         public const string Bridge_ASSEMBLY = "Bridge";
         public const string BridgeResourcesList = "Bridge.Resources.list";
+        private static readonly Encoding OutputEncoding = System.Text.UTF8Encoding.UTF8;
+        private static readonly CodeSettings MinifierCodeSettings = new CodeSettings { TermSemicolons = true, StrictMode = true };
         public const string LocalesPrefix = "Bridge.Resources.Locales.";
 
         public Translator(string location, bool fromTask = false)
         {
             this.Location = location;
             this.Validator = this.CreateValidator();
-            this.DefineConstants = new List<string>(){"BRIDGE"};
+            this.DefineConstants = new List<string>() { "BRIDGE" };
             this.FromTask = fromTask;
         }
 
@@ -185,19 +187,18 @@ namespace Bridge.Translator
 
                 // If 'fileName' is an absolute path, Path.Combine will ignore the 'path' prefix.
                 string filePath = Path.Combine(path, fileName);
-                string extension = Path.GetExtension(filePath);
+                string extension = Path.GetExtension(fileName);
                 bool isJs = extension == ('.' + Bridge.Translator.AssemblyInfo.JAVASCRIPT_EXTENSION);
-
-                System.IO.FileInfo file;
 
                 // We can only have Beautified, Minified or Both, so this test has inverted logic:
                 // output beautified if not minified only == (output beautified or output both)
                 // Check by @vladsch: Output anyway if the class is not a JavaScript file.
                 if (this.AssemblyInfo.OutputFormatting != JavaScriptOutputType.Minified || !isJs)
                 {
-                    file = new System.IO.FileInfo(filePath);
+                    string header = GetOutputHeader(isJs, isJs);
+                    // merge var file = WriteOutput(path, fileName, header, code);
+                    var file = new System.IO.FileInfo(filePath);
                     file.Directory.Create();
-                    string header = isJs ? "/* global Bridge */\n\n" : "";
                     this.SaveToFile(file.FullName, header + code);
                     files.Add(fileName, file.FullName);
                 }
@@ -206,11 +207,15 @@ namespace Bridge.Translator
                 // Check by @vladsch: Output minified is allowed only and only if it is a JavaScript being output.
                 if (this.AssemblyInfo.OutputFormatting != JavaScriptOutputType.Formatted && isJs)
                 {
+
+                    // Minifier will add "use strict" as option StrictMode = true is used
+                    // merge string header = GetOutputHeader(false, false);
+                    // merge WriteOutput(path, fileName, header, minifier.MinifyJavaScript(code, MinifierCodeSettings));
+
                     var fileNameMin = Path.GetFileNameWithoutExtension(filePath) + ".min" + extension;
                     var filePathMin = Path.Combine(Path.GetDirectoryName(filePath), fileNameMin);
-                    file = new System.IO.FileInfo(filePathMin);
-                    file.Directory.Create();
-                    this.SaveToFile(file.FullName, minifier.MinifyJavaScript(code, new CodeSettings { TermSemicolons = true }));
+                    var file = new System.IO.FileInfo(filePathMin);
+                    this.SaveToFile(file.FullName, minifier.MinifyJavaScript(code, MinifierCodeSettings));
                 }
             }
 
@@ -274,6 +279,29 @@ namespace Bridge.Translator
             return path.Replace('-', '_') + name;
         }
 
+        private static string GetOutputHeader(bool needGlobalComment, bool needStrictModeInstruction)
+        {
+            string header = needGlobalComment ? "/* global Bridge */\n\n" : string.Empty;
+            header = header + (needStrictModeInstruction ? "\"use strict\";\n" : string.Empty);
+
+            return header;
+        }
+
+        private static FileInfo WriteOutput(string outputPath, string fileName, string header, string code)
+        {
+            var file = CreateFile(outputPath, fileName);
+
+            // No need to perform redundant concatenation if header is empty
+            if (!string.IsNullOrWhiteSpace(header))
+            {
+                code = header + code;
+            }
+
+            File.WriteAllText(file.FullName, code, OutputEncoding);
+
+            return file;
+        }
+
         protected virtual Emitter CreateEmitter(IMemberResolver resolver)
         {
             return new Emitter(this.TypeDefinitions, this.BridgeTypes, this.Types, this.Validator, resolver, this.TypeInfoDefinitions);
@@ -289,7 +317,7 @@ namespace Bridge.Translator
             foreach (var reference in this.References)
             {
                 var listRes = reference.MainModule.Resources.FirstOrDefault(r => r.Name == Translator.BridgeResourcesList);
-                
+
                 if (listRes != null)
                 {
                     string resourcesStr = null;
@@ -326,7 +354,7 @@ namespace Bridge.Translator
                         {
                             if (!nodebug)
                             {
-                                this.ExtractResourceAndWriteToFile(outputPath, reference, resName, fileName.ReplaceLastInstanceOf(".js", ".min.js"), (content) => { var minifier = new Minifier(); return minifier.MinifyJavaScript(content, new CodeSettings { TermSemicolons = true }); });
+                                this.ExtractResourceAndWriteToFile(outputPath, reference, resName, fileName.ReplaceLastInstanceOf(".js", ".min.js"), (content) => { var minifier = new Minifier(); return minifier.MinifyJavaScript(content, MinifierCodeSettings); });
                             }
                         }
                     }
@@ -496,6 +524,16 @@ namespace Bridge.Translator
             }
             var content = preHandler != null ? preHandler(resourcesStr) : resourcesStr;
             this.SaveToFile(file.FullName, content);
+        }
+
+        private static FileInfo CreateFile(string outputPath, string fileName)
+        {
+            var filePath = Path.Combine(outputPath, fileName);
+
+            var file = new System.IO.FileInfo(filePath);
+            file.Directory.Create();
+
+            return file;
         }
 
         public EmitterException CreateExceptionFromLastNode()

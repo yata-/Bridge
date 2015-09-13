@@ -1,5 +1,6 @@
 ﻿/* global Bridge */
 
+"use strict";
 Bridge.define('BasicTypes.BasicTypes', {
     boolValue: true,
     stringValue: "Some string value",
@@ -13,6 +14,7 @@ Bridge.define('BasicTypes.BasicTypes', {
             this.integerArray = [1, 2, 3];
             this.stringArray = ["1", "2", "3"];
             this.colorArray = [BasicTypes.Color.blue, BasicTypes.Color.green, BasicTypes.Color.red];
+            this.twoDimensionalArray = [[1, 2, 3], [5, 8]];
             this.colorValue = BasicTypes.Color.green;
             this.undefinedValue = undefined;
         }
