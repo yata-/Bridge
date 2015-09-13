@@ -313,7 +313,12 @@
     };
 
     Bridge.Decimal.prototype.round = function () {
-        return new Bridge.Decimal(this.value.round());
+        var old = Bridge.$Decimal.rounding,
+            r;
+        Bridge.$Decimal.rounding = 6;
+        r = new Bridge.Decimal(this.value.round());
+        Bridge.$Decimal.rounding = old;
+        return r;
     };
 
     Bridge.Decimal.prototype.sqrt = function () {

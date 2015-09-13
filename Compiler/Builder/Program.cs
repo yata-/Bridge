@@ -183,13 +183,13 @@ namespace Bridge.Builder
                 if (extractCore)
                 {
                     Console.WriteLine("Extracting core scripts...");
-                    Bridge.Translator.Translator.ExtractCore(translator, outputPath);
+                    translator.ExtractCore(outputPath);
                 }
-
-                translator.Plugins.AfterOutput(translator, outputPath, !extractCore);
 
                 Console.WriteLine("Saving to " + outputPath);
                 translator.SaveTo(outputPath, Path.GetFileName(outputLocation));
+                translator.Flush(outputPath, Path.GetFileName(outputLocation));
+                translator.Plugins.AfterOutput(translator, outputPath, !extractCore);
 
                 Console.WriteLine("Done.");
             }
