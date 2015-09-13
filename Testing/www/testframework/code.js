@@ -4329,7 +4329,7 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.DecimalTests', {
         this.assertIsDecimalAndEqualTo(Bridge.Decimal(0).sub(Bridge.Decimal(3.0)), -3, null);
     },
     roundWorks: function () {
-        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.2), 1), 3, null);
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.2), 6), 3, null);
     },
     roundWithModeWorks: function () {
         this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.8), 0), 4, "Up 3.8m");

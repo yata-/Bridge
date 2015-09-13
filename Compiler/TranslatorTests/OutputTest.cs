@@ -73,7 +73,8 @@ namespace Bridge.Translator.Tests
         [TestCase("14", true, true, TestName = "OutputTest 14 - Bridge.json preserveMemberCase")]
         [TestCase("15", true, true, TestName = "OutputTest 15 - Bridge.json filename")]
         [TestCase("16", true, true, TestName = "OutputTest 16 - Issues")]
-        [TestCase("17", true, true, TestName = "OutputTest 17 - Define project constant Bridge#375")]
+        [TestCase("17", true, true, TestName = "OutputTest 17 - Define project constant #375")]
+        [TestCase("18", true, true, TestName = "OutputTest 18 - manage locale JavaScript files #431")]
         public void Test(string folder, bool isToTranslate, bool useSpecialFileCompare)
         {
             GetPaths(folder);

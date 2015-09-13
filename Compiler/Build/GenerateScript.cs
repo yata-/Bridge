@@ -127,12 +127,11 @@ namespace Bridge.Build
 
                 if (!this.NoCore)
                 {
-                    Bridge.Translator.Translator.ExtractCore(translator, outputPath);
+                    translator.ExtractCore(outputPath);
                 }
-
-                translator.Plugins.AfterOutput(translator, outputPath, this.NoCore);
-
                 translator.SaveTo(outputPath, fileName);
+                translator.Flush(outputPath, fileName);
+                translator.Plugins.AfterOutput(translator, outputPath, this.NoCore);
             }
             catch (EmitterException e)
             {
