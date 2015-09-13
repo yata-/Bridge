@@ -868,6 +868,17 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
             var b3 = new ClientTestLibrary.Bridge436Third();
             assert.equal(b3.toObject(), "123", "Bridge436Third.ToObject()");
         },
+        n438: function (assert) {
+            var magic = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+                [0], 
+                [1], 
+                [2], 
+                [3], 
+                [4]
+            ] );
+            var epic = magic.getRange(0, 3);
+            assert.equal(Bridge.getTypeName(Bridge.getType(epic)), "Bridge.List$1$Bridge.Int", "epic.GetType().GetClassName()");
+        },
         n439: function (assert) {
             var b = new ClientTestLibrary.Bridge439();
             var accumulator = "";

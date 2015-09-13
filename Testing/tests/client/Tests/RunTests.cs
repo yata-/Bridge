@@ -100,6 +100,7 @@ namespace ClientTestLibrary
             QUnit.Test("#428", TestBridgeIssues.N428);
             QUnit.Test("#435", TestBridgeIssues.N435);
             QUnit.Test("#436", TestBridgeIssues.N436);
+            QUnit.Test("#438", TestBridgeIssues.N438);
             QUnit.Test("#439", TestBridgeIssues.N439);
             QUnit.Test("#442", TestBridgeIssues.N442);
 
