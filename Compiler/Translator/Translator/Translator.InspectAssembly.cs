@@ -17,7 +17,7 @@ namespace Bridge.Translator
             string name;
             string path;
             AssemblyDefinition reference;
-
+            
             foreach (AssemblyNameReference r in assemblyDefinition.MainModule.AssemblyReferences)
             {
                 name = r.Name;

@@ -34,18 +34,26 @@ namespace Bridge.Translator
 
                 if (rr != null)
                 {
-                    var method = rr.Member as IMethod;
-                    if (method != null && method.IsVirtual)
+
+                    if (rr.IsVirtualCall)
                     {
                         proto = true;
                     }
                     else
                     {
-                        var prop = rr.Member as IProperty;
-
-                        if (prop != null && prop.IsVirtual)
+                        var method = rr.Member as IMethod;
+                        if (method != null && (method.IsVirtual || method.IsOverride))
                         {
                             proto = true;
+                        }
+                        else
+                        {
+                            var prop = rr.Member as IProperty;
+
+                            if (prop != null && (prop.IsVirtual || prop.IsOverride))
+                            {
+                                proto = true;
+                            }
                         }
                     }
                 }

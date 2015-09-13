@@ -68,6 +68,11 @@ namespace Bridge.Translator.Utils
             {
                 assemblyInfo.PluginsPath = helper.ConvertPath(assemblyInfo.PluginsPath);
             }
+
+            if (!string.IsNullOrWhiteSpace(assemblyInfo.LocalesOutput))
+            {
+                assemblyInfo.LocalesOutput = helper.ConvertPath(assemblyInfo.LocalesOutput);
+            }
         }
     }
 }
