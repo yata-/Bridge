@@ -18,10 +18,35 @@ namespace Bridge.Translator.Tests
 
         public override string ToString()
         {
+            var fromTo = new string[2];
             if (InReference)
-                return string.Format("Output file {0} compared with Reference file {1}. Difference: {2}.", Name, Result, Difference);
-            else
-                return string.Format("Reference file {0} compared with Output file {1}. Difference: {2}.", Name, Result, Difference);
+            {
+                fromTo[0] = "Output";
+                fromTo[1]= "Reference";
+            }else
+            {
+                fromTo[1] = "Output";
+                fromTo[0]= "Reference";
+            }
+
+            string difference;
+            switch (Result)
+            {
+                case CompareResult.DoesNotExist:
+                    difference = string.Empty;
+                    break;
+                case CompareResult.HasContentDifferences:
+                    difference = " Difference: " + Difference + ".";
+                    break;
+                case CompareResult.TheSame:
+                    difference = string.Empty;
+                    break;
+                default:
+                    difference = string.Empty;
+                    break;
+            }
+
+            return string.Format("{0} file {1} compared with {2} file {3}.{4}", fromTo[0], Name, fromTo[1], Result, difference);
         }
     }
 
@@ -49,10 +74,10 @@ namespace Bridge.Translator.Tests
         public static List<Comparence> CompareFolders(string referenceFolder, string outputFolder, Dictionary<string, CompareMode> specialFiles)
         {
             var referenceDirectory = new DirectoryInfo(referenceFolder);
-            var referenceFiles = referenceDirectory.GetFiles();
+            var referenceFiles = referenceDirectory.GetFiles("*", SearchOption.AllDirectories);
 
             var outputDirectory = new DirectoryInfo(outputFolder);
-            var outputFiles = outputDirectory.GetFiles();
+            var outputFiles = outputDirectory.GetFiles("*", SearchOption.AllDirectories);
 
             var comparence = new Dictionary<string, Comparence>(referenceFiles.Length > outputFiles.Length ? referenceFiles.Length : outputFiles.Length);
 
@@ -117,7 +142,7 @@ namespace Bridge.Translator.Tests
             LogWarning(sb.ToString());
         }
 
-        private static void HandleFile(string folder1, string folder2, Dictionary<string, CompareMode> specialFiles, Dictionary<string, Comparence> comparence, FileInfo file, bool inReference)
+        private static void HandleFile(string folder1, string folder2, Dictionary<string, CompareMode> specialFiles, Dictionary<string, Comparence> comparence, FileInfo file, bool inReference, bool ignoreSame = true)
         {
             if (comparence.ContainsKey(file.Name))
                 return;
@@ -126,7 +151,7 @@ namespace Bridge.Translator.Tests
             {
                 Name = file.Name,
                 File1FullPath = file.FullName,
-                Result =  CompareResult.DoesNotExist,
+                Result = CompareResult.DoesNotExist,
                 InReference = inReference
             };
 
@@ -147,13 +172,17 @@ namespace Bridge.Translator.Tests
 
                 cd.Result = CompareResult.HasContentDifferences;
 
-                cd.Difference = AnyDifference(cd.File1FullPath, cd.File2FullPath);;
+                cd.Difference = AnyDifference(cd.File1FullPath, cd.File2FullPath); ;
 
                 if (cd.Difference == null)
                 {
+                    if (ignoreSame)
+                    {
+                        return;
+                    }
+
                     cd.Result = CompareResult.TheSame;
                 }
-
             }
 
             comparence.Add(file.Name, cd);
@@ -173,7 +202,7 @@ namespace Bridge.Translator.Tests
                     {
                         var b1 = s1.ReadByte();
                         var b2 = s2.ReadByte();
-                        if ( b1 != b2 )
+                        if (b1 != b2)
                             return string.Format("Content difference found at {0} with {1} vs {2}", i, b2, b1);
 
                         i++;

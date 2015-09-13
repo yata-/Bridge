@@ -195,5 +195,34 @@ namespace Bridge.Translator
         public List<string> DefineConstants { get; set; }
 		
 		public bool InjectScriptToAssembly { get; set; }
+
+        public string Locales
+        {
+            get; set;
+        }
+
+        public string LocalesOutput
+        {
+            get;
+            set;
+        }
+
+        public string LocalesFileName
+        {
+            get; 
+            set;
+        }
+
+        public bool CombineLocales
+        {
+            get;
+            set;
+        }
+
+        public bool CombineScripts
+        {
+            get; 
+            set;
+        }
     }
 }
