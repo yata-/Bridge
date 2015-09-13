@@ -154,7 +154,7 @@ namespace Bridge.Translator
 
             var member = memberResolveResult.Member;
 
-            string attrName = Bridge.Translator.Translator.Bridge_ASSEMBLY + ".BeforeDefineAttribute";
+            string attrName = Bridge.Translator.Translator.Bridge_ASSEMBLY + ".InitAttribute";
 
             if (member != null)
             {
@@ -164,7 +164,22 @@ namespace Bridge.Translator
                     return a.AttributeType.FullName == attrName;
                 });
 
-                return attr != null;
+                if (attr != null)
+                {
+                    if (attr.PositionalArguments.Count > 0)
+                    {
+                        var argExpr = attr.PositionalArguments.First();
+                        if (argExpr.ConstantValue is int)
+                        {
+                            var value = (int)argExpr.ConstantValue;
+
+                            if (value == 1 || value == 2)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
             }
 
             return false;

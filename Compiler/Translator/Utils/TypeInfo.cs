@@ -4,6 +4,7 @@ using ICSharpCode.NRefactory.TypeSystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Attribute = ICSharpCode.NRefactory.CSharp.Attribute;
 
 namespace Bridge.Translator
 {
@@ -167,10 +168,35 @@ namespace Bridge.Translator
 
                     foreach (var attrSection in method.Attributes)
                     {
-                        if (attrSection.Attributes.Select(attr => emitter.Resolver.ResolveNode(attr.Type, emitter))
-                                .Any(rr => rr.Type.FullName != "Bridge.BeforeDefineAttribute"))
+                        foreach (var attr in attrSection.Attributes)
                         {
-                            return true;
+                            var rr = emitter.Resolver.ResolveNode(attr.Type, emitter);
+                            if (rr.Type.FullName == "Bridge.InitAttribute")
+                            {
+                                if (!attr.HasArgumentList)
+                                {
+                                    return true;
+                                }
+
+                                var expr = attr.Arguments.First();
+
+                                var argrr = emitter.Resolver.ResolveNode(expr, emitter);
+                                if (argrr.ConstantValue is int)
+                                {
+                                    var value = (int)argrr.ConstantValue;
+
+                                    if (value == 1 || value == 2)
+                                    {
+                                        return false;
+                                    }
+                                }
+
+                                return true;
+                            }
+                            else
+                            {
+                                return true;
+                            }
                         }
                     }
                 }
