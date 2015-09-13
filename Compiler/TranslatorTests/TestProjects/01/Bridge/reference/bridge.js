@@ -737,7 +737,7 @@
 
             $build: function (handlers) {
                 var fn = function () {
-                    var list = arguments.callee.$invocationList,
+                    var list = fn.$invocationList,
                         result,
                         i,
                         handler;
