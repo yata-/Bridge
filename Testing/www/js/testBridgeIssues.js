@@ -880,6 +880,13 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
 
             b.callDispatcher("2");
             assert.equal(accumulator, "12", "accumulator 12");
+        },
+        n442: function (assert) {
+            var a = Bridge.Decimal(3.5);
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, a.round(), "4", "a.Round(3.5M)");
+
+            var b = Bridge.Decimal(4.5);
+            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, b.round(), "4", "b.Round(4.5M)");
         }
     }
 });

@@ -973,5 +973,15 @@ namespace ClientTestLibrary
             b.CallDispatcher("2");
             assert.Equal(accumulator, "12", "accumulator 12");
         }
+
+        // Bridge[#442]
+        public static void N442(Assert assert)
+        {
+            decimal a = 3.5M;
+            EnsureNumber(assert, a.Round(), "4", "a.Round(3.5M)");
+
+            decimal b = 4.5M;
+            EnsureNumber(assert, b.Round(), "4", "b.Round(4.5M)");
+        }
     }
 }
