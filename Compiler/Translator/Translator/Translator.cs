@@ -15,7 +15,7 @@ namespace Bridge.Translator
     {
         public const string Bridge_ASSEMBLY = "Bridge";
         public const string BridgeResourcesList = "Bridge.Resources.list";
-        private static readonly Encoding OutputEncoding = System.Text.UTF8Encoding.UTF8;
+        private static readonly Encoding OutputEncoding = System.Text.Encoding.UTF8;
         private static readonly CodeSettings MinifierCodeSettings = new CodeSettings { TermSemicolons = true, StrictMode = true };
         public const string LocalesPrefix = "Bridge.Resources.Locales.";
 
@@ -196,10 +196,8 @@ namespace Bridge.Translator
                 if (this.AssemblyInfo.OutputFormatting != JavaScriptOutputType.Minified || !isJs)
                 {
                     string header = GetOutputHeader(isJs, isJs);
-                    // merge var file = WriteOutput(path, fileName, header, code);
-                    var file = new System.IO.FileInfo(filePath);
-                    file.Directory.Create();
-                    this.SaveToFile(file.FullName, header + code);
+                    var file = CreateFileDirectory(filePath);
+                    this.SaveToFile(file.FullName, string.IsNullOrWhiteSpace(header) ? code : header + code);
                     files.Add(fileName, file.FullName);
                 }
 
@@ -207,14 +205,9 @@ namespace Bridge.Translator
                 // Check by @vladsch: Output minified is allowed only and only if it is a JavaScript being output.
                 if (this.AssemblyInfo.OutputFormatting != JavaScriptOutputType.Formatted && isJs)
                 {
-
-                    // Minifier will add "use strict" as option StrictMode = true is used
-                    // merge string header = GetOutputHeader(false, false);
-                    // merge WriteOutput(path, fileName, header, minifier.MinifyJavaScript(code, MinifierCodeSettings));
-
                     var fileNameMin = Path.GetFileNameWithoutExtension(filePath) + ".min" + extension;
-                    var filePathMin = Path.Combine(Path.GetDirectoryName(filePath), fileNameMin);
-                    var file = new System.IO.FileInfo(filePathMin);
+
+                    var file = CreateFileDirectory(Path.GetDirectoryName(filePath), fileNameMin);
                     this.SaveToFile(file.FullName, minifier.MinifyJavaScript(code, MinifierCodeSettings));
                 }
             }
@@ -265,7 +258,7 @@ namespace Bridge.Translator
             }
             sb.Remove(sb.Length - 1, 1);
 
-            var listResources = new EmbeddedResource(Translator.BridgeResourcesList, ManifestResourceAttributes.Public, System.Text.Encoding.UTF8.GetBytes(sb.ToString()));
+            var listResources = new EmbeddedResource(Translator.BridgeResourcesList, ManifestResourceAttributes.Public, OutputEncoding.GetBytes(sb.ToString()));
             resources.Add(listResources);
 
             assemblyDef.Write(this.AssemblyLocation);
@@ -285,21 +278,6 @@ namespace Bridge.Translator
             header = header + (needStrictModeInstruction ? "\"use strict\";\n" : string.Empty);
 
             return header;
-        }
-
-        private static FileInfo WriteOutput(string outputPath, string fileName, string header, string code)
-        {
-            var file = CreateFile(outputPath, fileName);
-
-            // No need to perform redundant concatenation if header is empty
-            if (!string.IsNullOrWhiteSpace(header))
-            {
-                code = header + code;
-            }
-
-            File.WriteAllText(file.FullName, code, OutputEncoding);
-
-            return file;
         }
 
         protected virtual Emitter CreateEmitter(IMemberResolver resolver)
@@ -329,7 +307,6 @@ namespace Bridge.Translator
                         }
                     }
 
-                    //var resourcesStr = enc.GetString(((EmbeddedResource) listRes).GetResourceData());
                     var resources = resourcesStr.Split('+');
 
                     foreach (var res in resources)
@@ -413,18 +390,16 @@ namespace Bridge.Translator
                         oldFNlen = fileName.Length;
                     }
 
-                    var filePath = Path.Combine(outputPath, fileName);
-                    var file = new System.IO.FileInfo(filePath);
-                    file.Directory.Create();
+                    var file = CreateFileDirectory(outputPath, fileName);
 
                     if (bufferjs != null && bufferjs.Length > 0)
                     {
-                        File.WriteAllText(filePath, bufferjs.ToString(), System.Text.Encoding.UTF8);
+                        File.WriteAllText(file.FullName, bufferjs.ToString(), OutputEncoding);
                     }
 
                     if (bufferjsmin != null && bufferjsmin.Length > 0)
                     {
-                        File.WriteAllText(filePath.ReplaceLastInstanceOf(".js", ".min.js"), bufferjsmin.ToString(), System.Text.Encoding.UTF8);
+                        File.WriteAllText(file.FullName.ReplaceLastInstanceOf(".js", ".min.js"), bufferjsmin.ToString(), OutputEncoding);
                     }
                 }
             }
@@ -446,10 +421,7 @@ namespace Bridge.Translator
                 outputPath = Path.Combine(outputPath, this.AssemblyInfo.LocalesOutput);
             }
 
-            var filePath = Path.Combine(outputPath, fileName);
-
-            var file = new System.IO.FileInfo(filePath);
-            file.Directory.Create();
+            var file = CreateFileDirectory(outputPath, fileName);
 
             string resourcesStr = null;
             string resourcesStrMin = null;
@@ -496,11 +468,11 @@ namespace Bridge.Translator
             {
                 if (this.AssemblyInfo.OutputFormatting != JavaScriptOutputType.Minified)
                 {
-                    File.WriteAllText(file.FullName, resourcesStr, System.Text.Encoding.UTF8);
+                    File.WriteAllText(file.FullName, resourcesStr, OutputEncoding);
                 }
                 if (resourcesStrMin != null)
                 {
-                    File.WriteAllText(file.FullName.ReplaceLastInstanceOf(".js", ".min.js"), resourcesStrMin, System.Text.Encoding.UTF8);    
+                    File.WriteAllText(file.FullName.ReplaceLastInstanceOf(".js", ".min.js"), resourcesStrMin, OutputEncoding);
                 }
             }
         }
@@ -509,10 +481,7 @@ namespace Bridge.Translator
         {
             var res = assembly.MainModule.Resources.FirstOrDefault(r => r.Name == resourceName);
 
-            var filePath = Path.Combine(outputPath, fileName);
-
-            var file = new System.IO.FileInfo(filePath);
-            file.Directory.Create();
+            var file = CreateFileDirectory(outputPath, fileName);
 
             string resourcesStr = null;
             using (var resourcesStream = ((EmbeddedResource)res).GetResourceStream())
@@ -526,12 +495,19 @@ namespace Bridge.Translator
             this.SaveToFile(file.FullName, content);
         }
 
-        private static FileInfo CreateFile(string outputPath, string fileName)
+        private static FileInfo CreateFileDirectory(string outputPath, string fileName)
         {
-            var filePath = Path.Combine(outputPath, fileName);
+            return CreateFileDirectory(Path.Combine(outputPath, fileName));
+        }
 
-            var file = new System.IO.FileInfo(filePath);
-            file.Directory.Create();
+        private static FileInfo CreateFileDirectory(string path)
+        {
+            var file = new System.IO.FileInfo(path);
+
+            if (!file.Directory.Exists)
+            {
+                file.Directory.Create();
+            }
 
             return file;
         }
@@ -581,7 +557,7 @@ namespace Bridge.Translator
                 {
                     buffer.AppendLine(content);
                 }
-                
+
                 if (this.removeList == null)
                 {
                     this.removeList = new List<string>();
@@ -589,7 +565,7 @@ namespace Bridge.Translator
                 this.removeList.Add(fileName);
             }
 
-            File.WriteAllText(fileName, content, System.Text.Encoding.UTF8);
+            File.WriteAllText(fileName, content, OutputEncoding);
         }
 
         public void Flush(string path, string defaultFileName)
@@ -628,12 +604,12 @@ namespace Bridge.Translator
 
             if (this.jsbuffer != null && this.jsbuffer.Length > 0)
             {
-                File.WriteAllText(filePath, this.jsbuffer.ToString(), System.Text.Encoding.UTF8); 
+                File.WriteAllText(filePath, this.jsbuffer.ToString(), OutputEncoding);
             }
 
             if (this.jsminbuffer != null && this.jsminbuffer.Length > 0)
             {
-                File.WriteAllText(filePath.ReplaceLastInstanceOf(".js", ".min.js"), this.jsminbuffer.ToString(), System.Text.Encoding.UTF8);
+                File.WriteAllText(filePath.ReplaceLastInstanceOf(".js", ".min.js"), this.jsminbuffer.ToString(), OutputEncoding);
             }
         }
     }
