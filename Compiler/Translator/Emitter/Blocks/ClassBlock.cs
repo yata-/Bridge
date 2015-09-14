@@ -307,7 +307,7 @@ namespace Bridge.Translator
             return this.GetDefineMethods("Before",
                 (method, rrMethod) =>
                 {
-                    this.PushWriter("(fucntion(){0})();");
+                    this.PushWriter("(function(){0})();");
                     this.ResetLocals();
                     var prevMap = this.BuildLocalsMap();
                     var prevNamesMap = this.BuildLocalsNamesMap();
