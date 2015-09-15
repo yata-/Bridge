@@ -263,11 +263,18 @@ namespace Bridge.Translator
                                 int? initPosition = null;
                                 if (attr.HasArgumentList)
                                 {
-                                    var argExpr = attr.Arguments.First();
-                                    var argrr = this.Emitter.Resolver.ResolveNode(argExpr, this.Emitter);
-                                    if (argrr.ConstantValue is int)
+                                    if (attr.Arguments.Count > 0)
                                     {
-                                        initPosition = (int)argrr.ConstantValue;
+                                        var argExpr = attr.Arguments.First();
+                                        var argrr = this.Emitter.Resolver.ResolveNode(argExpr, this.Emitter);
+                                        if (argrr.ConstantValue is int)
+                                        {
+                                            initPosition = (int)argrr.ConstantValue;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        initPosition = 0; //Default InitPosition.After
                                     }
                                 }
                                 else

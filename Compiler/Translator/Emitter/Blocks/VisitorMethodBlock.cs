@@ -35,20 +35,26 @@ namespace Bridge.Translator
                     var rr = this.Emitter.Resolver.ResolveNode(attr.Type, this.Emitter);
                     if (rr.Type.FullName == "Bridge.InitAttribute")
                     {
+                        int initPosition = 0;
+
                         if (attr.HasArgumentList)
                         {
-                            var argExpr = attr.Arguments.First();
-                            var argrr = this.Emitter.Resolver.ResolveNode(argExpr, this.Emitter);
-                            if (argrr.ConstantValue is int)
+                            if (attr.Arguments.Any())
                             {
-                                var value = (int) argrr.ConstantValue;
-
-                                if (value == 1 || value == 2)
+                                var argExpr = attr.Arguments.First();
+                                var argrr = this.Emitter.Resolver.ResolveNode(argExpr, this.Emitter);
+                                if (argrr.ConstantValue is int)
                                 {
-                                    return;
+                                    initPosition = (int)argrr.ConstantValue;
                                 }
                             }
                         }
+
+                        if (initPosition == 1) // Before
+                        {
+                            return;
+                        }
+
                     }
                 }
             }
