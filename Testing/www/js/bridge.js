@@ -133,7 +133,7 @@
                 }
 
                 return(ret);
-            }
+            };
 
             var attachHandler = function () {
                 var ret = fn.call(elem, Bridge.global.event);
@@ -144,7 +144,7 @@
                 }
 
                 return (ret);
-            }
+            };
 
             if (elem.addEventListener) {
                 elem.addEventListener(event, listenHandler, false);
@@ -266,7 +266,7 @@
             }
 
             if ((obj).constructor == Function) {
-                str = (obj).toString()
+                str = (obj).toString();
             }
             else {
                 str = (obj).constructor.toString();
@@ -685,7 +685,7 @@
 
                 if (arguments.length === 2) {
                     fn = function () {
-                        return method.apply(obj, arguments)
+                        return method.apply(obj, arguments);
                     };
                 }
                 else {
@@ -737,7 +737,7 @@
 
             $build: function (handlers) {
                 var fn = function () {
-                    var list = arguments.callee.$invocationList,
+                    var list = fn.$invocationList,
                         result,
                         i,
                         handler;
@@ -821,7 +821,7 @@
             F.prototype = o;
 
             return new F();
-        }
+        };
     }
 
     globals.Bridge = core;
@@ -2554,7 +2554,7 @@ Bridge.define('Bridge.Int', {
                             exponent++;
                         }
 
-                        while (coefficient < 1) {
+                        while (coefficient != 0 && coefficient < 1) {
                             coefficient *= 10;
                             exponent--;
                         }
@@ -2836,7 +2836,7 @@ Bridge.define('Bridge.Int', {
                 sep: noGroup ? "" : nf[name + "GroupSeparator"]
             };
 
-            inString = 0;
+            var inString = 0;
 
             for (f = 0; f < format.length; f++) {
                 c = format.charAt(f);
@@ -3395,7 +3395,12 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
     };
 
     Bridge.Decimal.prototype.round = function () {
-        return new Bridge.Decimal(this.value.round());
+        var old = Bridge.$Decimal.rounding,
+            r;
+        Bridge.$Decimal.rounding = 6;
+        r = new Bridge.Decimal(this.value.round());
+        Bridge.$Decimal.rounding = old;
+        return r;
     };
 
     Bridge.Decimal.prototype.sqrt = function () {
@@ -5431,7 +5436,7 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
                 result.push(this.items[i]);
             }
 
-            return result;
+            return new Bridge.List$1(T)(result);
         },
 
         insert: function (index, item) {

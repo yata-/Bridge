@@ -12,7 +12,7 @@
 *.csproj text
 *.htm text
 *.html text
-*.js text
+#*.js text
 *.jsb text
 *.json text
 *.md text

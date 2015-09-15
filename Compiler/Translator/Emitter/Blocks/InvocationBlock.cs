@@ -315,7 +315,9 @@ namespace Bridge.Translator
 
                 if (rr != null)
                 {
-                    var method = rr.Member as IMethod;
+                    proto = rr.IsVirtualCall;
+                    
+                    /*var method = rr.Member as IMethod;
                     if (method != null && method.IsVirtual)
                     {
                         proto = true;
@@ -328,7 +330,7 @@ namespace Bridge.Translator
                         {
                             proto = true;
                         }
-                    }
+                    }*/
                 }
             }
 
