@@ -21,6 +21,7 @@
 *.py text
 *.sln text
 *.sql text
+*.t.ds eol=lf
 *.target text
 *.txt text
 *.xml text
