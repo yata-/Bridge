@@ -224,7 +224,7 @@ namespace Bridge.Translator
         {
             var methods = this.TypeInfo.InstanceMethods;
             var attrName = "Bridge.InitAttribute";
-            int value = prefix == "Before" ? 2 : 3;
+            int value = prefix == "After" ? 0 : 1;
 
             foreach (var methodGroup in methods)
             {
@@ -260,37 +260,47 @@ namespace Bridge.Translator
                             var rr = this.Emitter.Resolver.ResolveNode(attr.Type, this.Emitter);
                             if (rr.Type.FullName == attrName)
                             {
+                                int? initPosition = null;
                                 if (attr.HasArgumentList)
                                 {
                                     var argExpr = attr.Arguments.First();
                                     var argrr = this.Emitter.Resolver.ResolveNode(argExpr, this.Emitter);
-                                    if (argrr.ConstantValue is int && ((int)argrr.ConstantValue == value))
+                                    if (argrr.ConstantValue is int)
                                     {
-                                        if (rrMember == null)
+                                        initPosition = (int)argrr.ConstantValue;
+                                    }
+                                }
+                                else
+                                {
+                                    initPosition = 0; //Default InitPosition.After
+                                }
+
+                                if (initPosition == value)
+                                {
+                                    if (rrMember == null)
+                                    {
+                                        rrMember = this.Emitter.Resolver.ResolveNode(method, this.Emitter) as MemberResolveResult;
+                                        rrMethod = rrMember != null ? rrMember.Member as IMethod : null;
+                                    }
+
+                                    if (rrMethod != null)
+                                    {
+                                        if (rrMethod.TypeParameters.Count > 0)
                                         {
-                                            rrMember = this.Emitter.Resolver.ResolveNode(method, this.Emitter) as MemberResolveResult;
-                                            rrMethod = rrMember != null ? rrMember.Member as IMethod : null;
+                                            throw new EmitterException(method, "Init method cannot be generic");
                                         }
 
-                                        if (rrMethod != null)
+                                        if (rrMethod.Parameters.Count > 0)
                                         {
-                                            if (rrMethod.TypeParameters.Count > 0)
-                                            {
-                                                throw new EmitterException(method, "Init method cannot be generic");
-                                            }
-
-                                            if (rrMethod.Parameters.Count > 0)
-                                            {
-                                                throw new EmitterException(method, "Init method should not have parameters");
-                                            }
-
-                                            if (rrMethod.ReturnType.Kind != TypeKind.Void)
-                                            {
-                                                throw new EmitterException(method, "Init method should not return anything");
-                                            }
-
-                                            list.Add(fn(method, rrMethod));
+                                            throw new EmitterException(method, "Init method should not have parameters");
                                         }
+
+                                        if (rrMethod.ReturnType.Kind != TypeKind.Void)
+                                        {
+                                            throw new EmitterException(method, "Init method should not return anything");
+                                        }
+
+                                        list.Add(fn(method, rrMethod));
                                     }
                                 }
                             }
