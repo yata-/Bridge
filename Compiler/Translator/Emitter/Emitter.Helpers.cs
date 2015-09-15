@@ -142,6 +142,49 @@ namespace Bridge.Translator
             return new Tuple<bool, bool, string>(isStatic, isInlineMethod, inlineCode);
         }
 
+        public virtual bool IsForbiddenInvocation(InvocationExpression node)
+        {
+            var resolveResult = this.Resolver.ResolveNode(node, this);
+            var memberResolveResult = resolveResult as MemberResolveResult;
+
+            if (memberResolveResult == null)
+            {
+                return false;
+            }
+
+            var member = memberResolveResult.Member;
+
+            string attrName = Bridge.Translator.Translator.Bridge_ASSEMBLY + ".InitAttribute";
+
+            if (member != null)
+            {
+                var attr = member.Attributes.FirstOrDefault(a =>
+                {
+
+                    return a.AttributeType.FullName == attrName;
+                });
+
+                if (attr != null)
+                {
+                    if (attr.PositionalArguments.Count > 0)
+                    {
+                        var argExpr = attr.PositionalArguments.First();
+                        if (argExpr.ConstantValue is int)
+                        {
+                            var value = (int)argExpr.ConstantValue;
+
+                            if (value == 1 || value == 2)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
         public virtual IEnumerable<string> GetScript(EntityDeclaration method)
         {
             var attr = this.GetAttribute(method.Attributes, Bridge.Translator.Translator.Bridge_ASSEMBLY + ".Script");
