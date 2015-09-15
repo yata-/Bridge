@@ -146,11 +146,16 @@ namespace Bridge.Translator
 
             foreach (var item in this.Outputs)
             {
-                string code = item.Value;
-                builder.AppendLine(code);
+                NewLine(builder, item.Value);
             }
 
             return builder.ToString();
+        }
+
+        private static void NewLine(StringBuilder sb, string line)
+        {
+            sb.Append(line);
+            sb.Append("\n");
         }
 
         public virtual void SaveTo(string path, string defaultFileName)
@@ -456,7 +461,7 @@ namespace Bridge.Translator
                 {
                     if (this.AssemblyInfo.OutputFormatting != JavaScriptOutputType.Minified)
                     {
-                        bufferjs.AppendLine(resourcesStr);
+                        NewLine(bufferjs, resourcesStr);
                     }
                     if (resourcesStrMin != null)
                     {
@@ -555,7 +560,7 @@ namespace Bridge.Translator
                 }
                 else
                 {
-                    buffer.AppendLine(content);
+                    NewLine(buffer, content);
                 }
 
                 if (this.removeList == null)
