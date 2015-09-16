@@ -1,8 +1,8 @@
 // @source Core.js
 
-(function () {
+(function (globals) {
     var core = {
-        global: (function () { return this; })(),
+        global: globals,
 
         emptyFn: function () { },
 
@@ -124,7 +124,7 @@
                 }
 
                 return(ret);
-            }
+            };
 
             var attachHandler = function () {
                 var ret = fn.call(elem, Bridge.global.event);
@@ -135,7 +135,7 @@
                 }
 
                 return (ret);
-            }
+            };
 
             if (elem.addEventListener) {
                 elem.addEventListener(event, listenHandler, false);
@@ -153,8 +153,11 @@
                 throw new Bridge.InvalidOperationException('HashCode cannot be calculated for empty value');
             }
 
-            if (Bridge.isFunction(value.getHashCode)) {
-                return value.getHashCode();
+            if (Bridge.isFunction(value.getHashCode) && !value.__insideHashCode) {
+                value.__insideHashCode = true;
+                var r = value.getHashCode();
+                delete value.__insideHashCode;
+                return r;
             }
 
             if (Bridge.isBoolean(value)) {
@@ -212,7 +215,7 @@
                 Bridge.$$hashCodeCache.push(cacheItem);
 
                 for (var property in value) {
-                    if (value.hasOwnProperty(property)) {
+                    if (value.hasOwnProperty(property) && property !== "__insideHashCode") {
                         temp = Bridge.isEmpty(value[property], true) ? 0 : Bridge.getHashCode(value[property]);
                         result = 29 * result + temp;
                     }
@@ -257,7 +260,7 @@
             }
 
             if ((obj).constructor == Function) {
-                str = (obj).toString()
+                str = (obj).toString();
             }
             else {
                 str = (obj).constructor.toString();
@@ -676,7 +679,7 @@
 
                 if (arguments.length === 2) {
                     fn = function () {
-                        return method.apply(obj, arguments)
+                        return method.apply(obj, arguments);
                     };
                 }
                 else {
@@ -728,7 +731,7 @@
 
             $build: function (handlers) {
                 var fn = function () {
-                    var list = arguments.callee.$invocationList,
+                    var list = fn.$invocationList,
                         result,
                         i,
                         handler;
@@ -812,8 +815,8 @@
             F.prototype = o;
 
             return new F();
-        }
+        };
     }
 
-    Bridge = core;
-})();
+    globals.Bridge = core;
+})(this);

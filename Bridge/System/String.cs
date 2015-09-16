@@ -116,6 +116,54 @@ namespace System
         }
 
         /// <summary>
+        /// Determines whether two specified String objects have the same value.
+        /// </summary>
+        /// <param name="a">The first string to compare, or null. </param>
+        /// <param name="b">The second string to compare, or null. </param>
+        /// <returns>true if the value of a is the same as the value of b; otherwise, false. If both a and b are null, the method returns true.</returns>
+        [Template("Bridge.String.equals({a}, {b})")]
+        public static bool Equals(string a, string b)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Determines whether two specified String objects have the same value. A parameter specifies the culture, case, and sort rules used in the comparison.
+        /// </summary>
+        /// <param name="a">The first string to compare, or null. </param>
+        /// <param name="b">The second string to compare, or null. </param>
+        /// <param name="comparisonType">One of the enumeration values that specifies the rules for the comparison.</param>
+        /// <returns>true if the value of a is the same as the value of b; otherwise, false. If both a and b are null, the method returns true.</returns>
+        [Template("Bridge.String.equals({a}, {b}, {comparisonType})")]
+        public static bool Equals(string a, string b, StringComparison comparisonType)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Determines whether this string and a specified String object have the same value. A parameter specifies the culture, case, and sort rules used in the comparison.
+        /// </summary>
+        /// <param name="value">The string to compare to this instance.</param>
+        /// <param name="comparisonType">One of the enumeration values that specifies how the strings will be compared. </param>
+        /// <returns>true if the value of the value parameter is the same as this string; otherwise, false.</returns>
+        [Template("Bridge.String.equals({this}, {value}, {comparisonType})")]
+        public bool Equals(string value, StringComparison comparisonType)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Determines whether this instance and another specified String object have the same value.
+        /// </summary>
+        /// <param name="value">The string to compare to this instance.</param>
+        /// <returns>true if the value of the value parameter is the same as this string; otherwise, false.</returns>
+        [Template("Bridge.String.equals({this}, {value})")]
+        public bool Equals(string value)
+        {
+            return false;
+        }
+
+        /// <summary>
         /// The concat() method combines the text of two or more strings and returns a new string.
         /// </summary>
         /// <param name="string1">Strings to concatenate to this string.</param>

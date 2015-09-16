@@ -26,6 +26,7 @@
   <file name="Browser.js" />
   <file name="Task.js" />
   <file name="Validation.js" />
+  <file name="Version.js" />
   <file name="Attribute.js" />
   <file name="INotifyPropertyChanged.js" />
   <file name="Array.js" />
@@ -56,6 +57,7 @@
     <include name="Collections/List.js" />
     <include name="Task.js" />
     <include name="Validation.js" />
+    <include name="Version.js" />
     <include name="Attribute.js" />
     <include name="INotifyPropertyChanged.js" />
     <include name="Array.js" />

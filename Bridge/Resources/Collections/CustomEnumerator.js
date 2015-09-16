@@ -26,6 +26,10 @@ Bridge.define("Bridge.CustomEnumerator", {
         return this.$getCurrent.call(this.scope);
     },
 
+    getCurrent$1: function () {
+        return this.$getCurrent.call(this.scope);
+    },
+
     reset: function () {
         if (this.$reset) {
             this.$reset.call(this.scope);

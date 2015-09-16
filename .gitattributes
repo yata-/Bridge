@@ -12,7 +12,7 @@
 *.csproj text
 *.htm text
 *.html text
-*.js text
+*.js eol=lf
 *.jsb text
 *.json text
 *.md text
@@ -21,6 +21,7 @@
 *.py text
 *.sln text
 *.sql text
+*.t.ds eol=lf
 *.target text
 *.txt text
 *.xml text

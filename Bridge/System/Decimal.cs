@@ -15,11 +15,20 @@ namespace System
     [Constructor("Bridge.Decimal")]
     public struct Decimal : IComparable, IComparable<Decimal>, IEquatable<Decimal>, IFormattable
     {
-        public const decimal Zero = 0;
-        public const decimal One = 1;
-        public const decimal MinusOne = -1;
-        public const decimal MaxValue = 0;
-        public const decimal MinValue = 0;
+        [Name(false)]
+        public static readonly decimal Zero = 0;
+
+        [Name(false)]
+        public static readonly decimal One = 1;
+
+        [Name(false)]
+        public static readonly decimal MinusOne = -1;
+
+        [Name(false)]
+        public static readonly decimal MaxValue = 0;
+
+        [Name(false)]
+        public static readonly decimal MinValue = 0;
 
         [Template("Bridge.Decimal(0)")]
         private extern Decimal(DummyTypeUsedToAddAttributeToDefaultValueTypeConstructor _);
@@ -238,7 +247,7 @@ namespace System
         [Template("Bridge.Decimal.tryParse({s}, {provider}, {result})")]
         public static extern bool TryParse(string s, IFormatProvider provider, out decimal result);
 
-        [Template("Bridge.Decimal.round({d}, 1)")]
+        [Template("Bridge.Decimal.round({d}, 6)")]
         public static extern decimal Round(decimal d);
 
         [Template("Bridge.Decimal.round({d}, {mode})")]

@@ -10,6 +10,14 @@ namespace System.Collections.Generic
         {
         }
 
+        [Template("new Bridge.Dictionary$2({TKey}, {TValue})()")]
+        public extern Dictionary(int capacity);
+
+        [Template("new Bridge.Dictionary$2({TKey}, {TValue})(null, {comparer})")]
+        public Dictionary(int capacity, IEqualityComparer<TKey> comparer)
+        {
+        }
+
         public Dictionary(object obj)
         {
         }
@@ -22,6 +30,10 @@ namespace System.Collections.Generic
         public Dictionary(IEqualityComparer<TKey> comparer)
         {
         }
+
+        public extern Dictionary(IDictionary<TKey, TValue> dictionary);
+
+        public extern Dictionary(IDictionary<TKey, TValue> dictionary, IEqualityComparer<TKey> comparer);
 
         public IEqualityComparer<TKey> Comparer
         {
