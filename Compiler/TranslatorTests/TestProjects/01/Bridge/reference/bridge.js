@@ -162,7 +162,7 @@
                 throw new Bridge.InvalidOperationException('HashCode cannot be calculated for empty value');
             }
 
-            if (Bridge.isFunction(value.getHashCode)) {
+            if (Bridge.isFunction(value.getHashCode) && value.getHashCode.length === 0) {
                 return value.getHashCode();
             }
 
@@ -242,7 +242,8 @@
         },
 
         getDefaultValue: function (type) {
-            if (Bridge.isFunction(type.getDefaultValue)) {
+            if (
+                (type.getDefaultValue) && type.getDefaultValue.length === 0) {
                 return type.getDefaultValue();
             }
             else if (type === Boolean) {
@@ -510,7 +511,7 @@
         },
 
         equals: function (a, b) {
-            if (a && Bridge.isFunction(a.equals)) {
+            if (a && Bridge.isFunction(a.equals) && a.equals.length === 1) {
                 return a.equals(b);
             }
             else if (Bridge.isDate(a) && Bridge.isDate(b)) {
@@ -4868,7 +4869,6 @@ Bridge.Class.generic('Bridge.IEqualityComparer$1', function (T) {
     var $$name = Bridge.Class.genericName('Bridge.IEqualityComparer$1', T);
 
     return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
-        inherits: [Bridge.IEqualityComparer]
     }));
 });
 
