@@ -164,5 +164,7 @@ namespace Bridge.Contract
             get;
             set;
         }
+
+        bool HasRealStatic(IEmitter emitter);
     }
 }

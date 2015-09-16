@@ -3,6 +3,8 @@ using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.TypeSystem;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Attribute = ICSharpCode.NRefactory.CSharp.Attribute;
 
 namespace Bridge.Translator
 {
@@ -141,6 +143,71 @@ namespace Bridge.Translator
                        || this.StaticCtor != null
                        || this.Operators.Count > 0;
             }
+        }
+
+        public bool HasRealStatic(IEmitter emitter)
+        {
+            var result = this.StaticConfig.HasMembers
+                       || this.StaticProperties.Count > 0
+                       || this.StaticCtor != null
+                       || this.Operators.Count > 0;
+
+            if (result)
+            {
+                return true;
+            }
+
+            if (this.StaticMethods.Any(group =>
+            {
+                foreach (var method in group.Value)
+                {
+                    if (method.Attributes.Count == 0)
+                    {
+                        return true;
+                    }
+
+                    foreach (var attrSection in method.Attributes)
+                    {
+                        foreach (var attr in attrSection.Attributes)
+                        {
+                            var rr = emitter.Resolver.ResolveNode(attr.Type, emitter);
+                            if (rr.Type.FullName == "Bridge.InitAttribute")
+                            {
+                                if (!attr.HasArgumentList)
+                                {
+                                    return true;
+                                }
+
+                                var expr = attr.Arguments.First();
+
+                                var argrr = emitter.Resolver.ResolveNode(expr, emitter);
+                                if (argrr.ConstantValue is int)
+                                {
+                                    var value = (int)argrr.ConstantValue;
+
+                                    if (value == 1 || value == 2)
+                                    {
+                                        return false;
+                                    }
+                                }
+
+                                return true;
+                            }
+                            else
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+
+                return false;
+            }))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public bool HasInstantiable
