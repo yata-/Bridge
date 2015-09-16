@@ -327,6 +327,28 @@ Bridge.define('ClientTestLibrary.Bridge439', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge467', {
+    config: {
+        properties: {
+            MyProperty: 0
+        }
+    },
+    equals: function (obj) {
+        var other = Bridge.as(obj, ClientTestLibrary.Bridge467);
+        if (other === null)
+            return false;
+
+        if (this.getMyProperty() < 0 || other.getMyProperty() < 0) {
+            return this === other;
+        }
+
+        return this.getMyProperty() === other.getMyProperty();
+    },
+    getHashCode: function () {
+        return this.getMyProperty() < 0 ? Bridge.getHashCode(this) : Bridge.getHashCode(this.getMyProperty());
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
@@ -904,6 +926,17 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
 
             number = -12345.6789;
             assert.equal(Bridge.Int.format(number, "G", Bridge.CultureInfo.invariantCulture), "-12345.6789", "ToString(\"G\") for negative numbers in InvariantCulture");
+        },
+        n467: function (assert) {
+            var a = Bridge.merge(new ClientTestLibrary.Bridge467(), {
+                setMyProperty: -1
+            } );
+
+            var b = Bridge.merge(new ClientTestLibrary.Bridge467(), {
+                setMyProperty: -1
+            } );
+
+            assert.equal(a.getHashCode(), b.getHashCode(), "Call to base.GetHashCode() causes compilation to fail");
         }
     }
 });
