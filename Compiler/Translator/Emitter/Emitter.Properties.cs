@@ -363,5 +363,11 @@ namespace Bridge.Translator
             get;
             set;
         }
+
+        public bool ReplaceJump
+        {
+            get; 
+            set;
+        }
     }
 }

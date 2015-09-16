@@ -45,9 +45,18 @@ namespace Bridge.Translator
                 }
             }
 
-            this.Write("continue");
+            if (this.Emitter.ReplaceJump && this.Emitter.JumpStatements == null)
+            {
+                this.Write("return 1");
+                
+            }
+            else
+            {
+                this.Write("continue");
+            }
+
             this.WriteSemiColon();
-            this.WriteNewLine();
+            this.WriteNewLine();   
         }
     }
 }
