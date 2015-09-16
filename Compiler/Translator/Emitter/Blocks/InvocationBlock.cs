@@ -121,23 +121,29 @@ namespace Bridge.Translator
                         return;
                     }
                 }
-                else if (!String.IsNullOrEmpty(inlineScript) && invocationExpression.Target is IdentifierExpression)
+                else
                 {
-                    argsInfo.ThisArgument = "this";
-                    bool noThis = !inlineScript.Contains("{this}");
+                    MemberReferenceExpression targetMemberRef = invocationExpression.Target as MemberReferenceExpression;
+                    bool isBase = targetMemberRef != null && targetMemberRef.Target is BaseReferenceExpression;
 
-                    if (!isStaticMethod && noThis)
+                    if (!String.IsNullOrEmpty(inlineScript) && (isBase || invocationExpression.Target is IdentifierExpression))
                     {
-                        this.WriteThis();
-                        this.WriteDot();
+                        argsInfo.ThisArgument = "this";
+                        bool noThis = !inlineScript.Contains("{this}");
+
+                        if (!isStaticMethod && noThis)
+                        {
+                            this.WriteThis();
+                            this.WriteDot();
+                        }
+
+                        new InlineArgumentsBlock(this.Emitter, argsInfo, inlineScript).Emit();
+                        this.Emitter.ReplaceAwaiterByVar = oldValue;
+                        this.Emitter.AsyncExpressionHandling = oldAsyncExpressionHandling;
+
+                        return;
                     }
-
-                    new InlineArgumentsBlock(this.Emitter, argsInfo, inlineScript).Emit();
-                    this.Emitter.ReplaceAwaiterByVar = oldValue;
-                    this.Emitter.AsyncExpressionHandling = oldAsyncExpressionHandling;
-
-                    return;
-                }
+                } 
             }
 
             MemberReferenceExpression targetMember = invocationExpression.Target as MemberReferenceExpression;
@@ -343,7 +349,7 @@ namespace Bridge.Translator
 
                 if (isIgnore)
                 {
-                    throw (Exception)this.Emitter.CreateException(targetMember.Target, "Cannot call base method, because parent class code is ignored");
+                    //throw (System.Exception)this.Emitter.CreateException(targetMember.Target, "Cannot call base method, because parent class code is ignored");
                 }
 
                 bool needComma = false;
