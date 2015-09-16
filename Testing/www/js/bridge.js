@@ -2299,7 +2299,7 @@ Bridge.define("Bridge.NumberFormatInfo", {
                 percentPositivePattern: 0,
                 percentNegativePattern: 0,
 
-                currencySymbol: "$",
+                currencySymbol: "¤",
                 currencyGroupSizes: [3],
                 currencyDecimalDigits: 2,
                 currencyDecimalSeparator: ".",
@@ -2311,7 +2311,7 @@ Bridge.define("Bridge.NumberFormatInfo", {
                 numberDecimalDigits: 2,
                 numberDecimalSeparator: ".",
                 numberGroupSeparator: ",",
-                numberNegativePattern: 0
+                numberNegativePattern: 1
             });
         }
     },
@@ -2361,9 +2361,9 @@ Bridge.define("Bridge.CultureInfo", {
     statics: {
         constructor: function() {
             this.cultures = this.cultures || {};
-            this.invariantCulture = Bridge.merge(new Bridge.CultureInfo("en-US", true), {
-                englishName: "English (United States)",
-                nativeName: "English (United States)",
+            this.invariantCulture = Bridge.merge(new Bridge.CultureInfo("iv", true), {
+                englishName: "Invariant Language (Invariant Country)",
+                nativeName: "Invariant Language (Invariant Country)",
                 numberFormat: Bridge.NumberFormatInfo.invariantInfo,
                 dateTimeFormat: Bridge.DateTimeFormatInfo.invariantInfo
             });

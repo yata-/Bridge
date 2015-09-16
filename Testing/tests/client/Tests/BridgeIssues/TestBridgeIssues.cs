@@ -991,5 +991,14 @@ namespace ClientTestLibrary
             decimal b = 4.5M;
             EnsureNumber(assert, b.Round(), "4", "b.Round(4.5M)");
         }
+
+        // Bridge[#460]
+        public static void N460(Assert assert)
+        {
+            double number;
+
+            number = -12345.6789;
+            assert.Equal(number.ToString("G", System.Globalization.CultureInfo.InvariantCulture), "-12345.6789", "ToString(\"G\") for negative numbers in InvariantCulture");
+        }
     }
 }
