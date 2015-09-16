@@ -1990,7 +1990,7 @@ Bridge.define('Bridge.ClientTest.CultureInfoTests', {
     },
     invariantWorks: function () {
         var culture = Bridge.CultureInfo.invariantCulture;
-        Bridge.Test.Assert.areEqual(culture.name, "en-US");
+        Bridge.Test.Assert.areEqual(culture.name, "iv");
         Bridge.Test.Assert.areEqual(culture.dateTimeFormat, Bridge.DateTimeFormatInfo.invariantInfo);
         Bridge.Test.Assert.areEqual(culture.numberFormat, Bridge.NumberFormatInfo.invariantInfo);
     }
@@ -3591,7 +3591,7 @@ Bridge.define('Bridge.ClientTest.NumberFormatInfoTests', {
         Bridge.Test.Assert.areEqual(format.percentPositivePattern, 0);
         Bridge.Test.Assert.areEqual(format.percentNegativePattern, 0);
 
-        Bridge.Test.Assert.areEqual(format.currencySymbol, "$");
+        Bridge.Test.Assert.areEqual(format.currencySymbol, "¤");
         Bridge.Test.Assert.areEqual(format.currencyGroupSizes, [3]);
         Bridge.Test.Assert.areEqual(format.currencyDecimalDigits, 2);
         Bridge.Test.Assert.areEqual(format.currencyDecimalSeparator, ".");

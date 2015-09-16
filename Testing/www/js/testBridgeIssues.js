@@ -898,6 +898,12 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
 
             var b = Bridge.Decimal(4.5);
             ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, b.round(), "4", "b.Round(4.5M)");
+        },
+        n460: function (assert) {
+            var number;
+
+            number = -12345.6789;
+            assert.equal(Bridge.Int.format(number, "G", Bridge.CultureInfo.invariantCulture), "-12345.6789", "ToString(\"G\") for negative numbers in InvariantCulture");
         }
     }
 });
