@@ -383,6 +383,31 @@ namespace ClientTestLibrary
         }
     }
 
+    [FileName("testBridgeIssues.js")]
+    public class Bridge467
+    {
+        public int MyProperty { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            var other = obj as Bridge467;
+            if (other == null)
+                return false;
+
+            if (MyProperty < 0 || other.MyProperty < 0)
+            {
+                return ReferenceEquals(this, other);
+            }
+
+            return MyProperty == other.MyProperty;
+        }
+
+        public override int GetHashCode()
+        {
+            return MyProperty < 0 ? base.GetHashCode() : MyProperty.GetHashCode();
+        }
+    }
+
     // Tests Bridge GitHub issues
     class TestBridgeIssues
     {
@@ -999,6 +1024,22 @@ namespace ClientTestLibrary
 
             number = -12345.6789;
             assert.Equal(number.ToString("G", System.Globalization.CultureInfo.InvariantCulture), "-12345.6789", "ToString(\"G\") for negative numbers in InvariantCulture");
+        }
+
+        // Bridge[#467]
+        public static void N467(Assert assert)
+        {
+            var a = new Bridge467
+            {
+                MyProperty = -1
+            };
+
+            var b = new Bridge467
+            {
+                MyProperty = -1
+            };
+
+            assert.Equal(a.GetHashCode(), b.GetHashCode(), "Call to base.GetHashCode() causes compilation to fail");
         }
     }
 }
