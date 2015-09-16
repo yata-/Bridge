@@ -162,8 +162,11 @@
                 throw new Bridge.InvalidOperationException('HashCode cannot be calculated for empty value');
             }
 
-            if (Bridge.isFunction(value.getHashCode)) {
-                return value.getHashCode();
+            if (Bridge.isFunction(value.getHashCode) && !value.__insideHashCode) {
+                value.__insideHashCode = true;
+                var r = value.getHashCode();
+                delete value.__insideHashCode;
+                return r;
             }
 
             if (Bridge.isBoolean(value)) {
@@ -221,7 +224,7 @@
                 Bridge.$$hashCodeCache.push(cacheItem);
 
                 for (var property in value) {
-                    if (value.hasOwnProperty(property)) {
+                    if (value.hasOwnProperty(property) && property !== "__insideHashCode") {
                         temp = Bridge.isEmpty(value[property], true) ? 0 : Bridge.getHashCode(value[property]);
                         result = 29 * result + temp;
                     }
