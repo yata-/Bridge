@@ -163,7 +163,8 @@ namespace Bridge.Translator
                     throw new EmitterException(invocationExpression, "Delegate's methods are not supported. Please use direct delegate invoke.");
                 }
 
-                var targetResolve = this.Emitter.Resolver.ResolveNode(targetMember, this.Emitter);
+                //var targetResolve = this.Emitter.Resolver.ResolveNode(targetMember, this.Emitter);
+                var targetResolve = this.Emitter.Resolver.ResolveNode(invocationExpression, this.Emitter);
 
                 if (targetResolve != null)
                 {
