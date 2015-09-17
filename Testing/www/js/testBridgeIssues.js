@@ -937,6 +937,28 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
             } );
 
             assert.equal(a.getHashCode(), b.getHashCode(), "Call to base.GetHashCode() causes compilation to fail");
+        },
+        n469: function (assert) {
+            var $t;
+            var testList = new Bridge.List$1(Bridge.Int)();
+            testList.add(5);
+
+            var count = 0;
+
+            for (var i = 0; i < 10; i++) 
+            {
+                var $t = (function () {
+                    if (!Bridge.Linq.Enumerable.from(testList).any(function (x) {
+                        return x === i;
+                    }))
+                        return 1;
+
+                    count++;
+                }).call(this);
+                if($t == 1) continue;
+            }
+
+            assert.equal(count, 1, "\"continue\" generated correctly");
         }
     }
 });

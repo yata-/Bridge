@@ -5,6 +5,7 @@ using Bridge.QUnit;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ClientTestLibrary
 {
@@ -1040,6 +1041,25 @@ namespace ClientTestLibrary
             };
 
             assert.Equal(a.GetHashCode(), b.GetHashCode(), "Call to base.GetHashCode() causes compilation to fail");
+        }
+
+        // Bridge[#469]
+        public static void N469(Assert assert)
+        {
+            var testList = new List<int>();
+            testList.Add(5);
+
+            int count = 0;
+
+            for (int i = 0; i < 10; i++)
+            {
+                if (!testList.Any(x => x == i))
+                    continue;
+
+                count++;
+            }
+
+            assert.Equal(count, 1, "\"continue\" generated correctly");
         }
     }
 }
