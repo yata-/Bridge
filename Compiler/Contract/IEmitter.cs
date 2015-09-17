@@ -94,5 +94,6 @@ namespace Bridge.Contract
         IJsDoc JsDoc { get; set;  }
         IType ReturnType { get; set; }
         string GetEntityNameFromAttr(IEntity member, bool setter = false);
+        bool ReplaceJump { get; set; }
     }
 }

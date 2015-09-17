@@ -61,7 +61,14 @@ namespace Bridge.Translator
             }
             else
             {
-                this.Write("break");
+                if (this.Emitter.ReplaceJump)
+                {
+                    this.Write("return 2");
+                }
+                else
+                {
+                    this.Write("break");
+                }
             }
 
             this.WriteSemiColon();
