@@ -409,6 +409,27 @@ namespace ClientTestLibrary
         }
     }
 
+    [FileName("testBridgeIssues.js")]
+    public class Bridge470 : IEqualityComparer<Bridge470>
+    {
+        public int Data { get; set; }
+
+        public bool Equals(Bridge470 x, Bridge470 y)
+        {
+            return x.Data == y.Data;
+        }
+
+        public int GetHashCode(Bridge470 obj)
+        {
+            return obj.Data.GetHashCode();
+        }
+
+        private static bool IsOdd(int value)
+        {
+            return value % 2 != 0;
+        }
+    }
+
     // Tests Bridge GitHub issues
     class TestBridgeIssues
     {
@@ -1060,6 +1081,44 @@ namespace ClientTestLibrary
             }
 
             assert.Equal(count, 1, "\"continue\" generated correctly");
+        }
+
+        // Bridge[#470]
+        public static void N470(Assert assert)
+        {
+
+            var a = new Bridge470 { Data = 1 };
+            var b = new Bridge470 { Data = 2 };
+            var c = new Bridge470 { Data = 3 };
+
+            assert.Equal(a.Equals(b), false, "a.Equals(b)");
+            assert.Equal(a.Equals(new Bridge470 { Data = 1 }), true, "a.Equals(new Bridge470 { Data = 1 })");
+            assert.Equal(a.Equals(null), false, "a.Equals(null)");
+
+            assert.Equal(a.Equals(b, b), true, "a.Equals(b, b)");
+            assert.Equal(a.Equals(a, new Bridge470 { Data = 1 }), true, "a.Equals(a, new Bridge470 { Data = 1 })");
+            assert.Equal(a.Equals(a, new Bridge470 { Data = 2 }), false, "a.Equals(a, new Bridge470 { Data = 2 })");
+            assert.Equal(a.Equals(new Bridge470 { Data = 5 }, new Bridge470 { Data = 5 }), true, "new Bridge470 { Data = 5 }, new Bridge470 { Data = 5 }");
+
+            assert.Equal(a.GetHashCode(), 1, "a.GetHashCode()");
+            assert.Equal(c.GetHashCode(), 3, "c.GetHashCode()");
+
+            assert.Equal(a.GetHashCode(b), 2, "a.GetHashCode(b)");
+            assert.Equal(c.GetHashCode(c), 3, "c.GetHashCode(c)");
+
+            var test1 = new List<Bridge470>();
+            test1.Add(a);
+            test1.Add(b);
+            test1.Add(c);
+
+            var comparer = new Bridge470();
+
+            // EqualityComparer's methods do not handle null values intentionally
+            assert.Equal(test1.Contains(a, comparer), true, "test1 Contains a");
+            assert.Equal(test1.Contains(b, comparer), true, "test1 Contains b");
+            assert.Equal(test1.Contains(c, comparer), true, "test1 Contains c");
+            assert.Equal(test1.Contains(new Bridge470 { Data = 4 }, comparer), false, "test1 Contains 4");
+            assert.Equal(test1.Contains(new Bridge470 { Data = 5 }, comparer), false, "test1 Contains 5");
         }
     }
 }

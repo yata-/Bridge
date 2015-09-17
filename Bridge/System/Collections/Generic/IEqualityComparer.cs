@@ -4,7 +4,7 @@ namespace System.Collections.Generic
 {
     [Ignore]
     [Namespace("Bridge")]
-    public interface IEqualityComparer<in T> : IEqualityComparer, IBridgeClass
+    public interface IEqualityComparer<in T> : IBridgeClass
     {
         [Template("{this}.equals({x}, {y})")]
         bool Equals(T x, T y);
@@ -24,17 +24,14 @@ namespace System.Collections.Generic
             get { return null; }
         }
 
-        public abstract bool Equals(T x, T y);
-        public abstract int GetHashCode(T obj);
-
         [Template("{this}.equals({x}, {y})")]
-        bool IEqualityComparer.Equals(object x, object y)
+        public virtual bool Equals(T x, T y)
         {
             return false;
         }
 
         [Template("{this}.getHashCode({obj}, true)")]
-        int IEqualityComparer.GetHashCode(object obj)
+        public virtual int GetHashCode(T obj)
         {
             return 0;
         }

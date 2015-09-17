@@ -103,6 +103,7 @@ Bridge.define('ClientTestLibrary.RunTests', {
             QUnit.test("#460", ClientTestLibrary.TestBridgeIssues.n460);
             QUnit.test("#467", ClientTestLibrary.TestBridgeIssues.n467);
             QUnit.test("#469", ClientTestLibrary.TestBridgeIssues.n469);
+            QUnit.test("#470", ClientTestLibrary.TestBridgeIssues.n470);
 
             QUnit.module("LINQ");
             QUnit.test("Aggregate operators", ClientTestLibrary.Linq.TestLinqAggregateOperators.test);

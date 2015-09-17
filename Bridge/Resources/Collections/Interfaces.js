@@ -35,7 +35,6 @@ Bridge.Class.generic('Bridge.IEqualityComparer$1', function (T) {
     var $$name = Bridge.Class.genericName('Bridge.IEqualityComparer$1', T);
 
     return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
-        inherits: [Bridge.IEqualityComparer]
     }));
 });
 

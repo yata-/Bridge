@@ -288,11 +288,11 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.EqualityComparerTests', {
         Bridge.Test.Assert.true$1(Bridge.is(dict, Bridge.IEqualityComparer$1(Object)), "is IEqualityComparer<object> should be true");
     },
     defaultComparerCanGetHashCodeOfNumber: function () {
-        Bridge.Test.Assert.areEqual(new Bridge.EqualityComparer$1(Object)().getHashCode(12345), Bridge.getHashCode(12345));
+        Bridge.Test.Assert.areEqual(new Bridge.EqualityComparer$1(Object)().getHashCode(12345, true), Bridge.getHashCode(12345));
     },
     defaultComparerReturnsZeroAsHashCodeForNullAndUndefined: function () {
-        Bridge.Test.Assert.areEqual(new Bridge.EqualityComparer$1(Object)().getHashCode(null), 0);
-        Bridge.Test.Assert.areEqual(new Bridge.EqualityComparer$1(Object)().getHashCode(undefined), 0);
+        Bridge.Test.Assert.areEqual(new Bridge.EqualityComparer$1(Object)().getHashCode(null, true), 0);
+        Bridge.Test.Assert.areEqual(new Bridge.EqualityComparer$1(Object)().getHashCode(undefined, true), 0);
     },
     defaultComparerCanDetermineEquality: function () {
         var o1 = { }, o2 = { };
@@ -306,7 +306,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.EqualityComparerTests', {
     defaultComparerInvokesOverriddenGetHashCode: function () {
         Bridge.Test.Assert.areEqual(new Bridge.EqualityComparer$1(Object)().getHashCode(Bridge.merge(new Bridge.ClientTest.Collections.Generic.EqualityComparerTests.MyClass(), {
             hashCode: 42158
-        } )), 42158);
+        } ), true), 42158);
     },
     defaultComparerInvokesOverriddenEquals: function () {
         var c = new Bridge.ClientTest.Collections.Generic.EqualityComparerTests.MyClass();

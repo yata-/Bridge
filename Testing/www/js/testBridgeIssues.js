@@ -349,6 +349,26 @@ Bridge.define('ClientTestLibrary.Bridge467', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge470', {
+    inherits: function () { return [Bridge.IEqualityComparer$1(ClientTestLibrary.Bridge470)]; },
+    statics: {
+        isOdd: function (value) {
+            return value % 2 !== 0;
+        }
+    },
+    config: {
+        properties: {
+            Data: 0
+        }
+    },
+    equals: function (x, y) {
+        return x.getData() === y.getData();
+    },
+    getHashCode: function (obj) {
+        return Bridge.getHashCode(obj.getData());
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
@@ -959,6 +979,61 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
             }
 
             assert.equal(count, 1, "\"continue\" generated correctly");
+        }        ,
+        n470: function (assert) {
+
+            var a = Bridge.merge(new ClientTestLibrary.Bridge470(), {
+                setData: 1
+            } );
+            var b = Bridge.merge(new ClientTestLibrary.Bridge470(), {
+                setData: 2
+            } );
+            var c = Bridge.merge(new ClientTestLibrary.Bridge470(), {
+                setData: 3
+            } );
+
+            assert.equal(Bridge.equals(a, b), false, "a.Equals(b)");
+            assert.equal(Bridge.equals(a, Bridge.merge(new ClientTestLibrary.Bridge470(), {
+                setData: 1
+            } )), true, "a.Equals(new Bridge470 { Data = 1 })");
+            assert.equal(Bridge.equals(a, null), false, "a.Equals(null)");
+
+            assert.equal(a.equals(b, b), true, "a.Equals(b, b)");
+            assert.equal(a.equals(a, Bridge.merge(new ClientTestLibrary.Bridge470(), {
+                setData: 1
+            } )), true, "a.Equals(a, new Bridge470 { Data = 1 })");
+            assert.equal(a.equals(a, Bridge.merge(new ClientTestLibrary.Bridge470(), {
+                setData: 2
+            } )), false, "a.Equals(a, new Bridge470 { Data = 2 })");
+            assert.equal(a.equals(Bridge.merge(new ClientTestLibrary.Bridge470(), {
+                setData: 5
+            } ), Bridge.merge(new ClientTestLibrary.Bridge470(), {
+                setData: 5
+            } )), true, "new Bridge470 { Data = 5 }, new Bridge470 { Data = 5 }");
+
+            assert.equal(Bridge.getHashCode(a), 1, "a.GetHashCode()");
+            assert.equal(Bridge.getHashCode(c), 3, "c.GetHashCode()");
+
+            assert.equal(a.getHashCode(b), 2, "a.GetHashCode(b)");
+            assert.equal(c.getHashCode(c), 3, "c.GetHashCode(c)");
+
+            var test1 = new Bridge.List$1(ClientTestLibrary.Bridge470)();
+            test1.add(a);
+            test1.add(b);
+            test1.add(c);
+
+            var comparer = new ClientTestLibrary.Bridge470();
+
+            // EqualityComparer's methods do not handle null values intentionally
+            assert.equal(Bridge.Linq.Enumerable.from(test1).contains(a, comparer), true, "test1 Contains a");
+            assert.equal(Bridge.Linq.Enumerable.from(test1).contains(b, comparer), true, "test1 Contains b");
+            assert.equal(Bridge.Linq.Enumerable.from(test1).contains(c, comparer), true, "test1 Contains c");
+            assert.equal(Bridge.Linq.Enumerable.from(test1).contains(Bridge.merge(new ClientTestLibrary.Bridge470(), {
+                setData: 4
+            } ), comparer), false, "test1 Contains 4");
+            assert.equal(Bridge.Linq.Enumerable.from(test1).contains(Bridge.merge(new ClientTestLibrary.Bridge470(), {
+                setData: 5
+            } ), comparer), false, "test1 Contains 5");
         }
     }
 });
