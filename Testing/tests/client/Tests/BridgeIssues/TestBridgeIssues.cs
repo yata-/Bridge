@@ -5,6 +5,7 @@ using Bridge.QUnit;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ClientTestLibrary
 {
@@ -380,6 +381,31 @@ namespace ClientTestLibrary
         public void CallDispatcher(string s)
         {
             _dispatcher(s);
+        }
+    }
+
+    [FileName("testBridgeIssues.js")]
+    public class Bridge467
+    {
+        public int MyProperty { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            var other = obj as Bridge467;
+            if (other == null)
+                return false;
+
+            if (MyProperty < 0 || other.MyProperty < 0)
+            {
+                return ReferenceEquals(this, other);
+            }
+
+            return MyProperty == other.MyProperty;
+        }
+
+        public override int GetHashCode()
+        {
+            return MyProperty < 0 ? base.GetHashCode() : MyProperty.GetHashCode();
         }
     }
 
@@ -999,6 +1025,41 @@ namespace ClientTestLibrary
 
             number = -12345.6789;
             assert.Equal(number.ToString("G", System.Globalization.CultureInfo.InvariantCulture), "-12345.6789", "ToString(\"G\") for negative numbers in InvariantCulture");
+        }
+
+        // Bridge[#467]
+        public static void N467(Assert assert)
+        {
+            var a = new Bridge467
+            {
+                MyProperty = -1
+            };
+
+            var b = new Bridge467
+            {
+                MyProperty = -1
+            };
+
+            assert.Equal(a.GetHashCode(), b.GetHashCode(), "Call to base.GetHashCode() causes compilation to fail");
+        }
+
+        // Bridge[#469]
+        public static void N469(Assert assert)
+        {
+            var testList = new List<int>();
+            testList.Add(5);
+
+            int count = 0;
+
+            for (int i = 0; i < 10; i++)
+            {
+                if (!testList.Any(x => x == i))
+                    continue;
+
+                count++;
+            }
+
+            assert.Equal(count, 1, "\"continue\" generated correctly");
         }
     }
 }

@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using ICSharpCode.NRefactory.TypeSystem;
+using ICSharpCode.NRefactory.TypeSystem.Implementation;
 
 namespace Bridge.Translator
 {
@@ -97,12 +99,12 @@ namespace Bridge.Translator
 
                 if (hasInitializer)
                 {
-                    this.WriteObjectInitializer(objectCreateExpression.Initializer.Elements, this.Emitter.AssemblyInfo.PreserveMemberCase, type);
+                    this.WriteObjectInitializer(objectCreateExpression.Initializer.Elements, this.Emitter.AssemblyInfo.PreserveMemberCase, type, invocationResolveResult);
                     this.WriteSpace();
                 }
                 else if (this.Emitter.Validator.IsObjectLiteral(type))
                 {
-                    this.WriteObjectInitializer(null, this.Emitter.AssemblyInfo.PreserveMemberCase, type);
+                    this.WriteObjectInitializer(null, this.Emitter.AssemblyInfo.PreserveMemberCase, type, invocationResolveResult);
                     this.WriteSpace();
                 }
 
@@ -230,7 +232,7 @@ namespace Bridge.Translator
             Helpers.CheckValueTypeClone(invocationResolveResult, this.ObjectCreateExpression, this);
         }
 
-        protected virtual void WriteObjectInitializer(IEnumerable<Expression> expressions, bool preserveMemberCase, TypeDefinition type)
+        protected virtual void WriteObjectInitializer(IEnumerable<Expression> expressions, bool preserveMemberCase, TypeDefinition type, InvocationResolveResult rr)
         {
             bool needComma = false;
             List<string> names = new List<string>();
@@ -264,12 +266,45 @@ namespace Bridge.Translator
                 }
             }
 
-            /*if (this.Emitter.Validator.IsObjectLiteral(type) && !this.Emitter.Validator.IsIgnoreType(type, true))
+            if (this.Emitter.Validator.IsObjectLiteral(type))
             {
                 var key = BridgeTypes.GetTypeDefinitionKey(type);
                 var tinfo = this.Emitter.Types.FirstOrDefault(t => t.Key == key);
 
-                if (tinfo != null)
+                if (tinfo == null)
+                {
+                    return;
+                }
+                var itype = tinfo.Type as ITypeDefinition;
+
+                var mode = 0;
+                if (rr != null)
+                {
+                    if (rr.Member.Parameters.Count == 1 &&
+                        rr.Member.Parameters.First().Type.FullName == "Bridge.DefaultValueMode")
+                    {
+                        var arg = rr.Arguments.FirstOrDefault();
+                        if (arg != null && arg.ConstantValue != null)
+                        {
+                            mode = (int)arg.ConstantValue;
+                        }
+                    }
+                    else if (itype != null)
+                    {
+                        var attr = this.Emitter.Validator.GetAttribute(itype.Attributes, Translator.Bridge_ASSEMBLY + ".ObjectLiteralAttribute");
+                        if (attr.PositionalArguments.Count > 0)
+                        {
+                            var value = attr.PositionalArguments.First().ConstantValue;
+
+                            if (value != null && value is int)
+                            {
+                                mode = (int)value;
+                            }
+                        }
+                    }
+                }
+
+                if (mode != 0)
                 {
                     var members = tinfo.InstanceConfig.Fields.Concat(tinfo.InstanceConfig.Properties);
 
@@ -277,7 +312,13 @@ namespace Bridge.Translator
                     {
                         foreach (var member in members)
                         {
+                            if (mode == 1 && (member.VarInitializer == null || member.VarInitializer.Initializer.IsNull))
+                            {
+                                continue;
+                            }
+
                             var name = member.GetName(this.Emitter);
+
 
                             if (!preserveMemberCase)
                             {
@@ -311,7 +352,7 @@ namespace Bridge.Translator
                         }
                     }
                 }
-            }*/
+            }
         }
     }
 }
