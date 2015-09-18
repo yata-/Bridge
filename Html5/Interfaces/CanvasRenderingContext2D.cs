@@ -72,13 +72,39 @@ namespace Bridge.Html5
         /// </param>
         /// <param name="x">The x axis of the coordinate for the text starting point.</param>
         /// <param name="y">The y axis of the coordinate for the text starting point.</param>
+        public virtual void FillText(string text, Any<uint, int> x, Any<uint, int> y)
+        {
+            return;
+        }
+
+        /// <summary>
+        /// Draws (fills) a given text at the given (x,y) position.
+        /// </summary>
+        /// <param name="text">
+        /// The text to render using the current font, textAlign, textBaseline, and direction values.
+        /// </param>
+        /// <param name="x">The x axis of the coordinate for the text starting point.</param>
+        /// <param name="y">The y axis of the coordinate for the text starting point.</param>
         /// <param name="maxWidth">
         /// The maximum width to draw. If specified, and the string is computed to be wider than
         /// this width, the font is adjusted to use a more horizontally condensed font (if one is
         /// available or if a reasonably readable one can be synthesized by scaling the current
         /// font horizontally) or a smaller font.
         /// </param>
-        public virtual void FillText(string text, Any<uint, int> x, Any<uint, int> y, Any<uint?, int?> maxWidth = null)
+        public virtual void FillText(string text, Any<uint, int> x, Any<uint, int> y, Any<uint?, int?> maxWidth)
+        {
+            return;
+        }
+
+        /// <summary>
+        /// Draws (strokes) a given text at the given (x, y) position.
+        /// </summary>
+        /// <param name="text">
+        /// The text to render using the current font, textAlign, textBaseline, and direction values.
+        /// </param>
+        /// <param name="x">The x axis of the coordinate for the text starting point.</param>
+        /// <param name="y">The y axis of the coordinate for the text starting point.</param>
+        public virtual void StrokeText(string text, Any<uint, int> x, Any<uint, int> y)
         {
             return;
         }
@@ -97,7 +123,7 @@ namespace Bridge.Html5
         /// available or if a reasonably readable one can be synthesized by scaling the current
         /// font horizontally) or a smaller font.
         /// </param>
-        public virtual void StrokeText(string text, Any<uint, int> x, Any<uint, int> y, Any<uint?, int?> maxWidth = null)
+        public virtual void StrokeText(string text, Any<uint, int> x, Any<uint, int> y, Any<uint?, int?> maxWidth)
         {
             return;
         }
@@ -445,6 +471,20 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="x">The X coordinate of the point to check.</param>
         /// <param name="y">The Y coordinate of the point to check.</param>
+        /// <returns>
+        /// A Boolean, which is true if the specified point is contained in the current or specfied path,
+        /// otherwise false.
+        /// </returns>
+        public virtual bool IsPointInPath(Any<uint, int, double> x, Any<uint, int, double> y)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Reports whether or not the specified point is contained in the current path.
+        /// </summary>
+        /// <param name="x">The X coordinate of the point to check.</param>
+        /// <param name="y">The Y coordinate of the point to check.</param>
         /// <param name="fillRule">
         /// The algorithm by which to determine if a point is inside a path or outside a path.
         /// </param>
@@ -453,7 +493,22 @@ namespace Bridge.Html5
         /// otherwise false.
         /// </returns>
         public virtual bool IsPointInPath(Any<uint, int, double> x, Any<uint, int, double> y,
-                                          CanvasTypes.CanvasFillRule? fillRule = null)
+                                          CanvasTypes.CanvasFillRule? fillRule)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Reports whether or not the specified point is contained in the current path.
+        /// </summary>
+        /// <param name="path">A Path2D path to use.</param>
+        /// <param name="x">The X coordinate of the point to check.</param>
+        /// <param name="y">The Y coordinate of the point to check.</param>
+        /// <returns>
+        /// A Boolean, which is true if the specified point is contained in the current or specfied path,
+        /// otherwise false.
+        /// </returns>
+        public virtual bool IsPointInPath(Path2D path, Any<uint, int, double> x, Any<uint, int, double> y)
         {
             return false;
         }
@@ -472,7 +527,7 @@ namespace Bridge.Html5
         /// otherwise false.
         /// </returns>
         public virtual bool IsPointInPath(Path2D path, Any<uint, int, double> x, Any<uint, int, double> y,
-                                          CanvasTypes.CanvasFillRule? fillRule = null)
+                                          CanvasTypes.CanvasFillRule? fillRule)
         {
             return false;
         }
@@ -684,44 +739,6 @@ namespace Bridge.Html5
         /// The Y coordinate of the top left corner of the sub-rectangle of the source image to draw into
         /// the destination context.
         /// </param>
-        /// <param name="dx">
-        /// The X coordinate in the destination canvas at which to place the top-left corner of the source image.
-        /// </param>
-        /// <param name="dy">
-        /// The Y coordinate in the destination canvas at which to place the top-left corner of the source image.
-        /// </param>
-        /// <param name="dWidth">
-        /// The width to draw the image in the destination canvas. This allows scaling of the drawn image.
-        /// If not specified or null, the image is not scaled in height when drawn.
-        /// </param>
-        /// <param name="dHeight">
-        /// The height to draw the image in the destination canvas. This allows scaling of the drawn image.
-        /// If not specified or null, the image is not scaled in height when drawn.
-        /// </param>
-        public virtual void DrawImage(Any<ImageElement, VideoElement, CanvasElement, CanvasRenderingContext2D> image,
-                                      Any<int, long, float, double> sx, Any<int, long, float, double> sy,
-                                      Any<int, long, float, double> dx, Any<int, long, float, double> dy,
-                                      Any<int?, long?, float?, double?> dWidth = null,
-                                      Any<int?, long?, float?, double?> dHeight = null)
-        {
-            return;
-        }
-
-        /// <summary>
-        /// Draws the specified image. This method is available in multiple formats, providing a great
-        /// deal of flexibility in its use.
-        /// </summary>
-        /// <param name="image">
-        /// An element to draw into the context. The specification permits any canvas image source.
-        /// </param>
-        /// <param name="sx">
-        /// The X coordinate of the top left corner of the sub-rectangle of the source image to draw into
-        /// the destination context.
-        /// </param>
-        /// <param name="sy">
-        /// The Y coordinate of the top left corner of the sub-rectangle of the source image to draw into
-        /// the destination context.
-        /// </param>
         /// <param name="sWidth">
         /// The width of the sub-rectangle of the source image to draw into the destination context.
         /// </param>
@@ -747,8 +764,8 @@ namespace Bridge.Html5
                                       Any<int?, long?, float?, double?> sWidth,
                                       Any<int?, long?, float?, double?> sHeight,
                                       Any<int, long, float, double> dx, Any<int, long, float, double> dy,
-                                      Any<int?, long?, float?, double?> dWidth = null,
-                                      Any<int?, long?, float?, double?> dHeight = null)
+                                      Any<int?, long?, float?, double?> dWidth,
+                                      Any<int?, long?, float?, double?> dHeight)
         {
             return;
         }
@@ -824,6 +841,24 @@ namespace Bridge.Html5
         /// Position offset in the target canvas context of the rectangle to be painted, relative to the
         /// rectangle in the origin image data.
         /// </param>
+        public virtual void PutImageData(ImageData imagedata, int dx, int dy)
+        {
+            return;
+        }
+
+        /// <summary>
+        /// Paints data from the given ImageData object onto the bitmap. If a dirty rectangle is provided,
+        /// only the pixels from that rectangle are painted.
+        /// </summary>
+        /// <param name="imagedata">An imageData object containing the array of pixel values.</param>
+        /// <param name="dx">
+        /// Position offset in the target canvas context of the rectangle to be painted, relative to the
+        /// rectangle in the origin image data.
+        /// </param>
+        /// <param name="dy">
+        /// Position offset in the target canvas context of the rectangle to be painted, relative to the
+        /// rectangle in the origin image data.
+        /// </param>
         /// <param name="dirtyX">
         /// Position of the top left point of the rectangle to be painted, in the origin image data.
         /// Defaults to the top left of the whole image data.
@@ -838,9 +873,9 @@ namespace Bridge.Html5
         /// <param name="dirtyHeight">
         /// Height of the rectangle to be painted, in the origin image data. Defaults to the height of the image data.
         /// </param>
-        public virtual void PutImageData(ImageData imagedata, int dx, int dy, Any<uint?, int?> dirtyX = null,
-                                         Any<uint?, int?> dirtyY = null, Any<uint?, int?> dirtyWidth = null,
-                                         Any<uint?, int?> dirtyHeight = null)
+        public virtual void PutImageData(ImageData imagedata, int dx, int dy, 
+                                         Any<uint?, int?> dirtyX, Any<uint?, int?> dirtyY, 
+                                         Any<uint?, int?> dirtyWidth, Any<uint?, int?> dirtyHeight)
         {
             return;
         }
@@ -891,12 +926,21 @@ namespace Bridge.Html5
         /// <summary>
         /// Adds a hit region to the canvas.
         /// </summary>
+        /// <remarks>This is experimental API that should not be used in production code.</remarks>
+        public virtual void AddHitRegion()
+        {
+            return;
+        }
+
+        /// <summary>
+        /// Adds a hit region to the canvas.
+        /// </summary>
         /// <param name="options">
         /// The options argument is optional. When provided, it is an CanvasHitRegionOptions
         /// object with one or more of its properties set.
         /// </param>
         /// <remarks>This is experimental API that should not be used in production code.</remarks>
-        public virtual void AddHitRegion(CanvasHitRegionOptions options = null)
+        public virtual void AddHitRegion(CanvasHitRegionOptions options)
         {
             return;
         }
