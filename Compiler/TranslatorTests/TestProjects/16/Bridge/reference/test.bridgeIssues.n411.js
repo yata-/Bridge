@@ -8,3 +8,4 @@ Bridge.define('Test.BridgeIssues.N411.App', {
         ctx.fillText("text", 50, 50);
     }
 });
+
