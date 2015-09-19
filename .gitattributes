@@ -21,9 +21,9 @@
 *.py text
 *.sln text
 *.sql text
-*.t.ds eol=lf
+*.d.ts eol=lf
 *.target text
-*.txt text
+*.txt eol=lf
 *.xml text
 
 # These are expected to be always treated as binary files.
