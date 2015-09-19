@@ -1,6 +1,7 @@
 ﻿using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using System.Collections.Generic;
+using ICSharpCode.NRefactory.Semantics;
 
 namespace Bridge.Translator.TypeScript
 {
@@ -107,6 +108,7 @@ namespace Bridge.Translator.TypeScript
             foreach (var p in declarations)
             {
                 var name = this.Emitter.GetEntityName(p);
+                bool optional = p.DefaultExpression != null && !p.DefaultExpression.IsNull;
 
                 if (needComma)
                 {
@@ -115,6 +117,12 @@ namespace Bridge.Translator.TypeScript
 
                 needComma = true;
                 this.Write(name);
+
+                if (optional)
+                {
+                    this.Write("?");
+                }
+
                 this.WriteColon();
                 name = BridgeTypes.ToTypeScriptName(p.Type, this.Emitter);
                 if (p.ParameterModifier == ParameterModifier.Out || p.ParameterModifier == ParameterModifier.Ref)

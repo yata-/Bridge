@@ -1,7 +1,7 @@
 ﻿using Bridge;
 using System;
 
-namespace TestIssue475B
+namespace Test.BridgeIssues.N475B
 {
     [Ignore]
     public static class Bridge475Extension2

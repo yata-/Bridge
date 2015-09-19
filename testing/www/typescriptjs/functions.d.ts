@@ -10,7 +10,7 @@ declare module Functions {
     var Delegates: DelegatesFunc;
 
     export interface Parameters {
-        getSomething(i: number): number;
+        getSomething(i?: number): number;
         join(numbers: number[]): string;
     }
     export interface ParametersFunc extends Function {

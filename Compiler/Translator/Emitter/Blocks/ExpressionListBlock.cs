@@ -62,6 +62,10 @@ namespace Bridge.Translator
 
             foreach (var expr in expressions)
             {
+                if (expr == null)
+                {
+                    continue;
+                }
                 this.Emitter.Translator.EmitNode = expr;
                 if (needComma)
                 {

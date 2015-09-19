@@ -1,7 +1,7 @@
 ﻿using Bridge;
 using System;
 
-namespace TestIssue475A
+namespace Test.BridgeIssues.N475A
 {
     public static class Bridge475Extension2
     {
