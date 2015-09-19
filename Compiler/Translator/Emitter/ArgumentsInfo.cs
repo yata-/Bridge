@@ -312,7 +312,7 @@ namespace Bridge.Translator
 
                 Expression[] result = new Expression[parameters.Count - shift];
                 string[] names = new string[result.Length];
-
+                bool named = false;
                 int i = 0;
                 foreach (var arg in arguments)
                 {
@@ -324,6 +324,7 @@ namespace Bridge.Translator
 
                         result[index] = namedArg.Expression;
                         names[index] = namedArg.Name;
+                        named = true;
                     }
                     else
                     {
@@ -356,23 +357,28 @@ namespace Bridge.Translator
                     i++;
                 }
 
-                for (i = 0; i < result.Length; i++)
+                if (named)
                 {
-                    if (result[i] == null)
+                    for (i = 0; i < result.Length; i++)
                     {
-                        var p = parameters[i + shift];
-
-                        if (p.Type.Kind == TypeKind.Enum)
+                        if (result[i] == null)
                         {
-                            result[i] = new PrimitiveExpression(Helpers.GetEnumValue(this.Emitter, p.Type, p.ConstantValue));
+                            var p = parameters[i + shift];
+                            object t = null;
+                            if (p.Type.Kind == TypeKind.Enum)
+                            {
+                                t = Helpers.GetEnumValue(this.Emitter, p.Type, p.ConstantValue);
+                            }
+                            else
+                            {
+                                t = p.ConstantValue;
+                            }
+                            result[i] = new PrimitiveExpression(t);
+                            names[i] = parameters[i + shift].Name;
                         }
-                        else
-                        {
-                            result[i] = new PrimitiveExpression(p.ConstantValue);
-                        }
-                        names[i] = parameters[i + shift].Name;
                     }
                 }
+                
 
                 this.ArgumentsExpressions = result;
                 this.ArgumentsNames = names;

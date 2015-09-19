@@ -3,6 +3,10 @@ using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using System.Collections.Generic;
 using System.Linq;
+using ICSharpCode.NRefactory.TypeSystem;
+using ICSharpCode.NRefactory.TypeSystem.Implementation;
+using Newtonsoft.Json;
+using Object.Net.Utilities;
 
 namespace Bridge.Translator
 {
@@ -161,6 +165,32 @@ namespace Bridge.Translator
 
         public virtual void ConvertParamsToReferences(IEnumerable<ParameterDeclaration> declarations)
         {
+            if (declarations.Any())
+            {
+                var p = declarations.First().Parent;
+                if (p != null)
+                {
+                    var rr = this.Emitter.Resolver.ResolveNode(p, this.Emitter) as MemberResolveResult;
+
+                    if (rr != null)
+                    {
+                        var method = rr.Member as DefaultResolvedMethod;
+
+                        if (method != null)
+                        {
+                            foreach (var prm in method.Parameters)
+                            {
+                                if (prm.IsOptional)
+                                {
+                                    this.Write(string.Format("if ({0} === void 0) {{ {0} = {1}; }}", prm.Name, Newtonsoft.Json.JsonConvert.SerializeObject(prm.ConstantValue)));
+                                    this.WriteNewLine();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             declarations.ToList().ForEach(item =>
             {
                 var isReferenceLocal = this.Emitter.LocalsMap.ContainsKey(item.Name) && this.Emitter.LocalsMap[item.Name].EndsWith(".v");
