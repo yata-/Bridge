@@ -13,6 +13,7 @@ Bridge.define('Functions.Delegates');
 
 Bridge.define('Functions.Parameters', {
     getSomething: function (i) {
+        if (i === void 0) { i = 5; }
         return i;
     },
     join: function (numbers) {
