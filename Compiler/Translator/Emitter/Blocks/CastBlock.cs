@@ -261,6 +261,14 @@ namespace Bridge.Translator
             {
                 this.Write(BridgeTypes.ToJsName(NullableType.GetUnderlyingType(resolveResult.Type), this.Emitter));
             }
+            else if (resolveResult.Type.Kind == TypeKind.Delegate)
+            {
+                this.Write("Function"); 
+            }   
+            else if (resolveResult.Type.Kind == TypeKind.Array)
+            {
+                this.Write("Array"); 
+            }   
             else
             {
                 astType.AcceptVisitor(this.Emitter);
@@ -272,6 +280,10 @@ namespace Bridge.Translator
             if (NullableType.IsNullable(iType))
             {
                 this.Write(BridgeTypes.ToJsName(NullableType.GetUnderlyingType(iType), this.Emitter));
+            }
+            else if (iType.Kind == TypeKind.Delegate)
+            {
+                this.Write("Function");
             }
             else if (iType.Kind == TypeKind.Array)
             {

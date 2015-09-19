@@ -1,5 +1,5 @@
 {
-    "output": "..\\..\\www\\typescript",
+    "output": "..\\..\\www\\typescriptjs",
     "cleanOutputFolderBeforeBuild": true,
     "outputBy": "Namespace",
     "generateTypeScript": "true"

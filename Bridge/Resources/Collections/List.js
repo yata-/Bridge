@@ -93,7 +93,7 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
         insertRange: function (index, items) {
             this.checkReadOnly();
 
-            if (index != 0) {
+            if (index != this.items.length) {
                 this.checkIndex(index);
             }
 
@@ -140,7 +140,7 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
         insert: function (index, item) {
             this.checkReadOnly();
 
-            if (index != 0) {
+            if (index != this.items.length) {
                 this.checkIndex(index);
             }
 
