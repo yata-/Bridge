@@ -1,7 +1,7 @@
 ﻿/* global Bridge */
 
 "use strict";
-Bridge.define('TestIssue475B.Bridge475Event', {
+Bridge.define('Test.BridgeIssues.N475B.Bridge475Event', {
     config: {
         properties: {
             Data: 0
@@ -12,10 +12,10 @@ Bridge.define('TestIssue475B.Bridge475Event', {
     }
 });
 
-Bridge.define('TestIssue475B.Test', {
+Bridge.define('Test.BridgeIssues.N475B.Test', {
     statics: {
         n475: function () {
-            var b = new TestIssue475B.Bridge475();
+            var b = new Test.BridgeIssues.N475B.Bridge475();
 
             b.keyDown(function (ev) {
                 ev.preventDefault();
@@ -27,3 +27,4 @@ Bridge.define('TestIssue475B.Test', {
         }
     }
 });
+
