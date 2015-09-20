@@ -118,16 +118,25 @@ namespace Bridge.Translator
                         }
                         else
                         {
-                            var writer = this.SaveWriter();
-                            this.NewWriter();
-                            exprs[0].AcceptVisitor(this.Emitter);
-                            var s = this.Emitter.Output.ToString();
-                            this.RestoreWriter(writer);
-
-                            if (modifier == "raw")
+                            string s;
+                            if (exprs[0] != null)
                             {
-                                s = s.Trim('"');
+                                var writer = this.SaveWriter();
+                                this.NewWriter();
+                                exprs[0].AcceptVisitor(this.Emitter);
+                                s = this.Emitter.Output.ToString();
+                                this.RestoreWriter(writer);
+
+                                if (modifier == "raw")
+                                {
+                                    s = s.Trim('"');
+                                }
                             }
+                            else
+                            {
+                                s = "null";
+                            }
+                            
 
                             this.Write(this.WriteIndentToString(s));
                         }

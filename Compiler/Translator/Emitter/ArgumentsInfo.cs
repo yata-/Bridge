@@ -314,6 +314,13 @@ namespace Bridge.Translator
                 string[] names = new string[result.Length];
                 bool named = false;
                 int i = 0;
+
+                if (resolvedMethod != null)
+                {
+                    var inlineStr = this.Emitter.GetInline(resolvedMethod);
+                    named = !string.IsNullOrEmpty(inlineStr);
+                }
+
                 foreach (var arg in arguments)
                 {
                     if (arg is NamedArgumentExpression)
@@ -357,25 +364,27 @@ namespace Bridge.Translator
                     i++;
                 }
 
-                if (named)
+                
+                for (i = 0; i < result.Length; i++)
                 {
-                    for (i = 0; i < result.Length; i++)
+                    if (result[i] == null)
                     {
-                        if (result[i] == null)
+                        var p = parameters[i + shift];
+                        object t = null;
+                        if (p.Type.Kind == TypeKind.Enum)
                         {
-                            var p = parameters[i + shift];
-                            object t = null;
-                            if (p.Type.Kind == TypeKind.Enum)
-                            {
-                                t = Helpers.GetEnumValue(this.Emitter, p.Type, p.ConstantValue);
-                            }
-                            else
-                            {
-                                t = p.ConstantValue;
-                            }
-                            result[i] = new PrimitiveExpression(t);
-                            names[i] = parameters[i + shift].Name;
+                            t = Helpers.GetEnumValue(this.Emitter, p.Type, p.ConstantValue);
                         }
+                        else
+                        {
+                            t = p.ConstantValue;
+                        }
+                        if (named)
+                        {
+                            result[i] = new PrimitiveExpression(t);
+                        }
+
+                        names[i] = parameters[i + shift].Name;
                     }
                 }
                 
