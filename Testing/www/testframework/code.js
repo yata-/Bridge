@@ -5940,7 +5940,7 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.StringTests', {
         Bridge.Test.Assert.$false(Bridge.String.equals("abcd", "ABCD"));
     },
     formatWorks: function () {
-        Bridge.Test.Assert.areEqual(Bridge.String.format("x", ), "x");
+        Bridge.Test.Assert.areEqual(Bridge.String.format("x", null), "x");
         Bridge.Test.Assert.areEqual(Bridge.String.format("x{0}", "a"), "xa");
         Bridge.Test.Assert.areEqual(Bridge.String.format("x{0}{1}", "a", "b"), "xab");
         Bridge.Test.Assert.areEqual(Bridge.String.format("x{0}{1}{2}", "a", "b", "c"), "xabc");
@@ -5968,7 +5968,7 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.StringTests', {
         Bridge.Test.Assert.areEqual(Bridge.String.format("{0:F2}", 3.1428571428571428), "3.14");
     },
     formatCanUseEscapedBraces: function () {
-        Bridge.Test.Assert.areEqual(Bridge.String.format("{{0}}", ), "{0}");
+        Bridge.Test.Assert.areEqual(Bridge.String.format("{{0}}", null), "{0}");
     },
     fromCharCodeWorks: function () {
         Bridge.Test.Assert.areEqual(String.fromCharCode(), "");

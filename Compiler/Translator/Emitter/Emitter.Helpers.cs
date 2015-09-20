@@ -437,14 +437,14 @@ namespace Bridge.Translator
         {
             var attr = this.GetAttribute(provider.CustomAttributes, Bridge.Translator.Translator.Bridge_ASSEMBLY + ".TemplateAttribute");
 
-            return attr != null ? ((string)attr.ConstructorArguments.First().Value) : null;
+            return attr != null && attr.ConstructorArguments.Count > 0 ? ((string)attr.ConstructorArguments.First().Value) : null;
         }
 
         public virtual string GetInline(EntityDeclaration method)
         {
             var attr = this.GetAttribute(method.Attributes, Bridge.Translator.Translator.Bridge_ASSEMBLY + ".Template");
 
-            return attr != null ? ((string)((PrimitiveExpression)attr.Arguments.First()).Value) : null;
+            return attr != null && attr.Arguments.Count > 0 ? ((string)((PrimitiveExpression)attr.Arguments.First()).Value) : null;
         }
 
         public virtual string GetInline(IEntity entity)
@@ -465,7 +465,7 @@ namespace Bridge.Translator
                     return a.AttributeType.FullName == attrName;
                 });
 
-                return attr != null ? attr.PositionalArguments[0].ConstantValue.ToString() : null;
+                return attr != null && attr.PositionalArguments.Count > 0 ? attr.PositionalArguments[0].ConstantValue.ToString() : null;
             }
 
             return null;
