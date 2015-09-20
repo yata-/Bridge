@@ -1,6 +1,6 @@
 ﻿/// <reference path="..\..\www\qunit\qunit.d.ts" />
-/// <reference path="..\..\www\typescript\bridge.d.ts" />
-/// <reference path="..\..\www\typescript\classes.d.ts" />
+/// <reference path="..\..\www\typescriptjs\bridge.d.ts" />
+/// <reference path="..\..\www\typescriptjs\classes.d.ts" />
 
 QUnit.module("TypeScript - Classes");
 QUnit.test("Inheritance", function (assert) {

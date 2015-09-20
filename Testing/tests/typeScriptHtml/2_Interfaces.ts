@@ -1,6 +1,6 @@
 ﻿/// <reference path="..\..\www\qunit\qunit.d.ts" />
-/// <reference path="..\..\www\typescript\bridge.d.ts" />
-/// <reference path="..\..\www\typescript\interfaces.d.ts" />
+/// <reference path="..\..\www\typescriptjs\bridge.d.ts" />
+/// <reference path="..\..\www\typescriptjs\interfaces.d.ts" />
 
 QUnit.module("TypeScript - Interfaces");
 QUnit.test("Simple field and property", function (assert) {

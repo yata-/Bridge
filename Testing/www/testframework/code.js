@@ -1162,6 +1162,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IListTests.MyList', {
 
 Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
     assertEqual: function (actual, expected, message) {
+        if (message === void 0) { message = null; }
         Bridge.Test.Assert.areEqual$1(Bridge.String.replaceAll(actual, "\r\n", "\n"), Bridge.String.replaceAll(expected, "\r\n", "\n"), message);
     },
     typeReturnedByIteratorBlockReturningIEnumeratorImplementsThatInterfaceAndIDisposable: function () {
@@ -1177,7 +1178,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine("got " + enm.getCurrent$1());
         }
 
-        this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\ngot -1\r\n", null);
+        this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\ngot -1\r\n");
     },
     prematureDisposalOfIEnumeratorIteratorExecutesFinallyBlocks: function () {
         //TODO expected for v1: yield iterator works with no state machine
@@ -1191,7 +1192,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
         }
         enm.dispose();
 
-        this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding 2\r\nyielding 3\r\nyielding 4\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\n", null);
+        this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding 2\r\nyielding 3\r\nyielding 4\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\n");
     },
     exceptionInIEnumeratorIteratorBodyExecutesFinallyBlocks: function () {
         //TODO expected for v1: yield iterator works with no state machine
@@ -1211,7 +1212,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine("caught exception");
         }
 
-        this.assertEqual(sb.toString(), "yielding 1\r\nyielding 2\r\nthrowing\r\nin finally\r\ncaught exception\r\n", null);
+        this.assertEqual(sb.toString(), "yielding 1\r\nyielding 2\r\nthrowing\r\nin finally\r\ncaught exception\r\n");
     },
     typeReturnedByIteratorBlockReturningIEnumerableImplementsThatInterface: function () {
         var enm = new Bridge.ClientTest.Collections.Generic.IteratorBlockTests.C(new Bridge.Text.StringBuilder()).getEnumerable(0);
@@ -1236,7 +1237,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine("got " + i1);
         }
 
-        this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\ngot -1\r\n-\r\ngot 0\r\ngot 1\r\ngot -1\r\n", null);
+        this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\ngot -1\r\n-\r\ngot 0\r\ngot 1\r\ngot -1\r\n");
     }    ,
     prematureDisposalOfIEnumerableIteratorExecutesFinallyBlocks: function () {
         var $t;
@@ -1252,7 +1253,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
                 break;
         }
 
-        this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding 2\r\nyielding 3\r\nyielding 4\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\n", null);
+        this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding 2\r\nyielding 3\r\nyielding 4\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\n");
     }    ,
     exceptionInIEnumerableIteratorBodyExecutesFinallyBlocks: function () {
         //TODO expected for v1: yield iterator works with no state machine
@@ -1274,7 +1275,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine("caught exception");
         }
 
-        this.assertEqual(sb.toString(), "yielding 1\r\nyielding 2\r\nthrowing\r\nin finally\r\ncaught exception\r\n", null);
+        this.assertEqual(sb.toString(), "yielding 1\r\nyielding 2\r\nthrowing\r\nin finally\r\ncaught exception\r\n");
     },
     enumeratingAnIteratorBlockReturningIEnumerableMultipleTimesUsesTheInitialValuesForParameters: function () {
         var $t, $t1;
@@ -1292,7 +1293,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine(i1.toString());
         }
 
-        this.assertEqual(sb.toString(), "3\r\n2\r\n1\r\n3\r\n2\r\n1\r\n", null);
+        this.assertEqual(sb.toString(), "3\r\n2\r\n1\r\n3\r\n2\r\n1\r\n");
     }    ,
     differentGetEnumeratorCallsOnIteratorBlockReturningIEnumerableGetOwnCopiesOfLocals: function () {
         var sb = new Bridge.Text.StringBuilder();
@@ -1307,7 +1308,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine(enm2.getCurrent$1().toString());
         }
 
-        this.assertEqual(sb.toString(), "0\r\n0\r\n1\r\n1\r\n2\r\n2\r\n-1\r\n-1\r\n", null);
+        this.assertEqual(sb.toString(), "0\r\n0\r\n1\r\n1\r\n2\r\n2\r\n-1\r\n-1\r\n");
     }
 });
 
@@ -4195,6 +4196,7 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.CharTests', {
 
 Bridge.define('Bridge.ClientTest.SimpleTypes.DecimalTests', {
     assertIsDecimalAndEqualTo: function (v, d, message) {
+        if (message === void 0) { message = null; }
         Bridge.Test.Assert.areStrictEqual$1(Bridge.is(v, Bridge.Decimal), true, message);
         Bridge.Test.Assert.areStrictEqual$1(v.toString(), d.toString(), message);
     },
@@ -4211,26 +4213,26 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.DecimalTests', {
         });
     },
     defaultValueIs0: function () {
-        this.assertIsDecimalAndEqualTo(this.getDefaultValue(Bridge.Decimal)(), 0, null);
+        this.assertIsDecimalAndEqualTo(this.getDefaultValue(Bridge.Decimal)(), 0);
     },
     creatingInstanceReturnsZero: function () {
-        this.assertIsDecimalAndEqualTo(new Bridge.Decimal(), 0, null);
+        this.assertIsDecimalAndEqualTo(new Bridge.Decimal(), 0);
     },
     constantsWork: function () {
-        this.assertIsDecimalAndEqualTo(Bridge.Decimal.One, 1, null);
-        this.assertIsDecimalAndEqualTo(Bridge.Decimal.Zero, 0, null);
-        this.assertIsDecimalAndEqualTo(Bridge.Decimal.MinusOne, -1, null);
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.One, 1);
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.Zero, 0);
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.MinusOne, -1);
     },
     defaultConstructorReturnsZero: function () {
-        this.assertIsDecimalAndEqualTo(Bridge.Decimal(), 0, null);
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal(), 0);
     },
     convertingConstructorsWork: function () {
-        this.assertIsDecimalAndEqualTo(Bridge.Decimal(0.5), 0.5, null);
-        this.assertIsDecimalAndEqualTo(Bridge.Decimal(Bridge.cast(1.5, Number)), 1.5, null);
-        this.assertIsDecimalAndEqualTo(Bridge.Decimal(2), 2, null);
-        this.assertIsDecimalAndEqualTo(Bridge.Decimal(Bridge.cast(3, Bridge.Int)), 3, null);
-        this.assertIsDecimalAndEqualTo(Bridge.Decimal(Bridge.cast(4, Bridge.Int)), 4, null);
-        this.assertIsDecimalAndEqualTo(Bridge.Decimal(Bridge.cast(5, Bridge.Int)), 5, null);
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal(0.5), 0.5);
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal(Bridge.cast(1.5, Number)), 1.5);
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal(2), 2);
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal(Bridge.cast(3, Bridge.Int)), 3);
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal(Bridge.cast(4, Bridge.Int)), 4);
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal(Bridge.cast(5, Bridge.Int)), 5);
     },
     formatWorks: function () {
         Bridge.Test.Assert.areEqual(Bridge.Int.format(Bridge.Decimal(291.0).toFloat(), "x"), "123");
@@ -4283,17 +4285,17 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.DecimalTests', {
     operatorsWork: function () {
         var $t;
         var x = Bridge.Decimal(3);
-        this.assertIsDecimalAndEqualTo(x.clone(), 3, null);
-        this.assertIsDecimalAndEqualTo(x.neg(), -3, null);
-        this.assertIsDecimalAndEqualTo(x.add(Bridge.Decimal(4.0)), 7, null);
-        this.assertIsDecimalAndEqualTo(x.sub(Bridge.Decimal(2.0)), 1, null);
-        this.assertIsDecimalAndEqualTo(($t = x, x = x.add(1), $t), 3, null);
-        this.assertIsDecimalAndEqualTo((x = x.add(1)), 5, null);
-        this.assertIsDecimalAndEqualTo(($t = x, x = x.sub(1), $t), 5, null);
-        this.assertIsDecimalAndEqualTo((x = x.sub(1)), 3, null);
-        this.assertIsDecimalAndEqualTo(x.mul(Bridge.Decimal(3.0)), 9, null);
-        this.assertIsDecimalAndEqualTo(x.div(Bridge.Decimal(2.0)), 1.5, null);
-        this.assertIsDecimalAndEqualTo(Bridge.Decimal(14.0).mod(x), 2, null);
+        this.assertIsDecimalAndEqualTo(x.clone(), 3);
+        this.assertIsDecimalAndEqualTo(x.neg(), -3);
+        this.assertIsDecimalAndEqualTo(x.add(Bridge.Decimal(4.0)), 7);
+        this.assertIsDecimalAndEqualTo(x.sub(Bridge.Decimal(2.0)), 1);
+        this.assertIsDecimalAndEqualTo(($t = x, x = x.add(1), $t), 3);
+        this.assertIsDecimalAndEqualTo((x = x.add(1)), 5);
+        this.assertIsDecimalAndEqualTo(($t = x, x = x.sub(1), $t), 5);
+        this.assertIsDecimalAndEqualTo((x = x.sub(1)), 3);
+        this.assertIsDecimalAndEqualTo(x.mul(Bridge.Decimal(3.0)), 9);
+        this.assertIsDecimalAndEqualTo(x.div(Bridge.Decimal(2.0)), 1.5);
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal(14.0).mod(x), 2);
         Bridge.Test.Assert.$true(x.equalsT(Bridge.Decimal(3.0)));
         Bridge.Test.Assert.$false(x.equalsT(Bridge.Decimal(4.0)));
         Bridge.Test.Assert.$false(x.ne(Bridge.Decimal(3.0)));
@@ -4311,25 +4313,25 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.DecimalTests', {
         Bridge.Test.Assert.areEqual(Bridge.Decimal(3.0).add(Bridge.Decimal(4.0)), Bridge.Decimal(7.0));
     },
     ceilingWorks: function () {
-        this.assertIsDecimalAndEqualTo(Bridge.Decimal(3.4).ceil(), 4, null);
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal(3.4).ceil(), 4);
     },
     divideWorks: function () {
-        this.assertIsDecimalAndEqualTo(Bridge.Decimal(3.0).div(Bridge.Decimal(4.0)), 0.75, null);
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal(3.0).div(Bridge.Decimal(4.0)), 0.75);
     },
     floorWorks: function () {
-        this.assertIsDecimalAndEqualTo(Bridge.Decimal(3.2).floor(), 3, null);
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal(3.2).floor(), 3);
     },
     remainderWorks: function () {
-        this.assertIsDecimalAndEqualTo(Bridge.Decimal(14.0).mod(Bridge.Decimal(3.0)), 2, null);
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal(14.0).mod(Bridge.Decimal(3.0)), 2);
     },
     multiplyWorks: function () {
-        this.assertIsDecimalAndEqualTo(Bridge.Decimal(3.0).mul(Bridge.Decimal(2.0)), 6, null);
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal(3.0).mul(Bridge.Decimal(2.0)), 6);
     },
     negateWorks: function () {
-        this.assertIsDecimalAndEqualTo(Bridge.Decimal(0).sub(Bridge.Decimal(3.0)), -3, null);
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal(0).sub(Bridge.Decimal(3.0)), -3);
     },
     roundWorks: function () {
-        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.2), 6), 3, null);
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.2), 6), 3);
     },
     roundWithModeWorks: function () {
         this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.8), 0), 4, "Up 3.8m");
@@ -4396,7 +4398,7 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.DecimalTests', {
         this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.8), 6), -4, "ToEven -3.8m");
     },
     subtractWorks: function () {
-        this.assertIsDecimalAndEqualTo(Bridge.Decimal(7.0).sub(Bridge.Decimal(3.0)), 4, null);
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal(7.0).sub(Bridge.Decimal(3.0)), 4);
     },
     getHashCodeWorks: function () {
         Bridge.Test.Assert.areEqual(Bridge.getHashCode((Bridge.Decimal.lift(0))), Bridge.getHashCode((Bridge.Decimal.lift(0))));
@@ -4434,18 +4436,18 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.DecimalTests', {
         var a = Bridge.Decimal(1.0);
         var b = a.equalsT(Bridge.Decimal(1.0)) ? Bridge.Decimal(2.0) : Bridge.Decimal(3.0);
 
-        this.assertIsDecimalAndEqualTo(b, 2, null);
+        this.assertIsDecimalAndEqualTo(b, 2);
     },
     shortCoalesceWorks: function () {
         var c = Bridge.Decimal(1.0);
         var d = Bridge.coalesce(c, Bridge.Decimal(2.0));
 
-        this.assertIsDecimalAndEqualTo(d, 1, null);
+        this.assertIsDecimalAndEqualTo(d, 1);
 
         var e = Bridge.Decimal(3);
         var f = Bridge.coalesce(e, Bridge.Decimal(0));
 
-        this.assertIsDecimalAndEqualTo(f, 3, null);
+        this.assertIsDecimalAndEqualTo(f, 3);
     }
 });
 
@@ -5938,7 +5940,7 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.StringTests', {
         Bridge.Test.Assert.$false(Bridge.String.equals("abcd", "ABCD"));
     },
     formatWorks: function () {
-        Bridge.Test.Assert.areEqual(Bridge.String.format("x", null), "x");
+        Bridge.Test.Assert.areEqual(Bridge.String.format("x", ), "x");
         Bridge.Test.Assert.areEqual(Bridge.String.format("x{0}", "a"), "xa");
         Bridge.Test.Assert.areEqual(Bridge.String.format("x{0}{1}", "a", "b"), "xab");
         Bridge.Test.Assert.areEqual(Bridge.String.format("x{0}{1}{2}", "a", "b", "c"), "xabc");
@@ -5966,7 +5968,7 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.StringTests', {
         Bridge.Test.Assert.areEqual(Bridge.String.format("{0:F2}", 3.1428571428571428), "3.14");
     },
     formatCanUseEscapedBraces: function () {
-        Bridge.Test.Assert.areEqual(Bridge.String.format("{{0}}", null), "{0}");
+        Bridge.Test.Assert.areEqual(Bridge.String.format("{{0}}", ), "{0}");
     },
     fromCharCodeWorks: function () {
         Bridge.Test.Assert.areEqual(String.fromCharCode(), "");

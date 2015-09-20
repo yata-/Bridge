@@ -369,6 +369,50 @@ Bridge.define('ClientTestLibrary.Bridge470', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge472', {
+    statics: {
+        test: function (assert) {
+            assert.expect(10);
+
+            var magic1 = new Bridge.List$1(String)();
+            magic1.insert(magic1.getCount(), "first");
+            magic1.insert(magic1.getCount(), "second");
+
+            assert.equal(magic1.getItem(0), "first", "magic1[0]");
+            assert.equal(magic1.getItem(1), "second", "magic1[1]");
+
+            var magic2 = new Bridge.List$1(String)();
+            magic2.insertRange(magic2.getCount(), ["first", "second"]);
+            magic2.insertRange(magic2.getCount(), ["third", "fourth"]);
+
+            assert.equal(magic2.getItem(0), "first", "magic1[0]");
+            assert.equal(magic2.getItem(1), "second", "magic1[1]");
+            assert.equal(magic2.getItem(2), "third", "magic1[2]");
+            assert.equal(magic2.getItem(3), "fourth", "magic1[3]");
+
+            assert.throws(function () {
+                var magic = new Bridge.List$1(String)();
+                magic.insert(1, "first");
+            }, "Insert at length + 1");
+
+            assert.throws(function () {
+                var magic = new Bridge.List$1(String)();
+                magic.insert(-1, "first");
+            }, "Insert at -1");
+
+            assert.throws(function () {
+                var magic = new Bridge.List$1(String)();
+                magic.insertRange(1, ["first", "second"]);
+            }, "InsertRange at length + 1");
+
+            assert.throws(function () {
+                var magic = new Bridge.List$1(String)();
+                magic.insertRange(-1, ["first", "second"]);
+            }, "InsertRange at -1");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
