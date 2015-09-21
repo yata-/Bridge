@@ -289,6 +289,10 @@ namespace Bridge.Translator
             {
                 this.Write("Array");
             }
+            else if (iType.Kind == TypeKind.Anonymous)
+            {
+                this.Write("Object");
+            }
             else
             {
                 this.Write(BridgeTypes.ToJsName(iType, this.Emitter));

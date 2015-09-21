@@ -413,6 +413,30 @@ Bridge.define('ClientTestLibrary.Bridge472', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge485', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var list = Bridge.Linq.Enumerable.from([{ lastName: "", firstName: "" }]).skip(1).toList(Object);
+            list.add({ lastName: "Ruth", firstName: "Babe" });
+            list.add({ lastName: "Johnson", firstName: "Walter" });
+            list.add({ lastName: "Cobb", firstName: "Ty" });
+            list.add({ lastName: "Schmidt", firstName: "Mike" });
+
+            var query = Bridge.Linq.Enumerable.from(list).where(function (p) {
+                return p.lastName.length === 4;
+            }).select(function (p) {
+                return { lastName: p.lastName, firstName: p.firstName };
+            });
+
+            var s = JSON.stringify(query.toList(Object));
+
+            assert.equal(s, "{\"items\":[{\"lastName\":\"Ruth\",\"firstName\":\"Babe\"},{\"lastName\":\"Cobb\",\"firstName\":\"Ty\"}]}", "#485");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
