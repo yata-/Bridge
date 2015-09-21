@@ -43,14 +43,11 @@ Bridge.define('Bridge.TimeSpan', {
 
         if (arguments.length == 1) {
             this.ticks = arguments[0];
-        }
-        else if (arguments.length == 3) {
+        } else if (arguments.length == 3) {
             this.ticks = (((arguments[0] * 60 + arguments[1]) * 60) + arguments[2]) * 1e7;
-        }
-        else if (arguments.length == 4) {
+        } else if (arguments.length == 4) {
             this.ticks = ((((arguments[0] * 24 + arguments[1]) * 60 + arguments[2]) * 60) + arguments[3]) * 1e7;
-        }
-        else if (arguments.length == 5) {
+        } else if (arguments.length == 5) {
             this.ticks = (((((arguments[0] * 24 + arguments[1]) * 60 + arguments[2]) * 60) + arguments[3]) * 1e3 + arguments[4]) * 1e4;
         }
     },

@@ -87,11 +87,9 @@ Bridge.define('Bridge.Task', {
                     if (!executing) {
                         if (errors.length > 0) {
                             task.setError(errors);
-                        }
-                        else if (cancelled) {
+                        } else if (cancelled) {
                             task.setCanceled();
-                        }
-                        else {
+                        } else {
                             task.setResult(result);
                         }
                     }
@@ -216,8 +214,7 @@ Bridge.define('Bridge.Task', {
 
         if (this.isCompleted()) {
             setTimeout(fn, 0);
-        }
-        else {
+        } else {
             this.callbacks.push(fn);
         }
 
@@ -230,6 +227,7 @@ Bridge.define('Bridge.Task', {
         }
 
         var me = this;
+
         this.status = Bridge.TaskStatus.running;
 
         setTimeout(function () {

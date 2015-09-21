@@ -13,8 +13,7 @@
         fromCharCount: function (c, count) {
             if (count >= 0) {
                 return String(Array(count + 1).join(String.fromCharCode(c)));
-            }
-            else {
+            } else {
                 throw new Bridge.ArgumentOutOfRangeException("count", "cannot be less than zero");
             }
         },
@@ -53,15 +52,13 @@
 
             value = args[index];
 
-            if (value == null)
-            {
+            if (value == null) {
                 value = "";
             }
 
             if (formatStr && Bridge.is(value, Bridge.IFormattable)) {
                 value = Bridge.format(value, formatStr);
-            }
-            else {
+            } else {
                 value = "" + value;
             }
 
@@ -187,8 +184,8 @@
 
             for (var i = 0; i < anyOf.length; i++) {
                 var c = String.fromCharCode(anyOf[i]);
-
                 var index = s.indexOf(c);
+
                 if (index > -1) {
                     return index + startIndex;
                 }
@@ -227,7 +224,6 @@
             }
 
             var s = str.substr(startIndex, length);
-
             var index = (arguments.length == 5 && arguments[4] % 2 != 0) ? s.toLocaleUpperCase().indexOf(value.toLocaleUpperCase()) : s.indexOf(value);
 
             if (index > -1) {
