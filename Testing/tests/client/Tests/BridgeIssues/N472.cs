@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace ClientTestLibrary
 {
-    // Bridge[#169]
+    // Bridge[#472]
     [FileName("testBridgeIssues.js")]
     class Bridge472
     {
