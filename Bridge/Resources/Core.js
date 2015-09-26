@@ -9,7 +9,7 @@
         property : function (scope, name, v) {
             scope[name] = v;
 
-            var rs = name.charAt(0) == "$",
+            var rs = name.charAt(0) === "$",
                 cap = rs ? name.slice(1) : name;
 
             scope["get" + cap] = (function (name) {
@@ -28,7 +28,7 @@
         event: function (scope, name, v) {
             scope[name] = v;
 
-            var rs = name.charAt(0) == "$",
+            var rs = name.charAt(0) === "$",
                 cap = rs ? name.slice(1) : name;
 
             scope["add" + cap] = (function (name) {
@@ -64,7 +64,7 @@
             for (var name, i = 0, n = keys ? keys.length : 0; i < n; i++) {
                 name = keys[i];
 
-                if (toIf !== true || to[name] === undefined) {
+                if (toIf !== true || to[name] == undefined) {
                     if (Bridge.is(from[name], Bridge.ICloneable)) {
                         to[name] = Bridge.clone(from[name]);
                     }
@@ -85,7 +85,7 @@
             }
 
             for (i = 0; i < nsParts.length; i++) {
-                if (typeof scope[nsParts[i]] == 'undefined') {
+                if (typeof scope[nsParts[i]] === 'undefined') {
                     scope[nsParts[i]] = { };
                 }
 
@@ -105,7 +105,7 @@
             if (typeof Bridge.global.jQuery !== 'undefined') {
                 Bridge.global.jQuery(delayfn);
             } else {
-                if (!document || document.readyState == "complete" || document.readyState == "loaded") {
+                if (!document || document.readyState === "complete" || document.readyState === "loaded") {
                     delayfn();
                 }
                 else {
@@ -189,7 +189,7 @@
                 return value.$$hashCode;
             }
 
-            if (typeof value == "object") {
+            if (typeof value === "object") {
                 var result = 0,
                     removeCache = false,
                     len,
@@ -227,7 +227,7 @@
                     delete Bridge.$$hashCodeCache;
                 }
 
-                if (result != 0) {
+                if (result !== 0) {
                     return result;
                 }
             }
@@ -260,7 +260,7 @@
                 return obj.$$name;
             }
 
-            if ((obj).constructor == Function) {
+            if ((obj).constructor === Function) {
                 str = (obj).toString();
             }
             else {
@@ -272,7 +272,7 @@
         },
 
         is: function (obj, type, ignoreFn, allowNull) {
-	        if (typeof type == "string") {
+	        if (typeof type === "string") {
                 type = Bridge.unroll(type);
 	        }
 
@@ -290,7 +290,7 @@
 	            }
             }
 
-            if ((obj.constructor == type) || (obj instanceof type)) {
+            if ((obj.constructor === type) || (obj instanceof type)) {
 	            return true;
             }
 
@@ -324,7 +324,7 @@
 
             var result = Bridge.as(obj, type, allowNull);
 
-	        if (result == null) {
+	        if (result === null) {
 	            throw new Bridge.InvalidCastException('Unable to cast type ' + Bridge.getTypeName(obj) + ' to type ' + Bridge.getTypeName(type));
 	        }
 
@@ -337,7 +337,7 @@
 	        for (var i = 0; i < names.length; i++) {
 	            var name = names[i];
 
-	            if (typeof obj[name] == "function" && typeof values[name] != "function") {
+	            if (typeof obj[name] === "function" && typeof values[name] !== "function") {
 	                obj[name](values[name]);
 	            }
 	            else {
@@ -367,7 +367,7 @@
 	            for (key in from) {
 	                value = from[key];
 
-	                if (typeof to[key] == "function" && typeof value != "function") {
+	                if (typeof to[key] === "function" && typeof value !== "function") {
 	                    if (key.match(/^\s*get[A-Z]/)) {
 	                        Bridge.merge(to[key](), value);
 	                    }
@@ -378,7 +378,7 @@
 	                else {
 	                    var setter = "set" + key.charAt(0).toUpperCase() + key.slice(1);
 
-	                    if (typeof to[setter] == "function" && typeof value != "function") {
+	                    if (typeof to[setter] === "function" && typeof value !== "function") {
 	                        to[setter](value);
 	                    }
 	                    else if (value && value.constructor === Object && to[key]) {
@@ -430,11 +430,11 @@
 	    },
 
 	    isDefined: function (value, noNull) {
-	        return typeof value !== 'undefined' && (noNull ? value != null : true);
+	        return typeof value !== 'undefined' && (noNull ? value !== null : true);
 	    },
 
 	    isEmpty: function (value, allowEmpty) {
-	        return (value == null) || (!allowEmpty ? value === '' : false) || ((!allowEmpty && Bridge.isArray(value)) ? value.length === 0 : false);
+	        return (value === null) || (!allowEmpty ? value === '' : false) || ((!allowEmpty && Bridge.isArray(value)) ? value.length === 0 : false);
 	    },
 
 	    toArray: function (ienumerable) {
@@ -519,7 +519,7 @@
             }
 
 
-            if (typeof a == "object" && typeof b == "object") {
+            if (typeof a === "object" && typeof b === "object") {
                 return (Bridge.getHashCode(a) === Bridge.getHashCode(b)) && Bridge.objectEquals(a, b);
             }
 
@@ -539,7 +539,7 @@
         },
 
         deepEquals: function (a, b) {
-            if (typeof a == "object" && typeof b == "object") {
+            if (typeof a === "object" && typeof b === "object") {
                 if (Bridge.$$leftChain.indexOf(a) > -1 || Bridge.$$rightChain.indexOf(b) > -1) {
                     return false;
                 }
@@ -563,7 +563,7 @@
                         return false;
                     }
 
-                    if (typeof (a[p]) == "object") {
+                    if (typeof (a[p]) === "object") {
                         Bridge.$$leftChain.push(a);
                         Bridge.$$rightChain.push(b);
 
@@ -672,7 +672,7 @@
             },
 
             bind: function (obj, method, args, appendArgs) {
-                if (method && method.$method == method && method.$scope == obj) {
+                if (method && method.$method === method && method.$scope === obj) {
                     return method;
                 }
 
@@ -691,7 +691,7 @@
                             callArgs = Array.prototype.slice.call(arguments, 0);
                             callArgs = callArgs.concat(args);
                         }
-                        else if (typeof appendArgs == 'number') {
+                        else if (typeof appendArgs === 'number') {
                             callArgs = Array.prototype.slice.call(arguments, 0);
 
                             if (appendArgs === 0) {
@@ -747,7 +747,7 @@
 
                 fn.$invocationList = handlers ? Array.prototype.slice.call(handlers, 0) : [];
 
-                if (fn.$invocationList.length == 0) {
+                if (fn.$invocationList.length === 0) {
                     return null;
                 }
 
