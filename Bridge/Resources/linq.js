@@ -392,8 +392,8 @@
         return Enumerable.repeat(element, 1);
     };
 
-    // Overload:function(input, pattern)
-    // Overload:function(input, pattern, flags)
+    // Overload:function (input, pattern)
+    // Overload:function (input, pattern, flags)
     Enumerable.matches = function (input, pattern, flags) {
         if (flags == null) flags = "";
         if (pattern instanceof RegExp) {
@@ -415,8 +415,8 @@
         });
     };
 
-    // Overload:function(start, count)
-    // Overload:function(start, count, step)
+    // Overload:function (start, count)
+    // Overload:function (start, count, step)
     Enumerable.range = function (start, count, step) {
         if (step == null) step = 1;
 
@@ -435,8 +435,8 @@
         });
     };
 
-    // Overload:function(start, count)
-    // Overload:function(start, count, step)
+    // Overload:function (start, count)
+    // Overload:function (start, count, step)
     Enumerable.rangeDown = function (start, count, step) {
         if (step == null) step = 1;
 
@@ -455,8 +455,8 @@
         });
     };
 
-    // Overload:function(start, to)
-    // Overload:function(start, to, step)
+    // Overload:function (start, to)
+    // Overload:function (start, to, step)
     Enumerable.rangeTo = function (start, to, step) {
         if (step == null) step = 1;
 
@@ -492,8 +492,8 @@
         }
     };
 
-    // Overload:function(element)
-    // Overload:function(element, count)
+    // Overload:function (element)
+    // Overload:function (element, count)
     Enumerable.repeat = function (element, count) {
         if (count != null) return Enumerable.repeat(element).take(count);
 
@@ -523,8 +523,8 @@
         });
     };
 
-    // Overload:function(func)
-    // Overload:function(func, count)
+    // Overload:function (func)
+    // Overload:function (func, count)
     Enumerable.generate = function (func, count) {
         if (count != null) return Enumerable.generate(func).take(count);
         func = Utils.createLambda(func);
@@ -537,9 +537,9 @@
         });
     };
 
-    // Overload:function()
-    // Overload:function(start)
-    // Overload:function(start, step)
+    // Overload:function ()
+    // Overload:function (start)
+    // Overload:function (start, step)
     Enumerable.toInfinity = function (start, step) {
         if (start == null) start = 0;
         if (step == null) step = 1;
@@ -553,9 +553,9 @@
         });
     };
 
-    // Overload:function()
-    // Overload:function(start)
-    // Overload:function(start, step)
+    // Overload:function ()
+    // Overload:function (start)
+    // Overload:function (start, step)
     Enumerable.toNegativeInfinity = function (start, step) {
         if (start == null) start = 0;
         if (step == null) step = 1;
@@ -612,9 +612,9 @@
 
     /* Projection and Filtering Methods */
 
-    // Overload:function(func)
-    // Overload:function(func, resultSelector<element>)
-    // Overload:function(func, resultSelector<element, nestLevel>)
+    // Overload:function (func)
+    // Overload:function (func, resultSelector<element>)
+    // Overload:function (func, resultSelector<element, nestLevel>)
     Enumerable.prototype.traverseBreadthFirst = function (func, resultSelector) {
         var source = this;
         func = Utils.createLambda(func);
@@ -650,9 +650,9 @@
         });
     };
 
-    // Overload:function(func)
-    // Overload:function(func, resultSelector<element>)
-    // Overload:function(func, resultSelector<element, nestLevel>)
+    // Overload:function (func)
+    // Overload:function (func, resultSelector<element>)
+    // Overload:function (func, resultSelector<element, nestLevel>)
     Enumerable.prototype.traverseDepthFirst = function (func, resultSelector) {
         var source = this;
         func = Utils.createLambda(func);
@@ -759,8 +759,8 @@
         });
     };
 
-    // Overload:function(func)
-    // Overload:function(seed,func<value,element>)
+    // Overload:function (func)
+    // Overload:function (seed,func<value,element>)
     Enumerable.prototype.scan = function (seed, func) {
         var isUseSeed;
         if (func == null) {
@@ -800,8 +800,8 @@
         });
     };
 
-    // Overload:function(selector<element>)
-    // Overload:function(selector<element,index>)
+    // Overload:function (selector<element>)
+    // Overload:function (selector<element,index>)
     Enumerable.prototype.select = function (selector) {
         selector = Utils.createLambda(selector);
 
@@ -827,10 +827,10 @@
         }
     };
 
-    // Overload:function(collectionSelector<element>)
-    // Overload:function(collectionSelector<element,index>)
-    // Overload:function(collectionSelector<element>,resultSelector)
-    // Overload:function(collectionSelector<element,index>,resultSelector)
+    // Overload:function (collectionSelector<element>)
+    // Overload:function (collectionSelector<element,index>)
+    // Overload:function (collectionSelector<element>,resultSelector)
+    // Overload:function (collectionSelector<element,index>,resultSelector)
     Enumerable.prototype.selectMany = function (collectionSelector, resultSelector) {
         var source = this;
         collectionSelector = Utils.createLambda(collectionSelector);
@@ -872,8 +872,8 @@
         });
     };
 
-    // Overload:function(predicate<element>)
-    // Overload:function(predicate<element,index>)
+    // Overload:function (predicate<element>)
+    // Overload:function (predicate<element,index>)
     Enumerable.prototype.where = function (predicate) {
         predicate = Utils.createLambda(predicate);
 
@@ -903,8 +903,8 @@
     };
 
 
-    // Overload:function(selector<element>)
-    // Overload:function(selector<element,index>)
+    // Overload:function (selector<element>)
+    // Overload:function (selector<element,index>)
     Enumerable.prototype.choose = function (selector) {
         selector = Utils.createLambda(selector);
         var source = this;
@@ -1146,16 +1146,16 @@
         return result;
     };
 
-    // Overload:function()
-    // Overload:function(predicate)
+    // Overload:function ()
+    // Overload:function (predicate)
     Enumerable.prototype.any = function (predicate) {
         predicate = Utils.createLambda(predicate);
 
         var enumerator = this.getEnumerator();
         try {
-            if (arguments.length == 0) return enumerator.moveNext(); // case:function()
+            if (arguments.length == 0) return enumerator.moveNext(); // case:function ()
 
-            while (enumerator.moveNext()) // case:function(predicate)
+            while (enumerator.moveNext()) // case:function (predicate)
             {
                 if (predicate(enumerator.getCurrent())) return true;
             }
@@ -1330,8 +1330,8 @@
         });
     };
 
-    // Overload:function(value)
-    // Overload:function(value, compareSelector)
+    // Overload:function (value)
+    // Overload:function (value, compareSelector)
     Enumerable.prototype.contains = function (value, comparer) {
         comparer = comparer || Bridge.EqualityComparer$1.$default;
         var enumerator = this.getEnumerator();
@@ -1371,8 +1371,8 @@
         });
     };
 
-    // Overload:function()
-    // Overload:function(compareSelector)
+    // Overload:function ()
+    // Overload:function (compareSelector)
     Enumerable.prototype.distinct = function (comparer) {
         return this.except(Enumerable.empty(), comparer);
     };
@@ -1413,8 +1413,8 @@
         });
     };
 
-    // Overload:function(second)
-    // Overload:function(second, compareSelector)
+    // Overload:function (second)
+    // Overload:function (second, compareSelector)
     Enumerable.prototype.except = function (second, comparer) {
         var source = this;
 
@@ -1442,8 +1442,8 @@
         });
     };
 
-    // Overload:function(second)
-    // Overload:function(second, compareSelector)
+    // Overload:function (second)
+    // Overload:function (second, compareSelector)
     Enumerable.prototype.intersect = function (second, comparer) {
         var source = this;
 
@@ -1474,8 +1474,8 @@
         });
     };
 
-    // Overload:function(second)
-    // Overload:function(second, compareSelector)
+    // Overload:function (second)
+    // Overload:function (second, compareSelector)
     Enumerable.prototype.sequenceEqual = function (second, comparer) {
         comparer = comparer || Bridge.EqualityComparer$1.$default;
 
@@ -1644,10 +1644,10 @@
 
     /* Grouping Methods */
 
-    // Overload:function(keySelector)
-    // Overload:function(keySelector,elementSelector)
-    // Overload:function(keySelector,elementSelector,resultSelector)
-    // Overload:function(keySelector,elementSelector,resultSelector,compareSelector)
+    // Overload:function (keySelector)
+    // Overload:function (keySelector,elementSelector)
+    // Overload:function (keySelector,elementSelector,resultSelector)
+    // Overload:function (keySelector,elementSelector,resultSelector,compareSelector)
     Enumerable.prototype.groupBy = function (keySelector, elementSelector, resultSelector, comparer) {
         var source = this;
         keySelector = Utils.createLambda(keySelector);
@@ -1675,10 +1675,10 @@
         });
     };
 
-    // Overload:function(keySelector)
-    // Overload:function(keySelector,elementSelector)
-    // Overload:function(keySelector,elementSelector,resultSelector)
-    // Overload:function(keySelector,elementSelector,resultSelector,compareSelector)
+    // Overload:function (keySelector)
+    // Overload:function (keySelector,elementSelector)
+    // Overload:function (keySelector,elementSelector,resultSelector)
+    // Overload:function (keySelector,elementSelector,resultSelector,compareSelector)
     Enumerable.prototype.partitionBy = function (keySelector, elementSelector, resultSelector, comparer) {
 
         var source = this;
@@ -1760,16 +1760,16 @@
 
     /* Aggregate Methods */
 
-    // Overload:function(func)
-    // Overload:function(seed,func)
-    // Overload:function(seed,func,resultSelector)
+    // Overload:function (func)
+    // Overload:function (seed,func)
+    // Overload:function (seed,func,resultSelector)
     Enumerable.prototype.aggregate = function (seed, func, resultSelector) {
         resultSelector = Utils.createLambda(resultSelector);
         return resultSelector(this.scan(seed, func, resultSelector).last());
     };
 
-    // Overload:function()
-    // Overload:function(selector)
+    // Overload:function ()
+    // Overload:function (selector)
     Enumerable.prototype.average = function (selector) {
         selector = Utils.createLambda(selector);
 
@@ -1791,8 +1791,8 @@
         return this.average(selector);
     };
 
-    // Overload:function()
-    // Overload:function(predicate)
+    // Overload:function ()
+    // Overload:function (predicate)
     Enumerable.prototype.count = function (predicate) {
         predicate = (predicate == null) ? Functions.True : Utils.createLambda(predicate);
 
@@ -1803,8 +1803,8 @@
         return count;
     };
 
-    // Overload:function()
-    // Overload:function(selector)
+    // Overload:function ()
+    // Overload:function (selector)
     Enumerable.prototype.max = function (selector) {
         if (selector == null) selector = Functions.Identity;
         return this.select(selector).aggregate(function (a, b) {
@@ -1820,8 +1820,8 @@
         return this.max(selector);
     };
 
-    // Overload:function()
-    // Overload:function(selector)
+    // Overload:function ()
+    // Overload:function (selector)
     Enumerable.prototype.min = function (selector) {
         if (selector == null) selector = Functions.Identity;
         return this.select(selector).aggregate(function (a, b) {
@@ -1851,8 +1851,8 @@
         });
     };
 
-    // Overload:function()
-    // Overload:function(selector)
+    // Overload:function ()
+    // Overload:function (selector)
     Enumerable.prototype.sum = function (selector) {
         if (selector == null) selector = Functions.Identity;
         return this.select(selector).aggregate(0, function (a, b) { return a + b; });
@@ -1898,8 +1898,8 @@
         return (!found) ? defaultValue : value;
     };
 
-    // Overload:function()
-    // Overload:function(predicate)
+    // Overload:function ()
+    // Overload:function (predicate)
     Enumerable.prototype.first = function (predicate) {
         if (predicate != null) return this.where(predicate).first();
 
@@ -1929,8 +1929,8 @@
         return (!found) ? defaultValue : value;
     };
 
-    // Overload:function()
-    // Overload:function(predicate)
+    // Overload:function ()
+    // Overload:function (predicate)
     Enumerable.prototype.last = function (predicate) {
         if (predicate != null) return this.where(predicate).last();
 
@@ -1945,8 +1945,8 @@
         return value;
     };
 
-    // Overload:function(defaultValue)
-    // Overload:function(defaultValue,predicate)
+    // Overload:function (defaultValue)
+    // Overload:function (defaultValue,predicate)
     Enumerable.prototype.lastOrDefault = function (predicate, defaultValue) {
         if (defaultValue === undefined) defaultValue = null;
         if (predicate != null) return this.where(predicate).lastOrDefault(null, defaultValue);
@@ -1960,8 +1960,8 @@
         return (!found) ? defaultValue : value;
     };
 
-    // Overload:function()
-    // Overload:function(predicate)
+    // Overload:function ()
+    // Overload:function (predicate)
     Enumerable.prototype.single = function (predicate) {
         if (predicate != null) return this.where(predicate).single();
 
@@ -1978,8 +1978,8 @@
         return value;
     };
 
-    // Overload:function(defaultValue)
-    // Overload:function(defaultValue,predicate)
+    // Overload:function (defaultValue)
+    // Overload:function (defaultValue,predicate)
     Enumerable.prototype.singleOrDefault = function (predicate, defaultValue) {
         if (defaultValue === undefined) defaultValue = null;
         if (predicate != null) return this.where(predicate).singleOrDefault(null, defaultValue);
@@ -2019,8 +2019,8 @@
         });
     };
 
-    // Overload:function(predicate<element>)
-    // Overload:function(predicate<element,index>)
+    // Overload:function (predicate<element>)
+    // Overload:function (predicate<element,index>)
     Enumerable.prototype.skipWhile = function (predicate) {
         predicate = Utils.createLambda(predicate);
         var source = this;
@@ -2071,8 +2071,8 @@
         });
     };
 
-    // Overload:function(predicate<element>)
-    // Overload:function(predicate<element,index>)
+    // Overload:function (predicate<element>)
+    // Overload:function (predicate<element,index>)
     Enumerable.prototype.takeWhile = function (predicate) {
         predicate = Utils.createLambda(predicate);
         var source = this;
@@ -2092,8 +2092,8 @@
         });
     };
 
-    // Overload:function()
-    // Overload:function(count)
+    // Overload:function ()
+    // Overload:function (count)
     Enumerable.prototype.takeExceptLast = function (count) {
         if (count == null) count = 1;
         var source = this;
@@ -2147,8 +2147,8 @@
         });
     };
 
-    // Overload:function(item)
-    // Overload:function(predicate)
+    // Overload:function (item)
+    // Overload:function (predicate)
     Enumerable.prototype.indexOf = function (item, comparer) {
         var found = null;
 
@@ -2174,8 +2174,8 @@
         return (found !== null) ? found : -1;
     };
 
-    // Overload:function(item)
-    // Overload:function(predicate)
+    // Overload:function (item)
+    // Overload:function (predicate)
     Enumerable.prototype.lastIndexOf = function (item, comparer) {
         var result = -1;
 
@@ -2214,9 +2214,9 @@
         return new Bridge.List$1(T || Object)(array);
     };
 
-    // Overload:function(keySelector)
-    // Overload:function(keySelector, elementSelector)
-    // Overload:function(keySelector, elementSelector, compareSelector)
+    // Overload:function (keySelector)
+    // Overload:function (keySelector, elementSelector)
+    // Overload:function (keySelector, elementSelector, compareSelector)
     Enumerable.prototype.toLookup = function (keySelector, elementSelector, comparer) {
         keySelector = Utils.createLambda(keySelector);
         elementSelector = Utils.createLambda(elementSelector);
@@ -2250,8 +2250,8 @@
         return obj;
     };
 
-    // Overload:function(keySelector, elementSelector)
-    // Overload:function(keySelector, elementSelector, compareSelector)
+    // Overload:function (keySelector, elementSelector)
+    // Overload:function (keySelector, elementSelector, compareSelector)
     Enumerable.prototype.toDictionary = function (keySelector, elementSelector, keyType, valueType, comparer) {
         keySelector = Utils.createLambda(keySelector);
         elementSelector = Utils.createLambda(elementSelector);
@@ -2263,9 +2263,9 @@
         return dict;
     };
 
-    // Overload:function()
-    // Overload:function(replacer)
-    // Overload:function(replacer, space)
+    // Overload:function ()
+    // Overload:function (replacer)
+    // Overload:function (replacer, space)
     Enumerable.prototype.toJSONString = function (replacer, space) {
         if (typeof JSON === Types.Undefined || JSON.stringify == null) {
             throw new Error("toJSONString can't find JSON.stringify. This works native JSON support Browser or include json2.js");
@@ -2273,9 +2273,9 @@
         return JSON.stringify(this.toArray(), replacer, space);
     };
 
-    // Overload:function()
-    // Overload:function(separator)
-    // Overload:function(separator,selector)
+    // Overload:function ()
+    // Overload:function (separator)
+    // Overload:function (separator,selector)
     Enumerable.prototype.toJoinedString = function (separator, selector) {
         if (separator == null) separator = "";
         if (selector == null) selector = Functions.Identity;
@@ -2286,8 +2286,8 @@
 
     /* Action Methods */
 
-    // Overload:function(action<element>)
-    // Overload:function(action<element,index>)
+    // Overload:function (action<element>)
+    // Overload:function (action<element,index>)
     Enumerable.prototype.doAction = function (action) {
         var source = this;
         action = Utils.createLambda(action);
@@ -2309,10 +2309,10 @@
         });
     };
 
-    // Overload:function(action<element>)
-    // Overload:function(action<element,index>)
-    // Overload:function(func<element,bool>)
-    // Overload:function(func<element,index,bool>)
+    // Overload:function (action<element>)
+    // Overload:function (action<element,index>)
+    // Overload:function (func<element,bool>)
+    // Overload:function (func<element,index,bool>)
     Enumerable.prototype.forEach = function (action) {
         action = Utils.createLambda(action);
 
@@ -2327,9 +2327,9 @@
         }
     };
 
-    // Overload:function()
-    // Overload:function(separator)
-    // Overload:function(separator,selector)
+    // Overload:function ()
+    // Overload:function (separator)
+    // Overload:function (separator,selector)
     Enumerable.prototype.write = function (separator, selector) {
         if (separator == null) separator = "";
         selector = Utils.createLambda(selector);
@@ -2342,8 +2342,8 @@
         });
     };
 
-    // Overload:function()
-    // Overload:function(selector)
+    // Overload:function ()
+    // Overload:function (selector)
     Enumerable.prototype.writeLine = function (selector) {
         selector = Utils.createLambda(selector);
 
@@ -2501,8 +2501,8 @@
 
     /* For Debug Methods */
 
-    // Overload:function()
-    // Overload:function(selector)
+    // Overload:function ()
+    // Overload:function (selector)
     Enumerable.prototype.log = function (selector) {
         selector = Utils.createLambda(selector);
 
@@ -2513,9 +2513,9 @@
         });
     };
 
-    // Overload:function()
-    // Overload:function(message)
-    // Overload:function(message,selector)
+    // Overload:function ()
+    // Overload:function (message)
+    // Overload:function (message,selector)
     Enumerable.prototype.trace = function (message, selector) {
         if (message == null) message = "Trace";
         selector = Utils.createLambda(selector);

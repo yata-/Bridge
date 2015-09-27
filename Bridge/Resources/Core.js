@@ -9,7 +9,7 @@
         property : function (scope, name, v) {
             scope[name] = v;
 
-            var rs = name.charAt(0) == "$",
+            var rs = name.charAt(0) === "$",
                 cap = rs ? name.slice(1) : name;
 
             scope["get" + cap] = (function (name) {
@@ -28,7 +28,7 @@
         event: function (scope, name, v) {
             scope[name] = v;
 
-            var rs = name.charAt(0) == "$",
+            var rs = name.charAt(0) === "$",
                 cap = rs ? name.slice(1) : name;
 
             scope["add" + cap] = (function (name) {
@@ -78,13 +78,14 @@
         },
 
         ns: function (ns, scope) {
-            var nsParts = ns.split('.');
+            var nsParts = ns.split('.'),
+                i = 0;
 
             if (!scope) {
                 scope = Bridge.global;
             }
 
-            for (i = 0; i < nsParts.length; i++) {
+            for (i; i < nsParts.length; i++) {
                 if (typeof scope[nsParts[i]] == 'undefined') {
                     scope[nsParts[i]] = { };
                 }
@@ -105,10 +106,9 @@
             if (typeof Bridge.global.jQuery !== 'undefined') {
                 Bridge.global.jQuery(delayfn);
             } else {
-                if (!document || document.readyState == "complete" || document.readyState == "loaded") {
+                if (!document || document.readyState === "complete" || document.readyState === "loaded") {
                     delayfn();
-                }
-                else {
+                } else {
                     Bridge.on('DOMContentLoaded', document, delayfn);
                 }
             }
@@ -150,6 +150,7 @@
                 if (safe) {
                     return 0;
                 }
+
                 throw new Bridge.InvalidOperationException('HashCode cannot be calculated for empty value');
             }
 
@@ -206,6 +207,7 @@
 
                 for (i = 0, len = Bridge.$$hashCodeCache.length; i < len; i += 1) {
                     item = Bridge.$$hashCodeCache[i];
+
                     if (item.obj === value) {
                         return item.hash;
                     }
@@ -227,7 +229,7 @@
                     delete Bridge.$$hashCodeCache;
                 }
 
-                if (result != 0) {
+                if (result !== 0) {
                     return result;
                 }
             }
@@ -239,14 +241,11 @@
             if (
                 (type.getDefaultValue) && type.getDefaultValue.length === 0) {
                 return type.getDefaultValue();
-            }
-            else if (type === Boolean) {
+            } else if (type === Boolean) {
                 return false;
-            }
-            else if (type === Date) {
+            } else if (type === Date) {
                 return new Date(0);
-            }
-            else if (type === Number) {
+            } else if (type === Number) {
                 return 0;
             }
 
@@ -260,7 +259,7 @@
                 return obj.$$name;
             }
 
-            if ((obj).constructor == Function) {
+            if ((obj).constructor === Function) {
                 str = (obj).toString();
             }
             else {
@@ -290,7 +289,7 @@
 	            }
             }
 
-            if ((obj.constructor == type) || (obj instanceof type)) {
+            if ((obj.constructor === type) || (obj instanceof type)) {
 	            return true;
             }
 
@@ -302,9 +301,10 @@
                 return false;
             }
 
-            var inheritors = type.$$inheritors;
+            var inheritors = type.$$inheritors,
+                i;
 
-            for (var i = 0; i < inheritors.length; i++) {
+            for (i = 0; i < inheritors.length; i++) {
                 if (Bridge.is(obj, inheritors[i])) {
 	                return true;
 	            }
@@ -332,9 +332,10 @@
         },
 
 	    apply: function (obj, values) {
-	        var names = Bridge.getPropertyNames(values, false);
+	        var names = Bridge.getPropertyNames(values, false),
+	            i;
 
-	        for (var i = 0; i < names.length; i++) {
+	        for (i = 0; i < names.length; i++) {
 	            var name = names[i];
 
 	            if (typeof obj[name] == "function" && typeof values[name] != "function") {
@@ -349,8 +350,7 @@
         },
 
 	    merge: function (to, from) {
-	        var object,
-                key,
+	        var key,
 			    i,
                 value,
                 toValue,
@@ -491,9 +491,9 @@
         unroll: function (value) {
             var d = value.split("."),
                 o = Bridge.global[d[0]],
-                i;
+                i = 1;
 
-            for (var i = 1; i < d.length; i++) {
+            for (i; i < d.length; i++) {
                 if (!o) {
                     return null;
                 }
@@ -507,17 +507,13 @@
         equals: function (a, b) {
             if (a && Bridge.isFunction(a.equals) && a.equals.length === 1) {
                 return a.equals(b);
-            }
-            else if (Bridge.isDate(a) && Bridge.isDate(b)) {
+            } else if (Bridge.isDate(a) && Bridge.isDate(b)) {
                 return a.valueOf() === b.valueOf();
-            }
-            else if (Bridge.isNull(a) && Bridge.isNull(b)) {
+            } else if (Bridge.isNull(a) && Bridge.isNull(b)) {
                 return true;
-            }
-            else if (Bridge.isNull(a) !== Bridge.isNull(b)) {
+            } else if (Bridge.isNull(a) !== Bridge.isNull(b)) {
                 return false;
             }
-
 
             if (typeof a == "object" && typeof b == "object") {
                 return (Bridge.getHashCode(a) === Bridge.getHashCode(b)) && Bridge.objectEquals(a, b);
@@ -549,8 +545,7 @@
                 for (p in b) {
                     if (b.hasOwnProperty(p) !== a.hasOwnProperty(p)) {
                         return false;
-                    }
-                    else if (typeof b[p] !== typeof a[p]) {
+                    } else if (typeof b[p] !== typeof a[p]) {
                         return false;
                     }
                 }
@@ -558,8 +553,7 @@
                 for (p in a) {
                     if (b.hasOwnProperty(p) !== a.hasOwnProperty(p)) {
                         return false;
-                    }
-                    else if (typeof a[p] !== typeof b[p]) {
+                    } else if (typeof a[p] !== typeof b[p]) {
                         return false;
                     }
 
@@ -575,7 +569,7 @@
                         Bridge.$$rightChain.pop();
                     }
                     else {
-                        if(!Bridge.equals(a[p], b[p])) {
+                        if (!Bridge.equals(a[p], b[p])) {
                             return false;
                         }
                     }
@@ -663,7 +657,7 @@
         },
 
         fn: {
-            call: function (obj, fnName){
+            call: function (obj, fnName) {
                 var args = Array.prototype.slice.call(arguments, 2);
 
                 obj = obj || Bridge.global;
@@ -672,35 +666,31 @@
             },
 
             bind: function (obj, method, args, appendArgs) {
-                if (method && method.$method == method && method.$scope == obj) {
+                if (method && method.$method === method && method.$scope === obj) {
                     return method;
                 }
 
-                var fn = null;
+                var fn;
 
                 if (arguments.length === 2) {
                     fn = function () {
                         return method.apply(obj, arguments);
                     };
-                }
-                else {
+                } else {
                     fn = function () {
                         var callArgs = args || arguments;
 
                         if (appendArgs === true) {
                             callArgs = Array.prototype.slice.call(arguments, 0);
                             callArgs = callArgs.concat(args);
-                        }
-                        else if (typeof appendArgs == 'number') {
+                        } else if (typeof appendArgs == "number") {
                             callArgs = Array.prototype.slice.call(arguments, 0);
 
                             if (appendArgs === 0) {
                                 callArgs.unshift.apply(callArgs, args);
-                            }
-                            else if (appendArgs < callArgs.length) {
+                            } else if (appendArgs < callArgs.length) {
                                 callArgs.splice.apply(callArgs, [appendArgs, 0].concat(args));
-                            }
-                            else {
+                            } else {
                                 callArgs.push.apply(callArgs, args);
                             }
                         }
@@ -733,7 +723,7 @@
             $build: function (handlers) {
                 var fn = function () {
                     var list = fn.$invocationList,
-                        result,
+                        result = null,
                         i,
                         handler;
 
@@ -747,7 +737,7 @@
 
                 fn.$invocationList = handlers ? Array.prototype.slice.call(handlers, 0) : [];
 
-                if (fn.$invocationList.length == 0) {
+                if (fn.$invocationList.length === 0) {
                     return null;
                 }
 
@@ -813,6 +803,7 @@
             }
 
             function F() { }
+
             F.prototype = o;
 
             return new F();

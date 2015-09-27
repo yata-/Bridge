@@ -1,7 +1,10 @@
-﻿// @source Version.js
+// @source Version.js
 
 Bridge.define('System.Version', {
-    inherits: function () { return [Bridge.ICloneable,Bridge.IComparable$1(System.Version),Bridge.IEquatable$1(System.Version)]; },
+    inherits: function() {
+        return [Bridge.ICloneable,Bridge.IComparable$1(System.Version),Bridge.IEquatable$1(System.Version)];
+    },
+
     statics: {
         separatorsArray: ".",
 
@@ -227,6 +230,7 @@ Bridge.define('System.Version', {
 
     constructor$4: function (version) {
         var v = System.Version.parse(version);
+
         this._Major = v.getMajor();
         this._Minor = v.getMinor();
         this._Build = v.getBuild();
@@ -279,7 +283,7 @@ Bridge.define('System.Version', {
         return (v);
     },
 
-    compareInternal: function(v) {
+    compareInternal: function (v) {
         if (this._Major !== v._Major) {
             if (this._Major > v._Major) {
                 return 1;
@@ -509,7 +513,7 @@ Bridge.define('System.Version.VersionResult', {
     },
 
     equals: function (o) {
-        if (!Bridge.is(o,System.Version.VersionResult)) {
+        if (!Bridge.is(o, System.Version.VersionResult)) {
             return false;
         }
 

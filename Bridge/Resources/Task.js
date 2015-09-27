@@ -36,8 +36,7 @@ Bridge.define('Bridge.Task', {
             setTimeout(function () {
                 try {
                     task.setResult(fn());
-                }
-                catch (e) {
+                } catch (e) {
                     task.setError(e);
                 }
             }, 0);
@@ -236,8 +235,7 @@ Bridge.define('Bridge.Task', {
                 delete me.action;
                 delete me.state;
                 me.complete(result);
-            }
-            catch (e) {
+            } catch (e) {
                 me.fail(e);
             }
         }, 0);
@@ -245,6 +243,7 @@ Bridge.define('Bridge.Task', {
 
     runCallbacks: function () {
         var me = this;
+
         setTimeout(function () {
             for (var i = 0; i < me.callbacks.length; i++) {
                 me.callbacks[i](me);
@@ -294,7 +293,7 @@ Bridge.define('Bridge.Task', {
     },
 
     isCompleted: function () {
-        return this.status == Bridge.TaskStatus.ranToCompletion || this.status == Bridge.TaskStatus.canceled || this.status == Bridge.TaskStatus.faulted;
+        return this.status === Bridge.TaskStatus.ranToCompletion || this.status === Bridge.TaskStatus.canceled || this.status === Bridge.TaskStatus.faulted;
     },
 
     isFaulted: function () {

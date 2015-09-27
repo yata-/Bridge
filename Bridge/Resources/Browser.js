@@ -1,7 +1,7 @@
 ﻿// @source Browser.js
 
 (function () {
-	if(!document) {
+	if (!document) {
 		return;
 	}
 	
@@ -9,7 +9,7 @@
         return regex.test(navigator.userAgent);
     },
 
-    isStrict = document.compatMode == 'CSS1Compat',
+    isStrict = document.compatMode === "CSS1Compat",
 
     version = function (is, regex) {
         var m;

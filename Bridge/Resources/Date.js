@@ -18,11 +18,10 @@
 	        var i,
                 repeat = 0;
 
-	        for (i = index - 1; i >= 0 && format[i] != patternToMatch; i--) {
-	        }
+	        for (i = index - 1; i >= 0 && format[i] !== patternToMatch; i--) { }
 
             if (i >= 0) {
-                while (--i >= 0 && format[i] == patternToMatch) {
+                while (--i >= 0 && format[i] === patternToMatch) {
                     repeat++;
                 }
 
@@ -31,13 +30,13 @@
                 }
             }
 
-            for (i = index + tokenLen; i < format.length && format[i] != patternToMatch; i++) {
+            for (i = index + tokenLen; i < format.length && format[i] !== patternToMatch; i++) {
             }
 
             if (i < format.length) {
                 repeat = 0;
 
-                while (++i < format.length && format[i] == patternToMatch) {
+                while (++i < format.length && format[i] === patternToMatch) {
                     repeat++;
                 }
 
@@ -45,6 +44,7 @@
                     return true;
                 }
             }
+
             return false;
         },
 
@@ -64,11 +64,10 @@
 
             format = format || "G";
 
-            if (format.length == 1) {
-                var formats = df.getAllDateTimePatterns(format, true);
+            if (format.length === 1) {
+                formats = df.getAllDateTimePatterns(format, true);
                 format = formats ? formats[0] : format;
-            }
-            else if (format.length == 2 && format.charAt(0) == "%") {
+            } else if (format.length === 2 && format.charAt(0) === "%") {
                 format = format.charAt(1);
             }
 
@@ -126,7 +125,7 @@
 			            case "yy":
 			                part = (year % 100).toString();
 
-			                if (part.length == 1) {
+			                if (part.length === 1) {
 			                    part = "0" + part;
 			                }
 
@@ -141,8 +140,7 @@
 
 			                if (!part) {
 			                    part = "12";
-			                }
-			                else if (match == "hh" && part.length == 1) {
+			                } else if (match === "hh" && part.length === 1) {
 			                    part = "0" + part;
 			                }
 
@@ -150,7 +148,7 @@
 			            case "HH":
 			                part = hour.toString();
 
-			                if (part.length == 1) {
+			                if (part.length === 1) {
 			                    part = "0" + part;
 			                }
 
@@ -161,7 +159,7 @@
 			            case "mm":
 			                part = minute.toString();
 
-			                if (part.length == 1) {
+			                if (part.length === 1) {
 			                    part = "0" + part;
 			                }
 
@@ -173,7 +171,7 @@
 			            case "ss":
 			                part = second.toString();
 
-			                if (part.length == 1) {
+			                if (part.length === 1) {
 			                    part = "0" + part;
 			                }
 
@@ -185,7 +183,7 @@
 			            case "tt":
 			                part = (hour < 12) ? df.amDesignator : df.pmDesignator;
 
-			                if (match == "t") {
+			                if (match === "t") {
 			                    part = part.charAt(0);
 			                }
 
@@ -199,10 +197,9 @@
 			                    part = Array(3 - part.length).join("0") + part;
 			                }
 
-			                if (match == "ff") {
+			                if (match === "ff") {
 			                    part = part.substr(0, 2);
-			                }
-			                else if (match == "f") {
+			                } else if (match === "f") {
 			                    part = part.charAt(0);
 			                }
 
@@ -217,7 +214,7 @@
 			                part = timezoneOffset / 60;
 			                part = ((part >= 0) ? "-" : "+") + Bridge.String.alignString(Math.floor(Math.abs(part)).toString(), 2, "0", 2);
 
-			                if (match == "zzz") {
+			                if (match === "zzz") {
 			                    part += df.timeSeparator + Bridge.String.alignString(Math.floor(Math.abs(timezoneOffset % 60)).toString(), 2, "0", 2);
 			                }
 
@@ -231,7 +228,7 @@
 
 			                break;
 			            default:
-			                part = match.substr(1, match.length - 1 - (match.charAt(0) != "\\"));
+			                part = match.substr(1, match.length - 1 - (match.charAt(0) !== "\\"));
 
 			                break;
 			        }
@@ -254,11 +251,11 @@
             }
 
             if (Bridge.isArray(format)) {
-                var i,
+                var j = 0,
                     d;
 
-                for (i = 0; i < format.length; i++) {
-                    d = Bridge.Date.parseExact(str, format[i], provider, utc, true);
+                for (j; j < format.length; j++) {
+                    d = Bridge.Date.parseExact(str, format[j], provider, utc, true);
 
                     if (d != null) {
                         return d;
@@ -277,7 +274,7 @@
                 pm = df.pmDesignator,
                 idx = 0,
                 index = 0,
-                i,
+                i = 0,
                 c,
                 token,
                 year = 0,
@@ -297,7 +294,8 @@
                 name,
                 invalid = false,
                 inQuotes = false,
-                tokenMatched;
+                tokenMatched,
+                formats;
 
             if (str == null) {
                 throw new Bridge.ArgumentNullException("str");
@@ -305,11 +303,10 @@
 
             format = format || "G";
 
-            if (format.length == 1) {
-                var formats = df.getAllDateTimePatterns(format, true);
+            if (format.length === 1) {
+                formats = df.getAllDateTimePatterns(format, true);
                 format = formats ? formats[0] : format;
-            }
-            else if (format.length == 2 && format.charAt(0) == "%") {
+            } else if (format.length === 2 && format.charAt(0) === "%") {
                 format = format.charAt(1);
             }
 
@@ -317,28 +314,25 @@
                 c = format.charAt(index);
                 token = "";
 
-                if (inQuotes == "\\") {
+                if (inQuotes === "\\") {
                     token += c;
-                    index++
-                }
-                else {
-                    while ((format.charAt(index) == c) && (index < format.length)) {
+                    index++;
+                } else {
+                    while ((format.charAt(index) === c) && (index < format.length)) {
                         token += c;
-                        index++
+                        index++;
                     }
                 }
 
                 tokenMatched = true;
 
                 if (!inQuotes) {
-                    if (token == "yyyy" || token == "yy" || token == "y") {
-                        if (token == "yyyy") {
+                    if (token === "yyyy" || token === "yy" || token === "y") {
+                        if (token === "yyyy") {
                             year = this.subparseInt(str, idx, 4, 4);
-                        }
-                        else if (token == "yy") {
+                        } else if (token === "yy") {
                             year = this.subparseInt(str, idx, 2, 2);
-                        }
-                        else if (token == "y") {
+                        } else if (token === "y") {
                             year = this.subparseInt(str, idx, 2, 4);
                         }
 
@@ -349,27 +343,25 @@
 
                         idx += year.length;
 
-                        if (year.length == 2) {
+                        if (year.length === 2) {
                             year = ~~year;
                             year = (year > 30 ? 1900 : 2000) + year;
                         }
                     }
-                    else if (token == "MMM" || token == "MMMM") {
+                    else if (token === "MMM" || token === "MMMM") {
                         month = 0;
 
                         if (token === "MMM") {
                             if (this.isUseGenitiveForm(format, index, 3, "d")) {
                                 names = df.abbreviatedMonthGenitiveNames;
-                            }
-                            else {
+                            } else {
                                 names = df.abbreviatedMonthNames;
                             }
                         }
                         else {
                             if (this.isUseGenitiveForm(format, index, 4, "d")) {
                                 names = df.monthGenitiveNames;
-                            }
-                            else {
+                            } else {
                                 names = df.monthNames;
                             }
                         }
@@ -377,7 +369,7 @@
                         for (i = 0; i < names.length; i++) {
                             name = names[i];
 
-                            if (str.substring(idx, idx + name.length).toLowerCase() == name.toLowerCase()) {
+                            if (str.substring(idx, idx + name.length).toLowerCase() === name.toLowerCase()) {
                                 month = (i % 12) + 1;
                                 idx += name.length;
 
@@ -390,8 +382,7 @@
 
                             break;
                         }
-                    }
-                    else if (token == "MM" || token == "M") {
+                    } else if (token === "MM" || token === "M") {
                         month = this.subparseInt(str, idx, token.length, 2);
 
                         if (month == null || month < 1 || month > 12) {
@@ -401,21 +392,19 @@
                         }
 
                         idx += month.length;
-                    }
-                    else if (token == "dddd" || token == "ddd") {
+                    } else if (token === "dddd" || token === "ddd") {
                         names = token === "ddd" ? df.abbreviatedDayNames : df.dayNames;
 
                         for (i = 0; i < names.length; i++) {
                             name = names[i];
 
-                            if (str.substring(idx, idx + name.length).toLowerCase() == name.toLowerCase()) {
+                            if (str.substring(idx, idx + name.length).toLowerCase() === name.toLowerCase()) {
                                 idx += name.length;
 
                                 break;
                             }
                         }
-                    }
-                    else if (token == "dd" || token == "d") {
+                    } else if (token === "dd" || token === "d") {
                         date = this.subparseInt(str, idx, token.length, 2);
 
                         if (date == null || date < 1 || date > 31) {
@@ -426,7 +415,7 @@
 
                         idx += date.length;
                     }
-                    else if (token == "hh" || token == "h") {
+                    else if (token === "hh" || token === "h") {
                         hh = this.subparseInt(str, idx, token.length, 2);
 
                         if (hh == null || hh < 1 || hh > 12) {
@@ -436,8 +425,7 @@
                         }
 
                         idx += hh.length;
-                    }
-                    else if (token == "HH" || token == "H") {
+                    } else if (token === "HH" || token === "H") {
                         hh = this.subparseInt(str, idx, token.length, 2);
 
                         if (hh == null || hh < 0 || hh > 23) {
@@ -447,8 +435,7 @@
                         }
 
                         idx += hh.length;
-                    }
-                    else if (token == "mm" || token == "m") {
+                    } else if (token === "mm" || token === "m") {
                         mm = this.subparseInt(str, idx, token.length, 2);
 
                         if (mm == null || mm < 0 || mm > 59) {
@@ -456,8 +443,7 @@
                         }
 
                         idx += mm.length;
-                    }
-                    else if (token == "ss" || token == "s") {
+                    } else if (token === "ss" || token === "s") {
                         ss = this.subparseInt(str, idx, token.length, 2);
 
                         if (ss == null || ss < 0 || ss > 59) {
@@ -467,8 +453,7 @@
                         }
 
                         idx += ss.length;
-                    }
-                    else if (token == "u") {
+                    } else if (token === "u") {
                         ff = this.subparseInt(str, idx, 1, 7);
 
                         if (ff == null) {
@@ -482,8 +467,7 @@
                         if (ff.length > 3) {
                             ff = ff.substring(0, 3);
                         }
-                    }
-                    else if (token == "fffffff" || token == "ffffff" || token == "fffff" || token == "ffff" || token == "fff" || token == "ff" || token == "f") {
+                    } else if (token === "fffffff" || token === "ffffff" || token === "fffff" || token === "ffff" || token === "fff" || token === "ff" || token === "f") {
                         ff = this.subparseInt(str, idx, token.length, 7);
 
                         if (ff == null) {
@@ -497,15 +481,12 @@
                         if (ff.length > 3) {
                             ff = ff.substring(0, 3);
                         }
-                    }
-                    else if (token == "t") {
-                        if (str.substring(idx, idx + 1).toLowerCase() == am.charAt(0).toLowerCase()) {
+                    } else if (token === "t") {
+                        if (str.substring(idx, idx + 1).toLowerCase() === am.charAt(0).toLowerCase()) {
                             tt = am;
-                        }
-                        else if (str.substring(idx, idx + 1).toLowerCase() == pm.charAt(0).toLowerCase()) {
+                        } else if (str.substring(idx, idx + 1).toLowerCase() === pm.charAt(0).toLowerCase()) {
                             tt = pm;
-                        }
-                        else {
+                        } else {
                             invalid = true;
 
                             break;
@@ -513,31 +494,26 @@
 
                         idx += 1;
                     }
-                    else if (token == "tt") {
-                        if (str.substring(idx, idx + 2).toLowerCase() == am.toLowerCase()) {
+                    else if (token === "tt") {
+                        if (str.substring(idx, idx + 2).toLowerCase() === am.toLowerCase()) {
                             tt = am;
-                        }
-                        else if (str.substring(idx, idx + 2).toLowerCase() == pm.toLowerCase()) {
+                        } else if (str.substring(idx, idx + 2).toLowerCase() === pm.toLowerCase()) {
                             tt = pm;
-                        }
-                        else {
+                        } else {
                             invalid = true;
 
                             break;
                         }
 
                         idx += 2;
-                    }
-                    else if (token == "z" || token == "zz") {
+                    } else if (token === "z" || token === "zz") {
                         sign = str.charAt(idx);
 
-                        if (sign == "-") {
+                        if (sign === "-") {
                             neg = true;
-                        }
-                        else if (sign == "+") {
+                        } else if (sign === "+") {
                             neg = false;
-                        }
-                        else {
+                        } else {
                             invalid = true;
 
                             break;
@@ -558,12 +534,11 @@
                         if (neg) {
                             zzh = -zzh;
                         }
-                    }
-                    else if (token == "zzz") {
+                    } else if (token === "zzz") {
                         name = str.substring(idx, idx + 6);
                         idx += 6;
 
-                        if (name.length != 6) {
+                        if (name.length !== 6) {
                             invalid = true;
 
                             break;
@@ -571,13 +546,11 @@
 
                         sign = name.charAt(0);
 
-                        if (sign == "-") {
+                        if (sign === "-") {
                             neg = true;
-                        }
-                        else if (sign == "+") {
+                        } else if (sign === "+") {
                             neg = false;
-                        }
-                        else {
+                        } else {
                             invalid = true;
 
                             break;
@@ -598,7 +571,7 @@
                             zzh = -zzh;
                         }
 
-                        if (name.charAt(zzi) != df.timeSeparator) {
+                        if (name.charAt(zzi) !== df.timeSeparator) {
                             invalid = true;
 
                             break;
@@ -613,8 +586,7 @@
 
                             break;
                         }
-                    }
-                    else {
+                    } else {
                         tokenMatched = false;
                     }
                 }
@@ -622,30 +594,29 @@
                 if (inQuotes || !tokenMatched) {
                     name = str.substring(idx, idx + token.length);
 
-                    if ((!inQuotes && ((token == ":" && name != df.timeSeparator) ||
-                        (token == "/" && name != df.dateSeparator))) ||
-                        (name != token && token != "'" && token != '"' && token != "\\")) {
+                    if ((!inQuotes && ((token === ":" && name !== df.timeSeparator) ||
+                        (token === "/" && name !== df.dateSeparator))) ||
+                        (name !== token && token !== "'" && token !== '"' && token !== "\\")) {
                         invalid = true;
 
                         break;
                     }
 
-                    if (inQuotes == "\\") {
+                    if (inQuotes === "\\") {
                         inQuotes = false;
                     }
 
-                    if (token != "'" && token != '"' && token != "\\") {
+                    if (token !== "'" && token !== '"' && token !== "\\") {
                         idx += token.length;
-                    }
-                    else {
+                    } else {
                         if (inQuotes === false) {
                             inQuotes = token;
-                        }
-                        else {
-                            if (inQuotes != token) {
+                        } else {
+                            if (inQuotes !== token) {
                                 invalid = true;
                                 break;
                             }
+
                             inQuotes = false;
                         }
                     }
@@ -657,20 +628,17 @@
             }
 
             if (!invalid) {
-                if (idx != str.length) {
+                if (idx !== str.length) {
                     invalid = true;
-                }
-                else if (month == 2) {
-                    if (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0)) {
+                } else if (month === 2) {
+                    if (((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0)) {
                         if (date > 29) {
                             invalid = true;
                         }
-                    }
-                    else if (date > 28) {
+                    } else if (date > 28) {
                         invalid = true;
                     }
-                }
-                else if ((month == 4) || (month == 6) || (month == 9) || (month == 11)) {
+                } else if ((month === 4) || (month === 6) || (month === 9) || (month === 11)) {
                     if (date > 30) {
                         invalid = true;
                     }
@@ -685,14 +653,13 @@
                 throw new Bridge.FormatException("String does not contain a valid string representation of a date and time.");
             }
 
-            if (hh < 12 && tt == pm) {
+            if (hh < 12 && tt === pm) {
                 hh = hh - 0 + 12;
-            }
-            else if (hh > 11 && tt == am) {
+            } else if (hh > 11 && tt === am) {
                 hh -= 12;
             }
 
-            if (zzh == 0 && zzm == 0 && !utc) {
+            if (zzh === 0 && zzm === 0 && !utc) {
                 return new Date(year, month - 1, date, hh, mm, ss, ff);
             }
 
@@ -748,7 +715,7 @@
             temp.setMonth(0);
             temp.setDate(1);
 
-            return temp.getTimezoneOffset() != dt.getTimezoneOffset();
+            return temp.getTimezoneOffset() !== dt.getTimezoneOffset();
         },
 
         toUTC: function (date) {

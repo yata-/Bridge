@@ -109,9 +109,10 @@
                         name,
                         obj,
                         c;
+
                     args.unshift(className);
                     name = Bridge.Class.genericName.apply(null, args),
-                    c = Bridge.Class.cache[name]
+                        c = Bridge.Class.cache[name];
 
                     if (c) {
                         return c;
@@ -128,12 +129,12 @@
             }
 
             prop = prop || {};
+
             var extend = prop.$inherits || prop.inherits,
                 statics = prop.$statics || prop.statics,
                 base,
                 cacheName = prop.$cacheName,
                 prototype,
-                nameParts,
                 scope = prop.$scope || Bridge.global,
                 i,
                 v,
@@ -145,18 +146,15 @@
 
             if (prop.$inherits) {
                 delete prop.$inherits;
-            }
-            else {
+            } else {
                 delete prop.inherits;
             }
 
             if (Bridge.isFunction(statics)) {
                 statics = null;
-            }
-            else if (prop.$statics) {
+            } else if (prop.$statics) {
                 delete prop.$statics;
-            }
-            else {
+            } else {
                 delete prop.statics;
             }
 
@@ -182,9 +180,10 @@
 
                     this.$$initCtor.apply(this, arguments);
                 }
-            }
+            };
 
             scope = Bridge.Class.set(scope, className, Class);
+
             if (extend && Bridge.isFunction(extend)) {
                 extend = extend();
             }
@@ -205,8 +204,7 @@
 
                     if (statics.$config) {
                         delete statics.$config;
-                    }
-                    else {
+                    } else {
                         delete statics.config;
                     }
                 }
@@ -217,10 +215,9 @@
             if (instanceConfig && !Bridge.isFunction(instanceConfig)) {
                 Bridge.Class.initConfig(extend, base, instanceConfig, false, prop);                
 
-                if (document && (document.readyState == "complete" || document.readyState == "loaded")) {
+                if (document && (document.readyState === "complete" || document.readyState === "loaded")) {
                     Bridge.Class.createAccessors(instanceConfig, prototype);
-                }
-                else {
+                } else {
                     setTimeout(function () {
                         Bridge.Class.createAccessors(instanceConfig, prototype);
                     }, 0);
@@ -228,12 +225,10 @@
 
                 if (prop.$config) {
                     delete prop.$config;
-                }
-                else {
+                } else {
                     delete prop.config;
                 }
-            }
-            else {
+            } else {
                 prop.$initMembers = extend ? function () {
                     base.$initMembers.apply(this, arguments);
                 } : function () { };
@@ -265,7 +260,7 @@
                                 this.$initMembers.apply(this, args);
                             }
 
-                            args.unshift(ctorName)
+                            args.unshift(ctorName);
                             this.$$initCtor.apply(this, args);
                         };
                     })(ctorName);
@@ -275,7 +270,7 @@
                 }
             }
 
-            if (ctorCounter == 0) {
+            if (ctorCounter === 0) {
                 prototype.$constructor = extend ? function () {
                     base.$constructor();
                 } : function () { };
@@ -331,10 +326,9 @@
                 }
             };
 
-            if (document && (document.readyState == "complete" || document.readyState == "loaded")) {
+            if (document && (document.readyState === "complete" || document.readyState === "loaded")) {
                 fn();
-            }
-            else {
+            } else {
                 setTimeout(fn, 0);
             }
 
@@ -345,6 +339,7 @@
         addExtend: function (cls, extend) {
             var i,
                 scope;
+
             Array.prototype.push.apply(cls.$$inherits, extend);
 
             for (i = 0; i < extend.length; i++) {
@@ -366,7 +361,7 @@
                 i;
 
             for (i = 0; i < (nameParts.length - 1) ; i++) {
-                if (typeof scope[nameParts[i]] == 'undefined') {
+                if (typeof scope[nameParts[i]] == "undefined") {
                     scope[nameParts[i]] = { };
                 }
 
@@ -393,7 +388,7 @@
             var name = arguments[0];
 
             for (var i = 1; i < arguments.length; i++) {
-                name += '$' + Bridge.getTypeName(arguments[i]);
+                name += "$" + Bridge.getTypeName(arguments[i]);
             }
 
             return name;

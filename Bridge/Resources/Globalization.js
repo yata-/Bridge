@@ -1,6 +1,7 @@
-﻿// @source Globalization.js
+/// <reference path="Init.js" />
+// @source Globalization.js
 
-Bridge.define("Bridge.DateTimeFormatInfo", {
+Bridge.define('Bridge.DateTimeFormatInfo', {
     inherits: [Bridge.IFormatProvider, Bridge.ICloneable],
 
     statics: {
@@ -111,7 +112,7 @@ Bridge.define("Bridge.DateTimeFormatInfo", {
             pattern = "";
 
             for (i = 0; i < names.length; i++) {
-                pattern = (i == 0 ? "" : (pattern + " ")) + this[names[i]];
+                pattern = (i === 0 ? "" : (pattern + " ")) + this[names[i]];
             }
 
             result.push(pattern);
@@ -173,7 +174,7 @@ Bridge.define("Bridge.DateTimeFormatInfo", {
     }
 });
 
-Bridge.define("Bridge.NumberFormatInfo", {
+Bridge.define('Bridge.NumberFormatInfo', {
     inherits: [Bridge.IFormatProvider, Bridge.ICloneable],
 
     statics: {
@@ -255,18 +256,20 @@ Bridge.define("Bridge.NumberFormatInfo", {
     }
 });
 
-Bridge.define("Bridge.CultureInfo", {
+Bridge.define('Bridge.CultureInfo', {
     inherits: [Bridge.IFormatProvider, Bridge.ICloneable],
 
     statics: {
-        constructor: function() {
+        constructor: function () {
             this.cultures = this.cultures || {};
+
             this.invariantCulture = Bridge.merge(new Bridge.CultureInfo("iv", true), {
                 englishName: "Invariant Language (Invariant Country)",
                 nativeName: "Invariant Language (Invariant Country)",
                 numberFormat: Bridge.NumberFormatInfo.invariantInfo,
                 dateTimeFormat: Bridge.DateTimeFormatInfo.invariantInfo
             });
+
             this.setCurrentCulture(Bridge.CultureInfo.invariantCulture);
         },
 
@@ -276,6 +279,7 @@ Bridge.define("Bridge.CultureInfo", {
 
         setCurrentCulture: function (culture) {
             this.currentCulture = culture;
+
             Bridge.DateTimeFormatInfo.currentInfo = culture.dateTimeFormat;
             Bridge.NumberFormatInfo.currentInfo = culture.numberFormat;
         },
@@ -318,6 +322,7 @@ Bridge.define("Bridge.CultureInfo", {
             if (!create) {
                 throw new Bridge.CultureNotFoundException("name", name);
             }
+
             Bridge.CultureInfo.cultures[name] = this;
         }
     },

@@ -1,7 +1,7 @@
 ﻿// @source Integer.js
 
-/*(function() {
-    var createIntType = function(name, min, max) {
+/*(function () {
+    var createIntType = function (name, min, max) {
         var type = Bridge.define(name, {
             inherits: [Bridge.IComparable, Bridge.IFormattable],
             statics: {
@@ -14,13 +14,13 @@
                 getDefaultValue: function () {
                     return 0;
                 },
-                parse: function(s) {
+                parse: function (s) {
                     return Bridge.Int.parseInt(s, min, max);
                 },
-                tryParse: function(s, result) {
+                tryParse: function (s, result) {
                     return Bridge.Int.tryParseInt(s, result, min, max);
                 },
-                format: function(number, format, provider) {
+                format: function (number, format, provider) {
                     return Bridge.Int.format(number, format, provider);
                 }
             }
@@ -45,7 +45,7 @@
         return b;
     };
 
-    Bridge.Char.parse = function(s) {
+    Bridge.Char.parse = function (s) {
         if (!Bridge.hasValue(s)) {
             throw new Bridge.ArgumentNullException('s');
         }
@@ -589,7 +589,7 @@ Bridge.define('Bridge.Int', {
             return x % y;
         },
 
-        check: function(x, type) {
+        check: function (x, type) {
             if (Bridge.isNumber(x) && !type.instanceOf(x)) {
                 throw new Bridge.OverflowException();
             }

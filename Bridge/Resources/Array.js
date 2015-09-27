@@ -3,7 +3,7 @@
 (function () {
     var array = {
         toIndex: function (arr, indices) {
-            if (indices.length != (arr.$s ? arr.$s.length : 1)) {
+            if (indices.length !== (arr.$s ? arr.$s.length : 1)) {
                 throw new Bridge.ArgumentException("Invalid number of indices");
             }
 
@@ -108,7 +108,7 @@
             return arr;
         },
 
-        init: function(size, value) {
+        init: function (size, value) {
             var arr = new Array(size),
                 isFn = Bridge.isFunction(value);
 
@@ -119,11 +119,11 @@
             return arr;
         },
 
-        toEnumerable: function(array) {
+        toEnumerable: function (array) {
             return new Bridge.ArrayEnumerable(array);
         },
 
-        toEnumerator: function(array) {
+        toEnumerator: function (array) {
             return new Bridge.ArrayEnumerator(array);
         },
 
@@ -132,13 +132,13 @@
                 return false;
             }
 
-            if ((obj.constructor == type) || (obj instanceof type)) {
+            if ((obj.constructor === type) || (obj instanceof type)) {
                 return true;
             }
 
-            if (type == Bridge.IEnumerable ||
-                type == Bridge.ICollection ||
-                type == Bridge.ICloneable ||
+            if (type === Bridge.IEnumerable ||
+                type === Bridge.ICollection ||
+                type === Bridge.ICloneable ||
                 type.$$name && Bridge.String.startsWith(type.$$name, "Bridge.IEnumerable$1") ||
                 type.$$name && Bridge.String.startsWith(type.$$name, "Bridge.ICollection$1") ||
                 type.$$name && Bridge.String.startsWith(type.$$name, "Bridge.IList$1")) {
@@ -148,20 +148,18 @@
             return false;
         },
 
-        clone: function(arr) {
+        clone: function (arr) {
             if (arr.length === 1) {
                 return [arr[0]];
-            }
-            else {
+            } else {
                 return arr.slice(0);
             }
         },
 
-        getCount: function(obj) {
+        getCount: function (obj) {
             if (Bridge.isArray(obj)) {
                 return obj.length;
-            }
-            else if (Bridge.isFunction(obj.getCount)) {
+            } else if (Bridge.isFunction(obj.getCount)) {
                 return obj.getCount();
             }
 
@@ -171,8 +169,7 @@
         add: function (obj, item) {
             if (Bridge.isArray(obj)) {
                 obj.push(item);
-            }
-            else if (Bridge.isFunction(obj.add)) {
+            } else if (Bridge.isFunction(obj.add)) {
                 obj.add(item);
             }
         },
@@ -180,8 +177,7 @@
         clear: function (obj) {
             if (Bridge.isArray(obj)) {
                 obj.length = 0;
-            }
-            else if (Bridge.isFunction(obj.clear)) {
+            } else if (Bridge.isFunction(obj.clear)) {
                 obj.clear();
             }
         },
@@ -192,6 +188,7 @@
             }
 
             var isFn = Bridge.isFunction(val);
+
             while (--count >= 0) {
                 dst[index + count] = isFn ? val() : val;
             }
@@ -210,25 +207,27 @@
                 while (--len >= 0) {
                     dst[dpos + len] = src[spos + len];
                 }
-            }
-            else {
+            } else {
                 for (var i = 0; i < len; i++) {
                     dst[dpos + i] = src[spos + i];
                 }
             }
         },
 
-        indexOf: function(arr, item) {
+        indexOf: function (arr, item) {
             if (Bridge.isArray(arr)) {
-                var i, ln, el;
+                var i,
+                    ln,
+                    el;
+
                 for (i = 0, ln = arr.length; i < ln; i++) {
                     el = arr[i];
+
                     if (el === item || Bridge.EqualityComparer$1.$default.equals(el, item)) {
                         return i;
                     }
                 }
-            }
-            else if (Bridge.isFunction(arr.indexOf)) {
+            } else if (Bridge.isFunction(arr.indexOf)) {
                 return arr.indexOf(item);
             }
 
@@ -238,8 +237,7 @@
         contains: function (obj, item) {
             if (Bridge.isArray(obj)) {
                 return Bridge.Array.indexOf(obj, item) > -1;
-            }
-            else if (Bridge.isFunction(obj.contains)) {
+            } else if (Bridge.isFunction(obj.contains)) {
                 return obj.contains(item);
             }
 
@@ -249,12 +247,13 @@
         remove: function (obj, item) {
             if (Bridge.isArray(obj)) {
                 var index = Bridge.Array.indexOf(obj, item);
+
                 if (index > -1) {
                     obj.splice(index, 1);
+
                     return true;
                 }
-            }
-            else if (Bridge.isFunction(obj.remove)) {
+            } else if (Bridge.isFunction(obj.remove)) {
                 return obj.remove(item);
             }
 
@@ -264,8 +263,7 @@
         insert: function (obj, index, item) {
             if (Bridge.isArray(obj)) {
                 obj.splice(index, 0, item);
-            }
-            else if (Bridge.isFunction(obj.insert)) {
+            } else if (Bridge.isFunction(obj.insert)) {
                  obj.insert(index, item);
             }
         },
@@ -273,8 +271,7 @@
         removeAt: function (obj, index) {
             if (Bridge.isArray(obj)) {
                 obj.splice(index, 1);
-            }
-            else if (Bridge.isFunction(obj.removeAt)) {
+            } else if (Bridge.isFunction(obj.removeAt)) {
                 obj.removeAt(index);
             }
         },
@@ -282,14 +279,11 @@
         getItem: function (obj, idx) {
             if (Bridge.isArray(obj)) {
                 return obj[idx];
-            }
-            else if (Bridge.isFunction(obj.get)) {
+            } else if (Bridge.isFunction(obj.get)) {
                 return obj.get(idx);
-            }
-            else if (Bridge.isFunction(obj.getItem)) {
+            } else if (Bridge.isFunction(obj.getItem)) {
                 return obj.getItem(idx);
-            }
-            else if (Bridge.isFunction(obj.get_Item)) {
+            } else if (Bridge.isFunction(obj.get_Item)) {
                 return obj.get_Item(idx);
             }
         },
@@ -297,14 +291,11 @@
         setItem: function (obj, idx, value) {
             if (Bridge.isArray(obj)) {
                 obj[idx] = value;
-            }
-            else if (Bridge.isFunction(obj.set)) {
+            } else if (Bridge.isFunction(obj.set)) {
                 obj.set(idx, value);
-            }
-            else if (Bridge.isFunction(obj.setItem)) {
+            } else if (Bridge.isFunction(obj.setItem)) {
                 obj.setItem(idx, value);
-            }
-            else if (Bridge.isFunction(obj.set_Item)) {
+            } else if (Bridge.isFunction(obj.set_Item)) {
                 obj.set_Item(idx, value);
             }
         },
@@ -329,7 +320,7 @@
             }
         },
 
-        reverse: function(arr, index, length) {
+        reverse: function (arr, index, length) {
             if (!array) {
                 throw new Bridge.ArgumentNullException("arr");
             }

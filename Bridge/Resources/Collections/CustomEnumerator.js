@@ -1,6 +1,6 @@
 ﻿// @source /Collections/CustomEnumerator.js
 
-Bridge.define("Bridge.CustomEnumerator", {
+Bridge.define('Bridge.CustomEnumerator', {
     inherits: [Bridge.IEnumerator],
 
     constructor: function (moveNext, getCurrent, reset, dispose, scope) {

@@ -38,7 +38,7 @@
         return new Bridge.Decimal(0);
     };
 
-    Bridge.Decimal.getValue = function(d) {
+    Bridge.Decimal.getValue = function (d) {
         if (!Bridge.hasValue(d)) {
             return null;
         }
@@ -50,7 +50,7 @@
         return new Bridge.$Decimal(d);
     };
 
-    Bridge.Decimal.create = function(d) {
+    Bridge.Decimal.create = function (d) {
         if (!Bridge.hasValue(d)) {
             return null;
         }
@@ -210,7 +210,7 @@
         return n;
     };
 
-    Bridge.Decimal.toInt = function(v) {
+    Bridge.Decimal.toInt = function (v) {
         if (!v) {
             return null;
         }

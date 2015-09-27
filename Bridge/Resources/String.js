@@ -239,7 +239,7 @@
             return -1;
         },
 
-        equals: function() {
+        equals: function () {
             return Bridge.String.compare.apply(this, arguments) == 0;
         },
 
@@ -258,32 +258,26 @@
                     switch (arguments[2]) {
                         case 1: // CurrentCultureIgnoreCase
                             return strA.localeCompare(strB, Bridge.CultureInfo.getCurrentCulture().name, { sensitivity: 'accent' });
-                            break;
                         case 2: // InvariantCulture
                             return strA.localeCompare(strB, Bridge.CultureInfo.invariantCulture.name);
-                            break;
                         case 3: // InvariantCultureIgnoreCase
                             return strA.localeCompare(strB, Bridge.CultureInfo.invariantCulture.name, { sensitivity: 'accent' });
-                            break;
                         case 4: // Ordinal
                             return (strA === strB) ? 0 : ((strA > strB) ? 1 : -1);
-                            break;
                         case 5: // OrdinalIgnoreCase
                             return (strA.toUpperCase() === strB.toUpperCase()) ? 0 : ((strA.toUpperCase() > strB.toUpperCase()) ? 1 : -1);
-                            break;
                         case 0: // CurrentCulture
                         default:
                             break;
                     }
-                }
-                else {
+                } else {
                     // ignoreCase
                     if (arguments[2]) {
                         strA = strA.toLocaleUpperCase();
                         strB = strB.toLocaleUpperCase();
                     }
 
-                    if (arguments.length == 4) {
+                    if (arguments.length === 4) {
                         // CultureInfo
                         return strA.localeCompare(strB, arguments[3].name);
                     }
@@ -319,13 +313,12 @@
             return arr;
         },
 
-        escape: function(str) {
+        escape: function (str) {
             return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
         },
 
         replaceAll: function (str, a, b) {
-            a = Bridge.String.escape(a);
-            var reg = new RegExp(a, "g");
+            var reg = new RegExp(Bridge.String.escape(a), "g");
 
             return str.replace(reg, b);
         }

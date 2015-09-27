@@ -210,7 +210,7 @@ Bridge.Class.generic('Bridge.Dictionary$2', function (TKey, TValue) {
         },
 
         getEnumerator: function () {
-            return this.getCustomEnumerator(function(e) {
+            return this.getCustomEnumerator(function (e) {
                  return e;
             });
         }
