@@ -1,4 +1,4 @@
-﻿using ICSharpCode.NRefactory.CSharp;
+using ICSharpCode.NRefactory.CSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +20,7 @@ namespace Bridge.Translator
 
         public List<Expression> GetAwaitExpressions()
         {
-            this.AwaitExpressions.Sort((t1,t2) => t2.Item1.CompareTo(t1.Item1));
+            this.AwaitExpressions.Sort((t1, t2) => t2.Item1.CompareTo(t1.Item1));
             return this.AwaitExpressions.Select(t => t.Item2).ToList();
         }
 

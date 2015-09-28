@@ -1,4 +1,4 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 
 namespace Bridge.Translator
@@ -40,7 +40,11 @@ namespace Bridge.Translator
                 if (finallyNode != null)
                 {
                     var hashcode = finallyNode.GetHashCode();
-                    this.Emitter.AsyncBlock.JumpLabels.Add(new AsyncJumpLabel { Node = finallyNode, Output = this.Emitter.Output });
+                    this.Emitter.AsyncBlock.JumpLabels.Add(new AsyncJumpLabel
+                    {
+                        Node = finallyNode,
+                        Output = this.Emitter.Output
+                    });
                     this.Write("$step = ${" + hashcode + "};");
                     this.WriteNewLine();
                     this.Write("$jumpFromFinally = ");

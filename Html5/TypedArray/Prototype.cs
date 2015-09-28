@@ -1,7 +1,8 @@
-﻿// The documentation for this class (on <summary> tags) was extracted from:
+// The documentation for this class (on <summary> tags) was extracted from:
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/prototype
 
 using System;
+
 namespace Bridge.Html5.TypedArray
 {
     /// <summary>
@@ -14,6 +15,7 @@ namespace Bridge.Html5.TypedArray
     public class Prototype<TypedArray, TypedElement>
     {
         #region Properties
+
         //TODO: Identify how to represent the Func<x,TypedArray> ctor.
         // <summary>
         // Returns the function that created an instance's prototype. This is one the corresponding
@@ -44,7 +46,8 @@ namespace Bridge.Html5.TypedArray
         /// read only.
         /// </summary>
         public readonly long Length;
-        #endregion
+
+        #endregion Properties
 
         #region Methods
 
@@ -561,7 +564,7 @@ namespace Bridge.Html5.TypedArray
 
         // TypedArray.prototype[@@iterator]() pertains to ECMAScript 6 proposal and should not be used in
         // production environment.
-        #endregion
-    }
 
+        #endregion Methods
+    }
 }

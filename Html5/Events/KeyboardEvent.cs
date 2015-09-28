@@ -1,13 +1,11 @@
-﻿// Event WebAPI by Mozilla Contributors is licensed under CC-BY-SA 2.5.
+// Event WebAPI by Mozilla Contributors is licensed under CC-BY-SA 2.5.
 // https://developer.mozilla.org/en-US/docs/Web/API/event
-
-using Bridge;
 
 namespace Bridge.Html5
 {
     [Ignore]
     [Name("KeyboardEvent")]
-    public class KeyboardEvent: UIEvent
+    public class KeyboardEvent : UIEvent
     {
         internal KeyboardEvent()
         {
@@ -118,6 +116,7 @@ namespace Bridge.Html5
         }
 
         #region Key codes consts
+
         /// <summary>
         /// Cancel key.
         /// </summary>
@@ -1233,7 +1232,6 @@ namespace Bridge.Html5
         /// </summary>
         [InlineConst]
         public const int DOM_VK_WIN_OEM_CLEAR = 254;
-
 
         #endregion Key codes consts
     }

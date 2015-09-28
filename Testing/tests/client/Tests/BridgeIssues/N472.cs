@@ -1,17 +1,13 @@
-﻿using Bridge;
-using Bridge.Html5;
+using Bridge;
 using Bridge.QUnit;
 
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ClientTestLibrary
 {
     // Bridge[#472]
     [FileName("testBridgeIssues.js")]
-    class Bridge472
+    internal class Bridge472
     {
         public static void Test(Assert assert)
         {

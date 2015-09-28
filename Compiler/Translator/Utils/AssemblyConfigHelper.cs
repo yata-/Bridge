@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Bridge.Contract;
-using Bridge.Translator;
-
 using Newtonsoft.Json;
+using System.IO;
 
 namespace Bridge.Translator.Utils
 {
@@ -31,7 +23,6 @@ namespace Bridge.Translator.Utils
 
             return config;
         }
-
 
         public static IAssemblyInfo ReadConfig(bool folderMode, string location)
         {

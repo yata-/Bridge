@@ -1,12 +1,9 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Linq;
 using System.IO;
-using System.Text.RegularExpressions;
-using ICSharpCode.NRefactory.CSharp;
-using ICSharpCode.NRefactory.TypeSystem;
+using System.Linq;
+using System.Text;
 
 namespace Bridge.Translator.TypeScript
 {
@@ -23,7 +20,8 @@ namespace Bridge.Translator.TypeScript
 
         private string ns = null;
 
-        public EmitBlock(IEmitter emitter) : base(emitter, null)
+        public EmitBlock(IEmitter emitter)
+            : base(emitter, null)
         {
             this.Emitter = emitter;
         }

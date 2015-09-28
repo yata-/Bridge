@@ -1,4 +1,4 @@
-﻿using Bridge;
+using Bridge;
 using Bridge.Html5;
 using Bridge.QUnit;
 
@@ -7,7 +7,7 @@ using ClientTestLibrary.Linq;
 namespace ClientTestLibrary
 {
     [FileName("testRunner.js")]
-    class RunTests
+    internal class RunTests
     {
         [Ready]
         public static void Main()

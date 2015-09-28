@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Bridge;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Bridge.Html5
 {
@@ -35,7 +34,6 @@ namespace Bridge.Html5
         /// Get a list of cues as a TextTrackCueList object
         /// </summary>
         public readonly TextTrackCueList Cues;
-
 
         /// <summary>
         /// Get the currently active text track cues as a TextTrackCueList object

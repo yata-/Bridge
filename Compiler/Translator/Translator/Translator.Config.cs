@@ -1,11 +1,7 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-
 using Bridge.Contract;
 using Bridge.Translator.Utils;
-
-using Newtonsoft.Json;
+using System.Diagnostics;
+using System.IO;
 
 namespace Bridge.Translator
 {

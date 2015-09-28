@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
-
 namespace BasicTypes
 {
-    public enum Color { Red, Green, Blue };
+    public enum Color
+    {
+        Red,
+        Green,
+        Blue
+    };
 
     public class BasicTypes
     {
@@ -13,20 +16,26 @@ namespace BasicTypes
         public int[] IntegerArray = new int[] { 1, 2, 3 };
         public string[] StringArray = new string[] { "1", "2", "3" };
         public Color[] ColorArray = new Color[] { Color.Blue, Color.Green, Color.Red };
+
         public int[][] TwoDimensionalArray = new int[][]
         {
             new int[] { 1, 2, 3 },
             new int[] { 5, 8 }
         };
+
         // TODO
         // list of int[]
         public Color ColorValue = Color.Green;
+
         public object AnyValueString = "AnyValueString";
         public object AnyValueInteger = 1;
         public dynamic DynamicValueInteger = 7;
 
         public object UndefinedValue = Bridge.Script.Undefined;
-        public void VoidFunction() { }
+
+        public void VoidFunction()
+        {
+        }
     }
 
     public class Keywords

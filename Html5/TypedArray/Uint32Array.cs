@@ -1,4 +1,4 @@
-﻿// The documentation for this class (on <summary> tags) was extracted from:
+// The documentation for this class (on <summary> tags) was extracted from:
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array
 
 namespace Bridge.Html5
@@ -53,8 +53,13 @@ namespace Bridge.Html5
         /// <returns>The element in the specified position.</returns>
         public uint this[Any<int, long, uint, ulong> i]
         {
-            get { return default(uint); }
-            set { }
+            get
+            {
+                return default(uint);
+            }
+            set
+            {
+            }
         }
 
         #region Properties
@@ -79,13 +84,13 @@ namespace Bridge.Html5
         /// </summary>
         public readonly TypedArray.Prototype<Uint32Array, uint> Prototype;
 
-        #endregion
+        #endregion Properties
 
         #region Methods
 
         // Uint32Array.from() and Uint32Array.of() are work in progress for ES6 and, at the time of the writing,
         // were not ready for production environment. Thus, their definitions are not present here.
 
-        #endregion
+        #endregion Methods
     }
 }

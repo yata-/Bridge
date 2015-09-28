@@ -1,8 +1,8 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
+using ICSharpCode.NRefactory.CSharp;
 using Mono.Cecil;
 using System;
 using System.Collections.Generic;
-using ICSharpCode.NRefactory.CSharp;
 
 namespace Bridge.Translator
 {
@@ -50,7 +50,11 @@ namespace Bridge.Translator
             protected set;
         }
 
-        public string BuildArguments { get; set; }
+        public string BuildArguments
+        {
+            get;
+            set;
+        }
 
         private string msbuildVersion = "4.0.30319";
 
@@ -169,8 +173,8 @@ namespace Bridge.Translator
             get;
             set;
         }
-		
-		public virtual IEnumerable<AssemblyDefinition> References
+
+        public virtual IEnumerable<AssemblyDefinition> References
         {
             get;
             set;

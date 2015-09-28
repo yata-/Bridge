@@ -1,11 +1,11 @@
-﻿using ICSharpCode.NRefactory.CSharp;
+using Bridge.Contract;
+using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bridge.Contract;
 
 namespace Bridge.Translator
 {
@@ -77,7 +77,7 @@ namespace Bridge.Translator
                                     if (isCommon)
                                     {
                                         var eventArg = attr.Arguments.First();
-                                        var primitiveArg = eventArg  as ICSharpCode.NRefactory.CSharp.PrimitiveExpression;
+                                        var primitiveArg = eventArg as ICSharpCode.NRefactory.CSharp.PrimitiveExpression;
 
                                         if (primitiveArg != null)
                                         {

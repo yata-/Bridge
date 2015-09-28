@@ -1,5 +1,3 @@
-﻿using System.Collections.Generic;
-
 namespace Functions
 {
     public class Parameters
@@ -25,7 +23,9 @@ namespace Functions
     public class Delegates
     {
         public delegate void VoidDelegate();
+
         public delegate void StringDelegate(string s);
+
         public delegate int StringDelegateIntResult(string s);
     }
 
@@ -33,7 +33,9 @@ namespace Functions
     public interface DelegateInterface
     {
         event Delegates.VoidDelegate MethodVoidDelegate;
+
         event Delegates.StringDelegate MethodStringDelegate;
+
         event Delegates.StringDelegateIntResult MethodStringDelegateIntResult;
     }
 
@@ -42,7 +44,5 @@ namespace Functions
         public Delegates.VoidDelegate MethodVoidDelegate;
         public Delegates.StringDelegate MethodStringDelegate;
         public Delegates.StringDelegateIntResult MethodStringDelegateIntResult;
-
     }
 }
-

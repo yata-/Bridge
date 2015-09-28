@@ -1,9 +1,9 @@
-﻿using Bridge;
-using System.Text.RegularExpressions;
-using System.Globalization;
+using Bridge;
 using System.Collections;
-using System.Runtime.CompilerServices;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 
 namespace System
 {
@@ -30,19 +30,22 @@ namespace System
         [Template("String.fromCharCode.apply(null, {value})")]
         public String(char[] value)
         {
-            
         }
 
         /// <summary>
         /// The String global object is a constructor for strings, or a sequence of characters.
         /// </summary>
-        public String() { }
+        public String()
+        {
+        }
 
         /// <summary>
         /// The String global object is a constructor for strings, or a sequence of characters.
         /// </summary>
         /// <param name="thing">Anything to be converted to a string.</param>
-        public String(object thing) { }
+        public String(object thing)
+        {
+        }
 
         /// <summary>
         /// Constructs a string from the value indicated by a specified character repeated a specified number of times.
@@ -50,7 +53,9 @@ namespace System
         /// <param name="c">A character.</param>
         /// <param name="count">The number of times the character occurs.</param>
         [Template("Bridge.String.fromCharCount({c}, {count})")]
-        public String(char c, int count) { }
+        public String(char c, int count)
+        {
+        }
 
         /// <summary>
         /// Indicates whether the specified string is null or an Empty string.
@@ -82,8 +87,6 @@ namespace System
         {
             return null;
         }
-
-
 
         /// <summary>
         /// The static String.fromCharCode() method returns a string created by using the specified sequence of Unicode values.
@@ -946,7 +949,6 @@ namespace System
         {
             return null;
         }
-
 
         [Template("Bridge.String.indexOfAny({this}, {anyOf})")]
         public int IndexOfAny(char[] anyOf)

@@ -1,4 +1,4 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using System.Collections.Generic;
 using System.Linq;
@@ -238,7 +238,6 @@ namespace Bridge.Translator
                 this.WriteCloseParentheses();
                 this.Emitter.ReplaceAwaiterByVar = oldValue;
             }
-
 
             if (switchSection.Statements.Count() == 1 && switchSection.Statements.First() is BlockStatement)
             {

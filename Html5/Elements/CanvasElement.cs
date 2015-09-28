@@ -1,6 +1,3 @@
-﻿using System;
-using Bridge;
-
 namespace Bridge.Html5
 {
     /// <summary>
@@ -105,5 +102,7 @@ namespace Bridge.Html5
     /// <summary>
     /// Implement this interface to use it with canvas.GetContext()
     /// </summary>
-    public interface IWebGLRenderingContext { }
+    public interface IWebGLRenderingContext
+    {
+    }
 }

@@ -1,13 +1,8 @@
-﻿using ICSharpCode.NRefactory.CSharp;
-using ICSharpCode.NRefactory.TypeSystem;
-using System;
-using System.Collections.Generic;
-using Object.Net.Utilities;
-using ICSharpCode.NRefactory;
 using Bridge.Contract;
-
+using ICSharpCode.NRefactory.CSharp;
+using ICSharpCode.NRefactory.TypeSystem;
+using System.Collections.Generic;
 using NRAttribute = ICSharpCode.NRefactory.CSharp.Attribute;
-using BrException = Bridge.Translator.Exception;
 
 namespace Bridge.Translator
 {
@@ -22,7 +17,6 @@ namespace Bridge.Translator
 
         protected virtual bool HasAttribute(EntityDeclaration type, string name)
         {
-
             foreach (var i in type.Attributes)
             {
                 foreach (var j in i.Attributes)
@@ -99,6 +93,7 @@ namespace Bridge.Translator
                 {
                     case KnownTypeCode.Decimal:
                         return 0m;
+
                     case KnownTypeCode.Int16:
                     case KnownTypeCode.Int32:
                     case KnownTypeCode.Int64:
@@ -110,6 +105,7 @@ namespace Bridge.Translator
                     case KnownTypeCode.SByte:
                     case KnownTypeCode.Single:
                         return 0;
+
                     case KnownTypeCode.Boolean:
                         return false;
                 }
@@ -163,7 +159,6 @@ namespace Bridge.Translator
                 return false;
             }
 
-
             if (type.Kind == TypeKind.Struct)
             {
                 return type;
@@ -192,7 +187,7 @@ namespace Bridge.Translator
 
                 return true;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return false;
             }
@@ -210,13 +205,11 @@ namespace Bridge.Translator
                 string newName = Emitter.FIX_ARGUMENT_NAME + p.Name;
                 string oldName = p.Name;
 
-
                 VariableDeclarationStatement varState = new VariableDeclarationStatement(p.Type.Clone(), oldName, new CastExpression(p.Type.Clone(), new IdentifierExpression(newName)));
 
                 p.Name = newName;
 
                 body.InsertChildBefore(body.FirstChild, varState, new Role<VariableDeclarationStatement>("Statement"));
-
             }*/
         }
 
@@ -242,7 +235,7 @@ namespace Bridge.Translator
                 var nsName = nsAt.Arguments.FirstOrNullObject().ToString().Trim('"');
                 if (Bridge.Translator.Inspector.IsConflictingNamespace(nsName))
                 {
-                    throw new EmitterException(nsAt,"Custom attribute '[" + nsAt.ToString() +
+                    throw new EmitterException(nsAt, "Custom attribute '[" + nsAt.ToString() +
                         "]' uses reserved namespace name 'Bridge'.\n" +
                         "This name is reserved for Bridge.NET core.");
                 }

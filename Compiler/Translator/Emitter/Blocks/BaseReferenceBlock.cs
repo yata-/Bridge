@@ -1,4 +1,4 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
@@ -34,7 +34,6 @@ namespace Bridge.Translator
 
                 if (rr != null)
                 {
-
                     if (rr.IsVirtualCall)
                     {
                         proto = true;

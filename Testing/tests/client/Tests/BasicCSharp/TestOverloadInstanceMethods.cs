@@ -1,12 +1,12 @@
-﻿using Bridge;
+using Bridge;
 using Bridge.QUnit;
 
 namespace ClientTestLibrary
 {
-    class TestOverloadInstanceMethods
+    internal class TestOverloadInstanceMethods
     {
         [FileName("testOverloadInstanceMethods.js")]
-        class Instance
+        private class Instance
         {
             public string Foo(int x)
             {

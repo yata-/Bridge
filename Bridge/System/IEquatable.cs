@@ -1,4 +1,5 @@
-﻿using Bridge;
+using Bridge;
+
 namespace System
 {
     [Ignore]
@@ -6,6 +7,6 @@ namespace System
     public interface IEquatable<in T> : IBridgeClass
     {
         [Template("Bridge.equalsT({this}, {other})")]
-		bool Equals(T other);
-	}
+        bool Equals(T other);
+    }
 }

@@ -1,4 +1,4 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using Object.Net.Utilities;
 using System;
@@ -99,7 +99,11 @@ namespace Bridge.Translator
                 if (finallyNode != null)
                 {
                     var hashcode = finallyNode.GetHashCode();
-                    this.Emitter.AsyncBlock.JumpLabels.Add(new AsyncJumpLabel { Node = finallyNode, Output = this.Emitter.Output });
+                    this.Emitter.AsyncBlock.JumpLabels.Add(new AsyncJumpLabel
+                    {
+                        Node = finallyNode,
+                        Output = this.Emitter.Output
+                    });
                     this.Write("$step = ${" + hashcode + "};");
                     this.WriteNewLine();
                     this.Write("continue;");
@@ -141,7 +145,11 @@ namespace Bridge.Translator
                 if (finallyNode != null)
                 {
                     var hashcode = finallyNode.GetHashCode();
-                    this.Emitter.AsyncBlock.JumpLabels.Add(new AsyncJumpLabel { Node = finallyNode, Output = this.Emitter.Output });
+                    this.Emitter.AsyncBlock.JumpLabels.Add(new AsyncJumpLabel
+                    {
+                        Node = finallyNode,
+                        Output = this.Emitter.Output
+                    });
                     this.Write("$step = ${" + hashcode + "};");
                     this.WriteNewLine();
                     this.Write("continue;");
@@ -190,7 +198,7 @@ namespace Bridge.Translator
 
             var count = this.TryCatchStatement.CatchClauses.Count;
 
-            if(count > 0)
+            if (count > 0)
             {
                 var firstClause = this.TryCatchStatement.CatchClauses.Count == 1 ? this.TryCatchStatement.CatchClauses.First() : null;
                 var exceptionType = (firstClause == null || firstClause.Type.IsNull) ? null : BridgeTypes.ToJsName(firstClause.Type, this.Emitter);

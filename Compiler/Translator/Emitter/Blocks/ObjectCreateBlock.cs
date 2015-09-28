@@ -1,13 +1,12 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
+using ICSharpCode.NRefactory.TypeSystem;
 using Mono.Cecil;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using ICSharpCode.NRefactory.TypeSystem;
-using ICSharpCode.NRefactory.TypeSystem.Implementation;
 
 namespace Bridge.Translator
 {
@@ -82,7 +81,6 @@ namespace Bridge.Translator
             var customCtor = this.Emitter.Validator.GetCustomConstructor(type) ?? "";
             var hasInitializer = !objectCreateExpression.Initializer.IsNull && objectCreateExpression.Initializer.Elements.Count > 0;
 
-
             bool isCollectionInitializer = false;
             AstNodeCollection<Expression> elements = null;
 
@@ -126,7 +124,6 @@ namespace Bridge.Translator
                 }
                 else
                 {
-
                     if (String.IsNullOrEmpty(customCtor))
                     {
                         this.WriteNew();
@@ -318,7 +315,6 @@ namespace Bridge.Translator
                             }
 
                             var name = member.GetName(this.Emitter);
-
 
                             if (!preserveMemberCase)
                             {

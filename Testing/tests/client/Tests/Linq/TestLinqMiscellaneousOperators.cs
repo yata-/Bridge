@@ -1,10 +1,10 @@
-﻿using Bridge.QUnit;
+using Bridge.QUnit;
 using ClientTestLibrary.Utilities;
 using System.Linq;
 
 namespace ClientTestLibrary.Linq
 {
-    class TestLinqMiscellaneousOperators
+    internal class TestLinqMiscellaneousOperators
     {
         public static void Test(Assert assert)
         {
@@ -18,8 +18,10 @@ namespace ClientTestLibrary.Linq
             assert.DeepEqual(concatNumbers, new[] { 4, 1, 3, 2, 3, 5 }, "Concat() numbers");
 
             // TEST
-            var names = from p in Person.GetPersons() select p.Name;
-            var cities = from p in Person.GetPersons() select p.City;
+            var names = from p in Person.GetPersons()
+                        select p.Name;
+            var cities = from p in Person.GetPersons()
+                         select p.City;
             var concatNames = names.Concat(cities).ToArray();
 
             assert.DeepEqual(concatNames,

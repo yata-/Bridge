@@ -1,6 +1,4 @@
-﻿using Bridge.Contract;
-using System;
-using System.Collections.Generic;
+using Bridge.Contract;
 using System.Text;
 
 namespace Bridge.Translator

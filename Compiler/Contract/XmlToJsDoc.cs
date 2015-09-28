@@ -1,15 +1,13 @@
-﻿using ICSharpCode.NRefactory.CSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
+using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
 using Newtonsoft.Json;
-using Object.Net.Utilities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Xml;
 
 namespace Bridge.Contract
 {
@@ -43,7 +41,7 @@ namespace Bridge.Contract
             object value = null;
             if (node is FieldDeclaration)
             {
-                var fieldDecl = (FieldDeclaration) node;
+                var fieldDecl = (FieldDeclaration)node;
                 node = fieldDecl.Variables.First();
                 var initializer = fieldDecl.Variables.First().Initializer as PrimitiveExpression;
 
@@ -324,7 +322,6 @@ namespace Bridge.Contract
                 }
             }
 
-
             return comment.ToString();
         }
 
@@ -371,7 +368,6 @@ namespace Bridge.Contract
             RemoveNodes(node, "include");
             RemoveNodes(node, "list");
             RemoveNodes(node, "permission");
-
 
             return node.InnerXml.Trim();
         }
@@ -459,7 +455,7 @@ namespace Bridge.Contract
 
                 if (member is IParameterizedMember)
                 {
-                    var parameters = ((IParameterizedMember) member).Parameters;
+                    var parameters = ((IParameterizedMember)member).Parameters;
 
                     if (parameters != null && parameters.Count > 0)
                     {
@@ -550,7 +546,7 @@ namespace Bridge.Contract
             IMember member = null;
             if (rr is MemberResolveResult)
             {
-                member = ((MemberResolveResult) rr).Member;
+                member = ((MemberResolveResult)rr).Member;
             }
 
             if (name == null)
@@ -560,7 +556,7 @@ namespace Bridge.Contract
 
             if (member is IParameterizedMember)
             {
-                var paramMember = (IParameterizedMember) member;
+                var paramMember = (IParameterizedMember)member;
                 var param = paramMember.Parameters.FirstOrDefault(p => p.Name == name);
                 if (param != null)
                 {
@@ -579,10 +575,13 @@ namespace Bridge.Contract
                 {
                     case KnownTypeCode.Void:
                         return "void";
+
                     case KnownTypeCode.Boolean:
                         return "boolean";
+
                     case KnownTypeCode.String:
                         return "string";
+
                     case KnownTypeCode.Decimal:
                     case KnownTypeCode.Double:
                     case KnownTypeCode.Byte:
@@ -742,7 +741,7 @@ namespace Bridge.Contract
             return name;
         }
 
-        class DocumentationCommentVisitor : DepthFirstAstVisitor
+        private class DocumentationCommentVisitor : DepthFirstAstVisitor
         {
             public DocumentationCommentVisitor()
             {
@@ -822,7 +821,8 @@ namespace Bridge.Contract
 
         public bool IsPrivate
         {
-            get; set;
+            get;
+            set;
         }
 
         public bool IsPublic
@@ -979,7 +979,7 @@ namespace Bridge.Contract
 
             if (this.Descriptions.Count > 0)
             {
-                comment.Append(" * " + string.Join(newLine +" * ", this.Descriptions.ToArray()) + newLine + " *" + newLine);
+                comment.Append(" * " + string.Join(newLine + " * ", this.Descriptions.ToArray()) + newLine + " *" + newLine);
             }
 
             if (this.Remarks.Count > 0)

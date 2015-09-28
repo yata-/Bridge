@@ -1,10 +1,11 @@
 using Bridge;
+
 namespace System
 {
-	[Namespace("Bridge")]
-	[Ignore]
+    [Namespace("Bridge")]
+    [Ignore]
     public interface IFormatProvider : IBridgeClass
     {
-		object GetFormat(Type formatType);
-	}
+        object GetFormat(Type formatType);
+    }
 }

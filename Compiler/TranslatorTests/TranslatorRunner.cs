@@ -1,22 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace Bridge.Translator.Tests
 {
-    class TranslatorRunner
+    internal class TranslatorRunner
     {
-        public string ProjectLocation { get; set; }
-        public string BuildArguments { get; set; }
+        public string ProjectLocation
+        {
+            get;
+            set;
+        }
 
-        void LogMessage(string level, string message)
+        public string BuildArguments
+        {
+            get;
+            set;
+        }
+
+        private void LogMessage(string level, string message)
         {
             SimpleLogger.Instance.WriteLine("{0}: {1}", level.ToUpper(), message);
         }
 
-        void LogInfo(string message)
+        private void LogInfo(string message)
         {
             SimpleLogger.Instance.LogInfo(message);
         }
@@ -31,7 +36,9 @@ namespace Bridge.Translator.Tests
                 return null;
 
             if (!Path.IsPathRooted(outputPath))
+            {
                 outputPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(bridgeProjectPath), outputPath));
+            }
 
             var bridgeDllPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(outputPath), "Bridge.dll"));
 
@@ -73,6 +80,7 @@ namespace Bridge.Translator.Tests
 
             string configuration;
             translator.BridgeLocation = FindBridgeDllPath(out configuration);
+
             if (translator.BridgeLocation == null)
             {
                 Bridge.Translator.Exception.Throw("Unable to determine Bridge project output path");
@@ -111,7 +119,9 @@ namespace Bridge.Translator.Tests
             LogInfo("\t\tProjectLocation: " + ProjectLocation);
 
             string configuration;
+
             translator.BridgeLocation = FindBridgeDllPath(out configuration);
+
             if (translator.BridgeLocation == null)
             {
                 Bridge.Translator.Exception.Throw("Unable to determine Bridge project output path");

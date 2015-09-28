@@ -1,4 +1,4 @@
-﻿using Bridge;
+using Bridge;
 
 namespace System.Collections.Generic
 {
@@ -17,11 +17,13 @@ namespace System.Collections.Generic
     [Namespace("Bridge")]
     public abstract class EqualityComparer<T> : IEqualityComparer<T>, IBridgeClass
     {
-
         public static EqualityComparer<T> Default
         {
             [Template("new Bridge.EqualityComparer$1({T})()")]
-            get { return null; }
+            get
+            {
+                return null;
+            }
         }
 
         [Template("{this}.equals({x}, {y})")]

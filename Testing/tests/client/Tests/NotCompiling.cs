@@ -1,48 +1,59 @@
-﻿using Bridge;
+using Bridge;
 
 namespace ClientTestLibrary
 {
-    //Does not compile issue [#59]
+    // Does not compile issue [#59]
     [FileName("notCompiling.js")]
-    class Class59
+    internal class Class59
     {
-        public static void Method1() { }
+        public static void Method1()
+        {
+        }
 
-        public void Method1(Aux1 d) { }
+        public void Method1(Aux1 d)
+        {
+        }
 
-        public class Aux1 { }
+        public class Aux1
+        {
+        }
     }
 
-    //Does not compile issue [#61]
-    //TODO It shows a correct error description now. How to check that in tests?
-    //[FileName("notCompiling.js")]
-    //class Class61
-    //{
-    //    public static void Test1(bool condition, string message = null)
-    //    {
-    //        Bridge.Script.Write(string.Format("var q = {0};", 1));
-    //    }
-    //}
+    // Does not compile issue [#61]
+    // TODO It shows a correct error description now. How to check that in tests?
+    // [FileName("notCompiling.js")]
+    // class Class61
+    // {
+    //     public static void Test1(bool condition, string message = null)
+    //     {
+    //         Bridge.Script.Write(string.Format("var q = {0};", 1));
+    //     }
+    // }
 
-    //Error: Index was outside the bounds of the array.
-    //public class Class2
-    //{
-    //    public static void Test1(bool condition, string message = null)
-    //    {
-    //        Bridge.Script.Write("");
-    //    }
-    //}
+    // Error: Index was outside the bounds of the array.
+    // public class Class2
+    // {
+    //      public static void Test1(bool condition, string message = null)
+    //     {
+    //         Bridge.Script.Write("");
+    //     }
+    // }
 
-
-    //[#64]
+    // [#64]
     [FileName("notCompiling.js")]
-    class Class64
+    internal class Class64
     {
-        public class Aux1 { }
+        public class Aux1
+        {
+        }
 
-        public Class64() { }
+        public Class64()
+        {
+        }
 
-        public Class64(Aux1 related) { }
+        public Class64(Aux1 related)
+        {
+        }
 
         public void Test()
         {
@@ -51,50 +62,62 @@ namespace ClientTestLibrary
         }
     }
 
-    //[#65]
+    // [#65]
     [FileName("notCompiling.js")]
-    class Class65_1
+    internal class Class65_1
     {
-        public class Nested { }
-    }
-
-    [FileName("notCompiling.js")]
-    class Class65_2 : Class65_1.Nested
-    {
-    }
-
-    //[#66]
-    [FileName("notCompiling.js")]
-    public struct Rectangle66
-    {
-        public Rectangle66(int x1) { this = new Rectangle66(); }
-        public Rectangle66(int x1, int x2) { }
-    }
-
-    [FileName("notCompiling.js")]
-    //[#84] Does not compile
-    class Class84
-    {
-        public void Test1()
+        public class Nested
         {
-            try { }
-            catch { }
         }
     }
 
-    //[#89]
-    //[FileName("notCompiling.js")]
-    //public class Class89
-    //{
-    //    void Test(params object[] p)
-    //    {
-    //        var i = p[0];
-    //    }
-    //}
-
-    //[#391]
     [FileName("notCompiling.js")]
-    class Class391
+    internal class Class65_2 : Class65_1.Nested
+    {
+    }
+
+    // [#66]
+    [FileName("notCompiling.js")]
+    public struct Rectangle66
+    {
+        public Rectangle66(int x1)
+        {
+            this = new Rectangle66();
+        }
+
+        public Rectangle66(int x1, int x2)
+        {
+        }
+    }
+
+    [FileName("notCompiling.js")]
+    // [#84] Does not compile
+    internal class Class84
+    {
+        public void Test1()
+        {
+            try
+            {
+            }
+            catch
+            {
+            }
+        }
+    }
+
+    // [#89]
+    // [FileName("notCompiling.js")]
+    // public class Class89
+    // {
+    //     void Test(params object[] p)
+    //     {
+    //         var i = p[0];
+    //     }
+    // }
+
+    // [#391]
+    [FileName("notCompiling.js")]
+    internal class Class391
     {
         public static void Main()
         {

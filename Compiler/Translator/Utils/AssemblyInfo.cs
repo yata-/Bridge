@@ -1,4 +1,4 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using System.Collections.Generic;
 
 namespace Bridge.Translator
@@ -147,6 +147,7 @@ namespace Bridge.Translator
             get;
             set;
         }
+
         public bool AutoPropertyToField
         {
             get;
@@ -166,6 +167,7 @@ namespace Bridge.Translator
         }
 
         private Bridge.Contract.DocumentationMode generateDocumentation = Bridge.Contract.DocumentationMode.Basic;
+
         public Bridge.Contract.DocumentationMode GenerateDocumentation
         {
             get
@@ -182,23 +184,44 @@ namespace Bridge.Translator
         /// The BuildArguments will be added to the command line that build project files. It is useful for debugging, logging etc.
         /// For example, "/fileLogger /fileLoggerParameters:Append;"
         /// </summary>
-        public string BuildArguments { get; set; }
+        public string BuildArguments
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Deletes files and folders from output directory before build (before extracting scripts after translation).
         /// It is useful to replace BeforeBuild event if it just contain commands to clean the output folder.
         /// </summary>
-        public bool CleanOutputFolderBeforeBuild { get; set; }
+        public bool CleanOutputFolderBeforeBuild
+        {
+            get;
+            set;
+        }
 
-        public string Configuration { get; set; }
+        public string Configuration
+        {
+            get;
+            set;
+        }
 
-        public List<string> DefineConstants { get; set; }
-		
-		public bool InjectScriptToAssembly { get; set; }
+        public List<string> DefineConstants
+        {
+            get;
+            set;
+        }
+
+        public bool InjectScriptToAssembly
+        {
+            get;
+            set;
+        }
 
         public string Locales
         {
-            get; set;
+            get;
+            set;
         }
 
         public string LocalesOutput
@@ -209,7 +232,7 @@ namespace Bridge.Translator
 
         public string LocalesFileName
         {
-            get; 
+            get;
             set;
         }
 
@@ -221,7 +244,7 @@ namespace Bridge.Translator
 
         public bool CombineScripts
         {
-            get; 
+            get;
             set;
         }
     }

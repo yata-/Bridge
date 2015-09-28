@@ -1,4 +1,4 @@
-﻿using Bridge;
+using Bridge;
 using Bridge.Html5;
 using Bridge.QUnit;
 
@@ -10,13 +10,16 @@ using System.Linq;
 namespace ClientTestLibrary
 {
     [FileName("testBridgeIssues.js")]
-    class Bridge169
+    internal class Bridge169
     {
         public static int Number = 0;
 
         public static void M1()
         {
-            new Action(() => { Bridge169.Number = 1; })();
+            new Action(() =>
+            {
+                Bridge169.Number = 1;
+            })();
         }
 
         public static void M2()
@@ -26,13 +29,17 @@ namespace ClientTestLibrary
     }
 
     [FileName("testBridgeIssues.js")]
-    abstract class Bridge240A
+    internal abstract class Bridge240A
     {
-        public int Data { get; set; }
+        public int Data
+        {
+            get;
+            set;
+        }
     }
 
     [FileName("testBridgeIssues.js")]
-    class Bridge240B : Bridge240A
+    internal class Bridge240B : Bridge240A
     {
         public string GetString()
         {
@@ -42,7 +49,7 @@ namespace ClientTestLibrary
     }
 
     [FileName("testBridgeIssues.js")]
-    class Bridge266A
+    internal class Bridge266A
     {
         public static object Test()
         {
@@ -50,12 +57,11 @@ namespace ClientTestLibrary
             // If null is used instead (as commented-out) then it works as expected.
             // No compile error.
             return Bridge266B.Test("test", new object());
-            //Bridge266B.Test("test", null);
         }
     }
 
     [FileName("testBridgeIssues.js")]
-    class Bridge266B
+    internal class Bridge266B
     {
         public static object Test(string arg1, object arg2)
         {
@@ -64,10 +70,15 @@ namespace ClientTestLibrary
     }
 
     [FileName("testBridgeIssues.js")]
-    class Bridge272
+    internal class Bridge272
     {
         [FileName("testBridgeIssues.js")]
-        public enum MyEnum { Abc = 1, Def = 2, Ghi = 3 };
+        public enum MyEnum
+        {
+            Abc = 1,
+            Def = 2,
+            Ghi = 3
+        };
 
         public static MyEnum Test(int i)
         {
@@ -76,9 +87,10 @@ namespace ClientTestLibrary
     }
 
     [FileName("testBridgeIssues.js")]
-    class Bridge294
+    internal class Bridge294
     {
         private readonly string Name;
+
         public Bridge294(string name)
         {
             this.Name = name;
@@ -96,13 +108,20 @@ namespace ClientTestLibrary
     }
 
     [FileName("testBridgeIssues.js")]
-    enum Bridge277 { Int }
+    internal enum Bridge277
+    {
+        Int
+    }
 
-    //[#304]
+    // [#304]
     [FileName("testBridgeIssues.js")]
     public class Bridge304 : IBridge304
     {
-        public string X { get; set; }
+        public string X
+        {
+            get;
+            set;
+        }
 
         public void F(string x)
         {
@@ -113,8 +132,8 @@ namespace ClientTestLibrary
         {
             this.X = "void F()";
         }
-
     }
+
     [FileName("testBridgeIssues.js")]
     public interface IBridge304
     {
@@ -124,15 +143,26 @@ namespace ClientTestLibrary
     [FileName("testBridgeIssues.js")]
     public class Bridge305 : IEnumerable<string>
     {
-        public List<string> Items { get; private set; }
+        public List<string> Items
+        {
+            get;
+            private set;
+        }
 
         public Bridge305(string[] items)
         {
             Items = new List<string>(items);
         }
 
-        IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
-        public IEnumerator<string> GetEnumerator() { return Items.GetEnumerator(); }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public IEnumerator<string> GetEnumerator()
+        {
+            return Items.GetEnumerator();
+        }
     }
 
     [FileName("testBridgeIssues.js")]
@@ -185,13 +215,21 @@ namespace ClientTestLibrary
     [FileName("testBridgeIssues.js")]
     public class Bridge341A
     {
-        public string Str { get; set; }
+        public string Str
+        {
+            get;
+            set;
+        }
     }
 
     [FileName("testBridgeIssues.js")]
     public class Bridge341B : IEquatable<Bridge341B>
     {
-        public string Str { get; set; }
+        public string Str
+        {
+            get;
+            set;
+        }
 
         public bool Equals(Bridge341B other)
         {
@@ -235,21 +273,39 @@ namespace ClientTestLibrary
 
         public string this[int key]
         {
-            get { return _backingDictionary[key]; }
-            set { _backingDictionary[key] = value; }
+            get
+            {
+                return _backingDictionary[key];
+            }
+            set
+            {
+                _backingDictionary[key] = value;
+            }
         }
 
         public new ICollection<int> Keys
         {
-            get { return _backingDictionary.Keys; }
+            get
+            {
+                return _backingDictionary.Keys;
+            }
         }
 
         public ICollection<string> Values
         {
-            get { return _backingDictionary.Values; }
+            get
+            {
+                return _backingDictionary.Values;
+            }
         }
 
-        public int Count { get { return _backingDictionary.Count; } }
+        public int Count
+        {
+            get
+            {
+                return _backingDictionary.Count;
+            }
+        }
 
         public void Add(int key, string value)
         {
@@ -290,7 +346,11 @@ namespace ClientTestLibrary
     [FileName("testBridgeIssues.js")]
     public class Person383
     {
-        public string Name { get; set; }
+        public string Name
+        {
+            get;
+            set;
+        }
     }
 
     [FileName("testBridgeIssues.js")]
@@ -305,18 +365,34 @@ namespace ClientTestLibrary
     [FileName("testBridgeIssues.js")]
     public class Bridge395
     {
-        public string Id { get; set; }
-        public int data { get; set; }
+        public string Id
+        {
+            get;
+            set;
+        }
+
+        public int data
+        {
+            get;
+            set;
+        }
     }
 
     [FileName("testBridgeIssues.js")]
-    struct Bridge407
+    internal struct Bridge407
     {
-        public int A { get; set; }
+        public int A
+        {
+            get;
+            set;
+        }
 
         public static Bridge407 operator +(Bridge407 x, Bridge407 y)
         {
-            return new Bridge407() { A = x.A + y.A };
+            return new Bridge407()
+            {
+                A = x.A + y.A
+            };
         }
     }
 
@@ -325,7 +401,11 @@ namespace ClientTestLibrary
     {
         public delegate int MyDelegate(int data);
 
-        public MyDelegate Delegate { get; set; }
+        public MyDelegate Delegate
+        {
+            get;
+            set;
+        }
 
         public int CallDelegate(int data)
         {
@@ -334,7 +414,7 @@ namespace ClientTestLibrary
     }
 
     [FileName("testBridgeIssues.js")]
-    enum Bridge422
+    internal enum Bridge422
     {
         first = 0,
         next = 100,
@@ -387,7 +467,11 @@ namespace ClientTestLibrary
     [FileName("testBridgeIssues.js")]
     public class Bridge467
     {
-        public int MyProperty { get; set; }
+        public int MyProperty
+        {
+            get;
+            set;
+        }
 
         public override bool Equals(object obj)
         {
@@ -412,7 +496,11 @@ namespace ClientTestLibrary
     [FileName("testBridgeIssues.js")]
     public class Bridge470 : IEqualityComparer<Bridge470>
     {
-        public int Data { get; set; }
+        public int Data
+        {
+            get;
+            set;
+        }
 
         public bool Equals(Bridge470 x, Bridge470 y)
         {
@@ -431,9 +519,8 @@ namespace ClientTestLibrary
     }
 
     // Tests Bridge GitHub issues
-    class TestBridgeIssues
+    internal class TestBridgeIssues
     {
-
         // Bridge[#169]
         public static void N169(Assert assert)
         {
@@ -511,7 +598,6 @@ namespace ClientTestLibrary
 
             r = items.Slice(1, 3).ToArray();
             assert.DeepEqual(r, new[] { 1, 2 }, "Slices start = 1, end = 2");
-
         }
 
         // Bridge[#277]
@@ -531,7 +617,6 @@ namespace ClientTestLibrary
 
             assert.Equal(c.GetName(), "Vlad", "Class method works");
             assert.Equal(c.GetNameThroughGeneric<int>(), "Vlad", "Generic class method works");
-
         }
 
         // Bridge[#304]
@@ -570,10 +655,16 @@ namespace ClientTestLibrary
         {
             assert.Expect(2);
 
-            var b = Bridge306B.New(new Bridge306B.Props() { Name = "B" });
+            var b = Bridge306B.New(new Bridge306B.Props()
+            {
+                Name = "B"
+            });
             assert.Equal(b, "ClientTestLibrary.Bridge306B.Props:B", "Bridge306B.New() works");
 
-            var a = Bridge306A.New(new Bridge306A.Props() { Name = "A" });
+            var a = Bridge306A.New(new Bridge306A.Props()
+            {
+                Name = "A"
+            });
             assert.Equal(a, "ClientTestLibrary.Bridge306A.Props:A", "Bridge306A.New() works");
         }
 
@@ -628,7 +719,6 @@ namespace ClientTestLibrary
             assert.Ok(b, "List<T> declares it implemets IList<T>");
         }
 
-
         // Bridge[#339]
         public static void N339(Assert assert)
         {
@@ -667,18 +757,36 @@ namespace ClientTestLibrary
             var b1 = EqualityComparer<object>.Default.Equals(o11, o12);
             assert.NotOk(b1, "EqualityComparer<object>.Default.Equals(o11, o12) works");
 
-            var o21 = new { i = 7 };
-            var o22 = new { i = 7 };
+            var o21 = new
+            {
+                i = 7
+            };
+            var o22 = new
+            {
+                i = 7
+            };
             var b2 = EqualityComparer<object>.Default.Equals(o21, o22);
             assert.Ok(b2, "EqualityComparer<object>.Default.Equals(o21, o22) works");
 
-            var o31 = new Bridge341A { Str = "String" };
-            var o32 = new Bridge341A { Str = "String" };
+            var o31 = new Bridge341A
+            {
+                Str = "String"
+            };
+            var o32 = new Bridge341A
+            {
+                Str = "String"
+            };
             var b3 = EqualityComparer<object>.Default.Equals(o31, o32);
             assert.NotOk(b3, "EqualityComparer<object>.Default.Equals(o31, o32) works");
 
-            var o41 = new Bridge341B { Str = "String" };
-            var o42 = new Bridge341B { Str = "String" };
+            var o41 = new Bridge341B
+            {
+                Str = "String"
+            };
+            var o42 = new Bridge341B
+            {
+                Str = "String"
+            };
             var b4 = EqualityComparer<object>.Default.Equals(o41, o42);
             assert.Ok(b4, "EqualityComparer<object>.Default.Equals(o41, o42) works");
         }
@@ -693,7 +801,10 @@ namespace ClientTestLibrary
             var interfacedDictionary = (IDictionary<int, string>)dictionary;
 
             assert.Equal(interfacedDictionary[6], "z", "IDictionary getter works");
-            assert.Throws(() => { var r = interfacedDictionary[1]; }, "IDictionary getter throws exception when incorrect key used");
+            assert.Throws(() =>
+            {
+                var r = interfacedDictionary[1];
+            }, "IDictionary getter throws exception when incorrect key used");
         }
 
         // Bridge[#377]
@@ -722,12 +833,18 @@ namespace ClientTestLibrary
         {
             assert.Expect(2);
 
-            var person1 = new Person383() { Name = "Johnny" };
+            var person1 = new Person383()
+            {
+                Name = "Johnny"
+            };
             var msg1 = person1.DoSomething();
 
             assert.Equal(msg1, "Johnny", "Instance extention Johnny");
 
-            var person2 = new Person383() { Name = "Madison" };
+            var person2 = new Person383()
+            {
+                Name = "Madison"
+            };
             var msg2 = Bridge383.DoSomething(person2);
 
             assert.Equal(msg2, "Madison", "Static extention Madison");
@@ -777,21 +894,27 @@ namespace ClientTestLibrary
                 case TESTA:
                     result = TESTA;
                     break;
+
                 case TESTB:
                     result = TESTB;
                     break;
+
                 case TESTC:
                     result = TESTC;
                     break;
+
                 case TESTD:
                     result = TESTD;
                     break;
+
                 case TESTE:
                     result = TESTE;
                     break;
+
                 case TESTF:
                     result = TESTF;
                     break;
+
                 case TESTG:
                     result = TESTG;
                     break;
@@ -803,8 +926,14 @@ namespace ClientTestLibrary
         // Bridge[#407]
         public static void N407(Assert assert)
         {
-            Bridge407 vec = new Bridge407() { A = 1 };
-            vec += new Bridge407() { A = 2 };
+            Bridge407 vec = new Bridge407()
+            {
+                A = 1
+            };
+            vec += new Bridge407()
+            {
+                A = 2
+            };
 
             assert.Equal(vec.A, 3, "Vec.A = 3");
 
@@ -828,6 +957,7 @@ namespace ClientTestLibrary
         {
             assert.Equal(actual.ToString(), expected, message);
         }
+
         public static void N410(Assert assert)
         {
             // Decimal consts
@@ -845,10 +975,14 @@ namespace ClientTestLibrary
 
             // Decimal consts in expressions
             DecimalZero = decimal.Zero + 0;
-            DecimalOne = decimal.One + 0; ;
-            DecimalMinusOne = decimal.MinusOne + 0; ;
-            DecimalMaxValue = decimal.MaxValue + 0; ;
-            DecimalMinValue = decimal.MinValue + 0; ;
+            DecimalOne = decimal.One + 0;
+            ;
+            DecimalMinusOne = decimal.MinusOne + 0;
+            ;
+            DecimalMaxValue = decimal.MaxValue + 0;
+            ;
+            DecimalMinValue = decimal.MinValue + 0;
+            ;
 
             EnsureNumber(assert, DecimalZero, "0", "DecimalZeroin expression");
             EnsureNumber(assert, DecimalOne, "1", "DecimalOnein expression");
@@ -1020,7 +1154,10 @@ namespace ClientTestLibrary
         {
             var b = new Bridge439();
             string accumulator = string.Empty;
-            b.Register((s) => { accumulator = accumulator + s; });
+            b.Register((s) =>
+            {
+                accumulator = accumulator + s;
+            });
 
             b.CallDispatcher("1");
             assert.Equal(accumulator, "1", "accumulator 1");
@@ -1086,19 +1223,42 @@ namespace ClientTestLibrary
         // Bridge[#470]
         public static void N470(Assert assert)
         {
-
-            var a = new Bridge470 { Data = 1 };
-            var b = new Bridge470 { Data = 2 };
-            var c = new Bridge470 { Data = 3 };
+            var a = new Bridge470
+            {
+                Data = 1
+            };
+            var b = new Bridge470
+            {
+                Data = 2
+            };
+            var c = new Bridge470
+            {
+                Data = 3
+            };
 
             assert.Equal(a.Equals(b), false, "a.Equals(b)");
-            assert.Equal(a.Equals(new Bridge470 { Data = 1 }), true, "a.Equals(new Bridge470 { Data = 1 })");
+            assert.Equal(a.Equals(new Bridge470
+            {
+                Data = 1
+            }), true, "a.Equals(new Bridge470 { Data = 1 })");
             assert.Equal(a.Equals(null), false, "a.Equals(null)");
 
             assert.Equal(a.Equals(b, b), true, "a.Equals(b, b)");
-            assert.Equal(a.Equals(a, new Bridge470 { Data = 1 }), true, "a.Equals(a, new Bridge470 { Data = 1 })");
-            assert.Equal(a.Equals(a, new Bridge470 { Data = 2 }), false, "a.Equals(a, new Bridge470 { Data = 2 })");
-            assert.Equal(a.Equals(new Bridge470 { Data = 5 }, new Bridge470 { Data = 5 }), true, "new Bridge470 { Data = 5 }, new Bridge470 { Data = 5 }");
+            assert.Equal(a.Equals(a, new Bridge470
+            {
+                Data = 1
+            }), true, "a.Equals(a, new Bridge470 { Data = 1 })");
+            assert.Equal(a.Equals(a, new Bridge470
+            {
+                Data = 2
+            }), false, "a.Equals(a, new Bridge470 { Data = 2 })");
+            assert.Equal(a.Equals(new Bridge470
+            {
+                Data = 5
+            }, new Bridge470
+            {
+                Data = 5
+            }), true, "new Bridge470 { Data = 5 }, new Bridge470 { Data = 5 }");
 
             assert.Equal(a.GetHashCode(), 1, "a.GetHashCode()");
             assert.Equal(c.GetHashCode(), 3, "c.GetHashCode()");
@@ -1117,8 +1277,14 @@ namespace ClientTestLibrary
             assert.Equal(test1.Contains(a, comparer), true, "test1 Contains a");
             assert.Equal(test1.Contains(b, comparer), true, "test1 Contains b");
             assert.Equal(test1.Contains(c, comparer), true, "test1 Contains c");
-            assert.Equal(test1.Contains(new Bridge470 { Data = 4 }, comparer), false, "test1 Contains 4");
-            assert.Equal(test1.Contains(new Bridge470 { Data = 5 }, comparer), false, "test1 Contains 5");
+            assert.Equal(test1.Contains(new Bridge470
+            {
+                Data = 4
+            }, comparer), false, "test1 Contains 4");
+            assert.Equal(test1.Contains(new Bridge470
+            {
+                Data = 5
+            }, comparer), false, "test1 Contains 5");
         }
     }
 }

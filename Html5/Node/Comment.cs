@@ -1,7 +1,3 @@
-﻿using System;
-
-using Bridge;
-
 namespace Bridge.Html5
 {
     /// <summary>
@@ -17,6 +13,6 @@ namespace Bridge.Html5
 
         public Comment(string data)
         {
-		}
+        }
     }
 }

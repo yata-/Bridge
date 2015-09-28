@@ -1,10 +1,9 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using Mono.Cecil;
 using Object.Net.Utilities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Bridge.Translator.TypeScript
 {
@@ -143,12 +142,11 @@ namespace Bridge.Translator.TypeScript
 
         protected virtual void EmitBlock()
         {
+            var typeDef = this.Emitter.GetTypeDefinition();
 
-          var typeDef = this.Emitter.GetTypeDefinition();
-
-          new MemberBlock(this.Emitter, this.TypeInfo, false).Emit();
-          if (this.Emitter.TypeInfo.TypeDeclaration.ClassType != ICSharpCode.NRefactory.CSharp.ClassType.Interface || this.IsGeneric)
-          {
+            new MemberBlock(this.Emitter, this.TypeInfo, false).Emit();
+            if (this.Emitter.TypeInfo.TypeDeclaration.ClassType != ICSharpCode.NRefactory.CSharp.ClassType.Interface || this.IsGeneric)
+            {
                 if (this.Position != this.Emitter.Output.Length && !this.Emitter.IsNewLine)
                 {
                     this.WriteNewLine();
@@ -239,7 +237,6 @@ namespace Bridge.Translator.TypeScript
 
                         this.Write(name);
                         this.WriteColon();
-
 
                         var parentTypeDef = this.Emitter.GetTypeDefinition();
                         string parentName = this.Emitter.Validator.GetCustomTypeName(parentTypeDef);

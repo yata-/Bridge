@@ -1,4 +1,4 @@
-﻿using Bridge;
+using Bridge;
 
 namespace System
 {
@@ -121,7 +121,7 @@ namespace System
         }
 
         [Template("{d}.floor()")]
-		public static extern decimal Floor(decimal d);
+        public static extern decimal Floor(decimal d);
 
         public static double Round(double x)
         {

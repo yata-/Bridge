@@ -1,4 +1,4 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 
 namespace Bridge.Translator
@@ -6,6 +6,7 @@ namespace Bridge.Translator
     public abstract partial class AbstractEmitterBlock : IAbstractEmitterBlock
     {
         private AstNode previousNode;
+
         public AbstractEmitterBlock(IEmitter emitter, AstNode node)
         {
             this.Emitter = emitter;

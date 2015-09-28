@@ -1,15 +1,11 @@
-﻿using Bridge.Contract;
-using Mono.Cecil;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Object.Net.Utilities;
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
+using Object.Net.Utilities;
+using System.Linq;
 
 namespace Bridge.Translator.TypeScript
 {
-    public class EnumBlock: AbstractEmitterBlock
+    public class EnumBlock : AbstractEmitterBlock
     {
         public EnumBlock(IEmitter emitter, ITypeInfo typeInfo)
             : base(emitter, typeInfo.TypeDeclaration)

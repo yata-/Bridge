@@ -1,4 +1,4 @@
-﻿using Bridge;
+using Bridge;
 using System.Collections.Generic;
 
 namespace System
@@ -50,7 +50,6 @@ namespace System
                 return null;
             }
         }
-
 
         public Exception()
         {

@@ -42,11 +42,6 @@ namespace System
             this.index = -1;
         }
 
-        //public object Clone()
-        //{
-        //    return this.MemberwiseClone();
-        //}
-
         public bool MoveNext()
         {
             if (this.index < this.str.Length - 1)

@@ -1,5 +1,4 @@
-﻿using System;
-using Bridge;
+using System;
 
 namespace Bridge.Html5
 {
@@ -1216,7 +1215,7 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="tagName">tagName is a string that specifies the type of element to be created. The nodeName of the created element is initialized with the value of tagName. Don't use qualified names (like "html:a") with this method.</param>
         /// <returns>created element object</returns>
-        public static T CreateElement<T>(string tagName) where T:Element
+        public static T CreateElement<T>(string tagName) where T : Element
         {
             return null;
         }
@@ -1238,7 +1237,7 @@ namespace Bridge.Html5
         /// <param name="namespaceURI"> a string that specifies the namespace URI to associate with the element. The namespaceURI property of the created element is initialized with the value of namespaceURI. (see section below for "Valid Namespace URI's")</param>
         /// <param name="qualifiedName">a string that specifies the type of element to be created. The nodeName property of the created element is initialized with the value of qualifiedName</param>
         /// <returns>the created element.</returns>
-        public static T CreateElementNS<T>(string namespaceURI, string qualifiedName) where T:Element
+        public static T CreateElementNS<T>(string namespaceURI, string qualifiedName) where T : Element
         {
             return null;
         }
@@ -1258,7 +1257,7 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="type">type is a string that represents the type of event to be created. Possible event types include "UIEvents", "MouseEvents", "MutationEvents", and "HTMLEvents".</param>
         /// <returns>the created Event object.</returns>
-        public static T CreateEvent<T>(string type) where T:Event
+        public static T CreateEvent<T>(string type) where T : Event
         {
             return null;
         }
@@ -1461,7 +1460,7 @@ namespace Bridge.Html5
         /// <typeparam name="T"></typeparam>
         /// <param name="id">id is a case-sensitive string representing the unique ID of the element being sought.</param>
         /// <returns>element is a reference to an Element object, or null if an element with the specified ID is not in the document.</returns>
-        public static T GetElementById<T>(string id) where T:Element
+        public static T GetElementById<T>(string id) where T : Element
         {
             return null;
         }
@@ -1676,8 +1675,8 @@ namespace Bridge.Html5
         {
         }
 
-        //TODO: Document.createExpression(String expression, XPathNSResolver resolver)
-        //TODO: Document.createNSResolver(Node resolver)
-        //TODO: Document.evaluate(String expression, Node contextNode, XPathNSResolver resolver, Number type, Object result)
+        // TODO: Document.createExpression(String expression, XPathNSResolver resolver)
+        // TODO: Document.createNSResolver(Node resolver)
+        // TODO: Document.evaluate(String expression, Node contextNode, XPathNSResolver resolver, Number type, Object result)
     }
 }

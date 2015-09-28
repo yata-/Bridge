@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-
-using Bridge;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Bridge.Html5
 {
@@ -10,7 +8,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("NamedNodeMap")]
-    public class NamedNodeMap: IEnumerable<Node>
+    public class NamedNodeMap : IEnumerable<Node>
     {
         protected internal NamedNodeMap()
         {
@@ -21,13 +19,13 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-		public virtual Node this[int index]
+        public virtual Node this[int index]
         {
-			get
+            get
             {
-				return null;
-			}
-		}
+                return null;
+            }
+        }
 
         /// <summary>
         /// Returns the item at the given index (or null if the index is higher or equal to the number of nodes)

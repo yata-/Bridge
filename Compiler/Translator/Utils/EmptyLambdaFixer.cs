@@ -1,6 +1,4 @@
-﻿using ICSharpCode.NRefactory;
 using ICSharpCode.NRefactory.CSharp;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -88,7 +86,6 @@ namespace Bridge.Translator
             base.VisitDoWhileStatement(whileStatement);
         }
     }
-
 
     public class EmptyLambdaFixer : DepthFirstAstVisitor<AstNode>
     {

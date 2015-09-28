@@ -1,4 +1,4 @@
-﻿using Bridge;
+using Bridge;
 
 namespace System
 {
@@ -128,7 +128,7 @@ namespace System
         }
 
         [Template("Bridge.as({obj}, {T})")]
-        public static T TryCast<T>(this object obj) where T:class
+        public static T TryCast<T>(this object obj) where T : class
         {
             return default(T);
         }

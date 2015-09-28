@@ -1,4 +1,4 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
@@ -8,7 +8,8 @@ namespace Bridge.Translator
 {
     public class ArrayCreateBlock : AbstractEmitterBlock
     {
-        public ArrayCreateBlock(IEmitter emitter, ArrayCreateExpression arrayCreateExpression) : base(emitter, arrayCreateExpression)
+        public ArrayCreateBlock(IEmitter emitter, ArrayCreateExpression arrayCreateExpression)
+            : base(emitter, arrayCreateExpression)
         {
             this.Emitter = emitter;
             this.ArrayCreateExpression = arrayCreateExpression;

@@ -1,4 +1,4 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
@@ -7,7 +7,8 @@ namespace Bridge.Translator
 {
     public class NameBlock : AbstractEmitterBlock
     {
-        public NameBlock(IEmitter emitter, NamedExpression namedExpression) : this(emitter, namedExpression.Name, namedExpression, namedExpression.Expression)
+        public NameBlock(IEmitter emitter, NamedExpression namedExpression)
+            : this(emitter, namedExpression.Name, namedExpression, namedExpression.Expression)
         {
         }
 

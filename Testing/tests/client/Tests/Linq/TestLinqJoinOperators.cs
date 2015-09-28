@@ -1,10 +1,10 @@
-﻿using Bridge.QUnit;
+using Bridge.QUnit;
 using ClientTestLibrary.Utilities;
 using System.Linq;
 
 namespace ClientTestLibrary.Linq
 {
-    class TestLinqJoinOperators
+    internal class TestLinqJoinOperators
     {
         public static void Test(Assert assert)
         {
@@ -14,7 +14,11 @@ namespace ClientTestLibrary.Linq
             var persons =
                    (from p in Person.GetPersons()
                     join g in Group.GetGroups() on p.Group equals g.Name
-                    select new { Name = p.Name, Limit = g.Limit }).ToArray();
+                    select new
+                    {
+                        Name = p.Name,
+                        Limit = g.Limit
+                    }).ToArray();
 
             var personsExpected = new object[] {
                  new { Name = "Frank", Limit = 1000},
@@ -33,7 +37,11 @@ namespace ClientTestLibrary.Linq
                                     .Join(Group.GetGroups(),
                                           p => p.Group,
                                           g => g.Name,
-                                          (p, g) => new { Name = p.Name, Limit = g.Limit })
+                                          (p, g) => new
+                                          {
+                                              Name = p.Name,
+                                              Limit = g.Limit
+                                          })
                                     .ToArray();
 
             var personsByLambdaExpected = new object[] {
@@ -51,7 +59,11 @@ namespace ClientTestLibrary.Linq
             // TEST
             var groupJoin = (from g in Group.GetGroups()
                              join p in Person.GetPersons() on g.Name equals p.Group into pg
-                             select new { Group = g.Name, Persons = pg.Select(x => x.Name).ToArray() })
+                             select new
+                             {
+                                 Group = g.Name,
+                                 Persons = pg.Select(x => x.Name).ToArray()
+                             })
                              .ToArray();
 
             var groupJoinExpected = new object[] {
@@ -67,7 +79,7 @@ namespace ClientTestLibrary.Linq
             var groupJoinWithDefault =
                             (from g in Group.GetGroups()
                              join p in Person.GetPersons() on g.Name equals p.Group into pg
-                             from ep in pg.DefaultIfEmpty() // DefaultIfEmpty preserves left-hand elements that have no matches on the right side 
+                             from ep in pg.DefaultIfEmpty() // DefaultIfEmpty preserves left-hand elements that have no matches on the right side
                              select new
                              {
                                  GroupName = g.Name,
@@ -91,7 +103,15 @@ namespace ClientTestLibrary.Linq
             // TEST
             var groupJoinWithDefaultAndComplexEquals =
                            (from g in Group.GetGroups()
-                            join p in Person.GetPersons() on new { Name = g.Name, Digit = 1 } equals new { Name = p.Group, Digit = 1 } into pg
+                            join p in Person.GetPersons() on new
+                            {
+                                Name = g.Name,
+                                Digit = 1
+                            } equals new
+                            {
+                                Name = p.Group,
+                                Digit = 1
+                            } into pg
                             from ep in pg.DefaultIfEmpty() // DefaultIfEmpty preserves left-hand elements that have no matches on the right side
                             orderby ep != null ? ep.Name : null descending
                             select new

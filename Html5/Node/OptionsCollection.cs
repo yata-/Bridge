@@ -1,7 +1,3 @@
-﻿using System.Collections.Generic;
-
-using Bridge;
-
 namespace Bridge.Html5
 {
     /// <summary>
@@ -9,8 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("OptionsCollection")]
-    public class OptionsCollection: HTMLCollection<OptionElement>
+    public class OptionsCollection : HTMLCollection<OptionElement>
     {
-
     }
 }

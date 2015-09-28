@@ -1,8 +1,6 @@
-
-using System;
+using Bridge;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Bridge;
 
 namespace System
 {
@@ -79,7 +77,7 @@ namespace System
         }
 
         public extern decimal Abs();
-        
+
         [Name("ceil")]
         public extern decimal Ceiling();
 
@@ -199,8 +197,6 @@ namespace System
         [Template("{d1}.add({d2})")]
         public static extern decimal Add(decimal d1, decimal d2);
 
-
-
         [Template("Bridge.Decimal.exp({d})")]
         public static extern decimal Exp(decimal d);
 
@@ -215,7 +211,6 @@ namespace System
 
         [Template("Bridge.Decimal.sqrt({d})")]
         public static extern decimal Sqrt(decimal d);
-
 
         [Template("{d}.ceil()")]
         public static extern decimal Ceiling(decimal d);
@@ -307,24 +302,43 @@ namespace System
         public extern int CompareTo(object obj);
 
         public extern int DecimalPlaces();
+
         public extern decimal DividedToIntegerBy(decimal d);
+
         public extern decimal Exponential();
+
         public extern decimal Floor();
+
         public extern bool IsFinite();
+
         public extern bool IsInteger();
+
         public extern bool IsNaN();
+
         public extern bool IsNegative();
+
         public extern bool IsZero();
+
         public extern decimal Log(decimal logBase);
+
         public extern decimal Ln();
+
         public extern int Precision();
+
         public extern decimal Round();
+
         public extern decimal Sqrt();
+
         public extern decimal ToDecimalPlaces(int dp, MidpointRounding rm);
+
         public extern string ToExponential(int dp, MidpointRounding rm);
+
         public extern string ToFixed(int dp, MidpointRounding rm);
+
         public extern decimal Pow(double n);
+
         public extern string ToPrecision(int sd, MidpointRounding rm);
+
         public extern decimal ToSignificantDigits(int sd, MidpointRounding rm);
 
         public static decimal Max(params decimal[] values)

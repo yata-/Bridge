@@ -1,11 +1,12 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using System;
 
 namespace Bridge.Translator
 {
     public class Exception : System.Exception, IVisitorException
     {
-        public Exception(string message) : base(message)
+        public Exception(string message)
+            : base(message)
         {
         }
 

@@ -1,5 +1,3 @@
-﻿using System.Collections.Generic;
-
 namespace Classes
 {
     public struct Point
@@ -24,7 +22,11 @@ namespace Classes
 
     public class MovePoint
     {
-        public Point Point { get; set; }
+        public Point Point
+        {
+            get;
+            set;
+        }
 
         public void Move(int dx, int dy)
         {
@@ -64,7 +66,10 @@ namespace Classes
 
     public class Snake : Animal
     {
-        public Snake(string name) : base(name) { }
+        public Snake(string name)
+            : base(name)
+        {
+        }
 
         public override int Move()
         {
@@ -74,7 +79,10 @@ namespace Classes
 
     public class Dog : Animal
     {
-        public Dog(string name) : base(name) { }
+        public Dog(string name)
+            : base(name)
+        {
+        }
 
         public new int Move()
         {
@@ -87,11 +95,11 @@ namespace Classes
         private string Name;
         private int Id;
 
-        public Employee(string name, int id): base(name)
+        public Employee(string name, int id)
+            : base(name)
         {
             this.Name = name;
             this.Id = id;
         }
     }
 }
-

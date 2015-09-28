@@ -1,4 +1,4 @@
-﻿using Bridge;
+using Bridge;
 
 namespace System
 {
@@ -10,7 +10,9 @@ namespace System
     [ObjectLiteral]
     public sealed class LocaleOptions
     {
-        public LocaleOptions() { }
+        public LocaleOptions()
+        {
+        }
 
         /// <summary>
         /// The locale matching algorithm to use. Possible values are "lookup" and "best fit"; the default is "best fit". For information about this option, see the Intl page.
@@ -66,14 +68,17 @@ namespace System
         /// Only strings that differ in base letters compare as unequal. Examples: a ≠ b, a = á, a = A.
         /// </summary>
         Base,
+
         /// <summary>
         /// Only strings that differ in base letters or accents and other diacritic marks compare as unequal. Examples: a ≠ b, a ≠ á, a = A.
         /// </summary>
         Accent,
+
         /// <summary>
         /// Only strings that differ in base letters or case compare as unequal. Examples: a ≠ b, a = á, a ≠ A.
         /// </summary>
         Case,
+
         /// <summary>
         /// Strings that differ in base letters, accents and other diacritic marks, or case compare as unequal. Other differences may also be taken into consideration. Examples: a ≠ b, a ≠ á, a ≠ A.
         /// </summary>
@@ -102,6 +107,7 @@ namespace System
         ///
         /// </summary>
         Lookup,
+
         /// <summary>
         ///
         /// </summary>

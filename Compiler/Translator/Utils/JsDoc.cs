@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Bridge.Contract;
+using System.Collections.Generic;
 
 namespace Bridge.Translator
 {
-    public class JsDoc: IJsDoc
+    public class JsDoc : IJsDoc
     {
         public JsDoc()
         {
@@ -25,7 +21,6 @@ namespace Bridge.Translator
             this.Namespaces = new List<string>();
             this.Callbacks = new List<string>();
         }
-
 
         public List<string> Callbacks
         {

@@ -1,4 +1,4 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
 using ICSharpCode.NRefactory.Semantics;
@@ -224,7 +224,7 @@ namespace Bridge.Translator
 
             for (int i = 0; i < this.AwaitExpressions.Length; i++)
             {
-                this.Emitter.AsyncVariables.Add("$task" + (i+1));
+                this.Emitter.AsyncVariables.Add("$task" + (i + 1));
 
                 if (this.IsTaskResult(this.AwaitExpressions[i]))
                 {
@@ -471,7 +471,6 @@ namespace Bridge.Translator
                                 this.Write("$e = $e1;");
                             }*/
 
-
                             this.Write("$step = " + step + ";");
 
                             this.WriteNewLine();
@@ -480,7 +479,6 @@ namespace Bridge.Translator
                             this.Write("return;");
                             this.WriteNewLine();
                             this.EndBlock();
-
                         }
                     }
 
@@ -547,7 +545,7 @@ namespace Bridge.Translator
                 this.Write("case " + i + ": ");
                 var output = step.Output.ToString();
 
-                if (string.IsNullOrWhiteSpace(output) && step.JumpToStep == (i+1))
+                if (string.IsNullOrWhiteSpace(output) && step.JumpToStep == (i + 1))
                 {
                     continue;
                 }

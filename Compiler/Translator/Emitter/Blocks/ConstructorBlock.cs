@@ -1,15 +1,8 @@
-﻿using ICSharpCode.NRefactory.CSharp;
-using System;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using System.Linq;
-using ICSharpCode.NRefactory.TypeSystem;
-using System.Text;
-using Mono.Cecil;
-using Object.Net.Utilities;
-using ICSharpCode.NRefactory.Semantics;
-using ICSharpCode.NRefactory.TypeSystem.Implementation;
 using Bridge.Contract;
+using ICSharpCode.NRefactory.CSharp;
+using ICSharpCode.NRefactory.Semantics;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Bridge.Translator
 {
@@ -228,7 +221,6 @@ namespace Bridge.Translator
 
             this.WriteNewLine();
             this.EndBlock();
-
         }
 
         protected virtual void EmitCtorForInstantiableClass()
@@ -303,7 +295,7 @@ namespace Bridge.Translator
                         {
                             this.WriteNewLine();
                         }
-                        
+
                         this.ConvertParamsToReferences(ctor.Parameters);
                         ctor.Body.AcceptChildren(this.Emitter);
 

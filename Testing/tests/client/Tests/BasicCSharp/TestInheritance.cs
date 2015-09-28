@@ -1,14 +1,18 @@
-﻿using Bridge;
+using Bridge;
 using Bridge.QUnit;
 
 namespace ClientTestLibrary
 {
-    class TestInheritance
+    internal class TestInheritance
     {
         [FileName("testInheritance.js")]
-        class A
+        private class A
         {
-            public int X { get; set; }
+            public int X
+            {
+                get;
+                set;
+            }
 
             public A(int x)
             {
@@ -27,11 +31,16 @@ namespace ClientTestLibrary
         }
 
         [FileName("testInheritance.js")]
-        class B : A
+        private class B : A
         {
-            public int Y { get; set; }
+            public int Y
+            {
+                get;
+                set;
+            }
 
-            public B(int x, int y): base(x)
+            public B(int x, int y)
+                : base(x)
             {
                 this.Y = y;
             }

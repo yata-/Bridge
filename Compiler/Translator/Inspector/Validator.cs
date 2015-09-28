@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using Mono.Cecil;
-using System.Linq;
-using ICSharpCode.NRefactory.TypeSystem.Implementation;
-using ICSharpCode.NRefactory.Semantics;
-using ICSharpCode.NRefactory.CSharp.Resolver;
-using ICSharpCode.NRefactory.CSharp;
-using Object.Net.Utilities;
 using Bridge.Contract;
+using ICSharpCode.NRefactory.CSharp;
+using ICSharpCode.NRefactory.CSharp.Resolver;
+using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
+using ICSharpCode.NRefactory.TypeSystem.Implementation;
+using Mono.Cecil;
+using Object.Net.Utilities;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Bridge.Translator
 {
@@ -78,7 +77,8 @@ namespace Bridge.Translator
         {
             string enumAttr = Translator.Bridge_ASSEMBLY + ".EnumAttribute";
             int result = -1;
-            type.Attributes.Any(attr => {
+            type.Attributes.Any(attr =>
+            {
                 if (attr.Constructor != null && attr.Constructor.DeclaringType.FullName == enumAttr && attr.PositionalArguments.Count > 0)
                 {
                     result = (int)attr.PositionalArguments.First().ConstantValue;
@@ -327,7 +327,7 @@ namespace Bridge.Translator
         public virtual void CheckMethods(TypeDefinition type, ITranslator translator)
         {
             var methodsCount = 0;
-            foreach(MethodDefinition method in type.Methods)
+            foreach (MethodDefinition method in type.Methods)
             {
                 if (method.HasCustomAttributes && method.CustomAttributes.Any(a => a.AttributeType.FullName == "System.Runtime.CompilerServices.CompilerGeneratedAttribute"))
                 {
@@ -351,13 +351,14 @@ namespace Bridge.Translator
         public virtual void CheckMethodArguments(MethodDefinition method)
         {
         }
+
         public virtual HashSet<string> GetParentTypes(IDictionary<string, TypeDefinition> allTypes)
         {
             var result = new HashSet<string>();
 
-            foreach(var type in allTypes.Values)
+            foreach (var type in allTypes.Values)
             {
-                if(type.BaseType != null)
+                if (type.BaseType != null)
                 {
                     string parentName = type.BaseType.FullName.LeftOf('<').Replace("`", "$");
 

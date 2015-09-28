@@ -1,5 +1,3 @@
-﻿using System.Collections.Generic;
-
 namespace Interfaces
 {
     //public struct Point
@@ -16,14 +14,21 @@ namespace Interfaces
 
     public interface Interface1
     {
-        int Property { get; set; }
+        int Property
+        {
+            get;
+            set;
+        }
     }
 
     public interface Interface2 : Interface1
     {
         void Method1();
-        void Method2(string  i);
+
+        void Method2(string i);
+
         int Method3();
+
         bool Method4(Interface1 i);
     }
 
@@ -36,29 +41,46 @@ namespace Interfaces
     {
         // #291
         void Method6(out bool b);
+
         void Method7(int i, out bool b);
+
         void Method8(ref string s);
+
         void Method9(int i, ref string s);
+
         void Method10(int i, ref bool b, ref string s);
     }
 
     public interface Interface6
     {
-        int Property { get; set; }
+        int Property
+        {
+            get;
+            set;
+        }
+
         int GetProperty();
+
         void SetProperty(string s);
+
         void SetProperty(int i);
     }
 
     public interface Interface61
     {
-        int Property { get; set; }
+        int Property
+        {
+            get;
+            set;
+        }
     }
 
     public interface Interface62
     {
         int GetProperty();
+
         void SetProperty(string s);
+
         void SetProperty(int i);
     }
 
@@ -67,7 +89,18 @@ namespace Interfaces
         public int Field = 200;
 
         private int property = 100;
-        public int Property { get { return this.property; } set { this.property = value; } }
+
+        public int Property
+        {
+            get
+            {
+                return this.property;
+            }
+            set
+            {
+                this.property = value;
+            }
+        }
     }
 
     public class Class2 : Class1, Interface2
@@ -77,14 +110,17 @@ namespace Interfaces
             Field = 1;
             Property = 2;
         }
+
         public void Method2(string s)
         {
             Field = s.Length;
         }
+
         public int Method3()
         {
             return Field;
         }
+
         public bool Method4(Interface1 i)
         {
             Field = i.Property;
@@ -101,24 +137,28 @@ namespace Interfaces
         }
     }
 
-    public class Class4: Interface4
+    public class Class4 : Interface4
     {
         public void Method6(out bool b)
         {
             b = true;
         }
+
         public void Method7(int i, out bool b)
         {
             b = true;
         }
+
         public void Method8(ref string s)
         {
             s = s + "Method8";
         }
+
         public void Method9(int i, ref string s)
         {
             s = s + i;
         }
+
         public void Method10(int i, ref bool b, ref string s)
         {
             b = true;
@@ -128,18 +168,28 @@ namespace Interfaces
 
     public class Class6 : Interface6
     {
-        public int Property { get; set; }
+        public int Property
+        {
+            get;
+            set;
+        }
 
-        public int MethodProperty { get; set; }
+        public int MethodProperty
+        {
+            get;
+            set;
+        }
 
         public int GetProperty()
         {
             return this.MethodProperty;
         }
+
         public void SetProperty(string s)
         {
             this.MethodProperty = s.Length;
         }
+
         public void SetProperty(int i)
         {
             this.MethodProperty = i;
@@ -168,5 +218,4 @@ namespace Interfaces
     //        this.MethodProperty = i;
     //    }
     //}
-
 }

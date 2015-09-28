@@ -1,4 +1,4 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 
 namespace Bridge.Translator
@@ -20,7 +20,6 @@ namespace Bridge.Translator
 
         protected override void DoEmit()
         {
-
             this.EmitIndexerMethod(this.IndexerDeclaration, this.IndexerDeclaration.Getter, false);
             this.EmitIndexerMethod(this.IndexerDeclaration, this.IndexerDeclaration.Setter, true);
         }

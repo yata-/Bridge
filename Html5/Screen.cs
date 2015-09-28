@@ -1,7 +1,5 @@
-﻿// Screen WebAPI by Mozilla Contributors is licensed under CC-BY-SA 2.5.
+// Screen WebAPI by Mozilla Contributors is licensed under CC-BY-SA 2.5.
 // https://developer.mozilla.org/en-US/docs/Web/API/Window.screen
-
-using Bridge;
 
 namespace Bridge.Html5
 {

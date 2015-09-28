@@ -1,7 +1,3 @@
-﻿using System;
-
-using Bridge;
-
 namespace Bridge.Html5
 {
     /// <summary>

@@ -1,4 +1,4 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using System;
 using System.Linq;
@@ -7,7 +7,8 @@ namespace Bridge.Translator
 {
     public class ThrowBlock : AbstractEmitterBlock
     {
-        public ThrowBlock(IEmitter emitter, ThrowStatement throwStatement) : base(emitter, throwStatement)
+        public ThrowBlock(IEmitter emitter, ThrowStatement throwStatement)
+            : base(emitter, throwStatement)
         {
             this.Emitter = emitter;
             this.ThrowStatement = throwStatement;

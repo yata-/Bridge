@@ -1,6 +1,5 @@
-﻿using ICSharpCode.NRefactory.CSharp;
+using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.TypeSystem;
-using System;
 using System.Collections.Generic;
 
 namespace Bridge.Contract
@@ -22,7 +21,6 @@ namespace Bridge.Contract
         Dictionary<string, EventDeclaration> EventsDeclarations
         {
             get;
-
         }
 
         bool IsStatic
@@ -109,7 +107,7 @@ namespace Bridge.Contract
 
         int LastEnumValue
         {
-            get; 
+            get;
             set;
         }
 
@@ -142,11 +140,13 @@ namespace Bridge.Contract
             get;
             set;
         }
+
         TypeConfigInfo StaticConfig
         {
             get;
             set;
         }
+
         TypeConfigInfo InstanceConfig
         {
             get;

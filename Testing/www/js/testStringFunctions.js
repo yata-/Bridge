@@ -6,7 +6,7 @@ Bridge.define('ClientTestLibrary.TestStringFunctions', {
     statics: {
         strings: function (assert) {
             var $t;
-            //In PhantomJS some correct tests failed. We will skip them in this environment.
+            // In PhantomJS some correct tests failed. We will skip them in this environment.
             var isPhantomJs = ClientTestLibrary.Utilities.BrowserHelper.isPhantomJs();
 
             var expectedCount = isPhantomJs ? 28 : 48;
@@ -175,7 +175,6 @@ Bridge.define('ClientTestLibrary.TestStringFunctions', {
             var result1 = Bridge.String.equals(a1, b1, 3);
 
             assert.notOk(result1, "testa testb StringComparison.InvariantCultureIgnoreCase");
-
         }
     }
 });

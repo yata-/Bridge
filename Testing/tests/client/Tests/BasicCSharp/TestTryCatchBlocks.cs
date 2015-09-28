@@ -1,4 +1,4 @@
-﻿using Bridge;
+using Bridge;
 using Bridge.QUnit;
 using System;
 
@@ -7,11 +7,11 @@ using System;
 namespace ClientTestLibrary
 {
     // Tests try and catch blocks
-    class TestTryCatchBlocks
+    internal class TestTryCatchBlocks
     {
         #region Tests
 
-        //[#84] Does not compile
+        // [#84] Does not compile
         public static void SimpleTryCatch(Assert assert)
         {
             assert.Expect(1);
@@ -39,22 +39,25 @@ namespace ClientTestLibrary
         {
             assert.Expect(12);
 
-            //#230
+            // #230
             assert.Throws(TryCatchWithNotCaughtTypedException, "catch me", "A.Typed exception is not Caught");
             assert.Ok(IsATry, "A. exception not caught - try section called");
             assert.Ok(!IsACatch, "A. exception not caught - catch section not called");
 
-            //#229
+            // #229
             assert.Throws(TryCatchWithNotCaughtTypedExceptionAndArgument, "catch me", "[#229] B. Typed exception is not Caught; and argument");
             assert.Ok(IsBTry, "[#229] B. exception not caught - try section called");
             assert.Ok(!IsBCatch, "B. exception not caught - catch section not called");
 
-            //#231
+            // #231
             assert.Throws(TryCatchWithRethrow, "catch me", "[#231] C. Rethrow");
             assert.Ok(IsCTry, "C. exception caught and re-thrown - try section called");
             assert.Ok(IsCCatch, "C. exception caught and re-thrown - catch section called");
 
-            assert.Throws(TryCatchWithRethrowEx, new Func<object, bool>((error) => { return error.ToString() == "catch me"; }), "D. Rethrow with parameter");
+            assert.Throws(TryCatchWithRethrowEx, new Func<object, bool>((error) =>
+            {
+                return error.ToString() == "catch me";
+            }), "D. Rethrow with parameter");
             assert.Ok(IsDTry, "D. exception caught and re-thrown  - try section called");
             assert.Ok(IsDCatch, "D. exception caught and re-thrown  - catch section called");
         }
@@ -74,7 +77,7 @@ namespace ClientTestLibrary
                 exceptionMessage = ex.Message;
             }
 
-            //var expectedMessage = Utilities.BrowserHelper.IsPhantomJs()
+            // var expectedMessage = Utilities.BrowserHelper.IsPhantomJs()
             //    ? "undefined is not a constructor (evaluating '\"someString\".SomeNotExistingMethod()')"
             //    : "\"someString\".SomeNotExistingMethod is not a function";
 
@@ -93,9 +96,8 @@ namespace ClientTestLibrary
             {
                 var r = 10 / i;
             }
-            catch(ArgumentException)
+            catch (ArgumentException)
             {
-
             }
             catch (Exception ex)
             {
@@ -159,8 +161,17 @@ namespace ClientTestLibrary
 
         #region ThrownExceptions
 
-        public static bool IsATry { get; set; }
-        public static bool IsACatch { get; set; }
+        public static bool IsATry
+        {
+            get;
+            set;
+        }
+
+        public static bool IsACatch
+        {
+            get;
+            set;
+        }
 
         private static void TryCatchWithNotCaughtTypedException()
         {
@@ -180,8 +191,17 @@ namespace ClientTestLibrary
             IsATry = false;
         }
 
-        public static bool IsBTry { get; set; }
-        public static bool IsBCatch { get; set; }
+        public static bool IsBTry
+        {
+            get;
+            set;
+        }
+
+        public static bool IsBCatch
+        {
+            get;
+            set;
+        }
 
         private static void TryCatchWithNotCaughtTypedExceptionAndArgument()
         {
@@ -203,8 +223,17 @@ namespace ClientTestLibrary
             IsBTry = false;
         }
 
-        public static bool IsCTry { get; set; }
-        public static bool IsCCatch { get; set; }
+        public static bool IsCTry
+        {
+            get;
+            set;
+        }
+
+        public static bool IsCCatch
+        {
+            get;
+            set;
+        }
 
         private static void TryCatchWithRethrow()
         {
@@ -226,8 +255,17 @@ namespace ClientTestLibrary
             IsCTry = false;
         }
 
-        public static bool IsDTry { get; set; }
-        public static bool IsDCatch { get; set; }
+        public static bool IsDTry
+        {
+            get;
+            set;
+        }
+
+        public static bool IsDCatch
+        {
+            get;
+            set;
+        }
 
         private static void TryCatchWithRethrowEx()
         {

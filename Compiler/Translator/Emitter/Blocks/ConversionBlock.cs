@@ -1,18 +1,18 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
-using System.Collections.Generic;
-using System.Linq;
 using ICSharpCode.NRefactory.TypeSystem;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Bridge.Translator
 {
     public abstract class ConversionBlock : AbstractEmitterBlock
     {
-        public ConversionBlock(IEmitter emitter, AstNode node) : base(emitter, node)
+        public ConversionBlock(IEmitter emitter, AstNode node)
+            : base(emitter, node)
         {
-
         }
 
         protected sealed override void DoEmit()
@@ -280,7 +280,6 @@ namespace Bridge.Translator
                         castTypeRr = block.Emitter.Resolver.ResolveNode(castExpr.Type, block.Emitter);
                     }
 
-
                     if (castTypeRr == null || !Helpers.IsDecimalType(castTypeRr.Type, block.Emitter.Resolver))
                     {
                         if (expression.IsNull)
@@ -411,6 +410,7 @@ namespace Bridge.Translator
         }
 
         protected abstract void EmitConversionExpression();
+
         protected abstract Expression GetExpression();
     }
 }

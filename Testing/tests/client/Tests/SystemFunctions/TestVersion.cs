@@ -1,13 +1,10 @@
-﻿using Bridge;
 using Bridge.QUnit;
 
 using System;
-using System.Globalization;
-using System.Text;
 
 namespace ClientTestLibrary
 {
-    class TestVersion
+    internal class TestVersion
     {
         public static void TestConstructors(Assert assert)
         {
@@ -141,7 +138,10 @@ namespace ClientTestLibrary
             assert.Equal(v1.ToString(2), "2.4", "c1.ToString(2)");
             assert.Equal(v1.ToString(3), "2.4.1128", "c1.ToString(3)");
             assert.Equal(v1.ToString(4), "2.4.1128.65537", "c1.ToString(4)");
-            assert.Throws(() => { v1.ToString(5); }, "c1.ToString(5)");
+            assert.Throws(() =>
+            {
+                v1.ToString(5);
+            }, "c1.ToString(5)");
         }
 
         public static void TestParse(Assert assert)
@@ -158,7 +158,10 @@ namespace ClientTestLibrary
 
             assert.Equal(Version.Parse(s2).ToString(), v2.ToString(), "Version.Parse(s2)");
 
-            assert.Throws(() => { Version.Parse("12,123.23.12"); }, "Version.Parse(\"12,123.23.12\")");
+            assert.Throws(() =>
+            {
+                Version.Parse("12,123.23.12");
+            }, "Version.Parse(\"12,123.23.12\")");
 
             Version vp1;
             var b1 = Version.TryParse("12,123.23.12", out vp1);

@@ -1,5 +1,3 @@
-﻿using Bridge;
-
 namespace Bridge.Html5
 {
     /// <summary>
@@ -8,11 +6,11 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("Range")]
-	public partial class Range
+    public partial class Range
     {
-		public Range()
+        public Range()
         {
-		}
+        }
 
         /// <summary>
         /// Returns a Boolean indicating whether the range's start and end points are at the same position.
@@ -23,7 +21,6 @@ namespace Bridge.Html5
         /// Returns the deepest Node that contains the startContainer and endContainer nodes.
         /// </summary>
         public readonly Node CommonAncestorContainer;
-
 
         /// <summary>
         /// Returns the Node within which the Range ends.
@@ -130,10 +127,10 @@ namespace Bridge.Html5
         /// Returns a DocumentFragment copying the nodes of a Range.
         /// </summary>
         /// <returns></returns>
-		public virtual DocumentFragment CloneContents()
+        public virtual DocumentFragment CloneContents()
         {
-			return null;
-		}
+            return null;
+        }
 
         /// <summary>
         /// Removes the contents of a Range from the Document.
@@ -182,10 +179,10 @@ namespace Bridge.Html5
         /// Returns a Range object with boundary points identical to the cloned Range.
         /// </summary>
         /// <returns></returns>
-		public virtual Range CloneRange()
+        public virtual Range CloneRange()
         {
-			return null;
-		}
+            return null;
+        }
 
         /// <summary>
         /// Releases the Range from use to improve performance.
@@ -202,8 +199,8 @@ namespace Bridge.Html5
         /// <returns>returns -1, 0, or 1 depending on whether the referenceNode is before, the same as, or after the Range.</returns>
         public virtual int ComparePoint(Node referenceNode, int offset)
         {
-			return 0;
-		}
+            return 0;
+        }
 
         /// <summary>
         /// Returns a DocumentFragment created from a given string of code.
@@ -212,8 +209,8 @@ namespace Bridge.Html5
         /// <returns></returns>
         public virtual DocumentFragment CreateContextualFragment(string tagString)
         {
-			return null;
-		}
+            return null;
+        }
 
         /// <summary>
         /// Returns a ClientRect object which bounds the entire contents of the Range; this would be the union of all the rectangles returned by range.getClientRects().
@@ -253,5 +250,5 @@ namespace Bridge.Html5
         {
             return false;
         }
-	}
+    }
 }

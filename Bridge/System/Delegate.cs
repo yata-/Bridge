@@ -1,8 +1,9 @@
-﻿using Bridge;
+using Bridge;
 
 namespace System
 {
-    [Ignore,IgnoreCast]
+    [Ignore]
+    [IgnoreCast]
     [Name("Function")]
     public class Delegate
     {
@@ -21,6 +22,7 @@ namespace System
         {
             return null;
         }
+
         public virtual object Apply(object thisArg, Array args)
         {
             return null;
@@ -30,10 +32,12 @@ namespace System
         {
             return null;
         }
+
         public virtual object Call(object thisArg)
         {
             return null;
         }
+
         public virtual object Call()
         {
             return null;
@@ -52,10 +56,13 @@ namespace System
         }
     }
 
-    [Ignore,IgnoreCast]
+    [Ignore]
+    [IgnoreCast]
     [Name("Function")]
     public class MulticastDelegate : Delegate
     {
-        protected MulticastDelegate() { }
+        protected MulticastDelegate()
+        {
+        }
     }
 }

@@ -1,12 +1,9 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
+using ICSharpCode.NRefactory.TypeSystem.Implementation;
 using System.Collections.Generic;
 using System.Linq;
-using ICSharpCode.NRefactory.TypeSystem;
-using ICSharpCode.NRefactory.TypeSystem.Implementation;
-using Newtonsoft.Json;
-using Object.Net.Utilities;
 
 namespace Bridge.Translator
 {
@@ -237,7 +234,7 @@ namespace Bridge.Translator
                 name = "$t" + ++i;
             }
 
-            name = "$t" + (i> 0 ? i.ToString() : "");
+            name = "$t" + (i > 0 ? i.ToString() : "");
 
             this.IntroduceTempVar(name);
 

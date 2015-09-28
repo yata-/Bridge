@@ -58,7 +58,7 @@ Bridge.define('ClientTestLibrary.Rectangle', {
         }
     },
     constructor$1: function (x, y) {
-        //[#69]
+        // [#69]
         (new ClientTestLibrary.Rectangle("constructor")).$clone(this);
 
         this.l.x = x;
@@ -97,7 +97,7 @@ Bridge.define('ClientTestLibrary.TestValueTypes', {
         testInstanceConstructorsAndMethods: function (assert) {
             assert.expect(18);
 
-            //Check parameterless constructor
+            // Check parameterless constructor
             var a = new ClientTestLibrary.Point();
 
             assert.deepEqual(a.x, 0, "x 0");

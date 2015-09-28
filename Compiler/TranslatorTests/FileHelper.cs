@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Xml;
 using System.Xml.Linq;
 
 namespace Bridge.Translator.Tests
 {
-    static class FileHelper
+    internal static class FileHelper
     {
         public static string CombineRelativePath(string absolutePath, string relativePath)
         {
@@ -31,7 +27,9 @@ namespace Bridge.Translator.Tests
         {
             var doc = XDocument.Load(projectFileFullName, LoadOptions.SetLineInfo);
 
-            var opnodes = from n in doc.Descendants() where n.Name.LocalName == "OutputPath" select n;
+            var opnodes = from n in doc.Descendants()
+                          where n.Name.LocalName == "OutputPath"
+                          select n;
             var nodes = from n in doc.Descendants()
                         where n.Name.LocalName == "OutputPath" &&
                               n.Parent.Attribute("Condition").Value.Contains(configurationName)

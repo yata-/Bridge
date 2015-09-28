@@ -1,15 +1,8 @@
-﻿using ICSharpCode.NRefactory.CSharp;
-using System;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using System.Linq;
-using ICSharpCode.NRefactory.TypeSystem;
-using System.Text;
-using Mono.Cecil;
-using Object.Net.Utilities;
-using ICSharpCode.NRefactory.Semantics;
-using ICSharpCode.NRefactory.TypeSystem.Implementation;
 using Bridge.Contract;
+using ICSharpCode.NRefactory.CSharp;
+using Object.Net.Utilities;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Bridge.Translator.TypeScript
 {

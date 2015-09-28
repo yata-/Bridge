@@ -1,16 +1,14 @@
-﻿using ICSharpCode.NRefactory.CSharp;
-using ICSharpCode.NRefactory.TypeSystem;
-using Mono.Cecil;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
-using Newtonsoft.Json;
-using ICSharpCode.NRefactory.TypeSystem.Implementation;
-using ICSharpCode.NRefactory.Semantics;
 using Bridge.Contract;
-using System.Text.RegularExpressions;
+using ICSharpCode.NRefactory.CSharp;
+using ICSharpCode.NRefactory.Semantics;
+using ICSharpCode.NRefactory.TypeSystem;
+using ICSharpCode.NRefactory.TypeSystem.Implementation;
+using Mono.Cecil;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Bridge.Translator
 {
@@ -160,7 +158,6 @@ namespace Bridge.Translator
             {
                 var attr = member.Attributes.FirstOrDefault(a =>
                 {
-
                     return a.AttributeType.FullName == attrName;
                 });
 
@@ -231,7 +228,7 @@ namespace Bridge.Translator
             else if (member is EventDefinition)
             {
                 var ev = (EventDefinition)member;
-                isStatic = ev.AddMethod != null ? ev.AddMethod.IsStatic : false ;
+                isStatic = ev.AddMethod != null ? ev.AddMethod.IsStatic : false;
             }
             if (attr != null)
             {
@@ -461,7 +458,6 @@ namespace Bridge.Translator
             {
                 var attr = entity.Attributes.FirstOrDefault(a =>
                 {
-
                     return a.AttributeType.FullName == attrName;
                 });
 
@@ -479,7 +475,6 @@ namespace Bridge.Translator
             {
                 var attr = entity.Attributes.FirstOrDefault(a =>
                 {
-
                     return a.AttributeType.FullName == attrName;
                 });
 

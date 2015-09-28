@@ -1,6 +1,3 @@
-﻿using System;
-using Bridge;
-
 namespace Bridge.Html5
 {
     /// <summary>
@@ -10,8 +7,8 @@ namespace Bridge.Html5
     [Name("XMLHttpRequestUpload")]
     public class XMLHttpRequestUpload : XMLHttpRequestEventTarget
     {
-        internal XMLHttpRequestUpload ()
-	    {
-	    }
+        internal XMLHttpRequestUpload()
+        {
+        }
     }
 }

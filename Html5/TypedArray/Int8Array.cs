@@ -1,4 +1,4 @@
-﻿// The documentation for this class (on <summary> tags) was extracted from:
+// The documentation for this class (on <summary> tags) was extracted from:
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array
 using System;
 
@@ -53,8 +53,13 @@ namespace Bridge.Html5
         /// <returns>The element in the specified position.</returns>
         public SByte this[Any<int, uint, long, ulong> i]
         {
-            get { return default(SByte); }
-            set { }
+            get
+            {
+                return default(SByte);
+            }
+            set
+            {
+            }
         }
 
         #region Properties
@@ -79,13 +84,13 @@ namespace Bridge.Html5
         /// </summary>
         public readonly TypedArray.Prototype<Int8Array, SByte> Prototype;
 
-        #endregion
+        #endregion Properties
 
         #region Methods
 
         // Int8Array.from() and Int8Array.of() are work in progress for ES6 and, at the time of the writing,
         // were not ready for production environment. Thus, their definitions are not present here.
 
-        #endregion
+        #endregion Methods
     }
 }

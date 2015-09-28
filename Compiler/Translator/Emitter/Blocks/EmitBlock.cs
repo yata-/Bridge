@@ -1,4 +1,4 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using Object.Net.Utilities;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,8 @@ namespace Bridge.Translator
 {
     public class EmitBlock : AbstractEmitterBlock
     {
-        public EmitBlock(IEmitter emitter) : base(emitter, null)
+        public EmitBlock(IEmitter emitter)
+            : base(emitter, null)
         {
             this.Emitter = emitter;
         }
@@ -35,16 +36,20 @@ namespace Bridge.Translator
                     case OutputBy.ClassPath:
                         fileName = typeInfo.Type.FullName;
                         break;
+
                     case OutputBy.Class:
                         fileName = this.GetIteractiveClassPath(typeInfo);
                         break;
+
                     case OutputBy.Module:
                         fileName = module;
                         break;
+
                     case OutputBy.NamespacePath:
                     case OutputBy.Namespace:
                         fileName = this.GetNamespaceFilename(typeInfo);
                         break;
+
                     default:
                         break;
                 }
@@ -122,6 +127,7 @@ namespace Bridge.Translator
                 case FileNameCaseConvert.Lowercase:
                     fileName = fileName.ToLower();
                     break;
+
                 default:
                     var lcFileName = fileName.ToLower();
 

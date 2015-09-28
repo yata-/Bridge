@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 
 namespace Bridge
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     [Ignore]
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct | AttributeTargets.Interface)]
@@ -13,8 +13,8 @@ namespace Bridge
         {
         }
 
-        public ModuleAttribute(string moduleName) 
-        { 
+        public ModuleAttribute(string moduleName)
+        {
         }
     }
 }

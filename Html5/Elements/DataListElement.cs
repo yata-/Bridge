@@ -1,6 +1,3 @@
-﻿using System;
-using Bridge;
-
 namespace Bridge.Html5
 {
     /// <summary>
@@ -8,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLDataListElement")]
-    public class DataListElement  : Element
+    public class DataListElement : Element
     {
         [Template("document.createElement('datalist')")]
         public DataListElement()

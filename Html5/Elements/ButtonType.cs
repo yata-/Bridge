@@ -1,5 +1,3 @@
-﻿using Bridge;
-
 namespace Bridge.Html5
 {
     /// <summary>
@@ -15,18 +13,15 @@ namespace Bridge.Html5
         /// </summary>
         Submit,
 
-
         /// <summary>
         /// The button resets the form.
         /// </summary>
         Reset,
 
-
         /// <summary>
         /// The button does nothing.
         /// </summary>
         Button,
-
 
         /// <summary>
         /// The button displays a menu.

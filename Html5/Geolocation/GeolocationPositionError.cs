@@ -1,7 +1,5 @@
-﻿// PositionError WebAPI by Mozilla Contributors is licensed under CC-BY-SA 2.5.
+// PositionError WebAPI by Mozilla Contributors is licensed under CC-BY-SA 2.5.
 // https://developer.mozilla.org/en-US/docs/Web/API/PositionError
-
-using Bridge;
 
 namespace Bridge.Html5
 {

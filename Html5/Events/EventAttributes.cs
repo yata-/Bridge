@@ -1,18 +1,16 @@
-﻿using Bridge;
-
 namespace Bridge.Html5
 {
     [Ignore]
     public enum HtmlEventTarget
     {
         [Template("{0}")]
-        Raw=0,
+        Raw = 0,
 
         [Template("document.getElementById('{0}')")]
-        GetElementById=1,
+        GetElementById = 1,
 
         [Template("document.querySelector('{0}')")]
-        QuerySelector=2
+        QuerySelector = 2
     }
 
     [Ignore]

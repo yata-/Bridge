@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using Bridge;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace System.Linq
 {

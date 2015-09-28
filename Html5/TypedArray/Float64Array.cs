@@ -1,4 +1,4 @@
-﻿// The documentation for this class (on <summary> tags) was extracted from:
+// The documentation for this class (on <summary> tags) was extracted from:
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array
 
 namespace Bridge.Html5
@@ -54,8 +54,13 @@ namespace Bridge.Html5
         /// <returns>The element in the specified position.</returns>
         public double this[Any<int, long, uint, ulong> i]
         {
-            get { return default(double); }
-            set { }
+            get
+            {
+                return default(double);
+            }
+            set
+            {
+            }
         }
 
         #region Properties
@@ -80,13 +85,13 @@ namespace Bridge.Html5
         /// </summary>
         public readonly TypedArray.Prototype<Float64Array, double> Prototype;
 
-        #endregion
+        #endregion Properties
 
         #region Methods
 
         // Float64Array.from() and Float64Array.of() are work in progress for ES6 and, at the time of the writing,
         // were not ready for production environment. Thus, their definitions are not present here.
 
-        #endregion
+        #endregion Methods
     }
 }

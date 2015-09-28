@@ -1,13 +1,14 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
-using System.Collections.Generic;
 using ICSharpCode.NRefactory.TypeSystem;
+using System.Collections.Generic;
 
 namespace Bridge.Translator
 {
     public class FieldBlock : AbstractEmitterBlock
     {
-        public FieldBlock(IEmitter emitter, ITypeInfo typeInfo, bool staticBlock, bool fieldsOnly) : base(emitter, typeInfo.TypeDeclaration)
+        public FieldBlock(IEmitter emitter, ITypeInfo typeInfo, bool staticBlock, bool fieldsOnly)
+            : base(emitter, typeInfo.TypeDeclaration)
         {
             this.Emitter = emitter;
             this.TypeInfo = typeInfo;
@@ -115,7 +116,7 @@ namespace Bridge.Translator
 
                 if (primitiveExpr != null && primitiveExpr.Value is AstType)
                 {
-                    var itype = this.Emitter.Resolver.ResolveNode((AstType) primitiveExpr.Value, this.Emitter);
+                    var itype = this.Emitter.Resolver.ResolveNode((AstType)primitiveExpr.Value, this.Emitter);
 
                     if (NullableType.IsNullable(itype.Type))
                     {
@@ -164,7 +165,7 @@ namespace Bridge.Translator
                     }
                     else
                     {
-                        this.Write("new " + BridgeTypes.ToJsName((AstType)primitiveExpr.Value, this.Emitter) + "()");    
+                        this.Write("new " + BridgeTypes.ToJsName((AstType)primitiveExpr.Value, this.Emitter) + "()");
                     }
                 }
                 else

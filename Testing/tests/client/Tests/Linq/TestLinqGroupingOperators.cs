@@ -1,4 +1,4 @@
-﻿using Bridge;
+using Bridge;
 using Bridge.QUnit;
 using ClientTestLibrary.Utilities;
 using System.Collections.Generic;
@@ -33,7 +33,7 @@ namespace ClientTestLibrary.Linq
         }
     }
 
-    class TestLinqGroupingOperators
+    internal class TestLinqGroupingOperators
     {
         public static void Test(Assert assert)
         {
@@ -46,8 +46,12 @@ namespace ClientTestLibrary.Linq
             var numberGroups =
                     (from n in numbers
                      group n by n % 5 into g
-                     select new { Remainder = g.Key, Numbers = g.ToArray() }).ToArray();
-           
+                     select new
+                     {
+                         Remainder = g.Key,
+                         Numbers = g.ToArray()
+                     }).ToArray();
+
             var numberGroupsExpected = new[]
                 {
                     new {Remainder = 2, Numbers = new[] { 2 } },
@@ -62,8 +66,12 @@ namespace ClientTestLibrary.Linq
             var wordGroups =
                     (from w in words
                      group w by w[0] into g
-                     select new { FirstLetter = g.Key, Words = g.ToArray() }).ToArray();
-            
+                     select new
+                     {
+                         FirstLetter = g.Key,
+                         Words = g.ToArray()
+                     }).ToArray();
+
             var wordGroupsExpected = new[]
                 {
                     new {FirstLetter = '1', Words = new[] { "1.one", "11.eleven" } },
@@ -77,7 +85,11 @@ namespace ClientTestLibrary.Linq
             var personGroups =
                    (from p in Person.GetPersons()
                     group p by p.Group into g
-                    select new { Group = g.Key, Persons = g.Select(x => x.Name).ToArray() }
+                    select new
+                    {
+                        Group = g.Key,
+                        Persons = g.Select(x => x.Name).ToArray()
+                    }
                    ).ToArray();
 
             var personGroupsExpected = new object[]
@@ -149,7 +161,11 @@ namespace ClientTestLibrary.Linq
             };
 
             var anagramsGroups = anagrams.GroupBy(w => w.Trim(), new AnagramEqualityComparer())
-                                   .Select(x => new { Key = x.Key, Words = x.ToArray() })
+                                   .Select(x => new
+                                   {
+                                       Key = x.Key,
+                                       Words = x.ToArray()
+                                   })
                                    .ToArray();
 
             var anagramsGroupsExpected = new[]
@@ -163,7 +179,11 @@ namespace ClientTestLibrary.Linq
 
             // TEST
             var anagramsGroups1 = anagrams.GroupBy(w => w.Trim(), a => a.ToUpper(), new AnagramEqualityComparer())
-                       .Select(x => new { Key = x.Key, Words = x.ToArray() })
+                       .Select(x => new
+                       {
+                           Key = x.Key,
+                           Words = x.ToArray()
+                       })
                        .ToArray();
             var anagramsGroupsExpected1 = new[]
                 {
@@ -202,7 +222,7 @@ namespace ClientTestLibrary.Linq
                 {
                     Number = 3,
                     Words = new []
-                    { 
+                    {
                         new
                         {
                             Letter = '3',
@@ -226,7 +246,7 @@ namespace ClientTestLibrary.Linq
                 {
                     Number = 1,
                     Words = new []
-                    { 
+                    {
                         new
                         {
                             Letter = '1',
@@ -242,7 +262,6 @@ namespace ClientTestLibrary.Linq
                 {
                     Number = -15, Words = new object[] { }
                 },
-
             };
 
             return complexGroupingExpected;

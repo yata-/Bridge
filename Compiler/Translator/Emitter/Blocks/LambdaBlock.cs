@@ -1,4 +1,4 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using System.Collections.Generic;
 
@@ -122,7 +122,6 @@ namespace Bridge.Translator
             var prevNamesMap = this.BuildLocalsNamesMap();
             this.AddLocals(parameters, body);
 
-
             bool block = body is BlockStatement;
             this.Write("");
 
@@ -171,7 +170,6 @@ namespace Bridge.Translator
                 this.Emitter.Output.Insert(savedPos, Bridge.Translator.Emitter.ROOT + "." + Bridge.Translator.Emitter.DELEGATE_BIND + "(this, ");
                 this.WriteCloseParentheses();
             }
-
 
             this.PopLocals();
             this.ClearLocalsMap(prevMap);

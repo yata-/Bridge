@@ -10,7 +10,8 @@ namespace System.Collections.Generic
         {
         }
 
-        public List(int capacity): this()
+        public List(int capacity)
+            : this()
         {
         }
 
@@ -78,7 +79,8 @@ namespace System.Collections.Generic
             return null;
         }
 
-        public List<T> GetRange(int index, int count) {
+        public List<T> GetRange(int index, int count)
+        {
             return null;
         }
 
@@ -148,8 +150,8 @@ namespace System.Collections.Generic
             return null;
         }
 
-
-        public void Sort() {
+        public void Sort()
+        {
         }
 
         public void Sort(Func<T, T, int> comparison)

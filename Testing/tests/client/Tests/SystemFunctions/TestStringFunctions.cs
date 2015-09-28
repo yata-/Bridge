@@ -1,18 +1,16 @@
-﻿using Bridge;
 using Bridge.Html5;
 using Bridge.QUnit;
 using System;
-using System.Text;
 
 namespace ClientTestLibrary
 {
     // Tests DateTime functions
-    class TestStringFunctions
+    internal class TestStringFunctions
     {
         // String functions
         public static void Strings(Assert assert)
         {
-            //In PhantomJS some correct tests failed. We will skip them in this environment.
+            // In PhantomJS some correct tests failed. We will skip them in this environment.
             var isPhantomJs = Utilities.BrowserHelper.IsPhantomJs();
 
             var expectedCount = isPhantomJs ? 28 : 48;
@@ -127,7 +125,7 @@ namespace ClientTestLibrary
             s = string.Concat(s, "2", "3", "4");
             assert.DeepEqual(s, "Hello Bridge.NET234", "string.Concat()");
 
-            s = string.Concat(null,true,3,false);
+            s = string.Concat(null, true, 3, false);
             assert.DeepEqual(s, "true3false", "string.Concat()");
 
             s = string.Concat(new string[] { "1", "2", "3", "4", "5" });
@@ -189,7 +187,6 @@ namespace ClientTestLibrary
             bool result1 = a1.Equals(b1, StringComparison.InvariantCultureIgnoreCase);
 
             assert.NotOk(result1, "testa testb StringComparison.InvariantCultureIgnoreCase");
-
         }
     }
 }

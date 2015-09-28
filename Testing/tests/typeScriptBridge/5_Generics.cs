@@ -1,5 +1,3 @@
-﻿using System.Collections.Generic;
-
 namespace Generics
 {
     // TODO Check reserved words
@@ -33,7 +31,9 @@ namespace Generics
         public T InstanceT;
         public K InstanceK;
 
-        public SimpleDoubleGeneric() { }
+        public SimpleDoubleGeneric()
+        {
+        }
 
         public SimpleDoubleGeneric(T instanceT, K instanceK)
         {
@@ -44,12 +44,20 @@ namespace Generics
 
     public class INamedEntity
     {
-        string Name { get; set; }
+        private string Name
+        {
+            get;
+            set;
+        }
     }
 
     public class NamedEntity : INamedEntity
     {
-        public string Name { get; set; }
+        public string Name
+        {
+            get;
+            set;
+        }
     }
 
     public class GenericINamedEntity<T> where T : INamedEntity
@@ -145,6 +153,7 @@ namespace Generics
     public class NewClass
     {
         public int Data;
+
         public NewClass()
         {
             this.Data = 30;
@@ -163,4 +172,3 @@ namespace Generics
         public static GenericNewAndClass<NewClass> GenericNewAndClass = new GenericNewAndClass<NewClass>(new NewClass());
     }
 }
-

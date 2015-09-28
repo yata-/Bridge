@@ -1,13 +1,11 @@
-﻿using Bridge;
-using Bridge.QUnit;
 using Bridge.Html5;
+using Bridge.QUnit;
 using ClientTestLibrary.Utilities;
-
 using System.Linq;
 
 namespace ClientTestLibrary.Linq
 {
-    class TestLinqAggregateOperators
+    internal class TestLinqAggregateOperators
     {
         public static void Test(Assert assert)
         {
@@ -28,7 +26,11 @@ namespace ClientTestLibrary.Linq
             // TEST
             var groupJoin = (from g in Group.GetGroups()
                              join p in Person.GetPersons() on g.Name equals p.Group into pg
-                             select new { Group = g.Name, PersonCount = pg.Count() })
+                             select new
+                             {
+                                 Group = g.Name,
+                                 PersonCount = pg.Count()
+                             })
                              .ToArray();
 
             var groupJoinExpected = new object[] {
@@ -43,7 +45,11 @@ namespace ClientTestLibrary.Linq
             // TEST
             var grouped = (from p in Person.GetPersons()
                            group p by p.Group into g
-                           select new { Group = g.Key, PersonCount = g.Count() })
+                           select new
+                           {
+                               Group = g.Key,
+                               PersonCount = g.Count()
+                           })
                             .ToArray();
 
             var groupedExpected = new object[] {
@@ -66,7 +72,11 @@ namespace ClientTestLibrary.Linq
             // TEST
             var groupedSum = (from p in Person.GetPersons()
                               group p by p.Group into g
-                              select new { Group = g.Key, Sum = g.Sum(x => x.Count) })
+                              select new
+                              {
+                                  Group = g.Key,
+                                  Sum = g.Sum(x => x.Count)
+                              })
                            .ToArray();
 
             var groupedSumExpected = new object[] {
@@ -89,7 +99,11 @@ namespace ClientTestLibrary.Linq
             // TEST
             var groupedMin = (from p in Person.GetPersons()
                               group p by p.Group into g
-                              select new { Group = g.Key, Min = g.Min(x => x.Count) })
+                              select new
+                              {
+                                  Group = g.Key,
+                                  Min = g.Min(x => x.Count)
+                              })
                           .ToArray();
 
             var groupedMinExpected = new object[] {
@@ -105,7 +119,11 @@ namespace ClientTestLibrary.Linq
             var groupedMinWithLet = (from p in Person.GetPersons()
                                      group p by p.Group into g
                                      let minCount = g.Min(x => x.Count)
-                                     select new { Group = g.Key, Name = g.Where(x => x.Count == minCount).Select(x => x.Name).ToArray() })
+                                     select new
+                                     {
+                                         Group = g.Key,
+                                         Name = g.Where(x => x.Count == minCount).Select(x => x.Name).ToArray()
+                                     })
                              .ToArray();
 
             var groupedMinWithLetExpected = new object[] {
@@ -128,7 +146,11 @@ namespace ClientTestLibrary.Linq
             // TEST
             var groupedMax = (from p in Person.GetPersons()
                               group p by p.Group into g
-                              select new { Group = g.Key, Max = g.Max(x => x.Count) })
+                              select new
+                              {
+                                  Group = g.Key,
+                                  Max = g.Max(x => x.Count)
+                              })
                           .ToArray();
 
             var groupedMaxExpected = new object[] {
@@ -144,7 +166,11 @@ namespace ClientTestLibrary.Linq
             var groupedMaxWithLet = (from p in Person.GetPersons()
                                      group p by p.Group into g
                                      let maxCount = g.Max(x => x.Count)
-                                     select new { Group = g.Key, Name = g.Where(x => x.Count == maxCount).Select(x => x.Name).ToArray() })
+                                     select new
+                                     {
+                                         Group = g.Key,
+                                         Name = g.Where(x => x.Count == maxCount).Select(x => x.Name).ToArray()
+                                     })
                              .ToArray();
 
             var groupedMaxWithLetExpected = new object[] {
@@ -168,7 +194,11 @@ namespace ClientTestLibrary.Linq
             // TEST
             var groupedAverage = (from p in Person.GetPersons()
                                   group p by p.Group into g
-                                  select new { Group = g.Key, Average = g.Average(x => x.Count) })
+                                  select new
+                                  {
+                                      Group = g.Key,
+                                      Average = g.Average(x => x.Count)
+                                  })
                          .ToArray();
 
             var groupedAverageExpected = new object[] {
@@ -204,8 +234,6 @@ namespace ClientTestLibrary.Linq
             var q = "a,b,c,a".ToUpperCase().Split(",").Aggregate("", (workingSentence, next) => next + " " + workingSentence);
 
             assert.Equal(q, "A C B A ", "Enumerable.Aggregate");
-
         }
-
     }
 }

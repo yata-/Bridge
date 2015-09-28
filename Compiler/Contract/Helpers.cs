@@ -1,13 +1,12 @@
-﻿using ICSharpCode.NRefactory.CSharp;
-using Mono.Cecil;
-using System.Text;
-using ICSharpCode.NRefactory.TypeSystem;
-using System.Linq;
-using System.Collections.Generic;
+using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
-using System;
+using ICSharpCode.NRefactory.TypeSystem;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
+using Mono.Cecil;
+using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace Bridge.Contract
 {
@@ -43,7 +42,9 @@ namespace Bridge.Contract
                 {
                     gTypeDef = Helpers.ToTypeDefinition(gArgDef, emitter);
                 }
-                catch { }
+                catch
+                {
+                }
 
                 if (gTypeDef == searchType)
                 {
@@ -89,7 +90,9 @@ namespace Bridge.Contract
                 {
                     baseTypeDefinition = Helpers.ToTypeDefinition(thisTypeDefinition.BaseType, emitter);
                 }
-                catch { }
+                catch
+                {
+                }
 
                 if (baseTypeDefinition != null && deep)
                 {
@@ -109,7 +112,9 @@ namespace Bridge.Contract
                 {
                     baseTypeDefinition = Helpers.ToTypeDefinition(thisTypeDefinition.BaseType, emitter);
                 }
-                catch { }
+                catch
+                {
+                }
 
                 if (baseTypeDefinition != null)
                 {
@@ -140,7 +145,9 @@ namespace Bridge.Contract
                 {
                     interfaceDefinition = Helpers.ToTypeDefinition(iref, emitter);
                 }
-                catch { }
+                catch
+                {
+                }
 
                 if (interfaceDefinition != null && Helpers.IsImplementationOf(interfaceDefinition, interfaceTypeDefinition, emitter))
                 {
@@ -237,7 +244,7 @@ namespace Bridge.Contract
         {
             if (allowArray && type.Kind == TypeKind.Array)
             {
-                var elements = (TypeWithElementType) type;
+                var elements = (TypeWithElementType)type;
                 type = elements.ElementType;
             }
 
@@ -307,6 +314,7 @@ namespace Bridge.Contract
             }
             return typeDef.Fields.Any(f => !f.IsPublic && !f.IsStatic && f.Name.Contains("BackingField") && f.Name.Contains("<" + propDef.Name + ">"));
         }
+
         public static bool IsFieldProperty(IMember property, IEmitter emitter)
         {
             bool isAuto = property.Attributes.Any(a => a.AttributeType.FullName == "Bridge.FieldPropertyAttribute");
@@ -328,6 +336,7 @@ namespace Bridge.Contract
             }
             return isAuto;
         }
+
         public static bool IsFieldProperty(PropertyDeclaration property, IEmitter emitter)
         {
             string name = "Bridge.FieldProperty";
@@ -355,6 +364,7 @@ namespace Bridge.Contract
             var propDef = typeDef.Properties.FirstOrDefault(p => p.Name == property.Name);
             return Helpers.IsAutoProperty(propDef);
         }
+
         public static string GetEventRef(CustomEventDeclaration property, IEmitter emitter, bool remove = false, bool noOverload = false, bool ignoreInterface = false)
         {
             var name = emitter.GetEntityName(property, true, ignoreInterface);
@@ -368,18 +378,19 @@ namespace Bridge.Contract
 
             return (remove ? "remove" : "add") + name;
         }
+
         public static string GetEventRef(IMember property, IEmitter emitter, bool remove = false, bool noOverload = false, bool ignoreInterface = false)
-            {
+        {
             var name = emitter.GetEntityName(property, true, ignoreInterface);
 
             if (!noOverload)
-                {
+            {
                 var overloads = OverloadsCollection.Create(emitter, property, remove);
                 name = overloads.HasOverloads ? overloads.GetOverloadName() : name;
                 noOverload = !overloads.HasOverloads;
-                }
-            return (remove ? "remove" : "add") + name;
             }
+            return (remove ? "remove" : "add") + name;
+        }
 
         public static string GetPropertyRef(PropertyDeclaration property, IEmitter emitter, bool isSetter = false, bool noOverload = false, bool ignoreInterface = false)
         {
@@ -452,7 +463,6 @@ namespace Bridge.Contract
 
             if (Helpers.IsFieldProperty(property, emitter))
             {
-
                 return noOverload ? emitter.GetEntityName(property, false) : name;
             }
 
@@ -479,6 +489,7 @@ namespace Bridge.Contract
 
             return list;
         }
+
         private static readonly string[] reservedWords = new string[] { "abstract", "arguments", "as", "boolean", "break", "byte", "case", "catch", "char", "class", "continue", "const", "constructor", "debugger", "default", "delete", "do", "double", "else", "enum", "eval", "export", "extends", "false", "final", "finally", "float", "for", "function", "goto", "if", "implements", "import", "in", "instanceof", "int", "interface", "is", "let", "long", "namespace", "native", "new", "null", "package", "private", "protected", "public", "return", "short", "static", "super", "switch", "synchronized", "this", "throw", "throws", "transient", "true", "try", "typeof", "use", "var", "void", "volatile", "while", "with", "yield" };
 
         public static bool IsReservedWord(string word)
@@ -528,11 +539,14 @@ namespace Bridge.Contract
                         case 3:
                             enumStringName = member.Name.Substring(0, 1).ToLower(CultureInfo.InvariantCulture) + member.Name.Substring(1);
                             break;
+
                         case 4:
                             break;
+
                         case 5:
                             enumStringName = enumStringName.ToLowerInvariant();
                             break;
+
                         case 6:
                             enumStringName = enumStringName.ToUpperInvariant();
                             break;
@@ -551,44 +565,64 @@ namespace Bridge.Contract
             {
                 case BinaryOperatorType.Any:
                     return null;
+
                 case BinaryOperatorType.BitwiseAnd:
                     return "op_BitwiseAnd";
+
                 case BinaryOperatorType.BitwiseOr:
                     return "op_BitwiseOr";
+
                 case BinaryOperatorType.ConditionalAnd:
                     return "op_LogicalAnd";
+
                 case BinaryOperatorType.ConditionalOr:
                     return "op_LogicalOr";
+
                 case BinaryOperatorType.ExclusiveOr:
                     return "op_ExclusiveOr";
+
                 case BinaryOperatorType.GreaterThan:
                     return "op_GreaterThan";
+
                 case BinaryOperatorType.GreaterThanOrEqual:
                     return "op_GreaterThanOrEqual";
+
                 case BinaryOperatorType.Equality:
                     return "op_Equality";
+
                 case BinaryOperatorType.InEquality:
                     return "op_Inequality";
+
                 case BinaryOperatorType.LessThan:
                     return "op_LessThan";
+
                 case BinaryOperatorType.LessThanOrEqual:
                     return "op_LessThanOrEqual";
+
                 case BinaryOperatorType.Add:
                     return "op_Addition";
+
                 case BinaryOperatorType.Subtract:
                     return "op_Subtraction";
+
                 case BinaryOperatorType.Multiply:
                     return "op_Multiply";
+
                 case BinaryOperatorType.Divide:
                     return "op_Division";
+
                 case BinaryOperatorType.Modulus:
                     return "op_Modulus";
+
                 case BinaryOperatorType.ShiftLeft:
                     return "LeftShift";
+
                 case BinaryOperatorType.ShiftRight:
                     return "RightShift";
+
                 case BinaryOperatorType.NullCoalescing:
                     return null;
+
                 default:
                     throw new ArgumentOutOfRangeException("operatorType", operatorType, null);
             }
@@ -600,26 +634,36 @@ namespace Bridge.Contract
             {
                 case UnaryOperatorType.Any:
                     return null;
+
                 case UnaryOperatorType.Not:
                     return "op_LogicalNot";
+
                 case UnaryOperatorType.BitNot:
                     return "op_OnesComplement";
+
                 case UnaryOperatorType.Minus:
                     return "op_UnaryNegation";
+
                 case UnaryOperatorType.Plus:
                     return "op_UnaryPlus";
+
                 case UnaryOperatorType.Increment:
                 case UnaryOperatorType.PostIncrement:
                     return "op_Increment";
+
                 case UnaryOperatorType.Decrement:
                 case UnaryOperatorType.PostDecrement:
                     return "op_Decrement";
+
                 case UnaryOperatorType.Dereference:
                     return null;
+
                 case UnaryOperatorType.AddressOf:
                     return null;
+
                 case UnaryOperatorType.Await:
                     return null;
+
                 default:
                     throw new ArgumentOutOfRangeException("operatorType", operatorType, null);
             }
@@ -631,28 +675,40 @@ namespace Bridge.Contract
             {
                 case AssignmentOperatorType.Assign:
                     return BinaryOperatorType.Any;
+
                 case AssignmentOperatorType.Add:
                     return BinaryOperatorType.Add;
+
                 case AssignmentOperatorType.Subtract:
-                     return BinaryOperatorType.Subtract;
+                    return BinaryOperatorType.Subtract;
+
                 case AssignmentOperatorType.Multiply:
-                     return BinaryOperatorType.Multiply;
+                    return BinaryOperatorType.Multiply;
+
                 case AssignmentOperatorType.Divide:
-                     return BinaryOperatorType.Divide;
+                    return BinaryOperatorType.Divide;
+
                 case AssignmentOperatorType.Modulus:
-                     return BinaryOperatorType.Modulus;
+                    return BinaryOperatorType.Modulus;
+
                 case AssignmentOperatorType.ShiftLeft:
-                     return BinaryOperatorType.ShiftLeft;
+                    return BinaryOperatorType.ShiftLeft;
+
                 case AssignmentOperatorType.ShiftRight:
-                     return BinaryOperatorType.ShiftRight;
+                    return BinaryOperatorType.ShiftRight;
+
                 case AssignmentOperatorType.BitwiseAnd:
-                     return BinaryOperatorType.BitwiseAnd;
+                    return BinaryOperatorType.BitwiseAnd;
+
                 case AssignmentOperatorType.BitwiseOr:
-                     return BinaryOperatorType.BitwiseOr;
+                    return BinaryOperatorType.BitwiseOr;
+
                 case AssignmentOperatorType.ExclusiveOr:
-                     return BinaryOperatorType.ExclusiveOr;
+                    return BinaryOperatorType.ExclusiveOr;
+
                 case AssignmentOperatorType.Any:
-                     return BinaryOperatorType.Any;
+                    return BinaryOperatorType.Any;
+
                 default:
                     throw new ArgumentOutOfRangeException("operatorType", operatorType, null);
             }

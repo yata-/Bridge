@@ -1,8 +1,10 @@
-﻿namespace Bridge
+namespace Bridge
 {
-	[Ignore,IgnoreGeneric,IgnoreCast]
+    [Ignore]
+    [IgnoreGeneric]
+    [IgnoreCast]
     [Name("Object")]
-	public class Any<T1, T2>
+    public class Any<T1, T2>
     {
         public static implicit operator Any<T1, T2>(T1 t)
         {
@@ -23,9 +25,11 @@
         {
             return default(T2);
         }
-	}
+    }
 
-    [Ignore,IgnoreGeneric,IgnoreCast]
+    [Ignore]
+    [IgnoreGeneric]
+    [IgnoreCast]
     [Name("Object")]
     public class Any<T1, T2, T3>
     {
@@ -60,7 +64,9 @@
         }
     }
 
-    [Ignore,IgnoreGeneric,IgnoreCast]
+    [Ignore]
+    [IgnoreGeneric]
+    [IgnoreCast]
     [Name("Object")]
     public class Any<T1, T2, T3, T4>
     {
@@ -105,7 +111,9 @@
         }
     }
 
-    [Ignore,IgnoreGeneric,IgnoreCast]
+    [Ignore]
+    [IgnoreGeneric]
+    [IgnoreCast]
     [Name("Object")]
     public class Any<T1, T2, T3, T4, T5>
     {
@@ -160,7 +168,9 @@
         }
     }
 
-    [Ignore,IgnoreGeneric,IgnoreCast]
+    [Ignore]
+    [IgnoreGeneric]
+    [IgnoreCast]
     [Name("Object")]
     public class Any<T1, T2, T3, T4, T5, T6>
     {
@@ -225,7 +235,9 @@
         }
     }
 
-    [Ignore,IgnoreGeneric,IgnoreCast]
+    [Ignore]
+    [IgnoreGeneric]
+    [IgnoreCast]
     [Name("Object")]
     public class Any<T1, T2, T3, T4, T5, T6, T7>
     {
@@ -300,7 +312,9 @@
         }
     }
 
-    [Ignore,IgnoreGeneric,IgnoreCast]
+    [Ignore]
+    [IgnoreGeneric]
+    [IgnoreCast]
     [Name("Object")]
     public class Any<T1, T2, T3, T4, T5, T6, T7, T8>
     {

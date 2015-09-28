@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-
-using Bridge;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Bridge.Html5
 {
@@ -10,7 +8,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("CSSStyleDeclaration")]
-    public class CSSStyleDeclaration: IEnumerable<string>
+    public class CSSStyleDeclaration : IEnumerable<string>
     {
         protected internal CSSStyleDeclaration()
         {

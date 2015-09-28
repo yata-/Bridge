@@ -1,12 +1,12 @@
-﻿using Bridge;
+using Bridge;
 using Bridge.QUnit;
 
 namespace ClientTestLibrary
 {
-    class TestVirtualMethods
+    internal class TestVirtualMethods
     {
         [FileName("testVirtualMethods.js")]
-        class A
+        private class A
         {
             public virtual string Test()
             {
@@ -15,7 +15,7 @@ namespace ClientTestLibrary
         }
 
         [FileName("testVirtualMethods.js")]
-        class B : A
+        private class B : A
         {
             public string TestA()
             {
@@ -27,6 +27,7 @@ namespace ClientTestLibrary
                 return "B";
             }
         }
+
         public static void TestB(Assert assert)
         {
             assert.Expect(7);
@@ -35,7 +36,6 @@ namespace ClientTestLibrary
 
             assert.Ok(a != null, "Instance of A created");
             assert.Equal(a.Test(), "A", "a.Test() = 'A'");
-
 
             var b = new B();
 

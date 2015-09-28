@@ -1,7 +1,5 @@
-﻿// The documentation for this class (on <summary> tags) was extracted from:
+// The documentation for this class (on <summary> tags) was extracted from:
 // https://developer.mozilla.org/en-US/docs/Web/API/TextMetrics
-
-using Bridge;
 
 namespace Bridge.Html5
 {

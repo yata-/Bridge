@@ -1,7 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using Bridge;
-
 namespace Bridge.Html5
 {
     /// <summary>
@@ -134,7 +130,6 @@ namespace Bridge.Html5
         public virtual void Add(Element element, int beforeIndex)
         {
         }
-
 
         /// <summary>
         /// Checks whether the element has any constraints and whether it satisfies them. If the element fails its constraints, the browser fires a cancelable invalid event at the element (and returns false).

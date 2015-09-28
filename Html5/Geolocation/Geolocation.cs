@@ -1,9 +1,7 @@
-﻿// Geolocation WebAPI by Mozilla Contributors is licensed under CC-BY-SA 2.5.
+// Geolocation WebAPI by Mozilla Contributors is licensed under CC-BY-SA 2.5.
 // https://developer.mozilla.org/en-US/docs/Web/API/Geolocation
 
 using System;
-
-using Bridge;
 
 namespace Bridge.Html5
 {

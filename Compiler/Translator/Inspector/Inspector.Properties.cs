@@ -1,9 +1,7 @@
-﻿using ICSharpCode.NRefactory.CSharp;
-using ICSharpCode.NRefactory.TypeSystem;
+using Bridge.Contract;
+using ICSharpCode.NRefactory.CSharp;
 using System;
 using System.Collections.Generic;
-using Object.Net.Utilities;
-using Bridge.Contract;
 
 namespace Bridge.Translator
 {

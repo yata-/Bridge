@@ -1,12 +1,10 @@
-﻿using Bridge;
 using Bridge.QUnit;
-using System;
 using System.Text;
 
 namespace ClientTestLibrary
 {
     // Tests DateTime functions
-    class TestStringBuilderFunctions
+    internal class TestStringBuilderFunctions
     {
         // StringBuilder functions
         public static void StringBuilders(Assert assert)
@@ -18,7 +16,7 @@ namespace ClientTestLibrary
             var sb1 = new StringBuilder(128);
             assert.DeepEqual(sb.ToString(), string.Empty, "StringBuilder() .ctor");
             assert.DeepEqual(sb.ToString(), sb1.ToString(), "StringBuilder(capacity) .ctor");
-            
+
             sb = new StringBuilder("foo");
             sb1 = new StringBuilder("foo", 2);
             assert.DeepEqual(sb.ToString(), "foo", "StringBuilder(string) .ctor");
@@ -39,7 +37,7 @@ namespace ClientTestLibrary
 
             // Length
             assert.DeepEqual(sb.Length, "foo".Length, ".Length");
-            
+
             // TEST methods
 
             // Clear

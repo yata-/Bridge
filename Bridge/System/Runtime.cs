@@ -1,16 +1,16 @@
-﻿using System;
+using Bridge;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using Bridge;
 
 namespace System
 {
     [Ignore]
     [Name("Bridge.Attribute")]
-    public class Attribute: IBridgeClass
+    public class Attribute : IBridgeClass
     {
         protected Attribute()
         {
@@ -36,6 +36,7 @@ namespace System
         ReturnValue = 0x2000,
         GenericParameter = 0x4000,
         Type = Class | Struct | Enum | Interface | Delegate,
+
         All = Assembly | Module | Class | Struct | Enum | Constructor |
               Method | Property | Field | Event | Interface | Parameter |
               Delegate | ReturnValue | GenericParameter
@@ -49,7 +50,11 @@ namespace System
         {
         }
 
-        public bool AllowMultiple { get; set; }
+        public bool AllowMultiple
+        {
+            get;
+            set;
+        }
     }
 
     [AttributeUsage(AttributeTargets.Enum, AllowMultiple = false)]
@@ -320,9 +325,10 @@ namespace System.Runtime.CompilerServices
     [Ignore]
     public sealed class DummyTypeUsedToAddAttributeToDefaultValueTypeConstructor
     {
-        private DummyTypeUsedToAddAttributeToDefaultValueTypeConstructor() { }
+        private DummyTypeUsedToAddAttributeToDefaultValueTypeConstructor()
+        {
+        }
     }
-
 
     [Ignore]
     [AttributeUsage(AttributeTargets.Property)]
@@ -332,6 +338,7 @@ namespace System.Runtime.CompilerServices
         {
             this.Value = indexerName;
         }
+
         public string Value
         {
             get;
@@ -400,6 +407,7 @@ namespace System.Runtime.CompilerServices
         public DynamicAttribute(bool[] transformFlags)
         {
         }
+
         public List<bool> TransformFlags
         {
             get
@@ -593,6 +601,7 @@ namespace System.Runtime.CompilerServices
     public interface IAsyncStateMachine
     {
         void MoveNext();
+
         void SetStateMachine(IAsyncStateMachine stateMachine);
     }
 
@@ -722,7 +731,6 @@ namespace System.Linq.Expressions
             {
                 return null;
             }
-
         }
 
         public Type Type
@@ -853,7 +861,11 @@ namespace System.ComponentModel
     public sealed class EditorBrowsableAttribute : Attribute
     {
         public extern EditorBrowsableAttribute(EditorBrowsableState state);
-        public extern EditorBrowsableState State { get; }
+
+        public extern EditorBrowsableState State
+        {
+            get;
+        }
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -873,6 +885,7 @@ namespace System.Threading
     public static class Interlocked
     {
         public static extern int CompareExchange(ref int location1, int value, int comparand);
+
         public static extern T CompareExchange<T>(ref T location1, T value, T comparand) where T : class;
     }
 
@@ -881,7 +894,9 @@ namespace System.Threading
     public static class Monitor
     {
         public static extern void Enter(object obj);
+
         public static extern void Enter(object obj, ref bool b);
+
         public static extern void Exit(object obj);
     }
 
@@ -889,7 +904,14 @@ namespace System.Threading
     [Ignore]
     public class Thread
     {
-        public extern int ManagedThreadId { get; }
-        public static extern Thread CurrentThread { get; }
+        public extern int ManagedThreadId
+        {
+            get;
+        }
+
+        public static extern Thread CurrentThread
+        {
+            get;
+        }
     }
 }

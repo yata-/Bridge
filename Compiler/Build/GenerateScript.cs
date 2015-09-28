@@ -1,9 +1,9 @@
-﻿using Microsoft.Build.Framework;
+using Bridge.Contract;
+using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using System;
 using System.IO;
 using System.Linq;
-using Bridge.Contract;
 
 namespace Bridge.Build
 {
@@ -71,14 +71,16 @@ namespace Bridge.Build
         {
             level = level ?? "message";
 
-            switch(level.ToLowerInvariant())
+            switch (level.ToLowerInvariant())
             {
                 case "message":
                     this.Log.LogMessage(message);
                     break;
+
                 case "warning":
                     this.Log.LogWarning(message);
                     break;
+
                 case "error":
                     this.Log.LogError(message);
                     break;

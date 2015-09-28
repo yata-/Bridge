@@ -1,9 +1,8 @@
-﻿using System;
-using System.Linq;
 using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
+using System.Linq;
 
 namespace Bridge.Translator
 {
@@ -161,7 +160,7 @@ namespace Bridge.Translator
                 {
                     unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
                 }
-                
+
                 this.Emitter.IsUnaryAccessor = oldAccessor;
 
                 if (this.Emitter.Writers.Count > count)
@@ -186,6 +185,7 @@ namespace Bridge.Translator
                             unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
                         }
                         break;
+
                     case UnaryOperatorType.Decrement:
                         if (nullable)
                         {
@@ -202,6 +202,7 @@ namespace Bridge.Translator
                             unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
                         }
                         break;
+
                     case UnaryOperatorType.Increment:
                         if (nullable)
                         {
@@ -218,6 +219,7 @@ namespace Bridge.Translator
                             unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
                         }
                         break;
+
                     case UnaryOperatorType.Minus:
                         if (nullable)
                         {
@@ -231,6 +233,7 @@ namespace Bridge.Translator
                             unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
                         }
                         break;
+
                     case UnaryOperatorType.Not:
                         if (nullable)
                         {
@@ -244,6 +247,7 @@ namespace Bridge.Translator
                             unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
                         }
                         break;
+
                     case UnaryOperatorType.Plus:
                         if (nullable)
                         {
@@ -257,6 +261,7 @@ namespace Bridge.Translator
                         }
 
                         break;
+
                     case UnaryOperatorType.PostDecrement:
                         if (nullable)
                         {
@@ -273,6 +278,7 @@ namespace Bridge.Translator
                             this.Write("--");
                         }
                         break;
+
                     case UnaryOperatorType.PostIncrement:
                         if (nullable)
                         {
@@ -289,6 +295,7 @@ namespace Bridge.Translator
                             this.Write("++");
                         }
                         break;
+
                     case UnaryOperatorType.Await:
                         if (this.Emitter.ReplaceAwaiterByVar)
                         {
@@ -313,6 +320,7 @@ namespace Bridge.Translator
                             this.Emitter.AsyncExpressionHandling = oldAsyncExpressionHandling;
                         }
                         break;
+
                     default:
                         throw new EmitterException(unaryOperatorExpression, "Unsupported unary operator: " + unaryOperatorExpression.Operator.ToString());
                 }
@@ -378,7 +386,6 @@ namespace Bridge.Translator
                 return;
             }
 
-
             var method = orr != null ? orr.UserDefinedOperatorMethod : null;
 
             if (orr != null && method == null)
@@ -396,9 +403,9 @@ namespace Bridge.Translator
                 {
                     if (!isOneOp)
                     {
-                        this.Write(Bridge.Translator.Emitter.ROOT + ".Nullable.");    
+                        this.Write(Bridge.Translator.Emitter.ROOT + ".Nullable.");
                     }
-                    
+
                     string action = "lift1";
                     string op_name = null;
 
@@ -407,9 +414,11 @@ namespace Bridge.Translator
                         case UnaryOperatorType.Minus:
                             op_name = "neg";
                             break;
+
                         case UnaryOperatorType.Plus:
                             op_name = "clone";
                             break;
+
                         case UnaryOperatorType.Increment:
                         case UnaryOperatorType.Decrement:
                             this.Write("(Bridge.hasValue(");
@@ -421,9 +430,10 @@ namespace Bridge.Translator
                             this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
                             this.Write(")");
                             this.WriteCloseParentheses();
-                            
+
                             this.Write(" : null)");
                             break;
+
                         case UnaryOperatorType.PostIncrement:
                         case UnaryOperatorType.PostDecrement:
                             this.Write("(Bridge.hasValue(");
@@ -457,7 +467,7 @@ namespace Bridge.Translator
                         this.WriteScript(op_name);
                         this.WriteComma();
                         new ExpressionListBlock(this.Emitter,
-                            new Expression[] {this.UnaryOperatorExpression.Expression}, null).Emit();
+                            new Expression[] { this.UnaryOperatorExpression.Expression }, null).Emit();
                         this.WriteCloseParentheses();
                     }
                 }

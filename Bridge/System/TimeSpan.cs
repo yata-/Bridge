@@ -1,4 +1,4 @@
-﻿using Bridge;
+using Bridge;
 
 namespace System
 {
@@ -100,7 +100,6 @@ namespace System
         {
             return false;
         }
-
 
         public int Days
         {
@@ -210,6 +209,7 @@ namespace System
         {
             return 0;
         }
+
         public TimeSpan Duration()
         {
             return new TimeSpan();

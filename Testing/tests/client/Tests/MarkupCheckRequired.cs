@@ -1,16 +1,19 @@
-﻿using Bridge;
+using Bridge;
 
 namespace ClientTestLibrary
 {
-    //[#62] - check file name outputs
+    // [#62] - check file name outputs
     [FileName("markUpCheckRequired.js")]
-    public class CI1 { }
+    public class CI1
+    {
+    }
 
     [FileName("MarkUpCheckRequired.js")]
-    public class CI2 { }
+    public class CI2
+    {
+    }
 
-
-    //[#69]
+    // [#69]
     [FileName("markUpCheckRequired.js")]
     public struct Point69
     {

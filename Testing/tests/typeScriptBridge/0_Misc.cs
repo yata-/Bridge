@@ -1,8 +1,12 @@
-﻿namespace Misc.A
+namespace Misc.A
 {
-    class EnumTest
+    internal class EnumTest
     {
-        public enum EnumA { M1, M2 }
+        public enum EnumA
+        {
+            M1,
+            M2
+        }
 
         public EnumA DoSomething(EnumA m)
         {

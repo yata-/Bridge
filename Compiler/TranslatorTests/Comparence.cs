@@ -1,46 +1,79 @@
-﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
-using System.IO;
-
 namespace Bridge.Translator.Tests
 {
-    class Comparence
+    internal class Comparence
     {
-        public string Name { get; set; }
-        public string File1FullPath { get; set; }
-        public string File2FullPath { get; set; }
-        public bool InReference { get; set; }
-        public string Difference { get; set; }
-        public CompareResult Result { get; set; }
+        public string Name
+        {
+            get;
+            set;
+        }
+
+        public string File1FullPath
+        {
+            get;
+            set;
+        }
+
+        public string File2FullPath
+        {
+            get;
+            set;
+        }
+
+        public bool InReference
+        {
+            get;
+            set;
+        }
+
+        public string Difference
+        {
+            get;
+            set;
+        }
+
+        public CompareResult Result
+        {
+            get;
+            set;
+        }
 
         public override string ToString()
         {
             var fromTo = new string[2];
+
             if (InReference)
             {
                 fromTo[0] = "Output";
-                fromTo[1]= "Reference";
-            }else
+                fromTo[1] = "Reference";
+            }
+            else
             {
                 fromTo[1] = "Output";
-                fromTo[0]= "Reference";
+                fromTo[0] = "Reference";
             }
 
             string difference;
+
             switch (Result)
             {
                 case CompareResult.DoesNotExist:
                     difference = string.Empty;
                     break;
+
                 case CompareResult.HasContentDifferences:
                     difference = " Difference: " + Difference + ".";
                     break;
+
                 case CompareResult.TheSame:
                     difference = string.Empty;
                     break;
+
                 default:
                     difference = string.Empty;
                     break;
@@ -50,21 +83,21 @@ namespace Bridge.Translator.Tests
         }
     }
 
-    enum CompareMode
+    internal enum CompareMode
     {
         Default = 0,
         Presence = 1,
         Content = 2
     }
 
-    enum CompareResult
+    internal enum CompareResult
     {
         DoesNotExist = 0,
         HasContentDifferences = 1,
         TheSame = 2
     }
 
-    class FolderComparer
+    internal class FolderComparer
     {
         private static void LogWarning(string message)
         {
@@ -105,24 +138,28 @@ namespace Bridge.Translator.Tests
             foreach (var diff in comparence)
             {
                 if (diff.Result != CompareResult.HasContentDifferences)
+                {
                     continue;
+                }
 
                 try
                 {
                     var file1Content = FolderComparer.ReadFile(diff.File1FullPath);
+
                     if (file1Content == null)
                     {
                         sb.AppendLine(string.Format("DIFF Could not get detailed diff for {0}. Content is null.}", diff.File1FullPath));
+
                         continue;
                     }
 
                     var file2Content = FolderComparer.ReadFile(diff.File2FullPath);
+
                     if (file2Content == null)
                     {
                         sb.AppendLine(string.Format("DIFF Could not get detailed diff for {0}. Content is null.}", diff.File2FullPath));
                         continue;
                     }
-
 
                     var differences = differ.diff_main(file1Content, file2Content);
                     var diffText = differ.DiffText(differences, true);
@@ -145,7 +182,9 @@ namespace Bridge.Translator.Tests
         private static void HandleFile(string folder1, string folder2, Dictionary<string, CompareMode> specialFiles, Dictionary<string, Comparence> comparence, FileInfo file, bool inReference, bool ignoreSame = true)
         {
             if (comparence.ContainsKey(file.Name))
+            {
                 return;
+            }
 
             var cd = new Comparence
             {
@@ -163,16 +202,19 @@ namespace Bridge.Translator.Tests
                 if (specialFiles != null)
                 {
                     CompareMode specialFileMode;
+
                     if (specialFiles.TryGetValue(file.Name, out specialFileMode))
                     {
                         cd.Result = CompareResult.TheSame;
+
                         return;
                     }
                 }
 
                 cd.Result = CompareResult.HasContentDifferences;
 
-                cd.Difference = AnyDifference(cd.File1FullPath, cd.File2FullPath); ;
+                cd.Difference = AnyDifference(cd.File1FullPath, cd.File2FullPath);
+                ;
 
                 if (cd.Difference == null)
                 {
@@ -195,15 +237,21 @@ namespace Bridge.Translator.Tests
                 using (Stream s2 = new FileStream(file2, FileMode.Open, FileAccess.Read, FileShare.Read))
                 {
                     if (s1.Length != s2.Length)
+                    {
                         return string.Format("Length difference {0} vs {1}", s2.Length, s1.Length);
+                    }
 
                     int i = 0;
+
                     while (i < s1.Length)
                     {
                         var b1 = s1.ReadByte();
                         var b2 = s2.ReadByte();
+
                         if (b1 != b2)
+                        {
                             return string.Format("Content difference found at {0} with {1} vs {2}", i, b2, b1);
+                        }
 
                         i++;
                     }
@@ -216,7 +264,9 @@ namespace Bridge.Translator.Tests
         public static string ReadFile(string fullFileName)
         {
             if (!File.Exists(fullFileName))
+            {
                 return null;
+            }
 
             using (Stream stream = new FileStream(fullFileName, FileMode.Open, FileAccess.Read, FileShare.Read))
             {

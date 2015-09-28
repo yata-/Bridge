@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
 using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
+using System;
+using System.Linq;
 
 namespace Bridge.Translator
 {
@@ -68,7 +68,7 @@ namespace Bridge.Translator
                     }
 
                     new ExpressionListBlock(this.Emitter,
-                        new Expression[] {binaryOperatorExpression.Left, binaryOperatorExpression.Right}, null).Emit();
+                        new Expression[] { binaryOperatorExpression.Left, binaryOperatorExpression.Right }, null).Emit();
                     this.WriteCloseParentheses();
 
                     return true;
@@ -134,7 +134,6 @@ namespace Bridge.Translator
             if (binaryOperatorExpression.Operator == BinaryOperatorType.Add ||
                 binaryOperatorExpression.Operator == BinaryOperatorType.Subtract)
             {
-
                 var add = binaryOperatorExpression.Operator == BinaryOperatorType.Add;
 
                 if (this.Emitter.Validator.IsDelegateOrLambda(leftResolverResult) && this.Emitter.Validator.IsDelegateOrLambda(rightResolverResult))
@@ -150,7 +149,6 @@ namespace Bridge.Translator
             string root = Bridge.Translator.Emitter.ROOT + ".Nullable.";
             bool special = nullable || isCoalescing;
             bool rootSpecial = nullable;
-
 
             if (rootSpecial)
             {
@@ -177,6 +175,7 @@ namespace Bridge.Translator
                     case BinaryOperatorType.Add:
                         this.Write(rootSpecial ? "add" : "+");
                         break;
+
                     case BinaryOperatorType.BitwiseAnd:
                         if (isBool)
                         {
@@ -188,6 +187,7 @@ namespace Bridge.Translator
                         }
 
                         break;
+
                     case BinaryOperatorType.BitwiseOr:
                         if (isBool)
                         {
@@ -198,54 +198,71 @@ namespace Bridge.Translator
                             this.Write(rootSpecial ? "bor" : "|");
                         }
                         break;
+
                     case BinaryOperatorType.ConditionalAnd:
                         this.Write(rootSpecial ? "and" : "&&");
                         break;
+
                     case BinaryOperatorType.NullCoalescing:
                         this.Write("coalesce");
                         break;
+
                     case BinaryOperatorType.ConditionalOr:
                         this.Write(rootSpecial ? "or" : "||");
                         break;
+
                     case BinaryOperatorType.Divide:
                         this.Write(rootSpecial ? "div" : "/");
                         break;
+
                     case BinaryOperatorType.Equality:
                         this.Write(rootSpecial ? "eq" : "===");
                         break;
+
                     case BinaryOperatorType.ExclusiveOr:
                         this.Write(rootSpecial ? "xor" : "^");
                         break;
+
                     case BinaryOperatorType.GreaterThan:
                         this.Write(rootSpecial ? "gt" : ">");
                         break;
+
                     case BinaryOperatorType.GreaterThanOrEqual:
                         this.Write(rootSpecial ? "gte" : ">=");
                         break;
+
                     case BinaryOperatorType.InEquality:
                         this.Write(rootSpecial ? "neq" : "!==");
                         break;
+
                     case BinaryOperatorType.LessThan:
                         this.Write(rootSpecial ? "lt" : "<");
                         break;
+
                     case BinaryOperatorType.LessThanOrEqual:
                         this.Write(rootSpecial ? "lte" : "<=");
                         break;
+
                     case BinaryOperatorType.Modulus:
                         this.Write(rootSpecial ? "mod" : "%");
                         break;
+
                     case BinaryOperatorType.Multiply:
                         this.Write(rootSpecial ? "mul" : "*");
                         break;
+
                     case BinaryOperatorType.ShiftLeft:
                         this.Write(rootSpecial ? "sl" : "<<");
                         break;
+
                     case BinaryOperatorType.ShiftRight:
                         this.Write(rootSpecial ? "sr" : ">>");
                         break;
+
                     case BinaryOperatorType.Subtract:
                         this.Write(rootSpecial ? "sub" : "-");
                         break;
+
                     default:
                         throw new EmitterException(binaryOperatorExpression, "Unsupported binary operator: " + binaryOperatorExpression.Operator.ToString());
                 }
@@ -302,41 +319,52 @@ namespace Bridge.Translator
                             op_name = "gt";
                             action = "liftcmp";
                             break;
+
                         case BinaryOperatorType.GreaterThanOrEqual:
                             op_name = "gte";
                             action = "liftcmp";
                             break;
+
                         case BinaryOperatorType.Equality:
                             op_name = "equals";
                             action = "lifteq";
                             break;
+
                         case BinaryOperatorType.InEquality:
                             op_name = "ne";
                             action = "liftne";
                             break;
+
                         case BinaryOperatorType.LessThan:
                             op_name = "lt";
                             action = "liftcmp";
                             break;
+
                         case BinaryOperatorType.LessThanOrEqual:
                             op_name = "lte";
                             action = "liftcmp";
                             break;
+
                         case BinaryOperatorType.Add:
                             op_name = "add";
                             break;
+
                         case BinaryOperatorType.Subtract:
                             op_name = "sub";
                             break;
+
                         case BinaryOperatorType.Multiply:
                             op_name = "mul";
                             break;
+
                         case BinaryOperatorType.Divide:
                             op_name = "div";
                             break;
+
                         case BinaryOperatorType.Modulus:
                             op_name = "mod";
                             break;
+
                         default:
                             throw new ArgumentOutOfRangeException();
                     }

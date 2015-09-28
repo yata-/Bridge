@@ -1,13 +1,12 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using Microsoft.Ajax.Utilities;
+using Mono.Cecil;
+using Object.Net.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
-using Mono.Cecil;
-using Object.Net.Utilities;
 
 namespace Bridge.Translator
 {
@@ -16,7 +15,13 @@ namespace Bridge.Translator
         public const string Bridge_ASSEMBLY = "Bridge";
         public const string BridgeResourcesList = "Bridge.Resources.list";
         private static readonly Encoding OutputEncoding = System.Text.Encoding.UTF8;
-        private static readonly CodeSettings MinifierCodeSettings = new CodeSettings { TermSemicolons = true, StrictMode = true };
+
+        private static readonly CodeSettings MinifierCodeSettings = new CodeSettings
+        {
+            TermSemicolons = true,
+            StrictMode = true
+        };
+
         public const string LocalesPrefix = "Bridge.Resources.Locales.";
 
         public Translator(string location, bool fromTask = false)
@@ -304,7 +309,7 @@ namespace Bridge.Translator
                 if (listRes != null)
                 {
                     string resourcesStr = null;
-                    using (var resourcesStream = ((EmbeddedResource) listRes).GetResourceStream())
+                    using (var resourcesStream = ((EmbeddedResource)listRes).GetResourceStream())
                     {
                         using (StreamReader reader = new StreamReader(resourcesStream))
                         {
@@ -336,7 +341,11 @@ namespace Bridge.Translator
                         {
                             if (!nodebug)
                             {
-                                this.ExtractResourceAndWriteToFile(outputPath, reference, resName, fileName.ReplaceLastInstanceOf(".js", ".min.js"), (content) => { var minifier = new Minifier(); return minifier.MinifyJavaScript(content, MinifierCodeSettings); });
+                                this.ExtractResourceAndWriteToFile(outputPath, reference, resName, fileName.ReplaceLastInstanceOf(".js", ".min.js"), (content) =>
+                                {
+                                    var minifier = new Minifier();
+                                    return minifier.MinifyJavaScript(content, MinifierCodeSettings);
+                                });
                             }
                         }
                     }
@@ -441,7 +450,10 @@ namespace Bridge.Translator
             if (this.AssemblyInfo.OutputFormatting != JavaScriptOutputType.Formatted && !nodebug)
             {
                 var minifier = new Minifier();
-                resourcesStrMin = minifier.MinifyJavaScript(resourcesStr, new CodeSettings {TermSemicolons = true});
+                resourcesStrMin = minifier.MinifyJavaScript(resourcesStr, new CodeSettings
+                {
+                    TermSemicolons = true
+                });
             }
 
             if (this.AssemblyInfo.CombineLocales)
@@ -525,6 +537,7 @@ namespace Bridge.Translator
         private StringBuilder jsbuffer;
         private StringBuilder jsminbuffer;
         private List<string> removeList;
+
         protected virtual void SaveToFile(string fileName, string content)
         {
             bool isTs = fileName.EndsWith(".d.ts");

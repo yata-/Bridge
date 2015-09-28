@@ -1,10 +1,10 @@
-﻿using Bridge.Linq;
+using Bridge.Linq;
 using Bridge.QUnit;
 using System.Linq;
 
 namespace ClientTestLibrary.Linq
 {
-    class TestLinqQueryExecution
+    internal class TestLinqQueryExecution
     {
         public static void Test(Assert assert)
         {
@@ -14,7 +14,8 @@ namespace ClientTestLibrary.Linq
             int[] numbers = new int[] { 5, 4, 1, 3, 9, 8, 6, 7, 2, 0 };
             int i = 0;
 
-            var aQuery = from n in numbers select ++i;
+            var aQuery = from n in numbers
+                         select ++i;
             assert.Equal(i, 0, "Query is not executed until you enumerate over them");
 
             // TEST
@@ -24,12 +25,17 @@ namespace ClientTestLibrary.Linq
             i = 0;
 
             // TEST
-            var bQuery = (from n in numbers select ++i).Max();
+            var bQuery = (from n in numbers
+                          select ++i).Max();
             assert.Equal(i, 10, "Max() executes immediately");
 
             // TEST
-            var smallNumbers = from n in numbers where n <= 3 select n;
-            var smallerEvenNumbers = from n in smallNumbers where n % 2 == 0 select n;
+            var smallNumbers = from n in numbers
+                               where n <= 3
+                               select n;
+            var smallerEvenNumbers = from n in smallNumbers
+                                     where n % 2 == 0
+                                     select n;
             assert.DeepEqual(smallerEvenNumbers.ToArray(), new[] { 2, 0 }, "Query in a query");
 
             // TEST

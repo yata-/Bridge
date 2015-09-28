@@ -1,10 +1,10 @@
-﻿using Bridge;
+using Bridge;
 using Bridge.QUnit;
 
 namespace ClientTestLibrary
 {
     [FileName("testMethodParameters.js")]
-    class TestMethodParametersClass
+    internal class TestMethodParametersClass
     {
         private static int MethodDefault(int i = 5)
         {

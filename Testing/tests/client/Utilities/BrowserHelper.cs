@@ -1,4 +1,4 @@
-﻿using Bridge;
+using Bridge;
 
 namespace ClientTestLibrary.Utilities
 {

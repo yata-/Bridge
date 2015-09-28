@@ -1,7 +1,6 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.TypeSystem;
-using Object.Net.Utilities;
 
 namespace Bridge.Translator
 {
@@ -55,7 +54,7 @@ namespace Bridge.Translator
                 }
                 else
                 {
-                    new BreakBlock(this.Emitter, this.YieldBreakStatement).Emit();    
+                    new BreakBlock(this.Emitter, this.YieldBreakStatement).Emit();
                 }
             }
         }

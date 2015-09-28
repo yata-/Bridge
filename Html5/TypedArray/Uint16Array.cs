@@ -1,4 +1,4 @@
-﻿// The documentation for this class (on <summary> tags) was extracted from:
+// The documentation for this class (on <summary> tags) was extracted from:
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array
 
 namespace Bridge.Html5
@@ -53,8 +53,13 @@ namespace Bridge.Html5
         /// <returns>The element in the specified position.</returns>
         public ushort this[Any<int, long, uint, ulong> i]
         {
-            get { return default(ushort); }
-            set { }
+            get
+            {
+                return default(ushort);
+            }
+            set
+            {
+            }
         }
 
         #region Properties
@@ -79,13 +84,13 @@ namespace Bridge.Html5
         /// </summary>
         public readonly TypedArray.Prototype<Uint16Array, ushort> Prototype;
 
-        #endregion
+        #endregion Properties
 
         #region Methods
 
         // Uint16Array.from() and Uint16Array.of() are work in progress for ES6 and, at the time of the writing,
         // were not ready for production environment. Thus, their definitions are not present here.
 
-        #endregion
+        #endregion Methods
     }
 }

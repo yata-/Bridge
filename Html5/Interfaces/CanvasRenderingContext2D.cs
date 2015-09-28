@@ -1,7 +1,6 @@
-﻿// The documentation for this class (on <summary> tags) was extracted from:
+// The documentation for this class (on <summary> tags) was extracted from:
 // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
 
-using Bridge;
 using System.Collections.Generic;
 
 namespace Bridge.Html5
@@ -17,6 +16,7 @@ namespace Bridge.Html5
     public class CanvasRenderingContext2D : SVGOperations
     {
         // There are three methods that immediately draw rectangles to the bitmap.
+
         #region Drawing Rectangles
 
         // TODO: Review summary to include parameters' info. From this point down to createPattern (~390)
@@ -58,10 +58,11 @@ namespace Bridge.Html5
             return;
         }
 
-        #endregion
+        #endregion Drawing Rectangles
 
         // The following methods are provided for drawing text. See also the TextMetrics object for
         // text properties.
+
         #region Drawing Text
 
         /// <summary>
@@ -138,9 +139,10 @@ namespace Bridge.Html5
             return null;
         }
 
-        #endregion
+        #endregion Drawing Text
 
         // The following methods and properties control how lines are drawn.
+
         #region Line Styles
 
         /// <summary>
@@ -197,9 +199,10 @@ namespace Bridge.Html5
         /// </summary>
         public float LineDashOffset;
 
-        #endregion
+        #endregion Line Styles
 
         // The following properties control how text is laid out.
+
         #region Text Styles
 
         /// <summary>
@@ -223,10 +226,11 @@ namespace Bridge.Html5
         /// </summary>
         public CanvasTypes.CanvasTextDirection Direction;
 
-        #endregion
+        #endregion Text Styles
 
         // Fill styling is used for colors and styles inside shapes and stroke styling is used for
         // the lines around shapes.
+
         #region Fill and Stroke Styles
 
         /// <summary>
@@ -239,9 +243,10 @@ namespace Bridge.Html5
         /// </summary>
         public string StrokeStyle;
 
-        #endregion
+        #endregion Fill and Stroke Styles
 
         #region Gradients and Patterns
+
         /// <summary>
         /// Creates a linear gradient along the line given by the coordinates represented by the parameters.
         /// </summary>
@@ -300,7 +305,7 @@ namespace Bridge.Html5
             return null;
         }
 
-        #endregion
+        #endregion Gradients and Patterns
 
         #region Shadows
 
@@ -324,9 +329,10 @@ namespace Bridge.Html5
         /// </summary>
         public float ShadowOffsetY;
 
-        #endregion
+        #endregion Shadows
 
         // The following methods can be used to manipulate paths of objects.
+
         #region Paths
 
         /// <summary>
@@ -339,7 +345,8 @@ namespace Bridge.Html5
         }
 
         // All remaining methods here are inherited from SVGOperations, which are common to the Path2D interface.
-        #endregion
+
+        #endregion Paths
 
         #region Drawing Paths
 
@@ -561,13 +568,14 @@ namespace Bridge.Html5
             return false;
         }
 
-        #endregion
+        #endregion Drawing Paths
 
         // Objects in the CanvasRenderingContext2D rendering context have a current transformation matrix
         // and methods to manipulate it. The transformation matrix is applied when creating the current
         // default path, painting text, shapes and Path2D objects. The methods listed below remain for
         // historical and compatibility reasons as SVGMatrix objects are used in most parts of the API
         // nowadays and will be used in the future instead.
+
         #region Transformations
 
         /// <summary>
@@ -616,6 +624,7 @@ namespace Bridge.Html5
          * [ b d f ]
          * [ 0 0 1 ]
          */
+
         /// <summary>
         /// Multiplies the current transformation matrix with the matrix described by its arguments.
         /// Matrix is described by a 3x3 [ a c e // b d f // 0 0 1 ] (// means a matrix line break).
@@ -658,7 +667,7 @@ namespace Bridge.Html5
             return;
         }
 
-        #endregion
+        #endregion Transformations
 
         #region Composing
 
@@ -673,7 +682,7 @@ namespace Bridge.Html5
         /// </summary>
         public CanvasTypes.CanvasCompositeOperationType GlobalCompositeOperation;
 
-        #endregion
+        #endregion Composing
 
         #region Drawing Images
 
@@ -770,9 +779,10 @@ namespace Bridge.Html5
             return;
         }
 
-        #endregion
+        #endregion Drawing Images
 
         // See also the ImageData object.
+
         #region Pixel Manipulation
 
         /// <summary>
@@ -873,14 +883,14 @@ namespace Bridge.Html5
         /// <param name="dirtyHeight">
         /// Height of the rectangle to be painted, in the origin image data. Defaults to the height of the image data.
         /// </param>
-        public virtual void PutImageData(ImageData imagedata, int dx, int dy, 
-                                         Any<uint?, int?> dirtyX, Any<uint?, int?> dirtyY, 
+        public virtual void PutImageData(ImageData imagedata, int dx, int dy,
+                                         Any<uint?, int?> dirtyX, Any<uint?, int?> dirtyY,
                                          Any<uint?, int?> dirtyWidth, Any<uint?, int?> dirtyHeight)
         {
             return;
         }
 
-        #endregion
+        #endregion Pixel Manipulation
 
         #region Image Smoothing
 
@@ -890,11 +900,12 @@ namespace Bridge.Html5
         /// <remarks>This is experimental API that should not be used in production code.</remarks>
         public bool ImageSmoothingEnabled;
 
-        #endregion
+        #endregion Image Smoothing
 
         // The CanvasRenderingContext2D rendering context contains a variety of drawing style states
         // (attributes for line styles, fill styles, shadow styles, text styles). The following methods
         // help you to work with that state.
+
         #region Canvas State
 
         /// <summary>
@@ -919,7 +930,8 @@ namespace Bridge.Html5
         /// Might be null if it is not associated with a &lt;canvas> element.
         /// </summary>
         public readonly CanvasElement Canvas;
-        #endregion
+
+        #endregion Canvas State
 
         #region Hit Regions
 
@@ -964,15 +976,17 @@ namespace Bridge.Html5
             return;
         }
 
-        #endregion
+        #endregion Hit Regions
 
         #region Non-standard APIs
+
         // Non-standard APIs are not implemented on Bridge.NET.
 
         /// <summary>
         /// Most of these APIs are deprecated and will be removed in the future.
         /// </summary>
-        #endregion
+
+        #endregion Non-standard APIs
 
         // FIXME: Find a better place to define this class on. It is not an interface neither an element, but an
         //        auxiliary object, used only on CanvasRenderingContext2D.
@@ -983,45 +997,77 @@ namespace Bridge.Html5
             /// <summary>
             /// A Path2D object describing the area of the hit region. If not provided, the current path is used.
             /// </summary>
-            public Path2D Path { get; set; }
+            public Path2D Path
+            {
+                get;
+                set;
+            }
 
             /// <summary>
             /// The fill rule to use (defaults to "nonzero").
             /// </summary>
-            public CanvasTypes.CanvasFillRule fillRule { get; set; }
+            public CanvasTypes.CanvasFillRule fillRule
+            {
+                get;
+                set;
+            }
 
             /// <summary>
             /// The ID for this hit region to reference it for later use in events, for example.
             /// </summary>
-            public string Id { get; set; }
+            public string Id
+            {
+                get;
+                set;
+            }
 
             /// <summary>
             /// The ID of the parent region for cursor fallback and navigation by accessibility tools.
             /// </summary>
-            public string ParentID { get; set; }
+            public string ParentID
+            {
+                get;
+                set;
+            }
 
             /// <summary>
             /// The cursor to use when the mouse is over this region (defaults to "inherit").
             /// Inherits the cursor of the parent hit region, if any, or the canvas element's cursor.
             /// </summary>
-            public Cursor Cursor { get; set; } // FIXME: CSS/Cursor.cs has no 'inherit' option!
+            public Cursor Cursor
+            {
+                get;
+                set;
+            } // FIXME: CSS/Cursor.cs has no 'inherit' option!
 
             /// <summary>
             /// An element (descendant of the canvas) to which events are to be routed. Defaults to null.
             /// </summary>
-            public Element Control { get; set; }
+            public Element Control
+            {
+                get;
+                set;
+            }
 
             /// <summary>
             /// A text label for accessibility tools to use as a description of the region,
             /// if there is no control. Defaults to null.
             /// </summary>
-            public string Label { get; set; }
+            public string Label
+            {
+                get;
+                set;
+            }
 
             /// <summary>
             /// An ARIA role for accessibility tools to determine how to represent this region,
             /// if there is no control. Defaults to null.
             /// </summary>
-            public string role { get; set; }
+            public string role
+            {
+                get;
+                set;
+            }
         }
     }
 }

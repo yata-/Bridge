@@ -1,8 +1,4 @@
-﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bridge.Contract
 {
@@ -10,7 +6,8 @@ namespace Bridge.Contract
     {
         List<string> Namespaces
         {
-            get; set;
+            get;
+            set;
         }
 
         List<string> Callbacks

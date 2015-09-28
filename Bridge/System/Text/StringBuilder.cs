@@ -1,4 +1,4 @@
-﻿using Bridge;
+using Bridge;
 
 namespace System.Text
 {
@@ -43,9 +43,17 @@ namespace System.Text
         /// <summary>
         /// Gets or sets the length of the current StringBuilder object.
         /// </summary>
-        public int Length { get; set; }
+        public int Length
+        {
+            get;
+            set;
+        }
 
-        public int Capacity { get; set; }
+        public int Capacity
+        {
+            get;
+            set;
+        }
 
         public StringBuilder Append(bool value)
         {

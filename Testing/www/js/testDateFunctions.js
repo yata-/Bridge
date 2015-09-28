@@ -8,7 +8,7 @@ Bridge.define('ClientTestLibrary.TestDateFunctions', {
             assert.expect(2);
 
             // TEST
-            //[#83] by C#
+            // [#83] by C#
             var str = "2015-03-24T10:48:09.1500225+03:00";
             var bridgeDate = Bridge.Date.parse(str);
             var bridgeDate1 = new Date(str);
@@ -16,7 +16,7 @@ Bridge.define('ClientTestLibrary.TestDateFunctions', {
             assert.deepEqual(bridgeDate, bridgeDate1, "[#83] C# bridgeDate = bridgeDate1");
 
             // TEST
-            //[#83] by JavaScript code. This is to check the same issue as above and just to check another way of calling QUnit from JavaScript
+            // [#83] by JavaScript code. This is to check the same issue as above and just to check another way of calling QUnit from JavaScript
             var str = "2015-03-24T10:48:09.1500225+03:00",
     bridgeDate = Bridge.Date.parse(str),
     jsDate = new Date(Date.parse(str)),
@@ -35,7 +35,6 @@ Bridge.define('ClientTestLibrary.TestDateFunctions', {
 
             var d2 = Bridge.Date.parse("2001-01-01");
             assert.deepEqual(d2.toString(), d1.v.toString(), "TryParse And Parse give the same result");
-
         },
         bridge349: function (assert) {
             assert.expect(5);
@@ -50,7 +49,6 @@ Bridge.define('ClientTestLibrary.TestDateFunctions', {
             assert.equal(date.v.getFullYear(), 2015, "TryParse works Year");
             assert.equal(date.v.getMonth() + 1, 8, "TryParse works Month");
             assert.equal(date.v.getDate(), 22, "TryParse works Day");
-
         }
     }
 });

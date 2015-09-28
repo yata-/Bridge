@@ -1,8 +1,7 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using System;
 using System.Globalization;
 using System.Text;
-using ICSharpCode.NRefactory.TypeSystem;
 
 namespace Bridge.Translator
 {
@@ -97,7 +96,7 @@ namespace Bridge.Translator
 
             try
             {
-                similar = (decimal) (double) value == value;
+                similar = (decimal)(double)value == value;
             }
             catch
             {
@@ -118,7 +117,6 @@ namespace Bridge.Translator
 
             return s;
         }
-
 
         public virtual void WriteComma()
         {
@@ -444,7 +442,6 @@ namespace Bridge.Translator
             return this.Emitter.Output;
         }
 
-
         public int GetNumberOfEmptyLinesAtEnd()
         {
             return AbstractEmitterBlock.GetNumberOfEmptyLinesAtEnd(this.Emitter.Output);
@@ -474,7 +471,8 @@ namespace Bridge.Translator
                     }
                     else
                     {
-                        count++; ;
+                        count++;
+                        ;
                     }
                 }
                 i--;

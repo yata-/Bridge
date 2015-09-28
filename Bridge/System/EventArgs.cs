@@ -1,5 +1,4 @@
-﻿using Bridge;
-using System;
+using Bridge;
 
 namespace System
 {

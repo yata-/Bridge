@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-
-using Bridge;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Bridge.Html5
 {
@@ -10,7 +8,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("NodeList")]
-    public class NodeList: IEnumerable<Node>
+    public class NodeList : IEnumerable<Node>
     {
         protected internal NodeList()
         {
@@ -21,24 +19,24 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-		public virtual Node this[int index]
+        public virtual Node this[int index]
         {
-			get
+            get
             {
-				return null;
-			}
-		}
+                return null;
+            }
+        }
 
         /// <summary>
         /// Returns an item in the list by its index, or null if out-of-bounds. Equivalent to nodeList[idx].
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-		[Name("item")]
+        [Name("item")]
         public virtual Node GetItem(int index)
         {
-			return null;
-		}
+            return null;
+        }
 
         /// <summary>
         /// The number of nodes in the NodeList.

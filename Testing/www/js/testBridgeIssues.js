@@ -41,7 +41,6 @@ Bridge.define('ClientTestLibrary.Bridge266A', {
             // If null is used instead (as commented-out) then it works as expected.
             // No compile error.
             return ClientTestLibrary.Bridge266B.test("test", { });
-            //Bridge266B.Test("test", null);
         }
     }
 });
@@ -531,7 +530,6 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
 
             r = items.slice(1, 3).toArray();
             assert.deepEqual(r, [1, 2], "Slices start = 1, end = 2");
-
         },
         n277: function (assert) {
             assert.expect(1);
@@ -545,7 +543,6 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
 
             assert.equal(c.getName(), "Vlad", "Class method works");
             assert.equal(c.getNameThroughGeneric(Bridge.Int)(), "Vlad", "Generic class method works");
-
         },
         n304: function (assert) {
             assert.expect(2);
@@ -1050,7 +1047,6 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
             assert.equal(count, 1, "\"continue\" generated correctly");
         }        ,
         n470: function (assert) {
-
             var a = Bridge.merge(new ClientTestLibrary.Bridge470(), {
                 setData: 1
             } );

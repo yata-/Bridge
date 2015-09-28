@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using Mono.Cecil;
-using ICSharpCode.NRefactory.CSharp;
-using System.Linq;
-using System;
 using Bridge.Contract;
+using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.TypeSystem;
+using Mono.Cecil;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace Bridge.Translator
 {
@@ -17,7 +16,7 @@ namespace Bridge.Translator
             string name;
             string path;
             AssemblyDefinition reference;
-            
+
             foreach (AssemblyNameReference r in assemblyDefinition.MainModule.AssemblyReferences)
             {
                 name = r.Name;
@@ -56,7 +55,10 @@ namespace Bridge.Translator
                 this.Validator.CheckType(type, this);
                 this.TypeDefinitions.Add(BridgeTypes.GetTypeDefinitionKey(type), type);
                 string key = BridgeTypes.GetTypeDefinitionKey(type);
-                this.BridgeTypes.Add(key, new BridgeType(key) { TypeDefinition = type });
+                this.BridgeTypes.Add(key, new BridgeType(key)
+                {
+                    TypeDefinition = type
+                });
 
                 if (type.HasNestedTypes)
                 {
@@ -170,7 +172,7 @@ namespace Bridge.Translator
                     }
 
                     var syntaxTree = parser.Parse(reader, fileName);
-                    
+
                     if (parser.HasErrors)
                     {
                         foreach (var error in parser.Errors)
@@ -192,7 +194,10 @@ namespace Bridge.Translator
                         syntaxTree = (astNode != null ? (SyntaxTree)astNode : syntaxTree);
                     }
 
-                    var f = new ParsedSourceFile(syntaxTree, new CSharpUnresolvedFile { FileName = fileName });
+                    var f = new ParsedSourceFile(syntaxTree, new CSharpUnresolvedFile
+                    {
+                        FileName = fileName
+                    });
                     this.ParsedSourceFiles.Add(f);
 
                     var tcv = new TypeSystemConvertVisitor(f.ParsedFile);

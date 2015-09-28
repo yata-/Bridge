@@ -1,35 +1,55 @@
-﻿using System;
+using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 
-using NUnit.Framework;
-
 namespace Bridge.Translator.Tests
 {
     [TestFixture]
-    class OutputTest
+    internal class OutputTest
     {
         private const string LogFileNameWithoutExtention = "testProjectsBuild";
+
         private const string BuildArguments = "/flp:Verbosity=diagnostic;LogFile=" + LogFileNameWithoutExtention + ".log;Append"
                                               + " /flp1:warningsonly;LogFile=" + LogFileNameWithoutExtention + "Warnings.log;Append"
                                               + " /flp2:errorsonly;LogFile=" + LogFileNameWithoutExtention + "Errors.log;Append";
 
-        public string ProjectFileName { get; set; }
-        public string ProjectFolder { get; set; }
+        public string ProjectFileName
+        {
+            get;
+            set;
+        }
 
-        public string ProjectFilePath { get; set; }
+        public string ProjectFolder
+        {
+            get;
+            set;
+        }
 
-        public string ReferenceFolder { get; set; }
-        public string OutputFolder { get; set; }
+        public string ProjectFilePath
+        {
+            get;
+            set;
+        }
+
+        public string ReferenceFolder
+        {
+            get;
+            set;
+        }
+
+        public string OutputFolder
+        {
+            get;
+            set;
+        }
 
         private static Dictionary<string, CompareMode> SpecialFiles = new Dictionary<string, CompareMode>
         {
             { "bridge.js", CompareMode.Presence},
             { "bridge.min.js", CompareMode.Presence}
         };
-
 
         private void GetPaths(string folder)
         {
@@ -42,7 +62,7 @@ namespace Bridge.Translator.Tests
             ReferenceFolder = Path.Combine(ProjectFolder, @"Bridge\Reference");
         }
 
-        void LogInfo(string message)
+        private void LogInfo(string message)
         {
             SimpleLogger.Instance.LogInfo(message);
         }
@@ -118,6 +138,7 @@ namespace Bridge.Translator.Tests
                 if (comparence.Any())
                 {
                     var sb = new StringBuilder();
+
                     foreach (var diff in comparence)
                     {
                         sb.AppendLine(diff.ToString());

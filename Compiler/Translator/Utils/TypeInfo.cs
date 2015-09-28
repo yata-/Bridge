@@ -1,10 +1,8 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.TypeSystem;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Attribute = ICSharpCode.NRefactory.CSharp.Attribute;
 
 namespace Bridge.Translator
 {
@@ -264,7 +262,6 @@ namespace Bridge.Translator
             get;
             set;
         }
-
 
         public string FileName
         {

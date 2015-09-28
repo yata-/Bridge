@@ -1,4 +1,4 @@
-﻿using Bridge;
+using Bridge;
 
 namespace System
 {
@@ -193,8 +193,6 @@ namespace System
         {
             return 0;
         }
-
-
 
         public virtual string ToDateString()
         {

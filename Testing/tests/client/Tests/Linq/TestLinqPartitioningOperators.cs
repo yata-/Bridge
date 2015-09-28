@@ -1,10 +1,10 @@
-﻿using Bridge.Linq;
+using Bridge.Linq;
 using Bridge.QUnit;
 using System.Linq;
 
 namespace ClientTestLibrary.Linq
 {
-    class TestLinqPartitioningOperators
+    internal class TestLinqPartitioningOperators
     {
         public static void Test(Assert assert)
         {

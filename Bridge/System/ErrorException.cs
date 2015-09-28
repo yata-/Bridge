@@ -1,4 +1,4 @@
-﻿using Bridge;
+using Bridge;
 
 namespace System
 {
@@ -18,11 +18,13 @@ namespace System
         {
         }
 
-        public ErrorException(string message) : base(message)
+        public ErrorException(string message)
+            : base(message)
         {
         }
 
-        public ErrorException(string message, Exception innerException) : base(message, innerException)
+        public ErrorException(string message, Exception innerException)
+            : base(message, innerException)
         {
         }
     }

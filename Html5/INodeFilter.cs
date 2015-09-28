@@ -1,17 +1,15 @@
-﻿using Bridge;
-
 namespace Bridge.Html5
 {
-	[Ignore]
+    [Ignore]
     public interface INodeFilter
     {
-		/// <summary>
+        /// <summary>
         /// Returns an unsigned short that will be used to tell if a given Node must be accepted or not by the NodeIterator or TreeWalker iteration algorithm. This method is expected to be written by the user of a NodeFilter.
-		/// </summary>
+        /// </summary>
         /// <param name="node">Node being the object to check against the filter.</param>
-		/// <returns></returns>
+        /// <returns></returns>
         NodeFilterResult AcceptNode(Node node);
-	}
+    }
 
     [Ignore]
     [Enum(Emit.Value)]

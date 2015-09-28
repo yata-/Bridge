@@ -1,10 +1,10 @@
-﻿using System;
-using System.Linq;
 using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
+using System;
+using System.Linq;
 
 namespace Bridge.Translator
 {
@@ -288,36 +288,47 @@ namespace Bridge.Translator
                     {
                         case AssignmentOperatorType.Assign:
                             break;
+
                         case AssignmentOperatorType.Add:
                             this.Write("+");
                             break;
+
                         case AssignmentOperatorType.BitwiseAnd:
                             this.Write("&");
                             break;
+
                         case AssignmentOperatorType.BitwiseOr:
                             this.Write("|");
                             break;
+
                         case AssignmentOperatorType.Divide:
                             this.Write("/");
                             break;
+
                         case AssignmentOperatorType.ExclusiveOr:
                             this.Write("^");
                             break;
+
                         case AssignmentOperatorType.Modulus:
                             this.Write("%");
                             break;
+
                         case AssignmentOperatorType.Multiply:
                             this.Write("*");
                             break;
+
                         case AssignmentOperatorType.ShiftLeft:
                             this.Write("<<");
                             break;
+
                         case AssignmentOperatorType.ShiftRight:
                             this.Write(">>");
                             break;
+
                         case AssignmentOperatorType.Subtract:
                             this.Write("-");
                             break;
+
                         default:
                             throw new EmitterException(assignmentExpression,
                                 "Unsupported assignment operator: " + assignmentExpression.Operator.ToString());
@@ -336,36 +347,47 @@ namespace Bridge.Translator
                     {
                         case AssignmentOperatorType.Assign:
                             break;
+
                         case AssignmentOperatorType.Add:
                             this.Write("add");
                             break;
+
                         case AssignmentOperatorType.BitwiseAnd:
                             this.Write("band");
                             break;
+
                         case AssignmentOperatorType.BitwiseOr:
                             this.Write("bor");
                             break;
+
                         case AssignmentOperatorType.Divide:
                             this.Write("div");
                             break;
+
                         case AssignmentOperatorType.ExclusiveOr:
                             this.Write("xor");
                             break;
+
                         case AssignmentOperatorType.Modulus:
                             this.Write("mod");
                             break;
+
                         case AssignmentOperatorType.Multiply:
                             this.Write("mul");
                             break;
+
                         case AssignmentOperatorType.ShiftLeft:
                             this.Write("sl");
                             break;
+
                         case AssignmentOperatorType.ShiftRight:
                             this.Write("sr");
                             break;
+
                         case AssignmentOperatorType.Subtract:
                             this.Write("sub");
                             break;
+
                         default:
                             throw new EmitterException(assignmentExpression,
                                 "Unsupported assignment operator: " + assignmentExpression.Operator.ToString());
@@ -375,12 +397,12 @@ namespace Bridge.Translator
 
                     assignmentExpression.Left.AcceptVisitor(this.Emitter);
                     this.Write(", ");
-                    }
+                }
 
                 int count = this.Emitter.Writers.Count;
                 if (count == 0 && !thisAssignment && !special)
                 {
-                    this.Write("= ");    
+                    this.Write("= ");
                 }
             }
             else if (!isEvent)
@@ -430,7 +452,6 @@ namespace Bridge.Translator
                 return;
             }
 
-
             var orr = resolveOperator as OperatorResolveResult;
             var method = orr != null ? orr.UserDefinedOperatorMethod : null;
             var assigmentType = Helpers.TypeOfAssignment(this.AssignmentExpression.Operator);
@@ -456,36 +477,47 @@ namespace Bridge.Translator
                         case BinaryOperatorType.GreaterThan:
                             op_name = "gt";
                             break;
+
                         case BinaryOperatorType.GreaterThanOrEqual:
                             op_name = "gte";
                             break;
+
                         case BinaryOperatorType.Equality:
                             op_name = "equals";
                             break;
+
                         case BinaryOperatorType.InEquality:
                             op_name = "ne";
                             break;
+
                         case BinaryOperatorType.LessThan:
                             op_name = "lt";
                             break;
+
                         case BinaryOperatorType.LessThanOrEqual:
                             op_name = "lte";
                             break;
+
                         case BinaryOperatorType.Add:
                             op_name = "add";
                             break;
+
                         case BinaryOperatorType.Subtract:
                             op_name = "sub";
                             break;
+
                         case BinaryOperatorType.Multiply:
                             op_name = "mul";
                             break;
+
                         case BinaryOperatorType.Divide:
                             op_name = "div";
                             break;
+
                         case BinaryOperatorType.Modulus:
                             op_name = "mod";
                             break;
+
                         default:
                             throw new ArgumentOutOfRangeException();
                     }

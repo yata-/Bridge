@@ -1,14 +1,14 @@
-﻿using System;
+using Bridge.Contract;
+using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Bridge.Contract;
 
 namespace Bridge.Builder
 {
-    class Program
+    internal class Program
     {
-        static void LogMessage(string level, string message)
+        private static void LogMessage(string level, string message)
         {
             level = level ?? "message";
             switch (level.ToLowerInvariant())
@@ -18,11 +18,13 @@ namespace Bridge.Builder
                     Console.WriteLine("Message: {0}", message);
                     Console.ResetColor();
                     break;
+
                 case "warning":
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
                     Console.WriteLine("Warning: {0}", message);
                     Console.ResetColor();
                     break;
+
                 case "error":
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Error: {0}", message);
@@ -31,7 +33,7 @@ namespace Bridge.Builder
             }
         }
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             string projectLocation = null;
             string outputLocation = null;
@@ -74,38 +76,48 @@ namespace Bridge.Builder
                     case "-project":
                         projectLocation = args[++i];
                         break;
+
                     case "-b":
                     case "-bridge":
                         bridgeLocation = args[++i];
                         break;
+
                     case "-o":
                     case "-output":
                         outputLocation = args[++i];
                         break;
+
                     case "-cfg":
                     case "-configuration":
                         cfg = args[++i];
                         break;
+
                     case "-def":
                     case "-define":
                         def = args[++i];
                         break;
+
                     case "-rebuild":
                     case "-r":
                         rebuild = true;
                         break;
+
                     case "-nocore":
                         extractCore = false;
                         break;
+
                     case "-src":
                         source = args[++i];
                         break;
+
                     case "-folder":
                         folder = Path.Combine(Environment.CurrentDirectory, args[++i]);
                         break;
+
                     case "-recursive":
                         recursive = true;
                         break;
+
                     case "-lib":
                         lib = args[++i];
                         break;

@@ -1,4 +1,4 @@
-﻿using Bridge;
+using Bridge;
 using Bridge.QUnit;
 
 namespace ClientTestLibrary
@@ -6,8 +6,9 @@ namespace ClientTestLibrary
     [FileName("testValueTypes.js")]
     public struct Point
     {
-        //TODO Add more types
+        // TODO Add more types
         public static int StatitIntNotInitialized;
+
         public static string StatitStringNotInitialized;
         public static int StaticInt;
         public static string StaticString;
@@ -29,7 +30,11 @@ namespace ClientTestLibrary
 
         public Point Test2(Point p)
         {
-            return new Point() { x = this.x + p.x, y = this.y + p.y };
+            return new Point()
+            {
+                x = this.x + p.x,
+                y = this.y + p.y
+            };
         }
 
         public static int Test3()
@@ -46,14 +51,14 @@ namespace ClientTestLibrary
 
         public Rectangle(int x, int y)
         {
-            //[#69]
+            // [#69]
             this = new Rectangle();
 
             this.l.x = x;
             this.l.y = y;
         }
 
-        //[#66]
+        // [#66]
         public Rectangle(int x1, int y1, int x2, int y2)
         {
             this.l.x = x1;
@@ -65,14 +70,14 @@ namespace ClientTestLibrary
 
     // Tests:
     // Check value types
-    class TestValueTypes
+    internal class TestValueTypes
     {
-        //Check instance methods and constructors
+        // Check instance methods and constructors
         public static void TestInstanceConstructorsAndMethods(Assert assert)
         {
             assert.Expect(18);
 
-            //Check parameterless constructor
+            // Check parameterless constructor
             var a = new Point();
 
             assert.DeepEqual(a.x, 0, "x 0");
@@ -108,14 +113,18 @@ namespace ClientTestLibrary
 
             a.y = 400;
 
-            var b = new Point(){x = 5, y = 7};
+            var b = new Point()
+            {
+                x = 5,
+                y = 7
+            };
             var c = b.Test2(a);
 
             assert.DeepEqual(c.x, 305, "c.x 305");
             assert.DeepEqual(c.y, 407, "c.y 407");
         }
 
-        //Check static methods and constructor
+        // Check static methods and constructor
         public static void TestStaticConstructorsAndMethods(Assert assert)
         {
             assert.Expect(7);
@@ -128,7 +137,7 @@ namespace ClientTestLibrary
 
             Point.StatitIntNotInitialized = -1;
             assert.DeepEqual(Point.StatitIntNotInitialized, -1, "Point.StatitIntNotInitialized -1");
-            
+
             var i = Point.Test3();
             assert.DeepEqual(i, 499, "i 499");
         }

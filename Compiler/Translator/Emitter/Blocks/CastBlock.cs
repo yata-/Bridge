@@ -1,4 +1,4 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
@@ -263,12 +263,12 @@ namespace Bridge.Translator
             }
             else if (resolveResult.Type.Kind == TypeKind.Delegate)
             {
-                this.Write("Function"); 
-            }   
+                this.Write("Function");
+            }
             else if (resolveResult.Type.Kind == TypeKind.Array)
             {
-                this.Write("Array"); 
-            }   
+                this.Write("Array");
+            }
             else
             {
                 astType.AcceptVisitor(this.Emitter);
@@ -444,6 +444,10 @@ namespace Bridge.Translator
             this.Write(castCode);
         }
 
-        public IMethod InlineMethod { get; set; }
+        public IMethod InlineMethod
+        {
+            get;
+            set;
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿// The documentation for this class (on <summary> tags) was extracted from:
+// The documentation for this class (on <summary> tags) was extracted from:
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray
 
 namespace Bridge.Html5
@@ -56,8 +56,13 @@ namespace Bridge.Html5
         /// <returns>The element in the specified position.</returns>
         public byte this[Any<int, long, uint, ulong> i]
         {
-            get { return default(byte); }
-            set { }
+            get
+            {
+                return default(byte);
+            }
+            set
+            {
+            }
         }
 
         #region Properties
@@ -82,13 +87,13 @@ namespace Bridge.Html5
         /// </summary>
         public readonly TypedArray.Prototype<Uint8ClampedArray, byte> Prototype;
 
-        #endregion
+        #endregion Properties
 
         #region Methods
 
         // Uint8ClampedArray.from() and Uint8ClampedArray.of() are work in progress for ES6 and, at the time of the writing,
         // were not ready for production environment. Thus, their definitions are not present here.
 
-        #endregion
+        #endregion Methods
     }
 }

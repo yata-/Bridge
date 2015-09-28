@@ -1,4 +1,4 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using System.Collections.Generic;
 
@@ -38,7 +38,6 @@ namespace Bridge.Translator
             }
 
             bool isAwaiter = this.ExpressionStatement.Expression is UnaryOperatorExpression && ((UnaryOperatorExpression)this.ExpressionStatement.Expression).Operator == UnaryOperatorType.Await;
-
 
             this.ExpressionStatement.Expression.AcceptVisitor(this.Emitter);
 

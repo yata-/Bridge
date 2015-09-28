@@ -1,5 +1,3 @@
-﻿using Bridge;
-
 namespace Bridge.Html5
 {
     /// <summary>
@@ -10,9 +8,9 @@ namespace Bridge.Html5
     [Name("Number")]
     public enum RangeComparison
     {
-		/// <summary>
+        /// <summary>
         /// compares the start boundary-point of sourceRange to the start boundary-point of Range.
-		/// </summary>
+        /// </summary>
         StartToStart = 0,
 
         /// <summary>
@@ -29,5 +27,5 @@ namespace Bridge.Html5
         ///  compares the end boundary-point of sourceRange to the start boundary-point of Range.
         /// </summary>
         EndToStart = 3
-	}
+    }
 }

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -46,7 +46,7 @@ namespace Bridge.Translator
             // Replace '\' with '/' in any occurrence of <OutputPath><path></OutputPath>
             foreach (var ope in doc.Descendants().Where(e => e.Name.LocalName == "OutputPath" && e.Value.Contains("\\")))
             {
-                ope.SetValue (ope.Value.Replace ("\\", "/"));
+                ope.SetValue(ope.Value.Replace("\\", "/"));
             }
 
             // Replace now for <Compile Include="<path>" />
@@ -114,7 +114,9 @@ namespace Bridge.Translator
 
         protected virtual string GetOutputPath(XDocument doc, string configuration)
         {
-            var opnodes = from n in doc.Descendants() where n.Name.LocalName == "OutputPath" select n;
+            var opnodes = from n in doc.Descendants()
+                          where n.Name.LocalName == "OutputPath"
+                          select n;
             var nodes = from n in doc.Descendants()
                         where n.Name.LocalName == "OutputPath" &&
                               n.Parent.Attribute("Condition").Value.Contains(configuration)
@@ -170,8 +172,8 @@ namespace Bridge.Translator
             foreach (var node in nodeList)
             {
                 var constants = from n in node.Descendants()
-                            where n.Name.LocalName == "DefineConstants"
-                               select n.Value;
+                                where n.Name.LocalName == "DefineConstants"
+                                select n.Value;
                 foreach (var constant in constants)
                 {
                     if (!string.IsNullOrWhiteSpace(constant))

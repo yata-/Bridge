@@ -1,19 +1,24 @@
-﻿using Bridge;
+using Bridge;
 using Bridge.QUnit;
 
 namespace ClientTestLibrary
 {
-    class TestAbstractClass
+    internal class TestAbstractClass
     {
         [FileName("testAbstractClass.js")]
-        abstract class A
+        private abstract class A
         {
-            public int Data { get; set; }
+            public int Data
+            {
+                get;
+                set;
+            }
+
             public abstract string GetString();
         }
 
         [FileName("testAbstractClass.js")]
-        class B : A
+        private class B : A
         {
             public override string GetString()
             {
@@ -23,7 +28,7 @@ namespace ClientTestLibrary
         }
 
         [FileName("testAbstractClass.js")]
-        class C : B
+        private class C : B
         {
             public override string GetString()
             {

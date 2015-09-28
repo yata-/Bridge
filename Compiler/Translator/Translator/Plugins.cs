@@ -1,12 +1,9 @@
-﻿using Bridge.Contract;
-using System;
+using Bridge.Contract;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bridge.Translator
 {
@@ -34,7 +31,10 @@ namespace Bridge.Translator
 
             if (!System.IO.Directory.Exists(path))
             {
-                return new Plugins() { plugins = new IPlugin[0] };
+                return new Plugins()
+                {
+                    plugins = new IPlugin[0]
+                };
             }
 
             DirectoryCatalog dirCatalog = new DirectoryCatalog(path, "*.dll");

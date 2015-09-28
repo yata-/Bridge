@@ -1,9 +1,7 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using Object.Net.Utilities;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Bridge.Translator.TypeScript
 {

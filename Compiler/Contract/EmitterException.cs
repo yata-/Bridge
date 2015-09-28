@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ICSharpCode.NRefactory.CSharp;
+using System;
 
 namespace Bridge.Contract
 {
     public class EmitterException : Exception, IVisitorException
     {
-        public EmitterException(AstNode node) : base()
+        public EmitterException(AstNode node)
+            : base()
         {
             this.Node = node;
         }
 
-        public EmitterException(AstNode node, string message) : base(message)
+        public EmitterException(AstNode node, string message)
+            : base(message)
         {
             this.Node = node;
         }

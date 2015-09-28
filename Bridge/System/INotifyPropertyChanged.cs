@@ -1,10 +1,10 @@
-﻿using Bridge;
+using Bridge;
 
 namespace System.ComponentModel
 {
     [Ignore]
     [Namespace("Bridge")]
-    public interface INotifyPropertyChanged: IBridgeClass
+    public interface INotifyPropertyChanged : IBridgeClass
     {
         event PropertyChangedEventHandler PropertyChanged;
     }

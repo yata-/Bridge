@@ -1,12 +1,12 @@
-﻿using ICSharpCode.NRefactory.CSharp;
+using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.TypeSystem;
 using Mono.Cecil;
+using Object.Net.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Linq;
-using Object.Net.Utilities;
 
 namespace Bridge.Contract
 {
@@ -288,7 +288,10 @@ namespace Bridge.Contract
                 module = typeInfo.Module;
                 if (typeInfo.Module != null && currentTypeInfo.Module != typeInfo.Module && !emitter.CurrentDependencies.Any(d => d.DependencyName == typeInfo.Module))
                 {
-                    emitter.CurrentDependencies.Add(new ModuleDependency { DependencyName = typeInfo.Module });
+                    emitter.CurrentDependencies.Add(new ModuleDependency
+                    {
+                        DependencyName = typeInfo.Module
+                    });
                 }
             }
 
@@ -328,7 +331,10 @@ namespace Bridge.Contract
             return BridgeTypes.convRegex.Replace
             (
                 name,
-                delegate(Match m) { return replacements[m.Value]; }
+                delegate(Match m)
+                {
+                    return replacements[m.Value];
+                }
             );
         }
 
@@ -469,7 +475,10 @@ namespace Bridge.Contract
 
                     if (!emitter.CurrentDependencies.Any(d => d.DependencyName == fileName))
                     {
-                        emitter.CurrentDependencies.Add(new ModuleDependency() { DependencyName = fileName });
+                        emitter.CurrentDependencies.Add(new ModuleDependency()
+                        {
+                            DependencyName = fileName
+                        });
                     }
                 }
 
@@ -511,10 +520,13 @@ namespace Bridge.Contract
                 {
                     case KnownTypeCode.Void:
                         return "void";
+
                     case KnownTypeCode.Boolean:
                         return "boolean";
+
                     case KnownTypeCode.String:
                         return "string";
+
                     case KnownTypeCode.Decimal:
                     case KnownTypeCode.Double:
                     case KnownTypeCode.Byte:
@@ -559,6 +571,7 @@ namespace Bridge.Contract
                 case FileNameCaseConvert.Lowercase:
                     fileName = fileName.ToLower();
                     break;
+
                 case FileNameCaseConvert.CamelCase:
                     var sepList = new string[] { ".", System.IO.Path.DirectorySeparatorChar.ToString(), "\\", "/" };
 

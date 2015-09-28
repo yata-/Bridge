@@ -1,11 +1,12 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 
 namespace Bridge.Translator
 {
     public class NullReferenceBlock : AbstractEmitterBlock
     {
-        public NullReferenceBlock(IEmitter emitter, AstNode nullNode) : base(emitter, nullNode)
+        public NullReferenceBlock(IEmitter emitter, AstNode nullNode)
+            : base(emitter, nullNode)
         {
             this.Emitter = emitter;
             this.NullNode = nullNode;

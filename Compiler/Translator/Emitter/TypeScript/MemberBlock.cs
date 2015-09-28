@@ -1,12 +1,12 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
-using System.Collections.Generic;
 
 namespace Bridge.Translator.TypeScript
 {
     public class MemberBlock : AbstractEmitterBlock
     {
-        public MemberBlock(IEmitter emitter, ITypeInfo typeInfo, bool staticBlock) : base(emitter, typeInfo.TypeDeclaration)
+        public MemberBlock(IEmitter emitter, ITypeInfo typeInfo, bool staticBlock)
+            : base(emitter, typeInfo.TypeDeclaration)
         {
             this.Emitter = emitter;
             this.TypeInfo = typeInfo;

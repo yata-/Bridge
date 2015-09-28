@@ -1,4 +1,3 @@
-﻿using System;
 using System.Collections.Generic;
 
 namespace Bridge.Contract
@@ -82,30 +81,154 @@ namespace Bridge.Contract
 
     public interface IAssemblyInfo
     {
-        bool PreserveMemberCase { get; set; }
-        System.Collections.Generic.List<IPluginDependency> Dependencies { get; set; }
-        string FileName { get; set; }
-        OutputBy OutputBy { get; set; }
-        FileNameCaseConvert FileNameCasing { get; set; }
-        JavaScriptOutputType OutputFormatting { get; set; }
-        string Module { get; set; }
-        string Output { get; set; }
-        int StartIndexInName { get; set; }
-        string BeforeBuild { get; set; }
-        string AfterBuild { get; set; }
-        bool AutoPropertyToField { get; set; }
-        string PluginsPath { get; set; }
-        bool GenerateTypeScript { get; set; }
-        DocumentationMode GenerateDocumentation { get; set; }
-        string BuildArguments { get; set; }
-        string Configuration { get; set; }
-        List<string> DefineConstants { get; set; }
-        bool CleanOutputFolderBeforeBuild { get; set; }
-        bool InjectScriptToAssembly { get; set; }
-        string Locales { get; set; }
-        string LocalesOutput { get; set; }
-        string LocalesFileName { get; set; }
-        bool CombineLocales { get; set; }
-        bool CombineScripts { get; set; }
+        bool PreserveMemberCase
+        {
+            get;
+            set;
+        }
+
+        System.Collections.Generic.List<IPluginDependency> Dependencies
+        {
+            get;
+            set;
+        }
+
+        string FileName
+        {
+            get;
+            set;
+        }
+
+        OutputBy OutputBy
+        {
+            get;
+            set;
+        }
+
+        FileNameCaseConvert FileNameCasing
+        {
+            get;
+            set;
+        }
+
+        JavaScriptOutputType OutputFormatting
+        {
+            get;
+            set;
+        }
+
+        string Module
+        {
+            get;
+            set;
+        }
+
+        string Output
+        {
+            get;
+            set;
+        }
+
+        int StartIndexInName
+        {
+            get;
+            set;
+        }
+
+        string BeforeBuild
+        {
+            get;
+            set;
+        }
+
+        string AfterBuild
+        {
+            get;
+            set;
+        }
+
+        bool AutoPropertyToField
+        {
+            get;
+            set;
+        }
+
+        string PluginsPath
+        {
+            get;
+            set;
+        }
+
+        bool GenerateTypeScript
+        {
+            get;
+            set;
+        }
+
+        DocumentationMode GenerateDocumentation
+        {
+            get;
+            set;
+        }
+
+        string BuildArguments
+        {
+            get;
+            set;
+        }
+
+        string Configuration
+        {
+            get;
+            set;
+        }
+
+        List<string> DefineConstants
+        {
+            get;
+            set;
+        }
+
+        bool CleanOutputFolderBeforeBuild
+        {
+            get;
+            set;
+        }
+
+        bool InjectScriptToAssembly
+        {
+            get;
+            set;
+        }
+
+        string Locales
+        {
+            get;
+            set;
+        }
+
+        string LocalesOutput
+        {
+            get;
+            set;
+        }
+
+        string LocalesFileName
+        {
+            get;
+            set;
+        }
+
+        bool CombineLocales
+        {
+            get;
+            set;
+        }
+
+        bool CombineScripts
+        {
+            get;
+            set;
+        }
     }
 }

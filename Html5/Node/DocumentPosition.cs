@@ -1,6 +1,4 @@
-﻿using System;
-
-using Bridge;
+using System;
 
 namespace Bridge.Html5
 {

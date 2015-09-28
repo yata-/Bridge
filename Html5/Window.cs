@@ -1,9 +1,7 @@
-﻿// Window WebAPI by Mozilla Contributors is licensed under CC-BY-SA 2.5.
+// Window WebAPI by Mozilla Contributors is licensed under CC-BY-SA 2.5.
 // https://developer.mozilla.org/en-US/docs/Web/API/Window
 
 using System;
-
-using Bridge;
 
 namespace Bridge.Html5
 {
@@ -471,8 +469,8 @@ namespace Bridge.Html5
         /// <returns>true if the string is found; otherwise, false.</returns>
         public static bool Find(string str)
         {
-			return false;
-		}
+            return false;
+        }
 
         /// <summary>
         /// Finds a string in a window.
@@ -480,10 +478,10 @@ namespace Bridge.Html5
         /// <param name="str">The text string for which to search.</param>
         /// <param name="caseSensitive">Boolean value. If true, specifies a case-sensitive search.</param>
         /// <returns>true if the string is found; otherwise, false.</returns>
-		public static bool Find(string str, bool caseSensitive)
+        public static bool Find(string str, bool caseSensitive)
         {
-			return false;
-		}
+            return false;
+        }
 
         /// <summary>
         /// Finds a string in a window.
@@ -492,10 +490,10 @@ namespace Bridge.Html5
         /// <param name="caseSensitive">Boolean value. If true, specifies a case-sensitive search.</param>
         /// <param name="backwards">Boolean. If true, specifies a backward search.</param>
         /// <returns>true if the string is found; otherwise, false.</returns>
-		public static bool Find(string str, bool caseSensitive, bool backwards)
+        public static bool Find(string str, bool caseSensitive, bool backwards)
         {
-			return false;
-		}
+            return false;
+        }
 
         /// <summary>
         /// Finds a string in a window.
@@ -505,10 +503,10 @@ namespace Bridge.Html5
         /// <param name="backwards">Boolean. If true, specifies a backward search.</param>
         /// <param name="wrapAround">Boolean. If true, specifies a wrap around search.</param>
         /// <returns>true if the string is found; otherwise, false.</returns>
-		public static bool Find(string str, bool caseSensitive, bool backwards, bool wrapAround)
+        public static bool Find(string str, bool caseSensitive, bool backwards, bool wrapAround)
         {
-			return false;
-		}
+            return false;
+        }
 
         /// <summary>
         /// Finds a string in a window.
@@ -519,10 +517,10 @@ namespace Bridge.Html5
         /// <param name="wrapAround">Boolean. If true, specifies a wrap around search.</param>
         /// <param name="wholeWord">Boolean. If true, specifies a whole word search. </param>
         /// <returns>true if the string is found; otherwise, false.</returns>
-		public static bool Find(string str, bool caseSensitive, bool backwards, bool wrapAround, bool wholeWord)
+        public static bool Find(string str, bool caseSensitive, bool backwards, bool wrapAround, bool wholeWord)
         {
-			return false;
-		}
+            return false;
+        }
 
         /// <summary>
         /// Finds a string in a window.
@@ -534,10 +532,10 @@ namespace Bridge.Html5
         /// <param name="wholeWord">Boolean. If true, specifies a whole word search. </param>
         /// <param name="searchInFrames">Boolean. If true, specifies a search in frames.</param>
         /// <returns>true if the string is found; otherwise, false.</returns>
-		public static bool Find(string str, bool caseSensitive, bool backwards, bool wrapAround, bool wholeWord, bool searchInFrames)
+        public static bool Find(string str, bool caseSensitive, bool backwards, bool wrapAround, bool wholeWord, bool searchInFrames)
         {
-			return false;
-		}
+            return false;
+        }
 
         /// <summary>
         /// Finds a string in a window.
@@ -550,10 +548,10 @@ namespace Bridge.Html5
         /// <param name="searchInFrames">Boolean. If true, specifies a search in frames.</param>
         /// <param name="showDialog">Boolean. If true, specifies a show Dialog.</param>
         /// <returns>true if the string is found; otherwise, false.</returns>
-		public static bool Find(string str, bool caseSensitive, bool backwards, bool wrapAround, bool wholeWord, bool searchInFrames, bool showDialog)
+        public static bool Find(string str, bool caseSensitive, bool backwards, bool wrapAround, bool wholeWord, bool searchInFrames, bool showDialog)
         {
-			return false;
-		}
+            return false;
+        }
 
         /// <summary>
         /// Makes a request to bring the window to the front. It may fail due to user settings and the window isn't guaranteed to be frontmost before this method returns.
@@ -717,7 +715,6 @@ namespace Bridge.Html5
         {
             return null;
         }
-
 
         /// <summary>
         /// window.openDialog is an extension to window.open. It behaves the same, except that it can optionally take one or more parameters past windowFeatures, and windowFeatures itself is treated a little differently.

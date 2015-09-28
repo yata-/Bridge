@@ -1,11 +1,10 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
 using Mono.Cecil;
-using System;
 using System.Text;
 
 namespace Bridge.Translator
@@ -221,7 +220,6 @@ namespace Bridge.Translator
                         {
                             this.Write(BridgeTypes.ToJsName(member.DeclaringType, this.Emitter));
                         }
-
                     }
                     else
                     {
@@ -230,7 +228,6 @@ namespace Bridge.Translator
 
                     this.WriteDot();
                 }
-                
 
                 if (method != null)
                 {
@@ -267,7 +264,7 @@ namespace Bridge.Translator
                         this.Write(appendAdditionalCode);
                     }
                 }
-                else if(memberResult != null)
+                else if (memberResult != null)
                 {
                     if (isInlineConst)
                     {
@@ -476,10 +473,9 @@ namespace Bridge.Translator
                                     this.Write("-");
                                 }
 
-
                                 this.Write("1");
                             }
-                            
+
                             this.WriteCloseParentheses();
                         }
                         else

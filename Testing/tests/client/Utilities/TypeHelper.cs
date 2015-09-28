@@ -1,4 +1,4 @@
-﻿using Bridge;
+using Bridge;
 
 namespace ClientTestLibrary.Utilities
 {
@@ -8,7 +8,7 @@ namespace ClientTestLibrary.Utilities
         public static string GetTypeName(object o)
         {
             return o.GetClassName();
-            //return Script.Get<string>("o.__proto__.$$name");
+            // return Script.Get<string>("o.__proto__.$$name");
         }
     }
 }

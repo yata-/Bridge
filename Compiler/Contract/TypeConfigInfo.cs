@@ -1,6 +1,5 @@
-﻿using ICSharpCode.NRefactory.CSharp;
+using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -47,7 +46,8 @@ namespace Bridge.Contract
                 var rr = emitter.Resolver.ResolveNode(this.VarInitializer, emitter) as MemberResolveResult;
                 fieldName = OverloadsCollection.Create(emitter, rr.Member).GetOverloadName();
             }
-            else if (this.Entity is PropertyDeclaration) {
+            else if (this.Entity is PropertyDeclaration)
+            {
                 fieldName = OverloadsCollection.Create(emitter, (PropertyDeclaration)this.Entity).GetOverloadName();
             }
             else

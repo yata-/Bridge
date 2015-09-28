@@ -1,4 +1,4 @@
-﻿using Bridge;
+using Bridge;
 using Bridge.QUnit;
 using System;
 
@@ -7,13 +7,17 @@ using System;
 namespace ClientTestLibrary
 {
     [FileName("testTryCatchFinallyBlocks.js")]
-    class Data
+    internal class Data
     {
-        public int Count { get; set; }
+        public int Count
+        {
+            get;
+            set;
+        }
     }
 
     // Tests try and catch blocks
-    class TestTryCatchFinallyBlocks
+    internal class TestTryCatchFinallyBlocks
     {
         #region Tests
 
@@ -70,7 +74,10 @@ namespace ClientTestLibrary
             assert.Ok(IsCCatch, "C. exception caught and re-thrown  - catch section called");
             assert.Ok(IsCFinally, "C. exception caught and re-thrown  - finally section called");
 
-            assert.Throws(TryCatchWithRethrowEx, new Func<object, bool>((error) => { return error.ToString() == "catch me"; }), "D. Rethrow with parameter");
+            assert.Throws(TryCatchWithRethrowEx, new Func<object, bool>((error) =>
+            {
+                return error.ToString() == "catch me";
+            }), "D. Rethrow with parameter");
             assert.Ok(IsDTry, "D. exception caught and re-thrown  - try section called");
             assert.Ok(IsDCatch, "D. exception caught and re-thrown  - catch section called");
             assert.Ok(IsDFinally, "D. exception caught and re-thrown  - finally section called");
@@ -155,9 +162,23 @@ namespace ClientTestLibrary
 
         #region ThrownExceptions
 
-        public static bool IsATry { get; set; }
-        public static bool IsACatch { get; set; }
-        public static bool IsAFinally { get; set; }
+        public static bool IsATry
+        {
+            get;
+            set;
+        }
+
+        public static bool IsACatch
+        {
+            get;
+            set;
+        }
+
+        public static bool IsAFinally
+        {
+            get;
+            set;
+        }
 
         private static void TryCatchFinallyWithNotCaughtTypedException()
         {
@@ -181,9 +202,23 @@ namespace ClientTestLibrary
             }
         }
 
-        public static bool IsBTry { get; set; }
-        public static bool IsBCatch { get; set; }
-        public static bool IsBFinally { get; set; }
+        public static bool IsBTry
+        {
+            get;
+            set;
+        }
+
+        public static bool IsBCatch
+        {
+            get;
+            set;
+        }
+
+        public static bool IsBFinally
+        {
+            get;
+            set;
+        }
 
         private static void TryCatchWithNotCaughtTypedExceptionAndArgument()
         {
@@ -208,9 +243,23 @@ namespace ClientTestLibrary
             }
         }
 
-        public static bool IsCTry { get; set; }
-        public static bool IsCCatch { get; set; }
-        public static bool IsCFinally { get; set; }
+        public static bool IsCTry
+        {
+            get;
+            set;
+        }
+
+        public static bool IsCCatch
+        {
+            get;
+            set;
+        }
+
+        public static bool IsCFinally
+        {
+            get;
+            set;
+        }
 
         private static void TryCatchWithRethrow()
         {
@@ -235,9 +284,23 @@ namespace ClientTestLibrary
             }
         }
 
-        public static bool IsDTry { get; set; }
-        public static bool IsDCatch { get; set; }
-        public static bool IsDFinally { get; set; }
+        public static bool IsDTry
+        {
+            get;
+            set;
+        }
+
+        public static bool IsDCatch
+        {
+            get;
+            set;
+        }
+
+        public static bool IsDFinally
+        {
+            get;
+            set;
+        }
 
         private static void TryCatchWithRethrowEx()
         {

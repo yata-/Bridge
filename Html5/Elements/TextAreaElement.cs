@@ -1,5 +1,4 @@
-﻿using System;
-using Bridge;
+using System;
 
 namespace Bridge.Html5
 {
@@ -203,7 +202,6 @@ namespace Bridge.Html5
         /// The browser automatically inserts line breaks (CR+LF) so that each line has no more than the width of the control; the cols attribute must be specified.
         /// </summary>
         Hard,
-
 
         /// <summary>
         /// The browser ensures that all line breaks in the value consist of a CR+LF pair, but does not insert any additional line breaks.

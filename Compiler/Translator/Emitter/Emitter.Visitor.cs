@@ -1,15 +1,4 @@
-﻿using Object.Net.Utilities;
 using ICSharpCode.NRefactory.CSharp;
-using ICSharpCode.NRefactory.CSharp.Resolver;
-using ICSharpCode.NRefactory.Semantics;
-using ICSharpCode.NRefactory.TypeSystem;
-using ICSharpCode.NRefactory.TypeSystem.Implementation;
-using Mono.Cecil;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Bridge.Translator
 {

@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using System.Runtime.CompilerServices;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Bridge.Test")]
@@ -13,5 +12,5 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 [assembly: Guid("13940d0b-c16d-40b6-ba71-18c9eb086832")]
 
-//[assembly: AssemblyVersion("1.0")]
-//[assembly: AssemblyFileVersion("1.0.0-beta")]
+// [assembly: AssemblyVersion("1.0")]
+// [assembly: AssemblyFileVersion("1.0.0-beta")]

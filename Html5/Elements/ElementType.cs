@@ -1,5 +1,4 @@
-﻿using System;
-using Bridge;
+using System;
 
 namespace Bridge.Html5
 {
@@ -26,6 +25,7 @@ namespace Bridge.Html5
 
         [Name("dl")]
         DList,
+
         Embed,
         FieldSet,
 
@@ -56,6 +56,7 @@ namespace Bridge.Html5
 
         [Name("ol")]
         OList,
+
         OptGroup,
         Option,
         Output,
@@ -87,6 +88,7 @@ namespace Bridge.Html5
 
         [Name("td")]
         TableDataCell,
+
         Table,
 
         [Name("th")]

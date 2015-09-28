@@ -1,7 +1,6 @@
-﻿using System;
-using System.IO;
-
 using Newtonsoft.Json;
+using System;
+using System.IO;
 
 namespace Bridge.Contract
 {
@@ -53,7 +52,6 @@ namespace Bridge.Contract
             {
                 return null;
             }
-
 
             return path;
         }

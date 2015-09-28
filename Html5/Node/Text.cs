@@ -1,7 +1,3 @@
-﻿using System;
-
-using Bridge;
-
 namespace Bridge.Html5
 {
     /// <summary>
@@ -18,7 +14,7 @@ namespace Bridge.Html5
 
         public Text(string data)
         {
-		}
+        }
 
         /// <summary>
         /// Returns a DOMString containing the text of all Text nodes logically adjacent to this Node, concatenated in document order.

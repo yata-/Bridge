@@ -1,5 +1,3 @@
-﻿using Bridge;
-
 namespace Bridge.Html5
 {
     public partial class CanvasTypes

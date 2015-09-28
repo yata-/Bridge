@@ -1,15 +1,11 @@
-﻿using ICSharpCode.NRefactory.CSharp;
+using Bridge.Contract;
+using ICSharpCode.NRefactory.CSharp;
+using ICSharpCode.NRefactory.Semantics;
+using ICSharpCode.NRefactory.TypeSystem;
 using Mono.Cecil;
-using System;
-using System.Collections;
-using Object.Net.Utilities;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Collections.Generic;
-using ICSharpCode.NRefactory.Semantics;
-using ICSharpCode.NRefactory.TypeSystem.Implementation;
-using Bridge.Contract;
-using ICSharpCode.NRefactory.TypeSystem;
 
 namespace Bridge.Translator
 {
@@ -101,7 +97,7 @@ namespace Bridge.Translator
         {
             var resolveResult = this.Resolver.ResolveNode(reference, this) as TypeResolveResult;
             var type = this.BridgeTypes.Get(resolveResult.Type, safe);
-            return type != null ? type.TypeDefinition :  null;
+            return type != null ? type.TypeDefinition : null;
         }
 
         public virtual TypeDefinition GetBaseTypeDefinition()

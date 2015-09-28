@@ -1,4 +1,4 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using Mono.Cecil;
 using System.Collections.Generic;
 
@@ -36,7 +36,7 @@ namespace Bridge.Translator
                 this.JsDoc.Init();
                 block.Emit();
             }
-            
+
             return this.TransformOutputs();
         }
 

@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 
 namespace Bridge
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     [Ignore]
     [AttributeUsage(AttributeTargets.Field)]

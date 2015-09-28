@@ -1,8 +1,5 @@
-﻿using System;
-using System.Linq;
 using Object.Net.Utilities;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 
 namespace Bridge.Translator
@@ -72,7 +69,6 @@ namespace Bridge.Translator
                         moduleOutput.Append(", ");
                     }
 
-
                     moduleOutput.Append("[\"bridge\",");
                     if (output.ModuleDependencies.ContainsKey(moduleName) && output.ModuleDependencies[moduleName].Count > 0)
                     {
@@ -84,7 +80,6 @@ namespace Bridge.Translator
                     }
                     moduleOutput.Remove(moduleOutput.Length - 1, 1); // remove trailing comma
                     moduleOutput.Append("], ");
-
 
                     moduleOutput.Append("function (_");
 

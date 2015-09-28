@@ -131,7 +131,7 @@ Bridge.define('ClientTestLibrary.Utilities.TypeHelper', {
     statics: {
         getTypeName: function (o) {
             return Bridge.getTypeName(o);
-            //return Script.Get<string>("o.__proto__.$$name");
+            // return Script.Get<string>("o.__proto__.$$name");
         }
     }
 });

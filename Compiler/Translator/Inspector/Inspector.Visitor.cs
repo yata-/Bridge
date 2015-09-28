@@ -1,11 +1,9 @@
-﻿using ICSharpCode.NRefactory.CSharp;
-using ICSharpCode.NRefactory.TypeSystem;
+using Bridge.Contract;
+using ICSharpCode.NRefactory.CSharp;
+using ICSharpCode.NRefactory.Semantics;
 using System;
 using System.Collections.Generic;
-using Object.Net.Utilities;
 using System.Linq;
-using ICSharpCode.NRefactory.Semantics;
-using Bridge.Contract;
 
 namespace Bridge.Translator
 {
@@ -162,16 +160,16 @@ namespace Bridge.Translator
                         VarInitializer = item,
                         Initializer = initializer
                     });
-                    }
-                    else
-                    {
+                }
+                else
+                {
                     this.CurrentType.InstanceConfig.Fields.Add(new TypeConfigItem
                 {
-                        Name = item.Name,
-                        Entity = fieldDeclaration,
-                        VarInitializer = item,
-                        Initializer = initializer
-                    });
+                    Name = item.Name,
+                    Entity = fieldDeclaration,
+                    VarInitializer = item,
+                    Initializer = initializer
+                });
                 }
             }
         }
@@ -260,7 +258,7 @@ namespace Bridge.Translator
             }
             else
             {
-                dict.Add(key, new List<MethodDeclaration>(new []{methodDeclaration}));
+                dict.Add(key, new List<MethodDeclaration>(new[] { methodDeclaration }));
             }
         }
 
@@ -279,14 +277,12 @@ namespace Bridge.Translator
 
             var key = customEventDeclaration.Name;
 
-
-
             if (dict.ContainsKey(key))
-                {
+            {
                 dict[key].Add(customEventDeclaration);
-                }
-                else
-                {
+            }
+            else
+            {
                 dict.Add(key, new List<EntityDeclaration>(new[] { customEventDeclaration }));
             }
         }
@@ -333,7 +329,6 @@ namespace Bridge.Translator
                 }
                 else
                 {
-
                     info.Fields.Add(new TypeConfigItem
                     {
                         Name = key,
@@ -389,9 +384,9 @@ namespace Bridge.Translator
                         Initializer = initializer,
                         VarInitializer = item
                     });
-            }
-            else
-            {
+                }
+                else
+                {
                     this.CurrentType.InstanceConfig.Events.Add(new TypeConfigItem
                     {
                         Name = item.Name,

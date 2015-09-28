@@ -1,4 +1,4 @@
-﻿namespace Bridge.Contract
+namespace Bridge.Contract
 {
     public class ModuleDependency : IPluginDependency
     {

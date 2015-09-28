@@ -1,5 +1,3 @@
-﻿using Bridge;
-
 namespace Bridge.Html5
 {
     [Ignore]
@@ -22,10 +20,12 @@ namespace Bridge.Html5
         /// <returns></returns>
         public override object this[string key]
         {
-            get {
+            get
+            {
                 return null;
             }
-            set {
+            set
+            {
             }
         }
 

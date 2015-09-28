@@ -1,4 +1,4 @@
-﻿/*
+/*
  * This interface was written so that both Path2D and CanvasRenderingContext2D could inherit their methods
  * (which are the exact same).
  *
@@ -6,8 +6,6 @@
  * https://developer.mozilla.org/en-US/docs/Web/API/Path2D
  * https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
  */
-
-using Bridge;
 
 namespace Bridge.Html5
 {

@@ -1,12 +1,10 @@
-﻿using Bridge.Contract;
+using ICSharpCode.NRefactory.CSharp;
+using ICSharpCode.NRefactory.Semantics;
+using ICSharpCode.NRefactory.TypeSystem;
 using System;
 using System.Collections.Generic;
-using Mono.Cecil;
-using ICSharpCode.NRefactory.CSharp;
-using ICSharpCode.NRefactory.TypeSystem;
 using System.Linq;
 using System.Text;
-using ICSharpCode.NRefactory.Semantics;
 
 namespace Bridge.Contract
 {
@@ -364,7 +362,6 @@ namespace Bridge.Contract
             this.Emitter.OverloadsCache[key] = this;
         }
 
-
         public List<IMethod> Methods
         {
             get;
@@ -415,6 +412,7 @@ namespace Bridge.Contract
         }
 
         private List<IMember> members;
+
         public List<IMember> Members
         {
             get
@@ -472,7 +470,6 @@ namespace Bridge.Contract
                         {
                             if (im1.DeclaringType != im2.DeclaringType)
                             {
-
                                 if (im1.DeclaringTypeDefinition.IsDerivedFrom(im2.DeclaringTypeDefinition))
                                 {
                                     return 1;
@@ -528,9 +525,9 @@ namespace Bridge.Contract
 
                 if (name1.Length != name2.Length)
                 {
-                   //return name1.Length.CompareTo(name2.Length);
+                    //return name1.Length.CompareTo(name2.Length);
                 }
-                
+
                 return string.Compare(name1, name2);
             });
         }
@@ -543,21 +540,27 @@ namespace Bridge.Contract
                 case Accessibility.None:
                     w = 4;
                     break;
+
                 case Accessibility.Private:
                     w = 4;
                     break;
+
                 case Accessibility.Public:
                     w = 1;
                     break;
+
                 case Accessibility.Protected:
                     w = 3;
                     break;
+
                 case Accessibility.Internal:
                     w = 2;
                     break;
+
                 case Accessibility.ProtectedOrInternal:
                     w = 2;
                     break;
+
                 case Accessibility.ProtectedAndInternal:
                     w = 3;
                     break;
@@ -830,6 +833,7 @@ namespace Bridge.Contract
         }
 
         private string overloadName;
+
         public string GetOverloadName()
         {
             if (this.Member == null)
@@ -902,7 +906,7 @@ namespace Bridge.Contract
                     if (OverloadsCollection.Create(this.Emitter, iMember, false, true).GetOverloadName() != name)
                     {
                         string message = "Cannot translate interface ({2}) member '{0}' in '{1}' due name conflicts. Please rename methods or refactor your code";
-                        throw new Exception(string.Format(message,definition.ToString(), definition.DeclaringType.ToString(), iMember.DeclaringType.ToString()));
+                        throw new Exception(string.Format(message, definition.ToString(), definition.DeclaringType.ToString(), iMember.DeclaringType.ToString()));
                     }
                 }
             }

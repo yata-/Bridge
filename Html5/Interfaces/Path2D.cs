@@ -1,9 +1,7 @@
-﻿// The documentation for this class (on <summary> tags) was extracted from:
+// The documentation for this class (on <summary> tags) was extracted from:
 // https://developer.mozilla.org/en-US/docs/Web/API/Path2D
 
 // TODO: Implement Path2D itself.
-
-using Bridge;
 
 namespace Bridge.Html5
 {
@@ -54,5 +52,5 @@ namespace Bridge.Html5
         }
 
         // The remaining methods are all inherited from SVGOperations, which is common to CanvasRenderingContext2D.
-   }
+    }
 }

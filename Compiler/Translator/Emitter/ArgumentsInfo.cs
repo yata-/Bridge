@@ -1,12 +1,11 @@
-﻿using System;
-using ICSharpCode.NRefactory.CSharp;
-using System.Linq;
-using ICSharpCode.NRefactory.Semantics;
-using System.Collections.Generic;
-using ICSharpCode.NRefactory.TypeSystem;
-using ICSharpCode.NRefactory.CSharp.Resolver;
-using ICSharpCode.NRefactory.TypeSystem.Implementation;
 using Bridge.Contract;
+using ICSharpCode.NRefactory.CSharp;
+using ICSharpCode.NRefactory.CSharp.Resolver;
+using ICSharpCode.NRefactory.Semantics;
+using ICSharpCode.NRefactory.TypeSystem;
+using ICSharpCode.NRefactory.TypeSystem.Implementation;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Bridge.Translator
 {
@@ -248,9 +247,9 @@ namespace Bridge.Translator
                 {
                     var list = typedArguments.ToList();
                     for (int i = 0; i < list.Count; i++)
-			        {
+                    {
                         this.TypeArguments[i] = new TypeParamExpression(method.TypeParameters[i].Name, list[i], null);
-			        }
+                    }
                 }
                 else
                 {
@@ -364,7 +363,6 @@ namespace Bridge.Translator
                     i++;
                 }
 
-                
                 for (i = 0; i < result.Length; i++)
                 {
                     if (result[i] == null)
@@ -387,7 +385,6 @@ namespace Bridge.Translator
                         names[i] = parameters[i + shift].Name;
                     }
                 }
-                
 
                 this.ArgumentsExpressions = result;
                 this.ArgumentsNames = names;

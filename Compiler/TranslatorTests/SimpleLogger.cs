@@ -1,14 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace Bridge.Translator.Tests
 {
     public sealed class SimpleLogger : IDisposable
     {
-        public static SimpleLogger Instance { get { return Nested.instance; } }
+        public static SimpleLogger Instance
+        {
+            get
+            {
+                return Nested.instance;
+            }
+        }
 
         private class Nested
         {
@@ -20,7 +24,11 @@ namespace Bridge.Translator.Tests
             internal static readonly SimpleLogger instance = new SimpleLogger();
         }
 
-        private TextWriter Writer { get; set; }
+        private TextWriter Writer
+        {
+            get;
+            set;
+        }
 
         private const string LoggerFileName = "Bridge.Translator.Tests.run.log";
         private const int LoggerFileMaxLength = 1024 * 1024;
@@ -28,6 +36,7 @@ namespace Bridge.Translator.Tests
         private SimpleLogger()
         {
             var loggerFile = new FileInfo(LoggerFileName);
+
             if (loggerFile.Exists && loggerFile.Length > LoggerFileMaxLength)
             {
                 loggerFile.Delete();

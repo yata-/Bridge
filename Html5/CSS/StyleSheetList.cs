@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-
-using Bridge;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Bridge.Html5
 {
@@ -13,25 +11,25 @@ namespace Bridge.Html5
     [Name("StyleSheetList")]
     public class StyleSheetList : IEnumerable<StyleSheet>
     {
-		internal StyleSheetList()
+        internal StyleSheetList()
         {
-		}
+        }
 
-		public virtual StyleSheet this[int index]
+        public virtual StyleSheet this[int index]
         {
-			get
+            get
             {
-				return null;
-			}
-		}
+                return null;
+            }
+        }
 
         [Name("item")]
-		public virtual StyleSheet GetItem(int index)
+        public virtual StyleSheet GetItem(int index)
         {
-			return null;
-		}
+            return null;
+        }
 
-		public readonly int Length;
+        public readonly int Length;
 
         public virtual IEnumerator<StyleSheet> GetEnumerator()
         {
@@ -42,5 +40,5 @@ namespace Bridge.Html5
         {
             return null;
         }
-	}
+    }
 }

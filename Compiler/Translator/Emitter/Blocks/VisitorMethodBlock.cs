@@ -1,8 +1,6 @@
-﻿using System.Linq;
 using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
-using ICSharpCode.NRefactory.Semantics;
-using ICSharpCode.NRefactory.TypeSystem;
+using System.Linq;
 
 namespace Bridge.Translator
 {
@@ -54,7 +52,6 @@ namespace Bridge.Translator
                         {
                             return;
                         }
-
                     }
                 }
             }

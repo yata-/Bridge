@@ -1,4 +1,4 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
 using ICSharpCode.NRefactory.Semantics;
@@ -12,7 +12,8 @@ namespace Bridge.Translator
 {
     public class MemberReferenceBlock : ConversionBlock
     {
-        public MemberReferenceBlock(IEmitter emitter, MemberReferenceExpression memberReferenceExpression) : base(emitter, memberReferenceExpression)
+        public MemberReferenceBlock(IEmitter emitter, MemberReferenceExpression memberReferenceExpression)
+            : base(emitter, memberReferenceExpression)
         {
             this.Emitter = emitter;
             this.MemberReferenceExpression = memberReferenceExpression;
@@ -129,7 +130,7 @@ namespace Bridge.Translator
                         }
                     }
 
-                    if(assign)
+                    if (assign)
                     {
                         if (resolveResult is InvocationResolveResult)
                         {
@@ -230,11 +231,14 @@ namespace Bridge.Translator
                                     case 3:
                                         enumStringName = Object.Net.Utilities.StringUtils.ToLowerCamelCase(member.Member.Name);
                                         break;
+
                                     case 4:
                                         break;
+
                                     case 5:
                                         enumStringName = enumStringName.ToLowerInvariant();
                                         break;
+
                                     case 6:
                                         enumStringName = enumStringName.ToUpperInvariant();
                                         break;
@@ -438,7 +442,7 @@ namespace Bridge.Translator
                     }
                     else if (!this.Emitter.IsAssignment)
                     {
-                        if(this.Emitter.IsUnaryAccessor)
+                        if (this.Emitter.IsUnaryAccessor)
                         {
                             bool isNullable = NullableType.IsNullable(member.Member.ReturnType);
                             bool isDecimal = Helpers.IsDecimalType(member.Member.ReturnType, this.Emitter.Resolver);
@@ -736,7 +740,7 @@ namespace Bridge.Translator
                     }
                     else if (this.Emitter.AssignmentType != AssignmentOperatorType.Assign)
                     {
-                        if(targetVar != null)
+                        if (targetVar != null)
                         {
                             this.PushWriter(string.Concat(Helpers.GetPropertyRef(member.Member, this.Emitter, true),
                                 proto ? ".call(this, " : "(",
@@ -744,7 +748,10 @@ namespace Bridge.Translator
                                 ".",
                                 Helpers.GetPropertyRef(member.Member, this.Emitter, false),
                                 proto ? ".call(this)" : "()",
-                                "{0})"), () => { this.RemoveTempVar(targetVar); });
+                                "{0})"), () =>
+                                {
+                                    this.RemoveTempVar(targetVar);
+                                });
                         }
                         else
                         {

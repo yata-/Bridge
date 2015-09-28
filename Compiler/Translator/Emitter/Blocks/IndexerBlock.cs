@@ -1,4 +1,4 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
@@ -407,7 +407,6 @@ namespace Bridge.Translator
                                 this.Write("1");
                             }
 
-                            
                             this.WriteCloseParentheses();
                             this.WriteComma();
 
@@ -933,7 +932,10 @@ namespace Bridge.Translator
                             targetVar,
                             ".get([",
                             paramsStr,
-                            "]){0})"), () => { this.RemoveTempVar(targetVar); });
+                            "]){0})"), () =>
+                            {
+                                this.RemoveTempVar(targetVar);
+                            });
                     }
                     else
                     {

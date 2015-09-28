@@ -1,5 +1,4 @@
-﻿using System;
-using Bridge;
+using System;
 
 namespace Bridge.Html5
 {
@@ -24,7 +23,6 @@ namespace Bridge.Html5
         /// Reflects the datetime HTML attribute, containing a date-and-time string representing a timestamp for the change.
         /// </summary>
         public string DateTime;
-
     }
 
     /// <summary>

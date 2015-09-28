@@ -1,6 +1,3 @@
-﻿using Bridge;
-using System.Text;
-
 namespace System
 {
     // A Version object contains four hierarchical numeric components: major, minor,
@@ -16,53 +13,67 @@ namespace System
 
         public Version(int major, int minor, int build)
         {
-
         }
 
         public Version(int major, int minor)
         {
-
         }
 
         public Version(String version)
         {
-
         }
 
         public Version()
         {
-
         }
 
         // Properties for setting and getting version numbers
         public int Major
         {
-            get { return 0; }
+            get
+            {
+                return 0;
+            }
         }
 
         public int Minor
         {
-            get { return 0; }
+            get
+            {
+                return 0;
+            }
         }
 
         public int Build
         {
-            get { return 0; }
+            get
+            {
+                return 0;
+            }
         }
 
         public int Revision
         {
-            get { return 0; }
+            get
+            {
+                return 0;
+            }
         }
 
         public short MajorRevision
         {
-            get { return 0; }
+            get
+            {
+                return 0;
+            }
         }
 
         public short MinorRevision
         {
-            get { return 0; }
+            get
+            {
+                return 0;
+            }
         }
 
         public Object Clone()

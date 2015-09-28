@@ -1,7 +1,5 @@
-﻿// Event WebAPI by Mozilla Contributors is licensed under CC-BY-SA 2.5.
+// Event WebAPI by Mozilla Contributors is licensed under CC-BY-SA 2.5.
 // https://developer.mozilla.org/en-US/docs/Web/API/event
-
-using Bridge;
 
 namespace Bridge.Html5
 {

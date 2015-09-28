@@ -1,5 +1,3 @@
-﻿using Bridge;
-
 namespace Bridge
 {
     [Ignore]
@@ -8,7 +6,6 @@ namespace Bridge
     {
         [Template("this")]
         public static ThisInstance Instance;
-
 
         [Template("{this}[{name}].call(null, {args})")]
         public static void Call(string name, params object[] args)

@@ -1,7 +1,7 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
-using System.Linq;
 using ICSharpCode.NRefactory.TypeSystem;
+using System.Linq;
 
 namespace Bridge.Translator
 {
@@ -98,13 +98,13 @@ namespace Bridge.Translator
 
         public string LoopVar
         {
-            get; 
+            get;
             set;
         }
 
         public bool OldReplaceJump
         {
-            get; 
+            get;
             set;
         }
 
@@ -192,7 +192,7 @@ namespace Bridge.Translator
             if (this.BlockStatement.Parent is MethodDeclaration)
             {
                 this.IsMethodBlock = true;
-                var methodDeclaration = (MethodDeclaration) this.BlockStatement.Parent;
+                var methodDeclaration = (MethodDeclaration)this.BlockStatement.Parent;
                 if (!methodDeclaration.ReturnType.IsNull)
                 {
                     var rr = this.Emitter.Resolver.ResolveNode(methodDeclaration.ReturnType, this.Emitter);
@@ -233,8 +233,7 @@ namespace Bridge.Translator
 
                 if (role == "Setter")
                 {
-                    this.ConvertParamsToReferences(new ParameterDeclaration[]
-                    {new ParameterDeclaration {Name = "value"}});
+                    this.ConvertParamsToReferences(new ParameterDeclaration[] { new ParameterDeclaration { Name = "value" } });
                 }
                 else if (role == "Getter")
                 {
@@ -319,7 +318,7 @@ namespace Bridge.Translator
                     this.EndBlock();
                     this.RemoveTempVar(this.LoopVar);
                 }
-                
+
                 this.Emitter.ReplaceJump = this.OldReplaceJump;
             }
 

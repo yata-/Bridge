@@ -1,14 +1,13 @@
-﻿using Bridge;
+using Bridge;
 using Bridge.QUnit;
 
 using System;
 using System.Globalization;
-using System.Text;
 
 namespace ClientTestLibrary
 {
     // Tests DateTime functions
-    class TestDateFunctions
+    internal class TestDateFunctions
     {
         // DateTime functions
         public static void DateTimes(Assert assert)
@@ -16,7 +15,7 @@ namespace ClientTestLibrary
             assert.Expect(2);
 
             // TEST
-            //[#83] by C#
+            // [#83] by C#
             var str = "2015-03-24T10:48:09.1500225+03:00";
             var bridgeDate = DateTime.Parse(str);
             var bridgeDate1 = new DateTime(str);
@@ -24,7 +23,7 @@ namespace ClientTestLibrary
             assert.DeepEqual(bridgeDate, bridgeDate1, "[#83] C# bridgeDate = bridgeDate1");
 
             // TEST
-            //[#83] by JavaScript code. This is to check the same issue as above and just to check another way of calling QUnit from JavaScript
+            // [#83] by JavaScript code. This is to check the same issue as above and just to check another way of calling QUnit from JavaScript
             Script.Write<dynamic>(@"var str = ""2015-03-24T10:48:09.1500225+03:00"",
     bridgeDate = Bridge.Date.parse(str),
     jsDate = new Date(Date.parse(str)),
@@ -39,13 +38,12 @@ namespace ClientTestLibrary
             DateTime d1;
             var b1 = DateTime.TryParse("2001-01-01", out d1, true);
             assert.Ok(b1, "TryParse parsed '2001 - 01 - 01'");
-            assert.Equal(d1.GetUTCFullYear() , 2001, "TryParse works Year");
+            assert.Equal(d1.GetUTCFullYear(), 2001, "TryParse works Year");
             assert.Equal(d1.GetUtcMonth(), 1, "TryParse works Month");
             assert.Equal(d1.GetUTCDay(), 1, "TryParse works Day");
 
             var d2 = DateTime.Parse("2001-01-01");
             assert.DeepEqual(d2.ToString(), d1.ToString(), "TryParse And Parse give the same result");
-
         }
 
         public static void Bridge349(Assert assert)
@@ -62,8 +60,6 @@ namespace ClientTestLibrary
             assert.Equal(date.Year, 2015, "TryParse works Year");
             assert.Equal(date.Month, 8, "TryParse works Month");
             assert.Equal(date.Day, 22, "TryParse works Day");
-
         }
-
     }
 }

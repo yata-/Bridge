@@ -1,7 +1,6 @@
-﻿using ICSharpCode.NRefactory.CSharp;
-using System.Collections.Generic;
 using Bridge.Contract;
-using Object.Net.Utilities;
+using ICSharpCode.NRefactory.CSharp;
+using System.Collections.Generic;
 
 namespace Bridge.Translator
 {
@@ -22,7 +21,6 @@ namespace Bridge.Translator
                 NamedArgumentExpression namedArgumentExpression = null;
                 IdentifierExpression identifierExpression = null;
                 MemberReferenceExpression memberReferenceExpression = null;
-
 
                 namedExression = item as NamedExpression;
                 if (namedExression == null)

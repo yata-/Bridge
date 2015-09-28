@@ -1,7 +1,3 @@
-﻿using System.Collections.Generic;
-
-using Bridge;
-
 namespace Bridge.Html5
 {
     /// <summary>
@@ -9,15 +5,15 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("DOMSettableTokenList")]
-	public class DOMSettableTokenList : DOMTokenList
+    public class DOMSettableTokenList : DOMTokenList
     {
         protected internal DOMSettableTokenList()
         {
-		}
+        }
 
         /// <summary>
         /// Gets or sets the underlying string.
         /// </summary>
         public string Value;
-	}
+    }
 }

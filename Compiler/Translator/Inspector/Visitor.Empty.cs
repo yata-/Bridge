@@ -1,4 +1,4 @@
-﻿using ICSharpCode.NRefactory.CSharp;
+using ICSharpCode.NRefactory.CSharp;
 
 namespace Bridge.Translator
 {
@@ -63,6 +63,7 @@ namespace Bridge.Translator
         {
             //throw this.CreateException(newLineNode);
         }
+
         public virtual void VisitConstraint(Constraint constraint)
         {
         }

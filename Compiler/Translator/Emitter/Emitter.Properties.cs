@@ -1,4 +1,4 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.TypeSystem;
 using Mono.Cecil;
@@ -25,10 +25,10 @@ namespace Bridge.Translator
         public const string MERGE_OBJECT = "merge";
         public const string FIX_ARGUMENT_NAME = "__autofix__";
 
-
         internal static List<string> reservedStaticNames = new List<string> { "Name", "Arguments", "Caller", "Length", "Prototype" };
 
         private Dictionary<string, OverloadsCollection> overloadsCache;
+
         public Dictionary<string, OverloadsCollection> OverloadsCache
         {
             get
@@ -40,6 +40,7 @@ namespace Bridge.Translator
                 return this.overloadsCache;
             }
         }
+
         public IValidator Validator
         {
             get;
@@ -160,7 +161,7 @@ namespace Bridge.Translator
             set;
         }
 
-        HashSet<string> namespaces;
+        private HashSet<string> namespaces;
 
         protected virtual HashSet<string> Namespaces
         {
@@ -187,6 +188,7 @@ namespace Bridge.Translator
         }
 
         private List<IAssemblyReference> list;
+
         protected virtual IEnumerable<IAssemblyReference> AssemblyReferences
         {
             get
@@ -355,7 +357,8 @@ namespace Bridge.Translator
 
         public IJsDoc JsDoc
         {
-            get; set;
+            get;
+            set;
         }
 
         public IType ReturnType
@@ -366,7 +369,7 @@ namespace Bridge.Translator
 
         public bool ReplaceJump
         {
-            get; 
+            get;
             set;
         }
     }

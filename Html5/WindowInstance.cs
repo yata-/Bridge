@@ -1,9 +1,7 @@
-﻿// Window WebAPI by Mozilla Contributors is licensed under CC-BY-SA 2.5.
+// Window WebAPI by Mozilla Contributors is licensed under CC-BY-SA 2.5.
 // https://developer.mozilla.org/en-US/docs/Web/API/Window
 
 using System;
-
-using Bridge;
 
 namespace Bridge.Html5
 {
@@ -703,7 +701,6 @@ namespace Bridge.Html5
         {
             return null;
         }
-
 
         /// <summary>
         /// window.openDialog is an extension to window.open. It behaves the same, except that it can optionally take one or more parameters past windowFeatures, and windowFeatures itself is treated a little differently.

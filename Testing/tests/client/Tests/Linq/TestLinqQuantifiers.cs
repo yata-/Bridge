@@ -1,10 +1,10 @@
-﻿using Bridge.QUnit;
+using Bridge.QUnit;
 using ClientTestLibrary.Utilities;
 using System.Linq;
 
 namespace ClientTestLibrary.Linq
 {
-    class TestLinqQuantifiers
+    internal class TestLinqQuantifiers
     {
         public static void Test(Assert assert)
         {
@@ -30,7 +30,11 @@ namespace ClientTestLibrary.Linq
                     (from p in Person.GetPersons()
                      group p by p.Group into pGroup
                      where pGroup.Any(p => p.Count >= 500)
-                     select new { Group = pGroup.Key, Names = pGroup.Select(x => x.Name).ToArray() }).ToArray();
+                     select new
+                     {
+                         Group = pGroup.Key,
+                         Names = pGroup.Select(x => x.Name).ToArray()
+                     }).ToArray();
 
             object[] productGroupsExpected = { new {Group = "C", Names = new[]{"Zeppa", "Billy"}},
                                                  new {Group = "B", Names = new[]{"John", "Dora", "Ian", "Mary"}},

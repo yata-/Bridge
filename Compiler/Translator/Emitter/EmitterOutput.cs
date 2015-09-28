@@ -1,4 +1,4 @@
-﻿using Bridge.Contract;
+using Bridge.Contract;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -48,7 +48,7 @@ namespace Bridge.Translator
         }
     }
 
-    public class EmitterOutputs: Dictionary<string, IEmitterOutput>, IEmitterOutputs
+    public class EmitterOutputs : Dictionary<string, IEmitterOutput>, IEmitterOutputs
     {
         public IEmitterOutput FindModuleOutput(string moduleName)
         {

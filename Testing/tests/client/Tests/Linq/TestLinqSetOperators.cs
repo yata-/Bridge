@@ -1,10 +1,10 @@
-﻿using Bridge.QUnit;
+using Bridge.QUnit;
 using ClientTestLibrary.Utilities;
 using System.Linq;
 
 namespace ClientTestLibrary.Linq
 {
-    class TestLinqSetOperators
+    internal class TestLinqSetOperators
     {
         public static void Test(Assert assert)
         {
@@ -23,7 +23,8 @@ namespace ClientTestLibrary.Linq
             assert.DeepEqual(uniqueNumbers, new[] { 1, 2, 3, 5, 4 }, "Distinct() to remove duplicate elements");
 
             // TEST
-            var distinctPersonGroups = (from p in Person.GetPersons() select p.Group).Distinct().ToArray();
+            var distinctPersonGroups = (from p in Person.GetPersons()
+                                        select p.Group).Distinct().ToArray();
             assert.DeepEqual(distinctPersonGroups, new[] { "A", "C", "B", null }, "Distinct() to remove duplicate Group elements");
 
             // TEST
@@ -34,8 +35,10 @@ namespace ClientTestLibrary.Linq
             assert.DeepEqual(uniqueNumbersAB, new[] { 0, 2, 4, 5, 6, 8, 9, 1, 3, 7 }, "Union() to get unique number sequence");
 
             // TEST
-            var nameChars = from p in Person.GetPersons() select p.Name[0];
-            var cityChars = from p in Person.GetPersons() select p.City[0];
+            var nameChars = from p in Person.GetPersons()
+                            select p.Name[0];
+            var cityChars = from p in Person.GetPersons()
+                            select p.City[0];
             var uniqueFirstChars = nameChars.Union(cityChars).ToArray();
 
             assert.DeepEqual(uniqueFirstChars, new[] { (int)'F', (int)'Z', (int)'J', (int)'B', (int)'D', (int)'I', (int)'M', (int)'N',
@@ -47,8 +50,10 @@ namespace ClientTestLibrary.Linq
             assert.DeepEqual(commonNumbersCD, new[] { 5, 8 }, "Intersect() to get common number sequence");
 
             // TEST
-            nameChars = from p in Person.GetPersons() select p.Name[0];
-            cityChars = from p in Person.GetPersons() select p.City[0];
+            nameChars = from p in Person.GetPersons()
+                        select p.Name[0];
+            cityChars = from p in Person.GetPersons()
+                        select p.City[0];
 
             var commonFirstChars = nameChars.Intersect(cityChars).ToArray();
             assert.DeepEqual(commonFirstChars, new[] { (int)'B', (int)'D' }, "Intersect() to get common first letters of Name and City");
