@@ -64,7 +64,7 @@
             for (var name, i = 0, n = keys ? keys.length : 0; i < n; i++) {
                 name = keys[i];
 
-                if (toIf !== true || to[name] === undefined) {
+                if (toIf !== true || to[name] == undefined) {
                     if (Bridge.is(from[name], Bridge.ICloneable)) {
                         to[name] = Bridge.clone(from[name]);
                     }
@@ -85,12 +85,11 @@
                 scope = Bridge.global;
             }
 
-            for (i; i < nsParts.length; i++) {
-                if (typeof scope[nsParts[i]] == 'undefined') {
+            for (i = 0; i < nsParts.length; i++) {
+                if (typeof scope[nsParts[i]] === 'undefined') {
                     scope[nsParts[i]] = { };
                 }
 
-                scope = scope[nsParts[i]];
             }
 
             return scope;
@@ -190,7 +189,7 @@
                 return value.$$hashCode;
             }
 
-            if (typeof value == "object") {
+            if (typeof value === "object") {
                 var result = 0,
                     removeCache = false,
                     len,
@@ -271,7 +270,7 @@
         },
 
         is: function (obj, type, ignoreFn, allowNull) {
-	        if (typeof type == "string") {
+	        if (typeof type === "string") {
                 type = Bridge.unroll(type);
 	        }
 
@@ -324,7 +323,7 @@
 
             var result = Bridge.as(obj, type, allowNull);
 
-	        if (result == null) {
+	        if (result === null) {
 	            throw new Bridge.InvalidCastException('Unable to cast type ' + Bridge.getTypeName(obj) + ' to type ' + Bridge.getTypeName(type));
 	        }
 
@@ -338,7 +337,7 @@
 	        for (i = 0; i < names.length; i++) {
 	            var name = names[i];
 
-	            if (typeof obj[name] == "function" && typeof values[name] != "function") {
+	            if (typeof obj[name] === "function" && typeof values[name] !== "function") {
 	                obj[name](values[name]);
 	            }
 	            else {
@@ -367,7 +366,7 @@
 	            for (key in from) {
 	                value = from[key];
 
-	                if (typeof to[key] == "function" && typeof value != "function") {
+	                if (typeof to[key] === "function" && typeof value !== "function") {
 	                    if (key.match(/^\s*get[A-Z]/)) {
 	                        Bridge.merge(to[key](), value);
 	                    }
@@ -378,7 +377,7 @@
 	                else {
 	                    var setter = "set" + key.charAt(0).toUpperCase() + key.slice(1);
 
-	                    if (typeof to[setter] == "function" && typeof value != "function") {
+	                    if (typeof to[setter] === "function" && typeof value !== "function") {
 	                        to[setter](value);
 	                    }
 	                    else if (value && value.constructor === Object && to[key]) {
@@ -430,11 +429,11 @@
 	    },
 
 	    isDefined: function (value, noNull) {
-	        return typeof value !== 'undefined' && (noNull ? value != null : true);
+	        return typeof value !== 'undefined' && (noNull ? value !== null : true);
 	    },
 
 	    isEmpty: function (value, allowEmpty) {
-	        return (value == null) || (!allowEmpty ? value === '' : false) || ((!allowEmpty && Bridge.isArray(value)) ? value.length === 0 : false);
+	        return (value === null) || (!allowEmpty ? value === '' : false) || ((!allowEmpty && Bridge.isArray(value)) ? value.length === 0 : false);
 	    },
 
 	    toArray: function (ienumerable) {
@@ -515,7 +514,7 @@
                 return false;
             }
 
-            if (typeof a == "object" && typeof b == "object") {
+            if (typeof a === "object" && typeof b === "object") {
                 return (Bridge.getHashCode(a) === Bridge.getHashCode(b)) && Bridge.objectEquals(a, b);
             }
 
@@ -535,7 +534,7 @@
         },
 
         deepEquals: function (a, b) {
-            if (typeof a == "object" && typeof b == "object") {
+            if (typeof a === "object" && typeof b === "object") {
                 if (Bridge.$$leftChain.indexOf(a) > -1 || Bridge.$$rightChain.indexOf(b) > -1) {
                     return false;
                 }
@@ -557,7 +556,7 @@
                         return false;
                     }
 
-                    if (typeof (a[p]) == "object") {
+                    if (typeof (a[p]) === "object") {
                         Bridge.$$leftChain.push(a);
                         Bridge.$$rightChain.push(b);
 
@@ -683,7 +682,8 @@
                         if (appendArgs === true) {
                             callArgs = Array.prototype.slice.call(arguments, 0);
                             callArgs = callArgs.concat(args);
-                        } else if (typeof appendArgs == "number") {
+                        }
+                        else if (typeof appendArgs === 'number') {
                             callArgs = Array.prototype.slice.call(arguments, 0);
 
                             if (appendArgs === 0) {

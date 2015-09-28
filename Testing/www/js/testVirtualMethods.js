@@ -12,7 +12,6 @@ Bridge.define('ClientTestLibrary.TestVirtualMethods', {
             assert.ok(a !== null, "Instance of A created");
             assert.equal(a.test(), "A", "a.Test() = 'A'");
 
-
             var b = new ClientTestLibrary.TestVirtualMethods.B();
 
             assert.ok(b !== null, "Instance of B created");

@@ -28,6 +28,7 @@
 
 # These are expected to be always treated as binary files.
 *.bmp binary
+*.dat binary
 *.dll binary
 *.exe binary
 *.ico binary
