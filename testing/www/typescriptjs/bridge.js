@@ -86,17 +86,11 @@
                 scope = Bridge.global;
             }
 
-<<<<<<< HEAD
-            for (i; i < nsParts.length; i++) {
-                if (typeof scope[nsParts[i]] == 'undefined') {
-=======
             for (i = 0; i < nsParts.length; i++) {
                 if (typeof scope[nsParts[i]] === 'undefined') {
->>>>>>> 804781c5c778faba32fe15cac29cd0e5c32c75c7
                     scope[nsParts[i]] = { };
                 }
 
-                scope = scope[nsParts[i]];
             }
 
             return scope;
@@ -521,12 +515,7 @@
                 return false;
             }
 
-<<<<<<< HEAD
-            if (typeof a == "object" && typeof b == "object") {
-=======
-
             if (typeof a === "object" && typeof b === "object") {
->>>>>>> 804781c5c778faba32fe15cac29cd0e5c32c75c7
                 return (Bridge.getHashCode(a) === Bridge.getHashCode(b)) && Bridge.objectEquals(a, b);
             }
 
@@ -694,12 +683,8 @@
                         if (appendArgs === true) {
                             callArgs = Array.prototype.slice.call(arguments, 0);
                             callArgs = callArgs.concat(args);
-<<<<<<< HEAD
-                        } else if (typeof appendArgs == "number") {
-=======
                         }
                         else if (typeof appendArgs === 'number') {
->>>>>>> 804781c5c778faba32fe15cac29cd0e5c32c75c7
                             callArgs = Array.prototype.slice.call(arguments, 0);
 
                             if (appendArgs === 0) {
