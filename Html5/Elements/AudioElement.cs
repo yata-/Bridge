@@ -7,7 +7,7 @@ namespace Bridge.Html5
     [Ignore]
     [Name("HTMLAudioElement")]
     [Constructor("Audio")]
-    public class AudioElement : MediaElement
+    public class AudioElement : MediaElement<AudioElement>
     {
         /// <summary>
         /// Constructor for audio elements. The preload property of the returned object is set to auto and the src property is set to the argument value. The browser begins asynchronously selecting the resource before returning the object.

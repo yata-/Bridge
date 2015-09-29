@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLTitleElement")]
-    public class TitleElement : Element
+    public class TitleElement : Element<TitleElement>
     {
         [Template("document.createElement('title')")]
         public TitleElement()

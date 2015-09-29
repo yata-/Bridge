@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLAreaElement")]
-    public class AreaElement : Element
+    public class AreaElement : Element<AreaElement>
     {
         [Template("document.createElement('area')")]
         public AreaElement()

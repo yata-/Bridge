@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLEmbedElement")]
-    public class EmbedElement : Element
+    public class EmbedElement : Element<EmbedElement>
     {
         [Template("document.createElement('embed')")]
         public EmbedElement()

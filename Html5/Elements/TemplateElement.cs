@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLTemplateElement")]
-    public class TemplateElement : Element
+    public class TemplateElement : Element<TemplateElement>
     {
         [Template("document.createElement('template')")]
         public TemplateElement()

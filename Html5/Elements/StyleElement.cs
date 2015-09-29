@@ -6,7 +6,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLStyleElement")]
-    public class StyleElement : Element
+    public class StyleElement : Element<StyleElement>
     {
         [Template("document.createElement('style')")]
         public StyleElement()

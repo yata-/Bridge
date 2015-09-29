@@ -6,7 +6,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLObjectElement")]
-    public class ObjectElement : Element
+    public class ObjectElement : Element<ObjectElement>
     {
         [Template("document.createElement('object')")]
         public ObjectElement()

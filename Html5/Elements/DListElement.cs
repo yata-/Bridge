@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLDListElement")]
-    public class DListElement : Element
+    public class DListElement : Element<DListElement>
     {
         [Template("document.createElement('dl')")]
         public DListElement()

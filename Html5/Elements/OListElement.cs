@@ -7,7 +7,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLOListElement")]
-    public class OListElement : Element
+    public class OListElement : Element<OListElement>
     {
         [Template("document.createElement('ol')")]
         public OListElement()
