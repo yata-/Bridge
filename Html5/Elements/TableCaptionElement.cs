@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLTableCaptionElement")]
-    public class TableCaptionElement : Element
+    public class TableCaptionElement : Element<TableCaptionElement>
     {
         [Template("document.createElement('caption')")]
         public TableCaptionElement()

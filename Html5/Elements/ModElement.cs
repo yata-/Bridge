@@ -7,7 +7,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLModElement")]
-    public class ModElement : Element
+    public class ModElement : Element<ModElement>
     {
         [Template("document.createElement({0})")]
         public ModElement(ModElementType type)

@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLSpanElement")]
-    public class SpanElement : Element
+    public class SpanElement : Element<SpanElement>
     {
         [Template("document.createElement('span')")]
         public SpanElement()

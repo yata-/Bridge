@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLButtonElement")]
-    public class ButtonElement : Element
+    public class ButtonElement : Element<ButtonElement>
     {
         [Template("document.createElement('button')")]
         public ButtonElement()

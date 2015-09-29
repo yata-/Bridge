@@ -8,7 +8,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLTableColElement")]
-    public class TableColElement : Element
+    public class TableColElement : Element<TableColElement>
     {
         [Template("document.createElement('col')")]
         public TableColElement()

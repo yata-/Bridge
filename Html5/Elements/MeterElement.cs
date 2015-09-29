@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLMeterElement")]
-    public class MeterElement : Element
+    public class MeterElement : Element<MeterElement>
     {
         [Template("document.createElement('meter')")]
         public MeterElement()

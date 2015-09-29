@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLSelectElement")]
-    public class SelectElement : Element
+    public class SelectElement : Element<SelectElement>
     {
         [Template("document.createElement('select')")]
         public SelectElement()

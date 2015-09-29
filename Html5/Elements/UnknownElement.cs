@@ -6,7 +6,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLUnknownElement")]
-    public class UnknownElement : Element
+    public class UnknownElement : Element<UnknownElement>
     {
         [Template("document.createElement({0})")]
         public UnknownElement(string tagName)

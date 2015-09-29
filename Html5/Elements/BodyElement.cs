@@ -7,7 +7,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLBodyElement")]
-    public class BodyElement : Element
+    public class BodyElement : Element<BodyElement>
     {
         [Template("document.createElement('body')")]
         public BodyElement()

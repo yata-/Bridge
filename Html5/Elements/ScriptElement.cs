@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLScriptElement")]
-    public class ScriptElement : Element
+    public class ScriptElement : Element<ScriptElement>
     {
         [Template("document.createElement('script')")]
         public ScriptElement()

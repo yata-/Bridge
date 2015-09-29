@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLLIElement")]
-    public class LIElement : Element
+    public class LIElement : Element<LIElement>
     {
         [Template("document.createElement('li')")]
         public LIElement()
