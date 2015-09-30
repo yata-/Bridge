@@ -1,6 +1,6 @@
 // @source Version.js
 
-Bridge.define('System.Version', {
+Bridge.define("System.Version", {
     inherits: function() {
         return [Bridge.ICloneable,Bridge.IComparable$1(System.Version),Bridge.IEquatable$1(System.Version)];
     },
@@ -430,7 +430,7 @@ Bridge.define('System.Version', {
     }
 });
 
-Bridge.define('System.Version.ParseFailureKind', {
+Bridge.define("System.Version.ParseFailureKind", {
     statics: {
         argumentNullException: 0,
         argumentException: 1,
@@ -439,7 +439,7 @@ Bridge.define('System.Version.ParseFailureKind', {
     }
 });
 
-Bridge.define('System.Version.VersionResult', {
+Bridge.define("System.Version.VersionResult", {
     m_parsedVersion: null,
     m_failure: 0,
     m_exceptionArgument: null,

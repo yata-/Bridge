@@ -1,16 +1,16 @@
 // @source Text/StringBuilder.js
 
-Bridge.define('Bridge.Text.StringBuilder', {
+Bridge.define("Bridge.Text.StringBuilder", {
     constructor: function () {
         this.buffer = [],
         this.capacity = 16;
 
-        if (arguments.length == 1) {
+        if (arguments.length === 1) {
             this.append(arguments[0]);
-        } else if (arguments.length == 2) {
+        } else if (arguments.length === 2) {
             this.append(arguments[0]);
             this.setCapacity(arguments[1]);
-        } else if (arguments.length == 3) {
+        } else if (arguments.length === 3) {
             this.append(arguments[0], arguments[1], arguments[2]);
         }
     },
@@ -20,7 +20,7 @@ Bridge.define('Bridge.Text.StringBuilder', {
             return this.buffer[0] ? this.buffer[0].length : 0;
         }
 
-        var s = this.buffer.join('');
+        var s = this.buffer.join("");
 
         this.buffer = [];
         this.buffer[0] = s;
@@ -43,12 +43,12 @@ Bridge.define('Bridge.Text.StringBuilder', {
     },
 
     toString: function () {
-        var s = this.buffer.join('');
+        var s = this.buffer.join("");
 
         this.buffer = [];
         this.buffer[0] = s;
 
-        if (arguments.length == 2) {
+        if (arguments.length === 2) {
             var startIndex = arguments[0],
                 length = arguments[1];
 
@@ -65,23 +65,23 @@ Bridge.define('Bridge.Text.StringBuilder', {
             return this;
         }
 
-        if (arguments.length == 2) {
+        if (arguments.length === 2) {
             // append a char repeated count times
             var count = arguments[1];
 
-            if (count == 0) {
+            if (count === 0) {
                 return this;
             } else if (count < 0) {
                 throw new Bridge.ArgumentOutOfRangeException("count", "cannot be less than zero");
             }
 
             value = Array(count + 1).join(value).toString();
-        } else if (arguments.length == 3) {
+        } else if (arguments.length === 3) {
             // append a (startIndex, count) substring of value
             var startIndex = arguments[1],
                 count = arguments[2];
 
-            if (count == 0) {
+            if (count === 0) {
                 return this;
             }
 
@@ -105,7 +105,7 @@ Bridge.define('Bridge.Text.StringBuilder', {
     },
 
     appendLine: function () {
-        if (arguments.length == 1) {
+        if (arguments.length === 1) {
             this.append(arguments[0]);
         }
 
@@ -117,7 +117,7 @@ Bridge.define('Bridge.Text.StringBuilder', {
             return false;
         }
 
-        if (sb == this) {
+        if (sb === this) {
             return true;
         }
 
@@ -125,11 +125,11 @@ Bridge.define('Bridge.Text.StringBuilder', {
     },
 
     remove: function (startIndex, length) {
-        var s = this.buffer.join('');
+        var s = this.buffer.join("");
 
         this.checkLimits(s, startIndex, length);
 
-        if (s.length == length && startIndex == 0) {
+        if (s.length === length && startIndex === 0) {
             // Optimization.  If we are deleting everything
             return this.clear();
         }
@@ -148,11 +148,11 @@ Bridge.define('Bridge.Text.StringBuilder', {
             return this;
         }
 
-        if (arguments.length == 3) {
+        if (arguments.length === 3) {
             // insert value repeated count times
             var count = arguments[2];
 
-            if (count == 0) {
+            if (count === 0) {
                 return this;
             } else if (count < 0) {
                 throw new Bridge.ArgumentOutOfRangeException("count", "cannot be less than zero");
@@ -161,7 +161,7 @@ Bridge.define('Bridge.Text.StringBuilder', {
             value = Array(count + 1).join(value).toString();
         }
 
-        var s = this.buffer.join('');
+        var s = this.buffer.join("");
         this.buffer = [];
 
         if (index < 1) {
@@ -180,12 +180,12 @@ Bridge.define('Bridge.Text.StringBuilder', {
     },
 
     replace: function (oldValue, newValue) {
-        var r = new RegExp(oldValue, 'g'),
-            s = this.buffer.join('');
+        var r = new RegExp(oldValue, "g"),
+            s = this.buffer.join("");
 
         this.buffer = [];
 
-        if (arguments.length == 4) {
+        if (arguments.length === 4) {
             var startIndex = arguments[2],
                 count = arguments[3],
                 b = s.substr(startIndex, count);

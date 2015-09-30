@@ -1,6 +1,6 @@
 ﻿// @source TimeSpan.js
 
-Bridge.define('Bridge.TimeSpan', {
+Bridge.define("Bridge.TimeSpan", {
     inherits: [Bridge.IComparable],
     statics: {
         fromDays: function (value) {

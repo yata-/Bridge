@@ -1,4 +1,4 @@
-﻿// @source End.js
+// @source End.js
 
 // module export
 if (typeof define === "function" && define.amd) {

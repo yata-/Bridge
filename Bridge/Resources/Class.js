@@ -10,7 +10,7 @@
         initCtor: function () {
             var value = arguments[0];
 
-            if (this.$multipleCtors && arguments.length > 0 && typeof value == 'string') {
+            if (this.$multipleCtors && arguments.length > 0 && typeof value == "string") {
                 value = value === "constructor" ? "$constructor" : value;
 
                 if ((value === "$constructor" || Bridge.String.startsWith(value, "constructor$")) && Bridge.isFunction(this[value])) {
@@ -169,7 +169,7 @@
                         object = Object.create(Class.prototype),
                         result = Class.apply(object, args);
 
-                    return typeof result === 'object' ? result : object;
+                    return typeof result === "object" ? result : object;
                 }
 
                 // All construction is actually done in the init method
@@ -354,7 +354,7 @@
         },
 
         set: function (scope, className, cls) {
-            var nameParts = className.split('.'),
+            var nameParts = className.split("."),
                 name,
                 key,
                 exists,

@@ -57,7 +57,7 @@
         },
 
         copy: function (to, from, keys, toIf) {
-            if (typeof keys === 'string') {
+            if (typeof keys === "string") {
                 keys = keys.split(/[,;\s]+/);
             }
 
@@ -77,7 +77,7 @@
         },
 
         ns: function (ns, scope) {
-            var nsParts = ns.split('.'),
+            var nsParts = ns.split("."),
                 i = 0;
 
             if (!scope) {
@@ -85,7 +85,7 @@
             }
 
             for (i = 0; i < nsParts.length; i++) {
-                if (typeof scope[nsParts[i]] === 'undefined') {
+                if (typeof scope[nsParts[i]] === "undefined") {
                     scope[nsParts[i]] = { };
                 }
             }
@@ -100,13 +100,13 @@
                 }, 1);
             };
 
-            if (typeof Bridge.global.jQuery !== 'undefined') {
+            if (typeof Bridge.global.jQuery !== "undefined") {
                 Bridge.global.jQuery(delayfn);
             } else {
                 if (!document || document.readyState === "complete" || document.readyState === "loaded") {
                     delayfn();
                 } else {
-                    Bridge.on('DOMContentLoaded', document, delayfn);
+                    Bridge.on("DOMContentLoaded", document, delayfn);
                 }
             }
         },
@@ -147,7 +147,7 @@
                     return 0;
                 }
 
-                throw new Bridge.InvalidOperationException('HashCode cannot be calculated for empty value');
+                throw new Bridge.InvalidOperationException("HashCode cannot be calculated for empty value");
             }
 
             if (Bridge.isFunction(value.getHashCode) && !value.__insideHashCode && value.getHashCode.length === 0) {
@@ -169,7 +169,7 @@
             if (Bridge.isNumber(value)) {
                 value = value.toExponential();
 
-                return parseInt(value.substr(0, value.indexOf('e')).replace('.', ''), 10) & 0xFFFFFFFF;
+                return parseInt(value.substr(0, value.indexOf("e")).replace(".", ""), 10) & 0xFFFFFFFF;
             }
 
             if (Bridge.isString(value)) {
@@ -321,7 +321,7 @@
             var result = Bridge.as(obj, type, allowNull);
 
 	        if (result === null) {
-	            throw new Bridge.InvalidCastException('Unable to cast type ' + Bridge.getTypeName(obj) + ' to type ' + Bridge.getTypeName(type));
+	            throw new Bridge.InvalidCastException("Unable to cast type " + Bridge.getTypeName(obj) + " to type " + Bridge.getTypeName(type));
 	        }
 
 	        return result;
@@ -398,12 +398,12 @@
 	            return obj.getEnumerator();
 	        }
 
-	        if ((Object.prototype.toString.call(obj) === '[object Array]') ||
+	        if ((Object.prototype.toString.call(obj) === "[object Array]") ||
                 (obj && Bridge.isDefined(obj.length))) {
 	            return new Bridge.ArrayEnumerator(obj);
 	        }
 
-	        throw new Bridge.InvalidOperationException('Cannot create enumerator');
+	        throw new Bridge.InvalidOperationException("Cannot create enumerator");
 	    },
 
 	    getPropertyNames: function (obj, includeFunctions) {
@@ -411,7 +411,7 @@
 	            name;
 
 	        for (name in obj) {
-                if (includeFunctions || typeof obj[name] !== 'function') {
+                if (includeFunctions || typeof obj[name] !== "function") {
                     names.push(name);
                 }
 	        }
@@ -420,11 +420,11 @@
 	    },
 
 	    isDefined: function (value, noNull) {
-	        return typeof value !== 'undefined' && (noNull ? value !== null : true);
+	        return typeof value !== "undefined" && (noNull ? value !== null : true);
 	    },
 
 	    isEmpty: function (value, allowEmpty) {
-	        return (value === null) || (!allowEmpty ? value === '' : false) || ((!allowEmpty && Bridge.isArray(value)) ? value.length === 0 : false);
+	        return (value === null) || (!allowEmpty ? value === "" : false) || ((!allowEmpty && Bridge.isArray(value)) ? value.length === 0 : false);
 	    },
 
 	    toArray: function (ienumerable) {
@@ -450,15 +450,15 @@
 	    },
 
         isArray: function (obj) {
-            return Object.prototype.toString.call(obj) === '[object Array]';
+            return Object.prototype.toString.call(obj) === "[object Array]";
         },
 
         isFunction: function (obj) {
-            return typeof (obj) === 'function';
+            return typeof (obj) === "function";
         },
 
         isDate: function (obj) {
-            return Object.prototype.toString.call(obj) === '[object Date]';
+            return Object.prototype.toString.call(obj) === "[object Date]";
         },
 
         isNull: function (value) {
@@ -466,15 +466,15 @@
         },
 
         isBoolean: function (value) {
-            return typeof value === 'boolean';
+            return typeof value === "boolean";
         },
 
         isNumber: function (value) {
-            return typeof value === 'number' && isFinite(value);
+            return typeof value === "number" && isFinite(value);
         },
 
         isString: function (value) {
-            return typeof value === 'string';
+            return typeof value === "string";
         },
 
         unroll: function (value) {
@@ -613,7 +613,7 @@
 
         getType: function (instance) {
             if (!Bridge.isDefined(instance, true)) {
-                throw new Bridge.NullReferenceException('instance is null');
+                throw new Bridge.NullReferenceException("instance is null");
             }
 
             try {
@@ -666,7 +666,7 @@
                         if (appendArgs === true) {
                             callArgs = Array.prototype.slice.call(arguments, 0);
                             callArgs = callArgs.concat(args);
-                        } else if (typeof appendArgs === 'number') {
+                        } else if (typeof appendArgs === "number") {
                             callArgs = Array.prototype.slice.call(arguments, 0);
 
                             if (appendArgs === 0) {

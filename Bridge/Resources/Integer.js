@@ -57,11 +57,11 @@
     };
 })();*/
 
-Bridge.define('Bridge.Int', {
+Bridge.define("Bridge.Int", {
     inherits: [Bridge.IComparable, Bridge.IFormattable],
     statics: {
         instanceOf: function (instance) {
-            return typeof(instance) === 'number' && isFinite(instance) && Math.round(instance, 0) === instance;
+            return typeof(instance) === "number" && isFinite(instance) && Math.round(instance, 0) === instance;
         },
 
         getDefaultValue: function () {
@@ -467,7 +467,7 @@ Bridge.define('Bridge.Int', {
             }
 
             var nfInfo = (provider || Bridge.CultureInfo.getCurrentCulture()).getFormat(Bridge.NumberFormatInfo),
-                result = parseFloat(str.replace(nfInfo.numberDecimalSeparator, '.'));
+                result = parseFloat(str.replace(nfInfo.numberDecimalSeparator, "."));
 
             if (isNaN(result) && str !== nfInfo.nanSymbol) {
                 if (str === nfInfo.negativeInfinitySymbol) {
@@ -493,7 +493,7 @@ Bridge.define('Bridge.Int', {
 
             var nfInfo = (provider || Bridge.CultureInfo.getCurrentCulture()).getFormat(Bridge.NumberFormatInfo);
 
-            result.v = parseFloat(str.replace(nfInfo.numberDecimalSeparator, '.'));
+            result.v = parseFloat(str.replace(nfInfo.numberDecimalSeparator, "."));
 
             if (isNaN(result.v) && str !== nfInfo.nanSymbol) {
                 if (str === nfInfo.negativeInfinitySymbol) {

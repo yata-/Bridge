@@ -67,7 +67,7 @@
         },
 
         copy: function (to, from, keys, toIf) {
-            if (typeof keys === 'string') {
+            if (typeof keys === "string") {
                 keys = keys.split(/[,;\s]+/);
             }
 
@@ -87,7 +87,7 @@
         },
 
         ns: function (ns, scope) {
-            var nsParts = ns.split('.'),
+            var nsParts = ns.split("."),
                 i = 0;
 
             if (!scope) {
@@ -95,7 +95,7 @@
             }
 
             for (i = 0; i < nsParts.length; i++) {
-                if (typeof scope[nsParts[i]] === 'undefined') {
+                if (typeof scope[nsParts[i]] === "undefined") {
                     scope[nsParts[i]] = { };
                 }
             }
@@ -110,13 +110,13 @@
                 }, 1);
             };
 
-            if (typeof Bridge.global.jQuery !== 'undefined') {
+            if (typeof Bridge.global.jQuery !== "undefined") {
                 Bridge.global.jQuery(delayfn);
             } else {
                 if (!document || document.readyState === "complete" || document.readyState === "loaded") {
                     delayfn();
                 } else {
-                    Bridge.on('DOMContentLoaded', document, delayfn);
+                    Bridge.on("DOMContentLoaded", document, delayfn);
                 }
             }
         },
@@ -157,7 +157,7 @@
                     return 0;
                 }
 
-                throw new Bridge.InvalidOperationException('HashCode cannot be calculated for empty value');
+                throw new Bridge.InvalidOperationException("HashCode cannot be calculated for empty value");
             }
 
             if (Bridge.isFunction(value.getHashCode) && !value.__insideHashCode && value.getHashCode.length === 0) {
@@ -179,7 +179,7 @@
             if (Bridge.isNumber(value)) {
                 value = value.toExponential();
 
-                return parseInt(value.substr(0, value.indexOf('e')).replace('.', ''), 10) & 0xFFFFFFFF;
+                return parseInt(value.substr(0, value.indexOf("e")).replace(".", ""), 10) & 0xFFFFFFFF;
             }
 
             if (Bridge.isString(value)) {
@@ -331,7 +331,7 @@
             var result = Bridge.as(obj, type, allowNull);
 
 	        if (result === null) {
-	            throw new Bridge.InvalidCastException('Unable to cast type ' + Bridge.getTypeName(obj) + ' to type ' + Bridge.getTypeName(type));
+	            throw new Bridge.InvalidCastException("Unable to cast type " + Bridge.getTypeName(obj) + " to type " + Bridge.getTypeName(type));
 	        }
 
 	        return result;
@@ -408,12 +408,12 @@
 	            return obj.getEnumerator();
 	        }
 
-	        if ((Object.prototype.toString.call(obj) === '[object Array]') ||
+	        if ((Object.prototype.toString.call(obj) === "[object Array]") ||
                 (obj && Bridge.isDefined(obj.length))) {
 	            return new Bridge.ArrayEnumerator(obj);
 	        }
 
-	        throw new Bridge.InvalidOperationException('Cannot create enumerator');
+	        throw new Bridge.InvalidOperationException("Cannot create enumerator");
 	    },
 
 	    getPropertyNames: function (obj, includeFunctions) {
@@ -421,7 +421,7 @@
 	            name;
 
 	        for (name in obj) {
-                if (includeFunctions || typeof obj[name] !== 'function') {
+                if (includeFunctions || typeof obj[name] !== "function") {
                     names.push(name);
                 }
 	        }
@@ -430,11 +430,11 @@
 	    },
 
 	    isDefined: function (value, noNull) {
-	        return typeof value !== 'undefined' && (noNull ? value !== null : true);
+	        return typeof value !== "undefined" && (noNull ? value !== null : true);
 	    },
 
 	    isEmpty: function (value, allowEmpty) {
-	        return (value === null) || (!allowEmpty ? value === '' : false) || ((!allowEmpty && Bridge.isArray(value)) ? value.length === 0 : false);
+	        return (value === null) || (!allowEmpty ? value === "" : false) || ((!allowEmpty && Bridge.isArray(value)) ? value.length === 0 : false);
 	    },
 
 	    toArray: function (ienumerable) {
@@ -460,15 +460,15 @@
 	    },
 
         isArray: function (obj) {
-            return Object.prototype.toString.call(obj) === '[object Array]';
+            return Object.prototype.toString.call(obj) === "[object Array]";
         },
 
         isFunction: function (obj) {
-            return typeof (obj) === 'function';
+            return typeof (obj) === "function";
         },
 
         isDate: function (obj) {
-            return Object.prototype.toString.call(obj) === '[object Date]';
+            return Object.prototype.toString.call(obj) === "[object Date]";
         },
 
         isNull: function (value) {
@@ -476,15 +476,15 @@
         },
 
         isBoolean: function (value) {
-            return typeof value === 'boolean';
+            return typeof value === "boolean";
         },
 
         isNumber: function (value) {
-            return typeof value === 'number' && isFinite(value);
+            return typeof value === "number" && isFinite(value);
         },
 
         isString: function (value) {
-            return typeof value === 'string';
+            return typeof value === "string";
         },
 
         unroll: function (value) {
@@ -623,7 +623,7 @@
 
         getType: function (instance) {
             if (!Bridge.isDefined(instance, true)) {
-                throw new Bridge.NullReferenceException('instance is null');
+                throw new Bridge.NullReferenceException("instance is null");
             }
 
             try {
@@ -676,7 +676,7 @@
                         if (appendArgs === true) {
                             callArgs = Array.prototype.slice.call(arguments, 0);
                             callArgs = callArgs.concat(args);
-                        } else if (typeof appendArgs === 'number') {
+                        } else if (typeof appendArgs === "number") {
                             callArgs = Array.prototype.slice.call(arguments, 0);
 
                             if (appendArgs === 0) {
@@ -941,25 +941,25 @@
         },
 
         lift1: function (f, o) {
-            return Bridge.hasValue(o) ? (typeof f === 'function' ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : o[f].apply(o, Array.prototype.slice.call(arguments, 2))) : null;
+            return Bridge.hasValue(o) ? (typeof f === "function" ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : o[f].apply(o, Array.prototype.slice.call(arguments, 2))) : null;
         },
 
         lift2: function (f, a, b) {
-            return Bridge.hasValue(a) && Bridge.hasValue(b) ? (typeof f === 'function' ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))) : null;
+            return Bridge.hasValue(a) && Bridge.hasValue(b) ? (typeof f === "function" ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))) : null;
         },
 
         liftcmp: function (f, a, b) {
-            return Bridge.hasValue(a) && Bridge.hasValue(b) ? (typeof f === 'function' ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))) : false;
+            return Bridge.hasValue(a) && Bridge.hasValue(b) ? (typeof f === "function" ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))) : false;
         },
 
         lifteq: function (f, a, b) {
             var va = Bridge.hasValue(a), vb = Bridge.hasValue(b);
-            return (!va && !vb) || (va && vb && (typeof f === 'function' ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))));
+            return (!va && !vb) || (va && vb && (typeof f === "function" ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))));
         },
 
         liftne: function (f, a, b) {
             var va = Bridge.hasValue(a), vb = Bridge.hasValue(b);
-            return (va !== vb) || (va && (typeof f === 'function' ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))));
+            return (va !== vb) || (va && (typeof f === "function" ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))));
         }
     };
 
@@ -1317,11 +1317,11 @@
                     // StringComparison
                     switch (arguments[2]) {
                         case 1: // CurrentCultureIgnoreCase
-                            return strA.localeCompare(strB, Bridge.CultureInfo.getCurrentCulture().name, { sensitivity: 'accent' });
+                            return strA.localeCompare(strB, Bridge.CultureInfo.getCurrentCulture().name, { sensitivity: "accent" });
                         case 2: // InvariantCulture
                             return strA.localeCompare(strB, Bridge.CultureInfo.invariantCulture.name);
                         case 3: // InvariantCultureIgnoreCase
-                            return strA.localeCompare(strB, Bridge.CultureInfo.invariantCulture.name, { sensitivity: 'accent' });
+                            return strA.localeCompare(strB, Bridge.CultureInfo.invariantCulture.name, { sensitivity: "accent" });
                         case 4: // Ordinal
                             return (strA === strB) ? 0 : ((strA > strB) ? 1 : -1);
                         case 5: // OrdinalIgnoreCase
@@ -1399,7 +1399,7 @@
         initCtor: function () {
             var value = arguments[0];
 
-            if (this.$multipleCtors && arguments.length > 0 && typeof value == 'string') {
+            if (this.$multipleCtors && arguments.length > 0 && typeof value == "string") {
                 value = value === "constructor" ? "$constructor" : value;
 
                 if ((value === "$constructor" || Bridge.String.startsWith(value, "constructor$")) && Bridge.isFunction(this[value])) {
@@ -1558,7 +1558,7 @@
                         object = Object.create(Class.prototype),
                         result = Class.apply(object, args);
 
-                    return typeof result === 'object' ? result : object;
+                    return typeof result === "object" ? result : object;
                 }
 
                 // All construction is actually done in the init method
@@ -1743,7 +1743,7 @@
         },
 
         set: function (scope, className, cls) {
-            var nameParts = className.split('.'),
+            var nameParts = className.split("."),
                 name,
                 key,
                 exists,
@@ -1801,7 +1801,7 @@
 
 // @source Exception.js
 
-Bridge.define('Bridge.Exception', {
+Bridge.define("Bridge.Exception", {
     constructor: function (message, innerException) {
         this.message = message;
         this.innerException = innerException;
@@ -1848,7 +1848,7 @@ Bridge.define('Bridge.Exception', {
     }
 });
 
-Bridge.define('Bridge.ErrorException', {
+Bridge.define("Bridge.ErrorException", {
     inherits: [Bridge.Exception],
 
     constructor: function (error) {
@@ -1862,7 +1862,7 @@ Bridge.define('Bridge.ErrorException', {
     }
 });
 
-Bridge.define('Bridge.ArgumentException', {
+Bridge.define("Bridge.ArgumentException", {
     inherits: [Bridge.Exception],
 
     constructor: function (message, paramName, innerException) {
@@ -1875,15 +1875,15 @@ Bridge.define('Bridge.ArgumentException', {
     }
 });
 
-Bridge.define('Bridge.ArgumentNullException', {
+Bridge.define("Bridge.ArgumentNullException", {
     inherits: [Bridge.ArgumentException],
 
     constructor: function (paramName, message, innerException) {
         if (!message) {
-            message = 'Value cannot be null.';
+            message = "Value cannot be null.";
 
             if (paramName) {
-                message += '\nParameter name: ' + paramName;
+                message += "\nParameter name: " + paramName;
             }
         }
 
@@ -1891,15 +1891,15 @@ Bridge.define('Bridge.ArgumentNullException', {
     }
 });
 
-Bridge.define('Bridge.ArgumentOutOfRangeException', {
+Bridge.define("Bridge.ArgumentOutOfRangeException", {
     inherits: [Bridge.ArgumentException],
 
     constructor: function (paramName, message, innerException, actualValue) {
         if (!message) {
-            message = 'Value is out of range.';
+            message = "Value is out of range.";
 
             if (paramName) {
-                message += '\nParameter name: ' + paramName;
+                message += "\nParameter name: " + paramName;
             }
         }
 
@@ -1913,19 +1913,19 @@ Bridge.define('Bridge.ArgumentOutOfRangeException', {
     }
 });
 
-Bridge.define('Bridge.CultureNotFoundException', {
+Bridge.define("Bridge.CultureNotFoundException", {
     inherits: [Bridge.ArgumentException],
 
     constructor: function (paramName, invalidCultureName, message, innerException) {
         if (!message) {
-            message = 'Culture is not supported.';
+            message = "Culture is not supported.";
 
             if (paramName) {
-                message += '\nParameter name: ' + paramName;
+                message += "\nParameter name: " + paramName;
             }
 
             if (invalidCultureName) {
-                message += '\n' + invalidCultureName + ' is an invalid culture identifier.';
+                message += "\n" + invalidCultureName + " is an invalid culture identifier.";
             }
         }
 
@@ -1939,7 +1939,7 @@ Bridge.define('Bridge.CultureNotFoundException', {
     }
 });
 
-Bridge.define('Bridge.KeyNotFoundException', {
+Bridge.define("Bridge.KeyNotFoundException", {
     inherits: [Bridge.Exception],
 
     constructor: function (message, innerException) {
@@ -1947,7 +1947,7 @@ Bridge.define('Bridge.KeyNotFoundException', {
     }
 });
 
-Bridge.define('Bridge.ArithmeticException', {
+Bridge.define("Bridge.ArithmeticException", {
     inherits: [Bridge.Exception],
 
     constructor: function (message, innerException) {
@@ -1955,7 +1955,7 @@ Bridge.define('Bridge.ArithmeticException', {
     }
 });
 
-Bridge.define('Bridge.DivideByZeroException', {
+Bridge.define("Bridge.DivideByZeroException", {
     inherits: [Bridge.ArithmeticException],
 
     constructor: function (message, innerException) {
@@ -1963,7 +1963,7 @@ Bridge.define('Bridge.DivideByZeroException', {
     }
 });
 
-Bridge.define('Bridge.OverflowException', {
+Bridge.define("Bridge.OverflowException", {
     inherits: [Bridge.ArithmeticException],
 
     constructor: function (message, innerException) {
@@ -1971,7 +1971,7 @@ Bridge.define('Bridge.OverflowException', {
     }
 });
 
-Bridge.define('Bridge.FormatException', {
+Bridge.define("Bridge.FormatException", {
     inherits: [Bridge.Exception],
 
     constructor: function (message, innerException) {
@@ -1979,7 +1979,7 @@ Bridge.define('Bridge.FormatException', {
     }
 });
 
-Bridge.define('Bridge.InvalidCastException', {
+Bridge.define("Bridge.InvalidCastException", {
     inherits: [Bridge.Exception],
 
     constructor: function (message, innerException) {
@@ -1987,7 +1987,7 @@ Bridge.define('Bridge.InvalidCastException', {
     }
 });
 
-Bridge.define('Bridge.InvalidOperationException', {
+Bridge.define("Bridge.InvalidOperationException", {
     inherits: [Bridge.Exception],
 
     constructor: function (message, innerException) {
@@ -1995,7 +1995,7 @@ Bridge.define('Bridge.InvalidOperationException', {
     }
 });
 
-Bridge.define('Bridge.NotImplementedException', {
+Bridge.define("Bridge.NotImplementedException", {
     inherits: [Bridge.Exception],
 
     constructor: function (message, innerException) {
@@ -2003,7 +2003,7 @@ Bridge.define('Bridge.NotImplementedException', {
     }
 });
 
-Bridge.define('Bridge.NotSupportedException', {
+Bridge.define("Bridge.NotSupportedException", {
     inherits: [Bridge.Exception],
 
     constructor: function (message, innerException) {
@@ -2011,7 +2011,7 @@ Bridge.define('Bridge.NotSupportedException', {
     }
 });
 
-Bridge.define('Bridge.NullReferenceException', {
+Bridge.define("Bridge.NullReferenceException", {
     inherits: [Bridge.Exception],
 
     constructor: function (message, innerException) {
@@ -2021,7 +2021,7 @@ Bridge.define('Bridge.NullReferenceException', {
 
 // @source Interfaces.js
 
-Bridge.define('Bridge.IFormattable', {
+Bridge.define("Bridge.IFormattable", {
     statics: {
         $is: function (obj) {
             if (Bridge.isNumber(obj)) {
@@ -2037,31 +2037,31 @@ Bridge.define('Bridge.IFormattable', {
     }
 });
 
-Bridge.define('Bridge.IComparable');
+Bridge.define("Bridge.IComparable");
 
-Bridge.define('Bridge.IFormatProvider');
+Bridge.define("Bridge.IFormatProvider");
 
-Bridge.define('Bridge.ICloneable');
+Bridge.define("Bridge.ICloneable");
 
-Bridge.Class.generic('Bridge.IComparable$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.IComparable$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name));
-});
-
-Bridge.Class.generic('Bridge.IEquatable$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.IEquatable$1', T);
+Bridge.Class.generic("Bridge.IComparable$1", function (T) {
+    var $$name = Bridge.Class.genericName("Bridge.IComparable$1", T);
 
     return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name));
 });
 
-Bridge.define('Bridge.IPromise');
-Bridge.define('Bridge.IDisposable');
+Bridge.Class.generic("Bridge.IEquatable$1", function (T) {
+    var $$name = Bridge.Class.genericName("Bridge.IEquatable$1", T);
+
+    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name));
+});
+
+Bridge.define("Bridge.IPromise");
+Bridge.define("Bridge.IDisposable");
 
 /// <reference path="Init.js" />
 // @source Globalization.js
 
-Bridge.define('Bridge.DateTimeFormatInfo', {
+Bridge.define("Bridge.DateTimeFormatInfo", {
     inherits: [Bridge.IFormatProvider, Bridge.ICloneable],
 
     statics: {
@@ -2233,7 +2233,7 @@ Bridge.define('Bridge.DateTimeFormatInfo', {
     }
 });
 
-Bridge.define('Bridge.NumberFormatInfo', {
+Bridge.define("Bridge.NumberFormatInfo", {
     inherits: [Bridge.IFormatProvider, Bridge.ICloneable],
 
     statics: {
@@ -2315,7 +2315,7 @@ Bridge.define('Bridge.NumberFormatInfo', {
     }
 });
 
-Bridge.define('Bridge.CultureInfo', {
+Bridge.define("Bridge.CultureInfo", {
     inherits: [Bridge.IFormatProvider, Bridge.ICloneable],
 
     statics: {
@@ -2462,11 +2462,11 @@ Bridge.define('Bridge.CultureInfo', {
     };
 })();*/
 
-Bridge.define('Bridge.Int', {
+Bridge.define("Bridge.Int", {
     inherits: [Bridge.IComparable, Bridge.IFormattable],
     statics: {
         instanceOf: function (instance) {
-            return typeof(instance) === 'number' && isFinite(instance) && Math.round(instance, 0) === instance;
+            return typeof(instance) === "number" && isFinite(instance) && Math.round(instance, 0) === instance;
         },
 
         getDefaultValue: function () {
@@ -2872,7 +2872,7 @@ Bridge.define('Bridge.Int', {
             }
 
             var nfInfo = (provider || Bridge.CultureInfo.getCurrentCulture()).getFormat(Bridge.NumberFormatInfo),
-                result = parseFloat(str.replace(nfInfo.numberDecimalSeparator, '.'));
+                result = parseFloat(str.replace(nfInfo.numberDecimalSeparator, "."));
 
             if (isNaN(result) && str !== nfInfo.nanSymbol) {
                 if (str === nfInfo.negativeInfinitySymbol) {
@@ -2898,7 +2898,7 @@ Bridge.define('Bridge.Int', {
 
             var nfInfo = (provider || Bridge.CultureInfo.getCurrentCulture()).getFormat(Bridge.NumberFormatInfo);
 
-            result.v = parseFloat(str.replace(nfInfo.numberDecimalSeparator, '.'));
+            result.v = parseFloat(str.replace(nfInfo.numberDecimalSeparator, "."));
 
             if (isNaN(result.v) && str !== nfInfo.nanSymbol) {
                 if (str === nfInfo.negativeInfinitySymbol) {
@@ -3048,7 +3048,7 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
             return new Bridge.Decimal(v);
         }
 
-        if (typeof v === 'string') {
+        if (typeof v === "string") {
             provider = provider || Bridge.CultureInfo.getCurrentCulture();
 
             var nfInfo = provider && provider.getFormat(Bridge.NumberFormatInfo);
@@ -3061,7 +3061,7 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
                 throw new Bridge.FormatException();
             }
 
-            v = v.replace(/\s/g, '');
+            v = v.replace(/\s/g, "");
         }
 
         this.value = Bridge.Decimal.getValue(v);
@@ -4188,7 +4188,7 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
 
 // @source TimeSpan.js
 
-Bridge.define('Bridge.TimeSpan', {
+Bridge.define("Bridge.TimeSpan", {
     inherits: [Bridge.IComparable],
     statics: {
         fromDays: function (value) {
@@ -4382,17 +4382,17 @@ Bridge.Class.addExtend(Bridge.TimeSpan, [Bridge.IComparable$1(Bridge.TimeSpan), 
 
 // @source Text/StringBuilder.js
 
-Bridge.define('Bridge.Text.StringBuilder', {
+Bridge.define("Bridge.Text.StringBuilder", {
     constructor: function () {
         this.buffer = [],
         this.capacity = 16;
 
-        if (arguments.length == 1) {
+        if (arguments.length === 1) {
             this.append(arguments[0]);
-        } else if (arguments.length == 2) {
+        } else if (arguments.length === 2) {
             this.append(arguments[0]);
             this.setCapacity(arguments[1]);
-        } else if (arguments.length == 3) {
+        } else if (arguments.length === 3) {
             this.append(arguments[0], arguments[1], arguments[2]);
         }
     },
@@ -4402,7 +4402,7 @@ Bridge.define('Bridge.Text.StringBuilder', {
             return this.buffer[0] ? this.buffer[0].length : 0;
         }
 
-        var s = this.buffer.join('');
+        var s = this.buffer.join("");
 
         this.buffer = [];
         this.buffer[0] = s;
@@ -4425,12 +4425,12 @@ Bridge.define('Bridge.Text.StringBuilder', {
     },
 
     toString: function () {
-        var s = this.buffer.join('');
+        var s = this.buffer.join("");
 
         this.buffer = [];
         this.buffer[0] = s;
 
-        if (arguments.length == 2) {
+        if (arguments.length === 2) {
             var startIndex = arguments[0],
                 length = arguments[1];
 
@@ -4447,23 +4447,23 @@ Bridge.define('Bridge.Text.StringBuilder', {
             return this;
         }
 
-        if (arguments.length == 2) {
+        if (arguments.length === 2) {
             // append a char repeated count times
             var count = arguments[1];
 
-            if (count == 0) {
+            if (count === 0) {
                 return this;
             } else if (count < 0) {
                 throw new Bridge.ArgumentOutOfRangeException("count", "cannot be less than zero");
             }
 
             value = Array(count + 1).join(value).toString();
-        } else if (arguments.length == 3) {
+        } else if (arguments.length === 3) {
             // append a (startIndex, count) substring of value
             var startIndex = arguments[1],
                 count = arguments[2];
 
-            if (count == 0) {
+            if (count === 0) {
                 return this;
             }
 
@@ -4487,7 +4487,7 @@ Bridge.define('Bridge.Text.StringBuilder', {
     },
 
     appendLine: function () {
-        if (arguments.length == 1) {
+        if (arguments.length === 1) {
             this.append(arguments[0]);
         }
 
@@ -4499,7 +4499,7 @@ Bridge.define('Bridge.Text.StringBuilder', {
             return false;
         }
 
-        if (sb == this) {
+        if (sb === this) {
             return true;
         }
 
@@ -4507,11 +4507,11 @@ Bridge.define('Bridge.Text.StringBuilder', {
     },
 
     remove: function (startIndex, length) {
-        var s = this.buffer.join('');
+        var s = this.buffer.join("");
 
         this.checkLimits(s, startIndex, length);
 
-        if (s.length == length && startIndex == 0) {
+        if (s.length === length && startIndex === 0) {
             // Optimization.  If we are deleting everything
             return this.clear();
         }
@@ -4530,11 +4530,11 @@ Bridge.define('Bridge.Text.StringBuilder', {
             return this;
         }
 
-        if (arguments.length == 3) {
+        if (arguments.length === 3) {
             // insert value repeated count times
             var count = arguments[2];
 
-            if (count == 0) {
+            if (count === 0) {
                 return this;
             } else if (count < 0) {
                 throw new Bridge.ArgumentOutOfRangeException("count", "cannot be less than zero");
@@ -4543,7 +4543,7 @@ Bridge.define('Bridge.Text.StringBuilder', {
             value = Array(count + 1).join(value).toString();
         }
 
-        var s = this.buffer.join('');
+        var s = this.buffer.join("");
         this.buffer = [];
 
         if (index < 1) {
@@ -4562,12 +4562,12 @@ Bridge.define('Bridge.Text.StringBuilder', {
     },
 
     replace: function (oldValue, newValue) {
-        var r = new RegExp(oldValue, 'g'),
-            s = this.buffer.join('');
+        var r = new RegExp(oldValue, "g"),
+            s = this.buffer.join("");
 
         this.buffer = [];
 
-        if (arguments.length == 4) {
+        if (arguments.length === 4) {
             var startIndex = arguments[2],
                 count = arguments[3],
                 b = s.substr(startIndex, count);
@@ -4604,7 +4604,7 @@ Bridge.define('Bridge.Text.StringBuilder', {
 (function () {
     var specials = [
             // order matters for these
-                "-"
+              "-"
             , "["
             , "]"
             // order doesn't matter for any of these
@@ -4623,7 +4623,7 @@ Bridge.define('Bridge.Text.StringBuilder', {
             , "|"
     ],
 
-    regex = RegExp('[' + specials.join('\\') + ']', 'g'),
+    regex = RegExp("[" + specials.join("\\") + "]", "g"),
 
     regexpEscape = function (s) {
         return s.replace(regex, "\\$&");
@@ -4631,6 +4631,7 @@ Bridge.define('Bridge.Text.StringBuilder', {
 
     Bridge.regexpEscape = regexpEscape;
 })();
+
 // @source Browser.js
 
 (function () {
@@ -5486,7 +5487,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
 
 // @source Task.js
 
-Bridge.define('Bridge.Task', {
+Bridge.define("Bridge.Task", {
     constructor: function (action, state) {
         this.action = action;
         this.state = state;
@@ -5564,7 +5565,7 @@ Bridge.define('Bridge.Task', {
                             errors.push(t.error);
                             break;
                         default:
-                            throw new Bridge.InvalidOperationException('Invalid task status: ' + t.status);
+                            throw new Bridge.InvalidOperationException("Invalid task status: " + t.status);
                     }
 
                     executing--;
@@ -5590,7 +5591,7 @@ Bridge.define('Bridge.Task', {
             }
 
             if (!tasks.length) {
-                throw new Bridge.ArgumentException('At least one task is required');
+                throw new Bridge.ArgumentException("At least one task is required");
             }
 
             var task = new Bridge.Task(),
@@ -5609,7 +5610,7 @@ Bridge.define('Bridge.Task', {
                             task.fail(t.error);
                             break;
                         default:
-                            throw new Bridge.InvalidOperationException('Invalid task status: ' + t.status);
+                            throw new Bridge.InvalidOperationException("Invalid task status: " + t.status);
                     }
                 });
             }
@@ -5708,7 +5709,7 @@ Bridge.define('Bridge.Task', {
 
     start: function () {
         if (this.status !== Bridge.TaskStatus.created) {
-            throw new Error('Task was already started.');
+            throw new Error("Task was already started.");
         }
 
         var me = this;
@@ -5791,29 +5792,29 @@ Bridge.define('Bridge.Task', {
             case Bridge.TaskStatus.ranToCompletion:
                 return this.result;
             case Bridge.TaskStatus.canceled:
-                throw new Error('Task was cancelled.');
+                throw new Error("Task was cancelled.");
             case Bridge.TaskStatus.faulted:
                 throw this.error;
             default:
-                throw new Error('Task is not yet completed.');
+                throw new Error("Task is not yet completed.");
         }
     },
 
     setCanceled: function () {
         if (!this.cancel()) {
-            throw new Error('Task was already completed.');
+            throw new Error("Task was already completed.");
         }
     },
 
     setResult: function (result) {
         if (!this.complete(result)) {
-            throw new Error('Task was already completed.');
+            throw new Error("Task was already completed.");
         }
     },
 
     setError: function (error) {
         if (!this.fail(error)) {
-            throw new Error('Task was already completed.');
+            throw new Error("Task was already completed.");
         }
     },
 
@@ -5825,7 +5826,7 @@ Bridge.define('Bridge.Task', {
     }
 });
 
-Bridge.define('Bridge.TaskStatus', {
+Bridge.define("Bridge.TaskStatus", {
     $statics: {
         created: 0,
         waitingForActivation: 1,
@@ -5952,7 +5953,7 @@ Bridge.define('Bridge.TaskStatus', {
 
 // @source Version.js
 
-Bridge.define('System.Version', {
+Bridge.define("System.Version", {
     inherits: function() {
         return [Bridge.ICloneable,Bridge.IComparable$1(System.Version),Bridge.IEquatable$1(System.Version)];
     },
@@ -6382,7 +6383,7 @@ Bridge.define('System.Version', {
     }
 });
 
-Bridge.define('System.Version.ParseFailureKind', {
+Bridge.define("System.Version.ParseFailureKind", {
     statics: {
         argumentNullException: 0,
         argumentException: 1,
@@ -6391,7 +6392,7 @@ Bridge.define('System.Version.ParseFailureKind', {
     }
 });
 
-Bridge.define('System.Version.VersionResult', {
+Bridge.define("System.Version.VersionResult", {
     m_parsedVersion: null,
     m_failure: 0,
     m_exceptionArgument: null,
@@ -6487,13 +6488,13 @@ Bridge.define('System.Version.VersionResult', {
 
 // @source Attribute.js
 
-Bridge.define('Bridge.Attribute');
+Bridge.define("Bridge.Attribute");
 
 // @source INotifyPropertyChanged.js
 
-Bridge.define('Bridge.INotifyPropertyChanged');
+Bridge.define("Bridge.INotifyPropertyChanged");
 
-Bridge.define('Bridge.PropertyChangedEventArgs', {
+Bridge.define("Bridge.PropertyChangedEventArgs", {
     constructor: function (propertyName) {
         this.propertyName = propertyName;
     }
@@ -9772,3 +9773,4 @@ if (typeof define === "function" && define.amd) {
     // Node
     module.exports = Bridge;
 }
+

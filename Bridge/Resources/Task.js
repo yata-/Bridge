@@ -1,6 +1,6 @@
 // @source Task.js
 
-Bridge.define('Bridge.Task', {
+Bridge.define("Bridge.Task", {
     constructor: function (action, state) {
         this.action = action;
         this.state = state;
@@ -78,7 +78,7 @@ Bridge.define('Bridge.Task', {
                             errors.push(t.error);
                             break;
                         default:
-                            throw new Bridge.InvalidOperationException('Invalid task status: ' + t.status);
+                            throw new Bridge.InvalidOperationException("Invalid task status: " + t.status);
                     }
 
                     executing--;
@@ -104,7 +104,7 @@ Bridge.define('Bridge.Task', {
             }
 
             if (!tasks.length) {
-                throw new Bridge.ArgumentException('At least one task is required');
+                throw new Bridge.ArgumentException("At least one task is required");
             }
 
             var task = new Bridge.Task(),
@@ -123,7 +123,7 @@ Bridge.define('Bridge.Task', {
                             task.fail(t.error);
                             break;
                         default:
-                            throw new Bridge.InvalidOperationException('Invalid task status: ' + t.status);
+                            throw new Bridge.InvalidOperationException("Invalid task status: " + t.status);
                     }
                 });
             }
@@ -222,7 +222,7 @@ Bridge.define('Bridge.Task', {
 
     start: function () {
         if (this.status !== Bridge.TaskStatus.created) {
-            throw new Error('Task was already started.');
+            throw new Error("Task was already started.");
         }
 
         var me = this;
@@ -305,29 +305,29 @@ Bridge.define('Bridge.Task', {
             case Bridge.TaskStatus.ranToCompletion:
                 return this.result;
             case Bridge.TaskStatus.canceled:
-                throw new Error('Task was cancelled.');
+                throw new Error("Task was cancelled.");
             case Bridge.TaskStatus.faulted:
                 throw this.error;
             default:
-                throw new Error('Task is not yet completed.');
+                throw new Error("Task is not yet completed.");
         }
     },
 
     setCanceled: function () {
         if (!this.cancel()) {
-            throw new Error('Task was already completed.');
+            throw new Error("Task was already completed.");
         }
     },
 
     setResult: function (result) {
         if (!this.complete(result)) {
-            throw new Error('Task was already completed.');
+            throw new Error("Task was already completed.");
         }
     },
 
     setError: function (error) {
         if (!this.fail(error)) {
-            throw new Error('Task was already completed.');
+            throw new Error("Task was already completed.");
         }
     },
 
@@ -339,7 +339,7 @@ Bridge.define('Bridge.Task', {
     }
 });
 
-Bridge.define('Bridge.TaskStatus', {
+Bridge.define("Bridge.TaskStatus", {
     $statics: {
         created: 0,
         waitingForActivation: 1,
