@@ -177,7 +177,7 @@ Bridge.define('Bridge.TimeSpan', {
 
         result += format(ticks / 36e9) + ":";
         ticks %= 36e9;
-        result += format(ticks / 6e8 | 0) + ':';
+        result += format(ticks / 6e8 | 0) + ":";
         ticks %= 6e8;
         result += format(ticks / 1e7);
         ticks %= 1e7;

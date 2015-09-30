@@ -36,14 +36,11 @@ Bridge.define('Bridge.Exception', {
 
             if (error instanceof TypeError) {
                 return new Bridge.NullReferenceException(error.message, new Bridge.ErrorException(error));
-            }
-            else if (error instanceof RangeError) {
+            } else if (error instanceof RangeError) {
                 return new Bridge.ArgumentOutOfRangeException(null, error.message, new Bridge.ErrorException(error));
-            }
-            else if (error instanceof Error) {
+            } else if (error instanceof Error) {
                 return new Bridge.ErrorException(error);
-            }
-            else {
+            } else {
                 return new Bridge.Exception(error ? error.toString() : null);
             }
         }

@@ -4,7 +4,7 @@
 
 (function () {
     Bridge.Decimal = function (v, provider) {
-        if (this.constructor != Bridge.Decimal) {
+        if (this.constructor !== Bridge.Decimal) {
             return new Bridge.Decimal(v);
         }
 

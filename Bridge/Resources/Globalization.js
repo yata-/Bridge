@@ -102,8 +102,7 @@ Bridge.define('Bridge.DateTimeFormatInfo', {
 
             formats = { };
             formats[format] = f[format];
-        }
-        else {
+        } else {
             formats = f;
         }
 
@@ -307,6 +306,7 @@ Bridge.define('Bridge.CultureInfo', {
 
     constructor: function (name, create) {
         this.name = name;
+
         if (!Bridge.CultureInfo.cultures) {
             Bridge.CultureInfo.cultures = {};
         }

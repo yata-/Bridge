@@ -1,4 +1,4 @@
-﻿// @source Text/StringBuilder.js
+// @source Text/StringBuilder.js
 
 Bridge.define('Bridge.Text.StringBuilder', {
     constructor: function () {
@@ -7,12 +7,10 @@ Bridge.define('Bridge.Text.StringBuilder', {
 
         if (arguments.length == 1) {
             this.append(arguments[0]);
-        }
-        else if (arguments.length == 2) {
+        } else if (arguments.length == 2) {
             this.append(arguments[0]);
             this.setCapacity(arguments[1]);
-        }
-        else if (arguments.length == 3) {
+        } else if (arguments.length == 3) {
             this.append(arguments[0], arguments[1], arguments[2]);
         }
     },
@@ -73,14 +71,12 @@ Bridge.define('Bridge.Text.StringBuilder', {
 
             if (count == 0) {
                 return this;
-            }
-            else if (count < 0) {
+            } else if (count < 0) {
                 throw new Bridge.ArgumentOutOfRangeException("count", "cannot be less than zero");
             }
 
             value = Array(count + 1).join(value).toString();
-        }
-        else if (arguments.length == 3) {
+        } else if (arguments.length == 3) {
             // append a (startIndex, count) substring of value
             var startIndex = arguments[1],
                 count = arguments[2];
@@ -158,8 +154,7 @@ Bridge.define('Bridge.Text.StringBuilder', {
 
             if (count == 0) {
                 return this;
-            }
-            else if (count < 0) {
+            } else if (count < 0) {
                 throw new Bridge.ArgumentOutOfRangeException("count", "cannot be less than zero");
             }
 
@@ -172,12 +167,10 @@ Bridge.define('Bridge.Text.StringBuilder', {
         if (index < 1) {
             this.buffer[0] = value;
             this.buffer[1] = s;
-        }
-        else if (index >= s.length) {
+        } else if (index >= s.length) {
             this.buffer[0] = s;
             this.buffer[1] = value;
-        }
-        else {
+        } else {
             this.buffer[0] = s.substring(0, index);
             this.buffer[1] = value;
             this.buffer[2] = s.substring(index, s.length);
@@ -202,8 +195,7 @@ Bridge.define('Bridge.Text.StringBuilder', {
             this.buffer[0] = s.substring(0, startIndex);
             this.buffer[1] = b.replace(r, newValue);
             this.buffer[2] = s.substring(startIndex + count, s.length);
-        }
-        else {
+        } else {
             this.buffer[0] = s.replace(r, newValue);
         }
 

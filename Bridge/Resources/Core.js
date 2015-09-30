@@ -67,8 +67,7 @@
                 if (toIf !== true || to[name] == undefined) {
                     if (Bridge.is(from[name], Bridge.ICloneable)) {
                         to[name] = Bridge.clone(from[name]);
-                    }
-                    else {
+                    } else {
                         to[name] = from[name];
                     }
                 }
@@ -89,7 +88,6 @@
                 if (typeof scope[nsParts[i]] === 'undefined') {
                     scope[nsParts[i]] = { };
                 }
-
             }
 
             return scope;
@@ -138,8 +136,7 @@
 
             if (elem.addEventListener) {
                 elem.addEventListener(event, listenHandler, false);
-            }
-            else {
+            } else {
                 elem.attachEvent("on" + event, attachHandler);
             }
         },
@@ -157,6 +154,7 @@
                 value.__insideHashCode = true;
                 var r = value.getHashCode();
                 delete value.__insideHashCode;
+
                 return r;
             }
 
@@ -260,8 +258,7 @@
 
             if ((obj).constructor === Function) {
                 str = (obj).toString();
-            }
-            else {
+            } else {
                 str = (obj).constructor.toString();
             }
 
@@ -339,8 +336,7 @@
 
 	            if (typeof obj[name] === "function" && typeof values[name] !== "function") {
 	                obj[name](values[name]);
-	            }
-	            else {
+	            } else {
 	                obj[name] = values[name];
 	            }
 	        }
@@ -361,30 +357,25 @@
 	            for (i = 0; i < from.length; i++) {
 	                fn.apply(to, from[i]);
 	            }
-	        }
-	        else {
+	        } else {
 	            for (key in from) {
 	                value = from[key];
 
 	                if (typeof to[key] === "function" && typeof value !== "function") {
 	                    if (key.match(/^\s*get[A-Z]/)) {
 	                        Bridge.merge(to[key](), value);
-	                    }
-	                    else {
+	                    } else {
 	                        to[key](value);
 	                    }
-	                }
-	                else {
+	                } else {
 	                    var setter = "set" + key.charAt(0).toUpperCase() + key.slice(1);
 
 	                    if (typeof to[setter] === "function" && typeof value !== "function") {
 	                        to[setter](value);
-	                    }
-	                    else if (value && value.constructor === Object && to[key]) {
+	                    } else if (value && value.constructor === Object && to[key]) {
 	                        toValue = to[key];
 	                        Bridge.merge(toValue, value);
-	                    }
-	                    else {
+	                    } else {
 	                        to[key] = value;
 	                    }
 	                }
@@ -446,8 +437,7 @@
                 for (i = 0, len = ienumerable.length; i < len; ++i) {
                     result.push(ienumerable[i]);
                 }
-	        }
-	        else {
+	        } else {
                 i = Bridge.getEnumerator(ienumerable);
 
                 while (i.moveNext()) {
@@ -566,8 +556,7 @@
 
                         Bridge.$$leftChain.pop();
                         Bridge.$$rightChain.pop();
-                    }
-                    else {
+                    } else {
                         if (!Bridge.equals(a[p], b[p])) {
                             return false;
                         }
@@ -575,8 +564,7 @@
                 }
 
                 return true;
-            }
-            else {
+            } else {
                 return Bridge.equals(a, b);
             }
         },
@@ -586,12 +574,11 @@
                 if (safe) {
                     return 0;
                 }
+
                 throw new Bridge.NullReferenceException();
-            }
-            else if (Bridge.isNumber(a) || Bridge.isString(a) || Bridge.isBoolean(a)) {
+            } else if (Bridge.isNumber(a) || Bridge.isString(a) || Bridge.isBoolean(a)) {
                 return a < b ? -1 : (a > b ? 1 : 0);
-            }
-            else if (Bridge.isDate(a)) {
+            } else if (Bridge.isDate(a)) {
                 return Bridge.compare(a.valueOf(), b.valueOf());
             }
 
@@ -605,11 +592,9 @@
         equalsT: function (a, b) {
             if (!Bridge.isDefined(a, true)) {
                 throw new Bridge.NullReferenceException();
-            }
-            else if (Bridge.isNumber(a) || Bridge.isString(a) || Bridge.isBoolean(a)) {
+            } else if (Bridge.isNumber(a) || Bridge.isString(a) || Bridge.isBoolean(a)) {
                 return a === b;
-            }
-            else if (Bridge.isDate(a)) {
+            } else if (Bridge.isDate(a)) {
                 return a.valueOf() === b.valueOf();
             }
 
@@ -619,8 +604,7 @@
         format: function (obj, formatString) {
             if (Bridge.isNumber(obj)) {
                 return Bridge.Int.format(obj, formatString);
-            }
-            else if (Bridge.isDate(obj)) {
+            } else if (Bridge.isDate(obj)) {
                 return Bridge.Date.format(obj, formatString);
             }
 
@@ -682,8 +666,7 @@
                         if (appendArgs === true) {
                             callArgs = Array.prototype.slice.call(arguments, 0);
                             callArgs = callArgs.concat(args);
-                        }
-                        else if (typeof appendArgs === 'number') {
+                        } else if (typeof appendArgs === 'number') {
                             callArgs = Array.prototype.slice.call(arguments, 0);
 
                             if (appendArgs === 0) {
@@ -793,8 +776,7 @@
         Object.create = function (o, properties) {
             if (typeof o !== "object" && typeof o !== "function") {
                 throw new TypeError("Object prototype may only be an Object: " + o);
-            }
-            else if (o === null) {
+            } else if (o === null) {
                 throw new Error("This browser's implementation of Object.create is a shim and doesn't support 'null' as the first argument");
             }
 

@@ -61,7 +61,7 @@ Bridge.define('Bridge.Int', {
     inherits: [Bridge.IComparable, Bridge.IFormattable],
     statics: {
         instanceOf: function (instance) {
-            return typeof(instance) === 'number' && isFinite(instance) && Math.round(instance, 0) == instance;
+            return typeof(instance) === 'number' && isFinite(instance) && Math.round(instance, 0) === instance;
         },
 
         getDefaultValue: function () {
@@ -78,7 +78,7 @@ Bridge.define('Bridge.Int', {
                 fs;
 
             if (!isFinite(number)) {
-                return Number.NEGATIVE_INFINITY == number ? nf.negativeInfinitySymbol : nf.positiveInfinitySymbol;
+                return Number.NEGATIVE_INFINITY === number ? nf.negativeInfinitySymbol : nf.positiveInfinitySymbol;
             }
 
             if (!format) {
@@ -100,7 +100,7 @@ Bridge.define('Bridge.Int', {
                         if (isNaN(precision)) {
                             precision = nf.numberDecimalDigits;
                         }
-                        return this.defaultFormat(number, 1, precision, precision, nf, fs == "F");
+                        return this.defaultFormat(number, 1, precision, precision, nf, fs === "F");
                     case "G":
                     case "E":
                         var exponent = 0,
@@ -115,19 +115,19 @@ Bridge.define('Bridge.Int', {
                             exponent++;
                         }
 
-                        while (coefficient != 0 && coefficient < 1) {
+                        while (coefficient !== 0 && coefficient < 1) {
                             coefficient *= 10;
                             exponent--;
                         }
 
-                        if (fs == "G") {
+                        if (fs === "G") {
                             if (exponent > -5 && (!precision || exponent < precision)) {
                                 minDecimals = precision ? precision - (exponent > 0 ? exponent + 1 : 1) : 0;
                                 maxDecimals = precision ? precision - (exponent > 0 ? exponent + 1 : 1) : 10;
                                 return this.defaultFormat(number, 1, minDecimals, maxDecimals, nf, true);
                             }
 
-                            exponentPrefix = exponentPrefix == "G" ? "E" : "e";
+                            exponentPrefix = exponentPrefix === "G" ? "E" : "e";
                             exponentPrecision = 2;
                             minDecimals = (precision || 1) - 1;
                             maxDecimals = (precision || 11) - 1;
@@ -137,8 +137,7 @@ Bridge.define('Bridge.Int', {
 
                         if (exponent >= 0) {
                             exponentPrefix += nf.positiveSign;
-                        }
-                        else {
+                        } else {
                             exponentPrefix += nf.negativeSign;
                             exponent = -exponent;
                         }
@@ -157,7 +156,7 @@ Bridge.define('Bridge.Int', {
                     case "X":
                         var result = Math.round(number).toString(16);
 
-                        if (match[1] == "X") {
+                        if (match[1] === "X") {
                             result = result.toUpperCase();
                         }
 
@@ -183,11 +182,11 @@ Bridge.define('Bridge.Int', {
                 var count = 0,
                     index = format.indexOf(",.");
 
-                if (index == -1) {
+                if (index === -1) {
                     index = format.length - 1;
                 }
 
-                while (index > -1 && format.charAt(index) == ",") {
+                while (index > -1 && format.charAt(index) === ",") {
                     count++;
                     index--;
                 }
@@ -250,10 +249,9 @@ Bridge.define('Bridge.Int', {
                     decimalPart += Array(minDecLen - decimalPart.length + 2).join("0");
                 }
 
-                if (maxDecLen == 0) {
+                if (maxDecLen === 0) {
                     decimalPart = null;
-                }
-                else if ((decimalPart.length - 1) > maxDecLen) {
+                } else if ((decimalPart.length - 1) > maxDecLen) {
                     decimalPart = decimalPart.substr(0, maxDecLen + 1);
                 }
             }
@@ -267,8 +265,7 @@ Bridge.define('Bridge.Int', {
                 if (decimalPart) {
                     buffer += decimalPart;
                 }
-            }
-            else {
+            } else {
                 index = str.length;
                 done = false;
                 sep = noGroup ? "" : nf[name + "GroupSeparator"];
@@ -292,8 +289,7 @@ Bridge.define('Bridge.Int', {
 
                     if (buffer.length) {
                         buffer = part + sep + buffer;
-                    }
-                    else {
+                    } else {
                         buffer = part;
                     }
 
@@ -314,8 +310,7 @@ Bridge.define('Bridge.Int', {
                 negPattern = Bridge.NumberFormatInfo[name + "NegativePatterns"][nf[name + "NegativePattern"]];
 
                 return negPattern.replace("-", nf.negativeSign).replace("%", nf.percentSymbol).replace("$", nf.currencySymbol).replace("n", buffer);
-            }
-            else if (Bridge.NumberFormatInfo[name + "PositivePatterns"]) {
+            } else if (Bridge.NumberFormatInfo[name + "PositivePatterns"]) {
                 negPattern = Bridge.NumberFormatInfo[name + "PositivePatterns"][nf[name + "PositivePattern"]];
 
                 return negPattern.replace("%", nf.percentSymbol).replace("$", nf.currencySymbol).replace("n", buffer);
@@ -345,27 +340,26 @@ Bridge.define('Bridge.Int', {
 
             if (format.indexOf("%") !== -1) {
                 name = "percent";
-            }
-            else if (format.indexOf("$") !== -1) {
+            } else if (format.indexOf("$") !== -1) {
                 name = "currency";
             }
 
             for (i = 0; i < format.length; i++) {
                 c = format.charAt(i);
 
-                if (c == "'" || c == '"') {
+                if (c === "'" || c === '"') {
                     i = format.indexOf(c, i + 1);
 
                     if (i < 0) {
                         break;
                     }
-                } else if (c == "\\") {
+                } else if (c === "\\") {
                     i++;
                 } else {
-                    if (c == "0" || c == "#") {
+                    if (c === "0" || c === "#") {
                         decimals += atDecimals;
 
-                        if (c == "0") {
+                        if (c === "0") {
                             if (atDecimals) {
                                 forcedDecimals = decimals;
                             } else if (forcedDigits < 0) {
@@ -376,7 +370,7 @@ Bridge.define('Bridge.Int', {
                         digits += !atDecimals;
                     }
 
-                    atDecimals = atDecimals || c == ".";
+                    atDecimals = atDecimals || c === ".";
                 }
             }
             forcedDigits = forcedDigits < 0 ? 1 : digits - forcedDigits;
@@ -397,12 +391,10 @@ Bridge.define('Bridge.Int', {
                 sep: noGroup ? "" : nf[name + "GroupSeparator"]
             };
 
-            var inString = 0;
-
             for (f = 0; f < format.length; f++) {
                 c = format.charAt(f);
 
-                if (c == "'" || c == '"') {
+                if (c === "'" || c === '"') {
                     endIndex = format.indexOf(c, f + 1);
 
                     buffer += format.substring(f + 1, endIndex < 0 ? format.length : endIndex);
@@ -412,10 +404,10 @@ Bridge.define('Bridge.Int', {
                     }
 
                     f = endIndex;
-                } else if (c == "\\") {
+                } else if (c === "\\") {
                     buffer += format.charAt(f + 1);
                     f++;
-                } else if (c == "#" || c == "0") {
+                } else if (c === "#" || c === "0") {
                     groupCfg.buffer = buffer;
 
                     if (i < integralDigits) {
@@ -436,7 +428,7 @@ Bridge.define('Bridge.Int', {
                     buffer = groupCfg.buffer;
 
                     i++;
-                } else if (c == ".") {
+                } else if (c === ".") {
                     if (number.length > ++i || forcedDecimals > 0) {
                         buffer += nf[name + "DecimalSeparator"];
                     }
@@ -460,7 +452,7 @@ Bridge.define('Bridge.Int', {
             for (var i = 0, length = value.length; i < length; i++) {
                 buffer += value.charAt(i);
 
-                if (sep && groupIndex > 1 && groupIndex-- % 3 == 1) {
+                if (sep && groupIndex > 1 && groupIndex-- % 3 === 1) {
                     buffer += sep;
                 }
             }
@@ -478,11 +470,11 @@ Bridge.define('Bridge.Int', {
                 result = parseFloat(str.replace(nfInfo.numberDecimalSeparator, '.'));
 
             if (isNaN(result) && str !== nfInfo.nanSymbol) {
-                if (str == nfInfo.negativeInfinitySymbol) {
+                if (str === nfInfo.negativeInfinitySymbol) {
                     return Number.NEGATIVE_INFINITY;
                 }
 
-                if (str == nfInfo.positiveInfinitySymbol) {
+                if (str === nfInfo.positiveInfinitySymbol) {
                     return Number.POSITIVE_INFINITY;
                 }
 
@@ -504,12 +496,12 @@ Bridge.define('Bridge.Int', {
             result.v = parseFloat(str.replace(nfInfo.numberDecimalSeparator, '.'));
 
             if (isNaN(result.v) && str !== nfInfo.nanSymbol) {
-                if (str == nfInfo.negativeInfinitySymbol) {
+                if (str === nfInfo.negativeInfinitySymbol) {
                     result.v = Number.NEGATIVE_INFINITY;
                     return true;
                 }
 
-                if (str == nfInfo.positiveInfinitySymbol) {
+                if (str === nfInfo.positiveInfinitySymbol) {
                     result.v = Number.POSITIVE_INFINITY;
                     return true;
                 }
