@@ -1124,26 +1124,41 @@ namespace Bridge.Contract
                 comment.Append(exception.Item1 + newLine);
             }
 
+            int i = 0;
             foreach (JsDocParam param in this.Parameters)
             {
                 comment.Append(" * @param   {" + param.Type + "}");
+
                 comment.Append(new String(' ', typeColumnWidth - param.Type.Length));
                 comment.Append(param.Name);
-                comment.Append(new String(' ', nameColumnWidth - param.Name.Length));
+
+                // All but last parameter will pad whitespaces to the end
+                if (++i != this.Parameters.Count)
+                {
+                    comment.Append(new String(' ', nameColumnWidth - param.Name.Length));
+                }
+
                 comment.Append(param.Desc + newLine);
             }
 
+            i = 0;
             foreach (JsDocParam param in this.Returns)
             {
                 comment.Append(" * @return  {" + param.Type + "}");
-                comment.Append(new String(' ', typeColumnWidth - param.Type.Length));
-                comment.Append(new String(' ', nameColumnWidth));
+                
+                // All but last argument will pad whitespaces to the end
+                if (++i != this.Returns.Count)
+                {
+                    comment.Append(new String(' ', typeColumnWidth - param.Type.Length));
+                    comment.Append(new String(' ', nameColumnWidth));
+                }
+
                 comment.Append(param.Desc + newLine);
             }
 
             foreach (var see in this.SeeAlso)
             {
-                comment.Append(" * @see {@link " + see + "}");
+                comment.Append(" * @see {@link " + see + "}" + newLine);
             }
 
             comment.Append(" */");
