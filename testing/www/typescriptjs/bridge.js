@@ -1661,7 +1661,7 @@
 
             if (ctorCounter === 0) {
                 prototype.$constructor = extend ? function () {
-                    base.$constructor();
+                    base.$constructor.apply(this, arguments);
                 } : function () { };
             }
 
