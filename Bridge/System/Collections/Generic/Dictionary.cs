@@ -93,6 +93,11 @@ namespace System.Collections.Generic
             return default(TValue);
         }
 
+        private TValue Items(TKey key)
+        {
+            return default(TValue);
+        }
+
         public void Clear()
         {
         }
