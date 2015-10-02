@@ -109,6 +109,7 @@ namespace ClientTestLibrary
             QUnit.Test("#470", TestBridgeIssues.N470);
             QUnit.Test("#472", Bridge472.Test);
             QUnit.Test("#485", Bridge485.TestUseCase);
+            QUnit.Test("#501", Bridge501.TestUseCase);
 
             QUnit.Module("LINQ");
             QUnit.Test("Aggregate operators", TestLinqAggregateOperators.Test);
