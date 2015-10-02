@@ -437,6 +437,46 @@ Bridge.define('ClientTestLibrary.Bridge485', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge501', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(5);
+
+            var list = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+                [7]
+            ] );
+            var z = JSON.stringify(list); // this is ok
+            assert.equal(z, "{\"items\":[7]}", "List<int>");
+
+            var b = Bridge.merge(new ClientTestLibrary.Bridge501B(), [
+                [1], 
+                [2]
+            ] );
+            var y = JSON.stringify(b); // wrong, missing items
+            assert.equal(y, "{\"items\":[1,2]}", "Bridge501B");
+
+            var a = Bridge.merge(new ClientTestLibrary.Bridge501A(), [
+                [7]
+            ] ); // sine items is defined as member, push fails
+            var x = JSON.stringify(a);
+            assert.equal(x, "{\"items\":[7]}", "Bridge501A");
+
+            var c = Bridge.merge(new ClientTestLibrary.Bridge501A(), JSON.parse(x));
+            assert.equal(c.items$1, "12", "Bridge501A Parse c.Items");
+            assert.equal(c.getItem(0), 7, "Bridge501A Parse c[0]");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge501A', {
+    inherits: [Bridge.List$1(Bridge.Int)],
+    items$1: "12"
+});
+
+Bridge.define('ClientTestLibrary.Bridge501B', {
+    inherits: [Bridge.List$1(Bridge.Int)]
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
