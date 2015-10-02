@@ -40,7 +40,7 @@ init:
 clone_folder: c:\projects\Bridge
 
 # fetch repository as zip archive
-shallow_clone: false                 # default is "false"
+shallow_clone: true                 # default is "false"
 
 # set clone depth
 clone_depth: 30                      # clone entire repository history if not defined
