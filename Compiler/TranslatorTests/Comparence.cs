@@ -214,7 +214,6 @@ namespace Bridge.Translator.Tests
                 cd.Result = CompareResult.HasContentDifferences;
 
                 cd.Difference = AnyDifference(cd.File1FullPath, cd.File2FullPath);
-                ;
 
                 if (cd.Difference == null)
                 {

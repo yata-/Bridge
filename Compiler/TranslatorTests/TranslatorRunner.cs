@@ -51,13 +51,16 @@ namespace Bridge.Translator.Tests
         private static string FindBridgeDllPath(out string configuration)
         {
             configuration = "Release";
+#if DEBUG
+            configuration = "Debug";
+#endif
             var path = FindBridgeDllPathByConfiguration(configuration);
 
-            if (path == null)
-            {
-                configuration = "Debug";
-                path = FindBridgeDllPathByConfiguration(configuration);
-            }
+            //if (path == null)
+            //{
+            //    configuration = "Debug";
+            //    path = FindBridgeDllPathByConfiguration(configuration);
+            //}
 
             return path;
         }
@@ -83,7 +86,7 @@ namespace Bridge.Translator.Tests
 
             if (translator.BridgeLocation == null)
             {
-                Bridge.Translator.Exception.Throw("Unable to determine Bridge project output path");
+                Bridge.Translator.Exception.Throw("Unable to determine Bridge project output path by configuration " + configuration);
             }
 
             translator.BuildArguments = WrapBuildArguments(configuration);
@@ -124,7 +127,7 @@ namespace Bridge.Translator.Tests
 
             if (translator.BridgeLocation == null)
             {
-                Bridge.Translator.Exception.Throw("Unable to determine Bridge project output path");
+                Bridge.Translator.Exception.Throw("Unable to determine Bridge project output path by configuration " + configuration);
             }
 
             translator.BuildArguments = WrapBuildArguments(configuration);
