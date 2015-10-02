@@ -1,7 +1,7 @@
 /// <reference path="Init.js" />
 // @source Globalization.js
 
-Bridge.define('Bridge.DateTimeFormatInfo', {
+Bridge.define("Bridge.DateTimeFormatInfo", {
     inherits: [Bridge.IFormatProvider, Bridge.ICloneable],
 
     statics: {
@@ -102,8 +102,7 @@ Bridge.define('Bridge.DateTimeFormatInfo', {
 
             formats = { };
             formats[format] = f[format];
-        }
-        else {
+        } else {
             formats = f;
         }
 
@@ -174,7 +173,7 @@ Bridge.define('Bridge.DateTimeFormatInfo', {
     }
 });
 
-Bridge.define('Bridge.NumberFormatInfo', {
+Bridge.define("Bridge.NumberFormatInfo", {
     inherits: [Bridge.IFormatProvider, Bridge.ICloneable],
 
     statics: {
@@ -256,7 +255,7 @@ Bridge.define('Bridge.NumberFormatInfo', {
     }
 });
 
-Bridge.define('Bridge.CultureInfo', {
+Bridge.define("Bridge.CultureInfo", {
     inherits: [Bridge.IFormatProvider, Bridge.ICloneable],
 
     statics: {
@@ -307,6 +306,7 @@ Bridge.define('Bridge.CultureInfo', {
 
     constructor: function (name, create) {
         this.name = name;
+
         if (!Bridge.CultureInfo.cultures) {
             Bridge.CultureInfo.cultures = {};
         }

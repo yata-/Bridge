@@ -57,7 +57,7 @@
         },
 
         copy: function (to, from, keys, toIf) {
-            if (typeof keys === 'string') {
+            if (typeof keys === "string") {
                 keys = keys.split(/[,;\s]+/);
             }
 
@@ -67,8 +67,7 @@
                 if (toIf !== true || to[name] == undefined) {
                     if (Bridge.is(from[name], Bridge.ICloneable)) {
                         to[name] = Bridge.clone(from[name]);
-                    }
-                    else {
+                    } else {
                         to[name] = from[name];
                     }
                 }
@@ -78,7 +77,7 @@
         },
 
         ns: function (ns, scope) {
-            var nsParts = ns.split('.'),
+            var nsParts = ns.split("."),
                 i = 0;
 
             if (!scope) {
@@ -86,10 +85,9 @@
             }
 
             for (i = 0; i < nsParts.length; i++) {
-                if (typeof scope[nsParts[i]] === 'undefined') {
+                if (typeof scope[nsParts[i]] === "undefined") {
                     scope[nsParts[i]] = { };
                 }
-
             }
 
             return scope;
@@ -102,13 +100,13 @@
                 }, 1);
             };
 
-            if (typeof Bridge.global.jQuery !== 'undefined') {
+            if (typeof Bridge.global.jQuery !== "undefined") {
                 Bridge.global.jQuery(delayfn);
             } else {
                 if (!document || document.readyState === "complete" || document.readyState === "loaded") {
                     delayfn();
                 } else {
-                    Bridge.on('DOMContentLoaded', document, delayfn);
+                    Bridge.on("DOMContentLoaded", document, delayfn);
                 }
             }
         },
@@ -138,8 +136,7 @@
 
             if (elem.addEventListener) {
                 elem.addEventListener(event, listenHandler, false);
-            }
-            else {
+            } else {
                 elem.attachEvent("on" + event, attachHandler);
             }
         },
@@ -150,13 +147,14 @@
                     return 0;
                 }
 
-                throw new Bridge.InvalidOperationException('HashCode cannot be calculated for empty value');
+                throw new Bridge.InvalidOperationException("HashCode cannot be calculated for empty value");
             }
 
             if (Bridge.isFunction(value.getHashCode) && !value.__insideHashCode && value.getHashCode.length === 0) {
                 value.__insideHashCode = true;
                 var r = value.getHashCode();
                 delete value.__insideHashCode;
+
                 return r;
             }
 
@@ -171,7 +169,7 @@
             if (Bridge.isNumber(value)) {
                 value = value.toExponential();
 
-                return parseInt(value.substr(0, value.indexOf('e')).replace('.', ''), 10) & 0xFFFFFFFF;
+                return parseInt(value.substr(0, value.indexOf("e")).replace(".", ""), 10) & 0xFFFFFFFF;
             }
 
             if (Bridge.isString(value)) {
@@ -260,8 +258,7 @@
 
             if ((obj).constructor === Function) {
                 str = (obj).toString();
-            }
-            else {
+            } else {
                 str = (obj).constructor.toString();
             }
 
@@ -324,7 +321,7 @@
             var result = Bridge.as(obj, type, allowNull);
 
 	        if (result === null) {
-	            throw new Bridge.InvalidCastException('Unable to cast type ' + Bridge.getTypeName(obj) + ' to type ' + Bridge.getTypeName(type));
+	            throw new Bridge.InvalidCastException("Unable to cast type " + Bridge.getTypeName(obj) + " to type " + Bridge.getTypeName(type));
 	        }
 
 	        return result;
@@ -339,8 +336,7 @@
 
 	            if (typeof obj[name] === "function" && typeof values[name] !== "function") {
 	                obj[name](values[name]);
-	            }
-	            else {
+	            } else {
 	                obj[name] = values[name];
 	            }
 	        }
@@ -361,30 +357,25 @@
 	            for (i = 0; i < from.length; i++) {
 	                fn.apply(to, from[i]);
 	            }
-	        }
-	        else {
+	        } else {
 	            for (key in from) {
 	                value = from[key];
 
 	                if (typeof to[key] === "function" && typeof value !== "function") {
 	                    if (key.match(/^\s*get[A-Z]/)) {
 	                        Bridge.merge(to[key](), value);
-	                    }
-	                    else {
+	                    } else {
 	                        to[key](value);
 	                    }
-	                }
-	                else {
+	                } else {
 	                    var setter = "set" + key.charAt(0).toUpperCase() + key.slice(1);
 
 	                    if (typeof to[setter] === "function" && typeof value !== "function") {
 	                        to[setter](value);
-	                    }
-	                    else if (value && value.constructor === Object && to[key]) {
+	                    } else if (value && value.constructor === Object && to[key]) {
 	                        toValue = to[key];
 	                        Bridge.merge(toValue, value);
-	                    }
-	                    else {
+	                    } else {
 	                        to[key] = value;
 	                    }
 	                }
@@ -407,12 +398,12 @@
 	            return obj.getEnumerator();
 	        }
 
-	        if ((Object.prototype.toString.call(obj) === '[object Array]') ||
+	        if ((Object.prototype.toString.call(obj) === "[object Array]") ||
                 (obj && Bridge.isDefined(obj.length))) {
 	            return new Bridge.ArrayEnumerator(obj);
 	        }
 
-	        throw new Bridge.InvalidOperationException('Cannot create enumerator');
+	        throw new Bridge.InvalidOperationException("Cannot create enumerator");
 	    },
 
 	    getPropertyNames: function (obj, includeFunctions) {
@@ -420,7 +411,7 @@
 	            name;
 
 	        for (name in obj) {
-                if (includeFunctions || typeof obj[name] !== 'function') {
+                if (includeFunctions || typeof obj[name] !== "function") {
                     names.push(name);
                 }
 	        }
@@ -429,11 +420,11 @@
 	    },
 
 	    isDefined: function (value, noNull) {
-	        return typeof value !== 'undefined' && (noNull ? value !== null : true);
+	        return typeof value !== "undefined" && (noNull ? value !== null : true);
 	    },
 
 	    isEmpty: function (value, allowEmpty) {
-	        return (value === null) || (!allowEmpty ? value === '' : false) || ((!allowEmpty && Bridge.isArray(value)) ? value.length === 0 : false);
+	        return (value === null) || (!allowEmpty ? value === "" : false) || ((!allowEmpty && Bridge.isArray(value)) ? value.length === 0 : false);
 	    },
 
 	    toArray: function (ienumerable) {
@@ -446,8 +437,7 @@
                 for (i = 0, len = ienumerable.length; i < len; ++i) {
                     result.push(ienumerable[i]);
                 }
-	        }
-	        else {
+	        } else {
                 i = Bridge.getEnumerator(ienumerable);
 
                 while (i.moveNext()) {
@@ -460,15 +450,15 @@
 	    },
 
         isArray: function (obj) {
-            return Object.prototype.toString.call(obj) === '[object Array]';
+            return Object.prototype.toString.call(obj) === "[object Array]";
         },
 
         isFunction: function (obj) {
-            return typeof (obj) === 'function';
+            return typeof (obj) === "function";
         },
 
         isDate: function (obj) {
-            return Object.prototype.toString.call(obj) === '[object Date]';
+            return Object.prototype.toString.call(obj) === "[object Date]";
         },
 
         isNull: function (value) {
@@ -476,15 +466,15 @@
         },
 
         isBoolean: function (value) {
-            return typeof value === 'boolean';
+            return typeof value === "boolean";
         },
 
         isNumber: function (value) {
-            return typeof value === 'number' && isFinite(value);
+            return typeof value === "number" && isFinite(value);
         },
 
         isString: function (value) {
-            return typeof value === 'string';
+            return typeof value === "string";
         },
 
         unroll: function (value) {
@@ -566,8 +556,7 @@
 
                         Bridge.$$leftChain.pop();
                         Bridge.$$rightChain.pop();
-                    }
-                    else {
+                    } else {
                         if (!Bridge.equals(a[p], b[p])) {
                             return false;
                         }
@@ -575,8 +564,7 @@
                 }
 
                 return true;
-            }
-            else {
+            } else {
                 return Bridge.equals(a, b);
             }
         },
@@ -586,12 +574,11 @@
                 if (safe) {
                     return 0;
                 }
+
                 throw new Bridge.NullReferenceException();
-            }
-            else if (Bridge.isNumber(a) || Bridge.isString(a) || Bridge.isBoolean(a)) {
+            } else if (Bridge.isNumber(a) || Bridge.isString(a) || Bridge.isBoolean(a)) {
                 return a < b ? -1 : (a > b ? 1 : 0);
-            }
-            else if (Bridge.isDate(a)) {
+            } else if (Bridge.isDate(a)) {
                 return Bridge.compare(a.valueOf(), b.valueOf());
             }
 
@@ -605,11 +592,9 @@
         equalsT: function (a, b) {
             if (!Bridge.isDefined(a, true)) {
                 throw new Bridge.NullReferenceException();
-            }
-            else if (Bridge.isNumber(a) || Bridge.isString(a) || Bridge.isBoolean(a)) {
+            } else if (Bridge.isNumber(a) || Bridge.isString(a) || Bridge.isBoolean(a)) {
                 return a === b;
-            }
-            else if (Bridge.isDate(a)) {
+            } else if (Bridge.isDate(a)) {
                 return a.valueOf() === b.valueOf();
             }
 
@@ -619,8 +604,7 @@
         format: function (obj, formatString) {
             if (Bridge.isNumber(obj)) {
                 return Bridge.Int.format(obj, formatString);
-            }
-            else if (Bridge.isDate(obj)) {
+            } else if (Bridge.isDate(obj)) {
                 return Bridge.Date.format(obj, formatString);
             }
 
@@ -629,7 +613,7 @@
 
         getType: function (instance) {
             if (!Bridge.isDefined(instance, true)) {
-                throw new Bridge.NullReferenceException('instance is null');
+                throw new Bridge.NullReferenceException("instance is null");
             }
 
             try {
@@ -682,8 +666,7 @@
                         if (appendArgs === true) {
                             callArgs = Array.prototype.slice.call(arguments, 0);
                             callArgs = callArgs.concat(args);
-                        }
-                        else if (typeof appendArgs === 'number') {
+                        } else if (typeof appendArgs === "number") {
                             callArgs = Array.prototype.slice.call(arguments, 0);
 
                             if (appendArgs === 0) {
@@ -793,8 +776,7 @@
         Object.create = function (o, properties) {
             if (typeof o !== "object" && typeof o !== "function") {
                 throw new TypeError("Object prototype may only be an Object: " + o);
-            }
-            else if (o === null) {
+            } else if (o === null) {
                 throw new Error("This browser's implementation of Object.create is a shim and doesn't support 'null' as the first argument");
             }
 

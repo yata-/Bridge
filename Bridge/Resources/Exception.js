@@ -1,6 +1,6 @@
 ﻿// @source Exception.js
 
-Bridge.define('Bridge.Exception', {
+Bridge.define("Bridge.Exception", {
     constructor: function (message, innerException) {
         this.message = message;
         this.innerException = innerException;
@@ -36,21 +36,18 @@ Bridge.define('Bridge.Exception', {
 
             if (error instanceof TypeError) {
                 return new Bridge.NullReferenceException(error.message, new Bridge.ErrorException(error));
-            }
-            else if (error instanceof RangeError) {
+            } else if (error instanceof RangeError) {
                 return new Bridge.ArgumentOutOfRangeException(null, error.message, new Bridge.ErrorException(error));
-            }
-            else if (error instanceof Error) {
+            } else if (error instanceof Error) {
                 return new Bridge.ErrorException(error);
-            }
-            else {
+            } else {
                 return new Bridge.Exception(error ? error.toString() : null);
             }
         }
     }
 });
 
-Bridge.define('Bridge.ErrorException', {
+Bridge.define("Bridge.ErrorException", {
     inherits: [Bridge.Exception],
 
     constructor: function (error) {
@@ -64,7 +61,7 @@ Bridge.define('Bridge.ErrorException', {
     }
 });
 
-Bridge.define('Bridge.ArgumentException', {
+Bridge.define("Bridge.ArgumentException", {
     inherits: [Bridge.Exception],
 
     constructor: function (message, paramName, innerException) {
@@ -77,15 +74,15 @@ Bridge.define('Bridge.ArgumentException', {
     }
 });
 
-Bridge.define('Bridge.ArgumentNullException', {
+Bridge.define("Bridge.ArgumentNullException", {
     inherits: [Bridge.ArgumentException],
 
     constructor: function (paramName, message, innerException) {
         if (!message) {
-            message = 'Value cannot be null.';
+            message = "Value cannot be null.";
 
             if (paramName) {
-                message += '\nParameter name: ' + paramName;
+                message += "\nParameter name: " + paramName;
             }
         }
 
@@ -93,15 +90,15 @@ Bridge.define('Bridge.ArgumentNullException', {
     }
 });
 
-Bridge.define('Bridge.ArgumentOutOfRangeException', {
+Bridge.define("Bridge.ArgumentOutOfRangeException", {
     inherits: [Bridge.ArgumentException],
 
     constructor: function (paramName, message, innerException, actualValue) {
         if (!message) {
-            message = 'Value is out of range.';
+            message = "Value is out of range.";
 
             if (paramName) {
-                message += '\nParameter name: ' + paramName;
+                message += "\nParameter name: " + paramName;
             }
         }
 
@@ -115,19 +112,19 @@ Bridge.define('Bridge.ArgumentOutOfRangeException', {
     }
 });
 
-Bridge.define('Bridge.CultureNotFoundException', {
+Bridge.define("Bridge.CultureNotFoundException", {
     inherits: [Bridge.ArgumentException],
 
     constructor: function (paramName, invalidCultureName, message, innerException) {
         if (!message) {
-            message = 'Culture is not supported.';
+            message = "Culture is not supported.";
 
             if (paramName) {
-                message += '\nParameter name: ' + paramName;
+                message += "\nParameter name: " + paramName;
             }
 
             if (invalidCultureName) {
-                message += '\n' + invalidCultureName + ' is an invalid culture identifier.';
+                message += "\n" + invalidCultureName + " is an invalid culture identifier.";
             }
         }
 
@@ -141,7 +138,7 @@ Bridge.define('Bridge.CultureNotFoundException', {
     }
 });
 
-Bridge.define('Bridge.KeyNotFoundException', {
+Bridge.define("Bridge.KeyNotFoundException", {
     inherits: [Bridge.Exception],
 
     constructor: function (message, innerException) {
@@ -149,7 +146,7 @@ Bridge.define('Bridge.KeyNotFoundException', {
     }
 });
 
-Bridge.define('Bridge.ArithmeticException', {
+Bridge.define("Bridge.ArithmeticException", {
     inherits: [Bridge.Exception],
 
     constructor: function (message, innerException) {
@@ -157,7 +154,7 @@ Bridge.define('Bridge.ArithmeticException', {
     }
 });
 
-Bridge.define('Bridge.DivideByZeroException', {
+Bridge.define("Bridge.DivideByZeroException", {
     inherits: [Bridge.ArithmeticException],
 
     constructor: function (message, innerException) {
@@ -165,7 +162,7 @@ Bridge.define('Bridge.DivideByZeroException', {
     }
 });
 
-Bridge.define('Bridge.OverflowException', {
+Bridge.define("Bridge.OverflowException", {
     inherits: [Bridge.ArithmeticException],
 
     constructor: function (message, innerException) {
@@ -173,7 +170,7 @@ Bridge.define('Bridge.OverflowException', {
     }
 });
 
-Bridge.define('Bridge.FormatException', {
+Bridge.define("Bridge.FormatException", {
     inherits: [Bridge.Exception],
 
     constructor: function (message, innerException) {
@@ -181,7 +178,7 @@ Bridge.define('Bridge.FormatException', {
     }
 });
 
-Bridge.define('Bridge.InvalidCastException', {
+Bridge.define("Bridge.InvalidCastException", {
     inherits: [Bridge.Exception],
 
     constructor: function (message, innerException) {
@@ -189,7 +186,7 @@ Bridge.define('Bridge.InvalidCastException', {
     }
 });
 
-Bridge.define('Bridge.InvalidOperationException', {
+Bridge.define("Bridge.InvalidOperationException", {
     inherits: [Bridge.Exception],
 
     constructor: function (message, innerException) {
@@ -197,7 +194,7 @@ Bridge.define('Bridge.InvalidOperationException', {
     }
 });
 
-Bridge.define('Bridge.NotImplementedException', {
+Bridge.define("Bridge.NotImplementedException", {
     inherits: [Bridge.Exception],
 
     constructor: function (message, innerException) {
@@ -205,7 +202,7 @@ Bridge.define('Bridge.NotImplementedException', {
     }
 });
 
-Bridge.define('Bridge.NotSupportedException', {
+Bridge.define("Bridge.NotSupportedException", {
     inherits: [Bridge.Exception],
 
     constructor: function (message, innerException) {
@@ -213,7 +210,7 @@ Bridge.define('Bridge.NotSupportedException', {
     }
 });
 
-Bridge.define('Bridge.NullReferenceException', {
+Bridge.define("Bridge.NullReferenceException", {
     inherits: [Bridge.Exception],
 
     constructor: function (message, innerException) {

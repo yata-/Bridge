@@ -4,11 +4,11 @@
 
 (function () {
     Bridge.Decimal = function (v, provider) {
-        if (this.constructor != Bridge.Decimal) {
+        if (this.constructor !== Bridge.Decimal) {
             return new Bridge.Decimal(v);
         }
 
-        if (typeof v === 'string') {
+        if (typeof v === "string") {
             provider = provider || Bridge.CultureInfo.getCurrentCulture();
 
             var nfInfo = provider && provider.getFormat(Bridge.NumberFormatInfo);
@@ -21,7 +21,7 @@
                 throw new Bridge.FormatException();
             }
 
-            v = v.replace(/\s/g, '');
+            v = v.replace(/\s/g, "");
         }
 
         this.value = Bridge.Decimal.getValue(v);

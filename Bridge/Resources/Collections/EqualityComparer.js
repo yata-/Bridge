@@ -9,9 +9,9 @@ Bridge.Class.generic('Bridge.EqualityComparer$1', function (T) {
         equals: function (x, y) {
             if (!Bridge.isDefined(x, true)) {
                 return !Bridge.isDefined(y, true);
-            }
-            else if (Bridge.isDefined(y, true)) {
+            } else if (Bridge.isDefined(y, true)) {
                 var isBridge = x && x.$$name;
+
                 return (!isBridge || Bridge.isFunction(x.equals)) ? Bridge.equals(x, y) : x === y;
             }
 

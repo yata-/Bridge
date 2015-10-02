@@ -8,11 +8,9 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
         constructor: function (obj) {
             if (Object.prototype.toString.call(obj) === '[object Array]') {
                 this.items = obj;
-            }
-            else if (Bridge.is(obj, Bridge.IEnumerable)) {
+            } else if (Bridge.is(obj, Bridge.IEnumerable)) {
                 this.items = Bridge.toArray(obj);
-            }
-            else {
+            } else {
                 this.items = [];
             }
         },
@@ -76,12 +74,13 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
                 startIndex = 0;
             }
 
-            if (startIndex != 0) {
+            if (startIndex !== 0) {
                 this.checkIndex(startIndex);
             }
 
             for (i = startIndex; i < this.items.length; i++) {
                 el = this.items[i];
+
                 if (el === item || Bridge.EqualityComparer$1.$default.equals(el, item)) {
                     return i;
                 }
@@ -93,7 +92,7 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
         insertRange: function (index, items) {
             this.checkReadOnly();
 
-            if (index != this.items.length) {
+            if (index !== this.items.length) {
                 this.checkIndex(index);
             }
 
@@ -121,7 +120,7 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
                 count = this.items.length;
             }
 
-            if (index != 0) {
+            if (index !== 0) {
                 this.checkIndex(index);
             }
 
@@ -140,7 +139,7 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
         insert: function (index, item) {
             this.checkReadOnly();
 
-            if (index != this.items.length) {
+            if (index !== this.items.length) {
                 this.checkIndex(index);
             }
 
@@ -148,8 +147,7 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
                 for (var i = 0; i < item.length; i++) {
                     this.insert(index++, item[i]);
                 }
-            }
-            else {
+            } else {
                 this.items.splice(index, 0, item);
             }
         },
@@ -163,7 +161,7 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
                 fromIndex = this.items.length - 1;
             }
 
-            if (fromIndex != 0) {
+            if (fromIndex !== 0) {
                 this.checkIndex(fromIndex);
             }
 
@@ -180,8 +178,10 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
             this.checkReadOnly();
 
             var index = this.indexOf(item);
-            if (index < 0)
+
+            if (index < 0) {
                 return false;
+            }
 
             this.checkIndex(index);
             this.items.splice(index, 1);
@@ -207,6 +207,7 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
 
         slice: function (start, end) {
             this.checkReadOnly();
+
             return new Bridge.List$1(this.$$name.substr(this.$$name.lastIndexOf('$')+1))(this.items.slice(start, end));
         },
 
