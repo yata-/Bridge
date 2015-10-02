@@ -52,6 +52,10 @@ environment:
   #my_secure_var1:
     #secure: FW3tJ3fMncxvs58/ifSP7w==
 
+# build cache to preserve files/folders between builds
+cache:
+  - packages -> **\packages.config
+
 # scripts that run after cloning repository
 install:
   - cmd: git.exe clone -q --progress -v  --depth 20 --branch=master "https://github.com/bridgedotnet/Frameworks" "c:\projects\Frameworks"
