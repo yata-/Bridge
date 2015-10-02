@@ -9,14 +9,14 @@
 #---------------------------------#
 
 # version format
-version: 1.8.{build}-{branch}
+version: 1.9.{build}-{branch}
 
 # branches to build
 branches:
   # whitelist
   only:
     - master
-    #- production
+    - release1.10
 
   # blacklist
   #except:
