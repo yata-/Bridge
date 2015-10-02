@@ -41,8 +41,8 @@ Bridge.define('TestProject1.TestClassA', {
      * @public
      * @this TestProject1.TestClassA
      * @memberof TestProject1.TestClassA
-     * @param   {number}    iNumber of somethng
-     * @return  {string}A good string
+     * @param   {number}    i    Number of somethng
+     * @return  {string}         A good string
      */
     getMyValue: function (i) {
         return "";
