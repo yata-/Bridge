@@ -29,8 +29,7 @@ Bridge.Class.generic('Bridge.Dictionary$2', function (TKey, TValue) {
                     c = e.getCurrent();
                     this.add(c.key, c.value);
                 }
-            }
-            else if (Object.prototype.toString.call(obj) === '[object Object]') {
+            } else if (Object.prototype.toString.call(obj) === '[object Object]') {
                 var names = Bridge.getPropertyNames(obj),
                     name;
 
@@ -124,8 +123,7 @@ Bridge.Class.generic('Bridge.Dictionary$2', function (TKey, TValue) {
 
             if (this.entries[hash]) {
                 this.entries[hash].push(entry);
-            }
-            else {
+            } else {
                 this.entries[hash] = [entry];
             }
 

@@ -1,9 +1,9 @@
-﻿// @source Text/Regex.js
+// @source Text/Regex.js
 
 (function () {
     var specials = [
             // order matters for these
-                "-"
+              "-"
             , "["
             , "]"
             // order doesn't matter for any of these
@@ -22,7 +22,7 @@
             , "|"
     ],
 
-    regex = RegExp('[' + specials.join('\\') + ']', 'g'),
+    regex = RegExp("[" + specials.join("\\") + "]", "g"),
 
     regexpEscape = function (s) {
         return s.replace(regex, "\\$&");

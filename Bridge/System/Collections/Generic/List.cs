@@ -38,6 +38,11 @@ namespace System.Collections.Generic
             }
         }
 
+        private T Items(int index)
+        {
+            return default(T);
+        }
+
         public T Get(int index)
         {
             return default(T);

@@ -32,8 +32,7 @@
         and: function (a, b) {
             if (a === true && b === true) {
                 return true;
-            }
-            else if (a === false || b === false) {
+            } else if (a === false || b === false) {
                 return false;
             }
 
@@ -135,25 +134,25 @@
         },
 
         lift1: function (f, o) {
-            return Bridge.hasValue(o) ? (typeof f === 'function' ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : o[f].apply(o, Array.prototype.slice.call(arguments, 2))) : null;
+            return Bridge.hasValue(o) ? (typeof f === "function" ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : o[f].apply(o, Array.prototype.slice.call(arguments, 2))) : null;
         },
 
         lift2: function (f, a, b) {
-            return Bridge.hasValue(a) && Bridge.hasValue(b) ? (typeof f === 'function' ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))) : null;
+            return Bridge.hasValue(a) && Bridge.hasValue(b) ? (typeof f === "function" ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))) : null;
         },
 
         liftcmp: function (f, a, b) {
-            return Bridge.hasValue(a) && Bridge.hasValue(b) ? (typeof f === 'function' ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))) : false;
+            return Bridge.hasValue(a) && Bridge.hasValue(b) ? (typeof f === "function" ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))) : false;
         },
 
         lifteq: function (f, a, b) {
             var va = Bridge.hasValue(a), vb = Bridge.hasValue(b);
-            return (!va && !vb) || (va && vb && (typeof f === 'function' ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))));
+            return (!va && !vb) || (va && vb && (typeof f === "function" ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))));
         },
 
         liftne: function (f, a, b) {
             var va = Bridge.hasValue(a), vb = Bridge.hasValue(b);
-            return (va !== vb) || (va && (typeof f === 'function' ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))));
+            return (va !== vb) || (va && (typeof f === "function" ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))));
         }
     };
 

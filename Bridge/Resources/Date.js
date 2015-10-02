@@ -95,8 +95,7 @@
 			            case "MMMM":
 			                if (me.isUseGenitiveForm(format, index, 4, "d")) {
 			                    part = df.monthGenitiveNames[month];
-			                }
-			                else {
+			                } else {
 			                    part = df.monthNames[month];
 			                }
 
@@ -104,8 +103,7 @@
 			            case "MMM":
 			                if (me.isUseGenitiveForm(format, index, 3, "d")) {
 			                    part = df.abbreviatedMonthGenitiveNames[month];
-			                }
-			                else {
+			                } else {
 			                    part = df.abbreviatedMonthNames[month];
 			                }
 
@@ -239,9 +237,11 @@
 
         parse: function (value, provider, utc, silent) {
             var dt = Date.parse(value);
+
             if (!isNaN(dt)) {
                 return new Date(dt);
             }
+
             return this.parseExact(value, null, provider, utc, silent);
         },
 
@@ -347,8 +347,7 @@
                             year = ~~year;
                             year = (year > 30 ? 1900 : 2000) + year;
                         }
-                    }
-                    else if (token === "MMM" || token === "MMMM") {
+                    } else if (token === "MMM" || token === "MMMM") {
                         month = 0;
 
                         if (token === "MMM") {
@@ -357,8 +356,7 @@
                             } else {
                                 names = df.abbreviatedMonthNames;
                             }
-                        }
-                        else {
+                        } else {
                             if (this.isUseGenitiveForm(format, index, 4, "d")) {
                                 names = df.monthGenitiveNames;
                             } else {
@@ -414,8 +412,7 @@
                         }
 
                         idx += date.length;
-                    }
-                    else if (token === "hh" || token === "h") {
+                    } else if (token === "hh" || token === "h") {
                         hh = this.subparseInt(str, idx, token.length, 2);
 
                         if (hh == null || hh < 1 || hh > 12) {
@@ -493,8 +490,7 @@
                         }
 
                         idx += 1;
-                    }
-                    else if (token === "tt") {
+                    } else if (token === "tt") {
                         if (str.substring(idx, idx + 2).toLowerCase() === am.toLowerCase()) {
                             tt = am;
                         } else if (str.substring(idx, idx + 2).toLowerCase() === pm.toLowerCase()) {

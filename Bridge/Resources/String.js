@@ -33,7 +33,7 @@
                     return fn(repeatCloseBrace);
                 }
 
-                if (openBrace.length % 2 == 0 || closeBrace.length % 2 == 0) {
+                if (openBrace.length % 2 === 0 || closeBrace.length % 2 === 0) {
                     return fn(openBrace) + elementContent + fn(closeBrace);
                 }
 
@@ -44,7 +44,7 @@
         handleElement: function (index, alignment, formatStr, args) {
             var value;
 
-            index = parseInt(index, 10)
+            index = parseInt(index, 10);
 
             if (index > args.length - 1) {
                 throw new Bridge.FormatException("Input string was not in a correct format.");
@@ -160,7 +160,7 @@
                 throw new Bridge.ArgumentNullException();
             }
 
-            if (str == null || str == "") {
+            if (str == null || str === "") {
                 return -1;
             }
 
@@ -199,7 +199,7 @@
                 throw new Bridge.ArgumentNullException();
             }
 
-            if (str == null || str == "") {
+            if (str == null || str === "") {
                 return -1;
             }
 
@@ -209,7 +209,7 @@
                 throw new Bridge.ArgumentOutOfRangeException("startIndex", "startIndex cannot be less than zero and must refer to a location within the string");
             }
 
-            if (value == "") {
+            if (value === "") {
                 return (arguments.length > 2) ? startIndex : 0;
             }
 
@@ -224,14 +224,13 @@
             }
 
             var s = str.substr(startIndex, length);
-            var index = (arguments.length == 5 && arguments[4] % 2 != 0) ? s.toLocaleUpperCase().indexOf(value.toLocaleUpperCase()) : s.indexOf(value);
+            var index = (arguments.length === 5 && arguments[4] % 2 !== 0) ? s.toLocaleUpperCase().indexOf(value.toLocaleUpperCase()) : s.indexOf(value);
 
             if (index > -1) {
-                if (arguments.length == 5) {
+                if (arguments.length === 5) {
                     // StringComparison
-                    return (Bridge.String.compare(value, s.substr(index, value.length), arguments[4]) == 0) ? index + startIndex : -1;
-                }
-                else {
+                    return (Bridge.String.compare(value, s.substr(index, value.length), arguments[4]) === 0) ? index + startIndex : -1;
+                } else {
                     return index + startIndex;
                 }
             }
@@ -240,7 +239,7 @@
         },
 
         equals: function () {
-            return Bridge.String.compare.apply(this, arguments) == 0;
+            return Bridge.String.compare.apply(this, arguments) === 0;
         },
 
         compare: function (strA, strB) {
@@ -257,11 +256,11 @@
                     // StringComparison
                     switch (arguments[2]) {
                         case 1: // CurrentCultureIgnoreCase
-                            return strA.localeCompare(strB, Bridge.CultureInfo.getCurrentCulture().name, { sensitivity: 'accent' });
+                            return strA.localeCompare(strB, Bridge.CultureInfo.getCurrentCulture().name, { sensitivity: "accent" });
                         case 2: // InvariantCulture
                             return strA.localeCompare(strB, Bridge.CultureInfo.invariantCulture.name);
                         case 3: // InvariantCultureIgnoreCase
-                            return strA.localeCompare(strB, Bridge.CultureInfo.invariantCulture.name, { sensitivity: 'accent' });
+                            return strA.localeCompare(strB, Bridge.CultureInfo.invariantCulture.name, { sensitivity: "accent" });
                         case 4: // Ordinal
                             return (strA === strB) ? 0 : ((strA > strB) ? 1 : -1);
                         case 5: // OrdinalIgnoreCase
