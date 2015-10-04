@@ -108,11 +108,30 @@ namespace Bridge.Translator
 
         protected virtual string GetUniqueName(string name)
         {
-            string tempName = name + "1";
+            int index = 1;
+
+            if (this.Emitter.LocalsNamesMap.ContainsKey(name))
+            {
+                var value = this.Emitter.LocalsNamesMap[name];
+                if (value.Length > name.Length)
+                {
+                    var suffix = value.Substring(name.Length);
+
+                    int subindex;
+                    bool isNumeric = int.TryParse(suffix, out subindex);
+
+                    if (isNumeric)
+                    {
+                        index = subindex + 1;
+                    }
+                }
+            }
+
+            string tempName = name + index;
 
             while (this.Emitter.LocalsNamesMap.ContainsValue(tempName))
             {
-                tempName += "1";
+                tempName = name + ++index;
             }
 
             return tempName;
