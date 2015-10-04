@@ -3684,13 +3684,19 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
         },
 
         parse: function (value, provider, utc, silent) {
-            var dt = Date.parse(value);
+            var dt = this.parseExact(value, null, provider, utc, true);
+
+            if (dt !== null) {
+                return dt;
+            }
+
+            dt = Date.parse(value);
 
             if (!isNaN(dt)) {
                 return new Date(dt);
+            } else if (!silent) {
+                throw new Bridge.FormatException("String does not contain a valid string representation of a date and time.");
             }
-
-            return this.parseExact(value, null, provider, utc, silent);
         },
 
         parseExact: function (str, format, provider, utc, silent) {
