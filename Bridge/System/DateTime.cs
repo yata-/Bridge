@@ -133,6 +133,12 @@ namespace System
             return null;
         }
 
+        [Template("Bridge.Date.format({this})")]
+        public override string ToString()
+        {
+            return null;
+        }
+
         [Template("Bridge.Date.format({this}, {format})")]
         public string ToString(string format)
         {
