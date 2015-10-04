@@ -181,7 +181,7 @@ namespace System
             return 0;
         }
 
-        [Template("{this}.getMonth() + 1")]
+        [Template("({this}.getMonth() + 1)")]
         public int GetMonth()
         {
             return 0;
@@ -232,7 +232,7 @@ namespace System
             return 0;
         }
 
-        [Template("{this}.getUTCMonth() + 1")]
+        [Template("({this}.getUTCMonth() + 1)")]
         public int GetUtcMonth()
         {
             return 0;
@@ -561,7 +561,7 @@ namespace System
 
         public int Month
         {
-            [Template("{this}.getMonth() + 1")]
+            [Template("({this}.getMonth() + 1)")]
             get
             {
                 return 0;
@@ -628,13 +628,13 @@ namespace System
             return default(DateTime);
         }
 
-        [Template("new Date({year}, {month}, -1).getDate() + 1")]
+        [Template("(new Date({year}, {month}, -1).getDate() + 1)")]
         public static int DaysInMonth(int year, int month)
         {
             return 0;
         }
 
-        [Template("new Date({year}, 2, -1).getDate() === 28")]
+        [Template("(new Date({year}, 2, -1).getDate() === 28)")]
         public static bool IsLeapYear(int year)
         {
             return false;
