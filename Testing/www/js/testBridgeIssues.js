@@ -483,10 +483,10 @@ Bridge.define('ClientTestLibrary.Bridge514', {
             assert.expect(2);
 
             var d1 = 5.43;
-            assert.equal(Math.sign(d1), 1, "Bridge514 Sign(double 5.43)");
+            assert.equal(Bridge.Int.sign(d1), 1, "Bridge514 Sign(double 5.43)");
 
             var d2 = -7.1;
-            assert.equal(Math.sign(d2), -1, "Bridge514 Sign(double -7.1)");
+            assert.equal(Bridge.Int.sign(d2), -1, "Bridge514 Sign(double -7.1)");
         },
         testRelated: function (assert) {
             assert.expect(2);

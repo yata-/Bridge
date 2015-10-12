@@ -223,6 +223,7 @@ namespace System
         [Template("{d}.trunc()")]
         public static extern decimal Truncate(decimal d);
 
+        [Template("Bridge.Int.sign({value})")]
         public static extern int Sign(double value);
 
         [Template("{value}.sign()")]
