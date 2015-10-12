@@ -3032,6 +3032,10 @@ Bridge.define("Bridge.Int", {
 
         clipu64: function (x) {
             return Bridge.isNumber(x) ? (Math.floor(x / 0x100000000) >>> 0) * 0x100000000 + (x >>> 0) : null;
+        },
+
+        sign: function (x) {
+            return Bridge.isNumber(x) ? (x === 0 ? 0 : (x < 0 ? -1 : 1)) : null;
         }
     }
 });
@@ -3684,13 +3688,19 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
         },
 
         parse: function (value, provider, utc, silent) {
-            var dt = Date.parse(value);
+            var dt = this.parseExact(value, null, provider, utc, true);
+
+            if (dt !== null) {
+                return dt;
+            }
+
+            dt = Date.parse(value);
 
             if (!isNaN(dt)) {
                 return new Date(dt);
+            } else if (!silent) {
+                throw new Bridge.FormatException("String does not contain a valid string representation of a date and time.");
             }
-
-            return this.parseExact(value, null, provider, utc, silent);
         },
 
         parseExact: function (str, format, provider, utc, silent) {
@@ -5238,7 +5248,7 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
         inherits: [Bridge.ICollection$1(T), Bridge.ICollection, Bridge.IList$1(T)],
         constructor: function (obj) {
             if (Object.prototype.toString.call(obj) === '[object Array]') {
-                this.items = obj;
+                this.items = Bridge.Array.clone(obj);
             } else if (Bridge.is(obj, Bridge.IEnumerable)) {
                 this.items = Bridge.toArray(obj);
             } else {
@@ -5509,7 +5519,7 @@ Bridge.define("Bridge.Task", {
         },
 
         fromResult: function (result) {
-            var task = new Bridge.Task();
+            var t = new Bridge.Task();
 
             t.status = Bridge.TaskStatus.ranToCompletion;
             t.result = result;
@@ -5539,7 +5549,10 @@ Bridge.define("Bridge.Task", {
                 errors = [],
                 i;
 
-            if (!Bridge.isArray(tasks)) {
+            if (Bridge.is(tasks, Bridge.IEnumerable)) {
+                tasks = Bridge.toArray(tasks);
+            }
+            else if (!Bridge.isArray(tasks)) {
                 tasks = Array.prototype.slice.call(arguments, 0);
             }
 
@@ -5586,7 +5599,10 @@ Bridge.define("Bridge.Task", {
         },
 
         whenAny: function (tasks) {
-            if (!Bridge.isArray(tasks)) {
+            if (Bridge.is(tasks, Bridge.IEnumerable)) {
+                tasks = Bridge.toArray(tasks);
+            }
+            else if (!Bridge.isArray(tasks)) {
                 tasks = Array.prototype.slice.call(arguments, 0);
             }
 
