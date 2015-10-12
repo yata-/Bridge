@@ -42,7 +42,7 @@ namespace ClientTestLibrary
             assert.Equal(d1.GetUtcMonth(), 1, "TryParse works Month");
             assert.Equal(d1.GetUTCDay(), 1, "TryParse works Day");
 
-            var d2 = DateTime.Parse("2001-01-01");
+            var d2 = DateTime.Parse("2001-01-01", true);
             assert.DeepEqual(d2.ToString(), d1.ToString(), "TryParse And Parse give the same result");
         }
 

@@ -13,7 +13,7 @@ Bridge.define('ClientTestLibrary.TestStringFunctions', {
             assert.expect(expectedCount);
 
             // TEST ToLower, ToLowerCase, ToLocaleLowerCase
-            var s = "HELLO".toLowerCase();
+            var s = ("HELLO").toLowerCase();
             assert.deepEqual(s, "hello", "'HELLO'.ToLower()");
 
             s = "HELLO".toLowerCase();
@@ -23,7 +23,7 @@ Bridge.define('ClientTestLibrary.TestStringFunctions', {
             assert.deepEqual(s, "hello", "'HELLO'.ToLocaleLowerCase()");
 
             // TEST ToUpper, ToUpperCase, ToLocaleUpperCase
-            s = "hello".toUpperCase();
+            s = ("hello").toUpperCase();
             assert.deepEqual(s, "HELLO", "'hello'.ToUpper()");
 
             s = "hello".toUpperCase();

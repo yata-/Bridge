@@ -449,7 +449,7 @@ Bridge.define('ClientTestLibrary.Bridge501', {
             assert.equal(z, "{\"items\":[7]}", "List<int>");
 
             var b = Bridge.merge(new ClientTestLibrary.Bridge501B(), [
-                [1], 
+                [1],
                 [2]
             ] );
             var y = JSON.stringify(b); // wrong, missing items
@@ -475,6 +475,29 @@ Bridge.define('ClientTestLibrary.Bridge501A', {
 
 Bridge.define('ClientTestLibrary.Bridge501B', {
     inherits: [Bridge.List$1(Bridge.Int)]
+});
+
+Bridge.define('ClientTestLibrary.Bridge514', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            var d1 = 5.43;
+            assert.equal(Bridge.Int.sign(d1), 1, "Bridge514 Sign(double 5.43)");
+
+            var d2 = -7.1;
+            assert.equal(Bridge.Int.sign(d2), -1, "Bridge514 Sign(double -7.1)");
+        },
+        testRelated: function (assert) {
+            assert.expect(2);
+
+            var d1 = Bridge.Decimal(5.43);
+            assert.equal(d1.sign(), 1, "Bridge514 Sign(decimal 5.43)");
+
+            var d2 = Bridge.Decimal(-7.1);
+            assert.equal(d2.sign(), -1, "Bridge514 Sign(decimal -7.1)");
+        }
+    }
 });
 
 Bridge.define('ClientTestLibrary.IBridge304');
