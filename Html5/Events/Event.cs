@@ -6,10 +6,9 @@ namespace Bridge.Html5
     /// <summary>
     /// The Event interface represents any event of the DOM. It contains common properties and methods to any event.
     /// </summary>
-    /// <typeparam name="TCurrentTarget">The type of CurrentTarget</typeparam>
     [Ignore]
     [Name("Event")]
-    public class Event<TCurrentTarget> where TCurrentTarget : Element<TCurrentTarget>
+    public class Event
     {
         internal Event()
         {
@@ -40,7 +39,7 @@ namespace Bridge.Html5
         /// Identifies the current target for the event, as the event traverses the DOM. It always refers to the element the event handler has been attached to as opposed to event.target which identifies the element on which the event occurred.
         /// On Internet Explorer 6 through 8, the event model is different. Event listeners are attached with the non-standard element.attachEvent method. In this model, there is no equivalent to event.currentTarget and this is the global object.
         /// </summary>
-        public readonly TCurrentTarget CurrentTarget;
+        public readonly Element CurrentTarget;
 
         /// <summary>
         /// Returns a boolean indicating whether or not event.preventDefault() was called on the event.
@@ -103,11 +102,19 @@ namespace Bridge.Html5
     }
 
     /// <summary>
-    /// The non-generic version of the Event class. CurrentTarget has the Element type.
+    /// A generic version of the Event class. The type parameters is a type of CurrentTarget.
     /// </summary>
+    /// <typeparam name="TCurrentTarget">The CurrentTarget type</typeparam>
     [Ignore]
     [Name("Event")]
-    public class Event : Event<Element> { }
+    public class Event<TCurrentTarget> : Event where TCurrentTarget : Element
+    {
+        /// <summary>
+        /// Identifies the current target for the event, as the event traverses the DOM. It always refers to the element the event handler has been attached to as opposed to event.target which identifies the element on which the event occurred.
+        /// On Internet Explorer 6 through 8, the event model is different. Event listeners are attached with the non-standard element.attachEvent method. In this model, there is no equivalent to event.currentTarget and this is the global object.
+        /// </summary>
+        public new readonly TCurrentTarget CurrentTarget;
+    }
 
     [Ignore]
     [Name("Object")]
@@ -131,25 +138,25 @@ namespace Bridge.Html5
     public static class EventsExtension
     {
         [Template("Bridge.is({0}, MouseEvent)")]
-        public static bool IsMouseEvent<T>(this Event<T> e) where T : Element<T>
+        public static bool IsMouseEvent(this Event e)
         {
             return false;
         }
 
         [Template("Bridge.is({0}, FocusEvent)")]
-        public static bool IsFocusEvent<T>(this Event<T> e) where T : Element<T>
+        public static bool IsFocusEvent(this Event e)
         {
             return false;
         }
 
         [Template("Bridge.is({0}, UIEvent)")]
-        public static bool IsUIEvent<T>(this Event<T> e) where T : Element<T>
+        public static bool IsUIEvent(this Event e)
         {
             return false;
         }
 
         [Template("Bridge.is({0}, KeyboardEvent)")]
-        public static bool IsKeyboardEvent<T>(this Event<T> e) where T : Element<T>
+        public static bool IsKeyboardEvent(this Event e)
         {
             return false;
         }

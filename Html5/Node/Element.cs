@@ -7,10 +7,9 @@ namespace Bridge.Html5
     /// Specific behaviors are described in interfaces which inherit from Element but add additional functionality.
     /// For example, the HTMLElement interface is the base interface for HTML elements, while the SVGElement interface is the basis for all SVG elements.
     /// </summary>
-    /// <typeparam name="TCurrentTarget">The CurrentTarget type of all Element's events</typeparam>
     [Ignore]
     [Name("HTMLElement")]
-    public class Element<TCurrentTarget> : Node where TCurrentTarget : Element<TCurrentTarget>
+    public class Element : Node
     {
         [Template("document.createElement('div')")]
         public Element()
@@ -433,13 +432,13 @@ namespace Bridge.Html5
         ///  EventHandler representing the code to be called when the abort event is raised.
         /// </summary>
         [Name("onabort")]
-        public Action<Event<TCurrentTarget>> OnAbort;
+        public Action<Event> OnAbort;
 
         /// <summary>
         /// EventHandler representing the code to be called when the blur event is raised.
         /// </summary>
         [Name("onblur")]
-        public Action<Event<TCurrentTarget>> OnBlur;
+        public Action<Event> OnBlur;
 
         /// <summary>
         /// OnErrorEventHandler representing the code to be called when the error event is raised.
@@ -451,373 +450,373 @@ namespace Bridge.Html5
         /// EventHandler representing the code to be called when the focus event is raised.
         /// </summary>
         [Name("onfocus")]
-        public Action<Event<TCurrentTarget>> OnFocus;
+        public Action<Event> OnFocus;
 
         /// <summary>
         /// EventHandler representing the code to be called when the cancel event is raised.
         /// </summary>
         [Name("oncancel")]
-        public Action<Event<TCurrentTarget>> OnCancel;
+        public Action<Event> OnCancel;
 
         /// <summary>
         /// EventHandler representing the code to be called when the canplay event is raised
         /// </summary>
         [Name("oncanplay")]
-        public Action<Event<TCurrentTarget>> OnCanPlay;
+        public Action<Event> OnCanPlay;
 
         /// <summary>
         /// EventHandler representing the code to be called when the canplaythrough event is raised.
         /// </summary>
         [Name("oncanplaythrough")]
-        public Action<Event<TCurrentTarget>> OnCanPlayThrough;
+        public Action<Event> OnCanPlayThrough;
 
         /// <summary>
         /// EventHandler representing the code to be called when the change event is raised.
         /// </summary>
         [Name("onchange")]
-        public Action<Event<TCurrentTarget>> OnChange;
+        public Action<Event> OnChange;
 
         /// <summary>
         /// EventHandler representing the code to be called when the click event is raised.
         /// </summary>
         [Name("onclick")]
-        public Action<Event<TCurrentTarget>> OnClick;
+        public Action<Event> OnClick;
 
         /// <summary>
         /// EventHandler representing the code to be called when the close event is raised.
         /// </summary>
         [Name("onclose")]
-        public Action<Event<TCurrentTarget>> OnClose;
+        public Action<Event> OnClose;
 
         /// <summary>
         /// EventHandler representing the code to be called when the contextmenu event is raised.
         /// </summary>
         [Name("oncontextmenu")]
-        public Action<Event<TCurrentTarget>> OnContextMenu;
+        public Action<Event> OnContextMenu;
 
         /// <summary>
         /// EventHandler representing the code to be called when the cuechange event is raised.
         /// </summary>
         [Name("oncuechange")]
-        public Action<Event<TCurrentTarget>> OnCueChange;
+        public Action<Event> OnCueChange;
 
         /// <summary>
         /// EventHandler representing the code to be called when the dblclick event is raised.
         /// </summary>
         [Name("ondblclick")]
-        public Action<Event<TCurrentTarget>> OnDblClick;
+        public Action<Event> OnDblClick;
 
         /// <summary>
         /// EventHandler representing the code to be called when the drag event is raised.
         /// </summary>
         [Name("ondrag")]
-        public Action<Event<TCurrentTarget>> OnDrag;
+        public Action<Event> OnDrag;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the dragend event is raised
         /// </summary>
         [Name("ondragend")]
-        public Action<Event<TCurrentTarget>> OnDragEnd;
+        public Action<Event> OnDragEnd;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the dragenter event is raised
         /// </summary>
         [Name("ondragenter")]
-        public Action<Event<TCurrentTarget>> OnDragEnter;
+        public Action<Event> OnDragEnter;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the dragexit event is raised
         /// </summary>
         [Name("ondragexit")]
-        public Action<Event<TCurrentTarget>> OnDragExit;
+        public Action<Event> OnDragExit;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the dragleave event is raised
         /// </summary>
         [Name("ondragleave")]
-        public Action<Event<TCurrentTarget>> OnDragLeave;
+        public Action<Event> OnDragLeave;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the dragover event is raised
         /// </summary>
         [Name("ondragover")]
-        public Action<Event<TCurrentTarget>> OnDragOver;
+        public Action<Event> OnDragOver;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the dragstart event is raised
         /// </summary>
         [Name("ondragstart")]
-        public Action<Event<TCurrentTarget>> OnDragStart;
+        public Action<Event> OnDragStart;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the drop event is raised
         /// </summary>
         [Name("ondrop")]
-        public Action<Event<TCurrentTarget>> OnDrop;
+        public Action<Event> OnDrop;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the durationchange event is raised
         /// </summary>
         [Name("ondurationchange")]
-        public Action<Event<TCurrentTarget>> OnDurationChange;
+        public Action<Event> OnDurationChange;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the emptied event is raised
         /// </summary>
         [Name("onemptied")]
-        public Action<Event<TCurrentTarget>> OnEmptied;
+        public Action<Event> OnEmptied;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the ended event is raised
         /// </summary>
         [Name("onended")]
-        public Action<Event<TCurrentTarget>> OnEnded;
+        public Action<Event> OnEnded;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the input event is raised
         /// </summary>
         [Name("oninput")]
-        public Action<Event<TCurrentTarget>> OnInput;
+        public Action<Event> OnInput;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the invalid event is raised
         /// </summary>
         [Name("oninvalid")]
-        public Action<Event<TCurrentTarget>> OnInvalid;
+        public Action<Event> OnInvalid;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the keydown event is raised
         /// </summary>
         [Name("onkeydown")]
-        public Action<Event<TCurrentTarget>> OnKeyDown;
+        public Action<Event> OnKeyDown;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the keypress event is raised
         /// </summary>
         [Name("onkeypress")]
-        public Action<Event<TCurrentTarget>> OnKeyPress;
+        public Action<Event> OnKeyPress;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the keyup event is raised
         /// </summary>
         [Name("onkeyup")]
-        public Action<Event<TCurrentTarget>> OnKeyUp;
+        public Action<Event> OnKeyUp;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the load event is raised
         /// </summary>
         [Name("onload")]
-        public Action<Event<TCurrentTarget>> OnLoad;
+        public Action<Event> OnLoad;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the loadeddata event is raised
         /// </summary>
         [Name("onloadeddata")]
-        public Action<Event<TCurrentTarget>> OnLoadedData;
+        public Action<Event> OnLoadedData;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the loadedmetadata event is raised
         /// </summary>
         [Name("onloadedmetadata")]
-        public Action<Event<TCurrentTarget>> OnLoadedMetaData;
+        public Action<Event> OnLoadedMetaData;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the loadstart event is raised
         /// </summary>
         [Name("onloadstart")]
-        public Action<Event<TCurrentTarget>> OnLoadStart;
+        public Action<Event> OnLoadStart;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the mousedown event is raised
         /// </summary>
         [Name("onmousedown")]
-        public Action<Event<TCurrentTarget>> OnMouseDown;
+        public Action<Event> OnMouseDown;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the mouseenter event is raised
         /// </summary>
         [Name("onmouseenter")]
-        public Action<Event<TCurrentTarget>> OnMouseEnter;
+        public Action<Event> OnMouseEnter;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the mouseleave event is raised
         /// </summary>
         [Name("onmouseleave")]
-        public Action<Event<TCurrentTarget>> OnMouseLeave;
+        public Action<Event> OnMouseLeave;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the mousemove event is raised
         /// </summary>
         [Name("onmousemove")]
-        public Action<Event<TCurrentTarget>> OnMouseMove;
+        public Action<Event> OnMouseMove;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the mouseout event is raised
         /// </summary>
         [Name("onmouseout")]
-        public Action<Event<TCurrentTarget>> OnMouseOut;
+        public Action<Event> OnMouseOut;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the mouseover event is raised
         /// </summary>
         [Name("onmouseover")]
-        public Action<Event<TCurrentTarget>> OnMouseOver;
+        public Action<Event> OnMouseOver;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the mouseup event is raised
         /// </summary>
         [Name("onmouseup")]
-        public Action<Event<TCurrentTarget>> OnMouseUp;
+        public Action<Event> OnMouseUp;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the mousewheel event is raised
         /// </summary>
         [Name("onmousewheel")]
-        public Action<Event<TCurrentTarget>> OnMouseWheel;
+        public Action<Event> OnMouseWheel;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the pause event is raised
         /// </summary>
         [Name("onpause")]
-        public Action<Event<TCurrentTarget>> OnPause;
+        public Action<Event> OnPause;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the play event is raised
         /// </summary>
         [Name("onplay")]
-        public Action<Event<TCurrentTarget>> OnPlay;
+        public Action<Event> OnPlay;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the playing event is raised
         /// </summary>
         [Name("onplaying")]
-        public Action<Event<TCurrentTarget>> OnPlaying;
+        public Action<Event> OnPlaying;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the progress event is raised
         /// </summary>
         [Name("onprogress")]
-        public Action<Event<TCurrentTarget>> OnProgress;
+        public Action<Event> OnProgress;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the ratechange event is raised
         /// </summary>
         [Name("onratechange")]
-        public Action<Event<TCurrentTarget>> OnRateChange;
+        public Action<Event> OnRateChange;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the reset event is raised
         /// </summary>
         [Name("onreset")]
-        public Action<Event<TCurrentTarget>> OnReset;
+        public Action<Event> OnReset;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the scroll event is raised
         /// </summary>
         [Name("onscroll")]
-        public Action<Event<TCurrentTarget>> OnScroll;
+        public Action<Event> OnScroll;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the seeked event is raised
         /// </summary>
         [Name("onseeked")]
-        public Action<Event<TCurrentTarget>> OnSeeked;
+        public Action<Event> OnSeeked;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the seeking event is raised
         /// </summary>
         [Name("onseeking")]
-        public Action<Event<TCurrentTarget>> OnSeeking;
+        public Action<Event> OnSeeking;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the select event is raised
         /// </summary>
         [Name("onselect")]
-        public Action<Event<TCurrentTarget>> OnSelect;
+        public Action<Event> OnSelect;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the show event is raised
         /// </summary>
         [Name("onshow")]
-        public Action<Event<TCurrentTarget>> OnShow;
+        public Action<Event> OnShow;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the sort event is raised
         /// </summary>
         [Name("onsort")]
-        public Action<Event<TCurrentTarget>> OnSort;
+        public Action<Event> OnSort;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the stalled event is raised
         /// </summary>
         [Name("onstalled")]
-        public Action<Event<TCurrentTarget>> OnStalled;
+        public Action<Event> OnStalled;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the submit event is raised
         /// </summary>
         [Name("onsubmit")]
-        public Action<Event<TCurrentTarget>> OnSubmit;
+        public Action<Event> OnSubmit;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the suspend event is raised
         /// </summary>
         [Name("onsuspend")]
-        public Action<Event<TCurrentTarget>> OnSuspend;
+        public Action<Event> OnSuspend;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the timeupdate event is raised
         /// </summary>
         [Name("ontimeupdate")]
-        public Action<Event<TCurrentTarget>> OnTimeUpdate;
+        public Action<Event> OnTimeUpdate;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the volumechange event is raised
         /// </summary>
         [Name("onvolumechange")]
-        public Action<Event<TCurrentTarget>> OnVolumeChange;
+        public Action<Event> OnVolumeChange;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the waiting event is raised
         /// </summary>
         [Name("onwaiting")]
-        public Action<Event<TCurrentTarget>> OnWaiting;
+        public Action<Event> OnWaiting;
 
         /// <summary>
         /// Returns the event handling code for the touchstart event.
         /// </summary>
         [Name("onTouchStart")]
-        public Action<Event<TCurrentTarget>> OnTouchStart;
+        public Action<Event> OnTouchStart;
 
         /// <summary>
         /// Returns the event handling code for the touchend event.
         /// </summary>
         [Name("onTouchEnd")]
-        public Action<Event<TCurrentTarget>> OnTouchEnd;
+        public Action<Event> OnTouchEnd;
 
         /// <summary>
         /// Returns the event handling code for the touchmove event.
         /// </summary>
         [Name("onTouchMove")]
-        public Action<Event<TCurrentTarget>> OnTouchMove;
+        public Action<Event> OnTouchMove;
 
         /// <summary>
         /// Returns the event handling code for the touchenter event.
         /// </summary>
         [Name("onTouchEnter")]
-        public Action<Event<TCurrentTarget>> OnTouchEnter;
+        public Action<Event> OnTouchEnter;
 
         /// <summary>
         /// Returns the event handling code for the touchleave event.
         /// </summary>
         [Name("onTouchLeave")]
-        public Action<Event<TCurrentTarget>> OnTouchLeave;
+        public Action<Event> OnTouchLeave;
 
         /// <summary>
         /// Returns the event handling code for the touchcancel event.
         /// </summary>
         [Name("onTouchCancel")]
-        public Action<Event<TCurrentTarget>> OnTouchCancel;
+        public Action<Event> OnTouchCancel;
 
         /// <summary>
         /// Removes keyboard focus from the currently focused element.
@@ -842,9 +841,393 @@ namespace Bridge.Html5
     }
 
     /// <summary>
-    /// The non-generic Element class. Events' CurrentTarget has the Element type.
+    /// A generic version of the Element class. The type parameter is a type of Events' CurrentTarget.
     /// </summary>
-    [Ignore]
-    [Name("HTMLElement")]
-    public class Element : Element<Element> { }
+    /// <typeparam name="TCurrentTarget">The CurrentTarget type of all Element's events</typeparam>
+    public class Element<TCurrentTarget> : Element where TCurrentTarget : Element
+    {
+        /// <summary>
+        ///  EventHandler representing the code to be called when the abort event is raised.
+        /// </summary>
+        [Name("onabort")]
+        public new Action<Event<TCurrentTarget>> OnAbort;
+
+        /// <summary>
+        /// EventHandler representing the code to be called when the blur event is raised.
+        /// </summary>
+        [Name("onblur")]
+        public new Action<Event<TCurrentTarget>> OnBlur;
+
+        /// <summary>
+        /// EventHandler representing the code to be called when the focus event is raised.
+        /// </summary>
+        [Name("onfocus")]
+        public new Action<Event<TCurrentTarget>> OnFocus;
+
+        /// <summary>
+        /// EventHandler representing the code to be called when the cancel event is raised.
+        /// </summary>
+        [Name("oncancel")]
+        public new Action<Event<TCurrentTarget>> OnCancel;
+
+        /// <summary>
+        /// EventHandler representing the code to be called when the canplay event is raised
+        /// </summary>
+        [Name("oncanplay")]
+        public new Action<Event<TCurrentTarget>> OnCanPlay;
+
+        /// <summary>
+        /// EventHandler representing the code to be called when the canplaythrough event is raised.
+        /// </summary>
+        [Name("oncanplaythrough")]
+        public new Action<Event<TCurrentTarget>> OnCanPlayThrough;
+
+        /// <summary>
+        /// EventHandler representing the code to be called when the change event is raised.
+        /// </summary>
+        [Name("onchange")]
+        public new Action<Event<TCurrentTarget>> OnChange;
+
+        /// <summary>
+        /// EventHandler representing the code to be called when the click event is raised.
+        /// </summary>
+        [Name("onclick")]
+        public new Action<Event<TCurrentTarget>> OnClick;
+
+        /// <summary>
+        /// EventHandler representing the code to be called when the close event is raised.
+        /// </summary>
+        [Name("onclose")]
+        public new Action<Event<TCurrentTarget>> OnClose;
+
+        /// <summary>
+        /// EventHandler representing the code to be called when the contextmenu event is raised.
+        /// </summary>
+        [Name("oncontextmenu")]
+        public new Action<Event<TCurrentTarget>> OnContextMenu;
+
+        /// <summary>
+        /// EventHandler representing the code to be called when the cuechange event is raised.
+        /// </summary>
+        [Name("oncuechange")]
+        public new Action<Event<TCurrentTarget>> OnCueChange;
+
+        /// <summary>
+        /// EventHandler representing the code to be called when the dblclick event is raised.
+        /// </summary>
+        [Name("ondblclick")]
+        public new Action<Event<TCurrentTarget>> OnDblClick;
+
+        /// <summary>
+        /// EventHandler representing the code to be called when the drag event is raised.
+        /// </summary>
+        [Name("ondrag")]
+        public new Action<Event<TCurrentTarget>> OnDrag;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the dragend event is raised
+        /// </summary>
+        [Name("ondragend")]
+        public new Action<Event<TCurrentTarget>> OnDragEnd;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the dragenter event is raised
+        /// </summary>
+        [Name("ondragenter")]
+        public new Action<Event<TCurrentTarget>> OnDragEnter;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the dragexit event is raised
+        /// </summary>
+        [Name("ondragexit")]
+        public new Action<Event<TCurrentTarget>> OnDragExit;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the dragleave event is raised
+        /// </summary>
+        [Name("ondragleave")]
+        public new Action<Event<TCurrentTarget>> OnDragLeave;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the dragover event is raised
+        /// </summary>
+        [Name("ondragover")]
+        public new Action<Event<TCurrentTarget>> OnDragOver;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the dragstart event is raised
+        /// </summary>
+        [Name("ondragstart")]
+        public new Action<Event<TCurrentTarget>> OnDragStart;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the drop event is raised
+        /// </summary>
+        [Name("ondrop")]
+        public new Action<Event<TCurrentTarget>> OnDrop;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the durationchange event is raised
+        /// </summary>
+        [Name("ondurationchange")]
+        public new Action<Event<TCurrentTarget>> OnDurationChange;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the emptied event is raised
+        /// </summary>
+        [Name("onemptied")]
+        public new Action<Event<TCurrentTarget>> OnEmptied;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the ended event is raised
+        /// </summary>
+        [Name("onended")]
+        public new Action<Event<TCurrentTarget>> OnEnded;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the input event is raised
+        /// </summary>
+        [Name("oninput")]
+        public new Action<Event<TCurrentTarget>> OnInput;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the invalid event is raised
+        /// </summary>
+        [Name("oninvalid")]
+        public new Action<Event<TCurrentTarget>> OnInvalid;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the keydown event is raised
+        /// </summary>
+        [Name("onkeydown")]
+        public new Action<Event<TCurrentTarget>> OnKeyDown;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the keypress event is raised
+        /// </summary>
+        [Name("onkeypress")]
+        public new Action<Event<TCurrentTarget>> OnKeyPress;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the keyup event is raised
+        /// </summary>
+        [Name("onkeyup")]
+        public new Action<Event<TCurrentTarget>> OnKeyUp;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the load event is raised
+        /// </summary>
+        [Name("onload")]
+        public new Action<Event<TCurrentTarget>> OnLoad;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the loadeddata event is raised
+        /// </summary>
+        [Name("onloadeddata")]
+        public new Action<Event<TCurrentTarget>> OnLoadedData;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the loadedmetadata event is raised
+        /// </summary>
+        [Name("onloadedmetadata")]
+        public new Action<Event<TCurrentTarget>> OnLoadedMetaData;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the loadstart event is raised
+        /// </summary>
+        [Name("onloadstart")]
+        public new Action<Event<TCurrentTarget>> OnLoadStart;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the mousedown event is raised
+        /// </summary>
+        [Name("onmousedown")]
+        public new Action<Event<TCurrentTarget>> OnMouseDown;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the mouseenter event is raised
+        /// </summary>
+        [Name("onmouseenter")]
+        public new Action<Event<TCurrentTarget>> OnMouseEnter;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the mouseleave event is raised
+        /// </summary>
+        [Name("onmouseleave")]
+        public new Action<Event<TCurrentTarget>> OnMouseLeave;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the mousemove event is raised
+        /// </summary>
+        [Name("onmousemove")]
+        public new Action<Event<TCurrentTarget>> OnMouseMove;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the mouseout event is raised
+        /// </summary>
+        [Name("onmouseout")]
+        public new Action<Event<TCurrentTarget>> OnMouseOut;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the mouseover event is raised
+        /// </summary>
+        [Name("onmouseover")]
+        public new Action<Event<TCurrentTarget>> OnMouseOver;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the mouseup event is raised
+        /// </summary>
+        [Name("onmouseup")]
+        public new Action<Event<TCurrentTarget>> OnMouseUp;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the mousewheel event is raised
+        /// </summary>
+        [Name("onmousewheel")]
+        public new Action<Event<TCurrentTarget>> OnMouseWheel;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the pause event is raised
+        /// </summary>
+        [Name("onpause")]
+        public new Action<Event<TCurrentTarget>> OnPause;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the play event is raised
+        /// </summary>
+        [Name("onplay")]
+        public new Action<Event<TCurrentTarget>> OnPlay;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the playing event is raised
+        /// </summary>
+        [Name("onplaying")]
+        public new Action<Event<TCurrentTarget>> OnPlaying;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the progress event is raised
+        /// </summary>
+        [Name("onprogress")]
+        public new Action<Event<TCurrentTarget>> OnProgress;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the ratechange event is raised
+        /// </summary>
+        [Name("onratechange")]
+        public new Action<Event<TCurrentTarget>> OnRateChange;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the reset event is raised
+        /// </summary>
+        [Name("onreset")]
+        public new Action<Event<TCurrentTarget>> OnReset;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the scroll event is raised
+        /// </summary>
+        [Name("onscroll")]
+        public new Action<Event<TCurrentTarget>> OnScroll;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the seeked event is raised
+        /// </summary>
+        [Name("onseeked")]
+        public new Action<Event<TCurrentTarget>> OnSeeked;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the seeking event is raised
+        /// </summary>
+        [Name("onseeking")]
+        public new Action<Event<TCurrentTarget>> OnSeeking;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the select event is raised
+        /// </summary>
+        [Name("onselect")]
+        public new Action<Event<TCurrentTarget>> OnSelect;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the show event is raised
+        /// </summary>
+        [Name("onshow")]
+        public new Action<Event<TCurrentTarget>> OnShow;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the sort event is raised
+        /// </summary>
+        [Name("onsort")]
+        public new Action<Event<TCurrentTarget>> OnSort;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the stalled event is raised
+        /// </summary>
+        [Name("onstalled")]
+        public new Action<Event<TCurrentTarget>> OnStalled;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the submit event is raised
+        /// </summary>
+        [Name("onsubmit")]
+        public new Action<Event<TCurrentTarget>> OnSubmit;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the suspend event is raised
+        /// </summary>
+        [Name("onsuspend")]
+        public new Action<Event<TCurrentTarget>> OnSuspend;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the timeupdate event is raised
+        /// </summary>
+        [Name("ontimeupdate")]
+        public new Action<Event<TCurrentTarget>> OnTimeUpdate;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the volumechange event is raised
+        /// </summary>
+        [Name("onvolumechange")]
+        public new Action<Event<TCurrentTarget>> OnVolumeChange;
+
+        /// <summary>
+        /// Is an EventHandler representing the code to be called when the waiting event is raised
+        /// </summary>
+        [Name("onwaiting")]
+        public new Action<Event<TCurrentTarget>> OnWaiting;
+
+        /// <summary>
+        /// Returns the event handling code for the touchstart event.
+        /// </summary>
+        [Name("onTouchStart")]
+        public new Action<Event<TCurrentTarget>> OnTouchStart;
+
+        /// <summary>
+        /// Returns the event handling code for the touchend event.
+        /// </summary>
+        [Name("onTouchEnd")]
+        public new Action<Event<TCurrentTarget>> OnTouchEnd;
+
+        /// <summary>
+        /// Returns the event handling code for the touchmove event.
+        /// </summary>
+        [Name("onTouchMove")]
+        public new Action<Event<TCurrentTarget>> OnTouchMove;
+
+        /// <summary>
+        /// Returns the event handling code for the touchenter event.
+        /// </summary>
+        [Name("onTouchEnter")]
+        public new Action<Event<TCurrentTarget>> OnTouchEnter;
+
+        /// <summary>
+        /// Returns the event handling code for the touchleave event.
+        /// </summary>
+        [Name("onTouchLeave")]
+        public new Action<Event<TCurrentTarget>> OnTouchLeave;
+
+        /// <summary>
+        /// Returns the event handling code for the touchcancel event.
+        /// </summary>
+        [Name("onTouchCancel")]
+        public new Action<Event<TCurrentTarget>> OnTouchCancel;
+    }
 }
