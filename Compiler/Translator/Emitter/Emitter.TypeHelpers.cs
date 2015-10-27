@@ -144,7 +144,7 @@ namespace Bridge.Translator
 
             var list = new List<string>();
 
-            foreach (var t in this.TypeInfo.TypeDeclaration.BaseTypes)
+            foreach (var t in this.TypeInfo.GetBaseTypes(this))
             {
                 var name = BridgeTypes.ToJsName(t, this);
 
