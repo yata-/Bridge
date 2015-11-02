@@ -4,14 +4,14 @@
 
 Bridge.define('BasicTypes.BasicTypes', {
     boolValue: true,
+    integerValue: -1000,
+    floatValue: Bridge.cast(2.3, Number),
     stringValue: "Some string value",
     anyValueString: "AnyValueString",
     anyValueInteger: 1,
     dynamicValueInteger: 7,
     config: {
         init: function () {
-            this.integerValue = -1000;
-            this.floatValue = Bridge.cast(2.3, Number);
             this.integerArray = [1, 2, 3];
             this.stringArray = ["1", "2", "3"];
             this.colorArray = [BasicTypes.Color.blue, BasicTypes.Color.green, BasicTypes.Color.red];
