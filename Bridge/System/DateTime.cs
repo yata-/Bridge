@@ -424,13 +424,13 @@ namespace System
             return null;
         }
 
-        [Template("new Date({d} - new Date({t} / 10000))")]
+        [Template("new Date({d} - new Date(({t}) / 10000))")]
         public static DateTime operator -(DateTime d, TimeSpan t)
         {
             return default(DateTime);
         }
 
-        [Template("new Date({d}.getTime() + ({t} / 10000))")]
+        [Template("new Date({d}.getTime() + (({t}) / 10000))")]
         public static DateTime operator +(DateTime d, TimeSpan t)
         {
             return default(DateTime);
@@ -586,13 +586,13 @@ namespace System
             }
         }
 
-        [Template("new Date({this}.valueOf() + Math.round({value} * 864e5))")]
+        [Template("new Date({this}.valueOf() + Math.round(({value}) * 864e5))")]
         public DateTime AddDays(double value)
         {
             return default(DateTime);
         }
 
-        [Template("new Date({this}.valueOf() + Math.round({value} * 36e5))")]
+        [Template("new Date({this}.valueOf() + Math.round(({value}) * 36e5))")]
         public DateTime AddHours(double value)
         {
             return default(DateTime);
@@ -604,7 +604,7 @@ namespace System
             return default(DateTime);
         }
 
-        [Template("new Date({this}.valueOf() + Math.round({value} * 6e4))")]
+        [Template("new Date({this}.valueOf() + Math.round(({value}) * 6e4))")]
         public DateTime AddMinutes(double value)
         {
             return default(DateTime);
@@ -616,7 +616,7 @@ namespace System
             return default(DateTime);
         }
 
-        [Template("new Date({this}.valueOf() + Math.round({value} * 1e3))")]
+        [Template("new Date({this}.valueOf() + Math.round(({value}) * 1e3))")]
         public DateTime AddSeconds(double value)
         {
             return default(DateTime);
