@@ -500,6 +500,42 @@ Bridge.define('ClientTestLibrary.Bridge514', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge520', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var s = new ClientTestLibrary.Bridge520.Source();
+            s.fire();
+
+            assert.equal(s.getCounter(), 1, "Bridge520 Counter");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge520.Source', {
+    config: {
+        events: {
+            Fired: null
+        },
+        properties: {
+            Counter: 0
+        }
+    },
+    fire: function () {
+        var getEvt = function (s) {
+            return s.Fired;
+        };
+        var evt = getEvt(this);
+
+        evt = Bridge.fn.combine(evt, Bridge.fn.bind(this, function (sender, args) {
+            this.setCounter(this.getCounter()+1);
+        }));
+
+        evt(this, new Object());
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
