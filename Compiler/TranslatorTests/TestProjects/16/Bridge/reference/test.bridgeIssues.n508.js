@@ -49,14 +49,14 @@ Bridge.define('Test.BridgeIssues.N508.Bridge508', {
                         for (;;) {
                             switch ($step) {
                                 case 0: {
-                                    $task3 = Test.BridgeIssues.N508.Bridge508.initPage();
+                                    $task1 = Test.BridgeIssues.N508.Bridge508.initPage();
                                     $step = 1;
-                                    $task3.continueWith($asyncBody);
+                                    $task1.continueWith($asyncBody);
                                     return;
                                 }
                                 case 1: {
-                                    $taskResult3 = $task3.getResult();
-                                    np = $taskResult3;
+                                    $taskResult1 = $task1.getResult();
+                                    np = $taskResult1;
                                     $step = 2;
                                     continue;
                                 }
@@ -86,14 +86,14 @@ Bridge.define('Test.BridgeIssues.N508.Bridge508', {
                                 case 6: {
                                     
                                     Test.BridgeIssues.N508.Bridge508.count = 0;
-                                    $task1 = Test.BridgeIssues.N508.Bridge508.initPage();
+                                    $task3 = Test.BridgeIssues.N508.Bridge508.initPage();
                                     $step = 7;
-                                    $task1.continueWith($asyncBody);
+                                    $task3.continueWith($asyncBody);
                                     return;
                                 }
                                 case 7: {
-                                    $taskResult1 = $task1.getResult();
-                                    np1 = $taskResult1;
+                                    $taskResult3 = $task3.getResult();
+                                    np1 = $taskResult3;
                                     $step = 8;
                                     continue;
                                 }
