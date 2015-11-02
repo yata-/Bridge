@@ -600,6 +600,21 @@ Bridge.define('ClientTestLibrary.Bridge522.DerivedClass1', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge532', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(3);
+
+            var list = new Bridge.List$1(Bridge.Int)([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+
+            assert.deepEqual(list.getRange(0, 2).toArray(), [1, 2], "Bridge532 (0, 2)");
+            assert.deepEqual(list.getRange(1, 2).toArray(), [2, 3], "Bridge532 (1, 2)");
+            assert.deepEqual(list.getRange(6, 3).toArray(), [7, 8, 9], "Bridge532 (6, 3)");
+
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
