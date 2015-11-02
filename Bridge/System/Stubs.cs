@@ -17,11 +17,6 @@ namespace System
     }
 
     [Ignore]
-    public class Enum
-    {
-    }
-
-    [Ignore]
     public struct IntPtr
     {
     }

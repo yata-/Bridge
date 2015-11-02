@@ -348,7 +348,23 @@ namespace Bridge.Translator
             Expression initializer = enumMemberDeclaration.Initializer;
             if (enumMemberDeclaration.Initializer.IsNull)
             {
-                initializer = new PrimitiveExpression(++this.CurrentType.LastEnumValue);
+                if (this.CurrentType.Type.GetDefinition().Attributes.Any(attr => attr.AttributeType.FullName == "System.FlagsAttribute"))
+                {
+                    if (this.CurrentType.LastEnumValue <= 0)
+                    {
+                        this.CurrentType.LastEnumValue = 1;
+                    }
+                    else
+                    {
+                        this.CurrentType.LastEnumValue *= 2;    
+                    }
+                    
+                    initializer = new PrimitiveExpression(this.CurrentType.LastEnumValue);
+                }
+                else
+                {
+                    initializer = new PrimitiveExpression(++this.CurrentType.LastEnumValue);    
+                }
             }
             else
             {
