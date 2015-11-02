@@ -212,3 +212,4 @@ Bridge.define('Test.BridgeIssues.N508.Bridge508', {
         }
     }
 });
+
