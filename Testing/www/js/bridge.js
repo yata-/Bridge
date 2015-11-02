@@ -355,6 +355,20 @@
         },
 
 	    merge: function (to, from) {
+	        if (to instanceof Bridge.Decimal && Bridge.isNumber(from)) {
+	            return new Bridge.Decimal(from);
+	        }
+
+	        if (to instanceof Boolean ||
+                to instanceof Number ||
+                to instanceof String ||
+                to instanceof Function ||
+                to instanceof Date ||
+                to instanceof Bridge.Int ||
+                to instanceof Bridge.Decimal) {
+	            return from;
+	        }
+
 	        var key,
 			    i,
                 value,
