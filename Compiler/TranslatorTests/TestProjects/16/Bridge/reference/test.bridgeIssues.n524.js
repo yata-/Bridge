@@ -10,3 +10,4 @@ Bridge.define('Test.BridgeIssues.N524.Bridge524', {
         }
     }
 });
+
