@@ -42,50 +42,50 @@
             var initFn,
                 isFn = Bridge.isFunction(cfg),
                 fn = function () {
-                var name,
-                    config;
+                    var name,
+                        config;
 
-                config = Bridge.isFunction(cfg) ? cfg() : cfg;
+                    config = Bridge.isFunction(cfg) ? cfg() : cfg;
 
-                if (extend && !statics && base.$initMembers) {
-                    base.$initMembers.apply(this, arguments);
-                }
-
-                if (config.fields) {
-                    for (name in config.fields) {
-                        this[name] = config.fields[name];
-                    }
-                }
-
-                if (config.properties) {
-                    for (name in config.properties) {
-                        Bridge.property(this, name, config.properties[name]);
-                    }
-                }
-
-                if (config.events) {
-                    for (name in config.events) {
-                        Bridge.event(this, name, config.events[name]);
-                    }
-                }
-                if (config.alias) {
-                    for (name in config.alias) {
-                        if (this[name]) {
-                            this[name] = this[config.alias[name]];
+                    if (config.fields) {
+                        for (name in config.fields) {
+                            this[name] = config.fields[name];
                         }
                     }
-                }
 
-                if (config.init) {
-                    initFn = config.init;
-                }
-            };
+                    if (config.properties) {
+                        for (name in config.properties) {
+                            Bridge.property(this, name, config.properties[name]);
+                        }
+                    }
+
+                    if (config.events) {
+                        for (name in config.events) {
+                            Bridge.event(this, name, config.events[name]);
+                        }
+                    }
+                    if (config.alias) {
+                        for (name in config.alias) {
+                            if (this[name]) {
+                                this[name] = this[config.alias[name]];
+                            }
+                        }
+                    }
+
+                    if (config.init) {
+                        initFn = config.init;
+                    }
+                };
 
             if (!isFn) {
                 fn.apply(scope);
             }
 
             scope.$initMembers = function () {
+                if (extend && !statics && base.$initMembers) {
+                    base.$initMembers.apply(this, arguments);
+                }
+
                 if (isFn) {
                     fn.apply(this);
                 }
