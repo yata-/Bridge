@@ -615,6 +615,21 @@ Bridge.define('ClientTestLibrary.Bridge532', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge538', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var srcString = "123";
+            var destString = "4";
+
+            destString += String.fromCharCode(srcString.charCodeAt(2));
+
+            assert.deepEqual(destString, "43", "Bridge538 '43'");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
