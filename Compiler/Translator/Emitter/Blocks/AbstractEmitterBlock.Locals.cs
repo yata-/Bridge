@@ -81,11 +81,6 @@ namespace Bridge.Translator
         {
             this.Emitter.Locals.Add(name, type);
 
-            if (this.Emitter.IsAsync && !this.Emitter.AsyncVariables.Contains(name))
-            {
-                this.Emitter.AsyncVariables.Add(name);
-            }
-
             name = name.StartsWith(Bridge.Translator.Emitter.FIX_ARGUMENT_NAME) ? name.Substring(Bridge.Translator.Emitter.FIX_ARGUMENT_NAME.Length) : name;
             string vName = name;
 
@@ -103,7 +98,14 @@ namespace Bridge.Translator
                 this.Emitter.LocalsNamesMap[name] = this.GetUniqueName(vName);
             }
 
-            return this.Emitter.LocalsNamesMap[name];
+            var result = this.Emitter.LocalsNamesMap[name];
+
+            if (this.Emitter.IsAsync && !this.Emitter.AsyncVariables.Contains(result))
+            {
+                this.Emitter.AsyncVariables.Add(result);
+            }
+
+            return result;
         }
 
         protected virtual string GetUniqueName(string name)
