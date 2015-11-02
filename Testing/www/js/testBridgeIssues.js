@@ -509,6 +509,8 @@ Bridge.define('ClientTestLibrary.Bridge544', {
             assert.equal(o, true, "Bridge544 bool");
         },
         testRelated: function (assert) {
+            assert.expect(5);
+
             var i = Bridge.merge(new Bridge.Int(), JSON.parse("25"));
             assert.equal(i, 25, "Bridge544 int");
 
@@ -516,15 +518,10 @@ Bridge.define('ClientTestLibrary.Bridge544', {
             assert.equal(dbl, 26.1, "Bridge544 double");
 
             var d = Bridge.merge(new Bridge.Decimal(), JSON.parse("27.2"));
-            assert.equal(i, Bridge.Decimal(27.2), "Bridge544 decimal");
-        }
-    }
-});
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(assert, d, 27.2, "Bridge544 decimal");
 
-Bridge.define('ClientTestLibrary.Bridge544.DateContainer', {
-    config: {
-        init: function () {
-            Bridge.property(this, "Date", new Date());
+            var s = Bridge.merge(new String(), JSON.parse("\"Some string\""));
+            assert.equal(s, "Some string", "Bridge544 string");
         }
     }
 });

@@ -2,6 +2,8 @@ using Bridge;
 using Bridge.Html5;
 using Bridge.QUnit;
 
+using ClientTestLibrary.Utilities;
+
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -22,6 +24,8 @@ namespace ClientTestLibrary
 
         public static void TestRelated(Assert assert)
         {
+            assert.Expect(5);
+
             var i = JSON.Parse<int>("25");
             assert.Equal(i, 25, "Bridge544 int");
 
@@ -29,12 +33,10 @@ namespace ClientTestLibrary
             assert.Equal(dbl, 26.1d, "Bridge544 double");
 
             var d = JSON.Parse<decimal>("27.2");
-            assert.Equal(i, 27.2m, "Bridge544 decimal");
-        }
+            DecimalHelper.AssertIsDecimalAndEqualTo(assert, d, 27.2, "Bridge544 decimal");
 
-        private class DateContainer
-        {
-            public DateTime Date { get; set; }
+            var s = JSON.Parse<string>("\"Some string\"");
+            assert.Equal(s, "Some string", "Bridge544 string");
         }
     }
 }
