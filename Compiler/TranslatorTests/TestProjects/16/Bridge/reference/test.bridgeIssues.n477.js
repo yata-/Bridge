@@ -68,3 +68,4 @@ Bridge.define('Test.BridgeIssues.N477.App2', {
         this.methodA$1("Y", 4000);
     }
 });
+

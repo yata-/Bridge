@@ -270,11 +270,20 @@ namespace Bridge.Translator
                     {
                         this.WriteScript(memberResult.ConstantValue);
                     }
-                    else if (memberResult != null && memberResult.Member is DefaultResolvedEvent && this.Emitter.IsAssignment && (this.Emitter.AssignmentType == AssignmentOperatorType.Add || this.Emitter.AssignmentType == AssignmentOperatorType.Subtract))
+                    else if (memberResult != null && memberResult.Member is DefaultResolvedEvent)
                     {
-                        this.Write(this.Emitter.AssignmentType == AssignmentOperatorType.Add ? "add" : "remove");
-                        this.Write(OverloadsCollection.Create(this.Emitter, memberResult.Member).GetOverloadName());
-                        this.WriteOpenParentheses();
+                        if (this.Emitter.IsAssignment &&
+                            (this.Emitter.AssignmentType == AssignmentOperatorType.Add ||
+                             this.Emitter.AssignmentType == AssignmentOperatorType.Subtract))
+                        {
+                            this.Write(this.Emitter.AssignmentType == AssignmentOperatorType.Add ? "add" : "remove");
+                            this.Write(OverloadsCollection.Create(this.Emitter, memberResult.Member).GetOverloadName());
+                            this.WriteOpenParentheses();
+                        }
+                        else
+                        {
+                            this.Write(this.Emitter.GetEntityName(memberResult.Member, true));
+                        }
                     }
                     else
                     {
@@ -602,21 +611,33 @@ namespace Bridge.Translator
                     this.PushWriter(Helpers.GetPropertyRef(memberResult.Member, this.Emitter, true) + "({0})");
                 }
             }
-            else if (memberResult != null && memberResult.Member is DefaultResolvedEvent && this.Emitter.IsAssignment && (this.Emitter.AssignmentType == AssignmentOperatorType.Add || this.Emitter.AssignmentType == AssignmentOperatorType.Subtract))
+            else if (memberResult != null && memberResult.Member is DefaultResolvedEvent)
             {
-                this.WriteTarget(memberResult);
-
-                if (!string.IsNullOrWhiteSpace(inlineCode))
+                if (this.Emitter.IsAssignment &&
+                    (this.Emitter.AssignmentType == AssignmentOperatorType.Add ||
+                     this.Emitter.AssignmentType == AssignmentOperatorType.Subtract))
                 {
-                    this.Write(inlineCode);
+                    this.WriteTarget(memberResult);
+
+                    if (!string.IsNullOrWhiteSpace(inlineCode))
+                    {
+                        this.Write(inlineCode);
+                    }
+                    else
+                    {
+                        this.Write(this.Emitter.AssignmentType == AssignmentOperatorType.Add ? "add" : "remove");
+                        this.Write(
+                            OverloadsCollection.Create(this.Emitter, memberResult.Member,
+                                this.Emitter.AssignmentType == AssignmentOperatorType.Subtract).GetOverloadName());
+                    }
+
+                    this.WriteOpenParentheses();
                 }
                 else
                 {
-                    this.Write(this.Emitter.AssignmentType == AssignmentOperatorType.Add ? "add" : "remove");
-                    this.Write(OverloadsCollection.Create(this.Emitter, memberResult.Member, this.Emitter.AssignmentType == AssignmentOperatorType.Subtract).GetOverloadName());
+                    this.WriteTarget(memberResult);
+                    this.Write(this.Emitter.GetEntityName(memberResult.Member, true));
                 }
-
-                this.WriteOpenParentheses();
             }
             else
             {
