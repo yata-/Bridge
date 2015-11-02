@@ -876,11 +876,22 @@ namespace Bridge.Translator
                         this.Write(OverloadsCollection.Create(this.Emitter, invocationResult.Member).GetOverloadName());
                     }
                 }
-                else if (member.Member is DefaultResolvedEvent && this.Emitter.IsAssignment && (this.Emitter.AssignmentType == AssignmentOperatorType.Add || this.Emitter.AssignmentType == AssignmentOperatorType.Subtract))
+                else if (member.Member is DefaultResolvedEvent)
                 {
-                    this.Write(this.Emitter.AssignmentType == AssignmentOperatorType.Add ? "add" : "remove");
-                    this.Write(OverloadsCollection.Create(this.Emitter, member.Member, this.Emitter.AssignmentType == AssignmentOperatorType.Subtract).GetOverloadName());
-                    this.WriteOpenParentheses();
+                    if (this.Emitter.IsAssignment &&
+                        (this.Emitter.AssignmentType == AssignmentOperatorType.Add ||
+                         this.Emitter.AssignmentType == AssignmentOperatorType.Subtract))
+                    {
+                        this.Write(this.Emitter.AssignmentType == AssignmentOperatorType.Add ? "add" : "remove");
+                        this.Write(
+                            OverloadsCollection.Create(this.Emitter, member.Member,
+                                this.Emitter.AssignmentType == AssignmentOperatorType.Subtract).GetOverloadName());
+                        this.WriteOpenParentheses();
+                    }
+                    else
+                    {
+                        this.Write(this.Emitter.GetEntityName(member.Member, true));
+                    }
                 }
                 else
                 {
