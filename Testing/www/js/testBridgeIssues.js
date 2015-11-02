@@ -500,6 +500,35 @@ Bridge.define('ClientTestLibrary.Bridge514', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge544', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var o = Bridge.merge(new Boolean(), JSON.parse("true"));
+            assert.equal(o, true, "Bridge544 bool");
+        },
+        testRelated: function (assert) {
+            var i = Bridge.merge(new Bridge.Int(), JSON.parse("25"));
+            assert.equal(i, 25, "Bridge544 int");
+
+            var dbl = Bridge.merge(new Number(), JSON.parse("26.1"));
+            assert.equal(dbl, 26.1, "Bridge544 double");
+
+            var d = Bridge.merge(new Bridge.Decimal(), JSON.parse("27.2"));
+            assert.equal(i, Bridge.Decimal(27.2), "Bridge544 decimal");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge544.DateContainer', {
+    config: {
+        init: function () {
+            Bridge.property(this, "Date", new Date());
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
