@@ -536,6 +536,70 @@ Bridge.define('ClientTestLibrary.Bridge520.Source', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge522', {
+    statics: {
+        testUseCase1: function (assert) {
+            assert.expect(2);
+
+            var dc1 = new ClientTestLibrary.Bridge522.DerivedClass1();
+            dc1.addValue(5);
+
+            assert.equal(dc1.getValues().getCount(), 1, "Bridge522 dc1.Count = 1");
+
+            var dc2 = new ClientTestLibrary.Bridge522.DerivedClass1();
+            assert.equal(dc2.getValues().getCount(), 0, "Bridge522 dc2.Count = 0");
+        },
+        testUseCase2: function (assert) {
+            assert.expect(2);
+
+            var dc1 = new ClientTestLibrary.Bridge522.DerivedClass2();
+            dc1.addValue(5);
+
+            assert.equal(dc1.getValues().getCount(), 1, "Bridge522 dc1.Count = 1");
+
+            var dc2 = new ClientTestLibrary.Bridge522.DerivedClass2();
+            assert.equal(dc2.getValues().getCount(), 0, "Bridge522 dc2.Count = 0");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge522.BaseClass', {
+    config: {
+        init: function () {
+            this.values = new Bridge.List$1(Bridge.Int)();
+        }
+    },
+    addValue: function (a) {
+        this.values.add(a);
+    },
+    getValues: function () {
+        return this.values;
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge522.DerivedClass2', {
+    inherits: [ClientTestLibrary.Bridge522.BaseClass],
+    config: {
+        properties: {
+            B: 0
+        }
+    },
+    constructor: function () {
+        ClientTestLibrary.Bridge522.BaseClass.prototype.$constructor.call(this);
+
+
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge522.DerivedClass1', {
+    inherits: [ClientTestLibrary.Bridge522.BaseClass],
+    constructor: function () {
+        ClientTestLibrary.Bridge522.BaseClass.prototype.$constructor.call(this);
+
+
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
