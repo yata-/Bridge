@@ -615,6 +615,68 @@ Bridge.define('ClientTestLibrary.Bridge532', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge537', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            assert.equal(ClientTestLibrary.Bridge537B.testB1(), 2, "Bridge537 TestB1");
+
+            assert.equal(ClientTestLibrary.Bridge537B.testB2(), 1, "Bridge537 TestB2");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge537A', {
+    id: 0
+});
+
+Bridge.define('ClientTestLibrary.Bridge537B', {
+    inherits: [Bridge.IEnumerable$1(ClientTestLibrary.Bridge537A)],
+    statics: {
+        getCount: function (l) {
+            return l.list.getCount();
+        },
+        testB1: function () {
+            var l = new ClientTestLibrary.Bridge537B();
+
+            l.add(Bridge.merge(new ClientTestLibrary.Bridge537A(), {
+                id: 101
+            } ));
+            l.add(Bridge.merge(new ClientTestLibrary.Bridge537A(), {
+                id: 102
+            } ));
+
+            return l.getCount();
+        },
+        testB2: function () {
+            var l = new ClientTestLibrary.Bridge537B();
+
+            l.add(Bridge.merge(new ClientTestLibrary.Bridge537A(), {
+                id: 103
+            } ));
+
+            return ClientTestLibrary.Bridge537B.getCount(l);
+        }
+    },
+    list: null,
+    constructor: function () {
+        this.list = new Bridge.List$1(ClientTestLibrary.Bridge537A)();
+    },
+    add: function (value) {
+        this.list.add(value);
+    },
+    getEnumerator$1: function () {
+        return this.list.getEnumerator();
+    },
+    getEnumerator: function () {
+        return this.list.getEnumerator();
+    },
+    getCount: function () {
+        return this.list.getCount();
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge538', {
     statics: {
         testUseCase: function (assert) {
