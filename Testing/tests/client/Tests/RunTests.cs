@@ -46,6 +46,11 @@ namespace ClientTestLibrary
             QUnit.Test("String #393", TestStringFunctions.IssueBridge393);
             QUnit.Test("StringBuilder", TestStringBuilderFunctions.StringBuilders);
 
+            QUnit.Module("Enum");
+            QUnit.Test("Parse", TestEnum.TestParse);
+            QUnit.Test("ToString", TestEnum.TestToString);
+            QUnit.Test("TestGetValues", TestEnum.TestGetValues);
+
             QUnit.Module("Date and time");
             QUnit.Test("Common", TestDateFunctions.DateTimes);
             QUnit.Test("#329", TestDateFunctions.Bridge329);
