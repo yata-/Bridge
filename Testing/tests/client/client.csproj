@@ -44,6 +44,9 @@
     <Compile Include="Tests\BasicCSharp\TestVirtualMethods.cs" />
     <Compile Include="Tests\BasicCSharp\TestAbstractClass.cs" />
     <Compile Include="Tests\BasicCSharp\TestTryCatchFinallyBlocks.cs" />
+    <Compile Include="Tests\BridgeIssues\N537B2 .cs" />
+    <Compile Include="Tests\BridgeIssues\N537B1.cs" />
+    <Compile Include="Tests\BridgeIssues\N537A.cs" />
     <Compile Include="Tests\BridgeIssues\N544.cs" />
     <Compile Include="Tests\BridgeIssues\N538.cs" />
     <Compile Include="Tests\BridgeIssues\N532.cs" />
