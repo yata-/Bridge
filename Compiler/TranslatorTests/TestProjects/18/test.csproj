@@ -41,6 +41,7 @@
     <Compile Include="TestIssue434.cs" />
     <Compile Include="Test2.cs" />
     <Compile Include="Test1.cs" />
+    <Compile Include="TestIssue461.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Bridge\bridge.json" />
