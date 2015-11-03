@@ -10,7 +10,6 @@ namespace Bridge.Translator
     {
         public Inspector()
         {
-            this.Usings = new HashSet<string>();
             this.Types = new List<ITypeInfo>();
             this.AssemblyInfo = new AssemblyInfo();
         }
