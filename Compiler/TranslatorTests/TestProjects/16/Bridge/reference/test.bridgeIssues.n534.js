@@ -12,3 +12,4 @@ Bridge.define('Test.BridgeIssues.N534.Bridge534', {
         DecimalValue2: Bridge.Decimal(11.0)
     }
 });
+
