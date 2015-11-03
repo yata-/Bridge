@@ -44,6 +44,14 @@
     <Compile Include="Tests\BasicCSharp\TestVirtualMethods.cs" />
     <Compile Include="Tests\BasicCSharp\TestAbstractClass.cs" />
     <Compile Include="Tests\BasicCSharp\TestTryCatchFinallyBlocks.cs" />
+    <Compile Include="Tests\BridgeIssues\N537B2 .cs" />
+    <Compile Include="Tests\BridgeIssues\N537B1.cs" />
+    <Compile Include="Tests\BridgeIssues\N537A.cs" />
+    <Compile Include="Tests\BridgeIssues\N544.cs" />
+    <Compile Include="Tests\BridgeIssues\N538.cs" />
+    <Compile Include="Tests\BridgeIssues\N532.cs" />
+    <Compile Include="Tests\BridgeIssues\N522.cs" />
+    <Compile Include="Tests\BridgeIssues\N520.cs" />
     <Compile Include="Tests\BridgeIssues\N514.cs" />
     <Compile Include="Tests\BridgeIssues\N501.cs" />
     <Compile Include="Tests\BridgeIssues\N485.cs" />
@@ -76,6 +84,7 @@
     <Compile Include="Tests\SystemFunctions\TestStringFunctions.cs" />
     <Compile Include="Tests\BasicCSharp\TestValueTypes.cs" />
     <Compile Include="Utilities\BrowserHelper.cs" />
+    <Compile Include="Utilities\DecimalHelper.cs" />
     <Compile Include="Utilities\TypeHelper.cs" />
     <Compile Include="Utilities\TestData.cs" />
   </ItemGroup>

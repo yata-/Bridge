@@ -88,6 +88,19 @@ namespace Bridge.Translator
             OperatorResolveResult orr = resolveOperator as OperatorResolveResult;
             var leftResolverResult = this.Emitter.Resolver.ResolveNode(binaryOperatorExpression.Left, this.Emitter);
             var rightResolverResult = this.Emitter.Resolver.ResolveNode(binaryOperatorExpression.Right, this.Emitter);
+            var charToString = -1;
+
+            if (orr != null && orr.Type.IsKnownType(KnownTypeCode.String))
+            {
+                for (int i = 0; i < orr.Operands.Count; i++)
+                {
+                    var crr = orr.Operands[i] as ConversionResolveResult;
+                    if (crr != null && crr.Input.Type.IsKnownType(KnownTypeCode.Char))
+                    {
+                        charToString = i;
+                    }
+                }
+            }
 
             if (resolveOperator is ConstantResolveResult)
             {
@@ -160,7 +173,17 @@ namespace Bridge.Translator
             }
             else
             {
+                if (charToString == 0)
+                {
+                    this.Write("String.fromCharCode(");
+                }
+
                 binaryOperatorExpression.Left.AcceptVisitor(this.Emitter);
+                
+                if (charToString == 0)
+                {
+                    this.Write(")");
+                }
             }
 
             if (!delegateOperator)
@@ -275,7 +298,18 @@ namespace Bridge.Translator
             if (special)
             {
                 this.WriteOpenParentheses();
+                if (charToString == 0)
+                {
+                    this.Write("String.fromCharCode(");
+                }
+
                 binaryOperatorExpression.Left.AcceptVisitor(this.Emitter);
+
+                if (charToString == 0)
+                {
+                    this.Write(")");
+                }
+
                 this.WriteComma();
             }
             else
@@ -283,7 +317,17 @@ namespace Bridge.Translator
                 this.WriteSpace();
             }
 
+            if (charToString == 1)
+            {
+                this.Write("String.fromCharCode(");
+            }
+
             binaryOperatorExpression.Right.AcceptVisitor(this.Emitter);
+
+            if (charToString == 1)
+            {
+                this.Write(")");
+            }
 
             if (delegateOperator || special)
             {

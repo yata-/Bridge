@@ -127,9 +127,10 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
             this.checkIndex(index + count - 1);
 
             var result = [],
-                i;
-
-            for (i = index; i < count; i++) {
+                i,
+				maxIndex = index + count;
+				
+            for (i = index; i < maxIndex; i++) {
                 result.push(this.items[i]);
             }
 

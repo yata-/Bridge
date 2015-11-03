@@ -356,9 +356,9 @@ namespace Bridge.Translator
 
                 string name = null;
 
-                if (this.TypeInfo.TypeDeclaration.BaseTypes.Any())
+                if (this.TypeInfo.GetBaseTypes(this.Emitter).Any())
                 {
-                    name = BridgeTypes.ToJsName(this.TypeInfo.TypeDeclaration.BaseTypes.First(), this.Emitter);
+                    name = BridgeTypes.ToJsName(this.TypeInfo.GetBaseClass(this.Emitter), this.Emitter);
                 }
                 else
                 {
