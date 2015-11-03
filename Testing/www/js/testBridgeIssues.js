@@ -66,13 +66,15 @@ Bridge.define('ClientTestLibrary.Bridge272.MyEnum', {
         abc: 1,
         def: 2,
         ghi: 3
-    }
+    },
+    enum: true
 });
 
 Bridge.define('ClientTestLibrary.Bridge277', {
     statics: {
         $int: 0
-    }
+    },
+    enum: true
 });
 
 Bridge.define('ClientTestLibrary.Bridge294', {
@@ -290,7 +292,8 @@ Bridge.define('ClientTestLibrary.Bridge422', {
         first: 0,
         next: 100,
         afterNext: 101
-    }
+    },
+    enum: true
 });
 
 Bridge.define('ClientTestLibrary.Bridge436First', {
@@ -496,6 +499,224 @@ Bridge.define('ClientTestLibrary.Bridge514', {
 
             var d2 = Bridge.Decimal(-7.1);
             assert.equal(d2.sign(), -1, "Bridge514 Sign(decimal -7.1)");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge520', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var s = new ClientTestLibrary.Bridge520.Source();
+            s.fire();
+
+            assert.equal(s.getCounter(), 1, "Bridge520 Counter");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge520.Source', {
+    config: {
+        events: {
+            Fired: null
+        },
+        properties: {
+            Counter: 0
+        }
+    },
+    fire: function () {
+        var getEvt = function (s) {
+            return s.Fired;
+        };
+        var evt = getEvt(this);
+
+        evt = Bridge.fn.combine(evt, Bridge.fn.bind(this, function (sender, args) {
+            this.setCounter(this.getCounter()+1);
+        }));
+
+        evt(this, new Object());
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge522', {
+    statics: {
+        testUseCase1: function (assert) {
+            assert.expect(2);
+
+            var dc1 = new ClientTestLibrary.Bridge522.DerivedClass1();
+            dc1.addValue(5);
+
+            assert.equal(dc1.getValues().getCount(), 1, "Bridge522 dc1.Count = 1");
+
+            var dc2 = new ClientTestLibrary.Bridge522.DerivedClass1();
+            assert.equal(dc2.getValues().getCount(), 0, "Bridge522 dc2.Count = 0");
+        },
+        testUseCase2: function (assert) {
+            assert.expect(2);
+
+            var dc1 = new ClientTestLibrary.Bridge522.DerivedClass2();
+            dc1.addValue(5);
+
+            assert.equal(dc1.getValues().getCount(), 1, "Bridge522 dc1.Count = 1");
+
+            var dc2 = new ClientTestLibrary.Bridge522.DerivedClass2();
+            assert.equal(dc2.getValues().getCount(), 0, "Bridge522 dc2.Count = 0");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge522.BaseClass', {
+    config: {
+        init: function () {
+            this.values = new Bridge.List$1(Bridge.Int)();
+        }
+    },
+    addValue: function (a) {
+        this.values.add(a);
+    },
+    getValues: function () {
+        return this.values;
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge522.DerivedClass2', {
+    inherits: [ClientTestLibrary.Bridge522.BaseClass],
+    config: {
+        properties: {
+            B: 0
+        }
+    },
+    constructor: function () {
+        ClientTestLibrary.Bridge522.BaseClass.prototype.$constructor.call(this);
+
+
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge522.DerivedClass1', {
+    inherits: [ClientTestLibrary.Bridge522.BaseClass],
+    constructor: function () {
+        ClientTestLibrary.Bridge522.BaseClass.prototype.$constructor.call(this);
+
+
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge532', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(3);
+
+            var list = new Bridge.List$1(Bridge.Int)([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+
+            assert.deepEqual(list.getRange(0, 2).toArray(), [1, 2], "Bridge532 (0, 2)");
+            assert.deepEqual(list.getRange(1, 2).toArray(), [2, 3], "Bridge532 (1, 2)");
+            assert.deepEqual(list.getRange(6, 3).toArray(), [7, 8, 9], "Bridge532 (6, 3)");
+
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge537', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            assert.equal(ClientTestLibrary.Bridge537B.testB1(), 2, "Bridge537 TestB1");
+
+            assert.equal(ClientTestLibrary.Bridge537B.testB2(), 1, "Bridge537 TestB2");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge537A', {
+    id: 0
+});
+
+Bridge.define('ClientTestLibrary.Bridge537B', {
+    inherits: [Bridge.IEnumerable$1(ClientTestLibrary.Bridge537A)],
+    statics: {
+        getCount: function (l) {
+            return l.list.getCount();
+        },
+        testB1: function () {
+            var l = new ClientTestLibrary.Bridge537B();
+
+            l.add(Bridge.merge(new ClientTestLibrary.Bridge537A(), {
+                id: 101
+            } ));
+            l.add(Bridge.merge(new ClientTestLibrary.Bridge537A(), {
+                id: 102
+            } ));
+
+            return l.getCount();
+        },
+        testB2: function () {
+            var l = new ClientTestLibrary.Bridge537B();
+
+            l.add(Bridge.merge(new ClientTestLibrary.Bridge537A(), {
+                id: 103
+            } ));
+
+            return ClientTestLibrary.Bridge537B.getCount(l);
+        }
+    },
+    list: null,
+    constructor: function () {
+        this.list = new Bridge.List$1(ClientTestLibrary.Bridge537A)();
+    },
+    add: function (value) {
+        this.list.add(value);
+    },
+    getEnumerator$1: function () {
+        return this.list.getEnumerator();
+    },
+    getEnumerator: function () {
+        return this.list.getEnumerator();
+    },
+    getCount: function () {
+        return this.list.getCount();
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge538', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var srcString = "123";
+            var destString = "4";
+
+            destString += String.fromCharCode(srcString.charCodeAt(2));
+
+            assert.deepEqual(destString, "43", "Bridge538 '43'");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge544', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var o = Bridge.merge(new Boolean(), JSON.parse("true"));
+            assert.equal(o, true, "Bridge544 bool");
+        },
+        testRelated: function (assert) {
+            assert.expect(5);
+
+            var i = Bridge.merge(new Bridge.Int(), JSON.parse("25"));
+            assert.equal(i, 25, "Bridge544 int");
+
+            var dbl = Bridge.merge(new Number(), JSON.parse("26.1"));
+            assert.equal(dbl, 26.1, "Bridge544 double");
+
+            var d = Bridge.merge(new Bridge.Decimal(), JSON.parse("27.2"));
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(assert, d, 27.2, "Bridge544 decimal");
+
+            var s = Bridge.merge(new String(), JSON.parse("\"Some string\""));
+            assert.equal(s, "Some string", "Bridge544 string");
         }
     }
 });

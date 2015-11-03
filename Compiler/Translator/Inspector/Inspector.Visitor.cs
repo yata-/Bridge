@@ -16,10 +16,6 @@ namespace Bridge.Translator
 
         public override void VisitUsingDeclaration(UsingDeclaration usingDeclaration)
         {
-            if (!this.Usings.Contains(usingDeclaration.Namespace))
-            {
-                this.Usings.Add(usingDeclaration.Namespace);
-            }
         }
 
         public override void VisitNamespaceDeclaration(NamespaceDeclaration namespaceDeclaration)
@@ -32,15 +28,12 @@ namespace Bridge.Translator
             ValidateNamespace(namespaceDeclaration);
 
             var prevNamespace = this.Namespace;
-            var prevUsings = this.Usings;
 
             this.Namespace = namespaceDeclaration.Name;
-            this.Usings = new HashSet<string>(prevUsings);
 
             namespaceDeclaration.AcceptChildren(this);
 
             this.Namespace = prevNamespace;
-            this.Usings = prevUsings;
         }
 
         public override void VisitTypeDeclaration(TypeDeclaration typeDeclaration)
@@ -83,7 +76,6 @@ namespace Bridge.Translator
                     Name = typeDeclaration.Name,
                     ClassType = typeDeclaration.ClassType,
                     Namespace = this.Namespace,
-                    Usings = new HashSet<string>(Usings),
                     IsEnum = typeDeclaration.ClassType == ClassType.Enum,
                     IsStatic = typeDeclaration.ClassType == ClassType.Enum || typeDeclaration.HasModifier(Modifiers.Static),
                     IsObjectLiteral = this.IsObjectLiteral(typeDeclaration),
@@ -98,6 +90,7 @@ namespace Bridge.Translator
             else
             {
                 this.CurrentType = partialType;
+                this.CurrentType.PartialTypeDeclarations.Add(typeDeclaration);
                 add = false;
             }
 

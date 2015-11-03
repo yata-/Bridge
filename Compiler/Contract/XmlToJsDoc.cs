@@ -515,7 +515,7 @@ namespace Bridge.Contract
         {
             var list = new List<string>();
 
-            foreach (var t in emitter.BridgeTypes.Get(type).TypeInfo.TypeDeclaration.BaseTypes)
+            foreach (var t in emitter.BridgeTypes.Get(type).TypeInfo.GetBaseTypes(emitter))
             {
                 var name = XmlToJsDoc.ToJavascriptName(t, emitter);
 
