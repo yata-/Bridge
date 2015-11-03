@@ -424,13 +424,13 @@ namespace System
             return null;
         }
 
-        [Template("new Date({d} - new Date(({t}) / 10000))")]
+        [Template("new Date({d} - new Date(({t}).ticks / 10000))")]
         public static DateTime operator -(DateTime d, TimeSpan t)
         {
             return default(DateTime);
         }
 
-        [Template("new Date({d}.getTime() + (({t}) / 10000))")]
+        [Template("new Date({d}.getTime() + (({t}).ticks / 10000))")]
         public static DateTime operator +(DateTime d, TimeSpan t)
         {
             return default(DateTime);
