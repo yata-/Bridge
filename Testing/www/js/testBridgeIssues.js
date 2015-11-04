@@ -721,6 +721,44 @@ Bridge.define('ClientTestLibrary.Bridge544', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge546', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var date = new Date(2015, 1 - 1, 1, 0, 0, 0, 0);
+
+            var i = 1;
+            var d = new Date(date.valueOf() + Math.round((10 + 20 * i) * 6e4));
+
+            assert.equal(d.getMinutes(), 30, "Bridge546 30 minutes");
+        },
+        testRelated: function (assert) {
+            assert.expect(5);
+
+            var date = new Date(2015, 1 - 1, 1, 0, 0, 0, 0);
+            var span1 = new Bridge.TimeSpan(0, 15, 0);
+            var span2 = new Bridge.TimeSpan(0, 7, 0);
+            var i = 1;
+
+            var d1 = new Date(new Date(date - new Date((span1).ticks / 10000)) - new Date((span2).ticks / 10000));
+            assert.equal(d1.getMinutes(), 38, "Bridge546 d1");
+
+            var d2 = new Date(new Date(date.getTime() + ((span1).ticks / 10000)).getTime() + ((span2).ticks / 10000));
+            assert.equal(d2.getMinutes(), 22, "Bridge546 d2");
+
+            var d3 = new Date(date.valueOf() + Math.round((10 + 20 * i) * 864e5));
+            assert.equal(d3.getDate(), 31, "Bridge546 d3");
+
+            var d4 = new Date(date.valueOf() + Math.round((10 + 20 * i) * 36e5));
+            assert.equal(d4.getHours(), 6, "Bridge546 d4");
+
+            var d5 = new Date(date.valueOf() + Math.round((12 + 20 * i) * 1e3));
+            assert.equal(d5.getSeconds(), 32, "Bridge546 d5");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
