@@ -48,8 +48,16 @@ namespace ClientTestLibrary
 
             QUnit.Module("Enum");
             QUnit.Test("Parse", TestEnum.TestParse);
+            QUnit.Test("ParseIgnoreCase", TestEnum.TestParseIgnoreCase);
             QUnit.Test("ToString", TestEnum.TestToString);
-            QUnit.Test("TestGetValues", TestEnum.TestGetValues);
+            QUnit.Test("GetValues", TestEnum.TestGetValues);
+            QUnit.Test("CompareTo", TestEnum.TestCompareTo);
+            QUnit.Test("Format", TestEnum.TestFormat);
+            QUnit.Test("GetName", TestEnum.TestGetName);
+            QUnit.Test("GetNames", TestEnum.TestGetNames);
+            QUnit.Test("HasFlag", TestEnum.TestHasFlag);
+            QUnit.Test("IsDefined", TestEnum.TestIsDefined);
+            QUnit.Test("TryParse", TestEnum.TestTryParse);
 
             QUnit.Module("Date and time");
             QUnit.Test("Common", TestDateFunctions.DateTimes);
