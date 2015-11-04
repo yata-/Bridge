@@ -174,6 +174,22 @@ namespace Bridge.Translator
 
         protected virtual void EmitInstantiableBlock()
         {
+            if (this.TypeInfo.IsEnum)
+            {
+                this.EnsureComma();
+                this.Write("enum: true");
+                this.Emitter.Comma = true;
+
+                if (this.Emitter.GetTypeDefinition(this.TypeInfo.Type)
+                        .CustomAttributes.Any(attr => attr.AttributeType.FullName == "System.FlagsAttribute"))
+                {
+                    this.EnsureComma();
+                    this.Write("flags: true");
+                    this.Emitter.Comma = true;
+                }
+            }
+
+
             var ctorBlock = new ConstructorBlock(this.Emitter, this.TypeInfo, false);
 
             if (this.TypeInfo.HasInstantiable || this.Emitter.Plugins.HasConstructorInjectors(ctorBlock))

@@ -46,6 +46,19 @@ namespace ClientTestLibrary
             QUnit.Test("String #393", TestStringFunctions.IssueBridge393);
             QUnit.Test("StringBuilder", TestStringBuilderFunctions.StringBuilders);
 
+            QUnit.Module("Enum");
+            QUnit.Test("Parse", TestEnum.TestParse);
+            QUnit.Test("ParseIgnoreCase", TestEnum.TestParseIgnoreCase);
+            QUnit.Test("ToString", TestEnum.TestToString);
+            QUnit.Test("GetValues", TestEnum.TestGetValues);
+            QUnit.Test("CompareTo", TestEnum.TestCompareTo);
+            QUnit.Test("Format", TestEnum.TestFormat);
+            QUnit.Test("GetName", TestEnum.TestGetName);
+            QUnit.Test("GetNames", TestEnum.TestGetNames);
+            QUnit.Test("HasFlag", TestEnum.TestHasFlag);
+            QUnit.Test("IsDefined", TestEnum.TestIsDefined);
+            QUnit.Test("TryParse", TestEnum.TestTryParse);
+
             QUnit.Module("Date and time");
             QUnit.Test("Common", TestDateFunctions.DateTimes);
             QUnit.Test("#329", TestDateFunctions.Bridge329);
@@ -112,6 +125,16 @@ namespace ClientTestLibrary
             QUnit.Test("#501", Bridge501.TestUseCase);
             QUnit.Test("#514", Bridge514.TestUseCase);
             QUnit.Test("#514", Bridge514.TestRelated);
+            QUnit.Test("#520", Bridge520.TestUseCase);
+            QUnit.Test("#522", Bridge522.TestUseCase1);
+            QUnit.Test("#522", Bridge522.TestUseCase2);
+            QUnit.Test("#532", Bridge532.TestUseCase);
+            QUnit.Test("#537", Bridge537.TestUseCase);
+            QUnit.Test("#538", Bridge538.TestUseCase);
+            QUnit.Test("#544", Bridge544.TestUseCase);
+            QUnit.Test("#544", Bridge544.TestRelated);
+            QUnit.Test("#546", Bridge546.TestUseCase);
+            QUnit.Test("#546", Bridge546.TestRelated);
 
             QUnit.Module("LINQ");
             QUnit.Test("Aggregate operators", TestLinqAggregateOperators.Test);

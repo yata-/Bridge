@@ -44,6 +44,19 @@ Bridge.define('ClientTestLibrary.RunTests', {
             QUnit.test("String #393", ClientTestLibrary.TestStringFunctions.issueBridge393);
             QUnit.test("StringBuilder", ClientTestLibrary.TestStringBuilderFunctions.stringBuilders);
 
+            QUnit.module("Enum");
+            QUnit.test("Parse", ClientTestLibrary.TestEnum.testParse);
+            QUnit.test("ParseIgnoreCase", ClientTestLibrary.TestEnum.testParseIgnoreCase);
+            QUnit.test("ToString", ClientTestLibrary.TestEnum.testToString);
+            QUnit.test("GetValues", ClientTestLibrary.TestEnum.testGetValues);
+            QUnit.test("CompareTo", ClientTestLibrary.TestEnum.testCompareTo);
+            QUnit.test("Format", ClientTestLibrary.TestEnum.testFormat);
+            QUnit.test("GetName", ClientTestLibrary.TestEnum.testGetName);
+            QUnit.test("GetNames", ClientTestLibrary.TestEnum.testGetNames);
+            QUnit.test("HasFlag", ClientTestLibrary.TestEnum.testHasFlag);
+            QUnit.test("IsDefined", ClientTestLibrary.TestEnum.testIsDefined);
+            QUnit.test("TryParse", ClientTestLibrary.TestEnum.testTryParse);
+
             QUnit.module("Date and time");
             QUnit.test("Common", ClientTestLibrary.TestDateFunctions.dateTimes);
             QUnit.test("#329", ClientTestLibrary.TestDateFunctions.bridge329);
@@ -110,6 +123,16 @@ Bridge.define('ClientTestLibrary.RunTests', {
             QUnit.test("#501", ClientTestLibrary.Bridge501.testUseCase);
             QUnit.test("#514", ClientTestLibrary.Bridge514.testUseCase);
             QUnit.test("#514", ClientTestLibrary.Bridge514.testRelated);
+            QUnit.test("#520", ClientTestLibrary.Bridge520.testUseCase);
+            QUnit.test("#522", ClientTestLibrary.Bridge522.testUseCase1);
+            QUnit.test("#522", ClientTestLibrary.Bridge522.testUseCase2);
+            QUnit.test("#532", ClientTestLibrary.Bridge532.testUseCase);
+            QUnit.test("#537", ClientTestLibrary.Bridge537.testUseCase);
+            QUnit.test("#538", ClientTestLibrary.Bridge538.testUseCase);
+            QUnit.test("#544", ClientTestLibrary.Bridge544.testUseCase);
+            QUnit.test("#544", ClientTestLibrary.Bridge544.testRelated);
+            QUnit.test("#546", ClientTestLibrary.Bridge546.testUseCase);
+            QUnit.test("#546", ClientTestLibrary.Bridge546.testRelated);
 
             QUnit.module("LINQ");
             QUnit.test("Aggregate operators", ClientTestLibrary.Linq.TestLinqAggregateOperators.test);
