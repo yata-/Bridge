@@ -1406,7 +1406,11 @@
 (function () {
     var enumMethods = {
         nameEquals: function (n1, n2, ignoreCase) {
-            return (ignoreCase ? (n1.charAt(0).toLowerCase() + n1.slice(1)) : n1) === (n2.charAt(0).toLowerCase() + n2.slice(1));
+            if (ignoreCase) {
+                return n1.toLowerCase() === n2.toLowerCase();
+            }
+
+            return (n1.charAt(0).toLowerCase() + n1.slice(1)) === (n2.charAt(0).toLowerCase() + n2.slice(1));
         },
 
         checkEnumType: function(enumType) {
@@ -1436,7 +1440,7 @@
                 }
             }
             else {
-                var parts = s.split('|');
+                var parts = s.split(',');
                 var value = 0;
                 var parsed = true;
 
@@ -1480,7 +1484,7 @@
                     }
                 }
                 //throw new Bridge.ArgumentException('Invalid Enumeration Value');
-                return value;
+                return value.toString();
             }
             else {
                 var parts = [];
@@ -1491,9 +1495,9 @@
                 }
                 if (!parts.length) {
                     //throw new Bridge.ArgumentException('Invalid Enumeration Value');
-                    return value;
+                    return value.toString();
                 }
-                return parts.join(' , ');
+                return parts.join(', ');
             }
         },
 
@@ -1512,7 +1516,7 @@
             Bridge.Enum.checkEnumType(enumType);
 
             var name;
-            if (!Bridge.isValue(value) && (name = "value") || !Bridge.isValue(format) && (name = "format")) {
+            if (!Bridge.hasValue(value) && (name = "value") || !Bridge.hasValue(format) && (name = "format")) {
                 throw new Bridge.ArgumentNullException(name);
             }
 
@@ -1525,7 +1529,7 @@
                     return value.toString(16);
                 case "d":
                 case "D":
-                    return value;
+                    return value.toString();
                 case "f":
                 case "F":
                     return Bridge.Enum.toString(enumType, value, true);
@@ -1564,8 +1568,9 @@
         isDefined: function (enumType, value) {
             Bridge.Enum.checkEnumType(enumType);
             var values = enumType;
+            var isString = Bridge.isString(value);
             for (var i in values) {
-                if (values[i] === value) {
+                if (isString ? enumMethods.nameEquals(i, value, false) : values[i] === value) {
                     return true;
                 }
             }
