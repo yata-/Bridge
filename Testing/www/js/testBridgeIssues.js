@@ -66,13 +66,15 @@ Bridge.define('ClientTestLibrary.Bridge272.MyEnum', {
         abc: 1,
         def: 2,
         ghi: 3
-    }
+    },
+    enum: true
 });
 
 Bridge.define('ClientTestLibrary.Bridge277', {
     statics: {
         $int: 0
-    }
+    },
+    enum: true
 });
 
 Bridge.define('ClientTestLibrary.Bridge294', {
@@ -290,7 +292,8 @@ Bridge.define('ClientTestLibrary.Bridge422', {
         first: 0,
         next: 100,
         afterNext: 101
-    }
+    },
+    enum: true
 });
 
 Bridge.define('ClientTestLibrary.Bridge436First', {

@@ -44,6 +44,19 @@ Bridge.define('ClientTestLibrary.RunTests', {
             QUnit.test("String #393", ClientTestLibrary.TestStringFunctions.issueBridge393);
             QUnit.test("StringBuilder", ClientTestLibrary.TestStringBuilderFunctions.stringBuilders);
 
+            QUnit.module("Enum");
+            QUnit.test("Parse", ClientTestLibrary.TestEnum.testParse);
+            QUnit.test("ParseIgnoreCase", ClientTestLibrary.TestEnum.testParseIgnoreCase);
+            QUnit.test("ToString", ClientTestLibrary.TestEnum.testToString);
+            QUnit.test("GetValues", ClientTestLibrary.TestEnum.testGetValues);
+            QUnit.test("CompareTo", ClientTestLibrary.TestEnum.testCompareTo);
+            QUnit.test("Format", ClientTestLibrary.TestEnum.testFormat);
+            QUnit.test("GetName", ClientTestLibrary.TestEnum.testGetName);
+            QUnit.test("GetNames", ClientTestLibrary.TestEnum.testGetNames);
+            QUnit.test("HasFlag", ClientTestLibrary.TestEnum.testHasFlag);
+            QUnit.test("IsDefined", ClientTestLibrary.TestEnum.testIsDefined);
+            QUnit.test("TryParse", ClientTestLibrary.TestEnum.testTryParse);
+
             QUnit.module("Date and time");
             QUnit.test("Common", ClientTestLibrary.TestDateFunctions.dateTimes);
             QUnit.test("#329", ClientTestLibrary.TestDateFunctions.bridge329);
