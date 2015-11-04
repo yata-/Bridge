@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLHeadElement")]
-    public class HeadElement : Element
+    public class HeadElement : Element<HeadElement>
     {
         [Template("document.createElement('head')")]
         public HeadElement()

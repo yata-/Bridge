@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLLegendElement")]
-    public class LegendElement : Element
+    public class LegendElement : Element<LegendElement>
     {
         [Template("document.createElement('legend')")]
         public LegendElement()

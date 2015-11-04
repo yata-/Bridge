@@ -6,7 +6,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLUListElement")]
-    public class UListElement : Element
+    public class UListElement : Element<UListElement>
     {
         [Template("document.createElement('ul')")]
         public UListElement()

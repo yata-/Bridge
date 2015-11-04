@@ -7,7 +7,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLVideoElement")]
-    public class VideoElement : MediaElement
+    public class VideoElement : MediaElement<VideoElement>
     {
         [Template("document.createElement('video')")]
         public VideoElement()

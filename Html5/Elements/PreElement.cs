@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLPreElement")]
-    public class PreElement : Element
+    public class PreElement : Element<OptionElement>
     {
         [Template("document.createElement('pre')")]
         public PreElement()

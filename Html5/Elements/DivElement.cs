@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLDivElement")]
-    public class DivElement : Element
+    public class DivElement : Element<DivElement>
     {
         [Template("document.createElement('div')")]
         public DivElement()
