@@ -1401,7 +1401,7 @@
     Bridge.String = string;
 })();
 
-// @source String.js
+// @source Enum.js
 
 (function () {
     var enumMethods = {
