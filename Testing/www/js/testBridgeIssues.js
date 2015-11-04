@@ -66,13 +66,15 @@ Bridge.define('ClientTestLibrary.Bridge272.MyEnum', {
         abc: 1,
         def: 2,
         ghi: 3
-    }
+    },
+    enum: true
 });
 
 Bridge.define('ClientTestLibrary.Bridge277', {
     statics: {
         $int: 0
-    }
+    },
+    enum: true
 });
 
 Bridge.define('ClientTestLibrary.Bridge294', {
@@ -290,7 +292,8 @@ Bridge.define('ClientTestLibrary.Bridge422', {
         first: 0,
         next: 100,
         afterNext: 101
-    }
+    },
+    enum: true
 });
 
 Bridge.define('ClientTestLibrary.Bridge436First', {
@@ -738,10 +741,10 @@ Bridge.define('ClientTestLibrary.Bridge546', {
             var span2 = new Bridge.TimeSpan(0, 7, 0);
             var i = 1;
 
-            var d1 = new Date(new Date(date - new Date((span1) / 10000)) - new Date((span2) / 10000));
+            var d1 = new Date(new Date(date - new Date((span1).ticks / 10000)) - new Date((span2).ticks / 10000));
             assert.equal(d1.getMinutes(), 38, "Bridge546 d1");
 
-            var d2 = new Date(new Date(date.getTime() + ((span1) / 10000)).getTime() + ((span2) / 10000));
+            var d2 = new Date(new Date(date.getTime() + ((span1).ticks / 10000)).getTime() + ((span2).ticks / 10000));
             assert.equal(d2.getMinutes(), 22, "Bridge546 d2");
 
             var d3 = new Date(date.valueOf() + Math.round((10 + 20 * i) * 864e5));

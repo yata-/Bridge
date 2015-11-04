@@ -4585,7 +4585,7 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.EnumTests', {
         });
     },
     defaultValueOfEnumClassIsNull: function () {
-        Bridge.Test.Assert.areStrictEqual(this.getDefaultValue(System.Enum)(), null);
+        Bridge.Test.Assert.areStrictEqual(this.getDefaultValue(Bridge.Enum)(), null);
     },
     defaultValueOfEnumTypeIsZero: function () {
         Bridge.Test.Assert.areStrictEqual(this.getDefaultValue(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum)(), 0);
@@ -4618,7 +4618,9 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.EnumTests.FlagsEnum', {
         firstValue: 1,
         secondValue: 2,
         thirdValue: 4
-    }
+    },
+    enum: true,
+    flags: true
 });
 
 Bridge.define('Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum', {
@@ -4626,7 +4628,8 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum', {
         firstValue: 0,
         secondValue: 1,
         thirdValue: 2
-    }
+    },
+    enum: true
 });
 
 Bridge.define('Bridge.ClientTest.SimpleTypes.Int16Tests', {
