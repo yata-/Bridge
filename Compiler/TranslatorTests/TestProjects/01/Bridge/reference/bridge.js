@@ -1077,8 +1077,37 @@
 
 (function () {
     var string = {
+        lastIndexOf: function (s, search, startIndex, count) {
+            var index = s.lastIndexOf(search, startIndex);
+            return (index < (startIndex - count + 1)) ? -1 : index;
+        },
+
+        lastIndexOfAny: function (s, chars, startIndex, count) {
+            var length = s.length;
+            if (!length) {
+                return -1;
+            }
+
+            chars = String.fromCharCode.apply(null, chars);
+            startIndex = startIndex || length - 1;
+            count = count || length;
+
+            var endIndex = startIndex - count + 1;
+            if (endIndex < 0) {
+                endIndex = 0;
+            }
+
+            for (var i = startIndex; i >= endIndex; i--) {
+                if (chars.indexOf(s.charAt(i)) >= 0) {
+                    return i;
+                }
+            }
+            return -1;
+        },
+
         isNullOrWhiteSpace: function (value) {
-            return value === null || value.match(/^ *$/) !== null;
+            //do not replace == to ===, it ichecks to undefined also
+            return value == null || value.match(/^ *$/) !== null;
         },
 
         isNullOrEmpty: function (value) {
@@ -1158,6 +1187,10 @@
 
             if (!pad) {
                 pad = " ";
+            }
+
+            if (Bridge.isNumber(pad)) {
+                pad = String.fromCharCode(pad);
             }
 
             if (!dir) {
@@ -1323,7 +1356,7 @@
             }
 
             if (strB == null) {
-                return (strA == null) ? 0 : 1;
+                return 1;
             }
 
             if (arguments.length >= 3) {
@@ -1395,6 +1428,53 @@
             var reg = new RegExp(Bridge.String.escape(a), "g");
 
             return str.replace(reg, b);
+        },
+
+        insert: function (idx, strA, strB) {
+            return index > 0 ? (strA.substring(0, index) + strB + strA.substring(index, strA.length)) : (strB + strA);
+        },
+
+        remove: function (s, index, count) {
+            if (!count || ((index + count) > this.length)) {
+                return s.substr(0, index);
+            }
+            return s.substr(0, index) + s.substr(index + count);
+        },
+
+        split: function (s, strings, limit, options) {
+            var re = new RegExp(strings.map(Bridge.String.escape).join('|'), 'g'),
+                res = [],
+                m,
+                i;
+            for (i = 0;; i = re.lastIndex) {
+                if (m = re.exec(s)) {
+                    if (options !== 1 || m.index > i) {
+                        if (res.length === limit - 1) {
+                            res.push(s.substr(i));
+                            return res;
+                        }
+                        else
+                            res.push(s.substring(i, m.index));
+                    }
+                }
+                else {
+                    if (options !== 1 || i !== s.length)
+                        res.push(s.substr(i));
+                    return res;
+                }
+            }
+        },
+
+        trimEnd: function (s, chars) {
+            return s.replace(chars ? new RegExp('[' + String.fromCharCode.apply(null, chars) + ']+$') : /\s*$/, '');
+        },
+
+        trimStart: function(s, chars) {
+            return s.replace(chars ? new RegExp('^[' + String.fromCharCode.apply(null, chars) + ']+') : /^\s*/, '');
+        },
+
+        trim: function(s, chars) {
+            return Bridge.String.trimStart(Bridge.String.trimEnd(s, chars), chars);
         }
     };
 
