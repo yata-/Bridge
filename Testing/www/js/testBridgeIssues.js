@@ -810,6 +810,21 @@ Bridge.define('ClientTestLibrary.Bridge546', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge554', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(4);
+
+            var s = "0123456789";
+
+            assert.equal(Bridge.String.remove(s, 5), "01234", "Remove(5)");
+            assert.equal(Bridge.String.remove(s, 10), "0123456789", "Remove(10)");
+            assert.equal(Bridge.String.remove(s, 1, 2), "03456789", "Remove(1, 2)");
+            assert.equal(Bridge.String.remove(s, 1, 10), "0", "Remove(1, 10)");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
