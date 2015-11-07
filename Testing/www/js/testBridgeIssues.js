@@ -825,6 +825,34 @@ Bridge.define('ClientTestLibrary.Bridge554', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge555', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(10);
+
+            var s = "0123456789";
+
+            //assert.Equal(s.JsSubstring(-1), "", "JsSubstring(-1)");
+            //assert.Equal(s.JsSubstring(5), "", "JsSubstring(5)");
+            //assert.Equal(s.JsSubstring(10), "", "JsSubstring(10)");
+            //assert.Equal(s.JsSubstring(1, 2), "", "JsSubstring(1, 2)");
+            //assert.Equal(s.JsSubstring(1, 10), "", "JsSubstring(1, 10)");
+
+            assert.equal(s.substr(-1), "9", "Substring(-1)");
+            assert.equal(s.substr(5), "56789", "Substring(5)");
+            assert.equal(s.substr(10), "", "Substring(10)");
+            assert.equal(s.substr(1, 2), "12", "Substring(1, 2)");
+            assert.equal(s.substr(1, 10), "123456789", "Substring(1, 10)");
+
+            assert.equal(s.substr(-1), "9", "Substr(-1)");
+            assert.equal(s.substr(5), "56789", "Substr(5)");
+            assert.equal(s.substr(10), "", "Substr(10)");
+            assert.equal(s.substr(1, 2), "12", "Substr(1, 2)");
+            assert.equal(s.substr(1, 10), "123456789", "Substr(1, 10)");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
