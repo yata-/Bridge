@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLDataListElement")]
-    public class DataListElement : Element
+    public class DataListElement : Element<DataListElement>
     {
         [Template("document.createElement('datalist')")]
         public DataListElement()

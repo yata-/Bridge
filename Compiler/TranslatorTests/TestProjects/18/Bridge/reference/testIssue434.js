@@ -49,3 +49,4 @@ Bridge.define('TestIssue434.Issue434B', {
 TestIssue434.Issue434B.method1();
 TestIssue434.Issue434B.method3();
 TestIssue434.Issue434B.method4();
+

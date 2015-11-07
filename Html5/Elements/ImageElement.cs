@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLImageElement")]
-    public class ImageElement : Element
+    public class ImageElement : Element<ImageElement>
     {
         [Template("new Image()")]
         public ImageElement()

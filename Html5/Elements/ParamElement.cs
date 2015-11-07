@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLParamElement")]
-    public class ParamElement : Element
+    public class ParamElement : Element<OptionElement>
     {
         [Template("document.createElement('param')")]
         public ParamElement()

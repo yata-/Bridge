@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLOutputElement")]
-    public class OutputElement : Element
+    public class OutputElement : Element<OptionElement>
     {
         [Template("document.createElement('output')")]
         public OutputElement()

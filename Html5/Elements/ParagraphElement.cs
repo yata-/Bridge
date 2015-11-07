@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLParagraphElement")]
-    public class ParagraphElement : Element
+    public class ParagraphElement : Element<OptionElement>
     {
         [Template("document.createElement('p')")]
         public ParagraphElement()

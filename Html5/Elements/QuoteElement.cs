@@ -7,7 +7,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLQuoteElement")]
-    public class QuoteElement : Element
+    public class QuoteElement : Element<QuoteElement>
     {
         [Template("document.createElement('blockquote')")]
         public QuoteElement()

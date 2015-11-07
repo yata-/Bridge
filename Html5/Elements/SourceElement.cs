@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLSourceElement")]
-    public class SourceElement : Element
+    public class SourceElement : Element<SourceElement>
     {
         [Template("document.createElement('source')")]
         public SourceElement()

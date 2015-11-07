@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLLinkElement")]
-    public class LinkElement : Element
+    public class LinkElement : Element<LinkElement>
     {
         [Template("document.createElement('link')")]
         public LinkElement()

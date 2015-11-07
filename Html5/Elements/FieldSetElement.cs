@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLFieldSetElement")]
-    public class FieldSetElement : Element
+    public class FieldSetElement : Element<FieldSetElement>
     {
         [Template("document.createElement('fieldset')")]
         public FieldSetElement()

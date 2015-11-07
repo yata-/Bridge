@@ -6,7 +6,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("HTMLTrackElement")]
-    public class TrackElement : Element
+    public class TrackElement : Element<TrackElement>
     {
         [Template("document.createElement('track')")]
         public TrackElement()
