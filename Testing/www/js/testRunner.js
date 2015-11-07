@@ -100,6 +100,7 @@ Bridge.define('ClientTestLibrary.RunTests', {
             QUnit.test("#341", ClientTestLibrary.TestBridgeIssues.n341);
             QUnit.test("#342", ClientTestLibrary.TestBridgeIssues.n342);
             QUnit.test("#377", ClientTestLibrary.TestBridgeIssues.n377);
+            QUnit.test("#381", ClientTestLibrary.Bridge381.testUseCase);
             QUnit.test("#383", ClientTestLibrary.TestBridgeIssues.n383);
             QUnit.test("#395", ClientTestLibrary.TestBridgeIssues.n395);
             QUnit.test("#406", ClientTestLibrary.TestBridgeIssues.n406);

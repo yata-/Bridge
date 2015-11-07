@@ -226,6 +226,57 @@ Bridge.define('ClientTestLibrary.Bridge342', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge381', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(6);
+
+            var s1 = ["a", "b"].join(",");
+            assert.equal(s1, "a,b", "Join1");
+
+            var animals = new Bridge.List$1(ClientTestLibrary.Bridge381.Animal)();
+            animals.add(new ClientTestLibrary.Bridge381.Animal("Squirrel", "Rodent"));
+            animals.add(new ClientTestLibrary.Bridge381.Animal("Gray Wolf", "Carnivora"));
+            animals.add(new ClientTestLibrary.Bridge381.Animal("Capybara", "Rodent"));
+
+            var s2 = Bridge.toArray(animals).join(" ");
+            assert.equal(s2, "Squirrel Gray Wolf Capybara", "Join2");
+
+            var values = [null, "Cobb", 4189, 11434, 0.366];
+            var s31 = values.join("|");
+            assert.equal(s31, "|Cobb|4189|11434|0.366", "Join31");
+
+            values[0] = "";
+            var s32 = values.join("|");
+            assert.equal(s32, "|Cobb|4189|11434|0.366", "Join32");
+
+
+            var sArr = Bridge.Array.init(10, null);
+            for (var i = 0; i < 10; i++)
+                sArr[i] = Bridge.String.format("{0,-3}", i * 5);
+
+            var s4 = sArr.join(":");
+            assert.equal(s4, "0  :5  :10 :15 :20 :25 :30 :35 :40 :45 ", "Join4");
+
+            var val = ["apple", "orange", "grape", "pear"];
+            var s5 = val.slice(1, 1 + 2).join(", ");
+            assert.equal(s5, "orange, grape", "Join5");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge381.Animal', {
+    kind: null,
+    order: null,
+    constructor: function (kind, order) {
+        this.kind = kind;
+        this.order = order;
+    },
+    toString: function () {
+        return this.kind;
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge383', {
     statics: {
         doSomething: function (person) {
