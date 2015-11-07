@@ -6092,10 +6092,10 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.StringTests', {
         Bridge.Test.Assert.areEqual(("abcde").substr(2, 2), "cd");
     },
     substringWorks: function () {
-        Bridge.Test.Assert.areEqual(("abcde").substring(2), "cde");
+        Bridge.Test.Assert.areEqual(("abcde").substr(2), "cde");
     },
     substringWithLengthWorks: function () {
-        Bridge.Test.Assert.areEqual(("abcde").substring(2, 4), "cd");
+        Bridge.Test.Assert.areEqual(("abcde").substr(2, 2), "cd");
     },
     toLowerCaseWorks: function () {
         Bridge.Test.Assert.areEqual(("ABcd").toLowerCase(), "abcd");
