@@ -151,6 +151,14 @@ namespace Bridge.Translator
 
         public override AstNode VisitForStatement(ForStatement forStatement)
         {
+            var visitor = new LambdaVisitor();
+            forStatement.EmbeddedStatement.AcceptVisitor(visitor);
+
+            if (visitor.LambdaExpression.Count == 0)
+            {
+                return base.VisitForStatement(forStatement);
+            }
+
             var clonForStatement = (ForStatement)base.VisitForStatement(forStatement);
 
             if (clonForStatement != null)
@@ -161,6 +169,96 @@ namespace Bridge.Translator
             if (!(forStatement.EmbeddedStatement is BlockStatement))
             {
                 var l = (ForStatement)forStatement.Clone();
+                var block = new BlockStatement();
+                block.Statements.Add(l.EmbeddedStatement.Clone());
+                l.EmbeddedStatement = block;
+
+                return l;
+            }
+
+            return forStatement.Clone();
+        }
+
+        public override AstNode VisitForeachStatement(ForeachStatement forStatement)
+        {
+            var visitor = new LambdaVisitor();
+            forStatement.EmbeddedStatement.AcceptVisitor(visitor);
+
+            if (visitor.LambdaExpression.Count == 0)
+            {
+                return base.VisitForeachStatement(forStatement);
+            }
+
+            var clonForStatement = (ForeachStatement)base.VisitForeachStatement(forStatement);
+
+            if (clonForStatement != null)
+            {
+                forStatement = clonForStatement;
+            }
+
+            if (!(forStatement.EmbeddedStatement is BlockStatement))
+            {
+                var l = (ForeachStatement)forStatement.Clone();
+                var block = new BlockStatement();
+                block.Statements.Add(l.EmbeddedStatement.Clone());
+                l.EmbeddedStatement = block;
+
+                return l;
+            }
+
+            return forStatement.Clone();
+        }
+
+        public override AstNode VisitDoWhileStatement(DoWhileStatement forStatement)
+        {
+            var visitor = new LambdaVisitor();
+            forStatement.EmbeddedStatement.AcceptVisitor(visitor);
+
+            if (visitor.LambdaExpression.Count == 0)
+            {
+                return base.VisitDoWhileStatement(forStatement);
+            }
+
+            var clonForStatement = (DoWhileStatement)base.VisitDoWhileStatement(forStatement);
+
+            if (clonForStatement != null)
+            {
+                forStatement = clonForStatement;
+            }
+
+            if (!(forStatement.EmbeddedStatement is BlockStatement))
+            {
+                var l = (DoWhileStatement)forStatement.Clone();
+                var block = new BlockStatement();
+                block.Statements.Add(l.EmbeddedStatement.Clone());
+                l.EmbeddedStatement = block;
+
+                return l;
+            }
+
+            return forStatement.Clone();
+        }
+
+        public override AstNode VisitWhileStatement(WhileStatement forStatement)
+        {
+            var visitor = new LambdaVisitor();
+            forStatement.EmbeddedStatement.AcceptVisitor(visitor);
+
+            if (visitor.LambdaExpression.Count == 0)
+            {
+                return base.VisitWhileStatement(forStatement);
+            }
+
+            var clonForStatement = (WhileStatement)base.VisitWhileStatement(forStatement);
+
+            if (clonForStatement != null)
+            {
+                forStatement = clonForStatement;
+            }
+
+            if (!(forStatement.EmbeddedStatement is BlockStatement))
+            {
+                var l = (WhileStatement)forStatement.Clone();
                 var block = new BlockStatement();
                 block.Statements.Add(l.EmbeddedStatement.Clone());
                 l.EmbeddedStatement = block;
