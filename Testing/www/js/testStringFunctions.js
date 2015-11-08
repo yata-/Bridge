@@ -104,6 +104,7 @@ Bridge.define('ClientTestLibrary.TestStringFunctions', {
                     ClientTestLibrary.TestStringFunctions.test(0, 1, sc, threeIs, expected, expectedIndex++, assert);
                     ClientTestLibrary.TestStringFunctions.test(0, 2, sc, threeIs, expected, expectedIndex++, assert);
                     ClientTestLibrary.TestStringFunctions.test(1, 2, sc, threeIs, expected, expectedIndex++, assert);
+
                 }
             }
 
@@ -151,6 +152,7 @@ Bridge.define('ClientTestLibrary.TestStringFunctions', {
                 result[i] = a;
 
                 i++;
+
             }
 
             assert.equal(result[0], 100);
