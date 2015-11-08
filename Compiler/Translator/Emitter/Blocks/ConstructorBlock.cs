@@ -372,7 +372,9 @@ namespace Bridge.Translator
             }
             else
             {
-                this.WriteThis();
+               // this.WriteThis();
+                string name = BridgeTypes.ToJsName(this.TypeInfo.Type, this.Emitter);
+                this.Write(name, ".prototype");
                 this.WriteDot();
 
                 var baseName = "constructor";
