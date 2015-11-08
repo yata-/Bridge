@@ -743,6 +743,7 @@ namespace System
         /// </summary>
         /// <param name="indexA">An integer between 0 and the length of the string.</param>
         /// <returns></returns>
+        [Name("substring")]
         public string JsSubstring(int indexA)
         {
             return null;
@@ -754,6 +755,7 @@ namespace System
         /// <param name="indexA">An integer between 0 and the length of the string.</param>
         /// <param name="indexB">An integer between 0 and the length of the string.</param>
         /// <returns></returns>
+        [Name("substring")]
         public string JsSubstring(int indexA, int indexB)
         {
             return null;
