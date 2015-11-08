@@ -1086,10 +1086,10 @@ namespace System
         [Template("Bridge.String.alignString({this}, {totalWidth}, {ch})")]
         public extern string PadLeft(int totalWidth, char ch);
 
-        [Template("Bridge.String.padRightString({this}, -{totalWidth})")]
+        [Template("Bridge.String.alignString({this}, -{totalWidth})")]
         public extern string PadRight(int totalWidth);
 
-        [Template("Bridge.String.padRightString({this}, -{totalWidth}, {ch})")]
+        [Template("Bridge.String.alignString({this}, -{totalWidth}, {ch})")]
         public extern string PadRight(int totalWidth, char ch);
 
         [Template("Bridge.String.remove({this}, {index})")]

@@ -13,7 +13,7 @@
                 return -1;
             }
 
-            chars = String.fromCharCode.apply(null, chars);
+            chars = String.fromCharCode(chars);
             startIndex = startIndex || length - 1;
             count = count || length;
 
@@ -391,11 +391,11 @@
         },
 
         trimEnd: function (s, chars) {
-            return s.replace(chars ? new RegExp('[' + String.fromCharCode.apply(null, chars) + ']+$') : /\s*$/, '');
+            return s.replace(chars ? new RegExp('[' + String.fromCharCode(chars) + ']+$') : /\s*$/, '');
         },
 
         trimStart: function(s, chars) {
-            return s.replace(chars ? new RegExp('^[' + String.fromCharCode.apply(null, chars) + ']+') : /^\s*/, '');
+            return s.replace(chars ? new RegExp('^[' + String.fromCharCode(chars) + ']+') : /^\s*/, '');
         },
 
         trim: function(s, chars) {
