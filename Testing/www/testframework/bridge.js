@@ -1430,7 +1430,7 @@
             return str.replace(reg, b);
         },
 
-        insert: function (idx, strA, strB) {
+        insert: function (index, strA, strB) {
             return index > 0 ? (strA.substring(0, index) + strB + strA.substring(index, strA.length)) : (strB + strA);
         },
 
