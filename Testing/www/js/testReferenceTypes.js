@@ -70,7 +70,7 @@ Bridge.define('ClientTestLibrary.ClassA', {
         } ));
     },
     constructor$1: function (d) {
-        this.$constructor();
+        ClientTestLibrary.ClassA.prototype.$constructor();
 
         if (d === null)
             throw new Bridge.Exception("Related should not be null");
@@ -78,7 +78,7 @@ Bridge.define('ClientTestLibrary.ClassA', {
         this.setData(d);
     },
     constructor$2: function (p) {
-        this.$constructor();
+        ClientTestLibrary.ClassA.prototype.$constructor();
 
         if (p === null || p.length < 6) {
             throw new Bridge.Exception("Should pass six parameters");
