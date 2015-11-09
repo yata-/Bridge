@@ -246,7 +246,12 @@ namespace Bridge.Translator
             foreachStatement.EmbeddedStatement.AcceptVisitor(this.Emitter);
 
             this.PopLocals();
-            this.WriteNewLine();
+
+            if (!this.Emitter.IsNewLine)
+            {
+                this.WriteNewLine();    
+            }
+            
             this.EndBlock();
             this.WriteNewLine();
         }

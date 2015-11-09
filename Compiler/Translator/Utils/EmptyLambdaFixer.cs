@@ -42,13 +42,14 @@ namespace Bridge.Translator
         {
             if (!(foreachStatement.EmbeddedStatement is BlockStatement))
             {
-                var visitor = new LambdaVisitor();
+                /*var visitor = new LambdaVisitor();
                 foreachStatement.EmbeddedStatement.AcceptVisitor(visitor);
 
                 if (visitor.LambdaExpression.Count > 0)
                 {
                     this.Found = true;
-                }
+                }*/
+                this.Found = true;
             }
 
             base.VisitForeachStatement(foreachStatement);
@@ -181,14 +182,6 @@ namespace Bridge.Translator
 
         public override AstNode VisitForeachStatement(ForeachStatement forStatement)
         {
-            var visitor = new LambdaVisitor();
-            forStatement.EmbeddedStatement.AcceptVisitor(visitor);
-
-            if (visitor.LambdaExpression.Count == 0)
-            {
-                return base.VisitForeachStatement(forStatement);
-            }
-
             var clonForStatement = (ForeachStatement)base.VisitForeachStatement(forStatement);
 
             if (clonForStatement != null)

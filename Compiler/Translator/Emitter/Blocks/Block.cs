@@ -295,7 +295,7 @@ namespace Bridge.Translator
                 var isBlock = (this.HandleContinue.HasValue && this.HandleContinue.Value) ||
                               (this.HandleBreak.HasValue && this.HandleBreak.Value);
 
-                if (!isBlock && this.NoBraces)
+                if (this.NoBraces)
                 {
                     this.Outdent();
                 }
@@ -319,7 +319,7 @@ namespace Bridge.Translator
                     this.Write("if(" + this.LoopVar + " == 2) break;");
                 }
 
-                if (!this.NoBraces || isBlock)
+                if (!this.NoBraces)
                 {
                     this.WriteNewLine();
                     this.EndBlock();
@@ -360,11 +360,6 @@ namespace Bridge.Translator
                 if ((this.HandleContinue.HasValue && this.HandleContinue.Value) ||
                     (this.HandleBreak.HasValue && this.HandleBreak.Value))
                 {
-                    if (this.NoBraces)
-                    {
-                        this.BeginBlock();    
-                    }
-                    
                     this.LoopVar = this.GetTempVarName();
                     this.Write("var " + this.LoopVar + " = ");
                 }
