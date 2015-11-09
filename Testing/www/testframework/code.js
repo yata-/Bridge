@@ -911,7 +911,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IDictionaryTests.MyDictiona
     inherits: [Bridge.IDictionary$2(Bridge.Int,String)],
     _backingDictionary: null,
     constructor: function () {
-        this.constructor$1(new Bridge.Dictionary$2(Bridge.Int,String)());
+        Bridge.ClientTest.Collections.Generic.IDictionaryTests.MyDictionary.prototype.constructor$1(new Bridge.Dictionary$2(Bridge.Int,String)());
 
     },
     constructor$1: function (initialValues) {
@@ -6061,10 +6061,10 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.StringTests', {
         Bridge.Test.Assert.areEqual(Bridge.String.lastIndexOf(("xbcxxxbc"), "bd", 3, 3), -1);
     },
     lastIndexOfAnyWorks: function () {
-        Bridge.Test.Assert.areEqual(Bridge.String.lastIndexOfAny(("abcd"), 98), 1);
-        Bridge.Test.Assert.areEqual(Bridge.String.lastIndexOfAny(("abcd"), 98, 120), 1);
-        Bridge.Test.Assert.areEqual(Bridge.String.lastIndexOfAny(("abcd"), 98, 120, 121), 1);
-        Bridge.Test.Assert.areEqual(Bridge.String.lastIndexOfAny(("abcd"), 120, 121), -1);
+        Bridge.Test.Assert.areEqual(Bridge.String.lastIndexOfAny(("abcd"), [98]), 1);
+        Bridge.Test.Assert.areEqual(Bridge.String.lastIndexOfAny(("abcd"), [98, 120]), 1);
+        Bridge.Test.Assert.areEqual(Bridge.String.lastIndexOfAny(("abcd"), [98, 120, 121]), 1);
+        Bridge.Test.Assert.areEqual(Bridge.String.lastIndexOfAny(("abcd"), [120, 121]), -1);
     },
     lastIndexOfAnyWithStartIndexWorks: function () {
         Bridge.Test.Assert.areEqual(Bridge.String.lastIndexOfAny(("abcdabcd"), [98], 4), 1);
@@ -6223,13 +6223,13 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.StringTests', {
         Bridge.Test.Assert.areEqual(("  abc  ").trim(), "abc");
     },
     trimCharsWorks: function () {
-        Bridge.Test.Assert.areEqual(Bridge.String.trim((",., aa, aa,... "), 44, 46, 32), "aa, aa");
+        Bridge.Test.Assert.areEqual(Bridge.String.trim((",., aa, aa,... "), [44, 46, 32]), "aa, aa");
     },
     trimStartCharsWorks: function () {
-        Bridge.Test.Assert.areEqual(Bridge.String.trimStart((",., aa, aa,... "), 44, 46, 32), "aa, aa,... ");
+        Bridge.Test.Assert.areEqual(Bridge.String.trimStart((",., aa, aa,... "), [44, 46, 32]), "aa, aa,... ");
     },
     trimEndCharsWorks: function () {
-        Bridge.Test.Assert.areEqual(Bridge.String.trimEnd((",., aa, aa,... "), 44, 46, 32), ",., aa, aa");
+        Bridge.Test.Assert.areEqual(Bridge.String.trimEnd((",., aa, aa,... "), [44, 46, 32]), ",., aa, aa");
     },
     trimStartWorks: function () {
         Bridge.Test.Assert.areEqual(Bridge.String.trimStart(("  abc  ")), "abc  ");
@@ -6345,7 +6345,7 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.StringTests.MyEnumerable$1', functi
         this._items = items;
     },
     getEnumerator: function () {
-        return null;
+        return this.getEnumerator$1();
     },
     getEnumerator$1: function () {
         return Bridge.cast(Bridge.getEnumerator(this._items), Bridge.IEnumerator$1(T));
