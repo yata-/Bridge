@@ -47,6 +47,7 @@
     <Compile Include="Tests\BasicCSharp\TestTryCatchFinallyBlocks.cs" />
     <Compile Include="Tests\BridgeIssues\N572.cs" />
     <Compile Include="Tests\BridgeIssues\N565.cs" />
+    <Compile Include="Tests\BridgeIssues\N563.cs" />
     <Compile Include="Tests\BridgeIssues\N559.cs" />
     <Compile Include="Tests\BridgeIssues\N558.cs" />
     <Compile Include="Tests\BridgeIssues\N555.cs" />
