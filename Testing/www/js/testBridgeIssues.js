@@ -759,6 +759,88 @@ Bridge.define('ClientTestLibrary.Bridge546', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge563', {
+    statics: {
+        tesForeach: function (assert) {
+            var $t, $t1, $t2, $t3;
+            assert.expect(2);
+
+            var keys = ["1", "2", "3"];
+            var handlers = Bridge.Array.init(3, null);
+            var i = 0;
+            var result = "";
+
+            $t = Bridge.getEnumerator(keys);
+            while ($t.moveNext()) {
+                (function () {
+                    var itm = $t.getCurrent();
+                    handlers[i++] = function () {
+                        return result += itm;
+                    };
+                }).call(this);
+            }
+
+            $t1 = Bridge.getEnumerator(handlers);
+            while ($t1.moveNext()) {
+                var handler = $t1.getCurrent();
+                handler();
+
+            }
+
+            assert.equal(result, "123", "Bridge563 No block foreach loop");
+
+            i = 0;
+            result = "";
+
+            $t2 = Bridge.getEnumerator(keys);
+            while ($t2.moveNext()) {
+                (function () {
+                    var itm1 = $t2.getCurrent();
+                    handlers[i++] = function () {
+                        return result += itm1;
+                    };
+                }).call(this);
+            }
+
+            $t3 = Bridge.getEnumerator(handlers);
+            while ($t3.moveNext()) {
+                var handler1 = $t3.getCurrent();
+                handler1();
+
+            }
+
+            assert.equal(result, "123", "Bridge563 block foreach loop");
+        }        ,
+        tesFor: function (assert) {
+            var $t;
+            assert.expect(1);
+
+            var keys = ["1", "2", "3"];
+            var handlers = Bridge.Array.init(3, null);
+            var i = 0;
+            var result = "";
+
+            for (var j = 0; j < keys.length; j++) {
+                (function () {
+                    var itm = keys[j];
+                    handlers[i++] = function () {
+                        return result += itm;
+                    };
+                }).call(this);
+            }
+
+            $t = Bridge.getEnumerator(handlers);
+            while ($t.moveNext()) {
+                var handler = $t.getCurrent();
+                handler();
+
+            }
+
+            assert.equal(result, "123", "Bridge563 For loop");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
@@ -889,6 +971,7 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
             while ($t.moveNext()) {
                 var item = $t.getCurrent();
                 result = result + item;
+
             }
 
             assert.equal(result, "123", "IEnumerator works");
@@ -1063,6 +1146,7 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
                 if (!_dictOfTests.containsKey(item.getId())) {
                     _dictOfTests.set(item.getId(), item);
                 }
+
             }
 
             assert.equal(_dictOfTests.getCount(), 2, "All items added");
@@ -1353,8 +1437,7 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
 
             var count = 0;
 
-            for (var i = 0; i < 10; i++) 
-            {
+            for (var i = 0; i < 10; i++) {
                 var $t = (function () {
                     if (!Bridge.Linq.Enumerable.from(testList).any(function (x) {
                         return x === i;
