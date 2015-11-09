@@ -50,6 +50,7 @@
     <include name="Text/StringBuilder.js" />
     <include name="Text/Regex.js" />
     <include name="Browser.js" />
+    <include name="Array.js" />
     <include name="Collections/Interfaces.js" />
     <include name="Collections/CustomEnumerator.js" />
     <include name="Collections/ArrayEnumerator.js" />
@@ -62,7 +63,6 @@
     <include name="Version.js" />
     <include name="Attribute.js" />
     <include name="INotifyPropertyChanged.js" />
-    <include name="Array.js" />
     <include name="linq.js" />
     <include name="End.js" />
   </target>

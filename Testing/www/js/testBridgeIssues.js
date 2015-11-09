@@ -226,6 +226,57 @@ Bridge.define('ClientTestLibrary.Bridge342', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge381', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(6);
+
+            var s1 = ["a", "b"].join(",");
+            assert.equal(s1, "a,b", "Join1");
+
+            var animals = new Bridge.List$1(ClientTestLibrary.Bridge381.Animal)();
+            animals.add(new ClientTestLibrary.Bridge381.Animal("Squirrel", "Rodent"));
+            animals.add(new ClientTestLibrary.Bridge381.Animal("Gray Wolf", "Carnivora"));
+            animals.add(new ClientTestLibrary.Bridge381.Animal("Capybara", "Rodent"));
+
+            var s2 = Bridge.toArray(animals).join(" ");
+            assert.equal(s2, "Squirrel Gray Wolf Capybara", "Join2");
+
+            var values = [null, "Cobb", 4189, 11434, 0.366];
+            var s31 = values.join("|");
+            assert.equal(s31, "|Cobb|4189|11434|0.366", "Join31");
+
+            values[0] = "";
+            var s32 = values.join("|");
+            assert.equal(s32, "|Cobb|4189|11434|0.366", "Join32");
+
+
+            var sArr = Bridge.Array.init(10, null);
+            for (var i = 0; i < 10; i++)
+                sArr[i] = Bridge.String.format("{0,-3}", i * 5);
+
+            var s4 = sArr.join(":");
+            assert.equal(s4, "0  :5  :10 :15 :20 :25 :30 :35 :40 :45 ", "Join4");
+
+            var val = ["apple", "orange", "grape", "pear"];
+            var s5 = val.slice(1, 1 + 2).join(", ");
+            assert.equal(s5, "orange, grape", "Join5");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge381.Animal', {
+    kind: null,
+    order: null,
+    constructor: function (kind, order) {
+        this.kind = kind;
+        this.order = order;
+    },
+    toString: function () {
+        return this.kind;
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge383', {
     statics: {
         doSomething: function (person) {
@@ -755,6 +806,49 @@ Bridge.define('ClientTestLibrary.Bridge546', {
 
             var d5 = new Date(date.valueOf() + Math.round((12 + 20 * i) * 1e3));
             assert.equal(d5.getSeconds(), 32, "Bridge546 d5");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge554', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(4);
+
+            var s = "0123456789";
+
+            assert.equal(Bridge.String.remove(s, 5), "01234", "Remove(5)");
+            assert.equal(Bridge.String.remove(s, 10), "0123456789", "Remove(10)");
+            assert.equal(Bridge.String.remove(s, 1, 2), "03456789", "Remove(1, 2)");
+            assert.equal(Bridge.String.remove(s, 1, 10), "0", "Remove(1, 10)");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge555', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(15);
+
+            var s = "0123456789";
+
+            assert.equal(s.substring(-1), "0123456789", "JsSubstring(-1)");
+            assert.equal(s.substring(5), "56789", "JsSubstring(5)");
+            assert.equal(s.substring(10), "", "JsSubstring(10)");
+            assert.equal(s.substring(1, 2), "1", "JsSubstring(1, 2)");
+            assert.equal(s.substring(1, 10), "123456789", "JsSubstring(1, 10)");
+
+            assert.equal(s.substr(-1), "9", "Substring(-1)");
+            assert.equal(s.substr(5), "56789", "Substring(5)");
+            assert.equal(s.substr(10), "", "Substring(10)");
+            assert.equal(s.substr(1, 2), "12", "Substring(1, 2)");
+            assert.equal(s.substr(1, 10), "123456789", "Substring(1, 10)");
+
+            assert.equal(s.substr(-1), "9", "Substr(-1)");
+            assert.equal(s.substr(5), "56789", "Substr(5)");
+            assert.equal(s.substr(10), "", "Substr(10)");
+            assert.equal(s.substr(1, 2), "12", "Substr(1, 2)");
+            assert.equal(s.substr(1, 10), "123456789", "Substr(1, 10)");
         }
     }
 });
