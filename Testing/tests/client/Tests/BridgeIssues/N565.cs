@@ -11,8 +11,6 @@ namespace ClientTestLibrary
     {
         public static void TestUseCase(Assert assert)
         {
-            var b = new Bridge559B(1);
-
             assert.Expect(7);
 
             var t1 = new Type();
