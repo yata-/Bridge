@@ -182,7 +182,7 @@ Bridge.define('ClientTestLibrary.Bridge342', {
     inherits: [Bridge.IDictionary$2(Bridge.Int,String)],
     _backingDictionary: null,
     constructor: function () {
-        this.constructor$1(new Bridge.Dictionary$2(Bridge.Int,String)());
+        ClientTestLibrary.Bridge342.prototype.constructor$1(new Bridge.Dictionary$2(Bridge.Int,String)());
 
     },
     constructor$1: function (initialValues) {
@@ -755,6 +755,111 @@ Bridge.define('ClientTestLibrary.Bridge546', {
 
             var d5 = new Date(date.valueOf() + Math.round((12 + 20 * i) * 1e3));
             assert.equal(d5.getSeconds(), 32, "Bridge546 d5");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge558', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(4);
+
+            var a = new ClientTestLibrary.Bridge558A();
+            var b = new ClientTestLibrary.Bridge558B();
+
+            assert.equal(a.zz(1), 1, "Bridge558 a.zz int");
+            assert.equal(a.zz$1(""), 2, "Bridge558 a.zz string");
+
+            assert.equal(b.zz(1), 1, "Bridge558 b.zz int");
+            assert.equal(b.zz$1(""), 2, "Bridge558 b.zz string");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge558A', {
+    zz: function (a) {
+        return 1;
+    },
+    zz$1: function (a) {
+        return 2;
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge558B', {
+    inherits: [ClientTestLibrary.Bridge558A],
+    zz: function (a) {
+        return ClientTestLibrary.Bridge558A.prototype.zz.call(this, a);
+    },
+    zz$1: function (a) {
+        return ClientTestLibrary.Bridge558A.prototype.zz$1.call(this, a);
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge559', {
+    statics: {
+        testUseCase: function (assert) {
+            var b = new ClientTestLibrary.Bridge559B("constructor$1", 1);
+
+            assert.expect(1);
+
+            assert.equal(b.result, " -> Bridge559A -> Bridge559A$1 -> Bridge559B$1", "Bridge559 TestUseCase");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge559A', {
+    result: "",
+    constructor: function () {
+        this.result += " -> Bridge559A";
+    },
+    constructor$1: function (a) {
+        ClientTestLibrary.Bridge559A.prototype.$constructor();
+
+        this.result += " -> Bridge559A$1";
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge559B', {
+    inherits: [ClientTestLibrary.Bridge559A],
+    constructor: function () {
+        ClientTestLibrary.Bridge559A.prototype.$constructor.call(this);
+
+        this.result += " -> Bridge559B -- unexpected!";
+    },
+    constructor$1: function (a) {
+        ClientTestLibrary.Bridge559A.prototype.constructor$1.call(this, a);
+
+        this.result += " -> Bridge559B$1";
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge565', {
+    statics: {
+        testUseCase: function (assert) {
+            var b = new ClientTestLibrary.Bridge559B("constructor$1", 1);
+
+            assert.expect(7);
+
+            var t1 = new Function();
+            assert.ok(t1 !== null, "#565 t1");
+
+            var t2 = new Object();
+            assert.ok(t2 !== null, "#565 t2");
+
+            var t3 = new Object();
+            assert.ok(Bridge.getType(t3) === Object, "#565 t3");
+
+            var t4 = new Object();
+            assert.ok(Bridge.getType(t4) === Object, "#565 t4");
+
+            var t5 = new Object();
+            assert.ok(t5 !== null, "#565 t5");
+
+            var t6 = new Object();
+            assert.ok(Bridge.getType(t6) === Object, "#565 t6");
+
+            var t7 = new Object();
+            assert.ok(Bridge.getType(t7) === Object, "#565 t7");
         }
     }
 });
