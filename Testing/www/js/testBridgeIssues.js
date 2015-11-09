@@ -833,6 +833,37 @@ Bridge.define('ClientTestLibrary.Bridge559B', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge565', {
+    statics: {
+        testUseCase: function (assert) {
+            var b = new ClientTestLibrary.Bridge559B("constructor$1", 1);
+
+            assert.expect(7);
+
+            var t1 = new Function();
+            assert.ok(t1 !== null, "#565 t1");
+
+            var t2 = new Object();
+            assert.ok(t2 !== null, "#565 t2");
+
+            var t3 = new Object();
+            assert.ok(Bridge.getType(t3) === Object, "#565 t3");
+
+            var t4 = new Object();
+            assert.ok(Bridge.getType(t4) === Object, "#565 t4");
+
+            var t5 = new Object();
+            assert.ok(t5 !== null, "#565 t5");
+
+            var t6 = new Object();
+            assert.ok(Bridge.getType(t6) === Object, "#565 t6");
+
+            var t7 = new Object();
+            assert.ok(Bridge.getType(t7) === Object, "#565 t7");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
