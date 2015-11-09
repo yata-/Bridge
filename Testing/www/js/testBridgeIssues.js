@@ -531,6 +531,45 @@ Bridge.define('ClientTestLibrary.Bridge501B', {
     inherits: [Bridge.List$1(Bridge.Int)]
 });
 
+Bridge.define('ClientTestLibrary.Bridge502', {
+    statics: {
+        testUseCase: function (assert) {
+            var $t, $t1, $t2, $t3;
+            assert.expect(1);
+
+            var numbers = [1, 2, 3];
+
+            var sum = 0;
+
+            $t = Bridge.getEnumerator(numbers);
+            while ($t.moveNext()) {
+                var a = $t.getCurrent();
+                sum = sum + a;
+            }
+
+            $t1 = Bridge.getEnumerator(numbers);
+            while ($t1.moveNext()) {
+                var a1 = $t1.getCurrent();
+                sum = sum + a1;
+            }
+
+            $t2 = Bridge.getEnumerator(numbers);
+            while ($t2.moveNext()) {
+                var a2 = $t2.getCurrent();
+                sum = sum + a2;
+            }
+
+            $t3 = Bridge.getEnumerator(numbers);
+            while ($t3.moveNext()) {
+                var a3 = $t3.getCurrent();
+                sum = sum + a3;
+            }
+
+            assert.equal(sum, 24, "Bridge502 sum");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge514', {
     statics: {
         testUseCase: function (assert) {
