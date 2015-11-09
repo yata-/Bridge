@@ -103,6 +103,7 @@
     <Compile Include="System\Linq\OrderedEnumerable.cs" />
     <Compile Include="System\MidpointRounding.cs" />
     <Compile Include="System\StringComparison.cs" />
+    <Compile Include="System\StringSplitOptions.cs" />
     <Compile Include="System\Version.cs" />
     <Compile Include="This.cs" />
     <Compile Include="System\OverflowException.cs" />

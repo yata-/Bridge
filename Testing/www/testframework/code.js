@@ -6025,6 +6025,9 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.StringTests', {
         Bridge.Test.Assert.areEqual(Bridge.String.indexOfAny(("abcdabcd"), [120, 121], 4, 2), -1);
         Bridge.Test.Assert.areEqual(Bridge.String.indexOfAny(("abcdabcd"), [99], 4, 2), -1);
     },
+    insertWorks: function () {
+        Bridge.Test.Assert.areEqual(Bridge.String.insert(2, ("abcd"), "xyz"), "abxyzcd");
+    },
     isNullOrEmptyWorks: function () {
         Bridge.Test.Assert.$true(Bridge.String.isNullOrEmpty(null));
         Bridge.Test.Assert.$true(Bridge.String.isNullOrEmpty(""));
@@ -6047,6 +6050,35 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.StringTests', {
         Bridge.Test.Assert.areEqual(("abcabc").lastIndexOf("bc", 3), 1);
         Bridge.Test.Assert.areEqual(("abcabc").lastIndexOf("bd", 3), -1);
     },
+    lastIndexOfCharWithStartIndexAndCountWorks: function () {
+        Bridge.Test.Assert.areEqual(Bridge.String.lastIndexOf(("abcabc"), String.fromCharCode(98), 3, 3), 1);
+        Bridge.Test.Assert.areEqual(Bridge.String.lastIndexOf(("abcabc"), String.fromCharCode(98), 3, 2), -1);
+        Bridge.Test.Assert.areEqual(Bridge.String.lastIndexOf(("abcabc"), String.fromCharCode(100), 3, 3), -1);
+    },
+    lastIndexOfStringWithStartIndexAndCountWorks: function () {
+        Bridge.Test.Assert.areEqual(Bridge.String.lastIndexOf(("xbcxxxbc"), "bc", 3, 3), 1);
+        Bridge.Test.Assert.areEqual(Bridge.String.lastIndexOf(("xbcxxxbc"), "bc", 3, 2), -1);
+        Bridge.Test.Assert.areEqual(Bridge.String.lastIndexOf(("xbcxxxbc"), "bd", 3, 3), -1);
+    },
+    lastIndexOfAnyWorks: function () {
+        Bridge.Test.Assert.areEqual(Bridge.String.lastIndexOfAny(("abcd"), [98]), 1);
+        Bridge.Test.Assert.areEqual(Bridge.String.lastIndexOfAny(("abcd"), [98, 120]), 1);
+        Bridge.Test.Assert.areEqual(Bridge.String.lastIndexOfAny(("abcd"), [98, 120, 121]), 1);
+        Bridge.Test.Assert.areEqual(Bridge.String.lastIndexOfAny(("abcd"), [120, 121]), -1);
+    },
+    lastIndexOfAnyWithStartIndexWorks: function () {
+        Bridge.Test.Assert.areEqual(Bridge.String.lastIndexOfAny(("abcdabcd"), [98], 4), 1);
+        Bridge.Test.Assert.areEqual(Bridge.String.lastIndexOfAny(("abcdabcd"), [98, 120], 4), 1);
+        Bridge.Test.Assert.areEqual(Bridge.String.lastIndexOfAny(("abcdabcd"), [98, 120, 121], 4), 1);
+        Bridge.Test.Assert.areEqual(Bridge.String.lastIndexOfAny(("abcdabcd"), [120, 121], 4), -1);
+    },
+    lastIndexOfAnyWithStartIndexAndCountWorks: function () {
+        Bridge.Test.Assert.areEqual(Bridge.String.lastIndexOfAny(("abcdabcd"), [98], 4, 4), 1);
+        Bridge.Test.Assert.areEqual(Bridge.String.lastIndexOfAny(("abcdabcd"), [98, 120], 4, 4), 1);
+        Bridge.Test.Assert.areEqual(Bridge.String.lastIndexOfAny(("abcdabcd"), [98, 120, 121], 4, 4), 1);
+        Bridge.Test.Assert.areEqual(Bridge.String.lastIndexOfAny(("abcdabcd"), [120, 121], 4, 4), -1);
+        Bridge.Test.Assert.areEqual(Bridge.String.lastIndexOfAny(("abcdabcd"), [98], 4, 2), -1);
+    },
     localeCompareWorks: function () {
         Bridge.Test.Assert.$true(("abcd").localeCompare("abcd") === 0);
         Bridge.Test.Assert.$true(("abcd").localeCompare("abcb") > 0);
@@ -6055,6 +6087,24 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.StringTests', {
     matchWorks: function () {
         var result = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz").match(new RegExp("[A-E]", "gi"));
         Bridge.Test.Assert.areEqual(result, ["A", "B", "C", "D", "E", "a", "b", "c", "d", "e"]);
+    },
+    padLeftWorks: function () {
+        Bridge.Test.Assert.areEqual(Bridge.String.alignString(("abc"), 5), "  abc");
+    },
+    padLeftWithCharWorks: function () {
+        Bridge.Test.Assert.areEqual(Bridge.String.alignString(("abc"), 5, 48), "00abc");
+    },
+    padRightWorks: function () {
+        Bridge.Test.Assert.areEqual(Bridge.String.alignString(("abc"), -5), "abc  ");
+    },
+    padRightWithCharWorks: function () {
+        Bridge.Test.Assert.areEqual(Bridge.String.alignString(("abc"), -5, 48), "abc00");
+    },
+    removeWorks: function () {
+        Bridge.Test.Assert.areEqual(Bridge.String.remove(("abcde"), 2), "ab");
+    },
+    removeWithCountWorks: function () {
+        Bridge.Test.Assert.areEqual(Bridge.String.remove(("abcde"), 2, 2), "abe");
     },
     replaceWorks: function () {
         Bridge.Test.Assert.areEqual(Bridge.String.replaceAll(("abcabcabc"), "a", "x"), "xbcxbcxbc");
@@ -6078,8 +6128,68 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.StringTests', {
     splitWithStringWorks: function () {
         Bridge.Test.Assert.areEqual(("abcabcabc").split("b"), ["a", "ca", "ca", "c"]);
     },
+    splitWithCharWorks: function () {
+        Bridge.Test.Assert.areEqual(("abcabcabc").split(String.fromCharCode(98)), ["a", "ca", "ca", "c"]);
+    },
+    jsSplitWithStringAndLimitWorks: function () {
+        Bridge.Test.Assert.areEqual(("abcaxbcabce").split("bc", 2), ["a", "ax"]);
+    },
+    jsSplitWithCharAndLimitWorks: function () {
+        Bridge.Test.Assert.areEqual(("abcabcabc").split(String.fromCharCode(98), 2), ["a", "ca"]);
+    },
+    splitWithCharsAndLimitWorks: function () {
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("abcabcabc"), [98].map(function(i) {{ return String.fromCharCode(i); }}), 2), ["a", "cabcabc"]);
+    },
+    splitWithCharsAndStringSplitOptionsAndLimitWorks: function () {
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("abxcabcabc"), [98, 120].map(function(i) {{ return String.fromCharCode(i); }}), 2, 1), ["a", "cabcabc"]);
+    },
     splitWithRegexWorks: function () {
         Bridge.Test.Assert.areEqual(("abcaxcaxc").split(new RegExp("b|x", "g")), ["a", "ca", "ca", "c"]);
+    },
+    someNetSplitTests: function () {
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("axybcxzde"), ["xy", "xz"], null, 0), ["a", "bc", "de"]);
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("axybcxzdexz"), ["xy", "xz"], null, 0), ["a", "bc", "de", ""]);
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("xzaxybcxzdexz"), ["xy", "xz"], null, 0), ["", "a", "bc", "de", ""]);
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("xzaxyxzbcxzdexz"), ["xy", "xz"], null, 0), ["", "a", "", "bc", "de", ""]);
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("xzaxyxzxybcxzdexz"), ["xy", "xz"], null, 0), ["", "a", "", "", "bc", "de", ""]);
+
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("axybcxzde"), ["xy", "xz"], null, 1), ["a", "bc", "de"]);
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("axybcxzdexz"), ["xy", "xz"], null, 1), ["a", "bc", "de"]);
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("xzaxybcxzdexz"), ["xy", "xz"], null, 1), ["a", "bc", "de"]);
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("xzaxyxzbcxzdexz"), ["xy", "xz"], null, 1), ["a", "bc", "de"]);
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("xzaxyxzxybcxzdexz"), ["xy", "xz"], null, 1), ["a", "bc", "de"]);
+
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("axybcxzde"), ["xy", "xz"], 100, 0), ["a", "bc", "de"]);
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("axybcxzdexz"), ["xy", "xz"], 100, 0), ["a", "bc", "de", ""]);
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("xzaxybcxzdexz"), ["xy", "xz"], 100, 0), ["", "a", "bc", "de", ""]);
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("xzaxyxzbcxzdexz"), ["xy", "xz"], 100, 0), ["", "a", "", "bc", "de", ""]);
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("xzaxyxzxybcxzdexz"), ["xy", "xz"], 100, 0), ["", "a", "", "", "bc", "de", ""]);
+
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("axybcxzde"), ["xy", "xz"], 2, 0), ["a", "bcxzde"]);
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("axybcxzdexz"), ["xy", "xz"], 2, 0), ["a", "bcxzdexz"]);
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("axyxzbcxzdexz"), ["xy", "xz"], 2, 0), ["a", "xzbcxzdexz"]);
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("xzaxybcxzdexz"), ["xy", "xz"], 2, 0), ["", "axybcxzdexz"]);
+
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("axybcxzde"), ["xy", "xz"], 2, 1), ["a", "bcxzde"]);
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("axybcxzdexz"), ["xy", "xz"], 2, 1), ["a", "bcxzdexz"]);
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("axyxzbcxzdexz"), ["xy", "xz"], 2, 1), ["a", "bcxzdexz"]);
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("xzaxyxzbcxzdexz"), ["xy", "xz"], 2, 1), ["a", "bcxzdexz"]);
+    },
+    splitWithCharsWorks: function () {
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("Lorem Ipsum, dolor[sit amet"), [44, 32, 91].map(function(i) {{ return String.fromCharCode(i); }})), ["Lorem", "Ipsum", "", "dolor", "sit", "amet"]);
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("Lorem Ipsum, dolor[sit amet"), [44, 32, 91].map(function(i) {{ return String.fromCharCode(i); }}), null, 0), ["Lorem", "Ipsum", "", "dolor", "sit", "amet"]);
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("Lorem Ipsum, dolor[sit amet"), [44, 32, 91].map(function(i) {{ return String.fromCharCode(i); }}), null, 1), ["Lorem", "Ipsum", "dolor", "sit", "amet"]);
+    },
+    splitWithStringsWorks: function () {
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("a is b if b is c and c isifis d if d is e"), ["is", "if"], null, 0), ["a ", " b ", " b ", " c and c ", "", "", " d ", " d ", " e"]);
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("a is b if b is c and c isifis d if d is e"), ["is", "if"], null, 1), ["a ", " b ", " b ", " c and c ", " d ", " d ", " e"]);
+    },
+    splitWithStringsAndLimitWorks: function () {
+        Bridge.Test.Assert.areEqual(Bridge.String.split(("abcbcabcabc"), ["bc"], 2, 1), ["a", "abcabc"]);
+    },
+    startsWithCharWorks: function () {
+        Bridge.Test.Assert.$true(Bridge.String.startsWith(("abc"), "a"));
+        Bridge.Test.Assert.$false(Bridge.String.startsWith(("abc"), "b"));
     },
     startsWithStringWorks: function () {
         Bridge.Test.Assert.$true(Bridge.String.startsWith(("abc"), "ab"));
@@ -6092,10 +6202,10 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.StringTests', {
         Bridge.Test.Assert.areEqual(("abcde").substr(2, 2), "cd");
     },
     substringWorks: function () {
-        Bridge.Test.Assert.areEqual(("abcde").substring(2), "cde");
+        Bridge.Test.Assert.areEqual(("abcde").substr(2), "cde");
     },
     substringWithLengthWorks: function () {
-        Bridge.Test.Assert.areEqual(("abcde").substring(2, 4), "cd");
+        Bridge.Test.Assert.areEqual(("abcde").substr(2, 2), "cd");
     },
     toLowerCaseWorks: function () {
         Bridge.Test.Assert.areEqual(("ABcd").toLowerCase(), "abcd");
@@ -6111,6 +6221,21 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.StringTests', {
     },
     trimWorks: function () {
         Bridge.Test.Assert.areEqual(("  abc  ").trim(), "abc");
+    },
+    trimCharsWorks: function () {
+        Bridge.Test.Assert.areEqual(Bridge.String.trim((",., aa, aa,... "), [44, 46, 32]), "aa, aa");
+    },
+    trimStartCharsWorks: function () {
+        Bridge.Test.Assert.areEqual(Bridge.String.trimStart((",., aa, aa,... "), [44, 46, 32]), "aa, aa,... ");
+    },
+    trimEndCharsWorks: function () {
+        Bridge.Test.Assert.areEqual(Bridge.String.trimEnd((",., aa, aa,... "), [44, 46, 32]), ",., aa, aa");
+    },
+    trimStartWorks: function () {
+        Bridge.Test.Assert.areEqual(Bridge.String.trimStart(("  abc  ")), "abc  ");
+    },
+    trimEndWorks: function () {
+        Bridge.Test.Assert.areEqual(Bridge.String.trimEnd(("  abc  ")), "  abc");
     },
     stringEqualityWorks: function () {
         var s1 = "abc", s2 = null, s3 = null;
@@ -6152,6 +6277,21 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.StringTests', {
         r = "ab";
         Bridge.Test.Assert.$false(Bridge.equals(("a"), r));
     },
+    iEquatableEqualsWorks: function () {
+        Bridge.Test.Assert.$true(Bridge.String.equals(("a"), "a"));
+        Bridge.Test.Assert.$false(Bridge.String.equals(("b"), "a"));
+        Bridge.Test.Assert.$false(Bridge.String.equals(("a"), "b"));
+        Bridge.Test.Assert.$true(Bridge.String.equals(("b"), "b"));
+        Bridge.Test.Assert.$false(Bridge.String.equals(("a"), "A"));
+        Bridge.Test.Assert.$false(Bridge.String.equals(("a"), "ab"));
+
+        Bridge.Test.Assert.$true(Bridge.equalsT((Bridge.cast("a", Bridge.IEquatable$1(String))), "a"));
+        Bridge.Test.Assert.$false(Bridge.equalsT((Bridge.cast("b", Bridge.IEquatable$1(String))), "a"));
+        Bridge.Test.Assert.$false(Bridge.equalsT((Bridge.cast("a", Bridge.IEquatable$1(String))), "b"));
+        Bridge.Test.Assert.$true(Bridge.equalsT((Bridge.cast("b", Bridge.IEquatable$1(String))), "b"));
+        Bridge.Test.Assert.$false(Bridge.equalsT((Bridge.cast("a", Bridge.IEquatable$1(String))), "A"));
+        Bridge.Test.Assert.$false(Bridge.equalsT((Bridge.cast("a", Bridge.IEquatable$1(String))), "ab"));
+    },
     stringEqualsWorks: function () {
         Bridge.Test.Assert.$true(Bridge.String.equals(("a"), "a"));
         Bridge.Test.Assert.$false(Bridge.String.equals(("b"), "a"));
@@ -6166,6 +6306,26 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.StringTests', {
         Bridge.Test.Assert.$true(Bridge.String.compare("abcd", "abcb") > 0);
         Bridge.Test.Assert.$true(Bridge.String.compare("abcd", "abce") < 0);
     },
+    iComparableCompareToWorks: function () {
+        Bridge.Test.Assert.$true(Bridge.compare((Bridge.cast("abcd", Bridge.IComparable$1(String))), "abcd") === 0);
+        Bridge.Test.Assert.$true(Bridge.compare((Bridge.cast("abcd", Bridge.IComparable$1(String))), "abcD") !== 0);
+        Bridge.Test.Assert.$true(Bridge.compare((Bridge.cast("abcd", Bridge.IComparable$1(String))), "abcb") > 0);
+        Bridge.Test.Assert.$true(Bridge.compare((Bridge.cast("abcd", Bridge.IComparable$1(String))), "abce") < 0);
+
+        Bridge.Test.Assert.$true(Bridge.compare((Bridge.cast("", Bridge.IComparable$1(String))), null) > 0);
+    },
+    joinWorks: function () {
+        Bridge.Test.Assert.areEqual(["a", "ab", "abc", "abcd"].join(", "), "a, ab, abc, abcd");
+        Bridge.Test.Assert.areEqual(["a", "ab", "abc", "abcd"].slice(1, 1 + 2).join(", "), "ab, abc");
+
+        var intValues = new Bridge.ClientTest.SimpleTypes.StringTests.MyEnumerable$1(Bridge.Int)([1, 5, 6]);
+        Bridge.Test.Assert.areEqual(Bridge.toArray(intValues).join(", "), "1, 5, 6");
+        var stringValues = new Bridge.ClientTest.SimpleTypes.StringTests.MyEnumerable$1(String)(["a", "ab", "abc", "abcd"]);
+        Bridge.Test.Assert.areEqual(Bridge.toArray(stringValues).join(", "), "a, ab, abc, abcd");
+
+        // TODO: c# makes it False but js false
+        Bridge.Test.Assert.areEqual(["a", 1, "abc", false].join(", "), "a, 1, abc, false"); // False");
+    },
     containsWorks: function () {
         var text = "Lorem ipsum dolor sit amet";
         Bridge.Test.Assert.$true(Bridge.String.contains(text,"Lorem"));
@@ -6177,6 +6337,20 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.StringTests', {
         Bridge.Test.Assert.areEqual(Bridge.String.toCharArray(text, 0, text.length), [76, 111, 114, 101, 109, 32, 115, 105, 116, 32, 100, 111, 108, 111, 114]);
     }
 });
+
+Bridge.define('Bridge.ClientTest.SimpleTypes.StringTests.MyEnumerable$1', function (T) { return {
+    inherits: [Bridge.IEnumerable$1(T)],
+    _items: null,
+    constructor: function (items) {
+        this._items = items;
+    },
+    getEnumerator: function () {
+        return this.getEnumerator$1();
+    },
+    getEnumerator$1: function () {
+        return Bridge.cast(Bridge.getEnumerator(this._items), Bridge.IEnumerator$1(T));
+    }
+}; });
 
 Bridge.define('Bridge.ClientTest.SimpleTypes.TimeSpanTests', {
     typePropertiesAreCorrect: function () {

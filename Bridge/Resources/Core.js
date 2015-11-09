@@ -289,8 +289,12 @@
 	            return true;
             }
 
-            if (Bridge.isArray(obj)) {
+            if (Bridge.isArray(obj) || obj instanceof Bridge.ArrayEnumerator) {
                 return Bridge.Array.is(obj, type);
+            }
+
+            if (Bridge.isString(obj)) {
+                return Bridge.String.is(obj, type);
             }
 
             if (!type.$$inheritors) {
@@ -591,6 +595,9 @@
 
                 throw new Bridge.NullReferenceException();
             } else if (Bridge.isNumber(a) || Bridge.isString(a) || Bridge.isBoolean(a)) {
+                if (Bridge.isString(a) && !Bridge.hasValue(b)) {
+                    return 1;
+                }
                 return a < b ? -1 : (a > b ? 1 : 0);
             } else if (Bridge.isDate(a)) {
                 return Bridge.compare(a.valueOf(), b.valueOf());
