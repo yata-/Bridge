@@ -930,8 +930,6 @@ Bridge.define('ClientTestLibrary.Bridge559B', {
 Bridge.define('ClientTestLibrary.Bridge565', {
     statics: {
         testUseCase: function (assert) {
-            var b = new ClientTestLibrary.Bridge559B("constructor$1", 1);
-
             assert.expect(7);
 
             var t1 = new Function();
@@ -954,6 +952,30 @@ Bridge.define('ClientTestLibrary.Bridge565', {
 
             var t7 = new Object();
             assert.ok(Bridge.getType(t7) === Object, "#565 t7");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge572', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(4);
+
+            var d1 = new Bridge.Dictionary$2(Bridge.Int,String)();
+
+            var d = Bridge.as(d1, Bridge.IDictionary$2(Bridge.Int,String));
+
+            d.add(1, "One");
+            d.add(2, "Two");
+
+            assert.equal(d.getItem(1), "One", "#572 getItem One");
+            assert.equal(d.getItem(2), "Two", "#572 getItem Two");
+
+            d.setItem(1, "New one");
+            d.setItem(2, "New two");
+
+            assert.equal(d.getItem(1), "New one", "#572 setItem New one");
+            assert.equal(d.getItem(2), "New two", "#572 setItem New two");
         }
     }
 });
