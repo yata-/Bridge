@@ -2,6 +2,25 @@
 
 (function () {
     var string = {
+        is: function (obj, type) {
+            if (!Bridge.isString(obj)) {
+                return false;
+            }
+
+            if ((obj.constructor === type) || (obj instanceof type)) {
+                return true;
+            }
+
+            if (type === Bridge.IEnumerable ||
+                type.$$name && Bridge.String.startsWith(type.$$name, "Bridge.IEnumerable$1") ||
+                type.$$name && Bridge.String.startsWith(type.$$name, "Bridge.IComparable$1") ||
+                type.$$name && Bridge.String.startsWith(type.$$name, "Bridge.IEquatable$1")) {
+                return true;
+            }
+
+            return false;
+        },
+
         lastIndexOf: function (s, search, startIndex, count) {
             var index = s.lastIndexOf(search, startIndex);
             return (index < (startIndex - count + 1)) ? -1 : index;
@@ -13,7 +32,7 @@
                 return -1;
             }
 
-            chars = String.fromCharCode(chars);
+            chars = String.fromCharCode.apply(null, chars);
             startIndex = startIndex || length - 1;
             count = count || length;
 
@@ -391,11 +410,11 @@
         },
 
         trimEnd: function (s, chars) {
-            return s.replace(chars ? new RegExp('[' + String.fromCharCode(chars) + ']+$') : /\s*$/, '');
+            return s.replace(chars ? new RegExp('[' + String.fromCharCode.apply(null, chars) + ']+$') : /\s*$/, '');
         },
 
         trimStart: function(s, chars) {
-            return s.replace(chars ? new RegExp('^[' + String.fromCharCode(chars) + ']+') : /^\s*/, '');
+            return s.replace(chars ? new RegExp('^[' + String.fromCharCode.apply(null, chars) + ']+') : /^\s*/, '');
         },
 
         trim: function(s, chars) {

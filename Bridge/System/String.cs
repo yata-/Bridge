@@ -482,7 +482,7 @@ namespace System
         [Template("{this}.lastIndexOf(String.fromCharCode({ch}), {startIndex})")]
         public extern int LastIndexOf(char ch, int startIndex);
 
-        [Template("Bridge.String.lastIndexOfAny({this}, {ch})")]
+        [Template("Bridge.String.lastIndexOfAny({this}, [{ch}])")]
         public extern int LastIndexOfAny(params char[] ch);
 
         [Template("Bridge.String.lastIndexOfAny({this}, {ch}, {startIndex})")]
@@ -834,13 +834,13 @@ namespace System
             return null;
         }
 
-        [Template("Bridge.String.trim({this}, {values})")]
+        [Template("Bridge.String.trim({this}, [{values}])")]
         public extern string Trim(params char[] values);
 
-        [Template("Bridge.String.trimStart({this}, {values})")]
+        [Template("Bridge.String.trimStart({this}, [{values}])")]
         public extern string TrimStart(params char[] values);
 
-        [Template("Bridge.String.trimEnd({this}, {values})")]
+        [Template("Bridge.String.trimEnd({this}, [{values}])")]
         public extern string TrimEnd(params char[] values);
 
         [Template("Bridge.String.trimStart({this})")]
