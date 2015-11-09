@@ -45,7 +45,14 @@
     <Compile Include="Tests\BasicCSharp\TestVirtualMethods.cs" />
     <Compile Include="Tests\BasicCSharp\TestAbstractClass.cs" />
     <Compile Include="Tests\BasicCSharp\TestTryCatchFinallyBlocks.cs" />
+    <Compile Include="Tests\BridgeIssues\N572.cs" />
+    <Compile Include="Tests\BridgeIssues\N565.cs" />
     <Compile Include="Tests\BridgeIssues\N563.cs" />
+    <Compile Include="Tests\BridgeIssues\N559.cs" />
+    <Compile Include="Tests\BridgeIssues\N558.cs" />
+    <Compile Include="Tests\BridgeIssues\N555.cs" />
+    <Compile Include="Tests\BridgeIssues\N554.cs" />
+    <Compile Include="Tests\BridgeIssues\N381.cs" />
     <Compile Include="Tests\BridgeIssues\N546.cs" />
     <Compile Include="Tests\BridgeIssues\N537B2 .cs" />
     <Compile Include="Tests\BridgeIssues\N537B1.cs" />
