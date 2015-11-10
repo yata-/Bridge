@@ -80,6 +80,7 @@ namespace ClientTestLibrary
             QUnit.Test("Version ToString", TestVersion.TestToString);
             QUnit.Test("Version Parse", TestVersion.TestParse);
             QUnit.Test("Version Operators", TestVersion.TestOperators);
+            QUnit.Test("Version #499", TestVersion.TestIssue499);
 
             QUnit.Module("Issues");
             QUnit.Test("#169", TestBridgeIssues.N169);
