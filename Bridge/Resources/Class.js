@@ -329,7 +329,7 @@
             if (document && (document.readyState === "complete" || document.readyState === "loaded")) {
                 fn();
             } else {
-                setTimeout(fn, 0);
+                Bridge.Class.$queue.push(fn);
             }
 
             return Class;
@@ -399,13 +399,26 @@
                 fn = scope;
                 scope = Bridge.global;
             }
-
+            fn.$$name = className;
             Bridge.Class.set(scope, className, fn);
 
             return fn;
+        },
+
+        init: function (fn) {
+            for (var i = 0; i < Bridge.Class.$queue.length; i++) {
+                Bridge.Class.$queue[i]();
+            }
+            Bridge.Class.$queue.length = 0;
+
+            if (fn) {
+                fn();
+            }
         }
     };
 
     Bridge.Class = base;
+    Bridge.Class.$queue = [];
     Bridge.define = Bridge.Class.define;
+    Bridge.init = Bridge.Class.init;
 })();
