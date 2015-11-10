@@ -203,6 +203,12 @@ Bridge.define('ClientTestLibrary.TestVersion', {
             assert.notOk(Bridge.Version.op_GreaterThanOrEqual(v4, v5), "v4 >= v5");
             assert.notOk(Bridge.Version.op_LessThan(v4, v5), "v4 < v5");
             assert.notOk(Bridge.Version.op_LessThanOrEqual(v4, v5), "v4 <= v5");
+        },
+        testIssue499: function (assert) {
+            assert.expect(1);
+
+            var v1 = new Bridge.Version("constructor");
+            assert.equal(Bridge.getTypeName(v1), "Bridge.Version", "#499 Version type name");
         }
     }
 });

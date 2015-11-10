@@ -78,6 +78,7 @@ Bridge.define('ClientTestLibrary.RunTests', {
             QUnit.test("Version ToString", ClientTestLibrary.TestVersion.testToString);
             QUnit.test("Version Parse", ClientTestLibrary.TestVersion.testParse);
             QUnit.test("Version Operators", ClientTestLibrary.TestVersion.testOperators);
+            QUnit.test("Version #499", ClientTestLibrary.TestVersion.testIssue499);
 
             QUnit.module("Issues");
             QUnit.test("#169", ClientTestLibrary.TestBridgeIssues.n169);
