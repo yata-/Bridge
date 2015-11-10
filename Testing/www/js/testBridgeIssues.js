@@ -1074,6 +1074,35 @@ Bridge.define('ClientTestLibrary.Bridge565', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge566', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var ted = new ClientTestLibrary.Bridge566B();
+            assert.equal(ted.getData(), "Ted", "#566 Ted");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge566A', {
+    config: {
+        properties: {
+            Data: null
+        }
+    },
+    constructor: function () {
+        this.setData(this.getName());
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge566B', {
+    inherits: [ClientTestLibrary.Bridge566A],
+    getName: function () {
+        return "Ted";
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge572', {
     statics: {
         testUseCase: function (assert) {
