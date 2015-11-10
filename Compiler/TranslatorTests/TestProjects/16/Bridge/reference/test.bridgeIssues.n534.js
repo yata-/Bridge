@@ -13,3 +13,6 @@ Bridge.define('Test.BridgeIssues.N534.Bridge534', {
     }
 });
 
+
+
+Bridge.init();
