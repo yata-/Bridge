@@ -15,7 +15,6 @@ namespace ClientTestLibrary
     [FileName("testBridgeIssues.js")]
     internal class Bridge549
     {
-        [Ready]
         public static void TestUseCase(Assert assert)
         {
             assert.Expect(72);
