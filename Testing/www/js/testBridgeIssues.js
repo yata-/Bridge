@@ -859,11 +859,6 @@ Bridge.define('ClientTestLibrary.Bridge546', {
  */
 Bridge.define('ClientTestLibrary.Bridge548', {
     statics: {
-        config: {
-            init: function () {
-                Bridge.ready(this.testUseCase);
-            }
-        },
         testUseCase: function (assert) {
             assert.expect(9);
             var v1 = new Float32Array(1);
@@ -896,11 +891,6 @@ Bridge.define('ClientTestLibrary.Bridge548', {
  */
 Bridge.define('ClientTestLibrary.Bridge549', {
     statics: {
-        config: {
-            init: function () {
-                Bridge.ready(this.testUseCase);
-            }
-        },
         testUseCase: function (assert) {
             assert.expect(72);
 
