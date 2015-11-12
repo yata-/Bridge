@@ -19,23 +19,33 @@ namespace ClientTestLibrary
     {
         public static void TestUseCase(Assert assert)
         {
-            assert.Expect(9);
+            assert.Expect(10);
+
             var v1 = new Float32Array(1);
-            assert.Ok(v1);
+            assert.Ok(v1 != null, "Float32Array created");
+            assert.Equal(v1.GetClassName(), "Float32Array", "Float32Array class name");
+
             var v2 = new Float64Array(1);
             assert.Ok(v2);
+
             var v3 = new Int16Array(1);
             assert.Ok(v3);
+
             var v4 = new Int32Array(1);
             assert.Ok(v4);
+
             var v5 = new Int8Array(1);
             assert.Ok(v5);
+
             var v6 = new Uint16Array(1);
             assert.Ok(v6);
+
             var v7 = new Uint32Array(1);
             assert.Ok(v7);
+
             var v8 = new Uint8Array(1);
             assert.Ok(v8);
+
             var v9 = new Uint8ClampedArray(1);
             assert.Ok(v9);
         }
