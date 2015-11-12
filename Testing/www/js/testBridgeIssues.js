@@ -844,197 +844,6 @@ Bridge.define('ClientTestLibrary.Bridge548', {
     }
 });
 
-/**
- * This test will check whether TypedArray types correctly inherit from
- the prototype common methods and fields. [#549]
- *
- * @class ClientTestLibrary.Bridge549
- */
-Bridge.define('ClientTestLibrary.Bridge549', {
-    statics: {
-        testUseCase: function (assert) {
-            assert.expect(81);
-
-            var v1 = new Float32Array(10);
-            assert.ok(v1 !== null, "Float32Array created");
-
-            v1[1] = 11;
-            v1[5] = 5;
-            v1[9] = 99;
-            assert.equal(v1[1], 11, "Float32Array indexier works 1");
-            assert.equal(v1[9], 99, "Float32Array indexier works 9");
-
-            // Check just a select number of references inside the Prototype inheritance.
-            assert.ok(v1.buffer !== null, "Float32Array Buffer");
-            assert.equal(v1.byteLength, 40, "Float32Array ByteLength");
-            assert.equal(v1.byteOffset, 0, "Float32Array ByteOffset");
-            assert.equal(v1.length, 10, "Float32Array Length");
-
-            /* 
-             * Commented out. Reason: Only Firefox implements them.
-             * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array
-            var mA = v1.Join();
-            v1.Reverse();
-            var mB = v1.Slice();
-            var mC = v1.Sort();
-             */
-
-            assert.equal(v1.toLocaleString(), "0,11,0,0,0,5,0,0,0,99", "Float32Array ToLocaleString");
-            assert.equal(v1.toString(), "0,11,0,0,0,5,0,0,0,99", "Float32Array ToString");
-
-            // Some browsers do not support SubArray() with no parameters.
-            // At least 'begin' must be provided.
-            var subArray11 = v1.subarray(1);
-            assert.ok(subArray11 !== null, "Float32Array SubArray1");
-            assert.equal(subArray11.length, 9, "Float32Array SubArray1 Length");
-            assert.equal(subArray11.toString(), "11,0,0,0,5,0,0,0,99", "Float32Array SubArray1 ToString");
-            assert.equal(subArray11.byteOffset, 4, "Float32Array SubArray1 ByteOffset");
-
-            var subArray12 = subArray11.subarray(2, 6);
-            assert.ok(subArray12 !== null, "Float32Array SubArray2");
-            assert.equal(subArray12.length, 4, "Float32Array SubArray2 Length");
-            assert.equal(subArray12.toString(), "0,0,5,0", "Float32Array SubArray2 ToString");
-            assert.equal(subArray12.byteOffset, 12, "Float32Array SubArray2 ByteOffset");
-
-            var v2 = new Float64Array(1);
-            assert.ok(true);
-            var p2X = v2.buffer;
-            assert.ok(true);
-            var p2Y = v2.byteLength;
-            assert.ok(true);
-            var p2Z = v2.byteOffset;
-            assert.ok(true);
-            var p2L = v2.length;
-            assert.ok(true);
-            var m2D = v2.subarray(1);
-            assert.ok(true);
-            var m2E = v2.toLocaleString();
-            assert.ok(true);
-            var m2F = v2.toString();
-            assert.ok(true);
-
-            var v3 = new Int16Array(1);
-            assert.ok(true);
-            var p3X = v3.buffer;
-            assert.ok(true);
-            var p3Y = v3.byteLength;
-            assert.ok(true);
-            var p3Z = v3.byteOffset;
-            assert.ok(true);
-            var p3L = v3.length;
-            assert.ok(true);
-            var m3D = v3.subarray(1);
-            assert.ok(true);
-            var m3E = v3.toLocaleString();
-            assert.ok(true);
-            var m3F = v3.toString();
-            assert.ok(true);
-
-            var v4 = new Int32Array(1);
-            assert.ok(true);
-            var p4X = v4.buffer;
-            assert.ok(true);
-            var p4Y = v4.byteLength;
-            assert.ok(true);
-            var p4Z = v4.byteOffset;
-            assert.ok(true);
-            var p4L = v4.length;
-            assert.ok(true);
-            var m4D = v4.subarray(1);
-            assert.ok(true);
-            var m4E = v4.toLocaleString();
-            assert.ok(true);
-            var m4F = v4.toString();
-            assert.ok(true);
-
-            var v5 = new Int8Array(1);
-            assert.ok(true);
-            var p5X = v5.buffer;
-            assert.ok(true);
-            var p5Y = v5.byteLength;
-            assert.ok(true);
-            var p5Z = v5.byteOffset;
-            assert.ok(true);
-            var p5L = v5.length;
-            assert.ok(true);
-            var m5D = v5.subarray(1);
-            assert.ok(true);
-            var m5E = v5.toLocaleString();
-            assert.ok(true);
-            var m5F = v5.toString();
-            assert.ok(true);
-
-            var v6 = new Uint16Array(1);
-            assert.ok(true);
-            var p6X = v6.buffer;
-            assert.ok(true);
-            var p6Y = v6.byteLength;
-            assert.ok(true);
-            var p6Z = v6.byteOffset;
-            assert.ok(true);
-            var p6L = v6.length;
-            assert.ok(true);
-            var m6D = v6.subarray(1);
-            assert.ok(true);
-            var m6E = v6.toLocaleString();
-            assert.ok(true);
-            var m6F = v6.toString();
-            assert.ok(true);
-
-            var v7 = new Uint32Array(1);
-            assert.ok(true);
-            var p7X = v7.buffer;
-            assert.ok(true);
-            var p7Y = v7.byteLength;
-            assert.ok(true);
-            var p7Z = v7.byteOffset;
-            assert.ok(true);
-            var p7L = v7.length;
-            assert.ok(true);
-            var m7D = v7.subarray(1);
-            assert.ok(true);
-            var m7E = v7.toLocaleString();
-            assert.ok(true);
-            var m7F = v7.toString();
-            assert.ok(true);
-
-            var v8 = new Uint8Array(1);
-            assert.ok(true);
-            var p8X = v8.buffer;
-            assert.ok(true);
-            var p8Y = v8.byteLength;
-            assert.ok(true);
-            var p8Z = v8.byteOffset;
-            assert.ok(true);
-            var p8L = v8.length;
-            assert.ok(true);
-            var m8D = v8.subarray(1);
-            assert.ok(true);
-            var m8E = v8.toLocaleString();
-            assert.ok(true);
-            var m8F = v8.toString();
-            assert.ok(true);
-
-            var v9 = new Uint8ClampedArray(1);
-            assert.ok(true);
-            var p9X = v9.buffer;
-            assert.ok(true);
-            var p9Y = v9.byteLength;
-            assert.ok(true);
-            var p9Z = v9.byteOffset;
-            assert.ok(true);
-            var p9L = v9.length;
-            assert.ok(true);
-            var m9D = v9.subarray(1);
-            assert.ok(true);
-            var m9E = v9.toLocaleString();
-            assert.ok(true);
-            var m9F = v9.toString();
-            assert.ok(true);
-        }
-    }
-});
-
 Bridge.define('ClientTestLibrary.Bridge554', {
     statics: {
         testUseCase: function (assert) {
@@ -2032,6 +1841,202 @@ Bridge.define('ClientTestLibrary.Bridge544', {
 
             var s = Bridge.merge(new String(), JSON.parse("\"Some string\""));
             assert.equal(s, "Some string", "Bridge544 string");
+        }
+    }
+});
+
+/**
+ * This test will check whether TypedArray types correctly inherit from
+ the prototype common methods and fields. [#549]
+ *
+ * @class ClientTestLibrary.Bridge549
+ */
+Bridge.define('ClientTestLibrary.Bridge549', {
+    statics: {
+        testUseCase: function (assert) {
+            var isToStringToTypeNameLogic = !ClientTestLibrary.Utilities.BrowserHelper.isChrome();
+
+            assert.expect(81);
+
+            var v1 = new Float32Array(10);
+            assert.ok(v1 !== null, "Float32Array created");
+
+            v1[1] = 11;
+            v1[5] = 5;
+            v1[9] = 99;
+            assert.equal(v1[1], 11, "Float32Array indexier works 1");
+            assert.equal(v1[9], 99, "Float32Array indexier works 9");
+
+            // Check just a select number of references inside the Prototype inheritance.
+            assert.ok(v1.buffer !== null, "Float32Array Buffer");
+            assert.equal(v1.byteLength, 40, "Float32Array ByteLength");
+            assert.equal(v1.byteOffset, 0, "Float32Array ByteOffset");
+            assert.equal(v1.length, 10, "Float32Array Length");
+
+            /* 
+             * Commented out. Reason: Only Firefox implements them.
+             * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array
+            var mA = v1.Join();
+            v1.Reverse();
+            var mB = v1.Slice();
+            var mC = v1.Sort();
+             */
+
+            var expectedToStringFloat32Array1 = isToStringToTypeNameLogic ? "[object Float32Array]" : "0,11,0,0,0,5,0,0,0,99";
+            assert.equal(v1.toLocaleString(), expectedToStringFloat32Array1, "Float32Array ToLocaleString");
+            assert.equal(v1.toString(), expectedToStringFloat32Array1, "Float32Array ToString");
+
+            // Some browsers do not support SubArray() with no parameters.
+            // At least 'begin' must be provided.
+            var subArray11 = v1.subarray(1);
+            var expectedToStringFloat32Array2 = isToStringToTypeNameLogic ? "[object Float32Array]" : "11,0,0,0,5,0,0,0,99";
+            assert.ok(subArray11 !== null, "Float32Array SubArray1");
+            assert.equal(subArray11.length, 9, "Float32Array SubArray1 Length");
+            assert.equal(subArray11.toString(), expectedToStringFloat32Array2, "Float32Array SubArray1 ToString");
+            assert.equal(subArray11.byteOffset, 4, "Float32Array SubArray1 ByteOffset");
+
+            var subArray12 = subArray11.subarray(2, 6);
+            var expectedToStringFloat32Array3 = isToStringToTypeNameLogic ? "[object Float32Array]" : "0,0,5,0";
+            assert.ok(subArray12 !== null, "Float32Array SubArray2");
+            assert.equal(subArray12.length, 4, "Float32Array SubArray2 Length");
+            assert.equal(subArray12.toString(), expectedToStringFloat32Array3, "Float32Array SubArray2 ToString");
+            assert.equal(subArray12.byteOffset, 12, "Float32Array SubArray2 ByteOffset");
+
+            var v2 = new Float64Array(1);
+            assert.ok(true);
+            var p2X = v2.buffer;
+            assert.ok(true);
+            var p2Y = v2.byteLength;
+            assert.ok(true);
+            var p2Z = v2.byteOffset;
+            assert.ok(true);
+            var p2L = v2.length;
+            assert.ok(true);
+            var m2D = v2.subarray(1);
+            assert.ok(true);
+            var m2E = v2.toLocaleString();
+            assert.ok(true);
+            var m2F = v2.toString();
+            assert.ok(true);
+
+            var v3 = new Int16Array(1);
+            assert.ok(true);
+            var p3X = v3.buffer;
+            assert.ok(true);
+            var p3Y = v3.byteLength;
+            assert.ok(true);
+            var p3Z = v3.byteOffset;
+            assert.ok(true);
+            var p3L = v3.length;
+            assert.ok(true);
+            var m3D = v3.subarray(1);
+            assert.ok(true);
+            var m3E = v3.toLocaleString();
+            assert.ok(true);
+            var m3F = v3.toString();
+            assert.ok(true);
+
+            var v4 = new Int32Array(1);
+            assert.ok(true);
+            var p4X = v4.buffer;
+            assert.ok(true);
+            var p4Y = v4.byteLength;
+            assert.ok(true);
+            var p4Z = v4.byteOffset;
+            assert.ok(true);
+            var p4L = v4.length;
+            assert.ok(true);
+            var m4D = v4.subarray(1);
+            assert.ok(true);
+            var m4E = v4.toLocaleString();
+            assert.ok(true);
+            var m4F = v4.toString();
+            assert.ok(true);
+
+            var v5 = new Int8Array(1);
+            assert.ok(true);
+            var p5X = v5.buffer;
+            assert.ok(true);
+            var p5Y = v5.byteLength;
+            assert.ok(true);
+            var p5Z = v5.byteOffset;
+            assert.ok(true);
+            var p5L = v5.length;
+            assert.ok(true);
+            var m5D = v5.subarray(1);
+            assert.ok(true);
+            var m5E = v5.toLocaleString();
+            assert.ok(true);
+            var m5F = v5.toString();
+            assert.ok(true);
+
+            var v6 = new Uint16Array(1);
+            assert.ok(true);
+            var p6X = v6.buffer;
+            assert.ok(true);
+            var p6Y = v6.byteLength;
+            assert.ok(true);
+            var p6Z = v6.byteOffset;
+            assert.ok(true);
+            var p6L = v6.length;
+            assert.ok(true);
+            var m6D = v6.subarray(1);
+            assert.ok(true);
+            var m6E = v6.toLocaleString();
+            assert.ok(true);
+            var m6F = v6.toString();
+            assert.ok(true);
+
+            var v7 = new Uint32Array(1);
+            assert.ok(true);
+            var p7X = v7.buffer;
+            assert.ok(true);
+            var p7Y = v7.byteLength;
+            assert.ok(true);
+            var p7Z = v7.byteOffset;
+            assert.ok(true);
+            var p7L = v7.length;
+            assert.ok(true);
+            var m7D = v7.subarray(1);
+            assert.ok(true);
+            var m7E = v7.toLocaleString();
+            assert.ok(true);
+            var m7F = v7.toString();
+            assert.ok(true);
+
+            var v8 = new Uint8Array(1);
+            assert.ok(true);
+            var p8X = v8.buffer;
+            assert.ok(true);
+            var p8Y = v8.byteLength;
+            assert.ok(true);
+            var p8Z = v8.byteOffset;
+            assert.ok(true);
+            var p8L = v8.length;
+            assert.ok(true);
+            var m8D = v8.subarray(1);
+            assert.ok(true);
+            var m8E = v8.toLocaleString();
+            assert.ok(true);
+            var m8F = v8.toString();
+            assert.ok(true);
+
+            var v9 = new Uint8ClampedArray(1);
+            assert.ok(true);
+            var p9X = v9.buffer;
+            assert.ok(true);
+            var p9Y = v9.byteLength;
+            assert.ok(true);
+            var p9Z = v9.byteOffset;
+            assert.ok(true);
+            var p9L = v9.length;
+            assert.ok(true);
+            var m9D = v9.subarray(1);
+            assert.ok(true);
+            var m9E = v9.toLocaleString();
+            assert.ok(true);
+            var m9F = v9.toString();
+            assert.ok(true);
         }
     }
 });

@@ -17,6 +17,8 @@ namespace ClientTestLibrary
     {
         public static void TestUseCase(Assert assert)
         {
+            var isToStringToTypeNameLogic = !BrowserHelper.IsChrome();
+
             assert.Expect(81);
 
             var v1 = new Float32Array(10);
@@ -43,21 +45,24 @@ namespace ClientTestLibrary
             var mC = v1.Sort();
              */
 
-            assert.Equal(v1.ToLocaleString(), "0,11,0,0,0,5,0,0,0,99", "Float32Array ToLocaleString");
-            assert.Equal(v1.ToString(), "0,11,0,0,0,5,0,0,0,99", "Float32Array ToString");
+            var expectedToStringFloat32Array1 = isToStringToTypeNameLogic ? "[object Float32Array]" : "0,11,0,0,0,5,0,0,0,99";
+            assert.Equal(v1.ToLocaleString(), expectedToStringFloat32Array1, "Float32Array ToLocaleString");
+            assert.Equal(v1.ToString(), expectedToStringFloat32Array1, "Float32Array ToString");
 
             // Some browsers do not support SubArray() with no parameters.
             // At least 'begin' must be provided.
             var subArray11 = v1.SubArray(1);
+            var expectedToStringFloat32Array2 = isToStringToTypeNameLogic ? "[object Float32Array]" : "11,0,0,0,5,0,0,0,99";
             assert.Ok(subArray11 != null, "Float32Array SubArray1");
             assert.Equal(subArray11.Length, 9, "Float32Array SubArray1 Length");
-            assert.Equal(subArray11.ToString(), "11,0,0,0,5,0,0,0,99", "Float32Array SubArray1 ToString");
+            assert.Equal(subArray11.ToString(), expectedToStringFloat32Array2, "Float32Array SubArray1 ToString");
             assert.Equal(subArray11.ByteOffset, 4, "Float32Array SubArray1 ByteOffset");
 
             var subArray12 = subArray11.SubArray(2, 6);
+            var expectedToStringFloat32Array3 = isToStringToTypeNameLogic ? "[object Float32Array]" : "0,0,5,0";
             assert.Ok(subArray12 != null, "Float32Array SubArray2");
             assert.Equal(subArray12.Length, 4, "Float32Array SubArray2 Length");
-            assert.Equal(subArray12.ToString(), "0,0,5,0", "Float32Array SubArray2 ToString");
+            assert.Equal(subArray12.ToString(), expectedToStringFloat32Array3, "Float32Array SubArray2 ToString");
             assert.Equal(subArray12.ByteOffset, 12, "Float32Array SubArray2 ByteOffset");
 
             var v2 = new Float64Array(1);
