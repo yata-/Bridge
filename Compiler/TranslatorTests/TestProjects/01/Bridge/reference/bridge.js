@@ -1726,19 +1726,6 @@
             }
         },
 
-        createAccessors: function (cfg, scope) {
-            var name,
-                config;
-
-            config = Bridge.isFunction(cfg) ? cfg() : cfg;
-
-            if (config.properties) {
-                for (name in config.properties) {
-                    Bridge.property(scope, name, config.properties[name]);
-                }
-            }
-        },
-
         initConfig: function (extend, base, cfg, statics, scope) {
             var initFn,
                 isFn = Bridge.isFunction(cfg),
@@ -1915,14 +1902,6 @@
 
             if (instanceConfig && !Bridge.isFunction(instanceConfig)) {
                 Bridge.Class.initConfig(extend, base, instanceConfig, false, prop);                
-
-                if (document && (document.readyState === "complete" || document.readyState === "loaded")) {
-                    Bridge.Class.createAccessors(instanceConfig, prototype);
-                } else {
-                    setTimeout(function () {
-                        Bridge.Class.createAccessors(instanceConfig, prototype);
-                    }, 0);
-                }
 
                 if (prop.$config) {
                     delete prop.$config;
