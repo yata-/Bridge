@@ -568,6 +568,7 @@ namespace Bridge.Html5.TypedArray
         /// A new TypedArray on the same ArrayBuffer store and with the same element types
         /// as for this TypedArray object.
         /// </returns>
+        [Name("subarray")]
         public TypedArray SubArray(Any<int, long, uint, ulong> begin, Any<int, long, uint, ulong> end)
         {
             return default(TypedArray);
