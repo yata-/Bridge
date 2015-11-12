@@ -21,7 +21,7 @@ namespace ClientTestLibrary
         public static int Valeur3 = Add(Bridge588B.Valeur2, 1);
     }
 
-    // Bridge[#559]
+    // Bridge[#588]
     [FileName("testBridgeIssues.js")]
     internal class Bridge588
     {

@@ -80,6 +80,7 @@ namespace ClientTestLibrary
             QUnit.Test("Version ToString", TestVersion.TestToString);
             QUnit.Test("Version Parse", TestVersion.TestParse);
             QUnit.Test("Version Operators", TestVersion.TestOperators);
+            QUnit.Test("Version #499", TestVersion.TestIssue499);
 
             QUnit.Module("Issues");
             QUnit.Test("#169", TestBridgeIssues.N169);
@@ -144,6 +145,7 @@ namespace ClientTestLibrary
             QUnit.Test("#563", Bridge563.TesForeach);
             QUnit.Test("#563", Bridge563.TesFor);
             QUnit.Test("#565", Bridge565.TestUseCase);
+            QUnit.Test("#566", Bridge566.TestUseCase);
             QUnit.Test("#572", Bridge572.TestUseCase);
             QUnit.Test("#588", Bridge588.TestUseCase);
 

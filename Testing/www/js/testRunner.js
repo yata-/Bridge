@@ -78,6 +78,7 @@ Bridge.define('ClientTestLibrary.RunTests', {
             QUnit.test("Version ToString", ClientTestLibrary.TestVersion.testToString);
             QUnit.test("Version Parse", ClientTestLibrary.TestVersion.testParse);
             QUnit.test("Version Operators", ClientTestLibrary.TestVersion.testOperators);
+            QUnit.test("Version #499", ClientTestLibrary.TestVersion.testIssue499);
 
             QUnit.module("Issues");
             QUnit.test("#169", ClientTestLibrary.TestBridgeIssues.n169);
@@ -142,7 +143,9 @@ Bridge.define('ClientTestLibrary.RunTests', {
             QUnit.test("#563", ClientTestLibrary.Bridge563.tesForeach);
             QUnit.test("#563", ClientTestLibrary.Bridge563.tesFor);
             QUnit.test("#565", ClientTestLibrary.Bridge565.testUseCase);
+            QUnit.test("#566", ClientTestLibrary.Bridge566.testUseCase);
             QUnit.test("#572", ClientTestLibrary.Bridge572.testUseCase);
+            QUnit.test("#588", ClientTestLibrary.Bridge588.testUseCase);
 
             QUnit.module("LINQ");
             QUnit.test("Aggregate operators", ClientTestLibrary.Linq.TestLinqAggregateOperators.test);
@@ -166,3 +169,4 @@ Bridge.define('ClientTestLibrary.RunTests', {
     }
 });
 
+Bridge.init();
