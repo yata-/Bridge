@@ -136,7 +136,7 @@ namespace Bridge.Translator
                 }
                 catch (Exception ex)
                 {
-                    this.LogWarning(string.Format("Topological sort failed {0} with error {1}", tInfo != null ? tInfo.Type.FullName : string.Empty,  tInfo, ex));
+                    this.LogWarning(string.Format("Topological sort failed {0} with error {1}", tInfo != null ? "at type " + tInfo.Type.FullName : string.Empty,  ex));
                 }
 
             }
