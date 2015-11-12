@@ -53,3 +53,6 @@ Bridge.define('ClientTestLibrary.TestDateFunctions', {
     }
 });
 
+
+
+Bridge.init();
