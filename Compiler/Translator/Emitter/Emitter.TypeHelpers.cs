@@ -105,21 +105,24 @@ namespace Bridge.Translator
                             var dProcess = new TopologicalSorting.OrderedProcess(graph, dependency.Type.FullName);
                             tProcess.After(dProcess);
                         }
-                    }    
+                    }
                 }
             }
 
             if (graph.ProcessCount > 0)
             {
+                ITypeInfo tInfo = null;
+
                 try
                 {
                     IEnumerable<IEnumerable<OrderedProcess>> sorted = graph.CalculateSort();
+
                     var list = new List<ITypeInfo>(this.Types.Count);
                     foreach (var processes in sorted)
                     {
                         foreach (var process in processes)
                         {
-                            var tInfo = this.Types.First(ti => ti.Type.FullName == process.Name);
+                            tInfo = this.Types.First(ti => ti.Type.FullName == process.Name);
 
                             if (list.All(t => t.Type.FullName != tInfo.Type.FullName))
                             {
@@ -131,10 +134,11 @@ namespace Bridge.Translator
                     this.Types.Clear();
                     this.Types.AddRange(list);
                 }
-                catch
+                catch (Exception ex)
                 {
+                    this.LogWarning(string.Format("Topological sort failed {0} with error {1}", tInfo != null ? tInfo.Type.FullName : string.Empty,  tInfo, ex));
                 }
-                
+
             }
         }
 
