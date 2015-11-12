@@ -800,50 +800,6 @@ Bridge.define('ClientTestLibrary.Bridge546', {
     }
 });
 
-/** @namespace ClientTestLibrary */
-
-/**
- * This test will check whether TypedArray types are emitted to JavaScript
- the right way. [#548]
- *
- * @class ClientTestLibrary.Bridge548
- */
-Bridge.define('ClientTestLibrary.Bridge548', {
-    statics: {
-        testUseCase: function (assert) {
-            assert.expect(10);
-
-            var v1 = new Float32Array(1);
-            assert.ok(v1 !== null, "Float32Array created");
-            assert.equal(Bridge.getTypeName(v1), "Float32Array", "Float32Array class name");
-
-            var v2 = new Float64Array(1);
-            assert.ok(v2);
-
-            var v3 = new Int16Array(1);
-            assert.ok(v3);
-
-            var v4 = new Int32Array(1);
-            assert.ok(v4);
-
-            var v5 = new Int8Array(1);
-            assert.ok(v5);
-
-            var v6 = new Uint16Array(1);
-            assert.ok(v6);
-
-            var v7 = new Uint32Array(1);
-            assert.ok(v7);
-
-            var v8 = new Uint8Array(1);
-            assert.ok(v8);
-
-            var v9 = new Uint8ClampedArray(1);
-            assert.ok(v9);
-        }
-    }
-});
-
 Bridge.define('ClientTestLibrary.Bridge554', {
     statics: {
         testUseCase: function (assert) {
@@ -1841,6 +1797,53 @@ Bridge.define('ClientTestLibrary.Bridge544', {
 
             var s = Bridge.merge(new String(), JSON.parse("\"Some string\""));
             assert.equal(s, "Some string", "Bridge544 string");
+        }
+    }
+});
+
+/** @namespace ClientTestLibrary */
+
+/**
+ * This test will check whether TypedArray types are emitted to JavaScript
+ the right way. [#548]
+ *
+ * @class ClientTestLibrary.Bridge548
+ */
+Bridge.define('ClientTestLibrary.Bridge548', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(10);
+
+            var isSpecialTypeName = ClientTestLibrary.Utilities.BrowserHelper.isPhantomJs();
+
+            var v1 = new Float32Array(1);
+            assert.ok(v1 !== null, "Float32Array created");
+            var float32ArrayName = isSpecialTypeName ? "Object" : "Float32Array";
+            assert.equal(Bridge.getTypeName(v1), float32ArrayName, "Float32Array class name");
+
+            var v2 = new Float64Array(1);
+            assert.ok(v2);
+
+            var v3 = new Int16Array(1);
+            assert.ok(v3);
+
+            var v4 = new Int32Array(1);
+            assert.ok(v4);
+
+            var v5 = new Int8Array(1);
+            assert.ok(v5);
+
+            var v6 = new Uint16Array(1);
+            assert.ok(v6);
+
+            var v7 = new Uint32Array(1);
+            assert.ok(v7);
+
+            var v8 = new Uint8Array(1);
+            assert.ok(v8);
+
+            var v9 = new Uint8ClampedArray(1);
+            assert.ok(v9);
         }
     }
 });

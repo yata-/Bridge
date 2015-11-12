@@ -21,9 +21,12 @@ namespace ClientTestLibrary
         {
             assert.Expect(10);
 
+            var isSpecialTypeName = BrowserHelper.IsPhantomJs();
+
             var v1 = new Float32Array(1);
             assert.Ok(v1 != null, "Float32Array created");
-            assert.Equal(v1.GetClassName(), "Float32Array", "Float32Array class name");
+            var float32ArrayName = isSpecialTypeName ? "Object" : "Float32Array";
+            assert.Equal(v1.GetClassName(), float32ArrayName, "Float32Array class name");
 
             var v2 = new Float64Array(1);
             assert.Ok(v2);
