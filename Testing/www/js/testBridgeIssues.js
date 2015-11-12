@@ -853,22 +853,22 @@ Bridge.define('ClientTestLibrary.Bridge548', {
 Bridge.define('ClientTestLibrary.Bridge549', {
     statics: {
         testUseCase: function (assert) {
-            assert.expect(72);
+            assert.expect(81);
 
-            var v1 = new Float32Array(1);
-            assert.ok(true);
+            var v1 = new Float32Array(10);
+            assert.ok(v1 !== null, "Float32Array created");
 
-            // Check just a select number of references inside the Prototype
-            // inheritance. If the command passes, then send an 'ok' to the
-            // unit tester.
-            var p1X = v1.buffer;
-            assert.ok(true);
-            var p1Y = v1.byteLength;
-            assert.ok(true);
-            var p1Z = v1.byteOffset;
-            assert.ok(true);
-            var p1L = v1.length;
-            assert.ok(true);
+            v1[1] = 11;
+            v1[5] = 5;
+            v1[9] = 99;
+            assert.equal(v1[1], 11, "Float32Array indexier works 1");
+            assert.equal(v1[9], 99, "Float32Array indexier works 9");
+
+            // Check just a select number of references inside the Prototype inheritance.
+            assert.ok(v1.buffer !== null, "Float32Array Buffer");
+            assert.equal(v1.byteLength, 40, "Float32Array ByteLength");
+            assert.equal(v1.byteOffset, 0, "Float32Array ByteOffset");
+            assert.equal(v1.length, 10, "Float32Array Length");
 
             /* 
              * Commented out. Reason: Only Firefox implements them.
@@ -879,14 +879,22 @@ Bridge.define('ClientTestLibrary.Bridge549', {
             var mC = v1.Sort();
              */
 
+            assert.equal(v1.toLocaleString(), "0,11,0,0,0,5,0,0,0,99", "Float32Array ToLocaleString");
+            assert.equal(v1.toString(), "0,11,0,0,0,5,0,0,0,99", "Float32Array ToString");
+
             // Some browsers do not support SubArray() with no parameters.
             // At least 'begin' must be provided.
-            var m1D = v1.subarray(1);
-            assert.ok(true);
-            var m1E = v1.toLocaleString();
-            assert.ok(true);
-            var m1F = v1.toString();
-            assert.ok(true);
+            var subArray11 = v1.subarray(1);
+            assert.ok(subArray11 !== null, "Float32Array SubArray1");
+            assert.equal(subArray11.length, 9, "Float32Array SubArray1 Length");
+            assert.equal(subArray11.toString(), "11,0,0,0,5,0,0,0,99", "Float32Array SubArray1 ToString");
+            assert.equal(subArray11.byteOffset, 4, "Float32Array SubArray1 ByteOffset");
+
+            var subArray12 = subArray11.subarray(2, 6);
+            assert.ok(subArray12 !== null, "Float32Array SubArray2");
+            assert.equal(subArray12.length, 4, "Float32Array SubArray2 Length");
+            assert.equal(subArray12.toString(), "0,0,5,0", "Float32Array SubArray2 ToString");
+            assert.equal(subArray12.byteOffset, 12, "Float32Array SubArray2 ByteOffset");
 
             var v2 = new Float64Array(1);
             assert.ok(true);

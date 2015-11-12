@@ -17,22 +17,22 @@ namespace ClientTestLibrary
     {
         public static void TestUseCase(Assert assert)
         {
-            assert.Expect(72);
+            assert.Expect(81);
 
-            var v1 = new Float32Array(1);
-            assert.Ok(true);
+            var v1 = new Float32Array(10);
+            assert.Ok(v1 != null, "Float32Array created");
 
-            // Check just a select number of references inside the Prototype
-            // inheritance. If the command passes, then send an 'ok' to the
-            // unit tester.
-            var p1X = v1.Buffer;
-            assert.Ok(true);
-            var p1Y = v1.ByteLength;
-            assert.Ok(true);
-            var p1Z = v1.ByteOffset;
-            assert.Ok(true);
-            var p1L = v1.Length;
-            assert.Ok(true);
+            v1[1] = 11;
+            v1[5] = 5;
+            v1[9] = 99;
+            assert.Equal(v1[1], 11, "Float32Array indexier works 1");
+            assert.Equal(v1[9], 99, "Float32Array indexier works 9");
+
+            // Check just a select number of references inside the Prototype inheritance.
+            assert.Ok(v1.Buffer != null, "Float32Array Buffer");
+            assert.Equal(v1.ByteLength, 40, "Float32Array ByteLength");
+            assert.Equal(v1.ByteOffset, 0, "Float32Array ByteOffset");
+            assert.Equal(v1.Length, 10, "Float32Array Length");
 
             /*
              * Commented out. Reason: Only Firefox implements them.
@@ -43,14 +43,22 @@ namespace ClientTestLibrary
             var mC = v1.Sort();
              */
 
+            assert.Equal(v1.ToLocaleString(), "0,11,0,0,0,5,0,0,0,99", "Float32Array ToLocaleString");
+            assert.Equal(v1.ToString(), "0,11,0,0,0,5,0,0,0,99", "Float32Array ToString");
+
             // Some browsers do not support SubArray() with no parameters.
             // At least 'begin' must be provided.
-            var m1D = v1.SubArray(1);
-            assert.Ok(true);
-            var m1E = v1.ToLocaleString();
-            assert.Ok(true);
-            var m1F = v1.ToString();
-            assert.Ok(true);
+            var subArray11 = v1.SubArray(1);
+            assert.Ok(subArray11 != null, "Float32Array SubArray1");
+            assert.Equal(subArray11.Length, 9, "Float32Array SubArray1 Length");
+            assert.Equal(subArray11.ToString(), "11,0,0,0,5,0,0,0,99", "Float32Array SubArray1 ToString");
+            assert.Equal(subArray11.ByteOffset, 4, "Float32Array SubArray1 ByteOffset");
+
+            var subArray12 = subArray11.SubArray(2, 6);
+            assert.Ok(subArray12 != null, "Float32Array SubArray2");
+            assert.Equal(subArray12.Length, 4, "Float32Array SubArray2 Length");
+            assert.Equal(subArray12.ToString(), "0,0,5,0", "Float32Array SubArray2 ToString");
+            assert.Equal(subArray12.ByteOffset, 12, "Float32Array SubArray2 ByteOffset");
 
             var v2 = new Float64Array(1);
             assert.Ok(true);
