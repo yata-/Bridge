@@ -160,3 +160,6 @@ Bridge.define('ClientTestLibrary.TestValueTypes', {
     }
 });
 
+
+
+Bridge.init();

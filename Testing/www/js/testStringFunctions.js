@@ -179,3 +179,6 @@ Bridge.define('ClientTestLibrary.TestStringFunctions', {
     }
 });
 
+
+
+Bridge.init();

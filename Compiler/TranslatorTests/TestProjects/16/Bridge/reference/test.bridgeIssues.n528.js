@@ -26,3 +26,6 @@ define("Bridge528_C", ["bridge","dep1"], function (_, dep1) {
     return exports;
 });
 
+
+
+Bridge.init();
