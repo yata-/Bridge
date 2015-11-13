@@ -215,6 +215,12 @@ namespace System
         [Template("Bridge.Array.copy({src}, 0, {dst}, 0, {len})")]
         public static extern void Copy(Array src, Array dst, int len);
 
+        [Template("Bridge.Array.copy({this}, {index}, {array}, 0, {this}.length - {index})")]
+        public extern void CopyTo(Array array, int index);
+
+        [Template("Bridge.Array.copy({this}, {index}, {array}, 0, {this}.length - {index})")]
+        public extern void CopyTo(Array array, long index);
+
         [Template("Bridge.Array.resize({array}, {newSize}, {T}.getDefaultValue || Bridge.getDefaultValue({T}))")]
         public static extern void Resize<T>(T[] array, int newSize);
 
