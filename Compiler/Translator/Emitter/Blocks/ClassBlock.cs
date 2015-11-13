@@ -339,7 +339,7 @@ namespace Bridge.Translator
             return this.GetDefineMethods("Before",
                 (method, rrMethod) =>
                 {
-                    this.PushWriter("(function(){0})();");
+                    this.PushWriter("Bridge.init(function(){0});");
                     this.ResetLocals();
                     var prevMap = this.BuildLocalsMap();
                     var prevNamesMap = this.BuildLocalsNamesMap();
@@ -356,8 +356,8 @@ namespace Bridge.Translator
         {
             return this.GetDefineMethods("After",
                 (method, rrMethod) =>
-                    BridgeTypes.ToJsName(rrMethod.DeclaringTypeDefinition, this.Emitter) + "." +
-                    this.Emitter.GetEntityName(method) + "();");
+                    "Bridge.init(" + BridgeTypes.ToJsName(rrMethod.DeclaringTypeDefinition, this.Emitter) + "." +
+                    this.Emitter.GetEntityName(method) + ");");
         }
     }
 }

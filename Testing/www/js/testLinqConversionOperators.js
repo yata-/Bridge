@@ -2,6 +2,20 @@
 
 "use strict";
 
+Bridge.define('ClientTestLibrary.Linq.TestLinqConversionOperatorsIEqualityComparer', {
+    inherits: [Bridge.EqualityComparer$1(String)],
+    equals: function (x, y) {
+        return Bridge.String.equals(x, y);
+    },
+    getHashCode: function (obj) {
+        if (obj === null) {
+            return 0;
+        }
+
+        return Bridge.getHashCode(obj);
+    }
+});
+
 Bridge.define('ClientTestLibrary.Linq.TestLinqConversionOperators', {
     statics: {
         test: function (assert) {
@@ -120,17 +134,6 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqConversionOperators', {
     }
 });
 
-Bridge.define('ClientTestLibrary.Linq.TestLinqConversionOperatorsIEqualityComparer', {
-    inherits: [Bridge.EqualityComparer$1(String)],
-    equals: function (x, y) {
-        return Bridge.String.equals(x, y);
-    },
-    getHashCode: function (obj) {
-        if (obj === null) {
-            return 0;
-        }
 
-        return Bridge.getHashCode(obj);
-    }
-});
 
+Bridge.init();
