@@ -213,7 +213,7 @@ namespace System
         /// </summary>
         /// <param name="strings">Strings to concatenate to this string.</param>
         /// <returns></returns>
-        [Template("[{strings}].toString().split(',').join('')")]
+        [Template("{strings:array}.toString().split(',').join('')")]
         public static string Concat(params string[] strings)
         {
             return null;
@@ -263,7 +263,7 @@ namespace System
         /// </summary>
         /// <param name="objects">Strings to concatenate to this string.</param>
         /// <returns></returns>
-        [Template("[{objects}].toString().split(',').join('')")]
+        [Template("{objects:array}.toString().split(',').join('')")]
         public static string Concat(params object[] objects)
         {
             return null;
@@ -482,7 +482,7 @@ namespace System
         [Template("{this}.lastIndexOf(String.fromCharCode({ch}), {startIndex})")]
         public extern int LastIndexOf(char ch, int startIndex);
 
-        [Template("Bridge.String.lastIndexOfAny({this}, [{ch}])")]
+        [Template("Bridge.String.lastIndexOfAny({this}, {ch:array})")]
         public extern int LastIndexOfAny(params char[] ch);
 
         [Template("Bridge.String.lastIndexOfAny({this}, {ch}, {startIndex})")]
@@ -706,7 +706,7 @@ namespace System
             return null;
         }    
 
-        [Template("Bridge.String.split({this}, [{separator}].map(function(i) {{ return String.fromCharCode(i); }}))")]
+        [Template("Bridge.String.split({this}, {separator:array}.map(function(i) {{ return String.fromCharCode(i); }}))")]
         public extern string[] Split(params char[] separator);
 
         [Template("Bridge.String.split({this}, {separator}.map(function(i) {{ return String.fromCharCode(i); }}), {limit})")]
@@ -834,13 +834,13 @@ namespace System
             return null;
         }
 
-        [Template("Bridge.String.trim({this}, [{values}])")]
+        [Template("Bridge.String.trim({this}, {values:array})")]
         public extern string Trim(params char[] values);
 
-        [Template("Bridge.String.trimStart({this}, [{values}])")]
+        [Template("Bridge.String.trimStart({this}, {values:array})")]
         public extern string TrimStart(params char[] values);
 
-        [Template("Bridge.String.trimEnd({this}, [{values}])")]
+        [Template("Bridge.String.trimEnd({this}, {values:array})")]
         public extern string TrimEnd(params char[] values);
 
         [Template("Bridge.String.trimStart({this})")]
