@@ -171,7 +171,7 @@ Bridge.define('ClientTestLibrary.Bridge342', {
     inherits: [Bridge.IDictionary$2(Bridge.Int,String)],
     _backingDictionary: null,
     constructor: function () {
-        ClientTestLibrary.Bridge342.prototype.constructor$1(new Bridge.Dictionary$2(Bridge.Int,String)());
+        ClientTestLibrary.Bridge342.prototype.constructor$1.call(this, new Bridge.Dictionary$2(Bridge.Int,String)());
 
     },
     constructor$1: function (initialValues) {
@@ -881,39 +881,96 @@ Bridge.define('ClientTestLibrary.Bridge558B', {
 
 Bridge.define('ClientTestLibrary.Bridge559', {
     statics: {
-        testUseCase: function (assert) {
-            var b = new ClientTestLibrary.Bridge559B("constructor$1", 1);
+        testUseCase1: function (assert) {
+            var b = new ClientTestLibrary.Bridge559B1("constructor$1", 1);
 
             assert.expect(1);
 
-            assert.equal(b.result, " -> Bridge559A -> Bridge559A$1 -> Bridge559B$1", "Bridge559 TestUseCase");
+            assert.equal(b.result, " -> Bridge559A1 -> Bridge559A1$1 -> Bridge559B1$1", "Bridge559 TestUseCase1");
+        },
+        testUseCase2: function (assert) {
+            var b = new ClientTestLibrary.Bridge559B2("constructor$1", 1);
+
+            assert.expect(1);
+
+            assert.equal(b.result, " ClassA ClassA$1 ClassB$1", "Bridge559 TestUseCase2");
+        },
+        testUseCase3: function (assert) {
+            var a = new ClientTestLibrary.Bridge559A3("constructor", 1);
+            var b = new ClientTestLibrary.Bridge559A3("constructor", 2);
+
+            assert.expect(1);
+
+            var r = a.getData() + "|" + b.getData();
+            assert.equal(r, "1|2", "Bridge559 TestUseCase3");
         }
     }
 });
 
-Bridge.define('ClientTestLibrary.Bridge559A', {
+Bridge.define('ClientTestLibrary.Bridge559A1', {
     result: "",
     constructor: function () {
-        this.result += " -> Bridge559A";
+        this.result += " -> Bridge559A1";
     },
     constructor$1: function (a) {
-        ClientTestLibrary.Bridge559A.prototype.$constructor();
+        ClientTestLibrary.Bridge559A1.prototype.$constructor.call(this);
 
-        this.result += " -> Bridge559A$1";
+        this.result += " -> Bridge559A1$1";
     }
 });
 
-Bridge.define('ClientTestLibrary.Bridge559B', {
-    inherits: [ClientTestLibrary.Bridge559A],
+Bridge.define('ClientTestLibrary.Bridge559B1', {
+    inherits: [ClientTestLibrary.Bridge559A1],
     constructor: function () {
-        ClientTestLibrary.Bridge559A.prototype.$constructor.call(this);
+        ClientTestLibrary.Bridge559A1.prototype.$constructor.call(this);
 
-        this.result += " -> Bridge559B -- unexpected!";
+        this.result += " -> Bridge559B1 -- unexpected!";
     },
     constructor$1: function (a) {
-        ClientTestLibrary.Bridge559A.prototype.constructor$1.call(this, a);
+        ClientTestLibrary.Bridge559A1.prototype.constructor$1.call(this, a);
 
-        this.result += " -> Bridge559B$1";
+        this.result += " -> Bridge559B1$1";
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge559A2', {
+    result: "",
+    constructor: function () {
+        this.result += " ClassA";
+    },
+    constructor$1: function (a) {
+        ClientTestLibrary.Bridge559A2.prototype.$constructor.call(this);
+
+        this.result += " ClassA$1";
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge559B2', {
+    inherits: [ClientTestLibrary.Bridge559A2],
+    constructor: function () {
+        ClientTestLibrary.Bridge559A2.prototype.$constructor.call(this);
+
+        this.result += " ClassB -- unexpected!";
+    },
+    constructor$1: function (a) {
+        ClientTestLibrary.Bridge559A2.prototype.constructor$1.call(this, a);
+
+        this.result += " ClassB$1";
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge559A3', {
+    config: {
+        properties: {
+            Data: null
+        }
+    },
+    constructor$1: function (value) {
+        this.setData(value);
+    },
+    constructor: function (value) {
+        ClientTestLibrary.Bridge559A3.prototype.constructor$1.call(this, value.toString());
+
     }
 });
 
