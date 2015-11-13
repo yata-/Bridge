@@ -44,3 +44,6 @@ Bridge.define('TestProject1.TestClassA', {
     }
 });
 
+
+
+Bridge.init();

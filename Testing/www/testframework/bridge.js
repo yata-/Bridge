@@ -679,6 +679,32 @@
                 return obj[fnName].apply(obj, args);
             },
 
+            makeFn: function (fn, length) {
+                switch (length) {
+                    case 0  : return function () { return fn.apply(this, arguments); };
+                    case 1  : return function (a) { return fn.apply(this, arguments); };
+                    case 2  : return function (a,b) { return fn.apply(this, arguments); };
+                    case 3  : return function (a,b,c) { return fn.apply(this, arguments); };
+                    case 4  : return function (a,b,c,d) { return fn.apply(this, arguments); };
+                    case 5  : return function (a,b,c,d,e) { return fn.apply(this, arguments); };
+                    case 6  : return function (a,b,c,d,e,f) { return fn.apply(this, arguments); };
+                    case 7  : return function (a,b,c,d,e,f,g) { return fn.apply(this, arguments); };
+                    case 8  : return function (a,b,c,d,e,f,g,h) { return fn.apply(this, arguments); };
+                    case 9  : return function (a, b, c, d, e, f, g, h, i) { return fn.apply(this, arguments); };
+                    case 10:  return function (a, b, c, d, e, f, g, h, i, j) { return fn.apply(this, arguments); };
+                    case 11:  return function (a, b, c, d, e, f, g, h, i, j, k) { return fn.apply(this, arguments); };
+                    case 12:  return function (a, b, c, d, e, f, g, h, i, j, k, l) { return fn.apply(this, arguments); };
+                    case 13:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m) { return fn.apply(this, arguments); };
+                    case 14:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n) { return fn.apply(this, arguments); };
+                    case 15:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o) { return fn.apply(this, arguments); };
+                    case 16:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p) { return fn.apply(this, arguments); };
+                    case 17:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q) { return fn.apply(this, arguments); };
+                    case 18:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r) { return fn.apply(this, arguments); };
+                    case 19:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s) { return fn.apply(this, arguments); };
+                    default:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t) { return fn.apply(this, arguments); };
+                }
+            },
+
             bind: function (obj, method, args, appendArgs) {
                 if (method && method.$method === method && method.$scope === obj) {
                     return method;
@@ -687,11 +713,11 @@
                 var fn;
 
                 if (arguments.length === 2) {
-                    fn = function () {
+                    fn = Bridge.fn.makeFn(function () {
                         return method.apply(obj, arguments);
-                    };
+                    }, method.length);
                 } else {
-                    fn = function () {
+                    fn = Bridge.fn.makeFn(function () {
                         var callArgs = args || arguments;
 
                         if (appendArgs === true) {
@@ -710,7 +736,7 @@
                         }
 
                         return method.apply(obj, callArgs);
-                    };
+                    }, method.length);
                 }
 
                 fn.$method = method;
@@ -720,13 +746,13 @@
             },
 
             bindScope: function (obj, method) {
-                var fn = function () {
+                var fn = Bridge.fn.makeFn(function () {
                     var callArgs = Array.prototype.slice.call(arguments, 0);
 
                     callArgs.unshift.apply(callArgs, [obj]);
 
                     return method.apply(obj, callArgs);
-                };
+                }, method.length);
 
                 fn.$method = method;
                 fn.$scope = obj;
@@ -1726,19 +1752,6 @@
             }
         },
 
-        createAccessors: function (cfg, scope) {
-            var name,
-                config;
-
-            config = Bridge.isFunction(cfg) ? cfg() : cfg;
-
-            if (config.properties) {
-                for (name in config.properties) {
-                    Bridge.property(scope, name, config.properties[name]);
-                }
-            }
-        },
-
         initConfig: function (extend, base, cfg, statics, scope) {
             var initFn,
                 isFn = Bridge.isFunction(cfg),
@@ -1916,14 +1929,6 @@
             if (instanceConfig && !Bridge.isFunction(instanceConfig)) {
                 Bridge.Class.initConfig(extend, base, instanceConfig, false, prop);                
 
-                if (document && (document.readyState === "complete" || document.readyState === "loaded")) {
-                    Bridge.Class.createAccessors(instanceConfig, prototype);
-                } else {
-                    setTimeout(function () {
-                        Bridge.Class.createAccessors(instanceConfig, prototype);
-                    }, 0);
-                }
-
                 if (prop.$config) {
                     delete prop.$config;
                 } else {
@@ -2030,7 +2035,7 @@
             if (document && (document.readyState === "complete" || document.readyState === "loaded")) {
                 fn();
             } else {
-                setTimeout(fn, 0);
+                Bridge.Class.$queue.push(fn);
             }
 
             return Class;
@@ -2100,15 +2105,28 @@
                 fn = scope;
                 scope = Bridge.global;
             }
-
+            fn.$$name = className;
             Bridge.Class.set(scope, className, fn);
 
             return fn;
+        },
+
+        init: function (fn) {
+            for (var i = 0; i < Bridge.Class.$queue.length; i++) {
+                Bridge.Class.$queue[i]();
+            }
+            Bridge.Class.$queue.length = 0;
+
+            if (fn) {
+                fn();
+            }
         }
     };
 
     Bridge.Class = base;
+    Bridge.Class.$queue = [];
     Bridge.define = Bridge.Class.define;
+    Bridge.init = Bridge.Class.init;
 })();
 
 // @source Exception.js
@@ -5673,6 +5691,21 @@ Bridge.Class.generic('Bridge.KeyValuePair$2', function (TKey, TValue) {
         constructor: function (key, value) {
             this.key = key;
             this.value = value;
+        },
+
+        toString: function() {
+            var s = "[";
+            
+            if( this.key != null) {
+                s += this.key.toString();
+            }
+
+            s += ", ";
+            if(this.value != null) {
+                s += this.value.toString();
+            }
+            s += "]";
+            return s;
         }
     }));
 });
