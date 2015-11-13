@@ -2,7 +2,7 @@
 
 "use strict";
 
-Bridge.define('Test.App', {
+Bridge.define('TestIssue599.Issue599', {
     statics: {
         config: {
             init: function () {
@@ -10,7 +10,7 @@ Bridge.define('Test.App', {
             }
         },
         main: function () {
-            var inst = new Test.App();
+            var inst = new TestIssue599.Issue599();
         }
     },
     _something: "HI!",

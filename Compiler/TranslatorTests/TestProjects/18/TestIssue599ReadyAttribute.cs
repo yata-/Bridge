@@ -1,15 +1,15 @@
 ﻿using Bridge.Html5;
 
-namespace Test
+namespace TestIssue599
 {
-    public class App
+    public class Issue599
     {
         private string _something = "HI!";
 
         [Ready]
         public static void Main()
         {
-            var inst = new App();
+            var inst = new Issue599();
         }
 
         [Ready]

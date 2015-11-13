@@ -95,7 +95,6 @@ namespace Bridge.Translator.Tests
         [TestCase("16", true, true, TestName = "OutputTest 16 - Issues")]
         [TestCase("17", true, true, TestName = "OutputTest 17 - Define project constant #375")]
         [TestCase("18", true, true, TestName = "OutputTest 18 - Features")]
-        [TestCase("19", true, true, TestName = "OutputTest 19 - ReadyAttribute")]
         public void Test(string folder, bool isToTranslate, bool useSpecialFileCompare)
         {
             GetPaths(folder);
