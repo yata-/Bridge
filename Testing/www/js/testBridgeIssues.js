@@ -456,6 +456,19 @@ Bridge.define('ClientTestLibrary.Bridge472', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge479', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(3);
+
+            var pair = new Bridge.KeyValuePair$2(Bridge.Int,String)(1, "value");
+            assert.equal(pair.key, 1, "Bridge479 Key");
+            assert.equal(pair.value, "value", "Bridge479 Value");
+            assert.equal(pair.toString(), "[1, value]", "Bridge479 ToString");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge485', {
     statics: {
         testUseCase: function (assert) {
