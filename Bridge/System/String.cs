@@ -706,8 +706,8 @@ namespace System
             return null;
         }    
 
-        [Template("Bridge.String.split({this}, {separator}.map(function(i) {{ return String.fromCharCode(i); }}))")]
-        public extern string[] Split(char[] separator);
+        [Template("Bridge.String.split({this}, [{separator}].map(function(i) {{ return String.fromCharCode(i); }}))")]
+        public extern string[] Split(params char[] separator);
 
         [Template("Bridge.String.split({this}, {separator}.map(function(i) {{ return String.fromCharCode(i); }}), {limit})")]
         public extern string[] Split(char[] separator, int limit);
