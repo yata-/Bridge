@@ -103,10 +103,14 @@
             return scope;
         },
 
-        ready: function (fn) {
+        ready: function (fn, scope) {
             var delayfn = function () {
                 setTimeout(function () {
-                    fn();
+                    if (scope) {
+                        fn.apply(scope);
+                    } else {
+                        fn();
+                    }
                 }, 1);
             };
 
@@ -121,9 +125,9 @@
             }
         },
 
-        on: function (event, elem, fn) {
+        on: function (event, elem, fn, scope) {
             var listenHandler = function (e) {
-                var ret = fn.apply(this, arguments);
+                var ret = fn.apply(scope || this, arguments);
 
                 if (ret === false) {
                     e.stopPropagation();
@@ -134,7 +138,7 @@
             };
 
             var attachHandler = function () {
-                var ret = fn.call(elem, Bridge.global.event);
+                var ret = fn.call(scope || elem, Bridge.global.event);
 
                 if (ret === false) {
                     Bridge.global.event.returnValue = false;
