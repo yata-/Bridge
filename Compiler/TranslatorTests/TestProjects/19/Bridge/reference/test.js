@@ -23,3 +23,5 @@ Bridge.define('Test.App', {
         console.log(this._something);
     }
 });
+
+Bridge.init();

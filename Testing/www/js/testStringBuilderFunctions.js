@@ -80,3 +80,6 @@ Bridge.define('ClientTestLibrary.TestStringBuilderFunctions', {
     }
 });
 
+
+
+Bridge.init();

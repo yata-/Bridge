@@ -22,3 +22,6 @@ define("Bridge527_B", ["bridge"], function (_) {
     return exports;
 });
 
+
+
+Bridge.init();

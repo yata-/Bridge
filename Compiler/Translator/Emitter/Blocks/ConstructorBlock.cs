@@ -391,6 +391,8 @@ namespace Bridge.Translator
                 }
 
                 this.Write(baseName);
+                this.Write(".call");
+                appendScope = true;
             }
 
             this.WriteOpenParentheses();
