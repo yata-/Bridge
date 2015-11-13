@@ -1216,6 +1216,36 @@ Bridge.define('ClientTestLibrary.Bridge595B', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge597', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            var inst = new ClientTestLibrary.Bridge597A();
+            assert.equal(inst.get(), "0:a", "Bridge597 Without instance member access");
+            assert.equal(inst.getWithMember(), "HI!:0:a", "Bridge597 With instance member access");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge597A', {
+    _something: "HI!",
+    get: function () {
+        var items = ["a"];
+        var mappedItemsWithoutInstanceMemberAccess = Bridge.Linq.Enumerable.from(items).select(function (value, index) {
+            return index + ":" + value;
+        }).toArray();
+        return mappedItemsWithoutInstanceMemberAccess[0];
+    },
+    getWithMember: function () {
+        var items = ["a"];
+        var mappedItemsWithInstanceMemberAccess = Bridge.Linq.Enumerable.from(items).select(Bridge.fn.bind(this, function (value, index) {
+            return this._something + ":" + index + ":" + value;
+        })).toArray();
+        return mappedItemsWithInstanceMemberAccess[0];
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
