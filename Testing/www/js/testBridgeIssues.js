@@ -1168,6 +1168,54 @@ Bridge.define('ClientTestLibrary.Bridge588B', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge595', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            var buffer = new Bridge.Text.StringBuilder();
+            var a = new ClientTestLibrary.Bridge595A(buffer);
+            a.render();
+            assert.equal(buffer.toString(), "Render0Render1", "Bridge595 A");
+
+            buffer.clear();
+            var b = new ClientTestLibrary.Bridge595B(buffer);
+            b.render();
+            assert.equal(buffer.toString(), "Render0Render1", "Bridge595 B");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge595A', {
+    buffer: null,
+    constructor: function (buffer) {
+        this.buffer = buffer;
+    },
+    render: function () {
+        this.buffer.append("Render0");
+        this.render$1(new Date());
+    },
+    render$1: function (when) {
+        this.buffer.append("Render1");
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge595B', {
+    statics: {
+        render: function (buffer) {
+            buffer.append("Render1");
+        }
+    },
+    buffer: null,
+    constructor: function (buffer) {
+        this.buffer = buffer;
+    },
+    render: function () {
+        this.buffer.append("Render0");
+        ClientTestLibrary.Bridge595B.render(this.buffer);
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
