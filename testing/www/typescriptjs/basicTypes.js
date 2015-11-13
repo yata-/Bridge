@@ -97,3 +97,6 @@ Bridge.define('BasicTypes.Keywords', {
     of: "of"
 });
 
+
+
+Bridge.init();

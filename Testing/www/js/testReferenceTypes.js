@@ -324,3 +324,6 @@ Bridge.define('ClientTestLibrary.TestSet1FailureHelper', {
     }
 });
 
+
+
+Bridge.init();

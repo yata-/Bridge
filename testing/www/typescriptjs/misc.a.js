@@ -21,3 +21,7 @@ Bridge.define('Misc.A.EnumTest.EnumA', {
     },
     enum: true
 });
+
+
+
+Bridge.init();
