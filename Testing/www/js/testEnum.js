@@ -133,15 +133,6 @@ Bridge.define('ClientTestLibrary.TestEnum', {
     }
 });
 
-Bridge.define('ClientTestLibrary.TestEnum.Abc', {
-    statics: {
-        a: -1,
-        b: 0,
-        c: 1
-    },
-    enum: true
-});
-
 Bridge.define('ClientTestLibrary.TestEnum.Digits', {
     statics: {
         zero: 0,
@@ -164,6 +155,15 @@ Bridge.define('ClientTestLibrary.TestEnum.Pets', {
     flags: true
 });
 
+Bridge.define('ClientTestLibrary.TestEnum.Abc', {
+    statics: {
+        a: -1,
+        b: 0,
+        c: 1
+    },
+    enum: true
+});
+
 Bridge.define('ClientTestLibrary.TestEnum.Pets1', {
     statics: {
         none: 0,
@@ -176,3 +176,6 @@ Bridge.define('ClientTestLibrary.TestEnum.Pets1', {
     enum: true
 });
 
+
+
+Bridge.init();

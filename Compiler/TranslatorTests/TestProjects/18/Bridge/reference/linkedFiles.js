@@ -10,3 +10,6 @@ Bridge.define('LinkedFiles.Link3');
 
 Bridge.define('LinkedFiles.Link4');
 
+
+
+Bridge.init();

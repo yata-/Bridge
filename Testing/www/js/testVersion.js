@@ -213,3 +213,6 @@ Bridge.define('ClientTestLibrary.TestVersion', {
     }
 });
 
+
+
+Bridge.init();
