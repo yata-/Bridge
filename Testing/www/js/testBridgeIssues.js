@@ -1201,6 +1201,21 @@ Bridge.define('ClientTestLibrary.Bridge577.Bridge577UnitB', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge578', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var s = "ab|abc&ab&abc|de&ef&";
+
+            var r = Bridge.String.split(s, [124, 38].map(function(i) {{ return String.fromCharCode(i); }}));
+            var expected = ["ab", "abc", "ab", "abc", "de", "ef", ""];
+
+            assert.deepEqual(r, expected, "#578 Split(params char[] separator)");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge588A', {
     statics: {
         config: {
