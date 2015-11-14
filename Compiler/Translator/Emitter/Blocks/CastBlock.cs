@@ -321,35 +321,6 @@ namespace Bridge.Translator
                 return inline;
             }
 
-            if (resolveResult != null)
-            {
-                IEnumerable<IAttribute> attributes = null;
-                DefaultResolvedTypeDefinition type = resolveResult.Type as DefaultResolvedTypeDefinition;
-
-                if (type != null)
-                {
-                    attributes = type.Attributes;
-                }
-                else
-                {
-                    ParameterizedType paramType = resolveResult.Type as ParameterizedType;
-
-                    if (paramType != null)
-                    {
-                        attributes = paramType.GetDefinition().Attributes;
-                    }
-                }
-
-                if (attributes != null)
-                {
-                    var attribute = this.Emitter.GetAttribute(attributes, Translator.Bridge_ASSEMBLY + ".CastAttribute");
-
-                    if (attribute != null)
-                    {
-                        return attribute.PositionalArguments[0].ConstantValue.ToString();
-                    }
-                }
-            }
             return null;
         }
 

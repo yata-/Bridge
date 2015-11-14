@@ -166,7 +166,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IDictionaryTests.MyDictiona
     inherits: [Bridge.IDictionary$2(Bridge.Int,String)],
     _backingDictionary: null,
     constructor: function () {
-        Bridge.ClientTest.Collections.Generic.IDictionaryTests.MyDictionary.prototype.constructor$1(new Bridge.Dictionary$2(Bridge.Int,String)());
+        Bridge.ClientTest.Collections.Generic.IDictionaryTests.MyDictionary.prototype.constructor$1.call(this, new Bridge.Dictionary$2(Bridge.Int,String)());
 
     },
     constructor$1: function (initialValues) {
@@ -521,7 +521,7 @@ Bridge.define('Bridge.ClientTest.DecimalMathTests', {
         parseDotNetDiff: function (input, i, lowerBound) {
             var o = input.get([i, lowerBound + 1]);
             if (o === null)
-                return null;
+                return Bridge.Decimal.lift(null);
 
             if (Bridge.is(o, String))
                 return Bridge.Decimal(o.toString());
