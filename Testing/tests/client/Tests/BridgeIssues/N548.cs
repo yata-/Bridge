@@ -19,38 +19,63 @@ namespace ClientTestLibrary
     {
         public static void TestUseCase(Assert assert)
         {
-            assert.Expect(10);
+            assert.Expect(18);
 
             var isSpecialTypeName = BrowserHelper.IsPhantomJs();
 
             var v1 = new Float32Array(1);
-            assert.Ok(v1 != null, "Float32Array created");
-            var float32ArrayName = isSpecialTypeName ? "Object" : "Float32Array";
-            assert.Equal(v1.GetClassName(), float32ArrayName, "Float32Array class name");
+            var thisType = "Float32Array";
+            assert.Ok(v1 != null, thisType + " created");
+            var thisName = isSpecialTypeName ? "Object" : thisType;
+            assert.Equal(v1.GetClassName(), thisName, thisType + " class name");
 
             var v2 = new Float64Array(1);
-            assert.Ok(v2);
+            thisType = "Float64Array";
+            assert.Ok(v2 != null, thisType + " created");
+            thisName = isSpecialTypeName ? "Object" : thisType;
+            assert.Equal(v2.GetClassName(), thisName, thisType + " class name");
 
             var v3 = new Int16Array(1);
-            assert.Ok(v3);
+            thisType = "Int16Array";
+            assert.Ok(v3 != null, thisType + " created");
+            thisName = isSpecialTypeName ? "Object" : thisType;
+            assert.Equal(v3.GetClassName(), thisName, thisType + " class name");
 
             var v4 = new Int32Array(1);
-            assert.Ok(v4);
+            thisType = "Int32Array";
+            assert.Ok(v4 != null, thisType + " created");
+            thisName = isSpecialTypeName ? "Object" : thisType;
+            assert.Equal(v4.GetClassName(), thisName, thisType + " class name");
 
             var v5 = new Int8Array(1);
-            assert.Ok(v5);
+            thisType = "Int8Array";
+            assert.Ok(v5 != null, thisType + " created");
+            thisName = isSpecialTypeName ? "Object" : thisType;
+            assert.Equal(v5.GetClassName(), thisName, thisType + " class name");
 
             var v6 = new Uint16Array(1);
-            assert.Ok(v6);
+            thisType = "Uint16Array";
+            assert.Ok(v6 != null, thisType + " created");
+            thisName = isSpecialTypeName ? "Object" : thisType;
+            assert.Equal(v6.GetClassName(), thisName, thisType + " class name");
 
             var v7 = new Uint32Array(1);
-            assert.Ok(v7);
+            thisType = "Uint32Array";
+            assert.Ok(v7 != null, thisType + " created");
+            thisName = isSpecialTypeName ? "Object" : thisType;
+            assert.Equal(v7.GetClassName(), thisName, thisType + " class name");
 
             var v8 = new Uint8Array(1);
-            assert.Ok(v8);
+            thisType = "Uint8Array";
+            assert.Ok(v8 != null, thisType + " created");
+            thisName = isSpecialTypeName ? "Object" : thisType;
+            assert.Equal(v8.GetClassName(), thisName, thisType + " class name");
 
             var v9 = new Uint8ClampedArray(1);
-            assert.Ok(v9);
+            thisType = "Uint8ClampedArray";
+            assert.Ok(v9 != null, thisType + " created");
+            thisName = isSpecialTypeName ? "Object" : thisType;
+            assert.Equal(v9.GetClassName(), thisName, thisType + " class name");
         }
     }
 }
