@@ -17,6 +17,7 @@ namespace Bridge.Html5
     public abstract class EventAttribute : Bridge.AdapterAttribute
     {
         public const string Format = "Bridge.on('{0}', {1}, this.{2});";
+        public const string FormatScope = "Bridge.on('{0}', {1}, this.{2}, this);";
     }
 
     [Ignore]
@@ -41,6 +42,7 @@ namespace Bridge.Html5
     public class ReadyAttribute : EventAttribute
     {
         new public const string Format = "Bridge.ready(this.{2});";
+        new public const string FormatScope = "Bridge.ready(this.{2}, this);";
         public const string Event = "ready";
 
         public ReadyAttribute()

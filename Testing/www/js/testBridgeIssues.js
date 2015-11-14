@@ -1148,6 +1148,59 @@ Bridge.define('ClientTestLibrary.Bridge572', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge577', {
+    statics: {
+        someMethodA: function (j) {
+            return new ClientTestLibrary.Bridge577.Bridge577UnitA();
+        },
+        someMethodB: function (j) {
+            var v = new ClientTestLibrary.Bridge577.Bridge577UnitB();
+            v.setNumber(j);
+
+            return v.$clone();
+        },
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            var a = ClientTestLibrary.Bridge577.someMethodA(1);
+            assert.ok(a.$clone(), "#577 Bridge577UnitA created");
+
+            var b = ClientTestLibrary.Bridge577.someMethodB(7);
+            assert.equal(b.getNumber(), 7, "#577 Bridge577UnitB created");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge577.Bridge577UnitA', {
+    $clone: function (to) { return this; }
+});
+
+Bridge.define('ClientTestLibrary.Bridge577.Bridge577UnitB', {
+    config: {
+        properties: {
+            Number: 0
+        }
+    },
+    constructor: function () {
+    },
+    getHashCode: function () {
+        var hash = 17;
+        hash = hash * 23 + (this.Number == null ? 0 : Bridge.getHashCode(this.Number));
+        return hash;
+    },
+    equals: function (o) {
+        if (!Bridge.is(o,ClientTestLibrary.Bridge577.Bridge577UnitB)) {
+            return false;
+        }
+        return Bridge.equals(this.Number, o.Number);
+    },
+    $clone: function (to) {
+        var s = to || new ClientTestLibrary.Bridge577.Bridge577UnitB();
+        s.Number = this.Number;
+        return s;
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge588A', {
     statics: {
         config: {
@@ -1165,6 +1218,84 @@ Bridge.define('ClientTestLibrary.Bridge588B', {
     statics: {
         Valeur1: 1,
         Valeur2: 2
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge595', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            var buffer = new Bridge.Text.StringBuilder();
+            var a = new ClientTestLibrary.Bridge595A(buffer);
+            a.render();
+            assert.equal(buffer.toString(), "Render0Render1", "Bridge595 A");
+
+            buffer.clear();
+            var b = new ClientTestLibrary.Bridge595B(buffer);
+            b.render();
+            assert.equal(buffer.toString(), "Render0Render1", "Bridge595 B");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge595A', {
+    buffer: null,
+    constructor: function (buffer) {
+        this.buffer = buffer;
+    },
+    render: function () {
+        this.buffer.append("Render0");
+        this.render$1(new Date());
+    },
+    render$1: function (when) {
+        this.buffer.append("Render1");
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge595B', {
+    statics: {
+        render: function (buffer) {
+            buffer.append("Render1");
+        }
+    },
+    buffer: null,
+    constructor: function (buffer) {
+        this.buffer = buffer;
+    },
+    render: function () {
+        this.buffer.append("Render0");
+        ClientTestLibrary.Bridge595B.render(this.buffer);
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge597', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            var inst = new ClientTestLibrary.Bridge597A();
+            assert.equal(inst.get(), "0:a", "Bridge597 Without instance member access");
+            assert.equal(inst.getWithMember(), "HI!:0:a", "Bridge597 With instance member access");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge597A', {
+    _something: "HI!",
+    get: function () {
+        var items = ["a"];
+        var mappedItemsWithoutInstanceMemberAccess = Bridge.Linq.Enumerable.from(items).select(function (value, index) {
+            return index + ":" + value;
+        }).toArray();
+        return mappedItemsWithoutInstanceMemberAccess[0];
+    },
+    getWithMember: function () {
+        var items = ["a"];
+        var mappedItemsWithInstanceMemberAccess = Bridge.Linq.Enumerable.from(items).select(Bridge.fn.bind(this, function (value, index) {
+            return this._something + ":" + index + ":" + value;
+        })).toArray();
+        return mappedItemsWithInstanceMemberAccess[0];
     }
 });
 

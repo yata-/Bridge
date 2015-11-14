@@ -192,7 +192,7 @@ namespace Bridge.Translator
 
             var ctorBlock = new ConstructorBlock(this.Emitter, this.TypeInfo, false);
 
-            if (this.TypeInfo.HasInstantiable || this.Emitter.Plugins.HasConstructorInjectors(ctorBlock))
+            if (this.TypeInfo.HasInstantiable || this.Emitter.Plugins.HasConstructorInjectors(ctorBlock) || this.TypeInfo.ClassType == ClassType.Struct)
             {
                 this.EnsureComma();
                 ctorBlock.Emit();
