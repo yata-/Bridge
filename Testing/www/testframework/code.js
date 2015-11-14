@@ -166,7 +166,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IDictionaryTests.MyDictiona
     inherits: [Bridge.IDictionary$2(Bridge.Int,String)],
     _backingDictionary: null,
     constructor: function () {
-        Bridge.ClientTest.Collections.Generic.IDictionaryTests.MyDictionary.prototype.constructor$1(new Bridge.Dictionary$2(Bridge.Int,String)());
+        Bridge.ClientTest.Collections.Generic.IDictionaryTests.MyDictionary.prototype.constructor$1.call(this, new Bridge.Dictionary$2(Bridge.Int,String)());
 
     },
     constructor$1: function (initialValues) {

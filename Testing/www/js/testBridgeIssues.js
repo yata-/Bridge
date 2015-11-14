@@ -171,7 +171,7 @@ Bridge.define('ClientTestLibrary.Bridge342', {
     inherits: [Bridge.IDictionary$2(Bridge.Int,String)],
     _backingDictionary: null,
     constructor: function () {
-        ClientTestLibrary.Bridge342.prototype.constructor$1(new Bridge.Dictionary$2(Bridge.Int,String)());
+        ClientTestLibrary.Bridge342.prototype.constructor$1.call(this, new Bridge.Dictionary$2(Bridge.Int,String)());
 
     },
     constructor$1: function (initialValues) {
@@ -452,6 +452,19 @@ Bridge.define('ClientTestLibrary.Bridge472', {
                 var magic = new Bridge.List$1(String)();
                 magic.insertRange(-1, ["first", "second"]);
             }, "InsertRange at -1");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge479', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(3);
+
+            var pair = new Bridge.KeyValuePair$2(Bridge.Int,String)(1, "value");
+            assert.equal(pair.key, 1, "Bridge479 Key");
+            assert.equal(pair.value, "value", "Bridge479 Value");
+            assert.equal(pair.toString(), "[1, value]", "Bridge479 ToString");
         }
     }
 });
@@ -881,39 +894,96 @@ Bridge.define('ClientTestLibrary.Bridge558B', {
 
 Bridge.define('ClientTestLibrary.Bridge559', {
     statics: {
-        testUseCase: function (assert) {
-            var b = new ClientTestLibrary.Bridge559B("constructor$1", 1);
+        testUseCase1: function (assert) {
+            var b = new ClientTestLibrary.Bridge559B1("constructor$1", 1);
 
             assert.expect(1);
 
-            assert.equal(b.result, " -> Bridge559A -> Bridge559A$1 -> Bridge559B$1", "Bridge559 TestUseCase");
+            assert.equal(b.result, " -> Bridge559A1 -> Bridge559A1$1 -> Bridge559B1$1", "Bridge559 TestUseCase1");
+        },
+        testUseCase2: function (assert) {
+            var b = new ClientTestLibrary.Bridge559B2("constructor$1", 1);
+
+            assert.expect(1);
+
+            assert.equal(b.result, " ClassA ClassA$1 ClassB$1", "Bridge559 TestUseCase2");
+        },
+        testUseCase3: function (assert) {
+            var a = new ClientTestLibrary.Bridge559A3("constructor", 1);
+            var b = new ClientTestLibrary.Bridge559A3("constructor", 2);
+
+            assert.expect(1);
+
+            var r = a.getData() + "|" + b.getData();
+            assert.equal(r, "1|2", "Bridge559 TestUseCase3");
         }
     }
 });
 
-Bridge.define('ClientTestLibrary.Bridge559A', {
+Bridge.define('ClientTestLibrary.Bridge559A1', {
     result: "",
     constructor: function () {
-        this.result += " -> Bridge559A";
+        this.result += " -> Bridge559A1";
     },
     constructor$1: function (a) {
-        ClientTestLibrary.Bridge559A.prototype.$constructor();
+        ClientTestLibrary.Bridge559A1.prototype.$constructor.call(this);
 
-        this.result += " -> Bridge559A$1";
+        this.result += " -> Bridge559A1$1";
     }
 });
 
-Bridge.define('ClientTestLibrary.Bridge559B', {
-    inherits: [ClientTestLibrary.Bridge559A],
+Bridge.define('ClientTestLibrary.Bridge559B1', {
+    inherits: [ClientTestLibrary.Bridge559A1],
     constructor: function () {
-        ClientTestLibrary.Bridge559A.prototype.$constructor.call(this);
+        ClientTestLibrary.Bridge559A1.prototype.$constructor.call(this);
 
-        this.result += " -> Bridge559B -- unexpected!";
+        this.result += " -> Bridge559B1 -- unexpected!";
     },
     constructor$1: function (a) {
-        ClientTestLibrary.Bridge559A.prototype.constructor$1.call(this, a);
+        ClientTestLibrary.Bridge559A1.prototype.constructor$1.call(this, a);
 
-        this.result += " -> Bridge559B$1";
+        this.result += " -> Bridge559B1$1";
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge559A2', {
+    result: "",
+    constructor: function () {
+        this.result += " ClassA";
+    },
+    constructor$1: function (a) {
+        ClientTestLibrary.Bridge559A2.prototype.$constructor.call(this);
+
+        this.result += " ClassA$1";
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge559B2', {
+    inherits: [ClientTestLibrary.Bridge559A2],
+    constructor: function () {
+        ClientTestLibrary.Bridge559A2.prototype.$constructor.call(this);
+
+        this.result += " ClassB -- unexpected!";
+    },
+    constructor$1: function (a) {
+        ClientTestLibrary.Bridge559A2.prototype.constructor$1.call(this, a);
+
+        this.result += " ClassB$1";
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge559A3', {
+    config: {
+        properties: {
+            Data: null
+        }
+    },
+    constructor$1: function (value) {
+        this.setData(value);
+    },
+    constructor: function (value) {
+        ClientTestLibrary.Bridge559A3.prototype.constructor$1.call(this, value.toString());
+
     }
 });
 
@@ -1095,6 +1165,84 @@ Bridge.define('ClientTestLibrary.Bridge588B', {
     statics: {
         Valeur1: 1,
         Valeur2: 2
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge595', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            var buffer = new Bridge.Text.StringBuilder();
+            var a = new ClientTestLibrary.Bridge595A(buffer);
+            a.render();
+            assert.equal(buffer.toString(), "Render0Render1", "Bridge595 A");
+
+            buffer.clear();
+            var b = new ClientTestLibrary.Bridge595B(buffer);
+            b.render();
+            assert.equal(buffer.toString(), "Render0Render1", "Bridge595 B");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge595A', {
+    buffer: null,
+    constructor: function (buffer) {
+        this.buffer = buffer;
+    },
+    render: function () {
+        this.buffer.append("Render0");
+        this.render$1(new Date());
+    },
+    render$1: function (when) {
+        this.buffer.append("Render1");
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge595B', {
+    statics: {
+        render: function (buffer) {
+            buffer.append("Render1");
+        }
+    },
+    buffer: null,
+    constructor: function (buffer) {
+        this.buffer = buffer;
+    },
+    render: function () {
+        this.buffer.append("Render0");
+        ClientTestLibrary.Bridge595B.render(this.buffer);
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge597', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            var inst = new ClientTestLibrary.Bridge597A();
+            assert.equal(inst.get(), "0:a", "Bridge597 Without instance member access");
+            assert.equal(inst.getWithMember(), "HI!:0:a", "Bridge597 With instance member access");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge597A', {
+    _something: "HI!",
+    get: function () {
+        var items = ["a"];
+        var mappedItemsWithoutInstanceMemberAccess = Bridge.Linq.Enumerable.from(items).select(function (value, index) {
+            return index + ":" + value;
+        }).toArray();
+        return mappedItemsWithoutInstanceMemberAccess[0];
+    },
+    getWithMember: function () {
+        var items = ["a"];
+        var mappedItemsWithInstanceMemberAccess = Bridge.Linq.Enumerable.from(items).select(Bridge.fn.bind(this, function (value, index) {
+            return this._something + ":" + index + ":" + value;
+        })).toArray();
+        return mappedItemsWithInstanceMemberAccess[0];
     }
 });
 
