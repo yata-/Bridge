@@ -7,6 +7,21 @@ Bridge.Class.generic('Bridge.KeyValuePair$2', function (TKey, TValue) {
         constructor: function (key, value) {
             this.key = key;
             this.value = value;
+        },
+
+        toString: function() {
+            var s = "[";
+            
+            if( this.key != null) {
+                s += this.key.toString();
+            }
+
+            s += ", ";
+            if(this.value != null) {
+                s += this.value.toString();
+            }
+            s += "]";
+            return s;
         }
     }));
 });

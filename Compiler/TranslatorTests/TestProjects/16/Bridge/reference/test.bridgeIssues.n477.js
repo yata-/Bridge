@@ -69,3 +69,6 @@ Bridge.define('Test.BridgeIssues.N477.App2', {
     }
 });
 
+
+
+Bridge.init();
