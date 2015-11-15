@@ -78,7 +78,7 @@
         return this.value.toNumber();
     };
 
-    Bridge.Decimal.prototype.format = function (fmt, provider) {
+    Bridge.Decimal.prototype.format = function (format, provider) {
         return Bridge.Int.format(this.toFloat(), format, provider);
     };
 
