@@ -1148,6 +1148,96 @@ Bridge.define('ClientTestLibrary.Bridge572', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge577', {
+    statics: {
+        someMethodA: function (j) {
+            return new ClientTestLibrary.Bridge577.Bridge577UnitA();
+        },
+        someMethodB: function (j) {
+            var v = new ClientTestLibrary.Bridge577.Bridge577UnitB();
+            v.setNumber(j);
+
+            return v.$clone();
+        },
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            var a = ClientTestLibrary.Bridge577.someMethodA(1);
+            assert.ok(a.$clone(), "#577 Bridge577UnitA created");
+
+            var b = ClientTestLibrary.Bridge577.someMethodB(7);
+            assert.equal(b.getNumber(), 7, "#577 Bridge577UnitB created");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge577.Bridge577UnitA', {
+    $clone: function (to) { return this; }
+});
+
+Bridge.define('ClientTestLibrary.Bridge577.Bridge577UnitB', {
+    config: {
+        properties: {
+            Number: 0
+        }
+    },
+    constructor: function () {
+    },
+    getHashCode: function () {
+        var hash = 17;
+        hash = hash * 23 + (this.Number == null ? 0 : Bridge.getHashCode(this.Number));
+        return hash;
+    },
+    equals: function (o) {
+        if (!Bridge.is(o,ClientTestLibrary.Bridge577.Bridge577UnitB)) {
+            return false;
+        }
+        return Bridge.equals(this.Number, o.Number);
+    },
+    $clone: function (to) {
+        var s = to || new ClientTestLibrary.Bridge577.Bridge577UnitB();
+        s.Number = this.Number;
+        return s;
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge578', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var s = "ab|abc&ab&abc|de&ef&";
+
+            var r = Bridge.String.split(s, [124, 38].map(function(i) {{ return String.fromCharCode(i); }}));
+            var expected = ["ab", "abc", "ab", "abc", "de", "ef", ""];
+
+            assert.deepEqual(r, expected, "#578 Split(params char[] separator)");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge580', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(5);
+
+            var arrs = ["s1", "s2"];
+            var dst = Bridge.Array.init(2, null);
+            Bridge.Array.copy(arrs, 0, dst, 0, arrs.length - 0);
+
+            assert.equal(dst.length, 2, "Bridge580 Length");
+            assert.equal(dst[0], arrs[0], "Bridge580 0");
+            assert.equal(dst[1], arrs[1], "Bridge580 1");
+
+            dst = Bridge.Array.init(1, null);
+            Bridge.Array.copy(arrs, 1, dst, 0, arrs.length - 1);
+
+            assert.equal(dst.length, 1, "Bridge580 Length 1");
+            assert.equal(dst[0], arrs[1], "Bridge580 1_1");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge588A', {
     statics: {
         config: {
@@ -1243,6 +1333,131 @@ Bridge.define('ClientTestLibrary.Bridge597A', {
             return this._something + ":" + index + ":" + value;
         })).toArray();
         return mappedItemsWithInstanceMemberAccess[0];
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge603', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            var c = ClientTestLibrary.Bridge603A.op_Implicit(null);
+            assert.equal(c.value, "[Null]", "Bridge603A TestUseCase Null");
+
+            c = ClientTestLibrary.Bridge603A.op_Implicit("Test");
+            assert.equal(c.value, "Test", "Bridge603A TestUseCase String");
+        },
+        testRelated: function (assert) {
+            assert.expect(5);
+
+            var b = ClientTestLibrary.Bridge603B.op_Implicit$1(12345);
+            assert.equal(b.intValue, 12345, "Bridge603B TestRelated Int");
+
+            var c = ClientTestLibrary.Bridge603B.op_Implicit$2(null);
+            assert.equal(c.value, "[Null]", "Bridge603B TestRelated String Null");
+
+            c = ClientTestLibrary.Bridge603B.op_Implicit$2("Test");
+            assert.equal(c.value, "Test", "Bridge603B TestRelated String");
+
+            var d = ClientTestLibrary.Bridge603B.op_Implicit(null);
+            assert.equal(d.value, "[Null]", "Bridge603B TestRelated Bridge603Class Null");
+
+            d = ClientTestLibrary.Bridge603B.op_Implicit(Bridge.merge(new ClientTestLibrary.Bridge603Class(), {
+                setData: "Test 603B"
+            } ));
+            assert.equal(d.value, "Test 603B", "Bridge603B TestRelated Bridge603Class");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge603A', {
+    statics: {
+        op_Implicit: function (value) {
+            value = Bridge.coalesce(value, "[Null]");
+            return new ClientTestLibrary.Bridge603A("constructor$1", value);
+        }
+    },
+    value: null,
+    constructor$1: function (value) {
+        this.value = value;
+    },
+    constructor: function () {
+    },
+    getHashCode: function () {
+        var hash = 17;
+        hash = hash * 23 + (this.value == null ? 0 : Bridge.getHashCode(this.value));
+        return hash;
+    },
+    equals: function (o) {
+        if (!Bridge.is(o,ClientTestLibrary.Bridge603A)) {
+            return false;
+        }
+        return Bridge.equals(this.value, o.value);
+    },
+    $clone: function (to) {
+        var s = to || new ClientTestLibrary.Bridge603A();
+        s.value = this.value;
+        return s;
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge603B', {
+    statics: {
+        op_Implicit$2: function (value) {
+            value = Bridge.coalesce(value, "[Null]");
+            return new ClientTestLibrary.Bridge603B("constructor$3", value);
+        },
+        op_Implicit$1: function (value) {
+            return new ClientTestLibrary.Bridge603B("constructor$2", value);
+        },
+        op_Implicit: function (value) {
+            value = Bridge.coalesce(value, Bridge.merge(new ClientTestLibrary.Bridge603Class(), {
+                setData: "[Null]"
+            } ));
+            return new ClientTestLibrary.Bridge603B("constructor$1", value);
+        }
+    },
+    value: null,
+    intValue: 0,
+    constructor$3: function (value) {
+        this.value = value;
+        this.intValue = 0;
+    },
+    constructor$2: function (value) {
+        this.value = null;
+        this.intValue = value;
+    },
+    constructor$1: function (value) {
+        this.value = value.getData().toString();
+        this.intValue = 0;
+    },
+    constructor: function () {
+    },
+    getHashCode: function () {
+        var hash = 17;
+        hash = hash * 23 + (this.value == null ? 0 : Bridge.getHashCode(this.value));
+        hash = hash * 23 + (this.intValue == null ? 0 : Bridge.getHashCode(this.intValue));
+        return hash;
+    },
+    equals: function (o) {
+        if (!Bridge.is(o,ClientTestLibrary.Bridge603B)) {
+            return false;
+        }
+        return Bridge.equals(this.value, o.value) && Bridge.equals(this.intValue, o.intValue);
+    },
+    $clone: function (to) {
+        var s = to || new ClientTestLibrary.Bridge603B();
+        s.value = this.value;
+        s.intValue = this.intValue;
+        return s;
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge603Class', {
+    config: {
+        properties: {
+            Data: null
+        }
     }
 });
 
@@ -1945,6 +2160,394 @@ Bridge.define('ClientTestLibrary.Bridge544', {
 
             var s = Bridge.merge(new String(), JSON.parse("\"Some string\""));
             assert.equal(s, "Some string", "Bridge544 string");
+        }
+    }
+});
+
+/** @namespace ClientTestLibrary */
+
+/**
+ * This test will check whether TypedArray types are emitted to JavaScript
+ the right way. [#548]
+ *
+ * @class ClientTestLibrary.Bridge548
+ */
+Bridge.define('ClientTestLibrary.Bridge548', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(18);
+
+            var isSpecialTypeName = ClientTestLibrary.Utilities.BrowserHelper.isPhantomJs();
+
+            var v1 = new Float32Array(1);
+            var thisType = "Float32Array";
+            assert.ok(v1 !== null, thisType + " created");
+            var thisName = isSpecialTypeName ? "Object" : thisType;
+            assert.equal(Bridge.getTypeName(v1), thisName, thisType + " class name");
+
+            var v2 = new Float64Array(1);
+            thisType = "Float64Array";
+            assert.ok(v2 !== null, thisType + " created");
+            thisName = isSpecialTypeName ? "Object" : thisType;
+            assert.equal(Bridge.getTypeName(v2), thisName, thisType + " class name");
+
+            var v3 = new Int16Array(1);
+            thisType = "Int16Array";
+            assert.ok(v3 !== null, thisType + " created");
+            thisName = isSpecialTypeName ? "Object" : thisType;
+            assert.equal(Bridge.getTypeName(v3), thisName, thisType + " class name");
+
+            var v4 = new Int32Array(1);
+            thisType = "Int32Array";
+            assert.ok(v4 !== null, thisType + " created");
+            thisName = isSpecialTypeName ? "Object" : thisType;
+            assert.equal(Bridge.getTypeName(v4), thisName, thisType + " class name");
+
+            var v5 = new Int8Array(1);
+            thisType = "Int8Array";
+            assert.ok(v5 !== null, thisType + " created");
+            thisName = isSpecialTypeName ? "Object" : thisType;
+            assert.equal(Bridge.getTypeName(v5), thisName, thisType + " class name");
+
+            var v6 = new Uint16Array(1);
+            thisType = "Uint16Array";
+            assert.ok(v6 !== null, thisType + " created");
+            thisName = isSpecialTypeName ? "Object" : thisType;
+            assert.equal(Bridge.getTypeName(v6), thisName, thisType + " class name");
+
+            var v7 = new Uint32Array(1);
+            thisType = "Uint32Array";
+            assert.ok(v7 !== null, thisType + " created");
+            thisName = isSpecialTypeName ? "Object" : thisType;
+            assert.equal(Bridge.getTypeName(v7), thisName, thisType + " class name");
+
+            var v8 = new Uint8Array(1);
+            thisType = "Uint8Array";
+            assert.ok(v8 !== null, thisType + " created");
+            thisName = isSpecialTypeName ? "Object" : thisType;
+            assert.equal(Bridge.getTypeName(v8), thisName, thisType + " class name");
+
+            var v9 = new Uint8ClampedArray(1);
+            thisType = "Uint8ClampedArray";
+            assert.ok(v9 !== null, thisType + " created");
+            thisName = isSpecialTypeName ? "Object" : thisType;
+            assert.equal(Bridge.getTypeName(v9), thisName, thisType + " class name");
+        }
+    }
+});
+
+/**
+ * This test will check whether TypedArray types correctly inherit from
+ the prototype common methods and fields. [#549]
+ *
+ * @class ClientTestLibrary.Bridge549
+ */
+Bridge.define('ClientTestLibrary.Bridge549', {
+    statics: {
+        testUseCase: function (assert) {
+            var isToStringToTypeNameLogic = !ClientTestLibrary.Utilities.BrowserHelper.isChrome();
+
+            assert.expect(153);
+
+            var v1 = new Float32Array(10);
+            assert.ok(v1 !== null, "Float32Array created");
+
+            v1[1] = 11;
+            v1[5] = 5;
+            v1[9] = 99;
+            assert.equal(v1[1], 11, "Float32Array indexier works 1");
+            assert.equal(v1[9], 99, "Float32Array indexier works 9");
+
+            // Check just a select number of references inside the Prototype inheritance.
+            assert.ok(v1.buffer !== null, "Float32Array Buffer");
+            assert.equal(v1.byteLength, 40, "Float32Array ByteLength");
+            assert.equal(v1.byteOffset, 0, "Float32Array ByteOffset");
+            assert.equal(v1.length, 10, "Float32Array Length");
+
+            /* 
+             * Commented out. Reason: Only Firefox implements them.
+             * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array
+            var mA = v1.Join();
+            v1.Reverse();
+            var mB = v1.Slice();
+            var mC = v1.Sort();
+             */
+
+            var expectedToStringFloat32Array1 = isToStringToTypeNameLogic ? "[object Float32Array]" : "0,11,0,0,0,5,0,0,0,99";
+            assert.equal(v1.toLocaleString(), expectedToStringFloat32Array1, "Float32Array ToLocaleString");
+            assert.equal(v1.toString(), expectedToStringFloat32Array1, "Float32Array ToString");
+
+            // Some browsers do not support SubArray() with no parameters.
+            // At least 'begin' must be provided.
+            var subArray11 = v1.subarray(1);
+            var expectedToStringFloat32Array2 = isToStringToTypeNameLogic ? "[object Float32Array]" : "11,0,0,0,5,0,0,0,99";
+            assert.ok(subArray11 !== null, "Float32Array SubArray1");
+            assert.equal(subArray11.length, 9, "Float32Array SubArray1 Length");
+            assert.equal(subArray11.toString(), expectedToStringFloat32Array2, "Float32Array SubArray1 ToString");
+            assert.equal(subArray11.byteOffset, 4, "Float32Array SubArray1 ByteOffset");
+
+            var subArray12 = subArray11.subarray(2, 6);
+            var expectedToStringFloat32Array3 = isToStringToTypeNameLogic ? "[object Float32Array]" : "0,0,5,0";
+            assert.ok(subArray12 !== null, "Float32Array SubArray2");
+            assert.equal(subArray12.length, 4, "Float32Array SubArray2 Length");
+            assert.equal(subArray12.toString(), expectedToStringFloat32Array3, "Float32Array SubArray2 ToString");
+            assert.equal(subArray12.byteOffset, 12, "Float32Array SubArray2 ByteOffset");
+
+            var v2 = new Float64Array(10);
+            assert.ok(v2 !== null, "Float64Array created");
+
+            v2[1] = 11;
+            v2[5] = 5;
+            v2[9] = 99;
+            assert.equal(v2[1], 11, "Float64Array indexier works 1");
+            assert.equal(v2[9], 99, "Float64Array indexier works 9");
+
+            assert.ok(v2.buffer !== null, "Float64Array Buffer");
+            assert.equal(v2.byteLength, 80, "Float64Array ByteLength");
+            assert.equal(v2.byteOffset, 0, "Float64Array ByteOffset");
+            assert.equal(v2.length, 10, "Float64Array Length");
+
+            var expectedToStringFloat64Array1 = isToStringToTypeNameLogic ? "[object Float64Array]" : "0,11,0,0,0,5,0,0,0,99";
+            assert.equal(v2.toLocaleString(), expectedToStringFloat64Array1, "Float64Array ToLocaleString");
+            assert.equal(v2.toString(), expectedToStringFloat64Array1, "Float64Array ToString");
+
+            var subArray21 = v2.subarray(1);
+            var expectedToStringFloat64Array2 = isToStringToTypeNameLogic ? "[object Float64Array]" : "11,0,0,0,5,0,0,0,99";
+            assert.ok(subArray21 !== null, "Float64Array SubArray1");
+            assert.equal(subArray21.length, 9, "Float64Array SubArray1 Length");
+            assert.equal(subArray21.toString(), expectedToStringFloat64Array2, "Float64Array SubArray1 ToString");
+            assert.equal(subArray21.byteOffset, 8, "Float64Array SubArray1 ByteOffset");
+
+            var subArray22 = subArray21.subarray(2, 6);
+            var expectedToStringFloat64Array3 = isToStringToTypeNameLogic ? "[object Float64Array]" : "0,0,5,0";
+            assert.ok(subArray22 !== null, "Float64Array SubArray2");
+            assert.equal(subArray22.length, 4, "Float64Array SubArray2 Length");
+            assert.equal(subArray22.toString(), expectedToStringFloat64Array3, "Float64Array SubArray2 ToString");
+            assert.equal(subArray22.byteOffset, 24, "Float64Array SubArray2 ByteOffset");
+
+            var v3 = new Int16Array(10);
+            assert.ok(v3 !== null, "Int16Array created");
+
+            v3[1] = 11;
+            v3[5] = 5;
+            v3[9] = 99;
+            assert.equal(v3[1], 11, "Int16Array indexier works 1");
+            assert.equal(v3[9], 99, "Int16Array indexier works 9");
+
+            assert.ok(v3.buffer !== null, "Int16Array Buffer");
+            assert.equal(v3.byteLength, 20, "Int16Array ByteLength");
+            assert.equal(v3.byteOffset, 0, "Int16Array ByteOffset");
+            assert.equal(v3.length, 10, "Int16Array Length");
+
+            var expectedToStringInt16Array1 = isToStringToTypeNameLogic ? "[object Int16Array]" : "0,11,0,0,0,5,0,0,0,99";
+            assert.equal(v3.toLocaleString(), expectedToStringInt16Array1, "Int16Array ToLocaleString");
+            assert.equal(v3.toString(), expectedToStringInt16Array1, "Int16Array ToString");
+
+            var subArray31 = v3.subarray(1);
+            var expectedToStringInt16Array2 = isToStringToTypeNameLogic ? "[object Int16Array]" : "11,0,0,0,5,0,0,0,99";
+            assert.ok(subArray31 !== null, "Int16Array SubArray1");
+            assert.equal(subArray31.length, 9, "Int16Array SubArray1 Length");
+            assert.equal(subArray31.toString(), expectedToStringInt16Array2, "Int16Array SubArray1 ToString");
+            assert.equal(subArray31.byteOffset, 2, "Int16Array SubArray1 ByteOffset");
+
+            var subArray32 = subArray31.subarray(2, 6);
+            var expectedToStringInt16Array3 = isToStringToTypeNameLogic ? "[object Int16Array]" : "0,0,5,0";
+            assert.ok(subArray32 !== null, "Int16Array SubArray2");
+            assert.equal(subArray32.length, 4, "Int16Array SubArray2 Length");
+            assert.equal(subArray32.toString(), expectedToStringInt16Array3, "Int16Array SubArray2 ToString");
+            assert.equal(subArray32.byteOffset, 6, "Int16Array SubArray2 ByteOffset");
+
+            var v4 = new Int32Array(10);
+            assert.ok(v4 !== null, "Int32Array created");
+
+            v4[1] = 11;
+            v4[5] = 5;
+            v4[9] = 99;
+            assert.equal(v4[1], 11, "Int32Array indexier works 1");
+            assert.equal(v4[9], 99, "Int32Array indexier works 9");
+
+            assert.ok(v4.buffer !== null, "Int32Array Buffer");
+            assert.equal(v4.byteLength, 40, "Int32Array ByteLength");
+            assert.equal(v4.byteOffset, 0, "Int32Array ByteOffset");
+            assert.equal(v4.length, 10, "Int32Array Length");
+
+            var expectedToStringInt32Array1 = isToStringToTypeNameLogic ? "[object Int32Array]" : "0,11,0,0,0,5,0,0,0,99";
+            assert.equal(v4.toLocaleString(), expectedToStringInt32Array1, "Int32Array ToLocaleString");
+            assert.equal(v4.toString(), expectedToStringInt32Array1, "Int32Array ToString");
+
+            var subArray41 = v4.subarray(1);
+            var expectedToStringInt32Array2 = isToStringToTypeNameLogic ? "[object Int32Array]" : "11,0,0,0,5,0,0,0,99";
+            assert.ok(subArray41 !== null, "Int32Array SubArray1");
+            assert.equal(subArray41.length, 9, "Int32Array SubArray1 Length");
+            assert.equal(subArray41.toString(), expectedToStringInt32Array2, "Int32Array SubArray1 ToString");
+            assert.equal(subArray41.byteOffset, 4, "Int32Array SubArray1 ByteOffset");
+
+            var subArray42 = subArray41.subarray(2, 6);
+            var expectedToStringInt32Array3 = isToStringToTypeNameLogic ? "[object Int32Array]" : "0,0,5,0";
+            assert.ok(subArray42 !== null, "Int32Array SubArray2");
+            assert.equal(subArray42.length, 4, "Int32Array SubArray2 Length");
+            assert.equal(subArray42.toString(), expectedToStringInt32Array3, "Int32Array SubArray2 ToString");
+            assert.equal(subArray42.byteOffset, 12, "Int32Array SubArray2 ByteOffset");
+
+            var v5 = new Int8Array(10);
+            assert.ok(v5 !== null, "Int8Array created");
+
+            v5[1] = 11;
+            v5[5] = 5;
+            v5[9] = 99;
+            assert.equal(v5[1], 11, "Int8Array indexier works 1");
+            assert.equal(v5[9], 99, "Int8Array indexier works 9");
+
+            assert.ok(v5.buffer !== null, "Int8Array Buffer");
+            assert.equal(v5.byteLength, 10, "Int8Array ByteLength");
+            assert.equal(v5.byteOffset, 0, "Int8Array ByteOffset");
+            assert.equal(v5.length, 10, "Int8Array Length");
+
+            var expectedToStringInt8Array1 = isToStringToTypeNameLogic ? "[object Int8Array]" : "0,11,0,0,0,5,0,0,0,99";
+            assert.equal(v5.toLocaleString(), expectedToStringInt8Array1, "Int8Array ToLocaleString");
+            assert.equal(v5.toString(), expectedToStringInt8Array1, "Int8Array ToString");
+
+            var subArray51 = v5.subarray(1);
+            var expectedToStringInt8Array2 = isToStringToTypeNameLogic ? "[object Int8Array]" : "11,0,0,0,5,0,0,0,99";
+            assert.ok(subArray51 !== null, "Int8Array SubArray1");
+            assert.equal(subArray51.length, 9, "Int8Array SubArray1 Length");
+            assert.equal(subArray51.toString(), expectedToStringInt8Array2, "Int8Array SubArray1 ToString");
+            assert.equal(subArray51.byteOffset, 1, "Int8Array SubArray1 ByteOffset");
+
+            var subArray52 = subArray51.subarray(2, 6);
+            var expectedToStringInt8Array3 = isToStringToTypeNameLogic ? "[object Int8Array]" : "0,0,5,0";
+            assert.ok(subArray52 !== null, "Int8Array SubArray2");
+            assert.equal(subArray52.length, 4, "Int8Array SubArray2 Length");
+            assert.equal(subArray52.toString(), expectedToStringInt8Array3, "Int8Array SubArray2 ToString");
+            assert.equal(subArray52.byteOffset, 3, "Int8Array SubArray2 ByteOffset");
+
+            var v6 = new Uint16Array(10);
+            assert.ok(v6 !== null, "Uint16Array created");
+
+            v6[1] = 11;
+            v6[5] = 5;
+            v6[9] = 99;
+            assert.equal(v6[1], 11, "Uint16Array indexier works 1");
+            assert.equal(v6[9], 99, "Uint16Array indexier works 9");
+
+            assert.ok(v6.buffer !== null, "Uint16Array Buffer");
+            assert.equal(v6.byteLength, 20, "Uint16Array ByteLength");
+            assert.equal(v6.byteOffset, 0, "Uint16Array ByteOffset");
+            assert.equal(v6.length, 10, "Uint16Array Length");
+
+            var expectedToStringUint16Array1 = isToStringToTypeNameLogic ? "[object Uint16Array]" : "0,11,0,0,0,5,0,0,0,99";
+            assert.equal(v6.toLocaleString(), expectedToStringUint16Array1, "Uint16Array ToLocaleString");
+            assert.equal(v6.toString(), expectedToStringUint16Array1, "Uint16Array ToString");
+
+            var subArray61 = v6.subarray(1);
+            var expectedToStringUint16Array2 = isToStringToTypeNameLogic ? "[object Uint16Array]" : "11,0,0,0,5,0,0,0,99";
+            assert.ok(subArray61 !== null, "Uint16Array SubArray1");
+            assert.equal(subArray61.length, 9, "Uint16Array SubArray1 Length");
+            assert.equal(subArray61.toString(), expectedToStringUint16Array2, "Uint16Array SubArray1 ToString");
+            assert.equal(subArray61.byteOffset, 2, "Uint16Array SubArray1 ByteOffset");
+
+            var subArray62 = subArray61.subarray(2, 6);
+            var expectedToStringUint16Array3 = isToStringToTypeNameLogic ? "[object Uint16Array]" : "0,0,5,0";
+            assert.ok(subArray62 !== null, "Uint16Array SubArray2");
+            assert.equal(subArray62.length, 4, "Uint16Array SubArray2 Length");
+            assert.equal(subArray62.toString(), expectedToStringUint16Array3, "Uint16Array SubArray2 ToString");
+            assert.equal(subArray62.byteOffset, 6, "Uint16Array SubArray2 ByteOffset");
+
+            var v7 = new Uint32Array(10);
+            assert.ok(v7 !== null, "Uint32Array created");
+
+            v7[1] = 11;
+            v7[5] = 5;
+            v7[9] = 99;
+            assert.equal(v7[1], 11, "Uint32Array indexier works 1");
+            assert.equal(v7[9], 99, "Uint32Array indexier works 9");
+
+            assert.ok(v7.buffer !== null, "Uint32Array Buffer");
+            assert.equal(v7.byteLength, 40, "Uint32Array ByteLength");
+            assert.equal(v7.byteOffset, 0, "Uint32Array ByteOffset");
+            assert.equal(v7.length, 10, "Uint32Array Length");
+
+            var expectedToStringUint32Array1 = isToStringToTypeNameLogic ? "[object Uint32Array]" : "0,11,0,0,0,5,0,0,0,99";
+            assert.equal(v7.toLocaleString(), expectedToStringUint32Array1, "Uint32Array ToLocaleString");
+            assert.equal(v7.toString(), expectedToStringUint32Array1, "Uint32Array ToString");
+
+            var subArray71 = v7.subarray(1);
+            var expectedToStringUint32Array2 = isToStringToTypeNameLogic ? "[object Uint32Array]" : "11,0,0,0,5,0,0,0,99";
+            assert.ok(subArray71 !== null, "Uint32Array SubArray1");
+            assert.equal(subArray71.length, 9, "Uint32Array SubArray1 Length");
+            assert.equal(subArray71.toString(), expectedToStringUint32Array2, "Uint32Array SubArray1 ToString");
+            assert.equal(subArray71.byteOffset, 4, "Uint32Array SubArray1 ByteOffset");
+
+            var subArray72 = subArray71.subarray(2, 6);
+            var expectedToStringUint32Array3 = isToStringToTypeNameLogic ? "[object Uint32Array]" : "0,0,5,0";
+            assert.ok(subArray72 !== null, "Uint32Array SubArray2");
+            assert.equal(subArray72.length, 4, "Uint32Array SubArray2 Length");
+            assert.equal(subArray72.toString(), expectedToStringUint32Array3, "Uint32Array SubArray2 ToString");
+            assert.equal(subArray72.byteOffset, 12, "Uint32Array SubArray2 ByteOffset");
+
+            var v8 = new Uint8Array(10);
+            assert.ok(v8 !== null, "Uint8Array created");
+
+            v8[1] = 11;
+            v8[5] = 5;
+            v8[9] = 99;
+            assert.equal(v8[1], 11, "Uint8Array indexier works 1");
+            assert.equal(v8[9], 99, "Uint8Array indexier works 9");
+
+            assert.ok(v8.buffer !== null, "Uint8Array Buffer");
+            assert.equal(v8.byteLength, 10, "Uint8Array ByteLength");
+            assert.equal(v8.byteOffset, 0, "Uint8Array ByteOffset");
+            assert.equal(v8.length, 10, "Uint8Array Length");
+
+            var expectedToStringUint8Array1 = isToStringToTypeNameLogic ? "[object Uint8Array]" : "0,11,0,0,0,5,0,0,0,99";
+            assert.equal(v8.toLocaleString(), expectedToStringUint8Array1, "Uint8Array ToLocaleString");
+            assert.equal(v8.toString(), expectedToStringUint8Array1, "Uint8Array ToString");
+
+            var subArray81 = v8.subarray(1);
+            var expectedToStringUint8Array2 = isToStringToTypeNameLogic ? "[object Uint8Array]" : "11,0,0,0,5,0,0,0,99";
+            assert.ok(subArray81 !== null, "Uint8Array SubArray1");
+            assert.equal(subArray81.length, 9, "Uint8Array SubArray1 Length");
+            assert.equal(subArray81.toString(), expectedToStringUint8Array2, "Uint8Array SubArray1 ToString");
+            assert.equal(subArray81.byteOffset, 1, "Uint8Array SubArray1 ByteOffset");
+
+            var subArray82 = subArray81.subarray(2, 6);
+            var expectedToStringUint8Array3 = isToStringToTypeNameLogic ? "[object Uint8Array]" : "0,0,5,0";
+            assert.ok(subArray82 !== null, "Uint8Array SubArray2");
+            assert.equal(subArray82.length, 4, "Uint8Array SubArray2 Length");
+            assert.equal(subArray82.toString(), expectedToStringUint8Array3, "Uint8Array SubArray2 ToString");
+            assert.equal(subArray82.byteOffset, 3, "Uint8Array SubArray2 ByteOffset");
+
+            var v9 = new Uint8ClampedArray(10);
+            assert.ok(v9 !== null, "Uint8ClampedArray created");
+
+            v9[1] = 11;
+            v9[5] = 5;
+            v9[9] = 99;
+            assert.equal(v9[1], 11, "Uint8ClampedArray indexier works 1");
+            assert.equal(v9[9], 99, "Uint8ClampedArray indexier works 9");
+
+            assert.ok(v9.buffer !== null, "Uint8ClampedArray Buffer");
+            assert.equal(v9.byteLength, 10, "Uint8ClampedArray ByteLength");
+            assert.equal(v9.byteOffset, 0, "Uint8ClampedArray ByteOffset");
+            assert.equal(v9.length, 10, "Uint8ClampedArray Length");
+
+            var expectedToStringUint8ClampedArray1 = isToStringToTypeNameLogic ? "[object Uint8ClampedArray]" : "0,11,0,0,0,5,0,0,0,99";
+            assert.equal(v9.toLocaleString(), expectedToStringUint8ClampedArray1, "Uint8ClampedArray ToLocaleString");
+            assert.equal(v9.toString(), expectedToStringUint8ClampedArray1, "Uint8ClampedArray ToString");
+
+            var subArray91 = v9.subarray(1);
+            var expectedToStringUint8ClampedArray2 = isToStringToTypeNameLogic ? "[object Uint8ClampedArray]" : "11,0,0,0,5,0,0,0,99";
+            assert.ok(subArray91 !== null, "Uint8ClampedArray SubArray1");
+            assert.equal(subArray91.length, 9, "Uint8ClampedArray SubArray1 Length");
+            assert.equal(subArray91.toString(), expectedToStringUint8ClampedArray2, "Uint8ClampedArray SubArray1 ToString");
+            assert.equal(subArray91.byteOffset, 1, "Uint8ClampedArray SubArray1 ByteOffset");
+
+            var subArray92 = subArray91.subarray(2, 6);
+            var expectedToStringUint8ClampedArray3 = isToStringToTypeNameLogic ? "[object Uint8ClampedArray]" : "0,0,5,0";
+            assert.ok(subArray92 !== null, "Uint8ClampedArray SubArray2");
+            assert.equal(subArray92.length, 4, "Uint8ClampedArray SubArray2 Length");
+            assert.equal(subArray92.toString(), expectedToStringUint8ClampedArray3, "Uint8ClampedArray SubArray2 ToString");
+            assert.equal(subArray92.byteOffset, 3, "Uint8ClampedArray SubArray2 ByteOffset");
         }
     }
 });

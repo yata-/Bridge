@@ -137,6 +137,8 @@ Bridge.define('ClientTestLibrary.RunTests', {
             QUnit.test("#544", ClientTestLibrary.Bridge544.testRelated);
             QUnit.test("#546", ClientTestLibrary.Bridge546.testUseCase);
             QUnit.test("#546", ClientTestLibrary.Bridge546.testRelated);
+            QUnit.test("#548", ClientTestLibrary.Bridge548.testUseCase);
+            QUnit.test("#549", ClientTestLibrary.Bridge549.testUseCase);
             QUnit.test("#554", ClientTestLibrary.Bridge554.testUseCase);
             QUnit.test("#555", ClientTestLibrary.Bridge555.testUseCase);
             QUnit.test("#558", ClientTestLibrary.Bridge558.testUseCase);
@@ -148,9 +150,14 @@ Bridge.define('ClientTestLibrary.RunTests', {
             QUnit.test("#565", ClientTestLibrary.Bridge565.testUseCase);
             QUnit.test("#566", ClientTestLibrary.Bridge566.testUseCase);
             QUnit.test("#572", ClientTestLibrary.Bridge572.testUseCase);
+            QUnit.test("#577", ClientTestLibrary.Bridge577.testUseCase);
+            QUnit.test("#578", ClientTestLibrary.Bridge578.testUseCase);
+            QUnit.test("#580", ClientTestLibrary.Bridge580.testUseCase);
             QUnit.test("#588", ClientTestLibrary.Bridge588.testUseCase);
             QUnit.test("#595", ClientTestLibrary.Bridge595.testUseCase);
             QUnit.test("#597", ClientTestLibrary.Bridge597.testUseCase);
+            QUnit.test("#603", ClientTestLibrary.Bridge603.testUseCase);
+            QUnit.test("#603", ClientTestLibrary.Bridge603.testRelated);
 
             QUnit.module("LINQ");
             QUnit.test("Aggregate operators", ClientTestLibrary.Linq.TestLinqAggregateOperators.test);
