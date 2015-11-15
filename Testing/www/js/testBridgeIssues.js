@@ -1216,6 +1216,50 @@ Bridge.define('ClientTestLibrary.Bridge578', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge580', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(10);
+
+            var arrs = ["s1", "s2"];
+
+            var intIndex;
+
+            var dst = Bridge.Array.init(2, null);
+            intIndex = 0;
+            Bridge.Array.copy(arrs, intIndex, dst, 0, arrs.length - intIndex);
+
+            assert.equal(dst.length, 2, "Bridge580 Length Int");
+            assert.equal(dst[0], arrs[0], "Bridge580 0 Int");
+            assert.equal(dst[1], arrs[1], "Bridge580 1 Int");
+
+            dst = Bridge.Array.init(1, null);
+            intIndex = 1;
+            Bridge.Array.copy(arrs, intIndex, dst, 0, arrs.length - intIndex);
+
+            assert.equal(dst.length, 1, "Bridge580 Length 1 Int");
+            assert.equal(dst[0], arrs[1], "Bridge580 1_1 Int");
+
+            var longIndex;
+
+            dst = Bridge.Array.init(2, null);
+            longIndex = 0;
+            Bridge.Array.copy(arrs, longIndex, dst, 0, arrs.length - longIndex);
+
+            assert.equal(dst.length, 2, "Bridge580 Length Long");
+            assert.equal(dst[0], arrs[0], "Bridge580 0 Long");
+            assert.equal(dst[1], arrs[1], "Bridge580 1 Long");
+
+            dst = Bridge.Array.init(1, null);
+            longIndex = 1;
+            Bridge.Array.copy(arrs, longIndex, dst, 0, arrs.length - longIndex);
+
+            assert.equal(dst.length, 1, "Bridge580 Length 1 Long");
+            assert.equal(dst[0], arrs[1], "Bridge580 1_1 Long");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge588A', {
     statics: {
         config: {
