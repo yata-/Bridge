@@ -1216,6 +1216,132 @@ Bridge.define('ClientTestLibrary.Bridge578', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge580', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(10);
+
+            var arrs = ["s1", "s2"];
+
+            var intIndex;
+
+            var dst = Bridge.Array.init(2, null);
+            intIndex = 0;
+            Bridge.Array.copy(arrs, intIndex, dst, 0, arrs.length - intIndex);
+
+            assert.equal(dst.length, 2, "Bridge580 Length Int");
+            assert.equal(dst[0], arrs[0], "Bridge580 0 Int");
+            assert.equal(dst[1], arrs[1], "Bridge580 1 Int");
+
+            dst = Bridge.Array.init(1, null);
+            intIndex = 1;
+            Bridge.Array.copy(arrs, intIndex, dst, 0, arrs.length - intIndex);
+
+            assert.equal(dst.length, 1, "Bridge580 Length 1 Int");
+            assert.equal(dst[0], arrs[1], "Bridge580 1_1 Int");
+
+            var longIndex;
+
+            dst = Bridge.Array.init(2, null);
+            longIndex = 0;
+            Bridge.Array.copy(arrs, longIndex, dst, 0, arrs.length - longIndex);
+
+            assert.equal(dst.length, 2, "Bridge580 Length Long");
+            assert.equal(dst[0], arrs[0], "Bridge580 0 Long");
+            assert.equal(dst[1], arrs[1], "Bridge580 1 Long");
+
+            dst = Bridge.Array.init(1, null);
+            longIndex = 1;
+            Bridge.Array.copy(arrs, longIndex, dst, 0, arrs.length - longIndex);
+
+            assert.equal(dst.length, 1, "Bridge580 Length 1 Long");
+            assert.equal(dst[0], arrs[1], "Bridge580 1_1 Long");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge582', {
+    statics: {
+        testAddTimeSpan: function (assert) {
+            assert.expect(6);
+
+            var today = new Date(2006, 1 - 1, 1);
+            var duration = new Bridge.TimeSpan(36, 0, 0, 0);
+            var answer = new Date((today).getTime() + ((duration).ticks / 10000));
+
+            assert.equal(answer.getFullYear(), 2006, "Bridge582 TestAddTimeSpan Year");
+            assert.equal((answer.getMonth() + 1), 2, "Bridge582 TestAddTimeSpan Month");
+            assert.equal(answer.getDate(), 6, "Bridge582 TestAddTimeSpan Day");
+            assert.equal(answer.getHours(), 0, "Bridge582 TestAddTimeSpan Hours");
+            assert.equal(answer.getMinutes(), 0, "Bridge582 TestAddTimeSpan Minutes");
+            assert.equal(answer.getSeconds(), 0, "Bridge582 TestAddTimeSpan Seconds");
+        },
+        testAddTicks: function (assert) {
+            assert.expect(6);
+
+            var dt = new Date(2001, 1 - 1, 1);
+            dt = new Date((dt).getTime() + ((20000000) / 10000));
+
+            assert.equal(dt.getFullYear(), 2001, "Bridge582 TestAddTicks Year");
+            assert.equal((dt.getMonth() + 1), 1, "Bridge582 TestAddTicks Month");
+            assert.equal(dt.getDate(), 1, "Bridge582 TestAddTicks Day");
+            assert.equal(dt.getHours(), 0, "Bridge582 TestAddTicks Hour");
+            assert.equal(dt.getMinutes(), 0, "Bridge582 TestAddTicks Minute");
+            assert.equal(dt.getSeconds(), 2, "Bridge582 TestAddTicks Second");
+        },
+        testTicks: function (assert) {
+            assert.expect(7);
+
+            var centuryBegin = new Date(2001, 1 - 1, 1);
+            var currentDate = new Date(2007, 12 - 1, 14, 15, 23);
+            var elapsedTicks = currentDate.getTime() * 10000 - centuryBegin.getTime() * 10000;
+            var elapsedSpan = new Bridge.TimeSpan(elapsedTicks);
+
+            assert.equal(elapsedTicks, 2193385800000000, "Bridge582 TestTicks ticks");
+            assert.equal(elapsedSpan.getTotalSeconds(), 219338580, "Bridge582 TestTicks seconds");
+            assert.equal(elapsedSpan.getTotalMinutes(), 3655643, "Bridge582 TestTicks minutes");
+            assert.equal(elapsedSpan.getDays(), 2538, "Bridge582 TestTicks days");
+            assert.equal(elapsedSpan.getHours(), 15, "Bridge582 TestTicks hours");
+            assert.equal(elapsedSpan.getMinutes(), 23, "Bridge582 TestTicks minutes");
+            assert.equal(elapsedSpan.getSeconds(), 0, "Bridge582 TestTicks minutes");
+        },
+        testSubtractTimeSpan: function (assert) {
+            assert.expect(4);
+
+            var date1 = new Date(Date.UTC(1996, 6 - 1, 3, 22, 15, 0));
+            var date2 = new Date(Date.UTC(1996, 12 - 1, 6, 13, 2, 0));
+            var date3 = new Date(Date.UTC(1996, 10 - 1, 12, 8, 42, 0));
+
+            var diff1 = new Bridge.TimeSpan((date2 - date1) * 10000);
+            assert.ok(diff1.equals(new Bridge.TimeSpan(185, 14, 47, 0)), "Bridge582 TestSubtractTimeSpan diff1");
+
+            var date4 = new Date(date3 - new Date((diff1).ticks / 10000));
+            assert.ok(Bridge.equalsT(date4, new Date(Date.UTC(1996, 4 - 1, 9, 17, 55, 0))), "Bridge582 TestSubtractTimeSpan date4");
+
+            var diff2 = new Bridge.TimeSpan((date2 - date3) * 10000);
+            assert.ok(diff2.equals(new Bridge.TimeSpan(55, 4, 20, 0)), "Bridge582 TestSubtractTimeSpan diff2");
+
+            var date5 = new Date(date1 - new Date((diff2).ticks / 10000));
+            assert.ok(Bridge.equalsT(date5, new Date(Date.UTC(1996, 4 - 1, 9, 17, 55, 0))), "Bridge582 TestSubtractTimeSpan date5");
+        },
+        testTimeOfDay: function (assert) {
+            assert.expect(6);
+
+            var date = new Date(2013, 9 - 1, 14, 9, 28, 0);
+            assert.ok(Bridge.equalsT(new Date(date.getFullYear(), date.getMonth(), date.getDate()), new Date(2013, 9 - 1, 14)), "Bridge582 TestTimeOfDay Date 2013, 9, 14, 9, 28, 0");
+            assert.ok(Bridge.Date.timeOfDay(date).equals(new Bridge.TimeSpan(9, 28, 0)), "Bridge582 TestTimeOfDay TimeOfDay 2013, 9, 14, 9, 28, 0");
+
+            date = new Date(2011, 5 - 1, 28, 10, 35, 0);
+            assert.ok(Bridge.equalsT(new Date(date.getFullYear(), date.getMonth(), date.getDate()), new Date(2011, 5 - 1, 28)), "Bridge582 TestTimeOfDay Date 2011, 5, 28, 10, 35, 0");
+            assert.ok(Bridge.Date.timeOfDay(date).equals(new Bridge.TimeSpan(10, 35, 0)), "Bridge582 TestTimeOfDay TimeOfDay 2011, 5, 28, 10, 35, 0");
+
+            date = new Date(1979, 12 - 1, 25, 14, 30, 0);
+            assert.ok(Bridge.equalsT(new Date(date.getFullYear(), date.getMonth(), date.getDate()), new Date(1979, 12 - 1, 25)), "Bridge582 TestTimeOfDay Date 1979, 12, 25, 14, 30, 0");
+            assert.ok(Bridge.Date.timeOfDay(date).equals(new Bridge.TimeSpan(14, 30, 0)), "Bridge582 TestTimeOfDay TimeOfDay 1979, 12, 25, 14, 30, 0");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge588A', {
     statics: {
         config: {

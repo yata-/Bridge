@@ -154,6 +154,7 @@ namespace ClientTestLibrary
             QUnit.Test("#572", Bridge572.TestUseCase);
             QUnit.Test("#577", Bridge577.TestUseCase);
             QUnit.Test("#578", Bridge578.TestUseCase);
+            QUnit.Test("#580", Bridge580.TestUseCase);
             QUnit.Test("#582", Bridge582.TestAddTicks);
             QUnit.Test("#582", Bridge582.TestAddTimeSpan);
             QUnit.Test("#582", Bridge582.TestSubtractTimeSpan);

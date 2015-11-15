@@ -388,7 +388,6 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests.C', {
 Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests.TestReverseComparer', {
     inherits: [Bridge.IComparer$1(Bridge.Int)],
     compare: function (x, y) {
-        Bridge.Test.Assert.$true(true);
         return x === y ? 0 : (x > y ? -1 : 1);
     }
 });
