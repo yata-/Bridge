@@ -1263,13 +1263,13 @@ Bridge.define('ClientTestLibrary.Bridge603', {
             var b = ClientTestLibrary.Bridge603B.op_Implicit$1(12345);
             assert.equal(b.intValue, 12345, "Bridge603B TestRelated Int");
 
-            var c = Bridge.cast(null, String);
+            var c = ClientTestLibrary.Bridge603B.op_Implicit$2(null);
             assert.equal(c.value, "[Null]", "Bridge603B TestRelated String Null");
 
             c = ClientTestLibrary.Bridge603B.op_Implicit$2("Test");
             assert.equal(c.value, "Test", "Bridge603B TestRelated String");
 
-            var d = Bridge.cast(null, ClientTestLibrary.Bridge603Class);
+            var d = ClientTestLibrary.Bridge603B.op_Implicit(null);
             assert.equal(d.value, "[Null]", "Bridge603B TestRelated Bridge603Class Null");
 
             d = ClientTestLibrary.Bridge603B.op_Implicit(Bridge.merge(new ClientTestLibrary.Bridge603Class(), {
