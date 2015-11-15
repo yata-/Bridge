@@ -112,7 +112,17 @@ Bridge.define('Bridge.Test.QUnit.RunQUnitTests', {
             QUnit.test("Array - JoinWithoutDelimiterWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests.joinWithoutDelimiterWorks);
             QUnit.test("Array - ReverseWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests.reverseWorks);
             QUnit.test("Array - AnyWithArrayItemFilterCallbackWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests.anyWithArrayItemFilterCallbackWorks);
+            QUnit.test("Array - BinarySearch1Works", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests.binarySearch1Works);
+            QUnit.test("Array - BinarySearch2Works", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests.binarySearch2Works);
+            QUnit.test("Array - BinarySearch3Works", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests.binarySearch3Works);
+            QUnit.test("Array - BinarySearch4Works", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests.binarySearch4Works);
+            QUnit.test("Array - BinarySearchExceptionsWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests.binarySearchExceptionsWorks);
             QUnit.test("Array - SortWithDefaultCompareWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests.sortWithDefaultCompareWorks);
+            QUnit.test("Array - Sort1Works", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests.sort1Works);
+            QUnit.test("Array - Sort2Works", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests.sort2Works);
+            QUnit.test("Array - Sort3Works", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests.sort3Works);
+            QUnit.test("Array - Sort4Works", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests.sort4Works);
+            QUnit.test("Array - SortExceptionsWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests.sortExceptionsWorks);
             QUnit.test("Array - ForeachWhenCastToIListWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests.foreachWhenCastToIListWorks);
             QUnit.test("Array - ICollectionCountWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests.iCollectionCountWorks);
             QUnit.test("Array - ICollectionAddWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests.iCollectionAddWorks);
@@ -215,6 +225,10 @@ Bridge.define('Bridge.Test.QUnit.RunQUnitTests', {
             QUnit.test("List - GetEnumeratorWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestCollectionsGenericListTests.getEnumeratorWorks);
             QUnit.test("List - AddWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestCollectionsGenericListTests.addWorks);
             QUnit.test("List - AddRangeWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestCollectionsGenericListTests.addRangeWorks);
+            QUnit.test("List - BinarySearch1Works", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestCollectionsGenericListTests.binarySearch1Works);
+            QUnit.test("List - BinarySearch2Works", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestCollectionsGenericListTests.binarySearch2Works);
+            QUnit.test("List - BinarySearch3Works", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestCollectionsGenericListTests.binarySearch3Works);
+            QUnit.test("List - BinarySearch4Works", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestCollectionsGenericListTests.binarySearch4Works);
             QUnit.test("List - ClearWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestCollectionsGenericListTests.clearWorks);
             QUnit.test("List - ContainsWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestCollectionsGenericListTests.containsWorks);
             QUnit.test("List - ContainsUsesEqualsMethod", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestCollectionsGenericListTests.containsUsesEqualsMethod);
@@ -448,6 +462,9 @@ Bridge.define('Bridge.Test.QUnit.RunQUnitTests', {
             QUnit.test("OverflowException - DefaultConstructorWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestExceptionsOverflowExceptionTests.defaultConstructorWorks);
             QUnit.test("OverflowException - ConstructorWithMessageWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestExceptionsOverflowExceptionTests.constructorWithMessageWorks);
             QUnit.test("OverflowException - ConstructorWithMessageAndInnerExceptionWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestExceptionsOverflowExceptionTests.constructorWithMessageAndInnerExceptionWorks);
+            QUnit.test("RankException - TypePropertiesAreCorrect", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestExceptionsRankExceptionTests.typePropertiesAreCorrect);
+            QUnit.test("RankException - DefaultConstructorWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestExceptionsRankExceptionTests.defaultConstructorWorks);
+            QUnit.test("RankException - ConstructorWithMessageWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestExceptionsRankExceptionTests.constructorWithMessageWorks);
             QUnit.test("Try/Catch/Finally - ThrowingAndCatchingExceptionsWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestExceptionTests.throwingAndCatchingExceptionsWorks);
             QUnit.test("Try/Catch/Finally - ExceptionOfWrongTypeIsNotCaught", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestExceptionTests.exceptionOfWrongTypeIsNotCaught);
             QUnit.test("Try/Catch/Finally - CanCatchExceptionAsBaseType", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestExceptionTests.canCatchExceptionAsBaseType);
@@ -1047,9 +1064,49 @@ Bridge.define('Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests', {
             var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests.beforeTest(false, assert);
             t.anyWithArrayItemFilterCallbackWorks();
         },
+        binarySearch1Works: function (assert) {
+            var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests.beforeTest(false, assert);
+            t.binarySearch1Works();
+        },
+        binarySearch2Works: function (assert) {
+            var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests.beforeTest(false, assert);
+            t.binarySearch2Works();
+        },
+        binarySearch3Works: function (assert) {
+            var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests.beforeTest(false, assert);
+            t.binarySearch3Works();
+        },
+        binarySearch4Works: function (assert) {
+            var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests.beforeTest(false, assert);
+            t.binarySearch4Works();
+        },
+        binarySearchExceptionsWorks: function (assert) {
+            var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests.beforeTest(false, assert);
+            t.binarySearchExceptionsWorks();
+        },
         sortWithDefaultCompareWorks: function (assert) {
             var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests.beforeTest(false, assert);
             t.sortWithDefaultCompareWorks();
+        },
+        sort1Works: function (assert) {
+            var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests.beforeTest(false, assert);
+            t.sort1Works();
+        },
+        sort2Works: function (assert) {
+            var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests.beforeTest(false, assert);
+            t.sort2Works();
+        },
+        sort3Works: function (assert) {
+            var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests.beforeTest(false, assert);
+            t.sort3Works();
+        },
+        sort4Works: function (assert) {
+            var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests.beforeTest(false, assert);
+            t.sort4Works();
+        },
+        sortExceptionsWorks: function (assert) {
+            var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests.beforeTest(false, assert);
+            t.sortExceptionsWorks();
         },
         foreachWhenCastToIListWorks: function (assert) {
             var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestArrayTests.beforeTest(false, assert);
@@ -1607,6 +1664,22 @@ Bridge.define('Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestCollectionsGeneri
         addRangeWorks: function (assert) {
             var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestCollectionsGenericListTests.beforeTest(false, assert);
             t.addRangeWorks();
+        },
+        binarySearch1Works: function (assert) {
+            var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestCollectionsGenericListTests.beforeTest(false, assert);
+            t.binarySearch1Works();
+        },
+        binarySearch2Works: function (assert) {
+            var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestCollectionsGenericListTests.beforeTest(false, assert);
+            t.binarySearch2Works();
+        },
+        binarySearch3Works: function (assert) {
+            var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestCollectionsGenericListTests.beforeTest(false, assert);
+            t.binarySearch3Works();
+        },
+        binarySearch4Works: function (assert) {
+            var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestCollectionsGenericListTests.beforeTest(false, assert);
+            t.binarySearch4Works();
         },
         clearWorks: function (assert) {
             var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestCollectionsGenericListTests.beforeTest(false, assert);
@@ -2979,6 +3052,39 @@ Bridge.define('Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestExceptionsOverflo
         constructorWithMessageAndInnerExceptionWorks: function (assert) {
             var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestExceptionsOverflowExceptionTests.beforeTest(false, assert);
             t.constructorWithMessageAndInnerExceptionWorks();
+        }
+    }
+});
+
+Bridge.define('Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestExceptionsRankExceptionTests', {
+    statics: {
+        instance: null,
+        getInstance: function () {
+            if (Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestExceptionsRankExceptionTests.instance === null) {
+                Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestExceptionsRankExceptionTests.instance = new Bridge.ClientTest.Exceptions.RankExceptionTests();
+            }
+            return Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestExceptionsRankExceptionTests.instance;
+        },
+        setInstance: function (value) {
+            Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestExceptionsRankExceptionTests.instance = value;
+        },
+        beforeTest: function (isStatic, assert) {
+            Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestExceptionsRankExceptionTests.setInstance(null);
+            Bridge.Test.Assert.assert = assert;
+            var r = isStatic ? null : Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestExceptionsRankExceptionTests.getInstance();
+            return r;
+        },
+        typePropertiesAreCorrect: function (assert) {
+            var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestExceptionsRankExceptionTests.beforeTest(false, assert);
+            t.typePropertiesAreCorrect();
+        },
+        defaultConstructorWorks: function (assert) {
+            var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestExceptionsRankExceptionTests.beforeTest(false, assert);
+            t.defaultConstructorWorks();
+        },
+        constructorWithMessageWorks: function (assert) {
+            var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestExceptionsRankExceptionTests.beforeTest(false, assert);
+            t.constructorWithMessageWorks();
         }
     }
 });

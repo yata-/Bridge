@@ -82,6 +82,13 @@ Bridge.define('Bridge.ClientTest.ArrayTests.C', {
     }
 });
 
+Bridge.define('Bridge.ClientTest.ArrayTests.TestReverseComparer', {
+    inherits: [Bridge.IComparer$1(Bridge.Int)],
+    compare: function (x, y) {
+        return x === y ? 0 : (x > y ? -1 : 1);
+    }
+});
+
 Bridge.define('Bridge.ClientTest.Collections.Generic.ComparerTests.C', {
     inherits: function () { return [Bridge.IComparable$1(Bridge.ClientTest.Collections.Generic.ComparerTests.C)]; },
     value: 0,
@@ -388,7 +395,6 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests.C', {
 Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests.TestReverseComparer', {
     inherits: [Bridge.IComparer$1(Bridge.Int)],
     compare: function (x, y) {
-        Bridge.Test.Assert.$true(true);
         return x === y ? 0 : (x > y ? -1 : 1);
     }
 });
@@ -959,10 +965,75 @@ Bridge.define('Bridge.ClientTest.ArrayTests', {
             return i > 5;
         }));
     },
+    binarySearch1Works: function () {
+        var arr = [1, 2, 3, 3, 4, 5];
+
+        Bridge.Test.Assert.areEqual(Bridge.Array.binarySearch(arr, 0, arr.length, 3), 2);
+        Bridge.Test.Assert.$true(Bridge.Array.binarySearch(arr, 0, arr.length, 6) < 0);
+    },
+    binarySearch2Works: function () {
+        var arr = [1, 2, 3, 3, 4, 5];
+
+        Bridge.Test.Assert.areEqual(Bridge.Array.binarySearch(arr, 3, 2, 3), 3);
+        Bridge.Test.Assert.$true(Bridge.Array.binarySearch(arr, 2, 2, 4) < 0);
+    },
+    binarySearch3Works: function () {
+        var arr = [1, 2, 3, 3, 4, 5];
+
+        Bridge.Test.Assert.areEqual(Bridge.Array.binarySearch(arr, 0, arr.length, 3, new Bridge.ClientTest.ArrayTests.TestReverseComparer()), 2);
+        Bridge.Test.Assert.areEqual(Bridge.Array.binarySearch(arr, 0, arr.length, 6, new Bridge.ClientTest.ArrayTests.TestReverseComparer()), -1);
+    },
+    binarySearch4Works: function () {
+        var arr = [1, 2, 3, 3, 4, 5];
+
+        Bridge.Test.Assert.areEqual(Bridge.Array.binarySearch(arr, 3, 2, 3, new Bridge.ClientTest.ArrayTests.TestReverseComparer()), 3);
+        Bridge.Test.Assert.$true(Bridge.Array.binarySearch(arr, 3, 2, 4, new Bridge.ClientTest.ArrayTests.TestReverseComparer()) < 0);
+    },
+    binarySearchExceptionsWorks: function () {
+        var arr1 = null;
+        var arr2 = [1, 2, 3, 3, 4, 5];
+
+        Bridge.Test.Assert.$throws(function () {
+            Bridge.Array.binarySearch(arr1, 0, arr1.length, 1);
+        });
+        Bridge.Test.Assert.$throws(function () {
+            Bridge.Array.binarySearch(arr2, -1, 1, 1);
+        });
+        Bridge.Test.Assert.$throws(function () {
+            Bridge.Array.binarySearch(arr2, 1, 6, 1);
+        });
+    },
     sortWithDefaultCompareWorks: function () {
         var arr = [1, 6, 6, 4, 2];
         arr.sort();
         Bridge.Test.Assert.areEqual(arr, [1, 2, 4, 6, 6]);
+    },
+    sort1Works: function () {
+        var arr = [1, 6, 6, 4, 2];
+        Bridge.Array.sort(arr);
+        Bridge.Test.Assert.areEqual(arr, [1, 2, 4, 6, 6]);
+    },
+    sort2Works: function () {
+        var arr = [1, 6, 6, 4, 2];
+        Bridge.Array.sort(arr, 2, 3);
+        Bridge.Test.Assert.areEqual(arr, [1, 6, 2, 4, 6]);
+    },
+    sort3Works: function () {
+        var arr = [1, 2, 6, 3, 6, 7];
+        Bridge.Array.sort(arr, 2, 3, new Bridge.ClientTest.ArrayTests.TestReverseComparer());
+        Bridge.Test.Assert.areEqual(arr, [1, 2, 6, 6, 3, 7]);
+    },
+    sort4Works: function () {
+        var arr = [1, 6, 6, 4, 2];
+        Bridge.Array.sort(arr, new Bridge.ClientTest.ArrayTests.TestReverseComparer());
+        Bridge.Test.Assert.areEqual(arr, [6, 6, 4, 2, 1]);
+    },
+    sortExceptionsWorks: function () {
+        var arr1 = null;
+
+        Bridge.Test.Assert.$throws(function () {
+            Bridge.Array.sort(arr1);
+        });
     },
     foreachWhenCastToIListWorks: function () {
         var $t;
@@ -2004,6 +2075,58 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
         ] );
         l.addRange(["a", "b", "c"]);
         Bridge.Test.Assert.areEqual(l.toArray(), ["x", "y", "a", "b", "c"]);
+    },
+    binarySearch1Works: function () {
+        var arr = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+            [1],
+            [2],
+            [3],
+            [3],
+            [4],
+            [5]
+        ] );
+
+        Bridge.Test.Assert.areEqual(arr.binarySearch(3), 2);
+        Bridge.Test.Assert.$true(arr.binarySearch(6) < 0);
+    },
+    binarySearch2Works: function () {
+        var arr = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+            [1],
+            [2],
+            [3],
+            [3],
+            [4],
+            [5]
+        ] );
+
+        Bridge.Test.Assert.areEqual(arr.binarySearch(3, 2, 3), 3);
+        Bridge.Test.Assert.$true(arr.binarySearch(2, 2, 4) < 0);
+    },
+    binarySearch3Works: function () {
+        var arr = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+            [1],
+            [2],
+            [3],
+            [3],
+            [4],
+            [5]
+        ] );
+
+        Bridge.Test.Assert.areEqual(arr.binarySearch(3, new Bridge.ClientTest.Collections.Generic.ListTests.TestReverseComparer()), 2);
+        Bridge.Test.Assert.areEqual(arr.binarySearch(6, new Bridge.ClientTest.Collections.Generic.ListTests.TestReverseComparer()), -1);
+    },
+    binarySearch4Works: function () {
+        var arr = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+            [1],
+            [2],
+            [3],
+            [3],
+            [4],
+            [5]
+        ] );
+
+        Bridge.Test.Assert.areEqual(arr.binarySearch(3, 2, 3, new Bridge.ClientTest.Collections.Generic.ListTests.TestReverseComparer()), 3);
+        Bridge.Test.Assert.$true(arr.binarySearch(3, 2, 4, new Bridge.ClientTest.Collections.Generic.ListTests.TestReverseComparer()) < 0);
     },
     clearWorks: function () {
         var l = Bridge.merge(new Bridge.List$1(String)(), [
@@ -3047,6 +3170,30 @@ Bridge.define('Bridge.ClientTest.Exceptions.OverflowExceptionTests', {
         var ex = new Bridge.OverflowException("The message", inner);
         Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.OverflowException), "is OverflowException");
         Bridge.Test.Assert.true$1(ex.getInnerException() === inner, "InnerException");
+        Bridge.Test.Assert.areEqual(ex.getMessage(), "The message");
+    }
+});
+
+Bridge.define('Bridge.ClientTest.Exceptions.RankExceptionTests', {
+    statics: {
+        DefaultMessage: "Attempted to operate on an array with the incorrect number of dimensions."
+    },
+    typePropertiesAreCorrect: function () {
+        Bridge.Test.Assert.areEqual$1(Bridge.getTypeName(Bridge.RankException), "Bridge.RankException", "Name");
+        var d = new Bridge.RankException();
+        Bridge.Test.Assert.$true(Bridge.is(d, Bridge.RankException));
+        Bridge.Test.Assert.$true(Bridge.is(d, Bridge.Exception));
+    },
+    defaultConstructorWorks: function () {
+        var ex = new Bridge.RankException();
+        Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.RankException), "is ArgumentException");
+        Bridge.Test.Assert.areEqual$1(ex.getInnerException(), undefined, "InnerException");
+        Bridge.Test.Assert.areEqual(ex.getMessage(), Bridge.ClientTest.Exceptions.RankExceptionTests.DefaultMessage);
+    },
+    constructorWithMessageWorks: function () {
+        var ex = new Bridge.RankException("The message");
+        Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.RankException), "is RankException");
+        Bridge.Test.Assert.areEqual$1(ex.getInnerException(), undefined, "InnerException");
         Bridge.Test.Assert.areEqual(ex.getMessage(), "The message");
     }
 });
