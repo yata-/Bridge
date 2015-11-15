@@ -1314,6 +1314,131 @@ Bridge.define('ClientTestLibrary.Bridge597A', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge603', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            var c = ClientTestLibrary.Bridge603A.op_Implicit(null);
+            assert.equal(c.value, "[Null]", "Bridge603A TestUseCase Null");
+
+            c = ClientTestLibrary.Bridge603A.op_Implicit("Test");
+            assert.equal(c.value, "Test", "Bridge603A TestUseCase String");
+        },
+        testRelated: function (assert) {
+            assert.expect(5);
+
+            var b = ClientTestLibrary.Bridge603B.op_Implicit$1(12345);
+            assert.equal(b.intValue, 12345, "Bridge603B TestRelated Int");
+
+            var c = ClientTestLibrary.Bridge603B.op_Implicit$2(null);
+            assert.equal(c.value, "[Null]", "Bridge603B TestRelated String Null");
+
+            c = ClientTestLibrary.Bridge603B.op_Implicit$2("Test");
+            assert.equal(c.value, "Test", "Bridge603B TestRelated String");
+
+            var d = ClientTestLibrary.Bridge603B.op_Implicit(null);
+            assert.equal(d.value, "[Null]", "Bridge603B TestRelated Bridge603Class Null");
+
+            d = ClientTestLibrary.Bridge603B.op_Implicit(Bridge.merge(new ClientTestLibrary.Bridge603Class(), {
+                setData: "Test 603B"
+            } ));
+            assert.equal(d.value, "Test 603B", "Bridge603B TestRelated Bridge603Class");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge603A', {
+    statics: {
+        op_Implicit: function (value) {
+            value = Bridge.coalesce(value, "[Null]");
+            return new ClientTestLibrary.Bridge603A("constructor$1", value);
+        }
+    },
+    value: null,
+    constructor$1: function (value) {
+        this.value = value;
+    },
+    constructor: function () {
+    },
+    getHashCode: function () {
+        var hash = 17;
+        hash = hash * 23 + (this.value == null ? 0 : Bridge.getHashCode(this.value));
+        return hash;
+    },
+    equals: function (o) {
+        if (!Bridge.is(o,ClientTestLibrary.Bridge603A)) {
+            return false;
+        }
+        return Bridge.equals(this.value, o.value);
+    },
+    $clone: function (to) {
+        var s = to || new ClientTestLibrary.Bridge603A();
+        s.value = this.value;
+        return s;
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge603B', {
+    statics: {
+        op_Implicit$2: function (value) {
+            value = Bridge.coalesce(value, "[Null]");
+            return new ClientTestLibrary.Bridge603B("constructor$3", value);
+        },
+        op_Implicit$1: function (value) {
+            return new ClientTestLibrary.Bridge603B("constructor$2", value);
+        },
+        op_Implicit: function (value) {
+            value = Bridge.coalesce(value, Bridge.merge(new ClientTestLibrary.Bridge603Class(), {
+                setData: "[Null]"
+            } ));
+            return new ClientTestLibrary.Bridge603B("constructor$1", value);
+        }
+    },
+    value: null,
+    intValue: 0,
+    constructor$3: function (value) {
+        this.value = value;
+        this.intValue = 0;
+    },
+    constructor$2: function (value) {
+        this.value = null;
+        this.intValue = value;
+    },
+    constructor$1: function (value) {
+        this.value = value.getData().toString();
+        this.intValue = 0;
+    },
+    constructor: function () {
+    },
+    getHashCode: function () {
+        var hash = 17;
+        hash = hash * 23 + (this.value == null ? 0 : Bridge.getHashCode(this.value));
+        hash = hash * 23 + (this.intValue == null ? 0 : Bridge.getHashCode(this.intValue));
+        return hash;
+    },
+    equals: function (o) {
+        if (!Bridge.is(o,ClientTestLibrary.Bridge603B)) {
+            return false;
+        }
+        return Bridge.equals(this.value, o.value) && Bridge.equals(this.intValue, o.intValue);
+    },
+    $clone: function (to) {
+        var s = to || new ClientTestLibrary.Bridge603B();
+        s.value = this.value;
+        s.intValue = this.intValue;
+        return s;
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge603Class', {
+    config: {
+        properties: {
+            Data: null
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
