@@ -444,7 +444,7 @@
                 var newarray = array.slice(index, index + length);
                 newarray.sort(Bridge.fn.bind(comparer, comparer.compare));
 
-                for (var i = index; i < length; i++) {
+                for (var i = index; i < (index + length); i++) {
                     array[i] = newarray[i-index];
                 }
             }
