@@ -1148,6 +1148,74 @@ Bridge.define('ClientTestLibrary.Bridge572', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge577', {
+    statics: {
+        someMethodA: function (j) {
+            return new ClientTestLibrary.Bridge577.Bridge577UnitA();
+        },
+        someMethodB: function (j) {
+            var v = new ClientTestLibrary.Bridge577.Bridge577UnitB();
+            v.setNumber(j);
+
+            return v.$clone();
+        },
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            var a = ClientTestLibrary.Bridge577.someMethodA(1);
+            assert.ok(a.$clone(), "#577 Bridge577UnitA created");
+
+            var b = ClientTestLibrary.Bridge577.someMethodB(7);
+            assert.equal(b.getNumber(), 7, "#577 Bridge577UnitB created");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge577.Bridge577UnitA', {
+    $clone: function (to) { return this; }
+});
+
+Bridge.define('ClientTestLibrary.Bridge577.Bridge577UnitB', {
+    config: {
+        properties: {
+            Number: 0
+        }
+    },
+    constructor: function () {
+    },
+    getHashCode: function () {
+        var hash = 17;
+        hash = hash * 23 + (this.Number == null ? 0 : Bridge.getHashCode(this.Number));
+        return hash;
+    },
+    equals: function (o) {
+        if (!Bridge.is(o,ClientTestLibrary.Bridge577.Bridge577UnitB)) {
+            return false;
+        }
+        return Bridge.equals(this.Number, o.Number);
+    },
+    $clone: function (to) {
+        var s = to || new ClientTestLibrary.Bridge577.Bridge577UnitB();
+        s.Number = this.Number;
+        return s;
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge578', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var s = "ab|abc&ab&abc|de&ef&";
+
+            var r = Bridge.String.split(s, [124, 38].map(function(i) {{ return String.fromCharCode(i); }}));
+            var expected = ["ab", "abc", "ab", "abc", "de", "ef", ""];
+
+            assert.deepEqual(r, expected, "#578 Split(params char[] separator)");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge588A', {
     statics: {
         config: {
