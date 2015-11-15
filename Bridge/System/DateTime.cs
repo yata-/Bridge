@@ -677,7 +677,7 @@ namespace System
         }
 
         [Template("Bridge.Date.toUTC({this})")]
-        public DateTime ToUTC()
+        public DateTime ToUniversalTime()
         {
             return default(DateTime);
         }
@@ -686,6 +686,33 @@ namespace System
         public DateTime ToLocalTime()
         {
             return default(DateTime);
+        }
+
+        [Template("new Date(({this}).getTime() + (({value}).ticks / 10000))")]
+        public extern DateTime Add(TimeSpan value);
+
+        [Template("new Date(({this}).getTime() + (({value}) / 10000))")]
+        public extern DateTime AddTicks(long value);
+
+        [Template("new Date({this} - new Date(({value}).ticks / 10000))")]
+        public extern DateTime Subtract(TimeSpan value);
+
+        public TimeSpan TimeOfDay
+        {
+            [Template("Bridge.Date.timeOfDay({this})")] 
+            get
+            {
+                return default(TimeSpan);
+            }
+        }
+
+        public long Ticks
+        {
+            [Template("{this}.getTime() * 10000")]
+            get
+            {
+                return 0;
+            }
         }
     }
 }

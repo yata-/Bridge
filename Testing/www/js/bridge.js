@@ -3800,6 +3800,10 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
             return new Date(d.getFullYear(), d.getMonth(), d.getDate());
         },
 
+        timeOfDay: function(dt) {
+            return new Bridge.TimeSpan((dt - new Date(dt.getFullYear(), dt.getMonth(), dt.getDate())) * 10000);
+        },
+
         isUseGenitiveForm: function (format, index, tokenLen, patternToMatch) {
 	        var i,
                 repeat = 0;
