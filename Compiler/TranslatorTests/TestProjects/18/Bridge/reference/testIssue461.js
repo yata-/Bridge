@@ -34,4 +34,6 @@ Bridge.define('TestIssue461.Issue461', {
     }
 });
 
+
+
 Bridge.init();
