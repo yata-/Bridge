@@ -80,7 +80,7 @@ namespace Bridge.Translator
         {
             if (this.CastExpression != null)
             {
-                return this.CastExpression.Expression;
+                return this.CastExpression;
             }
             else if (this.AsExpression != null)
             {
@@ -191,7 +191,7 @@ namespace Bridge.Translator
                     }
                 }
 
-                if (ConversionBlock.IsUserDefinedConversion(this, expression))
+                if (ConversionBlock.IsUserDefinedConversion(this, this.CastExpression))
                 {
                     expression.AcceptVisitor(this.Emitter);
 
@@ -354,7 +354,7 @@ namespace Bridge.Translator
                     if (m.IsOperator && (m.Name == "op_Explicit" || m.Name == "op_Implicit") &&
                         m.Parameters.Count == 1 &&
                         m.ReturnType.ReflectionName == toType.ReflectionName &&
-                        m.Parameters[0].Type.ReflectionName == fromType.ReflectionName
+                        (m.Parameters[0].Type.ReflectionName == fromType.ReflectionName)
                         )
                     {
                         string tmpInline = this.Emitter.GetInline(m);
@@ -368,6 +368,23 @@ namespace Bridge.Translator
 
                     return false;
                 });
+            }
+
+            if (method == null && this.CastExpression != null)
+            {
+                var conversion = this.Emitter.Resolver.Resolver.GetConversion(this.CastExpression);
+
+                if (conversion.IsUserDefined)
+                {
+                    method = conversion.Method;
+
+                    string tmpInline = this.Emitter.GetInline(method);
+
+                    if (!string.IsNullOrWhiteSpace(tmpInline))
+                    {
+                        inline = tmpInline;
+                    }
+                }
             }
 
             template = inline;

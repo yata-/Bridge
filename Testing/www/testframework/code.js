@@ -82,6 +82,13 @@ Bridge.define('Bridge.ClientTest.ArrayTests.C', {
     }
 });
 
+Bridge.define('Bridge.ClientTest.ArrayTests.TestReverseComparer', {
+    inherits: [Bridge.IComparer$1(Bridge.Int)],
+    compare: function (x, y) {
+        return x === y ? 0 : (x > y ? -1 : 1);
+    }
+});
+
 Bridge.define('Bridge.ClientTest.Collections.Generic.ComparerTests.C', {
     inherits: function () { return [Bridge.IComparable$1(Bridge.ClientTest.Collections.Generic.ComparerTests.C)]; },
     value: 0,
@@ -388,7 +395,6 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests.C', {
 Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests.TestReverseComparer', {
     inherits: [Bridge.IComparer$1(Bridge.Int)],
     compare: function (x, y) {
-        Bridge.Test.Assert.$true(true);
         return x === y ? 0 : (x > y ? -1 : 1);
     }
 });
@@ -521,7 +527,7 @@ Bridge.define('Bridge.ClientTest.DecimalMathTests', {
         parseDotNetDiff: function (input, i, lowerBound) {
             var o = input.get([i, lowerBound + 1]);
             if (o === null)
-                return null;
+                return Bridge.Decimal.lift(null);
 
             if (Bridge.is(o, String))
                 return Bridge.Decimal(o.toString());
@@ -959,10 +965,75 @@ Bridge.define('Bridge.ClientTest.ArrayTests', {
             return i > 5;
         }));
     },
+    binarySearch1Works: function () {
+        var arr = [1, 2, 3, 3, 4, 5];
+
+        Bridge.Test.Assert.areEqual(Bridge.Array.binarySearch(arr, 0, arr.length, 3), 2);
+        Bridge.Test.Assert.$true(Bridge.Array.binarySearch(arr, 0, arr.length, 6) < 0);
+    },
+    binarySearch2Works: function () {
+        var arr = [1, 2, 3, 3, 4, 5];
+
+        Bridge.Test.Assert.areEqual(Bridge.Array.binarySearch(arr, 3, 2, 3), 3);
+        Bridge.Test.Assert.$true(Bridge.Array.binarySearch(arr, 2, 2, 4) < 0);
+    },
+    binarySearch3Works: function () {
+        var arr = [1, 2, 3, 3, 4, 5];
+
+        Bridge.Test.Assert.areEqual(Bridge.Array.binarySearch(arr, 0, arr.length, 3, new Bridge.ClientTest.ArrayTests.TestReverseComparer()), 2);
+        Bridge.Test.Assert.areEqual(Bridge.Array.binarySearch(arr, 0, arr.length, 6, new Bridge.ClientTest.ArrayTests.TestReverseComparer()), -1);
+    },
+    binarySearch4Works: function () {
+        var arr = [1, 2, 3, 3, 4, 5];
+
+        Bridge.Test.Assert.areEqual(Bridge.Array.binarySearch(arr, 3, 2, 3, new Bridge.ClientTest.ArrayTests.TestReverseComparer()), 3);
+        Bridge.Test.Assert.$true(Bridge.Array.binarySearch(arr, 3, 2, 4, new Bridge.ClientTest.ArrayTests.TestReverseComparer()) < 0);
+    },
+    binarySearchExceptionsWorks: function () {
+        var arr1 = null;
+        var arr2 = [1, 2, 3, 3, 4, 5];
+
+        Bridge.Test.Assert.$throws(function () {
+            Bridge.Array.binarySearch(arr1, 0, arr1.length, 1);
+        });
+        Bridge.Test.Assert.$throws(function () {
+            Bridge.Array.binarySearch(arr2, -1, 1, 1);
+        });
+        Bridge.Test.Assert.$throws(function () {
+            Bridge.Array.binarySearch(arr2, 1, 6, 1);
+        });
+    },
     sortWithDefaultCompareWorks: function () {
         var arr = [1, 6, 6, 4, 2];
         arr.sort();
         Bridge.Test.Assert.areEqual(arr, [1, 2, 4, 6, 6]);
+    },
+    sort1Works: function () {
+        var arr = [1, 6, 6, 4, 2];
+        Bridge.Array.sort(arr);
+        Bridge.Test.Assert.areEqual(arr, [1, 2, 4, 6, 6]);
+    },
+    sort2Works: function () {
+        var arr = [1, 6, 6, 4, 2];
+        Bridge.Array.sort(arr, 2, 3);
+        Bridge.Test.Assert.areEqual(arr, [1, 6, 2, 4, 6]);
+    },
+    sort3Works: function () {
+        var arr = [1, 2, 6, 3, 6, 7];
+        Bridge.Array.sort(arr, 2, 3, new Bridge.ClientTest.ArrayTests.TestReverseComparer());
+        Bridge.Test.Assert.areEqual(arr, [1, 2, 6, 6, 3, 7]);
+    },
+    sort4Works: function () {
+        var arr = [1, 6, 6, 4, 2];
+        Bridge.Array.sort(arr, new Bridge.ClientTest.ArrayTests.TestReverseComparer());
+        Bridge.Test.Assert.areEqual(arr, [6, 6, 4, 2, 1]);
+    },
+    sortExceptionsWorks: function () {
+        var arr1 = null;
+
+        Bridge.Test.Assert.$throws(function () {
+            Bridge.Array.sort(arr1);
+        });
     },
     foreachWhenCastToIListWorks: function () {
         var $t;
@@ -2004,6 +2075,58 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
         ] );
         l.addRange(["a", "b", "c"]);
         Bridge.Test.Assert.areEqual(l.toArray(), ["x", "y", "a", "b", "c"]);
+    },
+    binarySearch1Works: function () {
+        var arr = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+            [1],
+            [2],
+            [3],
+            [3],
+            [4],
+            [5]
+        ] );
+
+        Bridge.Test.Assert.areEqual(arr.binarySearch(3), 2);
+        Bridge.Test.Assert.$true(arr.binarySearch(6) < 0);
+    },
+    binarySearch2Works: function () {
+        var arr = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+            [1],
+            [2],
+            [3],
+            [3],
+            [4],
+            [5]
+        ] );
+
+        Bridge.Test.Assert.areEqual(arr.binarySearch(3, 2, 3), 3);
+        Bridge.Test.Assert.$true(arr.binarySearch(2, 2, 4) < 0);
+    },
+    binarySearch3Works: function () {
+        var arr = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+            [1],
+            [2],
+            [3],
+            [3],
+            [4],
+            [5]
+        ] );
+
+        Bridge.Test.Assert.areEqual(arr.binarySearch(3, new Bridge.ClientTest.Collections.Generic.ListTests.TestReverseComparer()), 2);
+        Bridge.Test.Assert.areEqual(arr.binarySearch(6, new Bridge.ClientTest.Collections.Generic.ListTests.TestReverseComparer()), -1);
+    },
+    binarySearch4Works: function () {
+        var arr = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+            [1],
+            [2],
+            [3],
+            [3],
+            [4],
+            [5]
+        ] );
+
+        Bridge.Test.Assert.areEqual(arr.binarySearch(3, 2, 3, new Bridge.ClientTest.Collections.Generic.ListTests.TestReverseComparer()), 3);
+        Bridge.Test.Assert.$true(arr.binarySearch(3, 2, 4, new Bridge.ClientTest.Collections.Generic.ListTests.TestReverseComparer()) < 0);
     },
     clearWorks: function () {
         var l = Bridge.merge(new Bridge.List$1(String)(), [
@@ -3051,6 +3174,30 @@ Bridge.define('Bridge.ClientTest.Exceptions.OverflowExceptionTests', {
     }
 });
 
+Bridge.define('Bridge.ClientTest.Exceptions.RankExceptionTests', {
+    statics: {
+        DefaultMessage: "Attempted to operate on an array with the incorrect number of dimensions."
+    },
+    typePropertiesAreCorrect: function () {
+        Bridge.Test.Assert.areEqual$1(Bridge.getTypeName(Bridge.RankException), "Bridge.RankException", "Name");
+        var d = new Bridge.RankException();
+        Bridge.Test.Assert.$true(Bridge.is(d, Bridge.RankException));
+        Bridge.Test.Assert.$true(Bridge.is(d, Bridge.Exception));
+    },
+    defaultConstructorWorks: function () {
+        var ex = new Bridge.RankException();
+        Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.RankException), "is ArgumentException");
+        Bridge.Test.Assert.areEqual$1(ex.getInnerException(), undefined, "InnerException");
+        Bridge.Test.Assert.areEqual(ex.getMessage(), Bridge.ClientTest.Exceptions.RankExceptionTests.DefaultMessage);
+    },
+    constructorWithMessageWorks: function () {
+        var ex = new Bridge.RankException("The message");
+        Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.RankException), "is RankException");
+        Bridge.Test.Assert.areEqual$1(ex.getInnerException(), undefined, "InnerException");
+        Bridge.Test.Assert.areEqual(ex.getMessage(), "The message");
+    }
+});
+
 Bridge.define('Bridge.ClientTest.ExceptionTests', {
     throwingAndCatchingExceptionsWorks: function () {
         try {
@@ -3948,12 +4095,12 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.ByteTests', {
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(i4, Bridge.Int), 255, "255 unchecked");
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(i5, Bridge.Int), 256, "256 unchecked");
 
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni1, Bridge.Int, true), -1, "nullable -1 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni2, Bridge.Int, true), 0, "nullable 0 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni3, Bridge.Int, true), 234, "nullable 234 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni4, Bridge.Int, true), 255, "nullable 255 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni5, Bridge.Int, true), 256, "nullable 256 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni6, Bridge.Int, true), null, "null unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni1), Bridge.Int, true), -1, "nullable -1 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni2), Bridge.Int, true), 0, "nullable 0 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni3), Bridge.Int, true), 234, "nullable 234 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni4), Bridge.Int, true), 255, "nullable 255 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni5), Bridge.Int, true), 256, "nullable 256 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni6), Bridge.Int, true), null, "null unchecked");
         }
 
         //checked
@@ -3962,10 +4109,10 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.ByteTests', {
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(i3, Bridge.Int), 234, "234 checked");
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(i4, Bridge.Int), 255, "256 checked");
 
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni2, Bridge.Int, true), 0, "nullable 0 checked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni3, Bridge.Int, true), 234, "nullable 234 checked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni4, Bridge.Int, true), 255, "nullable 255 checked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni6, Bridge.Int, true), null, "null checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni2), Bridge.Int, true), 0, "nullable 0 checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni3), Bridge.Int, true), 234, "nullable 234 checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni4), Bridge.Int, true), 255, "nullable 255 checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni6), Bridge.Int, true), null, "null checked");
         }
     },
     getDefaultValue: function (T) {
@@ -4104,12 +4251,12 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.CharTests', {
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.cast(i4, Bridge.Int), Bridge.Int), 65535, "65535 unchecked");
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.cast(i5, Bridge.Int), Bridge.Int), 65536, "65536 unchecked");
 
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.cast(ni1, Bridge.Int, true), Bridge.Int, true), -1, "nullable -1 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.cast(ni2, Bridge.Int, true), Bridge.Int, true), 0, "nullable 0 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.cast(ni3, Bridge.Int, true), Bridge.Int, true), 234, "nullable 234 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.cast(ni4, Bridge.Int, true), Bridge.Int, true), 65535, "nullable 65535 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.cast(ni5, Bridge.Int, true), Bridge.Int, true), 65536, "nullable 65536 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.cast(ni6, Bridge.Int, true), Bridge.Int, true), null, "null unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.cast(Bridge.Nullable.lift(ni1), Bridge.Int, true), Bridge.Int, true), -1, "nullable -1 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.cast(Bridge.Nullable.lift(ni2), Bridge.Int, true), Bridge.Int, true), 0, "nullable 0 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.cast(Bridge.Nullable.lift(ni3), Bridge.Int, true), Bridge.Int, true), 234, "nullable 234 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.cast(Bridge.Nullable.lift(ni4), Bridge.Int, true), Bridge.Int, true), 65535, "nullable 65535 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.cast(Bridge.Nullable.lift(ni5), Bridge.Int, true), Bridge.Int, true), 65536, "nullable 65536 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.cast(Bridge.Nullable.lift(ni6), Bridge.Int, true), Bridge.Int, true), null, "null unchecked");
         }
 
         //checked
@@ -4118,10 +4265,10 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.CharTests', {
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.cast(i3, Bridge.Int), Bridge.Int, true), 234, "234 checked");
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.cast(i4, Bridge.Int), Bridge.Int, true), 65535, "65535 checked");
 
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.cast(ni2, Bridge.Int, true), Bridge.Int, true), 0, "nullable 0 checked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.cast(ni3, Bridge.Int, true), Bridge.Int, true), 234, "nullable 234 checked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.cast(ni4, Bridge.Int, true), Bridge.Int, true), 65535, "nullable 65535 checked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.cast(ni6, Bridge.Int, true), Bridge.Int, true), null, "null checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.cast(Bridge.Nullable.lift(ni2), Bridge.Int, true), Bridge.Int, true), 0, "nullable 0 checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.cast(Bridge.Nullable.lift(ni3), Bridge.Int, true), Bridge.Int, true), 234, "nullable 234 checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.cast(Bridge.Nullable.lift(ni4), Bridge.Int, true), Bridge.Int, true), 65535, "nullable 65535 checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.cast(Bridge.Nullable.lift(ni6), Bridge.Int, true), Bridge.Int, true), null, "null checked");
         }
     },
     getDefaultValue: function (T) {
@@ -4689,12 +4836,12 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.Int16Tests', {
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(i4, Bridge.Int), 32767, "32767 unchecked");
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(i5, Bridge.Int), 32768, "32768 unchecked");
 
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni1, Bridge.Int, true), -32769, "nullable -32769 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni2, Bridge.Int, true), -32768, "nullable -32768 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni3, Bridge.Int, true), 5754, "nullable 5754 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni4, Bridge.Int, true), 32767, "nullable 32767 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni5, Bridge.Int, true), 32768, "nullable 32768 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni6, Bridge.Int, true), null, "null unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni1), Bridge.Int, true), -32769, "nullable -32769 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni2), Bridge.Int, true), -32768, "nullable -32768 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni3), Bridge.Int, true), 5754, "nullable 5754 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni4), Bridge.Int, true), 32767, "nullable 32767 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni5), Bridge.Int, true), 32768, "nullable 32768 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni6), Bridge.Int, true), null, "null unchecked");
         }
 
         //checked
@@ -4703,10 +4850,10 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.Int16Tests', {
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(i3, Bridge.Int), 5754, "5754 checked");
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(i4, Bridge.Int), 32767, "32767 checked");
 
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni2, Bridge.Int, true), -32768, "nullable -32768 checked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni3, Bridge.Int, true), 5754, "nullable 5754 checked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni4, Bridge.Int, true), 32767, "nullable 32767 checked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni6, Bridge.Int, true), null, "null checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni2), Bridge.Int, true), -32768, "nullable -32768 checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni3), Bridge.Int, true), 5754, "nullable 5754 checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni4), Bridge.Int, true), 32767, "nullable 32767 checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni6), Bridge.Int, true), null, "null checked");
         }
     },
     getDefaultValue: function (T) {
@@ -4845,30 +4992,30 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.Int32Tests', {
 
         //unchecked
         {
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.getValue(i1), Bridge.Int), -2147483649, "-2147483649 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.getValue(i2), Bridge.Int), -2147483648, "-2147483648 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.getValue(i3), Bridge.Int), 5754, "5754 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.getValue(i4), Bridge.Int), 2147483647, "2147483647 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.getValue(i5), Bridge.Int), 2147483648, "2147483648 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.getValue(Bridge.Nullable.lift(i1)), Bridge.Int), -2147483649, "-2147483649 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.getValue(Bridge.Nullable.lift(i2)), Bridge.Int), -2147483648, "-2147483648 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.getValue(Bridge.Nullable.lift(i3)), Bridge.Int), 5754, "5754 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.getValue(Bridge.Nullable.lift(i4)), Bridge.Int), 2147483647, "2147483647 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.getValue(Bridge.Nullable.lift(i5)), Bridge.Int), 2147483648, "2147483648 unchecked");
 
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni1, Bridge.Int, true), -2147483649, "nullable -2147483649 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni2, Bridge.Int, true), -2147483648, "nullable -2147483648 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni3, Bridge.Int, true), 5754, "nullable 5754 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni4, Bridge.Int, true), 2147483647, "nullable 2147483647 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni5, Bridge.Int, true), 2147483648, "nullable 2147483648 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni6, Bridge.Int, true), null, "null unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni1), Bridge.Int, true), -2147483649, "nullable -2147483649 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni2), Bridge.Int, true), -2147483648, "nullable -2147483648 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni3), Bridge.Int, true), 5754, "nullable 5754 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni4), Bridge.Int, true), 2147483647, "nullable 2147483647 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni5), Bridge.Int, true), 2147483648, "nullable 2147483648 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni6), Bridge.Int, true), null, "null unchecked");
         }
 
         //checked
         {
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.getValue(i2), Bridge.Int), -2147483648, "-2147483648 checked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.getValue(i3), Bridge.Int), 5754, "5754 checked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.getValue(i4), Bridge.Int), 2147483647, "2147483647 checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.getValue(Bridge.Nullable.lift(i2)), Bridge.Int), -2147483648, "-2147483648 checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.getValue(Bridge.Nullable.lift(i3)), Bridge.Int), 5754, "5754 checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.getValue(Bridge.Nullable.lift(i4)), Bridge.Int), 2147483647, "2147483647 checked");
 
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni2, Bridge.Int, true), -2147483648, "nullable -2147483648 checked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni3, Bridge.Int, true), 5754, "nullable 5754 checked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni4, Bridge.Int, true), 2147483647, "nullable 2147483647 checked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni6, Bridge.Int, true), null, "null checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni2), Bridge.Int, true), -2147483648, "nullable -2147483648 checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni3), Bridge.Int, true), 5754, "nullable 5754 checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni4), Bridge.Int, true), 2147483647, "nullable 2147483647 checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni6), Bridge.Int, true), null, "null checked");
         }
     },
     typeIsWorksForInt32: function () {
@@ -5039,11 +5186,11 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.Int32Tests', {
         var d3 = 8.5;
         Bridge.Test.Assert.areEqual(Bridge.Int.trunc(d1), 4);
         Bridge.Test.Assert.areEqual(Bridge.Int.trunc(-d1), -4);
-        Bridge.Test.Assert.areEqual(Bridge.Int.trunc(d2), null);
-        Bridge.Test.Assert.areEqual(Bridge.Int.trunc(Bridge.Nullable.getValue(d3)), 8);
-        Bridge.Test.Assert.areEqual(Bridge.Int.trunc(Bridge.Nullable.getValue(Bridge.Nullable.neg(d3))), -8);
-        Bridge.Test.Assert.areEqual(Bridge.Int.trunc(d3), 8);
-        Bridge.Test.Assert.areEqual(Bridge.Int.trunc(Bridge.Nullable.neg(d3)), -8);
+        Bridge.Test.Assert.areEqual(Bridge.Int.trunc(Bridge.Nullable.lift(d2)), null);
+        Bridge.Test.Assert.areEqual(Bridge.Int.trunc(Bridge.Nullable.getValue(Bridge.Nullable.lift(d3))), 8);
+        Bridge.Test.Assert.areEqual(Bridge.Int.trunc(Bridge.Nullable.getValue(Bridge.Nullable.lift(Bridge.Nullable.neg(d3)))), -8);
+        Bridge.Test.Assert.areEqual(Bridge.Int.trunc(Bridge.Nullable.lift(d3)), 8);
+        Bridge.Test.Assert.areEqual(Bridge.Int.trunc(Bridge.Nullable.lift(Bridge.Nullable.neg(d3))), -8);
     }
 });
 
@@ -5070,10 +5217,10 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.Int64Tests', {
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(i4, Bridge.Int), 9223372036854775000, "9223372036854775000 unchecked");
             Bridge.Test.Assert.false$1(Bridge.cast(i5, Bridge.Int) < 0, "16223372036854776000 unchecked");
 
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni3, Bridge.Int, true), 5754, "nullable 5754 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni4, Bridge.Int, true), 9223372036854775000, "nullable 9223372036854775000 unchecked");
-            Bridge.Test.Assert.false$1(Bridge.Nullable.lt(Bridge.cast(ni5, Bridge.Int, true), 0), "nullable 16223372036854776000 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni6, Bridge.Int, true), null, "null unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni3), Bridge.Int, true), 5754, "nullable 5754 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni4), Bridge.Int, true), 9223372036854775000, "nullable 9223372036854775000 unchecked");
+            Bridge.Test.Assert.false$1(Bridge.Nullable.lt(Bridge.cast(Bridge.Nullable.lift(ni5), Bridge.Int, true), 0), "nullable 16223372036854776000 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni6), Bridge.Int, true), null, "null unchecked");
         }
 
         //checked
@@ -5081,9 +5228,9 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.Int64Tests', {
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(i3, Bridge.Int), 5754, "5754 checked");
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(i4, Bridge.Int), 9223372036854775000, "9223372036854775000 checked");
 
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni3, Bridge.Int, true), 5754, "nullable 5754 checked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni4, Bridge.Int, true), 9223372036854775000, "nullable 9223372036854775000 checked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni6, Bridge.Int, true), null, "null checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni3), Bridge.Int, true), 5754, "nullable 5754 checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni4), Bridge.Int, true), 9223372036854775000, "nullable 9223372036854775000 checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni6), Bridge.Int, true), null, "null checked");
         }
     },
     getDefaultValue: function (T) {
@@ -5477,16 +5624,16 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.JsDateTimeTests', {
     dateEqualityWorks: function () {
         Bridge.Test.Assert.$true(Bridge.equals(new Date(2011, 7 - 1, 12), new Date(2011, 7 - 1, 12)));
         Bridge.Test.Assert.$false(Bridge.equals(new Date(2011, 7 - 1, 12), new Date(2011, 7 - 1, 13)));
-        Bridge.Test.Assert.areStrictEqual(Bridge.equals(new Date(2011, 7 - 1, 12), null), false);
-        Bridge.Test.Assert.areStrictEqual(Bridge.equals(null, new Date(2011, 7 - 1, 12)), false);
-        Bridge.Test.Assert.areStrictEqual(Bridge.equals(null, null), true);
+        Bridge.Test.Assert.areStrictEqual(Bridge.equals(new Date(2011, 7 - 1, 12), Bridge.cast(null, Date)), false);
+        Bridge.Test.Assert.areStrictEqual(Bridge.equals(Bridge.cast(null, Date), new Date(2011, 7 - 1, 12)), false);
+        Bridge.Test.Assert.areStrictEqual(Bridge.equals(Bridge.cast(null, Date), Bridge.cast(null, Date)), true);
     },
     dateInequalityWorks: function () {
         Bridge.Test.Assert.$false(!Bridge.equals(new Date(2011, 7 - 1, 12), new Date(2011, 7 - 1, 12)));
         Bridge.Test.Assert.$true(!Bridge.equals(new Date(2011, 7 - 1, 12), new Date(2011, 7 - 1, 13)));
-        Bridge.Test.Assert.areStrictEqual(!Bridge.equals(new Date(2011, 7 - 1, 12), null), true);
-        Bridge.Test.Assert.areStrictEqual(!Bridge.equals(null, new Date(2011, 7 - 1, 12)), true);
-        Bridge.Test.Assert.areStrictEqual(!Bridge.equals(null, null), false);
+        Bridge.Test.Assert.areStrictEqual(!Bridge.equals(new Date(2011, 7 - 1, 12), Bridge.cast(null, Date)), true);
+        Bridge.Test.Assert.areStrictEqual(!Bridge.equals(Bridge.cast(null, Date), new Date(2011, 7 - 1, 12)), true);
+        Bridge.Test.Assert.areStrictEqual(!Bridge.equals(Bridge.cast(null, Date), Bridge.cast(null, Date)), false);
     },
     dateLessThanWorks: function () {
         Bridge.Test.Assert.$true(new Date(2011, 7 - 1, 11) < new Date(2011, 7 - 1, 12));
@@ -5613,12 +5760,12 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.SByteTests', {
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(i4, Bridge.Int), 127, "127 unchecked");
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(i5, Bridge.Int), 128, "128 unchecked");
 
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni1, Bridge.Int, true), -129, "nullable -129 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni2, Bridge.Int, true), -128, "nullable -128 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni3, Bridge.Int, true), 80, "nullable 80 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni4, Bridge.Int, true), 127, "nullable 127 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni5, Bridge.Int, true), 128, "nullable 128 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni6, Bridge.Int, true), null, "null unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni1), Bridge.Int, true), -129, "nullable -129 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni2), Bridge.Int, true), -128, "nullable -128 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni3), Bridge.Int, true), 80, "nullable 80 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni4), Bridge.Int, true), 127, "nullable 127 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni5), Bridge.Int, true), 128, "nullable 128 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni6), Bridge.Int, true), null, "null unchecked");
         }
 
         //checked
@@ -5627,10 +5774,10 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.SByteTests', {
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(i3, Bridge.Int), 80, "80 checked");
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(i4, Bridge.Int), 127, "127 checked");
 
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni2, Bridge.Int, true), -128, "nullable -128 checked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni3, Bridge.Int, true), 80, "nullable 80 checked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni4, Bridge.Int, true), 127, "nullable 127 checked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni6, Bridge.Int, true), null, "null checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni2), Bridge.Int, true), -128, "nullable -128 checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni3), Bridge.Int, true), 80, "nullable 80 checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni4), Bridge.Int, true), 127, "nullable 127 checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni6), Bridge.Int, true), null, "null checked");
         }
     },
     getDefaultValue: function (T) {
@@ -6692,12 +6839,12 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.UInt16Tests', {
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(i4, Bridge.Int), 65535, "65535 unchecked");
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(i5, Bridge.Int), 65536, "65536 unchecked");
 
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni1, Bridge.Int, true), -1, "nullable -1 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni2, Bridge.Int, true), 0, "nullable 0 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni3, Bridge.Int, true), 234, "nullable 234 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni4, Bridge.Int, true), 65535, "nullable 65535 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni5, Bridge.Int, true), 65536, "nullable 65536 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni6, Bridge.Int, true), null, "null unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni1), Bridge.Int, true), -1, "nullable -1 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni2), Bridge.Int, true), 0, "nullable 0 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni3), Bridge.Int, true), 234, "nullable 234 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni4), Bridge.Int, true), 65535, "nullable 65535 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni5), Bridge.Int, true), 65536, "nullable 65536 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni6), Bridge.Int, true), null, "null unchecked");
         }
 
         //checked
@@ -6706,10 +6853,10 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.UInt16Tests', {
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(i3, Bridge.Int), 234, "234 checked");
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(i4, Bridge.Int), 65535, "65535 checked");
 
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni2, Bridge.Int, true), 0, "nullable 0 checked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni3, Bridge.Int, true), 234, "nullable 234 checked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni4, Bridge.Int, true), 65535, "nullable 65535 checked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni6, Bridge.Int, true), null, "null checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni2), Bridge.Int, true), 0, "nullable 0 checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni3), Bridge.Int, true), 234, "nullable 234 checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni4), Bridge.Int, true), 65535, "nullable 65535 checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni6), Bridge.Int, true), null, "null checked");
         }
     },
     getDefaultValue: function (T) {
@@ -6853,12 +7000,12 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.UInt32Tests', {
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(i4, Bridge.Int), 4294967295, "4294967295 unchecked");
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(i5, Bridge.Int), 4294967296, "4294967296 unchecked");
 
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni1, Bridge.Int, true), -1, "nullable -1 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni2, Bridge.Int, true), 0, "nullable 0 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni3, Bridge.Int, true), 234, "nullable 234 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni4, Bridge.Int, true), 4294967295, "nullable 4294967295 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni5, Bridge.Int, true), 4294967296, "nullable 4294967296 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni6, Bridge.Int, true), null, "null unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni1), Bridge.Int, true), -1, "nullable -1 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni2), Bridge.Int, true), 0, "nullable 0 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni3), Bridge.Int, true), 234, "nullable 234 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni4), Bridge.Int, true), 4294967295, "nullable 4294967295 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni5), Bridge.Int, true), 4294967296, "nullable 4294967296 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni6), Bridge.Int, true), null, "null unchecked");
         }
 
         //checked
@@ -6867,10 +7014,10 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.UInt32Tests', {
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(i3, Bridge.Int), 234, "234 checked");
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(i4, Bridge.Int), 4294967295, "4294967295 checked");
 
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni2, Bridge.Int, true), 0, "nullable 0 checked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni3, Bridge.Int, true), 234, "nullable 234 checked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni4, Bridge.Int, true), 4294967295, "nullable 4294967295 checked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni6, Bridge.Int, true), null, "null checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni2), Bridge.Int, true), 0, "nullable 0 checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni3), Bridge.Int, true), 234, "nullable 234 checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni4), Bridge.Int, true), 4294967295, "nullable 4294967295 checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni6), Bridge.Int, true), null, "null checked");
         }
     },
     getDefaultValue: function (T) {
@@ -7006,10 +7153,10 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.UInt64Tests', {
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(i3, Bridge.Int), 234, "234 unchecked");
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(i4, Bridge.Int), 9223372036854775000, "9223372036854775000 unchecked");
 
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni2, Bridge.Int, true), 0, "nullable 0 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni3, Bridge.Int, true), 234, "nullable 234 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni4, Bridge.Int, true), 9223372036854775000, "nullable 9223372036854775000 unchecked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni6, Bridge.Int, true), null, "null unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni2), Bridge.Int, true), 0, "nullable 0 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni3), Bridge.Int, true), 234, "nullable 234 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni4), Bridge.Int, true), 9223372036854775000, "nullable 9223372036854775000 unchecked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni6), Bridge.Int, true), null, "null unchecked");
         }
 
         //checked
@@ -7018,10 +7165,10 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.UInt64Tests', {
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(i3, Bridge.Int), 234, "234 checked");
             Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(i4, Bridge.Int), 9223372036854775000, "9223372036854775000 checked");
 
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni2, Bridge.Int, true), 0, "nullable 0 checked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni3, Bridge.Int, true), 234, "nullable 234 checked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni4, Bridge.Int, true), 9223372036854775000, "nullable 9223372036854775000 checked");
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(ni6, Bridge.Int, true), null, "null checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni2), Bridge.Int, true), 0, "nullable 0 checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni3), Bridge.Int, true), 234, "nullable 234 checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni4), Bridge.Int, true), 9223372036854775000, "nullable 9223372036854775000 checked");
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.cast(Bridge.Nullable.lift(ni6), Bridge.Int, true), null, "null checked");
         }
     },
     getDefaultValue: function (T) {
