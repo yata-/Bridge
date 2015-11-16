@@ -11,6 +11,7 @@
   <file name="Exception.js" />
   <file name="Interfaces.js" />
   <file name="Globalization.js" />
+  <file name="Math.js" />
   <file name="Integer.js" />
   <file name="Decimal.js" />
   <file name="Date.js" />
@@ -43,6 +44,7 @@
     <include name="Exception.js" />
     <include name="Interfaces.js" />
     <include name="Globalization.js" />
+    <include name="Math.js" />
     <include name="Integer.js" />
     <include name="Decimal.js" />
     <include name="Date.js" />

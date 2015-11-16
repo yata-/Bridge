@@ -141,6 +141,7 @@ namespace ClientTestLibrary
             QUnit.Test("#546", Bridge546.TestRelated);
             QUnit.Test("#548", Bridge548.TestUseCase);
             QUnit.Test("#549", Bridge549.TestUseCase);
+            QUnit.Test("#550", Bridge550.TestUseCase);
             QUnit.Test("#554", Bridge554.TestUseCase);
             QUnit.Test("#555", Bridge555.TestUseCase);
             QUnit.Test("#558", Bridge558.TestUseCase);
@@ -162,10 +163,13 @@ namespace ClientTestLibrary
             QUnit.Test("#582", Bridge582.TestTicks);
             QUnit.Test("#583", Bridge583.TestUseCase);
             QUnit.Test("#588", Bridge588.TestUseCase);
+            QUnit.Test("#592", Bridge592.TestUseCase);
             QUnit.Test("#595", Bridge595.TestUseCase);
             QUnit.Test("#597", Bridge597.TestUseCase);
             QUnit.Test("#603", Bridge603.TestUseCase);
             QUnit.Test("#603", Bridge603.TestRelated);
+            QUnit.Test("#606", Bridge606.TestUseCase);
+            QUnit.Test("#607", Bridge607.TestUseCase);
             QUnit.Test("#608", Bridge608.TestUseCase);
 
             QUnit.Module("LINQ");
