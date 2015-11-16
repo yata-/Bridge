@@ -1707,6 +1707,42 @@ Bridge.define('ClientTestLibrary.Bridge607', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge608', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            var s = new ClientTestLibrary.Bridge608A("constructor$1", "test");
+            var o = "test";
+            assert.ok(s.equals(o), "Bridge608 Object");
+            assert.ok(s.equals$1("test"), "Bridge608 String");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge608A', {
+    field: null,
+    constructor$1: function (field) {
+        this.field = field;
+    },
+    constructor: function () {
+    },
+    equals: function (obj) {
+        return this.equals$1(obj.toString());
+    },
+    equals$1: function (other) {
+        return other === this.field;
+    },
+    getHashCode: function () {
+        return Bridge.getHashCode(this.field);
+    },
+    $clone: function (to) {
+        var s = to || new ClientTestLibrary.Bridge608A();
+        s.field = this.field;
+        return s;
+    }
+});
+
 Bridge.define('ClientTestLibrary.Class1', {
     inherits: function () { return [Bridge.IEquatable$1(ClientTestLibrary.Class1)]; },
     equals: function (other) {
