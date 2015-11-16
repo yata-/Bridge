@@ -3519,12 +3519,12 @@ Bridge.define('Bridge.ClientTest.MathTests', {
         }
     },
     roundOfDoubleWorks: function () {
-        Bridge.Test.Assert.areEqual(Math.round(3.432), 3.0);
-        Bridge.Test.Assert.areEqual(Math.round(3.6), 4.0);
-        Bridge.Test.Assert.areEqual(Math.round(3.5), 4.0);
-        Bridge.Test.Assert.areEqual(Math.round(4.5), 5.0);
-        Bridge.Test.Assert.areEqual(Math.round(-3.5), -3.0);
-        Bridge.Test.Assert.areEqual(Math.round(-4.5), -4.0);
+        Bridge.Test.Assert.areEqual(Bridge.Math.round(3.432, 0, 6), 3.0);
+        Bridge.Test.Assert.areEqual(Bridge.Math.round(3.6, 0, 6), 4.0);
+        Bridge.Test.Assert.areEqual(Bridge.Math.round(3.5, 0, 6), 4.0);
+        Bridge.Test.Assert.areEqual(Bridge.Math.round(4.5, 0, 6), 5.0);
+        Bridge.Test.Assert.areEqual(Bridge.Math.round(-3.5, 0, 6), -3.0);
+        Bridge.Test.Assert.areEqual(Bridge.Math.round(-4.5, 0, 6), -4.0);
     },
     sinWorks: function () {
         this.assertAlmostEqual(Math.sin(0.5), 0.479425538604203);

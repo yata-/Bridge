@@ -1,4 +1,4 @@
-// @source Date.js
+// @source Math.js
 
 (function () {
     var math = {
@@ -18,7 +18,7 @@
             }
 
             return Math.round(n) / m;
-        }   
+        }
     };
 
     Bridge.Math = math;
