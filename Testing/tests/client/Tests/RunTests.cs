@@ -161,6 +161,7 @@ namespace ClientTestLibrary
             QUnit.Test("#582", Bridge582.TestTimeOfDay);
             QUnit.Test("#582", Bridge582.TestTicks);
             QUnit.Test("#588", Bridge588.TestUseCase);
+            QUnit.Test("#592", Bridge592.TestUseCase);
             QUnit.Test("#595", Bridge595.TestUseCase);
             QUnit.Test("#597", Bridge597.TestUseCase);
             QUnit.Test("#603", Bridge603.TestUseCase);
