@@ -10,7 +10,7 @@ namespace Bridge.Html5
     /// using the object's methods, or using standard array index syntax (that is, using bracket
     /// notation).
     /// </summary>
-    [Ignore]
+    [External]
     [Namespace(false)]
     public class Float32Array : TypedArray.Prototype<Float32Array, float>
     {

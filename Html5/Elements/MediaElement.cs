@@ -1,11 +1,11 @@
-namespace Bridge.Html5
+﻿namespace Bridge.Html5
 {
     /// <summary>
     /// The HTMLMediaElement interface has special properties and methods (beyond the properties and methods available for all children of HTMLElement), that are common to all media-related objects.
     /// This interface is inherited by HTMLVideoElement and HTMLAudioElement.
     /// </summary>
     /// <typeparam name="TCurrentTarget">The CurrentTarget type of all MediaElement's events</typeparam>
-    [Ignore]
+    [External]
     [Name("HTMLMediaElement")]
     public abstract class MediaElement<TCurrentTarget> : Element<TCurrentTarget> where TCurrentTarget : Element<TCurrentTarget>
     {
@@ -200,7 +200,7 @@ namespace Bridge.Html5
     /// <summary>
     /// The non-generic MediaElement class. Events' CurrentTarget has the MediaElement type.
     /// </summary>
-    [Ignore]
+    [External]
     [Name("HTMLMediaElement")]
     public abstract class MediaElement : Element<MediaElement> { }
 

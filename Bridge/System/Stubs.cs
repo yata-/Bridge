@@ -2,7 +2,7 @@
 
 namespace System
 {
-    [Ignore]
+    [External]
     [Name("Function")] 
     public class Type
     {
@@ -12,37 +12,37 @@ namespace System
         }
     }
 
-    [Ignore]
+    [External]
     [Name("Object")] 
     public class ValueType
     {
     }
 
-    [Ignore]
+    [External]
     [Name("Object")] 
     public struct IntPtr
     {
     }
 
-    [Ignore]
+    [External]
     [Name("Object")] 
     public struct UIntPtr
     {
     }
 
-    [Ignore]
+    [External]
     [Name("Object")] 
     public class ParamArrayAttribute
     {
     }
 
-    [Ignore]
+    [External]
     [Name("Object")] 
     public struct RuntimeTypeHandle
     {
     }
 
-    [Ignore]
+    [External]
     [Name("Object")] 
     public struct RuntimeFieldHandle
     {

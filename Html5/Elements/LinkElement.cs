@@ -3,7 +3,7 @@ namespace Bridge.Html5
     /// <summary>
     /// The HTMLLinkElement interface represents reference information for external resources and the relationship of those resources to a document and vice-versa. This object inherits all of the properties and methods of the HTMLElement interface.
     /// </summary>
-    [Ignore]
+    [External]
     [Name("HTMLLinkElement")]
     public class LinkElement : Element<LinkElement>
     {

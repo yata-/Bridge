@@ -3,7 +3,7 @@ namespace Bridge.Html5
     /// <summary>
     /// The HTMLImageElement interface provides special properties and methods (beyond the regular HTMLElement interface it also has available to it by inheritance) for manipulating the layout and presentation of &lt;img&gt; elements.
     /// </summary>
-    [Ignore]
+    [External]
     [Name("HTMLImageElement")]
     public class ImageElement : Element<ImageElement>
     {

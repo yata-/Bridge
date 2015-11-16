@@ -3,7 +3,7 @@ namespace Bridge.Html5
     /// <summary>
     /// HTML Colors
     /// </summary>
-    [Ignore]
+    [External]
     [Enum(Emit.StringNameLowerCase)]
     [Name("String")]
     public enum HTMLColor

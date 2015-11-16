@@ -3,7 +3,7 @@ using Bridge;
 
 namespace System
 {
-    [Ignore]
+    [External]
     [Name("Bridge.Enum")]
     public abstract class Enum : ValueType
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Bridge
 {
-    [Ignore]
+    [External]
     [Name("Bridge")]
     public static class Script
     {

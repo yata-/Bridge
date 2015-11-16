@@ -16,7 +16,7 @@ namespace Bridge.Html5
     ///
     /// This is a helper type to simplify the specification, it isn't an interface and there are no objects implementing it.
     /// </summary>
-    [Ignore]
+    [External]
     [IgnoreGeneric]
     [IgnoreCast]
     [Name("Object")]
