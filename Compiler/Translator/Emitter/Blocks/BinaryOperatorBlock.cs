@@ -193,6 +193,24 @@ namespace Bridge.Translator
                     this.WriteSpace();
                 }
                 bool isBool = NullableType.IsNullable(resolveOperator.Type) ? NullableType.GetUnderlyingType(resolveOperator.Type).IsKnownType(KnownTypeCode.Boolean) : resolveOperator.Type.IsKnownType(KnownTypeCode.Boolean);
+                bool isUint = resolveOperator.Type.IsKnownType(KnownTypeCode.UInt16) ||
+                              resolveOperator.Type.IsKnownType(KnownTypeCode.UInt32) ||
+                              resolveOperator.Type.IsKnownType(KnownTypeCode.UInt64);
+
+                bool is64bit = resolveOperator.Type.IsKnownType(KnownTypeCode.UInt64) ||
+                               resolveOperator.Type.IsKnownType(KnownTypeCode.Int64);
+
+                bool isBitwise = binaryOperatorExpression.Operator == BinaryOperatorType.BitwiseAnd ||
+                                 binaryOperatorExpression.Operator == BinaryOperatorType.BitwiseOr ||
+                                 binaryOperatorExpression.Operator == BinaryOperatorType.ExclusiveOr ||
+                                 binaryOperatorExpression.Operator == BinaryOperatorType.ShiftLeft ||
+                                 binaryOperatorExpression.Operator == BinaryOperatorType.ShiftRight;
+
+                if (isBitwise && is64bit)
+                {   
+                    throw new EmitterException(this.BinaryOperatorExpression, "Bitwise operations are not allowed on 64-bit types");
+                }
+
                 switch (binaryOperatorExpression.Operator)
                 {
                     case BinaryOperatorType.Add:
@@ -279,7 +297,15 @@ namespace Bridge.Translator
                         break;
 
                     case BinaryOperatorType.ShiftRight:
-                        this.Write(rootSpecial ? "sr" : ">>");
+                        if (isUint)
+                        {
+                            this.Write(rootSpecial ? "srr" : ">>>");
+                        }
+                        else
+                        {
+                            this.Write(rootSpecial ? "sr" : ">>");    
+                        }
+                        
                         break;
 
                     case BinaryOperatorType.Subtract:

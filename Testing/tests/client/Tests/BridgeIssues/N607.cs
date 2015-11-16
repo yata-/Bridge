@@ -9,7 +9,6 @@ namespace ClientTestLibrary
     {
         public bool Equals(Opti<T> obj)
         {
-            
             return this == obj;
         }
     }

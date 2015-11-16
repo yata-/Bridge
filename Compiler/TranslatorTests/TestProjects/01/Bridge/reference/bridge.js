@@ -955,6 +955,10 @@
             return Bridge.hasValue(a) && Bridge.hasValue(b) ? a >> b : null;
         },
 
+        srr: function (a, b) {
+            return Bridge.hasValue(a) && Bridge.hasValue(b) ? a >>> b : null;
+        },
+
         sub: function (a, b) {
 	        return Bridge.hasValue(a) && Bridge.hasValue(b) ? a - b : null;
         },
@@ -3508,7 +3512,13 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
         Bridge.$Decimal.rounding = old;
 
         return d;
-    }
+    };
+
+    Bridge.Decimal.toDecimalPlaces = function(obj, decimals, mode) {
+        obj = Bridge.Decimal.create(obj);
+        var d = new Bridge.Decimal(obj.value.toDecimalPlaces(decimals, mode));
+        return d;
+    };
 
     Bridge.Decimal.prototype.compareTo = function (another) {
         return this.value.comparedTo(Bridge.Decimal.getValue(another));
