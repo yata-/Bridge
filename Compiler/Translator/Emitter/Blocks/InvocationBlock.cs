@@ -246,7 +246,8 @@ namespace Bridge.Translator
                                 }
                                 else if (!isNative)
                                 {
-                                    string name = BridgeTypes.ToJsName(resolvedMethod.DeclaringType, this.Emitter) + "." + this.Emitter.GetEntityName(resolvedMethod);
+                                    var overloads = OverloadsCollection.Create(this.Emitter, resolvedMethod);
+                                    string name = BridgeTypes.ToJsName(resolvedMethod.DeclaringType, this.Emitter) + "." + overloads.GetOverloadName();
                                     var isIgnoreClass = resolvedMethod.DeclaringTypeDefinition != null && this.Emitter.Validator.IsIgnoreType(resolvedMethod.DeclaringTypeDefinition);
 
                                     this.Write(name);

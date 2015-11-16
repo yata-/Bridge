@@ -1743,6 +1743,31 @@ Bridge.define('ClientTestLibrary.Bridge608A', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge615', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            var i = 0;
+            var o = null;
+
+            assert.equal(ClientTestLibrary.Bridge615A.method1$1(o), "object", "Bridge615 object");
+            assert.equal(ClientTestLibrary.Bridge615A.method1(i), "int", "Bridge615 int");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge615A', {
+    statics: {
+        method1$1: function (o) {
+            return "object";
+        },
+        method1: function (i) {
+            return "int";
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Class1', {
     inherits: function () { return [Bridge.IEquatable$1(ClientTestLibrary.Class1)]; },
     equals: function (other) {
