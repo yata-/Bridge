@@ -245,6 +245,12 @@ namespace System
         [Template("Bridge.Decimal.round({d}, 6)")]
         public static extern decimal Round(decimal d);
 
+        [Template("Bridge.Decimal.toDecimalPlaces({d}, {decimals}, 6)")]
+        public static extern decimal Round(decimal d, int decimals);
+
+        [Template("Bridge.Decimal.toDecimalPlaces({d}, {decimals}, {mode})")]
+        public static extern decimal Round(decimal d, int decimals, MidpointRounding mode);
+
         [Template("Bridge.Decimal.round({d}, {mode})")]
         public static extern decimal Round(decimal d, MidpointRounding mode);
 
