@@ -813,6 +813,47 @@ Bridge.define('ClientTestLibrary.Bridge546', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge550', {
+    statics: {
+        testMethod: function (array, name, assert) {
+            assert.ok(array !== null, Bridge.String.format("ArrayBufferView is an alias of {0}", name));
+        },
+        testUseCase: function (assert) {
+            assert.expect(10);
+
+            var array1 = new Int8Array(1);
+            ClientTestLibrary.Bridge550.testMethod(array1, "Int8Array", assert);
+
+            var array2 = new Uint8Array(1);
+            ClientTestLibrary.Bridge550.testMethod(array2, "Uint8Array", assert);
+
+            var array3 = new Uint8ClampedArray(1);
+            ClientTestLibrary.Bridge550.testMethod(array3, "Uint8ClampedArray", assert);
+
+            var array4 = new Int16Array(1);
+            ClientTestLibrary.Bridge550.testMethod(array4, "Int16Array", assert);
+
+            var array5 = new Uint16Array(1);
+            ClientTestLibrary.Bridge550.testMethod(array5, "Uint16Array", assert);
+
+            var array6 = new Int32Array(1);
+            ClientTestLibrary.Bridge550.testMethod(array6, "Int32Array", assert);
+
+            var array7 = new Uint32Array(1);
+            ClientTestLibrary.Bridge550.testMethod(array7, "Uint32Array", assert);
+
+            var array8 = new Float32Array(1);
+            ClientTestLibrary.Bridge550.testMethod(array8, "Float32Array", assert);
+
+            var array9 = new Float64Array(1);
+            ClientTestLibrary.Bridge550.testMethod(array9, "Float64Array", assert);
+
+            var array10 = new DataView(array9.buffer);
+            ClientTestLibrary.Bridge550.testMethod(array10, "DataView", assert);
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge554', {
     statics: {
         testUseCase: function (assert) {

@@ -6,7 +6,7 @@ namespace Bridge.Html5
     /// </summary>
     [Ignore]
     [Name("DataView")]
-    public class DataView : ArrayBufferView
+    public class DataView
     {
         /// <summary>
         /// Returns a new DataView object using the passed ArrayBuffer for its storage.
@@ -34,6 +34,21 @@ namespace Bridge.Html5
         public DataView(ArrayBuffer buffer, long byteOffset, long byteLength)
         {
         }
+
+        /// <summary>
+        /// The buffer this view references. Read only.
+        /// </summary>
+        public readonly ArrayBuffer Buffer;
+
+        /// <summary>
+        /// The length, in bytes, of the view. Read only.
+        /// </summary>
+        public readonly long ByteLength;
+
+        /// <summary>
+        /// The offset, in bytes, to the first byte of the view within the ArrayBuffer. Read only.
+        /// </summary>
+        public readonly long ByteOffset;
 
         /// <summary>
         /// Gets a signed 8-bit integer at the specified byte offset from the start of the view.
