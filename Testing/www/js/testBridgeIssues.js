@@ -1342,6 +1342,21 @@ Bridge.define('ClientTestLibrary.Bridge582', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge583', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(6);
+
+            assert.ok(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 6).equals(Bridge.Decimal(1.4)), "Bridge583 1");
+            assert.ok(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 6).equals(Bridge.Decimal(1.6)), "Bridge583 2");
+            assert.ok(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 6).equals(Bridge.Decimal(123.4568)), "Bridge583 3");
+            assert.ok(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 6).equals(Bridge.Decimal(123.456789)), "Bridge583 4");
+            assert.ok(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 6).equals(Bridge.Decimal(123.456789)), "Bridge583 5");
+            assert.ok(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 6).equals(Bridge.Decimal(-123.0)), "Bridge583 6");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge588A', {
     statics: {
         config: {
