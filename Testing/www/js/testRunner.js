@@ -158,6 +158,7 @@ Bridge.define('ClientTestLibrary.RunTests', {
             QUnit.test("#582", ClientTestLibrary.Bridge582.testSubtractTimeSpan);
             QUnit.test("#582", ClientTestLibrary.Bridge582.testTimeOfDay);
             QUnit.test("#582", ClientTestLibrary.Bridge582.testTicks);
+            QUnit.test("#583", ClientTestLibrary.Bridge583.testUseCase);
             QUnit.test("#588", ClientTestLibrary.Bridge588.testUseCase);
             QUnit.test("#595", ClientTestLibrary.Bridge595.testUseCase);
             QUnit.test("#597", ClientTestLibrary.Bridge597.testUseCase);
