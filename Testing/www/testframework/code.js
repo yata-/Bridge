@@ -3522,8 +3522,8 @@ Bridge.define('Bridge.ClientTest.MathTests', {
         Bridge.Test.Assert.areEqual(Bridge.Math.round(3.432, 0, 6), 3.0);
         Bridge.Test.Assert.areEqual(Bridge.Math.round(3.6, 0, 6), 4.0);
         Bridge.Test.Assert.areEqual(Bridge.Math.round(3.5, 0, 6), 4.0);
-        Bridge.Test.Assert.areEqual(Bridge.Math.round(4.5, 0, 6), 5.0);
-        Bridge.Test.Assert.areEqual(Bridge.Math.round(-3.5, 0, 6), -3.0);
+        Bridge.Test.Assert.areEqual(Bridge.Math.round(4.5, 0, 6), 4.0);
+        Bridge.Test.Assert.areEqual(Bridge.Math.round(-3.5, 0, 6), -4.0);
         Bridge.Test.Assert.areEqual(Bridge.Math.round(-4.5, 0, 6), -4.0);
     },
     sinWorks: function () {
