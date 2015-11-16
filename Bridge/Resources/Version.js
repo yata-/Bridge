@@ -2,30 +2,30 @@
 
 Bridge.define("Bridge.Version", {
     inherits: function() {
-        return [Bridge.ICloneable,Bridge.IComparable$1(Bridge.Version),Bridge.IEquatable$1(Bridge.Version)];
+        return [Bridge.ICloneable, Bridge.IComparable$1(Bridge.Version), Bridge.IEquatable$1(Bridge.Version)];
     },
 
     statics: {
         separatorsArray: ".",
 
         config: {
-            init: function () {
+            init: function() {
                 this.ZERO_CHAR_VALUE = Bridge.cast(48, Bridge.Int);
             }
         },
 
-        appendPositiveNumber: function (num, sb) {
+        appendPositiveNumber: function(num, sb) {
             var index = sb.getLength();
             var reminder;
 
-            do  {
+            do {
                 reminder = num % 10;
                 num = Bridge.Int.div(num, 10);
                 sb.insert(index, String.fromCharCode(Bridge.cast((Bridge.Version.ZERO_CHAR_VALUE + reminder), Bridge.Int)));
             } while (num > 0);
         },
 
-        parse: function (input) {
+        parse: function(input) {
             if (input === null) {
                 throw new Bridge.ArgumentNullException("input");
             }
@@ -41,8 +41,8 @@ Bridge.define("Bridge.Version", {
             return r.v.m_parsedVersion;
         },
 
-        tryParse: function (input, result) {
-            var r = { v : new Bridge.Version.VersionResult() };
+        tryParse: function(input, result) {
+            var r = { v: new Bridge.Version.VersionResult() };
 
             r.v.init("input", false);
 
@@ -53,8 +53,8 @@ Bridge.define("Bridge.Version", {
             return b;
         },
 
-        tryParseVersion: function (version, result) {
-            var major = { }, minor = { }, build = { }, revision = { };
+        tryParseVersion: function(version, result) {
+            var major = {}, minor = {}, build = {}, revision = {};
 
             if (version === null) {
                 result.v.setFailure(Bridge.Version.ParseFailureKind.argumentNullException);
@@ -90,20 +90,20 @@ Bridge.define("Bridge.Version", {
                 if (parsedComponentsLength > 0) {
                     if (!Bridge.Version.tryParseComponent(parsedComponents[3], "revision", result, revision)) {
                         return false;
-                    } else  {
+                    } else {
                         result.v.m_parsedVersion = new Bridge.Version("constructor$3", major.v, minor.v, build.v, revision.v);
                     }
-                } else  {
+                } else {
                     result.v.m_parsedVersion = new Bridge.Version("constructor$2", major.v, minor.v, build.v);
                 }
-            } else  {
+            } else {
                 result.v.m_parsedVersion = new Bridge.Version("constructor$1", major.v, minor.v);
             }
 
             return true;
         },
 
-        tryParseComponent: function (component, componentName, result, parsedComponent) {
+        tryParseComponent: function(component, componentName, result, parsedComponent) {
             if (!Bridge.Int.tryParseInt(component, parsedComponent, -2147483648, 2147483647)) {
                 result.v.setFailure$1(Bridge.Version.ParseFailureKind.formatException, component);
 
@@ -119,7 +119,7 @@ Bridge.define("Bridge.Version", {
             return true;
         },
 
-        op_Equality: function (v1, v2) {
+        op_Equality: function(v1, v2) {
             if (v1 === null) {
                 return v2 === null;
             }
@@ -127,11 +127,11 @@ Bridge.define("Bridge.Version", {
             return v1.equals(v2);
         },
 
-        op_Inequality: function (v1, v2) {
+        op_Inequality: function(v1, v2) {
             return !(Bridge.Version.op_Equality(v1, v2));
         },
 
-        op_LessThan: function (v1, v2) {
+        op_LessThan: function(v1, v2) {
             if (v1 === null && v2 === null) {
                 return false;
             }
@@ -143,7 +143,7 @@ Bridge.define("Bridge.Version", {
             return (v2.compareTo(v1) > 0);
         },
 
-        op_LessThanOrEqual: function (v1, v2) {
+        op_LessThanOrEqual: function(v1, v2) {
             if (v1 === null && v2 === null) {
                 return false;
             }
@@ -155,11 +155,11 @@ Bridge.define("Bridge.Version", {
             return (v2.compareTo(v1) >= 0);
         },
 
-        op_GreaterThan: function (v1, v2) {
+        op_GreaterThan: function(v1, v2) {
             return (Bridge.Version.op_LessThan(v2, v1));
         },
 
-        op_GreaterThanOrEqual: function (v1, v2) {
+        op_GreaterThanOrEqual: function(v1, v2) {
             return (Bridge.Version.op_LessThanOrEqual(v2, v1));
         }
     },
@@ -168,13 +168,13 @@ Bridge.define("Bridge.Version", {
     _Minor: 0,
 
     config: {
-        init: function () {
+        init: function() {
             this._Build = -1;
             this._Revision = -1;
         }
     },
 
-    constructor$3: function (major, minor, build, revision) {
+    constructor$3: function(major, minor, build, revision) {
         if (major < 0) {
             throw new Bridge.ArgumentOutOfRangeException("major", "Cannot be < 0");
         }
@@ -197,7 +197,7 @@ Bridge.define("Bridge.Version", {
         this._Revision = revision;
     },
 
-    constructor$2: function (major, minor, build) {
+    constructor$2: function(major, minor, build) {
         if (major < 0) {
             throw new Bridge.ArgumentOutOfRangeException("major", "Cannot be < 0");
         }
@@ -215,7 +215,7 @@ Bridge.define("Bridge.Version", {
         this._Build = build;
     },
 
-    constructor$1: function (major, minor) {
+    constructor$1: function(major, minor) {
         if (major < 0) {
             throw new Bridge.ArgumentOutOfRangeException("major", "Cannot be < 0");
         }
@@ -228,7 +228,7 @@ Bridge.define("Bridge.Version", {
         this._Minor = minor;
     },
 
-    constructor$4: function (version) {
+    constructor$4: function(version) {
         var v = Bridge.Version.parse(version);
 
         this._Major = v.getMajor();
@@ -237,32 +237,32 @@ Bridge.define("Bridge.Version", {
         this._Revision = v.getRevision();
     },
 
-    constructor: function () {
+    constructor: function() {
         this._Major = 0;
         this._Minor = 0;
     },
 
-    getMajor: function () {
+    getMajor: function() {
         return this._Major;
     },
 
-    getMinor: function () {
+    getMinor: function() {
         return this._Minor;
     },
 
-    getBuild: function () {
+    getBuild: function() {
         return this._Build;
     },
 
-    getRevision: function () {
+    getRevision: function() {
         return this._Revision;
     },
 
-    getMajorRevision: function () {
+    getMajorRevision: function() {
         return this._Revision >> 16;
     },
 
-    getMinorRevision: function () {
+    getMinorRevision: function() {
         var n = this._Revision & 65535;
 
         if (n > 32767) {
@@ -272,7 +272,7 @@ Bridge.define("Bridge.Version", {
         return n;
     },
 
-    clone: function () {
+    clone: function() {
         var v = new Bridge.Version("constructor");
 
         v._Major = this._Major;
@@ -283,7 +283,7 @@ Bridge.define("Bridge.Version", {
         return (v);
     },
 
-    compareInternal: function (v) {
+    compareInternal: function(v) {
         if (this._Major !== v._Major) {
             if (this._Major > v._Major) {
                 return 1;
@@ -319,7 +319,7 @@ Bridge.define("Bridge.Version", {
         return 0;
     },
 
-    compareTo$1: function (version) {
+    compareTo$1: function(version) {
         if (version === null) {
             return 1;
         }
@@ -333,14 +333,14 @@ Bridge.define("Bridge.Version", {
         return this.compareInternal(v);
     },
 
-    compareTo: function (value) {
+    compareTo: function(value) {
         if (value === null) {
             return 1;
         }
 
         return this.compareInternal(value);
     },
-    equals: function (obj) {
+    equals$1: function (obj) {
         var v = Bridge.as(obj, Bridge.Version);
 
         if (v === null) {
@@ -353,6 +353,9 @@ Bridge.define("Bridge.Version", {
         }
 
         return true;
+    },
+    equals: function(v) {
+        return this.equals$1(v);
     },
     getHashCode: function () {
         // Let's assume that most version numbers will be pretty small and just OR some lower order bits together.

@@ -813,6 +813,47 @@ Bridge.define('ClientTestLibrary.Bridge546', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge550', {
+    statics: {
+        testMethod: function (array, name, assert) {
+            assert.ok(array !== null, Bridge.String.format("ArrayBufferView is an alias of {0}", name));
+        },
+        testUseCase: function (assert) {
+            assert.expect(10);
+
+            var array1 = new Int8Array(1);
+            ClientTestLibrary.Bridge550.testMethod(array1, "Int8Array", assert);
+
+            var array2 = new Uint8Array(1);
+            ClientTestLibrary.Bridge550.testMethod(array2, "Uint8Array", assert);
+
+            var array3 = new Uint8ClampedArray(1);
+            ClientTestLibrary.Bridge550.testMethod(array3, "Uint8ClampedArray", assert);
+
+            var array4 = new Int16Array(1);
+            ClientTestLibrary.Bridge550.testMethod(array4, "Int16Array", assert);
+
+            var array5 = new Uint16Array(1);
+            ClientTestLibrary.Bridge550.testMethod(array5, "Uint16Array", assert);
+
+            var array6 = new Int32Array(1);
+            ClientTestLibrary.Bridge550.testMethod(array6, "Int32Array", assert);
+
+            var array7 = new Uint32Array(1);
+            ClientTestLibrary.Bridge550.testMethod(array7, "Uint32Array", assert);
+
+            var array8 = new Float32Array(1);
+            ClientTestLibrary.Bridge550.testMethod(array8, "Float32Array", assert);
+
+            var array9 = new Float64Array(1);
+            ClientTestLibrary.Bridge550.testMethod(array9, "Float64Array", assert);
+
+            var array10 = new DataView(array9.buffer);
+            ClientTestLibrary.Bridge550.testMethod(array10, "DataView", assert);
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge554', {
     statics: {
         testUseCase: function (assert) {
@@ -1662,6 +1703,67 @@ Bridge.define('ClientTestLibrary.Bridge607', {
 
             assert.ok(c1.equals(c1));
             assert.notOk(c1.equals(null));
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge608', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            var s = new ClientTestLibrary.Bridge608A("constructor$1", "test");
+            var o = "test";
+            assert.ok(s.equals(o), "Bridge608 Object");
+            assert.ok(s.equals$1("test"), "Bridge608 String");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge608A', {
+    field: null,
+    constructor$1: function (field) {
+        this.field = field;
+    },
+    constructor: function () {
+    },
+    equals: function (obj) {
+        return this.equals$1(obj.toString());
+    },
+    equals$1: function (other) {
+        return other === this.field;
+    },
+    getHashCode: function () {
+        return Bridge.getHashCode(this.field);
+    },
+    $clone: function (to) {
+        var s = to || new ClientTestLibrary.Bridge608A();
+        s.field = this.field;
+        return s;
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge615', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            var i = 0;
+            var o = null;
+
+            assert.equal(ClientTestLibrary.Bridge615A.method1$1(o), "object", "Bridge615 object");
+            assert.equal(ClientTestLibrary.Bridge615A.method1(i), "int", "Bridge615 int");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge615A', {
+    statics: {
+        method1$1: function (o) {
+            return "object";
+        },
+        method1: function (i) {
+            return "int";
         }
     }
 });
