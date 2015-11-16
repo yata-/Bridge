@@ -133,7 +133,7 @@ namespace System
         [Template("Bridge.Math.round({d}, 0, 6)")]
         public static extern double Round(double d);
 
-        [Template("{d}.round()")]
+        [Template("Math.round({d})")]
         public static extern double JsRound(double d);
 
         [Template("Bridge.Decimal.toDecimalPlaces({d}, {digits}, 6)")]
