@@ -1649,6 +1649,30 @@ Bridge.define('ClientTestLibrary.Bridge606C', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge607', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(4);
+
+            var c = new ClientTestLibrary.Opti$1(String)();
+            var c1 = new ClientTestLibrary.Class1();
+
+            assert.ok(c.equals(c));
+            assert.notOk(c.equals(null));
+
+            assert.ok(c1.equals(c1));
+            assert.notOk(c1.equals(null));
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Class1', {
+    inherits: function () { return [Bridge.IEquatable$1(ClientTestLibrary.Class1)]; },
+    equals: function (other) {
+        return this === other;
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
@@ -1665,6 +1689,13 @@ Bridge.define('ClientTestLibrary.Bridge304', {
         this.setX("void F()");
     }
 });
+
+Bridge.define('ClientTestLibrary.Opti$1', function (T) { return {
+    inherits: function () { return [Bridge.IEquatable$1(ClientTestLibrary.Opti$1(T))]; },
+    equals: function (obj) {
+        return this === obj;
+    }
+}; });
 
 Bridge.define('ClientTestLibrary.Person383', {
     config: {

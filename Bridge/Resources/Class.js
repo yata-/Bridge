@@ -171,6 +171,10 @@
 
             scope = Bridge.Class.set(scope, className, Class);
 
+            if (cacheName) {
+                Bridge.Class.cache[cacheName] = Class;
+            }
+
             if (extend && Bridge.isFunction(extend)) {
                 extend = extend();
             }
@@ -260,10 +264,6 @@
             }
 
             prototype.$$name = className;
-
-            if (cacheName) {
-                Bridge.Class.cache[cacheName] = Class;
-            }
 
             // Populate our constructed prototype object
             Class.prototype = prototype;
