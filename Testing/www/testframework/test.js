@@ -482,6 +482,7 @@ Bridge.define('Bridge.Test.QUnit.RunQUnitTests', {
             QUnit.test("Math - AtanWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.atanWorks);
             QUnit.test("Math - Atan2Works", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.atan2Works);
             QUnit.test("Math - CosWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.cosWorks);
+            QUnit.test("Math - DivRemWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.divRemWorks);
             QUnit.test("Math - ExpWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.expWorks);
             QUnit.test("Math - FloorOfDoubleWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.floorOfDoubleWorks);
             QUnit.test("Math - FloorOfDecimalWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.floorOfDecimalWorks);
@@ -510,8 +511,13 @@ Bridge.define('Bridge.Test.QUnit.RunQUnitTests', {
             QUnit.test("Math - MinOfULongWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.minOfULongWorks);
             QUnit.test("Math - PowWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.powWorks);
             QUnit.test("Math - RandomWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.randomWorks);
+            QUnit.test("Math - RoundOfDoubleWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.roundOfDoubleWorks);
             QUnit.test("Math - RoundDecimalWithModeWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.roundDecimalWithModeWorks);
+            QUnit.test("Math - RoundDecimalWithPrecisionAndModeWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.roundDecimalWithPrecisionAndModeWorks);
             QUnit.test("Math - RoundDoubleWithModeWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.roundDoubleWithModeWorks);
+            QUnit.test("Math - RoundDoubleWithPrecisionAndModeWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.roundDoubleWithPrecisionAndModeWorks);
+            QUnit.test("Math - JsRoundWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.jsRoundWorks);
+            QUnit.test("Math - IEEERemainderWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.iEEERemainderWorks);
             QUnit.test("Math - SinWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.sinWorks);
             QUnit.test("Math - SqrtWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.sqrtWorks);
             QUnit.test("Math - TanWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.tanWorks);
@@ -3193,6 +3199,10 @@ Bridge.define('Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests', {
             var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.beforeTest(false, assert);
             t.cosWorks();
         },
+        divRemWorks: function (assert) {
+            var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.beforeTest(false, assert);
+            t.divRemWorks();
+        },
         expWorks: function (assert) {
             var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.beforeTest(false, assert);
             t.expWorks();
@@ -3305,13 +3315,33 @@ Bridge.define('Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests', {
             var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.beforeTest(false, assert);
             t.randomWorks();
         },
+        roundOfDoubleWorks: function (assert) {
+            var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.beforeTest(false, assert);
+            t.roundOfDoubleWorks();
+        },
         roundDecimalWithModeWorks: function (assert) {
             var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.beforeTest(false, assert);
             t.roundDecimalWithModeWorks();
         },
+        roundDecimalWithPrecisionAndModeWorks: function (assert) {
+            var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.beforeTest(false, assert);
+            t.roundDecimalWithPrecisionAndModeWorks();
+        },
         roundDoubleWithModeWorks: function (assert) {
             var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.beforeTest(false, assert);
             t.roundDoubleWithModeWorks();
+        },
+        roundDoubleWithPrecisionAndModeWorks: function (assert) {
+            var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.beforeTest(false, assert);
+            t.roundDoubleWithPrecisionAndModeWorks();
+        },
+        jsRoundWorks: function (assert) {
+            var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.beforeTest(false, assert);
+            t.jsRoundWorks();
+        },
+        iEEERemainderWorks: function (assert) {
+            var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.beforeTest(false, assert);
+            t.iEEERemainderWorks();
         },
         sinWorks: function (assert) {
             var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.beforeTest(false, assert);
