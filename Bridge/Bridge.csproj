@@ -95,6 +95,7 @@
     <Compile Include="System\EventHandler.cs" />
     <Compile Include="System\IDisposable.cs" />
     <Compile Include="System\IAccessorsIndexer.cs" />
+    <Compile Include="System\RankException.cs" />
     <Compile Include="System\Linq\Enumerable.cs" />
     <Compile Include="System\Linq\Grouping.cs" />
     <Compile Include="System\Linq\EnumerableInstance.cs" />
@@ -604,6 +605,7 @@
     <EmbeddedResource Include="Resources\Locales\zu-ZA.js" />
     <EmbeddedResource Include="Resources\Locales\zu.js" />
     <Content Include="Resources\Enum.js" />
+    <Content Include="Resources\Math.js" />
     <Content Include="Resources\Version.js" />
     <None Include="AdditionalCompilerOptions.txt" />
     <Content Include="Resources\Array.js" />

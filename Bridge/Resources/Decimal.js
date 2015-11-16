@@ -78,7 +78,7 @@
         return this.value.toNumber();
     };
 
-    Bridge.Decimal.prototype.format = function (fmt, provider) {
+    Bridge.Decimal.prototype.format = function (format, provider) {
         return Bridge.Int.format(this.toFloat(), format, provider);
     };
 
@@ -122,7 +122,13 @@
         Bridge.$Decimal.rounding = old;
 
         return d;
-    }
+    };
+
+    Bridge.Decimal.toDecimalPlaces = function(obj, decimals, mode) {
+        obj = Bridge.Decimal.create(obj);
+        var d = new Bridge.Decimal(obj.value.toDecimalPlaces(decimals, mode));
+        return d;
+    };
 
     Bridge.Decimal.prototype.compareTo = function (another) {
         return this.value.comparedTo(Bridge.Decimal.getValue(another));

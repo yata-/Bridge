@@ -184,5 +184,13 @@ namespace System.Collections.Generic
         {
             return null;
         }
+
+        public extern int BinarySearch(T value);
+
+        public extern int BinarySearch(int index, int length, T value);
+
+        public extern int BinarySearch(T value, IComparer<T> comparer);
+
+        public extern int BinarySearch(int index, int length, T value, IComparer<T> comparer);
     }
 }

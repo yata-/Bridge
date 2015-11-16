@@ -955,6 +955,10 @@
             return Bridge.hasValue(a) && Bridge.hasValue(b) ? a >> b : null;
         },
 
+        srr: function (a, b) {
+            return Bridge.hasValue(a) && Bridge.hasValue(b) ? a >>> b : null;
+        },
+
         sub: function (a, b) {
 	        return Bridge.hasValue(a) && Bridge.hasValue(b) ? a - b : null;
         },
@@ -1902,6 +1906,10 @@
 
             scope = Bridge.Class.set(scope, className, Class);
 
+            if (cacheName) {
+                Bridge.Class.cache[cacheName] = Class;
+            }
+
             if (extend && Bridge.isFunction(extend)) {
                 extend = extend();
             }
@@ -1991,10 +1999,6 @@
             }
 
             prototype.$$name = className;
-
-            if (cacheName) {
-                Bridge.Class.cache[cacheName] = Class;
-            }
 
             // Populate our constructed prototype object
             Class.prototype = prototype;
@@ -2350,6 +2354,14 @@ Bridge.define("Bridge.NullReferenceException", {
 
     constructor: function (message, innerException) {
         Bridge.Exception.prototype.$constructor.call(this, message || "Object is null.", innerException);
+    }
+});
+
+Bridge.define("Bridge.RankException", {
+    inherits: [Bridge.Exception],
+
+    constructor: function (message, innerException) {
+        Bridge.Exception.prototype.$constructor.call(this, message || "Attempted to operate on an array with the incorrect number of dimensions.", innerException);
     }
 });
 
@@ -2736,6 +2748,32 @@ Bridge.define("Bridge.CultureInfo", {
         return new Bridge.CultureInfo(this.name);
     }
 });
+
+// @source Math.js
+
+(function () {
+    var math = {
+        divRem: function(a, b, result) {
+            var remainder = a % b;
+            result.v = remainder;
+            return (a - remainder) / b;
+        },
+
+        round: function(n, d, rounding) {
+            var m = Math.pow(10, d || 0);
+            n *= m;
+            var sign = (n > 0) | -(n < 0);
+            if (n % 1 === 0.5 * sign) {
+                var f = Math.floor(n);
+                return (f + (rounding === 4 ? (sign > 0) : (f % 2 * sign))) / m;
+            }
+
+            return Math.round(n) / m;
+        }
+    };
+
+    Bridge.Math = math;
+})();
 
 // @source Integer.js
 
@@ -3456,7 +3494,7 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
         return this.value.toNumber();
     };
 
-    Bridge.Decimal.prototype.format = function (fmt, provider) {
+    Bridge.Decimal.prototype.format = function (format, provider) {
         return Bridge.Int.format(this.toFloat(), format, provider);
     };
 
@@ -3500,7 +3538,13 @@ Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEq
         Bridge.$Decimal.rounding = old;
 
         return d;
-    }
+    };
+
+    Bridge.Decimal.toDecimalPlaces = function(obj, decimals, mode) {
+        obj = Bridge.Decimal.create(obj);
+        var d = new Bridge.Decimal(obj.value.toDecimalPlaces(decimals, mode));
+        return d;
+    };
 
     Bridge.Decimal.prototype.compareTo = function (another) {
         return this.value.comparedTo(Bridge.Decimal.getValue(another));
@@ -5475,6 +5519,92 @@ Bridge.define("Bridge.Text.StringBuilder", {
                 i++;
                 j--;
             }
+        },
+
+        binarySearch: function (array, index, length,value, comparer) {
+            if (!array) {
+                throw new Bridge.ArgumentNullException("array");
+            }
+            
+            var lb = 0;
+            if (index < lb || length < 0) {
+                throw new Bridge.ArgumentOutOfRangeException(index < lb ? "index" : "length", "Non-negative number required.");
+            }
+
+            if (array.length - (index - lb) < length) {
+                throw new Bridge.ArgumentException("Offset and length were out of bounds for the array or count is greater than the number of elements from index to the end of the source collection.");
+            }
+
+            if (Bridge.Array.getRank(array) !== 1) {
+                throw new Bridge.RankException("Only single dimensional arrays are supported for the requested action.");
+            }
+
+            if (!comparer) {
+                comparer = Bridge.Comparer$1.$default;
+            }
+ 
+            var lo = index,
+                hi = index + length - 1,
+                i,
+                c;
+
+            while (lo <= hi) {
+                i = lo + ((hi - lo) >> 1);
+ 
+                try {
+                    c = comparer.compare(array[i], value);
+                }
+                catch (e) {
+                    throw new Bridge.InvalidOperationException("Failed to compare two elements in the array.", e);
+                }
+
+                if (c === 0) {
+                    return i;
+                }
+
+                if (c < 0) {
+                    lo = i + 1;
+                }
+                else {
+                    hi = i - 1;
+                }
+            }
+
+            return ~lo;
+        },
+
+        sort: function (array, index, length, comparer) {
+            if (!array) {
+                throw new Bridge.ArgumentNullException("array");
+            }
+
+            if (arguments.length === 2 && typeof index === "object") {
+                comparer = index;
+                index = null;
+            }
+
+            if (!Bridge.isNumber(index)) {
+                index = 0;
+            }
+
+            if (!Bridge.isNumber(length)) {
+                length = array.length;
+            }
+
+            if (!comparer) {
+                comparer = Bridge.Comparer$1.$default;
+            }
+
+            if (index === 0 && length === array.length) {
+                array.sort(Bridge.fn.bind(comparer, comparer.compare));
+            } else {
+                var newarray = array.slice(index, index + length);
+                newarray.sort(Bridge.fn.bind(comparer, comparer.compare));
+
+                for (var i = index; i < (index + length); i++) {
+                    array[i] = newarray[i-index];
+                }
+            }
         }
     };
 
@@ -6200,6 +6330,34 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
             if (this.readOnly) {
                 throw new Bridge.NotSupportedException();
             }
+        },
+
+        binarySearch: function (index, length, value, comparer) {
+            if (arguments.length === 1) {
+                value = index;
+                index = null;
+            }
+
+            if (arguments.length === 2) {
+                value = index;
+                comparer = length;
+                index = null;
+                length = null;
+            }
+
+            if (!Bridge.isNumber(index)) {
+                index = 0;
+            }
+
+            if (!Bridge.isNumber(length)) {
+                length = this.items.length;
+            }
+
+            if (!comparer) {
+                comparer = Bridge.Comparer$1.$default;
+            }
+
+            return Bridge.Array.binarySearch(this.items, index, length, value, comparer);
         }
     }));
 });

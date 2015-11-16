@@ -4,6 +4,11 @@
 
 Bridge.define('ClientTestLibrary.Utilities.DecimalHelper', {
     statics: {
+        assertIsDecimalAndEqualTo$1: function (assert, v, d, message) {
+            if (message === void 0) { message = null; }
+            assert.strictEqual(Bridge.is(v, Bridge.Decimal), true, message);
+            assert.strictEqual(v.toString(), d.toString(), message);
+        },
         assertIsDecimalAndEqualTo: function (assert, v, d, message) {
             if (message === void 0) { message = null; }
             assert.strictEqual(Bridge.is(v, Bridge.Decimal), true, message);
