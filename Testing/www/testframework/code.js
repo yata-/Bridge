@@ -3353,9 +3353,15 @@ Bridge.define('Bridge.ClientTest.MathTests', {
             diff = -diff;
         Bridge.Test.Assert.$true(diff < 1E-08);
     },
-    assertIsDecimalAndEqualTo: function (v, d) {
-        Bridge.Test.Assert.areStrictEqual(Bridge.is(v, Bridge.Decimal), true);
-        Bridge.Test.Assert.areStrictEqual(v.toString(), d.toString());
+    assertIsDecimalAndEqualTo: function (v, d, message) {
+        if (message === void 0) { message = null; }
+        Bridge.Test.Assert.areStrictEqual$1(Bridge.is(v, Bridge.Decimal), true, message);
+        Bridge.Test.Assert.areStrictEqual$1(v.toString(), d.toString(), message);
+    },
+    assertIsDoubleAndEqualTo: function (v, d, message) {
+        if (message === void 0) { message = null; }
+        Bridge.Test.Assert.areStrictEqual$1(Bridge.is(v, Number), true, message);
+        Bridge.Test.Assert.areStrictEqual$1(v.toString(), d.toString(), message);
     },
     constantsWork: function () {
         this.assertAlmostEqual(Math.E, 2.7182818284590451);
@@ -3386,7 +3392,6 @@ Bridge.define('Bridge.ClientTest.MathTests', {
         Bridge.Test.Assert.areEqual(Math.abs(-17.5), 17.5);
     },
     absOfDecimalWorks: function () {
-        // TODO Math.Abs(decimal)
         this.assertIsDecimalAndEqualTo(Bridge.Decimal(-10.0).abs(), 10.0);
     },
     acosWorks: function () {
@@ -3412,7 +3417,6 @@ Bridge.define('Bridge.ClientTest.MathTests', {
         Bridge.Test.Assert.areEqual(Math.floor(-3.6), -4.0);
     },
     floorOfDecimalWorks: function () {
-        // TODO Math.Floor(decimal)
         this.assertIsDecimalAndEqualTo(Bridge.Decimal(3.6).floor(), 3.0);
         this.assertIsDecimalAndEqualTo(Bridge.Decimal(-3.6).floor(), -4.0);
     },
@@ -3424,7 +3428,6 @@ Bridge.define('Bridge.ClientTest.MathTests', {
         Bridge.Test.Assert.areEqual(Math.max(Bridge.cast(5, Bridge.Int), Bridge.cast(3, Bridge.Int)), 5.0);
     },
     maxOfDecimalWorks: function () {
-        // TODO Max(decimal)
         this.assertIsDecimalAndEqualTo(Bridge.Decimal.max(Bridge.Decimal(-14.5), Bridge.Decimal(3.0)), 3.0);
         this.assertIsDecimalAndEqualTo(Bridge.Decimal.max(Bridge.Decimal(5.4), Bridge.Decimal(3.0)), 5.4);
     },
@@ -3510,6 +3513,9 @@ Bridge.define('Bridge.ClientTest.MathTests', {
     },
     powWorks: function () {
         this.assertAlmostEqual(Math.pow(3, 0.5), 1.7320508075688772);
+
+        //AssertAlmostEqual(Math.Pow(3, 2), 9);
+        //AssertAlmostEqual(Math.Pow(2, 3), 8);
     },
     randomWorks: function () {
         for (var i = 0; i < 5; i++) {
@@ -3518,13 +3524,148 @@ Bridge.define('Bridge.ClientTest.MathTests', {
             Bridge.Test.Assert.$true(d < 1);
         }
     },
-    roundOfDoubleWorks: function () {
-        Bridge.Test.Assert.areEqual(Math.round(3.432), 3.0);
-        Bridge.Test.Assert.areEqual(Math.round(3.6), 4.0);
-        Bridge.Test.Assert.areEqual(Math.round(3.5), 4.0);
-        Bridge.Test.Assert.areEqual(Math.round(4.5), 5.0);
-        Bridge.Test.Assert.areEqual(Math.round(-3.5), -3.0);
-        Bridge.Test.Assert.areEqual(Math.round(-4.5), -4.0);
+    roundDecimalWithModeWorks: function () {
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.8), 6), 4, "3.8m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.5), 6), 4, "3.5m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.2), 6), 3, "3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.2), 6), -3, "-3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.5), 6), -4, "-3.5");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.8), 6), -4, "-3.8m");
+
+
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.8), 0), 4, "Up 3.8m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.5), 0), 4, "Up 3.5m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.2), 0), 4, "Up 3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.2), 0), -4, "Up -3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.5), 0), -4, "Up -3.5");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.8), 0), -4, "Up -3.8m");
+
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.8), 1), 3, "Down 3.8m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.5), 1), 3, "Down 3.5m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.2), 1), 3, "Down 3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.2), 1), -3, "Down -3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.5), 1), -3, "Down -3.5");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.8), 1), -3, "Down -3.8m");
+
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.8), 2), 4, "InfinityPos 3.8m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.5), 2), 4, "InfinityPos 3.5m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.2), 2), 4, "InfinityPos 3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.2), 2), -3, "InfinityPos -3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.5), 2), -3, "InfinityPos -3.5");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.8), 2), -3, "InfinityPos -3.8m");
+
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.8), 3), 3, "InfinityNeg 3.8m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.5), 3), 3, "InfinityNeg 3.5m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.2), 3), 3, "InfinityNeg 3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.2), 3), -4, "InfinityNeg -3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.5), 3), -4, "InfinityNeg -3.5");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.8), 3), -4, "InfinityNeg -3.8m");
+
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.8), 5), 4, "TowardsZero 3.8m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.5), 5), 3, "TowardsZero 3.5m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.2), 5), 3, "TowardsZero 3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.2), 5), -3, "TowardsZero -3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.5), 5), -3, "TowardsZero -3.5");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.8), 5), -4, "TowardsZero -3.8m");
+
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.8), 4), 4, "AwayFromZero 3.8m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.5), 4), 4, "AwayFromZero 3.5m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.2), 4), 3, "AwayFromZero 3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.2), 4), -3, "AwayFromZero -3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.5), 4), -4, "AwayFromZero -3.5");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.8), 4), -4, "AwayFromZero -3.8m");
+
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.8), 7), 4, "Ceil 3.8m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.5), 7), 4, "Ceil 3.5m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.2), 7), 3, "Ceil 3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.2), 7), -3, "Ceil -3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.5), 7), -3, "Ceil -3.5");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.8), 7), -4, "Ceil -3.8m");
+
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.8), 8), 4, "Floor 3.8m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.5), 8), 3, "Floor 3.5m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.2), 8), 3, "Floor 3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.2), 8), -3, "Floor -3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.5), 8), -4, "Floor -3.5");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.8), 8), -4, "Floor -3.8m");
+
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.8), 6), 4, "ToEven 3.8m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.5), 6), 4, "ToEven 3.5m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.2), 6), 3, "ToEven 3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.2), 6), -3, "ToEven -3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.5), 6), -4, "ToEven -3.5");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.8), 6), -4, "ToEven -3.8m");
+    },
+    roundDoubleWithModeWorks: function () {
+        this.assertIsDoubleAndEqualTo(Math.round(3.8), 4, "3.8");
+        this.assertIsDoubleAndEqualTo(Math.round(3.5), 4, "3.5");
+        this.assertIsDoubleAndEqualTo(Math.round(3.2), 3, "3.2");
+        this.assertIsDoubleAndEqualTo(Math.round(-3.2), -3, "-3.2");
+        this.assertIsDoubleAndEqualTo(Math.round(-3.5), -3, "-3.5");
+        this.assertIsDoubleAndEqualTo(Math.round(-3.8), -4, "-3.8");
+
+        //AssertIsDoubleAndEqualTo(Math.Round(3.8, MidpointRounding.Up), 4, "Up 3.8");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.5, MidpointRounding.Up), 4, "Up 3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.2, MidpointRounding.Up), 4, "Up 3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.2, MidpointRounding.Up), -4, "Up -3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.5, MidpointRounding.Up), -4, "Up -3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.8, MidpointRounding.Up), -4, "Up -3.8");
+
+        //AssertIsDoubleAndEqualTo(Math.Round(3.8, MidpointRounding.Down), 3, "Down 3.8");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.5, MidpointRounding.Down), 3, "Down 3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.2, MidpointRounding.Down), 3, "Down 3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.2, MidpointRounding.Down), -3, "Down -3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.5, MidpointRounding.Down), -3, "Down -3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.8, MidpointRounding.Down), -3, "Down -3.8");
+
+        //AssertIsDoubleAndEqualTo(Math.Round(3.8, MidpointRounding.InfinityPos), 4, "InfinityPos 3.8");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.5, MidpointRounding.InfinityPos), 4, "InfinityPos 3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.2, MidpointRounding.InfinityPos), 4, "InfinityPos 3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.2, MidpointRounding.InfinityPos), -3, "InfinityPos -3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.5, MidpointRounding.InfinityPos), -3, "InfinityPos -3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.8, MidpointRounding.InfinityPos), -3, "InfinityPos -3.8");
+
+        //AssertIsDoubleAndEqualTo(Math.Round(3.8, MidpointRounding.InfinityNeg), 3, "InfinityNeg 3.8");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.5, MidpointRounding.InfinityNeg), 3, "InfinityNeg 3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.2, MidpointRounding.InfinityNeg), 3, "InfinityNeg 3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.2, MidpointRounding.InfinityNeg), -4, "InfinityNeg -3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.5, MidpointRounding.InfinityNeg), -4, "InfinityNeg -3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.8, MidpointRounding.InfinityNeg), -4, "InfinityNeg -3.8");
+
+        //AssertIsDoubleAndEqualTo(Math.Round(3.8, MidpointRounding.TowardsZero), 4, "TowardsZero 3.8");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.5, MidpointRounding.TowardsZero), 3, "TowardsZero 3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.2, MidpointRounding.TowardsZero), 3, "TowardsZero 3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.2, MidpointRounding.TowardsZero), -3, "TowardsZero -3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.5, MidpointRounding.TowardsZero), -3, "TowardsZero -3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.8, MidpointRounding.TowardsZero), -4, "TowardsZero -3.8");
+
+        //AssertIsDoubleAndEqualTo(Math.Round(3.8, MidpointRounding.AwayFromZero), 4, "AwayFromZero 3.8");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.5, MidpointRounding.AwayFromZero), 4, "AwayFromZero 3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.2, MidpointRounding.AwayFromZero), 3, "AwayFromZero 3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.2, MidpointRounding.AwayFromZero), -3, "AwayFromZero -3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.5, MidpointRounding.AwayFromZero), -4, "AwayFromZero -3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.8, MidpointRounding.AwayFromZero), -4, "AwayFromZero -3.8");
+
+        //AssertIsDoubleAndEqualTo(Math.Round(3.8, MidpointRounding.Ceil), 4, "Ceil 3.8");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.5, MidpointRounding.Ceil), 4, "Ceil 3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.2, MidpointRounding.Ceil), 3, "Ceil 3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.2, MidpointRounding.Ceil), -3, "Ceil -3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.5, MidpointRounding.Ceil), -3, "Ceil -3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.8, MidpointRounding.Ceil), -4, "Ceil -3.8");
+
+        //AssertIsDoubleAndEqualTo(Math.Round(3.8, MidpointRounding.Floor), 4, "Floor 3.8");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.5, MidpointRounding.Floor), 3, "Floor 3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.2, MidpointRounding.Floor), 3, "Floor 3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.2, MidpointRounding.Floor), -3, "Floor -3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.5, MidpointRounding.Floor), -4, "Floor -3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.8, MidpointRounding.Floor), -4, "Floor -3.8");
+
+        //AssertIsDoubleAndEqualTo(Math.Round(3.8, MidpointRounding.ToEven), 4, "ToEven 3.8");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.5, MidpointRounding.ToEven), 4, "ToEven 3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.2, MidpointRounding.ToEven), 3, "ToEven 3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.2, MidpointRounding.ToEven), -3, "ToEven -3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.5, MidpointRounding.ToEven), -4, "ToEven -3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.8, MidpointRounding.ToEven), -4, "ToEven -3.8");
     },
     sinWorks: function () {
         this.assertAlmostEqual(Math.sin(0.5), 0.479425538604203);
