@@ -235,6 +235,34 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
             if (this.readOnly) {
                 throw new Bridge.NotSupportedException();
             }
+        },
+
+        binarySearch: function (index, length, value, comparer) {
+            if (arguments.length === 1) {
+                value = index;
+                index = null;
+            }
+
+            if (arguments.length === 2) {
+                value = index;
+                comparer = length;
+                index = null;
+                length = null;
+            }
+
+            if (!Bridge.isNumber(index)) {
+                index = 0;
+            }
+
+            if (!Bridge.isNumber(length)) {
+                length = this.items.length;
+            }
+
+            if (!comparer) {
+                comparer = Bridge.Comparer$1.$default;
+            }
+
+            return Bridge.Array.binarySearch(this.items, index, length, value, comparer);
         }
     }));
 });
