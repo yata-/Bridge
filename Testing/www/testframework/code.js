@@ -3353,9 +3353,15 @@ Bridge.define('Bridge.ClientTest.MathTests', {
             diff = -diff;
         Bridge.Test.Assert.$true(diff < 1E-08);
     },
-    assertIsDecimalAndEqualTo: function (v, d) {
-        Bridge.Test.Assert.areStrictEqual(Bridge.is(v, Bridge.Decimal), true);
-        Bridge.Test.Assert.areStrictEqual(v.toString(), d.toString());
+    assertIsDecimalAndEqualTo: function (v, d, message) {
+        if (message === void 0) { message = null; }
+        Bridge.Test.Assert.areStrictEqual$1(Bridge.is(v, Bridge.Decimal), true, message);
+        Bridge.Test.Assert.areStrictEqual$1(v.toString(), d.toString(), message);
+    },
+    assertIsDoubleAndEqualTo: function (v, d, message) {
+        if (message === void 0) { message = null; }
+        Bridge.Test.Assert.areStrictEqual$1(Bridge.is(v, Number), true, message);
+        Bridge.Test.Assert.areStrictEqual$1(v.toString(), d.toString(), message);
     },
     constantsWork: function () {
         this.assertAlmostEqual(Math.E, 2.7182818284590451);
@@ -3386,7 +3392,6 @@ Bridge.define('Bridge.ClientTest.MathTests', {
         Bridge.Test.Assert.areEqual(Math.abs(-17.5), 17.5);
     },
     absOfDecimalWorks: function () {
-        // TODO Math.Abs(decimal)
         this.assertIsDecimalAndEqualTo(Bridge.Decimal(-10.0).abs(), 10.0);
     },
     acosWorks: function () {
@@ -3404,6 +3409,26 @@ Bridge.define('Bridge.ClientTest.MathTests', {
     cosWorks: function () {
         this.assertAlmostEqual(Math.cos(0.5), 0.87758256189037276);
     },
+    divRemWorks: function () {
+        var resultInt = { };
+
+        Bridge.Math.divRem(1, 2, resultInt);
+        Bridge.Test.Assert.areEqual(resultInt.v, 1);
+
+        Bridge.Math.divRem(234, 157, resultInt);
+        Bridge.Test.Assert.areEqual(resultInt.v, 77);
+
+        Bridge.Math.divRem(0, 20, resultInt);
+        Bridge.Test.Assert.areEqual(resultInt.v, 0);
+
+        var resultLong = { };
+
+        Bridge.Math.divRem(2, 4, resultLong);
+        Bridge.Test.Assert.areEqual(resultLong.v, 2);
+
+        Bridge.Math.divRem(2341, 157, resultLong);
+        Bridge.Test.Assert.areEqual(resultLong.v, 143);
+    },
     expWorks: function () {
         this.assertAlmostEqual(Math.exp(0.5), 1.6487212707001282);
     },
@@ -3412,7 +3437,6 @@ Bridge.define('Bridge.ClientTest.MathTests', {
         Bridge.Test.Assert.areEqual(Math.floor(-3.6), -4.0);
     },
     floorOfDecimalWorks: function () {
-        // TODO Math.Floor(decimal)
         this.assertIsDecimalAndEqualTo(Bridge.Decimal(3.6).floor(), 3.0);
         this.assertIsDecimalAndEqualTo(Bridge.Decimal(-3.6).floor(), -4.0);
     },
@@ -3424,7 +3448,6 @@ Bridge.define('Bridge.ClientTest.MathTests', {
         Bridge.Test.Assert.areEqual(Math.max(Bridge.cast(5, Bridge.Int), Bridge.cast(3, Bridge.Int)), 5.0);
     },
     maxOfDecimalWorks: function () {
-        // TODO Max(decimal)
         this.assertIsDecimalAndEqualTo(Bridge.Decimal.max(Bridge.Decimal(-14.5), Bridge.Decimal(3.0)), 3.0);
         this.assertIsDecimalAndEqualTo(Bridge.Decimal.max(Bridge.Decimal(5.4), Bridge.Decimal(3.0)), 5.4);
     },
@@ -3510,6 +3533,9 @@ Bridge.define('Bridge.ClientTest.MathTests', {
     },
     powWorks: function () {
         this.assertAlmostEqual(Math.pow(3, 0.5), 1.7320508075688772);
+
+        this.assertAlmostEqual(Math.pow(3, 2), 9);
+        this.assertAlmostEqual(Math.pow(2, 3), 8);
     },
     randomWorks: function () {
         for (var i = 0; i < 5; i++) {
@@ -3525,6 +3551,306 @@ Bridge.define('Bridge.ClientTest.MathTests', {
         Bridge.Test.Assert.areEqual(Bridge.Math.round(4.5, 0, 6), 4.0);
         Bridge.Test.Assert.areEqual(Bridge.Math.round(-3.5, 0, 6), -4.0);
         Bridge.Test.Assert.areEqual(Bridge.Math.round(-4.5, 0, 6), -4.0);
+    },
+    roundDecimalWithModeWorks: function () {
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.8), 6), 4, "3.8m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.5), 6), 4, "3.5m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.2), 6), 3, "3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.2), 6), -3, "-3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.5), 6), -4, "-3.5");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.8), 6), -4, "-3.8m");
+
+
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.8), 0), 4, "Up 3.8m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.5), 0), 4, "Up 3.5m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.2), 0), 4, "Up 3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.2), 0), -4, "Up -3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.5), 0), -4, "Up -3.5");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.8), 0), -4, "Up -3.8m");
+
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.8), 1), 3, "Down 3.8m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.5), 1), 3, "Down 3.5m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.2), 1), 3, "Down 3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.2), 1), -3, "Down -3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.5), 1), -3, "Down -3.5");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.8), 1), -3, "Down -3.8m");
+
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.8), 2), 4, "InfinityPos 3.8m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.5), 2), 4, "InfinityPos 3.5m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.2), 2), 4, "InfinityPos 3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.2), 2), -3, "InfinityPos -3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.5), 2), -3, "InfinityPos -3.5");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.8), 2), -3, "InfinityPos -3.8m");
+
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.8), 3), 3, "InfinityNeg 3.8m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.5), 3), 3, "InfinityNeg 3.5m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.2), 3), 3, "InfinityNeg 3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.2), 3), -4, "InfinityNeg -3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.5), 3), -4, "InfinityNeg -3.5");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.8), 3), -4, "InfinityNeg -3.8m");
+
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.8), 5), 4, "TowardsZero 3.8m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.5), 5), 3, "TowardsZero 3.5m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.2), 5), 3, "TowardsZero 3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.2), 5), -3, "TowardsZero -3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.5), 5), -3, "TowardsZero -3.5");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.8), 5), -4, "TowardsZero -3.8m");
+
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.8), 4), 4, "AwayFromZero 3.8m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.5), 4), 4, "AwayFromZero 3.5m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.2), 4), 3, "AwayFromZero 3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.2), 4), -3, "AwayFromZero -3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.5), 4), -4, "AwayFromZero -3.5");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.8), 4), -4, "AwayFromZero -3.8m");
+
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.8), 7), 4, "Ceil 3.8m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.5), 7), 4, "Ceil 3.5m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.2), 7), 3, "Ceil 3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.2), 7), -3, "Ceil -3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.5), 7), -3, "Ceil -3.5");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.8), 7), -4, "Ceil -3.8m");
+
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.8), 8), 4, "Floor 3.8m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.5), 8), 3, "Floor 3.5m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.2), 8), 3, "Floor 3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.2), 8), -3, "Floor -3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.5), 8), -4, "Floor -3.5");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.8), 8), -4, "Floor -3.8m");
+
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.8), 6), 4, "ToEven 3.8m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.5), 6), 4, "ToEven 3.5m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(3.2), 6), 3, "ToEven 3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.2), 6), -3, "ToEven -3.2m");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.5), 6), -4, "ToEven -3.5");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.round(Bridge.Decimal(-3.8), 6), -4, "ToEven -3.8m");
+    },
+    roundDecimalWithPrecisionAndModeWorks: function () {
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 6), Bridge.Decimal(1.4), "Bridge584 1");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 6), Bridge.Decimal(1.6), "Bridge584 2");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 6), Bridge.Decimal(123.4568), "Bridge584 3");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 6), Bridge.Decimal(123.456789), "Bridge584 4");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 6), Bridge.Decimal(123.456789), "Bridge584 5");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 6), Bridge.Decimal(-123.0), "Bridge584 6");
+
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 0), 1.5, "Bridge584 Up 1");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 0), 1.6, "Bridge584 Up 2");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 0), 123.4568, "Bridge584 Up 3");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 0), 123.456789, "Bridge584 Up 4");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 0), 123.456789, "Bridge584 Up 5");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 0), -124.0, "Bridge584 Up 6");
+
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 4), 1.5, "Bridge584 AwayFromZero 1");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 4), 1.6, "Bridge584 AwayFromZero 2");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 4), 123.4568, "Bridge584 AwayFromZero 3");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 4), 123.456789, "Bridge584 AwayFromZero 4");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 4), 123.456789, "Bridge584 AwayFromZero 5");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 4), -123.0, "Bridge584 AwayFromZero 6");
+
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 1), 1.4, "Bridge584 Down 1");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 1), 1.5, "Bridge584 Down 2");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 1), 123.4567, "Bridge584 Down 3");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 1), 123.456789, "Bridge584 Down 4");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 1), 123.456789, "Bridge584 Down 5");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 1), -123.0, "Bridge584 Down 6");
+
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 2), 1.5, "Bridge584 InfinityPos 1");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 2), 1.6, "Bridge584 InfinityPos 2");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 2), 123.4568, "Bridge584 InfinityPos 3");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 2), 123.456789, "Bridge584 InfinityPos 4");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 2), 123.456789, "Bridge584 InfinityPos 5");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 2), -123.0, "Bridge584 InfinityPos 6");
+
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 3), 1.4, "Bridge584 InfinityNeg 1");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 3), 1.5, "Bridge584 InfinityNeg 2");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 3), 123.4567, "Bridge584 InfinityNeg 3");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 3), 123.456789, "Bridge584 InfinityNeg 4");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 3), 123.456789, "Bridge584 InfinityNeg 5");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 3), -124.0, "Bridge584 InfinityNeg 6");
+
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 5), 1.4, "Bridge584 TowardsZero 1");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 5), 1.5, "Bridge584 TowardsZero 2");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 5), 123.4568, "Bridge584 TowardsZero 3");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 5), 123.456789, "Bridge584 TowardsZero 4");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 5), 123.456789, "Bridge584 TowardsZero 5");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 5), -123.0, "Bridge584 TowardsZero 6");
+
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 6), 1.4, "Bridge584 ToEven 1");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 6), 1.6, "Bridge584 ToEven 2");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 6), 123.4568, "Bridge584 ToEven 3");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 6), 123.456789, "Bridge584 ToEven 4");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 6), 123.456789, "Bridge584 ToEven 5");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 6), -123.0, "Bridge584 ToEven 6");
+
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 7), 1.5, "Bridge584 Ceil 1");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 7), 1.6, "Bridge584 Ceil 2");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 7), 123.4568, "Bridge584 Ceil 3");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 7), 123.456789, "Bridge584 Ceil 4");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 7), 123.456789, "Bridge584 Ceil 5");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 7), -123.0, "Bridge584 Ceil 6");
+
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 8), 1.4, "Bridge584 Floor 1");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 8), 1.5, "Bridge584 Floor 2");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 8), 123.4568, "Bridge584 Floor 3");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 8), 123.456789, "Bridge584 Floor 4");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 8), 123.456789, "Bridge584 Floor 5");
+        this.assertIsDecimalAndEqualTo(Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 8), -123.0, "Bridge584 Floor 6");
+    },
+    roundDoubleWithModeWorks: function () {
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.8, 0, 6), 4, "3.8");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.5, 0, 6), 4, "3.5");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.2, 0, 6), 3, "3.2");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.2, 0, 6), -3, "-3.2");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.5, 0, 6), -4, "-3.5");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.8, 0, 6), -4, "-3.8");
+
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.8, 0, 0), 4, "Up 3.8");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.5, 0, 0), 4, "Up 3.5");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.2, 0, 0), 4, "Up 3.2");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.2, 0, 0), -4, "Up -3.2");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.5, 0, 0), -4, "Up -3.5");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.8, 0, 0), -4, "Up -3.8");
+
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.8, 0, 1), 3, "Down 3.8");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.5, 0, 1), 3, "Down 3.5");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.2, 0, 1), 3, "Down 3.2");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.2, 0, 1), -3, "Down -3.2");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.5, 0, 1), -3, "Down -3.5");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.8, 0, 1), -3, "Down -3.8");
+
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.8, 0, 2), 4, "InfinityPos 3.8");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.5, 0, 2), 4, "InfinityPos 3.5");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.2, 0, 2), 4, "InfinityPos 3.2");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.2, 0, 2), -3, "InfinityPos -3.2");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.5, 0, 2), -3, "InfinityPos -3.5");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.8, 0, 2), -3, "InfinityPos -3.8");
+
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.8, 0, 3), 3, "InfinityNeg 3.8");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.5, 0, 3), 3, "InfinityNeg 3.5");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.2, 0, 3), 3, "InfinityNeg 3.2");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.2, 0, 3), -4, "InfinityNeg -3.2");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.5, 0, 3), -4, "InfinityNeg -3.5");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.8, 0, 3), -4, "InfinityNeg -3.8");
+
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.8, 0, 5), 4, "TowardsZero 3.8");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.5, 0, 5), 3, "TowardsZero 3.5");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.2, 0, 5), 3, "TowardsZero 3.2");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.2, 0, 5), -3, "TowardsZero -3.2");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.5, 0, 5), -3, "TowardsZero -3.5");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.8, 0, 5), -4, "TowardsZero -3.8");
+
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.8, 0, 4), 4, "AwayFromZero 3.8");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.5, 0, 4), 4, "AwayFromZero 3.5");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.2, 0, 4), 3, "AwayFromZero 3.2");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.2, 0, 4), -3, "AwayFromZero -3.2");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.5, 0, 4), -4, "AwayFromZero -3.5");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.8, 0, 4), -4, "AwayFromZero -3.8");
+
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.8, 0, 7), 4, "Ceil 3.8");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.5, 0, 7), 4, "Ceil 3.5");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.2, 0, 7), 3, "Ceil 3.2");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.2, 0, 7), -3, "Ceil -3.2");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.5, 0, 7), -3, "Ceil -3.5");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.8, 0, 7), -4, "Ceil -3.8");
+
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.8, 0, 8), 4, "Floor 3.8");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.5, 0, 8), 3, "Floor 3.5");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.2, 0, 8), 3, "Floor 3.2");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.2, 0, 8), -3, "Floor -3.2");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.5, 0, 8), -4, "Floor -3.5");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.8, 0, 8), -4, "Floor -3.8");
+
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.8, 0, 6), 4, "ToEven 3.8");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.5, 0, 6), 4, "ToEven 3.5");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.2, 0, 6), 3, "ToEven 3.2");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.2, 0, 6), -3, "ToEven -3.2");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.5, 0, 6), -4, "ToEven -3.5");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.8, 0, 6), -4, "ToEven -3.8");
+    },
+    roundDoubleWithPrecisionAndModeWorks: function () {
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.45, 1, 6), 1.4, "Bridge584 1");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.55, 1, 6), 1.6, "Bridge584 2");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 4, 6), 123.4568, "Bridge584 3");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 6, 6), 123.456789, "Bridge584 4");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 8, 6), 123.456789, "Bridge584 5");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-123.456, 0, 6), -123, "Bridge584 6");
+
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.45, 1, 0), 1.5, "Bridge584 Up 1");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.55, 1, 0), 1.6, "Bridge584 Up 2");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 4, 0), 123.4568, "Bridge584 Up 3");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 6, 0), 123.456789, "Bridge584 Up 4");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 8, 0), 123.456789, "Bridge584 Up 5");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-123.456, 0, 0), -124.0, "Bridge584 Up 6");
+
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.45, 1, 4), 1.5, "Bridge584 AwayFromZero 1");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.55, 1, 4), 1.6, "Bridge584 AwayFromZero 2");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 4, 4), 123.4568, "Bridge584 AwayFromZero 3");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 6, 4), 123.456789, "Bridge584 AwayFromZero 4");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 8, 4), 123.456789, "Bridge584 AwayFromZero 5");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-123.456, 0, 4), -123.0, "Bridge584 AwayFromZero 6");
+
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.45, 1, 1), 1.4, "Bridge584 Down 1");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.55, 1, 1), 1.5, "Bridge584 Down 2");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 4, 1), 123.4567, "Bridge584 Down 3");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 6, 1), 123.456789, "Bridge584 Down 4");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 8, 1), 123.456789, "Bridge584 Down 5");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-123.456, 0, 1), -123.0, "Bridge584 Down 6");
+
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.45, 1, 2), 1.5, "Bridge584 InfinityPos 1");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.55, 1, 2), 1.6, "Bridge584 InfinityPos 2");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 4, 2), 123.4568, "Bridge584 InfinityPos 3");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 6, 2), 123.456789, "Bridge584 InfinityPos 4");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 8, 2), 123.456789, "Bridge584 InfinityPos 5");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-123.456, 0, 2), -123.0, "Bridge584 InfinityPos 6");
+
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.45, 1, 3), 1.4, "Bridge584 InfinityNeg 1");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.55, 1, 3), 1.5, "Bridge584 InfinityNeg 2");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 4, 3), 123.4567, "Bridge584 InfinityNeg 3");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 6, 3), 123.456789, "Bridge584 InfinityNeg 4");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 8, 3), 123.456789, "Bridge584 InfinityNeg 5");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-123.456, 0, 3), -124.0, "Bridge584 InfinityNeg 6");
+
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.45, 1, 5), 1.4, "Bridge584 TowardsZero 1");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.55, 1, 5), 1.5, "Bridge584 TowardsZero 2");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 4, 5), 123.4568, "Bridge584 TowardsZero 3");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 6, 5), 123.456789, "Bridge584 TowardsZero 4");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 8, 5), 123.456789, "Bridge584 TowardsZero 5");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-123.456, 0, 5), -123.0, "Bridge584 TowardsZero 6");
+
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.45, 1, 6), 1.4, "Bridge584 ToEven 1");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.55, 1, 6), 1.6, "Bridge584 ToEven 2");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 4, 6), 123.4568, "Bridge584 ToEven 3");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 6, 6), 123.456789, "Bridge584 ToEven 4");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 8, 6), 123.456789, "Bridge584 ToEven 5");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-123.456, 0, 6), -123.0, "Bridge584 ToEven 6");
+
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.45, 1, 7), 1.5, "Bridge584 Ceil 1");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.55, 1, 7), 1.6, "Bridge584 Ceil 2");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 4, 7), 123.4568, "Bridge584 Ceil 3");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 6, 7), 123.456789, "Bridge584 Ceil 4");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 8, 7), 123.456789, "Bridge584 Ceil 5");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-123.456, 0, 7), -123.0, "Bridge584 Ceil 6");
+
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.45, 1, 8), 1.4, "Bridge584 Floor 1");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.55, 1, 8), 1.5, "Bridge584 Floor 2");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 4, 8), 123.4568, "Bridge584 Floor 3");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 6, 8), 123.456789, "Bridge584 Floor 4");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 8, 8), 123.456789, "Bridge584 Floor 5");
+        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-123.456, 0, 8), -123.0, "Bridge584 Floor 6");
+    },
+    jsRoundWorks: function () {
+        Bridge.Test.Assert.areEqual(3.432.round(), 3.0);
+        Bridge.Test.Assert.areEqual(3.6.round(), 4.0);
+        Bridge.Test.Assert.areEqual(3.5.round(), 4.0);
+        Bridge.Test.Assert.areEqual(4.5.round(), 4.0);
+        Bridge.Test.Assert.areEqual(-3.5.round(), -4.0);
+        Bridge.Test.Assert.areEqual(-4.5.round(), -4.0);
+    },
+    iEEERemainderWorks: function () {
+        this.assertAlmostEqual(3.1 - (4.0 * Math.round(3.1 / 4.0)), -0.9);
+        this.assertAlmostEqual(16.1 - (4.0 * Math.round(16.1 / 4.0)), 0.100000000000001);
+        this.assertAlmostEqual(4.0 - (16.1 * Math.round(4.0 / 16.1)), 4.0);
+        this.assertAlmostEqual(3.1 - (3.2 * Math.round(3.1 / 3.2)), -0.1);
+        this.assertAlmostEqual(3.2 - (3.1 * Math.round(3.2 / 3.1)), 0.1);
     },
     sinWorks: function () {
         this.assertAlmostEqual(Math.sin(0.5), 0.479425538604203);
