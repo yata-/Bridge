@@ -510,7 +510,8 @@ Bridge.define('Bridge.Test.QUnit.RunQUnitTests', {
             QUnit.test("Math - MinOfULongWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.minOfULongWorks);
             QUnit.test("Math - PowWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.powWorks);
             QUnit.test("Math - RandomWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.randomWorks);
-            QUnit.test("Math - RoundOfDoubleWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.roundOfDoubleWorks);
+            QUnit.test("Math - RoundDecimalWithModeWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.roundDecimalWithModeWorks);
+            QUnit.test("Math - RoundDoubleWithModeWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.roundDoubleWithModeWorks);
             QUnit.test("Math - SinWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.sinWorks);
             QUnit.test("Math - SqrtWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.sqrtWorks);
             QUnit.test("Math - TanWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.tanWorks);
@@ -3304,9 +3305,13 @@ Bridge.define('Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests', {
             var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.beforeTest(false, assert);
             t.randomWorks();
         },
-        roundOfDoubleWorks: function (assert) {
+        roundDecimalWithModeWorks: function (assert) {
             var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.beforeTest(false, assert);
-            t.roundOfDoubleWorks();
+            t.roundDecimalWithModeWorks();
+        },
+        roundDoubleWithModeWorks: function (assert) {
+            var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.beforeTest(false, assert);
+            t.roundDoubleWithModeWorks();
         },
         sinWorks: function (assert) {
             var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestMathTests.beforeTest(false, assert);

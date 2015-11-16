@@ -955,6 +955,10 @@
             return Bridge.hasValue(a) && Bridge.hasValue(b) ? a >> b : null;
         },
 
+        srr: function (a, b) {
+            return Bridge.hasValue(a) && Bridge.hasValue(b) ? a >>> b : null;
+        },
+
         sub: function (a, b) {
 	        return Bridge.hasValue(a) && Bridge.hasValue(b) ? a - b : null;
         },

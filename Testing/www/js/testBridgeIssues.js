@@ -1362,6 +1362,36 @@ Bridge.define('ClientTestLibrary.Bridge588B', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge592', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(6);
+
+            var i8_1 = -2;
+            var i8_2 = Bridge.cast((i8_1 >> 4), Bridge.Int);
+            var u8_1 = 254;
+            var u8_2 = Bridge.cast((u8_1 >> 4), Bridge.Int);
+
+            var i16_1 = -2;
+            var i16_2 = Bridge.cast((i16_1 >> 8), Bridge.Int);
+            var u16_1 = 65534;
+            var u16_2 = Bridge.cast((u16_1 >> 8), Bridge.Int);
+
+            var i32_1 = -2;
+            var i32_2 = i32_1 >> 16;
+            var u32_1 = 4294967294;
+            var u32_2 = u32_1 >>> 16;
+
+            assert.equal(i8_2, -1, "Bridge592 i8_2");
+            assert.equal(u8_2, 15, "Bridge592 u8_2");
+            assert.equal(i16_2, -1, "Bridge592 i16_2");
+            assert.equal(u16_2, 255, "Bridge592 u16_2");
+            assert.equal(i32_2, -1, "Bridge592 i32_2");
+            assert.equal(u32_2, 65535, "Bridge592 u32_2");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge595', {
     statics: {
         testUseCase: function (assert) {
