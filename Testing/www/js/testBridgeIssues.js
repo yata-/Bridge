@@ -1362,6 +1362,36 @@ Bridge.define('ClientTestLibrary.Bridge588B', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge592', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(6);
+
+            var i8_1 = -2;
+            var i8_2 = Bridge.cast((i8_1 >> 4), Bridge.Int);
+            var u8_1 = 254;
+            var u8_2 = Bridge.cast((u8_1 >> 4), Bridge.Int);
+
+            var i16_1 = -2;
+            var i16_2 = Bridge.cast((i16_1 >> 8), Bridge.Int);
+            var u16_1 = 65534;
+            var u16_2 = Bridge.cast((u16_1 >> 8), Bridge.Int);
+
+            var i32_1 = -2;
+            var i32_2 = i32_1 >> 16;
+            var u32_1 = 4294967294;
+            var u32_2 = u32_1 >>> 16;
+
+            assert.equal(i8_2, -1, "Bridge592 i8_2");
+            assert.equal(u8_2, 15, "Bridge592 u8_2");
+            assert.equal(i16_2, -1, "Bridge592 i16_2");
+            assert.equal(u16_2, 255, "Bridge592 u16_2");
+            assert.equal(i32_2, -1, "Bridge592 i32_2");
+            assert.equal(u32_2, 65535, "Bridge592 u32_2");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge595', {
     statics: {
         testUseCase: function (assert) {
@@ -1565,6 +1595,84 @@ Bridge.define('ClientTestLibrary.Bridge603Class', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge606', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(5);
+
+            var c = new ClientTestLibrary.Bridge606C();
+            c.example1("b", "a");
+            assert.equal(c.getX(), "b", "Bridge606 C X");
+            assert.equal(c.getY(), "a", "Bridge606 C Y");
+
+            var b = new ClientTestLibrary.Bridge606B("b", "a");
+            assert.equal(b.getX(), "b", "Bridge606 B X");
+            assert.equal(b.getY(), "a", "Bridge606 B Y");
+
+            var s = ClientTestLibrary.Bridge606A.example2("123", "b", "a");
+            assert.equal(s, "123 - b - a", "Bridge606 123");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge606A', {
+    statics: {
+        example2: function (source, x, y) {
+            return source + " - " + x + " - " + y;
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge606B', {
+    config: {
+        properties: {
+            X: null,
+            Y: null
+        }
+    },
+    constructor: function (x, y) {
+        this.setX(x);
+        this.setY(y);
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge606C', {
+    config: {
+        properties: {
+            X: null,
+            Y: null
+        }
+    },
+    example1: function (x, y) {
+        this.setX(x);
+        this.setY(y);
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge607', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(4);
+
+            var c = new ClientTestLibrary.Opti$1(String)();
+            var c1 = new ClientTestLibrary.Class1();
+
+            assert.ok(c.equals(c));
+            assert.notOk(c.equals(null));
+
+            assert.ok(c1.equals(c1));
+            assert.notOk(c1.equals(null));
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Class1', {
+    inherits: function () { return [Bridge.IEquatable$1(ClientTestLibrary.Class1)]; },
+    equals: function (other) {
+        return this === other;
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
@@ -1581,6 +1689,13 @@ Bridge.define('ClientTestLibrary.Bridge304', {
         this.setX("void F()");
     }
 });
+
+Bridge.define('ClientTestLibrary.Opti$1', function (T) { return {
+    inherits: function () { return [Bridge.IEquatable$1(ClientTestLibrary.Opti$1(T))]; },
+    equals: function (obj) {
+        return this === obj;
+    }
+}; });
 
 Bridge.define('ClientTestLibrary.Person383', {
     config: {

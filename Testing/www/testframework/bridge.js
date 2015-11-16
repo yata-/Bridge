@@ -955,6 +955,10 @@
             return Bridge.hasValue(a) && Bridge.hasValue(b) ? a >> b : null;
         },
 
+        srr: function (a, b) {
+            return Bridge.hasValue(a) && Bridge.hasValue(b) ? a >>> b : null;
+        },
+
         sub: function (a, b) {
 	        return Bridge.hasValue(a) && Bridge.hasValue(b) ? a - b : null;
         },
@@ -1902,6 +1906,10 @@
 
             scope = Bridge.Class.set(scope, className, Class);
 
+            if (cacheName) {
+                Bridge.Class.cache[cacheName] = Class;
+            }
+
             if (extend && Bridge.isFunction(extend)) {
                 extend = extend();
             }
@@ -1991,10 +1999,6 @@
             }
 
             prototype.$$name = className;
-
-            if (cacheName) {
-                Bridge.Class.cache[cacheName] = Class;
-            }
 
             // Populate our constructed prototype object
             Class.prototype = prototype;

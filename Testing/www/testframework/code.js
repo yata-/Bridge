@@ -3703,40 +3703,40 @@ Bridge.define('Bridge.ClientTest.MathTests', {
         this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.5, 0, 6), -4, "-3.5");
         this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.8, 0, 6), -4, "-3.8");
 
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.8, 0, 0), 4, "Up 3.8");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.5, 0, 0), 4, "Up 3.5");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.2, 0, 0), 4, "Up 3.2");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.2, 0, 0), -4, "Up -3.2");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.5, 0, 0), -4, "Up -3.5");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.8, 0, 0), -4, "Up -3.8");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.8, MidpointRounding.Up), 4, "Up 3.8");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.5, MidpointRounding.Up), 4, "Up 3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.2, MidpointRounding.Up), 4, "Up 3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.2, MidpointRounding.Up), -4, "Up -3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.5, MidpointRounding.Up), -4, "Up -3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.8, MidpointRounding.Up), -4, "Up -3.8");
 
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.8, 0, 1), 3, "Down 3.8");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.5, 0, 1), 3, "Down 3.5");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.2, 0, 1), 3, "Down 3.2");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.2, 0, 1), -3, "Down -3.2");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.5, 0, 1), -3, "Down -3.5");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.8, 0, 1), -3, "Down -3.8");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.8, MidpointRounding.Down), 3, "Down 3.8");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.5, MidpointRounding.Down), 3, "Down 3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.2, MidpointRounding.Down), 3, "Down 3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.2, MidpointRounding.Down), -3, "Down -3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.5, MidpointRounding.Down), -3, "Down -3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.8, MidpointRounding.Down), -3, "Down -3.8");
 
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.8, 0, 2), 4, "InfinityPos 3.8");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.5, 0, 2), 4, "InfinityPos 3.5");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.2, 0, 2), 4, "InfinityPos 3.2");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.2, 0, 2), -3, "InfinityPos -3.2");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.5, 0, 2), -3, "InfinityPos -3.5");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.8, 0, 2), -3, "InfinityPos -3.8");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.8, MidpointRounding.InfinityPos), 4, "InfinityPos 3.8");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.5, MidpointRounding.InfinityPos), 4, "InfinityPos 3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.2, MidpointRounding.InfinityPos), 4, "InfinityPos 3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.2, MidpointRounding.InfinityPos), -3, "InfinityPos -3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.5, MidpointRounding.InfinityPos), -3, "InfinityPos -3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.8, MidpointRounding.InfinityPos), -3, "InfinityPos -3.8");
 
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.8, 0, 3), 3, "InfinityNeg 3.8");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.5, 0, 3), 3, "InfinityNeg 3.5");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.2, 0, 3), 3, "InfinityNeg 3.2");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.2, 0, 3), -4, "InfinityNeg -3.2");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.5, 0, 3), -4, "InfinityNeg -3.5");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.8, 0, 3), -4, "InfinityNeg -3.8");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.8, MidpointRounding.InfinityNeg), 3, "InfinityNeg 3.8");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.5, MidpointRounding.InfinityNeg), 3, "InfinityNeg 3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.2, MidpointRounding.InfinityNeg), 3, "InfinityNeg 3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.2, MidpointRounding.InfinityNeg), -4, "InfinityNeg -3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.5, MidpointRounding.InfinityNeg), -4, "InfinityNeg -3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.8, MidpointRounding.InfinityNeg), -4, "InfinityNeg -3.8");
 
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.8, 0, 5), 4, "TowardsZero 3.8");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.5, 0, 5), 3, "TowardsZero 3.5");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.2, 0, 5), 3, "TowardsZero 3.2");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.2, 0, 5), -3, "TowardsZero -3.2");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.5, 0, 5), -3, "TowardsZero -3.5");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.8, 0, 5), -4, "TowardsZero -3.8");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.8, MidpointRounding.TowardsZero), 4, "TowardsZero 3.8");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.5, MidpointRounding.TowardsZero), 3, "TowardsZero 3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.2, MidpointRounding.TowardsZero), 3, "TowardsZero 3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.2, MidpointRounding.TowardsZero), -3, "TowardsZero -3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.5, MidpointRounding.TowardsZero), -3, "TowardsZero -3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.8, MidpointRounding.TowardsZero), -4, "TowardsZero -3.8");
 
         this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.8, 0, 4), 4, "AwayFromZero 3.8");
         this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.5, 0, 4), 4, "AwayFromZero 3.5");
@@ -3745,19 +3745,19 @@ Bridge.define('Bridge.ClientTest.MathTests', {
         this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.5, 0, 4), -4, "AwayFromZero -3.5");
         this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.8, 0, 4), -4, "AwayFromZero -3.8");
 
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.8, 0, 7), 4, "Ceil 3.8");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.5, 0, 7), 4, "Ceil 3.5");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.2, 0, 7), 3, "Ceil 3.2");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.2, 0, 7), -3, "Ceil -3.2");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.5, 0, 7), -3, "Ceil -3.5");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.8, 0, 7), -4, "Ceil -3.8");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.8, MidpointRounding.Ceil), 4, "Ceil 3.8");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.5, MidpointRounding.Ceil), 4, "Ceil 3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.2, MidpointRounding.Ceil), 3, "Ceil 3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.2, MidpointRounding.Ceil), -3, "Ceil -3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.5, MidpointRounding.Ceil), -3, "Ceil -3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.8, MidpointRounding.Ceil), -4, "Ceil -3.8");
 
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.8, 0, 8), 4, "Floor 3.8");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.5, 0, 8), 3, "Floor 3.5");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.2, 0, 8), 3, "Floor 3.2");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.2, 0, 8), -3, "Floor -3.2");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.5, 0, 8), -4, "Floor -3.5");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-3.8, 0, 8), -4, "Floor -3.8");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.8, MidpointRounding.Floor), 4, "Floor 3.8");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.5, MidpointRounding.Floor), 3, "Floor 3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(3.2, MidpointRounding.Floor), 3, "Floor 3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.2, MidpointRounding.Floor), -3, "Floor -3.2");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.5, MidpointRounding.Floor), -4, "Floor -3.5");
+        //AssertIsDoubleAndEqualTo(Math.Round(-3.8, MidpointRounding.Floor), -4, "Floor -3.8");
 
         this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.8, 0, 6), 4, "ToEven 3.8");
         this.assertIsDoubleAndEqualTo(Bridge.Math.round(3.5, 0, 6), 4, "ToEven 3.5");
@@ -3774,12 +3774,12 @@ Bridge.define('Bridge.ClientTest.MathTests', {
         this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 8, 6), 123.456789, "Bridge584 5");
         this.assertIsDoubleAndEqualTo(Bridge.Math.round(-123.456, 0, 6), -123, "Bridge584 6");
 
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.45, 1, 0), 1.5, "Bridge584 Up 1");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.55, 1, 0), 1.6, "Bridge584 Up 2");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 4, 0), 123.4568, "Bridge584 Up 3");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 6, 0), 123.456789, "Bridge584 Up 4");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 8, 0), 123.456789, "Bridge584 Up 5");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-123.456, 0, 0), -124.0, "Bridge584 Up 6");
+        //AssertIsDoubleAndEqualTo(Math.Round(1.45, 1, MidpointRounding.Up), 1.5, "Bridge584 Up 1");
+        //AssertIsDoubleAndEqualTo(Math.Round(1.55, 1, MidpointRounding.Up), 1.6, "Bridge584 Up 2");
+        //AssertIsDoubleAndEqualTo(Math.Round(123.456789, 4, MidpointRounding.Up), 123.4568, "Bridge584 Up 3");
+        //AssertIsDoubleAndEqualTo(Math.Round(123.456789, 6, MidpointRounding.Up), 123.456789, "Bridge584 Up 4");
+        //AssertIsDoubleAndEqualTo(Math.Round(123.456789, 8, MidpointRounding.Up), 123.456789, "Bridge584 Up 5");
+        //AssertIsDoubleAndEqualTo(Math.Round(-123.456, 0, MidpointRounding.Up), -124.0, "Bridge584 Up 6");
 
         this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.45, 1, 4), 1.5, "Bridge584 AwayFromZero 1");
         this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.55, 1, 4), 1.6, "Bridge584 AwayFromZero 2");
@@ -3788,33 +3788,33 @@ Bridge.define('Bridge.ClientTest.MathTests', {
         this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 8, 4), 123.456789, "Bridge584 AwayFromZero 5");
         this.assertIsDoubleAndEqualTo(Bridge.Math.round(-123.456, 0, 4), -123.0, "Bridge584 AwayFromZero 6");
 
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.45, 1, 1), 1.4, "Bridge584 Down 1");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.55, 1, 1), 1.5, "Bridge584 Down 2");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 4, 1), 123.4567, "Bridge584 Down 3");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 6, 1), 123.456789, "Bridge584 Down 4");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 8, 1), 123.456789, "Bridge584 Down 5");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-123.456, 0, 1), -123.0, "Bridge584 Down 6");
+        //AssertIsDoubleAndEqualTo(Math.Round(1.45, 1, MidpointRounding.Down), 1.4, "Bridge584 Down 1");
+        //AssertIsDoubleAndEqualTo(Math.Round(1.55, 1, MidpointRounding.Down), 1.5, "Bridge584 Down 2");
+        //AssertIsDoubleAndEqualTo(Math.Round(123.456789, 4, MidpointRounding.Down), 123.4567, "Bridge584 Down 3");
+        //AssertIsDoubleAndEqualTo(Math.Round(123.456789, 6, MidpointRounding.Down), 123.456789, "Bridge584 Down 4");
+        //AssertIsDoubleAndEqualTo(Math.Round(123.456789, 8, MidpointRounding.Down), 123.456789, "Bridge584 Down 5");
+        //AssertIsDoubleAndEqualTo(Math.Round(-123.456, 0, MidpointRounding.Down), -123.0, "Bridge584 Down 6");
 
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.45, 1, 2), 1.5, "Bridge584 InfinityPos 1");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.55, 1, 2), 1.6, "Bridge584 InfinityPos 2");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 4, 2), 123.4568, "Bridge584 InfinityPos 3");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 6, 2), 123.456789, "Bridge584 InfinityPos 4");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 8, 2), 123.456789, "Bridge584 InfinityPos 5");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-123.456, 0, 2), -123.0, "Bridge584 InfinityPos 6");
+        //AssertIsDoubleAndEqualTo(Math.Round(1.45, 1, MidpointRounding.InfinityPos), 1.5, "Bridge584 InfinityPos 1");
+        //AssertIsDoubleAndEqualTo(Math.Round(1.55, 1, MidpointRounding.InfinityPos), 1.6, "Bridge584 InfinityPos 2");
+        //AssertIsDoubleAndEqualTo(Math.Round(123.456789, 4, MidpointRounding.InfinityPos), 123.4568, "Bridge584 InfinityPos 3");
+        //AssertIsDoubleAndEqualTo(Math.Round(123.456789, 6, MidpointRounding.InfinityPos), 123.456789, "Bridge584 InfinityPos 4");
+        //AssertIsDoubleAndEqualTo(Math.Round(123.456789, 8, MidpointRounding.InfinityPos), 123.456789, "Bridge584 InfinityPos 5");
+        //AssertIsDoubleAndEqualTo(Math.Round(-123.456, 0, MidpointRounding.InfinityPos), -123.0, "Bridge584 InfinityPos 6");
 
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.45, 1, 3), 1.4, "Bridge584 InfinityNeg 1");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.55, 1, 3), 1.5, "Bridge584 InfinityNeg 2");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 4, 3), 123.4567, "Bridge584 InfinityNeg 3");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 6, 3), 123.456789, "Bridge584 InfinityNeg 4");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 8, 3), 123.456789, "Bridge584 InfinityNeg 5");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-123.456, 0, 3), -124.0, "Bridge584 InfinityNeg 6");
+        //AssertIsDoubleAndEqualTo(Math.Round(1.45, 1, MidpointRounding.InfinityNeg), 1.4, "Bridge584 InfinityNeg 1");
+        //AssertIsDoubleAndEqualTo(Math.Round(1.55, 1, MidpointRounding.InfinityNeg), 1.5, "Bridge584 InfinityNeg 2");
+        //AssertIsDoubleAndEqualTo(Math.Round(123.456789, 4, MidpointRounding.InfinityNeg), 123.4567, "Bridge584 InfinityNeg 3");
+        //AssertIsDoubleAndEqualTo(Math.Round(123.456789, 6, MidpointRounding.InfinityNeg), 123.456789, "Bridge584 InfinityNeg 4");
+        //AssertIsDoubleAndEqualTo(Math.Round(123.456789, 8, MidpointRounding.InfinityNeg), 123.456789, "Bridge584 InfinityNeg 5");
+        //AssertIsDoubleAndEqualTo(Math.Round(-123.456, 0, MidpointRounding.InfinityNeg), -124.0, "Bridge584 InfinityNeg 6");
 
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.45, 1, 5), 1.4, "Bridge584 TowardsZero 1");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.55, 1, 5), 1.5, "Bridge584 TowardsZero 2");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 4, 5), 123.4568, "Bridge584 TowardsZero 3");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 6, 5), 123.456789, "Bridge584 TowardsZero 4");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 8, 5), 123.456789, "Bridge584 TowardsZero 5");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-123.456, 0, 5), -123.0, "Bridge584 TowardsZero 6");
+        //AssertIsDoubleAndEqualTo(Math.Round(1.45, 1, MidpointRounding.TowardsZero), 1.4, "Bridge584 TowardsZero 1");
+        //AssertIsDoubleAndEqualTo(Math.Round(1.55, 1, MidpointRounding.TowardsZero), 1.5, "Bridge584 TowardsZero 2");
+        //AssertIsDoubleAndEqualTo(Math.Round(123.456789, 4, MidpointRounding.TowardsZero), 123.4568, "Bridge584 TowardsZero 3");
+        //AssertIsDoubleAndEqualTo(Math.Round(123.456789, 6, MidpointRounding.TowardsZero), 123.456789, "Bridge584 TowardsZero 4");
+        //AssertIsDoubleAndEqualTo(Math.Round(123.456789, 8, MidpointRounding.TowardsZero), 123.456789, "Bridge584 TowardsZero 5");
+        //AssertIsDoubleAndEqualTo(Math.Round(-123.456, 0, MidpointRounding.TowardsZero), -123.0, "Bridge584 TowardsZero 6");
 
         this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.45, 1, 6), 1.4, "Bridge584 ToEven 1");
         this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.55, 1, 6), 1.6, "Bridge584 ToEven 2");
@@ -3823,27 +3823,27 @@ Bridge.define('Bridge.ClientTest.MathTests', {
         this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 8, 6), 123.456789, "Bridge584 ToEven 5");
         this.assertIsDoubleAndEqualTo(Bridge.Math.round(-123.456, 0, 6), -123.0, "Bridge584 ToEven 6");
 
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.45, 1, 7), 1.5, "Bridge584 Ceil 1");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.55, 1, 7), 1.6, "Bridge584 Ceil 2");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 4, 7), 123.4568, "Bridge584 Ceil 3");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 6, 7), 123.456789, "Bridge584 Ceil 4");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 8, 7), 123.456789, "Bridge584 Ceil 5");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-123.456, 0, 7), -123.0, "Bridge584 Ceil 6");
+        //AssertIsDoubleAndEqualTo(Math.Round(1.45, 1, MidpointRounding.Ceil), 1.5, "Bridge584 Ceil 1");
+        //AssertIsDoubleAndEqualTo(Math.Round(1.55, 1, MidpointRounding.Ceil), 1.6, "Bridge584 Ceil 2");
+        //AssertIsDoubleAndEqualTo(Math.Round(123.456789, 4, MidpointRounding.Ceil), 123.4568, "Bridge584 Ceil 3");
+        //AssertIsDoubleAndEqualTo(Math.Round(123.456789, 6, MidpointRounding.Ceil), 123.456789, "Bridge584 Ceil 4");
+        //AssertIsDoubleAndEqualTo(Math.Round(123.456789, 8, MidpointRounding.Ceil), 123.456789, "Bridge584 Ceil 5");
+        //AssertIsDoubleAndEqualTo(Math.Round(-123.456, 0, MidpointRounding.Ceil), -123.0, "Bridge584 Ceil 6");
 
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.45, 1, 8), 1.4, "Bridge584 Floor 1");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(1.55, 1, 8), 1.5, "Bridge584 Floor 2");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 4, 8), 123.4568, "Bridge584 Floor 3");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 6, 8), 123.456789, "Bridge584 Floor 4");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(123.456789, 8, 8), 123.456789, "Bridge584 Floor 5");
-        this.assertIsDoubleAndEqualTo(Bridge.Math.round(-123.456, 0, 8), -123.0, "Bridge584 Floor 6");
+        //AssertIsDoubleAndEqualTo(Math.Round(1.45, 1, MidpointRounding.Floor), 1.4, "Bridge584 Floor 1");
+        //AssertIsDoubleAndEqualTo(Math.Round(1.55, 1, MidpointRounding.Floor), 1.5, "Bridge584 Floor 2");
+        //AssertIsDoubleAndEqualTo(Math.Round(123.456789, 4, MidpointRounding.Floor), 123.4568, "Bridge584 Floor 3");
+        //AssertIsDoubleAndEqualTo(Math.Round(123.456789, 6, MidpointRounding.Floor), 123.456789, "Bridge584 Floor 4");
+        //AssertIsDoubleAndEqualTo(Math.Round(123.456789, 8, MidpointRounding.Floor), 123.456789, "Bridge584 Floor 5");
+        //AssertIsDoubleAndEqualTo(Math.Round(-123.456, 0, MidpointRounding.Floor), -123.0, "Bridge584 Floor 6");
     },
     jsRoundWorks: function () {
-        Bridge.Test.Assert.areEqual(3.432.round(), 3.0);
-        Bridge.Test.Assert.areEqual(3.6.round(), 4.0);
-        Bridge.Test.Assert.areEqual(3.5.round(), 4.0);
-        Bridge.Test.Assert.areEqual(4.5.round(), 4.0);
-        Bridge.Test.Assert.areEqual(-3.5.round(), -4.0);
-        Bridge.Test.Assert.areEqual(-4.5.round(), -4.0);
+        Bridge.Test.Assert.areEqual(Math.round(3.432), 3.0);
+        Bridge.Test.Assert.areEqual(Math.round(3.6), 4.0);
+        Bridge.Test.Assert.areEqual(Math.round(3.5), 4.0);
+        Bridge.Test.Assert.areEqual(Math.round(4.5), 5.0);
+        Bridge.Test.Assert.areEqual(Math.round(-3.5), -3.0);
+        Bridge.Test.Assert.areEqual(Math.round(-4.5), -4.0);
     },
     iEEERemainderWorks: function () {
         this.assertAlmostEqual(3.1 - (4.0 * Math.round(3.1 / 4.0)), -0.9);
