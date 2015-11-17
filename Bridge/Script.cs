@@ -282,6 +282,12 @@ namespace Bridge
             return default(T);
         }
 
+        [Template("(Bridge.caller[0] || this)")]
+        public static T Caller<T>()
+        {
+            return default(T);
+        }
+
         [Template("{scope:raw}[{name}] = {value}")]
         public static void Set(object scope, string name, object value)
         {

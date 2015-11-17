@@ -718,7 +718,11 @@
 
                 if (arguments.length === 2) {
                     fn = Bridge.fn.makeFn(function () {
-                        return method.apply(obj, arguments);
+                        Bridge.caller.unshift(this);
+                        var result = method.apply(obj, arguments);
+                        Bridge.caller.shift(this);
+
+                        return result;
                     }, method.length);
                 } else {
                     fn = Bridge.fn.makeFn(function () {
@@ -738,8 +742,11 @@
                                 callArgs.push.apply(callArgs, args);
                             }
                         }
+                        Bridge.caller.unshift(this);
+                        var result = method.apply(obj, callArgs);
+                        Bridge.caller.shift(this);
 
-                        return method.apply(obj, callArgs);
+                        return result;
                     }, method.length);
                 }
 
@@ -755,7 +762,11 @@
 
                     callArgs.unshift.apply(callArgs, [obj]);
 
-                    return method.apply(obj, callArgs);
+                    Bridge.caller.unshift(this);
+                    var result = method.apply(obj, callArgs);
+                    Bridge.caller.shift(this);
+
+                    return result;
                 }, method.length);
 
                 fn.$method = method;
@@ -854,6 +865,7 @@
     }
 
     globals.Bridge = core;
+    globals.Bridge.caller = [];
 })(this);
 
 // @source Nullable.js
