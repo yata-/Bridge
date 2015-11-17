@@ -1817,6 +1817,87 @@ Bridge.define('ClientTestLibrary.Bridge615A', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge623', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(8);
+
+            var func1 = function () {
+                return (Bridge.caller[0] || this).foo;
+            };
+
+            var point1 = new ClientTestLibrary.Bridge623A(1, func1);
+            var point2 = new ClientTestLibrary.Bridge623A(2, func1);
+
+            assert.equal(point1.call(), 1, "Bridge623A point1 func1");
+            assert.equal(point2.call(), 2, "Bridge623A point2 func1");
+
+            var point3 = new ClientTestLibrary.Bridge623B1(3, func1);
+            var point4 = new ClientTestLibrary.Bridge623B1(4, func1);
+
+            assert.equal(point3.call(), 3, "Bridge623B1 point3 func1");
+            assert.equal(point4.call(), 4, "Bridge623B1 point4 func1");
+
+            var func2 = function () {
+                return (Bridge.caller[0] || this).getFoo();
+            };
+
+            var point5 = new ClientTestLibrary.Bridge623B1(5, func2);
+            var point6 = new ClientTestLibrary.Bridge623B1(6, func2);
+
+            assert.equal(point5.call(), 10, "Bridge623B1 point5 func2");
+            assert.equal(point6.call(), 12, "Bridge623B1 point6 func2");
+
+            var func3 = function () {
+                return (Bridge.caller[0] || this).getFoo();
+            };
+
+            var point7 = new ClientTestLibrary.Bridge623B2(7, func3);
+            var point8 = new ClientTestLibrary.Bridge623B2(8, func3);
+
+            assert.equal(point7.call(), 1021, "Bridge623B2 point7 func3");
+            assert.equal(point8.call(), 1024, "Bridge623B2 point8 func3");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge623A', {
+    foo: 0,
+    func: null,
+    constructor: function (foo, func) {
+        this.foo = foo;
+        this.func = func;
+    },
+    call: function () {
+        return this.func();
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge623B1', {
+    inherits: [ClientTestLibrary.Bridge623A],
+    constructor: function (foo, func) {
+        ClientTestLibrary.Bridge623A.prototype.$constructor.call(this, foo, func);
+
+    },
+    getFoo: function () {
+        return 2 * this.foo;
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge623B2', {
+    inherits: [ClientTestLibrary.Bridge623B1],
+    constructor: function (foo, func) {
+        ClientTestLibrary.Bridge623B1.prototype.$constructor.call(this, foo, func);
+
+    },
+    getFoo: function () {
+        return 3 * this.foo;
+    },
+    call: function () {
+        return this.func() + 1000;
+    }
+});
+
 Bridge.define('ClientTestLibrary.Class1', {
     inherits: function () { return [Bridge.IEquatable$1(ClientTestLibrary.Class1)]; },
     equals: function (other) {
