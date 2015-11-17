@@ -493,6 +493,48 @@ Bridge.define('ClientTestLibrary.Bridge485', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge495', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(3);
+
+            var root = document.getElementById("qunit-fixture");
+
+            var button1 = document.createElement('button');
+            button1.innerHTML = "Button 1";
+            button1.id = "button1";
+            button1.style.color = "green";
+
+            root.appendChild(button1);
+
+            var b1 = document.getElementById("button1");
+            assert.equal(b1.style.color, "green", "b1.Style.Color green");
+
+            var button2 = document.createElement('button');
+            button2.innerHTML = "Button 2";
+            button2.id = "button2";
+            button2.style.backgroundColor = "yellow";
+
+            root.appendChild(button2);
+
+            var b2 = document.getElementById("button2");
+            assert.equal(b2.style.backgroundColor, "yellow", "b2.Style.BackgroundColor HTMLColor.Yellow");
+
+            var hexColor = "#FFEEAA";
+            var divElement1 = document.createElement('div');
+            divElement1.innerHTML = "Div 1";
+            divElement1.id = "div1";
+            divElement1.style.color = hexColor;
+
+            root.appendChild(divElement1);
+
+            var div1 = document.getElementById("div1");
+            assert.equal(div1.style.color, "rgb(255, 238, 170)", "div1.Style.Color " + hexColor);
+
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge501', {
     statics: {
         testUseCase: function (assert) {
@@ -1381,6 +1423,13 @@ Bridge.define('ClientTestLibrary.Bridge582', {
             assert.ok(Bridge.Date.timeOfDay(date).equals(new Bridge.TimeSpan(14, 30, 0)), "Bridge582 TestTimeOfDay TimeOfDay 1979, 12, 25, 14, 30, 0");
         }
     }
+});
+
+Bridge.define('ClientTestLibrary.Bridge586A', {
+    statics: {
+
+    },
+
 });
 
 Bridge.define('ClientTestLibrary.Bridge588A', {
@@ -2947,6 +2996,28 @@ Bridge.define('ClientTestLibrary.Bridge583', {
             ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 8), 123.456789, "Bridge583 Floor 4");
             ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 8), 123.456789, "Bridge583 Floor 5");
             ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 8), -123.0, "Bridge583 Floor 6");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge586', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(4);
+
+            assert.throws(function () {
+                ClientTestLibrary.Bridge586A.setSomeDataStatic(Bridge.Decimal(4));
+            }, "a.SomeDataStatic is external");
+            assert.throws(function () {
+                ClientTestLibrary.Bridge586A.doSomethingStatic();
+            }, "a.DoSomethingStatic() is external");
+
+            assert.throws(function () {
+                ClientTestLibrary.Bridge586B.setSomeDataStatic(Bridge.Decimal(4));
+            }, "b.SomeDataStatic is external");
+            assert.throws(function () {
+                ClientTestLibrary.Bridge586B.doSomethingStatic();
+            }, "b.DoSomethingStatic() is external");
         }
     }
 });
