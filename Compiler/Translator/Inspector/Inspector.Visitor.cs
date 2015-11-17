@@ -305,6 +305,7 @@ namespace Bridge.Translator
             }
 
             if (!propertyDeclaration.Getter.IsNull
+                && !this.HasIgnore(propertyDeclaration)
                 && !this.HasInline(propertyDeclaration.Getter)
                 && propertyDeclaration.Getter.Body.IsNull
                 && !this.HasScript(propertyDeclaration.Getter))
