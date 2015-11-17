@@ -1427,17 +1427,9 @@ Bridge.define('ClientTestLibrary.Bridge582', {
 
 Bridge.define('ClientTestLibrary.Bridge586A', {
     statics: {
-        config: {
-            properties: {
-                SomeDataStatic: Bridge.Decimal(0.0)
-            }
-        }
+
     },
-    config: {
-        properties: {
-            SomeData: 0
-        }
-    }
+
 });
 
 Bridge.define('ClientTestLibrary.Bridge588A', {
