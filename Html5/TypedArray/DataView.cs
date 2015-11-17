@@ -4,7 +4,7 @@ namespace Bridge.Html5
     /// An ArrayBuffer is a useful object for representing an arbitrary chunk of data. In many cases, such data will be read from disk or from the network, and will not follow the alignment restrictions that are imposed on the Typed Array Views described earlier. In addition, the data will often be heterogeneous in nature and have a defined byte order.
     /// The DataView view provides a low-level interface for reading such data from and writing it to an ArrayBuffer.
     /// </summary>
-    [Ignore]
+    [External]
     [Name("DataView")]
     public class DataView
     {

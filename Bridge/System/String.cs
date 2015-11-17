@@ -10,7 +10,7 @@ namespace System
     /// <summary>
     /// The String global object is a constructor for strings, or a sequence of characters.
     /// </summary>
-    [Ignore]
+    [External]
     [Name("String")]
     [Constructor("String")]
     public sealed class String : IEnumerable, IEnumerable<char>, IComparable<String>, IEquatable<String>
@@ -1033,7 +1033,7 @@ namespace System
         [IndexerName("Chars")]
         public char this[int index]
         {
-            [Ignore]
+            [External]
             [Template("charCodeAt({0})")]
             get
             {

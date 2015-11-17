@@ -3,7 +3,7 @@ namespace Bridge.Html5
     /// <summary>
     /// The HTMLLabelElement interface gives access to properties specific to &lt;label&gt; elements. It inherits from HTMLElement.
     /// </summary>
-    [Ignore]
+    [External]
     [Name("HTMLLabelElement")]
     public class LabelElement : Element<LabelElement>
     {

@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 
 namespace Bridge.Html5
@@ -6,7 +6,7 @@ namespace Bridge.Html5
     /// <summary>
     /// A CSSStyleDeclaration is an interface to the declaration block returned by the style property of a cssRule in a stylesheet, when the rule is a CSSStyleRule.
     /// </summary>
-    [Ignore]
+    [External]
     [Name("CSSStyleDeclaration")]
     public class CSSStyleDeclaration : IEnumerable<string>
     {

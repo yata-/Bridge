@@ -2,7 +2,7 @@ using Bridge;
 
 namespace System
 {
-    [Ignore]
+    [External]
     public enum StringSplitOptions
     {
         None = 0,

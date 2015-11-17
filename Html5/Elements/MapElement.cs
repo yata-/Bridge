@@ -3,7 +3,7 @@ namespace Bridge.Html5
     /// <summary>
     /// The HTMLMapElement interface provides special properties and methods (beyond those of the regular object HTMLElement interface it also has available to it by inheritance) for manipulating the layout and presentation of map elements.
     /// </summary>
-    [Ignore]
+    [External]
     [Name("HTMLMapElement")]
     public class MapElement : Element<MapElement>
     {

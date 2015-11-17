@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// The HTML elements implementing this interface: &lt;th&gt; and &lt;td&gt;.
     /// </summary>
     /// <typeparam name="TCurrentTarget">The CurrentTarget type of all TableCellElement's events</typeparam>
-    [Ignore]
+    [External]
     [Name("HTMLTableCellElement")]
     public abstract class TableCellElement<TCurrentTarget> : Element<TCurrentTarget> where TCurrentTarget : Element<TCurrentTarget>
     {
@@ -35,7 +35,7 @@ namespace Bridge.Html5
     /// <summary>
     /// The non-generic TableCellElement class. Events' CurrentTarget has the TableCellElement type.
     /// </summary>
-    [Ignore]
+    [External]
     [Name("HTMLTableCellElement")]
     public abstract class TableCellElement : Element<TableCellElement> { }
 }

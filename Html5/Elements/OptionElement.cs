@@ -3,7 +3,7 @@ namespace Bridge.Html5
     /// <summary>
     /// The HTMLOptionElement interface represents &lt;option&gt; elements and inherits all classes and methods of the HTMLElement interface.
     /// </summary>
-    [Ignore]
+    [External]
     [Name("HTMLOptionElement")]
     public class OptionElement : Element<OptionElement>
     {

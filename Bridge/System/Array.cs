@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace System
 {
-    [Ignore]
+    [External]
     [Name("Array")]
     public sealed class Array : IEnumerable, ICloneable
     {
@@ -16,12 +16,12 @@ namespace System
 
         public object this[int index]
         {
-            [Ignore]
+            [External]
             get
             {
                 return null;
             }
-            [Ignore]
+            [External]
             set
             {
             }

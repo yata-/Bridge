@@ -487,7 +487,7 @@ namespace Bridge.Translator
         private bool IsNativeMethod(IMethod resolvedMethod)
         {
             return resolvedMethod.DeclaringTypeDefinition != null &&
-                   this.Emitter.Validator.HasAttribute(resolvedMethod.DeclaringTypeDefinition.Attributes, "Bridge.IgnoreAttribute");
+                   this.Emitter.Validator.IsIgnoreType(resolvedMethod.DeclaringTypeDefinition);
         }
     }
 }

@@ -1,4 +1,4 @@
-// The documentation for this class (on <summary> tags) was extracted from:
+﻿// The documentation for this class (on <summary> tags) was extracted from:
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/prototype
 
 using System;
@@ -13,7 +13,7 @@ namespace Bridge.Html5.TypedArray
     /// object to add properties or methods to all TypedArray instances, where TypedArray is one of the
     /// typed array types.
     /// </summary>
-    [Ignore]
+    [External]
     [Namespace(false)]
     public abstract class Prototype<TypedArray, TypedElement>
     {

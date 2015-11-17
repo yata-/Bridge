@@ -3,7 +3,7 @@ namespace Bridge.Html5
     /// <summary>
     /// HTML &lt;select&gt; elements share all of the properties and methods of other HTML elements described in the element section. They also have the specialized interface HTMLSelectElement.
     /// </summary>
-    [Ignore]
+    [External]
     [Name("HTMLSelectElement")]
     public class SelectElement : Element<SelectElement>
     {

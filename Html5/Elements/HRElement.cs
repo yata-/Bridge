@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// <summary>
     /// The HTMLHRElement interface provides special properties (beyond those of the HTMLElement interface it also has available to it by inheritance) for manipulating &lt;hr&gt; elements.
     /// </summary>
-    [Ignore]
+    [External]
     [Name("HTMLHRElement")]
     public class HRElement : Element<HRElement>
     {

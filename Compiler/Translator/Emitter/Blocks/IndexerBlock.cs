@@ -74,7 +74,7 @@ namespace Bridge.Translator
                         isName = true;
                     }
 
-                    ignoreAccessor = this.Emitter.Validator.HasAttribute(method.Attributes, "Bridge.IgnoreAttribute");
+                    ignoreAccessor = this.Emitter.Validator.IsIgnoreType(method);
                 }
             }
 
