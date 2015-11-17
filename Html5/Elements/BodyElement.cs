@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// <summary>
     /// The HTMLBodyElement interface provides special properties (beyond those of the regular HTMLElement interface they also inherit) for manipulating body elements.
     /// </summary>
-    [Ignore]
+    [External]
     [Name("HTMLBodyElement")]
     public class BodyElement : Element<BodyElement>
     {

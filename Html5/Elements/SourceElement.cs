@@ -3,7 +3,7 @@ namespace Bridge.Html5
     /// <summary>
     /// The HTMLSourceElement interface provides special properties (beyond the regular HTMLElement object interface it also has available to it by inheritance) for manipulating &lt;source&gt; elements.
     /// </summary>
-    [Ignore]
+    [External]
     [Name("HTMLSourceElement")]
     public class SourceElement : Element<SourceElement>
     {

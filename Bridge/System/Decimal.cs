@@ -8,7 +8,7 @@ namespace System
     /// The decimal data type.
     /// http://mikemcl.github.io/decimal.js/
     /// </summary>
-    [Ignore]
+    [External]
     [Name("Bridge.Decimal")]
     [Constructor("Bridge.Decimal")]
     public struct Decimal : IComparable, IComparable<Decimal>, IEquatable<Decimal>, IFormattable
@@ -391,7 +391,7 @@ namespace System
 
     [Name("Object")]
     [Constructor("{ }")]
-    [Ignore]
+    [External]
     public class DecimalConfig
     {
         /// <summary>
@@ -448,7 +448,7 @@ namespace System
 
     [Name("Object")]
     [Constructor("{ }")]
-    [Ignore]
+    [External]
     public class DecimalFormatConfig
     {
         /// <summary>

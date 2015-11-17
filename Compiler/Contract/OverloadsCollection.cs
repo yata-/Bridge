@@ -703,8 +703,8 @@ namespace Bridge.Contract
                     bool eq = false;
                     if (p.IsStatic == this.Static)
                     {
-                        var getterIgnore = p.Getter != null && this.Emitter.Validator.HasAttribute(p.Getter.Attributes, "Bridge.IgnoreAttribute");
-                        var setterIgnore = p.Setter != null && this.Emitter.Validator.HasAttribute(p.Setter.Attributes, "Bridge.IgnoreAttribute");
+                        var getterIgnore = p.Getter != null && this.Emitter.Validator.IsIgnoreType(p.Getter);
+                        var setterIgnore = p.Setter != null && this.Emitter.Validator.IsIgnoreType(p.Setter);
                         var getterName = p.Getter != null ? Helpers.GetPropertyRef(p, this.Emitter, false, true, true) : null;
                         var setterName = p.Setter != null ? Helpers.GetPropertyRef(p, this.Emitter, true, true, true) : null;
                         if (!getterIgnore && getterName != null && (getterName == this.JsName || getterName == this.AltJsName))

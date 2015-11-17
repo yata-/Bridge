@@ -2,7 +2,7 @@ using Bridge;
 
 namespace System
 {
-    [Ignore]
+    [External]
     [Name("Math")]
     public static class Math
     {

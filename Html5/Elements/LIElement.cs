@@ -3,7 +3,7 @@ namespace Bridge.Html5
     /// <summary>
     /// The HTMLLIElement interface expose specific properties and methods (beyond those defined by regular HTMLElement interface it also has available to it by inheritance) for manipulating list elements.
     /// </summary>
-    [Ignore]
+    [External]
     [Name("HTMLLIElement")]
     public class LIElement : Element<LIElement>
     {

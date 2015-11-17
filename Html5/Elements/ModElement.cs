@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// <summary>
     /// The HTMLModElement interface provides special properties (beyond the regular methods and properties available through the HTMLElement interface they also have available to them by inheritance) for manipulating modification elements, that is &lt;del&gt; and &lt;ins&gt;.
     /// </summary>
-    [Ignore]
+    [External]
     [Name("HTMLModElement")]
     public class ModElement : Element<ModElement>
     {
@@ -28,7 +28,7 @@ namespace Bridge.Html5
     /// <summary>
     /// The types of ModElement
     /// </summary>
-    [Ignore]
+    [External]
     [Enum(Emit.StringNameLowerCase)]
     [Name("String")]
     public enum ModElementType

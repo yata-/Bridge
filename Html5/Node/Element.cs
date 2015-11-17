@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace Bridge.Html5
 {
@@ -7,7 +7,7 @@ namespace Bridge.Html5
     /// Specific behaviors are described in interfaces which inherit from Element but add additional functionality.
     /// For example, the HTMLElement interface is the base interface for HTML elements, while the SVGElement interface is the basis for all SVG elements.
     /// </summary>
-    [Ignore]
+    [External]
     [Name("HTMLElement")]
     public class Element : Node
     {

@@ -3,7 +3,7 @@ namespace Bridge.Html5
     /// <summary>
     /// The HTMLAnchorElement interface represents hyperlink elements and provides special properties and methods (beyond those of the regular HTMLElement object interface they also have available to them by inheritance) for manipulating the layout and presentation of such elements.
     /// </summary>
-    [Ignore]
+    [External]
     [Name("HTMLAnchorElement")]
     public class AnchorElement : Element<AnchorElement>
     {

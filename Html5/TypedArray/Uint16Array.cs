@@ -9,7 +9,7 @@ namespace Bridge.Html5
     /// Once established, you can reference elements in the array using the object's methods, or using
     /// standard array index syntax (that is, using bracket notation).
     /// </summary>
-    [Ignore]
+    [External]
     [Namespace(false)]
     public class Uint16Array : TypedArray.Prototype<Uint16Array, ushort>
     {

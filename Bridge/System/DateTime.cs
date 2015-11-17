@@ -2,7 +2,7 @@ using Bridge;
 
 namespace System
 {
-    [Ignore]
+    [External]
     [Name("Date")]
     public struct DateTime : IComparable, IComparable<DateTime>, IEquatable<DateTime>, IFormattable
     {
