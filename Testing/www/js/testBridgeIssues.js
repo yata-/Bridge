@@ -1425,6 +1425,13 @@ Bridge.define('ClientTestLibrary.Bridge582', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge586A', {
+    statics: {
+
+    },
+
+});
+
 Bridge.define('ClientTestLibrary.Bridge588A', {
     statics: {
         config: {
@@ -2989,6 +2996,28 @@ Bridge.define('ClientTestLibrary.Bridge583', {
             ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 8), 123.456789, "Bridge583 Floor 4");
             ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 8), 123.456789, "Bridge583 Floor 5");
             ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 8), -123.0, "Bridge583 Floor 6");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge586', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(4);
+
+            assert.throws(function () {
+                ClientTestLibrary.Bridge586A.setSomeDataStatic(Bridge.Decimal(4));
+            }, "a.SomeDataStatic is external");
+            assert.throws(function () {
+                ClientTestLibrary.Bridge586A.doSomethingStatic();
+            }, "a.DoSomethingStatic() is external");
+
+            assert.throws(function () {
+                ClientTestLibrary.Bridge586B.setSomeDataStatic(Bridge.Decimal(4));
+            }, "b.SomeDataStatic is external");
+            assert.throws(function () {
+                ClientTestLibrary.Bridge586B.doSomethingStatic();
+            }, "b.DoSomethingStatic() is external");
         }
     }
 });

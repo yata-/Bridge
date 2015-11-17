@@ -59,37 +59,37 @@ namespace System
         }
 
         [Template("Date.UTC({year}, {month} - 1, {day}, {hours}, {minutes}, {seconds}, {ms})")]
-        public static long UTC(int year, int month, int day, int hours, int minutes, int seconds, int ms)
+        public static long Utc(int year, int month, int day, int hours, int minutes, int seconds, int ms)
         {
             return 0;
         }
 
         [Template("Date.UTC({year}, {month} - 1, {day}, {hours}, {minutes}, {seconds})")]
-        public static long UTC(int year, int month, int day, int hours, int minutes, int seconds)
+        public static long Utc(int year, int month, int day, int hours, int minutes, int seconds)
         {
             return 0;
         }
 
         [Template("Date.UTC({year}, {month} - 1, {day}, {hours}, {minutes})")]
-        public static long UTC(int year, int month, int day, int hours, int minutes)
+        public static long Utc(int year, int month, int day, int hours, int minutes)
         {
             return 0;
         }
 
         [Template("Date.UTC({year}, {month} - 1, {day}, {hours})")]
-        public static long UTC(int year, int month, int day, int hours)
+        public static long Utc(int year, int month, int day, int hours)
         {
             return 0;
         }
 
         [Template("Date.UTC({year}, {month} - 1, {day})")]
-        public static long UTC(int year, int month, int day)
+        public static long Utc(int year, int month, int day)
         {
             return 0;
         }
 
         [Template("Date.UTC({year}, {month} - 1)")]
-        public static long UTC(int year, int month)
+        public static long Utc(int year, int month)
         {
             return 0;
         }
@@ -202,32 +202,38 @@ namespace System
             return 0;
         }
 
-        public int GetUTCDate()
+        [Name("getUTCDate")]
+        public int GetUtcDate()
         {
             return 0;
         }
 
-        public int GetUTCDay()
+        [Name("getUTCDay")]
+        public int GetUtcDay()
         {
             return 0;
         }
 
-        public int GetUTCFullYear()
+        [Name("getUTCFullYear")]
+        public int GetUtcFullYear()
         {
             return 0;
         }
 
-        public int GetUTCHours()
+        [Name("getUTCHours")]
+        public int GetUtcHours()
         {
             return 0;
         }
 
-        public int GetUTCMilliseconds()
+        [Name("getUTCMilliseconds")]
+        public int GetUtcMilliseconds()
         {
             return 0;
         }
 
-        public int GetUTCMinutes()
+        [Name("getUTCMinutes")]
+        public int GetUtcMinutes()
         {
             return 0;
         }
@@ -238,7 +244,8 @@ namespace System
             return 0;
         }
 
-        public int GetUTCSeconds()
+        [Name("getUTCSeconds")]
+        public int GetUtcSeconds()
         {
             return 0;
         }
@@ -419,7 +426,8 @@ namespace System
             return null;
         }
 
-        public string ToUTCString()
+        [Name("toUTCString")]
+        public string ToUtcString()
         {
             return null;
         }
