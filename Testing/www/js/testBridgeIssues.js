@@ -536,6 +536,27 @@ Bridge.define('ClientTestLibrary.Bridge502', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge503', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(4);
+
+            var a = ["a", "b", "c"];
+            var list = new Bridge.List$1(String)(a);
+
+            list.addRange(a);
+
+            assert.equal(a.length, 3, "Bridge503: array.Length is correct");
+            assert.equal(list.getCount(), 6, "Bridge503: list.Count is correct");
+
+            list.clear();
+
+            assert.equal(a.length, 3, "Bridge503: array.Length is correct");
+            assert.equal(list.getCount(), 0, "Bridge503: list.Count is correct");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge514', {
     statics: {
         testUseCase: function (assert) {
@@ -2872,6 +2893,14 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
         ensureNumber: function (assert, actual, expected, message) {
             assert.equal(actual.toString(), expected, message);
         },
+        assertAlmostEqual: function (assert, actual, expected, message) {
+            var diff = expected - actual;
+            if (diff < 0) {
+                diff = -diff;
+            }
+
+            assert.ok(diff < 1E-08, message + "actual: " + actual + "expeted:" + expected);
+        },
         n410: function (assert) {
             // Decimal consts
             var DecimalZero = Bridge.Decimal.Zero;
@@ -2946,7 +2975,8 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
             ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathE, "2.718281828459045", "MathE");
             ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathLN10, "2.302585092994046", "MathLN10");
             ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathLN2, "0.6931471805599453", "MathLN2");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathLOG2E, "1.4426950408889634", "MathLOG2E");
+            //IE has Math.LOG2E defined as 1.4426950408889633 instead of standard 1.4426950408889634
+            ClientTestLibrary.TestBridgeIssues.assertAlmostEqual(assert, MathLOG2E, 1.4426950408889634, "MathLOG2E");
             ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathLOG10E, "0.4342944819032518", "MathLOG10E");
             ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathPI, "3.141592653589793", "MathPI");
             ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathSQRT1_2, "0.7071067811865476", "MathSQRT1_2");
@@ -2965,7 +2995,8 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
             ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathE, "2.718281828459045", "MathEin expression");
             ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathLN10, "2.302585092994046", "MathLN10in expression");
             ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathLN2, "0.6931471805599453", "MathLN2in expression");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathLOG2E, "1.4426950408889634", "MathLOG2Ein expression");
+            //IE has Math.LOG2E defined as 1.4426950408889633 instead of standard 1.4426950408889634
+            ClientTestLibrary.TestBridgeIssues.assertAlmostEqual(assert, MathLOG2E, 1.4426950408889634, "MathLOG2Ein expression");
             ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathLOG10E, "0.4342944819032518", "MathLOG10Ein expression");
             ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathPI, "3.141592653589793", "MathPIin expression");
             ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathSQRT1_2, "0.7071067811865476", "MathSQRT1_2in expression");
