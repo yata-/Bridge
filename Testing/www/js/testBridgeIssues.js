@@ -1919,6 +1919,31 @@ Bridge.define('ClientTestLibrary.Bridge623B2', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge634', {
+    statics: {
+        testUseCase: function (assert) {
+            var $t;
+            assert.expect(1);
+
+            var hashSet = new Bridge.Collections.HashSet$1(String)("constructor");
+
+            hashSet.add$1("a");
+            hashSet.add$1("b");
+            hashSet.add$1("c");
+
+            var text = "";
+
+            $t = Bridge.getEnumerator(hashSet);
+            while ($t.moveNext()) {
+                var s = $t.getCurrent();
+                text += s;
+            }
+
+            assert.equal(text, "abc", "Bridge634: foreach works for HashSet");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Class1', {
     inherits: function () { return [Bridge.IEquatable$1(ClientTestLibrary.Class1)]; },
     equals: function (other) {
