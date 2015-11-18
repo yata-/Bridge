@@ -161,6 +161,20 @@ Bridge.define('ClientTestLibrary.ClassA.Aux1', {
     }
 });
 
+Bridge.define('ClientTestLibrary.TestSet1FailureHelper', {
+    statics: {
+        testConstructor1Failure: function () {
+            new ClientTestLibrary.ClassA("constructor$1", Bridge.cast(null, ClientTestLibrary.ClassA.Aux1));
+        },
+        testConstructor2Failure: function () {
+            var t = new ClientTestLibrary.ClassA("constructor$2", [Bridge.Array.init(2, null)]);
+        },
+        staticMethod2Failure: function () {
+            ClientTestLibrary.ClassA.staticMethod2(["1", "some string", "345.345435"]);
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.TestReferenceTypes', {
     statics: {
         testInstanceConstructorsAndMethods: function (assert) {
@@ -306,20 +320,6 @@ Bridge.define('ClientTestLibrary.TestReferenceTypes', {
 
             assert.ok(tryResult, "tryResult");
             assert.deepEqual(i.v, 3, "i 3");
-        }
-    }
-});
-
-Bridge.define('ClientTestLibrary.TestSet1FailureHelper', {
-    statics: {
-        testConstructor1Failure: function () {
-            new ClientTestLibrary.ClassA("constructor$1", Bridge.cast(null, ClientTestLibrary.ClassA.Aux1));
-        },
-        testConstructor2Failure: function () {
-            var t = new ClientTestLibrary.ClassA("constructor$2", [Bridge.Array.init(2, null)]);
-        },
-        staticMethod2Failure: function () {
-            ClientTestLibrary.ClassA.staticMethod2(["1", "some string", "345.345435"]);
         }
     }
 });

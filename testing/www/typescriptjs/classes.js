@@ -52,14 +52,6 @@ Bridge.define('Classes.Dog', {
     }
 });
 
-Bridge.define('Classes.StaticClass', {
-    statics: {
-        move: function (p, dx, dy) {
-            return new Classes.Point("constructor$1", p.x + dx, p.y + dy);
-        }
-    }
-});
-
 Bridge.define('Classes.Point', {
     x: 0,
     y: 0,
@@ -86,6 +78,14 @@ Bridge.define('Classes.Point', {
         s.x = this.x;
         s.y = this.y;
         return s;
+    }
+});
+
+Bridge.define('Classes.StaticClass', {
+    statics: {
+        move: function (p, dx, dy) {
+            return new Classes.Point("constructor$1", p.x + dx, p.y + dy);
+        }
     }
 });
 

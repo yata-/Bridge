@@ -399,175 +399,98 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests.TestReverseCompar
     }
 });
 
-Bridge.define('Bridge.ClientTest.DecimalMathTests', {
+Bridge.define('Bridge.ClientTest.DecimalMathTests.Logger', {
     statics: {
-        useLogging: false,
-        jSMode: true,
-        NoDotNetDiff: false,
-        HasDotNetDiff: true,
-        config: {
-            init: function () {
-                this.maxValue = Bridge.Decimal.MaxValue;
-                this.minValue = Bridge.Decimal.MinValue;
-                this.inputAdd = Bridge.Array.create(null, [[Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(47.0), Bridge.Decimal(47.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(-47.0), Bridge.Decimal(-47.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(-47.0), Bridge.Decimal(-47.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(47.0), Bridge.Decimal(47.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.33478923476"), Bridge.Decimal(47.0), Bridge.Decimal("443534569034923.33478923476")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.12345678901235"), Bridge.Decimal(47.000000000001), Bridge.Decimal("443534569034923.12345678901335")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.12345678901235"), Bridge.Decimal("9436905724146.297872340425532"), Bridge.Decimal("452971474759022.42132912943788")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("4435345690348766678656790453"), Bridge.Decimal(17.0), Bridge.Decimal("4435345690348766678656790470")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(17.2345324), Bridge.Decimal("4435345690348766678656790453"), Bridge.Decimal("4435345690348766678656790470.2")], [Bridge.ClientTest.DecimalMathTests.HasDotNetDiff, "0.00000000000005", Bridge.Decimal("-943456769034871.4234"), Bridge.Decimal("47.00000000003455"), Bridge.Decimal("-943456769034824.4233999999654")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("6999545690348766678656790453"), Bridge.Decimal(-13.0), Bridge.Decimal("6999545690348766678656790440")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(11.0), Bridge.Decimal("-6435345690348766678656790453"), Bridge.Decimal("-6435345690348766678656790442")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.maxValue, Bridge.ClientTest.DecimalMathTests.minValue, Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal.MinusOne, Bridge.ClientTest.DecimalMathTests.maxValue, Bridge.Decimal("79228162514264337593543950334")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.maxValue, Bridge.Decimal.MinusOne, Bridge.Decimal("79228162514264337593543950334")]], 15, 5);
-                this.inputSubtract = Bridge.Array.create(null, [[Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(47.0), Bridge.Decimal(-47.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(-47.0), Bridge.Decimal(47.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(-47.0), Bridge.Decimal(47.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(47.0), Bridge.Decimal(-47.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.33478923476"), Bridge.Decimal(47.0), Bridge.Decimal("443534569034829.33478923476")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.12345678901235"), Bridge.Decimal(47.000000000001), Bridge.Decimal("443534569034829.12345678901135")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.12345678901235"), Bridge.Decimal("9436905724146.297872340425532"), Bridge.Decimal("434097663310729.82558444858682")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("4435345690348766678656790453"), Bridge.Decimal(17.0), Bridge.Decimal("4435345690348766678656790436")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(17.2345324), Bridge.Decimal("4435345690348766678656790453"), Bridge.Decimal("-4435345690348766678656790435.8")], [Bridge.ClientTest.DecimalMathTests.HasDotNetDiff, Bridge.Decimal("-5E-14"), Bridge.Decimal("-943456769034871.4234"), Bridge.Decimal("47.00000000003455"), Bridge.Decimal("-943456769034918.4234000000346")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("6999545690348766678656790453"), Bridge.Decimal(-13.0), Bridge.Decimal("6999545690348766678656790466")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(11.0), Bridge.Decimal("-6435345690348766678656790453"), Bridge.Decimal("6435345690348766678656790464")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.maxValue, Bridge.ClientTest.DecimalMathTests.maxValue, Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal.MinusOne, Bridge.ClientTest.DecimalMathTests.minValue, Bridge.Decimal("79228162514264337593543950334")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.maxValue, Bridge.Decimal.One, Bridge.Decimal("79228162514264337593543950334")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.minValue, Bridge.Decimal.MinusOne, Bridge.Decimal("-79228162514264337593543950334")]], 16, 5);
-                this.inputMultiply = Bridge.Array.create(null, [[Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(47.0), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(-47.0), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(-47.0), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(47.0), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(0.0), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.33478923476"), Bridge.Decimal(0.47), Bridge.Decimal("208461247446391.8773509403372")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("43534569034876.12345678901235"), Bridge.Decimal(47.000000000001), Bridge.Decimal("2046124744639221.3370381184566")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("44.353456903487612345678901235"), Bridge.Decimal("9436905724146.297872340425532"), Bridge.Decimal("418559391338198.38088395328596")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("4435345690348766678656790453"), Bridge.Decimal(0.17), Bridge.Decimal("754008767359290335371654377.01")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(17.2345324), Bridge.Decimal("443534569034876667865679045.37"), Bridge.Decimal("7644110900551618662335084355.4")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("-943456769034871.4234"), Bridge.Decimal("0.4700000000003455"), Bridge.Decimal("-443424681446715.53331170154808")], [Bridge.ClientTest.DecimalMathTests.HasDotNetDiff, Bridge.Decimal(-0.01), Bridge.Decimal("6999545690348766678656790453"), Bridge.Decimal(-0.13), Bridge.Decimal("-909940939745339668225382758.9")], [Bridge.ClientTest.DecimalMathTests.HasDotNetDiff, Bridge.Decimal(0.0001), Bridge.Decimal(0.11), Bridge.Decimal("-64353456903487666786567904.535"), Bridge.Decimal("-7078880259383643346522469.4988")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.maxValue, Bridge.Decimal.MinusOne, Bridge.ClientTest.DecimalMathTests.minValue], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal.MinusOne, Bridge.ClientTest.DecimalMathTests.minValue, Bridge.ClientTest.DecimalMathTests.maxValue], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.maxValue, Bridge.Decimal.One, Bridge.ClientTest.DecimalMathTests.maxValue], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.minValue, Bridge.Decimal.MinusOne, Bridge.ClientTest.DecimalMathTests.maxValue]], 17, 5);
-                this.inputDivide = Bridge.Array.create(null, [[Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(47.0), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(-47.0), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(-47.0), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(47.0), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal.One, Bridge.Decimal(2.0), Bridge.Decimal(0.5)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(3.0), Bridge.Decimal(4.0), Bridge.Decimal(0.75)], [Bridge.ClientTest.DecimalMathTests.HasDotNetDiff, "-0.00000000000000000000000000003", Bridge.Decimal(5.0), Bridge.Decimal(6.0), Bridge.Decimal("0.8333333333333333333333333333")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(7.0), Bridge.Decimal(8.0), Bridge.Decimal(0.875)], [Bridge.ClientTest.DecimalMathTests.HasDotNetDiff, "-0.0000000000000005", Bridge.Decimal("443534569034876.33478923476"), Bridge.Decimal(47.0), Bridge.Decimal("9436905724146.304995515633191")], [Bridge.ClientTest.DecimalMathTests.HasDotNetDiff, "0.0000000000000002", Bridge.Decimal("443534569034876.12345678901235"), Bridge.Decimal(47.000000000001), Bridge.Decimal("9436905724146.099713852443963")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.12345678901235"), Bridge.Decimal("9436905724146.297872340425532"), Bridge.Decimal("47.000000000000013082337857467")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("4435345690348766678656790453"), Bridge.Decimal(17.0), Bridge.Decimal("260902687667574510509222967.82")], [Bridge.ClientTest.DecimalMathTests.HasDotNetDiff, "0.0000000000000000000000000000142752779107986686908967873", Bridge.Decimal(17.2345324), Bridge.Decimal("4435345690348766678656790453"), Bridge.Decimal("3.9000000000000004E-27")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("-943456769034871.4234"), Bridge.Decimal("47.00000000003455"), Bridge.Decimal("-20073548277322.933666106776439")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("6999545690348766678656790453"), Bridge.Decimal(-13.0), Bridge.Decimal("-538426591565289744512060804.08")], [Bridge.ClientTest.DecimalMathTests.HasDotNetDiff, "0.0000000000000000000000000000093098847039324132480985641", Bridge.Decimal(11.0), Bridge.Decimal("-6435345690348766678656790453"), Bridge.Decimal("-1.7000000000000002E-27")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.maxValue, Bridge.ClientTest.DecimalMathTests.minValue, Bridge.Decimal.MinusOne], [Bridge.ClientTest.DecimalMathTests.HasDotNetDiff, "-0.000000000000000000000000000012621774483536188886587657045", Bridge.Decimal.MinusOne, Bridge.ClientTest.DecimalMathTests.minValue, Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.maxValue, Bridge.Decimal.MinusOne, Bridge.ClientTest.DecimalMathTests.minValue], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.minValue, Bridge.Decimal.MinusOne, Bridge.ClientTest.DecimalMathTests.maxValue]], 20, 5);
-                this.inputRemainder = Bridge.Array.create(null, [[Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(47.0), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(-47.0), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(-47.0), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(47.0), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.33478923476"), Bridge.Decimal(47.0), Bridge.Decimal(14.33478923476)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.12345678901235"), Bridge.Decimal(47.000000000001), Bridge.Decimal(4.68655106486635)], [Bridge.ClientTest.DecimalMathTests.HasDotNetDiff, Bridge.Decimal("4E-15"), Bridge.Decimal("443534569034876.12345678901235"), Bridge.Decimal("9436905724146.297872340425532"), Bridge.Decimal(0.12345678901235)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("4435345690348766678656790453"), Bridge.Decimal(17.0), Bridge.Decimal(14.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(17.2345324), Bridge.Decimal("4435345690348766678656790453"), Bridge.Decimal(17.2345324)], [Bridge.ClientTest.DecimalMathTests.HasDotNetDiff, Bridge.Decimal("1E-13"), Bridge.Decimal("-943456769034871.4234"), Bridge.Decimal("47.00000000003455"), Bridge.Decimal(-43.8823070185248)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("6999545690348766678656790453"), Bridge.Decimal(-13.0), Bridge.Decimal.One], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(11.0), Bridge.Decimal("-6435345690348766678656790453"), Bridge.Decimal(11.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.maxValue, Bridge.ClientTest.DecimalMathTests.maxValue, Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal.MinusOne, Bridge.ClientTest.DecimalMathTests.minValue, Bridge.Decimal.MinusOne], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.maxValue, Bridge.Decimal.One, Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.minValue, Bridge.Decimal.MinusOne, Bridge.Decimal(0.0)]], 16, 5);
-            }
-        },
-        testSubtractOperator: function () {
-            Bridge.ClientTest.DecimalMathTests.runOperationSet$1(Bridge.ClientTest.DecimalMathTests.inputSubtract, "SubtractOperator", function (a, b) {
-                return a.sub(b);
-            });
-        },
-        testRemainderOperator: function () {
-            Bridge.ClientTest.DecimalMathTests.runOperationSet$1(Bridge.ClientTest.DecimalMathTests.inputRemainder, "RemainderOperator", function (a, b) {
-                return a.mod(b);
-            });
-        },
-        testMultiplyOperator: function () {
-            Bridge.ClientTest.DecimalMathTests.runOperationSet$1(Bridge.ClientTest.DecimalMathTests.inputMultiply, "MultiplyOperator", function (a, b) {
-                return a.mul(b);
-            });
-        },
-        testDivideOperator: function () {
-            Bridge.ClientTest.DecimalMathTests.runOperationSet$1(Bridge.ClientTest.DecimalMathTests.inputDivide, "DivideOperator", function (a, b) {
-                return a.div(b);
-            });
-        },
-        testAddOperator: function () {
-            Bridge.ClientTest.DecimalMathTests.runOperationSet$1(Bridge.ClientTest.DecimalMathTests.inputAdd, "AddOperator", function (a, b) {
-                return a.add(b);
-            });
-        },
-        testAddMethod: function () {
-            Bridge.ClientTest.DecimalMathTests.runOperationSet$1(Bridge.ClientTest.DecimalMathTests.inputAdd, "AddMethod", function (a, b) {
-                return a.add(b);
-            });
-        },
-        testDivideMethod: function () {
-            Bridge.ClientTest.DecimalMathTests.runOperationSet$1(Bridge.ClientTest.DecimalMathTests.inputDivide, "DivideMethod", function (a, b) {
-                return a.div(b);
-            });
-        },
-        testMultiplyMethod: function () {
-            Bridge.ClientTest.DecimalMathTests.runOperationSet$1(Bridge.ClientTest.DecimalMathTests.inputMultiply, "MiltiplyMethod", function (a, b) {
-                return a.mul(b);
-            });
-        },
-        testRemainderMethod: function () {
-            Bridge.ClientTest.DecimalMathTests.runOperationSet$1(Bridge.ClientTest.DecimalMathTests.inputRemainder, "RemainderMethod", function (a, b) {
-                return a.mod(b);
-            });
-        },
-        testSubtractMethod: function () {
-            Bridge.ClientTest.DecimalMathTests.runOperationSet$1(Bridge.ClientTest.DecimalMathTests.inputSubtract, "SubtractMethod", function (a, b) {
-                return a.sub(b);
-            });
-        },
-        testCeilingMethod: function () {
-            var input = Bridge.Array.create(null, [[Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("-443534569034876.12345678901235"), Bridge.Decimal(-443534569034876.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("-443534569034876.82345678901235"), Bridge.Decimal(-443534569034876.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.12345678901235"), Bridge.Decimal(443534569034877.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.62345678901235"), Bridge.Decimal(443534569034877.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.49999999999999"), Bridge.Decimal(443534569034877.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.50000000000001"), Bridge.Decimal(443534569034877.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.99999999999999"), Bridge.Decimal(443534569034877.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("4435345690348766678656790453"), Bridge.Decimal("4435345690348766678656790453")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(17.9345324), Bridge.Decimal(18.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("-0.9434567690348714234"), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("6999545690348766678656790453"), Bridge.Decimal("6999545690348766678656790453")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.maxValue, Bridge.ClientTest.DecimalMathTests.maxValue], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal.MinusOne, Bridge.Decimal.MinusOne], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.minValue, Bridge.ClientTest.DecimalMathTests.minValue]], 15, 4);
+        convertParameters: function (parameters) {
+            var result = Bridge.Array.init(parameters.length + 1, null);
 
-            Bridge.ClientTest.DecimalMathTests.runOperationSet(input, "CeilingMethod", function (a) {
-                return a.ceil();
-            });
-        },
-        testFloorMethod: function () {
-            var input = Bridge.Array.create(null, [[Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("-443534569034876.12345678901235"), Bridge.Decimal(-443534569034877.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("-443534569034876.82345678901235"), Bridge.Decimal(-443534569034877.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.12345678901235"), Bridge.Decimal(443534569034876.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.62345678901235"), Bridge.Decimal(443534569034876.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.49999999999999"), Bridge.Decimal(443534569034876.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.50000000000001"), Bridge.Decimal(443534569034876.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.99999999999999"), Bridge.Decimal(443534569034876.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("4435345690348766678656790453"), Bridge.Decimal("4435345690348766678656790453")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(17.9345324), Bridge.Decimal(17.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("-0.9434567690348714234"), Bridge.Decimal.MinusOne], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("6999545690348766678656790453"), Bridge.Decimal("6999545690348766678656790453")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.maxValue, Bridge.ClientTest.DecimalMathTests.maxValue], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal.MinusOne, Bridge.Decimal.MinusOne], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.minValue, Bridge.ClientTest.DecimalMathTests.minValue]], 15, 4);
+            for (var i = 0; i < parameters.length; i++) {
+                if (i === 0) {
+                    var d = Bridge.cast(parameters[0], Bridge.Decimal, true);
+                    result[0] = Bridge.Nullable.hasValue(d) ? "HasDotNetDiff" : "NoDotNetDiff";
+                    result[1] = Bridge.Nullable.hasValue(d) ? d.toString() + "m" : "null";
 
-            Bridge.ClientTest.DecimalMathTests.runOperationSet(input, "FloorMethod", function (a) {
-                return a.floor();
-            });
-        },
-        runOperationSet$1: function (input, name, operation) {
-            var logger = new Bridge.ClientTest.DecimalMathTests.Logger();
-            logger.onLogBegin(name);
+                    continue;
+                }
 
-            for (var i = Bridge.Array.getLower(input, 0); i <= (Bridge.Array.getLength(input, 0) - 1); i++) {
-                var lowerBound = Bridge.Array.getLower(input, 1);
-                var dotNetDiff = Bridge.ClientTest.DecimalMathTests.parseDotNetDiff(input, i, lowerBound);
-
-                var a = input.get([i, lowerBound + 2]);
-                var b = input.get([i, lowerBound + 3]);
-                var expected = input.get([i, lowerBound + 4]);
-                var result = Bridge.ClientTest.DecimalMathTests.runOperation(Bridge.cast(a, Bridge.Decimal), Bridge.cast(b, Bridge.Decimal), operation);
-
-                logger.onLog([dotNetDiff, a, b, result]);
-
-                var diff = Bridge.ClientTest.DecimalMathTests.getDifference(expected, result);
-                var diffReport = Bridge.ClientTest.DecimalMathTests.getDifferenceReport(diff);
-
-                Bridge.ClientTest.DecimalMathTests.assertDecimal(dotNetDiff, expected, result, diffReport, Bridge.String.format("{0} for row {1} with operand {2} and {3} .NetDiff {4}{5}", name, i, a, b, dotNetDiff, diffReport));
+                var o = parameters[i];
+                var j = i + 1;
+                if (Bridge.is(o, Bridge.Decimal)) {
+                    var d1 = Bridge.cast(o, Bridge.Decimal);
+                    if (d1.equals(Bridge.ClientTest.DecimalMathTests.maxValue))
+                        result[j] = "DecimalMathTests.MaxValue";
+                    else 
+                        if (d1.equals(Bridge.ClientTest.DecimalMathTests.minValue))
+                            result[j] = "DecimalMathTests.MinValue";
+                        else 
+                            if (d1.equals(Bridge.Decimal.MinusOne))
+                                result[j] = "decimal.MinusOne";
+                            else 
+                                if (d1.equals(Bridge.Decimal.One))
+                                    result[j] = "decimal.One";
+                                else 
+                                    result[j] = d1.toString() + "m";
+                }
+                else  {
+                    result[j] = o;
+                }
             }
 
-            logger.onLogEnd();
-        },
-        runOperationSet: function (input, name, operation) {
-            var logger = new Bridge.ClientTest.DecimalMathTests.Logger();
-            logger.onLogBegin(name);
-
-            for (var i = Bridge.Array.getLower(input, 0); i <= (Bridge.Array.getLength(input, 0) - 1); i++) {
-                var lowerBound = Bridge.Array.getLower(input, 1);
-                var dotNetDiff = Bridge.ClientTest.DecimalMathTests.parseDotNetDiff(input, i, lowerBound);
-                var a = input.get([i, lowerBound + 2]);
-                var expected = input.get([i, lowerBound + 3]);
-                var result = Bridge.ClientTest.DecimalMathTests.runOperation$1(Bridge.cast(a, Bridge.Decimal), operation);
-
-                logger.onLog([dotNetDiff, a, result]);
-
-                var diff = Bridge.ClientTest.DecimalMathTests.getDifference(expected, result);
-                var diffReport = Bridge.ClientTest.DecimalMathTests.getDifferenceReport(diff);
-
-                Bridge.ClientTest.DecimalMathTests.assertDecimal(dotNetDiff, expected, result, diffReport, Bridge.String.format("{0} for row {1} with operand {2} .NetDiff {3}{4}", name, i, a, dotNetDiff, diffReport));
-            }
-
-            logger.onLogEnd();
-        },
-        parseDotNetDiff: function (input, i, lowerBound) {
-            var o = input.get([i, lowerBound + 1]);
-            if (o === null)
-                return Bridge.Decimal.lift(null);
-
-            if (Bridge.is(o, String))
-                return Bridge.Decimal(o.toString());
-
-            var dotNetDiff = Bridge.cast(input.get([i, lowerBound + 1]), Bridge.Decimal, true);
-            return dotNetDiff;
-        },
-        assertDecimal: function (dotNetDiff, expected, result, differenceReport, message) {
-            if (Bridge.ClientTest.DecimalMathTests.jSMode) {
-                Bridge.ClientTest.DecimalMathTests.assertIsDecimalAndEqualTo(result, Bridge.cast(expected, Bridge.Decimal).sub((Bridge.Nullable.hasValue(dotNetDiff) ? Bridge.Nullable.getValue(dotNetDiff) : Bridge.Decimal(0.0))), message);
-            }
-            else  {
-                Bridge.ClientTest.DecimalMathTests.assertIsDecimalAndEqualTo(result, expected, message);
-            }
-        },
-        assertIsDecimalAndEqualTo: function (actual, expected, message) {
-            Bridge.Test.Assert.true$1(Bridge.is(actual, Bridge.Decimal), "isDecimal " + message);
-            Bridge.Test.Assert.areStrictEqual$1(actual.toString(), expected.toString(), "StrictEqual " + message);
-        },
-        getDifferenceReport: function (difference) {
-            var differenceReport = difference.ne(Bridge.Decimal(0.0)) ? "; result diff is " + difference.toString() : "";
-            return differenceReport;
-        },
-        getDifference: function (expected, result) {
-            var difference;
-            if ((Bridge.is(result, Bridge.Decimal) || Bridge.is(result, Bridge.Int)) && (Bridge.is(expected, Bridge.Decimal) || Bridge.is(expected, Bridge.Int))) {
-                difference  = Bridge.cast(expected, Bridge.Decimal).sub(Bridge.cast(result, Bridge.Decimal));
-            }
-            else  {
-                difference  = Bridge.Decimal(0.0);
-            }
-
-            return difference;
-        },
-        runOperation: function (a, b, operation) {
-            return operation(a, b);
-        },
-        runOperation$1: function (a, operation) {
-            return operation(a);
+            return result;
         }
+    },
+    config: {
+        properties: {
+            Text: null
+        }
+    },
+    constructor: function () {
+        if (Bridge.ClientTest.DecimalMathTests.useLogging)
+            this.setText(new Bridge.Text.StringBuilder());
+    },
+    onLogBegin: function (name) {
+        if (!Bridge.ClientTest.DecimalMathTests.useLogging)
+            return;
+
+        this.getText().appendLine("//------------------------------" + name + "------------------------------");
+        this.getText().appendLine("object[,] input = new object[,]");
+        this.getText().append("{");
+    },
+    onLog: function (parameters) {
+        if (!Bridge.ClientTest.DecimalMathTests.useLogging)
+            return;
+
+        var sb = new Bridge.Text.StringBuilder("{{");
+        for (var i = 0; i < parameters.length + 1; i++) {
+            sb.append(" {");
+            sb.append(i);
+            sb.append("},");
+        }
+        sb.remove(sb.getLength() - 1, 1);
+        sb.append(" }},");
+
+        var format = sb.toString();
+
+        this.getText().appendLine();
+        //Fix
+        //this.Text.AppendFormat(format, ConvertParameters(parameters));
+        var convertedParams = Bridge.ClientTest.DecimalMathTests.Logger.convertParameters(parameters);
+        if (convertedParams.length === 4)
+            this.getText().appendFormat(format, convertedParams[0], convertedParams[1], convertedParams[2], convertedParams[3]);
+        if (convertedParams.length === 5)
+            this.getText().appendFormat(format, convertedParams[0], convertedParams[1], convertedParams[2], convertedParams[3], convertedParams[4]);
+    },
+    onLogEnd: function () {
+        if (!Bridge.ClientTest.DecimalMathTests.useLogging)
+            return;
+
+        var sb = this.getText();
+
+        sb.remove(sb.getLength() - 1, 1);
+        sb.appendLine();
+        sb.append("};");
+
+        console.log(sb.toString());
     }
 });
 
@@ -2577,98 +2500,175 @@ Bridge.define('Bridge.ClientTest.DateTimeFormatInfoTests', {
     }
 });
 
-Bridge.define('Bridge.ClientTest.DecimalMathTests.Logger', {
+Bridge.define('Bridge.ClientTest.DecimalMathTests', {
     statics: {
-        convertParameters: function (parameters) {
-            var result = Bridge.Array.init(parameters.length + 1, null);
+        useLogging: false,
+        jSMode: true,
+        NoDotNetDiff: false,
+        HasDotNetDiff: true,
+        config: {
+            init: function () {
+                this.maxValue = Bridge.Decimal.MaxValue;
+                this.minValue = Bridge.Decimal.MinValue;
+                this.inputAdd = Bridge.Array.create(null, [[Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(47.0), Bridge.Decimal(47.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(-47.0), Bridge.Decimal(-47.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(-47.0), Bridge.Decimal(-47.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(47.0), Bridge.Decimal(47.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.33478923476"), Bridge.Decimal(47.0), Bridge.Decimal("443534569034923.33478923476")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.12345678901235"), Bridge.Decimal(47.000000000001), Bridge.Decimal("443534569034923.12345678901335")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.12345678901235"), Bridge.Decimal("9436905724146.297872340425532"), Bridge.Decimal("452971474759022.42132912943788")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("4435345690348766678656790453"), Bridge.Decimal(17.0), Bridge.Decimal("4435345690348766678656790470")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(17.2345324), Bridge.Decimal("4435345690348766678656790453"), Bridge.Decimal("4435345690348766678656790470.2")], [Bridge.ClientTest.DecimalMathTests.HasDotNetDiff, "0.00000000000005", Bridge.Decimal("-943456769034871.4234"), Bridge.Decimal("47.00000000003455"), Bridge.Decimal("-943456769034824.4233999999654")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("6999545690348766678656790453"), Bridge.Decimal(-13.0), Bridge.Decimal("6999545690348766678656790440")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(11.0), Bridge.Decimal("-6435345690348766678656790453"), Bridge.Decimal("-6435345690348766678656790442")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.maxValue, Bridge.ClientTest.DecimalMathTests.minValue, Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal.MinusOne, Bridge.ClientTest.DecimalMathTests.maxValue, Bridge.Decimal("79228162514264337593543950334")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.maxValue, Bridge.Decimal.MinusOne, Bridge.Decimal("79228162514264337593543950334")]], 15, 5);
+                this.inputSubtract = Bridge.Array.create(null, [[Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(47.0), Bridge.Decimal(-47.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(-47.0), Bridge.Decimal(47.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(-47.0), Bridge.Decimal(47.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(47.0), Bridge.Decimal(-47.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.33478923476"), Bridge.Decimal(47.0), Bridge.Decimal("443534569034829.33478923476")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.12345678901235"), Bridge.Decimal(47.000000000001), Bridge.Decimal("443534569034829.12345678901135")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.12345678901235"), Bridge.Decimal("9436905724146.297872340425532"), Bridge.Decimal("434097663310729.82558444858682")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("4435345690348766678656790453"), Bridge.Decimal(17.0), Bridge.Decimal("4435345690348766678656790436")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(17.2345324), Bridge.Decimal("4435345690348766678656790453"), Bridge.Decimal("-4435345690348766678656790435.8")], [Bridge.ClientTest.DecimalMathTests.HasDotNetDiff, Bridge.Decimal("-5E-14"), Bridge.Decimal("-943456769034871.4234"), Bridge.Decimal("47.00000000003455"), Bridge.Decimal("-943456769034918.4234000000346")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("6999545690348766678656790453"), Bridge.Decimal(-13.0), Bridge.Decimal("6999545690348766678656790466")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(11.0), Bridge.Decimal("-6435345690348766678656790453"), Bridge.Decimal("6435345690348766678656790464")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.maxValue, Bridge.ClientTest.DecimalMathTests.maxValue, Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal.MinusOne, Bridge.ClientTest.DecimalMathTests.minValue, Bridge.Decimal("79228162514264337593543950334")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.maxValue, Bridge.Decimal.One, Bridge.Decimal("79228162514264337593543950334")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.minValue, Bridge.Decimal.MinusOne, Bridge.Decimal("-79228162514264337593543950334")]], 16, 5);
+                this.inputMultiply = Bridge.Array.create(null, [[Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(47.0), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(-47.0), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(-47.0), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(47.0), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(0.0), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.33478923476"), Bridge.Decimal(0.47), Bridge.Decimal("208461247446391.8773509403372")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("43534569034876.12345678901235"), Bridge.Decimal(47.000000000001), Bridge.Decimal("2046124744639221.3370381184566")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("44.353456903487612345678901235"), Bridge.Decimal("9436905724146.297872340425532"), Bridge.Decimal("418559391338198.38088395328596")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("4435345690348766678656790453"), Bridge.Decimal(0.17), Bridge.Decimal("754008767359290335371654377.01")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(17.2345324), Bridge.Decimal("443534569034876667865679045.37"), Bridge.Decimal("7644110900551618662335084355.4")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("-943456769034871.4234"), Bridge.Decimal("0.4700000000003455"), Bridge.Decimal("-443424681446715.53331170154808")], [Bridge.ClientTest.DecimalMathTests.HasDotNetDiff, Bridge.Decimal(-0.01), Bridge.Decimal("6999545690348766678656790453"), Bridge.Decimal(-0.13), Bridge.Decimal("-909940939745339668225382758.9")], [Bridge.ClientTest.DecimalMathTests.HasDotNetDiff, Bridge.Decimal(0.0001), Bridge.Decimal(0.11), Bridge.Decimal("-64353456903487666786567904.535"), Bridge.Decimal("-7078880259383643346522469.4988")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.maxValue, Bridge.Decimal.MinusOne, Bridge.ClientTest.DecimalMathTests.minValue], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal.MinusOne, Bridge.ClientTest.DecimalMathTests.minValue, Bridge.ClientTest.DecimalMathTests.maxValue], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.maxValue, Bridge.Decimal.One, Bridge.ClientTest.DecimalMathTests.maxValue], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.minValue, Bridge.Decimal.MinusOne, Bridge.ClientTest.DecimalMathTests.maxValue]], 17, 5);
+                this.inputDivide = Bridge.Array.create(null, [[Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(47.0), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(-47.0), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(-47.0), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(47.0), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal.One, Bridge.Decimal(2.0), Bridge.Decimal(0.5)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(3.0), Bridge.Decimal(4.0), Bridge.Decimal(0.75)], [Bridge.ClientTest.DecimalMathTests.HasDotNetDiff, "-0.00000000000000000000000000003", Bridge.Decimal(5.0), Bridge.Decimal(6.0), Bridge.Decimal("0.8333333333333333333333333333")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(7.0), Bridge.Decimal(8.0), Bridge.Decimal(0.875)], [Bridge.ClientTest.DecimalMathTests.HasDotNetDiff, "-0.0000000000000005", Bridge.Decimal("443534569034876.33478923476"), Bridge.Decimal(47.0), Bridge.Decimal("9436905724146.304995515633191")], [Bridge.ClientTest.DecimalMathTests.HasDotNetDiff, "0.0000000000000002", Bridge.Decimal("443534569034876.12345678901235"), Bridge.Decimal(47.000000000001), Bridge.Decimal("9436905724146.099713852443963")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.12345678901235"), Bridge.Decimal("9436905724146.297872340425532"), Bridge.Decimal("47.000000000000013082337857467")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("4435345690348766678656790453"), Bridge.Decimal(17.0), Bridge.Decimal("260902687667574510509222967.82")], [Bridge.ClientTest.DecimalMathTests.HasDotNetDiff, "0.0000000000000000000000000000142752779107986686908967873", Bridge.Decimal(17.2345324), Bridge.Decimal("4435345690348766678656790453"), Bridge.Decimal("3.9000000000000004E-27")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("-943456769034871.4234"), Bridge.Decimal("47.00000000003455"), Bridge.Decimal("-20073548277322.933666106776439")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("6999545690348766678656790453"), Bridge.Decimal(-13.0), Bridge.Decimal("-538426591565289744512060804.08")], [Bridge.ClientTest.DecimalMathTests.HasDotNetDiff, "0.0000000000000000000000000000093098847039324132480985641", Bridge.Decimal(11.0), Bridge.Decimal("-6435345690348766678656790453"), Bridge.Decimal("-1.7000000000000002E-27")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.maxValue, Bridge.ClientTest.DecimalMathTests.minValue, Bridge.Decimal.MinusOne], [Bridge.ClientTest.DecimalMathTests.HasDotNetDiff, "-0.000000000000000000000000000012621774483536188886587657045", Bridge.Decimal.MinusOne, Bridge.ClientTest.DecimalMathTests.minValue, Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.maxValue, Bridge.Decimal.MinusOne, Bridge.ClientTest.DecimalMathTests.minValue], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.minValue, Bridge.Decimal.MinusOne, Bridge.ClientTest.DecimalMathTests.maxValue]], 20, 5);
+                this.inputRemainder = Bridge.Array.create(null, [[Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(47.0), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(-47.0), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(-47.0), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(47.0), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.33478923476"), Bridge.Decimal(47.0), Bridge.Decimal(14.33478923476)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.12345678901235"), Bridge.Decimal(47.000000000001), Bridge.Decimal(4.68655106486635)], [Bridge.ClientTest.DecimalMathTests.HasDotNetDiff, Bridge.Decimal("4E-15"), Bridge.Decimal("443534569034876.12345678901235"), Bridge.Decimal("9436905724146.297872340425532"), Bridge.Decimal(0.12345678901235)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("4435345690348766678656790453"), Bridge.Decimal(17.0), Bridge.Decimal(14.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(17.2345324), Bridge.Decimal("4435345690348766678656790453"), Bridge.Decimal(17.2345324)], [Bridge.ClientTest.DecimalMathTests.HasDotNetDiff, Bridge.Decimal("1E-13"), Bridge.Decimal("-943456769034871.4234"), Bridge.Decimal("47.00000000003455"), Bridge.Decimal(-43.8823070185248)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("6999545690348766678656790453"), Bridge.Decimal(-13.0), Bridge.Decimal.One], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(11.0), Bridge.Decimal("-6435345690348766678656790453"), Bridge.Decimal(11.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.maxValue, Bridge.ClientTest.DecimalMathTests.maxValue, Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal.MinusOne, Bridge.ClientTest.DecimalMathTests.minValue, Bridge.Decimal.MinusOne], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.maxValue, Bridge.Decimal.One, Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.minValue, Bridge.Decimal.MinusOne, Bridge.Decimal(0.0)]], 16, 5);
+            }
+        },
+        testSubtractOperator: function () {
+            Bridge.ClientTest.DecimalMathTests.runOperationSet$1(Bridge.ClientTest.DecimalMathTests.inputSubtract, "SubtractOperator", function (a, b) {
+                return a.sub(b);
+            });
+        },
+        testRemainderOperator: function () {
+            Bridge.ClientTest.DecimalMathTests.runOperationSet$1(Bridge.ClientTest.DecimalMathTests.inputRemainder, "RemainderOperator", function (a, b) {
+                return a.mod(b);
+            });
+        },
+        testMultiplyOperator: function () {
+            Bridge.ClientTest.DecimalMathTests.runOperationSet$1(Bridge.ClientTest.DecimalMathTests.inputMultiply, "MultiplyOperator", function (a, b) {
+                return a.mul(b);
+            });
+        },
+        testDivideOperator: function () {
+            Bridge.ClientTest.DecimalMathTests.runOperationSet$1(Bridge.ClientTest.DecimalMathTests.inputDivide, "DivideOperator", function (a, b) {
+                return a.div(b);
+            });
+        },
+        testAddOperator: function () {
+            Bridge.ClientTest.DecimalMathTests.runOperationSet$1(Bridge.ClientTest.DecimalMathTests.inputAdd, "AddOperator", function (a, b) {
+                return a.add(b);
+            });
+        },
+        testAddMethod: function () {
+            Bridge.ClientTest.DecimalMathTests.runOperationSet$1(Bridge.ClientTest.DecimalMathTests.inputAdd, "AddMethod", function (a, b) {
+                return a.add(b);
+            });
+        },
+        testDivideMethod: function () {
+            Bridge.ClientTest.DecimalMathTests.runOperationSet$1(Bridge.ClientTest.DecimalMathTests.inputDivide, "DivideMethod", function (a, b) {
+                return a.div(b);
+            });
+        },
+        testMultiplyMethod: function () {
+            Bridge.ClientTest.DecimalMathTests.runOperationSet$1(Bridge.ClientTest.DecimalMathTests.inputMultiply, "MiltiplyMethod", function (a, b) {
+                return a.mul(b);
+            });
+        },
+        testRemainderMethod: function () {
+            Bridge.ClientTest.DecimalMathTests.runOperationSet$1(Bridge.ClientTest.DecimalMathTests.inputRemainder, "RemainderMethod", function (a, b) {
+                return a.mod(b);
+            });
+        },
+        testSubtractMethod: function () {
+            Bridge.ClientTest.DecimalMathTests.runOperationSet$1(Bridge.ClientTest.DecimalMathTests.inputSubtract, "SubtractMethod", function (a, b) {
+                return a.sub(b);
+            });
+        },
+        testCeilingMethod: function () {
+            var input = Bridge.Array.create(null, [[Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("-443534569034876.12345678901235"), Bridge.Decimal(-443534569034876.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("-443534569034876.82345678901235"), Bridge.Decimal(-443534569034876.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.12345678901235"), Bridge.Decimal(443534569034877.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.62345678901235"), Bridge.Decimal(443534569034877.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.49999999999999"), Bridge.Decimal(443534569034877.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.50000000000001"), Bridge.Decimal(443534569034877.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.99999999999999"), Bridge.Decimal(443534569034877.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("4435345690348766678656790453"), Bridge.Decimal("4435345690348766678656790453")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(17.9345324), Bridge.Decimal(18.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("-0.9434567690348714234"), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("6999545690348766678656790453"), Bridge.Decimal("6999545690348766678656790453")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.maxValue, Bridge.ClientTest.DecimalMathTests.maxValue], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal.MinusOne, Bridge.Decimal.MinusOne], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.minValue, Bridge.ClientTest.DecimalMathTests.minValue]], 15, 4);
 
-            for (var i = 0; i < parameters.length; i++) {
-                if (i === 0) {
-                    var d = Bridge.cast(parameters[0], Bridge.Decimal, true);
-                    result[0] = Bridge.Nullable.hasValue(d) ? "HasDotNetDiff" : "NoDotNetDiff";
-                    result[1] = Bridge.Nullable.hasValue(d) ? d.toString() + "m" : "null";
+            Bridge.ClientTest.DecimalMathTests.runOperationSet(input, "CeilingMethod", function (a) {
+                return a.ceil();
+            });
+        },
+        testFloorMethod: function () {
+            var input = Bridge.Array.create(null, [[Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(0.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("-443534569034876.12345678901235"), Bridge.Decimal(-443534569034877.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("-443534569034876.82345678901235"), Bridge.Decimal(-443534569034877.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.12345678901235"), Bridge.Decimal(443534569034876.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.62345678901235"), Bridge.Decimal(443534569034876.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.49999999999999"), Bridge.Decimal(443534569034876.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.50000000000001"), Bridge.Decimal(443534569034876.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("443534569034876.99999999999999"), Bridge.Decimal(443534569034876.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("4435345690348766678656790453"), Bridge.Decimal("4435345690348766678656790453")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal(17.9345324), Bridge.Decimal(17.0)], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("-0.9434567690348714234"), Bridge.Decimal.MinusOne], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal("6999545690348766678656790453"), Bridge.Decimal("6999545690348766678656790453")], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.maxValue, Bridge.ClientTest.DecimalMathTests.maxValue], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.Decimal.MinusOne, Bridge.Decimal.MinusOne], [Bridge.ClientTest.DecimalMathTests.NoDotNetDiff, null, Bridge.ClientTest.DecimalMathTests.minValue, Bridge.ClientTest.DecimalMathTests.minValue]], 15, 4);
 
-                    continue;
-                }
+            Bridge.ClientTest.DecimalMathTests.runOperationSet(input, "FloorMethod", function (a) {
+                return a.floor();
+            });
+        },
+        runOperationSet$1: function (input, name, operation) {
+            var logger = new Bridge.ClientTest.DecimalMathTests.Logger();
+            logger.onLogBegin(name);
 
-                var o = parameters[i];
-                var j = i + 1;
-                if (Bridge.is(o, Bridge.Decimal)) {
-                    var d1 = Bridge.cast(o, Bridge.Decimal);
-                    if (d1.equals(Bridge.ClientTest.DecimalMathTests.maxValue))
-                        result[j] = "DecimalMathTests.MaxValue";
-                    else 
-                        if (d1.equals(Bridge.ClientTest.DecimalMathTests.minValue))
-                            result[j] = "DecimalMathTests.MinValue";
-                        else 
-                            if (d1.equals(Bridge.Decimal.MinusOne))
-                                result[j] = "decimal.MinusOne";
-                            else 
-                                if (d1.equals(Bridge.Decimal.One))
-                                    result[j] = "decimal.One";
-                                else 
-                                    result[j] = d1.toString() + "m";
-                }
-                else  {
-                    result[j] = o;
-                }
+            for (var i = Bridge.Array.getLower(input, 0); i <= (Bridge.Array.getLength(input, 0) - 1); i++) {
+                var lowerBound = Bridge.Array.getLower(input, 1);
+                var dotNetDiff = Bridge.ClientTest.DecimalMathTests.parseDotNetDiff(input, i, lowerBound);
+
+                var a = input.get([i, lowerBound + 2]);
+                var b = input.get([i, lowerBound + 3]);
+                var expected = input.get([i, lowerBound + 4]);
+                var result = Bridge.ClientTest.DecimalMathTests.runOperation(Bridge.cast(a, Bridge.Decimal), Bridge.cast(b, Bridge.Decimal), operation);
+
+                logger.onLog([dotNetDiff, a, b, result]);
+
+                var diff = Bridge.ClientTest.DecimalMathTests.getDifference(expected, result);
+                var diffReport = Bridge.ClientTest.DecimalMathTests.getDifferenceReport(diff);
+
+                Bridge.ClientTest.DecimalMathTests.assertDecimal(dotNetDiff, expected, result, diffReport, Bridge.String.format("{0} for row {1} with operand {2} and {3} .NetDiff {4}{5}", name, i, a, b, dotNetDiff, diffReport));
             }
 
-            return result;
+            logger.onLogEnd();
+        },
+        runOperationSet: function (input, name, operation) {
+            var logger = new Bridge.ClientTest.DecimalMathTests.Logger();
+            logger.onLogBegin(name);
+
+            for (var i = Bridge.Array.getLower(input, 0); i <= (Bridge.Array.getLength(input, 0) - 1); i++) {
+                var lowerBound = Bridge.Array.getLower(input, 1);
+                var dotNetDiff = Bridge.ClientTest.DecimalMathTests.parseDotNetDiff(input, i, lowerBound);
+                var a = input.get([i, lowerBound + 2]);
+                var expected = input.get([i, lowerBound + 3]);
+                var result = Bridge.ClientTest.DecimalMathTests.runOperation$1(Bridge.cast(a, Bridge.Decimal), operation);
+
+                logger.onLog([dotNetDiff, a, result]);
+
+                var diff = Bridge.ClientTest.DecimalMathTests.getDifference(expected, result);
+                var diffReport = Bridge.ClientTest.DecimalMathTests.getDifferenceReport(diff);
+
+                Bridge.ClientTest.DecimalMathTests.assertDecimal(dotNetDiff, expected, result, diffReport, Bridge.String.format("{0} for row {1} with operand {2} .NetDiff {3}{4}", name, i, a, dotNetDiff, diffReport));
+            }
+
+            logger.onLogEnd();
+        },
+        parseDotNetDiff: function (input, i, lowerBound) {
+            var o = input.get([i, lowerBound + 1]);
+            if (o === null)
+                return Bridge.Decimal.lift(null);
+
+            if (Bridge.is(o, String))
+                return Bridge.Decimal(o.toString());
+
+            var dotNetDiff = Bridge.cast(input.get([i, lowerBound + 1]), Bridge.Decimal, true);
+            return dotNetDiff;
+        },
+        assertDecimal: function (dotNetDiff, expected, result, differenceReport, message) {
+            if (Bridge.ClientTest.DecimalMathTests.jSMode) {
+                Bridge.ClientTest.DecimalMathTests.assertIsDecimalAndEqualTo(result, Bridge.cast(expected, Bridge.Decimal).sub((Bridge.Nullable.hasValue(dotNetDiff) ? Bridge.Nullable.getValue(dotNetDiff) : Bridge.Decimal(0.0))), message);
+            }
+            else  {
+                Bridge.ClientTest.DecimalMathTests.assertIsDecimalAndEqualTo(result, expected, message);
+            }
+        },
+        assertIsDecimalAndEqualTo: function (actual, expected, message) {
+            Bridge.Test.Assert.true$1(Bridge.is(actual, Bridge.Decimal), "isDecimal " + message);
+            Bridge.Test.Assert.areStrictEqual$1(actual.toString(), expected.toString(), "StrictEqual " + message);
+        },
+        getDifferenceReport: function (difference) {
+            var differenceReport = difference.ne(Bridge.Decimal(0.0)) ? "; result diff is " + difference.toString() : "";
+            return differenceReport;
+        },
+        getDifference: function (expected, result) {
+            var difference;
+            if ((Bridge.is(result, Bridge.Decimal) || Bridge.is(result, Bridge.Int)) && (Bridge.is(expected, Bridge.Decimal) || Bridge.is(expected, Bridge.Int))) {
+                difference  = Bridge.cast(expected, Bridge.Decimal).sub(Bridge.cast(result, Bridge.Decimal));
+            }
+            else  {
+                difference  = Bridge.Decimal(0.0);
+            }
+
+            return difference;
+        },
+        runOperation: function (a, b, operation) {
+            return operation(a, b);
+        },
+        runOperation$1: function (a, operation) {
+            return operation(a);
         }
-    },
-    config: {
-        properties: {
-            Text: null
-        }
-    },
-    constructor: function () {
-        if (Bridge.ClientTest.DecimalMathTests.useLogging)
-            this.setText(new Bridge.Text.StringBuilder());
-    },
-    onLogBegin: function (name) {
-        if (!Bridge.ClientTest.DecimalMathTests.useLogging)
-            return;
-
-        this.getText().appendLine("//------------------------------" + name + "------------------------------");
-        this.getText().appendLine("object[,] input = new object[,]");
-        this.getText().append("{");
-    },
-    onLog: function (parameters) {
-        if (!Bridge.ClientTest.DecimalMathTests.useLogging)
-            return;
-
-        var sb = new Bridge.Text.StringBuilder("{{");
-        for (var i = 0; i < parameters.length + 1; i++) {
-            sb.append(" {");
-            sb.append(i);
-            sb.append("},");
-        }
-        sb.remove(sb.getLength() - 1, 1);
-        sb.append(" }},");
-
-        var format = sb.toString();
-
-        this.getText().appendLine();
-        //Fix
-        //this.Text.AppendFormat(format, ConvertParameters(parameters));
-        var convertedParams = Bridge.ClientTest.DecimalMathTests.Logger.convertParameters(parameters);
-        if (convertedParams.length === 4)
-            this.getText().appendFormat(format, convertedParams[0], convertedParams[1], convertedParams[2], convertedParams[3]);
-        if (convertedParams.length === 5)
-            this.getText().appendFormat(format, convertedParams[0], convertedParams[1], convertedParams[2], convertedParams[3], convertedParams[4]);
-    },
-    onLogEnd: function () {
-        if (!Bridge.ClientTest.DecimalMathTests.useLogging)
-            return;
-
-        var sb = this.getText();
-
-        sb.remove(sb.getLength() - 1, 1);
-        sb.appendLine();
-        sb.append("};");
-
-        console.log(sb.toString());
     }
 });
 
