@@ -62,7 +62,8 @@ namespace Bridge.Contract
             set;
         }
 
-        int CompareTypeInfosByNameAndPriority(ITypeInfo x, ITypeInfo y);
+        int CompareTypeInfosByName(ITypeInfo x, ITypeInfo y);
+        int CompareTypeInfosByPriority(ITypeInfo x, ITypeInfo y);
 
         bool IsInheritedFrom(ITypeInfo x, ITypeInfo y);
 
