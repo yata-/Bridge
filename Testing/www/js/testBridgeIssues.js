@@ -614,6 +614,27 @@ Bridge.define('ClientTestLibrary.Bridge502', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge503', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(4);
+
+            var a = ["a", "b", "c"];
+            var list = new Bridge.List$1(String)(a);
+
+            list.addRange(a);
+
+            assert.equal(a.length, 3, "Bridge503: array.Length is correct");
+            assert.equal(list.getCount(), 6, "Bridge503: list.Count is correct");
+
+            list.clear();
+
+            assert.equal(a.length, 3, "Bridge503: array.Length is correct");
+            assert.equal(list.getCount(), 0, "Bridge503: list.Count is correct");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge514', {
     statics: {
         testUseCase: function (assert) {
