@@ -53,9 +53,22 @@ namespace ClientTestLibrary
         // Bridge[#588]
         public static void TestUseCase(Assert assert)
         {
-            assert.Expect(1);
+            assert.Expect(9);
 
-            assert.Equal(C1.Default.Value.Name, "default", "Bridge588 TestUseCase");
+            var c2 = new C2("C2 value");
+            assert.Ok(c2 != null, "Bridge588 C2");
+            assert.Equal(c2.Name, "C2 value", "Bridge588 C2.Name");
+
+            var c1 = new C1(c2);
+            assert.Ok(c1 != null, "Bridge588 C1");
+            assert.Equal(c1.Value.Name, "C2 value", "Bridge588 C1.Value.Name");
+
+            assert.Ok(C1.Default != null, "Bridge588 C1.Default");
+            assert.Ok(C1.Default.Value != null, "Bridge588 C1.Default.Value");
+            assert.Equal(C1.Default.Value.Name, "default", "Bridge588 C1.Default.Value.Name");
+            assert.Ok(C2.Default != null, "Bridge588 C2.Default");
+            assert.Ok(C2.Default.Name != null, "Bridge588 C2.Default.Name");
+
         }
     }
 

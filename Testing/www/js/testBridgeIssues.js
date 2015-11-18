@@ -2506,9 +2506,22 @@ Bridge.define('ClientTestLibrary.Bridge537', {
 Bridge.define('ClientTestLibrary.Bridge588C', {
     statics: {
         testUseCase: function (assert) {
-            assert.expect(1);
+            assert.expect(9);
 
-            assert.equal(ClientTestLibrary.Bridge588C.C1.getDefault().getValue().getName(), "default", "Bridge588 TestUseCase");
+            var c2 = new ClientTestLibrary.Bridge588C.C2("C2 value");
+            assert.ok(c2 !== null, "Bridge588 C2");
+            assert.equal(c2.getName(), "C2 value", "Bridge588 C2.Name");
+
+            var c1 = new ClientTestLibrary.Bridge588C.C1(c2);
+            assert.ok(c1 !== null, "Bridge588 C1");
+            assert.equal(c1.getValue().getName(), "C2 value", "Bridge588 C1.Value.Name");
+
+            assert.ok(ClientTestLibrary.Bridge588C.C1.getDefault() !== null, "Bridge588 C1.Default");
+            assert.ok(ClientTestLibrary.Bridge588C.C1.getDefault().getValue() !== null, "Bridge588 C1.Default.Value");
+            assert.equal(ClientTestLibrary.Bridge588C.C1.getDefault().getValue().getName(), "default", "Bridge588 C1.Default.Value.Name");
+            assert.ok(ClientTestLibrary.Bridge588C.C2.getDefault() !== null, "Bridge588 C2.Default");
+            assert.ok(ClientTestLibrary.Bridge588C.C2.getDefault().getName() !== null, "Bridge588 C2.Default.Name");
+
         }
     }
 });
