@@ -2,6 +2,40 @@
 
 "use strict";
 
+Bridge.define('ClientTestLibrary.TestInheritance.A', {
+    config: {
+        properties: {
+            X: 0
+        }
+    },
+    constructor: function (x) {
+        this.setX(x);
+    },
+    handleNumber: function (i) {
+        return i;
+    },
+    handleString: function (s) {
+        return s;
+    }
+});
+
+Bridge.define('ClientTestLibrary.TestInheritance.B', {
+    inherits: [ClientTestLibrary.TestInheritance.A],
+    config: {
+        properties: {
+            Y: 0
+        }
+    },
+    constructor: function (x, y) {
+        ClientTestLibrary.TestInheritance.A.prototype.$constructor.call(this, x);
+
+        this.setY(y);
+    },
+    handleNumber$1: function (i) {
+        return i * 100;
+    }
+});
+
 Bridge.define('ClientTestLibrary.TestInheritance', {
     statics: {
         testA: function (assert) {
@@ -35,40 +69,6 @@ Bridge.define('ClientTestLibrary.TestInheritance', {
             assert.equal(b.handleNumber(10), 10, "b.HandleNumber(10) = 10");
             assert.equal(b.handleString("Hundred"), "Hundred", "b.HandleString('Hundred') = 'Hundred'");
         }
-    }
-});
-
-Bridge.define('ClientTestLibrary.TestInheritance.A', {
-    config: {
-        properties: {
-            X: 0
-        }
-    },
-    constructor: function (x) {
-        this.setX(x);
-    },
-    handleNumber: function (i) {
-        return i;
-    },
-    handleString: function (s) {
-        return s;
-    }
-});
-
-Bridge.define('ClientTestLibrary.TestInheritance.B', {
-    inherits: [ClientTestLibrary.TestInheritance.A],
-    config: {
-        properties: {
-            Y: 0
-        }
-    },
-    constructor: function (x, y) {
-        ClientTestLibrary.TestInheritance.A.prototype.$constructor.call(this, x);
-
-        this.setY(y);
-    },
-    handleNumber$1: function (i) {
-        return i * 100;
     }
 });
 
