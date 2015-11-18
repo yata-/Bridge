@@ -958,6 +958,17 @@ namespace ClientTestLibrary
             assert.Equal(actual.ToString(), expected, message);
         }
 
+        private static void AssertAlmostEqual(Assert assert, double actual, double expected, string message)
+        {
+            var diff = expected - actual;
+            if (diff < 0)
+            {
+                diff = -diff;
+            }
+
+            assert.Ok(diff < 1e-8, message + "actual: " + actual + "expeted:" + expected);
+        }
+
         public static void N410(Assert assert)
         {
             // Decimal consts
@@ -1033,7 +1044,8 @@ namespace ClientTestLibrary
             EnsureNumber(assert, MathE, "2.718281828459045", "MathE");
             EnsureNumber(assert, MathLN10, "2.302585092994046", "MathLN10");
             EnsureNumber(assert, MathLN2, "0.6931471805599453", "MathLN2");
-            EnsureNumber(assert, MathLOG2E, "1.4426950408889634", "MathLOG2E");
+            //IE has Math.LOG2E defined as 1.4426950408889633 instead of standard 1.4426950408889634
+            AssertAlmostEqual(assert, MathLOG2E, 1.4426950408889634, "MathLOG2E");
             EnsureNumber(assert, MathLOG10E, "0.4342944819032518", "MathLOG10E");
             EnsureNumber(assert, MathPI, "3.141592653589793", "MathPI");
             EnsureNumber(assert, MathSQRT1_2, "0.7071067811865476", "MathSQRT1_2");
@@ -1052,7 +1064,8 @@ namespace ClientTestLibrary
             EnsureNumber(assert, MathE, "2.718281828459045", "MathEin expression");
             EnsureNumber(assert, MathLN10, "2.302585092994046", "MathLN10in expression");
             EnsureNumber(assert, MathLN2, "0.6931471805599453", "MathLN2in expression");
-            EnsureNumber(assert, MathLOG2E, "1.4426950408889634", "MathLOG2Ein expression");
+            //IE has Math.LOG2E defined as 1.4426950408889633 instead of standard 1.4426950408889634
+            AssertAlmostEqual(assert, MathLOG2E, 1.4426950408889634, "MathLOG2Ein expression");
             EnsureNumber(assert, MathLOG10E, "0.4342944819032518", "MathLOG10Ein expression");
             EnsureNumber(assert, MathPI, "3.141592653589793", "MathPIin expression");
             EnsureNumber(assert, MathSQRT1_2, "0.7071067811865476", "MathSQRT1_2in expression");
