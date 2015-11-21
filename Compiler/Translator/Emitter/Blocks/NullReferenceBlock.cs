@@ -18,10 +18,10 @@ namespace Bridge.Translator
             set;
         }
 
-protected override Expression GetExpression()
+        protected override Expression GetExpression()
         {
             var expr = this.NullNode as Expression;
-            return  expr;
+            return expr;
         }
 
         protected override void EmitConversionExpression()

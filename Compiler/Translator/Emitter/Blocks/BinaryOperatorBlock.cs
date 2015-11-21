@@ -179,7 +179,7 @@ namespace Bridge.Translator
                 }
 
                 binaryOperatorExpression.Left.AcceptVisitor(this.Emitter);
-                
+
                 if (charToString == 0)
                 {
                     this.Write(")");
@@ -207,7 +207,7 @@ namespace Bridge.Translator
                                  binaryOperatorExpression.Operator == BinaryOperatorType.ShiftRight;
 
                 if (isBitwise && is64bit)
-                {   
+                {
                     throw new EmitterException(this.BinaryOperatorExpression, "Bitwise operations are not allowed on 64-bit types");
                 }
 
@@ -303,9 +303,9 @@ namespace Bridge.Translator
                         }
                         else
                         {
-                            this.Write(rootSpecial ? "sr" : ">>");    
+                            this.Write(rootSpecial ? "sr" : ">>");
                         }
-                        
+
                         break;
 
                     case BinaryOperatorType.Subtract:
