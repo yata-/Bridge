@@ -129,7 +129,6 @@ namespace System
             return 0;
         }
 
-
         [Template("Bridge.Math.round({d}, 0, 6)")]
         public static extern double Round(double d);
 

@@ -1,9 +1,9 @@
-﻿using Bridge;
+using Bridge;
 
 namespace System
 {
     [External]
-    [Name("Function")] 
+    [Name("Function")]
     public class Type
     {
         public static Type GetTypeFromHandle(RuntimeTypeHandle typeHandle)
@@ -13,37 +13,37 @@ namespace System
     }
 
     [External]
-    [Name("Object")] 
+    [Name("Object")]
     public class ValueType
     {
     }
 
     [External]
-    [Name("Object")] 
+    [Name("Object")]
     public struct IntPtr
     {
     }
 
     [External]
-    [Name("Object")] 
+    [Name("Object")]
     public struct UIntPtr
     {
     }
 
     [External]
-    [Name("Object")] 
+    [Name("Object")]
     public class ParamArrayAttribute
     {
     }
 
     [External]
-    [Name("Object")] 
+    [Name("Object")]
     public struct RuntimeTypeHandle
     {
     }
 
     [External]
-    [Name("Object")] 
+    [Name("Object")]
     public struct RuntimeFieldHandle
     {
     }

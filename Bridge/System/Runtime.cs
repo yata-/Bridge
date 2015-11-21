@@ -100,7 +100,7 @@ namespace System
         {
             get;
         }
-    } 
+    }
 }
 
 namespace System.Runtime.InteropServices
