@@ -109,7 +109,7 @@ namespace Bridge.Contract
 
         bool IsForbiddenInvocation(InvocationExpression node);
 
-        string GetDefinitionName(IMemberDefinition member, bool changeCase = true);
+        string GetDefinitionName(IEmitter emitter, IMemberDefinition member, bool changeCase = true);
 
         System.Collections.Generic.IEnumerable<string> GetScript(ICSharpCode.NRefactory.CSharp.EntityDeclaration method);
 
