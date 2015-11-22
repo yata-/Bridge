@@ -190,6 +190,38 @@ namespace Bridge.Contract
             return resolveResult.Type;
         }
 
+        public static string GetParentNames(TypeDefinition typeDef)
+        {
+            List<string> names = new List<string>();
+            while (typeDef.DeclaringType != null)
+            {
+                names.Add(BridgeTypes.ConvertName(typeDef.DeclaringType.Name));
+                typeDef = typeDef.DeclaringType;
+            }
+
+            names.Reverse();
+            return names.Join(".");
+        }
+
+        public static string GetParentNames(IType type)
+        {
+            List<string> names = new List<string>();
+            while (type.DeclaringType != null)
+            {
+                var name = BridgeTypes.ConvertName(type.DeclaringType.Name);
+                
+                if (type.DeclaringType.TypeArguments.Count > 0)
+                {
+                    name += "$" + type.TypeArguments.Count;
+                }
+                names.Add(name);
+                type = type.DeclaringType;
+            }
+
+            names.Reverse();
+            return names.Join(".");
+        }
+
         public static string ToJsName(IType type, IEmitter emitter, bool asDefinition = false, bool excludens = false)
         {
             if (type.Kind == TypeKind.Array)
@@ -208,14 +240,43 @@ namespace Bridge.Contract
             }
 
             BridgeType bridgeType = emitter.BridgeTypes.Get(type, true);
-            string name = BridgeTypes.ConvertName(excludens ? type.Name : type.FullName);
+
+            var name = excludens ? "" : type.Namespace;
+            
+            var hasTypeDef = bridgeType != null && bridgeType.TypeDefinition != null;
+            if (hasTypeDef)
+            {
+                var typeDef = bridgeType.TypeDefinition;
+                if (typeDef.IsNested && !excludens)
+                {
+                    name = (string.IsNullOrEmpty(name) ? "" : (name + ".")) + BridgeTypes.GetParentNames(typeDef);
+                }
+
+                name = (string.IsNullOrEmpty(name) ? "" : (name + ".")) + BridgeTypes.ConvertName(typeDef.Name);
+            }
+            else
+            {
+                if (type.DeclaringType != null && !excludens)
+                {
+                    name = (string.IsNullOrEmpty(name) ? "" : (name + ".")) + BridgeTypes.GetParentNames(type);
+
+                    if (type.DeclaringType.TypeArguments.Count > 0)
+                    {
+                        name += "$" + type.TypeArguments.Count;
+                    }
+                }
+
+                name = (string.IsNullOrEmpty(name) ? "" : (name + ".")) + BridgeTypes.ConvertName(type.Name);
+            }
+            
+
             bool isCustomName = false;
             if (bridgeType != null)
             {
                 name = BridgeTypes.AddModule(name, bridgeType, out isCustomName);
             }
 
-            if (!isCustomName && type.TypeArguments.Count > 0)
+            if (!hasTypeDef && !isCustomName && type.TypeArguments.Count > 0)
             {
                 name += "$" + type.TypeArguments.Count;
             }
@@ -304,7 +365,7 @@ namespace Bridge.Contract
                 }
             }
 
-            var customName = emitter.Validator.GetCustomTypeName(type.TypeDefinition);
+            var customName = emitter.Validator.GetCustomTypeName(type.TypeDefinition, emitter);
 
             if (!String.IsNullOrEmpty(customName))
             {
@@ -471,7 +532,36 @@ namespace Bridge.Contract
             }
 
             BridgeType bridgeType = emitter.BridgeTypes.Get(type, true);
-            string name = BridgeTypes.ConvertName(excludens ? type.Name : type.FullName);
+            //string name = BridgeTypes.ConvertName(excludens ? type.Name : type.FullName);
+
+            var name = excludens ? "" : type.Namespace;
+
+            var hasTypeDef = bridgeType != null && bridgeType.TypeDefinition != null;
+            if (hasTypeDef)
+            {
+                var typeDef = bridgeType.TypeDefinition;
+                if (typeDef.IsNested && !excludens)
+                {
+                    name = (string.IsNullOrEmpty(name) ? "" : (name + ".")) + BridgeTypes.GetParentNames(typeDef);
+                }
+
+                name = (string.IsNullOrEmpty(name) ? "" : (name + ".")) + BridgeTypes.ConvertName(typeDef.Name);
+            }
+            else
+            {
+                if (type.DeclaringType != null && !excludens)
+                {
+                    name = (string.IsNullOrEmpty(name) ? "" : (name + ".")) + BridgeTypes.GetParentNames(type);
+
+                    if (type.DeclaringType.TypeArguments.Count > 0)
+                    {
+                        name += "$" + type.TypeArguments.Count;
+                    }
+                }
+
+                name = (string.IsNullOrEmpty(name) ? "" : (name + ".")) + BridgeTypes.ConvertName(type.Name);
+            }
+
             bool isCustomName = false;
             if (bridgeType != null)
             {
@@ -494,7 +584,7 @@ namespace Bridge.Contract
                 name = BridgeTypes.AddModule(name, bridgeType, out isCustomName);
             }
 
-            if (!isCustomName && type.TypeArguments.Count > 0)
+            if (!hasTypeDef && !isCustomName && type.TypeArguments.Count > 0)
             {
                 name += "$" + type.TypeArguments.Count;
             }

@@ -726,14 +726,47 @@ namespace Bridge.Contract
             }
 
             BridgeType bridgeType = emitter.BridgeTypes.Get(type, true);
-            string name = BridgeTypes.ConvertName(type.FullName);
+            //string name = BridgeTypes.ConvertName(type.FullName);
+
+
+
+            var name = type.Namespace;
+
+            var hasTypeDef = bridgeType != null && bridgeType.TypeDefinition != null;
+            if (hasTypeDef)
+            {
+                var typeDef = bridgeType.TypeDefinition;
+                if (typeDef.IsNested)
+                {
+                    name = (string.IsNullOrEmpty(name) ? "" : (name + ".")) + BridgeTypes.GetParentNames(typeDef);
+                }
+
+                name = (string.IsNullOrEmpty(name) ? "" : (name + ".")) + BridgeTypes.ConvertName(typeDef.Name);
+            }
+            else
+            {
+                if (type.DeclaringType != null)
+                {
+                    name = (string.IsNullOrEmpty(name) ? "" : (name + ".")) + BridgeTypes.GetParentNames(type);
+
+                    if (type.DeclaringType.TypeArguments.Count > 0)
+                    {
+                        name += "$" + type.TypeArguments.Count;
+                    }
+                }
+
+                name = (string.IsNullOrEmpty(name) ? "" : (name + ".")) + BridgeTypes.ConvertName(type.Name);
+            }
+
+
+
             bool isCustomName = false;
             if (bridgeType != null)
             {
                 name = BridgeTypes.AddModule(name, bridgeType, out isCustomName);
             }
 
-            if (!isCustomName && type.TypeArguments.Count > 0)
+            if (!hasTypeDef && !isCustomName && type.TypeArguments.Count > 0)
             {
                 name += "$" + type.TypeArguments.Count;
             }

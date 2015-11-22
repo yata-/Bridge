@@ -38,9 +38,7 @@ namespace Bridge.Contract
 
         string GetCustomConstructor(Mono.Cecil.TypeDefinition type);
 
-        string GetCustomTypeName(Mono.Cecil.TypeDefinition type);
-
-        string GetCustomTypeName(ICSharpCode.NRefactory.TypeSystem.IType type);
+        string GetCustomTypeName(Mono.Cecil.TypeDefinition type, IEmitter emitter);
 
         string GetInlineCode(Mono.Cecil.MethodDefinition method);
 

@@ -128,22 +128,22 @@ namespace Bridge.Translator
                 var finder = new DependencyFinderVisitor(this, t);
                 t.TypeDeclaration.AcceptVisitor(finder);
 
-                var tProcess = graph.Processes.FirstOrDefault(p => p.Name == t.Type.FullName);
+                var tProcess = graph.Processes.FirstOrDefault(p => p.Name == t.Type.ReflectionName);
                 if (tProcess == null)
                 {
-                    tProcess = new TopologicalSorting.OrderedProcess(graph, t.Type.FullName);
+                    tProcess = new TopologicalSorting.OrderedProcess(graph, t.Type.ReflectionName);
                 }
 
                 if (finder.Dependencies.Count > 0)
                 {
                     foreach (var dependency in finder.Dependencies)
                     {
-                        if (tProcess.Predecessors.All(p => p.Name != dependency.Type.FullName))
+                        if (tProcess.Predecessors.All(p => p.Name != dependency.Type.ReflectionName))
                         {
-                            var dProcess = graph.Processes.FirstOrDefault(p => p.Name == dependency.Type.FullName);
+                            var dProcess = graph.Processes.FirstOrDefault(p => p.Name == dependency.Type.ReflectionName);
                             if (dProcess == null)
                             {
-                                dProcess = new TopologicalSorting.OrderedProcess(graph, dependency.Type.FullName);
+                                dProcess = new TopologicalSorting.OrderedProcess(graph, dependency.Type.ReflectionName);
                             }
                             //var dProcess = new TopologicalSorting.OrderedProcess(graph, dependency.Type.FullName);
 
@@ -169,9 +169,9 @@ namespace Bridge.Translator
                     {
                         foreach (var process in processes)
                         {
-                            tInfo = this.Types.First(ti => ti.Type.FullName == process.Name);
+                            tInfo = this.Types.First(ti => ti.Type.ReflectionName == process.Name);
 
-                            if (list.All(t => t.Type.FullName != tInfo.Type.FullName))
+                            if (list.All(t => t.Type.ReflectionName != tInfo.Type.ReflectionName))
                             {
                                 list.Add(tInfo);
                             }
@@ -183,7 +183,7 @@ namespace Bridge.Translator
                 }
                 catch (System.Exception ex)
                 {
-                    this.LogWarning(string.Format("Topological sort failed {0} with error {1}", tInfo != null ? "at type " + tInfo.Type.FullName : string.Empty, ex));
+                    this.LogWarning(string.Format("Topological sort failed {0} with error {1}", tInfo != null ? "at type " + tInfo.Type.ReflectionName : string.Empty, ex));
                 }
             }
         }
