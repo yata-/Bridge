@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Bridge.Contract")]
@@ -11,5 +11,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 [assembly: Guid("5bbbae4b-9c2a-4cb0-bd4c-85fc16e5df5e")]
-[assembly: AssemblyVersion("1.9")]
-[assembly: AssemblyFileVersion("1.9.0")]
+[assembly: AssemblyVersion("1.10")]
+[assembly: AssemblyFileVersion("1.10.0")]

@@ -1,4 +1,4 @@
-﻿namespace Bridge.Html5
+namespace Bridge.Html5
 {
     /// <summary>
     /// The HTMLMediaElement interface has special properties and methods (beyond the properties and methods available for all children of HTMLElement), that are common to all media-related objects.
@@ -202,7 +202,9 @@
     /// </summary>
     [External]
     [Name("HTMLMediaElement")]
-    public abstract class MediaElement : Element<MediaElement> { }
+    public abstract class MediaElement : Element<MediaElement>
+    {
+    }
 
     /// <summary>
     /// The TimeRanges interface is used to represent a set of time ranges, primarily for the purpose of tracking which portions of media have been buffered when loading it for use by the &lt;audio&gt; and &lt;video&gt; elements.

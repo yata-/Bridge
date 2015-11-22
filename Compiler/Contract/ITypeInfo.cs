@@ -168,6 +168,7 @@ namespace Bridge.Contract
         bool HasRealStatic(IEmitter emitter);
 
         List<AstType> GetBaseTypes(IEmitter emitter);
+
         AstType GetBaseClass(IEmitter emitter);
     }
 }

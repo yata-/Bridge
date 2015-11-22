@@ -2,7 +2,7 @@ namespace Bridge.Html5
 {
     /// <summary>
     /// ArrayBufferView is a helper type representing any of the following JavaScript TypedArray types:
-    /// 
+    ///
     ///     Int8Array,
     ///     Uint8Array,
     ///     Uint8ClampedArray,
@@ -71,8 +71,6 @@ namespace Bridge.Html5
         {
             return null;
         }
-
-
 
         public static explicit operator Int8Array(ArrayBufferView value)
         {
