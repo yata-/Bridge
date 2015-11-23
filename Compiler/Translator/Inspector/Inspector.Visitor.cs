@@ -350,14 +350,14 @@ namespace Bridge.Translator
                     }
                     else
                     {
-                        this.CurrentType.LastEnumValue *= 2;    
+                        this.CurrentType.LastEnumValue *= 2;
                     }
-                    
+
                     initializer = new PrimitiveExpression(this.CurrentType.LastEnumValue);
                 }
                 else
                 {
-                    initializer = new PrimitiveExpression(++this.CurrentType.LastEnumValue);    
+                    initializer = new PrimitiveExpression(++this.CurrentType.LastEnumValue);
                 }
             }
             else

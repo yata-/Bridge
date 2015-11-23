@@ -12,7 +12,7 @@ namespace Bridge.Html5
     /// </summary>
     [External]
     [Namespace(false)]
-    public class Uint8ClampedArray: TypedArray.Prototype<Uint8ClampedArray, byte>
+    public class Uint8ClampedArray : TypedArray.Prototype<Uint8ClampedArray, byte>
     {
         /// <summary>
         /// Creates a new Uint8ClampedArray of the specified length.

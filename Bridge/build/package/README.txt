@@ -1,7 +1,7 @@
-﻿Project          : Bridge
-Release Date     : 2015-09-21
-Current Version  : 1.9
-Previous Version : 1.8
+Project          : Bridge
+Release Date     : 2015-11-23
+Current Version  : 1.10
+Previous Version : 1.9
 
 Use Bridge.NET to build platform independent applications for mobile, web 
 and desktop. Run on iOS, Windows, Mac, Linux and billions of other devices 

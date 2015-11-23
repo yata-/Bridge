@@ -285,6 +285,7 @@ namespace Bridge.Translator
         }
 
         private List<AstType> baseTypes;
+
         public List<AstType> GetBaseTypes(IEmitter emitter)
         {
             if (this.baseTypes != null)

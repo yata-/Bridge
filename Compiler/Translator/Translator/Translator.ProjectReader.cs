@@ -1,9 +1,9 @@
+using Microsoft.Build.Evaluation;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
-using Microsoft.Build.Evaluation;
 
 namespace Bridge.Translator
 {

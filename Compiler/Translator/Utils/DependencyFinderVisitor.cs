@@ -1,8 +1,7 @@
-using System.Collections.Generic;
-using ICSharpCode.NRefactory.CSharp;
-using System.Linq;
 using Bridge.Contract;
-using ICSharpCode.NRefactory.Semantics;
+using ICSharpCode.NRefactory.CSharp;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Bridge.Translator
 {
@@ -46,7 +45,7 @@ namespace Bridge.Translator
             if (methodDeclaration.HasModifier(Modifiers.Static))
             {
                 this.CheckDependency(methodDeclaration.ReturnType);
-                base.VisitMethodDeclaration(methodDeclaration);    
+                base.VisitMethodDeclaration(methodDeclaration);
             }
         }
 
@@ -55,7 +54,7 @@ namespace Bridge.Translator
             if (fieldDeclaration.HasModifier(Modifiers.Static))
             {
                 this.CheckDependency(fieldDeclaration.ReturnType);
-                base.VisitFieldDeclaration(fieldDeclaration);    
+                base.VisitFieldDeclaration(fieldDeclaration);
             }
         }
 
@@ -107,15 +106,20 @@ namespace Bridge.Translator
 
         public IEmitter Emitter
         {
-            get; 
+            get;
             set;
         }
 
         public List<ITypeInfo> Dependencies
         {
-            get; set;
+            get;
+            set;
         }
 
-        public ITypeInfo Type { get; set; }
+        public ITypeInfo Type
+        {
+            get;
+            set;
+        }
     }
 }

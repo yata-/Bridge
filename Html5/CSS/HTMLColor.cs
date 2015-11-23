@@ -16,7 +16,7 @@ namespace Bridge.Html5
         /// rgb(192, 192, 192)
         /// </summary>
         [InlineConst]
-        public const string Silver ="silver";
+        public const string Silver = "silver";
 
         /// <summary>
         /// rgb(128, 128, 128)
@@ -39,7 +39,8 @@ namespace Bridge.Html5
         /// <summary>
         /// rgb(255,   0,   0)
         /// </summary>
-        [InlineConst] public const string Red = "red";
+        [InlineConst]
+        public const string Red = "red";
 
         /// <summary>
         /// rgb(128,   0, 128)

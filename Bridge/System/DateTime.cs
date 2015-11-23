@@ -707,7 +707,7 @@ namespace System
 
         public TimeSpan TimeOfDay
         {
-            [Template("Bridge.Date.timeOfDay({this})")] 
+            [Template("Bridge.Date.timeOfDay({this})")]
             get
             {
                 return default(TimeSpan);

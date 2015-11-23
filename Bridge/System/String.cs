@@ -704,7 +704,7 @@ namespace System
         public string Slice(int beginSlice, int endSlice)
         {
             return null;
-        }    
+        }
 
         [Template("Bridge.String.split({this}, {separator:array}.map(function(i) {{ return String.fromCharCode(i); }}))")]
         public extern string[] Split(params char[] separator);
