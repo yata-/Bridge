@@ -1766,6 +1766,84 @@ Bridge.define('ClientTestLibrary.Bridge623B2', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge634A$1', function (T) { return {
+
+}; });
+
+Bridge.define('ClientTestLibrary.Bridge634A$1.Nested', function (T) { return {
+
+}; });
+
+Bridge.define('ClientTestLibrary.Bridge634A$1.Nested.SubNested', function (T) { return {
+
+}; });
+
+Bridge.define('ClientTestLibraryCustom.Bridge634B$1', function (T) { return {
+
+}; });
+
+Bridge.define('ClientTestLibraryCustom.Bridge634B$1.Nested', function (T) { return {
+
+}; });
+
+Bridge.define('ClientTestLibraryCustom.Bridge634B$1.Nested.SubNested', function (T) { return {
+
+}; });
+
+Bridge.define('ClientTestLibrary.Bridge634C');
+
+Bridge.define('ClientTestLibrary.Bridge634C.Nested');
+
+Bridge.define('ClientTestLibrary.Bridge634C.Nested.SubNested');
+
+Bridge.define('ClientTestLibrary.Bridge634A$1.Nested.SubNested$1', function (T, T1) { return {
+
+}; });
+
+Bridge.define('ClientTestLibrary.Bridge634A$1.Nested$1', function (T, T1) { return {
+
+}; });
+
+Bridge.define('ClientTestLibrary.Bridge634A$1.Nested$1.SubNested', function (T, T1) { return {
+
+}; });
+
+Bridge.define('ClientTestLibrary.Bridge634A$1.Nested$1.SubNested$1', function (T, T1, T2) { return {
+
+}; });
+
+Bridge.define('ClientTestLibraryCustom.Bridge634B$1.Nested.SubNested$1', function (T, T1) { return {
+
+}; });
+
+Bridge.define('ClientTestLibraryCustom.Bridge634B$1.Nested$1', function (T, T1) { return {
+
+}; });
+
+Bridge.define('ClientTestLibraryCustom.Bridge634B$1.Nested$1.SubNested', function (T, T1) { return {
+
+}; });
+
+Bridge.define('ClientTestLibraryCustom.Bridge634B$1.Nested$1.SubNested$1', function (T, T1, T2) { return {
+
+}; });
+
+Bridge.define('ClientTestLibrary.Bridge634C.Nested.SubNested$1', function (T1) { return {
+
+}; });
+
+Bridge.define('ClientTestLibrary.Bridge634C.Nested$1', function (T1) { return {
+
+}; });
+
+Bridge.define('ClientTestLibrary.Bridge634C.Nested$1.SubNested', function (T1) { return {
+
+}; });
+
+Bridge.define('ClientTestLibrary.Bridge634C.Nested$1.SubNested$1', function (T1, T2) { return {
+
+}; });
+
 Bridge.define('ClientTestLibrary.Bridge635A', {
     internalFunc1: function () {
         return "A.Test1";
@@ -2732,6 +2810,82 @@ Bridge.define('ClientTestLibrary.Bridge623', {
 
             assert.equal(point7.call(), 1021, "Bridge623B2 point7 func3");
             assert.equal(point8.call(), 1024, "Bridge623B2 point8 func3");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge634', {
+    statics: {
+        testUseCase1: function (assert) {
+            var $t;
+            assert.expect(1);
+
+            var hashSet = new Bridge.Collections.HashSet$1(String)("constructor");
+
+            hashSet.add$1("a");
+            hashSet.add$1("b");
+            hashSet.add$1("c");
+
+            var text = "";
+
+            $t = Bridge.getEnumerator(hashSet);
+            while ($t.moveNext()) {
+                var s = $t.getCurrent();
+                text += s;
+            }
+
+            assert.equal(text, "abc", "Bridge634: foreach works for HashSet");
+        }        ,
+        testUseCase2: function (assert) {
+            assert.expect(21);
+
+            var a = new ClientTestLibrary.Bridge634A$1(String)();
+            var a1 = new ClientTestLibrary.Bridge634A$1.Nested(String)();
+            var a2 = new ClientTestLibrary.Bridge634A$1.Nested$1(String,Bridge.Int)();
+            var a3 = new ClientTestLibrary.Bridge634A$1.Nested.SubNested(String)();
+            var a4 = new ClientTestLibrary.Bridge634A$1.Nested.SubNested$1(String,Bridge.Int)();
+            var a5 = new ClientTestLibrary.Bridge634A$1.Nested$1.SubNested(String,Bridge.Int)();
+            var a6 = new ClientTestLibrary.Bridge634A$1.Nested$1.SubNested$1(String,Bridge.Int,Bridge.Int)();
+
+            assert.equal(Bridge.getTypeName(a), "ClientTestLibrary.Bridge634A$1$String", "Bridge634 A a");
+            assert.equal(Bridge.getTypeName(a1), "ClientTestLibrary.Bridge634A$1.Nested$String", "Bridge634 A a1");
+            assert.equal(Bridge.getTypeName(a2), "ClientTestLibrary.Bridge634A$1.Nested$1$String$Bridge.Int", "Bridge634 A a2");
+            assert.equal(Bridge.getTypeName(a3), "ClientTestLibrary.Bridge634A$1.Nested.SubNested$String", "Bridge634 A a3");
+            assert.equal(Bridge.getTypeName(a4), "ClientTestLibrary.Bridge634A$1.Nested.SubNested$1$String$Bridge.Int", "Bridge634 A a4");
+            assert.equal(Bridge.getTypeName(a5), "ClientTestLibrary.Bridge634A$1.Nested$1.SubNested$String$Bridge.Int", "Bridge634 A a5");
+            assert.equal(Bridge.getTypeName(a6), "ClientTestLibrary.Bridge634A$1.Nested$1.SubNested$1$String$Bridge.Int$Bridge.Int", "Bridge634 A a6");
+
+            var b = new ClientTestLibraryCustom.Bridge634B$1(String)();
+            var b1 = new ClientTestLibraryCustom.Bridge634B$1.Nested(String)();
+            var b2 = new ClientTestLibraryCustom.Bridge634B$1.Nested$1(String,Bridge.Int)();
+            var b3 = new ClientTestLibraryCustom.Bridge634B$1.Nested.SubNested(String)();
+            var b4 = new ClientTestLibraryCustom.Bridge634B$1.Nested.SubNested$1(String,Bridge.Int)();
+            var b5 = new ClientTestLibraryCustom.Bridge634B$1.Nested$1.SubNested(String,Bridge.Int)();
+            var b6 = new ClientTestLibraryCustom.Bridge634B$1.Nested$1.SubNested$1(String,Bridge.Int,Bridge.Int)();
+
+            assert.equal(Bridge.getTypeName(b), "ClientTestLibraryCustom.Bridge634B$1$String", "Bridge634 B b");
+            assert.equal(Bridge.getTypeName(b1), "ClientTestLibraryCustom.Bridge634B$1.Nested$String", "Bridge634 B b1");
+            assert.equal(Bridge.getTypeName(b2), "ClientTestLibraryCustom.Bridge634B$1.Nested$1$String$Bridge.Int", "Bridge634 B b2");
+            assert.equal(Bridge.getTypeName(b3), "ClientTestLibraryCustom.Bridge634B$1.Nested.SubNested$String", "Bridge634 B b3");
+            assert.equal(Bridge.getTypeName(b4), "ClientTestLibraryCustom.Bridge634B$1.Nested.SubNested$1$String$Bridge.Int", "Bridge634 B b4");
+            assert.equal(Bridge.getTypeName(b5), "ClientTestLibraryCustom.Bridge634B$1.Nested$1.SubNested$String$Bridge.Int", "Bridge634 B b5");
+            assert.equal(Bridge.getTypeName(b6), "ClientTestLibraryCustom.Bridge634B$1.Nested$1.SubNested$1$String$Bridge.Int$Bridge.Int", "Bridge634 B b6");
+
+            var c = new ClientTestLibrary.Bridge634C();
+            var c1 = new ClientTestLibrary.Bridge634C.Nested();
+            var c2 = new ClientTestLibrary.Bridge634C.Nested$1(Bridge.Int)();
+            var c3 = new ClientTestLibrary.Bridge634C.Nested.SubNested();
+            var c4 = new ClientTestLibrary.Bridge634C.Nested.SubNested$1(Bridge.Int)();
+            var c5 = new ClientTestLibrary.Bridge634C.Nested$1.SubNested(Bridge.Int)();
+            var c6 = new ClientTestLibrary.Bridge634C.Nested$1.SubNested$1(Bridge.Int,Bridge.Int)();
+
+            assert.equal(Bridge.getTypeName(c), "ClientTestLibrary.Bridge634C", "Bridge634 C c");
+            assert.equal(Bridge.getTypeName(c1), "ClientTestLibrary.Bridge634C.Nested", "Bridge634 C c1");
+            assert.equal(Bridge.getTypeName(c2), "ClientTestLibrary.Bridge634C.Nested$1$Bridge.Int", "Bridge634 C c2");
+            assert.equal(Bridge.getTypeName(c3), "ClientTestLibrary.Bridge634C.Nested.SubNested", "Bridge634 C c3");
+            assert.equal(Bridge.getTypeName(c4), "ClientTestLibrary.Bridge634C.Nested.SubNested$1$Bridge.Int", "Bridge634 C c4");
+            assert.equal(Bridge.getTypeName(c5), "ClientTestLibrary.Bridge634C.Nested$1.SubNested$Bridge.Int", "Bridge634 C c5");
+            assert.equal(Bridge.getTypeName(c6), "ClientTestLibrary.Bridge634C.Nested$1.SubNested$1$Bridge.Int$Bridge.Int", "Bridge634 C c6");
         }
     }
 });
