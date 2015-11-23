@@ -1766,6 +1766,19 @@ Bridge.define('ClientTestLibrary.Bridge623B2', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge635A', {
+    internalFunc1: function () {
+        return "A.Test1";
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge635B', {
+    inherits: [ClientTestLibrary.Bridge635A],
+    internalFunc1: function () {
+        return "B.Test1";
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
@@ -2719,6 +2732,23 @@ Bridge.define('ClientTestLibrary.Bridge623', {
 
             assert.equal(point7.call(), 1021, "Bridge623B2 point7 func3");
             assert.equal(point8.call(), 1024, "Bridge623B2 point8 func3");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge635', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(4);
+
+            var a = new ClientTestLibrary.Bridge635A();
+            var b = new ClientTestLibrary.Bridge635B();
+
+            assert.equal(typeof a.internalFunc1, "function", "Bridge635 A.internalFunc1");
+            assert.equal(a["internalFunc1"](), "A.Test1", "Bridge635 A.internalFunc1 Invoke");
+
+            assert.equal(typeof b.internalFunc1, "function", "Bridge635 B.internalFunc1");
+            assert.equal(b["internalFunc1"](), "B.Test1", "Bridge635 B.internalFunc1 Invoke");
         }
     }
 });

@@ -189,7 +189,7 @@ namespace Bridge.Translator
             return this.GetScriptArguments(attr);
         }
 
-        public virtual string GetDefinitionName(IMemberDefinition member, bool preserveMemberCase = false)
+        public virtual string GetDefinitionName(IEmitter emitter, IMemberDefinition member, bool preserveMemberCase = false)
         {
             if (!preserveMemberCase)
             {
@@ -201,7 +201,8 @@ namespace Bridge.Translator
                 }
             }
             string attrName = Bridge.Translator.Translator.Bridge_ASSEMBLY + ".NameAttribute";
-            var attr = member.CustomAttributes.FirstOrDefault(a => a.AttributeType.FullName == attrName);
+            var attr = Helpers.GetInheritedAttribute(emitter, member, attrName);
+
             bool isIgnore = this.Validator.IsIgnoreType(member.DeclaringType);
             string name = member.Name;
             bool isStatic = false;
@@ -284,7 +285,7 @@ namespace Bridge.Translator
                 return null;
             }
 
-            var attr = member.Attributes.FirstOrDefault(a => a.AttributeType.FullName == Bridge.Translator.Translator.Bridge_ASSEMBLY + ".NameAttribute");
+            var attr = Helpers.GetInheritedAttribute(member, Bridge.Translator.Translator.Bridge_ASSEMBLY + ".NameAttribute");
             bool isIgnore = member.DeclaringTypeDefinition != null && this.Validator.IsIgnoreType(member.DeclaringTypeDefinition);
             string name;
 
@@ -312,7 +313,7 @@ namespace Bridge.Translator
             {
                 preserveMemberChange = true;
             }
-            var attr = member.Attributes.FirstOrDefault(a => a.AttributeType.FullName == Bridge.Translator.Translator.Bridge_ASSEMBLY + ".NameAttribute");
+            var attr = Helpers.GetInheritedAttribute(member, Bridge.Translator.Translator.Bridge_ASSEMBLY + ".NameAttribute");
             bool isIgnore = member.DeclaringTypeDefinition != null && this.Validator.IsIgnoreType(member.DeclaringTypeDefinition);
             string name = member.Name;
             if (member is IMethod && ((IMethod)member).IsConstructor)
