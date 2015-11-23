@@ -613,7 +613,7 @@ namespace Bridge.Contract
                         }
                         return true;
                     }
-                }    
+                }
             }
 
             return false;

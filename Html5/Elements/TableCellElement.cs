@@ -37,5 +37,7 @@ namespace Bridge.Html5
     /// </summary>
     [External]
     [Name("HTMLTableCellElement")]
-    public abstract class TableCellElement : Element<TableCellElement> { }
+    public abstract class TableCellElement : Element<TableCellElement>
+    {
+    }
 }

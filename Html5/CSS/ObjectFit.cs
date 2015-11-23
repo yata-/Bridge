@@ -1,4 +1,4 @@
-﻿namespace Bridge.Html5
+namespace Bridge.Html5
 {
     /// <summary>
     /// The ‘object-fit’ property specifies how the contents of a replaced element should be fitted to the box established by its used height and width.

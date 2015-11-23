@@ -1,6 +1,6 @@
-﻿using System;
 using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -232,7 +232,7 @@ namespace Bridge.Translator
             this.Emitter.BeforeBlock = ac;
 
             BlockStatement block = foreachStatement.EmbeddedStatement as BlockStatement;
-            
+
             if (replaceAwaiterByVar.HasValue)
             {
                 this.Emitter.ReplaceAwaiterByVar = replaceAwaiterByVar.Value;
@@ -249,9 +249,9 @@ namespace Bridge.Translator
 
             if (!this.Emitter.IsNewLine)
             {
-                this.WriteNewLine();    
+                this.WriteNewLine();
             }
-            
+
             this.EndBlock();
             this.WriteNewLine();
         }

@@ -1,10 +1,8 @@
 using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
-using ICSharpCode.NRefactory.CSharp.Resolver;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
-using Mono.Cecil;
 using System.Text;
 
 namespace Bridge.Translator

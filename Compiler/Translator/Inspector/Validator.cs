@@ -60,7 +60,7 @@ namespace Bridge.Translator
             string objectLiteralAttr = Translator.Bridge_ASSEMBLY + ".ObjectLiteralAttribute";
 
             return this.HasAttribute(enity.Attributes, ignoreAttr)
-                   || this.HasAttribute(enity.Attributes, externalAttr) 
+                   || this.HasAttribute(enity.Attributes, externalAttr)
                    || (!ignoreLiteral && this.HasAttribute(enity.Attributes, objectLiteralAttr));
         }
 

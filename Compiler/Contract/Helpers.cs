@@ -312,7 +312,7 @@ namespace Bridge.Contract
                 {
                     if (expression.Parent is InvocationExpression)
                     {
-                        var invocationExpression = (InvocationExpression) expression.Parent;
+                        var invocationExpression = (InvocationExpression)expression.Parent;
                         if (invocationExpression.Target == expression)
                         {
                             return;

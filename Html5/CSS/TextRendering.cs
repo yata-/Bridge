@@ -1,4 +1,4 @@
-﻿namespace Bridge.Html5
+namespace Bridge.Html5
 {
     /// <summary>
     /// The text-rendering CSS property provides information to the rendering engine about what to optimize for when rendering text.
