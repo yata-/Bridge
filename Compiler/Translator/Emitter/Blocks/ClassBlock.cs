@@ -65,7 +65,7 @@ namespace Bridge.Translator
             }
 
             var typeDef = this.Emitter.GetTypeDefinition();
-            string name = this.Emitter.Validator.GetCustomTypeName(typeDef);
+            string name = this.Emitter.Validator.GetCustomTypeName(typeDef, this.Emitter);
             this.IsGeneric = typeDef.GenericParameters.Count > 0;
 
             if (name.IsEmpty())
@@ -188,7 +188,6 @@ namespace Bridge.Translator
                     this.Emitter.Comma = true;
                 }
             }
-
 
             var ctorBlock = new ConstructorBlock(this.Emitter, this.TypeInfo, false);
 

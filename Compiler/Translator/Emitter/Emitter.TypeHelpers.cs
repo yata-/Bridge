@@ -12,7 +12,30 @@ namespace Bridge.Translator
 {
     public partial class Emitter
     {
-        public virtual int CompareTypeInfosByNameAndPriority(ITypeInfo x, ITypeInfo y)
+        public virtual int CompareTypeInfosByName(ITypeInfo x, ITypeInfo y)
+        {
+            if (x == y)
+            {
+                return 0;
+            }
+
+            if (x.Key == Emitter.ROOT)
+            {
+                return -1;
+            }
+
+            if (y.Key == Emitter.ROOT)
+            {
+                return 1;
+            }
+
+            var xTypeDefinition = this.TypeDefinitions[x.Key];
+            var yTypeDefinition = this.TypeDefinitions[y.Key];
+
+            return xTypeDefinition.FullName.CompareTo(yTypeDefinition.FullName);
+        }
+
+        public virtual int CompareTypeInfosByPriority(ITypeInfo x, ITypeInfo y)
         {
             if (x == y)
             {
@@ -34,11 +57,6 @@ namespace Bridge.Translator
 
             var xPriority = this.GetPriority(xTypeDefinition);
             var yPriority = this.GetPriority(yTypeDefinition);
-
-            if (xPriority == yPriority)
-            {
-                return xTypeDefinition.FullName.CompareTo(yTypeDefinition.FullName);
-            }
 
             return -xPriority.CompareTo(yPriority);
         }
@@ -68,6 +86,21 @@ namespace Bridge.Translator
         {
             this.TopologicalSort();
 
+            //this.Types.Sort has strange effects for items with 0 priority
+            ITypeInfo temp;
+            for (int write = 0; write < this.Types.Count; write++)
+            {
+                for (int sort = 0; sort < this.Types.Count - 1; sort++)
+                {
+                    if (this.CompareTypeInfosByPriority(this.Types[sort], this.Types[sort + 1]) == 1)
+                    {
+                        temp = this.Types[sort + 1];
+                        this.Types[sort + 1] = this.Types[sort];
+                        this.Types[sort] = temp;
+                    }
+                }
+            }
+
             var clonedTypes = new List<ITypeInfo>(this.Types);
 
             foreach (var t in clonedTypes)
@@ -92,18 +125,32 @@ namespace Bridge.Translator
 
             foreach (var t in this.Types)
             {
-                var finder = new DependencyFinderVisitor(this);
+                var finder = new DependencyFinderVisitor(this, t);
                 t.TypeDeclaration.AcceptVisitor(finder);
-                var tProcess = new TopologicalSorting.OrderedProcess(graph, t.Type.FullName);
+
+                var tProcess = graph.Processes.FirstOrDefault(p => p.Name == t.Type.ReflectionName);
+                if (tProcess == null)
+                {
+                    tProcess = new TopologicalSorting.OrderedProcess(graph, t.Type.ReflectionName);
+                }
 
                 if (finder.Dependencies.Count > 0)
                 {
                     foreach (var dependency in finder.Dependencies)
                     {
-                        if (tProcess.Predecessors.All(p => p.Name != dependency.Type.FullName))
+                        if (tProcess.Predecessors.All(p => p.Name != dependency.Type.ReflectionName))
                         {
-                            var dProcess = new TopologicalSorting.OrderedProcess(graph, dependency.Type.FullName);
-                            tProcess.After(dProcess);
+                            var dProcess = graph.Processes.FirstOrDefault(p => p.Name == dependency.Type.ReflectionName);
+                            if (dProcess == null)
+                            {
+                                dProcess = new TopologicalSorting.OrderedProcess(graph, dependency.Type.ReflectionName);
+                            }
+                            //var dProcess = new TopologicalSorting.OrderedProcess(graph, dependency.Type.FullName);
+
+                            if (dProcess.Predecessors.All(p => p.Name != tProcess.Name))
+                            {
+                                tProcess.After(dProcess);
+                            }
                         }
                     }
                 }
@@ -122,9 +169,9 @@ namespace Bridge.Translator
                     {
                         foreach (var process in processes)
                         {
-                            tInfo = this.Types.First(ti => ti.Type.FullName == process.Name);
+                            tInfo = this.Types.First(ti => ti.Type.ReflectionName == process.Name);
 
-                            if (list.All(t => t.Type.FullName != tInfo.Type.FullName))
+                            if (list.All(t => t.Type.ReflectionName != tInfo.Type.ReflectionName))
                             {
                                 list.Add(tInfo);
                             }
@@ -134,11 +181,10 @@ namespace Bridge.Translator
                     this.Types.Clear();
                     this.Types.AddRange(list);
                 }
-                catch (Exception ex)
+                catch (System.Exception ex)
                 {
-                    this.LogWarning(string.Format("Topological sort failed {0} with error {1}", tInfo != null ? "at type " + tInfo.Type.FullName : string.Empty,  ex));
+                    this.LogWarning(string.Format("Topological sort failed {0} with error {1}", tInfo != null ? "at type " + tInfo.Type.ReflectionName : string.Empty, ex));
                 }
-
             }
         }
 

@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Bridge.Builder")]
@@ -11,5 +11,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 [assembly: Guid("44bd50e3-3b1b-4c13-90fa-8ab048f2c0c0")]
-[assembly: AssemblyVersion("1.9")]
-[assembly: AssemblyFileVersion("1.9.0")]
+[assembly: AssemblyVersion("1.10")]
+[assembly: AssemblyFileVersion("1.10.0")]

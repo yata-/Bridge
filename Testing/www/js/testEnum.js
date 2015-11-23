@@ -2,6 +2,49 @@
 
 "use strict";
 
+Bridge.define('ClientTestLibrary.TestEnum.Digits', {
+    statics: {
+        zero: 0,
+        one: 1,
+        two: 2
+    },
+    enum: true
+});
+
+Bridge.define('ClientTestLibrary.TestEnum.Pets', {
+    statics: {
+        none: 0,
+        dog: 1,
+        cat: 2,
+        bird: 4,
+        rabbit: 8,
+        other: 16
+    },
+    enum: true,
+    flags: true
+});
+
+Bridge.define('ClientTestLibrary.TestEnum.Abc', {
+    statics: {
+        a: -1,
+        b: 0,
+        c: 1
+    },
+    enum: true
+});
+
+Bridge.define('ClientTestLibrary.TestEnum.Pets1', {
+    statics: {
+        none: 0,
+        dog: 1,
+        cat: 2,
+        bird: 4,
+        rabbit: 8,
+        other: 16
+    },
+    enum: true
+});
+
 Bridge.define('ClientTestLibrary.TestEnum', {
     statics: {
         testParse: function (assert) {
@@ -131,49 +174,6 @@ Bridge.define('ClientTestLibrary.TestEnum', {
             assert.equal(Bridge.Enum.tryParse(ClientTestLibrary.TestEnum.Digits, "ONE", outVar), false, "TryParse ONE");
         }
     }
-});
-
-Bridge.define('ClientTestLibrary.TestEnum.Digits', {
-    statics: {
-        zero: 0,
-        one: 1,
-        two: 2
-    },
-    enum: true
-});
-
-Bridge.define('ClientTestLibrary.TestEnum.Pets', {
-    statics: {
-        none: 0,
-        dog: 1,
-        cat: 2,
-        bird: 4,
-        rabbit: 8,
-        other: 16
-    },
-    enum: true,
-    flags: true
-});
-
-Bridge.define('ClientTestLibrary.TestEnum.Abc', {
-    statics: {
-        a: -1,
-        b: 0,
-        c: 1
-    },
-    enum: true
-});
-
-Bridge.define('ClientTestLibrary.TestEnum.Pets1', {
-    statics: {
-        none: 0,
-        dog: 1,
-        cat: 2,
-        bird: 4,
-        rabbit: 8,
-        other: 16
-    },
-    enum: true
 });
 
 

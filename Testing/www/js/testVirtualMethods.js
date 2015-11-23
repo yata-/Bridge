@@ -2,6 +2,22 @@
 
 "use strict";
 
+Bridge.define('ClientTestLibrary.TestVirtualMethods.A', {
+    test: function () {
+        return "A";
+    }
+});
+
+Bridge.define('ClientTestLibrary.TestVirtualMethods.B', {
+    inherits: [ClientTestLibrary.TestVirtualMethods.A],
+    testA: function () {
+        return ClientTestLibrary.TestVirtualMethods.A.prototype.test.call(this);
+    },
+    test: function () {
+        return "B";
+    }
+});
+
 Bridge.define('ClientTestLibrary.TestVirtualMethods', {
     statics: {
         testB: function (assert) {
@@ -23,22 +39,6 @@ Bridge.define('ClientTestLibrary.TestVirtualMethods', {
             assert.ok(c !== null, "Instance of C created");
             assert.equal(c.test(), "B", "c.Test() = 'B'");
         }
-    }
-});
-
-Bridge.define('ClientTestLibrary.TestVirtualMethods.A', {
-    test: function () {
-        return "A";
-    }
-});
-
-Bridge.define('ClientTestLibrary.TestVirtualMethods.B', {
-    inherits: [ClientTestLibrary.TestVirtualMethods.A],
-    testA: function () {
-        return ClientTestLibrary.TestVirtualMethods.A.prototype.test.call(this);
-    },
-    test: function () {
-        return "B";
     }
 });
 

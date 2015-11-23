@@ -62,7 +62,9 @@ namespace Bridge.Contract
             set;
         }
 
-        int CompareTypeInfosByNameAndPriority(ITypeInfo x, ITypeInfo y);
+        int CompareTypeInfosByName(ITypeInfo x, ITypeInfo y);
+
+        int CompareTypeInfosByPriority(ITypeInfo x, ITypeInfo y);
 
         bool IsInheritedFrom(ITypeInfo x, ITypeInfo y);
 
@@ -108,7 +110,7 @@ namespace Bridge.Contract
 
         bool IsForbiddenInvocation(InvocationExpression node);
 
-        string GetDefinitionName(IMemberDefinition member, bool changeCase = true);
+        string GetDefinitionName(IEmitter emitter, IMemberDefinition member, bool changeCase = true);
 
         System.Collections.Generic.IEnumerable<string> GetScript(ICSharpCode.NRefactory.CSharp.EntityDeclaration method);
 
@@ -226,7 +228,7 @@ namespace Bridge.Contract
 
         Action BeforeBlock
         {
-            get; 
+            get;
             set;
         }
 

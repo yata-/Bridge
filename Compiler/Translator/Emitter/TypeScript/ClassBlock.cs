@@ -74,7 +74,7 @@ namespace Bridge.Translator.TypeScript
         {
             TypeDefinition baseType = this.Emitter.GetBaseTypeDefinition();
             var typeDef = this.Emitter.GetTypeDefinition();
-            string name = this.Emitter.Validator.GetCustomTypeName(typeDef);
+            string name = this.Emitter.Validator.GetCustomTypeName(typeDef, this.Emitter);
             this.IsGeneric = typeDef.GenericParameters.Count > 0;
 
             if (name.IsEmpty())
@@ -228,7 +228,7 @@ namespace Bridge.Translator.TypeScript
 
                     if (!isGeneric)
                     {
-                        string name = this.Emitter.Validator.GetCustomTypeName(typeDef);
+                        string name = this.Emitter.Validator.GetCustomTypeName(typeDef, this.Emitter);
 
                         if (name.IsEmpty())
                         {
@@ -239,7 +239,7 @@ namespace Bridge.Translator.TypeScript
                         this.WriteColon();
 
                         var parentTypeDef = this.Emitter.GetTypeDefinition();
-                        string parentName = this.Emitter.Validator.GetCustomTypeName(parentTypeDef);
+                        string parentName = this.Emitter.Validator.GetCustomTypeName(parentTypeDef, this.Emitter);
                         if (parentName.IsEmpty())
                         {
                             parentName = this.TypeInfo.Type.Name;
@@ -296,7 +296,7 @@ namespace Bridge.Translator.TypeScript
                 }
 
                 var typeDef = this.Emitter.GetTypeDefinition();
-                string name = this.Emitter.Validator.GetCustomTypeName(typeDef);
+                string name = this.Emitter.Validator.GetCustomTypeName(typeDef, this.Emitter);
                 if (name.IsEmpty())
                 {
                     name = this.TypeInfo.Type.Name;

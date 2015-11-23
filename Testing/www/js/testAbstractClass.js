@@ -2,6 +2,30 @@
 
 "use strict";
 
+Bridge.define('ClientTestLibrary.TestAbstractClass.A', {
+    config: {
+        properties: {
+            Data: 0
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.TestAbstractClass.B', {
+    inherits: [ClientTestLibrary.TestAbstractClass.A],
+    getString: function () {
+        this.setData(this.getData()+1);
+        return "B";
+    }
+});
+
+Bridge.define('ClientTestLibrary.TestAbstractClass.C', {
+    inherits: [ClientTestLibrary.TestAbstractClass.B],
+    getString: function () {
+        this.setData(this.getData()-1);
+        return "C";
+    }
+});
+
 Bridge.define('ClientTestLibrary.TestAbstractClass', {
     statics: {
         testB: function (assert) {
@@ -36,30 +60,6 @@ Bridge.define('ClientTestLibrary.TestAbstractClass', {
             assert.equal(c.getString(), "C", "c.GetString() = 'C'");
             assert.equal(c.getData(), -1, "c.Data = -1");
         }
-    }
-});
-
-Bridge.define('ClientTestLibrary.TestAbstractClass.A', {
-    config: {
-        properties: {
-            Data: 0
-        }
-    }
-});
-
-Bridge.define('ClientTestLibrary.TestAbstractClass.B', {
-    inherits: [ClientTestLibrary.TestAbstractClass.A],
-    getString: function () {
-        this.setData(this.getData()+1);
-        return "B";
-    }
-});
-
-Bridge.define('ClientTestLibrary.TestAbstractClass.C', {
-    inherits: [ClientTestLibrary.TestAbstractClass.B],
-    getString: function () {
-        this.setData(this.getData()-1);
-        return "C";
     }
 });
 

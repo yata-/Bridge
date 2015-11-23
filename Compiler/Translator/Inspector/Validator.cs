@@ -1,3 +1,4 @@
+using System;
 using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
@@ -60,7 +61,7 @@ namespace Bridge.Translator
             string objectLiteralAttr = Translator.Bridge_ASSEMBLY + ".ObjectLiteralAttribute";
 
             return this.HasAttribute(enity.Attributes, ignoreAttr)
-                   || this.HasAttribute(enity.Attributes, externalAttr) 
+                   || this.HasAttribute(enity.Attributes, externalAttr)
                    || (!ignoreLiteral && this.HasAttribute(enity.Attributes, objectLiteralAttr));
         }
 
@@ -200,7 +201,7 @@ namespace Bridge.Translator
             return this.HasAttribute(type.Attributes, Translator.Bridge_ASSEMBLY + ".ObjectLiteralAttribute");
         }
 
-        public virtual string GetCustomTypeName(TypeDefinition type)
+        public virtual string GetCustomTypeName(TypeDefinition type, IEmitter emitter)
         {
             var name = this.GetAttributeValue(type.CustomAttributes, Translator.Bridge_ASSEMBLY + ".NameAttribute");
 
@@ -213,65 +214,28 @@ namespace Bridge.Translator
             if (nsAtrr != null && nsAtrr.ConstructorArguments.Count > 0)
             {
                 var arg = nsAtrr.ConstructorArguments[0];
-                name = Helpers.ReplaceSpecialChars(type.Name);
-
-                if (arg.Value is bool && !((bool)arg.Value))
-                {
-                    return name;
-                }
-
+                name = "";
                 if (arg.Value is string)
                 {
-                    string ns = arg.Value.ToString();
-
-                    return (!string.IsNullOrWhiteSpace(ns) ? (ns + ".") : "") + name;
+                    name = arg.Value.ToString();
                 }
-            }
 
-            if (this.HasAttribute(type.CustomAttributes, Translator.Bridge_ASSEMBLY + ".ObjectLiteralAttribute"))
-            {
-                return "Object";
-            }
+                if (arg.Value is bool && ((bool) arg.Value))
+                {
+                    return null;
+                }
 
-            return null;
-        }
+                if (type.IsNested && !string.IsNullOrEmpty(name))
+                {
+                    name = (string.IsNullOrEmpty(name) ? "" : (name + ".")) + BridgeTypes.GetParentNames(type);
+                }
 
-        public virtual string GetCustomTypeName(ICSharpCode.NRefactory.TypeSystem.IType type)
-        {
-            var attrs = type.GetDefinition().Attributes;
+                name = (string.IsNullOrEmpty(name) ? "" : (name + ".")) + BridgeTypes.ConvertName(type.Name);
 
-            string name = null;
-            var nameAttr = this.GetAttribute(attrs, Translator.Bridge_ASSEMBLY + ".NameAttribute");
-            if (nameAttr != null)
-            {
-                name = (string)nameAttr.PositionalArguments[0].ConstantValue;
-            }
-
-            if (!string.IsNullOrEmpty(name))
-            {
                 return name;
             }
 
-            var nsAtrr = this.GetAttribute(attrs, Translator.Bridge_ASSEMBLY + ".NamespaceAttribute");
-            if (nsAtrr != null && nsAtrr.PositionalArguments.Count > 0)
-            {
-                var arg = nsAtrr.PositionalArguments[0];
-                name = Helpers.ReplaceSpecialChars(type.Name);
-
-                if (arg.ConstantValue is bool && !((bool)arg.ConstantValue))
-                {
-                    return name;
-                }
-
-                if (arg.ConstantValue is string)
-                {
-                    string ns = arg.ConstantValue.ToString();
-
-                    return (!string.IsNullOrWhiteSpace(ns) ? (ns + ".") : "") + name;
-                }
-            }
-
-            if (this.HasAttribute(attrs, Translator.Bridge_ASSEMBLY + ".ObjectLiteralAttribute"))
+            if (this.HasAttribute(type.CustomAttributes, Translator.Bridge_ASSEMBLY + ".ObjectLiteralAttribute"))
             {
                 return "Object";
             }

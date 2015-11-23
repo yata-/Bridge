@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Bridge.Html5")]
@@ -11,5 +11,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 [assembly: Guid("d5956119-f924-47e1-96c2-4d98b832eb38")]
-[assembly: AssemblyVersion("1.9")]
-[assembly: AssemblyFileVersion("1.9.0")]
+[assembly: AssemblyVersion("1.10")]
+[assembly: AssemblyFileVersion("1.10.0")]

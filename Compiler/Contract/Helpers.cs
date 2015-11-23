@@ -312,7 +312,7 @@ namespace Bridge.Contract
                 {
                     if (expression.Parent is InvocationExpression)
                     {
-                        var invocationExpression = (InvocationExpression) expression.Parent;
+                        var invocationExpression = (InvocationExpression)expression.Parent;
                         if (invocationExpression.Target == expression)
                         {
                             return;
@@ -738,6 +738,102 @@ namespace Bridge.Contract
                 default:
                     throw new ArgumentOutOfRangeException("operatorType", operatorType, null);
             }
+        }
+
+        public static IAttribute GetInheritedAttribute(IEntity entity, string attrName)
+        {
+            if (entity is IMember)
+            {
+                return Helpers.GetInheritedAttribute((IMember)entity, attrName);
+            }
+
+            foreach (var attr in entity.Attributes)
+            {
+                if (attr.AttributeType.FullName == attrName)
+                {
+                    return attr;
+                }
+            }
+            return null;
+        }
+
+        public static IAttribute GetInheritedAttribute(IMember member, string attrName)
+        {
+            foreach (var attr in member.Attributes)
+            {
+                if (attr.AttributeType.FullName == attrName)
+                {
+                    return attr;
+                }
+            }
+
+            if (member.IsOverride)
+            {
+                member = InheritanceHelper.GetBaseMember(member);
+
+                if (member != null)
+                {
+                    return Helpers.GetInheritedAttribute(member, attrName);
+                }
+            }
+
+            return null;
+        }
+
+        public static CustomAttribute GetInheritedAttribute(IEmitter emitter, TypeDefinition type, string attrName)
+        {
+            foreach (var attr in type.CustomAttributes)
+            {
+                if (attr.AttributeType.FullName == attrName)
+                {
+                    return attr;
+                }
+            }
+
+            return null;
+        }
+
+        public static IAttribute GetInheritedAttribute(IType type, string attrName)
+        {
+            var typeDef = type.GetDefinition();
+            foreach (var attr in typeDef.Attributes)
+            {
+                if (attr.AttributeType.FullName == attrName)
+                {
+                    return attr;
+                }
+            }
+
+            return null;
+        }
+
+        public static CustomAttribute GetInheritedAttribute(IEmitter emitter, IMemberDefinition member, string attrName)
+        {
+            foreach (var attr in member.CustomAttributes)
+            {
+                if (attr.AttributeType.FullName == attrName)
+                {
+                    return attr;
+                }
+            }
+
+            var methodDefinition = member as MethodDefinition;
+            if (methodDefinition != null)
+            {
+                var isOverride = methodDefinition.IsVirtual && methodDefinition.IsReuseSlot;
+
+                if (isOverride)
+                {
+                    member = Helpers.GetBaseMethod(methodDefinition, emitter);
+
+                    if (member != null)
+                    {
+                        return Helpers.GetInheritedAttribute(emitter, member, attrName);
+                    }
+                }
+            }
+
+            return null;
         }
     }
 }

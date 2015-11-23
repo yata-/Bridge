@@ -42,14 +42,6 @@ Bridge.define('ClientTestLibrary.Bridge266B', {
     }
 });
 
-Bridge.define('ClientTestLibrary.Bridge272', {
-    statics: {
-        test: function (i) {
-            return i;
-        }
-    }
-});
-
 Bridge.define('ClientTestLibrary.Bridge272.MyEnum', {
     statics: {
         abc: 1,
@@ -215,45 +207,6 @@ Bridge.define('ClientTestLibrary.Bridge342', {
     }
 });
 
-Bridge.define('ClientTestLibrary.Bridge381', {
-    statics: {
-        testUseCase: function (assert) {
-            assert.expect(6);
-
-            var s1 = ["a", "b"].join(",");
-            assert.equal(s1, "a,b", "Join1");
-
-            var animals = new Bridge.List$1(ClientTestLibrary.Bridge381.Animal)();
-            animals.add(new ClientTestLibrary.Bridge381.Animal("Squirrel", "Rodent"));
-            animals.add(new ClientTestLibrary.Bridge381.Animal("Gray Wolf", "Carnivora"));
-            animals.add(new ClientTestLibrary.Bridge381.Animal("Capybara", "Rodent"));
-
-            var s2 = Bridge.toArray(animals).join(" ");
-            assert.equal(s2, "Squirrel Gray Wolf Capybara", "Join2");
-
-            var values = [null, "Cobb", 4189, 11434, 0.366];
-            var s31 = values.join("|");
-            assert.equal(s31, "|Cobb|4189|11434|0.366", "Join31");
-
-            values[0] = "";
-            var s32 = values.join("|");
-            assert.equal(s32, "|Cobb|4189|11434|0.366", "Join32");
-
-
-            var sArr = Bridge.Array.init(10, null);
-            for (var i = 0; i < 10; i++)
-                sArr[i] = Bridge.String.format("{0,-3}", i * 5);
-
-            var s4 = sArr.join(":");
-            assert.equal(s4, "0  :5  :10 :15 :20 :25 :30 :35 :40 :45 ", "Join4");
-
-            var val = ["apple", "orange", "grape", "pear"];
-            var s5 = val.slice(1, 1 + 2).join(", ");
-            assert.equal(s5, "orange, grape", "Join5");
-        }
-    }
-});
-
 Bridge.define('ClientTestLibrary.Bridge381.Animal', {
     kind: null,
     order: null,
@@ -266,10 +219,10 @@ Bridge.define('ClientTestLibrary.Bridge381.Animal', {
     }
 });
 
-Bridge.define('ClientTestLibrary.Bridge383', {
-    statics: {
-        doSomething: function (person) {
-            return person.getName();
+Bridge.define('ClientTestLibrary.Person383', {
+    config: {
+        properties: {
+            Name: null
         }
     }
 });
@@ -535,44 +488,13 @@ Bridge.define('ClientTestLibrary.Bridge495', {
     }
 });
 
-Bridge.define('ClientTestLibrary.Bridge501', {
-    statics: {
-        testUseCase: function (assert) {
-            assert.expect(5);
-
-            var list = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
-                [7]
-            ] );
-            var z = JSON.stringify(list); // this is ok
-            assert.equal(z, "{\"items\":[7]}", "List<int>");
-
-            var b = Bridge.merge(new ClientTestLibrary.Bridge501B(), [
-                [1],
-                [2]
-            ] );
-            var y = JSON.stringify(b); // wrong, missing items
-            assert.equal(y, "{\"items\":[1,2]}", "Bridge501B");
-
-            var a = Bridge.merge(new ClientTestLibrary.Bridge501A(), [
-                [7]
-            ] ); // sine items is defined as member, push fails
-            var x = JSON.stringify(a);
-            assert.equal(x, "{\"items\":[7]}", "Bridge501A");
-
-            var c = Bridge.merge(new ClientTestLibrary.Bridge501A(), JSON.parse(x));
-            assert.equal(c.items$1, "12", "Bridge501A Parse c.Items");
-            assert.equal(c.getItem(0), 7, "Bridge501A Parse c[0]");
-        }
-    }
+Bridge.define('ClientTestLibrary.Bridge501B', {
+    inherits: [Bridge.List$1(Bridge.Int)]
 });
 
 Bridge.define('ClientTestLibrary.Bridge501A', {
     inherits: [Bridge.List$1(Bridge.Int)],
     items$1: "12"
-});
-
-Bridge.define('ClientTestLibrary.Bridge501B', {
-    inherits: [Bridge.List$1(Bridge.Int)]
 });
 
 Bridge.define('ClientTestLibrary.Bridge502', {
@@ -635,6 +557,238 @@ Bridge.define('ClientTestLibrary.Bridge503', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge508', {
+    statics: {
+        count: 0,
+        config: {
+            properties: {
+                QUnitAsyncDone: null
+            }
+        },
+        testUseCase: function (assert) {
+            var $step = 0,
+                $task1, 
+                $taskResult1, 
+                $jumpFromFinally, 
+                result, 
+                $asyncBody = function () {
+                    for (;;) {
+                        switch ($step) {
+                            case 0: {
+                                ClientTestLibrary.Bridge508.setQUnitAsyncDone(assert.async());
+                                
+                                $task1 = ClientTestLibrary.Bridge508.method1();
+                                $step = 1;
+                                $task1.continueWith($asyncBody, true);
+                                return;
+                            }
+                            case 1: {
+                                $taskResult1 = $task1.getResult();
+                                result = $taskResult1;
+                                
+                                assert.equal(result, "A(0)A(1)B(0)B(1)B(2)", "#508 Method1");
+                                
+                                ClientTestLibrary.Bridge508.getQUnitAsyncDone()();
+                                return;
+                            }
+                            default: {
+                                return;
+                            }
+                        }
+                    }
+                };
+
+            $asyncBody.apply(this, arguments);
+        },
+        method1: function () {
+            var $step = 0,
+                $task1, 
+                $taskResult1, 
+                $task2, 
+                $taskResult2, 
+                $task3, 
+                $taskResult3, 
+                $jumpFromFinally, 
+                $returnTask = new Bridge.Task(), 
+                $returnValue, 
+                result, 
+                i, 
+                np, 
+                np1, 
+                $asyncBody = function () {
+                    try {
+                        for (;;) {
+                            switch ($step) {
+                                case 0: {
+                                    result = "";
+                                    
+                                    i = 0;
+                                    $task3 = ClientTestLibrary.Bridge508.initPage();
+                                    $step = 1;
+                                    $task3.continueWith($asyncBody);
+                                    return;
+                                }
+                                case 1: {
+                                    $taskResult3 = $task3.getResult();
+                                    np = $taskResult3;
+                                    $step = 2;
+                                    continue;
+                                }
+                                case 2: {
+                                    if ( np !== null ) {
+                                        $step = 3;
+                                        continue;
+                                    }
+                                    $step = 6;
+                                    continue;
+                                }
+                                case 3: {
+                                    result += Bridge.String.format("A({0})", i++);
+                                }
+                                case 4: {
+                                    $task2 = ClientTestLibrary.Bridge508.nextPage();
+                                    $step = 5;
+                                    $task2.continueWith($asyncBody);
+                                    return;
+                                }
+                                case 5: {
+                                    $taskResult2 = $task2.getResult();
+                                    np = $taskResult2;
+                                    $step = 2;
+                                    continue;
+                                }
+                                case 6: {
+                                    
+                                    ClientTestLibrary.Bridge508.count = 0;
+                                    i = 0;
+                                    $task1 = ClientTestLibrary.Bridge508.initPage();
+                                    $step = 7;
+                                    $task1.continueWith($asyncBody);
+                                    return;
+                                }
+                                case 7: {
+                                    $taskResult1 = $task1.getResult();
+                                    np1 = $taskResult1;
+                                    $step = 8;
+                                    continue;
+                                }
+                                case 8: {
+                                    if ( np1 !== null ) {
+                                        $step = 9;
+                                        continue;
+                                    }
+                                    $step = 11;
+                                    continue;
+                                }
+                                case 9: {
+                                    result += Bridge.String.format("B({0})", i++);
+                                }
+                                case 10: {
+                                    np1 = ClientTestLibrary.Bridge508.nextPage1();
+                                    $step = 8;
+                                    continue;
+                                }
+                                case 11: {
+                                    
+                                    $returnTask.setResult(result);
+                                    return;
+                                }
+                                default: {
+                                    $returnTask.setResult(null);
+                                    return;
+                                }
+                            }
+                        }
+                    } catch($e1) {
+                        $e1 = Bridge.Exception.create($e1);
+                        $returnTask.setError($e1);
+                    }
+                };
+
+            $asyncBody.apply(this, arguments);
+            return $returnTask;
+        },
+        initPage: function () {
+            var $step = 0,
+                $task1, 
+                $jumpFromFinally, 
+                $returnTask = new Bridge.Task(), 
+                $returnValue, 
+                $asyncBody = function () {
+                    try {
+                        for (;;) {
+                            switch ($step) {
+                                case 0: {
+                                    $task1 = Bridge.Task.delay(0);
+                                    $step = 1;
+                                    $task1.continueWith($asyncBody);
+                                    return;
+                                }
+                                case 1: {
+                                    $task1.getResult();
+                                    ClientTestLibrary.Bridge508.count++;
+                                    $returnTask.setResult(ClientTestLibrary.Bridge508.count < 2 ? { } : null);
+                                    return;
+                                }
+                                default: {
+                                    $returnTask.setResult(null);
+                                    return;
+                                }
+                            }
+                        }
+                    } catch($e1) {
+                        $e1 = Bridge.Exception.create($e1);
+                        $returnTask.setError($e1);
+                    }
+                };
+
+            $asyncBody.apply(this, arguments);
+            return $returnTask;
+        },
+        nextPage: function () {
+            var $step = 0,
+                $task1, 
+                $jumpFromFinally, 
+                $returnTask = new Bridge.Task(), 
+                $returnValue, 
+                $asyncBody = function () {
+                    try {
+                        for (;;) {
+                            switch ($step) {
+                                case 0: {
+                                    $task1 = Bridge.Task.delay(0);
+                                    $step = 1;
+                                    $task1.continueWith($asyncBody);
+                                    return;
+                                }
+                                case 1: {
+                                    $task1.getResult();
+                                    ClientTestLibrary.Bridge508.count++;
+                                    $returnTask.setResult(ClientTestLibrary.Bridge508.count < 3 ? { } : null);
+                                    return;
+                                }
+                                default: {
+                                    $returnTask.setResult(null);
+                                    return;
+                                }
+                            }
+                        }
+                    } catch($e1) {
+                        $e1 = Bridge.Exception.create($e1);
+                        $returnTask.setError($e1);
+                    }
+                };
+
+            $asyncBody.apply(this, arguments);
+            return $returnTask;
+        },
+        nextPage1: function () {
+            ClientTestLibrary.Bridge508.count++;
+            return ClientTestLibrary.Bridge508.count < 4 ? { } : null;
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge514', {
     statics: {
         testUseCase: function (assert) {
@@ -654,19 +808,6 @@ Bridge.define('ClientTestLibrary.Bridge514', {
 
             var d2 = Bridge.Decimal(-7.1);
             assert.equal(d2.sign(), -1, "Bridge514 Sign(decimal -7.1)");
-        }
-    }
-});
-
-Bridge.define('ClientTestLibrary.Bridge520', {
-    statics: {
-        testUseCase: function (assert) {
-            assert.expect(1);
-
-            var s = new ClientTestLibrary.Bridge520.Source();
-            s.fire();
-
-            assert.equal(s.getCounter(), 1, "Bridge520 Counter");
         }
     }
 });
@@ -691,33 +832,6 @@ Bridge.define('ClientTestLibrary.Bridge520.Source', {
         }));
 
         evt(this, new Object());
-    }
-});
-
-Bridge.define('ClientTestLibrary.Bridge522', {
-    statics: {
-        testUseCase1: function (assert) {
-            assert.expect(2);
-
-            var dc1 = new ClientTestLibrary.Bridge522.DerivedClass1();
-            dc1.addValue(5);
-
-            assert.equal(dc1.getValues().getCount(), 1, "Bridge522 dc1.Count = 1");
-
-            var dc2 = new ClientTestLibrary.Bridge522.DerivedClass1();
-            assert.equal(dc2.getValues().getCount(), 0, "Bridge522 dc2.Count = 0");
-        },
-        testUseCase2: function (assert) {
-            assert.expect(2);
-
-            var dc1 = new ClientTestLibrary.Bridge522.DerivedClass2();
-            dc1.addValue(5);
-
-            assert.equal(dc1.getValues().getCount(), 1, "Bridge522 dc1.Count = 1");
-
-            var dc2 = new ClientTestLibrary.Bridge522.DerivedClass2();
-            assert.equal(dc2.getValues().getCount(), 0, "Bridge522 dc2.Count = 0");
-        }
     }
 });
 
@@ -960,23 +1074,6 @@ Bridge.define('ClientTestLibrary.Bridge555', {
     }
 });
 
-Bridge.define('ClientTestLibrary.Bridge558', {
-    statics: {
-        testUseCase: function (assert) {
-            assert.expect(4);
-
-            var a = new ClientTestLibrary.Bridge558A();
-            var b = new ClientTestLibrary.Bridge558B();
-
-            assert.equal(a.zz(1), 1, "Bridge558 a.zz int");
-            assert.equal(a.zz$1(""), 2, "Bridge558 a.zz string");
-
-            assert.equal(b.zz(1), 1, "Bridge558 b.zz int");
-            assert.equal(b.zz$1(""), 2, "Bridge558 b.zz string");
-        }
-    }
-});
-
 Bridge.define('ClientTestLibrary.Bridge558A', {
     zz: function (a) {
         return 1;
@@ -996,31 +1093,18 @@ Bridge.define('ClientTestLibrary.Bridge558B', {
     }
 });
 
-Bridge.define('ClientTestLibrary.Bridge559', {
-    statics: {
-        testUseCase1: function (assert) {
-            var b = new ClientTestLibrary.Bridge559B1("constructor$1", 1);
-
-            assert.expect(1);
-
-            assert.equal(b.result, " -> Bridge559A1 -> Bridge559A1$1 -> Bridge559B1$1", "Bridge559 TestUseCase1");
-        },
-        testUseCase2: function (assert) {
-            var b = new ClientTestLibrary.Bridge559B2("constructor$1", 1);
-
-            assert.expect(1);
-
-            assert.equal(b.result, " ClassA ClassA$1 ClassB$1", "Bridge559 TestUseCase2");
-        },
-        testUseCase3: function (assert) {
-            var a = new ClientTestLibrary.Bridge559A3("constructor", 1);
-            var b = new ClientTestLibrary.Bridge559A3("constructor", 2);
-
-            assert.expect(1);
-
-            var r = a.getData() + "|" + b.getData();
-            assert.equal(r, "1|2", "Bridge559 TestUseCase3");
+Bridge.define('ClientTestLibrary.Bridge559A3', {
+    config: {
+        properties: {
+            Data: null
         }
+    },
+    constructor$1: function (value) {
+        this.setData(value);
+    },
+    constructor: function (value) {
+        ClientTestLibrary.Bridge559A3.prototype.constructor$1.call(this, value.toString());
+
     }
 });
 
@@ -1073,21 +1157,6 @@ Bridge.define('ClientTestLibrary.Bridge559B2', {
         ClientTestLibrary.Bridge559A2.prototype.constructor$1.call(this, a);
 
         this.result += " ClassB$1";
-    }
-});
-
-Bridge.define('ClientTestLibrary.Bridge559A3', {
-    config: {
-        properties: {
-            Data: null
-        }
-    },
-    constructor$1: function (value) {
-        this.setData(value);
-    },
-    constructor: function (value) {
-        ClientTestLibrary.Bridge559A3.prototype.constructor$1.call(this, value.toString());
-
     }
 });
 
@@ -1199,17 +1268,6 @@ Bridge.define('ClientTestLibrary.Bridge565', {
     }
 });
 
-Bridge.define('ClientTestLibrary.Bridge566', {
-    statics: {
-        testUseCase: function (assert) {
-            assert.expect(1);
-
-            var ted = new ClientTestLibrary.Bridge566B();
-            assert.equal(ted.getData(), "Ted", "#566 Ted");
-        }
-    }
-});
-
 Bridge.define('ClientTestLibrary.Bridge566A', {
     config: {
         properties: {
@@ -1248,29 +1306,6 @@ Bridge.define('ClientTestLibrary.Bridge572', {
 
             assert.equal(d.getItem(1), "New one", "#572 setItem New one");
             assert.equal(d.getItem(2), "New two", "#572 setItem New two");
-        }
-    }
-});
-
-Bridge.define('ClientTestLibrary.Bridge577', {
-    statics: {
-        someMethodA: function (j) {
-            return new ClientTestLibrary.Bridge577.Bridge577UnitA();
-        },
-        someMethodB: function (j) {
-            var v = new ClientTestLibrary.Bridge577.Bridge577UnitB();
-            v.setNumber(j);
-
-            return v.$clone();
-        },
-        testUseCase: function (assert) {
-            assert.expect(2);
-
-            var a = ClientTestLibrary.Bridge577.someMethodA(1);
-            assert.ok(a.$clone(), "#577 Bridge577UnitA created");
-
-            var b = ClientTestLibrary.Bridge577.someMethodB(7);
-            assert.equal(b.getNumber(), 7, "#577 Bridge577UnitB created");
         }
     }
 });
@@ -1453,16 +1488,24 @@ Bridge.define('ClientTestLibrary.Bridge586A', {
 
 });
 
-Bridge.define('ClientTestLibrary.Bridge588A', {
+Bridge.define('ClientTestLibrary.Bridge588C.C2', {
     statics: {
         config: {
             init: function () {
-                this.valeur3 = ClientTestLibrary.Bridge588A.add(ClientTestLibrary.Bridge588B.Valeur2, 1);
+                this._default = new ClientTestLibrary.Bridge588C.C2("default");
             }
         },
-        add: function (a, b) {
-            return a + b;
+        getDefault: function () {
+            return ClientTestLibrary.Bridge588C.C2._default;
         }
+    },
+    config: {
+        properties: {
+            Name: null
+        }
+    },
+    constructor: function (name) {
+        this.setName(name);
     }
 });
 
@@ -1503,24 +1546,6 @@ Bridge.define('ClientTestLibrary.Bridge592', {
     }
 });
 
-Bridge.define('ClientTestLibrary.Bridge595', {
-    statics: {
-        testUseCase: function (assert) {
-            assert.expect(2);
-
-            var buffer = new Bridge.Text.StringBuilder();
-            var a = new ClientTestLibrary.Bridge595A(buffer);
-            a.render();
-            assert.equal(buffer.toString(), "Render0Render1", "Bridge595 A");
-
-            buffer.clear();
-            var b = new ClientTestLibrary.Bridge595B(buffer);
-            b.render();
-            assert.equal(buffer.toString(), "Render0Render1", "Bridge595 B");
-        }
-    }
-});
-
 Bridge.define('ClientTestLibrary.Bridge595A', {
     buffer: null,
     constructor: function (buffer) {
@@ -1551,18 +1576,6 @@ Bridge.define('ClientTestLibrary.Bridge595B', {
     }
 });
 
-Bridge.define('ClientTestLibrary.Bridge597', {
-    statics: {
-        testUseCase: function (assert) {
-            assert.expect(2);
-
-            var inst = new ClientTestLibrary.Bridge597A();
-            assert.equal(inst.get(), "0:a", "Bridge597 Without instance member access");
-            assert.equal(inst.getWithMember(), "HI!:0:a", "Bridge597 With instance member access");
-        }
-    }
-});
-
 Bridge.define('ClientTestLibrary.Bridge597A', {
     _something: "HI!",
     get: function () {
@@ -1578,40 +1591,6 @@ Bridge.define('ClientTestLibrary.Bridge597A', {
             return this._something + ":" + index + ":" + value;
         })).toArray();
         return mappedItemsWithInstanceMemberAccess[0];
-    }
-});
-
-Bridge.define('ClientTestLibrary.Bridge603', {
-    statics: {
-        testUseCase: function (assert) {
-            assert.expect(2);
-
-            var c = ClientTestLibrary.Bridge603A.op_Implicit(null);
-            assert.equal(c.value, "[Null]", "Bridge603A TestUseCase Null");
-
-            c = ClientTestLibrary.Bridge603A.op_Implicit("Test");
-            assert.equal(c.value, "Test", "Bridge603A TestUseCase String");
-        },
-        testRelated: function (assert) {
-            assert.expect(5);
-
-            var b = ClientTestLibrary.Bridge603B.op_Implicit$1(12345);
-            assert.equal(b.intValue, 12345, "Bridge603B TestRelated Int");
-
-            var c = ClientTestLibrary.Bridge603B.op_Implicit$2(null);
-            assert.equal(c.value, "[Null]", "Bridge603B TestRelated String Null");
-
-            c = ClientTestLibrary.Bridge603B.op_Implicit$2("Test");
-            assert.equal(c.value, "Test", "Bridge603B TestRelated String");
-
-            var d = ClientTestLibrary.Bridge603B.op_Implicit(null);
-            assert.equal(d.value, "[Null]", "Bridge603B TestRelated Bridge603Class Null");
-
-            d = ClientTestLibrary.Bridge603B.op_Implicit(Bridge.merge(new ClientTestLibrary.Bridge603Class(), {
-                setData: "Test 603B"
-            } ));
-            assert.equal(d.value, "Test 603B", "Bridge603B TestRelated Bridge603Class");
-        }
     }
 });
 
@@ -1643,6 +1622,1049 @@ Bridge.define('ClientTestLibrary.Bridge603A', {
         var s = to || new ClientTestLibrary.Bridge603A();
         s.value = this.value;
         return s;
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge603Class', {
+    config: {
+        properties: {
+            Data: null
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge606C', {
+    config: {
+        properties: {
+            X: null,
+            Y: null
+        }
+    },
+    example1: function (x, y) {
+        this.setX(x);
+        this.setY(y);
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge606B', {
+    config: {
+        properties: {
+            X: null,
+            Y: null
+        }
+    },
+    constructor: function (x, y) {
+        this.setX(x);
+        this.setY(y);
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge606A', {
+    statics: {
+        example2: function (source, x, y) {
+            return source + " - " + x + " - " + y;
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Opti$1', function (T) { return {
+    inherits: function () { return [Bridge.IEquatable$1(ClientTestLibrary.Opti$1(T))]; },
+    equals: function (obj) {
+        return this === obj;
+    }
+}; });
+
+Bridge.define('ClientTestLibrary.Class1', {
+    inherits: function () { return [Bridge.IEquatable$1(ClientTestLibrary.Class1)]; },
+    equals: function (other) {
+        return this === other;
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge608A', {
+    field: null,
+    constructor$1: function (field) {
+        this.field = field;
+    },
+    constructor: function () {
+    },
+    equals: function (obj) {
+        return this.equals$1(obj.toString());
+    },
+    equals$1: function (other) {
+        return other === this.field;
+    },
+    getHashCode: function () {
+        return Bridge.getHashCode(this.field);
+    },
+    $clone: function (to) {
+        var s = to || new ClientTestLibrary.Bridge608A();
+        s.field = this.field;
+        return s;
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge615', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            var i = 0;
+            var o = null;
+
+            assert.equal(ClientTestLibrary.Bridge615A.method1$1(o), "object", "Bridge615 object");
+            assert.equal(ClientTestLibrary.Bridge615A.method1(i), "int", "Bridge615 int");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge615A', {
+    statics: {
+        method1$1: function (o) {
+            return "object";
+        },
+        method1: function (i) {
+            return "int";
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge623A', {
+    foo: 0,
+    func: null,
+    constructor: function (foo, func) {
+        this.foo = foo;
+        this.func = func;
+    },
+    call: function () {
+        return this.func();
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge623B1', {
+    inherits: [ClientTestLibrary.Bridge623A],
+    constructor: function (foo, func) {
+        ClientTestLibrary.Bridge623A.prototype.$constructor.call(this, foo, func);
+
+    },
+    getFoo: function () {
+        return 2 * this.foo;
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge623B2', {
+    inherits: [ClientTestLibrary.Bridge623B1],
+    constructor: function (foo, func) {
+        ClientTestLibrary.Bridge623B1.prototype.$constructor.call(this, foo, func);
+
+    },
+    getFoo: function () {
+        return 3 * this.foo;
+    },
+    call: function () {
+        return this.func() + 1000;
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge634A$1', function (T) { return {
+
+}; });
+
+Bridge.define('ClientTestLibrary.Bridge634A$1.Nested', function (T) { return {
+
+}; });
+
+Bridge.define('ClientTestLibrary.Bridge634A$1.Nested.SubNested', function (T) { return {
+
+}; });
+
+Bridge.define('ClientTestLibraryCustom.Bridge634B$1', function (T) { return {
+
+}; });
+
+Bridge.define('ClientTestLibraryCustom.Bridge634B$1.Nested', function (T) { return {
+
+}; });
+
+Bridge.define('ClientTestLibraryCustom.Bridge634B$1.Nested.SubNested', function (T) { return {
+
+}; });
+
+Bridge.define('ClientTestLibrary.Bridge634C');
+
+Bridge.define('ClientTestLibrary.Bridge634C.Nested');
+
+Bridge.define('ClientTestLibrary.Bridge634C.Nested.SubNested');
+
+Bridge.define('ClientTestLibrary.Bridge634A$1.Nested.SubNested$1', function (T, T1) { return {
+
+}; });
+
+Bridge.define('ClientTestLibrary.Bridge634A$1.Nested$1', function (T, T1) { return {
+
+}; });
+
+Bridge.define('ClientTestLibrary.Bridge634A$1.Nested$1.SubNested', function (T, T1) { return {
+
+}; });
+
+Bridge.define('ClientTestLibrary.Bridge634A$1.Nested$1.SubNested$1', function (T, T1, T2) { return {
+
+}; });
+
+Bridge.define('ClientTestLibraryCustom.Bridge634B$1.Nested.SubNested$1', function (T, T1) { return {
+
+}; });
+
+Bridge.define('ClientTestLibraryCustom.Bridge634B$1.Nested$1', function (T, T1) { return {
+
+}; });
+
+Bridge.define('ClientTestLibraryCustom.Bridge634B$1.Nested$1.SubNested', function (T, T1) { return {
+
+}; });
+
+Bridge.define('ClientTestLibraryCustom.Bridge634B$1.Nested$1.SubNested$1', function (T, T1, T2) { return {
+
+}; });
+
+Bridge.define('ClientTestLibrary.Bridge634C.Nested.SubNested$1', function (T1) { return {
+
+}; });
+
+Bridge.define('ClientTestLibrary.Bridge634C.Nested$1', function (T1) { return {
+
+}; });
+
+Bridge.define('ClientTestLibrary.Bridge634C.Nested$1.SubNested', function (T1) { return {
+
+}; });
+
+Bridge.define('ClientTestLibrary.Bridge634C.Nested$1.SubNested$1', function (T1, T2) { return {
+
+}; });
+
+Bridge.define('ClientTestLibrary.Bridge635A', {
+    internalFunc1: function () {
+        return "A.Test1";
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge635B', {
+    inherits: [ClientTestLibrary.Bridge635A],
+    internalFunc1: function () {
+        return "B.Test1";
+    }
+});
+
+Bridge.define('ClientTestLibrary.IBridge304');
+
+Bridge.define('ClientTestLibrary.Bridge304', {
+    inherits: [ClientTestLibrary.IBridge304],
+    config: {
+        properties: {
+            X: null
+        }
+    },
+    f: function (x) {
+        this.setX(x);
+    },
+    f$1: function () {
+        this.setX("void F()");
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge266A', {
+    statics: {
+        test: function () {
+            // Nothing gets written for Class1 in the output JavaScript due to the "new object()" argument.
+            // If null is used instead (as commented-out) then it works as expected.
+            // No compile error.
+            return ClientTestLibrary.Bridge266B.test("test", { });
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge272', {
+    statics: {
+        test: function (i) {
+            return i;
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge381', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(6);
+
+            var s1 = ["a", "b"].join(",");
+            assert.equal(s1, "a,b", "Join1");
+
+            var animals = new Bridge.List$1(ClientTestLibrary.Bridge381.Animal)();
+            animals.add(new ClientTestLibrary.Bridge381.Animal("Squirrel", "Rodent"));
+            animals.add(new ClientTestLibrary.Bridge381.Animal("Gray Wolf", "Carnivora"));
+            animals.add(new ClientTestLibrary.Bridge381.Animal("Capybara", "Rodent"));
+
+            var s2 = Bridge.toArray(animals).join(" ");
+            assert.equal(s2, "Squirrel Gray Wolf Capybara", "Join2");
+
+            var values = [null, "Cobb", 4189, 11434, 0.366];
+            var s31 = values.join("|");
+            assert.equal(s31, "|Cobb|4189|11434|0.366", "Join31");
+
+            values[0] = "";
+            var s32 = values.join("|");
+            assert.equal(s32, "|Cobb|4189|11434|0.366", "Join32");
+
+
+            var sArr = Bridge.Array.init(10, null);
+            for (var i = 0; i < 10; i++)
+                sArr[i] = Bridge.String.format("{0,-3}", i * 5);
+
+            var s4 = sArr.join(":");
+            assert.equal(s4, "0  :5  :10 :15 :20 :25 :30 :35 :40 :45 ", "Join4");
+
+            var val = ["apple", "orange", "grape", "pear"];
+            var s5 = val.slice(1, 1 + 2).join(", ");
+            assert.equal(s5, "orange, grape", "Join5");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge383', {
+    statics: {
+        doSomething: function (person) {
+            return person.getName();
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge501', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(5);
+
+            var list = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+                [7]
+            ] );
+            var z = JSON.stringify(list); // this is ok
+            assert.equal(z, "{\"items\":[7]}", "List<int>");
+
+            var b = Bridge.merge(new ClientTestLibrary.Bridge501B(), [
+                [1],
+                [2]
+            ] );
+            var y = JSON.stringify(b); // wrong, missing items
+            assert.equal(y, "{\"items\":[1,2]}", "Bridge501B");
+
+            var a = Bridge.merge(new ClientTestLibrary.Bridge501A(), [
+                [7]
+            ] ); // sine items is defined as member, push fails
+            var x = JSON.stringify(a);
+            assert.equal(x, "{\"items\":[7]}", "Bridge501A");
+
+            var c = Bridge.merge(new ClientTestLibrary.Bridge501A(), JSON.parse(x));
+            assert.equal(c.items$1, "12", "Bridge501A Parse c.Items");
+            assert.equal(c.getItem(0), 7, "Bridge501A Parse c[0]");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge520', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var s = new ClientTestLibrary.Bridge520.Source();
+            s.fire();
+
+            assert.equal(s.getCounter(), 1, "Bridge520 Counter");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge522', {
+    statics: {
+        testUseCase1: function (assert) {
+            assert.expect(2);
+
+            var dc1 = new ClientTestLibrary.Bridge522.DerivedClass1();
+            dc1.addValue(5);
+
+            assert.equal(dc1.getValues().getCount(), 1, "Bridge522 dc1.Count = 1");
+
+            var dc2 = new ClientTestLibrary.Bridge522.DerivedClass1();
+            assert.equal(dc2.getValues().getCount(), 0, "Bridge522 dc2.Count = 0");
+        },
+        testUseCase2: function (assert) {
+            assert.expect(2);
+
+            var dc1 = new ClientTestLibrary.Bridge522.DerivedClass2();
+            dc1.addValue(5);
+
+            assert.equal(dc1.getValues().getCount(), 1, "Bridge522 dc1.Count = 1");
+
+            var dc2 = new ClientTestLibrary.Bridge522.DerivedClass2();
+            assert.equal(dc2.getValues().getCount(), 0, "Bridge522 dc2.Count = 0");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge544', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var o = Bridge.merge(new Boolean(), JSON.parse("true"));
+            assert.equal(o, true, "Bridge544 bool");
+        },
+        testRelated: function (assert) {
+            assert.expect(5);
+
+            var i = Bridge.merge(new Bridge.Int(), JSON.parse("25"));
+            assert.equal(i, 25, "Bridge544 int");
+
+            var dbl = Bridge.merge(new Number(), JSON.parse("26.1"));
+            assert.equal(dbl, 26.1, "Bridge544 double");
+
+            var d = Bridge.merge(new Bridge.Decimal(), JSON.parse("27.2"));
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, d, 27.2, "Bridge544 decimal");
+
+            var s = Bridge.merge(new String(), JSON.parse("\"Some string\""));
+            assert.equal(s, "Some string", "Bridge544 string");
+        }
+    }
+});
+
+/** @namespace ClientTestLibrary */
+
+/**
+ * This test will check whether TypedArray types are emitted to JavaScript
+ the right way. [#548]
+ *
+ * @class ClientTestLibrary.Bridge548
+ */
+Bridge.define('ClientTestLibrary.Bridge548', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(18);
+
+            var isSpecialTypeName = ClientTestLibrary.Utilities.BrowserHelper.isPhantomJs();
+
+            var v1 = new Float32Array(1);
+            var thisType = "Float32Array";
+            assert.ok(v1 !== null, thisType + " created");
+            var thisName = isSpecialTypeName ? "Object" : thisType;
+            assert.equal(Bridge.getTypeName(v1), thisName, thisType + " class name");
+
+            var v2 = new Float64Array(1);
+            thisType = "Float64Array";
+            assert.ok(v2 !== null, thisType + " created");
+            thisName = isSpecialTypeName ? "Object" : thisType;
+            assert.equal(Bridge.getTypeName(v2), thisName, thisType + " class name");
+
+            var v3 = new Int16Array(1);
+            thisType = "Int16Array";
+            assert.ok(v3 !== null, thisType + " created");
+            thisName = isSpecialTypeName ? "Object" : thisType;
+            assert.equal(Bridge.getTypeName(v3), thisName, thisType + " class name");
+
+            var v4 = new Int32Array(1);
+            thisType = "Int32Array";
+            assert.ok(v4 !== null, thisType + " created");
+            thisName = isSpecialTypeName ? "Object" : thisType;
+            assert.equal(Bridge.getTypeName(v4), thisName, thisType + " class name");
+
+            var v5 = new Int8Array(1);
+            thisType = "Int8Array";
+            assert.ok(v5 !== null, thisType + " created");
+            thisName = isSpecialTypeName ? "Object" : thisType;
+            assert.equal(Bridge.getTypeName(v5), thisName, thisType + " class name");
+
+            var v6 = new Uint16Array(1);
+            thisType = "Uint16Array";
+            assert.ok(v6 !== null, thisType + " created");
+            thisName = isSpecialTypeName ? "Object" : thisType;
+            assert.equal(Bridge.getTypeName(v6), thisName, thisType + " class name");
+
+            var v7 = new Uint32Array(1);
+            thisType = "Uint32Array";
+            assert.ok(v7 !== null, thisType + " created");
+            thisName = isSpecialTypeName ? "Object" : thisType;
+            assert.equal(Bridge.getTypeName(v7), thisName, thisType + " class name");
+
+            var v8 = new Uint8Array(1);
+            thisType = "Uint8Array";
+            assert.ok(v8 !== null, thisType + " created");
+            thisName = isSpecialTypeName ? "Object" : thisType;
+            assert.equal(Bridge.getTypeName(v8), thisName, thisType + " class name");
+
+            var v9 = new Uint8ClampedArray(1);
+            thisType = "Uint8ClampedArray";
+            assert.ok(v9 !== null, thisType + " created");
+            thisName = isSpecialTypeName ? "Object" : thisType;
+            assert.equal(Bridge.getTypeName(v9), thisName, thisType + " class name");
+        }
+    }
+});
+
+/**
+ * This test will check whether TypedArray types correctly inherit from
+ the prototype common methods and fields. [#549]
+ *
+ * @class ClientTestLibrary.Bridge549
+ */
+Bridge.define('ClientTestLibrary.Bridge549', {
+    statics: {
+        testUseCase: function (assert) {
+            var isToStringToTypeNameLogic = !ClientTestLibrary.Utilities.BrowserHelper.isChrome();
+
+            assert.expect(153);
+
+            var v1 = new Float32Array(10);
+            assert.ok(v1 !== null, "Float32Array created");
+
+            v1[1] = 11;
+            v1[5] = 5;
+            v1[9] = 99;
+            assert.equal(v1[1], 11, "Float32Array indexier works 1");
+            assert.equal(v1[9], 99, "Float32Array indexier works 9");
+
+            // Check just a select number of references inside the Prototype inheritance.
+            assert.ok(v1.buffer !== null, "Float32Array Buffer");
+            assert.equal(v1.byteLength, 40, "Float32Array ByteLength");
+            assert.equal(v1.byteOffset, 0, "Float32Array ByteOffset");
+            assert.equal(v1.length, 10, "Float32Array Length");
+
+            /* 
+             * Commented out. Reason: Only Firefox implements them.
+             * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array
+            var mA = v1.Join();
+            v1.Reverse();
+            var mB = v1.Slice();
+            var mC = v1.Sort();
+             */
+
+            var expectedToStringFloat32Array1 = isToStringToTypeNameLogic ? "[object Float32Array]" : "0,11,0,0,0,5,0,0,0,99";
+            assert.equal(v1.toLocaleString(), expectedToStringFloat32Array1, "Float32Array ToLocaleString");
+            assert.equal(v1.toString(), expectedToStringFloat32Array1, "Float32Array ToString");
+
+            // Some browsers do not support SubArray() with no parameters.
+            // At least 'begin' must be provided.
+            var subArray11 = v1.subarray(1);
+            var expectedToStringFloat32Array2 = isToStringToTypeNameLogic ? "[object Float32Array]" : "11,0,0,0,5,0,0,0,99";
+            assert.ok(subArray11 !== null, "Float32Array SubArray1");
+            assert.equal(subArray11.length, 9, "Float32Array SubArray1 Length");
+            assert.equal(subArray11.toString(), expectedToStringFloat32Array2, "Float32Array SubArray1 ToString");
+            assert.equal(subArray11.byteOffset, 4, "Float32Array SubArray1 ByteOffset");
+
+            var subArray12 = subArray11.subarray(2, 6);
+            var expectedToStringFloat32Array3 = isToStringToTypeNameLogic ? "[object Float32Array]" : "0,0,5,0";
+            assert.ok(subArray12 !== null, "Float32Array SubArray2");
+            assert.equal(subArray12.length, 4, "Float32Array SubArray2 Length");
+            assert.equal(subArray12.toString(), expectedToStringFloat32Array3, "Float32Array SubArray2 ToString");
+            assert.equal(subArray12.byteOffset, 12, "Float32Array SubArray2 ByteOffset");
+
+            var v2 = new Float64Array(10);
+            assert.ok(v2 !== null, "Float64Array created");
+
+            v2[1] = 11;
+            v2[5] = 5;
+            v2[9] = 99;
+            assert.equal(v2[1], 11, "Float64Array indexier works 1");
+            assert.equal(v2[9], 99, "Float64Array indexier works 9");
+
+            assert.ok(v2.buffer !== null, "Float64Array Buffer");
+            assert.equal(v2.byteLength, 80, "Float64Array ByteLength");
+            assert.equal(v2.byteOffset, 0, "Float64Array ByteOffset");
+            assert.equal(v2.length, 10, "Float64Array Length");
+
+            var expectedToStringFloat64Array1 = isToStringToTypeNameLogic ? "[object Float64Array]" : "0,11,0,0,0,5,0,0,0,99";
+            assert.equal(v2.toLocaleString(), expectedToStringFloat64Array1, "Float64Array ToLocaleString");
+            assert.equal(v2.toString(), expectedToStringFloat64Array1, "Float64Array ToString");
+
+            var subArray21 = v2.subarray(1);
+            var expectedToStringFloat64Array2 = isToStringToTypeNameLogic ? "[object Float64Array]" : "11,0,0,0,5,0,0,0,99";
+            assert.ok(subArray21 !== null, "Float64Array SubArray1");
+            assert.equal(subArray21.length, 9, "Float64Array SubArray1 Length");
+            assert.equal(subArray21.toString(), expectedToStringFloat64Array2, "Float64Array SubArray1 ToString");
+            assert.equal(subArray21.byteOffset, 8, "Float64Array SubArray1 ByteOffset");
+
+            var subArray22 = subArray21.subarray(2, 6);
+            var expectedToStringFloat64Array3 = isToStringToTypeNameLogic ? "[object Float64Array]" : "0,0,5,0";
+            assert.ok(subArray22 !== null, "Float64Array SubArray2");
+            assert.equal(subArray22.length, 4, "Float64Array SubArray2 Length");
+            assert.equal(subArray22.toString(), expectedToStringFloat64Array3, "Float64Array SubArray2 ToString");
+            assert.equal(subArray22.byteOffset, 24, "Float64Array SubArray2 ByteOffset");
+
+            var v3 = new Int16Array(10);
+            assert.ok(v3 !== null, "Int16Array created");
+
+            v3[1] = 11;
+            v3[5] = 5;
+            v3[9] = 99;
+            assert.equal(v3[1], 11, "Int16Array indexier works 1");
+            assert.equal(v3[9], 99, "Int16Array indexier works 9");
+
+            assert.ok(v3.buffer !== null, "Int16Array Buffer");
+            assert.equal(v3.byteLength, 20, "Int16Array ByteLength");
+            assert.equal(v3.byteOffset, 0, "Int16Array ByteOffset");
+            assert.equal(v3.length, 10, "Int16Array Length");
+
+            var expectedToStringInt16Array1 = isToStringToTypeNameLogic ? "[object Int16Array]" : "0,11,0,0,0,5,0,0,0,99";
+            assert.equal(v3.toLocaleString(), expectedToStringInt16Array1, "Int16Array ToLocaleString");
+            assert.equal(v3.toString(), expectedToStringInt16Array1, "Int16Array ToString");
+
+            var subArray31 = v3.subarray(1);
+            var expectedToStringInt16Array2 = isToStringToTypeNameLogic ? "[object Int16Array]" : "11,0,0,0,5,0,0,0,99";
+            assert.ok(subArray31 !== null, "Int16Array SubArray1");
+            assert.equal(subArray31.length, 9, "Int16Array SubArray1 Length");
+            assert.equal(subArray31.toString(), expectedToStringInt16Array2, "Int16Array SubArray1 ToString");
+            assert.equal(subArray31.byteOffset, 2, "Int16Array SubArray1 ByteOffset");
+
+            var subArray32 = subArray31.subarray(2, 6);
+            var expectedToStringInt16Array3 = isToStringToTypeNameLogic ? "[object Int16Array]" : "0,0,5,0";
+            assert.ok(subArray32 !== null, "Int16Array SubArray2");
+            assert.equal(subArray32.length, 4, "Int16Array SubArray2 Length");
+            assert.equal(subArray32.toString(), expectedToStringInt16Array3, "Int16Array SubArray2 ToString");
+            assert.equal(subArray32.byteOffset, 6, "Int16Array SubArray2 ByteOffset");
+
+            var v4 = new Int32Array(10);
+            assert.ok(v4 !== null, "Int32Array created");
+
+            v4[1] = 11;
+            v4[5] = 5;
+            v4[9] = 99;
+            assert.equal(v4[1], 11, "Int32Array indexier works 1");
+            assert.equal(v4[9], 99, "Int32Array indexier works 9");
+
+            assert.ok(v4.buffer !== null, "Int32Array Buffer");
+            assert.equal(v4.byteLength, 40, "Int32Array ByteLength");
+            assert.equal(v4.byteOffset, 0, "Int32Array ByteOffset");
+            assert.equal(v4.length, 10, "Int32Array Length");
+
+            var expectedToStringInt32Array1 = isToStringToTypeNameLogic ? "[object Int32Array]" : "0,11,0,0,0,5,0,0,0,99";
+            assert.equal(v4.toLocaleString(), expectedToStringInt32Array1, "Int32Array ToLocaleString");
+            assert.equal(v4.toString(), expectedToStringInt32Array1, "Int32Array ToString");
+
+            var subArray41 = v4.subarray(1);
+            var expectedToStringInt32Array2 = isToStringToTypeNameLogic ? "[object Int32Array]" : "11,0,0,0,5,0,0,0,99";
+            assert.ok(subArray41 !== null, "Int32Array SubArray1");
+            assert.equal(subArray41.length, 9, "Int32Array SubArray1 Length");
+            assert.equal(subArray41.toString(), expectedToStringInt32Array2, "Int32Array SubArray1 ToString");
+            assert.equal(subArray41.byteOffset, 4, "Int32Array SubArray1 ByteOffset");
+
+            var subArray42 = subArray41.subarray(2, 6);
+            var expectedToStringInt32Array3 = isToStringToTypeNameLogic ? "[object Int32Array]" : "0,0,5,0";
+            assert.ok(subArray42 !== null, "Int32Array SubArray2");
+            assert.equal(subArray42.length, 4, "Int32Array SubArray2 Length");
+            assert.equal(subArray42.toString(), expectedToStringInt32Array3, "Int32Array SubArray2 ToString");
+            assert.equal(subArray42.byteOffset, 12, "Int32Array SubArray2 ByteOffset");
+
+            var v5 = new Int8Array(10);
+            assert.ok(v5 !== null, "Int8Array created");
+
+            v5[1] = 11;
+            v5[5] = 5;
+            v5[9] = 99;
+            assert.equal(v5[1], 11, "Int8Array indexier works 1");
+            assert.equal(v5[9], 99, "Int8Array indexier works 9");
+
+            assert.ok(v5.buffer !== null, "Int8Array Buffer");
+            assert.equal(v5.byteLength, 10, "Int8Array ByteLength");
+            assert.equal(v5.byteOffset, 0, "Int8Array ByteOffset");
+            assert.equal(v5.length, 10, "Int8Array Length");
+
+            var expectedToStringInt8Array1 = isToStringToTypeNameLogic ? "[object Int8Array]" : "0,11,0,0,0,5,0,0,0,99";
+            assert.equal(v5.toLocaleString(), expectedToStringInt8Array1, "Int8Array ToLocaleString");
+            assert.equal(v5.toString(), expectedToStringInt8Array1, "Int8Array ToString");
+
+            var subArray51 = v5.subarray(1);
+            var expectedToStringInt8Array2 = isToStringToTypeNameLogic ? "[object Int8Array]" : "11,0,0,0,5,0,0,0,99";
+            assert.ok(subArray51 !== null, "Int8Array SubArray1");
+            assert.equal(subArray51.length, 9, "Int8Array SubArray1 Length");
+            assert.equal(subArray51.toString(), expectedToStringInt8Array2, "Int8Array SubArray1 ToString");
+            assert.equal(subArray51.byteOffset, 1, "Int8Array SubArray1 ByteOffset");
+
+            var subArray52 = subArray51.subarray(2, 6);
+            var expectedToStringInt8Array3 = isToStringToTypeNameLogic ? "[object Int8Array]" : "0,0,5,0";
+            assert.ok(subArray52 !== null, "Int8Array SubArray2");
+            assert.equal(subArray52.length, 4, "Int8Array SubArray2 Length");
+            assert.equal(subArray52.toString(), expectedToStringInt8Array3, "Int8Array SubArray2 ToString");
+            assert.equal(subArray52.byteOffset, 3, "Int8Array SubArray2 ByteOffset");
+
+            var v6 = new Uint16Array(10);
+            assert.ok(v6 !== null, "Uint16Array created");
+
+            v6[1] = 11;
+            v6[5] = 5;
+            v6[9] = 99;
+            assert.equal(v6[1], 11, "Uint16Array indexier works 1");
+            assert.equal(v6[9], 99, "Uint16Array indexier works 9");
+
+            assert.ok(v6.buffer !== null, "Uint16Array Buffer");
+            assert.equal(v6.byteLength, 20, "Uint16Array ByteLength");
+            assert.equal(v6.byteOffset, 0, "Uint16Array ByteOffset");
+            assert.equal(v6.length, 10, "Uint16Array Length");
+
+            var expectedToStringUint16Array1 = isToStringToTypeNameLogic ? "[object Uint16Array]" : "0,11,0,0,0,5,0,0,0,99";
+            assert.equal(v6.toLocaleString(), expectedToStringUint16Array1, "Uint16Array ToLocaleString");
+            assert.equal(v6.toString(), expectedToStringUint16Array1, "Uint16Array ToString");
+
+            var subArray61 = v6.subarray(1);
+            var expectedToStringUint16Array2 = isToStringToTypeNameLogic ? "[object Uint16Array]" : "11,0,0,0,5,0,0,0,99";
+            assert.ok(subArray61 !== null, "Uint16Array SubArray1");
+            assert.equal(subArray61.length, 9, "Uint16Array SubArray1 Length");
+            assert.equal(subArray61.toString(), expectedToStringUint16Array2, "Uint16Array SubArray1 ToString");
+            assert.equal(subArray61.byteOffset, 2, "Uint16Array SubArray1 ByteOffset");
+
+            var subArray62 = subArray61.subarray(2, 6);
+            var expectedToStringUint16Array3 = isToStringToTypeNameLogic ? "[object Uint16Array]" : "0,0,5,0";
+            assert.ok(subArray62 !== null, "Uint16Array SubArray2");
+            assert.equal(subArray62.length, 4, "Uint16Array SubArray2 Length");
+            assert.equal(subArray62.toString(), expectedToStringUint16Array3, "Uint16Array SubArray2 ToString");
+            assert.equal(subArray62.byteOffset, 6, "Uint16Array SubArray2 ByteOffset");
+
+            var v7 = new Uint32Array(10);
+            assert.ok(v7 !== null, "Uint32Array created");
+
+            v7[1] = 11;
+            v7[5] = 5;
+            v7[9] = 99;
+            assert.equal(v7[1], 11, "Uint32Array indexier works 1");
+            assert.equal(v7[9], 99, "Uint32Array indexier works 9");
+
+            assert.ok(v7.buffer !== null, "Uint32Array Buffer");
+            assert.equal(v7.byteLength, 40, "Uint32Array ByteLength");
+            assert.equal(v7.byteOffset, 0, "Uint32Array ByteOffset");
+            assert.equal(v7.length, 10, "Uint32Array Length");
+
+            var expectedToStringUint32Array1 = isToStringToTypeNameLogic ? "[object Uint32Array]" : "0,11,0,0,0,5,0,0,0,99";
+            assert.equal(v7.toLocaleString(), expectedToStringUint32Array1, "Uint32Array ToLocaleString");
+            assert.equal(v7.toString(), expectedToStringUint32Array1, "Uint32Array ToString");
+
+            var subArray71 = v7.subarray(1);
+            var expectedToStringUint32Array2 = isToStringToTypeNameLogic ? "[object Uint32Array]" : "11,0,0,0,5,0,0,0,99";
+            assert.ok(subArray71 !== null, "Uint32Array SubArray1");
+            assert.equal(subArray71.length, 9, "Uint32Array SubArray1 Length");
+            assert.equal(subArray71.toString(), expectedToStringUint32Array2, "Uint32Array SubArray1 ToString");
+            assert.equal(subArray71.byteOffset, 4, "Uint32Array SubArray1 ByteOffset");
+
+            var subArray72 = subArray71.subarray(2, 6);
+            var expectedToStringUint32Array3 = isToStringToTypeNameLogic ? "[object Uint32Array]" : "0,0,5,0";
+            assert.ok(subArray72 !== null, "Uint32Array SubArray2");
+            assert.equal(subArray72.length, 4, "Uint32Array SubArray2 Length");
+            assert.equal(subArray72.toString(), expectedToStringUint32Array3, "Uint32Array SubArray2 ToString");
+            assert.equal(subArray72.byteOffset, 12, "Uint32Array SubArray2 ByteOffset");
+
+            var v8 = new Uint8Array(10);
+            assert.ok(v8 !== null, "Uint8Array created");
+
+            v8[1] = 11;
+            v8[5] = 5;
+            v8[9] = 99;
+            assert.equal(v8[1], 11, "Uint8Array indexier works 1");
+            assert.equal(v8[9], 99, "Uint8Array indexier works 9");
+
+            assert.ok(v8.buffer !== null, "Uint8Array Buffer");
+            assert.equal(v8.byteLength, 10, "Uint8Array ByteLength");
+            assert.equal(v8.byteOffset, 0, "Uint8Array ByteOffset");
+            assert.equal(v8.length, 10, "Uint8Array Length");
+
+            var expectedToStringUint8Array1 = isToStringToTypeNameLogic ? "[object Uint8Array]" : "0,11,0,0,0,5,0,0,0,99";
+            assert.equal(v8.toLocaleString(), expectedToStringUint8Array1, "Uint8Array ToLocaleString");
+            assert.equal(v8.toString(), expectedToStringUint8Array1, "Uint8Array ToString");
+
+            var subArray81 = v8.subarray(1);
+            var expectedToStringUint8Array2 = isToStringToTypeNameLogic ? "[object Uint8Array]" : "11,0,0,0,5,0,0,0,99";
+            assert.ok(subArray81 !== null, "Uint8Array SubArray1");
+            assert.equal(subArray81.length, 9, "Uint8Array SubArray1 Length");
+            assert.equal(subArray81.toString(), expectedToStringUint8Array2, "Uint8Array SubArray1 ToString");
+            assert.equal(subArray81.byteOffset, 1, "Uint8Array SubArray1 ByteOffset");
+
+            var subArray82 = subArray81.subarray(2, 6);
+            var expectedToStringUint8Array3 = isToStringToTypeNameLogic ? "[object Uint8Array]" : "0,0,5,0";
+            assert.ok(subArray82 !== null, "Uint8Array SubArray2");
+            assert.equal(subArray82.length, 4, "Uint8Array SubArray2 Length");
+            assert.equal(subArray82.toString(), expectedToStringUint8Array3, "Uint8Array SubArray2 ToString");
+            assert.equal(subArray82.byteOffset, 3, "Uint8Array SubArray2 ByteOffset");
+
+            var v9 = new Uint8ClampedArray(10);
+            assert.ok(v9 !== null, "Uint8ClampedArray created");
+
+            v9[1] = 11;
+            v9[5] = 5;
+            v9[9] = 99;
+            assert.equal(v9[1], 11, "Uint8ClampedArray indexier works 1");
+            assert.equal(v9[9], 99, "Uint8ClampedArray indexier works 9");
+
+            assert.ok(v9.buffer !== null, "Uint8ClampedArray Buffer");
+            assert.equal(v9.byteLength, 10, "Uint8ClampedArray ByteLength");
+            assert.equal(v9.byteOffset, 0, "Uint8ClampedArray ByteOffset");
+            assert.equal(v9.length, 10, "Uint8ClampedArray Length");
+
+            var expectedToStringUint8ClampedArray1 = isToStringToTypeNameLogic ? "[object Uint8ClampedArray]" : "0,11,0,0,0,5,0,0,0,99";
+            assert.equal(v9.toLocaleString(), expectedToStringUint8ClampedArray1, "Uint8ClampedArray ToLocaleString");
+            assert.equal(v9.toString(), expectedToStringUint8ClampedArray1, "Uint8ClampedArray ToString");
+
+            var subArray91 = v9.subarray(1);
+            var expectedToStringUint8ClampedArray2 = isToStringToTypeNameLogic ? "[object Uint8ClampedArray]" : "11,0,0,0,5,0,0,0,99";
+            assert.ok(subArray91 !== null, "Uint8ClampedArray SubArray1");
+            assert.equal(subArray91.length, 9, "Uint8ClampedArray SubArray1 Length");
+            assert.equal(subArray91.toString(), expectedToStringUint8ClampedArray2, "Uint8ClampedArray SubArray1 ToString");
+            assert.equal(subArray91.byteOffset, 1, "Uint8ClampedArray SubArray1 ByteOffset");
+
+            var subArray92 = subArray91.subarray(2, 6);
+            var expectedToStringUint8ClampedArray3 = isToStringToTypeNameLogic ? "[object Uint8ClampedArray]" : "0,0,5,0";
+            assert.ok(subArray92 !== null, "Uint8ClampedArray SubArray2");
+            assert.equal(subArray92.length, 4, "Uint8ClampedArray SubArray2 Length");
+            assert.equal(subArray92.toString(), expectedToStringUint8ClampedArray3, "Uint8ClampedArray SubArray2 ToString");
+            assert.equal(subArray92.byteOffset, 3, "Uint8ClampedArray SubArray2 ByteOffset");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge558', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(4);
+
+            var a = new ClientTestLibrary.Bridge558A();
+            var b = new ClientTestLibrary.Bridge558B();
+
+            assert.equal(a.zz(1), 1, "Bridge558 a.zz int");
+            assert.equal(a.zz$1(""), 2, "Bridge558 a.zz string");
+
+            assert.equal(b.zz(1), 1, "Bridge558 b.zz int");
+            assert.equal(b.zz$1(""), 2, "Bridge558 b.zz string");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge559', {
+    statics: {
+        testUseCase1: function (assert) {
+            var b = new ClientTestLibrary.Bridge559B1("constructor$1", 1);
+
+            assert.expect(1);
+
+            assert.equal(b.result, " -> Bridge559A1 -> Bridge559A1$1 -> Bridge559B1$1", "Bridge559 TestUseCase1");
+        },
+        testUseCase2: function (assert) {
+            var b = new ClientTestLibrary.Bridge559B2("constructor$1", 1);
+
+            assert.expect(1);
+
+            assert.equal(b.result, " ClassA ClassA$1 ClassB$1", "Bridge559 TestUseCase2");
+        },
+        testUseCase3: function (assert) {
+            var a = new ClientTestLibrary.Bridge559A3("constructor", 1);
+            var b = new ClientTestLibrary.Bridge559A3("constructor", 2);
+
+            assert.expect(1);
+
+            var r = a.getData() + "|" + b.getData();
+            assert.equal(r, "1|2", "Bridge559 TestUseCase3");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge566', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var ted = new ClientTestLibrary.Bridge566B();
+            assert.equal(ted.getData(), "Ted", "#566 Ted");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge577', {
+    statics: {
+        someMethodA: function (j) {
+            return new ClientTestLibrary.Bridge577.Bridge577UnitA();
+        },
+        someMethodB: function (j) {
+            var v = new ClientTestLibrary.Bridge577.Bridge577UnitB();
+            v.setNumber(j);
+
+            return v.$clone();
+        },
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            var a = ClientTestLibrary.Bridge577.someMethodA(1);
+            assert.ok(a.$clone(), "#577 Bridge577UnitA created");
+
+            var b = ClientTestLibrary.Bridge577.someMethodB(7);
+            assert.equal(b.getNumber(), 7, "#577 Bridge577UnitB created");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge583', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(120);
+
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 6), Bridge.Decimal(1.4), "Bridge583 1");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 6), Bridge.Decimal(1.6), "Bridge583 2");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 6), Bridge.Decimal(123.4568), "Bridge583 3");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 6), Bridge.Decimal(123.456789), "Bridge583 4");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 6), Bridge.Decimal(123.456789), "Bridge583 5");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 6), Bridge.Decimal(-123.0), "Bridge583 6");
+
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 0), 1.5, "Bridge583 Up 1");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 0), 1.6, "Bridge583 Up 2");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 0), 123.4568, "Bridge583 Up 3");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 0), 123.456789, "Bridge583 Up 4");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 0), 123.456789, "Bridge583 Up 5");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 0), -124.0, "Bridge583 Up 6");
+
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 4), 1.5, "Bridge583 AwayFromZero 1");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 4), 1.6, "Bridge583 AwayFromZero 2");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 4), 123.4568, "Bridge583 AwayFromZero 3");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 4), 123.456789, "Bridge583 AwayFromZero 4");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 4), 123.456789, "Bridge583 AwayFromZero 5");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 4), -123.0, "Bridge583 AwayFromZero 6");
+
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 1), 1.4, "Bridge583 Down 1");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 1), 1.5, "Bridge583 Down 2");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 1), 123.4567, "Bridge583 Down 3");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 1), 123.456789, "Bridge583 Down 4");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 1), 123.456789, "Bridge583 Down 5");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 1), -123.0, "Bridge583 Down 6");
+
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 2), 1.5, "Bridge583 InfinityPos 1");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 2), 1.6, "Bridge583 InfinityPos 2");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 2), 123.4568, "Bridge583 InfinityPos 3");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 2), 123.456789, "Bridge583 InfinityPos 4");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 2), 123.456789, "Bridge583 InfinityPos 5");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 2), -123.0, "Bridge583 InfinityPos 6");
+
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 3), 1.4, "Bridge583 InfinityNeg 1");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 3), 1.5, "Bridge583 InfinityNeg 2");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 3), 123.4567, "Bridge583 InfinityNeg 3");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 3), 123.456789, "Bridge583 InfinityNeg 4");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 3), 123.456789, "Bridge583 InfinityNeg 5");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 3), -124.0, "Bridge583 InfinityNeg 6");
+
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 5), 1.4, "Bridge583 TowardsZero 1");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 5), 1.5, "Bridge583 TowardsZero 2");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 5), 123.4568, "Bridge583 TowardsZero 3");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 5), 123.456789, "Bridge583 TowardsZero 4");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 5), 123.456789, "Bridge583 TowardsZero 5");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 5), -123.0, "Bridge583 TowardsZero 6");
+
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 6), 1.4, "Bridge583 ToEven 1");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 6), 1.6, "Bridge583 ToEven 2");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 6), 123.4568, "Bridge583 ToEven 3");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 6), 123.456789, "Bridge583 ToEven 4");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 6), 123.456789, "Bridge583 ToEven 5");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 6), -123.0, "Bridge583 ToEven 6");
+
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 7), 1.5, "Bridge583 Ceil 1");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 7), 1.6, "Bridge583 Ceil 2");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 7), 123.4568, "Bridge583 Ceil 3");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 7), 123.456789, "Bridge583 Ceil 4");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 7), 123.456789, "Bridge583 Ceil 5");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 7), -123.0, "Bridge583 Ceil 6");
+
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 8), 1.4, "Bridge583 Floor 1");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 8), 1.5, "Bridge583 Floor 2");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 8), 123.4568, "Bridge583 Floor 3");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 8), 123.456789, "Bridge583 Floor 4");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 8), 123.456789, "Bridge583 Floor 5");
+            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 8), -123.0, "Bridge583 Floor 6");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge586', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(4);
+
+            assert.throws(function () {
+                ClientTestLibrary.Bridge586A.setSomeDataStatic(Bridge.Decimal(4));
+            }, "a.SomeDataStatic is external");
+            assert.throws(function () {
+                ClientTestLibrary.Bridge586A.doSomethingStatic();
+            }, "a.DoSomethingStatic() is external");
+
+            assert.throws(function () {
+                ClientTestLibrary.Bridge586B.setSomeDataStatic(Bridge.Decimal(4));
+            }, "b.SomeDataStatic is external");
+            assert.throws(function () {
+                ClientTestLibrary.Bridge586B.doSomethingStatic();
+            }, "b.DoSomethingStatic() is external");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge588A', {
+    statics: {
+        config: {
+            init: function () {
+                this.valeur3 = ClientTestLibrary.Bridge588A.add(ClientTestLibrary.Bridge588B.Valeur2, 1);
+            }
+        },
+        add: function (a, b) {
+            return a + b;
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge588C.C1', {
+    statics: {
+        config: {
+            init: function () {
+                this._default = new ClientTestLibrary.Bridge588C.C1(ClientTestLibrary.Bridge588C.C2.getDefault());
+            }
+        },
+        getDefault: function () {
+            return ClientTestLibrary.Bridge588C.C1._default;
+        }
+    },
+    config: {
+        properties: {
+            Value: null
+        }
+    },
+    constructor: function (value) {
+        this.setValue(value);
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge595', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            var buffer = new Bridge.Text.StringBuilder();
+            var a = new ClientTestLibrary.Bridge595A(buffer);
+            a.render();
+            assert.equal(buffer.toString(), "Render0Render1", "Bridge595 A");
+
+            buffer.clear();
+            var b = new ClientTestLibrary.Bridge595B(buffer);
+            b.render();
+            assert.equal(buffer.toString(), "Render0Render1", "Bridge595 B");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge597', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            var inst = new ClientTestLibrary.Bridge597A();
+            assert.equal(inst.get(), "0:a", "Bridge597 Without instance member access");
+            assert.equal(inst.getWithMember(), "HI!:0:a", "Bridge597 With instance member access");
+        }
     }
 });
 
@@ -1698,14 +2720,6 @@ Bridge.define('ClientTestLibrary.Bridge603B', {
     }
 });
 
-Bridge.define('ClientTestLibrary.Bridge603Class', {
-    config: {
-        properties: {
-            Data: null
-        }
-    }
-});
-
 Bridge.define('ClientTestLibrary.Bridge606', {
     statics: {
         testUseCase: function (assert) {
@@ -1723,40 +2737,6 @@ Bridge.define('ClientTestLibrary.Bridge606', {
             var s = ClientTestLibrary.Bridge606A.example2("123", "b", "a");
             assert.equal(s, "123 - b - a", "Bridge606 123");
         }
-    }
-});
-
-Bridge.define('ClientTestLibrary.Bridge606A', {
-    statics: {
-        example2: function (source, x, y) {
-            return source + " - " + x + " - " + y;
-        }
-    }
-});
-
-Bridge.define('ClientTestLibrary.Bridge606B', {
-    config: {
-        properties: {
-            X: null,
-            Y: null
-        }
-    },
-    constructor: function (x, y) {
-        this.setX(x);
-        this.setY(y);
-    }
-});
-
-Bridge.define('ClientTestLibrary.Bridge606C', {
-    config: {
-        properties: {
-            X: null,
-            Y: null
-        }
-    },
-    example1: function (x, y) {
-        this.setX(x);
-        this.setY(y);
     }
 });
 
@@ -1786,54 +2766,6 @@ Bridge.define('ClientTestLibrary.Bridge608', {
             var o = "test";
             assert.ok(s.equals(o), "Bridge608 Object");
             assert.ok(s.equals$1("test"), "Bridge608 String");
-        }
-    }
-});
-
-Bridge.define('ClientTestLibrary.Bridge608A', {
-    field: null,
-    constructor$1: function (field) {
-        this.field = field;
-    },
-    constructor: function () {
-    },
-    equals: function (obj) {
-        return this.equals$1(obj.toString());
-    },
-    equals$1: function (other) {
-        return other === this.field;
-    },
-    getHashCode: function () {
-        return Bridge.getHashCode(this.field);
-    },
-    $clone: function (to) {
-        var s = to || new ClientTestLibrary.Bridge608A();
-        s.field = this.field;
-        return s;
-    }
-});
-
-Bridge.define('ClientTestLibrary.Bridge615', {
-    statics: {
-        testUseCase: function (assert) {
-            assert.expect(2);
-
-            var i = 0;
-            var o = null;
-
-            assert.equal(ClientTestLibrary.Bridge615A.method1$1(o), "object", "Bridge615 object");
-            assert.equal(ClientTestLibrary.Bridge615A.method1(i), "int", "Bridge615 int");
-        }
-    }
-});
-
-Bridge.define('ClientTestLibrary.Bridge615A', {
-    statics: {
-        method1$1: function (o) {
-            return "object";
-        },
-        method1: function (i) {
-            return "int";
         }
     }
 });
@@ -1882,46 +2814,9 @@ Bridge.define('ClientTestLibrary.Bridge623', {
     }
 });
 
-Bridge.define('ClientTestLibrary.Bridge623A', {
-    foo: 0,
-    func: null,
-    constructor: function (foo, func) {
-        this.foo = foo;
-        this.func = func;
-    },
-    call: function () {
-        return this.func();
-    }
-});
-
-Bridge.define('ClientTestLibrary.Bridge623B1', {
-    inherits: [ClientTestLibrary.Bridge623A],
-    constructor: function (foo, func) {
-        ClientTestLibrary.Bridge623A.prototype.$constructor.call(this, foo, func);
-
-    },
-    getFoo: function () {
-        return 2 * this.foo;
-    }
-});
-
-Bridge.define('ClientTestLibrary.Bridge623B2', {
-    inherits: [ClientTestLibrary.Bridge623B1],
-    constructor: function (foo, func) {
-        ClientTestLibrary.Bridge623B1.prototype.$constructor.call(this, foo, func);
-
-    },
-    getFoo: function () {
-        return 3 * this.foo;
-    },
-    call: function () {
-        return this.func() + 1000;
-    }
-});
-
 Bridge.define('ClientTestLibrary.Bridge634', {
     statics: {
-        testUseCase: function (assert) {
+        testUseCase1: function (assert) {
             var $t;
             assert.expect(1);
 
@@ -1940,45 +2835,143 @@ Bridge.define('ClientTestLibrary.Bridge634', {
             }
 
             assert.equal(text, "abc", "Bridge634: foreach works for HashSet");
+        }        ,
+        testUseCase2: function (assert) {
+            assert.expect(21);
+
+            var a = new ClientTestLibrary.Bridge634A$1(String)();
+            var a1 = new ClientTestLibrary.Bridge634A$1.Nested(String)();
+            var a2 = new ClientTestLibrary.Bridge634A$1.Nested$1(String,Bridge.Int)();
+            var a3 = new ClientTestLibrary.Bridge634A$1.Nested.SubNested(String)();
+            var a4 = new ClientTestLibrary.Bridge634A$1.Nested.SubNested$1(String,Bridge.Int)();
+            var a5 = new ClientTestLibrary.Bridge634A$1.Nested$1.SubNested(String,Bridge.Int)();
+            var a6 = new ClientTestLibrary.Bridge634A$1.Nested$1.SubNested$1(String,Bridge.Int,Bridge.Int)();
+
+            assert.equal(Bridge.getTypeName(a), "ClientTestLibrary.Bridge634A$1$String", "Bridge634 A a");
+            assert.equal(Bridge.getTypeName(a1), "ClientTestLibrary.Bridge634A$1.Nested$String", "Bridge634 A a1");
+            assert.equal(Bridge.getTypeName(a2), "ClientTestLibrary.Bridge634A$1.Nested$1$String$Bridge.Int", "Bridge634 A a2");
+            assert.equal(Bridge.getTypeName(a3), "ClientTestLibrary.Bridge634A$1.Nested.SubNested$String", "Bridge634 A a3");
+            assert.equal(Bridge.getTypeName(a4), "ClientTestLibrary.Bridge634A$1.Nested.SubNested$1$String$Bridge.Int", "Bridge634 A a4");
+            assert.equal(Bridge.getTypeName(a5), "ClientTestLibrary.Bridge634A$1.Nested$1.SubNested$String$Bridge.Int", "Bridge634 A a5");
+            assert.equal(Bridge.getTypeName(a6), "ClientTestLibrary.Bridge634A$1.Nested$1.SubNested$1$String$Bridge.Int$Bridge.Int", "Bridge634 A a6");
+
+            var b = new ClientTestLibraryCustom.Bridge634B$1(String)();
+            var b1 = new ClientTestLibraryCustom.Bridge634B$1.Nested(String)();
+            var b2 = new ClientTestLibraryCustom.Bridge634B$1.Nested$1(String,Bridge.Int)();
+            var b3 = new ClientTestLibraryCustom.Bridge634B$1.Nested.SubNested(String)();
+            var b4 = new ClientTestLibraryCustom.Bridge634B$1.Nested.SubNested$1(String,Bridge.Int)();
+            var b5 = new ClientTestLibraryCustom.Bridge634B$1.Nested$1.SubNested(String,Bridge.Int)();
+            var b6 = new ClientTestLibraryCustom.Bridge634B$1.Nested$1.SubNested$1(String,Bridge.Int,Bridge.Int)();
+
+            assert.equal(Bridge.getTypeName(b), "ClientTestLibraryCustom.Bridge634B$1$String", "Bridge634 B b");
+            assert.equal(Bridge.getTypeName(b1), "ClientTestLibraryCustom.Bridge634B$1.Nested$String", "Bridge634 B b1");
+            assert.equal(Bridge.getTypeName(b2), "ClientTestLibraryCustom.Bridge634B$1.Nested$1$String$Bridge.Int", "Bridge634 B b2");
+            assert.equal(Bridge.getTypeName(b3), "ClientTestLibraryCustom.Bridge634B$1.Nested.SubNested$String", "Bridge634 B b3");
+            assert.equal(Bridge.getTypeName(b4), "ClientTestLibraryCustom.Bridge634B$1.Nested.SubNested$1$String$Bridge.Int", "Bridge634 B b4");
+            assert.equal(Bridge.getTypeName(b5), "ClientTestLibraryCustom.Bridge634B$1.Nested$1.SubNested$String$Bridge.Int", "Bridge634 B b5");
+            assert.equal(Bridge.getTypeName(b6), "ClientTestLibraryCustom.Bridge634B$1.Nested$1.SubNested$1$String$Bridge.Int$Bridge.Int", "Bridge634 B b6");
+
+            var c = new ClientTestLibrary.Bridge634C();
+            var c1 = new ClientTestLibrary.Bridge634C.Nested();
+            var c2 = new ClientTestLibrary.Bridge634C.Nested$1(Bridge.Int)();
+            var c3 = new ClientTestLibrary.Bridge634C.Nested.SubNested();
+            var c4 = new ClientTestLibrary.Bridge634C.Nested.SubNested$1(Bridge.Int)();
+            var c5 = new ClientTestLibrary.Bridge634C.Nested$1.SubNested(Bridge.Int)();
+            var c6 = new ClientTestLibrary.Bridge634C.Nested$1.SubNested$1(Bridge.Int,Bridge.Int)();
+
+            assert.equal(Bridge.getTypeName(c), "ClientTestLibrary.Bridge634C", "Bridge634 C c");
+            assert.equal(Bridge.getTypeName(c1), "ClientTestLibrary.Bridge634C.Nested", "Bridge634 C c1");
+            assert.equal(Bridge.getTypeName(c2), "ClientTestLibrary.Bridge634C.Nested$1$Bridge.Int", "Bridge634 C c2");
+            assert.equal(Bridge.getTypeName(c3), "ClientTestLibrary.Bridge634C.Nested.SubNested", "Bridge634 C c3");
+            assert.equal(Bridge.getTypeName(c4), "ClientTestLibrary.Bridge634C.Nested.SubNested$1$Bridge.Int", "Bridge634 C c4");
+            assert.equal(Bridge.getTypeName(c5), "ClientTestLibrary.Bridge634C.Nested$1.SubNested$Bridge.Int", "Bridge634 C c5");
+            assert.equal(Bridge.getTypeName(c6), "ClientTestLibrary.Bridge634C.Nested$1.SubNested$1$Bridge.Int$Bridge.Int", "Bridge634 C c6");
         }
     }
 });
 
-Bridge.define('ClientTestLibrary.Class1', {
-    inherits: function () { return [Bridge.IEquatable$1(ClientTestLibrary.Class1)]; },
-    equals: function (other) {
-        return this === other;
-    }
-});
+Bridge.define('ClientTestLibrary.Bridge635', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(4);
 
-Bridge.define('ClientTestLibrary.IBridge304');
+            var a = new ClientTestLibrary.Bridge635A();
+            var b = new ClientTestLibrary.Bridge635B();
 
-Bridge.define('ClientTestLibrary.Bridge304', {
-    inherits: [ClientTestLibrary.IBridge304],
-    config: {
-        properties: {
-            X: null
+            assert.equal(typeof a.internalFunc1, "function", "Bridge635 A.internalFunc1");
+            assert.equal(a["internalFunc1"](), "A.Test1", "Bridge635 A.internalFunc1 Invoke");
+
+            assert.equal(typeof b.internalFunc1, "function", "Bridge635 B.internalFunc1");
+            assert.equal(b["internalFunc1"](), "B.Test1", "Bridge635 B.internalFunc1 Invoke");
         }
-    },
-    f: function (x) {
-        this.setX(x);
-    },
-    f$1: function () {
-        this.setX("void F()");
     }
 });
 
-Bridge.define('ClientTestLibrary.Opti$1', function (T) { return {
-    inherits: function () { return [Bridge.IEquatable$1(ClientTestLibrary.Opti$1(T))]; },
-    equals: function (obj) {
-        return this === obj;
-    }
-}; });
+Bridge.define('ClientTestLibrary.Bridge537', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(2);
 
-Bridge.define('ClientTestLibrary.Person383', {
-    config: {
-        properties: {
-            Name: null
+            assert.equal(ClientTestLibrary.Bridge537B.testB1(), 2, "Bridge537 TestB1");
+
+            assert.equal(ClientTestLibrary.Bridge537B.testB2(), 1, "Bridge537 TestB2");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge588C', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(9);
+
+            var c2 = new ClientTestLibrary.Bridge588C.C2("C2 value");
+            assert.ok(c2 !== null, "Bridge588 C2");
+            assert.equal(c2.getName(), "C2 value", "Bridge588 C2.Name");
+
+            var c1 = new ClientTestLibrary.Bridge588C.C1(c2);
+            assert.ok(c1 !== null, "Bridge588 C1");
+            assert.equal(c1.getValue().getName(), "C2 value", "Bridge588 C1.Value.Name");
+
+            assert.ok(ClientTestLibrary.Bridge588C.C1.getDefault() !== null, "Bridge588 C1.Default");
+            assert.ok(ClientTestLibrary.Bridge588C.C1.getDefault().getValue() !== null, "Bridge588 C1.Default.Value");
+            assert.equal(ClientTestLibrary.Bridge588C.C1.getDefault().getValue().getName(), "default", "Bridge588 C1.Default.Value.Name");
+            assert.ok(ClientTestLibrary.Bridge588C.C2.getDefault() !== null, "Bridge588 C2.Default");
+            assert.ok(ClientTestLibrary.Bridge588C.C2.getDefault().getName() !== null, "Bridge588 C2.Default.Name");
+
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge603', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            var c = ClientTestLibrary.Bridge603A.op_Implicit(null);
+            assert.equal(c.value, "[Null]", "Bridge603A TestUseCase Null");
+
+            c = ClientTestLibrary.Bridge603A.op_Implicit("Test");
+            assert.equal(c.value, "Test", "Bridge603A TestUseCase String");
+        },
+        testRelated: function (assert) {
+            assert.expect(5);
+
+            var b = ClientTestLibrary.Bridge603B.op_Implicit$1(12345);
+            assert.equal(b.intValue, 12345, "Bridge603B TestRelated Int");
+
+            var c = ClientTestLibrary.Bridge603B.op_Implicit$2(null);
+            assert.equal(c.value, "[Null]", "Bridge603B TestRelated String Null");
+
+            c = ClientTestLibrary.Bridge603B.op_Implicit$2("Test");
+            assert.equal(c.value, "Test", "Bridge603B TestRelated String");
+
+            var d = ClientTestLibrary.Bridge603B.op_Implicit(null);
+            assert.equal(d.value, "[Null]", "Bridge603B TestRelated Bridge603Class Null");
+
+            d = ClientTestLibrary.Bridge603B.op_Implicit(Bridge.merge(new ClientTestLibrary.Bridge603Class(), {
+                setData: "Test 603B"
+            } ));
+            assert.equal(d.value, "Test 603B", "Bridge603B TestRelated Bridge603Class");
         }
     }
 });
@@ -2633,549 +3626,13 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
     }
 });
 
-Bridge.define('ClientTestLibrary.Bridge537', {
+Bridge.define('ClientTestLibrary.Bridge588', {
     statics: {
         testUseCase: function (assert) {
             assert.expect(2);
 
-            assert.equal(ClientTestLibrary.Bridge537B.testB1(), 2, "Bridge537 TestB1");
-
-            assert.equal(ClientTestLibrary.Bridge537B.testB2(), 1, "Bridge537 TestB2");
-        }
-    }
-});
-
-Bridge.define('ClientTestLibrary.Bridge544', {
-    statics: {
-        testUseCase: function (assert) {
-            assert.expect(1);
-
-            var o = Bridge.merge(new Boolean(), JSON.parse("true"));
-            assert.equal(o, true, "Bridge544 bool");
-        },
-        testRelated: function (assert) {
-            assert.expect(5);
-
-            var i = Bridge.merge(new Bridge.Int(), JSON.parse("25"));
-            assert.equal(i, 25, "Bridge544 int");
-
-            var dbl = Bridge.merge(new Number(), JSON.parse("26.1"));
-            assert.equal(dbl, 26.1, "Bridge544 double");
-
-            var d = Bridge.merge(new Bridge.Decimal(), JSON.parse("27.2"));
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, d, 27.2, "Bridge544 decimal");
-
-            var s = Bridge.merge(new String(), JSON.parse("\"Some string\""));
-            assert.equal(s, "Some string", "Bridge544 string");
-        }
-    }
-});
-
-/** @namespace ClientTestLibrary */
-
-/**
- * This test will check whether TypedArray types are emitted to JavaScript
- the right way. [#548]
- *
- * @class ClientTestLibrary.Bridge548
- */
-Bridge.define('ClientTestLibrary.Bridge548', {
-    statics: {
-        testUseCase: function (assert) {
-            assert.expect(18);
-
-            var isSpecialTypeName = ClientTestLibrary.Utilities.BrowserHelper.isPhantomJs();
-
-            var v1 = new Float32Array(1);
-            var thisType = "Float32Array";
-            assert.ok(v1 !== null, thisType + " created");
-            var thisName = isSpecialTypeName ? "Object" : thisType;
-            assert.equal(Bridge.getTypeName(v1), thisName, thisType + " class name");
-
-            var v2 = new Float64Array(1);
-            thisType = "Float64Array";
-            assert.ok(v2 !== null, thisType + " created");
-            thisName = isSpecialTypeName ? "Object" : thisType;
-            assert.equal(Bridge.getTypeName(v2), thisName, thisType + " class name");
-
-            var v3 = new Int16Array(1);
-            thisType = "Int16Array";
-            assert.ok(v3 !== null, thisType + " created");
-            thisName = isSpecialTypeName ? "Object" : thisType;
-            assert.equal(Bridge.getTypeName(v3), thisName, thisType + " class name");
-
-            var v4 = new Int32Array(1);
-            thisType = "Int32Array";
-            assert.ok(v4 !== null, thisType + " created");
-            thisName = isSpecialTypeName ? "Object" : thisType;
-            assert.equal(Bridge.getTypeName(v4), thisName, thisType + " class name");
-
-            var v5 = new Int8Array(1);
-            thisType = "Int8Array";
-            assert.ok(v5 !== null, thisType + " created");
-            thisName = isSpecialTypeName ? "Object" : thisType;
-            assert.equal(Bridge.getTypeName(v5), thisName, thisType + " class name");
-
-            var v6 = new Uint16Array(1);
-            thisType = "Uint16Array";
-            assert.ok(v6 !== null, thisType + " created");
-            thisName = isSpecialTypeName ? "Object" : thisType;
-            assert.equal(Bridge.getTypeName(v6), thisName, thisType + " class name");
-
-            var v7 = new Uint32Array(1);
-            thisType = "Uint32Array";
-            assert.ok(v7 !== null, thisType + " created");
-            thisName = isSpecialTypeName ? "Object" : thisType;
-            assert.equal(Bridge.getTypeName(v7), thisName, thisType + " class name");
-
-            var v8 = new Uint8Array(1);
-            thisType = "Uint8Array";
-            assert.ok(v8 !== null, thisType + " created");
-            thisName = isSpecialTypeName ? "Object" : thisType;
-            assert.equal(Bridge.getTypeName(v8), thisName, thisType + " class name");
-
-            var v9 = new Uint8ClampedArray(1);
-            thisType = "Uint8ClampedArray";
-            assert.ok(v9 !== null, thisType + " created");
-            thisName = isSpecialTypeName ? "Object" : thisType;
-            assert.equal(Bridge.getTypeName(v9), thisName, thisType + " class name");
-        }
-    }
-});
-
-/**
- * This test will check whether TypedArray types correctly inherit from
- the prototype common methods and fields. [#549]
- *
- * @class ClientTestLibrary.Bridge549
- */
-Bridge.define('ClientTestLibrary.Bridge549', {
-    statics: {
-        testUseCase: function (assert) {
-            var isToStringToTypeNameLogic = !ClientTestLibrary.Utilities.BrowserHelper.isChrome();
-
-            assert.expect(153);
-
-            var v1 = new Float32Array(10);
-            assert.ok(v1 !== null, "Float32Array created");
-
-            v1[1] = 11;
-            v1[5] = 5;
-            v1[9] = 99;
-            assert.equal(v1[1], 11, "Float32Array indexier works 1");
-            assert.equal(v1[9], 99, "Float32Array indexier works 9");
-
-            // Check just a select number of references inside the Prototype inheritance.
-            assert.ok(v1.buffer !== null, "Float32Array Buffer");
-            assert.equal(v1.byteLength, 40, "Float32Array ByteLength");
-            assert.equal(v1.byteOffset, 0, "Float32Array ByteOffset");
-            assert.equal(v1.length, 10, "Float32Array Length");
-
-            /* 
-             * Commented out. Reason: Only Firefox implements them.
-             * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array
-            var mA = v1.Join();
-            v1.Reverse();
-            var mB = v1.Slice();
-            var mC = v1.Sort();
-             */
-
-            var expectedToStringFloat32Array1 = isToStringToTypeNameLogic ? "[object Float32Array]" : "0,11,0,0,0,5,0,0,0,99";
-            assert.equal(v1.toLocaleString(), expectedToStringFloat32Array1, "Float32Array ToLocaleString");
-            assert.equal(v1.toString(), expectedToStringFloat32Array1, "Float32Array ToString");
-
-            // Some browsers do not support SubArray() with no parameters.
-            // At least 'begin' must be provided.
-            var subArray11 = v1.subarray(1);
-            var expectedToStringFloat32Array2 = isToStringToTypeNameLogic ? "[object Float32Array]" : "11,0,0,0,5,0,0,0,99";
-            assert.ok(subArray11 !== null, "Float32Array SubArray1");
-            assert.equal(subArray11.length, 9, "Float32Array SubArray1 Length");
-            assert.equal(subArray11.toString(), expectedToStringFloat32Array2, "Float32Array SubArray1 ToString");
-            assert.equal(subArray11.byteOffset, 4, "Float32Array SubArray1 ByteOffset");
-
-            var subArray12 = subArray11.subarray(2, 6);
-            var expectedToStringFloat32Array3 = isToStringToTypeNameLogic ? "[object Float32Array]" : "0,0,5,0";
-            assert.ok(subArray12 !== null, "Float32Array SubArray2");
-            assert.equal(subArray12.length, 4, "Float32Array SubArray2 Length");
-            assert.equal(subArray12.toString(), expectedToStringFloat32Array3, "Float32Array SubArray2 ToString");
-            assert.equal(subArray12.byteOffset, 12, "Float32Array SubArray2 ByteOffset");
-
-            var v2 = new Float64Array(10);
-            assert.ok(v2 !== null, "Float64Array created");
-
-            v2[1] = 11;
-            v2[5] = 5;
-            v2[9] = 99;
-            assert.equal(v2[1], 11, "Float64Array indexier works 1");
-            assert.equal(v2[9], 99, "Float64Array indexier works 9");
-
-            assert.ok(v2.buffer !== null, "Float64Array Buffer");
-            assert.equal(v2.byteLength, 80, "Float64Array ByteLength");
-            assert.equal(v2.byteOffset, 0, "Float64Array ByteOffset");
-            assert.equal(v2.length, 10, "Float64Array Length");
-
-            var expectedToStringFloat64Array1 = isToStringToTypeNameLogic ? "[object Float64Array]" : "0,11,0,0,0,5,0,0,0,99";
-            assert.equal(v2.toLocaleString(), expectedToStringFloat64Array1, "Float64Array ToLocaleString");
-            assert.equal(v2.toString(), expectedToStringFloat64Array1, "Float64Array ToString");
-
-            var subArray21 = v2.subarray(1);
-            var expectedToStringFloat64Array2 = isToStringToTypeNameLogic ? "[object Float64Array]" : "11,0,0,0,5,0,0,0,99";
-            assert.ok(subArray21 !== null, "Float64Array SubArray1");
-            assert.equal(subArray21.length, 9, "Float64Array SubArray1 Length");
-            assert.equal(subArray21.toString(), expectedToStringFloat64Array2, "Float64Array SubArray1 ToString");
-            assert.equal(subArray21.byteOffset, 8, "Float64Array SubArray1 ByteOffset");
-
-            var subArray22 = subArray21.subarray(2, 6);
-            var expectedToStringFloat64Array3 = isToStringToTypeNameLogic ? "[object Float64Array]" : "0,0,5,0";
-            assert.ok(subArray22 !== null, "Float64Array SubArray2");
-            assert.equal(subArray22.length, 4, "Float64Array SubArray2 Length");
-            assert.equal(subArray22.toString(), expectedToStringFloat64Array3, "Float64Array SubArray2 ToString");
-            assert.equal(subArray22.byteOffset, 24, "Float64Array SubArray2 ByteOffset");
-
-            var v3 = new Int16Array(10);
-            assert.ok(v3 !== null, "Int16Array created");
-
-            v3[1] = 11;
-            v3[5] = 5;
-            v3[9] = 99;
-            assert.equal(v3[1], 11, "Int16Array indexier works 1");
-            assert.equal(v3[9], 99, "Int16Array indexier works 9");
-
-            assert.ok(v3.buffer !== null, "Int16Array Buffer");
-            assert.equal(v3.byteLength, 20, "Int16Array ByteLength");
-            assert.equal(v3.byteOffset, 0, "Int16Array ByteOffset");
-            assert.equal(v3.length, 10, "Int16Array Length");
-
-            var expectedToStringInt16Array1 = isToStringToTypeNameLogic ? "[object Int16Array]" : "0,11,0,0,0,5,0,0,0,99";
-            assert.equal(v3.toLocaleString(), expectedToStringInt16Array1, "Int16Array ToLocaleString");
-            assert.equal(v3.toString(), expectedToStringInt16Array1, "Int16Array ToString");
-
-            var subArray31 = v3.subarray(1);
-            var expectedToStringInt16Array2 = isToStringToTypeNameLogic ? "[object Int16Array]" : "11,0,0,0,5,0,0,0,99";
-            assert.ok(subArray31 !== null, "Int16Array SubArray1");
-            assert.equal(subArray31.length, 9, "Int16Array SubArray1 Length");
-            assert.equal(subArray31.toString(), expectedToStringInt16Array2, "Int16Array SubArray1 ToString");
-            assert.equal(subArray31.byteOffset, 2, "Int16Array SubArray1 ByteOffset");
-
-            var subArray32 = subArray31.subarray(2, 6);
-            var expectedToStringInt16Array3 = isToStringToTypeNameLogic ? "[object Int16Array]" : "0,0,5,0";
-            assert.ok(subArray32 !== null, "Int16Array SubArray2");
-            assert.equal(subArray32.length, 4, "Int16Array SubArray2 Length");
-            assert.equal(subArray32.toString(), expectedToStringInt16Array3, "Int16Array SubArray2 ToString");
-            assert.equal(subArray32.byteOffset, 6, "Int16Array SubArray2 ByteOffset");
-
-            var v4 = new Int32Array(10);
-            assert.ok(v4 !== null, "Int32Array created");
-
-            v4[1] = 11;
-            v4[5] = 5;
-            v4[9] = 99;
-            assert.equal(v4[1], 11, "Int32Array indexier works 1");
-            assert.equal(v4[9], 99, "Int32Array indexier works 9");
-
-            assert.ok(v4.buffer !== null, "Int32Array Buffer");
-            assert.equal(v4.byteLength, 40, "Int32Array ByteLength");
-            assert.equal(v4.byteOffset, 0, "Int32Array ByteOffset");
-            assert.equal(v4.length, 10, "Int32Array Length");
-
-            var expectedToStringInt32Array1 = isToStringToTypeNameLogic ? "[object Int32Array]" : "0,11,0,0,0,5,0,0,0,99";
-            assert.equal(v4.toLocaleString(), expectedToStringInt32Array1, "Int32Array ToLocaleString");
-            assert.equal(v4.toString(), expectedToStringInt32Array1, "Int32Array ToString");
-
-            var subArray41 = v4.subarray(1);
-            var expectedToStringInt32Array2 = isToStringToTypeNameLogic ? "[object Int32Array]" : "11,0,0,0,5,0,0,0,99";
-            assert.ok(subArray41 !== null, "Int32Array SubArray1");
-            assert.equal(subArray41.length, 9, "Int32Array SubArray1 Length");
-            assert.equal(subArray41.toString(), expectedToStringInt32Array2, "Int32Array SubArray1 ToString");
-            assert.equal(subArray41.byteOffset, 4, "Int32Array SubArray1 ByteOffset");
-
-            var subArray42 = subArray41.subarray(2, 6);
-            var expectedToStringInt32Array3 = isToStringToTypeNameLogic ? "[object Int32Array]" : "0,0,5,0";
-            assert.ok(subArray42 !== null, "Int32Array SubArray2");
-            assert.equal(subArray42.length, 4, "Int32Array SubArray2 Length");
-            assert.equal(subArray42.toString(), expectedToStringInt32Array3, "Int32Array SubArray2 ToString");
-            assert.equal(subArray42.byteOffset, 12, "Int32Array SubArray2 ByteOffset");
-
-            var v5 = new Int8Array(10);
-            assert.ok(v5 !== null, "Int8Array created");
-
-            v5[1] = 11;
-            v5[5] = 5;
-            v5[9] = 99;
-            assert.equal(v5[1], 11, "Int8Array indexier works 1");
-            assert.equal(v5[9], 99, "Int8Array indexier works 9");
-
-            assert.ok(v5.buffer !== null, "Int8Array Buffer");
-            assert.equal(v5.byteLength, 10, "Int8Array ByteLength");
-            assert.equal(v5.byteOffset, 0, "Int8Array ByteOffset");
-            assert.equal(v5.length, 10, "Int8Array Length");
-
-            var expectedToStringInt8Array1 = isToStringToTypeNameLogic ? "[object Int8Array]" : "0,11,0,0,0,5,0,0,0,99";
-            assert.equal(v5.toLocaleString(), expectedToStringInt8Array1, "Int8Array ToLocaleString");
-            assert.equal(v5.toString(), expectedToStringInt8Array1, "Int8Array ToString");
-
-            var subArray51 = v5.subarray(1);
-            var expectedToStringInt8Array2 = isToStringToTypeNameLogic ? "[object Int8Array]" : "11,0,0,0,5,0,0,0,99";
-            assert.ok(subArray51 !== null, "Int8Array SubArray1");
-            assert.equal(subArray51.length, 9, "Int8Array SubArray1 Length");
-            assert.equal(subArray51.toString(), expectedToStringInt8Array2, "Int8Array SubArray1 ToString");
-            assert.equal(subArray51.byteOffset, 1, "Int8Array SubArray1 ByteOffset");
-
-            var subArray52 = subArray51.subarray(2, 6);
-            var expectedToStringInt8Array3 = isToStringToTypeNameLogic ? "[object Int8Array]" : "0,0,5,0";
-            assert.ok(subArray52 !== null, "Int8Array SubArray2");
-            assert.equal(subArray52.length, 4, "Int8Array SubArray2 Length");
-            assert.equal(subArray52.toString(), expectedToStringInt8Array3, "Int8Array SubArray2 ToString");
-            assert.equal(subArray52.byteOffset, 3, "Int8Array SubArray2 ByteOffset");
-
-            var v6 = new Uint16Array(10);
-            assert.ok(v6 !== null, "Uint16Array created");
-
-            v6[1] = 11;
-            v6[5] = 5;
-            v6[9] = 99;
-            assert.equal(v6[1], 11, "Uint16Array indexier works 1");
-            assert.equal(v6[9], 99, "Uint16Array indexier works 9");
-
-            assert.ok(v6.buffer !== null, "Uint16Array Buffer");
-            assert.equal(v6.byteLength, 20, "Uint16Array ByteLength");
-            assert.equal(v6.byteOffset, 0, "Uint16Array ByteOffset");
-            assert.equal(v6.length, 10, "Uint16Array Length");
-
-            var expectedToStringUint16Array1 = isToStringToTypeNameLogic ? "[object Uint16Array]" : "0,11,0,0,0,5,0,0,0,99";
-            assert.equal(v6.toLocaleString(), expectedToStringUint16Array1, "Uint16Array ToLocaleString");
-            assert.equal(v6.toString(), expectedToStringUint16Array1, "Uint16Array ToString");
-
-            var subArray61 = v6.subarray(1);
-            var expectedToStringUint16Array2 = isToStringToTypeNameLogic ? "[object Uint16Array]" : "11,0,0,0,5,0,0,0,99";
-            assert.ok(subArray61 !== null, "Uint16Array SubArray1");
-            assert.equal(subArray61.length, 9, "Uint16Array SubArray1 Length");
-            assert.equal(subArray61.toString(), expectedToStringUint16Array2, "Uint16Array SubArray1 ToString");
-            assert.equal(subArray61.byteOffset, 2, "Uint16Array SubArray1 ByteOffset");
-
-            var subArray62 = subArray61.subarray(2, 6);
-            var expectedToStringUint16Array3 = isToStringToTypeNameLogic ? "[object Uint16Array]" : "0,0,5,0";
-            assert.ok(subArray62 !== null, "Uint16Array SubArray2");
-            assert.equal(subArray62.length, 4, "Uint16Array SubArray2 Length");
-            assert.equal(subArray62.toString(), expectedToStringUint16Array3, "Uint16Array SubArray2 ToString");
-            assert.equal(subArray62.byteOffset, 6, "Uint16Array SubArray2 ByteOffset");
-
-            var v7 = new Uint32Array(10);
-            assert.ok(v7 !== null, "Uint32Array created");
-
-            v7[1] = 11;
-            v7[5] = 5;
-            v7[9] = 99;
-            assert.equal(v7[1], 11, "Uint32Array indexier works 1");
-            assert.equal(v7[9], 99, "Uint32Array indexier works 9");
-
-            assert.ok(v7.buffer !== null, "Uint32Array Buffer");
-            assert.equal(v7.byteLength, 40, "Uint32Array ByteLength");
-            assert.equal(v7.byteOffset, 0, "Uint32Array ByteOffset");
-            assert.equal(v7.length, 10, "Uint32Array Length");
-
-            var expectedToStringUint32Array1 = isToStringToTypeNameLogic ? "[object Uint32Array]" : "0,11,0,0,0,5,0,0,0,99";
-            assert.equal(v7.toLocaleString(), expectedToStringUint32Array1, "Uint32Array ToLocaleString");
-            assert.equal(v7.toString(), expectedToStringUint32Array1, "Uint32Array ToString");
-
-            var subArray71 = v7.subarray(1);
-            var expectedToStringUint32Array2 = isToStringToTypeNameLogic ? "[object Uint32Array]" : "11,0,0,0,5,0,0,0,99";
-            assert.ok(subArray71 !== null, "Uint32Array SubArray1");
-            assert.equal(subArray71.length, 9, "Uint32Array SubArray1 Length");
-            assert.equal(subArray71.toString(), expectedToStringUint32Array2, "Uint32Array SubArray1 ToString");
-            assert.equal(subArray71.byteOffset, 4, "Uint32Array SubArray1 ByteOffset");
-
-            var subArray72 = subArray71.subarray(2, 6);
-            var expectedToStringUint32Array3 = isToStringToTypeNameLogic ? "[object Uint32Array]" : "0,0,5,0";
-            assert.ok(subArray72 !== null, "Uint32Array SubArray2");
-            assert.equal(subArray72.length, 4, "Uint32Array SubArray2 Length");
-            assert.equal(subArray72.toString(), expectedToStringUint32Array3, "Uint32Array SubArray2 ToString");
-            assert.equal(subArray72.byteOffset, 12, "Uint32Array SubArray2 ByteOffset");
-
-            var v8 = new Uint8Array(10);
-            assert.ok(v8 !== null, "Uint8Array created");
-
-            v8[1] = 11;
-            v8[5] = 5;
-            v8[9] = 99;
-            assert.equal(v8[1], 11, "Uint8Array indexier works 1");
-            assert.equal(v8[9], 99, "Uint8Array indexier works 9");
-
-            assert.ok(v8.buffer !== null, "Uint8Array Buffer");
-            assert.equal(v8.byteLength, 10, "Uint8Array ByteLength");
-            assert.equal(v8.byteOffset, 0, "Uint8Array ByteOffset");
-            assert.equal(v8.length, 10, "Uint8Array Length");
-
-            var expectedToStringUint8Array1 = isToStringToTypeNameLogic ? "[object Uint8Array]" : "0,11,0,0,0,5,0,0,0,99";
-            assert.equal(v8.toLocaleString(), expectedToStringUint8Array1, "Uint8Array ToLocaleString");
-            assert.equal(v8.toString(), expectedToStringUint8Array1, "Uint8Array ToString");
-
-            var subArray81 = v8.subarray(1);
-            var expectedToStringUint8Array2 = isToStringToTypeNameLogic ? "[object Uint8Array]" : "11,0,0,0,5,0,0,0,99";
-            assert.ok(subArray81 !== null, "Uint8Array SubArray1");
-            assert.equal(subArray81.length, 9, "Uint8Array SubArray1 Length");
-            assert.equal(subArray81.toString(), expectedToStringUint8Array2, "Uint8Array SubArray1 ToString");
-            assert.equal(subArray81.byteOffset, 1, "Uint8Array SubArray1 ByteOffset");
-
-            var subArray82 = subArray81.subarray(2, 6);
-            var expectedToStringUint8Array3 = isToStringToTypeNameLogic ? "[object Uint8Array]" : "0,0,5,0";
-            assert.ok(subArray82 !== null, "Uint8Array SubArray2");
-            assert.equal(subArray82.length, 4, "Uint8Array SubArray2 Length");
-            assert.equal(subArray82.toString(), expectedToStringUint8Array3, "Uint8Array SubArray2 ToString");
-            assert.equal(subArray82.byteOffset, 3, "Uint8Array SubArray2 ByteOffset");
-
-            var v9 = new Uint8ClampedArray(10);
-            assert.ok(v9 !== null, "Uint8ClampedArray created");
-
-            v9[1] = 11;
-            v9[5] = 5;
-            v9[9] = 99;
-            assert.equal(v9[1], 11, "Uint8ClampedArray indexier works 1");
-            assert.equal(v9[9], 99, "Uint8ClampedArray indexier works 9");
-
-            assert.ok(v9.buffer !== null, "Uint8ClampedArray Buffer");
-            assert.equal(v9.byteLength, 10, "Uint8ClampedArray ByteLength");
-            assert.equal(v9.byteOffset, 0, "Uint8ClampedArray ByteOffset");
-            assert.equal(v9.length, 10, "Uint8ClampedArray Length");
-
-            var expectedToStringUint8ClampedArray1 = isToStringToTypeNameLogic ? "[object Uint8ClampedArray]" : "0,11,0,0,0,5,0,0,0,99";
-            assert.equal(v9.toLocaleString(), expectedToStringUint8ClampedArray1, "Uint8ClampedArray ToLocaleString");
-            assert.equal(v9.toString(), expectedToStringUint8ClampedArray1, "Uint8ClampedArray ToString");
-
-            var subArray91 = v9.subarray(1);
-            var expectedToStringUint8ClampedArray2 = isToStringToTypeNameLogic ? "[object Uint8ClampedArray]" : "11,0,0,0,5,0,0,0,99";
-            assert.ok(subArray91 !== null, "Uint8ClampedArray SubArray1");
-            assert.equal(subArray91.length, 9, "Uint8ClampedArray SubArray1 Length");
-            assert.equal(subArray91.toString(), expectedToStringUint8ClampedArray2, "Uint8ClampedArray SubArray1 ToString");
-            assert.equal(subArray91.byteOffset, 1, "Uint8ClampedArray SubArray1 ByteOffset");
-
-            var subArray92 = subArray91.subarray(2, 6);
-            var expectedToStringUint8ClampedArray3 = isToStringToTypeNameLogic ? "[object Uint8ClampedArray]" : "0,0,5,0";
-            assert.ok(subArray92 !== null, "Uint8ClampedArray SubArray2");
-            assert.equal(subArray92.length, 4, "Uint8ClampedArray SubArray2 Length");
-            assert.equal(subArray92.toString(), expectedToStringUint8ClampedArray3, "Uint8ClampedArray SubArray2 ToString");
-            assert.equal(subArray92.byteOffset, 3, "Uint8ClampedArray SubArray2 ByteOffset");
-        }
-    }
-});
-
-Bridge.define('ClientTestLibrary.Bridge583', {
-    statics: {
-        testUseCase: function (assert) {
-            assert.expect(120);
-
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 6), Bridge.Decimal(1.4), "Bridge583 1");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 6), Bridge.Decimal(1.6), "Bridge583 2");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 6), Bridge.Decimal(123.4568), "Bridge583 3");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 6), Bridge.Decimal(123.456789), "Bridge583 4");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 6), Bridge.Decimal(123.456789), "Bridge583 5");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 6), Bridge.Decimal(-123.0), "Bridge583 6");
-
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 0), 1.5, "Bridge583 Up 1");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 0), 1.6, "Bridge583 Up 2");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 0), 123.4568, "Bridge583 Up 3");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 0), 123.456789, "Bridge583 Up 4");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 0), 123.456789, "Bridge583 Up 5");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 0), -124.0, "Bridge583 Up 6");
-
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 4), 1.5, "Bridge583 AwayFromZero 1");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 4), 1.6, "Bridge583 AwayFromZero 2");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 4), 123.4568, "Bridge583 AwayFromZero 3");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 4), 123.456789, "Bridge583 AwayFromZero 4");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 4), 123.456789, "Bridge583 AwayFromZero 5");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 4), -123.0, "Bridge583 AwayFromZero 6");
-
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 1), 1.4, "Bridge583 Down 1");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 1), 1.5, "Bridge583 Down 2");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 1), 123.4567, "Bridge583 Down 3");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 1), 123.456789, "Bridge583 Down 4");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 1), 123.456789, "Bridge583 Down 5");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 1), -123.0, "Bridge583 Down 6");
-
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 2), 1.5, "Bridge583 InfinityPos 1");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 2), 1.6, "Bridge583 InfinityPos 2");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 2), 123.4568, "Bridge583 InfinityPos 3");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 2), 123.456789, "Bridge583 InfinityPos 4");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 2), 123.456789, "Bridge583 InfinityPos 5");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 2), -123.0, "Bridge583 InfinityPos 6");
-
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 3), 1.4, "Bridge583 InfinityNeg 1");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 3), 1.5, "Bridge583 InfinityNeg 2");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 3), 123.4567, "Bridge583 InfinityNeg 3");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 3), 123.456789, "Bridge583 InfinityNeg 4");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 3), 123.456789, "Bridge583 InfinityNeg 5");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 3), -124.0, "Bridge583 InfinityNeg 6");
-
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 5), 1.4, "Bridge583 TowardsZero 1");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 5), 1.5, "Bridge583 TowardsZero 2");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 5), 123.4568, "Bridge583 TowardsZero 3");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 5), 123.456789, "Bridge583 TowardsZero 4");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 5), 123.456789, "Bridge583 TowardsZero 5");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 5), -123.0, "Bridge583 TowardsZero 6");
-
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 6), 1.4, "Bridge583 ToEven 1");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 6), 1.6, "Bridge583 ToEven 2");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 6), 123.4568, "Bridge583 ToEven 3");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 6), 123.456789, "Bridge583 ToEven 4");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 6), 123.456789, "Bridge583 ToEven 5");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 6), -123.0, "Bridge583 ToEven 6");
-
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 7), 1.5, "Bridge583 Ceil 1");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 7), 1.6, "Bridge583 Ceil 2");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 7), 123.4568, "Bridge583 Ceil 3");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 7), 123.456789, "Bridge583 Ceil 4");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 7), 123.456789, "Bridge583 Ceil 5");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 7), -123.0, "Bridge583 Ceil 6");
-
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 8), 1.4, "Bridge583 Floor 1");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 8), 1.5, "Bridge583 Floor 2");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 8), 123.4568, "Bridge583 Floor 3");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 8), 123.456789, "Bridge583 Floor 4");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 8), 123.456789, "Bridge583 Floor 5");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 8), -123.0, "Bridge583 Floor 6");
-        }
-    }
-});
-
-Bridge.define('ClientTestLibrary.Bridge586', {
-    statics: {
-        testUseCase: function (assert) {
-            assert.expect(4);
-
-            assert.throws(function () {
-                ClientTestLibrary.Bridge586A.setSomeDataStatic(Bridge.Decimal(4));
-            }, "a.SomeDataStatic is external");
-            assert.throws(function () {
-                ClientTestLibrary.Bridge586A.doSomethingStatic();
-            }, "a.DoSomethingStatic() is external");
-
-            assert.throws(function () {
-                ClientTestLibrary.Bridge586B.setSomeDataStatic(Bridge.Decimal(4));
-            }, "b.SomeDataStatic is external");
-            assert.throws(function () {
-                ClientTestLibrary.Bridge586B.doSomethingStatic();
-            }, "b.DoSomethingStatic() is external");
-        }
-    }
-});
-
-Bridge.define('ClientTestLibrary.Bridge588', {
-    statics: {
-        testUseCase: function (assert) {
-            assert.expect(1);
-
             assert.equal(ClientTestLibrary.Bridge588A.valeur3, 3, "Bridge588 TestUseCase");
-        }
-    }
-});
-
-Bridge.define('ClientTestLibrary.Bridge266A', {
-    statics: {
-        test: function () {
-            // Nothing gets written for Class1 in the output JavaScript due to the "new object()" argument.
-            // If null is used instead (as commented-out) then it works as expected.
-            // No compile error.
-            return ClientTestLibrary.Bridge266B.test("test", { });
+            assert.equal(ClientTestLibrary.Bridge588C.C1.getDefault().getValue().getName(), "default", "Bridge588_2 TestUseCase");
         }
     }
 });

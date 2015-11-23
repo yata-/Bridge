@@ -613,7 +613,7 @@ namespace Bridge.Contract
                         }
                         return true;
                     }
-                }    
+                }
             }
 
             return false;
@@ -888,7 +888,7 @@ namespace Bridge.Contract
                 name = "constructor";
             }
 
-            var attr = this.Emitter.GetAttribute(definition.Attributes, "Bridge.NameAttribute");
+            var attr = Helpers.GetInheritedAttribute(definition, "Bridge.NameAttribute");
 
             if (attr == null && definition is IProperty)
             {
@@ -897,7 +897,7 @@ namespace Bridge.Contract
 
                 if (acceessor != null)
                 {
-                    attr = this.Emitter.GetAttribute(acceessor.Attributes, "Bridge.NameAttribute");
+                    attr = Helpers.GetInheritedAttribute(acceessor, "Bridge.NameAttribute");
                 }
             }
 

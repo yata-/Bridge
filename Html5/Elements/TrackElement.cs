@@ -1,4 +1,4 @@
-﻿namespace Bridge.Html5
+namespace Bridge.Html5
 {
     /// <summary>
     /// The HTMLTrackElement interface provides access to the properties of &lt;track&gt; elements, as well as methods to manipulate them.
