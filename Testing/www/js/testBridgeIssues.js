@@ -2816,7 +2816,27 @@ Bridge.define('ClientTestLibrary.Bridge623', {
 
 Bridge.define('ClientTestLibrary.Bridge634', {
     statics: {
-        testUseCase: function (assert) {
+        testUseCase1: function (assert) {
+            var $t;
+            assert.expect(1);
+
+            var hashSet = new Bridge.Collections.HashSet$1(String)("constructor");
+
+            hashSet.add$1("a");
+            hashSet.add$1("b");
+            hashSet.add$1("c");
+
+            var text = "";
+
+            $t = Bridge.getEnumerator(hashSet);
+            while ($t.moveNext()) {
+                var s = $t.getCurrent();
+                text += s;
+            }
+
+            assert.equal(text, "abc", "Bridge634: foreach works for HashSet");
+        }        ,
+        testUseCase2: function (assert) {
             assert.expect(21);
 
             var a = new ClientTestLibrary.Bridge634A$1(String)();

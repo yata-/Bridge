@@ -129,6 +129,10 @@
     <None Include="Bridge\bridge.json" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Frameworks\Collections\Bridge.Collections.csproj">
+      <Project>{2f36a7e8-fc89-49a9-8161-5bbbe8f66a3a}</Project>
+      <Name>Bridge.Collections</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Bridge\Bridge.csproj">
       <Project>{de78b8b7-c0f5-415b-a70b-02194433f450}</Project>
       <Name>Bridge</Name>
