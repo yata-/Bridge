@@ -32,8 +32,15 @@ namespace CopyOutputToReference
                 var sourcePath = folderPath + @"\bridge\output";
                 var sourceFiles = GetSourceFiles(sourcePath, exceptions);
 
-                var targetPath = folderPath + @"\bridge\reference";
-                CopyToTargetDirectory(folderPath, targetPath, sourcePath, sourceFiles, exceptions);
+                if (sourceFiles != null)
+                {
+                    var targetPath = folderPath + @"\bridge\reference";
+                    CopyToTargetDirectory(folderPath, targetPath, sourcePath, sourceFiles, exceptions);
+                }
+                else
+                {
+                    Console.WriteLine("\tSkipping as sourcePath does not exist " + sourcePath);
+                }
             }
 
             Console.ReadLine();
@@ -59,7 +66,7 @@ namespace CopyOutputToReference
 
             if (!di.Exists)
             {
-                throw new InvalidOperationException("Could not find source directory " + path);
+                return null;
             }
 
             var files = di.EnumerateFiles("*", SearchOption.AllDirectories);
