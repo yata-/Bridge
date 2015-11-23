@@ -70,7 +70,7 @@ namespace Bridge.Translator
 
                     if (inlineAttr == null)
                     {
-                        inlineAttr = this.Emitter.GetAttribute(method.Attributes, Translator.Bridge_ASSEMBLY + ".NameAttribute");
+                        inlineAttr = Helpers.GetInheritedAttribute(method, Translator.Bridge_ASSEMBLY + ".NameAttribute");
                         isName = true;
                     }
 

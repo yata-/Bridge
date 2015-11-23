@@ -47,6 +47,7 @@
     <Compile Include="Tests\BasicCSharp\TestTryCatchFinallyBlocks.cs" />
     <Compile Include="Tests\BridgeIssues\N495.cs" />
     <Compile Include="Tests\BridgeIssues\N502.cs" />
+    <Compile Include="Tests\BridgeIssues\N508.cs" />
     <Compile Include="Tests\BridgeIssues\N503.cs" />
     <Compile Include="Tests\BridgeIssues\N550.cs" />
     <Compile Include="Tests\BridgeIssues\N578.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="Tests\BridgeIssues\N592.cs" />
     <Compile Include="Tests\BridgeIssues\N606.cs" />
     <Compile Include="Tests\BridgeIssues\N634.cs" />
+    <Compile Include="Tests\BridgeIssues\N635.cs" />
     <Compile Include="Tests\BridgeIssues\N623.cs" />
     <Compile Include="Tests\BridgeIssues\N615.cs" />
     <Compile Include="Tests\BridgeIssues\N607.cs" />

@@ -245,7 +245,7 @@ namespace Bridge.Translator
                         if (enumMode >= 3)
                         {
                             string enumStringName = member.Member.Name;
-                            var attr = this.Emitter.GetAttribute(member.Member.Attributes, Translator.Bridge_ASSEMBLY + ".NameAttribute");
+                            var attr = Helpers.GetInheritedAttribute(member.Member, Translator.Bridge_ASSEMBLY + ".NameAttribute");
 
                             if (attr != null)
                             {
