@@ -140,7 +140,7 @@ namespace Bridge.Translator
 
         protected virtual IList<string> GetSourceFiles(XDocument doc)
         {
-            var project = new Project(this.Location);
+            var project = new Project(this.Location, null, null, new ProjectCollection());
             var sourceFiles = new List<string>();
 
             foreach (var projectItem in project.Items)
