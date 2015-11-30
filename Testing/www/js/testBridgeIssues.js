@@ -1857,9 +1857,19 @@ Bridge.define('ClientTestLibrary.Bridge635B', {
     }
 });
 
-Bridge.define('ClientTestLibrary.Bridge652.Bridge652B', {
+Bridge.define('ClientTestLibrary.Bridge652.Bridge652B1', {
     constructor: function () {
-        ClientTestLibrary.Bridge652.log = "Bridge652B";
+        ClientTestLibrary.Bridge652.log = "Bridge652B1";
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge652.Bridge652B2', {
+    inherits: [Bridge.IComparable],
+    constructor: function () {
+        ClientTestLibrary.Bridge652.log = "Bridge652B2";
+    },
+    compareTo: function (obj) {
+        return 0;
     }
 });
 
@@ -1870,8 +1880,19 @@ Bridge.define('ClientTestLibrary.Bridge652.Bridge652C$1', function (T) { return 
     }
 }; });
 
-Bridge.define('ClientTestLibrary.Bridge652.Bridge652A', {
-    inherits: [ClientTestLibrary.Bridge652.Bridge652C$1(ClientTestLibrary.Bridge652.Bridge652B)]
+Bridge.define('ClientTestLibrary.Bridge652.Bridge652A1', {
+    inherits: [ClientTestLibrary.Bridge652.Bridge652C$1(ClientTestLibrary.Bridge652.Bridge652B1)]
+});
+
+Bridge.define('ClientTestLibrary.Bridge652.Bridge652D$1', function (T) { return {
+    bar: null,
+    constructor: function () {
+        this.bar = new T();
+    }
+}; });
+
+Bridge.define('ClientTestLibrary.Bridge652.Bridge652A2', {
+    inherits: [ClientTestLibrary.Bridge652.Bridge652D$1(ClientTestLibrary.Bridge652.Bridge652B2)]
 });
 
 Bridge.define('ClientTestLibrary.Bridge661', {
@@ -2952,12 +2973,17 @@ Bridge.define('ClientTestLibrary.Bridge652', {
     statics: {
         log: null,
         testUseCase: function (assert) {
-            assert.expect(2);
+            assert.expect(4);
 
             ClientTestLibrary.Bridge652.log = null;
-            var c = new ClientTestLibrary.Bridge652.Bridge652A();
-            assert.notEqual(c.bar, null, "Bridge652 Bar NotNull");
-            assert.equal(ClientTestLibrary.Bridge652.log, "Bridge652B", "Bridge652 log");
+            var c = new ClientTestLibrary.Bridge652.Bridge652A1();
+            assert.notEqual(c.bar, null, "Bridge652A1 Bar NotNull");
+            assert.equal(ClientTestLibrary.Bridge652.log, "Bridge652B1", "Bridge652A1 log");
+
+            ClientTestLibrary.Bridge652.log = null;
+            var d = new ClientTestLibrary.Bridge652.Bridge652A2();
+            assert.notEqual(d.bar, null, "Bridge652A2 Bar NotNull");
+            assert.equal(ClientTestLibrary.Bridge652.log, "Bridge652B2", "Bridge652A2 log");
         }
     }
 });
