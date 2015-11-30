@@ -1984,13 +1984,20 @@ Bridge.define('ClientTestLibrary.Bridge661', {
 Bridge.define('ClientTestLibrary.Bridge664', {
     statics: {
         testUseCase: function (assert) {
-            assert.expect(1);
+            assert.expect(2);
 
             var f = function (s) {
                 return s;
             };
             // if cast will be emitted then exception will be thrown because Bridge664A is not emitted
             assert.equal(f("test"), "test", "Bridge664");
+
+            assert.throws(function () {
+                var b = { };
+                var s = Bridge.cast(b, ClientTestLibrary.Bridge664B);
+            }, "Bridge664 Should throw exception");
+
+
         }
     }
 });
