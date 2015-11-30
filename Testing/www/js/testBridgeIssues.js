@@ -1796,6 +1796,10 @@ Bridge.define('ClientTestLibrary.Bridge634C.Nested');
 
 Bridge.define('ClientTestLibrary.Bridge634C.Nested.SubNested');
 
+Bridge.define('Bridge634D');
+
+Bridge.define('Bridge634D.Nested');
+
 Bridge.define('ClientTestLibrary.Bridge634A$1.Nested.SubNested$1', function (T, T1) { return {
 
 }; });
@@ -3006,6 +3010,15 @@ Bridge.define('ClientTestLibrary.Bridge634', {
             assert.equal(Bridge.getTypeName(c4), "ClientTestLibrary.Bridge634C.Nested.SubNested$1$Bridge.Int", "Bridge634 C c4");
             assert.equal(Bridge.getTypeName(c5), "ClientTestLibrary.Bridge634C.Nested$1.SubNested$Bridge.Int", "Bridge634 C c5");
             assert.equal(Bridge.getTypeName(c6), "ClientTestLibrary.Bridge634C.Nested$1.SubNested$1$Bridge.Int$Bridge.Int", "Bridge634 C c6");
+        },
+        testUseCaseFor658: function (assert) {
+            assert.expect(2);
+
+            var d = new Bridge634D();
+            var d1 = new Bridge634D.Nested();
+
+            assert.equal(Bridge.getTypeName(d), "Bridge634D", "Bridge634 D d");
+            assert.equal(Bridge.getTypeName(d1), "Bridge634D.Nested", "Bridge634 D d1");
         }
     }
 });

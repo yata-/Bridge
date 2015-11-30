@@ -119,7 +119,7 @@ namespace ClientTestLibrary
 
         public static void TestUseCase2(Assert assert)
         {
-            assert.Expect(23);
+            assert.Expect(21);
 
             var a = new Bridge634A<string>();
             var a1 = new Bridge634A<string>.Nested();
@@ -168,6 +168,11 @@ namespace ClientTestLibrary
             assert.Equal(c4.GetClassName(), "ClientTestLibrary.Bridge634C.Nested.SubNested$1$Bridge.Int", "Bridge634 C c4");
             assert.Equal(c5.GetClassName(), "ClientTestLibrary.Bridge634C.Nested$1.SubNested$Bridge.Int", "Bridge634 C c5");
             assert.Equal(c6.GetClassName(), "ClientTestLibrary.Bridge634C.Nested$1.SubNested$1$Bridge.Int$Bridge.Int", "Bridge634 C c6");
+        }
+
+        public static void TestUseCaseFor658(Assert assert)
+        {
+            assert.Expect(2);
 
             var d = new Bridge634D();
             var d1 = new Bridge634D.Nested();
