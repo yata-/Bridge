@@ -189,7 +189,7 @@ namespace Bridge.Translator
                     }
                 }
 
-                if (ConversionBlock.IsUserDefinedConversion(this, this.CastExpression))
+                if (ConversionBlock.IsUserDefinedConversion(this, this.CastExpression.Expression))
                 {
                     expression.AcceptVisitor(this.Emitter);
 

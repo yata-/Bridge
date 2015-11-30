@@ -183,6 +183,7 @@ Bridge.define('ClientTestLibrary.RunTests', {
             QUnit.test("#652", ClientTestLibrary.Bridge652.testUseCase);
             QUnit.test("#655", ClientTestLibrary.Bridge655.testUseCase);
             QUnit.test("#661", ClientTestLibrary.Bridge661.testUseCase);
+            QUnit.test("#664", ClientTestLibrary.Bridge664.testUseCase);
 
             QUnit.module("LINQ");
             QUnit.test("Aggregate operators", ClientTestLibrary.Linq.TestLinqAggregateOperators.test);

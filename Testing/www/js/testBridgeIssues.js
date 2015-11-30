@@ -1981,6 +1981,27 @@ Bridge.define('ClientTestLibrary.Bridge661', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge664', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            var f = function (s) {
+                return s;
+            };
+            // if cast will be emitted then exception will be thrown because Bridge664A is not emitted
+            assert.equal(f("test"), "test", "Bridge664");
+
+            assert.throws(function () {
+                var b = { };
+                var s = Bridge.cast(b, ClientTestLibrary.Bridge664B);
+            }, "Bridge664 Should throw exception");
+
+
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
@@ -3111,13 +3132,13 @@ Bridge.define('ClientTestLibrary.Bridge603', {
             var b = ClientTestLibrary.Bridge603B.op_Implicit$1(12345);
             assert.equal(b.intValue, 12345, "Bridge603B TestRelated Int");
 
-            var c = ClientTestLibrary.Bridge603B.op_Implicit$2(null);
+            var c = ClientTestLibrary.Bridge603B.op_Implicit$2(Bridge.cast(null, String));
             assert.equal(c.value, "[Null]", "Bridge603B TestRelated String Null");
 
             c = ClientTestLibrary.Bridge603B.op_Implicit$2("Test");
             assert.equal(c.value, "Test", "Bridge603B TestRelated String");
 
-            var d = ClientTestLibrary.Bridge603B.op_Implicit(null);
+            var d = ClientTestLibrary.Bridge603B.op_Implicit(Bridge.cast(null, ClientTestLibrary.Bridge603Class));
             assert.equal(d.value, "[Null]", "Bridge603B TestRelated Bridge603Class Null");
 
             d = ClientTestLibrary.Bridge603B.op_Implicit(Bridge.merge(new ClientTestLibrary.Bridge603Class(), {
