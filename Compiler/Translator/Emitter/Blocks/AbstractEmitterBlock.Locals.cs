@@ -252,7 +252,7 @@ namespace Bridge.Translator
             string name = "$t";
             int i = 0;
 
-            while (this.Emitter.TempVariables.ContainsKey(name))
+            while (this.Emitter.TempVariables.ContainsKey(name) || (this.Emitter.ParentTempVariables != null && this.Emitter.ParentTempVariables.ContainsKey(name)))
             {
                 name = "$t" + ++i;
             }
