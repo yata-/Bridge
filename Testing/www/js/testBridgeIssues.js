@@ -1857,6 +1857,20 @@ Bridge.define('ClientTestLibrary.Bridge635B', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge661', {
+    statics: {
+        example: function (exampleInput) {
+            if (exampleInput === void 0) { exampleInput = 0; }
+            return exampleInput === 0;
+        },
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            assert.equal(ClientTestLibrary.Bridge661.example(), true, "Bridge661 Example true");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
