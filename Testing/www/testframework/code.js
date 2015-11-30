@@ -5950,16 +5950,16 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.JsDateTimeTests', {
     dateEqualityWorks: function () {
         Bridge.Test.Assert.$true(Bridge.equals(new Date(2011, 7 - 1, 12), new Date(2011, 7 - 1, 12)));
         Bridge.Test.Assert.$false(Bridge.equals(new Date(2011, 7 - 1, 12), new Date(2011, 7 - 1, 13)));
-        Bridge.Test.Assert.areStrictEqual(Bridge.equals(new Date(2011, 7 - 1, 12), Bridge.cast(null, Date)), false);
-        Bridge.Test.Assert.areStrictEqual(Bridge.equals(Bridge.cast(null, Date), new Date(2011, 7 - 1, 12)), false);
-        Bridge.Test.Assert.areStrictEqual(Bridge.equals(Bridge.cast(null, Date), Bridge.cast(null, Date)), true);
+        Bridge.Test.Assert.areStrictEqual(Bridge.equals(new Date(2011, 7 - 1, 12), null), false);
+        Bridge.Test.Assert.areStrictEqual(Bridge.equals(null, new Date(2011, 7 - 1, 12)), false);
+        Bridge.Test.Assert.areStrictEqual(Bridge.equals(null, null), true);
     },
     dateInequalityWorks: function () {
         Bridge.Test.Assert.$false(!Bridge.equals(new Date(2011, 7 - 1, 12), new Date(2011, 7 - 1, 12)));
         Bridge.Test.Assert.$true(!Bridge.equals(new Date(2011, 7 - 1, 12), new Date(2011, 7 - 1, 13)));
-        Bridge.Test.Assert.areStrictEqual(!Bridge.equals(new Date(2011, 7 - 1, 12), Bridge.cast(null, Date)), true);
-        Bridge.Test.Assert.areStrictEqual(!Bridge.equals(Bridge.cast(null, Date), new Date(2011, 7 - 1, 12)), true);
-        Bridge.Test.Assert.areStrictEqual(!Bridge.equals(Bridge.cast(null, Date), Bridge.cast(null, Date)), false);
+        Bridge.Test.Assert.areStrictEqual(!Bridge.equals(new Date(2011, 7 - 1, 12), null), true);
+        Bridge.Test.Assert.areStrictEqual(!Bridge.equals(null, new Date(2011, 7 - 1, 12)), true);
+        Bridge.Test.Assert.areStrictEqual(!Bridge.equals(null, null), false);
     },
     dateLessThanWorks: function () {
         Bridge.Test.Assert.$true(new Date(2011, 7 - 1, 11) < new Date(2011, 7 - 1, 12));

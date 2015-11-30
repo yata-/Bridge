@@ -158,11 +158,6 @@ namespace Bridge.Translator
             {
                 var member = this.Emitter.Resolver.ResolveNode(targetMember.Target, this.Emitter);
 
-                if (member != null && member.Type.Kind == TypeKind.Delegate)
-                {
-                    throw new EmitterException(invocationExpression, "Delegate's methods are not supported. Please use direct delegate invoke.");
-                }
-
                 //var targetResolve = this.Emitter.Resolver.ResolveNode(targetMember, this.Emitter);
                 var targetResolve = this.Emitter.Resolver.ResolveNode(invocationExpression, this.Emitter);
 
@@ -174,6 +169,11 @@ namespace Bridge.Translator
                     bool isExtensionMethodInvocation = false;
                     if (csharpInvocation != null)
                     {
+                        if (member != null && member.Type.Kind == TypeKind.Delegate && !csharpInvocation.IsExtensionMethodInvocation)
+                        {
+                            throw new EmitterException(invocationExpression, "Delegate's methods are not supported. Please use direct delegate invoke.");
+                        }
+
                         if (csharpInvocation.IsExtensionMethodInvocation)
                         {
                             invocationResult = csharpInvocation;

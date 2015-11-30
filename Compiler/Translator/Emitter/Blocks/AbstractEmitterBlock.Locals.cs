@@ -200,7 +200,9 @@ namespace Bridge.Translator
                             {
                                 if (prm.IsOptional)
                                 {
-                                    this.Write(string.Format("if ({0} === void 0) {{ {0} = {1}; }}", prm.Name, Newtonsoft.Json.JsonConvert.SerializeObject(prm.ConstantValue)));
+                                    this.Write(string.Format("if ({0} === void 0) {{ {0} = ", prm.Name));
+                                    this.WriteScript(prm.ConstantValue);
+                                    this.Write("; }");
                                     this.WriteNewLine();
                                 }
                             }

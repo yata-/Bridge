@@ -1796,6 +1796,10 @@ Bridge.define('ClientTestLibrary.Bridge634C.Nested');
 
 Bridge.define('ClientTestLibrary.Bridge634C.Nested.SubNested');
 
+Bridge.define('Bridge634D');
+
+Bridge.define('Bridge634D.Nested');
+
 Bridge.define('ClientTestLibrary.Bridge634A$1.Nested.SubNested$1', function (T, T1) { return {
 
 }; });
@@ -1854,6 +1858,140 @@ Bridge.define('ClientTestLibrary.Bridge635B', {
     inherits: [ClientTestLibrary.Bridge635A],
     internalFunc1: function () {
         return "B.Test1";
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge652.Bridge652B1', {
+    constructor: function () {
+        ClientTestLibrary.Bridge652.log = "Bridge652B1";
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge652.Bridge652B2', {
+    inherits: [Bridge.IComparable],
+    constructor: function () {
+        ClientTestLibrary.Bridge652.log = "Bridge652B2";
+    },
+    compareTo: function (obj) {
+        return 0;
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge652.Bridge652C$1', function (T) { return {
+    bar: null,
+    constructor: function () {
+        this.bar = new T();
+    }
+}; });
+
+Bridge.define('ClientTestLibrary.Bridge652.Bridge652A1', {
+    inherits: [ClientTestLibrary.Bridge652.Bridge652C$1(ClientTestLibrary.Bridge652.Bridge652B1)]
+});
+
+Bridge.define('ClientTestLibrary.Bridge652.Bridge652D$1', function (T) { return {
+    bar: null,
+    constructor: function () {
+        this.bar = new T();
+    }
+}; });
+
+Bridge.define('ClientTestLibrary.Bridge652.Bridge652A2', {
+    inherits: [ClientTestLibrary.Bridge652.Bridge652D$1(ClientTestLibrary.Bridge652.Bridge652B2)]
+});
+
+Bridge.define('ClientTestLibrary.Bridge655', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(12);
+
+            var item11 = function () {
+                return 11;
+            };
+            assert.equal(ClientTestLibrary.Bridge655A.isNullOrUndefined(item11), false, "Bridge655 IsNullOrUndefined11");
+            assert.equal(item11(), 11, "Bridge655 item11");
+
+            var item12 = function (i) {
+                return i;
+            };
+            assert.equal(ClientTestLibrary.Bridge655A.isNullOrUndefined(item12), false, "Bridge655 IsNullOrUndefined12");
+            assert.equal(item12(12), 12, "Bridge655 item12");
+
+            var item21 = function () {
+                return 21;
+            };
+            assert.equal(ClientTestLibrary.Bridge655A.isNullOrUndefined$1(item21, 21), false, "Bridge655 IsNullOrUndefined21 false");
+            assert.equal(ClientTestLibrary.Bridge655A.isNullOrUndefined$1(item21, 0), true, "Bridge655 IsNullOrUndefined21 true");
+            assert.equal(item21(), 21, "Bridge655 item21");
+
+            var item22 = function (i, s) {
+                return i + s.length;
+            };
+            assert.equal(ClientTestLibrary.Bridge655A.isNullOrUndefined$2(item22, "22"), "false", "Bridge655 IsNullOrUndefined22 false");
+            assert.equal(ClientTestLibrary.Bridge655A.isNullOrUndefined$2(item22, ""), "true", "Bridge655 IsNullOrUndefined22 true");
+            assert.equal(item22(19, "two"), 22, "Bridge655 item22");
+
+            var item32 = function (i, s) {
+                var b = i === s.length;
+            };
+            assert.equal(ClientTestLibrary.Bridge655A.isNullOrUndefined$2(item32, "32"), "false", "Bridge655 IsNullOrUndefined32 false");
+            assert.equal(ClientTestLibrary.Bridge655A.isNullOrUndefined$2(item32, ""), "true", "Bridge655 IsNullOrUndefined32 true");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge655A', {
+    statics: {
+        isNullOrUndefined: function (subject) {
+            return subject === undefined || subject === null;
+        },
+        isNullOrUndefined$1: function (subject, i) {
+            return subject === undefined || subject === null || i === 0;
+        },
+        isNullOrUndefined$2: function (subject, s) {
+            if (subject === undefined || subject === null || Bridge.String.isNullOrEmpty(s)) {
+                return "true";
+            }
+
+            return "false";
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge661', {
+    statics: {
+        example1: function (exampleInput) {
+            if (exampleInput === void 0) { exampleInput = 0; }
+            return exampleInput === 0;
+        },
+        example2: function (exampleInput) {
+            if (exampleInput === void 0) { exampleInput = 49; }
+            return exampleInput === 49;
+        },
+        testUseCase: function (assert) {
+            assert.expect(6);
+
+            assert.equal(ClientTestLibrary.Bridge661.example1(), true, "Bridge661 Example1 true default");
+            assert.equal(ClientTestLibrary.Bridge661.example1(0), true, "Bridge661 Example1 true");
+            assert.equal(ClientTestLibrary.Bridge661.example1(65), false, "Bridge661 Example1 false");
+
+            assert.equal(ClientTestLibrary.Bridge661.example2(), true, "Bridge661 Example2 true default");
+            assert.equal(ClientTestLibrary.Bridge661.example2(49), true, "Bridge661 Example2 true");
+            assert.equal(ClientTestLibrary.Bridge661.example2(0), false, "Bridge661 Example2 false");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge664', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var f = function (s) {
+                return s;
+            };
+            // if cast will be emitted then exception will be thrown because Bridge664A is not emitted
+            assert.equal(f("test"), "test", "Bridge664");
+        }
     }
 });
 
@@ -2886,6 +3024,15 @@ Bridge.define('ClientTestLibrary.Bridge634', {
             assert.equal(Bridge.getTypeName(c4), "ClientTestLibrary.Bridge634C.Nested.SubNested$1$Bridge.Int", "Bridge634 C c4");
             assert.equal(Bridge.getTypeName(c5), "ClientTestLibrary.Bridge634C.Nested$1.SubNested$Bridge.Int", "Bridge634 C c5");
             assert.equal(Bridge.getTypeName(c6), "ClientTestLibrary.Bridge634C.Nested$1.SubNested$1$Bridge.Int$Bridge.Int", "Bridge634 C c6");
+        },
+        testUseCaseFor658: function (assert) {
+            assert.expect(2);
+
+            var d = new Bridge634D();
+            var d1 = new Bridge634D.Nested();
+
+            assert.equal(Bridge.getTypeName(d), "Bridge634D", "Bridge634 D d");
+            assert.equal(Bridge.getTypeName(d1), "Bridge634D.Nested", "Bridge634 D d1");
         }
     }
 });
@@ -2903,6 +3050,25 @@ Bridge.define('ClientTestLibrary.Bridge635', {
 
             assert.equal(typeof b.internalFunc1, "function", "Bridge635 B.internalFunc1");
             assert.equal(b["internalFunc1"](), "B.Test1", "Bridge635 B.internalFunc1 Invoke");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge652', {
+    statics: {
+        log: null,
+        testUseCase: function (assert) {
+            assert.expect(4);
+
+            ClientTestLibrary.Bridge652.log = null;
+            var c = new ClientTestLibrary.Bridge652.Bridge652A1();
+            assert.notEqual(c.bar, null, "Bridge652A1 Bar NotNull");
+            assert.equal(ClientTestLibrary.Bridge652.log, "Bridge652B1", "Bridge652A1 log");
+
+            ClientTestLibrary.Bridge652.log = null;
+            var d = new ClientTestLibrary.Bridge652.Bridge652A2();
+            assert.notEqual(d.bar, null, "Bridge652A2 Bar NotNull");
+            assert.equal(ClientTestLibrary.Bridge652.log, "Bridge652B2", "Bridge652A2 log");
         }
     }
 });
@@ -2959,13 +3125,13 @@ Bridge.define('ClientTestLibrary.Bridge603', {
             var b = ClientTestLibrary.Bridge603B.op_Implicit$1(12345);
             assert.equal(b.intValue, 12345, "Bridge603B TestRelated Int");
 
-            var c = ClientTestLibrary.Bridge603B.op_Implicit$2(null);
+            var c = ClientTestLibrary.Bridge603B.op_Implicit$2(Bridge.cast(null, String));
             assert.equal(c.value, "[Null]", "Bridge603B TestRelated String Null");
 
             c = ClientTestLibrary.Bridge603B.op_Implicit$2("Test");
             assert.equal(c.value, "Test", "Bridge603B TestRelated String");
 
-            var d = ClientTestLibrary.Bridge603B.op_Implicit(null);
+            var d = ClientTestLibrary.Bridge603B.op_Implicit(Bridge.cast(null, ClientTestLibrary.Bridge603Class));
             assert.equal(d.value, "[Null]", "Bridge603B TestRelated Bridge603Class Null");
 
             d = ClientTestLibrary.Bridge603B.op_Implicit(Bridge.merge(new ClientTestLibrary.Bridge603Class(), {

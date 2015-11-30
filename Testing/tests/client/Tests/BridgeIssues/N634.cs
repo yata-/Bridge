@@ -84,6 +84,15 @@ namespace ClientTestLibrary
         }
     }
 
+    [FileName("testBridgeIssues.js")]
+    [Namespace(false)]
+    public class Bridge634D
+    {
+        public class Nested
+        {
+        }
+    }
+
     // Bridge[#634]
     [FileName("testBridgeIssues.js")]
     internal class Bridge634
@@ -159,6 +168,17 @@ namespace ClientTestLibrary
             assert.Equal(c4.GetClassName(), "ClientTestLibrary.Bridge634C.Nested.SubNested$1$Bridge.Int", "Bridge634 C c4");
             assert.Equal(c5.GetClassName(), "ClientTestLibrary.Bridge634C.Nested$1.SubNested$Bridge.Int", "Bridge634 C c5");
             assert.Equal(c6.GetClassName(), "ClientTestLibrary.Bridge634C.Nested$1.SubNested$1$Bridge.Int$Bridge.Int", "Bridge634 C c6");
+        }
+
+        public static void TestUseCaseFor658(Assert assert)
+        {
+            assert.Expect(2);
+
+            var d = new Bridge634D();
+            var d1 = new Bridge634D.Nested();
+
+            assert.Equal(d.GetClassName(), "Bridge634D", "Bridge634 D d");
+            assert.Equal(d1.GetClassName(), "Bridge634D.Nested", "Bridge634 D d1");
         }
     }
 }
