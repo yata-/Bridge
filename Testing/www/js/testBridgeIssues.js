@@ -1859,14 +1859,24 @@ Bridge.define('ClientTestLibrary.Bridge635B', {
 
 Bridge.define('ClientTestLibrary.Bridge661', {
     statics: {
-        example: function (exampleInput) {
+        example1: function (exampleInput) {
             if (exampleInput === void 0) { exampleInput = 0; }
             return exampleInput === 0;
         },
+        example2: function (exampleInput) {
+            if (exampleInput === void 0) { exampleInput = 49; }
+            return exampleInput === 49;
+        },
         testUseCase: function (assert) {
-            assert.expect(1);
+            assert.expect(6);
 
-            assert.equal(ClientTestLibrary.Bridge661.example(), true, "Bridge661 Example true");
+            assert.equal(ClientTestLibrary.Bridge661.example1(), true, "Bridge661 Example1 true default");
+            assert.equal(ClientTestLibrary.Bridge661.example1(0), true, "Bridge661 Example1 true");
+            assert.equal(ClientTestLibrary.Bridge661.example1(65), false, "Bridge661 Example1 false");
+
+            assert.equal(ClientTestLibrary.Bridge661.example2(), true, "Bridge661 Example2 true default");
+            assert.equal(ClientTestLibrary.Bridge661.example2(49), true, "Bridge661 Example2 true");
+            assert.equal(ClientTestLibrary.Bridge661.example2(0), false, "Bridge661 Example2 false");
         }
     }
 });
