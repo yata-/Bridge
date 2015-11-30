@@ -1857,6 +1857,47 @@ Bridge.define('ClientTestLibrary.Bridge635B', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge652.Bridge652B', {
+    constructor: function () {
+        ClientTestLibrary.Bridge652.log = "Bridge652B";
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge652.Bridge652C$1', function (T) { return {
+    bar: null,
+    constructor: function () {
+        this.bar = new T();
+    }
+}; });
+
+Bridge.define('ClientTestLibrary.Bridge652.Bridge652A', {
+    inherits: [ClientTestLibrary.Bridge652.Bridge652C$1(ClientTestLibrary.Bridge652.Bridge652B)]
+});
+
+Bridge.define('ClientTestLibrary.Bridge661', {
+    statics: {
+        example1: function (exampleInput) {
+            if (exampleInput === void 0) { exampleInput = 0; }
+            return exampleInput === 0;
+        },
+        example2: function (exampleInput) {
+            if (exampleInput === void 0) { exampleInput = 49; }
+            return exampleInput === 49;
+        },
+        testUseCase: function (assert) {
+            assert.expect(6);
+
+            assert.equal(ClientTestLibrary.Bridge661.example1(), true, "Bridge661 Example1 true default");
+            assert.equal(ClientTestLibrary.Bridge661.example1(0), true, "Bridge661 Example1 true");
+            assert.equal(ClientTestLibrary.Bridge661.example1(65), false, "Bridge661 Example1 false");
+
+            assert.equal(ClientTestLibrary.Bridge661.example2(), true, "Bridge661 Example2 true default");
+            assert.equal(ClientTestLibrary.Bridge661.example2(49), true, "Bridge661 Example2 true");
+            assert.equal(ClientTestLibrary.Bridge661.example2(0), false, "Bridge661 Example2 false");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
@@ -2903,6 +2944,20 @@ Bridge.define('ClientTestLibrary.Bridge635', {
 
             assert.equal(typeof b.internalFunc1, "function", "Bridge635 B.internalFunc1");
             assert.equal(b["internalFunc1"](), "B.Test1", "Bridge635 B.internalFunc1 Invoke");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge652', {
+    statics: {
+        log: null,
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            ClientTestLibrary.Bridge652.log = null;
+            var c = new ClientTestLibrary.Bridge652.Bridge652A();
+            assert.notEqual(c.bar, null, "Bridge652 Bar NotNull");
+            assert.equal(ClientTestLibrary.Bridge652.log, "Bridge652B", "Bridge652 log");
         }
     }
 });
