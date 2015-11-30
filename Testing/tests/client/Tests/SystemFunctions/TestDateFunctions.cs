@@ -24,11 +24,12 @@ namespace ClientTestLibrary
 
             // TEST
             // [#83] by JavaScript code. This is to check the same issue as above and just to check another way of calling QUnit from JavaScript
-            Script.Write<dynamic>(@"var str = ""2015-03-24T10:48:09.1500225+03:00"",
-    bridgeDate = Bridge.Date.parse(str),
-    jsDate = new Date(Date.parse(str)),
-    format = ""yyyy-MM-dd hh:mm:ss"";
-    assert.deepEqual(Bridge.Date.format(bridgeDate, format), Bridge.Date.format(jsDate, format), ""[#83] js"")");
+            Script.Write<dynamic>("var str = \"2015-03-24T10:48:09.1500225+03:00\";");
+            Script.Write<dynamic>("var bridgeDate2 = Bridge.Date.parse(str);");
+            Script.Write<dynamic>("var jsDate = new Date(Date.parse(str));");
+            Script.Write<dynamic>("var format = \"yyyy-MM-dd hh:mm:ss\";");
+
+            Script.Write<dynamic>("assert.deepEqual(Bridge.Date.format(bridgeDate2, format), Bridge.Date.format(jsDate, format), \"[#83] js\");");
         }
 
         public static void Bridge329(Assert assert)
