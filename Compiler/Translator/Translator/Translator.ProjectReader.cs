@@ -150,7 +150,7 @@ namespace Bridge.Translator
                     sourceFiles.Add(projectItem.EvaluatedInclude);
                 }
             }
-
+            project.ProjectCollection.UnloadProject(project);
             return sourceFiles;
         }
 

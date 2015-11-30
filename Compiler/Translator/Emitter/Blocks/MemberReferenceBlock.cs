@@ -283,7 +283,7 @@ namespace Bridge.Translator
                 {
                     TypeResolveResult typeResolveResult = (TypeResolveResult)resolveResult;
 
-                    this.Write(BridgeTypes.ToJsName(typeResolveResult.Type, this.Emitter));
+                    this.Write("Bridge.get(" + BridgeTypes.ToJsName(typeResolveResult.Type, this.Emitter) + ")");
 
                     return;
                 }
