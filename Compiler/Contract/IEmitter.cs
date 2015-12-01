@@ -341,6 +341,12 @@ namespace Bridge.Contract
             set;
         }
 
+        Dictionary<string, bool> ParentTempVariables
+        {
+            get;
+            set;
+        }
+
         Tuple<bool, string> IsGlobalTarget(IMember member);
 
         BridgeTypes BridgeTypes
