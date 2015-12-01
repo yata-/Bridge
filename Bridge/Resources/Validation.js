@@ -1,6 +1,5 @@
 ﻿// @source Validation.js
 
-(function () {
     var validation = {
         isNull: function (value) {
             return !Bridge.isDefined(value, true);
@@ -108,4 +107,3 @@
     };
 
     Bridge.Validation = validation;
-})();

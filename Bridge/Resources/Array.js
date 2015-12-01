@@ -1,6 +1,5 @@
 ﻿// @source Array.js
 
-(function () {
     var array = {
         toIndex: function (arr, indices) {
             if (indices.length !== (arr.$s ? arr.$s.length : 1)) {
@@ -452,4 +451,3 @@
     };
 
     Bridge.Array = array;
-})();

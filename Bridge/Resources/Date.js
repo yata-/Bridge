@@ -1,6 +1,5 @@
 ﻿// @source Date.js
 
-(function () {
     var date = {
         utcNow:  function () {
             var d = new Date();
@@ -746,4 +745,3 @@
     };
 
     Bridge.Date = date;
-})();

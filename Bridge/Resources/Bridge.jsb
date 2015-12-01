@@ -67,5 +67,6 @@
     <include name="INotifyPropertyChanged.js" />
     <include name="linq.js" />
     <include name="End.js" />
+    <include name="Finally.js" />
   </target>
 </project>
