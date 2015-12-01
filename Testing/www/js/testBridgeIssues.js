@@ -3096,6 +3096,21 @@ Bridge.define('ClientTestLibrary.Bridge635', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge647', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(3);
+
+            var a = { bar: 1 };
+            assert.equal(a.bar, 1, "Bridge647 A");
+
+            var b = { bar: 1, bar1: 12 };
+            assert.equal(b.bar, 1, "Bridge647 B bar");
+            assert.equal(b.bar1, 12, "Bridge647 B bar1");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge652', {
     statics: {
         log: null,

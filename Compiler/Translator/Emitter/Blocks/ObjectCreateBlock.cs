@@ -241,6 +241,15 @@ namespace Bridge.Translator
                 {
                     NamedExpression namedExression = item as NamedExpression;
                     NamedArgumentExpression namedArgumentExpression = item as NamedArgumentExpression;
+                    string name = namedExression != null ? namedExression.Name : namedArgumentExpression.Name;
+
+                    var itemrr = this.Emitter.Resolver.ResolveNode(item, this.Emitter) as MemberResolveResult;
+                    if (itemrr != null)
+                    {
+                        var oc = OverloadsCollection.Create(this.Emitter, itemrr.Member);
+                        name = oc.GetOverloadName();
+                    }
+
 
                     if (needComma)
                     {
@@ -248,7 +257,7 @@ namespace Bridge.Translator
                     }
 
                     needComma = true;
-                    string name = namedExression != null ? namedExression.Name : namedArgumentExpression.Name;
+                    
 
                     if (!preserveMemberCase)
                     {
