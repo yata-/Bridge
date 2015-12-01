@@ -349,6 +349,12 @@ namespace Bridge.Translator
             set;
         }
 
+        public Dictionary<string, bool> ParentTempVariables
+        {
+            get;
+            set;
+        }
+
         public BridgeTypes BridgeTypes
         {
             get;

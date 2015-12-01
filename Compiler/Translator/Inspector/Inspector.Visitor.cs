@@ -47,7 +47,7 @@ namespace Bridge.Translator
 
             ValidateNamespace(typeDeclaration);
 
-            if (this.HasIgnore(typeDeclaration))
+            if (this.HasIgnore(typeDeclaration) && !this.IsObjectLiteral(typeDeclaration))
             {
                 return;
             }
