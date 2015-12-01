@@ -58,7 +58,8 @@ namespace Bridge.Translator
             if (resolveResult != null && resolveResult is MemberResolveResult)
             {
                 var member = ((MemberResolveResult)resolveResult).Member;
-                name = this.Emitter.GetEntityName(member);
+                var preserveCase = !this.Emitter.IsNativeMember(member.FullName) ? this.Emitter.AssemblyInfo.PreserveMemberCase : false;
+                name = this.Emitter.GetEntityName(member, preserveCase);
 
                 var isProperty = member.SymbolKind == SymbolKind.Property;
 
