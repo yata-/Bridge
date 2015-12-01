@@ -2002,6 +2002,41 @@ Bridge.define('ClientTestLibrary.Bridge664', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge666', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            assert.equal(ClientTestLibrary.Bridge666.getSum(), 360, "Bridge666 GetSum 360");
+        },
+        getSum: function () {
+            var $t;
+            var sum = 0;
+            var numbers = [1, 2, 3];
+
+            $t = Bridge.getEnumerator(numbers);
+            while ($t.moveNext()) {
+                (function () {
+                    var n = $t.getCurrent();
+                    var func = function (i) {
+                        var $t1;
+                        var bigNumbers = [10, 20, 30];
+                        $t1 = Bridge.getEnumerator(bigNumbers);
+                        while ($t1.moveNext()) {
+                            var bn = $t1.getCurrent();
+                            sum = sum + i * bn;
+                        }
+                    }                    ;
+
+                    func(n);
+                }).call(this);
+            }
+
+            return sum;
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
@@ -3057,6 +3092,21 @@ Bridge.define('ClientTestLibrary.Bridge635', {
 
             assert.equal(typeof b.internalFunc1, "function", "Bridge635 B.internalFunc1");
             assert.equal(b["internalFunc1"](), "B.Test1", "Bridge635 B.internalFunc1 Invoke");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge647', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(3);
+
+            var a = { bar: 1 };
+            assert.equal(a.bar, 1, "Bridge647 A");
+
+            var b = { bar: 1, bar1: 12 };
+            assert.equal(b.bar, 1, "Bridge647 B bar");
+            assert.equal(b.bar1, 12, "Bridge647 B bar1");
         }
     }
 });
