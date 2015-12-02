@@ -1861,6 +1861,22 @@ Bridge.define('ClientTestLibrary.Bridge635B', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge648A', {
+    statics: {
+        op_Implicit: function (value) {
+            return value.getValue();
+        }
+    },
+    config: {
+        properties: {
+            Value: null
+        }
+    },
+    constructor: function (value) {
+        this.setValue(value);
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge652.Bridge652B1', {
     constructor: function () {
         ClientTestLibrary.Bridge652.log = "Bridge652B1";
@@ -2033,6 +2049,73 @@ Bridge.define('ClientTestLibrary.Bridge666', {
             }
 
             return sum;
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge671', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            assert.equal(new ClientTestLibrary.Bridge671().invoke(), 1);
+        }
+    },
+    one: 1,
+    getOne: function () {
+        return this.one;
+    },
+    invoke: function () {
+        var b = new ClientTestLibrary.Bridge671A(Bridge.fn.bind(this, this.getOne));
+        return b.invoke();
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge671A', {
+    func: null,
+    constructor: function (func) {
+        this.func = func;
+    },
+    invoke: function () {
+        return this.func();
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge674', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var o = undefined;
+            assert.throws(function () {
+                var s = Bridge.cast(o, String);
+            }, "Unable to cast type 'null' to type String");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge675', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(3);
+
+            var me = Bridge.global.ClientTestLibrary.Bridge675;
+            me.id = "str1";
+            me.i1 = 1;
+            me.i2 = 2;
+
+            assert.equal(me.dynMethod(me.id), "str1", "Bridge675 DynMethod");
+            assert.equal(ClientTestLibrary.Bridge675.method1$1(me.id), "str1", "Bridge675 Method1 id");
+            assert.equal(ClientTestLibrary.Bridge675.method1(me.i1, me.i2), 3, "Bridge675 Method1 i1 i2");
+        },
+        dynMethod: function (s) {
+            return s;
+        },
+        method1$1: function (s) {
+            return s;
+        },
+        method1: function (i1, i2) {
+            return i1 + i2;
         }
     }
 });
@@ -3107,6 +3190,20 @@ Bridge.define('ClientTestLibrary.Bridge647', {
             var b = { bar: 1, bar1: 12 };
             assert.equal(b.bar, 1, "Bridge647 B bar");
             assert.equal(b.bar1, 12, "Bridge647 B bar1");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge648', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var wrappedString = new ClientTestLibrary.Bridge648A("test");
+            var stringArray = Bridge.Array.init(0, null);
+            stringArray.push(ClientTestLibrary.Bridge648A.op_Implicit(wrappedString));
+
+            assert.equal(stringArray[0], "test");
         }
     }
 });

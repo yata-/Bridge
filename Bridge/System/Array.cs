@@ -89,10 +89,6 @@ namespace System
             return null;
         }
 
-        public void Push(params object[] items)
-        {
-        }
-
         public void Reverse()
         {
         }
@@ -255,5 +251,12 @@ namespace System
 
         [Template("Bridge.Array.sort({array}, {comparer})")]
         public static extern void Sort<T>(T[] array, IComparer<T> comparer);
+    }
+
+    [External]
+    public static class ArrayExtensions
+    {
+        [Template("{source}.push({*values})")]
+        public extern static void Push<T>(this T[] source, params T[] values);
     }
 }
