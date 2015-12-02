@@ -142,8 +142,19 @@ namespace Bridge.Translator
             this.Expression = objectCreateExpression;
 
             var arguments = objectCreateExpression.Arguments.ToList();
-            this.ResolveResult = emitter.Resolver.ResolveNode(objectCreateExpression, emitter) as InvocationResolveResult;
+            var rr = emitter.Resolver.ResolveNode(objectCreateExpression, emitter);
+            var drr = rr as DynamicInvocationResolveResult;
+            if (drr != null)
+            {
+                var group = drr.Target as MethodGroupResolveResult;
 
+                if (group != null && group.Methods.Count() > 1)
+                {
+                    throw new EmitterException(objectCreateExpression, "Cannot compile this dynamic invocation because all applicable do not have the same script name");
+                }
+            }
+
+            this.ResolveResult = rr as InvocationResolveResult;
             this.BuildArgumentsList(arguments);
             this.BuildTypedArguments(objectCreateExpression.Type);
         }
