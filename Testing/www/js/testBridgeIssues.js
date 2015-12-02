@@ -2053,6 +2053,34 @@ Bridge.define('ClientTestLibrary.Bridge666', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge671', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            assert.equal(new ClientTestLibrary.Bridge671().invoke(), 1);
+        }
+    },
+    one: 1,
+    getOne: function () {
+        return this.one;
+    },
+    invoke: function () {
+        var b = new ClientTestLibrary.Bridge671A(Bridge.fn.bind(this, this.getOne));
+        return b.invoke();
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge671A', {
+    func: null,
+    constructor: function (func) {
+        this.func = func;
+    },
+    invoke: function () {
+        return this.func();
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
