@@ -2037,6 +2037,32 @@ Bridge.define('ClientTestLibrary.Bridge666', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge675', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(3);
+
+            var me = Bridge.global.ClientTestLibrary.Bridge675;
+            me.id = "str1";
+            me.i1 = 1;
+            me.i2 = 2;
+
+            assert.equal(me.dynMethod(me.id), "str1", "Bridge675 DynMethod");
+            assert.equal(ClientTestLibrary.Bridge675.method1$1(me.id), "str1", "Bridge675 Method1 id");
+            assert.equal(ClientTestLibrary.Bridge675.method1(me.i1, me.i2), 3, "Bridge675 Method1 i1 i2");
+        },
+        dynMethod: function (s) {
+            return s;
+        },
+        method1$1: function (s) {
+            return s;
+        },
+        method1: function (i1, i2) {
+            return i1 + i2;
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
