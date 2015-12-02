@@ -1973,6 +1973,78 @@ Bridge.define('ClientTestLibrary.Bridge655A', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge660TextInputState', {
+    config: {
+        properties: {
+            Text: null
+        }
+    },
+    constructor: function (text) {
+        ClientTestLibrary.Bridge660TextInputState.prototype.constructor$1.call(this, text, Bridge.get(ClientTestLibrary.Bridge660Optional$1(String)).getMissing());
+
+    },
+    constructor$1: function (text, validationError) {
+        this.setText(text);
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge660MessageEditState', {
+    config: {
+        properties: {
+            Content: null
+        }
+    },
+    constructor: function (content) {
+        this.setContent(content);
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge660Optional$1', function (T) { return {
+    statics: {
+        config: {
+            init: function () {
+                this._missing = new ClientTestLibrary.Bridge660Optional$1(T)("constructor$2", Bridge.getDefaultValue(T), false);
+            }
+        },
+        getMissing: function () {
+            return Bridge.get(ClientTestLibrary.Bridge660Optional$1(T))._missing.$clone();
+        }
+    },
+    value: null,
+    isDefined: false,
+    constructor$1: function (value) {
+        ClientTestLibrary.Bridge660Optional$1(T).prototype.constructor$2.call(this, value, value !== null);
+
+    },
+    constructor$2: function (value, isDefined) {
+        this.isDefined = (value !== null);
+        this.value = value;
+    },
+    constructor: function () {
+    },
+    getIsDefined: function () {
+        return this.isDefined;
+    },
+    getHashCode: function () {
+        var hash = 17;
+        hash = hash * 23 + (this.value == null ? 0 : Bridge.getHashCode(this.value));
+        hash = hash * 23 + (this.isDefined == null ? 0 : Bridge.getHashCode(this.isDefined));
+        return hash;
+    },
+    equals: function (o) {
+        if (!Bridge.is(o,ClientTestLibrary.Bridge660Optional$1(T))) {
+            return false;
+        }
+        return Bridge.equals(this.value, o.value) && Bridge.equals(this.isDefined, o.isDefined);
+    },
+    $clone: function (to) {
+        var s = to || new ClientTestLibrary.Bridge660Optional$1(T)();
+        s.value = this.value;
+        s.isDefined = this.isDefined;
+        return s;
+    }
+}; });
+
 Bridge.define('ClientTestLibrary.Bridge661', {
     statics: {
         example1: function (exampleInput) {
@@ -3227,6 +3299,16 @@ Bridge.define('ClientTestLibrary.Bridge652', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge660MessageStore', {
+    statics: {
+        config: {
+            init: function () {
+                this._initialEditState = new ClientTestLibrary.Bridge660MessageEditState(new ClientTestLibrary.Bridge660TextInputState("constructor", "Message"));
+            }
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge537', {
     statics: {
         testUseCase: function (assert) {
@@ -3292,6 +3374,16 @@ Bridge.define('ClientTestLibrary.Bridge603', {
                 setData: "Test 603B"
             } ));
             assert.equal(d.value, "Test 603B", "Bridge603B TestRelated Bridge603Class");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge660', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge660MessageStore)._initialEditState.getContent().getText(), "Message", "Bridge660 Initialize static members before first access to the class");
         }
     }
 });
