@@ -116,7 +116,34 @@ namespace Bridge.Translator
                     this.Write(inlineCode);
                 }
             }
-            else if (memberResult != null && memberResult.Member.SymbolKind == SymbolKind.Property && memberResult.TargetResult.Type.Kind != TypeKind.Anonymous)
+
+            string appendAdditionalCode = null;
+            if (memberResult != null &&
+                        memberResult.Member is IMethod &&
+                        !(memberResult is InvocationResolveResult) &&
+                        !(
+                        identifierExpression.Parent is InvocationExpression &&
+                        identifierExpression.NextSibling != null &&
+                        identifierExpression.NextSibling.Role is TokenRole &&
+                        ((TokenRole)identifierExpression.NextSibling.Role).Token == "("
+                        )
+                )
+            {
+                var resolvedMethod = (IMethod)memberResult.Member;
+                bool isStatic = resolvedMethod != null && resolvedMethod.IsStatic;
+
+                if (!isStatic)
+                {
+                    var isExtensionMethod = resolvedMethod.IsExtensionMethod;
+                    this.Write(Bridge.Translator.Emitter.ROOT + "." + (isExtensionMethod ? Bridge.Translator.Emitter.DELEGATE_BIND_SCOPE : Bridge.Translator.Emitter.DELEGATE_BIND) + "(");
+                    this.WriteThis();
+                    this.Write(", ");
+                    appendAdditionalCode = ")";
+                }
+            }
+            
+            
+            if (memberResult != null && memberResult.Member.SymbolKind == SymbolKind.Property && memberResult.TargetResult.Type.Kind != TypeKind.Anonymous)
             {
                 bool isStatement = false;
                 string valueVar = null;
@@ -425,6 +452,11 @@ namespace Bridge.Translator
                 {
                     throw new EmitterException(identifierExpression, "Cannot resolve identifier: " + id);
                 }
+            }
+
+            if (appendAdditionalCode != null)
+            {
+                this.Write(appendAdditionalCode);
             }
         }
 
