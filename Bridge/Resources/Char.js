@@ -1,4 +1,4 @@
-// @source Char.js
+    // @source Char.js
 
     var char = {
         charCodeAt: function (str, index) {

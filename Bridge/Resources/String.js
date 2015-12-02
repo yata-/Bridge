@@ -1,4 +1,4 @@
-// @source String.js
+    // @source String.js
 
     var string = {
         is: function (obj, type) {

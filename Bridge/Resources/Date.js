@@ -1,4 +1,4 @@
-﻿// @source Date.js
+﻿    // @source Date.js
 
     var date = {
         utcNow:  function () {

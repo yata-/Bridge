@@ -1,4 +1,4 @@
-// @source Math.js
+    // @source Math.js
 
     var math = {
         divRem: function(a, b, result) {

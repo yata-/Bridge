@@ -1,4 +1,4 @@
-﻿// @source Browser.js
+﻿    // @source Browser.js
 
 	if (!document) {
 		return;

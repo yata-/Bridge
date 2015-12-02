@@ -1,4 +1,4 @@
-﻿// @source Array.js
+﻿    // @source Array.js
 
     var array = {
         toIndex: function (arr, indices) {

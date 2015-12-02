@@ -1,4 +1,4 @@
-﻿// @source Class.js
+﻿    // @source Class.js
 
     var initializing = false;
 
