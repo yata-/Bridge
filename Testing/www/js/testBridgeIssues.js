@@ -2081,6 +2081,19 @@ Bridge.define('ClientTestLibrary.Bridge671A', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge674', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var o = undefined;
+            assert.throws(function () {
+                var s = Bridge.cast(o, String);
+            }, "Unable to cast type 'null' to type String");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
