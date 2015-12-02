@@ -1,6 +1,5 @@
-// @source Core.js
+    // @source Core.js
 
-(function (globals) {
     var core = {
         global: globals,
 
@@ -856,4 +855,3 @@
 
     globals.Bridge = core;
     globals.Bridge.caller = [];
-})(this);

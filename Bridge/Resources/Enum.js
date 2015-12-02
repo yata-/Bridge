@@ -1,6 +1,5 @@
-// @source Enum.js
+    // @source Enum.js
 
-(function () {
     var enumMethods = {
         nameEquals: function (n1, n2, ignoreCase) {
             if (ignoreCase) {
@@ -188,4 +187,3 @@
     };
 
     Bridge.Enum = enumMethods;
-})();

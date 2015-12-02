@@ -2889,14 +2889,12 @@
     // module export
     if (typeof define === Types.Function && define.amd) { // AMD
         define("linqjs", [], function () { return Enumerable; });
-    }
-    else if (typeof module !== Types.Undefined && module.exports) { // Node
+    } else if (typeof module !== Types.Undefined && module.exports) { // Node
         module.exports = Enumerable;
-    }
-    else {
+    } else {
         root.Enumerable = Enumerable;
     }
 
     Bridge.Linq = {};
     Bridge.Linq.Enumerable = Enumerable;
-})(this);
+})(Bridge.global);

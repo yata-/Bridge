@@ -1,6 +1,5 @@
-// @source String.js
+    // @source String.js
 
-(function () {
     var string = {
         is: function (obj, type) {
             if (!Bridge.isString(obj)) {
@@ -423,4 +422,3 @@
     };
 
     Bridge.String = string;
-})();
