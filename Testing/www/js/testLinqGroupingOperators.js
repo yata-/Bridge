@@ -53,7 +53,7 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqGroupingOperators', {
             assert.deepEqual(wordGroups, wordGroupsExpected, "Group words by first letters");
 
             // TEST
-            var personGroups = (Bridge.Linq.Enumerable.from(ClientTestLibrary.Utilities.Person.getPersons()).groupBy(function (p) {
+            var personGroups = (Bridge.Linq.Enumerable.from(Bridge.get(ClientTestLibrary.Utilities.Person).getPersons()).groupBy(function (p) {
                 return p.getGroup();
             }).select(function (g) {
                 return { group: g.key(), persons: g.select(function (x) {
@@ -88,7 +88,7 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqGroupingOperators', {
                 })).toArray() };
             })).toArray();
 
-            var complexGroupingExpected = ClientTestLibrary.Linq.TestLinqGroupingOperators.getComplexGroupingExpectedResult();
+            var complexGroupingExpected = Bridge.get(ClientTestLibrary.Linq.TestLinqGroupingOperators).getComplexGroupingExpectedResult();
             assert.deepEqual(complexGrouping, complexGroupingExpected, "Complex grouping for numbers and words");
         },
         testAnagrams: function (assert) {

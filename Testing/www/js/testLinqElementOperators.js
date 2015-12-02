@@ -8,23 +8,23 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqElementOperators', {
             assert.expect(26);
 
             // TEST
-            var persons = ClientTestLibrary.Utilities.Person.getPersons();
-            var person3 = (Bridge.Linq.Enumerable.from(ClientTestLibrary.Utilities.Person.getPersons()).where(function (p) {
+            var persons = Bridge.get(ClientTestLibrary.Utilities.Person).getPersons();
+            var person3 = (Bridge.Linq.Enumerable.from(Bridge.get(ClientTestLibrary.Utilities.Person).getPersons()).where(function (p) {
                 return p.getID() === 3;
             })).first();
 
-            assert.deepEqual(person3, ClientTestLibrary.Utilities.Person.getPersons().getItem(2), "First() with ID = 3");
+            assert.deepEqual(person3, Bridge.get(ClientTestLibrary.Utilities.Person).getPersons().getItem(2), "First() with ID = 3");
             assert.deepEqual(Bridge.Linq.Enumerable.from(persons).first(function (x) {
                 return x.getID() === 3;
-            }), ClientTestLibrary.Utilities.Person.getPersons().getItem(2), "First() with ID = 3 by lambda");
+            }), Bridge.get(ClientTestLibrary.Utilities.Person).getPersons().getItem(2), "First() with ID = 3 by lambda");
             assert.deepEqual(Bridge.Linq.Enumerable.from(persons).where(function (x) {
                 return x.getID() === 3;
-            }).first(), ClientTestLibrary.Utilities.Person.getPersons().getItem(2), "First() with Where() with ID = 3 by lambda");
+            }).first(), Bridge.get(ClientTestLibrary.Utilities.Person).getPersons().getItem(2), "First() with Where() with ID = 3 by lambda");
             assert.deepEqual(Bridge.Linq.Enumerable.from(persons).first(function (x) {
                 return x.getGroup() === "C";
-            }), ClientTestLibrary.Utilities.Person.getPersons().getItem(1), "First() with Group = 'C' by lambda");
-            assert.throws(ClientTestLibrary.Linq.TestLinqElementOperators.throwExceptionOnFirst1, "First() should throw exception if no element found");
-            assert.throws(ClientTestLibrary.Linq.TestLinqElementOperators.throwExceptionOnFirst2, "First() should throw exception on empty collection");
+            }), Bridge.get(ClientTestLibrary.Utilities.Person).getPersons().getItem(1), "First() with Group = 'C' by lambda");
+            assert.throws(Bridge.get(ClientTestLibrary.Linq.TestLinqElementOperators).throwExceptionOnFirst1, "First() should throw exception if no element found");
+            assert.throws(Bridge.get(ClientTestLibrary.Linq.TestLinqElementOperators).throwExceptionOnFirst2, "First() should throw exception on empty collection");
 
             // TEST
             assert.deepEqual(Bridge.Linq.Enumerable.from(persons).firstOrDefault(function (x) {
@@ -42,19 +42,19 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqElementOperators', {
             assert.deepEqual(Bridge.Linq.Enumerable.from(([])).firstOrDefault(null, Bridge.getDefaultValue(Object)), null, "FirstOrDefault() within zero-length array by lambda");
 
             // TEST
-            var lastPerson = (Bridge.Linq.Enumerable.from(ClientTestLibrary.Utilities.Person.getPersons()).select(function (p) {
+            var lastPerson = (Bridge.Linq.Enumerable.from(Bridge.get(ClientTestLibrary.Utilities.Person).getPersons()).select(function (p) {
                 return p;
             })).last();
 
-            assert.deepEqual(lastPerson, ClientTestLibrary.Utilities.Person.getPersons().getItem(7), "Last() person");
+            assert.deepEqual(lastPerson, Bridge.get(ClientTestLibrary.Utilities.Person).getPersons().getItem(7), "Last() person");
             assert.deepEqual(Bridge.Linq.Enumerable.from(persons).last(function (x) {
                 return x.getID() === 4;
-            }), ClientTestLibrary.Utilities.Person.getPersons().getItem(3), "Last() with ID = 4 by lambda");
+            }), Bridge.get(ClientTestLibrary.Utilities.Person).getPersons().getItem(3), "Last() with ID = 4 by lambda");
             assert.deepEqual(Bridge.Linq.Enumerable.from(persons).last(function (x) {
                 return x.getGroup() === "B";
-            }), ClientTestLibrary.Utilities.Person.getPersons().getItem(6), "Last() with Group = 'B' by lambda");
-            assert.throws(ClientTestLibrary.Linq.TestLinqElementOperators.throwExceptionOnLast1, "Last() should throw exception if no element found");
-            assert.throws(ClientTestLibrary.Linq.TestLinqElementOperators.throwExceptionOnLast2, "Last() should throw exception on empty collection");
+            }), Bridge.get(ClientTestLibrary.Utilities.Person).getPersons().getItem(6), "Last() with Group = 'B' by lambda");
+            assert.throws(Bridge.get(ClientTestLibrary.Linq.TestLinqElementOperators).throwExceptionOnLast1, "Last() should throw exception if no element found");
+            assert.throws(Bridge.get(ClientTestLibrary.Linq.TestLinqElementOperators).throwExceptionOnLast2, "Last() should throw exception on empty collection");
 
             // TEST
             assert.deepEqual(Bridge.Linq.Enumerable.from(persons).lastOrDefault(function (x) {
@@ -75,8 +75,8 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqElementOperators', {
             })).elementAt(1);
 
             assert.deepEqual(elementAt1, 8, "ElementAt() should return 8");
-            assert.throws(ClientTestLibrary.Linq.TestLinqElementOperators.throwExceptionOnElementAt1, "ElementAt() should throw exception if no element found");
-            assert.throws(ClientTestLibrary.Linq.TestLinqElementOperators.throwExceptionOnElementAt2, "ElementAt() should throw exception on empty collection");
+            assert.throws(Bridge.get(ClientTestLibrary.Linq.TestLinqElementOperators).throwExceptionOnElementAt1, "ElementAt() should throw exception if no element found");
+            assert.throws(Bridge.get(ClientTestLibrary.Linq.TestLinqElementOperators).throwExceptionOnElementAt2, "ElementAt() should throw exception on empty collection");
 
             // TEST
             var elementAt1OrDefault = Bridge.Linq.Enumerable.from(numbers).elementAtOrDefault(1, Bridge.getDefaultValue(Bridge.Int));

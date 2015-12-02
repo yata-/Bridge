@@ -29,7 +29,7 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqQuantifiers', {
             assert.ok(notOnlyOdd, "All() is not only odd");
 
             // TEST
-            var productGroups = (Bridge.Linq.Enumerable.from(ClientTestLibrary.Utilities.Person.getPersons()).groupBy(function (p) {
+            var productGroups = (Bridge.Linq.Enumerable.from(Bridge.get(ClientTestLibrary.Utilities.Person).getPersons()).groupBy(function (p) {
                 return p.getGroup();
             }).where(function (pGroup) {
                 return pGroup.any(function (p) {

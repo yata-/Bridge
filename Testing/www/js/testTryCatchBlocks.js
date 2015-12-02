@@ -19,45 +19,45 @@ Bridge.define('ClientTestLibrary.TestTryCatchBlocks', {
         simpleTryCatch: function (assert) {
             assert.expect(1);
 
-            var result = ClientTestLibrary.TestTryCatchBlocks.tryCatch("Good");
+            var result = Bridge.get(ClientTestLibrary.TestTryCatchBlocks).tryCatch("Good");
 
             assert.equal(result, "Good", "TryCatch() executes");
         },
         caughtExceptions: function (assert) {
             assert.expect(3);
 
-            ClientTestLibrary.TestTryCatchBlocks.tryCatchWithCaughtException();
+            Bridge.get(ClientTestLibrary.TestTryCatchBlocks).tryCatchWithCaughtException();
             assert.ok(true, "Exception catch");
 
-            ClientTestLibrary.TestTryCatchBlocks.tryCatchWithCaughtTypedException();
+            Bridge.get(ClientTestLibrary.TestTryCatchBlocks).tryCatchWithCaughtTypedException();
             assert.ok(true, "Typed exception catch");
 
-            var exceptionMessage = ClientTestLibrary.TestTryCatchBlocks.tryCatchWithCaughtArgumentException();
+            var exceptionMessage = Bridge.get(ClientTestLibrary.TestTryCatchBlocks).tryCatchWithCaughtArgumentException();
             assert.deepEqual(exceptionMessage, "catch me", "Typed exception catch with exception message");
         },
         thrownExceptions: function (assert) {
             assert.expect(12);
 
             // #230
-            assert.throws(ClientTestLibrary.TestTryCatchBlocks.tryCatchWithNotCaughtTypedException, "catch me", "A.Typed exception is not Caught");
-            assert.ok(ClientTestLibrary.TestTryCatchBlocks.getIsATry(), "A. exception not caught - try section called");
-            assert.ok(!ClientTestLibrary.TestTryCatchBlocks.getIsACatch(), "A. exception not caught - catch section not called");
+            assert.throws(Bridge.get(ClientTestLibrary.TestTryCatchBlocks).tryCatchWithNotCaughtTypedException, "catch me", "A.Typed exception is not Caught");
+            assert.ok(Bridge.get(ClientTestLibrary.TestTryCatchBlocks).getIsATry(), "A. exception not caught - try section called");
+            assert.ok(!Bridge.get(ClientTestLibrary.TestTryCatchBlocks).getIsACatch(), "A. exception not caught - catch section not called");
 
             // #229
-            assert.throws(ClientTestLibrary.TestTryCatchBlocks.tryCatchWithNotCaughtTypedExceptionAndArgument, "catch me", "[#229] B. Typed exception is not Caught; and argument");
-            assert.ok(ClientTestLibrary.TestTryCatchBlocks.getIsBTry(), "[#229] B. exception not caught - try section called");
-            assert.ok(!ClientTestLibrary.TestTryCatchBlocks.getIsBCatch(), "B. exception not caught - catch section not called");
+            assert.throws(Bridge.get(ClientTestLibrary.TestTryCatchBlocks).tryCatchWithNotCaughtTypedExceptionAndArgument, "catch me", "[#229] B. Typed exception is not Caught; and argument");
+            assert.ok(Bridge.get(ClientTestLibrary.TestTryCatchBlocks).getIsBTry(), "[#229] B. exception not caught - try section called");
+            assert.ok(!Bridge.get(ClientTestLibrary.TestTryCatchBlocks).getIsBCatch(), "B. exception not caught - catch section not called");
 
             // #231
-            assert.throws(ClientTestLibrary.TestTryCatchBlocks.tryCatchWithRethrow, "catch me", "[#231] C. Rethrow");
-            assert.ok(ClientTestLibrary.TestTryCatchBlocks.getIsCTry(), "C. exception caught and re-thrown - try section called");
-            assert.ok(ClientTestLibrary.TestTryCatchBlocks.getIsCCatch(), "C. exception caught and re-thrown - catch section called");
+            assert.throws(Bridge.get(ClientTestLibrary.TestTryCatchBlocks).tryCatchWithRethrow, "catch me", "[#231] C. Rethrow");
+            assert.ok(Bridge.get(ClientTestLibrary.TestTryCatchBlocks).getIsCTry(), "C. exception caught and re-thrown - try section called");
+            assert.ok(Bridge.get(ClientTestLibrary.TestTryCatchBlocks).getIsCCatch(), "C. exception caught and re-thrown - catch section called");
 
-            assert.throws(ClientTestLibrary.TestTryCatchBlocks.tryCatchWithRethrowEx, function (error) {
+            assert.throws(Bridge.get(ClientTestLibrary.TestTryCatchBlocks).tryCatchWithRethrowEx, function (error) {
                 return error.toString() === "catch me";
             }, "D. Rethrow with parameter");
-            assert.ok(ClientTestLibrary.TestTryCatchBlocks.getIsDTry(), "D. exception caught and re-thrown  - try section called");
-            assert.ok(ClientTestLibrary.TestTryCatchBlocks.getIsDCatch(), "D. exception caught and re-thrown  - catch section called");
+            assert.ok(Bridge.get(ClientTestLibrary.TestTryCatchBlocks).getIsDTry(), "D. exception caught and re-thrown  - try section called");
+            assert.ok(Bridge.get(ClientTestLibrary.TestTryCatchBlocks).getIsDCatch(), "D. exception caught and re-thrown  - catch section called");
         },
         bridge320: function (assert) {
             assert.expect(1);
@@ -143,40 +143,40 @@ Bridge.define('ClientTestLibrary.TestTryCatchBlocks', {
             }
         },
         tryCatchWithNotCaughtTypedException: function () {
-            ClientTestLibrary.TestTryCatchBlocks.setIsATry(false);
-            ClientTestLibrary.TestTryCatchBlocks.setIsACatch(false);
+            Bridge.get(ClientTestLibrary.TestTryCatchBlocks).setIsATry(false);
+            Bridge.get(ClientTestLibrary.TestTryCatchBlocks).setIsACatch(false);
 
             try {
-                ClientTestLibrary.TestTryCatchBlocks.setIsATry(true);
+                Bridge.get(ClientTestLibrary.TestTryCatchBlocks).setIsATry(true);
                 throw new Bridge.Exception("catch me");
             }
             catch ($e) {
                 $e = Bridge.Exception.create($e);
                 if (Bridge.is($e, Bridge.ArgumentException)) {
-                    ClientTestLibrary.TestTryCatchBlocks.setIsATry(true);
+                    Bridge.get(ClientTestLibrary.TestTryCatchBlocks).setIsATry(true);
                 }
                 else {
                     throw $e;
                 }
             }
 
-            ClientTestLibrary.TestTryCatchBlocks.setIsATry(false);
+            Bridge.get(ClientTestLibrary.TestTryCatchBlocks).setIsATry(false);
         },
         tryCatchWithNotCaughtTypedExceptionAndArgument: function () {
-            ClientTestLibrary.TestTryCatchBlocks.setIsBTry(false);
-            ClientTestLibrary.TestTryCatchBlocks.setIsBCatch(false);
+            Bridge.get(ClientTestLibrary.TestTryCatchBlocks).setIsBTry(false);
+            Bridge.get(ClientTestLibrary.TestTryCatchBlocks).setIsBCatch(false);
 
             try {
-                ClientTestLibrary.TestTryCatchBlocks.setIsBTry(true);
+                Bridge.get(ClientTestLibrary.TestTryCatchBlocks).setIsBTry(true);
                 throw new Bridge.Exception("catch me");
-                ClientTestLibrary.TestTryCatchBlocks.setIsBTry(false);
+                Bridge.get(ClientTestLibrary.TestTryCatchBlocks).setIsBTry(false);
             }
             catch ($e) {
                 $e = Bridge.Exception.create($e);
                 var ex;
                 if (Bridge.is($e, Bridge.InvalidCastException)) {
                     ex = $e;
-                    ClientTestLibrary.TestTryCatchBlocks.setIsBCatch(true);
+                    Bridge.get(ClientTestLibrary.TestTryCatchBlocks).setIsBCatch(true);
                     var s = ex.getMessage();
                 }
                 else {
@@ -184,41 +184,41 @@ Bridge.define('ClientTestLibrary.TestTryCatchBlocks', {
                 }
             }
 
-            ClientTestLibrary.TestTryCatchBlocks.setIsBTry(false);
+            Bridge.get(ClientTestLibrary.TestTryCatchBlocks).setIsBTry(false);
         },
         tryCatchWithRethrow: function () {
-            ClientTestLibrary.TestTryCatchBlocks.setIsCTry(false);
-            ClientTestLibrary.TestTryCatchBlocks.setIsCCatch(false);
+            Bridge.get(ClientTestLibrary.TestTryCatchBlocks).setIsCTry(false);
+            Bridge.get(ClientTestLibrary.TestTryCatchBlocks).setIsCCatch(false);
 
             try {
-                ClientTestLibrary.TestTryCatchBlocks.setIsCTry(true);
+                Bridge.get(ClientTestLibrary.TestTryCatchBlocks).setIsCTry(true);
                 throw new Bridge.InvalidOperationException("catch me");
-                ClientTestLibrary.TestTryCatchBlocks.setIsCTry(false);
+                Bridge.get(ClientTestLibrary.TestTryCatchBlocks).setIsCTry(false);
             }
             catch ($e) {
                 $e = Bridge.Exception.create($e);
-                ClientTestLibrary.TestTryCatchBlocks.setIsCCatch(true);
+                Bridge.get(ClientTestLibrary.TestTryCatchBlocks).setIsCCatch(true);
                 throw $e;
             }
 
-            ClientTestLibrary.TestTryCatchBlocks.setIsCTry(false);
+            Bridge.get(ClientTestLibrary.TestTryCatchBlocks).setIsCTry(false);
         },
         tryCatchWithRethrowEx: function () {
-            ClientTestLibrary.TestTryCatchBlocks.setIsDTry(false);
-            ClientTestLibrary.TestTryCatchBlocks.setIsDCatch(false);
+            Bridge.get(ClientTestLibrary.TestTryCatchBlocks).setIsDTry(false);
+            Bridge.get(ClientTestLibrary.TestTryCatchBlocks).setIsDCatch(false);
 
             try {
-                ClientTestLibrary.TestTryCatchBlocks.setIsDTry(true);
+                Bridge.get(ClientTestLibrary.TestTryCatchBlocks).setIsDTry(true);
                 throw new Bridge.ArgumentException("catch me");
-                ClientTestLibrary.TestTryCatchBlocks.setIsDTry(false);
+                Bridge.get(ClientTestLibrary.TestTryCatchBlocks).setIsDTry(false);
             }
             catch (ex) {
                 ex = Bridge.Exception.create(ex);
-                ClientTestLibrary.TestTryCatchBlocks.setIsDCatch(true);
+                Bridge.get(ClientTestLibrary.TestTryCatchBlocks).setIsDCatch(true);
                 throw ex;
             }
 
-            ClientTestLibrary.TestTryCatchBlocks.setIsDTry(false);
+            Bridge.get(ClientTestLibrary.TestTryCatchBlocks).setIsDTry(false);
         }
     }
 });

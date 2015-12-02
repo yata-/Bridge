@@ -16,8 +16,8 @@ Bridge.define('ClientTestLibrary.Class68', {
 Bridge.define('ClientTestLibrary.ClassA', {
     statics: {
         constructor: function () {
-            ClientTestLibrary.ClassA.staticString = "Defined string";
-            ClientTestLibrary.ClassA.staticInt = -340;
+            Bridge.get(ClientTestLibrary.ClassA).staticString = "Defined string";
+            Bridge.get(ClientTestLibrary.ClassA).staticInt = -340;
         },
         statitIntNotInitialized: 0,
         statitStringNotInitialized: null,
@@ -26,8 +26,8 @@ Bridge.define('ClientTestLibrary.ClassA', {
         CONST_CHAR: 81,
         CONST_DECIMAL: Bridge.Decimal("3.123456789324324324"),
         staticMethod1: function (i, s, d) {
-            ClientTestLibrary.ClassA.statitIntNotInitialized = i;
-            ClientTestLibrary.ClassA.statitStringNotInitialized = s;
+            Bridge.get(ClientTestLibrary.ClassA).statitIntNotInitialized = i;
+            Bridge.get(ClientTestLibrary.ClassA).statitStringNotInitialized = s;
 
             return Bridge.merge(new ClientTestLibrary.ClassA("constructor"), {
                 setDoubleA: d
@@ -38,7 +38,7 @@ Bridge.define('ClientTestLibrary.ClassA', {
             var s = Bridge.cast(p[1], String);
             var d = Bridge.cast(p[2], Number);
 
-            return ClientTestLibrary.ClassA.staticMethod1(i, s, d);
+            return Bridge.get(ClientTestLibrary.ClassA).staticMethod1(i, s, d);
         },
         tryParse: function (o, i) {
             i.v = 3;
@@ -63,8 +63,8 @@ Bridge.define('ClientTestLibrary.ClassA', {
         this.setNumberA(10);
         this.setStringA("Str");
         this.setBoolA(true);
-        this.setDoubleA(Number.POSITIVE_INFINITY);
-        this.setDecimalA(Bridge.Decimal.MinusOne);
+        this.setDoubleA(Bridge.get(Number).POSITIVE_INFINITY);
+        this.setDecimalA(Bridge.get(Bridge.Decimal).MinusOne);
         this.setData(Bridge.merge(new ClientTestLibrary.ClassA.Aux1(), {
             setNumber: 700
         } ));
@@ -170,7 +170,7 @@ Bridge.define('ClientTestLibrary.TestSet1FailureHelper', {
             var t = new ClientTestLibrary.ClassA("constructor$2", [Bridge.Array.init(2, null)]);
         },
         staticMethod2Failure: function () {
-            ClientTestLibrary.ClassA.staticMethod2(["1", "some string", "345.345435"]);
+            Bridge.get(ClientTestLibrary.ClassA).staticMethod2(["1", "some string", "345.345435"]);
         }
     }
 });
@@ -187,18 +187,18 @@ Bridge.define('ClientTestLibrary.TestReferenceTypes', {
             assert.deepEqual(a.getNumberA(), 10, "NumberA 10");
             assert.deepEqual(a.getStringA(), "Str", "StringA Str");
             assert.deepEqual(a.getBoolA(), true, "BoolA true");
-            assert.ok(a.getDoubleA() === Number.POSITIVE_INFINITY, "DoubleA Double.PositiveInfinity");
+            assert.ok(a.getDoubleA() === Bridge.get(Number).POSITIVE_INFINITY, "DoubleA Double.PositiveInfinity");
             assert.deepEqual(a.getDecimalA(), Bridge.Decimal(-1.0), "DecimalA Decimal.MinusOne");
             assert.ok(a.getData() !== null, "Data not null");
             assert.deepEqual(a.getData().getNumber(), 700, "Data.Number 700");
 
             // TEST
             // Check constructor with parameter
-            assert.throws(ClientTestLibrary.TestSet1FailureHelper.testConstructor1Failure, "Related should not be null", "Related should not be null");
+            assert.throws(Bridge.get(ClientTestLibrary.TestSet1FailureHelper).testConstructor1Failure, "Related should not be null", "Related should not be null");
 
             // TEST
             // Check constructor with parameter
-            assert.throws(ClientTestLibrary.TestSet1FailureHelper.testConstructor2Failure, "Should pass six parameters", "Should pass six parameters");
+            assert.throws(Bridge.get(ClientTestLibrary.TestSet1FailureHelper).testConstructor2Failure, "Should pass six parameters", "Should pass six parameters");
 
             a = new ClientTestLibrary.ClassA("constructor$2", [150, "151", true, 1.53, Bridge.Decimal(1.54), Bridge.merge(new ClientTestLibrary.ClassA.Aux1(), {
                 setNumber: 155
@@ -245,30 +245,30 @@ Bridge.define('ClientTestLibrary.TestReferenceTypes', {
 
             // TEST
             // Check static fields initialization
-            assert.deepEqual(ClientTestLibrary.ClassA.statitIntNotInitialized, 0, "#74 StatitInt not initialized");
-            assert.deepEqual(ClientTestLibrary.ClassA.statitStringNotInitialized, null, "#74 StatitString not initialized");
-            assert.deepEqual(ClientTestLibrary.ClassA.CONST_CHAR, 81, "#74 CONST_CHAR Q");
+            assert.deepEqual(Bridge.get(ClientTestLibrary.ClassA).statitIntNotInitialized, 0, "#74 StatitInt not initialized");
+            assert.deepEqual(Bridge.get(ClientTestLibrary.ClassA).statitStringNotInitialized, null, "#74 StatitString not initialized");
+            assert.deepEqual(Bridge.get(ClientTestLibrary.ClassA).CONST_CHAR, 81, "#74 CONST_CHAR Q");
             assert.deepEqual(true, true, "#74 CONST_DECIMAL 3.123456789324324324m");
 
             // TEST
             // Check static constructor
-            assert.deepEqual(ClientTestLibrary.ClassA.staticInt, -340, "StatitInt initialized");
-            assert.deepEqual(ClientTestLibrary.ClassA.staticString, "Defined string", "StatitString initialized");
+            assert.deepEqual(Bridge.get(ClientTestLibrary.ClassA).staticInt, -340, "StatitInt initialized");
+            assert.deepEqual(Bridge.get(ClientTestLibrary.ClassA).staticString, "Defined string", "StatitString initialized");
 
             // TEST
             // Check static methods
-            var a = ClientTestLibrary.ClassA.staticMethod1(678, "ASD", Number.NaN);
+            var a = Bridge.get(ClientTestLibrary.ClassA).staticMethod1(678, "ASD", Number.NaN);
 
-            assert.deepEqual(ClientTestLibrary.ClassA.statitIntNotInitialized, 678, "StatitIntNotInitialized 678");
-            assert.deepEqual(ClientTestLibrary.ClassA.statitStringNotInitialized, "ASD", "ClassA.StatitStringNotInitialized ASD");
+            assert.deepEqual(Bridge.get(ClientTestLibrary.ClassA).statitIntNotInitialized, 678, "StatitIntNotInitialized 678");
+            assert.deepEqual(Bridge.get(ClientTestLibrary.ClassA).statitStringNotInitialized, "ASD", "ClassA.StatitStringNotInitialized ASD");
             assert.deepEqual(a.getDoubleA(), Number.NaN, "DoubleA double.NaN");
 
-            a = ClientTestLibrary.ClassA.staticMethod2([678, "QWE", 234]);
-            assert.deepEqual(ClientTestLibrary.ClassA.statitIntNotInitialized, 1678, "StatitIntNotInitialized 1678");
-            assert.deepEqual(ClientTestLibrary.ClassA.statitStringNotInitialized, "QWE", "ClassA.StatitStringNotInitialized QWE");
+            a = Bridge.get(ClientTestLibrary.ClassA).staticMethod2([678, "QWE", 234]);
+            assert.deepEqual(Bridge.get(ClientTestLibrary.ClassA).statitIntNotInitialized, 1678, "StatitIntNotInitialized 1678");
+            assert.deepEqual(Bridge.get(ClientTestLibrary.ClassA).statitStringNotInitialized, "QWE", "ClassA.StatitStringNotInitialized QWE");
             assert.deepEqual(a.getDoubleA(), 234, "DoubleA 234");
 
-            assert.throws(ClientTestLibrary.TestSet1FailureHelper.staticMethod2Failure, "Unable to cast type String to type Bridge.Int", "Cast exception should occur");
+            assert.throws(Bridge.get(ClientTestLibrary.TestSet1FailureHelper).staticMethod2Failure, "Unable to cast type String to type Bridge.Int", "Cast exception should occur");
         },
         testMethodParameters: function (assert) {
             assert.expect(16);
@@ -309,14 +309,14 @@ Bridge.define('ClientTestLibrary.TestReferenceTypes', {
 
             // TEST
             // [#86]
-            var di = ClientTestLibrary.ClassA.getDefaultInt();
+            var di = Bridge.get(ClientTestLibrary.ClassA).getDefaultInt();
             assert.deepEqual(di, 0, "di 0");
 
             // TEST
             // Check  "out parameter"
             // [#85]
             var i = { };
-            var tryResult = ClientTestLibrary.ClassA.tryParse("", i);
+            var tryResult = Bridge.get(ClientTestLibrary.ClassA).tryParse("", i);
 
             assert.ok(tryResult, "tryResult");
             assert.deepEqual(i.v, 3, "i 3");

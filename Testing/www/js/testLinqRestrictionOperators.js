@@ -15,7 +15,7 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqRestrictionOperators', {
             assert.deepEqual(filteredNumbers, [5, 4, 1, 3, 6, 2, 0], "Where elements in integer array are below or equal 6");
 
             // TEST
-            var filteredCounts = (Bridge.Linq.Enumerable.from(ClientTestLibrary.Utilities.Person.getPersons()).where(function (p) {
+            var filteredCounts = (Bridge.Linq.Enumerable.from(Bridge.get(ClientTestLibrary.Utilities.Person).getPersons()).where(function (p) {
                 return p.getCount() < 501;
             }).select(function (p) {
                 return p.getCount();
@@ -23,7 +23,7 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqRestrictionOperators', {
             assert.deepEqual(filteredCounts, [300, 100, 500, 50], "Where elements in Person array have Count below 501");
 
             // TEST
-            filteredCounts = (Bridge.Linq.Enumerable.from(ClientTestLibrary.Utilities.Person.getPersons()).where(function (p) {
+            filteredCounts = (Bridge.Linq.Enumerable.from(Bridge.get(ClientTestLibrary.Utilities.Person).getPersons()).where(function (p) {
                 return p.getCount() < 501 && p.getGroup() === "A";
             }).select(function (p) {
                 return p.getCount();
@@ -31,8 +31,8 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqRestrictionOperators', {
             assert.deepEqual(filteredCounts, [300], "Where elements in Person array have Count below 501 ang in group 'A'");
 
             // TEST
-            var persons = ClientTestLibrary.Utilities.Person.getPersons();
-            var filteredPersonByCounts = (Bridge.Linq.Enumerable.from(ClientTestLibrary.Utilities.Person.getPersons()).where(function (p) {
+            var persons = Bridge.get(ClientTestLibrary.Utilities.Person).getPersons();
+            var filteredPersonByCounts = (Bridge.Linq.Enumerable.from(Bridge.get(ClientTestLibrary.Utilities.Person).getPersons()).where(function (p) {
                 return p.getCount() < 501;
             })).toArray();
 

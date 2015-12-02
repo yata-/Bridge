@@ -20,7 +20,7 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqSetOperators', {
             assert.deepEqual(uniqueNumbers, [1, 2, 3, 5, 4], "Distinct() to remove duplicate elements");
 
             // TEST
-            var distinctPersonGroups = (Bridge.Linq.Enumerable.from(ClientTestLibrary.Utilities.Person.getPersons()).select(function (p) {
+            var distinctPersonGroups = (Bridge.Linq.Enumerable.from(Bridge.get(ClientTestLibrary.Utilities.Person).getPersons()).select(function (p) {
                 return p.getGroup();
             })).distinct().toArray();
             assert.deepEqual(distinctPersonGroups, ["A", "C", "B", null], "Distinct() to remove duplicate Group elements");
@@ -33,10 +33,10 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqSetOperators', {
             assert.deepEqual(uniqueNumbersAB, [0, 2, 4, 5, 6, 8, 9, 1, 3, 7], "Union() to get unique number sequence");
 
             // TEST
-            var nameChars = Bridge.Linq.Enumerable.from(ClientTestLibrary.Utilities.Person.getPersons()).select(function (p) {
+            var nameChars = Bridge.Linq.Enumerable.from(Bridge.get(ClientTestLibrary.Utilities.Person).getPersons()).select(function (p) {
                 return p.getName().charCodeAt(0);
             });
-            var cityChars = Bridge.Linq.Enumerable.from(ClientTestLibrary.Utilities.Person.getPersons()).select(function (p) {
+            var cityChars = Bridge.Linq.Enumerable.from(Bridge.get(ClientTestLibrary.Utilities.Person).getPersons()).select(function (p) {
                 return p.getCity().charCodeAt(0);
             });
             var uniqueFirstChars = nameChars.union(cityChars).toArray();
@@ -48,10 +48,10 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqSetOperators', {
             assert.deepEqual(commonNumbersCD, [5, 8], "Intersect() to get common number sequence");
 
             // TEST
-            nameChars = Bridge.Linq.Enumerable.from(ClientTestLibrary.Utilities.Person.getPersons()).select(function (p) {
+            nameChars = Bridge.Linq.Enumerable.from(Bridge.get(ClientTestLibrary.Utilities.Person).getPersons()).select(function (p) {
                 return p.getName().charCodeAt(0);
             });
-            cityChars = Bridge.Linq.Enumerable.from(ClientTestLibrary.Utilities.Person.getPersons()).select(function (p) {
+            cityChars = Bridge.Linq.Enumerable.from(Bridge.get(ClientTestLibrary.Utilities.Person).getPersons()).select(function (p) {
                 return p.getCity().charCodeAt(0);
             });
 

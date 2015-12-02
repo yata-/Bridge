@@ -40,7 +40,7 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqConversionOperators', {
             }))).toList(String);
             var wordListExpected1 = new Bridge.List$1(String)(["3.three", "2.two", "1.one"]);
 
-            assert.deepEqual(ClientTestLibrary.Utilities.TypeHelper.getTypeName(wordList1), "Bridge.List$1$String", "ToList() conversion with explicit String type for string - check type name");
+            assert.deepEqual(Bridge.get(ClientTestLibrary.Utilities.TypeHelper).getTypeName(wordList1), "Bridge.List$1$String", "ToList() conversion with explicit String type for string - check type name");
             assert.deepEqual(wordList1, wordListExpected1, "ToList() conversion for strings with explicit String type - check content");
 
             // TEST
@@ -49,11 +49,11 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqConversionOperators', {
             })).toList(String);
             var wordListExpected2 = new Bridge.List$1(String)(["3.three", "2.two", "1.one"]);
 
-            assert.deepEqual(ClientTestLibrary.Utilities.TypeHelper.getTypeName(wordList2), "Bridge.List$1$String", "ToList() conversion for string - check type name");
+            assert.deepEqual(Bridge.get(ClientTestLibrary.Utilities.TypeHelper).getTypeName(wordList2), "Bridge.List$1$String", "ToList() conversion for string - check type name");
             assert.deepEqual(wordList2, wordListExpected2, "ToList() conversion for strings - check content");
 
             // TEST
-            var groups = ClientTestLibrary.Utilities.Group.getGroups();
+            var groups = Bridge.get(ClientTestLibrary.Utilities.Group).getGroups();
             var groupDictionary1 = (Bridge.Linq.Enumerable.from(groups).select(function (g) {
                 return g;
             })).toDictionary(function (g) {
@@ -79,7 +79,7 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqConversionOperators', {
                 setName: "D",
                 setLimit: 200
             } ));
-            assert.deepEqual(ClientTestLibrary.Utilities.TypeHelper.getTypeName(groupDictionary1), "Bridge.Dictionary$2$String$ClientTestLibrary.Utilities.Group", "ToDictionary(keySelector, elementSelector) conversion for <string, Group> - check type name");
+            assert.deepEqual(Bridge.get(ClientTestLibrary.Utilities.TypeHelper).getTypeName(groupDictionary1), "Bridge.Dictionary$2$String$ClientTestLibrary.Utilities.Group", "ToDictionary(keySelector, elementSelector) conversion for <string, Group> - check type name");
             assert.deepEqual(groupDictionary1, expectedGroupDictionary1, "ToDictionary(keySelector, elementSelector) conversion for <string, Group> - check content");
 
             // TEST
@@ -111,7 +111,7 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqConversionOperators', {
                 return g;
             }, String, ClientTestLibrary.Utilities.Group, comparer);
 
-            assert.deepEqual(ClientTestLibrary.Utilities.TypeHelper.getTypeName(groupDictionary2), "Bridge.Dictionary$2$String$ClientTestLibrary.Utilities.Group", "ToDictionary(keySelector, elementSelector, IEqualityComparer) conversion for <string, Group> - check type name");
+            assert.deepEqual(Bridge.get(ClientTestLibrary.Utilities.TypeHelper).getTypeName(groupDictionary2), "Bridge.Dictionary$2$String$ClientTestLibrary.Utilities.Group", "ToDictionary(keySelector, elementSelector, IEqualityComparer) conversion for <string, Group> - check type name");
             assert.deepEqual(groupDictionary2, expectedGroupDictionary2, "ToDictionary(keySelector, elementSelector, IEqualityComparer) conversion for <string, Group> - check content");
 
             // TEST
@@ -121,7 +121,7 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqConversionOperators', {
                 return g.getName();
             }, null, String, ClientTestLibrary.Utilities.Group);
 
-            assert.deepEqual(ClientTestLibrary.Utilities.TypeHelper.getTypeName(groupDictionary3), "Bridge.Dictionary$2$String$ClientTestLibrary.Utilities.Group", "ToDictionary(keySelector) conversion for <string, Group> - check type name");
+            assert.deepEqual(Bridge.get(ClientTestLibrary.Utilities.TypeHelper).getTypeName(groupDictionary3), "Bridge.Dictionary$2$String$ClientTestLibrary.Utilities.Group", "ToDictionary(keySelector) conversion for <string, Group> - check type name");
             assert.deepEqual(groupDictionary3, expectedGroupDictionary1, "ToDictionary(keySelector) conversion for <string, Group> - check content");
 
             // TEST
