@@ -1,6 +1,5 @@
-﻿// @source Class.js
+﻿    // @source Class.js
 
-(function () {
     var initializing = false;
 
     // The base Class implementation
@@ -411,4 +410,3 @@
     Bridge.Class.$queue = [];
     Bridge.define = Bridge.Class.define;
     Bridge.init = Bridge.Class.init;
-})();

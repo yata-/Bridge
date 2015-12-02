@@ -1,6 +1,5 @@
-// @source Char.js
+    // @source Char.js
 
-(function () {
     var char = {
         charCodeAt: function (str, index) {
             if (str == null) {
@@ -88,4 +87,3 @@
     };
 
     Bridge.Char = char;
-})();

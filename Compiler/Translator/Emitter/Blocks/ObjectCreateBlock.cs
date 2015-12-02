@@ -39,9 +39,11 @@ namespace Bridge.Translator
         {
             ObjectCreateExpression objectCreateExpression = this.ObjectCreateExpression;
 
-            var type = this.Emitter.GetTypeDefinition(objectCreateExpression.Type);
+            var resolveResult = this.Emitter.Resolver.ResolveNode(objectCreateExpression.Type, this.Emitter) as TypeResolveResult;
+            bool isTypeParam = resolveResult.Type.Kind == TypeKind.TypeParameter;
+            var type = isTypeParam ? null : this.Emitter.GetTypeDefinition(objectCreateExpression.Type);
 
-            if (type.BaseType != null && type.BaseType.FullName == "System.MulticastDelegate")
+            if (type != null && type.BaseType != null && type.BaseType.FullName == "System.MulticastDelegate")
             {
                 bool wrap = false;
                 var parent = objectCreateExpression.Parent as InvocationExpression;
@@ -78,7 +80,7 @@ namespace Bridge.Translator
                 inlineCode = this.Emitter.GetInline(invocationResolveResult.Member);
             }
 
-            var customCtor = this.Emitter.Validator.GetCustomConstructor(type) ?? "";
+            var customCtor = isTypeParam ? "" : (this.Emitter.Validator.GetCustomConstructor(type) ?? "");
             var hasInitializer = !objectCreateExpression.Initializer.IsNull && objectCreateExpression.Initializer.Elements.Count > 0;
 
             bool isCollectionInitializer = false;
@@ -136,7 +138,7 @@ namespace Bridge.Translator
 
                     this.WriteOpenParentheses();
 
-                    if (!this.Emitter.Validator.IsIgnoreType(type) && type.Methods.Count(m => m.IsConstructor && !m.IsStatic) > (type.IsValueType ? 0 : 1))
+                    if (!isTypeParam && !this.Emitter.Validator.IsIgnoreType(type) && type.Methods.Count(m => m.IsConstructor && !m.IsStatic) > (type.IsValueType ? 0 : 1))
                     {
                         this.WriteScript(OverloadsCollection.Create(this.Emitter, ((InvocationResolveResult)this.Emitter.Resolver.ResolveNode(objectCreateExpression, this.Emitter)).Member).GetOverloadName());
 
@@ -239,6 +241,20 @@ namespace Bridge.Translator
                 {
                     NamedExpression namedExression = item as NamedExpression;
                     NamedArgumentExpression namedArgumentExpression = item as NamedArgumentExpression;
+                    string name = namedExression != null ? namedExression.Name : namedArgumentExpression.Name;
+
+                    if (!preserveMemberCase)
+                    {
+                        name = Object.Net.Utilities.StringUtils.ToLowerCamelCase(name);
+                    }
+
+                    var itemrr = this.Emitter.Resolver.ResolveNode(item, this.Emitter) as MemberResolveResult;
+                    if (itemrr != null)
+                    {
+                        var oc = OverloadsCollection.Create(this.Emitter, itemrr.Member);
+                        oc.CancelChangeCase = this.Emitter.IsNativeMember(itemrr.Member.FullName) ? false : preserveMemberCase;
+                        name = oc.GetOverloadName();
+                    }
 
                     if (needComma)
                     {
@@ -246,12 +262,6 @@ namespace Bridge.Translator
                     }
 
                     needComma = true;
-                    string name = namedExression != null ? namedExression.Name : namedArgumentExpression.Name;
-
-                    if (!preserveMemberCase)
-                    {
-                        name = Object.Net.Utilities.StringUtils.ToLowerCamelCase(name);
-                    }
 
                     Expression expression = namedExression != null ? namedExression.Expression : namedArgumentExpression.Expression;
 

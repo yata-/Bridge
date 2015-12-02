@@ -1,6 +1,5 @@
-// @source Core.js
+    // @source Core.js
 
-(function (globals) {
     var core = {
         global: globals,
 
@@ -335,7 +334,7 @@
             var result = Bridge.as(obj, type, allowNull);
 
 	        if (result === null) {
-	            throw new Bridge.InvalidCastException("Unable to cast type " + Bridge.getTypeName(obj) + " to type " + Bridge.getTypeName(type));
+	            throw new Bridge.InvalidCastException("Unable to cast type " + (obj ? Bridge.getTypeName(obj) : "'null'") + " to type " + Bridge.getTypeName(type));
 	        }
 
 	        return result;
@@ -862,4 +861,3 @@
 
     globals.Bridge = core;
     globals.Bridge.caller = [];
-})(this);

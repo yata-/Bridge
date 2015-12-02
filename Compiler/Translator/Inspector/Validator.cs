@@ -225,7 +225,7 @@ namespace Bridge.Translator
                     return null;
                 }
 
-                if (type.IsNested && !string.IsNullOrEmpty(name))
+                if (type.IsNested)
                 {
                     name = (string.IsNullOrEmpty(name) ? "" : (name + ".")) + BridgeTypes.GetParentNames(type);
                 }

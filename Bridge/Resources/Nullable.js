@@ -1,6 +1,5 @@
-// @source Nullable.js
+    // @source Nullable.js
 
-(function () {
     var nullable = {
         hasValue: function (obj) {
             return (obj !== null) && (obj !== undefined);
@@ -162,4 +161,3 @@
 
     Bridge.Nullable = nullable;
     Bridge.hasValue = Bridge.Nullable.hasValue;
-})();

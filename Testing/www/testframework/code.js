@@ -5950,16 +5950,16 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.JsDateTimeTests', {
     dateEqualityWorks: function () {
         Bridge.Test.Assert.$true(Bridge.equals(new Date(2011, 7 - 1, 12), new Date(2011, 7 - 1, 12)));
         Bridge.Test.Assert.$false(Bridge.equals(new Date(2011, 7 - 1, 12), new Date(2011, 7 - 1, 13)));
-        Bridge.Test.Assert.areStrictEqual(Bridge.equals(new Date(2011, 7 - 1, 12), Bridge.cast(null, Date)), false);
-        Bridge.Test.Assert.areStrictEqual(Bridge.equals(Bridge.cast(null, Date), new Date(2011, 7 - 1, 12)), false);
-        Bridge.Test.Assert.areStrictEqual(Bridge.equals(Bridge.cast(null, Date), Bridge.cast(null, Date)), true);
+        Bridge.Test.Assert.areStrictEqual(Bridge.equals(new Date(2011, 7 - 1, 12), null), false);
+        Bridge.Test.Assert.areStrictEqual(Bridge.equals(null, new Date(2011, 7 - 1, 12)), false);
+        Bridge.Test.Assert.areStrictEqual(Bridge.equals(null, null), true);
     },
     dateInequalityWorks: function () {
         Bridge.Test.Assert.$false(!Bridge.equals(new Date(2011, 7 - 1, 12), new Date(2011, 7 - 1, 12)));
         Bridge.Test.Assert.$true(!Bridge.equals(new Date(2011, 7 - 1, 12), new Date(2011, 7 - 1, 13)));
-        Bridge.Test.Assert.areStrictEqual(!Bridge.equals(new Date(2011, 7 - 1, 12), Bridge.cast(null, Date)), true);
-        Bridge.Test.Assert.areStrictEqual(!Bridge.equals(Bridge.cast(null, Date), new Date(2011, 7 - 1, 12)), true);
-        Bridge.Test.Assert.areStrictEqual(!Bridge.equals(Bridge.cast(null, Date), Bridge.cast(null, Date)), false);
+        Bridge.Test.Assert.areStrictEqual(!Bridge.equals(new Date(2011, 7 - 1, 12), null), true);
+        Bridge.Test.Assert.areStrictEqual(!Bridge.equals(null, new Date(2011, 7 - 1, 12)), true);
+        Bridge.Test.Assert.areStrictEqual(!Bridge.equals(null, null), false);
     },
     dateLessThanWorks: function () {
         Bridge.Test.Assert.$true(new Date(2011, 7 - 1, 11) < new Date(2011, 7 - 1, 12));
@@ -6618,6 +6618,27 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.StringTests', {
         Bridge.Test.Assert.areEqual(("abcabcabc").search(new RegExp("ca")), 2);
         Bridge.Test.Assert.areEqual(("abcabcabc").search(new RegExp("x")), -1);
     },
+    sliceWorks: function () {
+        var numbers = "0123456789";
+
+        // Let's start by using both begin and end.
+        Bridge.Test.Assert.areEqual("3456", numbers.slice(3, 7));
+
+        // What happens when we start with a negative number.
+        Bridge.Test.Assert.areEqual("3456", numbers.slice(-7, 7));
+
+        // What happens when we use two negative numbers.
+        Bridge.Test.Assert.areEqual("3456", numbers.slice(-7, -3));
+
+        // What happens when we omit the last argument.
+        Bridge.Test.Assert.areEqual("3456789", numbers.slice(3));
+
+        // And with the negative, end-relevant index.
+        Bridge.Test.Assert.areEqual("3456789", numbers.slice(-7));
+
+        // If the index is out of range, it returns the empty string.
+        Bridge.Test.Assert.areEqual("", numbers.slice(100, 101));
+    },
     splitWithStringWorks: function () {
         Bridge.Test.Assert.areEqual(("abcabcabc").split("b"), ["a", "ca", "ca", "c"]);
     },
@@ -6690,15 +6711,74 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.StringTests', {
     },
     substrWorks: function () {
         Bridge.Test.Assert.areEqual(("abcde").substr(2), "cde");
-    },
-    substrWithLengthWorks: function () {
         Bridge.Test.Assert.areEqual(("abcde").substr(2, 2), "cd");
+
+        var numbers = "0123456789";
+
+        // Let's start by using both start and length
+        Bridge.Test.Assert.areEqual("3456", numbers.substr(3, 4));
+
+        // What happens when we start with a negative number.
+        Bridge.Test.Assert.areEqual("3456", numbers.substr(-7, 4));
+
+        // What happens when we omit the last argument.
+        Bridge.Test.Assert.areEqual("3456789", numbers.substr(3));
+
+        // And with the negative, end-relevant index.
+        Bridge.Test.Assert.areEqual("3456789", numbers.substr(-7));
+
+        // If the index is out of range, it returns the empty string.
+        Bridge.Test.Assert.areEqual("", numbers.substr(100, 1));
+
+        Bridge.Test.Assert.areEqual("2345", numbers.substr(2, 4));
     },
     substringWorks: function () {
         Bridge.Test.Assert.areEqual(("abcde").substr(2), "cde");
-    },
-    substringWithLengthWorks: function () {
         Bridge.Test.Assert.areEqual(("abcde").substr(2, 2), "cd");
+
+        var numbers = "0123456789";
+        // Let's start by using both begin and end.
+        Bridge.Test.Assert.areEqual("3456789", numbers.substr(3, 7));
+
+        // What happens when we start with a negative number.
+        Bridge.Test.Assert.areEqual("3456789", numbers.substr(-7, 7));
+
+        // What happens when we use two negative numbers.
+        Bridge.Test.Assert.areEqual("", numbers.substr(-7, -3));
+
+        // What happens when we omit the last argument.
+        Bridge.Test.Assert.areEqual("3456789", numbers.substr(3));
+
+        // And with the negative, end-relevant index.
+        Bridge.Test.Assert.areEqual("3456789", numbers.substr(-7));
+
+        // If the index is out of range, it returns the empty string.
+        Bridge.Test.Assert.areEqual("", numbers.substr(100, 101));
+
+        Bridge.Test.Assert.areEqual("2345", numbers.substr(2, 4));
+    },
+    jsSubstringWorks: function () {
+        var numbers = "0123456789";
+
+        // Let's start by using both begin and end.
+        Bridge.Test.Assert.areEqual("3456", numbers.substring(3, 7));
+
+        // What happens when we start with a negative number.
+        Bridge.Test.Assert.areEqual("0123456", numbers.substring(-7, 7));
+
+        // What happens when we use two negative numbers.
+        Bridge.Test.Assert.areEqual("", numbers.substring(-7, -3));
+
+        // What happens when we omit the last argument.
+        Bridge.Test.Assert.areEqual("3456789", numbers.substring(3));
+
+        // And with the negative, end-relevant index.
+        Bridge.Test.Assert.areEqual("0123456789", numbers.substring(-7));
+
+        // If the index is out of range, it returns the empty string.
+        Bridge.Test.Assert.areEqual("", numbers.substring(100, 101));
+
+        Bridge.Test.Assert.areEqual("23", numbers.substring(2, 4));
     },
     toLowerCaseWorks: function () {
         Bridge.Test.Assert.areEqual(("ABcd").toLowerCase(), "abcd");

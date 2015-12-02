@@ -1,6 +1,5 @@
-﻿// @source Browser.js
+﻿    // @source Browser.js
 
-(function () {
 	if (!document) {
 		return;
 	}
@@ -127,4 +126,3 @@
     };
 
     Bridge.Browser = browser;
-})();
