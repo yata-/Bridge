@@ -172,7 +172,7 @@ namespace Bridge.Contract
         public bool CancelChangeCase
         {
             get;
-            private set;
+            set;
         }
 
         public bool IsSetter
