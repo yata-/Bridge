@@ -150,7 +150,7 @@ namespace Bridge.Translator
 
                 if (group != null && group.Methods.Count() > 1)
                 {
-                    throw new EmitterException(objectCreateExpression, "Cannot compile this dynamic invocation because all applicable do not have the same script name");
+                    throw new EmitterException(objectCreateExpression, "Cannot compile this dynamic invocation because there are two or more method overloads with the same parameter count. To work around this limitation, assign the dynamic value to a non-dynamic variable before use or call a method with different parameter count");
                 }
             }
 
