@@ -22,7 +22,7 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqAggregateOperators', {
             assert.deepEqual(oddNumbers, 3, "Count() odd numbers");
 
             // TEST
-            var groupJoin = (Bridge.Linq.Enumerable.from(ClientTestLibrary.Utilities.Group.getGroups()).groupJoin(ClientTestLibrary.Utilities.Person.getPersons(), function (g) {
+            var groupJoin = (Bridge.Linq.Enumerable.from(Bridge.get(ClientTestLibrary.Utilities.Group).getGroups()).groupJoin(Bridge.get(ClientTestLibrary.Utilities.Person).getPersons(), function (g) {
                 return g.getName();
             }, function (p) {
                 return p.getGroup();
@@ -35,7 +35,7 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqAggregateOperators', {
             assert.deepEqual(groupJoin, groupJoinExpected, "Count() within joint collections");
 
             // TEST
-            var grouped = (Bridge.Linq.Enumerable.from(ClientTestLibrary.Utilities.Person.getPersons()).groupBy(function (p) {
+            var grouped = (Bridge.Linq.Enumerable.from(Bridge.get(ClientTestLibrary.Utilities.Person).getPersons()).groupBy(function (p) {
                 return p.getGroup();
             }).select(function (g) {
                 return { group: g.key(), personCount: g.count() };
@@ -56,7 +56,7 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqAggregateOperators', {
             assert.deepEqual(totalChars, 11, "Sum() total chars");
 
             // TEST
-            var groupedSum = (Bridge.Linq.Enumerable.from(ClientTestLibrary.Utilities.Person.getPersons()).groupBy(function (p) {
+            var groupedSum = (Bridge.Linq.Enumerable.from(Bridge.get(ClientTestLibrary.Utilities.Person).getPersons()).groupBy(function (p) {
                 return p.getGroup();
             }).select(function (g) {
                 return { group: g.key(), sum: g.sum(function (x) {
@@ -79,7 +79,7 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqAggregateOperators', {
             assert.deepEqual(shortestWordLength, 3, "Min() for shortest word");
 
             // TEST
-            var groupedMin = (Bridge.Linq.Enumerable.from(ClientTestLibrary.Utilities.Person.getPersons()).groupBy(function (p) {
+            var groupedMin = (Bridge.Linq.Enumerable.from(Bridge.get(ClientTestLibrary.Utilities.Person).getPersons()).groupBy(function (p) {
                 return p.getGroup();
             }).select(function (g) {
                 return { group: g.key(), min: g.min(function (x) {
@@ -92,7 +92,7 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqAggregateOperators', {
             assert.deepEqual(groupedMin, groupedMinExpected, "Min() within group");
 
             // TEST
-            var groupedMinWithLet = (Bridge.Linq.Enumerable.from(ClientTestLibrary.Utilities.Person.getPersons()).groupBy(function (p) {
+            var groupedMinWithLet = (Bridge.Linq.Enumerable.from(Bridge.get(ClientTestLibrary.Utilities.Person).getPersons()).groupBy(function (p) {
                 return p.getGroup();
             }).select(function (g) {
                 return { g: g, minCount: g.min(function (x) {
@@ -121,7 +121,7 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqAggregateOperators', {
             assert.deepEqual(longestWordLength, 5, "Max() for longest word");
 
             // TEST
-            var groupedMax = (Bridge.Linq.Enumerable.from(ClientTestLibrary.Utilities.Person.getPersons()).groupBy(function (p) {
+            var groupedMax = (Bridge.Linq.Enumerable.from(Bridge.get(ClientTestLibrary.Utilities.Person).getPersons()).groupBy(function (p) {
                 return p.getGroup();
             }).select(function (g) {
                 return { group: g.key(), max: g.max(function (x) {
@@ -134,7 +134,7 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqAggregateOperators', {
             assert.deepEqual(groupedMax, groupedMaxExpected, "Max() within group");
 
             // TEST
-            var groupedMaxWithLet = (Bridge.Linq.Enumerable.from(ClientTestLibrary.Utilities.Person.getPersons()).groupBy(function (p) {
+            var groupedMaxWithLet = (Bridge.Linq.Enumerable.from(Bridge.get(ClientTestLibrary.Utilities.Person).getPersons()).groupBy(function (p) {
                 return p.getGroup();
             }).select(function (g) {
                 return { g: g, maxCount: g.max(function (x) {
@@ -164,7 +164,7 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqAggregateOperators', {
             assert.deepEqual(averageWordLength, 3, "Average() for word lengths");
 
             // TEST
-            var groupedAverage = (Bridge.Linq.Enumerable.from(ClientTestLibrary.Utilities.Person.getPersons()).groupBy(function (p) {
+            var groupedAverage = (Bridge.Linq.Enumerable.from(Bridge.get(ClientTestLibrary.Utilities.Person).getPersons()).groupBy(function (p) {
                 return p.getGroup();
             }).select(function (g) {
                 return { group: g.key(), average: g.average(function (x) {

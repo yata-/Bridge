@@ -7,12 +7,12 @@ Bridge.define('ClientTestLibrary.Bridge169', {
         number: 0,
         m1: function () {
             (function () {
-                ClientTestLibrary.Bridge169.number = 1;
+                Bridge.get(ClientTestLibrary.Bridge169).number = 1;
             })();
         },
         m2: function () {
             (function () {
-                return ClientTestLibrary.Bridge169.number = 2;
+                return Bridge.get(ClientTestLibrary.Bridge169).number = 2;
             })();
         }
     }
@@ -112,7 +112,7 @@ Bridge.define('ClientTestLibrary.Bridge306A', {
     inherits: [ClientTestLibrary.Bridge306Component$1(ClientTestLibrary.Bridge306A.Props)],
     statics: {
         $new: function (props) {
-            return ClientTestLibrary.Bridge306Component$1(ClientTestLibrary.Bridge306A.Props).$new(ClientTestLibrary.Bridge306A)(props);
+            return Bridge.get(ClientTestLibrary.Bridge306Component$1(ClientTestLibrary.Bridge306A.Props)).$new(ClientTestLibrary.Bridge306A)(props);
         }
     }
 });
@@ -128,7 +128,7 @@ Bridge.define('ClientTestLibrary.Bridge306B', {
     inherits: [ClientTestLibrary.Bridge306Component$1(ClientTestLibrary.Bridge306B.Props)],
     statics: {
         $new: function (props) {
-            return ClientTestLibrary.Bridge306Component$1(ClientTestLibrary.Bridge306B.Props).$new(ClientTestLibrary.Bridge306B)(props);
+            return Bridge.get(ClientTestLibrary.Bridge306Component$1(ClientTestLibrary.Bridge306B.Props)).$new(ClientTestLibrary.Bridge306B)(props);
         }
     }
 });
@@ -439,7 +439,7 @@ Bridge.define('ClientTestLibrary.Bridge485', {
                 return { lastName: p.lastName, firstName: p.firstName };
             });
 
-            var s = JSON.stringify(query.toList(Object));
+            var s = Bridge.get(JSON).stringify(query.toList(Object));
 
             assert.equal(s, "{\"items\":[{\"lastName\":\"Ruth\",\"firstName\":\"Babe\"},{\"lastName\":\"Cobb\",\"firstName\":\"Ty\"}]}", "#485");
         }
@@ -451,7 +451,7 @@ Bridge.define('ClientTestLibrary.Bridge495', {
         testUseCase: function (assert) {
             assert.expect(3);
 
-            var root = document.getElementById("qunit-fixture");
+            var root = Bridge.get(document).getElementById("qunit-fixture");
 
             var button1 = document.createElement('button');
             button1.innerHTML = "Button 1";
@@ -460,7 +460,7 @@ Bridge.define('ClientTestLibrary.Bridge495', {
 
             root.appendChild(button1);
 
-            var b1 = document.getElementById("button1");
+            var b1 = Bridge.get(document).getElementById("button1");
             assert.equal(b1.style.color, "green", "b1.Style.Color green");
 
             var button2 = document.createElement('button');
@@ -470,7 +470,7 @@ Bridge.define('ClientTestLibrary.Bridge495', {
 
             root.appendChild(button2);
 
-            var b2 = document.getElementById("button2");
+            var b2 = Bridge.get(document).getElementById("button2");
             assert.equal(b2.style.backgroundColor, "yellow", "b2.Style.BackgroundColor HTMLColor.Yellow");
 
             var hexColor = "#FFEEAA";
@@ -481,7 +481,7 @@ Bridge.define('ClientTestLibrary.Bridge495', {
 
             root.appendChild(divElement1);
 
-            var div1 = document.getElementById("div1");
+            var div1 = Bridge.get(document).getElementById("div1");
             assert.equal(div1.style.color, "rgb(255, 238, 170)", "div1.Style.Color " + hexColor);
 
         }
@@ -575,9 +575,9 @@ Bridge.define('ClientTestLibrary.Bridge508', {
                     for (;;) {
                         switch ($step) {
                             case 0: {
-                                ClientTestLibrary.Bridge508.setQUnitAsyncDone(assert.async());
+                                Bridge.get(ClientTestLibrary.Bridge508).setQUnitAsyncDone(assert.async());
                                 
-                                $task1 = ClientTestLibrary.Bridge508.method1();
+                                $task1 = Bridge.get(ClientTestLibrary.Bridge508).method1();
                                 $step = 1;
                                 $task1.continueWith($asyncBody, true);
                                 return;
@@ -588,7 +588,7 @@ Bridge.define('ClientTestLibrary.Bridge508', {
                                 
                                 assert.equal(result, "A(0)A(1)B(0)B(1)B(2)", "#508 Method1");
                                 
-                                ClientTestLibrary.Bridge508.getQUnitAsyncDone()();
+                                Bridge.get(ClientTestLibrary.Bridge508).getQUnitAsyncDone()();
                                 return;
                             }
                             default: {
@@ -623,7 +623,7 @@ Bridge.define('ClientTestLibrary.Bridge508', {
                                     result = "";
                                     
                                     i = 0;
-                                    $task3 = ClientTestLibrary.Bridge508.initPage();
+                                    $task3 = Bridge.get(ClientTestLibrary.Bridge508).initPage();
                                     $step = 1;
                                     $task3.continueWith($asyncBody);
                                     return;
@@ -646,7 +646,7 @@ Bridge.define('ClientTestLibrary.Bridge508', {
                                     result += Bridge.String.format("A({0})", i++);
                                 }
                                 case 4: {
-                                    $task2 = ClientTestLibrary.Bridge508.nextPage();
+                                    $task2 = Bridge.get(ClientTestLibrary.Bridge508).nextPage();
                                     $step = 5;
                                     $task2.continueWith($asyncBody);
                                     return;
@@ -659,9 +659,9 @@ Bridge.define('ClientTestLibrary.Bridge508', {
                                 }
                                 case 6: {
                                     
-                                    ClientTestLibrary.Bridge508.count = 0;
+                                    Bridge.get(ClientTestLibrary.Bridge508).count = 0;
                                     i = 0;
-                                    $task1 = ClientTestLibrary.Bridge508.initPage();
+                                    $task1 = Bridge.get(ClientTestLibrary.Bridge508).initPage();
                                     $step = 7;
                                     $task1.continueWith($asyncBody);
                                     return;
@@ -684,7 +684,7 @@ Bridge.define('ClientTestLibrary.Bridge508', {
                                     result += Bridge.String.format("B({0})", i++);
                                 }
                                 case 10: {
-                                    np1 = ClientTestLibrary.Bridge508.nextPage1();
+                                    np1 = Bridge.get(ClientTestLibrary.Bridge508).nextPage1();
                                     $step = 8;
                                     continue;
                                 }
@@ -719,15 +719,15 @@ Bridge.define('ClientTestLibrary.Bridge508', {
                         for (;;) {
                             switch ($step) {
                                 case 0: {
-                                    $task1 = Bridge.Task.delay(0);
+                                    $task1 = Bridge.get(Bridge.Task).delay(0);
                                     $step = 1;
                                     $task1.continueWith($asyncBody);
                                     return;
                                 }
                                 case 1: {
                                     $task1.getResult();
-                                    ClientTestLibrary.Bridge508.count++;
-                                    $returnTask.setResult(ClientTestLibrary.Bridge508.count < 2 ? { } : null);
+                                    Bridge.get(ClientTestLibrary.Bridge508).count++;
+                                    $returnTask.setResult(Bridge.get(ClientTestLibrary.Bridge508).count < 2 ? { } : null);
                                     return;
                                 }
                                 default: {
@@ -756,15 +756,15 @@ Bridge.define('ClientTestLibrary.Bridge508', {
                         for (;;) {
                             switch ($step) {
                                 case 0: {
-                                    $task1 = Bridge.Task.delay(0);
+                                    $task1 = Bridge.get(Bridge.Task).delay(0);
                                     $step = 1;
                                     $task1.continueWith($asyncBody);
                                     return;
                                 }
                                 case 1: {
                                     $task1.getResult();
-                                    ClientTestLibrary.Bridge508.count++;
-                                    $returnTask.setResult(ClientTestLibrary.Bridge508.count < 3 ? { } : null);
+                                    Bridge.get(ClientTestLibrary.Bridge508).count++;
+                                    $returnTask.setResult(Bridge.get(ClientTestLibrary.Bridge508).count < 3 ? { } : null);
                                     return;
                                 }
                                 default: {
@@ -783,8 +783,8 @@ Bridge.define('ClientTestLibrary.Bridge508', {
             return $returnTask;
         },
         nextPage1: function () {
-            ClientTestLibrary.Bridge508.count++;
-            return ClientTestLibrary.Bridge508.count < 4 ? { } : null;
+            Bridge.get(ClientTestLibrary.Bridge508).count++;
+            return Bridge.get(ClientTestLibrary.Bridge508).count < 4 ? { } : null;
         }
     }
 });
@@ -916,7 +916,7 @@ Bridge.define('ClientTestLibrary.Bridge537B', {
                 id: 103
             } ));
 
-            return ClientTestLibrary.Bridge537B.getCount(l);
+            return Bridge.get(ClientTestLibrary.Bridge537B).getCount(l);
         }
     },
     list: null,
@@ -999,34 +999,34 @@ Bridge.define('ClientTestLibrary.Bridge550', {
             assert.expect(10);
 
             var array1 = new Int8Array(1);
-            ClientTestLibrary.Bridge550.testMethod(array1, "Int8Array", assert);
+            Bridge.get(ClientTestLibrary.Bridge550).testMethod(array1, "Int8Array", assert);
 
             var array2 = new Uint8Array(1);
-            ClientTestLibrary.Bridge550.testMethod(array2, "Uint8Array", assert);
+            Bridge.get(ClientTestLibrary.Bridge550).testMethod(array2, "Uint8Array", assert);
 
             var array3 = new Uint8ClampedArray(1);
-            ClientTestLibrary.Bridge550.testMethod(array3, "Uint8ClampedArray", assert);
+            Bridge.get(ClientTestLibrary.Bridge550).testMethod(array3, "Uint8ClampedArray", assert);
 
             var array4 = new Int16Array(1);
-            ClientTestLibrary.Bridge550.testMethod(array4, "Int16Array", assert);
+            Bridge.get(ClientTestLibrary.Bridge550).testMethod(array4, "Int16Array", assert);
 
             var array5 = new Uint16Array(1);
-            ClientTestLibrary.Bridge550.testMethod(array5, "Uint16Array", assert);
+            Bridge.get(ClientTestLibrary.Bridge550).testMethod(array5, "Uint16Array", assert);
 
             var array6 = new Int32Array(1);
-            ClientTestLibrary.Bridge550.testMethod(array6, "Int32Array", assert);
+            Bridge.get(ClientTestLibrary.Bridge550).testMethod(array6, "Int32Array", assert);
 
             var array7 = new Uint32Array(1);
-            ClientTestLibrary.Bridge550.testMethod(array7, "Uint32Array", assert);
+            Bridge.get(ClientTestLibrary.Bridge550).testMethod(array7, "Uint32Array", assert);
 
             var array8 = new Float32Array(1);
-            ClientTestLibrary.Bridge550.testMethod(array8, "Float32Array", assert);
+            Bridge.get(ClientTestLibrary.Bridge550).testMethod(array8, "Float32Array", assert);
 
             var array9 = new Float64Array(1);
-            ClientTestLibrary.Bridge550.testMethod(array9, "Float64Array", assert);
+            Bridge.get(ClientTestLibrary.Bridge550).testMethod(array9, "Float64Array", assert);
 
             var array10 = new DataView(array9.buffer);
-            ClientTestLibrary.Bridge550.testMethod(array10, "DataView", assert);
+            Bridge.get(ClientTestLibrary.Bridge550).testMethod(array10, "DataView", assert);
         }
     }
 });
@@ -1496,7 +1496,7 @@ Bridge.define('ClientTestLibrary.Bridge588C.C2', {
             }
         },
         getDefault: function () {
-            return ClientTestLibrary.Bridge588C.C2._default;
+            return Bridge.get(ClientTestLibrary.Bridge588C.C2)._default;
         }
     },
     config: {
@@ -1572,7 +1572,7 @@ Bridge.define('ClientTestLibrary.Bridge595B', {
     },
     render: function () {
         this.buffer.append("Render0");
-        ClientTestLibrary.Bridge595B.render(this.buffer);
+        Bridge.get(ClientTestLibrary.Bridge595B).render(this.buffer);
     }
 });
 
@@ -1879,14 +1879,14 @@ Bridge.define('ClientTestLibrary.Bridge648A', {
 
 Bridge.define('ClientTestLibrary.Bridge652.Bridge652B1', {
     constructor: function () {
-        ClientTestLibrary.Bridge652.log = "Bridge652B1";
+        Bridge.get(ClientTestLibrary.Bridge652).log = "Bridge652B1";
     }
 });
 
 Bridge.define('ClientTestLibrary.Bridge652.Bridge652B2', {
     inherits: [Bridge.IComparable],
     constructor: function () {
-        ClientTestLibrary.Bridge652.log = "Bridge652B2";
+        Bridge.get(ClientTestLibrary.Bridge652).log = "Bridge652B2";
     },
     compareTo: function (obj) {
         return 0;
@@ -1973,6 +1973,78 @@ Bridge.define('ClientTestLibrary.Bridge655A', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge660TextInputState', {
+    config: {
+        properties: {
+            Text: null
+        }
+    },
+    constructor: function (text) {
+        ClientTestLibrary.Bridge660TextInputState.prototype.constructor$1.call(this, text, Bridge.get(ClientTestLibrary.Bridge660Optional$1(String)).getMissing());
+
+    },
+    constructor$1: function (text, validationError) {
+        this.setText(text);
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge660MessageEditState', {
+    config: {
+        properties: {
+            Content: null
+        }
+    },
+    constructor: function (content) {
+        this.setContent(content);
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge660Optional$1', function (T) { return {
+    statics: {
+        config: {
+            init: function () {
+                this._missing = new ClientTestLibrary.Bridge660Optional$1(T)("constructor$2", Bridge.getDefaultValue(T), false);
+            }
+        },
+        getMissing: function () {
+            return Bridge.get(ClientTestLibrary.Bridge660Optional$1(T))._missing.$clone();
+        }
+    },
+    value: null,
+    isDefined: false,
+    constructor$1: function (value) {
+        ClientTestLibrary.Bridge660Optional$1(T).prototype.constructor$2.call(this, value, value !== null);
+
+    },
+    constructor$2: function (value, isDefined) {
+        this.isDefined = (value !== null);
+        this.value = value;
+    },
+    constructor: function () {
+    },
+    getIsDefined: function () {
+        return this.isDefined;
+    },
+    getHashCode: function () {
+        var hash = 17;
+        hash = hash * 23 + (this.value == null ? 0 : Bridge.getHashCode(this.value));
+        hash = hash * 23 + (this.isDefined == null ? 0 : Bridge.getHashCode(this.isDefined));
+        return hash;
+    },
+    equals: function (o) {
+        if (!Bridge.is(o,ClientTestLibrary.Bridge660Optional$1(T))) {
+            return false;
+        }
+        return Bridge.equals(this.value, o.value) && Bridge.equals(this.isDefined, o.isDefined);
+    },
+    $clone: function (to) {
+        var s = to || new ClientTestLibrary.Bridge660Optional$1(T)();
+        s.value = this.value;
+        s.isDefined = this.isDefined;
+        return s;
+    }
+}; });
+
 Bridge.define('ClientTestLibrary.Bridge661', {
     statics: {
         example1: function (exampleInput) {
@@ -1986,13 +2058,13 @@ Bridge.define('ClientTestLibrary.Bridge661', {
         testUseCase: function (assert) {
             assert.expect(6);
 
-            assert.equal(ClientTestLibrary.Bridge661.example1(), true, "Bridge661 Example1 true default");
-            assert.equal(ClientTestLibrary.Bridge661.example1(0), true, "Bridge661 Example1 true");
-            assert.equal(ClientTestLibrary.Bridge661.example1(65), false, "Bridge661 Example1 false");
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge661).example1(), true, "Bridge661 Example1 true default");
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge661).example1(0), true, "Bridge661 Example1 true");
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge661).example1(65), false, "Bridge661 Example1 false");
 
-            assert.equal(ClientTestLibrary.Bridge661.example2(), true, "Bridge661 Example2 true default");
-            assert.equal(ClientTestLibrary.Bridge661.example2(49), true, "Bridge661 Example2 true");
-            assert.equal(ClientTestLibrary.Bridge661.example2(0), false, "Bridge661 Example2 false");
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge661).example2(), true, "Bridge661 Example2 true default");
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge661).example2(49), true, "Bridge661 Example2 true");
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge661).example2(0), false, "Bridge661 Example2 false");
         }
     }
 });
@@ -2023,7 +2095,7 @@ Bridge.define('ClientTestLibrary.Bridge666', {
         testUseCase: function (assert) {
             assert.expect(1);
 
-            assert.equal(ClientTestLibrary.Bridge666.getSum(), 360, "Bridge666 GetSum 360");
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge666).getSum(), 360, "Bridge666 GetSum 360");
         },
         getSum: function () {
             var $t;
@@ -2105,8 +2177,8 @@ Bridge.define('ClientTestLibrary.Bridge675', {
             me.i2 = 2;
 
             assert.equal(me.dynMethod(me.id), "str1", "Bridge675 DynMethod");
-            assert.equal(ClientTestLibrary.Bridge675.method1$1(me.id), "str1", "Bridge675 Method1 id");
-            assert.equal(ClientTestLibrary.Bridge675.method1(me.i1, me.i2), 3, "Bridge675 Method1 i1 i2");
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge675).method1$1(me.id), "str1", "Bridge675 Method1 id");
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge675).method1(me.i1, me.i2), 3, "Bridge675 Method1 i1 i2");
         },
         dynMethod: function (s) {
             return s;
@@ -2143,7 +2215,7 @@ Bridge.define('ClientTestLibrary.Bridge266A', {
             // Nothing gets written for Class1 in the output JavaScript due to the "new object()" argument.
             // If null is used instead (as commented-out) then it works as expected.
             // No compile error.
-            return ClientTestLibrary.Bridge266B.test("test", { });
+            return Bridge.get(ClientTestLibrary.Bridge266B).test("test", { });
         }
     }
 });
@@ -2211,20 +2283,20 @@ Bridge.define('ClientTestLibrary.Bridge501', {
             var list = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
                 [7]
             ] );
-            var z = JSON.stringify(list); // this is ok
+            var z = Bridge.get(JSON).stringify(list); // this is ok
             assert.equal(z, "{\"items\":[7]}", "List<int>");
 
             var b = Bridge.merge(new ClientTestLibrary.Bridge501B(), [
                 [1],
                 [2]
             ] );
-            var y = JSON.stringify(b); // wrong, missing items
+            var y = Bridge.get(JSON).stringify(b); // wrong, missing items
             assert.equal(y, "{\"items\":[1,2]}", "Bridge501B");
 
             var a = Bridge.merge(new ClientTestLibrary.Bridge501A(), [
                 [7]
             ] ); // sine items is defined as member, push fails
-            var x = JSON.stringify(a);
+            var x = Bridge.get(JSON).stringify(a);
             assert.equal(x, "{\"items\":[7]}", "Bridge501A");
 
             var c = Bridge.merge(new ClientTestLibrary.Bridge501A(), JSON.parse(x));
@@ -2292,7 +2364,7 @@ Bridge.define('ClientTestLibrary.Bridge544', {
             assert.equal(dbl, 26.1, "Bridge544 double");
 
             var d = Bridge.merge(new Bridge.Decimal(), JSON.parse("27.2"));
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, d, 27.2, "Bridge544 decimal");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, d, 27.2, "Bridge544 decimal");
 
             var s = Bridge.merge(new String(), JSON.parse("\"Some string\""));
             assert.equal(s, "Some string", "Bridge544 string");
@@ -2313,7 +2385,7 @@ Bridge.define('ClientTestLibrary.Bridge548', {
         testUseCase: function (assert) {
             assert.expect(18);
 
-            var isSpecialTypeName = ClientTestLibrary.Utilities.BrowserHelper.isPhantomJs();
+            var isSpecialTypeName = Bridge.get(ClientTestLibrary.Utilities.BrowserHelper).isPhantomJs();
 
             var v1 = new Float32Array(1);
             var thisType = "Float32Array";
@@ -2381,7 +2453,7 @@ Bridge.define('ClientTestLibrary.Bridge548', {
 Bridge.define('ClientTestLibrary.Bridge549', {
     statics: {
         testUseCase: function (assert) {
-            var isToStringToTypeNameLogic = !ClientTestLibrary.Utilities.BrowserHelper.isChrome();
+            var isToStringToTypeNameLogic = !Bridge.get(ClientTestLibrary.Utilities.BrowserHelper).isChrome();
 
             assert.expect(153);
 
@@ -2758,10 +2830,10 @@ Bridge.define('ClientTestLibrary.Bridge577', {
         testUseCase: function (assert) {
             assert.expect(2);
 
-            var a = ClientTestLibrary.Bridge577.someMethodA(1);
+            var a = Bridge.get(ClientTestLibrary.Bridge577).someMethodA(1);
             assert.ok(a.$clone(), "#577 Bridge577UnitA created");
 
-            var b = ClientTestLibrary.Bridge577.someMethodB(7);
+            var b = Bridge.get(ClientTestLibrary.Bridge577).someMethodB(7);
             assert.equal(b.getNumber(), 7, "#577 Bridge577UnitB created");
         }
     }
@@ -2772,75 +2844,75 @@ Bridge.define('ClientTestLibrary.Bridge583', {
         testUseCase: function (assert) {
             assert.expect(120);
 
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 6), Bridge.Decimal(1.4), "Bridge583 1");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 6), Bridge.Decimal(1.6), "Bridge583 2");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 6), Bridge.Decimal(123.4568), "Bridge583 3");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 6), Bridge.Decimal(123.456789), "Bridge583 4");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 6), Bridge.Decimal(123.456789), "Bridge583 5");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 6), Bridge.Decimal(-123.0), "Bridge583 6");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 6), Bridge.Decimal(1.4), "Bridge583 1");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 6), Bridge.Decimal(1.6), "Bridge583 2");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 6), Bridge.Decimal(123.4568), "Bridge583 3");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 6), Bridge.Decimal(123.456789), "Bridge583 4");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 6), Bridge.Decimal(123.456789), "Bridge583 5");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 6), Bridge.Decimal(-123.0), "Bridge583 6");
 
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 0), 1.5, "Bridge583 Up 1");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 0), 1.6, "Bridge583 Up 2");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 0), 123.4568, "Bridge583 Up 3");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 0), 123.456789, "Bridge583 Up 4");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 0), 123.456789, "Bridge583 Up 5");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 0), -124.0, "Bridge583 Up 6");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 0), 1.5, "Bridge583 Up 1");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 0), 1.6, "Bridge583 Up 2");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 0), 123.4568, "Bridge583 Up 3");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 0), 123.456789, "Bridge583 Up 4");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 0), 123.456789, "Bridge583 Up 5");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 0), -124.0, "Bridge583 Up 6");
 
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 4), 1.5, "Bridge583 AwayFromZero 1");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 4), 1.6, "Bridge583 AwayFromZero 2");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 4), 123.4568, "Bridge583 AwayFromZero 3");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 4), 123.456789, "Bridge583 AwayFromZero 4");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 4), 123.456789, "Bridge583 AwayFromZero 5");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 4), -123.0, "Bridge583 AwayFromZero 6");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 4), 1.5, "Bridge583 AwayFromZero 1");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 4), 1.6, "Bridge583 AwayFromZero 2");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 4), 123.4568, "Bridge583 AwayFromZero 3");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 4), 123.456789, "Bridge583 AwayFromZero 4");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 4), 123.456789, "Bridge583 AwayFromZero 5");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 4), -123.0, "Bridge583 AwayFromZero 6");
 
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 1), 1.4, "Bridge583 Down 1");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 1), 1.5, "Bridge583 Down 2");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 1), 123.4567, "Bridge583 Down 3");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 1), 123.456789, "Bridge583 Down 4");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 1), 123.456789, "Bridge583 Down 5");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 1), -123.0, "Bridge583 Down 6");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 1), 1.4, "Bridge583 Down 1");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 1), 1.5, "Bridge583 Down 2");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 1), 123.4567, "Bridge583 Down 3");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 1), 123.456789, "Bridge583 Down 4");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 1), 123.456789, "Bridge583 Down 5");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 1), -123.0, "Bridge583 Down 6");
 
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 2), 1.5, "Bridge583 InfinityPos 1");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 2), 1.6, "Bridge583 InfinityPos 2");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 2), 123.4568, "Bridge583 InfinityPos 3");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 2), 123.456789, "Bridge583 InfinityPos 4");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 2), 123.456789, "Bridge583 InfinityPos 5");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 2), -123.0, "Bridge583 InfinityPos 6");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 2), 1.5, "Bridge583 InfinityPos 1");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 2), 1.6, "Bridge583 InfinityPos 2");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 2), 123.4568, "Bridge583 InfinityPos 3");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 2), 123.456789, "Bridge583 InfinityPos 4");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 2), 123.456789, "Bridge583 InfinityPos 5");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 2), -123.0, "Bridge583 InfinityPos 6");
 
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 3), 1.4, "Bridge583 InfinityNeg 1");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 3), 1.5, "Bridge583 InfinityNeg 2");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 3), 123.4567, "Bridge583 InfinityNeg 3");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 3), 123.456789, "Bridge583 InfinityNeg 4");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 3), 123.456789, "Bridge583 InfinityNeg 5");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 3), -124.0, "Bridge583 InfinityNeg 6");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 3), 1.4, "Bridge583 InfinityNeg 1");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 3), 1.5, "Bridge583 InfinityNeg 2");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 3), 123.4567, "Bridge583 InfinityNeg 3");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 3), 123.456789, "Bridge583 InfinityNeg 4");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 3), 123.456789, "Bridge583 InfinityNeg 5");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 3), -124.0, "Bridge583 InfinityNeg 6");
 
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 5), 1.4, "Bridge583 TowardsZero 1");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 5), 1.5, "Bridge583 TowardsZero 2");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 5), 123.4568, "Bridge583 TowardsZero 3");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 5), 123.456789, "Bridge583 TowardsZero 4");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 5), 123.456789, "Bridge583 TowardsZero 5");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 5), -123.0, "Bridge583 TowardsZero 6");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 5), 1.4, "Bridge583 TowardsZero 1");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 5), 1.5, "Bridge583 TowardsZero 2");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 5), 123.4568, "Bridge583 TowardsZero 3");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 5), 123.456789, "Bridge583 TowardsZero 4");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 5), 123.456789, "Bridge583 TowardsZero 5");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 5), -123.0, "Bridge583 TowardsZero 6");
 
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 6), 1.4, "Bridge583 ToEven 1");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 6), 1.6, "Bridge583 ToEven 2");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 6), 123.4568, "Bridge583 ToEven 3");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 6), 123.456789, "Bridge583 ToEven 4");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 6), 123.456789, "Bridge583 ToEven 5");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 6), -123.0, "Bridge583 ToEven 6");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 6), 1.4, "Bridge583 ToEven 1");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 6), 1.6, "Bridge583 ToEven 2");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 6), 123.4568, "Bridge583 ToEven 3");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 6), 123.456789, "Bridge583 ToEven 4");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 6), 123.456789, "Bridge583 ToEven 5");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 6), -123.0, "Bridge583 ToEven 6");
 
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 7), 1.5, "Bridge583 Ceil 1");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 7), 1.6, "Bridge583 Ceil 2");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 7), 123.4568, "Bridge583 Ceil 3");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 7), 123.456789, "Bridge583 Ceil 4");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 7), 123.456789, "Bridge583 Ceil 5");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 7), -123.0, "Bridge583 Ceil 6");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 7), 1.5, "Bridge583 Ceil 1");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 7), 1.6, "Bridge583 Ceil 2");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 7), 123.4568, "Bridge583 Ceil 3");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 7), 123.456789, "Bridge583 Ceil 4");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 7), 123.456789, "Bridge583 Ceil 5");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 7), -123.0, "Bridge583 Ceil 6");
 
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 8), 1.4, "Bridge583 Floor 1");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 8), 1.5, "Bridge583 Floor 2");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 8), 123.4568, "Bridge583 Floor 3");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 8), 123.456789, "Bridge583 Floor 4");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 8), 123.456789, "Bridge583 Floor 5");
-            ClientTestLibrary.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 8), -123.0, "Bridge583 Floor 6");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.45), 1, 8), 1.4, "Bridge583 Floor 1");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(1.55), 1, 8), 1.5, "Bridge583 Floor 2");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 4, 8), 123.4568, "Bridge583 Floor 3");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 6, 8), 123.456789, "Bridge583 Floor 4");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(123.456789), 8, 8), 123.456789, "Bridge583 Floor 5");
+            Bridge.get(ClientTestLibrary.Utilities.DecimalHelper).assertIsDecimalAndEqualTo$1(assert, Bridge.Decimal.toDecimalPlaces(Bridge.Decimal(-123.456), 0, 8), -123.0, "Bridge583 Floor 6");
         }
     }
 });
@@ -2851,17 +2923,17 @@ Bridge.define('ClientTestLibrary.Bridge586', {
             assert.expect(4);
 
             assert.throws(function () {
-                ClientTestLibrary.Bridge586A.setSomeDataStatic(Bridge.Decimal(4));
+                Bridge.get(ClientTestLibrary.Bridge586A).setSomeDataStatic(Bridge.Decimal(4));
             }, "a.SomeDataStatic is external");
             assert.throws(function () {
-                ClientTestLibrary.Bridge586A.doSomethingStatic();
+                Bridge.get(ClientTestLibrary.Bridge586A).doSomethingStatic();
             }, "a.DoSomethingStatic() is external");
 
             assert.throws(function () {
-                ClientTestLibrary.Bridge586B.setSomeDataStatic(Bridge.Decimal(4));
+                Bridge.get(ClientTestLibrary.Bridge586B).setSomeDataStatic(Bridge.Decimal(4));
             }, "b.SomeDataStatic is external");
             assert.throws(function () {
-                ClientTestLibrary.Bridge586B.doSomethingStatic();
+                Bridge.get(ClientTestLibrary.Bridge586B).doSomethingStatic();
             }, "b.DoSomethingStatic() is external");
         }
     }
@@ -2871,7 +2943,7 @@ Bridge.define('ClientTestLibrary.Bridge588A', {
     statics: {
         config: {
             init: function () {
-                this.valeur3 = ClientTestLibrary.Bridge588A.add(ClientTestLibrary.Bridge588B.Valeur2, 1);
+                this.valeur3 = Bridge.get(ClientTestLibrary.Bridge588A).add(Bridge.get(ClientTestLibrary.Bridge588B).Valeur2, 1);
             }
         },
         add: function (a, b) {
@@ -2884,11 +2956,11 @@ Bridge.define('ClientTestLibrary.Bridge588C.C1', {
     statics: {
         config: {
             init: function () {
-                this._default = new ClientTestLibrary.Bridge588C.C1(ClientTestLibrary.Bridge588C.C2.getDefault());
+                this._default = new ClientTestLibrary.Bridge588C.C1(Bridge.get(ClientTestLibrary.Bridge588C.C2).getDefault());
             }
         },
         getDefault: function () {
-            return ClientTestLibrary.Bridge588C.C1._default;
+            return Bridge.get(ClientTestLibrary.Bridge588C.C1)._default;
         }
     },
     config: {
@@ -3214,15 +3286,25 @@ Bridge.define('ClientTestLibrary.Bridge652', {
         testUseCase: function (assert) {
             assert.expect(4);
 
-            ClientTestLibrary.Bridge652.log = null;
+            Bridge.get(ClientTestLibrary.Bridge652).log = null;
             var c = new ClientTestLibrary.Bridge652.Bridge652A1();
             assert.notEqual(c.bar, null, "Bridge652A1 Bar NotNull");
-            assert.equal(ClientTestLibrary.Bridge652.log, "Bridge652B1", "Bridge652A1 log");
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge652).log, "Bridge652B1", "Bridge652A1 log");
 
-            ClientTestLibrary.Bridge652.log = null;
+            Bridge.get(ClientTestLibrary.Bridge652).log = null;
             var d = new ClientTestLibrary.Bridge652.Bridge652A2();
             assert.notEqual(d.bar, null, "Bridge652A2 Bar NotNull");
-            assert.equal(ClientTestLibrary.Bridge652.log, "Bridge652B2", "Bridge652A2 log");
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge652).log, "Bridge652B2", "Bridge652A2 log");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge660MessageStore', {
+    statics: {
+        config: {
+            init: function () {
+                this._initialEditState = new ClientTestLibrary.Bridge660MessageEditState(new ClientTestLibrary.Bridge660TextInputState("constructor", "Message"));
+            }
         }
     }
 });
@@ -3232,9 +3314,9 @@ Bridge.define('ClientTestLibrary.Bridge537', {
         testUseCase: function (assert) {
             assert.expect(2);
 
-            assert.equal(ClientTestLibrary.Bridge537B.testB1(), 2, "Bridge537 TestB1");
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge537B).testB1(), 2, "Bridge537 TestB1");
 
-            assert.equal(ClientTestLibrary.Bridge537B.testB2(), 1, "Bridge537 TestB2");
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge537B).testB2(), 1, "Bridge537 TestB2");
         }
     }
 });
@@ -3252,11 +3334,11 @@ Bridge.define('ClientTestLibrary.Bridge588C', {
             assert.ok(c1 !== null, "Bridge588 C1");
             assert.equal(c1.getValue().getName(), "C2 value", "Bridge588 C1.Value.Name");
 
-            assert.ok(ClientTestLibrary.Bridge588C.C1.getDefault() !== null, "Bridge588 C1.Default");
-            assert.ok(ClientTestLibrary.Bridge588C.C1.getDefault().getValue() !== null, "Bridge588 C1.Default.Value");
-            assert.equal(ClientTestLibrary.Bridge588C.C1.getDefault().getValue().getName(), "default", "Bridge588 C1.Default.Value.Name");
-            assert.ok(ClientTestLibrary.Bridge588C.C2.getDefault() !== null, "Bridge588 C2.Default");
-            assert.ok(ClientTestLibrary.Bridge588C.C2.getDefault().getName() !== null, "Bridge588 C2.Default.Name");
+            assert.ok(Bridge.get(ClientTestLibrary.Bridge588C.C1).getDefault() !== null, "Bridge588 C1.Default");
+            assert.ok(Bridge.get(ClientTestLibrary.Bridge588C.C1).getDefault().getValue() !== null, "Bridge588 C1.Default.Value");
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge588C.C1).getDefault().getValue().getName(), "default", "Bridge588 C1.Default.Value.Name");
+            assert.ok(Bridge.get(ClientTestLibrary.Bridge588C.C2).getDefault() !== null, "Bridge588 C2.Default");
+            assert.ok(Bridge.get(ClientTestLibrary.Bridge588C.C2).getDefault().getName() !== null, "Bridge588 C2.Default.Name");
 
         }
     }
@@ -3296,18 +3378,28 @@ Bridge.define('ClientTestLibrary.Bridge603', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge660', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge660MessageStore)._initialEditState.getContent().getText(), "Message", "Bridge660 Initialize static members before first access to the class");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.TestBridgeIssues', {
     statics: {
         n169: function (assert) {
             assert.expect(2);
 
             // TEST
-            ClientTestLibrary.Bridge169.m1();
-            assert.deepEqual(ClientTestLibrary.Bridge169.number, 1, "M1()");
+            Bridge.get(ClientTestLibrary.Bridge169).m1();
+            assert.deepEqual(Bridge.get(ClientTestLibrary.Bridge169).number, 1, "M1()");
 
             // TEST
-            ClientTestLibrary.Bridge169.m2();
-            assert.deepEqual(ClientTestLibrary.Bridge169.number, 2, "M2()");
+            Bridge.get(ClientTestLibrary.Bridge169).m2();
+            assert.deepEqual(Bridge.get(ClientTestLibrary.Bridge169).number, 2, "M2()");
         },
         n240: function (assert) {
             assert.expect(3);
@@ -3322,24 +3414,24 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
             assert.expect(1);
 
             // TEST
-            var oldHash = Bridge.global.location.hash;
-            Bridge.global.location.hash = "#new-hash";
-            assert.equal(Bridge.global.location.hash, "#new-hash", "Setting Location.Hash works");
-            Bridge.global.location.hash = oldHash; // to clean up the url
+            var oldHash = Bridge.get(Bridge.global).location.hash;
+            Bridge.get(Bridge.global).location.hash = "#new-hash";
+            assert.equal(Bridge.get(Bridge.global).location.hash, "#new-hash", "Setting Location.Hash works");
+            Bridge.get(Bridge.global).location.hash = oldHash; // to clean up the url
         },
         n266: function (assert) {
             assert.expect(1);
 
             // TEST
-            assert.ok(ClientTestLibrary.Bridge266A.test() !== null, "new object() call transpiled");
+            assert.ok(Bridge.get(ClientTestLibrary.Bridge266A).test() !== null, "new object() call transpiled");
         },
         n272: function (assert) {
             assert.expect(3);
 
             // TEST
-            assert.deepEqual(ClientTestLibrary.Bridge272.test(1), ClientTestLibrary.Bridge272.MyEnum.abc, "Casted MyEnum.Abc");
-            assert.deepEqual(ClientTestLibrary.Bridge272.test(3), ClientTestLibrary.Bridge272.MyEnum.ghi, "Casted MyEnum.Ghi");
-            assert.deepEqual(ClientTestLibrary.Bridge272.test(4), 4, "Casted MyEnum.Abc");
+            assert.deepEqual(Bridge.get(ClientTestLibrary.Bridge272).test(1), Bridge.get(ClientTestLibrary.Bridge272.MyEnum).abc, "Casted MyEnum.Abc");
+            assert.deepEqual(Bridge.get(ClientTestLibrary.Bridge272).test(3), Bridge.get(ClientTestLibrary.Bridge272.MyEnum).ghi, "Casted MyEnum.Ghi");
+            assert.deepEqual(Bridge.get(ClientTestLibrary.Bridge272).test(4), 4, "Casted MyEnum.Abc");
         },
         n273: function (assert) {
             assert.expect(4);
@@ -3368,7 +3460,7 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
         n277: function (assert) {
             assert.expect(1);
 
-            assert.equal(ClientTestLibrary.Bridge277.$int, 0, "Enum member with reserved name initialized");
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge277).$int, 0, "Enum member with reserved name initialized");
         },
         n294: function (assert) {
             assert.expect(2);
@@ -3408,12 +3500,12 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
         n306: function (assert) {
             assert.expect(2);
 
-            var b = ClientTestLibrary.Bridge306B.$new(Bridge.merge(new ClientTestLibrary.Bridge306B.Props(), {
+            var b = Bridge.get(ClientTestLibrary.Bridge306B).$new(Bridge.merge(new ClientTestLibrary.Bridge306B.Props(), {
                 name: "B"
             } ));
             assert.equal(b, "ClientTestLibrary.Bridge306B.Props:B", "Bridge306B.New() works");
 
-            var a = ClientTestLibrary.Bridge306A.$new(Bridge.merge(new ClientTestLibrary.Bridge306A.Props(), {
+            var a = Bridge.get(ClientTestLibrary.Bridge306A).$new(Bridge.merge(new ClientTestLibrary.Bridge306A.Props(), {
                 name: "A"
             } ));
             assert.equal(a, "ClientTestLibrary.Bridge306A.Props:A", "Bridge306A.New() works");
@@ -3553,7 +3645,7 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
             var person2 = Bridge.merge(new ClientTestLibrary.Person383(), {
                 setName: "Madison"
             } );
-            var msg2 = ClientTestLibrary.Bridge383.doSomething(person2);
+            var msg2 = Bridge.get(ClientTestLibrary.Bridge383).doSomething(person2);
 
             assert.equal(msg2, "Madison", "Static extention Madison");
         },
@@ -3634,10 +3726,10 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
         },
         n409: function (assert) {
             var a = Bridge.Decimal.round(Bridge.Decimal(3.5), 6);
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, a, "4", "Math.Round(3.5M)");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, a, "4", "Math.Round(3.5M)");
 
             var b = Bridge.Decimal.round(Bridge.Decimal(4.5), 6);
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, b, "4", "Math.Round(4.5M)");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, b, "4", "Math.Round(4.5M)");
         },
         ensureNumber: function (assert, actual, expected, message) {
             assert.equal(actual.toString(), expected, message);
@@ -3658,11 +3750,11 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
             var DecimalMaxValue = Bridge.Decimal.MaxValue;
             var DecimalMinValue = Bridge.Decimal.MinValue;
 
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DecimalZero, "0", "DecimalZero");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DecimalOne, "1", "DecimalOne");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DecimalMinusOne, "-1", "DecimalMinusOne");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DecimalMaxValue, "7.9228162514264337593543950335e+28", "DecimalMaxValue");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DecimalMinValue, "-7.9228162514264337593543950335e+28", "DecimalMinValue");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, DecimalZero, "0", "DecimalZero");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, DecimalOne, "1", "DecimalOne");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, DecimalMinusOne, "-1", "DecimalMinusOne");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, DecimalMaxValue, "7.9228162514264337593543950335e+28", "DecimalMaxValue");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, DecimalMinValue, "-7.9228162514264337593543950335e+28", "DecimalMinValue");
 
             // Decimal consts in expressions
             DecimalZero  = Bridge.Decimal.Zero.add(Bridge.Decimal(0));
@@ -3675,11 +3767,11 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
             DecimalMinValue  = Bridge.Decimal.MinValue.add(Bridge.Decimal(0));
             ;
 
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DecimalZero, "0", "DecimalZeroin expression");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DecimalOne, "1", "DecimalOnein expression");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DecimalMinusOne, "-1", "DecimalMinusOnein expression");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DecimalMaxValue, "7.9228162514264337593543950335e+28", "DecimalMaxValuein expression");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DecimalMinValue, "-7.9228162514264337593543950335e+28", "DecimalMinValuein expression");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, DecimalZero, "0", "DecimalZeroin expression");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, DecimalOne, "1", "DecimalOnein expression");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, DecimalMinusOne, "-1", "DecimalMinusOnein expression");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, DecimalMaxValue, "7.9228162514264337593543950335e+28", "DecimalMaxValuein expression");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, DecimalMinValue, "-7.9228162514264337593543950335e+28", "DecimalMinValuein expression");
 
             // Double consts
             var DoubleMaxValue = Number.MAX_VALUE;
@@ -3689,12 +3781,12 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
             var DoublePositiveInfinity = Number.POSITIVE_INFINITY;
             var DoubleNaN = Number.NaN;
 
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DoubleMaxValue, "1.7976931348623157e+308", "DoubleMaxValue");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DoubleMinValue, "5e-324", "DoubleMinValue");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DoubleEpsilon, "5e-324", "DoubleEpsilon");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DoubleNegativeInfinity, "-Infinity", "DoubleNegativeInfinity");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DoublePositiveInfinity, "Infinity", "DoublePositiveInfinity");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DoubleNaN, "NaN", "DoubleNaN");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, DoubleMaxValue, "1.7976931348623157e+308", "DoubleMaxValue");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, DoubleMinValue, "5e-324", "DoubleMinValue");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, DoubleEpsilon, "5e-324", "DoubleEpsilon");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, DoubleNegativeInfinity, "-Infinity", "DoubleNegativeInfinity");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, DoublePositiveInfinity, "Infinity", "DoublePositiveInfinity");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, DoubleNaN, "NaN", "DoubleNaN");
 
             // Double consts in expressions
             DoubleMaxValue = Number.MAX_VALUE + 0;
@@ -3704,52 +3796,52 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
             DoublePositiveInfinity = Number.POSITIVE_INFINITY + 0;
             DoubleNaN = Number.NaN + 0;
 
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DoubleMaxValue, "1.7976931348623157e+308", "DoubleMaxValuein expression");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DoubleMinValue, "5e-324", "DoubleMinValuein expression");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DoubleEpsilon, "5e-324", "DoubleEpsilonin expression");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DoubleNegativeInfinity, "-Infinity", "DoubleNegativeInfinityin expression");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DoublePositiveInfinity, "Infinity", "DoublePositiveInfinityin expression");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, DoubleNaN, "NaN", "DoubleNaNin expression");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, DoubleMaxValue, "1.7976931348623157e+308", "DoubleMaxValuein expression");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, DoubleMinValue, "5e-324", "DoubleMinValuein expression");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, DoubleEpsilon, "5e-324", "DoubleEpsilonin expression");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, DoubleNegativeInfinity, "-Infinity", "DoubleNegativeInfinityin expression");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, DoublePositiveInfinity, "Infinity", "DoublePositiveInfinityin expression");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, DoubleNaN, "NaN", "DoubleNaNin expression");
 
             // Math consts
-            var MathE = Math.E;
-            var MathLN10 = Math.LN10;
-            var MathLN2 = Math.LN2;
-            var MathLOG2E = Math.LOG2E;
-            var MathLOG10E = Math.LOG10E;
-            var MathPI = Math.PI;
-            var MathSQRT1_2 = Math.SQRT1_2;
-            var MathSQRT2 = Math.SQRT2;
+            var MathE = Bridge.get(Math).E;
+            var MathLN10 = Bridge.get(Math).LN10;
+            var MathLN2 = Bridge.get(Math).LN2;
+            var MathLOG2E = Bridge.get(Math).LOG2E;
+            var MathLOG10E = Bridge.get(Math).LOG10E;
+            var MathPI = Bridge.get(Math).PI;
+            var MathSQRT1_2 = Bridge.get(Math).SQRT1_2;
+            var MathSQRT2 = Bridge.get(Math).SQRT2;
 
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathE, "2.718281828459045", "MathE");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathLN10, "2.302585092994046", "MathLN10");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathLN2, "0.6931471805599453", "MathLN2");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, MathE, "2.718281828459045", "MathE");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, MathLN10, "2.302585092994046", "MathLN10");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, MathLN2, "0.6931471805599453", "MathLN2");
             //IE has Math.LOG2E defined as 1.4426950408889633 instead of standard 1.4426950408889634
-            ClientTestLibrary.TestBridgeIssues.assertAlmostEqual(assert, MathLOG2E, 1.4426950408889634, "MathLOG2E");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathLOG10E, "0.4342944819032518", "MathLOG10E");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathPI, "3.141592653589793", "MathPI");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathSQRT1_2, "0.7071067811865476", "MathSQRT1_2");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathSQRT2, "1.4142135623730951", "MathSQRT2");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).assertAlmostEqual(assert, MathLOG2E, 1.4426950408889634, "MathLOG2E");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, MathLOG10E, "0.4342944819032518", "MathLOG10E");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, MathPI, "3.141592653589793", "MathPI");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, MathSQRT1_2, "0.7071067811865476", "MathSQRT1_2");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, MathSQRT2, "1.4142135623730951", "MathSQRT2");
 
             // Math consts in expression
-            MathE = Math.E + 0;
-            MathLN10 = Math.LN10 + 0;
-            MathLN2 = Math.LN2 + 0;
-            MathLOG2E = Math.LOG2E + 0;
-            MathLOG10E = Math.LOG10E + 0;
-            MathPI = Math.PI + 0;
-            MathSQRT1_2 = Math.SQRT1_2 + 0;
-            MathSQRT2 = Math.SQRT2 + 0;
+            MathE = Bridge.get(Math).E + 0;
+            MathLN10 = Bridge.get(Math).LN10 + 0;
+            MathLN2 = Bridge.get(Math).LN2 + 0;
+            MathLOG2E = Bridge.get(Math).LOG2E + 0;
+            MathLOG10E = Bridge.get(Math).LOG10E + 0;
+            MathPI = Bridge.get(Math).PI + 0;
+            MathSQRT1_2 = Bridge.get(Math).SQRT1_2 + 0;
+            MathSQRT2 = Bridge.get(Math).SQRT2 + 0;
 
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathE, "2.718281828459045", "MathEin expression");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathLN10, "2.302585092994046", "MathLN10in expression");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathLN2, "0.6931471805599453", "MathLN2in expression");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, MathE, "2.718281828459045", "MathEin expression");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, MathLN10, "2.302585092994046", "MathLN10in expression");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, MathLN2, "0.6931471805599453", "MathLN2in expression");
             //IE has Math.LOG2E defined as 1.4426950408889633 instead of standard 1.4426950408889634
-            ClientTestLibrary.TestBridgeIssues.assertAlmostEqual(assert, MathLOG2E, 1.4426950408889634, "MathLOG2Ein expression");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathLOG10E, "0.4342944819032518", "MathLOG10Ein expression");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathPI, "3.141592653589793", "MathPIin expression");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathSQRT1_2, "0.7071067811865476", "MathSQRT1_2in expression");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, MathSQRT2, "1.4142135623730951", "MathSQRT2in expression");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).assertAlmostEqual(assert, MathLOG2E, 1.4426950408889634, "MathLOG2Ein expression");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, MathLOG10E, "0.4342944819032518", "MathLOG10Ein expression");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, MathPI, "3.141592653589793", "MathPIin expression");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, MathSQRT1_2, "0.7071067811865476", "MathSQRT1_2in expression");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, MathSQRT2, "1.4142135623730951", "MathSQRT2in expression");
 
             // Single consts
             var SingleMaxValue = 3.40282347E+38;
@@ -3759,12 +3851,12 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
             var SingleNegativeInfinity = Number.NEGATIVE_INFINITY;
             var SinglePositiveInfinity = Number.POSITIVE_INFINITY;
 
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, SingleMaxValue, "3.40282347e+38", "SingleMaxValue");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, SingleMinValue, "-3.40282347e+38", "SingleMinValue");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, SingleEpsilon, "1.401298e-45", "SingleEpsilon");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, SingleNaN, "NaN", "SingleNaN");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, SingleNegativeInfinity, "-Infinity", "SingleNegativeInfinity");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, SinglePositiveInfinity, "Infinity", "SinglePositiveInfinity");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, SingleMaxValue, "3.40282347e+38", "SingleMaxValue");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, SingleMinValue, "-3.40282347e+38", "SingleMinValue");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, SingleEpsilon, "1.401298e-45", "SingleEpsilon");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, SingleNaN, "NaN", "SingleNaN");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, SingleNegativeInfinity, "-Infinity", "SingleNegativeInfinity");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, SinglePositiveInfinity, "Infinity", "SinglePositiveInfinity");
 
             // Single consts in expression
             SingleMaxValue = 3.40282347E+38;
@@ -3774,12 +3866,12 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
             SingleNegativeInfinity = Number.NEGATIVE_INFINITY + 0;
             SinglePositiveInfinity = Number.POSITIVE_INFINITY + 0;
 
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, SingleMaxValue, "3.40282347e+38", "SingleMaxValuein expression");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, SingleMinValue, "-3.40282347e+38", "SingleMinValuein expression");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, SingleEpsilon, "1.401298e-45", "SingleEpsilonin expression");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, SingleNaN, "NaN", "SingleNaNin expression");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, SingleNegativeInfinity, "-Infinity", "SingleNegativeInfinityin expression");
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, SinglePositiveInfinity, "Infinity", "SinglePositiveInfinityin expression");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, SingleMaxValue, "3.40282347e+38", "SingleMaxValuein expression");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, SingleMinValue, "-3.40282347e+38", "SingleMinValuein expression");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, SingleEpsilon, "1.401298e-45", "SingleEpsilonin expression");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, SingleNaN, "NaN", "SingleNaNin expression");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, SingleNegativeInfinity, "-Infinity", "SingleNegativeInfinityin expression");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, SinglePositiveInfinity, "Infinity", "SinglePositiveInfinityin expression");
         },
         n418: function (assert) {
             var t = new ClientTestLibrary.Bridge418();
@@ -3791,9 +3883,9 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
             assert.equal(r, 20, "Delegate added and called var r = t.CallDelegate(10);");
         },
         n422: function (assert) {
-            var v0 = ClientTestLibrary.Bridge422.first;
-            var v100 = ClientTestLibrary.Bridge422.next;
-            var v101 = ClientTestLibrary.Bridge422.afterNext;
+            var v0 = Bridge.get(ClientTestLibrary.Bridge422).first;
+            var v100 = Bridge.get(ClientTestLibrary.Bridge422).next;
+            var v101 = Bridge.get(ClientTestLibrary.Bridge422).afterNext;
 
             assert.equal(v0, 0, "Bridge422.first");
             assert.equal(v100, 100, "Bridge422.next");
@@ -3846,16 +3938,16 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
         },
         n442: function (assert) {
             var a = Bridge.Decimal(3.5);
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, a.round(), "4", "a.Round(3.5M)");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, a.round(), "4", "a.Round(3.5M)");
 
             var b = Bridge.Decimal(4.5);
-            ClientTestLibrary.TestBridgeIssues.ensureNumber(assert, b.round(), "4", "b.Round(4.5M)");
+            Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, b.round(), "4", "b.Round(4.5M)");
         },
         n460: function (assert) {
             var number;
 
             number = -12345.6789;
-            assert.equal(Bridge.Int.format(number, "G", Bridge.CultureInfo.invariantCulture), "-12345.6789", "ToString(\"G\") for negative numbers in InvariantCulture");
+            assert.equal(Bridge.Int.format(number, "G", Bridge.get(Bridge.CultureInfo).invariantCulture), "-12345.6789", "ToString(\"G\") for negative numbers in InvariantCulture");
         },
         n467: function (assert) {
             var a = Bridge.merge(new ClientTestLibrary.Bridge467(), {
@@ -3951,8 +4043,8 @@ Bridge.define('ClientTestLibrary.Bridge588', {
         testUseCase: function (assert) {
             assert.expect(2);
 
-            assert.equal(ClientTestLibrary.Bridge588A.valeur3, 3, "Bridge588 TestUseCase");
-            assert.equal(ClientTestLibrary.Bridge588C.C1.getDefault().getValue().getName(), "default", "Bridge588_2 TestUseCase");
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge588A).valeur3, 3, "Bridge588 TestUseCase");
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge588C.C1).getDefault().getValue().getName(), "default", "Bridge588_2 TestUseCase");
         }
     }
 });

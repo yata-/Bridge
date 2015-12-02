@@ -160,6 +160,10 @@
 
                 // All construction is actually done in the init method
                 if (!initializing) {
+                    if (this.$staticInit) {
+                        this.$staticInit();
+                    }
+
                     if (this.$initMembers) {
                         this.$initMembers.apply(this, arguments);
                     }
@@ -295,6 +299,8 @@
             }
 
             fn = function () {
+                Class.$staticInit = null;
+
                 if (Class.$initMembers) {
                     Class.$initMembers.call(Class);
                 }
@@ -307,7 +313,8 @@
             if (document && (document.readyState === "complete" || document.readyState === "loaded")) {
                 fn();
             } else {
-                Bridge.Class.$queue.push(fn);
+                Bridge.Class.$queue.push(Class);
+                Class.$staticInit = fn;
             }
 
             return Class;
@@ -385,7 +392,11 @@
 
         init: function (fn) {
             for (var i = 0; i < Bridge.Class.$queue.length; i++) {
-                Bridge.Class.$queue[i]();
+                var t = Bridge.Class.$queue[i];
+
+                if (t.$staticInit) {
+                    t.$staticInit();
+                }
             }
             Bridge.Class.$queue.length = 0;
 

@@ -15,7 +15,7 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqProjectionOperators', {
             assert.deepEqual(numberPlusOne, [2, 4, 6, 8], "A sequence of ints one higher than the numbers[]");
 
             // TEST
-            var persons = ClientTestLibrary.Utilities.Person.getPersons();
+            var persons = Bridge.get(ClientTestLibrary.Utilities.Person).getPersons();
             var names = (Bridge.Linq.Enumerable.from(persons).select(function (p) {
                 return p.getName();
             })).toArray();

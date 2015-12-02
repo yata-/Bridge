@@ -15,10 +15,10 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqMiscellaneousOperators', {
             assert.deepEqual(concatNumbers, [4, 1, 3, 2, 3, 5], "Concat() numbers");
 
             // TEST
-            var names = Bridge.Linq.Enumerable.from(ClientTestLibrary.Utilities.Person.getPersons()).select(function (p) {
+            var names = Bridge.Linq.Enumerable.from(Bridge.get(ClientTestLibrary.Utilities.Person).getPersons()).select(function (p) {
                 return p.getName();
             });
-            var cities = Bridge.Linq.Enumerable.from(ClientTestLibrary.Utilities.Person.getPersons()).select(function (p) {
+            var cities = Bridge.Linq.Enumerable.from(Bridge.get(ClientTestLibrary.Utilities.Person).getPersons()).select(function (p) {
                 return p.getCity();
             });
             var concatNames = names.concat(cities).toArray();

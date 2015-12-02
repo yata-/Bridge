@@ -5,8 +5,8 @@
 Bridge.define('ClientTestLibrary.Point', {
     statics: {
         constructor: function () {
-            ClientTestLibrary.Point.staticInt = 500;
-            ClientTestLibrary.Point.staticString = "Initialized";
+            Bridge.get(ClientTestLibrary.Point).staticInt = 500;
+            Bridge.get(ClientTestLibrary.Point).staticString = "Initialized";
         },
         statitIntNotInitialized: 0,
         statitStringNotInitialized: null,
@@ -14,7 +14,7 @@ Bridge.define('ClientTestLibrary.Point', {
         staticString: null,
         CONST_CHAR: 87,
         test3: function () {
-            return ClientTestLibrary.Point.statitIntNotInitialized + ClientTestLibrary.Point.staticInt;
+            return Bridge.get(ClientTestLibrary.Point).statitIntNotInitialized + Bridge.get(ClientTestLibrary.Point).staticInt;
         }
     },
     x: 0,
@@ -22,7 +22,7 @@ Bridge.define('ClientTestLibrary.Point', {
     constructor: function () {
     },
     test1: function () {
-        return ClientTestLibrary.Point.staticInt + this.x;
+        return Bridge.get(ClientTestLibrary.Point).staticInt + this.x;
     },
     test2: function (p) {
         return Bridge.merge(new ClientTestLibrary.Point(), {
@@ -145,16 +145,16 @@ Bridge.define('ClientTestLibrary.TestValueTypes', {
         testStaticConstructorsAndMethods: function (assert) {
             assert.expect(7);
 
-            assert.deepEqual(ClientTestLibrary.Point.staticInt, 500, "Point.StaticInt 500");
-            assert.deepEqual(ClientTestLibrary.Point.staticString, "Initialized", "Point.StaticString Initialized");
-            assert.deepEqual(ClientTestLibrary.Point.statitIntNotInitialized, 0, "Point.StatitIntNotInitialized 0");
-            assert.deepEqual(ClientTestLibrary.Point.statitStringNotInitialized, null, "Point.StatitStringNotInitialized null");
-            assert.deepEqual(ClientTestLibrary.Point.CONST_CHAR, Bridge.cast(87, Bridge.Int), "Point.CONST_CHAR W");
+            assert.deepEqual(Bridge.get(ClientTestLibrary.Point).staticInt, 500, "Point.StaticInt 500");
+            assert.deepEqual(Bridge.get(ClientTestLibrary.Point).staticString, "Initialized", "Point.StaticString Initialized");
+            assert.deepEqual(Bridge.get(ClientTestLibrary.Point).statitIntNotInitialized, 0, "Point.StatitIntNotInitialized 0");
+            assert.deepEqual(Bridge.get(ClientTestLibrary.Point).statitStringNotInitialized, null, "Point.StatitStringNotInitialized null");
+            assert.deepEqual(Bridge.get(ClientTestLibrary.Point).CONST_CHAR, Bridge.cast(87, Bridge.Int), "Point.CONST_CHAR W");
 
-            ClientTestLibrary.Point.statitIntNotInitialized = -1;
-            assert.deepEqual(ClientTestLibrary.Point.statitIntNotInitialized, -1, "Point.StatitIntNotInitialized -1");
+            Bridge.get(ClientTestLibrary.Point).statitIntNotInitialized = -1;
+            assert.deepEqual(Bridge.get(ClientTestLibrary.Point).statitIntNotInitialized, -1, "Point.StatitIntNotInitialized -1");
 
-            var i = ClientTestLibrary.Point.test3();
+            var i = Bridge.get(ClientTestLibrary.Point).test3();
             assert.deepEqual(i, 499, "i 499");
         }
     }

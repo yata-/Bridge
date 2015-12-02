@@ -8,7 +8,7 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqJoinOperators', {
             assert.expect(5);
 
             // TEST
-            var persons = (Bridge.Linq.Enumerable.from(ClientTestLibrary.Utilities.Person.getPersons()).join(ClientTestLibrary.Utilities.Group.getGroups(), function (p) {
+            var persons = (Bridge.Linq.Enumerable.from(Bridge.get(ClientTestLibrary.Utilities.Person).getPersons()).join(Bridge.get(ClientTestLibrary.Utilities.Group).getGroups(), function (p) {
                 return p.getGroup();
             }, function (g) {
                 return g.getName();
@@ -21,7 +21,7 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqJoinOperators', {
             assert.deepEqual(persons, personsExpected, "Join Persons and Groups");
 
             // TEST
-            var personsByLambda = Bridge.Linq.Enumerable.from(ClientTestLibrary.Utilities.Person.getPersons()).join(ClientTestLibrary.Utilities.Group.getGroups(), function (p) {
+            var personsByLambda = Bridge.Linq.Enumerable.from(Bridge.get(ClientTestLibrary.Utilities.Person).getPersons()).join(Bridge.get(ClientTestLibrary.Utilities.Group).getGroups(), function (p) {
                 return p.getGroup();
             }, function (g) {
                 return g.getName();
@@ -34,7 +34,7 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqJoinOperators', {
             assert.deepEqual(personsByLambda, personsByLambdaExpected, "Join Persons and Groups by lambda");
 
             // TEST
-            var groupJoin = (Bridge.Linq.Enumerable.from(ClientTestLibrary.Utilities.Group.getGroups()).groupJoin(ClientTestLibrary.Utilities.Person.getPersons(), function (g) {
+            var groupJoin = (Bridge.Linq.Enumerable.from(Bridge.get(ClientTestLibrary.Utilities.Group).getGroups()).groupJoin(Bridge.get(ClientTestLibrary.Utilities.Person).getPersons(), function (g) {
                 return g.getName();
             }, function (p) {
                 return p.getGroup();
@@ -49,7 +49,7 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqJoinOperators', {
             assert.deepEqual(groupJoin, groupJoinExpected, "Grouped join Persons and Groups");
 
             // TEST
-            var groupJoinWithDefault = (Bridge.Linq.Enumerable.from(ClientTestLibrary.Utilities.Group.getGroups()).groupJoin(ClientTestLibrary.Utilities.Person.getPersons(), function (g) {
+            var groupJoinWithDefault = (Bridge.Linq.Enumerable.from(Bridge.get(ClientTestLibrary.Utilities.Group).getGroups()).groupJoin(Bridge.get(ClientTestLibrary.Utilities.Person).getPersons(), function (g) {
                 return g.getName();
             }, function (p) {
                 return p.getGroup();
@@ -66,7 +66,7 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqJoinOperators', {
             assert.deepEqual(groupJoinWithDefault, groupJoinWithDefaultExpected, "Grouped join Persons and Groups with DefaultIfEmpty");
 
             // TEST
-            var groupJoinWithDefaultAndComplexEquals = (Bridge.Linq.Enumerable.from(ClientTestLibrary.Utilities.Group.getGroups()).groupJoin(ClientTestLibrary.Utilities.Person.getPersons(), function (g) {
+            var groupJoinWithDefaultAndComplexEquals = (Bridge.Linq.Enumerable.from(Bridge.get(ClientTestLibrary.Utilities.Group).getGroups()).groupJoin(Bridge.get(ClientTestLibrary.Utilities.Person).getPersons(), function (g) {
                 return { name: g.getName(), digit: 1 };
             }, function (p) {
                 return { name: p.getGroup(), digit: 1 };

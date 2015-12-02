@@ -21,7 +21,7 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqOrderingOperators', {
             assert.deepEqual(sortedWordsByLength, ["", "a", "z", "ac", "ab", "ab2", "bac", "ab12"], "Order by word length");
 
             // TEST
-            var sortedPersonsByName = (Bridge.Linq.Enumerable.from(ClientTestLibrary.Utilities.Person.getPersons()).orderBy(function (p) {
+            var sortedPersonsByName = (Bridge.Linq.Enumerable.from(Bridge.get(ClientTestLibrary.Utilities.Person).getPersons()).orderBy(function (p) {
                 return p.getName();
             }).select(function (p) {
                 return p.getName();
@@ -38,7 +38,7 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqOrderingOperators', {
             assert.deepEqual(sortedDoubles, [2.9, 2.1, 1.4, 1.0, 0.9, -0.7], "Order by descending double");
 
             // TEST
-            var sortedPersonsByCountDesc = (Bridge.Linq.Enumerable.from(ClientTestLibrary.Utilities.Person.getPersons()).orderByDescending(function (p) {
+            var sortedPersonsByCountDesc = (Bridge.Linq.Enumerable.from(Bridge.get(ClientTestLibrary.Utilities.Person).getPersons()).orderByDescending(function (p) {
                 return p.getCount();
             }).select(function (p) {
                 return p.getCount();

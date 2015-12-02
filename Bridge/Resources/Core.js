@@ -75,6 +75,14 @@
             return to;
         },
 
+        get: function (t) {
+            if (t && t.$staticInit) {
+                t.$staticInit();
+            }
+
+            return t;
+        },
+
         ns: function (ns, scope) {
             var nsParts = ns.split("."),
                 i = 0;
@@ -94,13 +102,11 @@
 
         ready: function (fn, scope) {
             var delayfn = function () {
-                setTimeout(function () {
-                    if (scope) {
-                        fn.apply(scope);
-                    } else {
-                        fn();
-                    }
-                }, 1);
+                if (scope) {
+                    fn.apply(scope);
+                } else {
+                    fn();
+                }
             };
 
             if (typeof Bridge.global.jQuery !== "undefined") {

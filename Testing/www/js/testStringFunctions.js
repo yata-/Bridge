@@ -7,7 +7,7 @@ Bridge.define('ClientTestLibrary.TestStringFunctions', {
         strings: function (assert) {
             var $t;
             // In PhantomJS some correct tests failed. We will skip them in this environment.
-            var isPhantomJs = ClientTestLibrary.Utilities.BrowserHelper.isPhantomJs();
+            var isPhantomJs = Bridge.get(ClientTestLibrary.Utilities.BrowserHelper).isPhantomJs();
 
             var expectedCount = isPhantomJs ? 28 : 48;
             assert.expect(expectedCount);
@@ -101,9 +101,9 @@ Bridge.define('ClientTestLibrary.TestStringFunctions', {
                 $t = Bridge.getEnumerator(scValues);
                 while ($t.moveNext()) {
                     var sc = $t.getCurrent();
-                    ClientTestLibrary.TestStringFunctions.test(0, 1, sc, threeIs, expected, expectedIndex++, assert);
-                    ClientTestLibrary.TestStringFunctions.test(0, 2, sc, threeIs, expected, expectedIndex++, assert);
-                    ClientTestLibrary.TestStringFunctions.test(1, 2, sc, threeIs, expected, expectedIndex++, assert);
+                    Bridge.get(ClientTestLibrary.TestStringFunctions).test(0, 1, sc, threeIs, expected, expectedIndex++, assert);
+                    Bridge.get(ClientTestLibrary.TestStringFunctions).test(0, 2, sc, threeIs, expected, expectedIndex++, assert);
+                    Bridge.get(ClientTestLibrary.TestStringFunctions).test(1, 2, sc, threeIs, expected, expectedIndex++, assert);
                 }
             }
 

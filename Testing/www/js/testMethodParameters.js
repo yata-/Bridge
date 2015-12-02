@@ -19,10 +19,10 @@ Bridge.define('ClientTestLibrary.TestMethodParametersClass', {
         test: function (assert) {
             assert.expect(3);
 
-            assert.equal(ClientTestLibrary.TestMethodParametersClass.methodDefault(), 5, "Default parameter - 5");
-            assert.equal(ClientTestLibrary.TestMethodParametersClass.methodDefault(10), 10, "Default parameter - 10");
+            assert.equal(Bridge.get(ClientTestLibrary.TestMethodParametersClass).methodDefault(), 5, "Default parameter - 5");
+            assert.equal(Bridge.get(ClientTestLibrary.TestMethodParametersClass).methodDefault(10), 10, "Default parameter - 10");
 
-            assert.equal(ClientTestLibrary.TestMethodParametersClass.methodParams([1, 2, 3]), 6, "params int[]");
+            assert.equal(Bridge.get(ClientTestLibrary.TestMethodParametersClass).methodParams([1, 2, 3]), 6, "params int[]");
         }
     }
 });
