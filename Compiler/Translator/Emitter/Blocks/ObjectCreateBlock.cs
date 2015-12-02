@@ -243,13 +243,18 @@ namespace Bridge.Translator
                     NamedArgumentExpression namedArgumentExpression = item as NamedArgumentExpression;
                     string name = namedExression != null ? namedExression.Name : namedArgumentExpression.Name;
 
+                    if (!preserveMemberCase)
+                    {
+                        name = Object.Net.Utilities.StringUtils.ToLowerCamelCase(name);
+                    }
+
                     var itemrr = this.Emitter.Resolver.ResolveNode(item, this.Emitter) as MemberResolveResult;
                     if (itemrr != null)
                     {
                         var oc = OverloadsCollection.Create(this.Emitter, itemrr.Member);
+                        oc.CancelChangeCase = this.Emitter.IsNativeMember(itemrr.Member.FullName) ? false : preserveMemberCase;
                         name = oc.GetOverloadName();
                     }
-
 
                     if (needComma)
                     {
@@ -257,12 +262,6 @@ namespace Bridge.Translator
                     }
 
                     needComma = true;
-                    
-
-                    if (!preserveMemberCase)
-                    {
-                        name = Object.Net.Utilities.StringUtils.ToLowerCamelCase(name);
-                    }
 
                     Expression expression = namedExression != null ? namedExression.Expression : namedArgumentExpression.Expression;
 

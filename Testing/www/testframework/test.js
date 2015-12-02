@@ -4340,6 +4340,10 @@ Bridge.define('Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesString
             var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesStringTests.beforeTest(false, assert);
             t.searchWorks();
         },
+        sliceWorks: function (assert) {
+            var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesStringTests.beforeTest(false, assert);
+            t.sliceWorks();
+        },
         splitWithStringWorks: function (assert) {
             var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesStringTests.beforeTest(false, assert);
             t.splitWithStringWorks();
@@ -4396,17 +4400,13 @@ Bridge.define('Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesString
             var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesStringTests.beforeTest(false, assert);
             t.substrWorks();
         },
-        substrWithLengthWorks: function (assert) {
-            var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesStringTests.beforeTest(false, assert);
-            t.substrWithLengthWorks();
-        },
         substringWorks: function (assert) {
             var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesStringTests.beforeTest(false, assert);
             t.substringWorks();
         },
-        substringWithLengthWorks: function (assert) {
+        jsSubstringWorks: function (assert) {
             var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesStringTests.beforeTest(false, assert);
-            t.substringWithLengthWorks();
+            t.jsSubstringWorks();
         },
         toLowerCaseWorks: function (assert) {
             var t = Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesStringTests.beforeTest(false, assert);
@@ -5497,6 +5497,7 @@ Bridge.define('Bridge.Test.QUnit.RunQUnitTests', {
             QUnit.test("String - ReplaceRegexWithReplaceTextWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesStringTests.replaceRegexWithReplaceTextWorks);
             QUnit.test("String - ReplaceRegexWithReplaceCallbackWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesStringTests.replaceRegexWithReplaceCallbackWorks);
             QUnit.test("String - SearchWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesStringTests.searchWorks);
+            QUnit.test("String - SliceWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesStringTests.sliceWorks);
             QUnit.test("String - SplitWithStringWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesStringTests.splitWithStringWorks);
             QUnit.test("String - SplitWithCharWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesStringTests.splitWithCharWorks);
             QUnit.test("String - JsSplitWithStringAndLimitWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesStringTests.jsSplitWithStringAndLimitWorks);
@@ -5511,9 +5512,8 @@ Bridge.define('Bridge.Test.QUnit.RunQUnitTests', {
             QUnit.test("String - StartsWithCharWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesStringTests.startsWithCharWorks);
             QUnit.test("String - StartsWithStringWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesStringTests.startsWithStringWorks);
             QUnit.test("String - SubstrWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesStringTests.substrWorks);
-            QUnit.test("String - SubstrWithLengthWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesStringTests.substrWithLengthWorks);
             QUnit.test("String - SubstringWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesStringTests.substringWorks);
-            QUnit.test("String - SubstringWithLengthWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesStringTests.substringWithLengthWorks);
+            QUnit.test("String - JsSubstringWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesStringTests.jsSubstringWorks);
             QUnit.test("String - ToLowerCaseWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesStringTests.toLowerCaseWorks);
             QUnit.test("String - ToUpperCaseWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesStringTests.toUpperCaseWorks);
             QUnit.test("String - ToLowerWorks", Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesStringTests.toLowerWorks);
