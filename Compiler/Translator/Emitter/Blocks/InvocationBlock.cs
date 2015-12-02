@@ -417,6 +417,18 @@ namespace Bridge.Translator
             }
             else
             {
+                var dynamicResolveResult = this.Emitter.Resolver.ResolveNode(invocationExpression, this.Emitter) as DynamicInvocationResolveResult;
+
+                if (dynamicResolveResult != null)
+                {
+                    var group = dynamicResolveResult.Target as MethodGroupResolveResult;
+
+                    if (group != null && group.Methods.Count() > 1)
+                    {
+                        throw new EmitterException(invocationExpression, "Cannot compile this dynamic invocation because there are two or more method overloads with the same parameter count. To work around this limitation, assign the dynamic value to a non-dynamic variable before use or call a method with different parameter count");
+                    }
+                }
+
                 var targetResolveResult = this.Emitter.Resolver.ResolveNode(invocationExpression.Target, this.Emitter);
                 var invocationResolveResult = targetResolveResult as MemberResolveResult;
                 IMethod method = null;
