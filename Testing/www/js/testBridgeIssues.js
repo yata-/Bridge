@@ -1861,6 +1861,22 @@ Bridge.define('ClientTestLibrary.Bridge635B', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge648A', {
+    statics: {
+        op_Implicit: function (value) {
+            return value.getValue();
+        }
+    },
+    config: {
+        properties: {
+            Value: null
+        }
+    },
+    constructor: function (value) {
+        this.setValue(value);
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge652.Bridge652B1', {
     constructor: function () {
         ClientTestLibrary.Bridge652.log = "Bridge652B1";
@@ -3107,6 +3123,20 @@ Bridge.define('ClientTestLibrary.Bridge647', {
             var b = { bar: 1, bar1: 12 };
             assert.equal(b.bar, 1, "Bridge647 B bar");
             assert.equal(b.bar1, 12, "Bridge647 B bar1");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge648', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var wrappedString = new ClientTestLibrary.Bridge648A("test");
+            var stringArray = Bridge.Array.init(0, null);
+            stringArray.push(ClientTestLibrary.Bridge648A.op_Implicit(wrappedString));
+
+            assert.equal(stringArray[0], "test");
         }
     }
 });
