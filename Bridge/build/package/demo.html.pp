@@ -8,9 +8,9 @@
     <script src="../output/$rootnamespace$.js"></script>
 </head>
 <body>
-	<!-- 
-		Right-Click on this file 
-		and select "View in Browser"
-	--> 
+    <!-- 
+        Right-Click on this file 
+        and select "View in Browser"
+    --> 
 </body>
 </html>
