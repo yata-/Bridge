@@ -282,7 +282,7 @@ namespace Bridge.Translator
                 if (resolveResult is TypeResolveResult)
                 {
                     TypeResolveResult typeResolveResult = (TypeResolveResult)resolveResult;
-                    var isNative = this.Emitter.IsNativeMember(typeResolveResult.Type.FullName) || this.Emitter.Validator.IsIgnoreType(typeResolveResult.Type.GetDefinition());
+                    var isNative = this.Emitter.Validator.IsIgnoreType(typeResolveResult.Type.GetDefinition());
                     if (isNative)
                     {
                         this.Write(BridgeTypes.ToJsName(typeResolveResult.Type, this.Emitter));

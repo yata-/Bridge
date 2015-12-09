@@ -3947,7 +3947,7 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
             var number;
 
             number = -12345.6789;
-            assert.equal(Bridge.Int.format(number, "G", Bridge.CultureInfo.invariantCulture), "-12345.6789", "ToString(\"G\") for negative numbers in InvariantCulture");
+            assert.equal(Bridge.Int.format(number, "G", Bridge.get(Bridge.CultureInfo).invariantCulture), "-12345.6789", "ToString(\"G\") for negative numbers in InvariantCulture");
         },
         n467: function (assert) {
             var a = Bridge.merge(new ClientTestLibrary.Bridge467(), {

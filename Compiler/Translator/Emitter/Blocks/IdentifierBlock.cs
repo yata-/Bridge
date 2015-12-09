@@ -67,9 +67,7 @@ namespace Bridge.Translator
 
             if (resolveResult is TypeResolveResult)
             {
-                var isNative = this.Emitter.IsNativeMember(resolveResult.Type.FullName);
-
-                if (isNative || this.Emitter.Validator.IsIgnoreType(resolveResult.Type.GetDefinition()))
+                if (this.Emitter.Validator.IsIgnoreType(resolveResult.Type.GetDefinition()))
                 {
                     this.Write(BridgeTypes.ToJsName(resolveResult.Type, this.Emitter));
                 }
@@ -93,7 +91,7 @@ namespace Bridge.Translator
 
                 if (memberResult.Member.IsStatic)
                 {
-                    if (!this.Emitter.IsNativeMember(memberResult.Member.DeclaringType.FullName) && !this.Emitter.Validator.IsIgnoreType(memberResult.Member.DeclaringTypeDefinition))
+                    if (!this.Emitter.Validator.IsIgnoreType(memberResult.Member.DeclaringTypeDefinition))
                     {
                         this.Write("(Bridge.get(" + BridgeTypes.ToJsName(memberResult.Member.DeclaringType, this.Emitter) + "))");
                     }
@@ -439,8 +437,8 @@ namespace Bridge.Translator
                     {
                         var typeResolveResult = (TypeResolveResult)resolveResult;
 
-                        var isNative = this.Emitter.IsNativeMember(typeResolveResult.Type.FullName);
-                        if (!isNative && !this.Emitter.Validator.IsIgnoreType(typeResolveResult.Type.GetDefinition()))
+                        var isNative = this.Emitter.Validator.IsIgnoreType(typeResolveResult.Type.GetDefinition());
+                        if (!isNative)
                         {
                             this.Write("Bridge.get(" + BridgeTypes.ToJsName(typeResolveResult.Type, this.Emitter));
                         }
@@ -495,8 +493,7 @@ namespace Bridge.Translator
         {            
             if (memberResult.Member.IsStatic)
             {
-                var isNative = this.Emitter.IsNativeMember(memberResult.Member.DeclaringType.FullName);
-                if (!isNative && !this.Emitter.Validator.IsIgnoreType(memberResult.Member.DeclaringTypeDefinition))
+                if (!this.Emitter.Validator.IsIgnoreType(memberResult.Member.DeclaringTypeDefinition))
                 {
                     this.Write("Bridge.get(" + BridgeTypes.ToJsName(memberResult.Member.DeclaringType, this.Emitter) + ")");
                 }
