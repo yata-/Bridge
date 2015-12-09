@@ -139,23 +139,23 @@ Bridge.define('ClientTestLibrary.TestVersion', {
             var s1 = "105.1.1128.65547";
             var v1 = new Bridge.Version("constructor$4", s1);
 
-            assert.equal(Bridge.get(Bridge.Version).parse(s1).toString(), v1.toString(), "Version.Parse(s1)");
+            assert.equal(Bridge.Version.parse(s1).toString(), v1.toString(), "Version.Parse(s1)");
 
             var s2 = "105.1";
             var v2 = new Bridge.Version("constructor$4", s2);
 
-            assert.equal(Bridge.get(Bridge.Version).parse(s2).toString(), v2.toString(), "Version.Parse(s2)");
+            assert.equal(Bridge.Version.parse(s2).toString(), v2.toString(), "Version.Parse(s2)");
 
             assert.throws(function () {
-                Bridge.get(Bridge.Version).parse("12,123.23.12");
+                Bridge.Version.parse("12,123.23.12");
             }, "Version.Parse(\"12,123.23.12\")");
 
             var vp1 = { };
-            var b1 = Bridge.get(Bridge.Version).tryParse("12,123.23.12", vp1);
+            var b1 = Bridge.Version.tryParse("12,123.23.12", vp1);
             assert.equal(b1, false, "b1");
 
             var vp2 = { };
-            var b2 = Bridge.get(Bridge.Version).tryParse("12.3.2.1", vp2);
+            var b2 = Bridge.Version.tryParse("12.3.2.1", vp2);
             assert.equal(b2, true, "b2");
             assert.equal(vp2.v.toString(), "12.3.2.1", "vp2.ToString()");
         },

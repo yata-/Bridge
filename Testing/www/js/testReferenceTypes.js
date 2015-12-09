@@ -63,8 +63,8 @@ Bridge.define('ClientTestLibrary.ClassA', {
         this.setNumberA(10);
         this.setStringA("Str");
         this.setBoolA(true);
-        this.setDoubleA(Bridge.get(Number).POSITIVE_INFINITY);
-        this.setDecimalA(Bridge.get(Bridge.Decimal).MinusOne);
+        this.setDoubleA(Number.POSITIVE_INFINITY);
+        this.setDecimalA(Bridge.Decimal.MinusOne);
         this.setData(Bridge.merge(new ClientTestLibrary.ClassA.Aux1(), {
             setNumber: 700
         } ));
@@ -187,7 +187,7 @@ Bridge.define('ClientTestLibrary.TestReferenceTypes', {
             assert.deepEqual(a.getNumberA(), 10, "NumberA 10");
             assert.deepEqual(a.getStringA(), "Str", "StringA Str");
             assert.deepEqual(a.getBoolA(), true, "BoolA true");
-            assert.ok(a.getDoubleA() === Bridge.get(Number).POSITIVE_INFINITY, "DoubleA Double.PositiveInfinity");
+            assert.ok(a.getDoubleA() === Number.POSITIVE_INFINITY, "DoubleA Double.PositiveInfinity");
             assert.deepEqual(a.getDecimalA(), Bridge.Decimal(-1.0), "DecimalA Decimal.MinusOne");
             assert.ok(a.getData() !== null, "Data not null");
             assert.deepEqual(a.getData().getNumber(), 700, "Data.Number 700");
