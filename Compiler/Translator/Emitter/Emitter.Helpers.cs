@@ -505,7 +505,7 @@ namespace Bridge.Translator
 
         public virtual bool IsNativeMember(string fullName)
         {
-            return fullName.Contains(Bridge.Translator.Translator.Bridge_ASSEMBLY) || fullName.StartsWith("System");
+            return fullName.StartsWith(Bridge.Translator.Translator.Bridge_ASSEMBLY + ".") || fullName.StartsWith("System.");
         }
 
         public virtual bool IsMemberConst(IMember member)

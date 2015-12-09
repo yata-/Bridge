@@ -282,8 +282,15 @@ namespace Bridge.Translator
                 if (resolveResult is TypeResolveResult)
                 {
                     TypeResolveResult typeResolveResult = (TypeResolveResult)resolveResult;
-
-                    this.Write("Bridge.get(" + BridgeTypes.ToJsName(typeResolveResult.Type, this.Emitter) + ")");
+                    var isNative = this.Emitter.IsNativeMember(typeResolveResult.Type.FullName) || this.Emitter.Validator.IsIgnoreType(typeResolveResult.Type.GetDefinition());
+                    if (isNative)
+                    {
+                        this.Write(BridgeTypes.ToJsName(typeResolveResult.Type, this.Emitter));
+                    }
+                    else
+                    {
+                        this.Write("Bridge.get(" + BridgeTypes.ToJsName(typeResolveResult.Type, this.Emitter) + ")");
+                    }                    
 
                     return;
                 }
