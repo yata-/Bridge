@@ -79,10 +79,11 @@ namespace Bridge.Translator
             var oldParentVariables = this.Emitter.ParentTempVariables;
             if (this.Emitter.ParentTempVariables == null)
             {
-                this.Emitter.ParentTempVariables = this.Emitter.TempVariables;
+                this.Emitter.ParentTempVariables = new Dictionary<string,bool>(this.Emitter.TempVariables);
             }
             else
             {
+                this.Emitter.ParentTempVariables = new Dictionary<string, bool>(this.Emitter.ParentTempVariables);
                 foreach (var item in this.Emitter.TempVariables)
                 {
                     this.Emitter.ParentTempVariables.Add(item.Key, item.Value);
