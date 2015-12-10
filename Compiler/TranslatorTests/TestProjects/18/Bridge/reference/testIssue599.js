@@ -20,7 +20,7 @@ Bridge.define('TestIssue599.Issue599', {
         }
     },
     test: function () {
-        Bridge.get(console).log(this._something);
+        console.log(this._something);
     }
 });
 

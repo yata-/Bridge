@@ -439,7 +439,7 @@ Bridge.define('ClientTestLibrary.Bridge485', {
                 return { lastName: p.lastName, firstName: p.firstName };
             });
 
-            var s = Bridge.get(JSON).stringify(query.toList(Object));
+            var s = JSON.stringify(query.toList(Object));
 
             assert.equal(s, "{\"items\":[{\"lastName\":\"Ruth\",\"firstName\":\"Babe\"},{\"lastName\":\"Cobb\",\"firstName\":\"Ty\"}]}", "#485");
         }
@@ -451,7 +451,7 @@ Bridge.define('ClientTestLibrary.Bridge495', {
         testUseCase: function (assert) {
             assert.expect(3);
 
-            var root = Bridge.get(document).getElementById("qunit-fixture");
+            var root = document.getElementById("qunit-fixture");
 
             var button1 = document.createElement('button');
             button1.innerHTML = "Button 1";
@@ -460,7 +460,7 @@ Bridge.define('ClientTestLibrary.Bridge495', {
 
             root.appendChild(button1);
 
-            var b1 = Bridge.get(document).getElementById("button1");
+            var b1 = document.getElementById("button1");
             assert.equal(b1.style.color, "green", "b1.Style.Color green");
 
             var button2 = document.createElement('button');
@@ -470,7 +470,7 @@ Bridge.define('ClientTestLibrary.Bridge495', {
 
             root.appendChild(button2);
 
-            var b2 = Bridge.get(document).getElementById("button2");
+            var b2 = document.getElementById("button2");
             assert.equal(b2.style.backgroundColor, "yellow", "b2.Style.BackgroundColor HTMLColor.Yellow");
 
             var hexColor = "#FFEEAA";
@@ -481,7 +481,7 @@ Bridge.define('ClientTestLibrary.Bridge495', {
 
             root.appendChild(divElement1);
 
-            var div1 = Bridge.get(document).getElementById("div1");
+            var div1 = document.getElementById("div1");
             assert.equal(div1.style.color, "rgb(255, 238, 170)", "div1.Style.Color " + hexColor);
 
         }
@@ -719,7 +719,7 @@ Bridge.define('ClientTestLibrary.Bridge508', {
                         for (;;) {
                             switch ($step) {
                                 case 0: {
-                                    $task1 = Bridge.get(Bridge.Task).delay(0);
+                                    $task1 = Bridge.Task.delay(0);
                                     $step = 1;
                                     $task1.continueWith($asyncBody);
                                     return;
@@ -756,7 +756,7 @@ Bridge.define('ClientTestLibrary.Bridge508', {
                         for (;;) {
                             switch ($step) {
                                 case 0: {
-                                    $task1 = Bridge.get(Bridge.Task).delay(0);
+                                    $task1 = Bridge.Task.delay(0);
                                     $step = 1;
                                     $task1.continueWith($asyncBody);
                                     return;
@@ -2317,20 +2317,20 @@ Bridge.define('ClientTestLibrary.Bridge501', {
             var list = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
                 [7]
             ] );
-            var z = Bridge.get(JSON).stringify(list); // this is ok
+            var z = JSON.stringify(list); // this is ok
             assert.equal(z, "{\"items\":[7]}", "List<int>");
 
             var b = Bridge.merge(new ClientTestLibrary.Bridge501B(), [
                 [1],
                 [2]
             ] );
-            var y = Bridge.get(JSON).stringify(b); // wrong, missing items
+            var y = JSON.stringify(b); // wrong, missing items
             assert.equal(y, "{\"items\":[1,2]}", "Bridge501B");
 
             var a = Bridge.merge(new ClientTestLibrary.Bridge501A(), [
                 [7]
             ] ); // sine items is defined as member, push fails
-            var x = Bridge.get(JSON).stringify(a);
+            var x = JSON.stringify(a);
             assert.equal(x, "{\"items\":[7]}", "Bridge501A");
 
             var c = Bridge.merge(new ClientTestLibrary.Bridge501A(), JSON.parse(x));
@@ -2964,10 +2964,10 @@ Bridge.define('ClientTestLibrary.Bridge586', {
             }, "a.DoSomethingStatic() is external");
 
             assert.throws(function () {
-                Bridge.get(ClientTestLibrary.Bridge586B).setSomeDataStatic(Bridge.Decimal(4));
+                ClientTestLibrary.Bridge586B.setSomeDataStatic(Bridge.Decimal(4));
             }, "b.SomeDataStatic is external");
             assert.throws(function () {
-                Bridge.get(ClientTestLibrary.Bridge586B).doSomethingStatic();
+                ClientTestLibrary.Bridge586B.doSomethingStatic();
             }, "b.DoSomethingStatic() is external");
         }
     }
@@ -3448,10 +3448,10 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
             assert.expect(1);
 
             // TEST
-            var oldHash = Bridge.get(Bridge.global).location.hash;
-            Bridge.get(Bridge.global).location.hash = "#new-hash";
-            assert.equal(Bridge.get(Bridge.global).location.hash, "#new-hash", "Setting Location.Hash works");
-            Bridge.get(Bridge.global).location.hash = oldHash; // to clean up the url
+            var oldHash = Bridge.global.location.hash;
+            Bridge.global.location.hash = "#new-hash";
+            assert.equal(Bridge.global.location.hash, "#new-hash", "Setting Location.Hash works");
+            Bridge.global.location.hash = oldHash; // to clean up the url
         },
         n266: function (assert) {
             assert.expect(1);
@@ -3838,14 +3838,14 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
             Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, DoubleNaN, "NaN", "DoubleNaNin expression");
 
             // Math consts
-            var MathE = Bridge.get(Math).E;
-            var MathLN10 = Bridge.get(Math).LN10;
-            var MathLN2 = Bridge.get(Math).LN2;
-            var MathLOG2E = Bridge.get(Math).LOG2E;
-            var MathLOG10E = Bridge.get(Math).LOG10E;
-            var MathPI = Bridge.get(Math).PI;
-            var MathSQRT1_2 = Bridge.get(Math).SQRT1_2;
-            var MathSQRT2 = Bridge.get(Math).SQRT2;
+            var MathE = Math.E;
+            var MathLN10 = Math.LN10;
+            var MathLN2 = Math.LN2;
+            var MathLOG2E = Math.LOG2E;
+            var MathLOG10E = Math.LOG10E;
+            var MathPI = Math.PI;
+            var MathSQRT1_2 = Math.SQRT1_2;
+            var MathSQRT2 = Math.SQRT2;
 
             Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, MathE, "2.718281828459045", "MathE");
             Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, MathLN10, "2.302585092994046", "MathLN10");
@@ -3858,14 +3858,14 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
             Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, MathSQRT2, "1.4142135623730951", "MathSQRT2");
 
             // Math consts in expression
-            MathE = Bridge.get(Math).E + 0;
-            MathLN10 = Bridge.get(Math).LN10 + 0;
-            MathLN2 = Bridge.get(Math).LN2 + 0;
-            MathLOG2E = Bridge.get(Math).LOG2E + 0;
-            MathLOG10E = Bridge.get(Math).LOG10E + 0;
-            MathPI = Bridge.get(Math).PI + 0;
-            MathSQRT1_2 = Bridge.get(Math).SQRT1_2 + 0;
-            MathSQRT2 = Bridge.get(Math).SQRT2 + 0;
+            MathE = Math.E + 0;
+            MathLN10 = Math.LN10 + 0;
+            MathLN2 = Math.LN2 + 0;
+            MathLOG2E = Math.LOG2E + 0;
+            MathLOG10E = Math.LOG10E + 0;
+            MathPI = Math.PI + 0;
+            MathSQRT1_2 = Math.SQRT1_2 + 0;
+            MathSQRT2 = Math.SQRT2 + 0;
 
             Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, MathE, "2.718281828459045", "MathEin expression");
             Bridge.get(ClientTestLibrary.TestBridgeIssues).ensureNumber(assert, MathLN10, "2.302585092994046", "MathLN10in expression");

@@ -490,7 +490,7 @@ Bridge.define('Bridge.ClientTest.DecimalMathTests.Logger', {
         sb.appendLine();
         sb.append("};");
 
-        Bridge.get(console).log(sb.toString());
+        console.log(sb.toString());
     }
 });
 
@@ -2461,24 +2461,24 @@ Bridge.define('Bridge.ClientTest.CultureInfoTests', {
     invariantWorks: function () {
         var culture = Bridge.get(Bridge.CultureInfo).invariantCulture;
         Bridge.get(Bridge.Test.Assert).areEqual(culture.name, "iv");
-        Bridge.get(Bridge.Test.Assert).areEqual(culture.dateTimeFormat, Bridge.get(Bridge.DateTimeFormatInfo).invariantInfo);
-        Bridge.get(Bridge.Test.Assert).areEqual(culture.numberFormat, Bridge.get(Bridge.NumberFormatInfo).invariantInfo);
+        Bridge.get(Bridge.Test.Assert).areEqual(culture.dateTimeFormat, Bridge.DateTimeFormatInfo.invariantInfo);
+        Bridge.get(Bridge.Test.Assert).areEqual(culture.numberFormat, Bridge.NumberFormatInfo.invariantInfo);
     }
 });
 
 Bridge.define('Bridge.ClientTest.DateTimeFormatInfoTests', {
     typePropertiesAreCorrect: function () {
-        var format = Bridge.get(Bridge.DateTimeFormatInfo).invariantInfo;
+        var format = Bridge.DateTimeFormatInfo.invariantInfo;
         Bridge.get(Bridge.Test.Assert).areEqual(Bridge.getTypeName(Bridge.DateTimeFormatInfo), "Bridge.DateTimeFormatInfo");
         Bridge.get(Bridge.Test.Assert).$true(true);
     },
     getFormatWorks: function () {
-        var format = Bridge.get(Bridge.DateTimeFormatInfo).invariantInfo;
+        var format = Bridge.DateTimeFormatInfo.invariantInfo;
         Bridge.get(Bridge.Test.Assert).areEqual(format.getFormat(Bridge.Int), null);
         Bridge.get(Bridge.Test.Assert).areEqual(format.getFormat(Bridge.DateTimeFormatInfo), format);
     },
     invariantWorks: function () {
-        var format = Bridge.get(Bridge.DateTimeFormatInfo).invariantInfo;
+        var format = Bridge.DateTimeFormatInfo.invariantInfo;
         Bridge.get(Bridge.Test.Assert).areEqual(format.amDesignator, "AM");
         Bridge.get(Bridge.Test.Assert).areEqual(format.pmDesignator, "PM");
 
@@ -2508,8 +2508,8 @@ Bridge.define('Bridge.ClientTest.DecimalMathTests', {
         HasDotNetDiff: true,
         config: {
             init: function () {
-                this.maxValue = Bridge.get(Bridge.Decimal).MaxValue;
-                this.minValue = Bridge.get(Bridge.Decimal).MinValue;
+                this.maxValue = Bridge.Decimal.MaxValue;
+                this.minValue = Bridge.Decimal.MinValue;
                 this.inputAdd = Bridge.Array.create(null, [[Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(47.0), Bridge.Decimal(47.0)], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(-47.0), Bridge.Decimal(-47.0)], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(-47.0), Bridge.Decimal(-47.0)], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(47.0), Bridge.Decimal(47.0)], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal("443534569034876.33478923476"), Bridge.Decimal(47.0), Bridge.Decimal("443534569034923.33478923476")], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal("443534569034876.12345678901235"), Bridge.Decimal(47.000000000001), Bridge.Decimal("443534569034923.12345678901335")], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal("443534569034876.12345678901235"), Bridge.Decimal("9436905724146.297872340425532"), Bridge.Decimal("452971474759022.42132912943788")], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal("4435345690348766678656790453"), Bridge.Decimal(17.0), Bridge.Decimal("4435345690348766678656790470")], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal(17.2345324), Bridge.Decimal("4435345690348766678656790453"), Bridge.Decimal("4435345690348766678656790470.2")], [Bridge.get(Bridge.ClientTest.DecimalMathTests).HasDotNetDiff, "0.00000000000005", Bridge.Decimal("-943456769034871.4234"), Bridge.Decimal("47.00000000003455"), Bridge.Decimal("-943456769034824.4233999999654")], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal("6999545690348766678656790453"), Bridge.Decimal(-13.0), Bridge.Decimal("6999545690348766678656790440")], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal(11.0), Bridge.Decimal("-6435345690348766678656790453"), Bridge.Decimal("-6435345690348766678656790442")], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.get(Bridge.ClientTest.DecimalMathTests).maxValue, Bridge.get(Bridge.ClientTest.DecimalMathTests).minValue, Bridge.Decimal(0.0)], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal.MinusOne, Bridge.get(Bridge.ClientTest.DecimalMathTests).maxValue, Bridge.Decimal("79228162514264337593543950334")], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.get(Bridge.ClientTest.DecimalMathTests).maxValue, Bridge.Decimal.MinusOne, Bridge.Decimal("79228162514264337593543950334")]], 15, 5);
                 this.inputSubtract = Bridge.Array.create(null, [[Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(47.0), Bridge.Decimal(-47.0)], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(-47.0), Bridge.Decimal(47.0)], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(-47.0), Bridge.Decimal(47.0)], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(47.0), Bridge.Decimal(-47.0)], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal("443534569034876.33478923476"), Bridge.Decimal(47.0), Bridge.Decimal("443534569034829.33478923476")], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal("443534569034876.12345678901235"), Bridge.Decimal(47.000000000001), Bridge.Decimal("443534569034829.12345678901135")], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal("443534569034876.12345678901235"), Bridge.Decimal("9436905724146.297872340425532"), Bridge.Decimal("434097663310729.82558444858682")], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal("4435345690348766678656790453"), Bridge.Decimal(17.0), Bridge.Decimal("4435345690348766678656790436")], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal(17.2345324), Bridge.Decimal("4435345690348766678656790453"), Bridge.Decimal("-4435345690348766678656790435.8")], [Bridge.get(Bridge.ClientTest.DecimalMathTests).HasDotNetDiff, Bridge.Decimal("-5E-14"), Bridge.Decimal("-943456769034871.4234"), Bridge.Decimal("47.00000000003455"), Bridge.Decimal("-943456769034918.4234000000346")], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal("6999545690348766678656790453"), Bridge.Decimal(-13.0), Bridge.Decimal("6999545690348766678656790466")], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal(11.0), Bridge.Decimal("-6435345690348766678656790453"), Bridge.Decimal("6435345690348766678656790464")], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.get(Bridge.ClientTest.DecimalMathTests).maxValue, Bridge.get(Bridge.ClientTest.DecimalMathTests).maxValue, Bridge.Decimal(0.0)], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal.MinusOne, Bridge.get(Bridge.ClientTest.DecimalMathTests).minValue, Bridge.Decimal("79228162514264337593543950334")], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.get(Bridge.ClientTest.DecimalMathTests).maxValue, Bridge.Decimal.One, Bridge.Decimal("79228162514264337593543950334")], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.get(Bridge.ClientTest.DecimalMathTests).minValue, Bridge.Decimal.MinusOne, Bridge.Decimal("-79228162514264337593543950334")]], 16, 5);
                 this.inputMultiply = Bridge.Array.create(null, [[Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(47.0), Bridge.Decimal(0.0)], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(-47.0), Bridge.Decimal(0.0)], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(-47.0), Bridge.Decimal(0.0)], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(47.0), Bridge.Decimal(0.0)], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal(0.0), Bridge.Decimal(0.0), Bridge.Decimal(0.0)], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal("443534569034876.33478923476"), Bridge.Decimal(0.47), Bridge.Decimal("208461247446391.8773509403372")], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal("43534569034876.12345678901235"), Bridge.Decimal(47.000000000001), Bridge.Decimal("2046124744639221.3370381184566")], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal("44.353456903487612345678901235"), Bridge.Decimal("9436905724146.297872340425532"), Bridge.Decimal("418559391338198.38088395328596")], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal("4435345690348766678656790453"), Bridge.Decimal(0.17), Bridge.Decimal("754008767359290335371654377.01")], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal(17.2345324), Bridge.Decimal("443534569034876667865679045.37"), Bridge.Decimal("7644110900551618662335084355.4")], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal("-943456769034871.4234"), Bridge.Decimal("0.4700000000003455"), Bridge.Decimal("-443424681446715.53331170154808")], [Bridge.get(Bridge.ClientTest.DecimalMathTests).HasDotNetDiff, Bridge.Decimal(-0.01), Bridge.Decimal("6999545690348766678656790453"), Bridge.Decimal(-0.13), Bridge.Decimal("-909940939745339668225382758.9")], [Bridge.get(Bridge.ClientTest.DecimalMathTests).HasDotNetDiff, Bridge.Decimal(0.0001), Bridge.Decimal(0.11), Bridge.Decimal("-64353456903487666786567904.535"), Bridge.Decimal("-7078880259383643346522469.4988")], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.get(Bridge.ClientTest.DecimalMathTests).maxValue, Bridge.Decimal.MinusOne, Bridge.get(Bridge.ClientTest.DecimalMathTests).minValue], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.Decimal.MinusOne, Bridge.get(Bridge.ClientTest.DecimalMathTests).minValue, Bridge.get(Bridge.ClientTest.DecimalMathTests).maxValue], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.get(Bridge.ClientTest.DecimalMathTests).maxValue, Bridge.Decimal.One, Bridge.get(Bridge.ClientTest.DecimalMathTests).maxValue], [Bridge.get(Bridge.ClientTest.DecimalMathTests).NoDotNetDiff, null, Bridge.get(Bridge.ClientTest.DecimalMathTests).minValue, Bridge.Decimal.MinusOne, Bridge.get(Bridge.ClientTest.DecimalMathTests).maxValue]], 17, 5);
@@ -3364,50 +3364,50 @@ Bridge.define('Bridge.ClientTest.MathTests', {
         Bridge.get(Bridge.Test.Assert).areStrictEqual$1(v.toString(), d.toString(), message);
     },
     constantsWork: function () {
-        this.assertAlmostEqual(Bridge.get(Math).E, 2.7182818284590451);
-        this.assertAlmostEqual(Bridge.get(Math).LN2, 0.69314718055994529);
-        this.assertAlmostEqual(Bridge.get(Math).LN10, 2.3025850929940459);
-        this.assertAlmostEqual(Bridge.get(Math).LOG2E, 1.4426950408889634);
-        this.assertAlmostEqual(Bridge.get(Math).LOG10E, 0.43429448190325182);
-        this.assertAlmostEqual(Bridge.get(Math).PI, 3.1415926535897931);
-        this.assertAlmostEqual(Bridge.get(Math).SQRT1_2, 0.70710678118654757);
-        this.assertAlmostEqual(Bridge.get(Math).SQRT2, 1.4142135623730951);
+        this.assertAlmostEqual(Math.E, 2.7182818284590451);
+        this.assertAlmostEqual(Math.LN2, 0.69314718055994529);
+        this.assertAlmostEqual(Math.LN10, 2.3025850929940459);
+        this.assertAlmostEqual(Math.LOG2E, 1.4426950408889634);
+        this.assertAlmostEqual(Math.LOG10E, 0.43429448190325182);
+        this.assertAlmostEqual(Math.PI, 3.1415926535897931);
+        this.assertAlmostEqual(Math.SQRT1_2, 0.70710678118654757);
+        this.assertAlmostEqual(Math.SQRT2, 1.4142135623730951);
     },
     absOfDoubleWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).abs(-12.5), 12.5);
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.abs(-12.5), 12.5);
     },
     absOfIntWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).abs(-12), 12);
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.abs(-12), 12);
     },
     absOfLongWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).abs(-12), 12);
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.abs(-12), 12);
     },
     absOfSbyteWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).abs(Bridge.cast(-15, Bridge.Int)), Bridge.cast(15, Bridge.Int));
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.abs(Bridge.cast(-15, Bridge.Int)), Bridge.cast(15, Bridge.Int));
     },
     absOfShortWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).abs(Bridge.cast(-15, Bridge.Int)), Bridge.cast(15, Bridge.Int));
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.abs(Bridge.cast(-15, Bridge.Int)), Bridge.cast(15, Bridge.Int));
     },
     absOfFloatWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).abs(-17.5), 17.5);
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.abs(-17.5), 17.5);
     },
     absOfDecimalWorks: function () {
         this.assertIsDecimalAndEqualTo(Bridge.Decimal(-10.0).abs(), 10.0);
     },
     acosWorks: function () {
-        this.assertAlmostEqual(Bridge.get(Math).acos(0.5), 1.0471975511965979);
+        this.assertAlmostEqual(Math.acos(0.5), 1.0471975511965979);
     },
     asinWorks: function () {
-        this.assertAlmostEqual(Bridge.get(Math).asin(0.5), 0.52359877559829893);
+        this.assertAlmostEqual(Math.asin(0.5), 0.52359877559829893);
     },
     atanWorks: function () {
-        this.assertAlmostEqual(Bridge.get(Math).atan(0.5), 0.46364760900080609);
+        this.assertAlmostEqual(Math.atan(0.5), 0.46364760900080609);
     },
     atan2Works: function () {
-        this.assertAlmostEqual(Bridge.get(Math).atan2(1, 2), 0.46364760900080609);
+        this.assertAlmostEqual(Math.atan2(1, 2), 0.46364760900080609);
     },
     cosWorks: function () {
-        this.assertAlmostEqual(Bridge.get(Math).cos(0.5), 0.87758256189037276);
+        this.assertAlmostEqual(Math.cos(0.5), 0.87758256189037276);
     },
     divRemWorks: function () {
         var resultInt = { };
@@ -3430,116 +3430,116 @@ Bridge.define('Bridge.ClientTest.MathTests', {
         Bridge.get(Bridge.Test.Assert).areEqual(resultLong.v, 143);
     },
     expWorks: function () {
-        this.assertAlmostEqual(Bridge.get(Math).exp(0.5), 1.6487212707001282);
+        this.assertAlmostEqual(Math.exp(0.5), 1.6487212707001282);
     },
     floorOfDoubleWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).floor(3.6), 3.0);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).floor(-3.6), -4.0);
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.floor(3.6), 3.0);
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.floor(-3.6), -4.0);
     },
     floorOfDecimalWorks: function () {
         this.assertIsDecimalAndEqualTo(Bridge.Decimal(3.6).floor(), 3.0);
         this.assertIsDecimalAndEqualTo(Bridge.Decimal(-3.6).floor(), -4.0);
     },
     logWorks: function () {
-        this.assertAlmostEqual(Bridge.get(Math).log(0.5), -0.69314718055994529);
+        this.assertAlmostEqual(Math.log(0.5), -0.69314718055994529);
     },
     maxOfByteWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).max(Bridge.cast(1, Bridge.Int), Bridge.cast(3, Bridge.Int)), 3.0);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).max(Bridge.cast(5, Bridge.Int), Bridge.cast(3, Bridge.Int)), 5.0);
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.max(Bridge.cast(1, Bridge.Int), Bridge.cast(3, Bridge.Int)), 3.0);
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.max(Bridge.cast(5, Bridge.Int), Bridge.cast(3, Bridge.Int)), 5.0);
     },
     maxOfDecimalWorks: function () {
         this.assertIsDecimalAndEqualTo(Bridge.Decimal.max(Bridge.Decimal(-14.5), Bridge.Decimal(3.0)), 3.0);
         this.assertIsDecimalAndEqualTo(Bridge.Decimal.max(Bridge.Decimal(5.4), Bridge.Decimal(3.0)), 5.4);
     },
     maxOfDoubleWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).max(1.0, 3.0), 3.0);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).max(4.0, 3.0), 4.0);
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.max(1.0, 3.0), 3.0);
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.max(4.0, 3.0), 4.0);
     },
     maxOfShortWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).max(Bridge.cast(1, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(3, Bridge.Int));
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).max(Bridge.cast(4, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(4, Bridge.Int));
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.max(Bridge.cast(1, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(3, Bridge.Int));
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.max(Bridge.cast(4, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(4, Bridge.Int));
     },
     maxOfIntWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).max(1, 3), 3);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).max(4, 3), 4);
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.max(1, 3), 3);
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.max(4, 3), 4);
     },
     maxOfLongWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).max(1, 3), 3);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).max(4, 3), 4);
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.max(1, 3), 3);
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.max(4, 3), 4);
     },
     maxOfSByteWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).max(Bridge.cast(-1, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(3, Bridge.Int));
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).max(Bridge.cast(5, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(5, Bridge.Int));
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.max(Bridge.cast(-1, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(3, Bridge.Int));
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.max(Bridge.cast(5, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(5, Bridge.Int));
     },
     maxOfFloatWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).max(-14.5, 3.0), 3.0);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).max(5.4, 3.0), 5.4);
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.max(-14.5, 3.0), 3.0);
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.max(5.4, 3.0), 5.4);
     },
     maxOfUShortWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).max(Bridge.cast(1, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(3, Bridge.Int));
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).max(Bridge.cast(5, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(5, Bridge.Int));
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.max(Bridge.cast(1, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(3, Bridge.Int));
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.max(Bridge.cast(5, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(5, Bridge.Int));
     },
     maxOfUIntWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).max(Bridge.cast(1, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(3, Bridge.Int));
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).max(Bridge.cast(5, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(5, Bridge.Int));
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.max(Bridge.cast(1, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(3, Bridge.Int));
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.max(Bridge.cast(5, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(5, Bridge.Int));
     },
     maxOfULongWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).max(Bridge.cast(100, Bridge.Int), Bridge.cast(300, Bridge.Int)), Bridge.cast(300, Bridge.Int));
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).max(Bridge.cast(500, Bridge.Int), Bridge.cast(300, Bridge.Int)), Bridge.cast(500, Bridge.Int));
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.max(Bridge.cast(100, Bridge.Int), Bridge.cast(300, Bridge.Int)), Bridge.cast(300, Bridge.Int));
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.max(Bridge.cast(500, Bridge.Int), Bridge.cast(300, Bridge.Int)), Bridge.cast(500, Bridge.Int));
     },
     minOfByteWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).min(Bridge.cast(1, Bridge.Int), Bridge.cast(3, Bridge.Int)), 1.0);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).min(Bridge.cast(5, Bridge.Int), Bridge.cast(3, Bridge.Int)), 3.0);
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.min(Bridge.cast(1, Bridge.Int), Bridge.cast(3, Bridge.Int)), 1.0);
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.min(Bridge.cast(5, Bridge.Int), Bridge.cast(3, Bridge.Int)), 3.0);
     },
     minOfDecimalWorks: function () {
         this.assertIsDecimalAndEqualTo(Bridge.Decimal.min(Bridge.Decimal(-14.5), Bridge.Decimal(3.0)), -14.5);
         this.assertIsDecimalAndEqualTo(Bridge.Decimal.min(Bridge.Decimal(5.4), Bridge.Decimal(3.0)), 3.0);
     },
     minOfDoubleWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).min(1.0, 3.0), 1.0);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).min(4.0, 3.0), 3.0);
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.min(1.0, 3.0), 1.0);
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.min(4.0, 3.0), 3.0);
     },
     minOfShortWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).min(Bridge.cast(1, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(1, Bridge.Int));
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).min(Bridge.cast(4, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(3, Bridge.Int));
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.min(Bridge.cast(1, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(1, Bridge.Int));
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.min(Bridge.cast(4, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(3, Bridge.Int));
     },
     minOfIntWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).min(1, 3), 1);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).min(4, 3), 3);
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.min(1, 3), 1);
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.min(4, 3), 3);
     },
     minOfLongWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).min(1, 3), 1);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).min(4, 3), 3);
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.min(1, 3), 1);
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.min(4, 3), 3);
     },
     minOfSByteWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).min(Bridge.cast(-1, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(-1, Bridge.Int));
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).min(Bridge.cast(5, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(3, Bridge.Int));
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.min(Bridge.cast(-1, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(-1, Bridge.Int));
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.min(Bridge.cast(5, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(3, Bridge.Int));
     },
     minOfFloatWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).min(-14.5, 3.0), -14.5);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).min(5.4, 3.0), 3.0);
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.min(-14.5, 3.0), -14.5);
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.min(5.4, 3.0), 3.0);
     },
     minOfUShortWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).min(Bridge.cast(1, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(1, Bridge.Int));
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).min(Bridge.cast(5, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(3, Bridge.Int));
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.min(Bridge.cast(1, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(1, Bridge.Int));
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.min(Bridge.cast(5, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(3, Bridge.Int));
     },
     minOfUIntWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).min(Bridge.cast(1, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(1, Bridge.Int));
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).min(Bridge.cast(5, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(3, Bridge.Int));
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.min(Bridge.cast(1, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(1, Bridge.Int));
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.min(Bridge.cast(5, Bridge.Int), Bridge.cast(3, Bridge.Int)), Bridge.cast(3, Bridge.Int));
     },
     minOfULongWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).min(Bridge.cast(100, Bridge.Int), Bridge.cast(300, Bridge.Int)), Bridge.cast(100, Bridge.Int));
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Math).min(Bridge.cast(500, Bridge.Int), Bridge.cast(300, Bridge.Int)), Bridge.cast(300, Bridge.Int));
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.min(Bridge.cast(100, Bridge.Int), Bridge.cast(300, Bridge.Int)), Bridge.cast(100, Bridge.Int));
+        Bridge.get(Bridge.Test.Assert).areEqual(Math.min(Bridge.cast(500, Bridge.Int), Bridge.cast(300, Bridge.Int)), Bridge.cast(300, Bridge.Int));
     },
     powWorks: function () {
-        this.assertAlmostEqual(Bridge.get(Math).pow(3, 0.5), 1.7320508075688772);
+        this.assertAlmostEqual(Math.pow(3, 0.5), 1.7320508075688772);
 
-        this.assertAlmostEqual(Bridge.get(Math).pow(3, 2), 9);
-        this.assertAlmostEqual(Bridge.get(Math).pow(2, 3), 8);
+        this.assertAlmostEqual(Math.pow(3, 2), 9);
+        this.assertAlmostEqual(Math.pow(2, 3), 8);
     },
     randomWorks: function () {
         for (var i = 0; i < 5; i++) {
-            var d = Bridge.get(Math).random();
+            var d = Math.random();
             Bridge.get(Bridge.Test.Assert).$true(d >= 0);
             Bridge.get(Bridge.Test.Assert).$true(d < 1);
         }
@@ -3853,13 +3853,13 @@ Bridge.define('Bridge.ClientTest.MathTests', {
         this.assertAlmostEqual(3.2 - (3.1 * Math.round(3.2 / 3.1)), 0.1);
     },
     sinWorks: function () {
-        this.assertAlmostEqual(Bridge.get(Math).sin(0.5), 0.479425538604203);
+        this.assertAlmostEqual(Math.sin(0.5), 0.479425538604203);
     },
     sqrtWorks: function () {
         this.assertIsDecimalAndEqualTo(Bridge.Decimal(3.0).sqrt(), "1.7320508075688772935274463415");
     },
     tanWorks: function () {
-        this.assertAlmostEqual(Bridge.get(Math).tan(0.5), 0.54630248984379048);
+        this.assertAlmostEqual(Math.tan(0.5), 0.54630248984379048);
     }
 });
 
@@ -4229,17 +4229,17 @@ Bridge.define('Bridge.ClientTest.NullableTests', {
 
 Bridge.define('Bridge.ClientTest.NumberFormatInfoTests', {
     typePropertiesAreCorrect: function () {
-        var format = Bridge.get(Bridge.NumberFormatInfo).invariantInfo;
+        var format = Bridge.NumberFormatInfo.invariantInfo;
         Bridge.get(Bridge.Test.Assert).areEqual(Bridge.getTypeName(Bridge.NumberFormatInfo), "Bridge.NumberFormatInfo");
         Bridge.get(Bridge.Test.Assert).$true(true);
     },
     getFormatWorks: function () {
-        var format = Bridge.get(Bridge.NumberFormatInfo).invariantInfo;
+        var format = Bridge.NumberFormatInfo.invariantInfo;
         Bridge.get(Bridge.Test.Assert).areEqual(format.getFormat(Bridge.Int), null);
         Bridge.get(Bridge.Test.Assert).areEqual(format.getFormat(Bridge.NumberFormatInfo), format);
     },
     invariantWorks: function () {
-        var format = Bridge.get(Bridge.NumberFormatInfo).invariantInfo;
+        var format = Bridge.NumberFormatInfo.invariantInfo;
         Bridge.get(Bridge.Test.Assert).areEqual(format.nanSymbol, "NaN");
         Bridge.get(Bridge.Test.Assert).areEqual(format.negativeSign, "-");
         Bridge.get(Bridge.Test.Assert).areEqual(format.positiveSign, "+");
@@ -4935,14 +4935,14 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.DecimalTests', {
         Bridge.get(Bridge.Test.Assert).$false(Bridge.equals(((Bridge.Decimal.lift(1))), Bridge.Decimal.lift(0)));
         Bridge.get(Bridge.Test.Assert).$false(Bridge.equals(((Bridge.Decimal.lift(0))), Bridge.Decimal.lift(0.5)));
         Bridge.get(Bridge.Test.Assert).$true(Bridge.equals(((Bridge.Decimal.lift(1))), Bridge.Decimal.lift(1)));
-        Bridge.get(Bridge.Test.Assert).$false(Bridge.equals(((Bridge.Decimal.lift(0))), Bridge.get(Bridge.Decimal).MaxValue));
+        Bridge.get(Bridge.Test.Assert).$false(Bridge.equals(((Bridge.Decimal.lift(0))), Bridge.Decimal.MaxValue));
     },
     decimalEqualsWorks: function () {
         Bridge.get(Bridge.Test.Assert).$true(((Bridge.Decimal.lift(0))).equals(Bridge.Decimal.lift(0)));
         Bridge.get(Bridge.Test.Assert).$false(((Bridge.Decimal.lift(1))).equals(Bridge.Decimal.lift(0)));
         Bridge.get(Bridge.Test.Assert).$false(((Bridge.Decimal.lift(0))).equals(Bridge.Decimal.lift(0.5)));
         Bridge.get(Bridge.Test.Assert).$true(((Bridge.Decimal.lift(1))).equals(Bridge.Decimal.lift(1)));
-        Bridge.get(Bridge.Test.Assert).$false(((Bridge.Decimal.lift(0))).equals(Bridge.get(Bridge.Decimal).MaxValue));
+        Bridge.get(Bridge.Test.Assert).$false(((Bridge.Decimal.lift(0))).equals(Bridge.Decimal.MaxValue));
     },
     compareToWorks: function () {
         Bridge.get(Bridge.Test.Assert).$true(((Bridge.Decimal.lift(0))).compareTo(Bridge.Decimal.lift(0)) === 0);
@@ -5036,21 +5036,21 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.DoubleTests', {
         var inf = "Infinity";
         Bridge.get(Bridge.Test.Assert).false$1((-inf === Number.POSITIVE_INFINITY), "-inf");
         Bridge.get(Bridge.Test.Assert).false$1((0.0 === Number.POSITIVE_INFINITY), "0.0");
-        Bridge.get(Bridge.Test.Assert).false$1((Bridge.get(Number).NaN === Number.POSITIVE_INFINITY), "Double.NaN");
+        Bridge.get(Bridge.Test.Assert).false$1((Number.NaN === Number.POSITIVE_INFINITY), "Double.NaN");
     },
     isNegativeInfinityWorks: function () {
         var inf = "Infinity";
         Bridge.get(Bridge.Test.Assert).$false((inf === Number.NEGATIVE_INFINITY));
         Bridge.get(Bridge.Test.Assert).$true((-inf === Number.NEGATIVE_INFINITY));
         Bridge.get(Bridge.Test.Assert).$false((0.0 === Number.NEGATIVE_INFINITY));
-        Bridge.get(Bridge.Test.Assert).$false((Bridge.get(Number).NaN === Number.NEGATIVE_INFINITY));
+        Bridge.get(Bridge.Test.Assert).$false((Number.NaN === Number.NEGATIVE_INFINITY));
     },
     isInfinityWorks: function () {
         var inf = "Infinity";
         Bridge.get(Bridge.Test.Assert).$true((Math.abs(inf) === Number.POSITIVE_INFINITY));
         Bridge.get(Bridge.Test.Assert).$true((Math.abs(-inf) === Number.POSITIVE_INFINITY));
         Bridge.get(Bridge.Test.Assert).$false((Math.abs(0.0) === Number.POSITIVE_INFINITY));
-        Bridge.get(Bridge.Test.Assert).$false((Math.abs(Bridge.get(Number).NaN) === Number.POSITIVE_INFINITY));
+        Bridge.get(Bridge.Test.Assert).$false((Math.abs(Number.NaN) === Number.POSITIVE_INFINITY));
     },
     isFiniteWorks: function () {
         var zero = 0, one = 1;
@@ -5757,7 +5757,7 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.JsDateTimeTests', {
     uTCNowWorks: function () {
         var UTC = Bridge.Date.utcNow();
         var local = new Date();
-        Bridge.get(Bridge.Test.Assert).$true(Bridge.get(Math).abs((new Bridge.TimeSpan((new Date(local.getUTCFullYear(), (local.getUTCMonth() + 1) - 1, local.getUTCDate(), local.getUTCHours(), local.getUTCMinutes(), local.getUTCSeconds(), local.getUTCMilliseconds()) - UTC) * 10000)).getTotalMinutes()) < 1000);
+        Bridge.get(Bridge.Test.Assert).$true(Math.abs((new Bridge.TimeSpan((new Date(local.getUTCFullYear(), (local.getUTCMonth() + 1) - 1, local.getUTCDate(), local.getUTCHours(), local.getUTCMinutes(), local.getUTCSeconds(), local.getUTCMilliseconds()) - UTC) * 10000)).getTotalMinutes()) < 1000);
     },
     toUniversalWorks: function () {
         var dt = new Date(2011, 7 - 1, 12, 13, 42, 56, 345);
@@ -6285,21 +6285,21 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.SingleTests', {
         //Assert.True (float.IsPositiveInfinity(inf));
         Bridge.get(Bridge.Test.Assert).$false((-inf === Number.POSITIVE_INFINITY));
         Bridge.get(Bridge.Test.Assert).$false((0.0 === Number.POSITIVE_INFINITY));
-        Bridge.get(Bridge.Test.Assert).$false((Bridge.get(Number).NaN === Number.POSITIVE_INFINITY));
+        Bridge.get(Bridge.Test.Assert).$false((Number.NaN === Number.POSITIVE_INFINITY));
     },
     isNegativeInfinityWorks: function () {
         var inf = "Infinity";
         Bridge.get(Bridge.Test.Assert).$false((inf === Number.NEGATIVE_INFINITY));
         Bridge.get(Bridge.Test.Assert).$true((-inf === Number.NEGATIVE_INFINITY));
         Bridge.get(Bridge.Test.Assert).$false((0.0 === Number.NEGATIVE_INFINITY));
-        Bridge.get(Bridge.Test.Assert).$false((Bridge.get(Number).NaN === Number.NEGATIVE_INFINITY));
+        Bridge.get(Bridge.Test.Assert).$false((Number.NaN === Number.NEGATIVE_INFINITY));
     },
     isInfinityWorks: function () {
         var inf = "Infinity";
         Bridge.get(Bridge.Test.Assert).$true((Math.abs(inf) === Number.POSITIVE_INFINITY));
         Bridge.get(Bridge.Test.Assert).$true((Math.abs(-inf) === Number.POSITIVE_INFINITY));
         Bridge.get(Bridge.Test.Assert).$false((Math.abs(0.0) === Number.POSITIVE_INFINITY));
-        Bridge.get(Bridge.Test.Assert).$false((Math.abs(Bridge.get(Number).NaN) === Number.POSITIVE_INFINITY));
+        Bridge.get(Bridge.Test.Assert).$false((Math.abs(Number.NaN) === Number.POSITIVE_INFINITY));
     },
     isFiniteWorks: function () {
         var zero = 0, one = 1;
@@ -6928,7 +6928,7 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.TimeSpanTests', {
         Bridge.get(Bridge.Test.Assert).areEqual(ts.getTicks(), 0);
     },
     zeroWorks: function () {
-        var ts = Bridge.get(Bridge.TimeSpan).zero;
+        var ts = Bridge.TimeSpan.zero;
         Bridge.get(Bridge.Test.Assert).areEqual(ts.getTicks(), 0);
     },
     creatingInstanceReturnsTimeSpanWithZeroValue: function () {
@@ -6953,27 +6953,27 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.TimeSpanTests', {
         Bridge.get(Bridge.Test.Assert).areEqual$1(time.getTicks(), 13332050140000, "full value");
     },
     factoryMethodsWork: function () {
-        var time = Bridge.get(Bridge.TimeSpan).fromDays(3);
+        var time = Bridge.TimeSpan.fromDays(3);
         Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(time, Bridge.TimeSpan), "FromDays type");
         Bridge.get(Bridge.Test.Assert).areEqual$1(time.getTicks(), 2592000000000, "FromDays value");
 
-        time = Bridge.get(Bridge.TimeSpan).fromHours(3);
+        time = Bridge.TimeSpan.fromHours(3);
         Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(time, Bridge.TimeSpan), "FromHours type");
         Bridge.get(Bridge.Test.Assert).areEqual$1(time.getTicks(), 108000000000, "FromHours value");
 
-        time = Bridge.get(Bridge.TimeSpan).fromMinutes(3);
+        time = Bridge.TimeSpan.fromMinutes(3);
         Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(time, Bridge.TimeSpan), "FromMinutes type");
         Bridge.get(Bridge.Test.Assert).areEqual$1(time.getTicks(), 1800000000, "FromMinutes value");
 
-        time = Bridge.get(Bridge.TimeSpan).fromSeconds(3);
+        time = Bridge.TimeSpan.fromSeconds(3);
         Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(time, Bridge.TimeSpan), "FromSeconds type");
         Bridge.get(Bridge.Test.Assert).areEqual$1(time.getTicks(), 30000000, "FromSeconds value");
 
-        time = Bridge.get(Bridge.TimeSpan).fromMilliseconds(3);
+        time = Bridge.TimeSpan.fromMilliseconds(3);
         Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(time, Bridge.TimeSpan), "FromMilliseconds type");
         Bridge.get(Bridge.Test.Assert).areEqual$1(time.getTicks(), 30000, "FromMilliseconds value");
 
-        time = Bridge.get(Bridge.TimeSpan).fromTicks(3);
+        time = Bridge.TimeSpan.fromTicks(3);
         Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(time, Bridge.TimeSpan), "FromTicks type");
         Bridge.get(Bridge.Test.Assert).areEqual$1(time.getTicks(), 3, "FromTicks value");
     },

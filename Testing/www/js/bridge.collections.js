@@ -452,7 +452,7 @@ Bridge.define('Bridge.Collections.HashHelpers', {
         },
         isPrime: function (candidate) {
             if ((candidate & 1) !== 0) {
-                var limit = Bridge.Int.trunc(Bridge.get(Math).sqrt(candidate));
+                var limit = Bridge.Int.trunc(Math.sqrt(candidate));
                 for (var divisor = 3; divisor <= limit; divisor += 2) {
                     if ((candidate % divisor) === 0)
                         return false;

@@ -67,7 +67,15 @@ namespace Bridge.Translator
 
             if (resolveResult is TypeResolveResult)
             {
-                this.Write("Bridge.get(" + BridgeTypes.ToJsName(resolveResult.Type, this.Emitter) + ")");
+                if (this.Emitter.Validator.IsIgnoreType(resolveResult.Type.GetDefinition()))
+                {
+                    this.Write(BridgeTypes.ToJsName(resolveResult.Type, this.Emitter));
+                }
+                else
+                {
+                    this.Write("Bridge.get(" + BridgeTypes.ToJsName(resolveResult.Type, this.Emitter) + ")");
+                }
+                
                 return;
             }
 
@@ -83,7 +91,14 @@ namespace Bridge.Translator
 
                 if (memberResult.Member.IsStatic)
                 {
-                    this.Write("(Bridge.get(" + BridgeTypes.ToJsName(memberResult.Member.DeclaringType, this.Emitter) + "))");
+                    if (!this.Emitter.Validator.IsIgnoreType(memberResult.Member.DeclaringTypeDefinition))
+                    {
+                        this.Write("(Bridge.get(" + BridgeTypes.ToJsName(memberResult.Member.DeclaringType, this.Emitter) + "))");
+                    }
+                    else
+                    {
+                        this.Write(BridgeTypes.ToJsName(memberResult.Member.DeclaringType, this.Emitter));
+                    }
                 }
                 else
                 {
@@ -422,7 +437,16 @@ namespace Bridge.Translator
                     {
                         var typeResolveResult = (TypeResolveResult)resolveResult;
 
-                        this.Write("Bridge.get(" + BridgeTypes.ToJsName(typeResolveResult.Type, this.Emitter));
+                        var isNative = this.Emitter.Validator.IsIgnoreType(typeResolveResult.Type.GetDefinition());
+                        if (!isNative)
+                        {
+                            this.Write("Bridge.get(" + BridgeTypes.ToJsName(typeResolveResult.Type, this.Emitter));
+                        }
+                        else
+                        {
+                            this.Write(BridgeTypes.ToJsName(typeResolveResult.Type, this.Emitter));
+                        }
+                        
 
                         if (typeResolveResult.Type.TypeParameterCount > 0)
                         {
@@ -431,7 +455,10 @@ namespace Bridge.Translator
                             this.WriteCloseParentheses();
                         }
 
-                        this.Write(")");
+                        if (!isNative)
+                        {
+                            this.Write(")");
+                        }                        
                     }
                     else if (resolveResult is LocalResolveResult)
                     {
@@ -463,10 +490,17 @@ namespace Bridge.Translator
         }
 
         protected void WriteTarget(MemberResolveResult memberResult)
-        {
+        {            
             if (memberResult.Member.IsStatic)
             {
-                this.Write("Bridge.get(" + BridgeTypes.ToJsName(memberResult.Member.DeclaringType, this.Emitter) + ")");
+                if (!this.Emitter.Validator.IsIgnoreType(memberResult.Member.DeclaringTypeDefinition))
+                {
+                    this.Write("Bridge.get(" + BridgeTypes.ToJsName(memberResult.Member.DeclaringType, this.Emitter) + ")");
+                }
+                else
+                {
+                    this.Write(BridgeTypes.ToJsName(memberResult.Member.DeclaringType, this.Emitter));
+                }
             }
             else
             {

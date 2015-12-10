@@ -18,7 +18,7 @@ Bridge.define('TestIssue434.Issue434A', {
             Bridge.get(TestIssue434.Issue434A).doSomething(4);
         },
         doSomething: function (i) {
-            Bridge.get(console).log(i);
+            console.log(i);
         }
     }
 });
@@ -42,7 +42,7 @@ Bridge.define('TestIssue434.Issue434B', {
             Bridge.get(TestIssue434.Issue434B).doSomething(4);
         },
         doSomething: function (i) {
-            Bridge.get(console).log(i);
+            console.log(i);
         }
     }
 });
