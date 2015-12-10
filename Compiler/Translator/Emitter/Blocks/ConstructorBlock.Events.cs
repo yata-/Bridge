@@ -37,6 +37,18 @@ namespace Bridge.Translator
                                         throw new EmitterException(attr, "Overloaded method cannot be event handler");
                                     }
 
+                                    var staticFlagField = resolveresult.Type.GetFields(f => f.Name == "StaticOnly");
+
+                                    if (staticFlagField.Count() > 0)
+                                    {
+                                        var staticValue = staticFlagField.First().ConstantValue;
+
+                                        if (staticValue is bool && ((bool)staticValue) && !method.HasModifier(Modifiers.Static))
+                                        {
+                                            throw new EmitterException(attr, resolveresult.Type.FullName + " can be applied for static members only");
+                                        }
+                                    }
+
                                     string eventName = methodGroup.Key;
                                     var eventField = resolveresult.Type.GetFields(f => f.Name == "Event");
 

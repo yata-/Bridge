@@ -44,6 +44,7 @@ namespace Bridge.Html5
         new public const string Format = "Bridge.ready(this.{2});";
         new public const string FormatScope = "Bridge.ready(this.{2}, this);";
         public const string Event = "ready";
+        public const bool StaticOnly = true;
 
         public ReadyAttribute()
         {
