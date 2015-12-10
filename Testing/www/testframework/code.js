@@ -810,7 +810,7 @@ Bridge.define('Bridge.ClientTest.ArrayTests', {
             result += s;
         }
         Bridge.get(Bridge.Test.Assert).areEqual(result, "xy");
-    }    ,
+    },
     cloneWorks: function () {
         var arr = ["x", "y"];
         var arr2 = (Bridge.Array.clone(arr));
@@ -968,7 +968,7 @@ Bridge.define('Bridge.ClientTest.ArrayTests', {
             result += s;
         }
         Bridge.get(Bridge.Test.Assert).areEqual(result, "xy");
-    }    ,
+    },
     iCollectionCountWorks: function () {
         var l = ["x", "y", "z"];
         Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getCount(l), 3);
@@ -1175,7 +1175,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.GenericDictionaryTests', {
             count++;
         }
         Bridge.get(Bridge.Test.Assert).areEqual(count, 2);
-    }    ,
+    },
     valuesWorks: function () {
         var $t;
         var d = Bridge.merge(new Bridge.Dictionary$2(Bridge.Int,String)(), [
@@ -1200,7 +1200,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.GenericDictionaryTests', {
             count++;
         }
         Bridge.get(Bridge.Test.Assert).areEqual(count, 2);
-    }    ,
+    },
     indexerGetterWorksForExistingItems: function () {
         var d = Bridge.merge(new Bridge.Dictionary$2(Bridge.Int,String)(), [
             [1, "a"],
@@ -1306,7 +1306,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.GenericDictionaryTests', {
             count++;
         }
         Bridge.get(Bridge.Test.Assert).areEqual(count, 2);
-    }    ,
+    },
     removeWorks: function () {
         var d = Bridge.merge(new Bridge.Dictionary$2(Bridge.Int,String)(), [
             [1, "a"],
@@ -1460,7 +1460,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IDictionaryTests', {
             i++;
         }
         Bridge.get(Bridge.Test.Assert).areEqual(i, actualKeys.length);
-    }    ,
+    },
     getItemWorks: function () {
         var d = new Bridge.ClientTest.Collections.Generic.IDictionaryTests.MyDictionary("constructor$1", Bridge.merge(new Bridge.Dictionary$2(Bridge.Int,String)(), [
             [3, "b"],
@@ -1509,7 +1509,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IDictionaryTests', {
             i++;
         }
         Bridge.get(Bridge.Test.Assert).areEqual(i, actualValues.length);
-    }    ,
+    },
     containsKeyWorks: function () {
         var d = new Bridge.ClientTest.Collections.Generic.IDictionaryTests.MyDictionary("constructor$1", Bridge.merge(new Bridge.Dictionary$2(Bridge.Int,String)(), [
             [3, "b"],
@@ -1830,7 +1830,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
         }
 
         this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\ngot -1\r\n-\r\ngot 0\r\ngot 1\r\ngot -1\r\n");
-    }    ,
+    },
     prematureDisposalOfIEnumerableIteratorExecutesFinallyBlocks: function () {
         var $t;
         //TODO expected for v1: yield iterator works with no state machine
@@ -1846,7 +1846,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
         }
 
         this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding 2\r\nyielding 3\r\nyielding 4\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\n");
-    }    ,
+    },
     exceptionInIEnumerableIteratorBodyExecutesFinallyBlocks: function () {
         //TODO expected for v1: yield iterator works with no state machine
 
@@ -1886,7 +1886,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
         }
 
         this.assertEqual(sb.toString(), "3\r\n2\r\n1\r\n3\r\n2\r\n1\r\n");
-    }    ,
+    },
     differentGetEnumeratorCallsOnIteratorBlockReturningIEnumerableGetOwnCopiesOfLocals: function () {
         var sb = new Bridge.Text.StringBuilder();
 
@@ -1971,7 +1971,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
             result += s;
         }
         Bridge.get(Bridge.Test.Assert).areEqual(result, "xy");
-    }    ,
+    },
     getEnumeratorWorks: function () {
         var e = Bridge.merge(new Bridge.List$1(String)(), [
             ["x"],
@@ -2299,7 +2299,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
             result += s;
         }
         Bridge.get(Bridge.Test.Assert).areEqual(result, "xy");
-    }    ,
+    },
     iEnumerableGetEnumeratorWorks: function () {
         var l = Bridge.cast(Bridge.merge(new Bridge.List$1(String)(), [
             ["x"],
@@ -4832,7 +4832,7 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.DecimalTests', {
         Bridge.get(Bridge.Test.Assert).$false(x.lt(Bridge.Decimal(3.0)));
         Bridge.get(Bridge.Test.Assert).$true(x.lte(Bridge.Decimal(3.0)));
         Bridge.get(Bridge.Test.Assert).$false(x.lte(Bridge.Decimal(2.0)));
-    }    ,
+    },
     addWorks: function () {
         Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Decimal(3.0).add(Bridge.Decimal(4.0)), Bridge.Decimal(7.0));
     },

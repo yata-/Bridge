@@ -129,7 +129,7 @@ Bridge.define('ClientTestLibrary.TestStringFunctions', {
 
             s = [1, null, 2, null, 3].toString().split(',').join('');
             assert.deepEqual(s, "123", "string.Concat()");
-        }        ,
+        },
         test: function (x, y, comparison, testI, expected, expectedIndex, assert) {
             var cmpValue = 0;
             cmpValue = Bridge.String.compare(testI[x], testI[y], comparison);
@@ -158,7 +158,7 @@ Bridge.define('ClientTestLibrary.TestStringFunctions', {
             assert.equal(result[2], 110);
             assert.equal(result[3], 110);
             assert.equal(result[4], 121);
-        }        ,
+        },
         issueBridge393: function (assert) {
             assert.expect(2);
 

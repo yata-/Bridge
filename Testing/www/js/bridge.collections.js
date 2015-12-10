@@ -534,7 +534,7 @@ Bridge.define('Bridge.Collections.HashSet$1', function (T) { return {
                 }
                 return true;
             }
-        }        ,
+        },
         areEqualityComparersEqual: function (set1, set2) {
             return Bridge.equals(set1.getComparer(), set2.getComparer());
         }
@@ -699,7 +699,7 @@ Bridge.define('Bridge.Collections.HashSet$1', function (T) { return {
             var item = $t.getCurrent();
             this.addIfNotPresent(item);
         }
-    }    ,
+    },
     intersectWith: function (other) {
         if (other === null) {
             throw new Bridge.ArgumentNullException("other");
@@ -738,7 +738,7 @@ Bridge.define('Bridge.Collections.HashSet$1', function (T) { return {
             var element = $t.getCurrent();
             this.remove(element);
         }
-    }    ,
+    },
     symmetricExceptWith: function (other) {
         if (other === null) {
             throw new Bridge.ArgumentNullException("other");
@@ -855,7 +855,7 @@ Bridge.define('Bridge.Collections.HashSet$1', function (T) { return {
             }
         }
         return false;
-    }    ,
+    },
     setEquals: function (other) {
         if (other === null) {
             throw new Bridge.ArgumentNullException("other");
@@ -1004,7 +1004,7 @@ Bridge.define('Bridge.Collections.HashSet$1', function (T) { return {
             }
         }
         return true;
-    }    ,
+    },
     isSubsetOfHashSetWithSameEC: function (other) {
         var $t;
         $t = Bridge.getEnumerator(this);
@@ -1015,7 +1015,7 @@ Bridge.define('Bridge.Collections.HashSet$1', function (T) { return {
             }
         }
         return true;
-    }    ,
+    },
     intersectWithHashSetWithSameEC: function (other) {
         for (var i = 0; i < this._lastIndex; i++) {
             if (this._slots[i].hashCode >= 0) {
@@ -1046,7 +1046,7 @@ Bridge.define('Bridge.Collections.HashSet$1', function (T) { return {
                 this.remove(this._slots[i].value);
             }
         }
-    }    ,
+    },
     internalIndexOf: function (item) {
         var hashCode = this.internalGetHashCode(item);
         for (var i = this._buckets[hashCode % this._buckets.length] - 1; i >= 0; i = this._slots[i].next) {
@@ -1065,7 +1065,7 @@ Bridge.define('Bridge.Collections.HashSet$1', function (T) { return {
                 this.addIfNotPresent(item);
             }
         }
-    }    ,
+    },
     symmetricExceptWithEnumerable: function (other) {
         var $t;
         var originalLastIndex = this._lastIndex;
@@ -1095,7 +1095,7 @@ Bridge.define('Bridge.Collections.HashSet$1', function (T) { return {
                 this.remove(this._slots[i].value);
             }
         }
-    }    ,
+    },
     addOrGetLocation: function (value, location) {
         var hashCode = this.internalGetHashCode(value);
         var bucket = hashCode % this._buckets.length;
@@ -1169,7 +1169,7 @@ Bridge.define('Bridge.Collections.HashSet$1', function (T) { return {
         result.uniqueCount = uniqueFoundCount;
         result.unfoundCount = unfoundCount;
         return result.$clone();
-    }    ,
+    },
     toArray: function () {
         var newArray = Bridge.Array.init(this.getCount(), null);
         this.copyTo(newArray);
