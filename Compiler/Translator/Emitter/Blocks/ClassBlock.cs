@@ -177,14 +177,14 @@ namespace Bridge.Translator
             if (this.TypeInfo.IsEnum)
             {
                 this.EnsureComma();
-                this.Write("enum: true");
+                this.Write("$enum: true");
                 this.Emitter.Comma = true;
 
                 if (this.Emitter.GetTypeDefinition(this.TypeInfo.Type)
                         .CustomAttributes.Any(attr => attr.AttributeType.FullName == "System.FlagsAttribute"))
                 {
                     this.EnsureComma();
-                    this.Write("flags: true");
+                    this.Write("$flags: true");
                     this.Emitter.Comma = true;
                 }
             }
