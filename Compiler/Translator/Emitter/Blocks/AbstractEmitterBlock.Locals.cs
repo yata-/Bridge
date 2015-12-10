@@ -268,6 +268,7 @@ namespace Bridge.Translator
         {
             if (this.Emitter.TempVariables.Count > 0)
             {
+                var newLine = this.Emitter.IsNewLine;
                 string temp = this.Emitter.Output.ToString(pos, this.Emitter.Output.Length - pos);
                 this.Emitter.Output.Length = pos;
 
@@ -289,6 +290,7 @@ namespace Bridge.Translator
                 this.WriteNewLine();
 
                 this.Emitter.Output.Append(temp);
+                this.Emitter.IsNewLine = newLine;
             }
         }
     }

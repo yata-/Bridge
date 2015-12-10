@@ -1209,7 +1209,7 @@ Bridge.define('ClientTestLibrary.Bridge563', {
             }
 
             assert.equal(result, "123", "Bridge563 block foreach loop");
-        }        ,
+        },
         tesFor: function (assert) {
             var $t;
             assert.expect(1);
@@ -2114,7 +2114,7 @@ Bridge.define('ClientTestLibrary.Bridge666', {
                             var bn = $t1.getCurrent();
                             sum = sum + i * bn;
                         }
-                    }                    ;
+                    };
 
                     func(n);
                 }).call(this);
@@ -2188,6 +2188,40 @@ Bridge.define('ClientTestLibrary.Bridge675', {
         },
         method1: function (i1, i2) {
             return i1 + i2;
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge708', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge708).testIssue(), 12, "Bridge708 TestIssue");
+        },
+        testIssue: function () {
+            var sum = 0;
+            var f = function () {
+                var $t;
+                $t = Bridge.getEnumerator([1, 2, 3]);
+                while ($t.moveNext()) {
+                    (function () {
+                        var n = $t.getCurrent();
+                        var g = function (i) {
+                            sum += i;
+                        };
+                        g(n);
+                    }).call(this);
+                }
+                var h = function () {
+                    sum *= 2;
+                };
+                h();
+            };
+
+            f();
+
+            return sum;
         }
     }
 });
@@ -3170,7 +3204,7 @@ Bridge.define('ClientTestLibrary.Bridge634', {
             }
 
             assert.equal(text, "abc", "Bridge634: foreach works for HashSet");
-        }        ,
+        },
         testUseCase2: function (assert) {
             assert.expect(21);
 
@@ -3496,7 +3530,7 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
             }
 
             assert.equal(result, "123", "IEnumerator works");
-        }        ,
+        },
         n306: function (assert) {
             assert.expect(2);
 
@@ -3672,7 +3706,7 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
             assert.equal(_dictOfTests.getCount(), 2, "All items added");
             assert.equal(_dictOfTests.get("a").getId(), "a", "First element is a");
             assert.equal(_dictOfTests.get("b").getId(), "b", "Second element is b");
-        }        ,
+        },
         n406: function (assert) {
             var TESTA = "TESTA";
             var TESTB = "TESTB";
@@ -3980,7 +4014,7 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
             }
 
             assert.equal(count, 1, "\"continue\" generated correctly");
-        }        ,
+        },
         n470: function (assert) {
             var a = Bridge.merge(new ClientTestLibrary.Bridge470(), {
                 setData: 1
