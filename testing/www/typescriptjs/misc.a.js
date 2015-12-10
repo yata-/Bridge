@@ -19,7 +19,7 @@ Bridge.define('Misc.A.EnumTest.EnumA', {
         m1: 0,
         m2: 1
     },
-    enum: true
+    $enum: true
 });
 
 

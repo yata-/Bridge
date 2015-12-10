@@ -701,8 +701,8 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.EnumTests.FlagsEnum', {
         secondValue: 2,
         thirdValue: 4
     },
-    enum: true,
-    flags: true
+    $enum: true,
+    $flags: true
 });
 
 Bridge.define('Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum', {
@@ -711,7 +711,7 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum', {
         secondValue: 1,
         thirdValue: 2
     },
-    enum: true
+    $enum: true
 });
 
 Bridge.define('Bridge.ClientTest.SimpleTypes.ObjectTests.C1', {

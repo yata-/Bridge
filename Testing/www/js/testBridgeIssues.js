@@ -48,14 +48,14 @@ Bridge.define('ClientTestLibrary.Bridge272.MyEnum', {
         def: 2,
         ghi: 3
     },
-    enum: true
+    $enum: true
 });
 
 Bridge.define('ClientTestLibrary.Bridge277', {
     statics: {
         $int: 0
     },
-    enum: true
+    $enum: true
 });
 
 Bridge.define('ClientTestLibrary.Bridge294', {
@@ -286,7 +286,7 @@ Bridge.define('ClientTestLibrary.Bridge422', {
         next: 100,
         afterNext: 101
     },
-    enum: true
+    $enum: true
 });
 
 Bridge.define('ClientTestLibrary.Bridge436First', {

@@ -8,7 +8,7 @@ Bridge.define('ClientTestLibrary.TestEnum.Digits', {
         one: 1,
         two: 2
     },
-    enum: true
+    $enum: true
 });
 
 Bridge.define('ClientTestLibrary.TestEnum.Pets', {
@@ -20,8 +20,8 @@ Bridge.define('ClientTestLibrary.TestEnum.Pets', {
         rabbit: 8,
         other: 16
     },
-    enum: true,
-    flags: true
+    $enum: true,
+    $flags: true
 });
 
 Bridge.define('ClientTestLibrary.TestEnum.Abc', {
@@ -30,7 +30,7 @@ Bridge.define('ClientTestLibrary.TestEnum.Abc', {
         b: 0,
         c: 1
     },
-    enum: true
+    $enum: true
 });
 
 Bridge.define('ClientTestLibrary.TestEnum.Pets1', {
@@ -42,7 +42,7 @@ Bridge.define('ClientTestLibrary.TestEnum.Pets1', {
         rabbit: 8,
         other: 16
     },
-    enum: true
+    $enum: true
 });
 
 Bridge.define('ClientTestLibrary.TestEnum', {
