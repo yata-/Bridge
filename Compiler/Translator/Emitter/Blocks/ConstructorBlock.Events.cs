@@ -45,7 +45,7 @@ namespace Bridge.Translator
 
                                         if (staticValue is bool && ((bool)staticValue) && !method.HasModifier(Modifiers.Static))
                                         {
-                                            throw new EmitterException(attr, resolveresult.Type.FullName + " can be applied for static members only");
+                                            throw new EmitterException(attr, resolveresult.Type.FullName + " can be applied for static methods only");
                                         }
                                     }
 
