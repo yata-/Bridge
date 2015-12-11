@@ -1,5 +1,5 @@
 {
   "output": "Bridge\\output",
   "cleanOutputFolderBeforeBuild": true,
-  "outputFormatting": "Minified"
+  "outputFormatting": "Both"
 }
