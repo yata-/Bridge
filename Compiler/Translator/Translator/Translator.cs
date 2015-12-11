@@ -18,6 +18,8 @@ namespace Bridge.Translator
 
         private static readonly CodeSettings MinifierCodeSettings = new CodeSettings
         {
+            EvalTreatment = Microsoft.Ajax.Utilities.EvalTreatment.MakeAllSafe,
+            LocalRenaming = Microsoft.Ajax.Utilities.LocalRenaming.KeepAll,
             TermSemicolons = true,
             StrictMode = true
         };
