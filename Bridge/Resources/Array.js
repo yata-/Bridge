@@ -451,3 +451,66 @@
     };
 
     Bridge.Array = array;
+
+    if (!Array.prototype.map) {
+        Array.prototype.map = function (callback, instance) {
+            var length = this.length;
+            var mapped = new Array(length);
+            for (var i = 0; i < length; i++) {
+                if (i in this) {
+                    mapped[i] = callback.call(instance, this[i], i, this);
+                }
+            }
+            return mapped;
+        };
+    }
+        
+    if (!Array.prototype.some) {
+        Array.prototype.some = function (callback, instance) {
+            var length = this.length;
+            for (var i = 0; i < length; i++) {
+                if (i in this && callback.call(instance, this[i], i, this)) {
+                    return true;
+                }
+            }
+            return false;
+        };
+     }
+ 
+    if (!Array.prototype.indexOf) {
+        Array.prototype.indexOf = function (searchElement, fromIndex) {
+            var k;
+
+            if (this == null) {
+                throw new TypeError('"this" is null or not defined');
+            }
+
+            var O = Object(this);
+
+            var len = O.length >>> 0;
+
+            if (len === 0) {
+                return -1;
+            }
+
+            var n = +fromIndex || 0;
+
+            if (Math.abs(n) === Infinity) {
+                n = 0;
+            }
+
+            if (n >= len) {
+                return -1;
+            }
+
+            k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
+
+            while (k < len) {
+                if (k in O && O[k] === searchElement) {
+                    return k;
+                }
+                k++;
+            }
+            return -1;
+        };
+    }

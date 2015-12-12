@@ -207,7 +207,7 @@ namespace Bridge.Builder
             }
             catch (EmitterException e)
             {
-                Console.WriteLine("Error: {2} ({3}, {4}) {0} {1}", e.Message, e.StackTrace, e.FileName, e.StartLine + 1, e.StartColumn + 1, e.EndLine + 1, e.EndColumn + 1);
+                Console.WriteLine("Error: {2} ({3}, {4}) {0} {1}", e.Message, e.StackTrace, e.FileName, e.StartLine, e.StartColumn, e.EndLine, e.EndColumn);
             }
             catch (Exception e)
             {
@@ -216,7 +216,7 @@ namespace Bridge.Builder
 
                 if (ee != null)
                 {
-                    Console.WriteLine("Error: {2} ({3}, {4}) {0} {1}", e.Message, e.StackTrace, ee.FileName, ee.StartLine + 1, ee.StartColumn + 1, ee.EndLine + 1, ee.EndColumn + 1);
+                    Console.WriteLine("Error: {2} ({3}, {4}) {0} {1}", e.Message, e.StackTrace, ee.FileName, ee.StartLine, ee.StartColumn, ee.EndLine, ee.EndColumn);
                 }
                 else
                 {

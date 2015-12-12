@@ -40,6 +40,7 @@
     <include name="Char.js" />
     <include name="String.js" />
     <include name="Enum.js" />
+    <include name="Browser.js" />
     <include name="Class.js" />
     <include name="Exception.js" />
     <include name="Interfaces.js" />
@@ -51,7 +52,6 @@
     <include name="TimeSpan.js" />
     <include name="Text/StringBuilder.js" />
     <include name="Text/Regex.js" />
-    <include name="Browser.js" />
     <include name="Array.js" />
     <include name="Collections/Interfaces.js" />
     <include name="Collections/CustomEnumerator.js" />
