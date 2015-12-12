@@ -9,13 +9,7 @@ namespace TestIssue599
         [Ready]
         public static void Main()
         {
-            var inst = new Issue599();
-        }
-
-        [Ready]
-        public void Test()
-        {
-            Console.WriteLine(_something);
+            Console.WriteLine(new Issue599()._something);
         }
     }
 }

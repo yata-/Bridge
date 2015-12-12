@@ -10,18 +10,10 @@ Bridge.define('TestIssue599.Issue599', {
             }
         },
         main: function () {
-            var inst = new TestIssue599.Issue599();
+            console.log(new TestIssue599.Issue599()._something);
         }
     },
-    _something: "HI!",
-    config: {
-        init: function () {
-            Bridge.ready(this.test, this);
-        }
-    },
-    test: function () {
-        console.log(this._something);
-    }
+    _something: "HI!"
 });
 
 Bridge.init();
