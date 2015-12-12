@@ -2192,6 +2192,22 @@ Bridge.define('ClientTestLibrary.Bridge675', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge687A', {
+    statics: {
+        op_Implicit: function (value) {
+            return value.getValue();
+        }
+    },
+    config: {
+        properties: {
+            Value: null
+        }
+    },
+    constructor: function (value) {
+        this.setValue(value);
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge708', {
     statics: {
         testUseCase: function (assert) {
@@ -3339,6 +3355,28 @@ Bridge.define('ClientTestLibrary.Bridge660MessageStore', {
             init: function () {
                 this._initialEditState = new ClientTestLibrary.Bridge660MessageEditState(new ClientTestLibrary.Bridge660TextInputState("constructor", "Message"));
             }
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge687', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            var c = new ClientTestLibrary.Bridge687A(null);
+            var case1 = false;
+            if (c === null) {
+                case1 = true;
+            }
+            assert.equal(case1, false, "Bridge687 case1");
+
+            c = new ClientTestLibrary.Bridge687A("test");
+            var case2 = false;
+            if (ClientTestLibrary.Bridge687A.op_Implicit(c) === "test") {
+                case2 = true;
+            }
+            assert.equal(case2, true, "Bridge687 case2");
         }
     }
 });
