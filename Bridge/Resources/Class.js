@@ -225,7 +225,21 @@
             // Copy the properties over onto the new prototype
             ctorCounter = 0;
 
+            var keys = [];
+
             for (name in prop) {
+                keys.push(name);
+            }
+
+            if (Bridge.Browser.isIE8) {
+                if (prop.hasOwnProperty("constructor") && keys.indexOf("constructor") < 0) {
+                    keys.push("constructor");
+                }
+            }            
+
+            for (var i = 0; i < keys.length; i++) {
+                name = keys[i];
+
                 v = prop[name];
                 isCtor = name === "constructor";
                 ctorName = isCtor ? "$constructor" : name;
