@@ -51,7 +51,7 @@
     <include name="Date.js" />
     <include name="TimeSpan.js" />
     <include name="Text/StringBuilder.js" />
-    <include name="Text/Regex.js" />    
+    <include name="Text/Regex.js" />
     <include name="Array.js" />
     <include name="Collections/Interfaces.js" />
     <include name="Collections/CustomEnumerator.js" />
