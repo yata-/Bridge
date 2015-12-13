@@ -5,7 +5,7 @@
  * @copyright : Copyright (c) 2008-2015, Object.NET, Inc. (http://object.net/). All rights reserved.
  * @license   : See license.txt and https://github.com/bridgedotnet/Bridge.NET/blob/master/LICENSE.
  */
-
+ 
  declare module Bridge {
     export function global<T>(): T;
     export function emptyFn(): Function;
@@ -341,7 +341,7 @@
         toString(str: string, provider?: DateTimeFormatInfo): string;
     }
 
-    module Text {
+    module Text {        
         export class StringBuilder {
             constructor();
             constructor(value: string);

@@ -2192,6 +2192,17 @@ Bridge.define('ClientTestLibrary.Bridge675', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge689', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var fn = parseInt;
+            assert.equal(fn("5"), 5, "Bridge689 should equals 5");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge708', {
     statics: {
         testUseCase: function (assert) {

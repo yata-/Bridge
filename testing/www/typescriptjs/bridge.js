@@ -1,16 +1,16 @@
 ﻿/*
- * @version   : 1.10.2 - Bridge.NET
- * @author    : Object.NET, Inc. http://bridge.net/
- * @date      : 2015-12-02
- * @copyright : Copyright (c) 2008-2015, Object.NET, Inc. (http://object.net/). All rights reserved.
- * @license   : See license.txt and https://github.com/bridgedotnet/Bridge.NET/blob/master/LICENSE.
- */
+ * @version   : 1.9.0 - Bridge.NET 
+ * @author    : Object.NET, Inc. http://bridge.net/ 
+ * @date      : 2015-09-21 
+ * @copyright : Copyright (c) 2008-2015, Object.NET, Inc. (http://object.net/). All rights reserved. 
+ * @license   : See license.txt and https://github.com/bridgedotnet/Bridge.NET/blob/master/LICENSE. 
+ */ 
+
+"use strict";
+
+// @source Core.js
 
 (function (globals) {
-    "use strict";
-
-    // @source Core.js
-
     var core = {
         global: globals,
 
@@ -19,7 +19,7 @@
         property : function (scope, name, v) {
             scope[name] = v;
 
-            var rs = name.charAt(0) === "$",
+            var rs = name.charAt(0) == "$",
                 cap = rs ? name.slice(1) : name;
 
             scope["get" + cap] = (function (name) {
@@ -38,7 +38,7 @@
         event: function (scope, name, v) {
             scope[name] = v;
 
-            var rs = name.charAt(0) === "$",
+            var rs = name.charAt(0) == "$",
                 cap = rs ? name.slice(1) : name;
 
             scope["add" + cap] = (function (name) {
@@ -67,17 +67,18 @@
         },
 
         copy: function (to, from, keys, toIf) {
-            if (typeof keys === "string") {
+            if (typeof keys === 'string') {
                 keys = keys.split(/[,;\s]+/);
             }
 
             for (var name, i = 0, n = keys ? keys.length : 0; i < n; i++) {
                 name = keys[i];
 
-                if (toIf !== true || to[name] == undefined) {
+                if (toIf !== true || to[name] === undefined) {
                     if (Bridge.is(from[name], Bridge.ICloneable)) {
                         to[name] = Bridge.clone(from[name]);
-                    } else {
+                    }
+                    else {
                         to[name] = from[name];
                     }
                 }
@@ -86,54 +87,46 @@
             return to;
         },
 
-        get: function (t) {
-            if (t && t.$staticInit) {
-                t.$staticInit();
-            }
-
-            return t;
-        },
-
         ns: function (ns, scope) {
-            var nsParts = ns.split("."),
-                i = 0;
+            var nsParts = ns.split('.');
 
             if (!scope) {
                 scope = Bridge.global;
             }
 
             for (i = 0; i < nsParts.length; i++) {
-                if (typeof scope[nsParts[i]] === "undefined") {
+                if (typeof scope[nsParts[i]] == 'undefined') {
                     scope[nsParts[i]] = { };
                 }
+
+                scope = scope[nsParts[i]];
             }
 
             return scope;
         },
 
-        ready: function (fn, scope) {
+        ready: function (fn) {
             var delayfn = function () {
-                if (scope) {
-                    fn.apply(scope);
-                } else {
+                setTimeout(function () {
                     fn();
-                }
+                }, 1);
             };
 
-            if (typeof Bridge.global.jQuery !== "undefined") {
+            if (typeof Bridge.global.jQuery !== 'undefined') {
                 Bridge.global.jQuery(delayfn);
             } else {
-                if (!document || document.readyState === "complete" || document.readyState === "loaded") {
+                if (!document || document.readyState == "complete" || document.readyState == "loaded") {
                     delayfn();
-                } else {
-                    Bridge.on("DOMContentLoaded", document, delayfn);
+                }
+                else {
+                    Bridge.on('DOMContentLoaded', document, delayfn);
                 }
             }
         },
 
-        on: function (event, elem, fn, scope) {
+        on: function (event, elem, fn) {
             var listenHandler = function (e) {
-                var ret = fn.apply(scope || this, arguments);
+                var ret = fn.apply(this, arguments);
 
                 if (ret === false) {
                     e.stopPropagation();
@@ -144,7 +137,7 @@
             };
 
             var attachHandler = function () {
-                var ret = fn.call(scope || elem, Bridge.global.event);
+                var ret = fn.call(elem, Bridge.global.event);
 
                 if (ret === false) {
                     Bridge.global.event.returnValue = false;
@@ -156,7 +149,8 @@
 
             if (elem.addEventListener) {
                 elem.addEventListener(event, listenHandler, false);
-            } else {
+            }
+            else {
                 elem.attachEvent("on" + event, attachHandler);
             }
         },
@@ -166,15 +160,13 @@
                 if (safe) {
                     return 0;
                 }
-
-                throw new Bridge.InvalidOperationException("HashCode cannot be calculated for empty value");
+                throw new Bridge.InvalidOperationException('HashCode cannot be calculated for empty value');
             }
 
             if (Bridge.isFunction(value.getHashCode) && !value.__insideHashCode && value.getHashCode.length === 0) {
                 value.__insideHashCode = true;
                 var r = value.getHashCode();
                 delete value.__insideHashCode;
-
                 return r;
             }
 
@@ -189,7 +181,7 @@
             if (Bridge.isNumber(value)) {
                 value = value.toExponential();
 
-                return parseInt(value.substr(0, value.indexOf("e")).replace(".", ""), 10) & 0xFFFFFFFF;
+                return parseInt(value.substr(0, value.indexOf('e')).replace('.', ''), 10) & 0xFFFFFFFF;
             }
 
             if (Bridge.isString(value)) {
@@ -207,7 +199,7 @@
                 return value.$$hashCode;
             }
 
-            if (typeof value === "object") {
+            if (typeof value == "object") {
                 var result = 0,
                     removeCache = false,
                     len,
@@ -224,7 +216,6 @@
 
                 for (i = 0, len = Bridge.$$hashCodeCache.length; i < len; i += 1) {
                     item = Bridge.$$hashCodeCache[i];
-
                     if (item.obj === value) {
                         return item.hash;
                     }
@@ -246,7 +237,7 @@
                     delete Bridge.$$hashCodeCache;
                 }
 
-                if (result !== 0) {
+                if (result != 0) {
                     return result;
                 }
             }
@@ -258,11 +249,14 @@
             if (
                 (type.getDefaultValue) && type.getDefaultValue.length === 0) {
                 return type.getDefaultValue();
-            } else if (type === Boolean) {
+            }
+            else if (type === Boolean) {
                 return false;
-            } else if (type === Date) {
+            }
+            else if (type === Date) {
                 return new Date(0);
-            } else if (type === Number) {
+            }
+            else if (type === Number) {
                 return 0;
             }
 
@@ -276,9 +270,10 @@
                 return obj.$$name;
             }
 
-            if ((obj).constructor === Function) {
+            if ((obj).constructor == Function) {
                 str = (obj).toString();
-            } else {
+            }
+            else {
                 str = (obj).constructor.toString();
             }
 
@@ -287,7 +282,7 @@
         },
 
         is: function (obj, type, ignoreFn, allowNull) {
-	        if (typeof type === "string") {
+	        if (typeof type == "string") {
                 type = Bridge.unroll(type);
 	        }
 
@@ -305,26 +300,21 @@
 	            }
             }
 
-            if ((obj.constructor === type) || (obj instanceof type)) {
+            if ((obj.constructor == type) || (obj instanceof type)) {
 	            return true;
             }
 
-            if (Bridge.isArray(obj) || obj instanceof Bridge.ArrayEnumerator) {
+            if (Bridge.isArray(obj)) {
                 return Bridge.Array.is(obj, type);
-            }
-
-            if (Bridge.isString(obj)) {
-                return Bridge.String.is(obj, type);
             }
 
             if (!type.$$inheritors) {
                 return false;
             }
 
-            var inheritors = type.$$inheritors,
-                i;
+            var inheritors = type.$$inheritors;
 
-            for (i = 0; i < inheritors.length; i++) {
+            for (var i = 0; i < inheritors.length; i++) {
                 if (Bridge.is(obj, inheritors[i])) {
 	                return true;
 	            }
@@ -344,23 +334,23 @@
 
             var result = Bridge.as(obj, type, allowNull);
 
-	        if (result === null) {
-	            throw new Bridge.InvalidCastException("Unable to cast type " + (obj ? Bridge.getTypeName(obj) : "'null'") + " to type " + Bridge.getTypeName(type));
+	        if (result == null) {
+	            throw new Bridge.InvalidCastException('Unable to cast type ' + Bridge.getTypeName(obj) + ' to type ' + Bridge.getTypeName(type));
 	        }
 
 	        return result;
         },
 
 	    apply: function (obj, values) {
-	        var names = Bridge.getPropertyNames(values, false),
-	            i;
+	        var names = Bridge.getPropertyNames(values, false);
 
-	        for (i = 0; i < names.length; i++) {
+	        for (var i = 0; i < names.length; i++) {
 	            var name = names[i];
 
-	            if (typeof obj[name] === "function" && typeof values[name] !== "function") {
+	            if (typeof obj[name] == "function" && typeof values[name] != "function") {
 	                obj[name](values[name]);
-	            } else {
+	            }
+	            else {
 	                obj[name] = values[name];
 	            }
 	        }
@@ -369,21 +359,8 @@
         },
 
 	    merge: function (to, from) {
-	        if (to instanceof Bridge.Decimal && Bridge.isNumber(from)) {
-	            return new Bridge.Decimal(from);
-	        }
-
-	        if (to instanceof Boolean ||
-                to instanceof Number ||
-                to instanceof String ||
-                to instanceof Function ||
-                to instanceof Date ||
-                to instanceof Bridge.Int ||
-                to instanceof Bridge.Decimal) {
-	            return from;
-	        }
-
-	        var key,
+	        var object,
+                key,
 			    i,
                 value,
                 toValue,
@@ -395,25 +372,30 @@
 	            for (i = 0; i < from.length; i++) {
 	                fn.apply(to, from[i]);
 	            }
-	        } else {
+	        }
+	        else {
 	            for (key in from) {
 	                value = from[key];
 
-	                if (typeof to[key] === "function" && typeof value !== "function") {
+	                if (typeof to[key] == "function" && typeof value != "function") {
 	                    if (key.match(/^\s*get[A-Z]/)) {
 	                        Bridge.merge(to[key](), value);
-	                    } else {
+	                    }
+	                    else {
 	                        to[key](value);
 	                    }
-	                } else {
+	                }
+	                else {
 	                    var setter = "set" + key.charAt(0).toUpperCase() + key.slice(1);
 
-	                    if (typeof to[setter] === "function" && typeof value !== "function") {
+	                    if (typeof to[setter] == "function" && typeof value != "function") {
 	                        to[setter](value);
-	                    } else if (value && value.constructor === Object && to[key]) {
+	                    }
+	                    else if (value && value.constructor === Object && to[key]) {
 	                        toValue = to[key];
 	                        Bridge.merge(toValue, value);
-	                    } else {
+	                    }
+	                    else {
 	                        to[key] = value;
 	                    }
 	                }
@@ -436,12 +418,12 @@
 	            return obj.getEnumerator();
 	        }
 
-	        if ((Object.prototype.toString.call(obj) === "[object Array]") ||
+	        if ((Object.prototype.toString.call(obj) === '[object Array]') ||
                 (obj && Bridge.isDefined(obj.length))) {
 	            return new Bridge.ArrayEnumerator(obj);
 	        }
 
-	        throw new Bridge.InvalidOperationException("Cannot create enumerator");
+	        throw new Bridge.InvalidOperationException('Cannot create enumerator');
 	    },
 
 	    getPropertyNames: function (obj, includeFunctions) {
@@ -449,7 +431,7 @@
 	            name;
 
 	        for (name in obj) {
-                if (includeFunctions || typeof obj[name] !== "function") {
+                if (includeFunctions || typeof obj[name] !== 'function') {
                     names.push(name);
                 }
 	        }
@@ -458,11 +440,11 @@
 	    },
 
 	    isDefined: function (value, noNull) {
-	        return typeof value !== "undefined" && (noNull ? value !== null : true);
+	        return typeof value !== 'undefined' && (noNull ? value != null : true);
 	    },
 
 	    isEmpty: function (value, allowEmpty) {
-	        return (value === null) || (!allowEmpty ? value === "" : false) || ((!allowEmpty && Bridge.isArray(value)) ? value.length === 0 : false);
+	        return (value == null) || (!allowEmpty ? value === '' : false) || ((!allowEmpty && Bridge.isArray(value)) ? value.length === 0 : false);
 	    },
 
 	    toArray: function (ienumerable) {
@@ -475,7 +457,8 @@
                 for (i = 0, len = ienumerable.length; i < len; ++i) {
                     result.push(ienumerable[i]);
                 }
-	        } else {
+	        }
+	        else {
                 i = Bridge.getEnumerator(ienumerable);
 
                 while (i.moveNext()) {
@@ -488,15 +471,15 @@
 	    },
 
         isArray: function (obj) {
-            return Object.prototype.toString.call(obj) === "[object Array]";
+            return Object.prototype.toString.call(obj) === '[object Array]';
         },
 
         isFunction: function (obj) {
-            return typeof (obj) === "function";
+            return typeof (obj) === 'function';
         },
 
         isDate: function (obj) {
-            return Object.prototype.toString.call(obj) === "[object Date]";
+            return Object.prototype.toString.call(obj) === '[object Date]';
         },
 
         isNull: function (value) {
@@ -504,23 +487,23 @@
         },
 
         isBoolean: function (value) {
-            return typeof value === "boolean";
+            return typeof value === 'boolean';
         },
 
         isNumber: function (value) {
-            return typeof value === "number" && isFinite(value);
+            return typeof value === 'number' && isFinite(value);
         },
 
         isString: function (value) {
-            return typeof value === "string";
+            return typeof value === 'string';
         },
 
         unroll: function (value) {
             var d = value.split("."),
                 o = Bridge.global[d[0]],
-                i = 1;
+                i;
 
-            for (i; i < d.length; i++) {
+            for (var i = 1; i < d.length; i++) {
                 if (!o) {
                     return null;
                 }
@@ -534,15 +517,19 @@
         equals: function (a, b) {
             if (a && Bridge.isFunction(a.equals) && a.equals.length === 1) {
                 return a.equals(b);
-            } else if (Bridge.isDate(a) && Bridge.isDate(b)) {
+            }
+            else if (Bridge.isDate(a) && Bridge.isDate(b)) {
                 return a.valueOf() === b.valueOf();
-            } else if (Bridge.isNull(a) && Bridge.isNull(b)) {
+            }
+            else if (Bridge.isNull(a) && Bridge.isNull(b)) {
                 return true;
-            } else if (Bridge.isNull(a) !== Bridge.isNull(b)) {
+            }
+            else if (Bridge.isNull(a) !== Bridge.isNull(b)) {
                 return false;
             }
 
-            if (typeof a === "object" && typeof b === "object") {
+
+            if (typeof a == "object" && typeof b == "object") {
                 return (Bridge.getHashCode(a) === Bridge.getHashCode(b)) && Bridge.objectEquals(a, b);
             }
 
@@ -562,7 +549,7 @@
         },
 
         deepEquals: function (a, b) {
-            if (typeof a === "object" && typeof b === "object") {
+            if (typeof a == "object" && typeof b == "object") {
                 if (Bridge.$$leftChain.indexOf(a) > -1 || Bridge.$$rightChain.indexOf(b) > -1) {
                     return false;
                 }
@@ -572,7 +559,8 @@
                 for (p in b) {
                     if (b.hasOwnProperty(p) !== a.hasOwnProperty(p)) {
                         return false;
-                    } else if (typeof b[p] !== typeof a[p]) {
+                    }
+                    else if (typeof b[p] !== typeof a[p]) {
                         return false;
                     }
                 }
@@ -580,11 +568,12 @@
                 for (p in a) {
                     if (b.hasOwnProperty(p) !== a.hasOwnProperty(p)) {
                         return false;
-                    } else if (typeof a[p] !== typeof b[p]) {
+                    }
+                    else if (typeof a[p] !== typeof b[p]) {
                         return false;
                     }
 
-                    if (typeof (a[p]) === "object") {
+                    if (typeof (a[p]) == "object") {
                         Bridge.$$leftChain.push(a);
                         Bridge.$$rightChain.push(b);
 
@@ -594,15 +583,17 @@
 
                         Bridge.$$leftChain.pop();
                         Bridge.$$rightChain.pop();
-                    } else {
-                        if (!Bridge.equals(a[p], b[p])) {
+                    }
+                    else {
+                        if(!Bridge.equals(a[p], b[p])) {
                             return false;
                         }
                     }
                 }
 
                 return true;
-            } else {
+            }
+            else {
                 return Bridge.equals(a, b);
             }
         },
@@ -612,14 +603,12 @@
                 if (safe) {
                     return 0;
                 }
-
                 throw new Bridge.NullReferenceException();
-            } else if (Bridge.isNumber(a) || Bridge.isString(a) || Bridge.isBoolean(a)) {
-                if (Bridge.isString(a) && !Bridge.hasValue(b)) {
-                    return 1;
-                }
+            }
+            else if (Bridge.isNumber(a) || Bridge.isString(a) || Bridge.isBoolean(a)) {
                 return a < b ? -1 : (a > b ? 1 : 0);
-            } else if (Bridge.isDate(a)) {
+            }
+            else if (Bridge.isDate(a)) {
                 return Bridge.compare(a.valueOf(), b.valueOf());
             }
 
@@ -633,9 +622,11 @@
         equalsT: function (a, b) {
             if (!Bridge.isDefined(a, true)) {
                 throw new Bridge.NullReferenceException();
-            } else if (Bridge.isNumber(a) || Bridge.isString(a) || Bridge.isBoolean(a)) {
+            }
+            else if (Bridge.isNumber(a) || Bridge.isString(a) || Bridge.isBoolean(a)) {
                 return a === b;
-            } else if (Bridge.isDate(a)) {
+            }
+            else if (Bridge.isDate(a)) {
                 return a.valueOf() === b.valueOf();
             }
 
@@ -645,7 +636,8 @@
         format: function (obj, formatString) {
             if (Bridge.isNumber(obj)) {
                 return Bridge.Int.format(obj, formatString);
-            } else if (Bridge.isDate(obj)) {
+            }
+            else if (Bridge.isDate(obj)) {
                 return Bridge.Date.format(obj, formatString);
             }
 
@@ -654,7 +646,7 @@
 
         getType: function (instance) {
             if (!Bridge.isDefined(instance, true)) {
-                throw new Bridge.NullReferenceException("instance is null");
+                throw new Bridge.NullReferenceException('instance is null');
             }
 
             try {
@@ -681,7 +673,7 @@
         },
 
         fn: {
-            call: function (obj, fnName) {
+            call: function (obj, fnName){
                 var args = Array.prototype.slice.call(arguments, 2);
 
                 obj = obj || Bridge.global;
@@ -689,71 +681,42 @@
                 return obj[fnName].apply(obj, args);
             },
 
-            makeFn: function (fn, length) {
-                switch (length) {
-                    case 0  : return function () { return fn.apply(this, arguments); };
-                    case 1  : return function (a) { return fn.apply(this, arguments); };
-                    case 2  : return function (a,b) { return fn.apply(this, arguments); };
-                    case 3  : return function (a,b,c) { return fn.apply(this, arguments); };
-                    case 4  : return function (a,b,c,d) { return fn.apply(this, arguments); };
-                    case 5  : return function (a,b,c,d,e) { return fn.apply(this, arguments); };
-                    case 6  : return function (a,b,c,d,e,f) { return fn.apply(this, arguments); };
-                    case 7  : return function (a,b,c,d,e,f,g) { return fn.apply(this, arguments); };
-                    case 8  : return function (a,b,c,d,e,f,g,h) { return fn.apply(this, arguments); };
-                    case 9  : return function (a, b, c, d, e, f, g, h, i) { return fn.apply(this, arguments); };
-                    case 10:  return function (a, b, c, d, e, f, g, h, i, j) { return fn.apply(this, arguments); };
-                    case 11:  return function (a, b, c, d, e, f, g, h, i, j, k) { return fn.apply(this, arguments); };
-                    case 12:  return function (a, b, c, d, e, f, g, h, i, j, k, l) { return fn.apply(this, arguments); };
-                    case 13:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m) { return fn.apply(this, arguments); };
-                    case 14:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n) { return fn.apply(this, arguments); };
-                    case 15:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o) { return fn.apply(this, arguments); };
-                    case 16:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p) { return fn.apply(this, arguments); };
-                    case 17:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q) { return fn.apply(this, arguments); };
-                    case 18:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r) { return fn.apply(this, arguments); };
-                    case 19:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s) { return fn.apply(this, arguments); };
-                    default:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t) { return fn.apply(this, arguments); };
-                }
-            },
-
             bind: function (obj, method, args, appendArgs) {
-                if (method && method.$method === method && method.$scope === obj) {
+                if (method && method.$method == method && method.$scope == obj) {
                     return method;
                 }
 
-                var fn;
+                var fn = null;
 
                 if (arguments.length === 2) {
-                    fn = Bridge.fn.makeFn(function () {
-                        Bridge.caller.unshift(this);
-                        var result = method.apply(obj, arguments);
-                        Bridge.caller.shift(this);
-
-                        return result;
-                    }, method.length);
-                } else {
-                    fn = Bridge.fn.makeFn(function () {
+                    fn = function () {
+                        return method.apply(obj, arguments);
+                    };
+                }
+                else {
+                    fn = function () {
                         var callArgs = args || arguments;
 
                         if (appendArgs === true) {
                             callArgs = Array.prototype.slice.call(arguments, 0);
                             callArgs = callArgs.concat(args);
-                        } else if (typeof appendArgs === "number") {
+                        }
+                        else if (typeof appendArgs == 'number') {
                             callArgs = Array.prototype.slice.call(arguments, 0);
 
                             if (appendArgs === 0) {
                                 callArgs.unshift.apply(callArgs, args);
-                            } else if (appendArgs < callArgs.length) {
+                            }
+                            else if (appendArgs < callArgs.length) {
                                 callArgs.splice.apply(callArgs, [appendArgs, 0].concat(args));
-                            } else {
+                            }
+                            else {
                                 callArgs.push.apply(callArgs, args);
                             }
                         }
-                        Bridge.caller.unshift(this);
-                        var result = method.apply(obj, callArgs);
-                        Bridge.caller.shift(this);
 
-                        return result;
-                    }, method.length);
+                        return method.apply(obj, callArgs);
+                    };
                 }
 
                 fn.$method = method;
@@ -763,17 +726,13 @@
             },
 
             bindScope: function (obj, method) {
-                var fn = Bridge.fn.makeFn(function () {
+                var fn = function () {
                     var callArgs = Array.prototype.slice.call(arguments, 0);
 
                     callArgs.unshift.apply(callArgs, [obj]);
 
-                    Bridge.caller.unshift(this);
-                    var result = method.apply(obj, callArgs);
-                    Bridge.caller.shift(this);
-
-                    return result;
-                }, method.length);
+                    return method.apply(obj, callArgs);
+                };
 
                 fn.$method = method;
                 fn.$scope = obj;
@@ -784,7 +743,7 @@
             $build: function (handlers) {
                 var fn = function () {
                     var list = fn.$invocationList,
-                        result = null,
+                        result,
                         i,
                         handler;
 
@@ -798,7 +757,7 @@
 
                 fn.$invocationList = handlers ? Array.prototype.slice.call(handlers, 0) : [];
 
-                if (fn.$invocationList.length === 0) {
+                if (fn.$invocationList.length == 0) {
                     return null;
                 }
 
@@ -854,7 +813,8 @@
         Object.create = function (o, properties) {
             if (typeof o !== "object" && typeof o !== "function") {
                 throw new TypeError("Object prototype may only be an Object: " + o);
-            } else if (o === null) {
+            }
+            else if (o === null) {
                 throw new Error("This browser's implementation of Object.create is a shim and doesn't support 'null' as the first argument");
             }
 
@@ -863,7 +823,6 @@
             }
 
             function F() { }
-
             F.prototype = o;
 
             return new F();
@@ -871,10 +830,11 @@
     }
 
     globals.Bridge = core;
-    globals.Bridge.caller = [];
+})(this);
 
-    // @source Nullable.js
+// @source Nullable.js
 
+(function () {
     var nullable = {
         hasValue: function (obj) {
             return (obj !== null) && (obj !== undefined);
@@ -906,7 +866,8 @@
         and: function (a, b) {
             if (a === true && b === true) {
                 return true;
-            } else if (a === false || b === false) {
+            }
+            else if (a === false || b === false) {
                 return false;
             }
 
@@ -916,7 +877,8 @@
         or: function (a, b) {
             if (a === true || b === true) {
                 return true;
-            } else if (a === false && b === false) {
+            }
+            else if (a === false && b === false) {
                 return false;
             }
 
@@ -971,10 +933,6 @@
             return Bridge.hasValue(a) && Bridge.hasValue(b) ? a >> b : null;
         },
 
-        srr: function (a, b) {
-            return Bridge.hasValue(a) && Bridge.hasValue(b) ? a >>> b : null;
-        },
-
         sub: function (a, b) {
 	        return Bridge.hasValue(a) && Bridge.hasValue(b) ? a - b : null;
         },
@@ -1012,42 +970,42 @@
         },
 
         lift1: function (f, o) {
-            return Bridge.hasValue(o) ? (typeof f === "function" ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : o[f].apply(o, Array.prototype.slice.call(arguments, 2))) : null;
+            return Bridge.hasValue(o) ? (typeof f === 'function' ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : o[f].apply(o, Array.prototype.slice.call(arguments, 2))) : null;
         },
 
         lift2: function (f, a, b) {
-            return Bridge.hasValue(a) && Bridge.hasValue(b) ? (typeof f === "function" ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))) : null;
+            return Bridge.hasValue(a) && Bridge.hasValue(b) ? (typeof f === 'function' ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))) : null;
         },
 
         liftcmp: function (f, a, b) {
-            return Bridge.hasValue(a) && Bridge.hasValue(b) ? (typeof f === "function" ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))) : false;
+            return Bridge.hasValue(a) && Bridge.hasValue(b) ? (typeof f === 'function' ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))) : false;
         },
 
         lifteq: function (f, a, b) {
             var va = Bridge.hasValue(a), vb = Bridge.hasValue(b);
-            return (!va && !vb) || (va && vb && (typeof f === "function" ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))));
+            return (!va && !vb) || (va && vb && (typeof f === 'function' ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))));
         },
 
         liftne: function (f, a, b) {
             var va = Bridge.hasValue(a), vb = Bridge.hasValue(b);
-            return (va !== vb) || (va && (typeof f === "function" ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))));
+            return (va !== vb) || (va && (typeof f === 'function' ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))));
         }
     };
 
     Bridge.Nullable = nullable;
     Bridge.hasValue = Bridge.Nullable.hasValue;
+})();
 
-    // @source Char.js
+// @source Char.js
 
+(function () {
     var char = {
         charCodeAt: function (str, index) {
-            if (str == null) {
+            if (str == null)
                 throw new Bridge.ArgumentNullException();
-            }
 
-            if (str.length != 1) {
+            if (str.length != 1)
                 throw new Bridge.FormatException("String must be exactly one character long");
-            }
 
             return str.charCodeAt(index);
         },
@@ -1126,60 +1084,14 @@
     };
 
     Bridge.Char = char;
+})();
 
-    // @source String.js
+// @source String.js
 
+(function () {
     var string = {
-        is: function (obj, type) {
-            if (!Bridge.isString(obj)) {
-                return false;
-            }
-
-            if ((obj.constructor === type) || (obj instanceof type)) {
-                return true;
-            }
-
-            if (type === Bridge.IEnumerable ||
-                type.$$name && Bridge.String.startsWith(type.$$name, "Bridge.IEnumerable$1") ||
-                type.$$name && Bridge.String.startsWith(type.$$name, "Bridge.IComparable$1") ||
-                type.$$name && Bridge.String.startsWith(type.$$name, "Bridge.IEquatable$1")) {
-                return true;
-            }
-
-            return false;
-        },
-
-        lastIndexOf: function (s, search, startIndex, count) {
-            var index = s.lastIndexOf(search, startIndex);
-            return (index < (startIndex - count + 1)) ? -1 : index;
-        },
-
-        lastIndexOfAny: function (s, chars, startIndex, count) {
-            var length = s.length;
-            if (!length) {
-                return -1;
-            }
-
-            chars = String.fromCharCode.apply(null, chars);
-            startIndex = startIndex || length - 1;
-            count = count || length;
-
-            var endIndex = startIndex - count + 1;
-            if (endIndex < 0) {
-                endIndex = 0;
-            }
-
-            for (var i = startIndex; i >= endIndex; i--) {
-                if (chars.indexOf(s.charAt(i)) >= 0) {
-                    return i;
-                }
-            }
-            return -1;
-        },
-
         isNullOrWhiteSpace: function (value) {
-            //do not replace == to ===, it ichecks to undefined also
-            return value == null || value.match(/^ *$/) !== null;
+            return value === null || value.match(/^ *$/) !== null;
         },
 
         isNullOrEmpty: function (value) {
@@ -1209,7 +1121,7 @@
                     return fn(repeatCloseBrace);
                 }
 
-                if (openBrace.length % 2 === 0 || closeBrace.length % 2 === 0) {
+                if (openBrace.length % 2 == 0 || closeBrace.length % 2 == 0) {
                     return fn(openBrace) + elementContent + fn(closeBrace);
                 }
 
@@ -1220,7 +1132,7 @@
         handleElement: function (index, alignment, formatStr, args) {
             var value;
 
-            index = parseInt(index, 10);
+            index = parseInt(index, 10)
 
             if (index > args.length - 1) {
                 throw new Bridge.FormatException("Input string was not in a correct format.");
@@ -1259,10 +1171,6 @@
 
             if (!pad) {
                 pad = " ";
-            }
-
-            if (Bridge.isNumber(pad)) {
-                pad = String.fromCharCode(pad);
             }
 
             if (!dir) {
@@ -1340,7 +1248,7 @@
                 throw new Bridge.ArgumentNullException();
             }
 
-            if (str == null || str === "") {
+            if (str == null || str == "") {
                 return -1;
             }
 
@@ -1379,7 +1287,7 @@
                 throw new Bridge.ArgumentNullException();
             }
 
-            if (str == null || str === "") {
+            if (str == null || str == "") {
                 return -1;
             }
 
@@ -1389,7 +1297,7 @@
                 throw new Bridge.ArgumentOutOfRangeException("startIndex", "startIndex cannot be less than zero and must refer to a location within the string");
             }
 
-            if (value === "") {
+            if (value == "") {
                 return (arguments.length > 2) ? startIndex : 0;
             }
 
@@ -1404,13 +1312,14 @@
             }
 
             var s = str.substr(startIndex, length);
-            var index = (arguments.length === 5 && arguments[4] % 2 !== 0) ? s.toLocaleUpperCase().indexOf(value.toLocaleUpperCase()) : s.indexOf(value);
+            var index = (arguments.length == 5 && arguments[4] % 2 != 0) ? s.toLocaleUpperCase().indexOf(value.toLocaleUpperCase()) : s.indexOf(value);
 
             if (index > -1) {
-                if (arguments.length === 5) {
+                if (arguments.length == 5) {
                     // StringComparison
-                    return (Bridge.String.compare(value, s.substr(index, value.length), arguments[4]) === 0) ? index + startIndex : -1;
-                } else {
+                    return (Bridge.String.compare(value, s.substr(index, value.length), arguments[4]) == 0) ? index + startIndex : -1;
+                }
+                else {
                     return index + startIndex;
                 }
             }
@@ -1418,8 +1327,8 @@
             return -1;
         },
 
-        equals: function () {
-            return Bridge.String.compare.apply(this, arguments) === 0;
+        equals: function() {
+            return Bridge.String.compare.apply(this, arguments) == 0;
         },
 
         compare: function (strA, strB) {
@@ -1428,7 +1337,7 @@
             }
 
             if (strB == null) {
-                return 1;
+                return (strA == null) ? 0 : 1;
             }
 
             if (arguments.length >= 3) {
@@ -1436,27 +1345,33 @@
                     // StringComparison
                     switch (arguments[2]) {
                         case 1: // CurrentCultureIgnoreCase
-                            return strA.localeCompare(strB, Bridge.CultureInfo.getCurrentCulture().name, { sensitivity: "accent" });
+                            return strA.localeCompare(strB, Bridge.CultureInfo.getCurrentCulture().name, { sensitivity: 'accent' });
+                            break;
                         case 2: // InvariantCulture
                             return strA.localeCompare(strB, Bridge.CultureInfo.invariantCulture.name);
+                            break;
                         case 3: // InvariantCultureIgnoreCase
-                            return strA.localeCompare(strB, Bridge.CultureInfo.invariantCulture.name, { sensitivity: "accent" });
+                            return strA.localeCompare(strB, Bridge.CultureInfo.invariantCulture.name, { sensitivity: 'accent' });
+                            break;
                         case 4: // Ordinal
                             return (strA === strB) ? 0 : ((strA > strB) ? 1 : -1);
+                            break;
                         case 5: // OrdinalIgnoreCase
                             return (strA.toUpperCase() === strB.toUpperCase()) ? 0 : ((strA.toUpperCase() > strB.toUpperCase()) ? 1 : -1);
+                            break;
                         case 0: // CurrentCulture
                         default:
                             break;
                     }
-                } else {
+                }
+                else {
                     // ignoreCase
                     if (arguments[2]) {
                         strA = strA.toLocaleUpperCase();
                         strB = strB.toLocaleUpperCase();
                     }
 
-                    if (arguments.length === 4) {
+                    if (arguments.length == 4) {
                         // CultureInfo
                         return strA.localeCompare(strB, arguments[3].name);
                     }
@@ -1492,385 +1407,24 @@
             return arr;
         },
 
-        escape: function (str) {
+        escape: function(str) {
             return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
         },
 
         replaceAll: function (str, a, b) {
-            var reg = new RegExp(Bridge.String.escape(a), "g");
+            a = Bridge.String.escape(a);
+            var reg = new RegExp(a, "g");
 
             return str.replace(reg, b);
-        },
-
-        insert: function (index, strA, strB) {
-            return index > 0 ? (strA.substring(0, index) + strB + strA.substring(index, strA.length)) : (strB + strA);
-        },
-
-        remove: function (s, index, count) {
-            if (!count || ((index + count) > this.length)) {
-                return s.substr(0, index);
-            }
-            return s.substr(0, index) + s.substr(index + count);
-        },
-
-        split: function (s, strings, limit, options) {
-            var re = new RegExp(strings.map(Bridge.String.escape).join('|'), 'g'),
-                res = [],
-                m,
-                i;
-            for (i = 0;; i = re.lastIndex) {
-                if (m = re.exec(s)) {
-                    if (options !== 1 || m.index > i) {
-                        if (res.length === limit - 1) {
-                            res.push(s.substr(i));
-                            return res;
-                        }
-                        else
-                            res.push(s.substring(i, m.index));
-                    }
-                }
-                else {
-                    if (options !== 1 || i !== s.length)
-                        res.push(s.substr(i));
-                    return res;
-                }
-            }
-        },
-
-        trimEnd: function (s, chars) {
-            return s.replace(chars ? new RegExp('[' + String.fromCharCode.apply(null, chars) + ']+$') : /\s*$/, '');
-        },
-
-        trimStart: function(s, chars) {
-            return s.replace(chars ? new RegExp('^[' + String.fromCharCode.apply(null, chars) + ']+') : /^\s*/, '');
-        },
-
-        trim: function(s, chars) {
-            return Bridge.String.trimStart(Bridge.String.trimEnd(s, chars), chars);
         }
     };
 
     Bridge.String = string;
+})();
 
-    // @source Enum.js
+// @source Class.js
 
-    var enumMethods = {
-        nameEquals: function (n1, n2, ignoreCase) {
-            if (ignoreCase) {
-                return n1.toLowerCase() === n2.toLowerCase();
-            }
-
-            return (n1.charAt(0).toLowerCase() + n1.slice(1)) === (n2.charAt(0).toLowerCase() + n2.slice(1));
-        },
-
-        checkEnumType: function(enumType) {
-            if (!enumType) {
-                throw new Bridge.ArgumentNullException("enumType");
-            }
-
-            if (!enumType.prototype.$enum) {
-                throw new Bridge.ArgumentException("", "enumType");
-            }
-        },
-
-        toName: function(name) {
-            return name.charAt(0).toUpperCase() + name.slice(1);
-        },
-
-        parse: function(enumType, s, ignoreCase, silent) {
-            var values = enumType;
-
-            Bridge.Enum.checkEnumType(enumType);
-
-            if (!enumType.prototype.$flags) {
-                for (var f in values) {
-                    if (enumMethods.nameEquals(f, s, ignoreCase)) {
-                        return values[f];
-                    }
-                }
-            }
-            else {
-                var parts = s.split(',');
-                var value = 0;
-                var parsed = true;
-
-                for (var i = parts.length - 1; i >= 0; i--) {
-                    var part = parts[i].trim();
-                    var found = false;
-
-                    for (var f in values) {
-                        if (enumMethods.nameEquals(f, part, ignoreCase)) {
-                            value |= values[f];
-                            found = true;
-                            break;
-                        }
-                    }
-                    if (!found) {
-                        parsed = false;
-                        break;
-                    }
-                }
-
-                if (parsed) {
-                    return value;
-                }
-            }
-
-            if (silent !== true) {
-                throw new Bridge.ArgumentException('Invalid Enumeration Value');
-            }
-
-            return null;
-        },
-
-        toString: function (enumType, value, forceFlags) {
-            Bridge.Enum.checkEnumType(enumType);
-
-            var values = enumType;
-            if ((!enumType.prototype.$flags && forceFlags !== true) || (value === 0)) {
-                for (var i in values) {
-                    if (values[i] === value) {
-                        return enumMethods.toName(i);
-                    }
-                }
-                //throw new Bridge.ArgumentException('Invalid Enumeration Value');
-                return value.toString();
-            }
-            else {
-                var parts = [];
-                for (var i in values) {
-                    if (values[i] & value) {
-                        parts.push(enumMethods.toName(i));
-                    }
-                }
-                if (!parts.length) {
-                    //throw new Bridge.ArgumentException('Invalid Enumeration Value');
-                    return value.toString();
-                }
-                return parts.join(', ');
-            }
-        },
-
-        getValues: function (enumType) {
-            Bridge.Enum.checkEnumType(enumType);
-            var parts = [];
-            var values = enumType;
-            for (var i in values) {
-                if (values.hasOwnProperty(i) && i.indexOf("$") < 0)
-                    parts.push(values[i]);
-            }
-            return parts;
-        },
-
-        format: function (enumType, value, format) {
-            Bridge.Enum.checkEnumType(enumType);
-
-            var name;
-            if (!Bridge.hasValue(value) && (name = "value") || !Bridge.hasValue(format) && (name = "format")) {
-                throw new Bridge.ArgumentNullException(name);
-            }
-
-            switch (format) {
-                case "G":
-                case "g":
-                    return Bridge.Enum.toString(enumType, value);
-                case "x":
-                case "X":
-                    return value.toString(16);
-                case "d":
-                case "D":
-                    return value.toString();
-                case "f":
-                case "F":
-                    return Bridge.Enum.toString(enumType, value, true);
-                default:
-                    throw new Bridge.FormatException();
-            }
-        },
-
-        getNames: function (enumType) {
-            Bridge.Enum.checkEnumType(enumType);
-            var parts = [];
-            var values = enumType;
-            for (var i in values) {
-                if (values.hasOwnProperty(i) && i.indexOf("$") < 0)
-                    parts.push(enumMethods.toName(i));
-            }
-            return parts;
-        },
-
-        getName: function (enumType, value) {
-            Bridge.Enum.checkEnumType(enumType);
-            var values = enumType;
-            for (var i in values) {
-                if (values[i] === value) {
-                    return i.charAt(0).toUpperCase() + i.slice(1);
-                }
-            }
-
-            return null;
-        },
-
-        hasFlag: function(value, flag) {
-            return !!(value & flag);
-        },
-
-        isDefined: function (enumType, value) {
-            Bridge.Enum.checkEnumType(enumType);
-            var values = enumType;
-            var isString = Bridge.isString(value);
-            for (var i in values) {
-                if (isString ? enumMethods.nameEquals(i, value, false) : values[i] === value) {
-                    return true;
-                }
-            }
-
-            return false;
-        },
-
-        tryParse: function (enumType, value, result, ignoreCase) {
-            result.v = 0;
-            result.v = enumMethods.parse(enumType, value, ignoreCase, true);
-
-            if (result.v == null) {
-                return false;
-            }
-
-            return true;
-        }
-    };
-
-    Bridge.Enum = enumMethods;
-
-    // @source Browser.js
-
-	if (document) {
-	    var check = function (regex) {
-	        return regex.test(navigator.userAgent);
-	    },
-
-        isStrict = document.compatMode === "CSS1Compat",
-
-        version = function (is, regex) {
-            var m;
-
-            return (is && (m = regex.exec(navigator.userAgent))) ? parseFloat(m[1]) : 0;
-        },
-
-        docMode = document.documentMode,
-        isOpera = check(/opera/),
-        isOpera10_5 = isOpera && check(/version\/10\.5/),
-        isChrome = check(/\bchrome\b/),
-        isWebKit = check(/webkit/),
-        isSafari = !isChrome && check(/safari/),
-        isSafari2 = isSafari && check(/applewebkit\/4/),
-        isSafari3 = isSafari && check(/version\/3/),
-        isSafari4 = isSafari && check(/version\/4/),
-        isSafari5_0 = isSafari && check(/version\/5\.0/),
-        isSafari5 = isSafari && check(/version\/5/),
-        isIE = !isOpera && (check(/msie/) || check(/trident/)),
-        isIE7 = isIE && ((check(/msie 7/) && docMode !== 8 && docMode !== 9 && docMode !== 10) || docMode === 7),
-        isIE8 = isIE && ((check(/msie 8/) && docMode !== 7 && docMode !== 9 && docMode !== 10) || docMode === 8),
-        isIE9 = isIE && ((check(/msie 9/) && docMode !== 7 && docMode !== 8 && docMode !== 10) || docMode === 9),
-        isIE10 = isIE && ((check(/msie 10/) && docMode !== 7 && docMode !== 8 && docMode !== 9) || docMode === 10),
-        isIE11 = isIE && ((check(/trident\/7\.0/) && docMode !== 7 && docMode !== 8 && docMode !== 9 && docMode !== 10) || docMode === 11),
-        isIE6 = isIE && check(/msie 6/),
-        isGecko = !isWebKit && !isIE && check(/gecko/),
-        isGecko3 = isGecko && check(/rv:1\.9/),
-        isGecko4 = isGecko && check(/rv:2\.0/),
-        isGecko5 = isGecko && check(/rv:5\./),
-        isGecko10 = isGecko && check(/rv:10\./),
-        isFF3_0 = isGecko3 && check(/rv:1\.9\.0/),
-        isFF3_5 = isGecko3 && check(/rv:1\.9\.1/),
-        isFF3_6 = isGecko3 && check(/rv:1\.9\.2/),
-        isWindows = check(/windows|win32/),
-        isMac = check(/macintosh|mac os x/),
-        isLinux = check(/linux/),
-        scrollbarSize = null,
-        chromeVersion = version(true, /\bchrome\/(\d+\.\d+)/),
-        firefoxVersion = version(true, /\bfirefox\/(\d+\.\d+)/),
-        ieVersion = version(isIE, /msie (\d+\.\d+)/),
-        operaVersion = version(isOpera, /version\/(\d+\.\d+)/),
-        safariVersion = version(isSafari, /version\/(\d+\.\d+)/),
-        webKitVersion = version(isWebKit, /webkit\/(\d+\.\d+)/),
-        isSecure = Bridge.global.location ? /^https/i.test(Bridge.global.location.protocol) : false,
-        isiPhone = /iPhone/i.test(navigator.platform),
-        isiPod = /iPod/i.test(navigator.platform),
-        isiPad = /iPad/i.test(navigator.userAgent),
-        isBlackberry = /Blackberry/i.test(navigator.userAgent),
-        isAndroid = /Android/i.test(navigator.userAgent),
-        isDesktop = isMac || isWindows || (isLinux && !isAndroid),
-        isTablet = isiPad,
-        isPhone = !isDesktop && !isTablet;
-
-	    var browser = {
-	        isStrict: isStrict,
-	        isIEQuirks: isIE && (!isStrict && (isIE6 || isIE7 || isIE8 || isIE9)),
-	        isOpera: isOpera,
-	        isOpera10_5: isOpera10_5,
-	        isWebKit: isWebKit,
-	        isChrome: isChrome,
-	        isSafari: isSafari,
-	        isSafari3: isSafari3,
-	        isSafari4: isSafari4,
-	        isSafari5: isSafari5,
-	        isSafari5_0: isSafari5_0,
-	        isSafari2: isSafari2,
-	        isIE: isIE,
-	        isIE6: isIE6,
-	        isIE7: isIE7,
-	        isIE7m: isIE6 || isIE7,
-	        isIE7p: isIE && !isIE6,
-	        isIE8: isIE8,
-	        isIE8m: isIE6 || isIE7 || isIE8,
-	        isIE8p: isIE && !(isIE6 || isIE7),
-	        isIE9: isIE9,
-	        isIE9m: isIE6 || isIE7 || isIE8 || isIE9,
-	        isIE9p: isIE && !(isIE6 || isIE7 || isIE8),
-	        isIE10: isIE10,
-	        isIE10m: isIE6 || isIE7 || isIE8 || isIE9 || isIE10,
-	        isIE10p: isIE && !(isIE6 || isIE7 || isIE8 || isIE9),
-	        isIE11: isIE11,
-	        isIE11m: isIE6 || isIE7 || isIE8 || isIE9 || isIE10 || isIE11,
-	        isIE11p: isIE && !(isIE6 || isIE7 || isIE8 || isIE9 || isIE10),
-	        isGecko: isGecko,
-	        isGecko3: isGecko3,
-	        isGecko4: isGecko4,
-	        isGecko5: isGecko5,
-	        isGecko10: isGecko10,
-	        isFF3_0: isFF3_0,
-	        isFF3_5: isFF3_5,
-	        isFF3_6: isFF3_6,
-	        isFF4: 4 <= firefoxVersion && firefoxVersion < 5,
-	        isFF5: 5 <= firefoxVersion && firefoxVersion < 6,
-	        isFF10: 10 <= firefoxVersion && firefoxVersion < 11,
-	        isLinux: isLinux,
-	        isWindows: isWindows,
-	        isMac: isMac,
-	        chromeVersion: chromeVersion,
-	        firefoxVersion: firefoxVersion,
-	        ieVersion: ieVersion,
-	        operaVersion: operaVersion,
-	        safariVersion: safariVersion,
-	        webKitVersion: webKitVersion,
-	        isSecure: isSecure,
-	        isiPhone: isiPhone,
-	        isiPod: isiPod,
-	        isiPad: isiPad,
-	        isBlackberry: isBlackberry,
-	        isAndroid: isAndroid,
-	        isDesktop: isDesktop,
-	        isTablet: isTablet,
-	        isPhone: isPhone,
-	        iOS: isiPhone || isiPad || isiPod,
-	        standalone: Bridge.global.navigator ? !!Bridge.global.navigator.standalone : false
-	    };
-
-	    Bridge.Browser = browser;
-	}
-
-    // @source Class.js
-
+(function () {
     var initializing = false;
 
     // The base Class implementation
@@ -1880,7 +1434,7 @@
         initCtor: function () {
             var value = arguments[0];
 
-            if (this.$multipleCtors && arguments.length > 0 && typeof value == "string") {
+            if (this.$multipleCtors && arguments.length > 0 && typeof value == 'string') {
                 value = value === "constructor" ? "$constructor" : value;
 
                 if ((value === "$constructor" || Bridge.String.startsWith(value, "constructor$")) && Bridge.isFunction(this[value])) {
@@ -1895,54 +1449,67 @@
             }
         },
 
+        createAccessors: function (cfg, scope) {
+            var name,
+                config;
+
+            config = Bridge.isFunction(cfg) ? cfg() : cfg;
+
+            if (config.properties) {
+                for (name in config.properties) {
+                    Bridge.property(scope, name, config.properties[name]);
+                }
+            }
+        },
+
         initConfig: function (extend, base, cfg, statics, scope) {
             var initFn,
                 isFn = Bridge.isFunction(cfg),
                 fn = function () {
-                    var name,
-                        config;
+                var name,
+                    config;
 
-                    config = Bridge.isFunction(cfg) ? cfg() : cfg;
+                config = Bridge.isFunction(cfg) ? cfg() : cfg;
 
-                    if (config.fields) {
-                        for (name in config.fields) {
-                            this[name] = config.fields[name];
+                if (extend && !statics && base.$initMembers) {
+                    base.$initMembers.apply(this, arguments);
+                }
+
+                if (config.fields) {
+                    for (name in config.fields) {
+                        this[name] = config.fields[name];
+                    }
+                }
+
+                if (config.properties) {
+                    for (name in config.properties) {
+                        Bridge.property(this, name, config.properties[name]);
+                    }
+                }
+
+                if (config.events) {
+                    for (name in config.events) {
+                        Bridge.event(this, name, config.events[name]);
+                    }
+                }
+                if (config.alias) {
+                    for (name in config.alias) {
+                        if (this[name]) {
+                            this[name] = this[config.alias[name]];
                         }
                     }
+                }
 
-                    if (config.properties) {
-                        for (name in config.properties) {
-                            Bridge.property(this, name, config.properties[name]);
-                        }
-                    }
-
-                    if (config.events) {
-                        for (name in config.events) {
-                            Bridge.event(this, name, config.events[name]);
-                        }
-                    }
-                    if (config.alias) {
-                        for (name in config.alias) {
-                            if (this[name]) {
-                                this[name] = this[config.alias[name]];
-                            }
-                        }
-                    }
-
-                    if (config.init) {
-                        initFn = config.init;
-                    }
-                };
+                if (config.init) {
+                    initFn = config.init;
+                }
+            };
 
             if (!isFn) {
                 fn.apply(scope);
             }
 
             scope.$initMembers = function () {
-                if (extend && !statics && base.$initMembers) {
-                    base.$initMembers.apply(this, arguments);
-                }
-
                 if (isFn) {
                     fn.apply(this);
                 }
@@ -1966,10 +1533,9 @@
                         name,
                         obj,
                         c;
-
                     args.unshift(className);
                     name = Bridge.Class.genericName.apply(null, args),
-                        c = Bridge.Class.cache[name];
+                    c = Bridge.Class.cache[name]
 
                     if (c) {
                         return c;
@@ -1986,12 +1552,12 @@
             }
 
             prop = prop || {};
-
             var extend = prop.$inherits || prop.inherits,
                 statics = prop.$statics || prop.statics,
                 base,
                 cacheName = prop.$cacheName,
                 prototype,
+                nameParts,
                 scope = prop.$scope || Bridge.global,
                 i,
                 v,
@@ -2003,15 +1569,18 @@
 
             if (prop.$inherits) {
                 delete prop.$inherits;
-            } else {
+            }
+            else {
                 delete prop.inherits;
             }
 
             if (Bridge.isFunction(statics)) {
                 statics = null;
-            } else if (prop.$statics) {
+            }
+            else if (prop.$statics) {
                 delete prop.$statics;
-            } else {
+            }
+            else {
                 delete prop.statics;
             }
 
@@ -2026,29 +1595,20 @@
                         object = Object.create(Class.prototype),
                         result = Class.apply(object, args);
 
-                    return typeof result === "object" ? result : object;
+                    return typeof result === 'object' ? result : object;
                 }
 
                 // All construction is actually done in the init method
                 if (!initializing) {
-                    if (this.$staticInit) {
-                        this.$staticInit();
-                    }
-
                     if (this.$initMembers) {
                         this.$initMembers.apply(this, arguments);
                     }
 
                     this.$$initCtor.apply(this, arguments);
                 }
-            };
-
-            scope = Bridge.Class.set(scope, className, Class);
-
-            if (cacheName) {
-                Bridge.Class.cache[cacheName] = Class;
             }
 
+            scope = Bridge.Class.set(scope, className, Class);
             if (extend && Bridge.isFunction(extend)) {
                 extend = extend();
             }
@@ -2069,7 +1629,8 @@
 
                     if (statics.$config) {
                         delete statics.$config;
-                    } else {
+                    }
+                    else {
                         delete statics.config;
                     }
                 }
@@ -2080,12 +1641,23 @@
             if (instanceConfig && !Bridge.isFunction(instanceConfig)) {
                 Bridge.Class.initConfig(extend, base, instanceConfig, false, prop);                
 
+                if (document && (document.readyState == "complete" || document.readyState == "loaded")) {
+                    Bridge.Class.createAccessors(instanceConfig, prototype);
+                }
+                else {
+                    setTimeout(function () {
+                        Bridge.Class.createAccessors(instanceConfig, prototype);
+                    }, 0);
+                }
+
                 if (prop.$config) {
                     delete prop.$config;
-                } else {
+                }
+                else {
                     delete prop.config;
                 }
-            } else {
+            }
+            else {
                 prop.$initMembers = extend ? function () {
                     base.$initMembers.apply(this, arguments);
                 } : function () { };
@@ -2096,21 +1668,7 @@
             // Copy the properties over onto the new prototype
             ctorCounter = 0;
 
-            var keys = [];
-
             for (name in prop) {
-                keys.push(name);
-            }
-
-            if (Bridge.Browser.isIE8) {
-                if (prop.hasOwnProperty("constructor") && keys.indexOf("constructor") < 0) {
-                    keys.push("constructor");
-                }
-            }            
-
-            for (var i = 0; i < keys.length; i++) {
-                name = keys[i];
-
                 v = prop[name];
                 isCtor = name === "constructor";
                 ctorName = isCtor ? "$constructor" : name;
@@ -2131,7 +1689,7 @@
                                 this.$initMembers.apply(this, args);
                             }
 
-                            args.unshift(ctorName);
+                            args.unshift(ctorName)
                             this.$$initCtor.apply(this, args);
                         };
                     })(ctorName);
@@ -2141,9 +1699,9 @@
                 }
             }
 
-            if (ctorCounter === 0) {
+            if (ctorCounter == 0) {
                 prototype.$constructor = extend ? function () {
-                    base.$constructor.apply(this, arguments);
+                    base.$constructor();
                 } : function () { };
             }
 
@@ -2152,6 +1710,10 @@
             }
 
             prototype.$$name = className;
+
+            if (cacheName) {
+                Bridge.Class.cache[cacheName] = Class;
+            }
 
             // Populate our constructed prototype object
             Class.prototype = prototype;
@@ -2184,8 +1746,6 @@
             }
 
             fn = function () {
-                Class.$staticInit = null;
-
                 if (Class.$initMembers) {
                     Class.$initMembers.call(Class);
                 }
@@ -2195,11 +1755,11 @@
                 }
             };
 
-            if (document && (document.readyState === "complete" || document.readyState === "loaded")) {
+            if (document && (document.readyState == "complete" || document.readyState == "loaded")) {
                 fn();
-            } else {
-                Bridge.Class.$queue.push(Class);
-                Class.$staticInit = fn;
+            }
+            else {
+                setTimeout(fn, 0);
             }
 
             return Class;
@@ -2209,7 +1769,6 @@
         addExtend: function (cls, extend) {
             var i,
                 scope;
-
             Array.prototype.push.apply(cls.$$inherits, extend);
 
             for (i = 0; i < extend.length; i++) {
@@ -2224,14 +1783,14 @@
         },
 
         set: function (scope, className, cls) {
-            var nameParts = className.split("."),
+            var nameParts = className.split('.'),
                 name,
                 key,
                 exists,
                 i;
 
             for (i = 0; i < (nameParts.length - 1) ; i++) {
-                if (typeof scope[nameParts[i]] == "undefined") {
+                if (typeof scope[nameParts[i]] == 'undefined') {
                     scope[nameParts[i]] = { };
                 }
 
@@ -2258,7 +1817,7 @@
             var name = arguments[0];
 
             for (var i = 1; i < arguments.length; i++) {
-                name += "$" + Bridge.getTypeName(arguments[i]);
+                name += '$' + Bridge.getTypeName(arguments[i]);
             }
 
             return name;
@@ -2269,1320 +1828,1273 @@
                 fn = scope;
                 scope = Bridge.global;
             }
-            fn.$$name = className;
+
             Bridge.Class.set(scope, className, fn);
 
             return fn;
-        },
-
-        init: function (fn) {
-            for (var i = 0; i < Bridge.Class.$queue.length; i++) {
-                var t = Bridge.Class.$queue[i];
-
-                if (t.$staticInit) {
-                    t.$staticInit();
-                }
-            }
-            Bridge.Class.$queue.length = 0;
-
-            if (fn) {
-                fn();
-            }
         }
     };
 
     Bridge.Class = base;
-    Bridge.Class.$queue = [];
     Bridge.define = Bridge.Class.define;
-    Bridge.init = Bridge.Class.init;
+})();
 
-    // @source Exception.js
+// @source Exception.js
 
-    Bridge.define("Bridge.Exception", {
-        constructor: function (message, innerException) {
-            this.message = message;
-            this.innerException = innerException;
-            this.errorStack = new Error();
-            this.data = new Bridge.Dictionary$2(Object, Object)();
-        },
+Bridge.define('Bridge.Exception', {
+    constructor: function (message, innerException) {
+        this.message = message;
+        this.innerException = innerException;
+        this.errorStack = new Error();
+        this.data = new Bridge.Dictionary$2(Object, Object)();
+    },
 
-        getMessage: function () {
-            return this.message;
-        },
+    getMessage: function () {
+        return this.message;
+    },
 
-        getInnerException: function () {
-            return this.innerException;
-        },
+    getInnerException: function () {
+        return this.innerException;
+    },
 
-        getStackTrace: function () {
-            return this.errorStack.stack;
-        },
+    getStackTrace: function () {
+        return this.errorStack.stack;
+    },
 
-        getData: function () {
-            return this.data;
-        },
+    getData: function () {
+        return this.data;
+    },
 
-        toString: function () {
-            return this.getMessage();
-        },
+    toString: function () {
+        return this.getMessage();
+    },
 
-        statics: {
-            create: function (error) {
-                if (Bridge.is(error, Bridge.Exception)) {
-                    return error;
-                }
-
-                if (error instanceof TypeError) {
-                    return new Bridge.NullReferenceException(error.message, new Bridge.ErrorException(error));
-                } else if (error instanceof RangeError) {
-                    return new Bridge.ArgumentOutOfRangeException(null, error.message, new Bridge.ErrorException(error));
-                } else if (error instanceof Error) {
-                    return new Bridge.ErrorException(error);
-                } else {
-                    return new Bridge.Exception(error ? error.toString() : null);
-                }
-            }
-        }
-    });
-
-    Bridge.define("Bridge.ErrorException", {
-        inherits: [Bridge.Exception],
-
-        constructor: function (error) {
-            Bridge.Exception.prototype.$constructor.call(this, error.message);
-            this.errorStack = error;
-            this.error = error;
-        },
-
-        getError: function () {
-            return this.error;
-        }
-    });
-
-    Bridge.define("Bridge.ArgumentException", {
-        inherits: [Bridge.Exception],
-
-        constructor: function (message, paramName, innerException) {
-            Bridge.Exception.prototype.$constructor.call(this, message || "Value does not fall within the expected range.", innerException);
-            this.paramName = paramName;
-        },
-
-        getParamName: function () {
-            return this.paramName;
-        }
-    });
-
-    Bridge.define("Bridge.ArgumentNullException", {
-        inherits: [Bridge.ArgumentException],
-
-        constructor: function (paramName, message, innerException) {
-            if (!message) {
-                message = "Value cannot be null.";
-
-                if (paramName) {
-                    message += "\nParameter name: " + paramName;
-                }
+    statics: {
+        create: function (error) {
+            if (Bridge.is(error, Bridge.Exception)) {
+                return error;
             }
 
-            Bridge.ArgumentException.prototype.$constructor.call(this, message, paramName, innerException);
+            if (error instanceof TypeError) {
+                return new Bridge.NullReferenceException(error.message, new Bridge.ErrorException(error));
+            }
+            else if (error instanceof RangeError) {
+                return new Bridge.ArgumentOutOfRangeException(null, error.message, new Bridge.ErrorException(error));
+            }
+            else if (error instanceof Error) {
+                return new Bridge.ErrorException(error);
+            }
+            else {
+                return new Bridge.Exception(error ? error.toString() : null);
+            }
         }
-    });
+    }
+});
 
-    Bridge.define("Bridge.ArgumentOutOfRangeException", {
-        inherits: [Bridge.ArgumentException],
+Bridge.define('Bridge.ErrorException', {
+    inherits: [Bridge.Exception],
 
-        constructor: function (paramName, message, innerException, actualValue) {
-            if (!message) {
-                message = "Value is out of range.";
+    constructor: function (error) {
+        Bridge.Exception.prototype.$constructor.call(this, error.message);
+        this.errorStack = error;
+        this.error = error;
+    },
 
-                if (paramName) {
-                    message += "\nParameter name: " + paramName;
-                }
+    getError: function () {
+        return this.error;
+    }
+});
+
+Bridge.define('Bridge.ArgumentException', {
+    inherits: [Bridge.Exception],
+
+    constructor: function (message, paramName, innerException) {
+        Bridge.Exception.prototype.$constructor.call(this, message || "Value does not fall within the expected range.", innerException);
+        this.paramName = paramName;
+    },
+
+    getParamName: function () {
+        return this.paramName;
+    }
+});
+
+Bridge.define('Bridge.ArgumentNullException', {
+    inherits: [Bridge.ArgumentException],
+
+    constructor: function (paramName, message, innerException) {
+        if (!message) {
+            message = 'Value cannot be null.';
+
+            if (paramName) {
+                message += '\nParameter name: ' + paramName;
+            }
+        }
+
+        Bridge.ArgumentException.prototype.$constructor.call(this, message, paramName, innerException);
+    }
+});
+
+Bridge.define('Bridge.ArgumentOutOfRangeException', {
+    inherits: [Bridge.ArgumentException],
+
+    constructor: function (paramName, message, innerException, actualValue) {
+        if (!message) {
+            message = 'Value is out of range.';
+
+            if (paramName) {
+                message += '\nParameter name: ' + paramName;
+            }
+        }
+
+        Bridge.ArgumentException.prototype.$constructor.call(this, message, paramName, innerException);
+
+        this.actualValue = actualValue;
+    },
+
+    getActualValue: function () {
+        return this.actualValue;
+    }
+});
+
+Bridge.define('Bridge.CultureNotFoundException', {
+    inherits: [Bridge.ArgumentException],
+
+    constructor: function (paramName, invalidCultureName, message, innerException) {
+        if (!message) {
+            message = 'Culture is not supported.';
+
+            if (paramName) {
+                message += '\nParameter name: ' + paramName;
             }
 
-            Bridge.ArgumentException.prototype.$constructor.call(this, message, paramName, innerException);
+            if (invalidCultureName) {
+                message += '\n' + invalidCultureName + ' is an invalid culture identifier.';
+            }
+        }
 
-            this.actualValue = actualValue;
+        Bridge.ArgumentException.prototype.$constructor.call(this, message, paramName, innerException);
+
+        this.invalidCultureName = invalidCultureName;
+    },
+
+    getInvalidCultureName: function () {
+        return this.invalidCultureName;
+    }
+});
+
+Bridge.define('Bridge.KeyNotFoundException', {
+    inherits: [Bridge.Exception],
+
+    constructor: function (message, innerException) {
+        Bridge.Exception.prototype.$constructor.call(this, message || "Key not found.", innerException);
+    }
+});
+
+Bridge.define('Bridge.ArithmeticException', {
+    inherits: [Bridge.Exception],
+
+    constructor: function (message, innerException) {
+        Bridge.Exception.prototype.$constructor.call(this, message || "Overflow or underflow in the arithmetic operation.", innerException);
+    }
+});
+
+Bridge.define('Bridge.DivideByZeroException', {
+    inherits: [Bridge.ArithmeticException],
+
+    constructor: function (message, innerException) {
+        Bridge.ArithmeticException.prototype.$constructor.call(this, message || "Division by 0.", innerException);
+    }
+});
+
+Bridge.define('Bridge.OverflowException', {
+    inherits: [Bridge.ArithmeticException],
+
+    constructor: function (message, innerException) {
+        Bridge.ArithmeticException.prototype.$constructor.call(this, message || "Arithmetic operation resulted in an overflow.", innerException);
+    }
+});
+
+Bridge.define('Bridge.FormatException', {
+    inherits: [Bridge.Exception],
+
+    constructor: function (message, innerException) {
+        Bridge.Exception.prototype.$constructor.call(this, message || "Invalid format.", innerException);
+    }
+});
+
+Bridge.define('Bridge.InvalidCastException', {
+    inherits: [Bridge.Exception],
+
+    constructor: function (message, innerException) {
+        Bridge.Exception.prototype.$constructor.call(this, message || "The cast is not valid.", innerException);
+    }
+});
+
+Bridge.define('Bridge.InvalidOperationException', {
+    inherits: [Bridge.Exception],
+
+    constructor: function (message, innerException) {
+        Bridge.Exception.prototype.$constructor.call(this, message || "Operation is not valid due to the current state of the object.", innerException);
+    }
+});
+
+Bridge.define('Bridge.NotImplementedException', {
+    inherits: [Bridge.Exception],
+
+    constructor: function (message, innerException) {
+        Bridge.Exception.prototype.$constructor.call(this, message || "The method or operation is not implemented.", innerException);
+    }
+});
+
+Bridge.define('Bridge.NotSupportedException', {
+    inherits: [Bridge.Exception],
+
+    constructor: function (message, innerException) {
+        Bridge.Exception.prototype.$constructor.call(this, message || "Specified method is not supported.", innerException);
+    }
+});
+
+Bridge.define('Bridge.NullReferenceException', {
+    inherits: [Bridge.Exception],
+
+    constructor: function (message, innerException) {
+        Bridge.Exception.prototype.$constructor.call(this, message || "Object is null.", innerException);
+    }
+});
+
+// @source Interfaces.js
+
+Bridge.define('Bridge.IFormattable', {
+    statics: {
+        $is: function (obj) {
+            if (Bridge.isNumber(obj)) {
+                return true;
+            }
+
+            if (Bridge.isDate(obj)) {
+                return true;
+            }
+
+            return Bridge.is(obj, Bridge.IFormattable, true);
+        }
+    }
+});
+
+Bridge.define('Bridge.IComparable');
+
+Bridge.define('Bridge.IFormatProvider');
+
+Bridge.define('Bridge.ICloneable');
+
+Bridge.Class.generic('Bridge.IComparable$1', function (T) {
+    var $$name = Bridge.Class.genericName('Bridge.IComparable$1', T);
+
+    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name));
+});
+
+Bridge.Class.generic('Bridge.IEquatable$1', function (T) {
+    var $$name = Bridge.Class.genericName('Bridge.IEquatable$1', T);
+
+    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name));
+});
+
+Bridge.define('Bridge.IPromise');
+Bridge.define('Bridge.IDisposable');
+
+// @source Globalization.js
+
+Bridge.define("Bridge.DateTimeFormatInfo", {
+    inherits: [Bridge.IFormatProvider, Bridge.ICloneable],
+
+    statics: {
+        $allStandardFormats: {
+            "d": "shortDatePattern",
+            "D": "longDatePattern",
+            "f": "longDatePattern shortTimePattern",
+            "F": "longDatePattern longTimePattern",
+            "g": "shortDatePattern shortTimePattern",
+            "G": "shortDatePattern longTimePattern",
+            "m": "monthDayPattern",
+            "M": "monthDayPattern",
+            "o": "roundtripFormat",
+            "O": "roundtripFormat",
+            "r": "rfc1123",
+            "R": "rfc1123",
+            "s": "sortableDateTimePattern",
+            "S": "sortableDateTimePattern1",
+            "t": "shortTimePattern",
+            "T": "longTimePattern",
+            "u": "universalSortableDateTimePattern",
+            "U": "longDatePattern longTimePattern",
+            "y": "yearMonthPattern",
+            "Y": "yearMonthPattern"
         },
 
-        getActualValue: function () {
-            return this.actualValue;
+        constructor: function () {
+            this.invariantInfo = Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+                abbreviatedDayNames: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+                abbreviatedMonthGenitiveNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", ""],
+                abbreviatedMonthNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", ""],
+                amDesignator: "AM",
+                dateSeparator: "/",
+                dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                firstDayOfWeek: 0,
+                fullDateTimePattern: "dddd, MMMM dd, yyyy h:mm:ss tt",
+                longDatePattern: "dddd, MMMM dd, yyyy",
+                longTimePattern: "h:mm:ss tt",
+                monthDayPattern: "MMMM dd",
+                monthGenitiveNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", ""],
+                monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", ""],
+                pmDesignator: "PM",
+                rfc1123: "ddd, dd MMM yyyy HH':'mm':'ss 'GMT'",
+                shortDatePattern: "M/d/yyyy",
+                shortestDayNames: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+                shortTimePattern: "h:mm tt",
+                sortableDateTimePattern: "yyyy'-'MM'-'dd'T'HH':'mm':'ss",
+                sortableDateTimePattern1: "yyyy'-'MM'-'dd",
+                timeSeparator: ":",
+                universalSortableDateTimePattern: "yyyy'-'MM'-'dd HH':'mm':'ss'Z'",
+                yearMonthPattern: "MMMM, yyyy",
+                roundtripFormat: "yyyy'-'MM'-'dd'T'HH':'mm':'ss.uzzz"
+            });
         }
-    });
+    },
 
-    Bridge.define("Bridge.CultureNotFoundException", {
-        inherits: [Bridge.ArgumentException],
-
-        constructor: function (paramName, invalidCultureName, message, innerException) {
-            if (!message) {
-                message = "Culture is not supported.";
-
-                if (paramName) {
-                    message += "\nParameter name: " + paramName;
-                }
-
-                if (invalidCultureName) {
-                    message += "\n" + invalidCultureName + " is an invalid culture identifier.";
-                }
-            }
-
-            Bridge.ArgumentException.prototype.$constructor.call(this, message, paramName, innerException);
-
-            this.invalidCultureName = invalidCultureName;
-        },
-
-        getInvalidCultureName: function () {
-            return this.invalidCultureName;
+    getFormat: function (type) {
+        switch (type) {
+            case Bridge.DateTimeFormatInfo:
+                return this;
+            default:
+                return null;
         }
-    });
+    },
 
-    Bridge.define("Bridge.KeyNotFoundException", {
-        inherits: [Bridge.Exception],
-
-        constructor: function (message, innerException) {
-            Bridge.Exception.prototype.$constructor.call(this, message || "Key not found.", innerException);
+    getAbbreviatedDayName: function (dayofweek) {
+        if (dayofweek < 0 || dayofweek > 6) {
+            throw new Bridge.ArgumentOutOfRangeException("dayofweek");
         }
-    });
 
-    Bridge.define("Bridge.ArithmeticException", {
-        inherits: [Bridge.Exception],
+        return this.abbreviatedDayNames[dayofweek];
+    },
 
-        constructor: function (message, innerException) {
-            Bridge.Exception.prototype.$constructor.call(this, message || "Overflow or underflow in the arithmetic operation.", innerException);
+    getAbbreviatedMonthName: function (month) {
+        if (month < 1 || month > 13) {
+            throw new Bridge.ArgumentOutOfRangeException("month");
         }
-    });
 
-    Bridge.define("Bridge.DivideByZeroException", {
-        inherits: [Bridge.ArithmeticException],
+        return this.abbreviatedMonthNames[month - 1];
+    },
 
-        constructor: function (message, innerException) {
-            Bridge.ArithmeticException.prototype.$constructor.call(this, message || "Division by 0.", innerException);
-        }
-    });
+    getAllDateTimePatterns: function (format, returnNull) {
+        var f = Bridge.DateTimeFormatInfo.$allStandardFormats,
+            formats,
+            names,
+            pattern,
+            i,
+            result = [];
 
-    Bridge.define("Bridge.OverflowException", {
-        inherits: [Bridge.ArithmeticException],
-
-        constructor: function (message, innerException) {
-            Bridge.ArithmeticException.prototype.$constructor.call(this, message || "Arithmetic operation resulted in an overflow.", innerException);
-        }
-    });
-
-    Bridge.define("Bridge.FormatException", {
-        inherits: [Bridge.Exception],
-
-        constructor: function (message, innerException) {
-            Bridge.Exception.prototype.$constructor.call(this, message || "Invalid format.", innerException);
-        }
-    });
-
-    Bridge.define("Bridge.InvalidCastException", {
-        inherits: [Bridge.Exception],
-
-        constructor: function (message, innerException) {
-            Bridge.Exception.prototype.$constructor.call(this, message || "The cast is not valid.", innerException);
-        }
-    });
-
-    Bridge.define("Bridge.InvalidOperationException", {
-        inherits: [Bridge.Exception],
-
-        constructor: function (message, innerException) {
-            Bridge.Exception.prototype.$constructor.call(this, message || "Operation is not valid due to the current state of the object.", innerException);
-        }
-    });
-
-    Bridge.define("Bridge.NotImplementedException", {
-        inherits: [Bridge.Exception],
-
-        constructor: function (message, innerException) {
-            Bridge.Exception.prototype.$constructor.call(this, message || "The method or operation is not implemented.", innerException);
-        }
-    });
-
-    Bridge.define("Bridge.NotSupportedException", {
-        inherits: [Bridge.Exception],
-
-        constructor: function (message, innerException) {
-            Bridge.Exception.prototype.$constructor.call(this, message || "Specified method is not supported.", innerException);
-        }
-    });
-
-    Bridge.define("Bridge.NullReferenceException", {
-        inherits: [Bridge.Exception],
-
-        constructor: function (message, innerException) {
-            Bridge.Exception.prototype.$constructor.call(this, message || "Object is null.", innerException);
-        }
-    });
-
-    Bridge.define("Bridge.RankException", {
-        inherits: [Bridge.Exception],
-
-        constructor: function (message, innerException) {
-            Bridge.Exception.prototype.$constructor.call(this, message || "Attempted to operate on an array with the incorrect number of dimensions.", innerException);
-        }
-    });
-
-    // @source Interfaces.js
-
-    Bridge.define("Bridge.IFormattable", {
-        statics: {
-            $is: function (obj) {
-                if (Bridge.isNumber(obj)) {
-                    return true;
-                }
-
-                if (Bridge.isDate(obj)) {
-                    return true;
-                }
-
-                return Bridge.is(obj, Bridge.IFormattable, true);
-            }
-        }
-    });
-
-    Bridge.define("Bridge.IComparable");
-
-    Bridge.define("Bridge.IFormatProvider");
-
-    Bridge.define("Bridge.ICloneable");
-
-    Bridge.Class.generic("Bridge.IComparable$1", function (T) {
-        var $$name = Bridge.Class.genericName("Bridge.IComparable$1", T);
-
-        return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name));
-    });
-
-    Bridge.Class.generic("Bridge.IEquatable$1", function (T) {
-        var $$name = Bridge.Class.genericName("Bridge.IEquatable$1", T);
-
-        return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name));
-    });
-
-    Bridge.define("Bridge.IPromise");
-    Bridge.define("Bridge.IDisposable");
-
-    /// <reference path="Init.js" />
-    // @source Globalization.js
-
-    Bridge.define("Bridge.DateTimeFormatInfo", {
-        inherits: [Bridge.IFormatProvider, Bridge.ICloneable],
-
-        statics: {
-            $allStandardFormats: {
-                "d": "shortDatePattern",
-                "D": "longDatePattern",
-                "f": "longDatePattern shortTimePattern",
-                "F": "longDatePattern longTimePattern",
-                "g": "shortDatePattern shortTimePattern",
-                "G": "shortDatePattern longTimePattern",
-                "m": "monthDayPattern",
-                "M": "monthDayPattern",
-                "o": "roundtripFormat",
-                "O": "roundtripFormat",
-                "r": "rfc1123",
-                "R": "rfc1123",
-                "s": "sortableDateTimePattern",
-                "S": "sortableDateTimePattern1",
-                "t": "shortTimePattern",
-                "T": "longTimePattern",
-                "u": "universalSortableDateTimePattern",
-                "U": "longDatePattern longTimePattern",
-                "y": "yearMonthPattern",
-                "Y": "yearMonthPattern"
-            },
-
-            constructor: function () {
-                this.invariantInfo = Bridge.merge(new Bridge.DateTimeFormatInfo(), {
-                    abbreviatedDayNames: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-                    abbreviatedMonthGenitiveNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", ""],
-                    abbreviatedMonthNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", ""],
-                    amDesignator: "AM",
-                    dateSeparator: "/",
-                    dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-                    firstDayOfWeek: 0,
-                    fullDateTimePattern: "dddd, MMMM dd, yyyy h:mm:ss tt",
-                    longDatePattern: "dddd, MMMM dd, yyyy",
-                    longTimePattern: "h:mm:ss tt",
-                    monthDayPattern: "MMMM dd",
-                    monthGenitiveNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", ""],
-                    monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", ""],
-                    pmDesignator: "PM",
-                    rfc1123: "ddd, dd MMM yyyy HH':'mm':'ss 'GMT'",
-                    shortDatePattern: "M/d/yyyy",
-                    shortestDayNames: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-                    shortTimePattern: "h:mm tt",
-                    sortableDateTimePattern: "yyyy'-'MM'-'dd'T'HH':'mm':'ss",
-                    sortableDateTimePattern1: "yyyy'-'MM'-'dd",
-                    timeSeparator: ":",
-                    universalSortableDateTimePattern: "yyyy'-'MM'-'dd HH':'mm':'ss'Z'",
-                    yearMonthPattern: "MMMM, yyyy",
-                    roundtripFormat: "yyyy'-'MM'-'dd'T'HH':'mm':'ss.uzzz"
-                });
-            }
-        },
-
-        getFormat: function (type) {
-            switch (type) {
-                case Bridge.DateTimeFormatInfo:
-                    return this;
-                default:
+        if (format) {
+            if (!f[format]) {
+                if (returnNull) {
                     return null;
-            }
-        },
+                }
 
-        getAbbreviatedDayName: function (dayofweek) {
-            if (dayofweek < 0 || dayofweek > 6) {
-                throw new Bridge.ArgumentOutOfRangeException("dayofweek");
+                throw new Bridge.ArgumentException(null, "format");
             }
 
-            return this.abbreviatedDayNames[dayofweek];
-        },
+            formats = { };
+            formats[format] = f[format];
+        }
+        else {
+            formats = f;
+        }
 
-        getAbbreviatedMonthName: function (month) {
-            if (month < 1 || month > 13) {
-                throw new Bridge.ArgumentOutOfRangeException("month");
+        for (f in formats) {
+            names = formats[f].split(" ");
+            pattern = "";
+
+            for (i = 0; i < names.length; i++) {
+                pattern = (i == 0 ? "" : (pattern + " ")) + this[names[i]];
             }
 
-            return this.abbreviatedMonthNames[month - 1];
+            result.push(pattern);
+        }
+
+        return result;
+    },
+
+    getDayName: function (dayofweek) {
+        if (dayofweek < 0 || dayofweek > 6) {
+            throw new Bridge.ArgumentOutOfRangeException("dayofweek");
+        }
+
+        return this.dayNames[dayofweek];
+    },
+
+    getMonthName: function (month) {
+        if (month < 1 || month > 13) {
+            throw new Bridge.ArgumentOutOfRangeException("month");
+        }
+
+        return this.monthNames[month-1];
+    },
+
+    getShortestDayName: function (dayOfWeek) {
+        if (dayOfWeek < 0 || dayOfWeek > 6) {
+            throw new Bridge.ArgumentOutOfRangeException("dayOfWeek");
+        }
+
+        return this.shortestDayNames[dayOfWeek];
+    },
+
+    clone: function () {
+        return Bridge.copy(new Bridge.DateTimeFormatInfo(), this, [
+            "abbreviatedDayNames",
+            "abbreviatedMonthGenitiveNames",
+            "abbreviatedMonthNames",
+            "amDesignator",
+            "dateSeparator",
+            "dayNames",
+            "firstDayOfWeek",
+            "fullDateTimePattern",
+            "longDatePattern",
+            "longTimePattern",
+            "monthDayPattern",
+            "monthGenitiveNames",
+            "monthNames",
+            "pmDesignator",
+            "rfc1123",
+            "shortDatePattern",
+            "shortestDayNames",
+            "shortTimePattern",
+            "sortableDateTimePattern",
+            "timeSeparator",
+            "universalSortableDateTimePattern",
+            "yearMonthPattern",
+            "roundtripFormat"
+        ]);
+    }
+});
+
+Bridge.define("Bridge.NumberFormatInfo", {
+    inherits: [Bridge.IFormatProvider, Bridge.ICloneable],
+
+    statics: {
+        constructor: function () {
+            this.numberNegativePatterns =  ["(n)", "-n", "- n", "n-", "n -"];
+            this.currencyNegativePatterns = ["($n)", "-$n", "$-n", "$n-", "(n$)", "-n$", "n-$", "n$-", "-n $", "-$ n", "n $-", "$ n-", "$ -n", "n- $", "($ n)", "(n $)"];
+            this.currencyPositivePatterns = ["$n", "n$", "$ n", "n $"];
+            this.percentNegativePatterns = ["-n %", "-n%", "-%n", "%-n", "%n-", "n-%", "n%-", "-% n", "n %-", "% n-", "% -n", "n- %"];
+            this.percentPositivePatterns = ["n %", "n%", "%n", "% n"];
+
+            this.invariantInfo = Bridge.merge(new Bridge.NumberFormatInfo(), {
+                nanSymbol: "NaN",
+                negativeSign: "-",
+                positiveSign: "+",
+                negativeInfinitySymbol: "-Infinity",
+                positiveInfinitySymbol: "Infinity",
+
+                percentSymbol: "%",
+                percentGroupSizes: [3],
+                percentDecimalDigits: 2,
+                percentDecimalSeparator: ".",
+                percentGroupSeparator: ",",
+                percentPositivePattern: 0,
+                percentNegativePattern: 0,
+
+                currencySymbol: "¤",
+                currencyGroupSizes: [3],
+                currencyDecimalDigits: 2,
+                currencyDecimalSeparator: ".",
+                currencyGroupSeparator: ",",
+                currencyNegativePattern: 0,
+                currencyPositivePattern: 0,
+
+                numberGroupSizes: [3],
+                numberDecimalDigits: 2,
+                numberDecimalSeparator: ".",
+                numberGroupSeparator: ",",
+                numberNegativePattern: 1
+            });
+        }
+    },
+
+    getFormat: function (type) {
+        switch (type) {
+            case Bridge.NumberFormatInfo:
+                return this;
+            default:
+                return null;
+        }
+    },
+
+    clone: function () {
+        return Bridge.copy(new Bridge.NumberFormatInfo(), this, [
+            "nanSymbol",
+            "negativeSign",
+            "positiveSign",
+            "negativeInfinitySymbol",
+            "positiveInfinitySymbol",
+            "percentSymbol",
+            "percentGroupSizes",
+            "percentDecimalDigits",
+            "percentDecimalSeparator",
+            "percentGroupSeparator",
+            "percentPositivePattern",
+            "percentNegativePattern",
+            "currencySymbol",
+            "currencyGroupSizes",
+            "currencyDecimalDigits",
+            "currencyDecimalSeparator",
+            "currencyGroupSeparator",
+            "currencyNegativePattern",
+            "currencyPositivePattern",
+            "numberGroupSizes",
+            "numberDecimalDigits",
+            "numberDecimalSeparator",
+            "numberGroupSeparator",
+            "numberNegativePattern"
+        ]);
+    }
+});
+
+Bridge.define("Bridge.CultureInfo", {
+    inherits: [Bridge.IFormatProvider, Bridge.ICloneable],
+
+    statics: {
+        constructor: function() {
+            this.cultures = this.cultures || {};
+            this.invariantCulture = Bridge.merge(new Bridge.CultureInfo("iv", true), {
+                englishName: "Invariant Language (Invariant Country)",
+                nativeName: "Invariant Language (Invariant Country)",
+                numberFormat: Bridge.NumberFormatInfo.invariantInfo,
+                dateTimeFormat: Bridge.DateTimeFormatInfo.invariantInfo
+            });
+            this.setCurrentCulture(Bridge.CultureInfo.invariantCulture);
         },
 
-        getAllDateTimePatterns: function (format, returnNull) {
-            var f = Bridge.DateTimeFormatInfo.$allStandardFormats,
-                formats,
-                names,
-                pattern,
-                i,
-                result = [];
+        getCurrentCulture: function () {
+            return this.currentCulture;
+        },
 
-            if (format) {
-                if (!f[format]) {
-                    if (returnNull) {
-                        return null;
+        setCurrentCulture: function (culture) {
+            this.currentCulture = culture;
+            Bridge.DateTimeFormatInfo.currentInfo = culture.dateTimeFormat;
+            Bridge.NumberFormatInfo.currentInfo = culture.numberFormat;
+        },
+
+        getCultureInfo: function (name) {
+            if (!name) {
+                throw new Bridge.ArgumentNullException("name");
+            }
+
+            return this.cultures[name];
+        },
+
+        getCultures: function () {
+            var names = Bridge.getPropertyNames(this.cultures),
+                result = [],
+                i;
+
+            for (i = 0; i < names.length; i++) {
+                result.push(this.cultures[names[i]]);
+            }
+
+            return result;
+        }
+    },
+
+    constructor: function (name, create) {
+        this.name = name;
+        if (!Bridge.CultureInfo.cultures) {
+            Bridge.CultureInfo.cultures = {};
+        }
+
+        if (Bridge.CultureInfo.cultures[name]) {
+            Bridge.copy(this, Bridge.CultureInfo.cultures[name], [
+                "englishName",
+                "nativeName",
+                "numberFormat",
+                "dateTimeFormat"
+            ]);
+        } else {
+            if (!create) {
+                throw new Bridge.CultureNotFoundException("name", name);
+            }
+            Bridge.CultureInfo.cultures[name] = this;
+        }
+    },
+
+    getFormat:  function (type) {
+        switch (type) {
+            case Bridge.NumberFormatInfo:
+                return this.numberFormat;
+            case Bridge.DateTimeFormatInfo:
+                return this.dateTimeFormat;
+            default:
+                return null;
+        }
+    },
+
+    clone: function () {
+        return new Bridge.CultureInfo(this.name);
+    }
+});
+
+// @source Integer.js
+
+/*(function() {
+    var createIntType = function(name, min, max) {
+        var type = Bridge.define(name, {
+            inherits: [Bridge.IComparable, Bridge.IFormattable],
+            statics: {
+                min: min,
+                max: max,
+
+                instanceOf: function (instance) {
+                    return typeof(instance) === 'number' && Math.round(instance, 0) == instance && instance >= min && instance <= max;
+                },
+                getDefaultValue: function () {
+                    return 0;
+                },
+                parse: function(s) {
+                    return Bridge.Int.parseInt(s, min, max);
+                },
+                tryParse: function(s, result) {
+                    return Bridge.Int.tryParseInt(s, result, min, max);
+                },
+                format: function(number, format, provider) {
+                    return Bridge.Int.format(number, format, provider);
+                }
+            }
+        });
+
+        Bridge.Class.addExtend(type, [Bridge.IComparable$1(type), Bridge.IEquatable$1(type)]);
+    };
+
+    createIntType('Bridge.Byte', 0, 255);
+    createIntType('Bridge.SByte', -128, 127);
+    createIntType('Bridge.Int16', -32768, 32767);
+    createIntType('Bridge.UInt16', 0, 65535);
+    createIntType('Bridge.Int32', -2147483648, 2147483647);
+    createIntType('Bridge.UInt32', 0, 4294967295);
+    createIntType('Bridge.Int64', -9223372036854775808, 9223372036854775807);
+    createIntType('Bridge.UInt64', 0, 18446744073709551615);
+    createIntType('Bridge.Char', 0, 65535);
+
+    Bridge.Char.tryParse = function (s, result) {
+        var b = s && s.length === 1;
+        result.v = b ? s.charCodeAt(0) : 0;
+        return b;
+    };
+
+    Bridge.Char.parse = function(s) {
+        if (!Bridge.hasValue(s)) {
+            throw new Bridge.ArgumentNullException('s');
+        }
+
+        if (s.length !== 1) {
+            throw new Bridge.FormatException();
+        }
+        return s.charCodeAt(0);
+    };
+})();*/
+
+Bridge.define('Bridge.Int', {
+    inherits: [Bridge.IComparable, Bridge.IFormattable],
+    statics: {
+        instanceOf: function (instance) {
+            return typeof(instance) === 'number' && isFinite(instance) && Math.round(instance, 0) == instance;
+        },
+
+        getDefaultValue: function () {
+            return 0;
+        },
+
+        format: function (number, format, provider) {
+            var nf = (provider || Bridge.CultureInfo.getCurrentCulture()).getFormat(Bridge.NumberFormatInfo),
+                decimalSeparator = nf.numberDecimalSeparator,
+                groupSeparator = nf.numberGroupSeparator,
+                match,
+                precision,
+                groups,
+                fs;
+
+            if (!isFinite(number)) {
+                return Number.NEGATIVE_INFINITY == number ? nf.negativeInfinitySymbol : nf.positiveInfinitySymbol;
+            }
+
+            if (!format) {
+                return this.defaultFormat(number, 0, 0, 15, nf, true);
+            }
+
+            match = format.match(/^([a-zA-Z])(\d*)$/);
+
+            if (match) {
+                fs = match[1].toUpperCase();
+                precision = parseInt(match[2], 10);
+                precision = precision > 15 ? 15 : precision;
+
+                switch (fs) {
+                    case "D":
+                        return this.defaultFormat(number, isNaN(precision) ? 1 : precision, 0, 0, nf, true);
+                    case "F":
+                    case "N":
+                        if (isNaN(precision)) {
+                            precision = nf.numberDecimalDigits;
+                        }
+                        return this.defaultFormat(number, 1, precision, precision, nf, fs == "F");
+                    case "G":
+                    case "E":
+                        var exponent = 0,
+                            coefficient = Math.abs(number),
+                            exponentPrefix = match[1],
+                            exponentPrecision = 3,
+                            minDecimals,
+                            maxDecimals;
+
+                        while (coefficient >= 10) {
+                            coefficient /= 10;
+                            exponent++;
+                        }
+
+                        while (coefficient != 0 && coefficient < 1) {
+                            coefficient *= 10;
+                            exponent--;
+                        }
+
+                        if (fs == "G") {
+                            if (exponent > -5 && (!precision || exponent < precision)) {
+                                minDecimals = precision ? precision - (exponent > 0 ? exponent + 1 : 1) : 0;
+                                maxDecimals = precision ? precision - (exponent > 0 ? exponent + 1 : 1) : 10;
+                                return this.defaultFormat(number, 1, minDecimals, maxDecimals, nf, true);
+                            }
+
+                            exponentPrefix = exponentPrefix == "G" ? "E" : "e";
+                            exponentPrecision = 2;
+                            minDecimals = (precision || 1) - 1;
+                            maxDecimals = (precision || 11) - 1;
+                        } else {
+                            minDecimals = maxDecimals = isNaN(precision) ? 6 : precision;
+                        }
+
+                        if (exponent >= 0) {
+                            exponentPrefix += nf.positiveSign;
+                        }
+                        else {
+                            exponentPrefix += nf.negativeSign;
+                            exponent = -exponent;
+                        }
+
+                        if (number < 0) {
+                            coefficient *= -1;
+                        }
+
+                        return this.defaultFormat(coefficient, 1, minDecimals, maxDecimals, nf) + exponentPrefix + this.defaultFormat(exponent, exponentPrecision, 0, 0, nf, true);
+                    case "P":
+                        if (isNaN(precision)) {
+                            precision = nf.percentDecimalDigits;
+                        }
+
+                        return this.defaultFormat(number * 100, 1, precision, precision, nf, false, "percent");
+                    case "X":
+                        var result = Math.round(number).toString(16);
+
+                        if (match[1] == "X") {
+                            result = result.toUpperCase();
+                        }
+
+                        precision -= result.length;
+
+                        while (precision-- > 0) {
+                            result = "0" + result;
+                        }
+
+                        return result;
+                    case "C":
+                        if (isNaN(precision)) {
+                            precision = nf.currencyDecimalDigits;
+                        }
+
+                        return this.defaultFormat(number, 1, precision, precision, nf, false, "currency");
+                    case "R":
+                        return "" + number;
+                }
+            }
+
+            if (format.indexOf(",.") !== -1 || Bridge.String.endsWith(format, ",")) {
+                var count = 0,
+                    index = format.indexOf(",.");
+
+                if (index == -1) {
+                    index = format.length - 1;
+                }
+
+                while (index > -1 && format.charAt(index) == ",") {
+                    count++;
+                    index--;
+                }
+
+                number /= Math.pow(1000, count);
+            }
+
+            if (format.indexOf("%") !== -1) {
+                number *= 100;
+            }
+
+            groups = format.split(";");
+
+            if (number < 0 && groups.length > 1) {
+                number *= -1;
+                format = groups[1];
+            } else {
+                format = groups[!number && groups.length > 2 ? 2 : 0];
+            }
+
+            return this.customFormat(number, format, nf, !format.match(/^[^\.]*[0#],[0#]/));
+        },
+
+        defaultFormat: function (number, minIntLen, minDecLen, maxDecLen, provider, noGroup, name) {
+            name = name || "number";
+
+            var nf = (provider || Bridge.CultureInfo.getCurrentCulture()).getFormat(Bridge.NumberFormatInfo),
+                str,
+                decimalIndex,
+                negPattern,
+                roundingFactor,
+                groupIndex,
+                groupSize,
+                groups = nf[name + "GroupSizes"],
+                decimalPart,
+                index,
+                done,
+                startIndex,
+                length,
+                part,
+                sep,
+                buffer = "";
+
+            roundingFactor = Math.pow(10, maxDecLen);
+            str = "" + (Math.round(Math.abs(number) * roundingFactor) / roundingFactor);
+
+            decimalIndex = str.indexOf(".");
+
+            if (decimalIndex > 0) {
+                decimalPart = nf[name + "DecimalSeparator"] + str.substr(decimalIndex + 1);
+                str = str.substr(0, decimalIndex);
+            }
+
+            if (str.length < minIntLen) {
+                str = Array(minIntLen - str.length + 1).join("0") + str;
+            }
+
+            if (decimalPart) {
+                if ((decimalPart.length - 1) < minDecLen) {
+                    decimalPart += Array(minDecLen - decimalPart.length + 2).join("0");
+                }
+
+                if (maxDecLen == 0) {
+                    decimalPart = null;
+                }
+                else if ((decimalPart.length - 1) > maxDecLen) {
+                    decimalPart = decimalPart.substr(0, maxDecLen + 1);
+                }
+            }
+
+            groupIndex = 0;
+            groupSize = groups[groupIndex];
+
+            if (str.length < groupSize) {
+                buffer = str;
+
+                if (decimalPart) {
+                    buffer += decimalPart;
+                }
+            }
+            else {
+                index = str.length;
+                done = false;
+                sep = noGroup ? "" : nf[name + "GroupSeparator"];
+
+                while (!done) {
+                    length = groupSize;
+                    startIndex = index - length;
+
+                    if (startIndex < 0) {
+                        groupSize += startIndex;
+                        length += startIndex;
+                        startIndex = 0;
+                        done = true;
                     }
 
-                    throw new Bridge.ArgumentException(null, "format");
+                    if (!length) {
+                        break;
+                    }
+
+                    part = str.substr(startIndex, length);
+
+                    if (buffer.length) {
+                        buffer = part + sep + buffer;
+                    }
+                    else {
+                        buffer = part;
+                    }
+
+                    index -= length;
+
+                    if (groupIndex < groups.length - 1) {
+                        groupIndex++;
+                        groupSize = groups[groupIndex];
+                    }
                 }
 
-                formats = { };
-                formats[format] = f[format];
-            } else {
-                formats = f;
+                if (decimalPart) {
+                    buffer += decimalPart;
+                }
             }
 
-            for (f in formats) {
-                names = formats[f].split(" ");
-                pattern = "";
+            if (number < 0) {
+                negPattern = Bridge.NumberFormatInfo[name + "NegativePatterns"][nf[name + "NegativePattern"]];
 
-                for (i = 0; i < names.length; i++) {
-                    pattern = (i === 0 ? "" : (pattern + " ")) + this[names[i]];
+                return negPattern.replace("-", nf.negativeSign).replace("%", nf.percentSymbol).replace("$", nf.currencySymbol).replace("n", buffer);
+            }
+            else if (Bridge.NumberFormatInfo[name + "PositivePatterns"]) {
+                negPattern = Bridge.NumberFormatInfo[name + "PositivePatterns"][nf[name + "PositivePattern"]];
+
+                return negPattern.replace("%", nf.percentSymbol).replace("$", nf.currencySymbol).replace("n", buffer);
+            }
+
+            return buffer;
+        },
+
+        customFormat: function (number, format, nf, noGroup) {
+            var digits = 0,
+                forcedDigits = -1,
+                integralDigits = -1,
+                decimals = 0,
+                forcedDecimals = -1,
+                atDecimals = 0,
+                unused = 1,
+                c, i, f,
+                endIndex,
+                roundingFactor,
+                decimalIndex,
+                isNegative = false,
+                name,
+                groupCfg,
+                buffer = "";
+
+            name = "number";
+
+            if (format.indexOf("%") !== -1) {
+                name = "percent";
+            }
+            else if (format.indexOf("$") !== -1) {
+                name = "currency";
+            }
+
+            for (i = 0; i < format.length; i++) {
+                c = format.charAt(i);
+
+                if (c == "'" || c == '"') {
+                    i = format.indexOf(c, i + 1);
+
+                    if (i < 0) {
+                        break;
+                    }
+                } else if (c == "\\") {
+                    i++;
+                } else {
+                    if (c == "0" || c == "#") {
+                        decimals += atDecimals;
+
+                        if (c == "0") {
+                            if (atDecimals) {
+                                forcedDecimals = decimals;
+                            } else if (forcedDigits < 0) {
+                                forcedDigits = digits;
+                            }
+                        }
+
+                        digits += !atDecimals;
+                    }
+
+                    atDecimals = atDecimals || c == ".";
+                }
+            }
+            forcedDigits = forcedDigits < 0 ? 1 : digits - forcedDigits;
+
+            if (number < 0) {
+                isNegative = true;
+            }
+
+            roundingFactor = Math.pow(10, decimals);
+            number = "" + (Math.round(Math.abs(number) * roundingFactor) / roundingFactor);
+
+            decimalIndex = number.indexOf(".");
+            integralDigits = decimalIndex < 0 ? number.length : decimalIndex;
+            i = integralDigits - digits;
+
+            groupCfg = {
+                groupIndex: Math.max(integralDigits, forcedDigits),
+                sep: noGroup ? "" : nf[name + "GroupSeparator"]
+            };
+
+            var inString = 0;
+
+            for (f = 0; f < format.length; f++) {
+                c = format.charAt(f);
+
+                if (c == "'" || c == '"') {
+                    endIndex = format.indexOf(c, f + 1);
+
+                    buffer += format.substring(f + 1, endIndex < 0 ? format.length : endIndex);
+
+                    if (endIndex < 0) {
+                        break;
+                    }
+
+                    f = endIndex;
+                } else if (c == "\\") {
+                    buffer += format.charAt(f + 1);
+                    f++;
+                } else if (c == "#" || c == "0") {
+                    groupCfg.buffer = buffer;
+
+                    if (i < integralDigits) {
+                        if (i >= 0) {
+                            if (unused) {
+                                this.addGroup(number.substr(0, i), groupCfg);
+                            }
+
+                            this.addGroup(number.charAt(i), groupCfg);
+                        } else if (i >= integralDigits - forcedDigits) {
+                            this.addGroup("0", groupCfg);
+                        }
+                        unused = 0;
+                    } else if (forcedDecimals-- > 0 || i < number.length) {
+                        this.addGroup(i >= number.length ? "0" : number.charAt(i), groupCfg);
+                    }
+
+                    buffer = groupCfg.buffer;
+
+                    i++;
+                } else if (c == ".") {
+                    if (number.length > ++i || forcedDecimals > 0) {
+                        buffer += nf[name + "DecimalSeparator"];
+                    }
+                } else if (c !== ",") {
+                    buffer += c;
+                }
+            }
+
+            if (isNegative < 0) {
+                buffer = "-" + buffer;
+            }
+
+            return buffer;
+        },
+
+        addGroup: function (value, cfg) {
+            var buffer = cfg.buffer,
+                sep = cfg.sep,
+                groupIndex = cfg.groupIndex;
+
+            for (var i = 0, length = value.length; i < length; i++) {
+                buffer += value.charAt(i);
+
+                if (sep && groupIndex > 1 && groupIndex-- % 3 == 1) {
+                    buffer += sep;
+                }
+            }
+
+            cfg.buffer = buffer;
+            cfg.groupIndex = groupIndex;
+        },
+
+        parseFloat: function (str, provider) {
+            if (str == null) {
+                throw new Bridge.ArgumentNullException("str");
+            }
+
+            var nfInfo = (provider || Bridge.CultureInfo.getCurrentCulture()).getFormat(Bridge.NumberFormatInfo),
+                result = parseFloat(str.replace(nfInfo.numberDecimalSeparator, '.'));
+
+            if (isNaN(result) && str !== nfInfo.nanSymbol) {
+                if (str == nfInfo.negativeInfinitySymbol) {
+                    return Number.NEGATIVE_INFINITY;
                 }
 
-                result.push(pattern);
+                if (str == nfInfo.positiveInfinitySymbol) {
+                    return Number.POSITIVE_INFINITY;
+                }
+
+                throw new Bridge.FormatException("Input string was not in a correct format.");
             }
 
             return result;
         },
 
-        getDayName: function (dayofweek) {
-            if (dayofweek < 0 || dayofweek > 6) {
-                throw new Bridge.ArgumentOutOfRangeException("dayofweek");
+        tryParseFloat: function (str, provider, result) {
+            result.v = 0;
+
+            if (str == null) {
+                return false;
             }
 
-            return this.dayNames[dayofweek];
+            var nfInfo = (provider || Bridge.CultureInfo.getCurrentCulture()).getFormat(Bridge.NumberFormatInfo);
+
+            result.v = parseFloat(str.replace(nfInfo.numberDecimalSeparator, '.'));
+
+            if (isNaN(result.v) && str !== nfInfo.nanSymbol) {
+                if (str == nfInfo.negativeInfinitySymbol) {
+                    result.v = Number.NEGATIVE_INFINITY;
+                    return true;
+                }
+
+                if (str == nfInfo.positiveInfinitySymbol) {
+                    result.v = Number.POSITIVE_INFINITY;
+                    return true;
+                }
+
+                return false;
+            }
+
+            return true;
         },
 
-        getMonthName: function (month) {
-            if (month < 1 || month > 13) {
-                throw new Bridge.ArgumentOutOfRangeException("month");
+        parseInt: function (str, min, max, radix) {
+            if (str == null) {
+                throw new Bridge.ArgumentNullException("str");
             }
 
-            return this.monthNames[month-1];
+            if (!/^[+-]?[0-9]+$/.test(str)) {
+                throw new Bridge.FormatException("Input string was not in a correct format.");
+            }
+
+            var result = parseInt(str, radix || 10);
+
+            if (isNaN(result)) {
+                throw new Bridge.FormatException("Input string was not in a correct format.");
+            }
+
+            if (result < min || result > max) {
+                throw new Bridge.OverflowException();
+            }
+
+            return result;
         },
 
-        getShortestDayName: function (dayOfWeek) {
-            if (dayOfWeek < 0 || dayOfWeek > 6) {
-                throw new Bridge.ArgumentOutOfRangeException("dayOfWeek");
+        tryParseInt: function (str, result, min, max, radix) {
+            result.v = 0;
+
+            if (!/^[+-]?[0-9]+$/.test(str)) {
+                return false;
             }
 
-            return this.shortestDayNames[dayOfWeek];
+            result.v = parseInt(str, radix || 10);
+
+            if (result.v < min || result.v > max) {
+                return false;
+            }
+
+            return true;
         },
 
-        clone: function () {
-            return Bridge.copy(new Bridge.DateTimeFormatInfo(), this, [
-                "abbreviatedDayNames",
-                "abbreviatedMonthGenitiveNames",
-                "abbreviatedMonthNames",
-                "amDesignator",
-                "dateSeparator",
-                "dayNames",
-                "firstDayOfWeek",
-                "fullDateTimePattern",
-                "longDatePattern",
-                "longTimePattern",
-                "monthDayPattern",
-                "monthGenitiveNames",
-                "monthNames",
-                "pmDesignator",
-                "rfc1123",
-                "shortDatePattern",
-                "shortestDayNames",
-                "shortTimePattern",
-                "sortableDateTimePattern",
-                "timeSeparator",
-                "universalSortableDateTimePattern",
-                "yearMonthPattern",
-                "roundtripFormat"
-            ]);
-        }
-    });
-
-    Bridge.define("Bridge.NumberFormatInfo", {
-        inherits: [Bridge.IFormatProvider, Bridge.ICloneable],
-
-        statics: {
-            constructor: function () {
-                this.numberNegativePatterns =  ["(n)", "-n", "- n", "n-", "n -"];
-                this.currencyNegativePatterns = ["($n)", "-$n", "$-n", "$n-", "(n$)", "-n$", "n-$", "n$-", "-n $", "-$ n", "n $-", "$ n-", "$ -n", "n- $", "($ n)", "(n $)"];
-                this.currencyPositivePatterns = ["$n", "n$", "$ n", "n $"];
-                this.percentNegativePatterns = ["-n %", "-n%", "-%n", "%-n", "%n-", "n-%", "n%-", "-% n", "n %-", "% n-", "% -n", "n- %"];
-                this.percentPositivePatterns = ["n %", "n%", "%n", "% n"];
-
-                this.invariantInfo = Bridge.merge(new Bridge.NumberFormatInfo(), {
-                    nanSymbol: "NaN",
-                    negativeSign: "-",
-                    positiveSign: "+",
-                    negativeInfinitySymbol: "-Infinity",
-                    positiveInfinitySymbol: "Infinity",
-
-                    percentSymbol: "%",
-                    percentGroupSizes: [3],
-                    percentDecimalDigits: 2,
-                    percentDecimalSeparator: ".",
-                    percentGroupSeparator: ",",
-                    percentPositivePattern: 0,
-                    percentNegativePattern: 0,
-
-                    currencySymbol: "¤",
-                    currencyGroupSizes: [3],
-                    currencyDecimalDigits: 2,
-                    currencyDecimalSeparator: ".",
-                    currencyGroupSeparator: ",",
-                    currencyNegativePattern: 0,
-                    currencyPositivePattern: 0,
-
-                    numberGroupSizes: [3],
-                    numberDecimalDigits: 2,
-                    numberDecimalSeparator: ".",
-                    numberGroupSeparator: ",",
-                    numberNegativePattern: 1
-                });
+        trunc: function (num) {
+            if (!Bridge.isNumber(num)) {
+                return null;
             }
+
+            return num > 0 ? Math.floor(num) : Math.ceil(num);
         },
 
-        getFormat: function (type) {
-            switch (type) {
-                case Bridge.NumberFormatInfo:
-                    return this;
-                default:
-                    return null;
+        div: function (x, y) {
+            if (!Bridge.isNumber(x) || !Bridge.isNumber(y)) {
+                return null;
             }
+
+            if (y === 0) {
+                throw new Bridge.DivideByZeroException();
+            }
+
+            return this.trunc(x / y);
         },
 
-        clone: function () {
-            return Bridge.copy(new Bridge.NumberFormatInfo(), this, [
-                "nanSymbol",
-                "negativeSign",
-                "positiveSign",
-                "negativeInfinitySymbol",
-                "positiveInfinitySymbol",
-                "percentSymbol",
-                "percentGroupSizes",
-                "percentDecimalDigits",
-                "percentDecimalSeparator",
-                "percentGroupSeparator",
-                "percentPositivePattern",
-                "percentNegativePattern",
-                "currencySymbol",
-                "currencyGroupSizes",
-                "currencyDecimalDigits",
-                "currencyDecimalSeparator",
-                "currencyGroupSeparator",
-                "currencyNegativePattern",
-                "currencyPositivePattern",
-                "numberGroupSizes",
-                "numberDecimalDigits",
-                "numberDecimalSeparator",
-                "numberGroupSeparator",
-                "numberNegativePattern"
-            ]);
-        }
-    });
-
-    Bridge.define("Bridge.CultureInfo", {
-        inherits: [Bridge.IFormatProvider, Bridge.ICloneable],
-
-        statics: {
-            constructor: function () {
-                this.cultures = this.cultures || {};
-
-                this.invariantCulture = Bridge.merge(new Bridge.CultureInfo("iv", true), {
-                    englishName: "Invariant Language (Invariant Country)",
-                    nativeName: "Invariant Language (Invariant Country)",
-                    numberFormat: Bridge.NumberFormatInfo.invariantInfo,
-                    dateTimeFormat: Bridge.DateTimeFormatInfo.invariantInfo
-                });
-
-                this.setCurrentCulture(Bridge.CultureInfo.invariantCulture);
-            },
-
-            getCurrentCulture: function () {
-                return this.currentCulture;
-            },
-
-            setCurrentCulture: function (culture) {
-                this.currentCulture = culture;
-
-                Bridge.DateTimeFormatInfo.currentInfo = culture.dateTimeFormat;
-                Bridge.NumberFormatInfo.currentInfo = culture.numberFormat;
-            },
-
-            getCultureInfo: function (name) {
-                if (!name) {
-                    throw new Bridge.ArgumentNullException("name");
-                }
-
-                return this.cultures[name];
-            },
-
-            getCultures: function () {
-                var names = Bridge.getPropertyNames(this.cultures),
-                    result = [],
-                    i;
-
-                for (i = 0; i < names.length; i++) {
-                    result.push(this.cultures[names[i]]);
-                }
-
-                return result;
+        mod: function (x, y) {
+            if (!Bridge.isNumber(x) || !Bridge.isNumber(y)) {
+                return null;
             }
+
+            if (y === 0) {
+                throw new Bridge.DivideByZeroException();
+            }
+            return x % y;
         },
 
-        constructor: function (name, create) {
-            this.name = name;
-
-            if (!Bridge.CultureInfo.cultures) {
-                Bridge.CultureInfo.cultures = {};
+        check: function(x, type) {
+            if (Bridge.isNumber(x) && !type.instanceOf(x)) {
+                throw new Bridge.OverflowException();
             }
-
-            if (Bridge.CultureInfo.cultures[name]) {
-                Bridge.copy(this, Bridge.CultureInfo.cultures[name], [
-                    "englishName",
-                    "nativeName",
-                    "numberFormat",
-                    "dateTimeFormat"
-                ]);
-            } else {
-                if (!create) {
-                    throw new Bridge.CultureNotFoundException("name", name);
-                }
-
-                Bridge.CultureInfo.cultures[name] = this;
-            }
-        },
-
-        getFormat:  function (type) {
-            switch (type) {
-                case Bridge.NumberFormatInfo:
-                    return this.numberFormat;
-                case Bridge.DateTimeFormatInfo:
-                    return this.dateTimeFormat;
-                default:
-                    return null;
-            }
-        },
-
-        clone: function () {
-            return new Bridge.CultureInfo(this.name);
-        }
-    });
-
-    // @source Math.js
-
-    var math = {
-        divRem: function(a, b, result) {
-            var remainder = a % b;
-            result.v = remainder;
-            return (a - remainder) / b;
-        },
-
-        round: function(n, d, rounding) {
-            var m = Math.pow(10, d || 0);
-            n *= m;
-            var sign = (n > 0) | -(n < 0);
-            if (n % 1 === 0.5 * sign) {
-                var f = Math.floor(n);
-                return (f + (rounding === 4 ? (sign > 0) : (f % 2 * sign))) / m;
-            }
-
-            return Math.round(n) / m;
-        }
-    };
-
-    Bridge.Math = math;
-
-    // @source Integer.js
-
-    /*(function () {
-        var createIntType = function (name, min, max) {
-            var type = Bridge.define(name, {
-                inherits: [Bridge.IComparable, Bridge.IFormattable],
-                statics: {
-                    min: min,
-                    max: max,
-
-                    instanceOf: function (instance) {
-                        return typeof(instance) === 'number' && Math.round(instance, 0) == instance && instance >= min && instance <= max;
-                    },
-                    getDefaultValue: function () {
-                        return 0;
-                    },
-                    parse: function (s) {
-                        return Bridge.Int.parseInt(s, min, max);
-                    },
-                    tryParse: function (s, result) {
-                        return Bridge.Int.tryParseInt(s, result, min, max);
-                    },
-                    format: function (number, format, provider) {
-                        return Bridge.Int.format(number, format, provider);
-                    }
-                }
-            });
-
-            Bridge.Class.addExtend(type, [Bridge.IComparable$1(type), Bridge.IEquatable$1(type)]);
-        };
-
-        createIntType('Bridge.Byte', 0, 255);
-        createIntType('Bridge.SByte', -128, 127);
-        createIntType('Bridge.Int16', -32768, 32767);
-        createIntType('Bridge.UInt16', 0, 65535);
-        createIntType('Bridge.Int32', -2147483648, 2147483647);
-        createIntType('Bridge.UInt32', 0, 4294967295);
-        createIntType('Bridge.Int64', -9223372036854775808, 9223372036854775807);
-        createIntType('Bridge.UInt64', 0, 18446744073709551615);
-        createIntType('Bridge.Char', 0, 65535);
-
-        Bridge.Char.tryParse = function (s, result) {
-            var b = s && s.length === 1;
-            result.v = b ? s.charCodeAt(0) : 0;
-            return b;
-        };
-
-        Bridge.Char.parse = function (s) {
-            if (!Bridge.hasValue(s)) {
-                throw new Bridge.ArgumentNullException('s');
-            }
-
-            if (s.length !== 1) {
-                throw new Bridge.FormatException();
-            }
-            return s.charCodeAt(0);
-        };
-    })();*/
-
-    Bridge.define("Bridge.Int", {
-        inherits: [Bridge.IComparable, Bridge.IFormattable],
-        statics: {
-            instanceOf: function (instance) {
-                return typeof(instance) === "number" && isFinite(instance) && Math.round(instance, 0) === instance;
-            },
-
-            getDefaultValue: function () {
-                return 0;
-            },
-
-            format: function (number, format, provider) {
-                var nf = (provider || Bridge.CultureInfo.getCurrentCulture()).getFormat(Bridge.NumberFormatInfo),
-                    decimalSeparator = nf.numberDecimalSeparator,
-                    groupSeparator = nf.numberGroupSeparator,
-                    match,
-                    precision,
-                    groups,
-                    fs;
-
-                if (!isFinite(number)) {
-                    return Number.NEGATIVE_INFINITY === number ? nf.negativeInfinitySymbol : nf.positiveInfinitySymbol;
-                }
-
-                if (!format) {
-                    return this.defaultFormat(number, 0, 0, 15, nf, true);
-                }
-
-                match = format.match(/^([a-zA-Z])(\d*)$/);
-
-                if (match) {
-                    fs = match[1].toUpperCase();
-                    precision = parseInt(match[2], 10);
-                    precision = precision > 15 ? 15 : precision;
-
-                    switch (fs) {
-                        case "D":
-                            return this.defaultFormat(number, isNaN(precision) ? 1 : precision, 0, 0, nf, true);
-                        case "F":
-                        case "N":
-                            if (isNaN(precision)) {
-                                precision = nf.numberDecimalDigits;
-                            }
-                            return this.defaultFormat(number, 1, precision, precision, nf, fs === "F");
-                        case "G":
-                        case "E":
-                            var exponent = 0,
-                                coefficient = Math.abs(number),
-                                exponentPrefix = match[1],
-                                exponentPrecision = 3,
-                                minDecimals,
-                                maxDecimals;
-
-                            while (coefficient >= 10) {
-                                coefficient /= 10;
-                                exponent++;
-                            }
-
-                            while (coefficient !== 0 && coefficient < 1) {
-                                coefficient *= 10;
-                                exponent--;
-                            }
-
-                            if (fs === "G") {
-                                if (exponent > -5 && (!precision || exponent < precision)) {
-                                    minDecimals = precision ? precision - (exponent > 0 ? exponent + 1 : 1) : 0;
-                                    maxDecimals = precision ? precision - (exponent > 0 ? exponent + 1 : 1) : 10;
-                                    return this.defaultFormat(number, 1, minDecimals, maxDecimals, nf, true);
-                                }
-
-                                exponentPrefix = exponentPrefix === "G" ? "E" : "e";
-                                exponentPrecision = 2;
-                                minDecimals = (precision || 1) - 1;
-                                maxDecimals = (precision || 11) - 1;
-                            } else {
-                                minDecimals = maxDecimals = isNaN(precision) ? 6 : precision;
-                            }
-
-                            if (exponent >= 0) {
-                                exponentPrefix += nf.positiveSign;
-                            } else {
-                                exponentPrefix += nf.negativeSign;
-                                exponent = -exponent;
-                            }
-
-                            if (number < 0) {
-                                coefficient *= -1;
-                            }
-
-                            return this.defaultFormat(coefficient, 1, minDecimals, maxDecimals, nf) + exponentPrefix + this.defaultFormat(exponent, exponentPrecision, 0, 0, nf, true);
-                        case "P":
-                            if (isNaN(precision)) {
-                                precision = nf.percentDecimalDigits;
-                            }
-
-                            return this.defaultFormat(number * 100, 1, precision, precision, nf, false, "percent");
-                        case "X":
-                            var result = Math.round(number).toString(16);
-
-                            if (match[1] === "X") {
-                                result = result.toUpperCase();
-                            }
-
-                            precision -= result.length;
-
-                            while (precision-- > 0) {
-                                result = "0" + result;
-                            }
-
-                            return result;
-                        case "C":
-                            if (isNaN(precision)) {
-                                precision = nf.currencyDecimalDigits;
-                            }
-
-                            return this.defaultFormat(number, 1, precision, precision, nf, false, "currency");
-                        case "R":
-                            return "" + number;
-                    }
-                }
-
-                if (format.indexOf(",.") !== -1 || Bridge.String.endsWith(format, ",")) {
-                    var count = 0,
-                        index = format.indexOf(",.");
-
-                    if (index === -1) {
-                        index = format.length - 1;
-                    }
-
-                    while (index > -1 && format.charAt(index) === ",") {
-                        count++;
-                        index--;
-                    }
-
-                    number /= Math.pow(1000, count);
-                }
-
-                if (format.indexOf("%") !== -1) {
-                    number *= 100;
-                }
-
-                groups = format.split(";");
-
-                if (number < 0 && groups.length > 1) {
-                    number *= -1;
-                    format = groups[1];
-                } else {
-                    format = groups[!number && groups.length > 2 ? 2 : 0];
-                }
-
-                return this.customFormat(number, format, nf, !format.match(/^[^\.]*[0#],[0#]/));
-            },
-
-            defaultFormat: function (number, minIntLen, minDecLen, maxDecLen, provider, noGroup, name) {
-                name = name || "number";
-
-                var nf = (provider || Bridge.CultureInfo.getCurrentCulture()).getFormat(Bridge.NumberFormatInfo),
-                    str,
-                    decimalIndex,
-                    negPattern,
-                    roundingFactor,
-                    groupIndex,
-                    groupSize,
-                    groups = nf[name + "GroupSizes"],
-                    decimalPart,
-                    index,
-                    done,
-                    startIndex,
-                    length,
-                    part,
-                    sep,
-                    buffer = "";
-
-                roundingFactor = Math.pow(10, maxDecLen);
-                str = "" + (Math.round(Math.abs(number) * roundingFactor) / roundingFactor);
-
-                decimalIndex = str.indexOf(".");
-
-                if (decimalIndex > 0) {
-                    decimalPart = nf[name + "DecimalSeparator"] + str.substr(decimalIndex + 1);
-                    str = str.substr(0, decimalIndex);
-                }
-
-                if (str.length < minIntLen) {
-                    str = Array(minIntLen - str.length + 1).join("0") + str;
-                }
-
-                if (decimalPart) {
-                    if ((decimalPart.length - 1) < minDecLen) {
-                        decimalPart += Array(minDecLen - decimalPart.length + 2).join("0");
-                    }
-
-                    if (maxDecLen === 0) {
-                        decimalPart = null;
-                    } else if ((decimalPart.length - 1) > maxDecLen) {
-                        decimalPart = decimalPart.substr(0, maxDecLen + 1);
-                    }
-                }
-
-                groupIndex = 0;
-                groupSize = groups[groupIndex];
-
-                if (str.length < groupSize) {
-                    buffer = str;
-
-                    if (decimalPart) {
-                        buffer += decimalPart;
-                    }
-                } else {
-                    index = str.length;
-                    done = false;
-                    sep = noGroup ? "" : nf[name + "GroupSeparator"];
-
-                    while (!done) {
-                        length = groupSize;
-                        startIndex = index - length;
-
-                        if (startIndex < 0) {
-                            groupSize += startIndex;
-                            length += startIndex;
-                            startIndex = 0;
-                            done = true;
-                        }
-
-                        if (!length) {
-                            break;
-                        }
-
-                        part = str.substr(startIndex, length);
-
-                        if (buffer.length) {
-                            buffer = part + sep + buffer;
-                        } else {
-                            buffer = part;
-                        }
-
-                        index -= length;
-
-                        if (groupIndex < groups.length - 1) {
-                            groupIndex++;
-                            groupSize = groups[groupIndex];
-                        }
-                    }
-
-                    if (decimalPart) {
-                        buffer += decimalPart;
-                    }
-                }
-
-                if (number < 0) {
-                    negPattern = Bridge.NumberFormatInfo[name + "NegativePatterns"][nf[name + "NegativePattern"]];
-
-                    return negPattern.replace("-", nf.negativeSign).replace("%", nf.percentSymbol).replace("$", nf.currencySymbol).replace("n", buffer);
-                } else if (Bridge.NumberFormatInfo[name + "PositivePatterns"]) {
-                    negPattern = Bridge.NumberFormatInfo[name + "PositivePatterns"][nf[name + "PositivePattern"]];
-
-                    return negPattern.replace("%", nf.percentSymbol).replace("$", nf.currencySymbol).replace("n", buffer);
-                }
-
-                return buffer;
-            },
-
-            customFormat: function (number, format, nf, noGroup) {
-                var digits = 0,
-                    forcedDigits = -1,
-                    integralDigits = -1,
-                    decimals = 0,
-                    forcedDecimals = -1,
-                    atDecimals = 0,
-                    unused = 1,
-                    c, i, f,
-                    endIndex,
-                    roundingFactor,
-                    decimalIndex,
-                    isNegative = false,
-                    name,
-                    groupCfg,
-                    buffer = "";
-
-                name = "number";
-
-                if (format.indexOf("%") !== -1) {
-                    name = "percent";
-                } else if (format.indexOf("$") !== -1) {
-                    name = "currency";
-                }
-
-                for (i = 0; i < format.length; i++) {
-                    c = format.charAt(i);
-
-                    if (c === "'" || c === '"') {
-                        i = format.indexOf(c, i + 1);
-
-                        if (i < 0) {
-                            break;
-                        }
-                    } else if (c === "\\") {
-                        i++;
-                    } else {
-                        if (c === "0" || c === "#") {
-                            decimals += atDecimals;
-
-                            if (c === "0") {
-                                if (atDecimals) {
-                                    forcedDecimals = decimals;
-                                } else if (forcedDigits < 0) {
-                                    forcedDigits = digits;
-                                }
-                            }
-
-                            digits += !atDecimals;
-                        }
-
-                        atDecimals = atDecimals || c === ".";
-                    }
-                }
-                forcedDigits = forcedDigits < 0 ? 1 : digits - forcedDigits;
-
-                if (number < 0) {
-                    isNegative = true;
-                }
-
-                roundingFactor = Math.pow(10, decimals);
-                number = "" + (Math.round(Math.abs(number) * roundingFactor) / roundingFactor);
-
-                decimalIndex = number.indexOf(".");
-                integralDigits = decimalIndex < 0 ? number.length : decimalIndex;
-                i = integralDigits - digits;
-
-                groupCfg = {
-                    groupIndex: Math.max(integralDigits, forcedDigits),
-                    sep: noGroup ? "" : nf[name + "GroupSeparator"]
-                };
-
-                for (f = 0; f < format.length; f++) {
-                    c = format.charAt(f);
-
-                    if (c === "'" || c === '"') {
-                        endIndex = format.indexOf(c, f + 1);
-
-                        buffer += format.substring(f + 1, endIndex < 0 ? format.length : endIndex);
-
-                        if (endIndex < 0) {
-                            break;
-                        }
-
-                        f = endIndex;
-                    } else if (c === "\\") {
-                        buffer += format.charAt(f + 1);
-                        f++;
-                    } else if (c === "#" || c === "0") {
-                        groupCfg.buffer = buffer;
-
-                        if (i < integralDigits) {
-                            if (i >= 0) {
-                                if (unused) {
-                                    this.addGroup(number.substr(0, i), groupCfg);
-                                }
-
-                                this.addGroup(number.charAt(i), groupCfg);
-                            } else if (i >= integralDigits - forcedDigits) {
-                                this.addGroup("0", groupCfg);
-                            }
-                            unused = 0;
-                        } else if (forcedDecimals-- > 0 || i < number.length) {
-                            this.addGroup(i >= number.length ? "0" : number.charAt(i), groupCfg);
-                        }
-
-                        buffer = groupCfg.buffer;
-
-                        i++;
-                    } else if (c === ".") {
-                        if (number.length > ++i || forcedDecimals > 0) {
-                            buffer += nf[name + "DecimalSeparator"];
-                        }
-                    } else if (c !== ",") {
-                        buffer += c;
-                    }
-                }
-
-                if (isNegative < 0) {
-                    buffer = "-" + buffer;
-                }
-
-                return buffer;
-            },
-
-            addGroup: function (value, cfg) {
-                var buffer = cfg.buffer,
-                    sep = cfg.sep,
-                    groupIndex = cfg.groupIndex;
-
-                for (var i = 0, length = value.length; i < length; i++) {
-                    buffer += value.charAt(i);
-
-                    if (sep && groupIndex > 1 && groupIndex-- % 3 === 1) {
-                        buffer += sep;
-                    }
-                }
-
-                cfg.buffer = buffer;
-                cfg.groupIndex = groupIndex;
-            },
-
-            parseFloat: function (str, provider) {
-                if (str == null) {
-                    throw new Bridge.ArgumentNullException("str");
-                }
-
-                var nfInfo = (provider || Bridge.CultureInfo.getCurrentCulture()).getFormat(Bridge.NumberFormatInfo),
-                    result = parseFloat(str.replace(nfInfo.numberDecimalSeparator, "."));
-
-                if (isNaN(result) && str !== nfInfo.nanSymbol) {
-                    if (str === nfInfo.negativeInfinitySymbol) {
-                        return Number.NEGATIVE_INFINITY;
-                    }
-
-                    if (str === nfInfo.positiveInfinitySymbol) {
-                        return Number.POSITIVE_INFINITY;
-                    }
-
-                    throw new Bridge.FormatException("Input string was not in a correct format.");
-                }
-
-                return result;
-            },
-
-            tryParseFloat: function (str, provider, result) {
-                result.v = 0;
-
-                if (str == null) {
-                    return false;
-                }
-
-                var nfInfo = (provider || Bridge.CultureInfo.getCurrentCulture()).getFormat(Bridge.NumberFormatInfo);
-
-                result.v = parseFloat(str.replace(nfInfo.numberDecimalSeparator, "."));
-
-                if (isNaN(result.v) && str !== nfInfo.nanSymbol) {
-                    if (str === nfInfo.negativeInfinitySymbol) {
-                        result.v = Number.NEGATIVE_INFINITY;
-                        return true;
-                    }
-
-                    if (str === nfInfo.positiveInfinitySymbol) {
-                        result.v = Number.POSITIVE_INFINITY;
-                        return true;
-                    }
-
-                    return false;
-                }
-
-                return true;
-            },
-
-            parseInt: function (str, min, max, radix) {
-                if (str == null) {
-                    throw new Bridge.ArgumentNullException("str");
-                }
-
-                if (!/^[+-]?[0-9]+$/.test(str)) {
-                    throw new Bridge.FormatException("Input string was not in a correct format.");
-                }
-
-                var result = parseInt(str, radix || 10);
-
-                if (isNaN(result)) {
-                    throw new Bridge.FormatException("Input string was not in a correct format.");
-                }
-
-                if (result < min || result > max) {
-                    throw new Bridge.OverflowException();
-                }
-
-                return result;
-            },
-
-            tryParseInt: function (str, result, min, max, radix) {
-                result.v = 0;
-
-                if (!/^[+-]?[0-9]+$/.test(str)) {
-                    return false;
-                }
-
-                result.v = parseInt(str, radix || 10);
-
-                if (result.v < min || result.v > max) {
-                    return false;
-                }
-
-                return true;
-            },
-
-            trunc: function (num) {
-                if (!Bridge.isNumber(num)) {
-                    return null;
-                }
-
-                return num > 0 ? Math.floor(num) : Math.ceil(num);
-            },
-
-            div: function (x, y) {
-                if (!Bridge.isNumber(x) || !Bridge.isNumber(y)) {
-                    return null;
-                }
-
-                if (y === 0) {
-                    throw new Bridge.DivideByZeroException();
-                }
-
-                return this.trunc(x / y);
-            },
-
-            mod: function (x, y) {
-                if (!Bridge.isNumber(x) || !Bridge.isNumber(y)) {
-                    return null;
-                }
-
-                if (y === 0) {
-                    throw new Bridge.DivideByZeroException();
-                }
-                return x % y;
-            },
-
-            check: function (x, type) {
-                if (Bridge.isNumber(x) && !type.instanceOf(x)) {
-                    throw new Bridge.OverflowException();
-                }
                 
-                return x;
-            },
+            return x;
+        },
 
-            sxb: function (x) {
-                return x | (x & 0x80 ? 0xffffff00 : 0);
-            },
+        sxb: function (x) {
+            return x | (x & 0x80 ? 0xffffff00 : 0);
+        },
 
-            sxs: function (x) {
-                return x | (x & 0x8000 ? 0xffff0000 : 0);
-            },
+        sxs: function (x) {
+            return x | (x & 0x8000 ? 0xffff0000 : 0);
+        },
 
-            clip8: function (x) {
-                return Bridge.isNumber(x) ? Bridge.Int.sxb(x & 0xff) : null;
-            },
+        clip8: function (x) {
+            return Bridge.isNumber(x) ? Bridge.Int.sxb(x & 0xff) : null;
+        },
 
-            clipu8: function (x) {
-                return Bridge.isNumber(x) ? x & 0xff : null;
-            },
+        clipu8: function (x) {
+            return Bridge.isNumber(x) ? x & 0xff : null;
+        },
 
-            clip16: function (x) {
-                return Bridge.isNumber(x) ? Bridge.Int.sxs(x & 0xffff) : null;
-            },
+        clip16: function (x) {
+            return Bridge.isNumber(x) ? Bridge.Int.sxs(x & 0xffff) : null;
+        },
 
-            clipu16: function (x) {
-                return Bridge.isNumber(x) ? x & 0xffff : null;
-            },
+        clipu16: function (x) {
+            return Bridge.isNumber(x) ? x & 0xffff : null;
+        },
 
-            clip32: function (x) {
-                return Bridge.isNumber(x) ? x | 0 : null;
-            },
+        clip32: function (x) {
+            return Bridge.isNumber(x) ? x | 0 : null;
+        },
 
-            clipu32: function (x) {
-                return Bridge.isNumber(x) ? x >>> 0 : null;
-            },
+        clipu32: function (x) {
+            return Bridge.isNumber(x) ? x >>> 0 : null;
+        },
 
-            clip64: function (x) {
-                return Bridge.isNumber(x) ? (Math.floor(x / 0x100000000) | 0) * 0x100000000 + (x >>> 0) : null;
-            },
+        clip64: function (x) {
+            return Bridge.isNumber(x) ? (Math.floor(x / 0x100000000) | 0) * 0x100000000 + (x >>> 0) : null;
+        },
 
-            clipu64: function (x) {
-                return Bridge.isNumber(x) ? (Math.floor(x / 0x100000000) >>> 0) * 0x100000000 + (x >>> 0) : null;
-            },
-
-            sign: function (x) {
-                return Bridge.isNumber(x) ? (x === 0 ? 0 : (x < 0 ? -1 : 1)) : null;
-            }
+        clipu64: function (x) {
+            return Bridge.isNumber(x) ? (Math.floor(x / 0x100000000) >>> 0) * 0x100000000 + (x >>> 0) : null;
         }
-    });
+    }
+});
 
-    Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEquatable$1(Bridge.Int)]);
+Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEquatable$1(Bridge.Int)]);
 
-    // @source Decimal.js
+/* decimal.js v4.0.2 https://github.com/MikeMcl/decimal.js/LICENCE */
 
-    /* decimal.js v4.0.2 https://github.com/MikeMcl/decimal.js/LICENCE */
+!function (e) { "use strict"; function n(e) { for (var n, r, t = 1, i = e.length, o = e[0] + ""; i > t; t++) { for (n = e[t] + "", r = y - n.length; r--;) n = "0" + n; o += n } for (i = o.length; 48 === o.charCodeAt(--i) ;); return o.slice(0, i + 1 || 1) } function r(e, n, r, t) { var i, o, s, c, u; for (o = 1, s = e[0]; s >= 10; s /= 10, o++); return s = n - o, 0 > s ? (s += y, i = 0) : (i = Math.ceil((s + 1) / y), s %= y), o = E(10, y - s), u = e[i] % o | 0, null == t ? 3 > s ? (0 == s ? u = u / 100 | 0 : 1 == s && (u = u / 10 | 0), c = 4 > r && 99999 == u || r > 3 && 49999 == u || 5e4 == u || 0 == u) : c = (4 > r && u + 1 == o || r > 3 && u + 1 == o / 2) && (e[i + 1] / o / 100 | 0) == E(10, s - 2) - 1 || (u == o / 2 || 0 == u) && 0 == (e[i + 1] / o / 100 | 0) : 4 > s ? (0 == s ? u = u / 1e3 | 0 : 1 == s ? u = u / 100 | 0 : 2 == s && (u = u / 10 | 0), c = (t || 4 > r) && 9999 == u || !t && r > 3 && 4999 == u) : c = ((t || 4 > r) && u + 1 == o || !t && r > 3 && u + 1 == o / 2) && (e[i + 1] / o / 1e3 | 0) == E(10, s - 3) - 1, c } function t(e, n, r) { var t = e.constructor; return null == n || ((m = 0 > n || n > 8) || 0 !== n && (t.errors ? parseInt : parseFloat)(n) != n) && !u(t, "rounding mode", n, r, 0) ? t.rounding : 0 | n } function i(e, n, r, t) { var i = e.constructor; return !(m = (t || 0) > n || n >= A + 1) && (0 === n || (i.errors ? parseInt : parseFloat)(n) == n) || u(i, "argument", n, r, 0) } function o(e, t) { var i, o, s, c, u, l, f, h = 0, g = 0, p = 0, m = e.constructor, d = m.ONE, v = m.rounding, N = m.precision; if (!e.c || !e.c[0] || e.e > 17) return new m(e.c ? e.c[0] ? e.s < 0 ? 0 : 1 / 0 : d : e.s ? e.s < 0 ? 0 : e : 0 / 0); for (null == t ? (w = !1, u = N) : u = t, f = new m(.03125) ; e.e > -2;) e = e.times(f), p += 5; for (o = Math.log(E(2, p)) / Math.LN10 * 2 + 5 | 0, u += o, i = c = l = new m(d), m.precision = u; ;) { if (c = a(c.times(e), u, 1), i = i.times(++g), f = l.plus(P(c, i, u, 1)), n(f.c).slice(0, u) === n(l.c).slice(0, u)) { for (s = p; s--;) l = a(l.times(l), u, 1); if (null != t) return m.precision = N, l; if (!(3 > h && r(l.c, u - o, v, h))) return a(l, m.precision = N, v, w = !0); m.precision = u += 10, i = c = f = new m(d), g = 0, h++ } l = f } } function s(e, r, t, i) { var o, s, c = e.constructor, u = (e = new c(e)).e; if (null == r ? t = 0 : (a(e, ++r, t), t = i ? r : r + e.e - u), u = e.e, o = n(e.c), 1 == i || 2 == i && (u >= r || u <= c.toExpNeg)) { for (; o.length < t; o += "0"); o.length > 1 && (o = o.charAt(0) + "." + o.slice(1)), o += (0 > u ? "e" : "e+") + u } else { if (i = o.length, 0 > u) { for (s = t - i; ++u; o = "0" + o); o = "0." + o } else if (++u > i) { for (s = t - u, u -= i; u--; o += "0"); s > 0 && (o += ".") } else s = t - i, i > u ? o = o.slice(0, u) + "." + o.slice(u) : s > 0 && (o += "."); if (s > 0) for (; s--; o += "0"); } return e.s < 0 && e.c[0] ? "-" + o : o } function c(e) { var n = e.length - 1, r = n * y + 1; if (n = e[n]) { for (; n % 10 == 0; n /= 10, r--); for (n = e[0]; n >= 10; n /= 10, r++); } return r } function u(e, n, r, t, i) { if (e.errors) { var o = new Error((t || ["new Decimal", "cmp", "div", "eq", "gt", "gte", "lt", "lte", "minus", "mod", "plus", "times", "toFraction", "pow", "random", "log", "sqrt", "toNearest", "divToInt"][v ? 0 > v ? -v : v : 0 > 1 / v ? 1 : 0]) + "() " + (["number type has more than 15 significant digits", "LN10 out of digits"][n] || n + ([m ? " out of range" : " not an integer", " not a boolean or binary digit"][i] || "")) + ": " + r); throw o.name = "Decimal Error", m = v = 0, o } } function l(e, n, r) { var t = new e(e.ONE); for (w = !1; 1 & r && (t = t.times(n)), r >>= 1, r;) n = n.times(n); return w = !0, t } function f(e, t) { var i, o, s, c, l, h, g, p, m, d, v, N = 1, E = 10, x = e, b = x.c, y = x.constructor, O = y.ONE, S = y.rounding, D = y.precision; if (x.s < 0 || !b || !b[0] || !x.e && 1 == b[0] && 1 == b.length) return new y(b && !b[0] ? -1 / 0 : 1 != x.s ? 0 / 0 : b ? 0 : x); if (null == t ? (w = !1, g = D) : g = t, y.precision = g += E, i = n(b), o = i.charAt(0), !(Math.abs(c = x.e) < 15e14)) return x = new y(o + "." + i.slice(1)), g + 2 > M.length && u(y, 1, g + 2, "ln"), x = f(x, g - E).plus(new y(M.slice(0, g + 2)).times(c + "")), y.precision = D, null == t ? a(x, D, S, w = !0) : x; for (; 7 > o && 1 != o || 1 == o && i.charAt(1) > 3;) x = x.times(e), i = n(x.c), o = i.charAt(0), N++; for (c = x.e, o > 1 ? (x = new y("0." + i), c++) : x = new y(o + "." + i.slice(1)), d = x, p = l = x = P(x.minus(O), x.plus(O), g, 1), v = a(x.times(x), g, 1), s = 3; ;) { if (l = a(l.times(v), g, 1), m = p.plus(P(l, new y(s), g, 1)), n(m.c).slice(0, g) === n(p.c).slice(0, g)) { if (p = p.times(2), 0 !== c && (g + 2 > M.length && u(y, 1, g + 2, "ln"), p = p.plus(new y(M.slice(0, g + 2)).times(c + ""))), p = P(p, new y(N), g, 1), null != t) return y.precision = D, p; if (!r(p.c, g - E, S, h)) return a(p, y.precision = D, S, w = !0); y.precision = g += E, m = l = x = P(d.minus(O), d.plus(O), g, 1), v = a(x.times(x), g, 1), s = h = 1 } p = m, s += 2 } } function a(e, n, r, t) { var i, o, s, c, u, l, f, a, h = e.constructor; e: if (null != n) { if (!(f = e.c)) return e; for (i = 1, c = f[0]; c >= 10; c /= 10, i++); if (o = n - i, 0 > o) o += y, s = n, u = f[a = 0], l = u / E(10, i - s - 1) % 10 | 0; else if (a = Math.ceil((o + 1) / y), a >= f.length) { if (!t) break e; for (; f.length <= a; f.push(0)); u = l = 0, i = 1, o %= y, s = o - y + 1 } else { for (u = c = f[a], i = 1; c >= 10; c /= 10, i++); o %= y, s = o - y + i, l = 0 > s ? 0 : N(u / E(10, i - s - 1) % 10) } if (t = t || 0 > n || null != f[a + 1] || (0 > s ? u : u % E(10, i - s - 1)), t = 4 > r ? (l || t) && (0 == r || r == (e.s < 0 ? 3 : 2)) : l > 5 || 5 == l && (4 == r || t || 6 == r && (o > 0 ? s > 0 ? u / E(10, i - s) : 0 : f[a - 1]) % 10 & 1 || r == (e.s < 0 ? 8 : 7)), 1 > n || !f[0]) return f.length = 0, t ? (n -= e.e + 1, f[0] = E(10, n % y), e.e = -n || 0) : f[0] = e.e = 0, e; if (0 == o ? (f.length = a, c = 1, a--) : (f.length = a + 1, c = E(10, y - o), f[a] = s > 0 ? (u / E(10, i - s) % E(10, s) | 0) * c : 0), t) for (; ;) { if (0 == a) { for (o = 1, s = f[0]; s >= 10; s /= 10, o++); for (s = f[0] += c, c = 1; s >= 10; s /= 10, c++); o != c && (e.e++, f[0] == b && (f[0] = 1)); break } if (f[a] += c, f[a] != b) break; f[a--] = 0, c = 1 } for (o = f.length; 0 === f[--o]; f.pop()); } return w && (e.e > h.maxE ? e.c = e.e = null : e.e < h.minE && (e.c = [e.e = 0])), e } var h, g, p, m, d = e.crypto, w = !0, v = 0, N = Math.floor, E = Math.pow, x = Object.prototype.toString, b = 1e7, y = 7, O = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_", S = {}, D = 9e15, A = 1e9, F = 3e3, M = "2.3025850929940456840179914546843642076011014886287729760333279009675726096773524802359972050895982983419677840422862486334095254650828067566662873690987816894829072083255546808437998948262331985283935053089653777326288461633662222876982198867465436674744042432743651550489343149393914796194044002221051017141748003688084012647080685567743216228355220114804663715659121373450747856947683463616792101806445070648000277502684916746550586856935673420670581136429224554405758925724208241314695689016758940256776311356919292033376587141660230105703089634572075440370847469940168269282808481184289314848524948644871927809676271275775397027668605952496716674183485704422507197965004714951050492214776567636938662976979522110718264549734772662425709429322582798502585509785265383207606726317164309505995087807523710333101197857547331541421808427543863591778117054309827482385045648019095610299291824318237525357709750539565187697510374970888692180205189339507238539205144634197265287286965110862571492198849978748873771345686209167058"; S.absoluteValue = S.abs = function () { var e = new this.constructor(this); return e.s < 0 && (e.s = 1), a(e) }, S.ceil = function () { return a(new this.constructor(this), this.e + 1, 2) }, S.comparedTo = S.cmp = function (e, n) { var r, t = this, i = t.c, o = (v = -v, e = new t.constructor(e, n), e.c), s = t.s, c = e.s, u = t.e, l = e.e; if (!s || !c) return null; if (r = i && !i[0], n = o && !o[0], r || n) return r ? n ? 0 : -c : s; if (s != c) return s; if (r = 0 > s, !i || !o) return u == l ? 0 : !i ^ r ? 1 : -1; if (u != l) return u > l ^ r ? 1 : -1; for (s = -1, c = (u = i.length) < (l = o.length) ? u : l; ++s < c;) if (i[s] != o[s]) return i[s] > o[s] ^ r ? 1 : -1; return u == l ? 0 : u > l ^ r ? 1 : -1 }, S.decimalPlaces = S.dp = function () { var e, n, r = null; if (e = this.c) { if (r = ((n = e.length - 1) - N(this.e / y)) * y, n = e[n]) for (; n % 10 == 0; n /= 10, r--); 0 > r && (r = 0) } return r }, S.dividedBy = S.div = function (e, n) { return v = 2, P(this, new this.constructor(e, n)) }, S.dividedToIntegerBy = S.divToInt = function (e, n) { var r = this, t = r.constructor; return v = 18, a(P(r, new t(e, n), 0, 1, 1), t.precision, t.rounding) }, S.equals = S.eq = function (e, n) { return v = 3, 0 === this.cmp(e, n) }, S.exponential = S.exp = function () { return o(this) }, S.floor = function () { return a(new this.constructor(this), this.e + 1, 3) }, S.greaterThan = S.gt = function (e, n) { return v = 4, this.cmp(e, n) > 0 }, S.greaterThanOrEqualTo = S.gte = function (e, n) { return v = 5, n = this.cmp(e, n), 1 == n || 0 === n }, S.isFinite = function () { return !!this.c }, S.isInteger = S.isInt = function () { return !!this.c && N(this.e / y) > this.c.length - 2 }, S.isNaN = function () { return !this.s }, S.isNegative = S.isNeg = function () { return this.s < 0 }, S.isZero = function () { return !!this.c && 0 == this.c[0] }, S.lessThan = S.lt = function (e, n) { return v = 6, this.cmp(e, n) < 0 }, S.lessThanOrEqualTo = S.lte = function (e, n) { return v = 7, n = this.cmp(e, n), -1 == n || 0 === n }, S.logarithm = S.log = function (e, t) { var i, o, s, c, l, h, g, p, m, d = this, N = d.constructor, E = N.precision, x = N.rounding, b = 5; if (null == e) e = new N(10), i = !0; else { if (v = 15, e = new N(e, t), o = e.c, e.s < 0 || !o || !o[0] || !e.e && 1 == o[0] && 1 == o.length) return new N(0 / 0); i = e.eq(10) } if (o = d.c, d.s < 0 || !o || !o[0] || !d.e && 1 == o[0] && 1 == o.length) return new N(o && !o[0] ? -1 / 0 : 1 != d.s ? 0 / 0 : o ? 0 : 1 / 0); if (l = i && (c = o[0], o.length > 1 || 1 != c && 10 != c && 100 != c && 1e3 != c && 1e4 != c && 1e5 != c && 1e6 != c), w = !1, g = E + b, p = g + 10, h = f(d, g), i ? (p > M.length && u(N, 1, p, "log"), s = new N(M.slice(0, p))) : s = f(e, g), m = P(h, s, g, 1), r(m.c, c = E, x)) do if (g += 10, h = f(d, g), i ? (p = g + 10, p > M.length && u(N, 1, p, "log"), s = new N(M.slice(0, p))) : s = f(e, g), m = P(h, s, g, 1), !l) { +n(m.c).slice(c + 1, c + 15) + 1 == 1e14 && (m = a(m, E + 1, 0)); break } while (r(m.c, c += 10, x)); return w = !0, a(m, E, x) }, S.minus = function (e, n) { var r, t, i, o, s = this, c = s.constructor, u = s.s; if (v = 8, e = new c(e, n), n = e.s, !u || !n) return new c(0 / 0); if (u != n) return e.s = -n, s.plus(e); var l = s.c, f = e.c, h = N(e.e / y), g = N(s.e / y), p = c.precision, m = c.rounding; if (!g || !h) { if (!l || !f) return l ? (e.s = -n, e) : new c(f ? s : 0 / 0); if (!l[0] || !f[0]) return s = f[0] ? (e.s = -n, e) : new c(l[0] ? s : 3 == m ? -0 : 0), w ? a(s, p, m) : s } if (l = l.slice(), t = l.length, u = g - h) { for ((o = 0 > u) ? (u = -u, r = l, t = f.length) : (h = g, r = f), (g = Math.ceil(p / y)) > t && (t = g), u > (t += 2) && (u = t, r.length = 1), r.reverse(), n = u; n--; r.push(0)); r.reverse() } else for ((o = t < (i = f.length)) && (i = t), u = n = 0; i > n; n++) if (l[n] != f[n]) { o = l[n] < f[n]; break } if (o && (r = l, l = f, f = r, e.s = -e.s), (n = -((i = l.length) - f.length)) > 0) for (; n--; l[i++] = 0); for (g = b - 1, n = f.length; n > u;) { if (l[--n] < f[n]) { for (t = n; t && !l[--t]; l[t] = g); --l[t], l[n] += b } l[n] -= f[n] } for (; 0 == l[--i]; l.pop()); for (; 0 == l[0]; l.shift(), --h); for (l[0] || (l = [h = 0], e.s = 3 == m ? -1 : 1), e.c = l, u = 1, n = l[0]; n >= 10; n /= 10, u++); return e.e = u + h * y - 1, w ? a(e, p, m) : e }, S.modulo = S.mod = function (e, n) { var r, t, i = this, o = i.constructor, s = o.modulo; return v = 9, e = new o(e, n), n = e.s, r = !i.c || !n || e.c && !e.c[0], r || !e.c || i.c && !i.c[0] ? r ? new o(0 / 0) : a(new o(i), o.precision, o.rounding) : (w = !1, 9 == s ? (e.s = 1, t = P(i, e, 0, 3, 1), e.s = n, t.s *= n) : t = P(i, e, 0, s, 1), t = t.times(e), w = !0, i.minus(t)) }, S.naturalLogarithm = S.ln = function () { return f(this) }, S.negated = S.neg = function () { var e = new this.constructor(this); return e.s = -e.s || null, a(e) }, S.plus = function (e, n) { var r, t = this, i = t.constructor, o = t.s; if (v = 10, e = new i(e, n), n = e.s, !o || !n) return new i(0 / 0); if (o != n) return e.s = -n, t.minus(e); var s = t.c, c = e.c, u = N(e.e / y), l = N(t.e / y), f = i.precision, h = i.rounding; if (!l || !u) { if (!s || !c) return new i(o / 0); if (!s[0] || !c[0]) return t = c[0] ? e : new i(s[0] ? t : 0 * o), w ? a(t, f, h) : t } if (s = s.slice(), o = l - u) { for (0 > o ? (o = -o, r = s, n = c.length) : (u = l, r = c, n = s.length), (l = Math.ceil(f / y)) > n && (n = l), o > ++n && (o = n, r.length = 1), r.reverse() ; o--; r.push(0)); r.reverse() } for (s.length - c.length < 0 && (r = c, c = s, s = r), o = c.length, n = 0, l = b; o; s[o] %= l) n = (s[--o] = s[o] + c[o] + n) / l | 0; for (n && (s.unshift(n), ++u), o = s.length; 0 == s[--o]; s.pop()); for (e.c = s, o = 1, n = s[0]; n >= 10; n /= 10, o++); return e.e = o + u * y - 1, w ? a(e, f, h) : e }, S.precision = S.sd = function (e) { var n = null, r = this; return e != n && e !== !!e && 1 !== e && 0 !== e && u(r.constructor, "argument", e, "precision", 1), r.c && (n = c(r.c), e && r.e + 1 > n && (n = r.e + 1)), n }, S.round = function () { var e = this, n = e.constructor; return a(new n(e), e.e + 1, n.rounding) }, S.squareRoot = S.sqrt = function () { var e, r, t, i, o, s, c = this, u = c.c, l = c.s, f = c.e, h = c.constructor, g = new h(.5); if (1 !== l || !u || !u[0]) return new h(!l || 0 > l && (!u || u[0]) ? 0 / 0 : u ? c : 1 / 0); for (w = !1, l = Math.sqrt(+c), 0 == l || l == 1 / 0 ? (r = n(u), (r.length + f) % 2 == 0 && (r += "0"), l = Math.sqrt(r), f = N((f + 1) / 2) - (0 > f || f % 2), l == 1 / 0 ? r = "1e" + f : (r = l.toExponential(), r = r.slice(0, r.indexOf("e") + 1) + f), i = new h(r)) : i = new h(l.toString()), t = (f = h.precision) + 3; ;) if (s = i, i = g.times(s.plus(P(c, s, t + 2, 1))), n(s.c).slice(0, t) === (r = n(i.c)).slice(0, t)) { if (r = r.slice(t - 3, t + 1), "9999" != r && (o || "4999" != r)) { (!+r || !+r.slice(1) && "5" == r.charAt(0)) && (a(i, f + 1, 1), e = !i.times(i).eq(c)); break } if (!o && (a(s, f + 1, 0), s.times(s).eq(c))) { i = s; break } t += 4, o = 1 } return w = !0, a(i, f, h.rounding, e) }, S.times = function (e, n) { var r, t, i = this, o = i.constructor, s = i.c, c = (v = 11, e = new o(e, n), e.c), u = N(i.e / y), l = N(e.e / y), f = i.s; if (n = e.s, e.s = f == n ? 1 : -1, !((u || s && s[0]) && (l || c && c[0]))) return new o(!f || !n || s && !s[0] && !c || c && !c[0] && !s ? 0 / 0 : s && c ? 0 * e.s : e.s / 0); for (t = u + l, f = s.length, n = c.length, n > f && (r = s, s = c, c = r, l = f, f = n, n = l), l = f + n, r = []; l--; r.push(0)); for (u = n - 1; u > -1; u--) { for (n = 0, l = f + u; l > u;) n = r[l] + c[u] * s[l - u - 1] + n, r[l--] = n % b | 0, n = n / b | 0; r[l] = (r[l] + n) % b | 0 } for (n ? ++t : r[0] || r.shift(), l = r.length; !r[--l]; r.pop()); for (e.c = r, f = 1, n = r[0]; n >= 10; n /= 10, f++); return e.e = f + t * y - 1, w ? a(e, o.precision, o.rounding) : e }, S.toDecimalPlaces = S.toDP = function (e, n) { var r = this; return r = new r.constructor(r), null != e && i(r, e, "toDP") ? a(r, (0 | e) + r.e + 1, t(r, n, "toDP")) : r }, S.toExponential = function (e, n) { var r = this; return r.c ? s(r, null != e && i(r, e, "toExponential") ? 0 | e : null, null != e && t(r, n, "toExponential"), 1) : r.toString() }, S.toFixed = function (e, n) { var r, o = this, c = o.constructor, u = c.toExpNeg, l = c.toExpPos; return null != e && (e = i(o, e, r = "toFixed") ? o.e + (0 | e) : null, n = t(o, n, r)), c.toExpNeg = -(c.toExpPos = 1 / 0), null != e && o.c ? (r = s(o, e, n), o.s < 0 && o.c && (o.c[0] ? r.indexOf("-") < 0 && (r = "-" + r) : r = r.replace("-", ""))) : r = o.toString(), c.toExpNeg = u, c.toExpPos = l, r }, S.toFormat = function (e, n) { var r = this; if (!r.c) return r.toString(); var t, i = r.s < 0, o = r.constructor.format, s = o.groupSeparator, c = +o.groupSize, u = +o.secondaryGroupSize, l = r.toFixed(e, n).split("."), f = l[0], a = l[1], h = i ? f.slice(1) : f, g = h.length; if (u && (t = c, c = u, g -= u = t), c > 0 && g > 0) { for (t = g % c || c, f = h.substr(0, t) ; g > t; t += c) f += s + h.substr(t, c); u > 0 && (f += s + h.slice(t)), i && (f = "-" + f) } return a ? f + o.decimalSeparator + ((u = +o.fractionGroupSize) ? a.replace(new RegExp("\\d{" + u + "}\\B", "g"), "$&" + o.fractionGroupSeparator) : a) : f }, S.toFraction = function (e) { var r, t, i, o, s, l, f, a, h = this, g = h.constructor, p = r = new g(g.ONE), d = l = new g(0), x = h.c, b = new g(d); if (!x) return h.toString(); for (i = b.e = c(x) - h.e - 1, b.c[0] = E(10, (f = i % y) < 0 ? y + f : f), (null == e || (!(v = 12, s = new g(e)).s || (m = s.cmp(p) < 0 || !s.c) || g.errors && N(s.e / y) < s.c.length - 1) && !u(g, "max denominator", e, "toFraction", 0) || (e = s).cmp(b) > 0) && (e = i > 0 ? b : p), w = !1, s = new g(n(x)), f = g.precision, g.precision = i = x.length * y * 2; a = P(s, b, 0, 1, 1), t = r.plus(a.times(d)), 1 != t.cmp(e) ;) r = d, d = t, p = l.plus(a.times(t = p)), l = t, b = s.minus(a.times(t = b)), s = t; return t = P(e.minus(r), d, 0, 1, 1), l = l.plus(t.times(p)), r = r.plus(t.times(d)), l.s = p.s = h.s, o = P(p, d, i, 1).minus(h).abs().cmp(P(l, r, i, 1).minus(h).abs()) < 1 ? [p + "", d + ""] : [l + "", r + ""], w = !0, g.precision = f, o }, S.toNearest = function (e, n) { var r = this, i = r.constructor; return r = new i(r), null == e ? (e = new i(i.ONE), n = i.rounding) : (v = 17, e = new i(e), n = t(r, n, "toNearest")), e.c ? r.c && (e.c[0] ? (w = !1, r = P(r, e, 0, 4 > n ? [4, 5, 7, 8][n] : n, 1).times(e), w = !0, a(r)) : r.c = [r.e = 0]) : r.s && (e.s && (e.s = r.s), r = e), r }, S.toNumber = function () { var e = this; return +e || (e.s ? 0 * e.s : 0 / 0) }, S.toPower = S.pow = function (e, t) { var i, s, c, u, h = this, g = h.constructor, p = h.s, m = (v = 13, +(e = new g(e, t))), d = 0 > m ? -m : m, x = g.precision, b = g.rounding; if (!h.c || !e.c || (c = !h.c[0]) || !e.c[0]) return new g(E(c ? 0 * p : +h, m)); if (h = new g(h), i = h.c.length, !h.e && h.c[0] == h.s && 1 == i) return h; if (t = e.c.length - 1, e.e || e.c[0] != e.s || t) if (s = N(e.e / y), c = s >= t, !c && 0 > p) u = new g(0 / 0); else { if (c && F > i * y * d) { if (u = l(g, h, d), e.s < 0) return g.ONE.div(u) } else { if (p = 0 > p && 1 & e.c[Math.max(s, t)] ? -1 : 1, t = E(+h, m), s = 0 != t && isFinite(t) ? new g(t + "").e : N(m * (Math.log("0." + n(h.c)) / Math.LN10 + h.e + 1)), s > g.maxE + 1 || s < g.minE - 1) return new g(s > 0 ? p / 0 : 0); w = !1, g.rounding = h.s = 1, d = Math.min(12, (s + "").length), u = o(e.times(f(h, x + d)), x), u = a(u, x + 5, 1), r(u.c, x, b) && (s = x + 10, u = a(o(e.times(f(h, s + d)), s), s + 5, 1), +n(u.c).slice(x + 1, x + 15) + 1 == 1e14 && (u = a(u, x + 1, 0))), u.s = p, w = !0, g.rounding = b } u = a(u, x, b) } else u = a(h, x, b); return u }, S.toPrecision = function (e, n) { var r = this; return null != e && i(r, e, "toPrecision", 1) && r.c ? s(r, 0 | --e, t(r, n, "toPrecision"), 2) : r.toString() }, S.toSignificantDigits = S.toSD = function (e, n) { var r = this, o = r.constructor; return r = new o(r), null != e && i(r, e, "toSD", 1) ? a(r, 0 | e, t(r, n, "toSD")) : a(r, o.precision, o.rounding) }, S.toString = function (e) { var r, t, i, o = this, c = o.constructor, l = o.e; if (null === l) t = o.s ? "Infinity" : "NaN"; else { if (e === r && (l <= c.toExpNeg || l >= c.toExpPos)) return s(o, null, c.rounding, 1); if (t = n(o.c), 0 > l) { for (; ++l; t = "0" + t); t = "0." + t } else if (i = t.length, l > 0) if (++l > i) for (l -= i; l--; t += "0"); else i > l && (t = t.slice(0, l) + "." + t.slice(l)); else if (r = t.charAt(0), i > 1) t = r + "." + t.slice(1); else if ("0" == r) return r; if (null != e) if ((m = !(e >= 2 && 65 > e)) || e != (0 | e) && c.errors) u(c, "base", e, "toString", 0); else if (t = h(c, t, 0 | e, 10, o.s), "0" == t) return t } return o.s < 0 ? "-" + t : t }, S.truncated = S.trunc = function () { return a(new this.constructor(this), this.e + 1, 1) }, S.valueOf = S.toJSON = function () { return this.toString() }, h = function () { function e(e, n, r) { for (var t, i, o = [0], s = 0, c = e.length; c > s;) { for (i = o.length; i--; o[i] *= n); for (o[t = 0] += O.indexOf(e.charAt(s++)) ; t < o.length; t++) o[t] > r - 1 && (null == o[t + 1] && (o[t + 1] = 0), o[t + 1] += o[t] / r | 0, o[t] %= r) } return o.reverse() } return function (n, r, t, i, o) { var s, c, u, f, a, h, g = r.indexOf("."), p = n.precision, m = n.rounding; for (37 > i && (r = r.toLowerCase()), g >= 0 && (r = r.replace(".", ""), h = new n(i), f = l(n, h, r.length - g), h.c = e(f.toFixed(), 10, t), h.e = h.c.length), a = e(r, i, t), s = c = a.length; 0 == a[--c]; a.pop()); if (!a[0]) return "0"; if (0 > g ? s-- : (f.c = a, f.e = s, f.s = o, f = P(f, h, p, m, 0, t), a = f.c, u = f.r, s = f.e), g = a[p], c = t / 2, u = u || null != a[p + 1], 4 > m ? (null != g || u) && (0 == m || m == (f.s < 0 ? 3 : 2)) : g > c || g == c && (4 == m || u || 6 == m && 1 & a[p - 1] || m == (f.s < 0 ? 8 : 7))) for (a.length = p, --t; ++a[--p] > t;) a[p] = 0, p || (++s, a.unshift(1)); else a.length = p; for (c = a.length; !a[--c];); for (g = 0, r = ""; c >= g; r += O.charAt(a[g++])); if (0 > s) { for (; ++s; r = "0" + r); r = "0." + r } else if (g = r.length, ++s > g) for (s -= g; s--; r += "0"); else g > s && (r = r.slice(0, s) + "." + r.slice(s)); return r } }(); var P = function () { function e(e, n, r) { var t, i = 0, o = e.length; for (e = e.slice() ; o--;) t = e[o] * n + i, e[o] = t % r | 0, i = t / r | 0; return i && e.unshift(i), e } function n(e, n, r, t) { var i, o; if (r != t) o = r > t ? 1 : -1; else for (i = o = 0; r > i; i++) if (e[i] != n[i]) { o = e[i] > n[i] ? 1 : -1; break } return o } function r(e, n, r, t) { for (var i = 0; r--;) e[r] -= i, i = e[r] < n[r] ? 1 : 0, e[r] = i * t + e[r] - n[r]; for (; !e[0] && e.length > 1; e.shift()); } return function (t, i, o, s, c, u) { var l, f, h, g, p, m, d, w, v, E, x, O, S, D, A, F, M, P, R, q = t.constructor, L = t.s == i.s ? 1 : -1, I = t.c, U = i.c; if (!(I && I[0] && U && U[0])) return new q(t.s && i.s && (I ? !U || I[0] != U[0] : U) ? I && 0 == I[0] || !U ? 0 * L : L / 0 : 0 / 0); for (u ? (g = 1, f = t.e - i.e) : (u = b, g = y, f = N(t.e / g) - N(i.e / g)), P = U.length, F = I.length, v = new q(L), E = v.c = [], h = 0; U[h] == (I[h] || 0) ; h++); if (U[h] > (I[h] || 0) && f--, null == o ? (L = o = q.precision, s = q.rounding) : L = c ? o + (t.e - i.e) + 1 : o, 0 > L) E.push(1), p = !0; else { if (L = L / g + 2 | 0, h = 0, 1 == P) { for (m = 0, U = U[0], L++; (F > h || m) && L--; h++) D = m * u + (I[h] || 0), E[h] = D / U | 0, m = D % U | 0; p = m || F > h } else { for (m = u / (U[0] + 1) | 0, m > 1 && (U = e(U, m, u), I = e(I, m, u), P = U.length, F = I.length), A = P, x = I.slice(0, P), O = x.length; P > O; x[O++] = 0); R = U.slice(), R.unshift(0), M = U[0], U[1] >= u / 2 && M++; do m = 0, l = n(U, x, P, O), 0 > l ? (S = x[0], P != O && (S = S * u + (x[1] || 0)), m = S / M | 0, m > 1 ? (m >= u && (m = u - 1), d = e(U, m, u), w = d.length, O = x.length, l = n(d, x, w, O), 1 == l && (m--, r(d, w > P ? R : U, w, u))) : (0 == m && (l = m = 1), d = U.slice()), w = d.length, O > w && d.unshift(0), r(x, d, O, u), -1 == l && (O = x.length, l = n(U, x, P, O), 1 > l && (m++, r(x, O > P ? R : U, O, u))), O = x.length) : 0 === l && (m++, x = [0]), E[h++] = m, l && x[0] ? x[O++] = I[A] || 0 : (x = [I[A]], O = 1); while ((A++ < F || null != x[0]) && L--); p = null != x[0] } E[0] || E.shift() } if (1 == g) v.e = f, v.r = +p; else { for (h = 1, L = E[0]; L >= 10; L /= 10, h++); v.e = h + f * g - 1, a(v, c ? o + v.e + 1 : o, s, p) } return v } }(); if (g = function () { function e(e) { var n, r, t, i = this, o = "config", s = i.errors ? parseInt : parseFloat; return e == r || "object" != typeof e && !u(i, "object expected", e, o) ? i : ((t = e[n = "precision"]) != r && ((m = 1 > t || t > A) || s(t) != t ? u(i, n, t, o, 0) : i[n] = 0 | t), (t = e[n = "rounding"]) != r && ((m = 0 > t || t > 8) || s(t) != t ? u(i, n, t, o, 0) : i[n] = 0 | t), (t = e[n = "toExpNeg"]) != r && ((m = -D > t || t > 0) || s(t) != t ? u(i, n, t, o, 0) : i[n] = N(t)), (t = e[n = "toExpPos"]) != r && ((m = 0 > t || t > D) || s(t) != t ? u(i, n, t, o, 0) : i[n] = N(t)), (t = e[n = "minE"]) != r && ((m = -D > t || t > 0) || s(t) != t ? u(i, n, t, o, 0) : i[n] = N(t)), (t = e[n = "maxE"]) != r && ((m = 0 > t || t > D) || s(t) != t ? u(i, n, t, o, 0) : i[n] = N(t)), (t = e[n = "errors"]) != r && (t === !!t || 1 === t || 0 === t ? (m = v = 0, i[n] = !!t) : u(i, n, t, o, 1)), (t = e[n = "crypto"]) != r && (t === !!t || 1 === t || 0 === t ? i[n] = !(!t || !d || "object" != typeof d) : u(i, n, t, o, 1)), (t = e[n = "modulo"]) != r && ((m = 0 > t || t > 9) || s(t) != t ? u(i, n, t, o, 0) : i[n] = 0 | t), (e = e[n = "format"]) != r && ("object" == typeof e ? i[n] = e : u(i, "format object expected", e, o)), i) } function n(e) { return new this(e).exp() } function r(e) { return new this(e).ln() } function t(e, n) { return new this(e).log(n) } function o(e, n, r) { var t, i, o = 0; for ("[object Array]" == x.call(n[0]) && (n = n[0]), t = new e(n[0]) ; ++o < n.length;) { if (i = new e(n[o]), !i.s) { t = i; break } t[r](i) && (t = i) } return t } function s() { return o(this, arguments, "lt") } function c() { return o(this, arguments, "gt") } function l(e, n) { return new this(e).pow(n) } function f(e) { var n, r, t, o = 0, s = [], c = this, l = new c(c.ONE); if (null != e && i(l, e, "random") ? e |= 0 : e = c.precision, r = Math.ceil(e / y), c.crypto) if (d && d.getRandomValues) for (n = d.getRandomValues(new Uint32Array(r)) ; r > o;) t = n[o], t >= 429e7 ? n[o] = d.getRandomValues(new Uint32Array(1))[0] : s[o++] = t % 1e7; else if (d && d.randomBytes) { for (n = d.randomBytes(r *= 4) ; r > o;) t = n[o] + (n[o + 1] << 8) + (n[o + 2] << 16) + ((127 & n[o + 3]) << 24), t >= 214e7 ? d.randomBytes(4).copy(n, o) : (s.push(t % 1e7), o += 4); o = r / 4 } else u(c, "crypto unavailable", d, "random"); if (!o) for (; r > o;) s[o++] = 1e7 * Math.random() | 0; for (r = s[--o], e %= y, r && e && (t = E(10, y - e), s[o] = (r / t | 0) * t) ; 0 === s[o]; o--) s.pop(); if (0 > o) s = [r = 0]; else { for (r = -1; 0 === s[0];) s.shift(), r -= y; for (o = 1, t = s[0]; t >= 10;) t /= 10, o++; y > o && (r -= y - o) } return l.e = r, l.c = s, l } function g(e) { return new this(e).sqrt() } function p(i) { function o(e, n) { var r = this; if (!(r instanceof o)) return u(o, "Decimal called without new", e), new o(e, n); if (r.constructor = o, e instanceof o) { if (null == n) return v = 0, r.s = e.s, r.e = e.e, r.c = (e = e.c) ? e.slice() : e, r; if (10 == n) return a(new o(e), o.precision, o.rounding); e += "" } return b(o, r, e, n) } return o.precision = 20, o.rounding = 4, o.modulo = 1, o.toExpNeg = -7, o.toExpPos = 21, o.minE = -D, o.maxE = D, o.errors = !0, o.crypto = !1, o.format = { decimalSeparator: ".", groupSeparator: ",", groupSize: 3, secondaryGroupSize: 0, fractionGroupSeparator: " ", fractionGroupSize: 0 }, o.prototype = S, o.ONE = new o(1), o.ROUND_UP = 0, o.ROUND_DOWN = 1, o.ROUND_CEIL = 2, o.ROUND_FLOOR = 3, o.ROUND_HALF_UP = 4, o.ROUND_HALF_DOWN = 5, o.ROUND_HALF_EVEN = 6, o.ROUND_HALF_CEIL = 7, o.ROUND_HALF_FLOOR = 8, o.EUCLID = 9, o.config = e, o.constructor = p, o.exp = n, o.ln = r, o.log = t, o.max = s, o.min = c, o.pow = l, o.sqrt = g, o.random = f, null != i && o.config(i), o } var b = function () { var e = /^-?(\d+(\.\d*)?|\.\d+)(e[+-]?\d+)?$/i, n = String.prototype.trim || function () { return this.replace(/^\s+|\s+$/g, "") }; return function (r, t, i, o) { var s, c, l, f, g, p; if ("string" != typeof i && (i = (f = "number" == typeof i || "[object Number]" == x.call(i)) && 0 === i && 0 > 1 / i ? "-0" : i + ""), g = i, null == o && e.test(i)) t.s = 45 === i.charCodeAt(0) ? (i = i.slice(1), -1) : 1; else { if (10 == o) return a(new r(i), r.precision, r.rounding); if (i = n.call(i).replace(/^\+(?!-)/, ""), t.s = 45 === i.charCodeAt(0) ? (i = i.replace(/^-(?!-)/, ""), -1) : 1, null != o ? o != (0 | o) && r.errors || (m = !(o >= 2 && 65 > o)) ? (u(r, "base", o, 0, 0), p = e.test(i)) : (s = "[" + O.slice(0, o = 0 | o) + "]+", i = i.replace(/\.$/, "").replace(/^\./, "0."), (p = new RegExp("^" + s + "(?:\\." + s + ")?$", 37 > o ? "i" : "").test(i)) ? (f && (i.replace(/^0\.0*|\./, "").length > 15 && u(r, 0, g), f = !f), i = h(r, i, 10, o, t.s)) : "Infinity" != i && "NaN" != i && (u(r, "not a base " + o + " number", g), i = "NaN")) : p = e.test(i), !p) return t.c = t.e = null, "Infinity" != i && ("NaN" != i && u(r, "not a number", g), t.s = null), v = 0, t } for ((c = i.indexOf(".")) > -1 && (i = i.replace(".", "")), (l = i.search(/e/i)) > 0 ? (0 > c && (c = l), c += +i.slice(l + 1), i = i.substring(0, l)) : 0 > c && (c = i.length), l = 0; 48 === i.charCodeAt(l) ; l++); for (o = i.length; 48 === i.charCodeAt(--o) ;); if (i = i.slice(l, o + 1)) { if (o = i.length, f && o > 15 && u(r, 0, g), t.e = c = c - l - 1, t.c = [], l = (c + 1) % y, 0 > c && (l += y), o > l) { for (l && t.c.push(+i.slice(0, l)), o -= y; o > l;) t.c.push(+i.slice(l, l += y)); i = i.slice(l), l = y - i.length } else l -= o; for (; l--; i += "0"); t.c.push(+i), w && (t.e > r.maxE ? t.c = t.e = null : t.e < r.minE && (t.c = [t.e = 0])) } else t.c = [t.e = 0]; return v = 0, t } }(); return p() }(), "function" == typeof define && define.amd) define(function () { return g }); else if ("undefined" != typeof module && module.exports) { if (module.exports = g, !d) try { d = require("crypto") } catch (R) { } } else p = e.Decimal, g.noConflict = function () { return e.Decimal = p, g }, Bridge.$Decimal = g }(this);
 
-    !function (e) { "use strict"; function n(e) { for (var n, r, t = 1, i = e.length, o = e[0] + ""; i > t; t++) { for (n = e[t] + "", r = y - n.length; r--;) n = "0" + n; o += n } for (i = o.length; 48 === o.charCodeAt(--i) ;); return o.slice(0, i + 1 || 1) } function r(e, n, r, t) { var i, o, s, c, u; for (o = 1, s = e[0]; s >= 10; s /= 10, o++); return s = n - o, 0 > s ? (s += y, i = 0) : (i = Math.ceil((s + 1) / y), s %= y), o = E(10, y - s), u = e[i] % o | 0, null == t ? 3 > s ? (0 == s ? u = u / 100 | 0 : 1 == s && (u = u / 10 | 0), c = 4 > r && 99999 == u || r > 3 && 49999 == u || 5e4 == u || 0 == u) : c = (4 > r && u + 1 == o || r > 3 && u + 1 == o / 2) && (e[i + 1] / o / 100 | 0) == E(10, s - 2) - 1 || (u == o / 2 || 0 == u) && 0 == (e[i + 1] / o / 100 | 0) : 4 > s ? (0 == s ? u = u / 1e3 | 0 : 1 == s ? u = u / 100 | 0 : 2 == s && (u = u / 10 | 0), c = (t || 4 > r) && 9999 == u || !t && r > 3 && 4999 == u) : c = ((t || 4 > r) && u + 1 == o || !t && r > 3 && u + 1 == o / 2) && (e[i + 1] / o / 1e3 | 0) == E(10, s - 3) - 1, c } function t(e, n, r) { var t = e.constructor; return null == n || ((m = 0 > n || n > 8) || 0 !== n && (t.errors ? parseInt : parseFloat)(n) != n) && !u(t, "rounding mode", n, r, 0) ? t.rounding : 0 | n } function i(e, n, r, t) { var i = e.constructor; return !(m = (t || 0) > n || n >= A + 1) && (0 === n || (i.errors ? parseInt : parseFloat)(n) == n) || u(i, "argument", n, r, 0) } function o(e, t) { var i, o, s, c, u, l, f, h = 0, g = 0, p = 0, m = e.constructor, d = m.ONE, v = m.rounding, N = m.precision; if (!e.c || !e.c[0] || e.e > 17) return new m(e.c ? e.c[0] ? e.s < 0 ? 0 : 1 / 0 : d : e.s ? e.s < 0 ? 0 : e : 0 / 0); for (null == t ? (w = !1, u = N) : u = t, f = new m(.03125) ; e.e > -2;) e = e.times(f), p += 5; for (o = Math.log(E(2, p)) / Math.LN10 * 2 + 5 | 0, u += o, i = c = l = new m(d), m.precision = u; ;) { if (c = a(c.times(e), u, 1), i = i.times(++g), f = l.plus(P(c, i, u, 1)), n(f.c).slice(0, u) === n(l.c).slice(0, u)) { for (s = p; s--;) l = a(l.times(l), u, 1); if (null != t) return m.precision = N, l; if (!(3 > h && r(l.c, u - o, v, h))) return a(l, m.precision = N, v, w = !0); m.precision = u += 10, i = c = f = new m(d), g = 0, h++ } l = f } } function s(e, r, t, i) { var o, s, c = e.constructor, u = (e = new c(e)).e; if (null == r ? t = 0 : (a(e, ++r, t), t = i ? r : r + e.e - u), u = e.e, o = n(e.c), 1 == i || 2 == i && (u >= r || u <= c.toExpNeg)) { for (; o.length < t; o += "0"); o.length > 1 && (o = o.charAt(0) + "." + o.slice(1)), o += (0 > u ? "e" : "e+") + u } else { if (i = o.length, 0 > u) { for (s = t - i; ++u; o = "0" + o); o = "0." + o } else if (++u > i) { for (s = t - u, u -= i; u--; o += "0"); s > 0 && (o += ".") } else s = t - i, i > u ? o = o.slice(0, u) + "." + o.slice(u) : s > 0 && (o += "."); if (s > 0) for (; s--; o += "0"); } return e.s < 0 && e.c[0] ? "-" + o : o } function c(e) { var n = e.length - 1, r = n * y + 1; if (n = e[n]) { for (; n % 10 == 0; n /= 10, r--); for (n = e[0]; n >= 10; n /= 10, r++); } return r } function u(e, n, r, t, i) { if (e.errors) { var o = new Error((t || ["new Decimal", "cmp", "div", "eq", "gt", "gte", "lt", "lte", "minus", "mod", "plus", "times", "toFraction", "pow", "random", "log", "sqrt", "toNearest", "divToInt"][v ? 0 > v ? -v : v : 0 > 1 / v ? 1 : 0]) + "() " + (["number type has more than 15 significant digits", "LN10 out of digits"][n] || n + ([m ? " out of range" : " not an integer", " not a boolean or binary digit"][i] || "")) + ": " + r); throw o.name = "Decimal Error", m = v = 0, o } } function l(e, n, r) { var t = new e(e.ONE); for (w = !1; 1 & r && (t = t.times(n)), r >>= 1, r;) n = n.times(n); return w = !0, t } function f(e, t) { var i, o, s, c, l, h, g, p, m, d, v, N = 1, E = 10, x = e, b = x.c, y = x.constructor, O = y.ONE, S = y.rounding, D = y.precision; if (x.s < 0 || !b || !b[0] || !x.e && 1 == b[0] && 1 == b.length) return new y(b && !b[0] ? -1 / 0 : 1 != x.s ? 0 / 0 : b ? 0 : x); if (null == t ? (w = !1, g = D) : g = t, y.precision = g += E, i = n(b), o = i.charAt(0), !(Math.abs(c = x.e) < 15e14)) return x = new y(o + "." + i.slice(1)), g + 2 > M.length && u(y, 1, g + 2, "ln"), x = f(x, g - E).plus(new y(M.slice(0, g + 2)).times(c + "")), y.precision = D, null == t ? a(x, D, S, w = !0) : x; for (; 7 > o && 1 != o || 1 == o && i.charAt(1) > 3;) x = x.times(e), i = n(x.c), o = i.charAt(0), N++; for (c = x.e, o > 1 ? (x = new y("0." + i), c++) : x = new y(o + "." + i.slice(1)), d = x, p = l = x = P(x.minus(O), x.plus(O), g, 1), v = a(x.times(x), g, 1), s = 3; ;) { if (l = a(l.times(v), g, 1), m = p.plus(P(l, new y(s), g, 1)), n(m.c).slice(0, g) === n(p.c).slice(0, g)) { if (p = p.times(2), 0 !== c && (g + 2 > M.length && u(y, 1, g + 2, "ln"), p = p.plus(new y(M.slice(0, g + 2)).times(c + ""))), p = P(p, new y(N), g, 1), null != t) return y.precision = D, p; if (!r(p.c, g - E, S, h)) return a(p, y.precision = D, S, w = !0); y.precision = g += E, m = l = x = P(d.minus(O), d.plus(O), g, 1), v = a(x.times(x), g, 1), s = h = 1 } p = m, s += 2 } } function a(e, n, r, t) { var i, o, s, c, u, l, f, a, h = e.constructor; e: if (null != n) { if (!(f = e.c)) return e; for (i = 1, c = f[0]; c >= 10; c /= 10, i++); if (o = n - i, 0 > o) o += y, s = n, u = f[a = 0], l = u / E(10, i - s - 1) % 10 | 0; else if (a = Math.ceil((o + 1) / y), a >= f.length) { if (!t) break e; for (; f.length <= a; f.push(0)); u = l = 0, i = 1, o %= y, s = o - y + 1 } else { for (u = c = f[a], i = 1; c >= 10; c /= 10, i++); o %= y, s = o - y + i, l = 0 > s ? 0 : N(u / E(10, i - s - 1) % 10) } if (t = t || 0 > n || null != f[a + 1] || (0 > s ? u : u % E(10, i - s - 1)), t = 4 > r ? (l || t) && (0 == r || r == (e.s < 0 ? 3 : 2)) : l > 5 || 5 == l && (4 == r || t || 6 == r && (o > 0 ? s > 0 ? u / E(10, i - s) : 0 : f[a - 1]) % 10 & 1 || r == (e.s < 0 ? 8 : 7)), 1 > n || !f[0]) return f.length = 0, t ? (n -= e.e + 1, f[0] = E(10, n % y), e.e = -n || 0) : f[0] = e.e = 0, e; if (0 == o ? (f.length = a, c = 1, a--) : (f.length = a + 1, c = E(10, y - o), f[a] = s > 0 ? (u / E(10, i - s) % E(10, s) | 0) * c : 0), t) for (; ;) { if (0 == a) { for (o = 1, s = f[0]; s >= 10; s /= 10, o++); for (s = f[0] += c, c = 1; s >= 10; s /= 10, c++); o != c && (e.e++, f[0] == b && (f[0] = 1)); break } if (f[a] += c, f[a] != b) break; f[a--] = 0, c = 1 } for (o = f.length; 0 === f[--o]; f.pop()); } return w && (e.e > h.maxE ? e.c = e.e = null : e.e < h.minE && (e.c = [e.e = 0])), e } var h, g, p, m, d = e.crypto, w = !0, v = 0, N = Math.floor, E = Math.pow, x = Object.prototype.toString, b = 1e7, y = 7, O = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_", S = {}, D = 9e15, A = 1e9, F = 3e3, M = "2.3025850929940456840179914546843642076011014886287729760333279009675726096773524802359972050895982983419677840422862486334095254650828067566662873690987816894829072083255546808437998948262331985283935053089653777326288461633662222876982198867465436674744042432743651550489343149393914796194044002221051017141748003688084012647080685567743216228355220114804663715659121373450747856947683463616792101806445070648000277502684916746550586856935673420670581136429224554405758925724208241314695689016758940256776311356919292033376587141660230105703089634572075440370847469940168269282808481184289314848524948644871927809676271275775397027668605952496716674183485704422507197965004714951050492214776567636938662976979522110718264549734772662425709429322582798502585509785265383207606726317164309505995087807523710333101197857547331541421808427543863591778117054309827482385045648019095610299291824318237525357709750539565187697510374970888692180205189339507238539205144634197265287286965110862571492198849978748873771345686209167058"; S.absoluteValue = S.abs = function () { var e = new this.constructor(this); return e.s < 0 && (e.s = 1), a(e) }, S.ceil = function () { return a(new this.constructor(this), this.e + 1, 2) }, S.comparedTo = S.cmp = function (e, n) { var r, t = this, i = t.c, o = (v = -v, e = new t.constructor(e, n), e.c), s = t.s, c = e.s, u = t.e, l = e.e; if (!s || !c) return null; if (r = i && !i[0], n = o && !o[0], r || n) return r ? n ? 0 : -c : s; if (s != c) return s; if (r = 0 > s, !i || !o) return u == l ? 0 : !i ^ r ? 1 : -1; if (u != l) return u > l ^ r ? 1 : -1; for (s = -1, c = (u = i.length) < (l = o.length) ? u : l; ++s < c;) if (i[s] != o[s]) return i[s] > o[s] ^ r ? 1 : -1; return u == l ? 0 : u > l ^ r ? 1 : -1 }, S.decimalPlaces = S.dp = function () { var e, n, r = null; if (e = this.c) { if (r = ((n = e.length - 1) - N(this.e / y)) * y, n = e[n]) for (; n % 10 == 0; n /= 10, r--); 0 > r && (r = 0) } return r }, S.dividedBy = S.div = function (e, n) { return v = 2, P(this, new this.constructor(e, n)) }, S.dividedToIntegerBy = S.divToInt = function (e, n) { var r = this, t = r.constructor; return v = 18, a(P(r, new t(e, n), 0, 1, 1), t.precision, t.rounding) }, S.equals = S.eq = function (e, n) { return v = 3, 0 === this.cmp(e, n) }, S.exponential = S.exp = function () { return o(this) }, S.floor = function () { return a(new this.constructor(this), this.e + 1, 3) }, S.greaterThan = S.gt = function (e, n) { return v = 4, this.cmp(e, n) > 0 }, S.greaterThanOrEqualTo = S.gte = function (e, n) { return v = 5, n = this.cmp(e, n), 1 == n || 0 === n }, S.isFinite = function () { return !!this.c }, S.isInteger = S.isInt = function () { return !!this.c && N(this.e / y) > this.c.length - 2 }, S.isNaN = function () { return !this.s }, S.isNegative = S.isNeg = function () { return this.s < 0 }, S.isZero = function () { return !!this.c && 0 == this.c[0] }, S.lessThan = S.lt = function (e, n) { return v = 6, this.cmp(e, n) < 0 }, S.lessThanOrEqualTo = S.lte = function (e, n) { return v = 7, n = this.cmp(e, n), -1 == n || 0 === n }, S.logarithm = S.log = function (e, t) { var i, o, s, c, l, h, g, p, m, d = this, N = d.constructor, E = N.precision, x = N.rounding, b = 5; if (null == e) e = new N(10), i = !0; else { if (v = 15, e = new N(e, t), o = e.c, e.s < 0 || !o || !o[0] || !e.e && 1 == o[0] && 1 == o.length) return new N(0 / 0); i = e.eq(10) } if (o = d.c, d.s < 0 || !o || !o[0] || !d.e && 1 == o[0] && 1 == o.length) return new N(o && !o[0] ? -1 / 0 : 1 != d.s ? 0 / 0 : o ? 0 : 1 / 0); if (l = i && (c = o[0], o.length > 1 || 1 != c && 10 != c && 100 != c && 1e3 != c && 1e4 != c && 1e5 != c && 1e6 != c), w = !1, g = E + b, p = g + 10, h = f(d, g), i ? (p > M.length && u(N, 1, p, "log"), s = new N(M.slice(0, p))) : s = f(e, g), m = P(h, s, g, 1), r(m.c, c = E, x)) do if (g += 10, h = f(d, g), i ? (p = g + 10, p > M.length && u(N, 1, p, "log"), s = new N(M.slice(0, p))) : s = f(e, g), m = P(h, s, g, 1), !l) { +n(m.c).slice(c + 1, c + 15) + 1 == 1e14 && (m = a(m, E + 1, 0)); break } while (r(m.c, c += 10, x)); return w = !0, a(m, E, x) }, S.minus = function (e, n) { var r, t, i, o, s = this, c = s.constructor, u = s.s; if (v = 8, e = new c(e, n), n = e.s, !u || !n) return new c(0 / 0); if (u != n) return e.s = -n, s.plus(e); var l = s.c, f = e.c, h = N(e.e / y), g = N(s.e / y), p = c.precision, m = c.rounding; if (!g || !h) { if (!l || !f) return l ? (e.s = -n, e) : new c(f ? s : 0 / 0); if (!l[0] || !f[0]) return s = f[0] ? (e.s = -n, e) : new c(l[0] ? s : 3 == m ? -0 : 0), w ? a(s, p, m) : s } if (l = l.slice(), t = l.length, u = g - h) { for ((o = 0 > u) ? (u = -u, r = l, t = f.length) : (h = g, r = f), (g = Math.ceil(p / y)) > t && (t = g), u > (t += 2) && (u = t, r.length = 1), r.reverse(), n = u; n--; r.push(0)); r.reverse() } else for ((o = t < (i = f.length)) && (i = t), u = n = 0; i > n; n++) if (l[n] != f[n]) { o = l[n] < f[n]; break } if (o && (r = l, l = f, f = r, e.s = -e.s), (n = -((i = l.length) - f.length)) > 0) for (; n--; l[i++] = 0); for (g = b - 1, n = f.length; n > u;) { if (l[--n] < f[n]) { for (t = n; t && !l[--t]; l[t] = g); --l[t], l[n] += b } l[n] -= f[n] } for (; 0 == l[--i]; l.pop()); for (; 0 == l[0]; l.shift(), --h); for (l[0] || (l = [h = 0], e.s = 3 == m ? -1 : 1), e.c = l, u = 1, n = l[0]; n >= 10; n /= 10, u++); return e.e = u + h * y - 1, w ? a(e, p, m) : e }, S.modulo = S.mod = function (e, n) { var r, t, i = this, o = i.constructor, s = o.modulo; return v = 9, e = new o(e, n), n = e.s, r = !i.c || !n || e.c && !e.c[0], r || !e.c || i.c && !i.c[0] ? r ? new o(0 / 0) : a(new o(i), o.precision, o.rounding) : (w = !1, 9 == s ? (e.s = 1, t = P(i, e, 0, 3, 1), e.s = n, t.s *= n) : t = P(i, e, 0, s, 1), t = t.times(e), w = !0, i.minus(t)) }, S.naturalLogarithm = S.ln = function () { return f(this) }, S.negated = S.neg = function () { var e = new this.constructor(this); return e.s = -e.s || null, a(e) }, S.plus = function (e, n) { var r, t = this, i = t.constructor, o = t.s; if (v = 10, e = new i(e, n), n = e.s, !o || !n) return new i(0 / 0); if (o != n) return e.s = -n, t.minus(e); var s = t.c, c = e.c, u = N(e.e / y), l = N(t.e / y), f = i.precision, h = i.rounding; if (!l || !u) { if (!s || !c) return new i(o / 0); if (!s[0] || !c[0]) return t = c[0] ? e : new i(s[0] ? t : 0 * o), w ? a(t, f, h) : t } if (s = s.slice(), o = l - u) { for (0 > o ? (o = -o, r = s, n = c.length) : (u = l, r = c, n = s.length), (l = Math.ceil(f / y)) > n && (n = l), o > ++n && (o = n, r.length = 1), r.reverse() ; o--; r.push(0)); r.reverse() } for (s.length - c.length < 0 && (r = c, c = s, s = r), o = c.length, n = 0, l = b; o; s[o] %= l) n = (s[--o] = s[o] + c[o] + n) / l | 0; for (n && (s.unshift(n), ++u), o = s.length; 0 == s[--o]; s.pop()); for (e.c = s, o = 1, n = s[0]; n >= 10; n /= 10, o++); return e.e = o + u * y - 1, w ? a(e, f, h) : e }, S.precision = S.sd = function (e) { var n = null, r = this; return e != n && e !== !!e && 1 !== e && 0 !== e && u(r.constructor, "argument", e, "precision", 1), r.c && (n = c(r.c), e && r.e + 1 > n && (n = r.e + 1)), n }, S.round = function () { var e = this, n = e.constructor; return a(new n(e), e.e + 1, n.rounding) }, S.squareRoot = S.sqrt = function () { var e, r, t, i, o, s, c = this, u = c.c, l = c.s, f = c.e, h = c.constructor, g = new h(.5); if (1 !== l || !u || !u[0]) return new h(!l || 0 > l && (!u || u[0]) ? 0 / 0 : u ? c : 1 / 0); for (w = !1, l = Math.sqrt(+c), 0 == l || l == 1 / 0 ? (r = n(u), (r.length + f) % 2 == 0 && (r += "0"), l = Math.sqrt(r), f = N((f + 1) / 2) - (0 > f || f % 2), l == 1 / 0 ? r = "1e" + f : (r = l.toExponential(), r = r.slice(0, r.indexOf("e") + 1) + f), i = new h(r)) : i = new h(l.toString()), t = (f = h.precision) + 3; ;) if (s = i, i = g.times(s.plus(P(c, s, t + 2, 1))), n(s.c).slice(0, t) === (r = n(i.c)).slice(0, t)) { if (r = r.slice(t - 3, t + 1), "9999" != r && (o || "4999" != r)) { (!+r || !+r.slice(1) && "5" == r.charAt(0)) && (a(i, f + 1, 1), e = !i.times(i).eq(c)); break } if (!o && (a(s, f + 1, 0), s.times(s).eq(c))) { i = s; break } t += 4, o = 1 } return w = !0, a(i, f, h.rounding, e) }, S.times = function (e, n) { var r, t, i = this, o = i.constructor, s = i.c, c = (v = 11, e = new o(e, n), e.c), u = N(i.e / y), l = N(e.e / y), f = i.s; if (n = e.s, e.s = f == n ? 1 : -1, !((u || s && s[0]) && (l || c && c[0]))) return new o(!f || !n || s && !s[0] && !c || c && !c[0] && !s ? 0 / 0 : s && c ? 0 * e.s : e.s / 0); for (t = u + l, f = s.length, n = c.length, n > f && (r = s, s = c, c = r, l = f, f = n, n = l), l = f + n, r = []; l--; r.push(0)); for (u = n - 1; u > -1; u--) { for (n = 0, l = f + u; l > u;) n = r[l] + c[u] * s[l - u - 1] + n, r[l--] = n % b | 0, n = n / b | 0; r[l] = (r[l] + n) % b | 0 } for (n ? ++t : r[0] || r.shift(), l = r.length; !r[--l]; r.pop()); for (e.c = r, f = 1, n = r[0]; n >= 10; n /= 10, f++); return e.e = f + t * y - 1, w ? a(e, o.precision, o.rounding) : e }, S.toDecimalPlaces = S.toDP = function (e, n) { var r = this; return r = new r.constructor(r), null != e && i(r, e, "toDP") ? a(r, (0 | e) + r.e + 1, t(r, n, "toDP")) : r }, S.toExponential = function (e, n) { var r = this; return r.c ? s(r, null != e && i(r, e, "toExponential") ? 0 | e : null, null != e && t(r, n, "toExponential"), 1) : r.toString() }, S.toFixed = function (e, n) { var r, o = this, c = o.constructor, u = c.toExpNeg, l = c.toExpPos; return null != e && (e = i(o, e, r = "toFixed") ? o.e + (0 | e) : null, n = t(o, n, r)), c.toExpNeg = -(c.toExpPos = 1 / 0), null != e && o.c ? (r = s(o, e, n), o.s < 0 && o.c && (o.c[0] ? r.indexOf("-") < 0 && (r = "-" + r) : r = r.replace("-", ""))) : r = o.toString(), c.toExpNeg = u, c.toExpPos = l, r }, S.toFormat = function (e, n) { var r = this; if (!r.c) return r.toString(); var t, i = r.s < 0, o = r.constructor.format, s = o.groupSeparator, c = +o.groupSize, u = +o.secondaryGroupSize, l = r.toFixed(e, n).split("."), f = l[0], a = l[1], h = i ? f.slice(1) : f, g = h.length; if (u && (t = c, c = u, g -= u = t), c > 0 && g > 0) { for (t = g % c || c, f = h.substr(0, t) ; g > t; t += c) f += s + h.substr(t, c); u > 0 && (f += s + h.slice(t)), i && (f = "-" + f) } return a ? f + o.decimalSeparator + ((u = +o.fractionGroupSize) ? a.replace(new RegExp("\\d{" + u + "}\\B", "g"), "$&" + o.fractionGroupSeparator) : a) : f }, S.toFraction = function (e) { var r, t, i, o, s, l, f, a, h = this, g = h.constructor, p = r = new g(g.ONE), d = l = new g(0), x = h.c, b = new g(d); if (!x) return h.toString(); for (i = b.e = c(x) - h.e - 1, b.c[0] = E(10, (f = i % y) < 0 ? y + f : f), (null == e || (!(v = 12, s = new g(e)).s || (m = s.cmp(p) < 0 || !s.c) || g.errors && N(s.e / y) < s.c.length - 1) && !u(g, "max denominator", e, "toFraction", 0) || (e = s).cmp(b) > 0) && (e = i > 0 ? b : p), w = !1, s = new g(n(x)), f = g.precision, g.precision = i = x.length * y * 2; a = P(s, b, 0, 1, 1), t = r.plus(a.times(d)), 1 != t.cmp(e) ;) r = d, d = t, p = l.plus(a.times(t = p)), l = t, b = s.minus(a.times(t = b)), s = t; return t = P(e.minus(r), d, 0, 1, 1), l = l.plus(t.times(p)), r = r.plus(t.times(d)), l.s = p.s = h.s, o = P(p, d, i, 1).minus(h).abs().cmp(P(l, r, i, 1).minus(h).abs()) < 1 ? [p + "", d + ""] : [l + "", r + ""], w = !0, g.precision = f, o }, S.toNearest = function (e, n) { var r = this, i = r.constructor; return r = new i(r), null == e ? (e = new i(i.ONE), n = i.rounding) : (v = 17, e = new i(e), n = t(r, n, "toNearest")), e.c ? r.c && (e.c[0] ? (w = !1, r = P(r, e, 0, 4 > n ? [4, 5, 7, 8][n] : n, 1).times(e), w = !0, a(r)) : r.c = [r.e = 0]) : r.s && (e.s && (e.s = r.s), r = e), r }, S.toNumber = function () { var e = this; return +e || (e.s ? 0 * e.s : 0 / 0) }, S.toPower = S.pow = function (e, t) { var i, s, c, u, h = this, g = h.constructor, p = h.s, m = (v = 13, +(e = new g(e, t))), d = 0 > m ? -m : m, x = g.precision, b = g.rounding; if (!h.c || !e.c || (c = !h.c[0]) || !e.c[0]) return new g(E(c ? 0 * p : +h, m)); if (h = new g(h), i = h.c.length, !h.e && h.c[0] == h.s && 1 == i) return h; if (t = e.c.length - 1, e.e || e.c[0] != e.s || t) if (s = N(e.e / y), c = s >= t, !c && 0 > p) u = new g(0 / 0); else { if (c && F > i * y * d) { if (u = l(g, h, d), e.s < 0) return g.ONE.div(u) } else { if (p = 0 > p && 1 & e.c[Math.max(s, t)] ? -1 : 1, t = E(+h, m), s = 0 != t && isFinite(t) ? new g(t + "").e : N(m * (Math.log("0." + n(h.c)) / Math.LN10 + h.e + 1)), s > g.maxE + 1 || s < g.minE - 1) return new g(s > 0 ? p / 0 : 0); w = !1, g.rounding = h.s = 1, d = Math.min(12, (s + "").length), u = o(e.times(f(h, x + d)), x), u = a(u, x + 5, 1), r(u.c, x, b) && (s = x + 10, u = a(o(e.times(f(h, s + d)), s), s + 5, 1), +n(u.c).slice(x + 1, x + 15) + 1 == 1e14 && (u = a(u, x + 1, 0))), u.s = p, w = !0, g.rounding = b } u = a(u, x, b) } else u = a(h, x, b); return u }, S.toPrecision = function (e, n) { var r = this; return null != e && i(r, e, "toPrecision", 1) && r.c ? s(r, 0 | --e, t(r, n, "toPrecision"), 2) : r.toString() }, S.toSignificantDigits = S.toSD = function (e, n) { var r = this, o = r.constructor; return r = new o(r), null != e && i(r, e, "toSD", 1) ? a(r, 0 | e, t(r, n, "toSD")) : a(r, o.precision, o.rounding) }, S.toString = function (e) { var r, t, i, o = this, c = o.constructor, l = o.e; if (null === l) t = o.s ? "Infinity" : "NaN"; else { if (e === r && (l <= c.toExpNeg || l >= c.toExpPos)) return s(o, null, c.rounding, 1); if (t = n(o.c), 0 > l) { for (; ++l; t = "0" + t); t = "0." + t } else if (i = t.length, l > 0) if (++l > i) for (l -= i; l--; t += "0"); else i > l && (t = t.slice(0, l) + "." + t.slice(l)); else if (r = t.charAt(0), i > 1) t = r + "." + t.slice(1); else if ("0" == r) return r; if (null != e) if ((m = !(e >= 2 && 65 > e)) || e != (0 | e) && c.errors) u(c, "base", e, "toString", 0); else if (t = h(c, t, 0 | e, 10, o.s), "0" == t) return t } return o.s < 0 ? "-" + t : t }, S.truncated = S.trunc = function () { return a(new this.constructor(this), this.e + 1, 1) }, S.valueOf = S.toJSON = function () { return this.toString() }, h = function () { function e(e, n, r) { for (var t, i, o = [0], s = 0, c = e.length; c > s;) { for (i = o.length; i--; o[i] *= n); for (o[t = 0] += O.indexOf(e.charAt(s++)) ; t < o.length; t++) o[t] > r - 1 && (null == o[t + 1] && (o[t + 1] = 0), o[t + 1] += o[t] / r | 0, o[t] %= r) } return o.reverse() } return function (n, r, t, i, o) { var s, c, u, f, a, h, g = r.indexOf("."), p = n.precision, m = n.rounding; for (37 > i && (r = r.toLowerCase()), g >= 0 && (r = r.replace(".", ""), h = new n(i), f = l(n, h, r.length - g), h.c = e(f.toFixed(), 10, t), h.e = h.c.length), a = e(r, i, t), s = c = a.length; 0 == a[--c]; a.pop()); if (!a[0]) return "0"; if (0 > g ? s-- : (f.c = a, f.e = s, f.s = o, f = P(f, h, p, m, 0, t), a = f.c, u = f.r, s = f.e), g = a[p], c = t / 2, u = u || null != a[p + 1], 4 > m ? (null != g || u) && (0 == m || m == (f.s < 0 ? 3 : 2)) : g > c || g == c && (4 == m || u || 6 == m && 1 & a[p - 1] || m == (f.s < 0 ? 8 : 7))) for (a.length = p, --t; ++a[--p] > t;) a[p] = 0, p || (++s, a.unshift(1)); else a.length = p; for (c = a.length; !a[--c];); for (g = 0, r = ""; c >= g; r += O.charAt(a[g++])); if (0 > s) { for (; ++s; r = "0" + r); r = "0." + r } else if (g = r.length, ++s > g) for (s -= g; s--; r += "0"); else g > s && (r = r.slice(0, s) + "." + r.slice(s)); return r } }(); var P = function () { function e(e, n, r) { var t, i = 0, o = e.length; for (e = e.slice() ; o--;) t = e[o] * n + i, e[o] = t % r | 0, i = t / r | 0; return i && e.unshift(i), e } function n(e, n, r, t) { var i, o; if (r != t) o = r > t ? 1 : -1; else for (i = o = 0; r > i; i++) if (e[i] != n[i]) { o = e[i] > n[i] ? 1 : -1; break } return o } function r(e, n, r, t) { for (var i = 0; r--;) e[r] -= i, i = e[r] < n[r] ? 1 : 0, e[r] = i * t + e[r] - n[r]; for (; !e[0] && e.length > 1; e.shift()); } return function (t, i, o, s, c, u) { var l, f, h, g, p, m, d, w, v, E, x, O, S, D, A, F, M, P, R, q = t.constructor, L = t.s == i.s ? 1 : -1, I = t.c, U = i.c; if (!(I && I[0] && U && U[0])) return new q(t.s && i.s && (I ? !U || I[0] != U[0] : U) ? I && 0 == I[0] || !U ? 0 * L : L / 0 : 0 / 0); for (u ? (g = 1, f = t.e - i.e) : (u = b, g = y, f = N(t.e / g) - N(i.e / g)), P = U.length, F = I.length, v = new q(L), E = v.c = [], h = 0; U[h] == (I[h] || 0) ; h++); if (U[h] > (I[h] || 0) && f--, null == o ? (L = o = q.precision, s = q.rounding) : L = c ? o + (t.e - i.e) + 1 : o, 0 > L) E.push(1), p = !0; else { if (L = L / g + 2 | 0, h = 0, 1 == P) { for (m = 0, U = U[0], L++; (F > h || m) && L--; h++) D = m * u + (I[h] || 0), E[h] = D / U | 0, m = D % U | 0; p = m || F > h } else { for (m = u / (U[0] + 1) | 0, m > 1 && (U = e(U, m, u), I = e(I, m, u), P = U.length, F = I.length), A = P, x = I.slice(0, P), O = x.length; P > O; x[O++] = 0); R = U.slice(), R.unshift(0), M = U[0], U[1] >= u / 2 && M++; do m = 0, l = n(U, x, P, O), 0 > l ? (S = x[0], P != O && (S = S * u + (x[1] || 0)), m = S / M | 0, m > 1 ? (m >= u && (m = u - 1), d = e(U, m, u), w = d.length, O = x.length, l = n(d, x, w, O), 1 == l && (m--, r(d, w > P ? R : U, w, u))) : (0 == m && (l = m = 1), d = U.slice()), w = d.length, O > w && d.unshift(0), r(x, d, O, u), -1 == l && (O = x.length, l = n(U, x, P, O), 1 > l && (m++, r(x, O > P ? R : U, O, u))), O = x.length) : 0 === l && (m++, x = [0]), E[h++] = m, l && x[0] ? x[O++] = I[A] || 0 : (x = [I[A]], O = 1); while ((A++ < F || null != x[0]) && L--); p = null != x[0] } E[0] || E.shift() } if (1 == g) v.e = f, v.r = +p; else { for (h = 1, L = E[0]; L >= 10; L /= 10, h++); v.e = h + f * g - 1, a(v, c ? o + v.e + 1 : o, s, p) } return v } }(); if (g = function () { function e(e) { var n, r, t, i = this, o = "config", s = i.errors ? parseInt : parseFloat; return e == r || "object" != typeof e && !u(i, "object expected", e, o) ? i : ((t = e[n = "precision"]) != r && ((m = 1 > t || t > A) || s(t) != t ? u(i, n, t, o, 0) : i[n] = 0 | t), (t = e[n = "rounding"]) != r && ((m = 0 > t || t > 8) || s(t) != t ? u(i, n, t, o, 0) : i[n] = 0 | t), (t = e[n = "toExpNeg"]) != r && ((m = -D > t || t > 0) || s(t) != t ? u(i, n, t, o, 0) : i[n] = N(t)), (t = e[n = "toExpPos"]) != r && ((m = 0 > t || t > D) || s(t) != t ? u(i, n, t, o, 0) : i[n] = N(t)), (t = e[n = "minE"]) != r && ((m = -D > t || t > 0) || s(t) != t ? u(i, n, t, o, 0) : i[n] = N(t)), (t = e[n = "maxE"]) != r && ((m = 0 > t || t > D) || s(t) != t ? u(i, n, t, o, 0) : i[n] = N(t)), (t = e[n = "errors"]) != r && (t === !!t || 1 === t || 0 === t ? (m = v = 0, i[n] = !!t) : u(i, n, t, o, 1)), (t = e[n = "crypto"]) != r && (t === !!t || 1 === t || 0 === t ? i[n] = !(!t || !d || "object" != typeof d) : u(i, n, t, o, 1)), (t = e[n = "modulo"]) != r && ((m = 0 > t || t > 9) || s(t) != t ? u(i, n, t, o, 0) : i[n] = 0 | t), (e = e[n = "format"]) != r && ("object" == typeof e ? i[n] = e : u(i, "format object expected", e, o)), i) } function n(e) { return new this(e).exp() } function r(e) { return new this(e).ln() } function t(e, n) { return new this(e).log(n) } function o(e, n, r) { var t, i, o = 0; for ("[object Array]" == x.call(n[0]) && (n = n[0]), t = new e(n[0]) ; ++o < n.length;) { if (i = new e(n[o]), !i.s) { t = i; break } t[r](i) && (t = i) } return t } function s() { return o(this, arguments, "lt") } function c() { return o(this, arguments, "gt") } function l(e, n) { return new this(e).pow(n) } function f(e) { var n, r, t, o = 0, s = [], c = this, l = new c(c.ONE); if (null != e && i(l, e, "random") ? e |= 0 : e = c.precision, r = Math.ceil(e / y), c.crypto) if (d && d.getRandomValues) for (n = d.getRandomValues(new Uint32Array(r)) ; r > o;) t = n[o], t >= 429e7 ? n[o] = d.getRandomValues(new Uint32Array(1))[0] : s[o++] = t % 1e7; else if (d && d.randomBytes) { for (n = d.randomBytes(r *= 4) ; r > o;) t = n[o] + (n[o + 1] << 8) + (n[o + 2] << 16) + ((127 & n[o + 3]) << 24), t >= 214e7 ? d.randomBytes(4).copy(n, o) : (s.push(t % 1e7), o += 4); o = r / 4 } else u(c, "crypto unavailable", d, "random"); if (!o) for (; r > o;) s[o++] = 1e7 * Math.random() | 0; for (r = s[--o], e %= y, r && e && (t = E(10, y - e), s[o] = (r / t | 0) * t) ; 0 === s[o]; o--) s.pop(); if (0 > o) s = [r = 0]; else { for (r = -1; 0 === s[0];) s.shift(), r -= y; for (o = 1, t = s[0]; t >= 10;) t /= 10, o++; y > o && (r -= y - o) } return l.e = r, l.c = s, l } function g(e) { return new this(e).sqrt() } function p(i) { function o(e, n) { var r = this; if (!(r instanceof o)) return u(o, "Decimal called without new", e), new o(e, n); if (r.constructor = o, e instanceof o) { if (null == n) return v = 0, r.s = e.s, r.e = e.e, r.c = (e = e.c) ? e.slice() : e, r; if (10 == n) return a(new o(e), o.precision, o.rounding); e += "" } return b(o, r, e, n) } return o.precision = 20, o.rounding = 4, o.modulo = 1, o.toExpNeg = -7, o.toExpPos = 21, o.minE = -D, o.maxE = D, o.errors = !0, o.crypto = !1, o.format = { decimalSeparator: ".", groupSeparator: ",", groupSize: 3, secondaryGroupSize: 0, fractionGroupSeparator: " ", fractionGroupSize: 0 }, o.prototype = S, o.ONE = new o(1), o.ROUND_UP = 0, o.ROUND_DOWN = 1, o.ROUND_CEIL = 2, o.ROUND_FLOOR = 3, o.ROUND_HALF_UP = 4, o.ROUND_HALF_DOWN = 5, o.ROUND_HALF_EVEN = 6, o.ROUND_HALF_CEIL = 7, o.ROUND_HALF_FLOOR = 8, o.EUCLID = 9, o.config = e, o.constructor = p, o.exp = n, o.ln = r, o.log = t, o.max = s, o.min = c, o.pow = l, o.sqrt = g, o.random = f, null != i && o.config(i), o } var b = function () { var e = /^-?(\d+(\.\d*)?|\.\d+)(e[+-]?\d+)?$/i, n = String.prototype.trim || function () { return this.replace(/^\s+|\s+$/g, "") }; return function (r, t, i, o) { var s, c, l, f, g, p; if ("string" != typeof i && (i = (f = "number" == typeof i || "[object Number]" == x.call(i)) && 0 === i && 0 > 1 / i ? "-0" : i + ""), g = i, null == o && e.test(i)) t.s = 45 === i.charCodeAt(0) ? (i = i.slice(1), -1) : 1; else { if (10 == o) return a(new r(i), r.precision, r.rounding); if (i = n.call(i).replace(/^\+(?!-)/, ""), t.s = 45 === i.charCodeAt(0) ? (i = i.replace(/^-(?!-)/, ""), -1) : 1, null != o ? o != (0 | o) && r.errors || (m = !(o >= 2 && 65 > o)) ? (u(r, "base", o, 0, 0), p = e.test(i)) : (s = "[" + O.slice(0, o = 0 | o) + "]+", i = i.replace(/\.$/, "").replace(/^\./, "0."), (p = new RegExp("^" + s + "(?:\\." + s + ")?$", 37 > o ? "i" : "").test(i)) ? (f && (i.replace(/^0\.0*|\./, "").length > 15 && u(r, 0, g), f = !f), i = h(r, i, 10, o, t.s)) : "Infinity" != i && "NaN" != i && (u(r, "not a base " + o + " number", g), i = "NaN")) : p = e.test(i), !p) return t.c = t.e = null, "Infinity" != i && ("NaN" != i && u(r, "not a number", g), t.s = null), v = 0, t } for ((c = i.indexOf(".")) > -1 && (i = i.replace(".", "")), (l = i.search(/e/i)) > 0 ? (0 > c && (c = l), c += +i.slice(l + 1), i = i.substring(0, l)) : 0 > c && (c = i.length), l = 0; 48 === i.charCodeAt(l) ; l++); for (o = i.length; 48 === i.charCodeAt(--o) ;); if (i = i.slice(l, o + 1)) { if (o = i.length, f && o > 15 && u(r, 0, g), t.e = c = c - l - 1, t.c = [], l = (c + 1) % y, 0 > c && (l += y), o > l) { for (l && t.c.push(+i.slice(0, l)), o -= y; o > l;) t.c.push(+i.slice(l, l += y)); i = i.slice(l), l = y - i.length } else l -= o; for (; l--; i += "0"); t.c.push(+i), w && (t.e > r.maxE ? t.c = t.e = null : t.e < r.minE && (t.c = [t.e = 0])) } else t.c = [t.e = 0]; return v = 0, t } }(); return p() }(), Bridge.$Decimal = g, "function" == typeof define && define.amd) define(function () { return g }); else if ("undefined" != typeof module && module.exports) { if (module.exports = g, !d) try { d = require("crypto") } catch (R) { } } else p = e.Decimal, g.noConflict = function () { return e.Decimal = p, g } }(Bridge.global);
-
+(function () {
     Bridge.Decimal = function (v, provider) {
-        if (this.constructor !== Bridge.Decimal) {
+        if (this.constructor != Bridge.Decimal) {
             return new Bridge.Decimal(v);
         }
 
-        if (typeof v === "string") {
+        if (typeof v === 'string') {
             provider = provider || Bridge.CultureInfo.getCurrentCulture();
 
             var nfInfo = provider && provider.getFormat(Bridge.NumberFormatInfo);
@@ -3595,7 +3107,7 @@
                 throw new Bridge.FormatException();
             }
 
-            v = v.replace(/\s/g, "");
+            v = v.replace(/\s/g, '');
         }
 
         this.value = Bridge.Decimal.getValue(v);
@@ -3612,7 +3124,7 @@
         return new Bridge.Decimal(0);
     };
 
-    Bridge.Decimal.getValue = function (d) {
+    Bridge.Decimal.getValue = function(d) {
         if (!Bridge.hasValue(d)) {
             return null;
         }
@@ -3624,7 +3136,7 @@
         return new Bridge.$Decimal(d);
     };
 
-    Bridge.Decimal.create = function (d) {
+    Bridge.Decimal.create = function(d) {
         if (!Bridge.hasValue(d)) {
             return null;
         }
@@ -3652,7 +3164,7 @@
         return this.value.toNumber();
     };
 
-    Bridge.Decimal.prototype.format = function (format, provider) {
+    Bridge.Decimal.prototype.format = function (fmt, provider) {
         return Bridge.Int.format(this.toFloat(), format, provider);
     };
 
@@ -3696,13 +3208,7 @@
         Bridge.$Decimal.rounding = old;
 
         return d;
-    };
-
-    Bridge.Decimal.toDecimalPlaces = function(obj, decimals, mode) {
-        obj = Bridge.Decimal.create(obj);
-        var d = new Bridge.Decimal(obj.value.toDecimalPlaces(decimals, mode));
-        return d;
-    };
+    }
 
     Bridge.Decimal.prototype.compareTo = function (another) {
         return this.value.comparedTo(Bridge.Decimal.getValue(another));
@@ -3790,7 +3296,7 @@
         return n;
     };
 
-    Bridge.Decimal.toInt = function (v) {
+    Bridge.Decimal.toInt = function(v) {
         if (!v) {
             return null;
         }
@@ -3984,9 +3490,11 @@
     Bridge.Decimal.MinusOne = Bridge.Decimal(-1);
     Bridge.Decimal.MinValue = Bridge.Decimal("-79228162514264337593543950335");
     Bridge.Decimal.MaxValue = Bridge.Decimal("79228162514264337593543950335");
+})();
 
-    // @source Date.js
+// @source Date.js
 
+(function () {
     var date = {
         utcNow:  function () {
             var d = new Date();
@@ -4000,18 +3508,15 @@
             return new Date(d.getFullYear(), d.getMonth(), d.getDate());
         },
 
-        timeOfDay: function(dt) {
-            return new Bridge.TimeSpan((dt - new Date(dt.getFullYear(), dt.getMonth(), dt.getDate())) * 10000);
-        },
-
         isUseGenitiveForm: function (format, index, tokenLen, patternToMatch) {
 	        var i,
                 repeat = 0;
 
-	        for (i = index - 1; i >= 0 && format[i] !== patternToMatch; i--) { }
+	        for (i = index - 1; i >= 0 && format[i] != patternToMatch; i--) {
+	        }
 
             if (i >= 0) {
-                while (--i >= 0 && format[i] === patternToMatch) {
+                while (--i >= 0 && format[i] == patternToMatch) {
                     repeat++;
                 }
 
@@ -4020,13 +3525,13 @@
                 }
             }
 
-            for (i = index + tokenLen; i < format.length && format[i] !== patternToMatch; i++) {
+            for (i = index + tokenLen; i < format.length && format[i] != patternToMatch; i++) {
             }
 
             if (i < format.length) {
                 repeat = 0;
 
-                while (++i < format.length && format[i] === patternToMatch) {
+                while (++i < format.length && format[i] == patternToMatch) {
                     repeat++;
                 }
 
@@ -4034,7 +3539,6 @@
                     return true;
                 }
             }
-
             return false;
         },
 
@@ -4054,10 +3558,11 @@
 
             format = format || "G";
 
-            if (format.length === 1) {
-                formats = df.getAllDateTimePatterns(format, true);
+            if (format.length == 1) {
+                var formats = df.getAllDateTimePatterns(format, true);
                 format = formats ? formats[0] : format;
-            } else if (format.length === 2 && format.charAt(0) === "%") {
+            }
+            else if (format.length == 2 && format.charAt(0) == "%") {
                 format = format.charAt(1);
             }
 
@@ -4085,7 +3590,8 @@
 			            case "MMMM":
 			                if (me.isUseGenitiveForm(format, index, 4, "d")) {
 			                    part = df.monthGenitiveNames[month];
-			                } else {
+			                }
+			                else {
 			                    part = df.monthNames[month];
 			                }
 
@@ -4093,7 +3599,8 @@
 			            case "MMM":
 			                if (me.isUseGenitiveForm(format, index, 3, "d")) {
 			                    part = df.abbreviatedMonthGenitiveNames[month];
-			                } else {
+			                }
+			                else {
 			                    part = df.abbreviatedMonthNames[month];
 			                }
 
@@ -4113,7 +3620,7 @@
 			            case "yy":
 			                part = (year % 100).toString();
 
-			                if (part.length === 1) {
+			                if (part.length == 1) {
 			                    part = "0" + part;
 			                }
 
@@ -4128,7 +3635,8 @@
 
 			                if (!part) {
 			                    part = "12";
-			                } else if (match === "hh" && part.length === 1) {
+			                }
+			                else if (match == "hh" && part.length == 1) {
 			                    part = "0" + part;
 			                }
 
@@ -4136,7 +3644,7 @@
 			            case "HH":
 			                part = hour.toString();
 
-			                if (part.length === 1) {
+			                if (part.length == 1) {
 			                    part = "0" + part;
 			                }
 
@@ -4147,7 +3655,7 @@
 			            case "mm":
 			                part = minute.toString();
 
-			                if (part.length === 1) {
+			                if (part.length == 1) {
 			                    part = "0" + part;
 			                }
 
@@ -4159,7 +3667,7 @@
 			            case "ss":
 			                part = second.toString();
 
-			                if (part.length === 1) {
+			                if (part.length == 1) {
 			                    part = "0" + part;
 			                }
 
@@ -4171,7 +3679,7 @@
 			            case "tt":
 			                part = (hour < 12) ? df.amDesignator : df.pmDesignator;
 
-			                if (match === "t") {
+			                if (match == "t") {
 			                    part = part.charAt(0);
 			                }
 
@@ -4185,9 +3693,10 @@
 			                    part = Array(3 - part.length).join("0") + part;
 			                }
 
-			                if (match === "ff") {
+			                if (match == "ff") {
 			                    part = part.substr(0, 2);
-			                } else if (match === "f") {
+			                }
+			                else if (match == "f") {
 			                    part = part.charAt(0);
 			                }
 
@@ -4202,7 +3711,7 @@
 			                part = timezoneOffset / 60;
 			                part = ((part >= 0) ? "-" : "+") + Bridge.String.alignString(Math.floor(Math.abs(part)).toString(), 2, "0", 2);
 
-			                if (match === "zzz") {
+			                if (match == "zzz") {
 			                    part += df.timeSeparator + Bridge.String.alignString(Math.floor(Math.abs(timezoneOffset % 60)).toString(), 2, "0", 2);
 			                }
 
@@ -4216,7 +3725,7 @@
 
 			                break;
 			            default:
-			                part = match.substr(1, match.length - 1 - (match.charAt(0) !== "\\"));
+			                part = match.substr(1, match.length - 1 - (match.charAt(0) != "\\"));
 
 			                break;
 			        }
@@ -4226,19 +3735,11 @@
         },
 
         parse: function (value, provider, utc, silent) {
-            var dt = this.parseExact(value, null, provider, utc, true);
-
-            if (dt !== null) {
-                return dt;
-            }
-
-            dt = Date.parse(value);
-
+            var dt = Date.parse(value);
             if (!isNaN(dt)) {
                 return new Date(dt);
-            } else if (!silent) {
-                throw new Bridge.FormatException("String does not contain a valid string representation of a date and time.");
             }
+            return this.parseExact(value, null, provider, utc, silent);
         },
 
         parseExact: function (str, format, provider, utc, silent) {
@@ -4247,11 +3748,11 @@
             }
 
             if (Bridge.isArray(format)) {
-                var j = 0,
+                var i,
                     d;
 
-                for (j; j < format.length; j++) {
-                    d = Bridge.Date.parseExact(str, format[j], provider, utc, true);
+                for (i = 0; i < format.length; i++) {
+                    d = Bridge.Date.parseExact(str, format[i], provider, utc, true);
 
                     if (d != null) {
                         return d;
@@ -4270,7 +3771,7 @@
                 pm = df.pmDesignator,
                 idx = 0,
                 index = 0,
-                i = 0,
+                i,
                 c,
                 token,
                 year = 0,
@@ -4290,8 +3791,7 @@
                 name,
                 invalid = false,
                 inQuotes = false,
-                tokenMatched,
-                formats;
+                tokenMatched;
 
             if (str == null) {
                 throw new Bridge.ArgumentNullException("str");
@@ -4299,10 +3799,11 @@
 
             format = format || "G";
 
-            if (format.length === 1) {
-                formats = df.getAllDateTimePatterns(format, true);
+            if (format.length == 1) {
+                var formats = df.getAllDateTimePatterns(format, true);
                 format = formats ? formats[0] : format;
-            } else if (format.length === 2 && format.charAt(0) === "%") {
+            }
+            else if (format.length == 2 && format.charAt(0) == "%") {
                 format = format.charAt(1);
             }
 
@@ -4310,25 +3811,28 @@
                 c = format.charAt(index);
                 token = "";
 
-                if (inQuotes === "\\") {
+                if (inQuotes == "\\") {
                     token += c;
-                    index++;
-                } else {
-                    while ((format.charAt(index) === c) && (index < format.length)) {
+                    index++
+                }
+                else {
+                    while ((format.charAt(index) == c) && (index < format.length)) {
                         token += c;
-                        index++;
+                        index++
                     }
                 }
 
                 tokenMatched = true;
 
                 if (!inQuotes) {
-                    if (token === "yyyy" || token === "yy" || token === "y") {
-                        if (token === "yyyy") {
+                    if (token == "yyyy" || token == "yy" || token == "y") {
+                        if (token == "yyyy") {
                             year = this.subparseInt(str, idx, 4, 4);
-                        } else if (token === "yy") {
+                        }
+                        else if (token == "yy") {
                             year = this.subparseInt(str, idx, 2, 2);
-                        } else if (token === "y") {
+                        }
+                        else if (token == "y") {
                             year = this.subparseInt(str, idx, 2, 4);
                         }
 
@@ -4339,23 +3843,27 @@
 
                         idx += year.length;
 
-                        if (year.length === 2) {
+                        if (year.length == 2) {
                             year = ~~year;
                             year = (year > 30 ? 1900 : 2000) + year;
                         }
-                    } else if (token === "MMM" || token === "MMMM") {
+                    }
+                    else if (token == "MMM" || token == "MMMM") {
                         month = 0;
 
                         if (token === "MMM") {
                             if (this.isUseGenitiveForm(format, index, 3, "d")) {
                                 names = df.abbreviatedMonthGenitiveNames;
-                            } else {
+                            }
+                            else {
                                 names = df.abbreviatedMonthNames;
                             }
-                        } else {
+                        }
+                        else {
                             if (this.isUseGenitiveForm(format, index, 4, "d")) {
                                 names = df.monthGenitiveNames;
-                            } else {
+                            }
+                            else {
                                 names = df.monthNames;
                             }
                         }
@@ -4363,7 +3871,7 @@
                         for (i = 0; i < names.length; i++) {
                             name = names[i];
 
-                            if (str.substring(idx, idx + name.length).toLowerCase() === name.toLowerCase()) {
+                            if (str.substring(idx, idx + name.length).toLowerCase() == name.toLowerCase()) {
                                 month = (i % 12) + 1;
                                 idx += name.length;
 
@@ -4376,7 +3884,8 @@
 
                             break;
                         }
-                    } else if (token === "MM" || token === "M") {
+                    }
+                    else if (token == "MM" || token == "M") {
                         month = this.subparseInt(str, idx, token.length, 2);
 
                         if (month == null || month < 1 || month > 12) {
@@ -4386,19 +3895,21 @@
                         }
 
                         idx += month.length;
-                    } else if (token === "dddd" || token === "ddd") {
+                    }
+                    else if (token == "dddd" || token == "ddd") {
                         names = token === "ddd" ? df.abbreviatedDayNames : df.dayNames;
 
                         for (i = 0; i < names.length; i++) {
                             name = names[i];
 
-                            if (str.substring(idx, idx + name.length).toLowerCase() === name.toLowerCase()) {
+                            if (str.substring(idx, idx + name.length).toLowerCase() == name.toLowerCase()) {
                                 idx += name.length;
 
                                 break;
                             }
                         }
-                    } else if (token === "dd" || token === "d") {
+                    }
+                    else if (token == "dd" || token == "d") {
                         date = this.subparseInt(str, idx, token.length, 2);
 
                         if (date == null || date < 1 || date > 31) {
@@ -4408,7 +3919,8 @@
                         }
 
                         idx += date.length;
-                    } else if (token === "hh" || token === "h") {
+                    }
+                    else if (token == "hh" || token == "h") {
                         hh = this.subparseInt(str, idx, token.length, 2);
 
                         if (hh == null || hh < 1 || hh > 12) {
@@ -4418,7 +3930,8 @@
                         }
 
                         idx += hh.length;
-                    } else if (token === "HH" || token === "H") {
+                    }
+                    else if (token == "HH" || token == "H") {
                         hh = this.subparseInt(str, idx, token.length, 2);
 
                         if (hh == null || hh < 0 || hh > 23) {
@@ -4428,7 +3941,8 @@
                         }
 
                         idx += hh.length;
-                    } else if (token === "mm" || token === "m") {
+                    }
+                    else if (token == "mm" || token == "m") {
                         mm = this.subparseInt(str, idx, token.length, 2);
 
                         if (mm == null || mm < 0 || mm > 59) {
@@ -4436,7 +3950,8 @@
                         }
 
                         idx += mm.length;
-                    } else if (token === "ss" || token === "s") {
+                    }
+                    else if (token == "ss" || token == "s") {
                         ss = this.subparseInt(str, idx, token.length, 2);
 
                         if (ss == null || ss < 0 || ss > 59) {
@@ -4446,7 +3961,8 @@
                         }
 
                         idx += ss.length;
-                    } else if (token === "u") {
+                    }
+                    else if (token == "u") {
                         ff = this.subparseInt(str, idx, 1, 7);
 
                         if (ff == null) {
@@ -4460,7 +3976,8 @@
                         if (ff.length > 3) {
                             ff = ff.substring(0, 3);
                         }
-                    } else if (token === "fffffff" || token === "ffffff" || token === "fffff" || token === "ffff" || token === "fff" || token === "ff" || token === "f") {
+                    }
+                    else if (token == "fffffff" || token == "ffffff" || token == "fffff" || token == "ffff" || token == "fff" || token == "ff" || token == "f") {
                         ff = this.subparseInt(str, idx, token.length, 7);
 
                         if (ff == null) {
@@ -4474,38 +3991,47 @@
                         if (ff.length > 3) {
                             ff = ff.substring(0, 3);
                         }
-                    } else if (token === "t") {
-                        if (str.substring(idx, idx + 1).toLowerCase() === am.charAt(0).toLowerCase()) {
+                    }
+                    else if (token == "t") {
+                        if (str.substring(idx, idx + 1).toLowerCase() == am.charAt(0).toLowerCase()) {
                             tt = am;
-                        } else if (str.substring(idx, idx + 1).toLowerCase() === pm.charAt(0).toLowerCase()) {
+                        }
+                        else if (str.substring(idx, idx + 1).toLowerCase() == pm.charAt(0).toLowerCase()) {
                             tt = pm;
-                        } else {
+                        }
+                        else {
                             invalid = true;
 
                             break;
                         }
 
                         idx += 1;
-                    } else if (token === "tt") {
-                        if (str.substring(idx, idx + 2).toLowerCase() === am.toLowerCase()) {
+                    }
+                    else if (token == "tt") {
+                        if (str.substring(idx, idx + 2).toLowerCase() == am.toLowerCase()) {
                             tt = am;
-                        } else if (str.substring(idx, idx + 2).toLowerCase() === pm.toLowerCase()) {
+                        }
+                        else if (str.substring(idx, idx + 2).toLowerCase() == pm.toLowerCase()) {
                             tt = pm;
-                        } else {
+                        }
+                        else {
                             invalid = true;
 
                             break;
                         }
 
                         idx += 2;
-                    } else if (token === "z" || token === "zz") {
+                    }
+                    else if (token == "z" || token == "zz") {
                         sign = str.charAt(idx);
 
-                        if (sign === "-") {
+                        if (sign == "-") {
                             neg = true;
-                        } else if (sign === "+") {
+                        }
+                        else if (sign == "+") {
                             neg = false;
-                        } else {
+                        }
+                        else {
                             invalid = true;
 
                             break;
@@ -4526,11 +4052,12 @@
                         if (neg) {
                             zzh = -zzh;
                         }
-                    } else if (token === "zzz") {
+                    }
+                    else if (token == "zzz") {
                         name = str.substring(idx, idx + 6);
                         idx += 6;
 
-                        if (name.length !== 6) {
+                        if (name.length != 6) {
                             invalid = true;
 
                             break;
@@ -4538,11 +4065,13 @@
 
                         sign = name.charAt(0);
 
-                        if (sign === "-") {
+                        if (sign == "-") {
                             neg = true;
-                        } else if (sign === "+") {
+                        }
+                        else if (sign == "+") {
                             neg = false;
-                        } else {
+                        }
+                        else {
                             invalid = true;
 
                             break;
@@ -4563,7 +4092,7 @@
                             zzh = -zzh;
                         }
 
-                        if (name.charAt(zzi) !== df.timeSeparator) {
+                        if (name.charAt(zzi) != df.timeSeparator) {
                             invalid = true;
 
                             break;
@@ -4578,7 +4107,8 @@
 
                             break;
                         }
-                    } else {
+                    }
+                    else {
                         tokenMatched = false;
                     }
                 }
@@ -4586,29 +4116,30 @@
                 if (inQuotes || !tokenMatched) {
                     name = str.substring(idx, idx + token.length);
 
-                    if ((!inQuotes && ((token === ":" && name !== df.timeSeparator) ||
-                        (token === "/" && name !== df.dateSeparator))) ||
-                        (name !== token && token !== "'" && token !== '"' && token !== "\\")) {
+                    if ((!inQuotes && ((token == ":" && name != df.timeSeparator) ||
+                        (token == "/" && name != df.dateSeparator))) ||
+                        (name != token && token != "'" && token != '"' && token != "\\")) {
                         invalid = true;
 
                         break;
                     }
 
-                    if (inQuotes === "\\") {
+                    if (inQuotes == "\\") {
                         inQuotes = false;
                     }
 
-                    if (token !== "'" && token !== '"' && token !== "\\") {
+                    if (token != "'" && token != '"' && token != "\\") {
                         idx += token.length;
-                    } else {
+                    }
+                    else {
                         if (inQuotes === false) {
                             inQuotes = token;
-                        } else {
-                            if (inQuotes !== token) {
+                        }
+                        else {
+                            if (inQuotes != token) {
                                 invalid = true;
                                 break;
                             }
-
                             inQuotes = false;
                         }
                     }
@@ -4620,17 +4151,20 @@
             }
 
             if (!invalid) {
-                if (idx !== str.length) {
+                if (idx != str.length) {
                     invalid = true;
-                } else if (month === 2) {
-                    if (((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0)) {
+                }
+                else if (month == 2) {
+                    if (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0)) {
                         if (date > 29) {
                             invalid = true;
                         }
-                    } else if (date > 28) {
+                    }
+                    else if (date > 28) {
                         invalid = true;
                     }
-                } else if ((month === 4) || (month === 6) || (month === 9) || (month === 11)) {
+                }
+                else if ((month == 4) || (month == 6) || (month == 9) || (month == 11)) {
                     if (date > 30) {
                         invalid = true;
                     }
@@ -4645,13 +4179,14 @@
                 throw new Bridge.FormatException("String does not contain a valid string representation of a date and time.");
             }
 
-            if (hh < 12 && tt === pm) {
+            if (hh < 12 && tt == pm) {
                 hh = hh - 0 + 12;
-            } else if (hh > 11 && tt === am) {
+            }
+            else if (hh > 11 && tt == am) {
                 hh -= 12;
             }
 
-            if (zzh === 0 && zzm === 0 && !utc) {
+            if (zzh == 0 && zzm == 0 && !utc) {
                 return new Date(year, month - 1, date, hh, mm, ss, ff);
             }
 
@@ -4707,7 +4242,7 @@
             temp.setMonth(0);
             temp.setDate(1);
 
-            return temp.getTimezoneOffset() !== dt.getTimezoneOffset();
+            return temp.getTimezoneOffset() != dt.getTimezoneOffset();
         },
 
         toUTC: function (date) {
@@ -4732,214 +4267,217 @@
     };
 
     Bridge.Date = date;
+})();
 
-    // @source TimeSpan.js
+// @source TimeSpan.js
 
-    Bridge.define("Bridge.TimeSpan", {
-        inherits: [Bridge.IComparable],
-        statics: {
-            fromDays: function (value) {
-                return new Bridge.TimeSpan(value * 864e9);
-            },
+Bridge.define('Bridge.TimeSpan', {
+    inherits: [Bridge.IComparable],
+    statics: {
+        fromDays: function (value) {
+            return new Bridge.TimeSpan(value * 864e9);
+        },
 
-            fromHours: function (value) {
-                return new Bridge.TimeSpan(value * 36e9);
-            },
+        fromHours: function (value) {
+            return new Bridge.TimeSpan(value * 36e9);
+        },
 
-            fromMilliseconds: function (value) {
-                return new Bridge.TimeSpan(value * 1e4);
-            },
+        fromMilliseconds: function (value) {
+            return new Bridge.TimeSpan(value * 1e4);
+        },
 
-            fromMinutes: function (value) {
-                return new Bridge.TimeSpan(value * 6e8);
-            },
+        fromMinutes: function (value) {
+            return new Bridge.TimeSpan(value * 6e8);
+        },
 
-            fromSeconds: function (value) {
-                return new Bridge.TimeSpan(value * 1e7);
-            },
+        fromSeconds: function (value) {
+            return new Bridge.TimeSpan(value * 1e7);
+        },
 
-            fromTicks: function (value) {
-                return new Bridge.TimeSpan(value);
-            },
-
-            constructor: function () {
-                this.zero = new Bridge.TimeSpan(0);
-                this.maxValue = new Bridge.TimeSpan(864e13);
-                this.minValue = new Bridge.TimeSpan(-864e13);
-            },
-
-            getDefaultValue: function () {
-                return new Bridge.TimeSpan(0);
-            }
+        fromTicks: function (value) {
+            return new Bridge.TimeSpan(value);
         },
 
         constructor: function () {
-            this.ticks = 0;
-
-            if (arguments.length === 1) {
-                this.ticks = arguments[0];
-            } else if (arguments.length === 3) {
-                this.ticks = (((arguments[0] * 60 + arguments[1]) * 60) + arguments[2]) * 1e7;
-            } else if (arguments.length === 4) {
-                this.ticks = ((((arguments[0] * 24 + arguments[1]) * 60 + arguments[2]) * 60) + arguments[3]) * 1e7;
-            } else if (arguments.length === 5) {
-                this.ticks = (((((arguments[0] * 24 + arguments[1]) * 60 + arguments[2]) * 60) + arguments[3]) * 1e3 + arguments[4]) * 1e4;
-            }
+            this.zero = new Bridge.TimeSpan(0);
+            this.maxValue = new Bridge.TimeSpan(864e13);
+            this.minValue = new Bridge.TimeSpan(-864e13);
         },
 
-        getTicks: function () {
-            return this.ticks;
-        },
-
-        getDays: function () {
-            return this.ticks / 864e9 | 0;
-        },
-
-        getHours: function () {
-            return this.ticks / 36e9 % 24 | 0;
-        },
-
-        getMilliseconds: function () {
-            return this.ticks / 1e4 % 1e3 | 0;
-        },
-
-        getMinutes: function () {
-            return this.ticks / 6e8 % 60 | 0;
-        },
-
-        getSeconds: function () {
-            return this.ticks / 1e7 % 60 | 0;
-        },
-
-        getTotalDays: function () {
-            return this.ticks / 864e9;
-        },
-
-        getTotalHours: function () {
-            return this.ticks / 36e9;
-        },
-
-        getTotalMilliseconds: function () {
-            return this.ticks / 1e4;
-        },
-
-        getTotalMinutes: function () {
-            return this.ticks / 6e8;
-        },
-
-        getTotalSeconds: function () {
-            return this.ticks / 1e7;
-        },
-
-        get12HourHour: function () {
-            return (this.getHours() > 12) ? this.getHours() - 12 : (this.getHours() === 0) ? 12 : this.getHours();
-        },
-
-        add: function (ts) {
-            return new Bridge.TimeSpan(this.ticks + ts.ticks);
-        },
-
-        subtract: function (ts) {
-            return new Bridge.TimeSpan(this.ticks - ts.ticks);
-        },
-
-        duration: function () {
-            return new Bridge.TimeSpan(Math.abs(this.ticks));
-        },
-
-        negate: function () {
-            return new Bridge.TimeSpan(-this.ticks);
-        },
-
-        compareTo: function (other) {
-            return this.ticks < other.ticks ? -1 : (this.ticks > other.ticks ? 1 : 0);
-        },
-
-        equals: function (other) {
-            return other.ticks === this.ticks;
-        },
-
-        format: function (formatStr, provider) {
-            return this.toString(formatStr, provider);
-        },
-
-        toString: function (formatStr, provider) {
-            var ticks = this.ticks,
-                result = "",
-                me = this,
-                dtInfo = (provider || Bridge.CultureInfo.getCurrentCulture()).getFormat(Bridge.DateTimeFormatInfo),
-                format = function (t, n) {
-                    return Bridge.String.alignString((t | 0).toString(), n || 2, "0", 2);
-                };
-
-            if (formatStr) {
-                return formatStr.replace(/dd?|HH?|hh?|mm?|ss?|tt?/g,
-                    function (formatStr) {
-                        switch (formatStr) {
-                            case "d":
-                                return me.getDays();
-                            case "dd":
-                                return format(me.getDays());
-                            case "H":
-                                return me.getHours();
-                            case "HH":
-                                return format(me.getHours());
-                            case "h":
-                                return me.get12HourHour();
-                            case "hh":
-                                return format(me.get12HourHour());
-                            case "m":
-                                return me.getMinutes();
-                            case "mm":
-                                return format(me.getMinutes());
-                            case "s":
-                                return me.getSeconds();
-                            case "ss":
-                                return format(me.getSeconds());
-                            case "t":
-                                return ((me.getHours() < 12) ? dtInfo.amDesignator : dtInfo.pmDesignator).substring(0, 1);
-                            case "tt":
-                                return (me.getHours() < 12) ? dtInfo.amDesignator : dtInfo.pmDesignator;
-                        }
-                    }
-                );
-            }
-
-            if (Math.abs(ticks) >= 864e9) {
-                result += format(ticks / 864e9) + ".";
-                ticks %= 864e9;
-            }
-
-            result += format(ticks / 36e9) + ":";
-            ticks %= 36e9;
-            result += format(ticks / 6e8 | 0) + ":";
-            ticks %= 6e8;
-            result += format(ticks / 1e7);
-            ticks %= 1e7;
-
-            if (ticks > 0) {
-                result += "." + format(ticks, 7);
-            }
-
-            return result;
+        getDefaultValue: function () {
+            return new Bridge.TimeSpan(0);
         }
-    });
+    },
 
-    Bridge.Class.addExtend(Bridge.TimeSpan, [Bridge.IComparable$1(Bridge.TimeSpan), Bridge.IEquatable$1(Bridge.TimeSpan)]);
+    constructor: function () {
+        this.ticks = 0;
+
+        if (arguments.length == 1) {
+            this.ticks = arguments[0];
+        } else if (arguments.length == 3) {
+            this.ticks = (((arguments[0] * 60 + arguments[1]) * 60) + arguments[2]) * 1e7;
+        } else if (arguments.length == 4) {
+            this.ticks = ((((arguments[0] * 24 + arguments[1]) * 60 + arguments[2]) * 60) + arguments[3]) * 1e7;
+        } else if (arguments.length == 5) {
+            this.ticks = (((((arguments[0] * 24 + arguments[1]) * 60 + arguments[2]) * 60) + arguments[3]) * 1e3 + arguments[4]) * 1e4;
+        }
+    },
+
+    getTicks: function () {
+        return this.ticks;
+    },
+
+    getDays: function () {
+        return this.ticks / 864e9 | 0;
+    },
+
+    getHours: function () {
+        return this.ticks / 36e9 % 24 | 0;
+    },
+
+    getMilliseconds: function () {
+        return this.ticks / 1e4 % 1e3 | 0;
+    },
+
+    getMinutes: function () {
+        return this.ticks / 6e8 % 60 | 0;
+    },
+
+    getSeconds: function () {
+        return this.ticks / 1e7 % 60 | 0;
+    },
+
+    getTotalDays: function () {
+        return this.ticks / 864e9;
+    },
+
+    getTotalHours: function () {
+        return this.ticks / 36e9;
+    },
+
+    getTotalMilliseconds: function () {
+        return this.ticks / 1e4;
+    },
+
+    getTotalMinutes: function () {
+        return this.ticks / 6e8;
+    },
+
+    getTotalSeconds: function () {
+        return this.ticks / 1e7;
+    },
+
+    get12HourHour: function () {
+        return (this.getHours() > 12) ? this.getHours() - 12 : (this.getHours() === 0) ? 12 : this.getHours();
+    },
+
+    add: function (ts) {
+        return new Bridge.TimeSpan(this.ticks + ts.ticks);
+    },
+
+    subtract: function (ts) {
+        return new Bridge.TimeSpan(this.ticks - ts.ticks);
+    },
+
+    duration: function () {
+        return new Bridge.TimeSpan(Math.abs(this.ticks));
+    },
+
+    negate: function () {
+        return new Bridge.TimeSpan(-this.ticks);
+    },
+
+    compareTo: function (other) {
+        return this.ticks < other.ticks ? -1 : (this.ticks > other.ticks ? 1 : 0);
+    },
+
+    equals: function (other) {
+        return other.ticks === this.ticks;
+    },
+
+    format: function (formatStr, provider) {
+        return this.toString(formatStr, provider);
+    },
+
+    toString: function (formatStr, provider) {
+        var ticks = this.ticks,
+            result = "",
+            me = this,
+            dtInfo = (provider || Bridge.CultureInfo.getCurrentCulture()).getFormat(Bridge.DateTimeFormatInfo),
+            format = function (t, n) {
+                return Bridge.String.alignString((t | 0).toString(), n || 2, "0", 2);
+            };
+
+        if (formatStr) {
+            return formatStr.replace(/dd?|HH?|hh?|mm?|ss?|tt?/g,
+                function (formatStr) {
+                    switch (formatStr) {
+                        case "d":
+                            return me.getDays();
+                        case "dd":
+                            return format(me.getDays());
+                        case "H":
+                            return me.getHours();
+                        case "HH":
+                            return format(me.getHours());
+                        case "h":
+                            return me.get12HourHour();
+                        case "hh":
+                            return format(me.get12HourHour());
+                        case "m":
+                            return me.getMinutes();
+                        case "mm":
+                            return format(me.getMinutes());
+                        case "s":
+                            return me.getSeconds();
+                        case "ss":
+                            return format(me.getSeconds());
+                        case "t":
+                            return ((me.getHours() < 12) ? dtInfo.amDesignator : dtInfo.pmDesignator).substring(0, 1);
+                        case "tt":
+                            return (me.getHours() < 12) ? dtInfo.amDesignator : dtInfo.pmDesignator;
+                    }
+                }
+            );
+        }
+
+        if (Math.abs(ticks) >= 864e9) {
+            result += format(ticks / 864e9) + ".";
+            ticks %= 864e9;
+        }
+
+        result += format(ticks / 36e9) + ":";
+        ticks %= 36e9;
+        result += format(ticks / 6e8 | 0) + ':';
+        ticks %= 6e8;
+        result += format(ticks / 1e7);
+        ticks %= 1e7;
+
+        if (ticks > 0) {
+            result += "." + format(ticks, 7);
+        }
+
+        return result;
+    }
+});
+
+Bridge.Class.addExtend(Bridge.TimeSpan, [Bridge.IComparable$1(Bridge.TimeSpan), Bridge.IEquatable$1(Bridge.TimeSpan)]);
 
 // @source Text/StringBuilder.js
 
-Bridge.define("Bridge.Text.StringBuilder", {
+Bridge.define('Bridge.Text.StringBuilder', {
     constructor: function () {
         this.buffer = [],
         this.capacity = 16;
 
-        if (arguments.length === 1) {
+        if (arguments.length == 1) {
             this.append(arguments[0]);
-        } else if (arguments.length === 2) {
+        }
+        else if (arguments.length == 2) {
             this.append(arguments[0]);
             this.setCapacity(arguments[1]);
-        } else if (arguments.length === 3) {
+        }
+        else if (arguments.length == 3) {
             this.append(arguments[0], arguments[1], arguments[2]);
         }
     },
@@ -4949,7 +4487,7 @@ Bridge.define("Bridge.Text.StringBuilder", {
             return this.buffer[0] ? this.buffer[0].length : 0;
         }
 
-        var s = this.buffer.join("");
+        var s = this.buffer.join('');
 
         this.buffer = [];
         this.buffer[0] = s;
@@ -4972,12 +4510,12 @@ Bridge.define("Bridge.Text.StringBuilder", {
     },
 
     toString: function () {
-        var s = this.buffer.join("");
+        var s = this.buffer.join('');
 
         this.buffer = [];
         this.buffer[0] = s;
 
-        if (arguments.length === 2) {
+        if (arguments.length == 2) {
             var startIndex = arguments[0],
                 length = arguments[1];
 
@@ -4994,23 +4532,25 @@ Bridge.define("Bridge.Text.StringBuilder", {
             return this;
         }
 
-        if (arguments.length === 2) {
+        if (arguments.length == 2) {
             // append a char repeated count times
             var count = arguments[1];
 
-            if (count === 0) {
+            if (count == 0) {
                 return this;
-            } else if (count < 0) {
+            }
+            else if (count < 0) {
                 throw new Bridge.ArgumentOutOfRangeException("count", "cannot be less than zero");
             }
 
             value = Array(count + 1).join(value).toString();
-        } else if (arguments.length === 3) {
+        }
+        else if (arguments.length == 3) {
             // append a (startIndex, count) substring of value
             var startIndex = arguments[1],
                 count = arguments[2];
 
-            if (count === 0) {
+            if (count == 0) {
                 return this;
             }
 
@@ -5034,7 +4574,7 @@ Bridge.define("Bridge.Text.StringBuilder", {
     },
 
     appendLine: function () {
-        if (arguments.length === 1) {
+        if (arguments.length == 1) {
             this.append(arguments[0]);
         }
 
@@ -5046,7 +4586,7 @@ Bridge.define("Bridge.Text.StringBuilder", {
             return false;
         }
 
-        if (sb === this) {
+        if (sb == this) {
             return true;
         }
 
@@ -5054,11 +4594,11 @@ Bridge.define("Bridge.Text.StringBuilder", {
     },
 
     remove: function (startIndex, length) {
-        var s = this.buffer.join("");
+        var s = this.buffer.join('');
 
         this.checkLimits(s, startIndex, length);
 
-        if (s.length === length && startIndex === 0) {
+        if (s.length == length && startIndex == 0) {
             // Optimization.  If we are deleting everything
             return this.clear();
         }
@@ -5077,29 +4617,32 @@ Bridge.define("Bridge.Text.StringBuilder", {
             return this;
         }
 
-        if (arguments.length === 3) {
+        if (arguments.length == 3) {
             // insert value repeated count times
             var count = arguments[2];
 
-            if (count === 0) {
+            if (count == 0) {
                 return this;
-            } else if (count < 0) {
+            }
+            else if (count < 0) {
                 throw new Bridge.ArgumentOutOfRangeException("count", "cannot be less than zero");
             }
 
             value = Array(count + 1).join(value).toString();
         }
 
-        var s = this.buffer.join("");
+        var s = this.buffer.join('');
         this.buffer = [];
 
         if (index < 1) {
             this.buffer[0] = value;
             this.buffer[1] = s;
-        } else if (index >= s.length) {
+        }
+        else if (index >= s.length) {
             this.buffer[0] = s;
             this.buffer[1] = value;
-        } else {
+        }
+        else {
             this.buffer[0] = s.substring(0, index);
             this.buffer[1] = value;
             this.buffer[2] = s.substring(index, s.length);
@@ -5109,12 +4652,12 @@ Bridge.define("Bridge.Text.StringBuilder", {
     },
 
     replace: function (oldValue, newValue) {
-        var r = new RegExp(oldValue, "g"),
-            s = this.buffer.join("");
+        var r = new RegExp(oldValue, 'g'),
+            s = this.buffer.join('');
 
         this.buffer = [];
 
-        if (arguments.length === 4) {
+        if (arguments.length == 4) {
             var startIndex = arguments[2],
                 count = arguments[3],
                 b = s.substr(startIndex, count);
@@ -5124,7 +4667,8 @@ Bridge.define("Bridge.Text.StringBuilder", {
             this.buffer[0] = s.substring(0, startIndex);
             this.buffer[1] = b.replace(r, newValue);
             this.buffer[2] = s.substring(startIndex + count, s.length);
-        } else {
+        }
+        else {
             this.buffer[0] = s.replace(r, newValue);
         }
 
@@ -5145,13 +4689,12 @@ Bridge.define("Bridge.Text.StringBuilder", {
         }
     }
 });
-
 // @source Text/Regex.js
 
 (function () {
     var specials = [
             // order matters for these
-              "-"
+                "-"
             , "["
             , "]"
             // order doesn't matter for any of these
@@ -5170,7 +4713,7 @@ Bridge.define("Bridge.Text.StringBuilder", {
             , "|"
     ],
 
-    regex = RegExp("[" + specials.join("\\") + "]", "g"),
+    regex = RegExp('[' + specials.join('\\') + ']', 'g'),
 
     regexpEscape = function (s) {
         return s.replace(regex, "\\$&");
@@ -5178,12 +4721,1877 @@ Bridge.define("Bridge.Text.StringBuilder", {
 
     Bridge.regexpEscape = regexpEscape;
 })();
+// @source Browser.js
 
-    // @source Array.js
+(function () {
+	if(!document) {
+		return;
+	}
+	
+    var check = function (regex) {
+        return regex.test(navigator.userAgent);
+    },
 
+    isStrict = document.compatMode == 'CSS1Compat',
+
+    version = function (is, regex) {
+        var m;
+
+        return (is && (m = regex.exec(navigator.userAgent))) ? parseFloat(m[1]) : 0;
+    },
+
+    docMode = document.documentMode,
+    isOpera = check(/opera/),
+    isOpera10_5 = isOpera && check(/version\/10\.5/),
+    isChrome = check(/\bchrome\b/),
+    isWebKit = check(/webkit/),
+    isSafari = !isChrome && check(/safari/),
+    isSafari2 = isSafari && check(/applewebkit\/4/),
+    isSafari3 = isSafari && check(/version\/3/),
+    isSafari4 = isSafari && check(/version\/4/),
+    isSafari5_0 = isSafari && check(/version\/5\.0/),
+    isSafari5 = isSafari && check(/version\/5/),
+    isIE = !isOpera && (check(/msie/) || check(/trident/)),
+    isIE7 = isIE && ((check(/msie 7/) && docMode != 8 && docMode != 9 && docMode != 10) || docMode == 7),
+    isIE8 = isIE && ((check(/msie 8/) && docMode != 7 && docMode != 9 && docMode != 10) || docMode == 8),
+    isIE9 = isIE && ((check(/msie 9/) && docMode != 7 && docMode != 8 && docMode != 10) || docMode == 9),
+    isIE10 = isIE && ((check(/msie 10/) && docMode != 7 && docMode != 8 && docMode != 9) || docMode == 10),
+    isIE11 = isIE && ((check(/trident\/7\.0/) && docMode != 7 && docMode != 8 && docMode != 9 && docMode != 10) || docMode == 11),
+    isIE6 = isIE && check(/msie 6/),
+    isGecko = !isWebKit && !isIE && check(/gecko/),
+    isGecko3 = isGecko && check(/rv:1\.9/),
+    isGecko4 = isGecko && check(/rv:2\.0/),
+    isGecko5 = isGecko && check(/rv:5\./),
+    isGecko10 = isGecko && check(/rv:10\./),
+    isFF3_0 = isGecko3 && check(/rv:1\.9\.0/),
+    isFF3_5 = isGecko3 && check(/rv:1\.9\.1/),
+    isFF3_6 = isGecko3 && check(/rv:1\.9\.2/),
+    isWindows = check(/windows|win32/),
+    isMac = check(/macintosh|mac os x/),
+    isLinux = check(/linux/),
+    scrollbarSize = null,
+    chromeVersion = version(true, /\bchrome\/(\d+\.\d+)/),
+    firefoxVersion = version(true, /\bfirefox\/(\d+\.\d+)/),
+    ieVersion = version(isIE, /msie (\d+\.\d+)/),
+    operaVersion = version(isOpera, /version\/(\d+\.\d+)/),
+    safariVersion = version(isSafari, /version\/(\d+\.\d+)/),
+    webKitVersion = version(isWebKit, /webkit\/(\d+\.\d+)/),
+    isSecure = Bridge.global.location ? /^https/i.test(Bridge.global.location.protocol) : false,
+    isiPhone = /iPhone/i.test(navigator.platform),
+    isiPod = /iPod/i.test(navigator.platform),
+    isiPad = /iPad/i.test(navigator.userAgent),
+    isBlackberry = /Blackberry/i.test(navigator.userAgent),
+    isAndroid = /Android/i.test(navigator.userAgent),
+    isDesktop = isMac || isWindows || (isLinux && !isAndroid),
+    isTablet = isiPad,
+    isPhone = !isDesktop && !isTablet;
+
+    var browser = {
+        isStrict: isStrict,
+        isIEQuirks: isIE && (!isStrict && (isIE6 || isIE7 || isIE8 || isIE9)),
+        isOpera: isOpera,
+        isOpera10_5: isOpera10_5,
+        isWebKit: isWebKit,
+        isChrome: isChrome,
+        isSafari: isSafari,
+        isSafari3: isSafari3,
+        isSafari4: isSafari4,
+        isSafari5: isSafari5,
+        isSafari5_0: isSafari5_0,
+        isSafari2: isSafari2,
+        isIE: isIE,
+        isIE6: isIE6,
+        isIE7: isIE7,
+        isIE7m: isIE6 || isIE7,
+        isIE7p: isIE && !isIE6,
+        isIE8: isIE8,
+        isIE8m: isIE6 || isIE7 || isIE8,
+        isIE8p: isIE && !(isIE6 || isIE7),
+        isIE9: isIE9,
+        isIE9m: isIE6 || isIE7 || isIE8 || isIE9,
+        isIE9p: isIE && !(isIE6 || isIE7 || isIE8),
+        isIE10: isIE10,
+        isIE10m: isIE6 || isIE7 || isIE8 || isIE9 || isIE10,
+        isIE10p: isIE && !(isIE6 || isIE7 || isIE8 || isIE9),
+        isIE11: isIE11,
+        isIE11m: isIE6 || isIE7 || isIE8 || isIE9 || isIE10 || isIE11,
+        isIE11p: isIE && !(isIE6 || isIE7 || isIE8 || isIE9 || isIE10),
+        isGecko: isGecko,
+        isGecko3: isGecko3,
+        isGecko4: isGecko4,
+        isGecko5: isGecko5,
+        isGecko10: isGecko10,
+        isFF3_0: isFF3_0,
+        isFF3_5: isFF3_5,
+        isFF3_6: isFF3_6,
+        isFF4: 4 <= firefoxVersion && firefoxVersion < 5,
+        isFF5: 5 <= firefoxVersion && firefoxVersion < 6,
+        isFF10: 10 <= firefoxVersion && firefoxVersion < 11,
+        isLinux: isLinux,
+        isWindows: isWindows,
+        isMac: isMac,
+        chromeVersion: chromeVersion,
+        firefoxVersion: firefoxVersion,
+        ieVersion: ieVersion,
+        operaVersion: operaVersion,
+        safariVersion: safariVersion,
+        webKitVersion: webKitVersion,
+        isSecure: isSecure,
+        isiPhone: isiPhone,
+        isiPod: isiPod,
+        isiPad: isiPad,
+        isBlackberry: isBlackberry,
+        isAndroid: isAndroid,
+        isDesktop: isDesktop,
+        isTablet: isTablet,
+        isPhone: isPhone,
+        iOS: isiPhone || isiPad || isiPod,
+        standalone: Bridge.global.navigator ? !!Bridge.global.navigator.standalone : false
+    };
+
+    Bridge.Browser = browser;
+})();
+
+// @source /Collections/Interfaces.js
+
+Bridge.define('Bridge.IEnumerable');
+Bridge.define('Bridge.IEnumerator');
+Bridge.define('Bridge.IEqualityComparer');
+Bridge.define('Bridge.ICollection', {
+    inherits: [Bridge.IEnumerable]
+});
+
+Bridge.Class.generic('Bridge.IEnumerator$1', function (T) {
+    var $$name = Bridge.Class.genericName('Bridge.IEnumerator$1', T);
+
+    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+        inherits: [Bridge.IEnumerator]
+    }));
+});
+
+Bridge.Class.generic('Bridge.IEnumerable$1', function (T) {
+    var $$name = Bridge.Class.genericName('Bridge.IEnumerable$1', T);
+
+    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+        inherits: [Bridge.IEnumerable]
+    }));
+});
+
+Bridge.Class.generic('Bridge.ICollection$1', function (T) {
+    var $$name = Bridge.Class.genericName('Bridge.ICollection$1', T);
+
+    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+        inherits: [Bridge.IEnumerable$1(T)]
+    }));
+});
+
+Bridge.Class.generic('Bridge.IEqualityComparer$1', function (T) {
+    var $$name = Bridge.Class.genericName('Bridge.IEqualityComparer$1', T);
+
+    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+    }));
+});
+
+Bridge.Class.generic('Bridge.IDictionary$2', function (TKey, TValue) {
+    var $$name = Bridge.Class.genericName('Bridge.IDictionary$2', TKey, TValue);
+
+    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+        inherits: [Bridge.IEnumerable$1(Bridge.KeyValuePair$2(TKey, TValue))]
+    }));
+});
+
+Bridge.Class.generic('Bridge.IList$1', function (T) {
+    var $$name = Bridge.Class.genericName('Bridge.IList$1', T);
+
+    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+        inherits: [Bridge.ICollection$1(T)]
+    }));
+});
+
+Bridge.Class.generic('Bridge.IComparer$1', function (T) {
+    var $$name = Bridge.Class.genericName('Bridge.IComparer$1', T);
+
+    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+    }));
+});
+
+Bridge.Class.generic('Bridge.ISet$1', function (T) {
+    var $$name = Bridge.Class.genericName('Bridge.ISet$1', T);
+
+    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+        inherits: [Bridge.ICollection$1(T)]
+    }));
+});
+// @source /Collections/CustomEnumerator.js
+
+Bridge.define("Bridge.CustomEnumerator", {
+    inherits: [Bridge.IEnumerator],
+
+    constructor: function (moveNext, getCurrent, reset, dispose, scope) {
+        this.$moveNext = moveNext;
+        this.$getCurrent = getCurrent;
+        this.$dispose = dispose;
+        this.$reset = reset;
+        this.scope = scope;
+    },
+
+    moveNext: function () {
+        try {
+            return this.$moveNext.call(this.scope);
+        }
+        catch (ex) {
+            this.dispose.call(this.scope);
+
+            throw ex;
+        }
+    },
+
+    getCurrent: function () {
+        return this.$getCurrent.call(this.scope);
+    },
+
+    getCurrent$1: function () {
+        return this.$getCurrent.call(this.scope);
+    },
+
+    reset: function () {
+        if (this.$reset) {
+            this.$reset.call(this.scope);
+        }
+    },
+
+    dispose: function () {
+        if (this.$dispose) {
+            this.$dispose.call(this.scope);
+        }
+    }
+});
+
+// @source /Collections/ArrayEnumerator.js
+
+Bridge.define('Bridge.ArrayEnumerator', {
+    inherits: [Bridge.IEnumerator],
+    constructor: function (array) {
+        this.array = array;
+        this.reset();
+    },
+
+    moveNext: function () {
+        this.index++;
+
+        return this.index < this.array.length;
+    },
+
+    getCurrent: function () {
+        return this.array[this.index];
+    },
+
+    getCurrent$1: function () {
+        return this.array[this.index];
+    },
+
+    reset: function () {
+        this.index = -1;
+    },
+
+    dispose: Bridge.emptyFn
+});
+
+Bridge.define('Bridge.ArrayEnumerable', {
+    inherits: [Bridge.IEnumerable],
+    constructor: function (array) {
+        this.array = array;
+    },
+
+    getEnumerator: function () {
+        return new Bridge.ArrayEnumerator(this.array);
+    }
+});
+// @source /Collections/Comparer.js
+
+Bridge.Class.generic('Bridge.EqualityComparer$1', function (T) {
+    var $$name = Bridge.Class.genericName('Bridge.EqualityComparer$1', T);
+
+    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+        inherits: [Bridge.IEqualityComparer$1(T)],
+
+        equals: function (x, y) {
+            if (!Bridge.isDefined(x, true)) {
+                return !Bridge.isDefined(y, true);
+            }
+            else if (Bridge.isDefined(y, true)) {
+                var isBridge = x && x.$$name;
+                return (!isBridge || Bridge.isFunction(x.equals)) ? Bridge.equals(x, y) : x === y;
+            }
+
+            return false;
+        },
+
+        getHashCode: function (obj) {
+            return Bridge.isDefined(obj, true) ? Bridge.getHashCode(obj) : 0;
+        }
+    }));
+});
+
+Bridge.EqualityComparer$1.$default = new Bridge.EqualityComparer$1(Object)();
+
+Bridge.Class.generic('Bridge.Comparer$1', function (T) {
+    var $$name = Bridge.Class.genericName('Bridge.Comparer$1', T);
+
+    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+        inherits: [Bridge.IComparer$1(T)],
+
+        constructor: function(fn) {
+            this.fn = fn;
+        },
+
+        compare: function (x, y) {
+            return this.fn(x, y);
+        }
+    }));
+});
+
+Bridge.Comparer$1.$default = new Bridge.Comparer$1(Object)(function(x, y) {
+    if (!Bridge.hasValue(x)) {
+        return !Bridge.hasValue(y) ? 0 : -1;
+    } else if (!Bridge.hasValue(y)) {
+        return 1;
+    }
+
+    return Bridge.compare(x, y);
+});
+// @source /Collections/Dictionary.js
+
+Bridge.Class.generic('Bridge.KeyValuePair$2', function (TKey, TValue) {
+    var $$name = Bridge.Class.genericName('Bridge.KeyValuePair$2', TKey, TValue);
+
+    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+        constructor: function (key, value) {
+            this.key = key;
+            this.value = value;
+        }
+    }));
+});
+
+Bridge.Class.generic('Bridge.Dictionary$2', function (TKey, TValue) {
+    var $$name = Bridge.Class.genericName('Bridge.Dictionary$2', TKey, TValue);
+
+    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+        inherits: [Bridge.IDictionary$2(TKey, TValue)],
+
+        constructor: function (obj, comparer) {
+            this.comparer = comparer || Bridge.EqualityComparer$1.$default;
+            this.clear();
+
+            if (Bridge.is(obj, Bridge.Dictionary$2(TKey, TValue))) {
+                var e = Bridge.getEnumerator(obj),
+                    c;
+
+                while (e.moveNext()) {
+                    c = e.getCurrent();
+                    this.add(c.key, c.value);
+                }
+            }
+            else if (Object.prototype.toString.call(obj) === '[object Object]') {
+                var names = Bridge.getPropertyNames(obj),
+                    name;
+
+                for (var i = 0; i < names.length; i++) {
+                    name = names[i];
+                    this.add(name, obj[name]);
+                }
+            }
+        },
+
+        getKeys: function () {
+            return new Bridge.DictionaryCollection$1(TKey)(this, true);
+        },
+
+        getValues: function () {
+            return new Bridge.DictionaryCollection$1(TValue)(this, false);
+        },
+
+        clear: function () {
+            this.entries = { };
+            this.count = 0;
+        },
+
+        findEntry: function (key) {
+            var hash = this.comparer.getHashCode(key),
+                entries,
+                i;
+
+            if (Bridge.isDefined(this.entries[hash])) {
+                entries = this.entries[hash];
+
+                for (i = 0; i < entries.length; i++) {
+                    if (this.comparer.equals(entries[i].key, key)) {
+                        return entries[i];
+                    }
+                }
+            }
+        },
+
+        containsKey: function (key) {
+            return !!this.findEntry(key);
+        },
+
+        containsValue: function (value) {
+            var e, i;
+
+            for (e in this.entries) {
+                if (this.entries.hasOwnProperty(e)) {
+                    var entries = this.entries[e];
+
+                    for (i = 0; i < entries.length; i++) {
+                        if (this.comparer.equals(entries[i].value, value)) {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        },
+
+        get: function (key) {
+            var entry = this.findEntry(key);
+
+            if (!entry) {
+                throw new Bridge.KeyNotFoundException('Key ' + key + ' does not exist.');
+            }
+
+            return entry.value;
+        },
+
+        getItem: function (key) {
+            return get(key);
+        },
+
+        set: function (key, value, add) {
+            var entry = this.findEntry(key),
+                hash;
+
+            if (entry) {
+                if (add) {
+                    throw new Bridge.ArgumentException('Key ' + key + ' already exists.');
+                }
+
+                entry.value = value;
+                return;
+            }
+
+            hash = this.comparer.getHashCode(key);
+            entry = new Bridge.KeyValuePair$2(TKey, TValue)(key, value);
+
+            if (this.entries[hash]) {
+                this.entries[hash].push(entry);
+            }
+            else {
+                this.entries[hash] = [entry];
+            }
+
+            this.count++;
+        },
+
+        setItem: function (key, value, add) {
+            set(key, value, add);
+        },
+
+        add: function (key, value) {
+            this.set(key, value, true);
+        },
+
+        remove: function (key) {
+            var hash = this.comparer.getHashCode(key),
+                entries,
+                i;
+
+            if (!this.entries[hash]) {
+                return false;
+            }
+
+            entries = this.entries[hash];
+
+            for (i = 0; i < entries.length; i++) {
+                if (this.comparer.equals(entries[i].key, key)) {
+                    entries.splice(i, 1);
+
+                    if (entries.length == 0) {
+                        delete this.entries[hash];
+                    }
+
+                    this.count--;
+
+                    return true;
+                }
+            }
+
+            return false;
+        },
+
+        getCount: function () {
+            return this.count;
+        },
+
+        getComparer: function () {
+            return this.comparer;
+        },
+
+        tryGetValue: function (key, value) {
+            var entry = this.findEntry(key);
+
+            value.v = entry ? entry.value : Bridge.getDefaultValue(TValue);
+
+            return !!entry;
+        },
+
+        getCustomEnumerator: function (fn) {
+            var hashes = Bridge.getPropertyNames(this.entries),
+                hashIndex = -1,
+                keyIndex;
+
+            return new Bridge.CustomEnumerator(function () {
+                if (hashIndex < 0 || keyIndex >= (this.entries[hashes[hashIndex]].length - 1)) {
+                    keyIndex = -1;
+                    hashIndex++;
+                }
+
+                if (hashIndex >= hashes.length) {
+                    return false;
+                }
+
+                keyIndex++;
+
+                return true;
+            }, function () {
+                return fn(this.entries[hashes[hashIndex]][keyIndex]);
+            }, function () {
+                hashIndex = -1;
+            }, null, this);
+        },
+
+        getEnumerator: function () {
+            return this.getCustomEnumerator(function(e) {
+                 return e;
+            });
+        }
+    }));
+});
+
+Bridge.Class.generic('Bridge.DictionaryCollection$1', function (T) {
+    var $$name = Bridge.Class.genericName('Bridge.DictionaryCollection$1', T);
+
+    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+        inherits: [Bridge.ICollection$1(T)],
+
+        constructor: function (dictionary, keys) {
+            this.dictionary = dictionary;
+            this.keys = keys;
+        },
+
+        getCount: function () {
+            return this.dictionary.getCount();
+        },
+
+        getEnumerator: function () {
+            return this.dictionary.getCustomEnumerator(this.keys ? function (e) {
+                return e.key;
+            } : function (e) {
+                return e.value;
+            });
+        },
+
+        contains: function (value) {
+            return this.keys ? this.dictionary.containsKey(value) : this.dictionary.containsValue(value);
+        },
+
+        add: function (v) {
+            throw new Bridge.NotSupportedException();
+        },
+
+        clear: function () {
+            throw new Bridge.NotSupportedException();
+        },
+
+        remove: function () {
+            throw new Bridge.NotSupportedException();
+        }
+    }));
+});
+
+// @source /Collections/List.js
+
+Bridge.Class.generic('Bridge.List$1', function (T) {
+    var $$name = Bridge.Class.genericName('Bridge.List$1', T);
+
+    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+        inherits: [Bridge.ICollection$1(T), Bridge.ICollection, Bridge.IList$1(T)],
+        constructor: function (obj) {
+            if (Object.prototype.toString.call(obj) === '[object Array]') {
+                this.items = obj;
+            }
+            else if (Bridge.is(obj, Bridge.IEnumerable)) {
+                this.items = Bridge.toArray(obj);
+            }
+            else {
+                this.items = [];
+            }
+        },
+
+        checkIndex: function (index) {
+            if (index < 0 || index > (this.items.length - 1)) {
+                throw new Bridge.ArgumentOutOfRangeException('Index out of range');
+            }
+        },
+
+        getCount: function () {
+            return this.items.length;
+        },
+
+        get: function (index) {
+            this.checkIndex(index);
+
+            return this.items[index];
+        },
+
+        getItem: function (index) {
+            return this.get(index);
+        },
+
+        set: function (index, value) {
+            this.checkReadOnly();
+            this.checkIndex(index);
+            this.items[index] = value;
+        },
+
+        setItem: function (index, value) {
+            this.set(index, value);
+        },
+
+        add: function (value) {
+            this.checkReadOnly();
+            this.items.push(value);
+        },
+
+        addRange: function (items) {
+            this.checkReadOnly();
+
+            var array = Bridge.toArray(items),
+                i,
+                len;
+
+            for (i = 0, len = array.length; i < len; ++i) {
+                this.items.push(array[i]);
+            }
+        },
+
+        clear: function () {
+            this.checkReadOnly();
+            this.items = [];
+        },
+
+        indexOf: function (item, startIndex) {
+            var i, el;
+
+            if (!Bridge.isDefined(startIndex)) {
+                startIndex = 0;
+            }
+
+            if (startIndex != 0) {
+                this.checkIndex(startIndex);
+            }
+
+            for (i = startIndex; i < this.items.length; i++) {
+                el = this.items[i];
+                if (el === item || Bridge.EqualityComparer$1.$default.equals(el, item)) {
+                    return i;
+                }
+            }
+
+            return -1;
+        },
+
+        insertRange: function (index, items) {
+            this.checkReadOnly();
+
+            if (index != this.items.length) {
+                this.checkIndex(index);
+            }
+
+            var array = Bridge.toArray(items);
+
+            for (var i = 0; i < array.length; i++) {
+                this.insert(index++, array[i]);
+            }
+        },
+
+        contains: function (item) {
+            return this.indexOf(item) > -1;
+        },
+
+        getEnumerator: function () {
+            return new Bridge.ArrayEnumerator(this.items);
+        },
+
+        getRange: function (index, count) {
+            if (!Bridge.isDefined(index)) {
+                index = 0;
+            }
+
+            if (!Bridge.isDefined(count)) {
+                count = this.items.length;
+            }
+
+            if (index != 0) {
+                this.checkIndex(index);
+            }
+
+            this.checkIndex(index + count - 1);
+
+            var result = [],
+                i;
+
+            for (i = index; i < count; i++) {
+                result.push(this.items[i]);
+            }
+
+            return new Bridge.List$1(T)(result);
+        },
+
+        insert: function (index, item) {
+            this.checkReadOnly();
+
+            if (index != this.items.length) {
+                this.checkIndex(index);
+            }
+
+            if (Bridge.isArray(item)) {
+                for (var i = 0; i < item.length; i++) {
+                    this.insert(index++, item[i]);
+                }
+            }
+            else {
+                this.items.splice(index, 0, item);
+            }
+        },
+
+        join: function (delimeter) {
+            return this.items.join(delimeter);
+        },
+
+        lastIndexOf: function (item, fromIndex) {
+            if (!Bridge.isDefined(fromIndex)) {
+                fromIndex = this.items.length - 1;
+            }
+
+            if (fromIndex != 0) {
+                this.checkIndex(fromIndex);
+            }
+
+            for (var i = fromIndex; i >= 0; i--) {
+                if (item === this.items[i]) {
+                    return i;
+                }
+            }
+
+            return -1;
+        },
+
+        remove: function (item) {
+            this.checkReadOnly();
+
+            var index = this.indexOf(item);
+            if (index < 0)
+                return false;
+
+            this.checkIndex(index);
+            this.items.splice(index, 1);
+            return true;
+        },
+
+        removeAt: function (index) {
+            this.checkReadOnly();
+            this.checkIndex(index);
+            this.items.splice(index, 1);
+        },
+
+        removeRange: function (index, count) {
+            this.checkReadOnly();
+            this.checkIndex(index);
+            this.items.splice(index, count);
+        },
+
+        reverse: function () {
+            this.checkReadOnly();
+            this.items.reverse();
+        },
+
+        slice: function (start, end) {
+            this.checkReadOnly();
+            return new Bridge.List$1(this.$$name.substr(this.$$name.lastIndexOf('$')+1))(this.items.slice(start, end));
+        },
+
+        sort: function (comparison) {
+            this.checkReadOnly();
+            this.items.sort(comparison);
+        },
+
+        splice: function (start, count, items) {
+            this.checkReadOnly();
+            this.items.splice(start, count, items);
+        },
+
+        unshift: function () {
+            this.checkReadOnly();
+            this.items.unshift();
+        },
+
+        toArray: function () {
+            return Bridge.toArray(this);
+        },
+
+        checkReadOnly: function () {
+            if (this.readOnly) {
+                throw new Bridge.NotSupportedException();
+            }
+        }
+    }));
+});
+
+Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
+    var $$name = Bridge.Class.genericName('Bridge.ReadOnlyCollection$1', T);
+
+    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+        inherits: [Bridge.List$1(T)],
+        constructor: function (list) {
+            if (list == null) {
+                throw new Bridge.ArgumentNullException("list");
+            }
+
+            Bridge.ReadOnlyCollection$1.prototype.$constructor.call(this, list);
+            this.readOnly = true;
+        }
+    }));
+});
+
+// @source Task.js
+
+Bridge.define('Bridge.Task', {
+    constructor: function (action, state) {
+        this.action = action;
+        this.state = state;
+        this.error = null;
+        this.status = Bridge.TaskStatus.created;
+        this.callbacks = [];
+        this.result = null;
+    },
+
+    statics: {
+        delay: function (delay, state) {
+            var task = new Bridge.Task();
+
+            setTimeout(function () {
+                task.setResult(state);
+            }, delay);
+
+            return task;
+        },
+
+        fromResult: function (result) {
+            var task = new Bridge.Task();
+
+            t.status = Bridge.TaskStatus.ranToCompletion;
+            t.result = result;
+
+            return t;
+        },
+
+        run: function (fn) {
+            var task = new Bridge.Task();
+
+            setTimeout(function () {
+                try {
+                    task.setResult(fn());
+                }
+                catch (e) {
+                    task.setError(e);
+                }
+            }, 0);
+
+            return task;
+        },
+
+        whenAll: function (tasks) {
+            var task = new Bridge.Task(),
+                result,
+                executing = tasks.length,
+                cancelled = false,
+                errors = [],
+                i;
+
+            if (!Bridge.isArray(tasks)) {
+                tasks = Array.prototype.slice.call(arguments, 0);
+            }
+
+            if (tasks.length === 0) {
+                task.setResult([]);
+
+                return task;
+            }
+
+            result = new Array(tasks.length);
+
+            for (i = 0; i < tasks.length; i++) {
+                tasks[i].$index = i;
+                tasks[i].continueWith(function (t) {
+                    switch (t.status) {
+                        case Bridge.TaskStatus.ranToCompletion:
+                            result[t.$index] = t.getResult();
+                            break;
+                        case Bridge.TaskStatus.canceled:
+                            cancelled = true;
+                            break;
+                        case Bridge.TaskStatus.faulted:
+                            errors.push(t.error);
+                            break;
+                        default:
+                            throw new Bridge.InvalidOperationException('Invalid task status: ' + t.status);
+                    }
+
+                    executing--;
+
+                    if (!executing) {
+                        if (errors.length > 0) {
+                            task.setError(errors);
+                        } else if (cancelled) {
+                            task.setCanceled();
+                        } else {
+                            task.setResult(result);
+                        }
+                    }
+                });
+            }
+
+            return task;
+        },
+
+        whenAny: function (tasks) {
+            if (!Bridge.isArray(tasks)) {
+                tasks = Array.prototype.slice.call(arguments, 0);
+            }
+
+            if (!tasks.length) {
+                throw new Bridge.ArgumentException('At least one task is required');
+            }
+
+            var task = new Bridge.Task(),
+                i;
+
+            for (i = 0; i < tasks.length; i++) {
+                tasks[i].continueWith(function (t) {
+                    switch (t.status) {
+                        case Bridge.TaskStatus.ranToCompletion:
+                            task.complete(t);
+                            break;
+                        case Bridge.TaskStatus.canceled:
+                            task.cancel();
+                            break;
+                        case Bridge.TaskStatus.faulted:
+                            task.fail(t.error);
+                            break;
+                        default:
+                            throw new Bridge.InvalidOperationException('Invalid task status: ' + t.status);
+                    }
+                });
+            }
+
+            return task;
+        },
+
+        fromCallback: function (target, method) {
+            var task = new Bridge.Task(),
+                args = Array.prototype.slice.call(arguments, 2),
+                callback;
+
+            callback = function (value) {
+                task.setResult(value);
+            };
+
+            args.push(callback);
+
+            target[method].apply(target, args);
+
+            return task;
+        },
+
+        fromCallbackResult: function (target, method, resultHandler) {
+            var task = new Bridge.Task(),
+                args = Array.prototype.slice.call(arguments, 3),
+                callback;
+
+            callback = function (value) {
+                task.setResult(value);
+            };
+
+            resultHandler(args, callback);
+
+            target[method].apply(target, args);
+
+            return task;
+        },
+
+        fromCallbackOptions: function (target, method, name) {
+            var task = new Bridge.Task(),
+                args = Array.prototype.slice.call(arguments, 3),
+                callback;
+
+            callback = function (value) {
+                task.setResult(value);
+            };
+
+            args[0] = args[0] || { };
+            args[0][name] = callback;
+
+            target[method].apply(target, args);
+
+            return task;
+        },
+
+        fromPromise: function (promise, handler, errorHandler) {
+            var task = new Bridge.Task();
+
+            if (!promise.then) {
+                promise = promise.promise();
+            }
+
+            promise.then(function () {
+                task.setResult(handler ? handler.apply(null, arguments) : arguments);
+            }, function () {
+                task.setError(errorHandler ? errorHandler.apply(null, arguments) : new Error(Array.prototype.slice.call(arguments, 0)));
+            });
+
+            return task;
+        }
+    },
+
+    continueWith: function (continuationAction, raise) {
+        var task = new Bridge.Task(),
+            me = this,
+            fn = raise ? function () {
+                task.setResult(continuationAction(me));
+            } : function () {
+                try {
+                    task.setResult(continuationAction(me));
+                }
+                catch (e) {
+                    task.setError(e);
+                }
+            };
+
+        if (this.isCompleted()) {
+            setTimeout(fn, 0);
+        } else {
+            this.callbacks.push(fn);
+        }
+
+        return task;
+    },
+
+    start: function () {
+        if (this.status !== Bridge.TaskStatus.created) {
+            throw new Error('Task was already started.');
+        }
+
+        var me = this;
+
+        this.status = Bridge.TaskStatus.running;
+
+        setTimeout(function () {
+            try {
+                var result = me.action(me.state);
+                delete me.action;
+                delete me.state;
+                me.complete(result);
+            }
+            catch (e) {
+                me.fail(e);
+            }
+        }, 0);
+    },
+
+    runCallbacks: function () {
+        var me = this;
+        setTimeout(function () {
+            for (var i = 0; i < me.callbacks.length; i++) {
+                me.callbacks[i](me);
+            }
+
+            delete me.callbacks;
+        }, 0);
+    },
+
+    complete: function (result) {
+        if (this.isCompleted()) {
+            return false;
+        }
+
+        this.result = result;
+        this.status = Bridge.TaskStatus.ranToCompletion;
+        this.runCallbacks();
+
+        return true;
+    },
+
+    fail: function (error) {
+        if (this.isCompleted()) {
+            return false;
+        }
+
+        this.error = error;
+        this.status = Bridge.TaskStatus.faulted;
+        this.runCallbacks();
+
+        return true;
+    },
+
+    cancel: function () {
+        if (this.isCompleted()) {
+            return false;
+        }
+
+        this.status = Bridge.TaskStatus.canceled;
+        this.runCallbacks();
+
+        return true;
+    },
+
+    isCanceled: function () {
+        return this.status === Bridge.TaskStatus.canceled;
+    },
+
+    isCompleted: function () {
+        return this.status == Bridge.TaskStatus.ranToCompletion || this.status == Bridge.TaskStatus.canceled || this.status == Bridge.TaskStatus.faulted;
+    },
+
+    isFaulted: function () {
+        return this.status === Bridge.TaskStatus.faulted;
+    },
+
+    getResult: function () {
+        switch (this.status) {
+            case Bridge.TaskStatus.ranToCompletion:
+                return this.result;
+            case Bridge.TaskStatus.canceled:
+                throw new Error('Task was cancelled.');
+            case Bridge.TaskStatus.faulted:
+                throw this.error;
+            default:
+                throw new Error('Task is not yet completed.');
+        }
+    },
+
+    setCanceled: function () {
+        if (!this.cancel()) {
+            throw new Error('Task was already completed.');
+        }
+    },
+
+    setResult: function (result) {
+        if (!this.complete(result)) {
+            throw new Error('Task was already completed.');
+        }
+    },
+
+    setError: function (error) {
+        if (!this.fail(error)) {
+            throw new Error('Task was already completed.');
+        }
+    },
+
+    dispose: function () {
+    },
+
+    getAwaiter: function () {
+        return this;
+    }
+});
+
+Bridge.define('Bridge.TaskStatus', {
+    $statics: {
+        created: 0,
+        waitingForActivation: 1,
+        waitingToRun: 2,
+        running: 3,
+        waitingForChildrenToComplete: 4,
+        ranToCompletion: 5,
+        canceled: 6,
+        faulted: 7
+    }
+});
+
+// @source Validation.js
+
+(function () {
+    var validation = {
+        isNull: function (value) {
+            return !Bridge.isDefined(value, true);
+        },
+
+        isEmpty: function (value) {
+            return value == null || value.length === 0 || Bridge.is(value, Bridge.ICollection) ? value.getCount() == 0 : false;
+        },
+
+        isNotEmptyOrWhitespace: function (value) {
+            return Bridge.isDefined(value, true) && !(/^$|\s+/.test(value));
+        },
+
+        isNotNull: function (value) {
+            return Bridge.isDefined(value, true);
+        },
+
+        isNotEmpty: function (value) {
+            return !Bridge.Validation.isEmpty(value);
+        },
+
+        email: function (value) {
+            var re = /^(")?(?:[^\."])(?:(?:[\.])?(?:[\w\-!#$%&'*+/=?^_`{|}~]))*\1@(\w[\-\w]*\.){1,5}([A-Za-z]){2,6}$/;
+
+            return re.test(value);
+        },
+
+        url: function (value) {
+            var re = /(((^https?)|(^ftp)):\/\/((([\-\w]+\.)+\w{2,3}(\/[%\-\w]+(\.\w{2,})?)*(([\w\-\.\?\\\/+@&#;`~=%!]*)(\.\w{2,})?)*)|(localhost|LOCALHOST))\/?)/i;
+
+            return re.test(value);
+        },
+
+        alpha: function (value) {
+            var re = /^[a-zA-Z_]+$/;
+
+            return re.test(value);
+        },
+
+        alphaNum: function (value) {
+            var re = /^[a-zA-Z_]+$/;
+
+            return re.test(value);
+        },
+
+        creditCard: function (value, type) {
+            var re,
+                checksum,
+                i,
+                digit;
+
+            if (type == "Visa") {
+                // Visa: length 16, prefix 4, dashes optional.
+                re = /^4\d{3}-?\d{4}-?\d{4}-?\d{4}$/;
+            } else if (type == "MasterCard") {
+                // Mastercard: length 16, prefix 51-55, dashes optional.
+                re = /^5[1-5]\d{2}-?\d{4}-?\d{4}-?\d{4}$/;
+            } else if (type == "Discover") {
+                // Discover: length 16, prefix 6011, dashes optional.
+                re = /^6011-?\d{4}-?\d{4}-?\d{4}$/;
+            } else if (type == "AmericanExpress") {
+                // American Express: length 15, prefix 34 or 37.
+                re = /^3[4,7]\d{13}$/;
+            } else if (type == "DinersClub") {
+                // Diners: length 14, prefix 30, 36, or 38.
+                re = /^3[0,6,8]\d{12}$/;
+            } else {
+                // Basing min and max length on
+                // http://developer.ean.com/general_info/Valid_Credit_Card_Types
+                if (!value || value.length < 13 || value.length > 19) {
+                    return false;
+                }
+
+                re = /[^0-9 \-]+/;
+            }
+
+            if (!re.test(value)) {
+                return false;
+            }
+
+            // Remove all dashes for the checksum checks to eliminate negative numbers
+            value = value.split("-").join("");
+
+            // Checksum ("Mod 10")
+            // Add even digits in even length strings or odd digits in odd length strings.
+            checksum = 0;
+
+            for (i = (2 - (value.length % 2)) ; i <= value.length; i += 2) {
+                checksum += parseInt(value.charAt(i - 1));
+            }
+
+            // Analyze odd digits in even length strings or even digits in odd length strings.
+            for (i = (value.length % 2) + 1; i < value.length; i += 2) {
+                digit = parseInt(value.charAt(i - 1)) * 2;
+
+                if (digit < 10) {
+                    checksum += digit;
+                } else {
+                    checksum += (digit - 9);
+                }
+            }
+
+            return (checksum % 10) == 0;
+        }
+    };
+
+    Bridge.Validation = validation;
+})();
+
+// @source Version.js
+
+Bridge.define('System.Version', {
+    inherits: function () { return [Bridge.ICloneable,Bridge.IComparable$1(System.Version),Bridge.IEquatable$1(System.Version)]; },
+    statics: {
+        separatorsArray: ".",
+
+        config: {
+            init: function () {
+                this.ZERO_CHAR_VALUE = Bridge.cast(48, Bridge.Int);
+            }
+        },
+
+        appendPositiveNumber: function (num, sb) {
+            var index = sb.getLength();
+            var reminder;
+
+            do  {
+                reminder = num % 10;
+                num = Bridge.Int.div(num, 10);
+                sb.insert(index, String.fromCharCode(Bridge.cast((System.Version.ZERO_CHAR_VALUE + reminder), Bridge.Int)));
+            } while (num > 0);
+        },
+
+        parse: function (input) {
+            if (input === null) {
+                throw new Bridge.ArgumentNullException("input");
+            }
+
+            var r = { v: new System.Version.VersionResult() };
+
+            r.v.init("input", true);
+
+            if (!System.Version.tryParseVersion(input, r)) {
+                throw r.v.getVersionParseException();
+            }
+
+            return r.v.m_parsedVersion;
+        },
+
+        tryParse: function (input, result) {
+            var r = { v : new System.Version.VersionResult() };
+
+            r.v.init("input", false);
+
+            var b = System.Version.tryParseVersion(input, r);
+
+            result.v = r.v.m_parsedVersion;
+
+            return b;
+        },
+
+        tryParseVersion: function (version, result) {
+            var major = { }, minor = { }, build = { }, revision = { };
+
+            if (version === null) {
+                result.v.setFailure(System.Version.ParseFailureKind.argumentNullException);
+                return false;
+            }
+
+            var parsedComponents = version.split(System.Version.separatorsArray);
+            var parsedComponentsLength = parsedComponents.length;
+
+            if ((parsedComponentsLength < 2) || (parsedComponentsLength > 4)) {
+                result.v.setFailure(System.Version.ParseFailureKind.argumentException);
+
+                return false;
+            }
+
+            if (!System.Version.tryParseComponent(parsedComponents[0], "version", result, major)) {
+                return false;
+            }
+
+            if (!System.Version.tryParseComponent(parsedComponents[1], "version", result, minor)) {
+                return false;
+            }
+
+            parsedComponentsLength -= 2;
+
+            if (parsedComponentsLength > 0) {
+                if (!System.Version.tryParseComponent(parsedComponents[2], "build", result, build)) {
+                    return false;
+                }
+
+                parsedComponentsLength--;
+
+                if (parsedComponentsLength > 0) {
+                    if (!System.Version.tryParseComponent(parsedComponents[3], "revision", result, revision)) {
+                        return false;
+                    } else  {
+                        result.v.m_parsedVersion = new System.Version("constructor$3", major.v, minor.v, build.v, revision.v);
+                    }
+                } else  {
+                    result.v.m_parsedVersion = new System.Version("constructor$2", major.v, minor.v, build.v);
+                }
+            } else  {
+                result.v.m_parsedVersion = new System.Version("constructor$1", major.v, minor.v);
+            }
+
+            return true;
+        },
+
+        tryParseComponent: function (component, componentName, result, parsedComponent) {
+            if (!Bridge.Int.tryParseInt(component, parsedComponent, -2147483648, 2147483647)) {
+                result.v.setFailure$1(System.Version.ParseFailureKind.formatException, component);
+
+                return false;
+            }
+
+            if (parsedComponent.v < 0) {
+                result.v.setFailure$1(System.Version.ParseFailureKind.argumentOutOfRangeException, componentName);
+
+                return false;
+            }
+
+            return true;
+        },
+
+        op_Equality: function (v1, v2) {
+            if (v1 === null) {
+                return v2 === null;
+            }
+
+            return v1.equals(v2);
+        },
+
+        op_Inequality: function (v1, v2) {
+            return !(System.Version.op_Equality(v1, v2));
+        },
+
+        op_LessThan: function (v1, v2) {
+            if (v1 === null && v2 === null) {
+                return false;
+            }
+
+            if (v2 === null) {
+                return (v1.compareTo(v2) < 0);
+            }
+
+            return (v2.compareTo(v1) > 0);
+        },
+
+        op_LessThanOrEqual: function (v1, v2) {
+            if (v1 === null && v2 === null) {
+                return false;
+            }
+
+            if (v2 === null) {
+                return (v1.compareTo(v2) <= 0);
+            }
+
+            return (v2.compareTo(v1) >= 0);
+        },
+
+        op_GreaterThan: function (v1, v2) {
+            return (System.Version.op_LessThan(v2, v1));
+        },
+
+        op_GreaterThanOrEqual: function (v1, v2) {
+            return (System.Version.op_LessThanOrEqual(v2, v1));
+        }
+    },
+
+    _Major: 0,
+    _Minor: 0,
+
+    config: {
+        init: function () {
+            this._Build = -1;
+            this._Revision = -1;
+        }
+    },
+
+    constructor$3: function (major, minor, build, revision) {
+        if (major < 0) {
+            throw new Bridge.ArgumentOutOfRangeException("major", "Cannot be < 0");
+        }
+
+        if (minor < 0) {
+            throw new Bridge.ArgumentOutOfRangeException("minor", "Cannot be < 0");
+        }
+
+        if (build < 0) {
+            throw new Bridge.ArgumentOutOfRangeException("build", "Cannot be < 0");
+        }
+
+        if (revision < 0) {
+            throw new Bridge.ArgumentOutOfRangeException("revision", "Cannot be < 0");
+        }
+
+        this._Major = major;
+        this._Minor = minor;
+        this._Build = build;
+        this._Revision = revision;
+    },
+
+    constructor$2: function (major, minor, build) {
+        if (major < 0) {
+            throw new Bridge.ArgumentOutOfRangeException("major", "Cannot be < 0");
+        }
+
+        if (minor < 0) {
+            throw new Bridge.ArgumentOutOfRangeException("minor", "Cannot be < 0");
+        }
+
+        if (build < 0) {
+            throw new Bridge.ArgumentOutOfRangeException("build", "Cannot be < 0");
+        }
+
+        this._Major = major;
+        this._Minor = minor;
+        this._Build = build;
+    },
+
+    constructor$1: function (major, minor) {
+        if (major < 0) {
+            throw new Bridge.ArgumentOutOfRangeException("major", "Cannot be < 0");
+        }
+
+        if (minor < 0) {
+            throw new Bridge.ArgumentOutOfRangeException("minor", "Cannot be < 0");
+        }
+
+        this._Major = major;
+        this._Minor = minor;
+    },
+
+    constructor$4: function (version) {
+        var v = System.Version.parse(version);
+        this._Major = v.getMajor();
+        this._Minor = v.getMinor();
+        this._Build = v.getBuild();
+        this._Revision = v.getRevision();
+    },
+
+    constructor: function () {
+        this._Major = 0;
+        this._Minor = 0;
+    },
+
+    getMajor: function () {
+        return this._Major;
+    },
+
+    getMinor: function () {
+        return this._Minor;
+    },
+
+    getBuild: function () {
+        return this._Build;
+    },
+
+    getRevision: function () {
+        return this._Revision;
+    },
+
+    getMajorRevision: function () {
+        return this._Revision >> 16;
+    },
+
+    getMinorRevision: function () {
+        var n = this._Revision & 65535;
+
+        if (n > 32767) {
+            n = -((n & 32767) ^ 32767) - 1;
+        }
+
+        return n;
+    },
+
+    clone: function () {
+        var v = new System.Version("constructor");
+
+        v._Major = this._Major;
+        v._Minor = this._Minor;
+        v._Build = this._Build;
+        v._Revision = this._Revision;
+
+        return (v);
+    },
+
+    compareInternal: function(v) {
+        if (this._Major !== v._Major) {
+            if (this._Major > v._Major) {
+                return 1;
+            } else {
+                return -1;
+            }
+        }
+
+        if (this._Minor !== v._Minor) {
+            if (this._Minor > v._Minor) {
+                return 1;
+            } else {
+                return -1;
+            }
+        }
+
+        if (this._Build !== v._Build) {
+            if (this._Build > v._Build) {
+                return 1;
+            } else {
+                return -1;
+            }
+        }
+
+        if (this._Revision !== v._Revision) {
+            if (this._Revision > v._Revision) {
+                return 1;
+            } else {
+                return -1;
+            }
+        }
+
+        return 0;
+    },
+
+    compareTo$1: function (version) {
+        if (version === null) {
+            return 1;
+        }
+
+        var v = Bridge.as(version, System.Version);
+
+        if (v === null) {
+            throw new Bridge.ArgumentException("version should be of System.Version type");
+        }
+
+        return this.compareInternal(v);
+    },
+
+    compareTo: function (value) {
+        if (value === null) {
+            return 1;
+        }
+
+        return this.compareInternal(value);
+    },
+    equals: function (obj) {
+        var v = Bridge.as(obj, System.Version);
+
+        if (v === null) {
+            return false;
+        }
+
+        // check that major, minor, build & revision numbers match
+        if ((this._Major !== v._Major) || (this._Minor !== v._Minor) || (this._Build !== v._Build) || (this._Revision !== v._Revision)) {
+            return false;
+        }
+
+        return true;
+    },
+    getHashCode: function () {
+        // Let's assume that most version numbers will be pretty small and just OR some lower order bits together.
+
+        var accumulator = 0;
+
+        accumulator |= (this._Major & 15) << 28;
+        accumulator |= (this._Minor & 255) << 20;
+        accumulator |= (this._Build & 255) << 12;
+        accumulator |= (this._Revision & 4095);
+
+        return accumulator;
+    },
+    toString: function () {
+        if (this._Build === -1) {
+            return (this.toString$1(2));
+        }
+
+        if (this._Revision === -1) {
+            return (this.toString$1(3));
+        }
+
+        return (this.toString$1(4));
+    },
+    toString$1: function (fieldCount) {
+        var sb;
+
+        switch (fieldCount) {
+            case 0:
+                return ("");
+            case 1:
+                return (this._Major.toString());
+            case 2:
+                sb = new Bridge.Text.StringBuilder();
+                System.Version.appendPositiveNumber(this._Major, sb);
+                sb.append(String.fromCharCode(46));
+                System.Version.appendPositiveNumber(this._Minor, sb);
+
+                return sb.toString();
+            default:
+                if (this._Build === -1) {
+                    throw new Bridge.ArgumentException("Build should be > 0 if fieldCount > 2", "fieldCount");
+                }
+
+                if (fieldCount === 3) {
+                    sb = new Bridge.Text.StringBuilder();
+                    System.Version.appendPositiveNumber(this._Major, sb);
+                    sb.append(String.fromCharCode(46));
+                    System.Version.appendPositiveNumber(this._Minor, sb);
+                    sb.append(String.fromCharCode(46));
+                    System.Version.appendPositiveNumber(this._Build, sb);
+
+                    return sb.toString();
+                }
+
+                if (this._Revision === -1) {
+                    throw new Bridge.ArgumentException("Revision should be > 0 if fieldCount > 3", "fieldCount");
+                }
+
+                if (fieldCount === 4) {
+                    sb = new Bridge.Text.StringBuilder();
+                    System.Version.appendPositiveNumber(this._Major, sb);
+                    sb.append(String.fromCharCode(46));
+                    System.Version.appendPositiveNumber(this._Minor, sb);
+                    sb.append(String.fromCharCode(46));
+                    System.Version.appendPositiveNumber(this._Build, sb);
+                    sb.append(String.fromCharCode(46));
+                    System.Version.appendPositiveNumber(this._Revision, sb);
+
+                    return sb.toString();
+                }
+
+                throw new Bridge.ArgumentException("Should be < 5", "fieldCount");
+        }
+    }
+});
+
+Bridge.define('System.Version.ParseFailureKind', {
+    statics: {
+        argumentNullException: 0,
+        argumentException: 1,
+        argumentOutOfRangeException: 2,
+        formatException: 3
+    }
+});
+
+Bridge.define('System.Version.VersionResult', {
+    m_parsedVersion: null,
+    m_failure: 0,
+    m_exceptionArgument: null,
+    m_argumentName: null,
+    m_canThrow: false,
+    constructor: function () {
+    },
+
+    init: function (argumentName, canThrow) {
+        this.m_canThrow = canThrow;
+        this.m_argumentName = argumentName;
+    },
+
+    setFailure: function (failure) {
+        this.setFailure$1(failure, "");
+    },
+
+    setFailure$1: function (failure, argument) {
+        this.m_failure = failure;
+        this.m_exceptionArgument = argument;
+
+        if (this.m_canThrow) {
+            throw this.getVersionParseException();
+        }
+    },
+
+    getVersionParseException: function () {
+        switch (this.m_failure) {
+            case System.Version.ParseFailureKind.argumentNullException:
+                return new Bridge.ArgumentNullException(this.m_argumentName);
+            case System.Version.ParseFailureKind.argumentException:
+                return new Bridge.ArgumentException("VersionString");
+            case System.Version.ParseFailureKind.argumentOutOfRangeException:
+                return new Bridge.ArgumentOutOfRangeException(this.m_exceptionArgument, "Cannot be < 0");
+            case System.Version.ParseFailureKind.formatException:
+                try {
+                    Bridge.Int.parseInt(this.m_exceptionArgument, -2147483648, 2147483647);
+                }
+                catch ($e) {
+                    $e = Bridge.Exception.create($e);
+                    var e;
+
+                    if (Bridge.is($e, Bridge.FormatException)) {
+                        e = $e;
+
+                        return e;
+                    } else if (Bridge.is($e, Bridge.OverflowException)) {
+                        e = $e;
+
+                        return e;
+                    } else {
+                        throw $e;
+                    }
+                }
+                return new Bridge.FormatException("InvalidString");
+            default:
+                return new Bridge.ArgumentException("VersionString");
+        }
+    },
+
+    getHashCode: function () {
+        var hash = 17;
+
+        hash = hash * 23 + (this.m_parsedVersion == null ? 0 : Bridge.getHashCode(this.m_parsedVersion));
+        hash = hash * 23 + (this.m_failure == null ? 0 : Bridge.getHashCode(this.m_failure));
+        hash = hash * 23 + (this.m_exceptionArgument == null ? 0 : Bridge.getHashCode(this.m_exceptionArgument));
+        hash = hash * 23 + (this.m_argumentName == null ? 0 : Bridge.getHashCode(this.m_argumentName));
+        hash = hash * 23 + (this.m_canThrow == null ? 0 : Bridge.getHashCode(this.m_canThrow));
+
+        return hash;
+    },
+
+    equals: function (o) {
+        if (!Bridge.is(o,System.Version.VersionResult)) {
+            return false;
+        }
+
+        return Bridge.equals(this.m_parsedVersion, o.m_parsedVersion) && Bridge.equals(this.m_failure, o.m_failure) && Bridge.equals(this.m_exceptionArgument, o.m_exceptionArgument) && Bridge.equals(this.m_argumentName, o.m_argumentName) && Bridge.equals(this.m_canThrow, o.m_canThrow);
+    },
+
+    $clone: function (to) {
+        var s = to || new System.Version.VersionResult();
+
+        s.m_parsedVersion = this.m_parsedVersion;
+        s.m_failure = this.m_failure;
+        s.m_exceptionArgument = this.m_exceptionArgument;
+        s.m_argumentName = this.m_argumentName;
+        s.m_canThrow = this.m_canThrow;
+
+        return s;
+    }
+});
+// @source Attribute.js
+
+Bridge.define('Bridge.Attribute');
+
+// @source INotifyPropertyChanged.js
+
+Bridge.define('Bridge.INotifyPropertyChanged');
+
+Bridge.define('Bridge.PropertyChangedEventArgs', {
+    constructor: function (propertyName) {
+        this.propertyName = propertyName;
+    }
+});
+
+// @source Array.js
+
+(function () {
     var array = {
         toIndex: function (arr, indices) {
-            if (indices.length !== (arr.$s ? arr.$s.length : 1)) {
+            if (indices.length != (arr.$s ? arr.$s.length : 1)) {
                 throw new Bridge.ArgumentException("Invalid number of indices");
             }
 
@@ -5288,7 +6696,7 @@ Bridge.define("Bridge.Text.StringBuilder", {
             return arr;
         },
 
-        init: function (size, value) {
+        init: function(size, value) {
             var arr = new Array(size),
                 isFn = Bridge.isFunction(value);
 
@@ -5299,36 +6707,26 @@ Bridge.define("Bridge.Text.StringBuilder", {
             return arr;
         },
 
-        toEnumerable: function (array) {
+        toEnumerable: function(array) {
             return new Bridge.ArrayEnumerable(array);
         },
 
-        toEnumerator: function (array) {
+        toEnumerator: function(array) {
             return new Bridge.ArrayEnumerator(array);
         },
 
         is: function (obj, type) {
-            if (obj instanceof Bridge.ArrayEnumerator) {
-                if ((obj.constructor === type) || (obj instanceof type) ||
-                    type === Bridge.ArrayEnumerator ||
-                    type.$$name && Bridge.String.startsWith(type.$$name, "Bridge.IEnumerator")) {
-                    return true;
-                }
-                return false;
-            }
-
-
             if (!Bridge.isArray(obj)) {
                 return false;
             }
 
-            if ((obj.constructor === type) || (obj instanceof type)) {
+            if ((obj.constructor == type) || (obj instanceof type)) {
                 return true;
             }
 
-            if (type === Bridge.IEnumerable ||
-                type === Bridge.ICollection ||
-                type === Bridge.ICloneable ||
+            if (type == Bridge.IEnumerable ||
+                type == Bridge.ICollection ||
+                type == Bridge.ICloneable ||
                 type.$$name && Bridge.String.startsWith(type.$$name, "Bridge.IEnumerable$1") ||
                 type.$$name && Bridge.String.startsWith(type.$$name, "Bridge.ICollection$1") ||
                 type.$$name && Bridge.String.startsWith(type.$$name, "Bridge.IList$1")) {
@@ -5338,18 +6736,20 @@ Bridge.define("Bridge.Text.StringBuilder", {
             return false;
         },
 
-        clone: function (arr) {
+        clone: function(arr) {
             if (arr.length === 1) {
                 return [arr[0]];
-            } else {
+            }
+            else {
                 return arr.slice(0);
             }
         },
 
-        getCount: function (obj) {
+        getCount: function(obj) {
             if (Bridge.isArray(obj)) {
                 return obj.length;
-            } else if (Bridge.isFunction(obj.getCount)) {
+            }
+            else if (Bridge.isFunction(obj.getCount)) {
                 return obj.getCount();
             }
 
@@ -5359,7 +6759,8 @@ Bridge.define("Bridge.Text.StringBuilder", {
         add: function (obj, item) {
             if (Bridge.isArray(obj)) {
                 obj.push(item);
-            } else if (Bridge.isFunction(obj.add)) {
+            }
+            else if (Bridge.isFunction(obj.add)) {
                 obj.add(item);
             }
         },
@@ -5367,7 +6768,8 @@ Bridge.define("Bridge.Text.StringBuilder", {
         clear: function (obj) {
             if (Bridge.isArray(obj)) {
                 obj.length = 0;
-            } else if (Bridge.isFunction(obj.clear)) {
+            }
+            else if (Bridge.isFunction(obj.clear)) {
                 obj.clear();
             }
         },
@@ -5378,7 +6780,6 @@ Bridge.define("Bridge.Text.StringBuilder", {
             }
 
             var isFn = Bridge.isFunction(val);
-
             while (--count >= 0) {
                 dst[index + count] = isFn ? val() : val;
             }
@@ -5397,27 +6798,25 @@ Bridge.define("Bridge.Text.StringBuilder", {
                 while (--len >= 0) {
                     dst[dpos + len] = src[spos + len];
                 }
-            } else {
+            }
+            else {
                 for (var i = 0; i < len; i++) {
                     dst[dpos + i] = src[spos + i];
                 }
             }
         },
 
-        indexOf: function (arr, item) {
+        indexOf: function(arr, item) {
             if (Bridge.isArray(arr)) {
-                var i,
-                    ln,
-                    el;
-
+                var i, ln, el;
                 for (i = 0, ln = arr.length; i < ln; i++) {
                     el = arr[i];
-
                     if (el === item || Bridge.EqualityComparer$1.$default.equals(el, item)) {
                         return i;
                     }
                 }
-            } else if (Bridge.isFunction(arr.indexOf)) {
+            }
+            else if (Bridge.isFunction(arr.indexOf)) {
                 return arr.indexOf(item);
             }
 
@@ -5427,7 +6826,8 @@ Bridge.define("Bridge.Text.StringBuilder", {
         contains: function (obj, item) {
             if (Bridge.isArray(obj)) {
                 return Bridge.Array.indexOf(obj, item) > -1;
-            } else if (Bridge.isFunction(obj.contains)) {
+            }
+            else if (Bridge.isFunction(obj.contains)) {
                 return obj.contains(item);
             }
 
@@ -5437,13 +6837,12 @@ Bridge.define("Bridge.Text.StringBuilder", {
         remove: function (obj, item) {
             if (Bridge.isArray(obj)) {
                 var index = Bridge.Array.indexOf(obj, item);
-
                 if (index > -1) {
                     obj.splice(index, 1);
-
                     return true;
                 }
-            } else if (Bridge.isFunction(obj.remove)) {
+            }
+            else if (Bridge.isFunction(obj.remove)) {
                 return obj.remove(item);
             }
 
@@ -5453,7 +6852,8 @@ Bridge.define("Bridge.Text.StringBuilder", {
         insert: function (obj, index, item) {
             if (Bridge.isArray(obj)) {
                 obj.splice(index, 0, item);
-            } else if (Bridge.isFunction(obj.insert)) {
+            }
+            else if (Bridge.isFunction(obj.insert)) {
                  obj.insert(index, item);
             }
         },
@@ -5461,7 +6861,8 @@ Bridge.define("Bridge.Text.StringBuilder", {
         removeAt: function (obj, index) {
             if (Bridge.isArray(obj)) {
                 obj.splice(index, 1);
-            } else if (Bridge.isFunction(obj.removeAt)) {
+            }
+            else if (Bridge.isFunction(obj.removeAt)) {
                 obj.removeAt(index);
             }
         },
@@ -5469,11 +6870,14 @@ Bridge.define("Bridge.Text.StringBuilder", {
         getItem: function (obj, idx) {
             if (Bridge.isArray(obj)) {
                 return obj[idx];
-            } else if (Bridge.isFunction(obj.get)) {
+            }
+            else if (Bridge.isFunction(obj.get)) {
                 return obj.get(idx);
-            } else if (Bridge.isFunction(obj.getItem)) {
+            }
+            else if (Bridge.isFunction(obj.getItem)) {
                 return obj.getItem(idx);
-            } else if (Bridge.isFunction(obj.get_Item)) {
+            }
+            else if (Bridge.isFunction(obj.get_Item)) {
                 return obj.get_Item(idx);
             }
         },
@@ -5481,11 +6885,14 @@ Bridge.define("Bridge.Text.StringBuilder", {
         setItem: function (obj, idx, value) {
             if (Bridge.isArray(obj)) {
                 obj[idx] = value;
-            } else if (Bridge.isFunction(obj.set)) {
+            }
+            else if (Bridge.isFunction(obj.set)) {
                 obj.set(idx, value);
-            } else if (Bridge.isFunction(obj.setItem)) {
+            }
+            else if (Bridge.isFunction(obj.setItem)) {
                 obj.setItem(idx, value);
-            } else if (Bridge.isFunction(obj.set_Item)) {
+            }
+            else if (Bridge.isFunction(obj.set_Item)) {
                 obj.set_Item(idx, value);
             }
         },
@@ -5510,7 +6917,7 @@ Bridge.define("Bridge.Text.StringBuilder", {
             }
         },
 
-        reverse: function (arr, index, length) {
+        reverse: function(arr, index, length) {
             if (!array) {
                 throw new Bridge.ArgumentNullException("arr");
             }
@@ -5542,1946 +6949,11 @@ Bridge.define("Bridge.Text.StringBuilder", {
                 i++;
                 j--;
             }
-        },
-
-        binarySearch: function (array, index, length,value, comparer) {
-            if (!array) {
-                throw new Bridge.ArgumentNullException("array");
-            }
-            
-            var lb = 0;
-            if (index < lb || length < 0) {
-                throw new Bridge.ArgumentOutOfRangeException(index < lb ? "index" : "length", "Non-negative number required.");
-            }
-
-            if (array.length - (index - lb) < length) {
-                throw new Bridge.ArgumentException("Offset and length were out of bounds for the array or count is greater than the number of elements from index to the end of the source collection.");
-            }
-
-            if (Bridge.Array.getRank(array) !== 1) {
-                throw new Bridge.RankException("Only single dimensional arrays are supported for the requested action.");
-            }
-
-            if (!comparer) {
-                comparer = Bridge.Comparer$1.$default;
-            }
- 
-            var lo = index,
-                hi = index + length - 1,
-                i,
-                c;
-
-            while (lo <= hi) {
-                i = lo + ((hi - lo) >> 1);
- 
-                try {
-                    c = comparer.compare(array[i], value);
-                }
-                catch (e) {
-                    throw new Bridge.InvalidOperationException("Failed to compare two elements in the array.", e);
-                }
-
-                if (c === 0) {
-                    return i;
-                }
-
-                if (c < 0) {
-                    lo = i + 1;
-                }
-                else {
-                    hi = i - 1;
-                }
-            }
-
-            return ~lo;
-        },
-
-        sort: function (array, index, length, comparer) {
-            if (!array) {
-                throw new Bridge.ArgumentNullException("array");
-            }
-
-            if (arguments.length === 2 && typeof index === "object") {
-                comparer = index;
-                index = null;
-            }
-
-            if (!Bridge.isNumber(index)) {
-                index = 0;
-            }
-
-            if (!Bridge.isNumber(length)) {
-                length = array.length;
-            }
-
-            if (!comparer) {
-                comparer = Bridge.Comparer$1.$default;
-            }
-
-            if (index === 0 && length === array.length) {
-                array.sort(Bridge.fn.bind(comparer, comparer.compare));
-            } else {
-                var newarray = array.slice(index, index + length);
-                newarray.sort(Bridge.fn.bind(comparer, comparer.compare));
-
-                for (var i = index; i < (index + length); i++) {
-                    array[i] = newarray[i-index];
-                }
-            }
         }
     };
 
     Bridge.Array = array;
-
-    if (!Array.prototype.map) {
-        Array.prototype.map = function (callback, instance) {
-            var length = this.length;
-            var mapped = new Array(length);
-            for (var i = 0; i < length; i++) {
-                if (i in this) {
-                    mapped[i] = callback.call(instance, this[i], i, this);
-                }
-            }
-            return mapped;
-        };
-    }
-        
-    if (!Array.prototype.some) {
-        Array.prototype.some = function (callback, instance) {
-            var length = this.length;
-            for (var i = 0; i < length; i++) {
-                if (i in this && callback.call(instance, this[i], i, this)) {
-                    return true;
-                }
-            }
-            return false;
-        };
-     }
- 
-    if (!Array.prototype.indexOf) {
-        Array.prototype.indexOf = function (searchElement, fromIndex) {
-            var k;
-
-            if (this == null) {
-                throw new TypeError('"this" is null or not defined');
-            }
-
-            var O = Object(this);
-
-            var len = O.length >>> 0;
-
-            if (len === 0) {
-                return -1;
-            }
-
-            var n = +fromIndex || 0;
-
-            if (Math.abs(n) === Infinity) {
-                n = 0;
-            }
-
-            if (n >= len) {
-                return -1;
-            }
-
-            k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
-
-            while (k < len) {
-                if (k in O && O[k] === searchElement) {
-                    return k;
-                }
-                k++;
-            }
-            return -1;
-        };
-    }
-// @source /Collections/Interfaces.js
-
-Bridge.define('Bridge.IEnumerable');
-Bridge.define('Bridge.IEnumerator');
-Bridge.define('Bridge.IEqualityComparer');
-Bridge.define('Bridge.ICollection', {
-    inherits: [Bridge.IEnumerable]
-});
-
-Bridge.Class.generic('Bridge.IEnumerator$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.IEnumerator$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
-        inherits: [Bridge.IEnumerator]
-    }));
-});
-
-Bridge.Class.generic('Bridge.IEnumerable$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.IEnumerable$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
-        inherits: [Bridge.IEnumerable]
-    }));
-});
-
-Bridge.Class.generic('Bridge.ICollection$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.ICollection$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
-        inherits: [Bridge.IEnumerable$1(T)]
-    }));
-});
-
-Bridge.Class.generic('Bridge.IEqualityComparer$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.IEqualityComparer$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
-    }));
-});
-
-Bridge.Class.generic('Bridge.IDictionary$2', function (TKey, TValue) {
-    var $$name = Bridge.Class.genericName('Bridge.IDictionary$2', TKey, TValue);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
-        inherits: [Bridge.IEnumerable$1(Bridge.KeyValuePair$2(TKey, TValue))]
-    }));
-});
-
-Bridge.Class.generic('Bridge.IList$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.IList$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
-        inherits: [Bridge.ICollection$1(T)]
-    }));
-});
-
-Bridge.Class.generic('Bridge.IComparer$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.IComparer$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
-    }));
-});
-
-Bridge.Class.generic('Bridge.ISet$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.ISet$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
-        inherits: [Bridge.ICollection$1(T)]
-    }));
-});
-// @source /Collections/CustomEnumerator.js
-
-Bridge.define('Bridge.CustomEnumerator', {
-    inherits: [Bridge.IEnumerator],
-
-    constructor: function (moveNext, getCurrent, reset, dispose, scope) {
-        this.$moveNext = moveNext;
-        this.$getCurrent = getCurrent;
-        this.$dispose = dispose;
-        this.$reset = reset;
-        this.scope = scope;
-    },
-
-    moveNext: function () {
-        try {
-            return this.$moveNext.call(this.scope);
-        }
-        catch (ex) {
-            this.dispose.call(this.scope);
-
-            throw ex;
-        }
-    },
-
-    getCurrent: function () {
-        return this.$getCurrent.call(this.scope);
-    },
-
-    getCurrent$1: function () {
-        return this.$getCurrent.call(this.scope);
-    },
-
-    reset: function () {
-        if (this.$reset) {
-            this.$reset.call(this.scope);
-        }
-    },
-
-    dispose: function () {
-        if (this.$dispose) {
-            this.$dispose.call(this.scope);
-        }
-    }
-});
-
-// @source /Collections/ArrayEnumerator.js
-
-Bridge.define('Bridge.ArrayEnumerator', {
-    inherits: [Bridge.IEnumerator],
-
-    constructor: function (array) {
-        this.array = array;
-        this.reset();
-    },
-    
-    moveNext: function () {
-        this.index++;
-
-        return this.index < this.array.length;
-    },
-
-    getCurrent: function () {
-        return this.array[this.index];
-    },
-
-    getCurrent$1: function () {
-        return this.array[this.index];
-    },
-
-    reset: function () {
-        this.index = -1;
-    },
-
-    dispose: Bridge.emptyFn
-});
-
-Bridge.define('Bridge.ArrayEnumerable', {
-    inherits: [Bridge.IEnumerable],
-    constructor: function (array) {
-        this.array = array;
-    },
-
-    getEnumerator: function () {
-        return new Bridge.ArrayEnumerator(this.array);
-    }
-});
-// @source /Collections/Comparer.js
-
-Bridge.Class.generic('Bridge.EqualityComparer$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.EqualityComparer$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
-        inherits: [Bridge.IEqualityComparer$1(T)],
-
-        equals: function (x, y) {
-            if (!Bridge.isDefined(x, true)) {
-                return !Bridge.isDefined(y, true);
-            } else if (Bridge.isDefined(y, true)) {
-                var isBridge = x && x.$$name;
-
-                return (!isBridge || Bridge.isFunction(x.equals)) ? Bridge.equals(x, y) : x === y;
-            }
-
-            return false;
-        },
-
-        getHashCode: function (obj) {
-            return Bridge.isDefined(obj, true) ? Bridge.getHashCode(obj) : 0;
-        }
-    }));
-});
-
-Bridge.EqualityComparer$1.$default = new Bridge.EqualityComparer$1(Object)();
-
-Bridge.Class.generic('Bridge.Comparer$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.Comparer$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
-        inherits: [Bridge.IComparer$1(T)],
-
-        constructor: function (fn) {
-            this.fn = fn;
-        },
-
-        compare: function (x, y) {
-            return this.fn(x, y);
-        }
-    }));
-});
-
-Bridge.Comparer$1.$default = new Bridge.Comparer$1(Object)(function (x, y) {
-    if (!Bridge.hasValue(x)) {
-        return !Bridge.hasValue(y) ? 0 : -1;
-    } else if (!Bridge.hasValue(y)) {
-        return 1;
-    }
-
-    return Bridge.compare(x, y);
-});
-// @source /Collections/Dictionary.js
-
-Bridge.Class.generic('Bridge.KeyValuePair$2', function (TKey, TValue) {
-    var $$name = Bridge.Class.genericName('Bridge.KeyValuePair$2', TKey, TValue);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
-        constructor: function (key, value) {
-            this.key = key;
-            this.value = value;
-        },
-
-        toString: function() {
-            var s = "[";
-            
-            if( this.key != null) {
-                s += this.key.toString();
-            }
-
-            s += ", ";
-            if(this.value != null) {
-                s += this.value.toString();
-            }
-            s += "]";
-            return s;
-        }
-    }));
-});
-
-Bridge.Class.generic('Bridge.Dictionary$2', function (TKey, TValue) {
-    var $$name = Bridge.Class.genericName('Bridge.Dictionary$2', TKey, TValue);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
-        inherits: [Bridge.IDictionary$2(TKey, TValue)],
-
-        constructor: function (obj, comparer) {
-            this.comparer = comparer || Bridge.EqualityComparer$1.$default;
-            this.clear();
-
-            if (Bridge.is(obj, Bridge.Dictionary$2(TKey, TValue))) {
-                var e = Bridge.getEnumerator(obj),
-                    c;
-
-                while (e.moveNext()) {
-                    c = e.getCurrent();
-                    this.add(c.key, c.value);
-                }
-            } else if (Object.prototype.toString.call(obj) === '[object Object]') {
-                var names = Bridge.getPropertyNames(obj),
-                    name;
-
-                for (var i = 0; i < names.length; i++) {
-                    name = names[i];
-                    this.add(name, obj[name]);
-                }
-            }
-        },
-
-        getKeys: function () {
-            return new Bridge.DictionaryCollection$1(TKey)(this, true);
-        },
-
-        getValues: function () {
-            return new Bridge.DictionaryCollection$1(TValue)(this, false);
-        },
-
-        clear: function () {
-            this.entries = { };
-            this.count = 0;
-        },
-
-        findEntry: function (key) {
-            var hash = this.comparer.getHashCode(key),
-                entries,
-                i;
-
-            if (Bridge.isDefined(this.entries[hash])) {
-                entries = this.entries[hash];
-
-                for (i = 0; i < entries.length; i++) {
-                    if (this.comparer.equals(entries[i].key, key)) {
-                        return entries[i];
-                    }
-                }
-            }
-        },
-
-        containsKey: function (key) {
-            return !!this.findEntry(key);
-        },
-
-        containsValue: function (value) {
-            var e, i;
-
-            for (e in this.entries) {
-                if (this.entries.hasOwnProperty(e)) {
-                    var entries = this.entries[e];
-
-                    for (i = 0; i < entries.length; i++) {
-                        if (this.comparer.equals(entries[i].value, value)) {
-                            return true;
-                        }
-                    }
-                }
-            }
-
-            return false;
-        },
-
-        get: function (key) {
-            var entry = this.findEntry(key);
-
-            if (!entry) {
-                throw new Bridge.KeyNotFoundException('Key ' + key + ' does not exist.');
-            }
-
-            return entry.value;
-        },
-
-        getItem: function (key) {
-            return this.get(key);
-        },
-
-        set: function (key, value, add) {
-            var entry = this.findEntry(key),
-                hash;
-
-            if (entry) {
-                if (add) {
-                    throw new Bridge.ArgumentException('Key ' + key + ' already exists.');
-                }
-
-                entry.value = value;
-                return;
-            }
-
-            hash = this.comparer.getHashCode(key);
-            entry = new Bridge.KeyValuePair$2(TKey, TValue)(key, value);
-
-            if (this.entries[hash]) {
-                this.entries[hash].push(entry);
-            } else {
-                this.entries[hash] = [entry];
-            }
-
-            this.count++;
-        },
-
-        setItem: function (key, value, add) {
-            this.set(key, value, add);
-        },
-
-        add: function (key, value) {
-            this.set(key, value, true);
-        },
-
-        remove: function (key) {
-            var hash = this.comparer.getHashCode(key),
-                entries,
-                i;
-
-            if (!this.entries[hash]) {
-                return false;
-            }
-
-            entries = this.entries[hash];
-
-            for (i = 0; i < entries.length; i++) {
-                if (this.comparer.equals(entries[i].key, key)) {
-                    entries.splice(i, 1);
-
-                    if (entries.length == 0) {
-                        delete this.entries[hash];
-                    }
-
-                    this.count--;
-
-                    return true;
-                }
-            }
-
-            return false;
-        },
-
-        getCount: function () {
-            return this.count;
-        },
-
-        getComparer: function () {
-            return this.comparer;
-        },
-
-        tryGetValue: function (key, value) {
-            var entry = this.findEntry(key);
-
-            value.v = entry ? entry.value : Bridge.getDefaultValue(TValue);
-
-            return !!entry;
-        },
-
-        getCustomEnumerator: function (fn) {
-            var hashes = Bridge.getPropertyNames(this.entries),
-                hashIndex = -1,
-                keyIndex;
-
-            return new Bridge.CustomEnumerator(function () {
-                if (hashIndex < 0 || keyIndex >= (this.entries[hashes[hashIndex]].length - 1)) {
-                    keyIndex = -1;
-                    hashIndex++;
-                }
-
-                if (hashIndex >= hashes.length) {
-                    return false;
-                }
-
-                keyIndex++;
-
-                return true;
-            }, function () {
-                return fn(this.entries[hashes[hashIndex]][keyIndex]);
-            }, function () {
-                hashIndex = -1;
-            }, null, this);
-        },
-
-        getEnumerator: function () {
-            return this.getCustomEnumerator(function (e) {
-                 return e;
-            });
-        }
-    }));
-});
-
-Bridge.Class.generic('Bridge.DictionaryCollection$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.DictionaryCollection$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
-        inherits: [Bridge.ICollection$1(T)],
-
-        constructor: function (dictionary, keys) {
-            this.dictionary = dictionary;
-            this.keys = keys;
-        },
-
-        getCount: function () {
-            return this.dictionary.getCount();
-        },
-
-        getEnumerator: function () {
-            return this.dictionary.getCustomEnumerator(this.keys ? function (e) {
-                return e.key;
-            } : function (e) {
-                return e.value;
-            });
-        },
-
-        contains: function (value) {
-            return this.keys ? this.dictionary.containsKey(value) : this.dictionary.containsValue(value);
-        },
-
-        add: function (v) {
-            throw new Bridge.NotSupportedException();
-        },
-
-        clear: function () {
-            throw new Bridge.NotSupportedException();
-        },
-
-        remove: function () {
-            throw new Bridge.NotSupportedException();
-        }
-    }));
-});
-
-// @source /Collections/List.js
-
-Bridge.Class.generic('Bridge.List$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.List$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
-        inherits: [Bridge.ICollection$1(T), Bridge.ICollection, Bridge.IList$1(T)],
-        constructor: function (obj) {
-            if (Object.prototype.toString.call(obj) === '[object Array]') {
-                this.items = Bridge.Array.clone(obj);
-            } else if (Bridge.is(obj, Bridge.IEnumerable)) {
-                this.items = Bridge.toArray(obj);
-            } else {
-                this.items = [];
-            }
-        },
-
-        checkIndex: function (index) {
-            if (index < 0 || index > (this.items.length - 1)) {
-                throw new Bridge.ArgumentOutOfRangeException('Index out of range');
-            }
-        },
-
-        getCount: function () {
-            return this.items.length;
-        },
-
-        get: function (index) {
-            this.checkIndex(index);
-
-            return this.items[index];
-        },
-
-        getItem: function (index) {
-            return this.get(index);
-        },
-
-        set: function (index, value) {
-            this.checkReadOnly();
-            this.checkIndex(index);
-            this.items[index] = value;
-        },
-
-        setItem: function (index, value) {
-            this.set(index, value);
-        },
-
-        add: function (value) {
-            this.checkReadOnly();
-            this.items.push(value);
-        },
-
-        addRange: function (items) {
-            this.checkReadOnly();
-
-            var array = Bridge.toArray(items),
-                i,
-                len;
-
-            for (i = 0, len = array.length; i < len; ++i) {
-                this.items.push(array[i]);
-            }
-        },
-
-        clear: function () {
-            this.checkReadOnly();
-            this.items = [];
-        },
-
-        indexOf: function (item, startIndex) {
-            var i, el;
-
-            if (!Bridge.isDefined(startIndex)) {
-                startIndex = 0;
-            }
-
-            if (startIndex !== 0) {
-                this.checkIndex(startIndex);
-            }
-
-            for (i = startIndex; i < this.items.length; i++) {
-                el = this.items[i];
-
-                if (el === item || Bridge.EqualityComparer$1.$default.equals(el, item)) {
-                    return i;
-                }
-            }
-
-            return -1;
-        },
-
-        insertRange: function (index, items) {
-            this.checkReadOnly();
-
-            if (index !== this.items.length) {
-                this.checkIndex(index);
-            }
-
-            var array = Bridge.toArray(items);
-
-            for (var i = 0; i < array.length; i++) {
-                this.insert(index++, array[i]);
-            }
-        },
-
-        contains: function (item) {
-            return this.indexOf(item) > -1;
-        },
-
-        getEnumerator: function () {
-            return new Bridge.ArrayEnumerator(this.items);
-        },
-
-        getRange: function (index, count) {
-            if (!Bridge.isDefined(index)) {
-                index = 0;
-            }
-
-            if (!Bridge.isDefined(count)) {
-                count = this.items.length;
-            }
-
-            if (index !== 0) {
-                this.checkIndex(index);
-            }
-
-            this.checkIndex(index + count - 1);
-
-            var result = [],
-                i,
-				maxIndex = index + count;
-				
-            for (i = index; i < maxIndex; i++) {
-                result.push(this.items[i]);
-            }
-
-            return new Bridge.List$1(T)(result);
-        },
-
-        insert: function (index, item) {
-            this.checkReadOnly();
-
-            if (index !== this.items.length) {
-                this.checkIndex(index);
-            }
-
-            if (Bridge.isArray(item)) {
-                for (var i = 0; i < item.length; i++) {
-                    this.insert(index++, item[i]);
-                }
-            } else {
-                this.items.splice(index, 0, item);
-            }
-        },
-
-        join: function (delimeter) {
-            return this.items.join(delimeter);
-        },
-
-        lastIndexOf: function (item, fromIndex) {
-            if (!Bridge.isDefined(fromIndex)) {
-                fromIndex = this.items.length - 1;
-            }
-
-            if (fromIndex !== 0) {
-                this.checkIndex(fromIndex);
-            }
-
-            for (var i = fromIndex; i >= 0; i--) {
-                if (item === this.items[i]) {
-                    return i;
-                }
-            }
-
-            return -1;
-        },
-
-        remove: function (item) {
-            this.checkReadOnly();
-
-            var index = this.indexOf(item);
-
-            if (index < 0) {
-                return false;
-            }
-
-            this.checkIndex(index);
-            this.items.splice(index, 1);
-            return true;
-        },
-
-        removeAt: function (index) {
-            this.checkReadOnly();
-            this.checkIndex(index);
-            this.items.splice(index, 1);
-        },
-
-        removeRange: function (index, count) {
-            this.checkReadOnly();
-            this.checkIndex(index);
-            this.items.splice(index, count);
-        },
-
-        reverse: function () {
-            this.checkReadOnly();
-            this.items.reverse();
-        },
-
-        slice: function (start, end) {
-            this.checkReadOnly();
-
-            return new Bridge.List$1(this.$$name.substr(this.$$name.lastIndexOf('$')+1))(this.items.slice(start, end));
-        },
-
-        sort: function (comparison) {
-            this.checkReadOnly();
-            this.items.sort(comparison);
-        },
-
-        splice: function (start, count, items) {
-            this.checkReadOnly();
-            this.items.splice(start, count, items);
-        },
-
-        unshift: function () {
-            this.checkReadOnly();
-            this.items.unshift();
-        },
-
-        toArray: function () {
-            return Bridge.toArray(this);
-        },
-
-        checkReadOnly: function () {
-            if (this.readOnly) {
-                throw new Bridge.NotSupportedException();
-            }
-        },
-
-        binarySearch: function (index, length, value, comparer) {
-            if (arguments.length === 1) {
-                value = index;
-                index = null;
-            }
-
-            if (arguments.length === 2) {
-                value = index;
-                comparer = length;
-                index = null;
-                length = null;
-            }
-
-            if (!Bridge.isNumber(index)) {
-                index = 0;
-            }
-
-            if (!Bridge.isNumber(length)) {
-                length = this.items.length;
-            }
-
-            if (!comparer) {
-                comparer = Bridge.Comparer$1.$default;
-            }
-
-            return Bridge.Array.binarySearch(this.items, index, length, value, comparer);
-        }
-    }));
-});
-
-Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.ReadOnlyCollection$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
-        inherits: [Bridge.List$1(T)],
-        constructor: function (list) {
-            if (list == null) {
-                throw new Bridge.ArgumentNullException("list");
-            }
-
-            Bridge.ReadOnlyCollection$1.prototype.$constructor.call(this, list);
-            this.readOnly = true;
-        }
-    }));
-});
-
-    // @source Task.js
-
-    Bridge.define("Bridge.Task", {
-        constructor: function (action, state) {
-            this.action = action;
-            this.state = state;
-            this.error = null;
-            this.status = Bridge.TaskStatus.created;
-            this.callbacks = [];
-            this.result = null;
-        },
-
-        statics: {
-            delay: function (delay, state) {
-                var task = new Bridge.Task();
-
-                setTimeout(function () {
-                    task.setResult(state);
-                }, delay);
-
-                return task;
-            },
-
-            fromResult: function (result) {
-                var t = new Bridge.Task();
-
-                t.status = Bridge.TaskStatus.ranToCompletion;
-                t.result = result;
-
-                return t;
-            },
-
-            run: function (fn) {
-                var task = new Bridge.Task();
-
-                setTimeout(function () {
-                    try {
-                        task.setResult(fn());
-                    } catch (e) {
-                        task.setError(e);
-                    }
-                }, 0);
-
-                return task;
-            },
-
-            whenAll: function (tasks) {
-                var task = new Bridge.Task(),
-                    result,
-                    executing = tasks.length,
-                    cancelled = false,
-                    errors = [],
-                    i;
-
-                if (Bridge.is(tasks, Bridge.IEnumerable)) {
-                    tasks = Bridge.toArray(tasks);
-                }
-                else if (!Bridge.isArray(tasks)) {
-                    tasks = Array.prototype.slice.call(arguments, 0);
-                }
-
-                if (tasks.length === 0) {
-                    task.setResult([]);
-
-                    return task;
-                }
-
-                result = new Array(tasks.length);
-
-                for (i = 0; i < tasks.length; i++) {
-                    tasks[i].$index = i;
-                    tasks[i].continueWith(function (t) {
-                        switch (t.status) {
-                            case Bridge.TaskStatus.ranToCompletion:
-                                result[t.$index] = t.getResult();
-                                break;
-                            case Bridge.TaskStatus.canceled:
-                                cancelled = true;
-                                break;
-                            case Bridge.TaskStatus.faulted:
-                                errors.push(t.error);
-                                break;
-                            default:
-                                throw new Bridge.InvalidOperationException("Invalid task status: " + t.status);
-                        }
-
-                        executing--;
-
-                        if (!executing) {
-                            if (errors.length > 0) {
-                                task.setError(errors);
-                            } else if (cancelled) {
-                                task.setCanceled();
-                            } else {
-                                task.setResult(result);
-                            }
-                        }
-                    });
-                }
-
-                return task;
-            },
-
-            whenAny: function (tasks) {
-                if (Bridge.is(tasks, Bridge.IEnumerable)) {
-                    tasks = Bridge.toArray(tasks);
-                }
-                else if (!Bridge.isArray(tasks)) {
-                    tasks = Array.prototype.slice.call(arguments, 0);
-                }
-
-                if (!tasks.length) {
-                    throw new Bridge.ArgumentException("At least one task is required");
-                }
-
-                var task = new Bridge.Task(),
-                    i;
-
-                for (i = 0; i < tasks.length; i++) {
-                    tasks[i].continueWith(function (t) {
-                        switch (t.status) {
-                            case Bridge.TaskStatus.ranToCompletion:
-                                task.complete(t);
-                                break;
-                            case Bridge.TaskStatus.canceled:
-                                task.cancel();
-                                break;
-                            case Bridge.TaskStatus.faulted:
-                                task.fail(t.error);
-                                break;
-                            default:
-                                throw new Bridge.InvalidOperationException("Invalid task status: " + t.status);
-                        }
-                    });
-                }
-
-                return task;
-            },
-
-            fromCallback: function (target, method) {
-                var task = new Bridge.Task(),
-                    args = Array.prototype.slice.call(arguments, 2),
-                    callback;
-
-                callback = function (value) {
-                    task.setResult(value);
-                };
-
-                args.push(callback);
-
-                target[method].apply(target, args);
-
-                return task;
-            },
-
-            fromCallbackResult: function (target, method, resultHandler) {
-                var task = new Bridge.Task(),
-                    args = Array.prototype.slice.call(arguments, 3),
-                    callback;
-
-                callback = function (value) {
-                    task.setResult(value);
-                };
-
-                resultHandler(args, callback);
-
-                target[method].apply(target, args);
-
-                return task;
-            },
-
-            fromCallbackOptions: function (target, method, name) {
-                var task = new Bridge.Task(),
-                    args = Array.prototype.slice.call(arguments, 3),
-                    callback;
-
-                callback = function (value) {
-                    task.setResult(value);
-                };
-
-                args[0] = args[0] || { };
-                args[0][name] = callback;
-
-                target[method].apply(target, args);
-
-                return task;
-            },
-
-            fromPromise: function (promise, handler, errorHandler) {
-                var task = new Bridge.Task();
-
-                if (!promise.then) {
-                    promise = promise.promise();
-                }
-
-                promise.then(function () {
-                    task.setResult(handler ? handler.apply(null, arguments) : arguments);
-                }, function () {
-                    task.setError(errorHandler ? errorHandler.apply(null, arguments) : new Error(Array.prototype.slice.call(arguments, 0)));
-                });
-
-                return task;
-            }
-        },
-
-        continueWith: function (continuationAction, raise) {
-            var task = new Bridge.Task(),
-                me = this,
-                fn = raise ? function () {
-                    task.setResult(continuationAction(me));
-                } : function () {
-                    try {
-                        task.setResult(continuationAction(me));
-                    }
-                    catch (e) {
-                        task.setError(e);
-                    }
-                };
-
-            if (this.isCompleted()) {
-                setTimeout(fn, 0);
-            } else {
-                this.callbacks.push(fn);
-            }
-
-            return task;
-        },
-
-        start: function () {
-            if (this.status !== Bridge.TaskStatus.created) {
-                throw new Error("Task was already started.");
-            }
-
-            var me = this;
-
-            this.status = Bridge.TaskStatus.running;
-
-            setTimeout(function () {
-                try {
-                    var result = me.action(me.state);
-                    delete me.action;
-                    delete me.state;
-                    me.complete(result);
-                } catch (e) {
-                    me.fail(e);
-                }
-            }, 0);
-        },
-
-        runCallbacks: function () {
-            var me = this;
-
-            setTimeout(function () {
-                for (var i = 0; i < me.callbacks.length; i++) {
-                    me.callbacks[i](me);
-                }
-
-                delete me.callbacks;
-            }, 0);
-        },
-
-        complete: function (result) {
-            if (this.isCompleted()) {
-                return false;
-            }
-
-            this.result = result;
-            this.status = Bridge.TaskStatus.ranToCompletion;
-            this.runCallbacks();
-
-            return true;
-        },
-
-        fail: function (error) {
-            if (this.isCompleted()) {
-                return false;
-            }
-
-            this.error = error;
-            this.status = Bridge.TaskStatus.faulted;
-            this.runCallbacks();
-
-            return true;
-        },
-
-        cancel: function () {
-            if (this.isCompleted()) {
-                return false;
-            }
-
-            this.status = Bridge.TaskStatus.canceled;
-            this.runCallbacks();
-
-            return true;
-        },
-
-        isCanceled: function () {
-            return this.status === Bridge.TaskStatus.canceled;
-        },
-
-        isCompleted: function () {
-            return this.status === Bridge.TaskStatus.ranToCompletion || this.status === Bridge.TaskStatus.canceled || this.status === Bridge.TaskStatus.faulted;
-        },
-
-        isFaulted: function () {
-            return this.status === Bridge.TaskStatus.faulted;
-        },
-
-        getResult: function () {
-            switch (this.status) {
-                case Bridge.TaskStatus.ranToCompletion:
-                    return this.result;
-                case Bridge.TaskStatus.canceled:
-                    throw new Error("Task was cancelled.");
-                case Bridge.TaskStatus.faulted:
-                    throw this.error;
-                default:
-                    throw new Error("Task is not yet completed.");
-            }
-        },
-
-        setCanceled: function () {
-            if (!this.cancel()) {
-                throw new Error("Task was already completed.");
-            }
-        },
-
-        setResult: function (result) {
-            if (!this.complete(result)) {
-                throw new Error("Task was already completed.");
-            }
-        },
-
-        setError: function (error) {
-            if (!this.fail(error)) {
-                throw new Error("Task was already completed.");
-            }
-        },
-
-        dispose: function () {
-        },
-
-        getAwaiter: function () {
-            return this;
-        }
-    });
-
-    Bridge.define("Bridge.TaskStatus", {
-        $statics: {
-            created: 0,
-            waitingForActivation: 1,
-            waitingToRun: 2,
-            running: 3,
-            waitingForChildrenToComplete: 4,
-            ranToCompletion: 5,
-            canceled: 6,
-            faulted: 7
-        }
-    });
-
-    // @source Validation.js
-
-    var validation = {
-        isNull: function (value) {
-            return !Bridge.isDefined(value, true);
-        },
-
-        isEmpty: function (value) {
-            return value == null || value.length === 0 || Bridge.is(value, Bridge.ICollection) ? value.getCount() === 0 : false;
-        },
-
-        isNotEmptyOrWhitespace: function (value) {
-            return Bridge.isDefined(value, true) && !(/^$|\s+/.test(value));
-        },
-
-        isNotNull: function (value) {
-            return Bridge.isDefined(value, true);
-        },
-
-        isNotEmpty: function (value) {
-            return !Bridge.Validation.isEmpty(value);
-        },
-
-        email: function (value) {
-            var re = /^(")?(?:[^\."])(?:(?:[\.])?(?:[\w\-!#$%&'*+/=?^_`{|}~]))*\1@(\w[\-\w]*\.){1,5}([A-Za-z]){2,6}$/;
-
-            return re.test(value);
-        },
-
-        url: function (value) {
-            var re = /(((^https?)|(^ftp)):\/\/((([\-\w]+\.)+\w{2,3}(\/[%\-\w]+(\.\w{2,})?)*(([\w\-\.\?\\\/+@&#;`~=%!]*)(\.\w{2,})?)*)|(localhost|LOCALHOST))\/?)/i;
-
-            return re.test(value);
-        },
-
-        alpha: function (value) {
-            var re = /^[a-zA-Z_]+$/;
-
-            return re.test(value);
-        },
-
-        alphaNum: function (value) {
-            var re = /^[a-zA-Z_]+$/;
-
-            return re.test(value);
-        },
-
-        creditCard: function (value, type) {
-            var re,
-                checksum,
-                i,
-                digit;
-
-            if (type === "Visa") {
-                // Visa: length 16, prefix 4, dashes optional.
-                re = /^4\d{3}-?\d{4}-?\d{4}-?\d{4}$/;
-            } else if (type === "MasterCard") {
-                // Mastercard: length 16, prefix 51-55, dashes optional.
-                re = /^5[1-5]\d{2}-?\d{4}-?\d{4}-?\d{4}$/;
-            } else if (type === "Discover") {
-                // Discover: length 16, prefix 6011, dashes optional.
-                re = /^6011-?\d{4}-?\d{4}-?\d{4}$/;
-            } else if (type === "AmericanExpress") {
-                // American Express: length 15, prefix 34 or 37.
-                re = /^3[4,7]\d{13}$/;
-            } else if (type === "DinersClub") {
-                // Diners: length 14, prefix 30, 36, or 38.
-                re = /^3[0,6,8]\d{12}$/;
-            } else {
-                // Basing min and max length on
-                // http://developer.ean.com/general_info/Valid_Credit_Card_Types
-                if (!value || value.length < 13 || value.length > 19) {
-                    return false;
-                }
-
-                re = /[^0-9 \-]+/;
-            }
-
-            if (!re.test(value)) {
-                return false;
-            }
-
-            // Remove all dashes for the checksum checks to eliminate negative numbers
-            value = value.split("-").join("");
-
-            // Checksum ("Mod 10")
-            // Add even digits in even length strings or odd digits in odd length strings.
-            checksum = 0;
-
-            for (i = (2 - (value.length % 2)) ; i <= value.length; i += 2) {
-                checksum += parseInt(value.charAt(i - 1));
-            }
-
-            // Analyze odd digits in even length strings or even digits in odd length strings.
-            for (i = (value.length % 2) + 1; i < value.length; i += 2) {
-                digit = parseInt(value.charAt(i - 1)) * 2;
-
-                if (digit < 10) {
-                    checksum += digit;
-                } else {
-                    checksum += (digit - 9);
-                }
-            }
-
-            return (checksum % 10) === 0;
-        }
-    };
-
-    Bridge.Validation = validation;
-
-    // @source Version.js
-
-    Bridge.define("Bridge.Version", {
-        inherits: function() {
-            return [Bridge.ICloneable, Bridge.IComparable$1(Bridge.Version), Bridge.IEquatable$1(Bridge.Version)];
-        },
-
-        statics: {
-            separatorsArray: ".",
-
-            config: {
-                init: function() {
-                    this.ZERO_CHAR_VALUE = Bridge.cast(48, Bridge.Int);
-                }
-            },
-
-            appendPositiveNumber: function(num, sb) {
-                var index = sb.getLength();
-                var reminder;
-
-                do {
-                    reminder = num % 10;
-                    num = Bridge.Int.div(num, 10);
-                    sb.insert(index, String.fromCharCode(Bridge.cast((Bridge.Version.ZERO_CHAR_VALUE + reminder), Bridge.Int)));
-                } while (num > 0);
-            },
-
-            parse: function(input) {
-                if (input === null) {
-                    throw new Bridge.ArgumentNullException("input");
-                }
-
-                var r = { v: new Bridge.Version.VersionResult() };
-
-                r.v.init("input", true);
-
-                if (!Bridge.Version.tryParseVersion(input, r)) {
-                    throw r.v.getVersionParseException();
-                }
-
-                return r.v.m_parsedVersion;
-            },
-
-            tryParse: function(input, result) {
-                var r = { v: new Bridge.Version.VersionResult() };
-
-                r.v.init("input", false);
-
-                var b = Bridge.Version.tryParseVersion(input, r);
-
-                result.v = r.v.m_parsedVersion;
-
-                return b;
-            },
-
-            tryParseVersion: function(version, result) {
-                var major = {}, minor = {}, build = {}, revision = {};
-
-                if (version === null) {
-                    result.v.setFailure(Bridge.Version.ParseFailureKind.argumentNullException);
-                    return false;
-                }
-
-                var parsedComponents = version.split(Bridge.Version.separatorsArray);
-                var parsedComponentsLength = parsedComponents.length;
-
-                if ((parsedComponentsLength < 2) || (parsedComponentsLength > 4)) {
-                    result.v.setFailure(Bridge.Version.ParseFailureKind.argumentException);
-
-                    return false;
-                }
-
-                if (!Bridge.Version.tryParseComponent(parsedComponents[0], "version", result, major)) {
-                    return false;
-                }
-
-                if (!Bridge.Version.tryParseComponent(parsedComponents[1], "version", result, minor)) {
-                    return false;
-                }
-
-                parsedComponentsLength -= 2;
-
-                if (parsedComponentsLength > 0) {
-                    if (!Bridge.Version.tryParseComponent(parsedComponents[2], "build", result, build)) {
-                        return false;
-                    }
-
-                    parsedComponentsLength--;
-
-                    if (parsedComponentsLength > 0) {
-                        if (!Bridge.Version.tryParseComponent(parsedComponents[3], "revision", result, revision)) {
-                            return false;
-                        } else {
-                            result.v.m_parsedVersion = new Bridge.Version("constructor$3", major.v, minor.v, build.v, revision.v);
-                        }
-                    } else {
-                        result.v.m_parsedVersion = new Bridge.Version("constructor$2", major.v, minor.v, build.v);
-                    }
-                } else {
-                    result.v.m_parsedVersion = new Bridge.Version("constructor$1", major.v, minor.v);
-                }
-
-                return true;
-            },
-
-            tryParseComponent: function(component, componentName, result, parsedComponent) {
-                if (!Bridge.Int.tryParseInt(component, parsedComponent, -2147483648, 2147483647)) {
-                    result.v.setFailure$1(Bridge.Version.ParseFailureKind.formatException, component);
-
-                    return false;
-                }
-
-                if (parsedComponent.v < 0) {
-                    result.v.setFailure$1(Bridge.Version.ParseFailureKind.argumentOutOfRangeException, componentName);
-
-                    return false;
-                }
-
-                return true;
-            },
-
-            op_Equality: function(v1, v2) {
-                if (v1 === null) {
-                    return v2 === null;
-                }
-
-                return v1.equals(v2);
-            },
-
-            op_Inequality: function(v1, v2) {
-                return !(Bridge.Version.op_Equality(v1, v2));
-            },
-
-            op_LessThan: function(v1, v2) {
-                if (v1 === null && v2 === null) {
-                    return false;
-                }
-
-                if (v2 === null) {
-                    return (v1.compareTo(v2) < 0);
-                }
-
-                return (v2.compareTo(v1) > 0);
-            },
-
-            op_LessThanOrEqual: function(v1, v2) {
-                if (v1 === null && v2 === null) {
-                    return false;
-                }
-
-                if (v2 === null) {
-                    return (v1.compareTo(v2) <= 0);
-                }
-
-                return (v2.compareTo(v1) >= 0);
-            },
-
-            op_GreaterThan: function(v1, v2) {
-                return (Bridge.Version.op_LessThan(v2, v1));
-            },
-
-            op_GreaterThanOrEqual: function(v1, v2) {
-                return (Bridge.Version.op_LessThanOrEqual(v2, v1));
-            }
-        },
-
-        _Major: 0,
-        _Minor: 0,
-
-        config: {
-            init: function() {
-                this._Build = -1;
-                this._Revision = -1;
-            }
-        },
-
-        constructor$3: function(major, minor, build, revision) {
-            if (major < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("major", "Cannot be < 0");
-            }
-
-            if (minor < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("minor", "Cannot be < 0");
-            }
-
-            if (build < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("build", "Cannot be < 0");
-            }
-
-            if (revision < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("revision", "Cannot be < 0");
-            }
-
-            this._Major = major;
-            this._Minor = minor;
-            this._Build = build;
-            this._Revision = revision;
-        },
-
-        constructor$2: function(major, minor, build) {
-            if (major < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("major", "Cannot be < 0");
-            }
-
-            if (minor < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("minor", "Cannot be < 0");
-            }
-
-            if (build < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("build", "Cannot be < 0");
-            }
-
-            this._Major = major;
-            this._Minor = minor;
-            this._Build = build;
-        },
-
-        constructor$1: function(major, minor) {
-            if (major < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("major", "Cannot be < 0");
-            }
-
-            if (minor < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("minor", "Cannot be < 0");
-            }
-
-            this._Major = major;
-            this._Minor = minor;
-        },
-
-        constructor$4: function(version) {
-            var v = Bridge.Version.parse(version);
-
-            this._Major = v.getMajor();
-            this._Minor = v.getMinor();
-            this._Build = v.getBuild();
-            this._Revision = v.getRevision();
-        },
-
-        constructor: function() {
-            this._Major = 0;
-            this._Minor = 0;
-        },
-
-        getMajor: function() {
-            return this._Major;
-        },
-
-        getMinor: function() {
-            return this._Minor;
-        },
-
-        getBuild: function() {
-            return this._Build;
-        },
-
-        getRevision: function() {
-            return this._Revision;
-        },
-
-        getMajorRevision: function() {
-            return this._Revision >> 16;
-        },
-
-        getMinorRevision: function() {
-            var n = this._Revision & 65535;
-
-            if (n > 32767) {
-                n = -((n & 32767) ^ 32767) - 1;
-            }
-
-            return n;
-        },
-
-        clone: function() {
-            var v = new Bridge.Version("constructor");
-
-            v._Major = this._Major;
-            v._Minor = this._Minor;
-            v._Build = this._Build;
-            v._Revision = this._Revision;
-
-            return (v);
-        },
-
-        compareInternal: function(v) {
-            if (this._Major !== v._Major) {
-                if (this._Major > v._Major) {
-                    return 1;
-                } else {
-                    return -1;
-                }
-            }
-
-            if (this._Minor !== v._Minor) {
-                if (this._Minor > v._Minor) {
-                    return 1;
-                } else {
-                    return -1;
-                }
-            }
-
-            if (this._Build !== v._Build) {
-                if (this._Build > v._Build) {
-                    return 1;
-                } else {
-                    return -1;
-                }
-            }
-
-            if (this._Revision !== v._Revision) {
-                if (this._Revision > v._Revision) {
-                    return 1;
-                } else {
-                    return -1;
-                }
-            }
-
-            return 0;
-        },
-
-        compareTo$1: function(version) {
-            if (version === null) {
-                return 1;
-            }
-
-            var v = Bridge.as(version, Bridge.Version);
-
-            if (v === null) {
-                throw new Bridge.ArgumentException("version should be of Bridge.Version type");
-            }
-
-            return this.compareInternal(v);
-        },
-
-        compareTo: function(value) {
-            if (value === null) {
-                return 1;
-            }
-
-            return this.compareInternal(value);
-        },
-        equals$1: function (obj) {
-            var v = Bridge.as(obj, Bridge.Version);
-
-            if (v === null) {
-                return false;
-            }
-
-            // check that major, minor, build & revision numbers match
-            if ((this._Major !== v._Major) || (this._Minor !== v._Minor) || (this._Build !== v._Build) || (this._Revision !== v._Revision)) {
-                return false;
-            }
-
-            return true;
-        },
-        equals: function(v) {
-            return this.equals$1(v);
-        },
-        getHashCode: function () {
-            // Let's assume that most version numbers will be pretty small and just OR some lower order bits together.
-            var accumulator = 0;
-
-            accumulator |= (this._Major & 15) << 28;
-            accumulator |= (this._Minor & 255) << 20;
-            accumulator |= (this._Build & 255) << 12;
-            accumulator |= (this._Revision & 4095);
-
-            return accumulator;
-        },
-        toString: function () {
-            if (this._Build === -1) {
-                return (this.toString$1(2));
-            }
-
-            if (this._Revision === -1) {
-                return (this.toString$1(3));
-            }
-
-            return (this.toString$1(4));
-        },
-        toString$1: function (fieldCount) {
-            var sb;
-
-            switch (fieldCount) {
-                case 0:
-                    return ("");
-                case 1:
-                    return (this._Major.toString());
-                case 2:
-                    sb = new Bridge.Text.StringBuilder();
-                    Bridge.Version.appendPositiveNumber(this._Major, sb);
-                    sb.append(String.fromCharCode(46));
-                    Bridge.Version.appendPositiveNumber(this._Minor, sb);
-
-                    return sb.toString();
-                default:
-                    if (this._Build === -1) {
-                        throw new Bridge.ArgumentException("Build should be > 0 if fieldCount > 2", "fieldCount");
-                    }
-
-                    if (fieldCount === 3) {
-                        sb = new Bridge.Text.StringBuilder();
-                        Bridge.Version.appendPositiveNumber(this._Major, sb);
-                        sb.append(String.fromCharCode(46));
-                        Bridge.Version.appendPositiveNumber(this._Minor, sb);
-                        sb.append(String.fromCharCode(46));
-                        Bridge.Version.appendPositiveNumber(this._Build, sb);
-
-                        return sb.toString();
-                    }
-
-                    if (this._Revision === -1) {
-                        throw new Bridge.ArgumentException("Revision should be > 0 if fieldCount > 3", "fieldCount");
-                    }
-
-                    if (fieldCount === 4) {
-                        sb = new Bridge.Text.StringBuilder();
-                        Bridge.Version.appendPositiveNumber(this._Major, sb);
-                        sb.append(String.fromCharCode(46));
-                        Bridge.Version.appendPositiveNumber(this._Minor, sb);
-                        sb.append(String.fromCharCode(46));
-                        Bridge.Version.appendPositiveNumber(this._Build, sb);
-                        sb.append(String.fromCharCode(46));
-                        Bridge.Version.appendPositiveNumber(this._Revision, sb);
-
-                        return sb.toString();
-                    }
-
-                    throw new Bridge.ArgumentException("Should be < 5", "fieldCount");
-            }
-        }
-    });
-
-    Bridge.define("Bridge.Version.ParseFailureKind", {
-        statics: {
-            argumentNullException: 0,
-            argumentException: 1,
-            argumentOutOfRangeException: 2,
-            formatException: 3
-        }
-    });
-
-    Bridge.define("Bridge.Version.VersionResult", {
-        m_parsedVersion: null,
-        m_failure: 0,
-        m_exceptionArgument: null,
-        m_argumentName: null,
-        m_canThrow: false,
-        constructor: function () {
-        },
-
-        init: function (argumentName, canThrow) {
-            this.m_canThrow = canThrow;
-            this.m_argumentName = argumentName;
-        },
-
-        setFailure: function (failure) {
-            this.setFailure$1(failure, "");
-        },
-
-        setFailure$1: function (failure, argument) {
-            this.m_failure = failure;
-            this.m_exceptionArgument = argument;
-
-            if (this.m_canThrow) {
-                throw this.getVersionParseException();
-            }
-        },
-
-        getVersionParseException: function () {
-            switch (this.m_failure) {
-                case Bridge.Version.ParseFailureKind.argumentNullException:
-                    return new Bridge.ArgumentNullException(this.m_argumentName);
-                case Bridge.Version.ParseFailureKind.argumentException:
-                    return new Bridge.ArgumentException("VersionString");
-                case Bridge.Version.ParseFailureKind.argumentOutOfRangeException:
-                    return new Bridge.ArgumentOutOfRangeException(this.m_exceptionArgument, "Cannot be < 0");
-                case Bridge.Version.ParseFailureKind.formatException:
-                    try {
-                        Bridge.Int.parseInt(this.m_exceptionArgument, -2147483648, 2147483647);
-                    }
-                    catch ($e) {
-                        $e = Bridge.Exception.create($e);
-                        var e;
-
-                        if (Bridge.is($e, Bridge.FormatException)) {
-                            e = $e;
-
-                            return e;
-                        } else if (Bridge.is($e, Bridge.OverflowException)) {
-                            e = $e;
-
-                            return e;
-                        } else {
-                            throw $e;
-                        }
-                    }
-                    return new Bridge.FormatException("InvalidString");
-                default:
-                    return new Bridge.ArgumentException("VersionString");
-            }
-        },
-
-        getHashCode: function () {
-            var hash = 17;
-
-            hash = hash * 23 + (this.m_parsedVersion == null ? 0 : Bridge.getHashCode(this.m_parsedVersion));
-            hash = hash * 23 + (this.m_failure == null ? 0 : Bridge.getHashCode(this.m_failure));
-            hash = hash * 23 + (this.m_exceptionArgument == null ? 0 : Bridge.getHashCode(this.m_exceptionArgument));
-            hash = hash * 23 + (this.m_argumentName == null ? 0 : Bridge.getHashCode(this.m_argumentName));
-            hash = hash * 23 + (this.m_canThrow == null ? 0 : Bridge.getHashCode(this.m_canThrow));
-
-            return hash;
-        },
-
-        equals: function (o) {
-            if (!Bridge.is(o, Bridge.Version.VersionResult)) {
-                return false;
-            }
-
-            return Bridge.equals(this.m_parsedVersion, o.m_parsedVersion) && Bridge.equals(this.m_failure, o.m_failure) && Bridge.equals(this.m_exceptionArgument, o.m_exceptionArgument) && Bridge.equals(this.m_argumentName, o.m_argumentName) && Bridge.equals(this.m_canThrow, o.m_canThrow);
-        },
-
-        $clone: function (to) {
-            var s = to || new Bridge.Version.VersionResult();
-
-            s.m_parsedVersion = this.m_parsedVersion;
-            s.m_failure = this.m_failure;
-            s.m_exceptionArgument = this.m_exceptionArgument;
-            s.m_argumentName = this.m_argumentName;
-            s.m_canThrow = this.m_canThrow;
-
-            return s;
-        }
-    });
-
-    // @source Attribute.js
-
-    Bridge.define("Bridge.Attribute");
-
-    // @source INotifyPropertyChanged.js
-
-    Bridge.define("Bridge.INotifyPropertyChanged");
-
-    Bridge.define("Bridge.PropertyChangedEventArgs", {
-        constructor: function (propertyName) {
-            this.propertyName = propertyName;
-        }
-    });
+})();
 
 /*--------------------------------------------------------------------------
  * linq.js - LINQ for JavaScript
@@ -7877,8 +7349,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         return Enumerable.repeat(element, 1);
     };
 
-    // Overload:function (input, pattern)
-    // Overload:function (input, pattern, flags)
+    // Overload:function(input, pattern)
+    // Overload:function(input, pattern, flags)
     Enumerable.matches = function (input, pattern, flags) {
         if (flags == null) flags = "";
         if (pattern instanceof RegExp) {
@@ -7900,8 +7372,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         });
     };
 
-    // Overload:function (start, count)
-    // Overload:function (start, count, step)
+    // Overload:function(start, count)
+    // Overload:function(start, count, step)
     Enumerable.range = function (start, count, step) {
         if (step == null) step = 1;
 
@@ -7920,8 +7392,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         });
     };
 
-    // Overload:function (start, count)
-    // Overload:function (start, count, step)
+    // Overload:function(start, count)
+    // Overload:function(start, count, step)
     Enumerable.rangeDown = function (start, count, step) {
         if (step == null) step = 1;
 
@@ -7940,8 +7412,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         });
     };
 
-    // Overload:function (start, to)
-    // Overload:function (start, to, step)
+    // Overload:function(start, to)
+    // Overload:function(start, to, step)
     Enumerable.rangeTo = function (start, to, step) {
         if (step == null) step = 1;
 
@@ -7977,8 +7449,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         }
     };
 
-    // Overload:function (element)
-    // Overload:function (element, count)
+    // Overload:function(element)
+    // Overload:function(element, count)
     Enumerable.repeat = function (element, count) {
         if (count != null) return Enumerable.repeat(element).take(count);
 
@@ -8008,8 +7480,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         });
     };
 
-    // Overload:function (func)
-    // Overload:function (func, count)
+    // Overload:function(func)
+    // Overload:function(func, count)
     Enumerable.generate = function (func, count) {
         if (count != null) return Enumerable.generate(func).take(count);
         func = Utils.createLambda(func);
@@ -8022,9 +7494,9 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         });
     };
 
-    // Overload:function ()
-    // Overload:function (start)
-    // Overload:function (start, step)
+    // Overload:function()
+    // Overload:function(start)
+    // Overload:function(start, step)
     Enumerable.toInfinity = function (start, step) {
         if (start == null) start = 0;
         if (step == null) step = 1;
@@ -8038,9 +7510,9 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         });
     };
 
-    // Overload:function ()
-    // Overload:function (start)
-    // Overload:function (start, step)
+    // Overload:function()
+    // Overload:function(start)
+    // Overload:function(start, step)
     Enumerable.toNegativeInfinity = function (start, step) {
         if (start == null) start = 0;
         if (step == null) step = 1;
@@ -8097,9 +7569,9 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
 
     /* Projection and Filtering Methods */
 
-    // Overload:function (func)
-    // Overload:function (func, resultSelector<element>)
-    // Overload:function (func, resultSelector<element, nestLevel>)
+    // Overload:function(func)
+    // Overload:function(func, resultSelector<element>)
+    // Overload:function(func, resultSelector<element, nestLevel>)
     Enumerable.prototype.traverseBreadthFirst = function (func, resultSelector) {
         var source = this;
         func = Utils.createLambda(func);
@@ -8135,9 +7607,9 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         });
     };
 
-    // Overload:function (func)
-    // Overload:function (func, resultSelector<element>)
-    // Overload:function (func, resultSelector<element, nestLevel>)
+    // Overload:function(func)
+    // Overload:function(func, resultSelector<element>)
+    // Overload:function(func, resultSelector<element, nestLevel>)
     Enumerable.prototype.traverseDepthFirst = function (func, resultSelector) {
         var source = this;
         func = Utils.createLambda(func);
@@ -8244,8 +7716,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         });
     };
 
-    // Overload:function (func)
-    // Overload:function (seed,func<value,element>)
+    // Overload:function(func)
+    // Overload:function(seed,func<value,element>)
     Enumerable.prototype.scan = function (seed, func) {
         var isUseSeed;
         if (func == null) {
@@ -8285,8 +7757,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         });
     };
 
-    // Overload:function (selector<element>)
-    // Overload:function (selector<element,index>)
+    // Overload:function(selector<element>)
+    // Overload:function(selector<element,index>)
     Enumerable.prototype.select = function (selector) {
         selector = Utils.createLambda(selector);
 
@@ -8312,10 +7784,10 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         }
     };
 
-    // Overload:function (collectionSelector<element>)
-    // Overload:function (collectionSelector<element,index>)
-    // Overload:function (collectionSelector<element>,resultSelector)
-    // Overload:function (collectionSelector<element,index>,resultSelector)
+    // Overload:function(collectionSelector<element>)
+    // Overload:function(collectionSelector<element,index>)
+    // Overload:function(collectionSelector<element>,resultSelector)
+    // Overload:function(collectionSelector<element,index>,resultSelector)
     Enumerable.prototype.selectMany = function (collectionSelector, resultSelector) {
         var source = this;
         collectionSelector = Utils.createLambda(collectionSelector);
@@ -8357,8 +7829,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         });
     };
 
-    // Overload:function (predicate<element>)
-    // Overload:function (predicate<element,index>)
+    // Overload:function(predicate<element>)
+    // Overload:function(predicate<element,index>)
     Enumerable.prototype.where = function (predicate) {
         predicate = Utils.createLambda(predicate);
 
@@ -8388,8 +7860,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
     };
 
 
-    // Overload:function (selector<element>)
-    // Overload:function (selector<element,index>)
+    // Overload:function(selector<element>)
+    // Overload:function(selector<element,index>)
     Enumerable.prototype.choose = function (selector) {
         selector = Utils.createLambda(selector);
         var source = this;
@@ -8631,16 +8103,16 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         return result;
     };
 
-    // Overload:function ()
-    // Overload:function (predicate)
+    // Overload:function()
+    // Overload:function(predicate)
     Enumerable.prototype.any = function (predicate) {
         predicate = Utils.createLambda(predicate);
 
         var enumerator = this.getEnumerator();
         try {
-            if (arguments.length == 0) return enumerator.moveNext(); // case:function ()
+            if (arguments.length == 0) return enumerator.moveNext(); // case:function()
 
-            while (enumerator.moveNext()) // case:function (predicate)
+            while (enumerator.moveNext()) // case:function(predicate)
             {
                 if (predicate(enumerator.getCurrent())) return true;
             }
@@ -8815,8 +8287,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         });
     };
 
-    // Overload:function (value)
-    // Overload:function (value, compareSelector)
+    // Overload:function(value)
+    // Overload:function(value, compareSelector)
     Enumerable.prototype.contains = function (value, comparer) {
         comparer = comparer || Bridge.EqualityComparer$1.$default;
         var enumerator = this.getEnumerator();
@@ -8856,8 +8328,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         });
     };
 
-    // Overload:function ()
-    // Overload:function (compareSelector)
+    // Overload:function()
+    // Overload:function(compareSelector)
     Enumerable.prototype.distinct = function (comparer) {
         return this.except(Enumerable.empty(), comparer);
     };
@@ -8898,8 +8370,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         });
     };
 
-    // Overload:function (second)
-    // Overload:function (second, compareSelector)
+    // Overload:function(second)
+    // Overload:function(second, compareSelector)
     Enumerable.prototype.except = function (second, comparer) {
         var source = this;
 
@@ -8927,8 +8399,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         });
     };
 
-    // Overload:function (second)
-    // Overload:function (second, compareSelector)
+    // Overload:function(second)
+    // Overload:function(second, compareSelector)
     Enumerable.prototype.intersect = function (second, comparer) {
         var source = this;
 
@@ -8959,8 +8431,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         });
     };
 
-    // Overload:function (second)
-    // Overload:function (second, compareSelector)
+    // Overload:function(second)
+    // Overload:function(second, compareSelector)
     Enumerable.prototype.sequenceEqual = function (second, comparer) {
         comparer = comparer || Bridge.EqualityComparer$1.$default;
 
@@ -9129,10 +8601,10 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
 
     /* Grouping Methods */
 
-    // Overload:function (keySelector)
-    // Overload:function (keySelector,elementSelector)
-    // Overload:function (keySelector,elementSelector,resultSelector)
-    // Overload:function (keySelector,elementSelector,resultSelector,compareSelector)
+    // Overload:function(keySelector)
+    // Overload:function(keySelector,elementSelector)
+    // Overload:function(keySelector,elementSelector,resultSelector)
+    // Overload:function(keySelector,elementSelector,resultSelector,compareSelector)
     Enumerable.prototype.groupBy = function (keySelector, elementSelector, resultSelector, comparer) {
         var source = this;
         keySelector = Utils.createLambda(keySelector);
@@ -9160,10 +8632,10 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         });
     };
 
-    // Overload:function (keySelector)
-    // Overload:function (keySelector,elementSelector)
-    // Overload:function (keySelector,elementSelector,resultSelector)
-    // Overload:function (keySelector,elementSelector,resultSelector,compareSelector)
+    // Overload:function(keySelector)
+    // Overload:function(keySelector,elementSelector)
+    // Overload:function(keySelector,elementSelector,resultSelector)
+    // Overload:function(keySelector,elementSelector,resultSelector,compareSelector)
     Enumerable.prototype.partitionBy = function (keySelector, elementSelector, resultSelector, comparer) {
 
         var source = this;
@@ -9245,16 +8717,16 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
 
     /* Aggregate Methods */
 
-    // Overload:function (func)
-    // Overload:function (seed,func)
-    // Overload:function (seed,func,resultSelector)
+    // Overload:function(func)
+    // Overload:function(seed,func)
+    // Overload:function(seed,func,resultSelector)
     Enumerable.prototype.aggregate = function (seed, func, resultSelector) {
         resultSelector = Utils.createLambda(resultSelector);
         return resultSelector(this.scan(seed, func, resultSelector).last());
     };
 
-    // Overload:function ()
-    // Overload:function (selector)
+    // Overload:function()
+    // Overload:function(selector)
     Enumerable.prototype.average = function (selector) {
         selector = Utils.createLambda(selector);
 
@@ -9276,8 +8748,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         return this.average(selector);
     };
 
-    // Overload:function ()
-    // Overload:function (predicate)
+    // Overload:function()
+    // Overload:function(predicate)
     Enumerable.prototype.count = function (predicate) {
         predicate = (predicate == null) ? Functions.True : Utils.createLambda(predicate);
 
@@ -9288,8 +8760,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         return count;
     };
 
-    // Overload:function ()
-    // Overload:function (selector)
+    // Overload:function()
+    // Overload:function(selector)
     Enumerable.prototype.max = function (selector) {
         if (selector == null) selector = Functions.Identity;
         return this.select(selector).aggregate(function (a, b) {
@@ -9305,8 +8777,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         return this.max(selector);
     };
 
-    // Overload:function ()
-    // Overload:function (selector)
+    // Overload:function()
+    // Overload:function(selector)
     Enumerable.prototype.min = function (selector) {
         if (selector == null) selector = Functions.Identity;
         return this.select(selector).aggregate(function (a, b) {
@@ -9336,8 +8808,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         });
     };
 
-    // Overload:function ()
-    // Overload:function (selector)
+    // Overload:function()
+    // Overload:function(selector)
     Enumerable.prototype.sum = function (selector) {
         if (selector == null) selector = Functions.Identity;
         return this.select(selector).aggregate(0, function (a, b) { return a + b; });
@@ -9383,8 +8855,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         return (!found) ? defaultValue : value;
     };
 
-    // Overload:function ()
-    // Overload:function (predicate)
+    // Overload:function()
+    // Overload:function(predicate)
     Enumerable.prototype.first = function (predicate) {
         if (predicate != null) return this.where(predicate).first();
 
@@ -9414,8 +8886,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         return (!found) ? defaultValue : value;
     };
 
-    // Overload:function ()
-    // Overload:function (predicate)
+    // Overload:function()
+    // Overload:function(predicate)
     Enumerable.prototype.last = function (predicate) {
         if (predicate != null) return this.where(predicate).last();
 
@@ -9430,8 +8902,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         return value;
     };
 
-    // Overload:function (defaultValue)
-    // Overload:function (defaultValue,predicate)
+    // Overload:function(defaultValue)
+    // Overload:function(defaultValue,predicate)
     Enumerable.prototype.lastOrDefault = function (predicate, defaultValue) {
         if (defaultValue === undefined) defaultValue = null;
         if (predicate != null) return this.where(predicate).lastOrDefault(null, defaultValue);
@@ -9445,8 +8917,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         return (!found) ? defaultValue : value;
     };
 
-    // Overload:function ()
-    // Overload:function (predicate)
+    // Overload:function()
+    // Overload:function(predicate)
     Enumerable.prototype.single = function (predicate) {
         if (predicate != null) return this.where(predicate).single();
 
@@ -9463,8 +8935,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         return value;
     };
 
-    // Overload:function (defaultValue)
-    // Overload:function (defaultValue,predicate)
+    // Overload:function(defaultValue)
+    // Overload:function(defaultValue,predicate)
     Enumerable.prototype.singleOrDefault = function (predicate, defaultValue) {
         if (defaultValue === undefined) defaultValue = null;
         if (predicate != null) return this.where(predicate).singleOrDefault(null, defaultValue);
@@ -9504,8 +8976,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         });
     };
 
-    // Overload:function (predicate<element>)
-    // Overload:function (predicate<element,index>)
+    // Overload:function(predicate<element>)
+    // Overload:function(predicate<element,index>)
     Enumerable.prototype.skipWhile = function (predicate) {
         predicate = Utils.createLambda(predicate);
         var source = this;
@@ -9556,8 +9028,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         });
     };
 
-    // Overload:function (predicate<element>)
-    // Overload:function (predicate<element,index>)
+    // Overload:function(predicate<element>)
+    // Overload:function(predicate<element,index>)
     Enumerable.prototype.takeWhile = function (predicate) {
         predicate = Utils.createLambda(predicate);
         var source = this;
@@ -9577,8 +9049,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         });
     };
 
-    // Overload:function ()
-    // Overload:function (count)
+    // Overload:function()
+    // Overload:function(count)
     Enumerable.prototype.takeExceptLast = function (count) {
         if (count == null) count = 1;
         var source = this;
@@ -9632,8 +9104,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         });
     };
 
-    // Overload:function (item)
-    // Overload:function (predicate)
+    // Overload:function(item)
+    // Overload:function(predicate)
     Enumerable.prototype.indexOf = function (item, comparer) {
         var found = null;
 
@@ -9659,8 +9131,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         return (found !== null) ? found : -1;
     };
 
-    // Overload:function (item)
-    // Overload:function (predicate)
+    // Overload:function(item)
+    // Overload:function(predicate)
     Enumerable.prototype.lastIndexOf = function (item, comparer) {
         var result = -1;
 
@@ -9699,9 +9171,9 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         return new Bridge.List$1(T || Object)(array);
     };
 
-    // Overload:function (keySelector)
-    // Overload:function (keySelector, elementSelector)
-    // Overload:function (keySelector, elementSelector, compareSelector)
+    // Overload:function(keySelector)
+    // Overload:function(keySelector, elementSelector)
+    // Overload:function(keySelector, elementSelector, compareSelector)
     Enumerable.prototype.toLookup = function (keySelector, elementSelector, comparer) {
         keySelector = Utils.createLambda(keySelector);
         elementSelector = Utils.createLambda(elementSelector);
@@ -9735,8 +9207,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         return obj;
     };
 
-    // Overload:function (keySelector, elementSelector)
-    // Overload:function (keySelector, elementSelector, compareSelector)
+    // Overload:function(keySelector, elementSelector)
+    // Overload:function(keySelector, elementSelector, compareSelector)
     Enumerable.prototype.toDictionary = function (keySelector, elementSelector, keyType, valueType, comparer) {
         keySelector = Utils.createLambda(keySelector);
         elementSelector = Utils.createLambda(elementSelector);
@@ -9748,9 +9220,9 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         return dict;
     };
 
-    // Overload:function ()
-    // Overload:function (replacer)
-    // Overload:function (replacer, space)
+    // Overload:function()
+    // Overload:function(replacer)
+    // Overload:function(replacer, space)
     Enumerable.prototype.toJSONString = function (replacer, space) {
         if (typeof JSON === Types.Undefined || JSON.stringify == null) {
             throw new Error("toJSONString can't find JSON.stringify. This works native JSON support Browser or include json2.js");
@@ -9758,9 +9230,9 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         return JSON.stringify(this.toArray(), replacer, space);
     };
 
-    // Overload:function ()
-    // Overload:function (separator)
-    // Overload:function (separator,selector)
+    // Overload:function()
+    // Overload:function(separator)
+    // Overload:function(separator,selector)
     Enumerable.prototype.toJoinedString = function (separator, selector) {
         if (separator == null) separator = "";
         if (selector == null) selector = Functions.Identity;
@@ -9771,8 +9243,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
 
     /* Action Methods */
 
-    // Overload:function (action<element>)
-    // Overload:function (action<element,index>)
+    // Overload:function(action<element>)
+    // Overload:function(action<element,index>)
     Enumerable.prototype.doAction = function (action) {
         var source = this;
         action = Utils.createLambda(action);
@@ -9794,10 +9266,10 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         });
     };
 
-    // Overload:function (action<element>)
-    // Overload:function (action<element,index>)
-    // Overload:function (func<element,bool>)
-    // Overload:function (func<element,index,bool>)
+    // Overload:function(action<element>)
+    // Overload:function(action<element,index>)
+    // Overload:function(func<element,bool>)
+    // Overload:function(func<element,index,bool>)
     Enumerable.prototype.forEach = function (action) {
         action = Utils.createLambda(action);
 
@@ -9812,9 +9284,9 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         }
     };
 
-    // Overload:function ()
-    // Overload:function (separator)
-    // Overload:function (separator,selector)
+    // Overload:function()
+    // Overload:function(separator)
+    // Overload:function(separator,selector)
     Enumerable.prototype.write = function (separator, selector) {
         if (separator == null) separator = "";
         selector = Utils.createLambda(selector);
@@ -9827,8 +9299,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         });
     };
 
-    // Overload:function ()
-    // Overload:function (selector)
+    // Overload:function()
+    // Overload:function(selector)
     Enumerable.prototype.writeLine = function (selector) {
         selector = Utils.createLambda(selector);
 
@@ -9986,8 +9458,8 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
 
     /* For Debug Methods */
 
-    // Overload:function ()
-    // Overload:function (selector)
+    // Overload:function()
+    // Overload:function(selector)
     Enumerable.prototype.log = function (selector) {
         selector = Utils.createLambda(selector);
 
@@ -9998,9 +9470,9 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         });
     };
 
-    // Overload:function ()
-    // Overload:function (message)
-    // Overload:function (message,selector)
+    // Overload:function()
+    // Overload:function(message)
+    // Overload:function(message,selector)
     Enumerable.prototype.trace = function (message, selector) {
         if (message == null) message = "Trace";
         selector = Utils.createLambda(selector);
@@ -10374,26 +9846,25 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
     // module export
     if (typeof define === Types.Function && define.amd) { // AMD
         define("linqjs", [], function () { return Enumerable; });
-    } else if (typeof module !== Types.Undefined && module.exports) { // Node
+    }
+    else if (typeof module !== Types.Undefined && module.exports) { // Node
         module.exports = Enumerable;
-    } else {
+    }
+    else {
         root.Enumerable = Enumerable;
     }
 
     Bridge.Linq = {};
     Bridge.Linq.Enumerable = Enumerable;
-})(Bridge.global);
-
-    // @source End.js
-
-    // module export
-    if (typeof define === "function" && define.amd) {
-        // AMD
-        define("bridge", [], function () { return Bridge; });
-    } else if (typeof module !== "undefined" && module.exports) {
-        // Node
-        module.exports = Bridge;
-    }
-
 })(this);
 
+// @source End.js
+
+// module export
+if (typeof define === "function" && define.amd) {
+    // AMD
+    define("bridge", [], function () { return Bridge; });
+} else if (typeof module !== "undefined" && module.exports) {
+    // Node
+    module.exports = Bridge;
+}
