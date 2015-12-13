@@ -193,6 +193,7 @@ namespace ClientTestLibrary
             QUnit.Test("#671", Bridge671.TestUseCase);
             QUnit.Test("#674", Bridge674.TestUseCase);
             QUnit.Test("#675", Bridge675.TestUseCase);
+            QUnit.Test("#690", Bridge690.TestUseCase);
             QUnit.Test("#708", Bridge708.TestUseCase);
 
             QUnit.Module("LINQ");
