@@ -2192,6 +2192,39 @@ Bridge.define('ClientTestLibrary.Bridge675', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge691', {
+    statics: {
+        testUseCase: function (assert) {
+            var $t;
+            assert.expect(1);
+
+            var pos = 0;
+            var lines = ["", "", "str"];
+            while (pos < lines.length) {
+                var $t = (function () {
+                    while (pos < lines.length && lines[pos].length === 0) {
+                        pos++;
+                    }
+
+                    if (!(pos < lines.length)) {
+                        return 2;
+                    }
+
+                    var a = function (p) {
+                    };
+
+                    if (pos > 0) {
+                        return 2;
+                    }
+                }).call(this);
+                if($t == 2) break;
+            }
+
+            assert.equal(pos, 2, "Bridge691");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge708', {
     statics: {
         testUseCase: function (assert) {
