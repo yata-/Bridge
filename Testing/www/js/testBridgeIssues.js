@@ -2399,6 +2399,11 @@ Bridge.define('ClientTestLibrary.Bridge691', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge693A$1', function (T) { return {
+    constructor: function (props) {
+    }
+}; });
+
 Bridge.define('ClientTestLibrary.Bridge708', {
     statics: {
         testUseCase: function (assert) {
@@ -2446,6 +2451,20 @@ Bridge.define('ClientTestLibrary.Bridge304', {
     },
     f$1: function () {
         this.setX("void F()");
+    }
+});
+
+Bridge.define('ClientTestLibrary.IBridge693D');
+
+Bridge.define('ClientTestLibrary.Bridge693B.Bridge693C', {
+    inherits: [ClientTestLibrary.IBridge693D]
+});
+
+Bridge.define('ClientTestLibrary.Bridge693B', {
+    inherits: [ClientTestLibrary.Bridge693A$1(ClientTestLibrary.Bridge693B.Bridge693C)],
+    constructor: function () {
+        ClientTestLibrary.Bridge693A$1(ClientTestLibrary.Bridge693B.Bridge693C).prototype.$constructor.call(this, new ClientTestLibrary.Bridge693B.Bridge693C());
+
     }
 });
 
@@ -3624,6 +3643,17 @@ Bridge.define('ClientTestLibrary.Bridge690', {
                 }, arguments);
 
             $asyncBody();
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge693', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var c = new ClientTestLibrary.Bridge693B();
+            assert.notEqual(c, null, "Bridge693 not null");
         }
     }
 });
