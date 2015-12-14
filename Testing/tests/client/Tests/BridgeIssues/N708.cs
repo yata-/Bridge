@@ -11,7 +11,6 @@ namespace ClientTestLibrary
         public static void TestUseCase(Assert assert)
         {
             assert.Expect(1);
-
             assert.Equal(TestIssue(), 12, "Bridge708 TestIssue");
         }
 

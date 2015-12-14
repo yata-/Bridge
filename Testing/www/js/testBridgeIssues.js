@@ -571,7 +571,7 @@ Bridge.define('ClientTestLibrary.Bridge508', {
                 $taskResult1, 
                 $jumpFromFinally, 
                 result, 
-                $asyncBody = function () {
+                $asyncBody = Bridge.fn.bind(this, function () {
                     for (;;) {
                         switch ($step) {
                             case 0: {
@@ -596,9 +596,9 @@ Bridge.define('ClientTestLibrary.Bridge508', {
                             }
                         }
                     }
-                };
+                }, arguments);
 
-            $asyncBody.apply(this, arguments);
+            $asyncBody();
         },
         method1: function () {
             var $step = 0,
@@ -615,7 +615,7 @@ Bridge.define('ClientTestLibrary.Bridge508', {
                 i, 
                 np, 
                 np1, 
-                $asyncBody = function () {
+                $asyncBody = Bridge.fn.bind(this, function () {
                     try {
                         for (;;) {
                             switch ($step) {
@@ -703,9 +703,9 @@ Bridge.define('ClientTestLibrary.Bridge508', {
                         $e1 = Bridge.Exception.create($e1);
                         $returnTask.setError($e1);
                     }
-                };
+                }, arguments);
 
-            $asyncBody.apply(this, arguments);
+            $asyncBody();
             return $returnTask;
         },
         initPage: function () {
@@ -714,7 +714,7 @@ Bridge.define('ClientTestLibrary.Bridge508', {
                 $jumpFromFinally, 
                 $returnTask = new Bridge.Task(), 
                 $returnValue, 
-                $asyncBody = function () {
+                $asyncBody = Bridge.fn.bind(this, function () {
                     try {
                         for (;;) {
                             switch ($step) {
@@ -740,9 +740,9 @@ Bridge.define('ClientTestLibrary.Bridge508', {
                         $e1 = Bridge.Exception.create($e1);
                         $returnTask.setError($e1);
                     }
-                };
+                }, arguments);
 
-            $asyncBody.apply(this, arguments);
+            $asyncBody();
             return $returnTask;
         },
         nextPage: function () {
@@ -751,7 +751,7 @@ Bridge.define('ClientTestLibrary.Bridge508', {
                 $jumpFromFinally, 
                 $returnTask = new Bridge.Task(), 
                 $returnValue, 
-                $asyncBody = function () {
+                $asyncBody = Bridge.fn.bind(this, function () {
                     try {
                         for (;;) {
                             switch ($step) {
@@ -777,9 +777,9 @@ Bridge.define('ClientTestLibrary.Bridge508', {
                         $e1 = Bridge.Exception.create($e1);
                         $returnTask.setError($e1);
                     }
-                };
+                }, arguments);
 
-            $asyncBody.apply(this, arguments);
+            $asyncBody();
             return $returnTask;
         },
         nextPage1: function () {
@@ -2210,11 +2210,166 @@ Bridge.define('ClientTestLibrary.Bridge689', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge690A', {
+    i3: 3,
+    asyncSum: function (i1, i2) {
+        var $step = 0,
+            $task1, 
+            $jumpFromFinally, 
+            $returnTask = new Bridge.Task(), 
+            $returnValue, 
+            $asyncBody = Bridge.fn.bind(this, function () {
+                try {
+                    for (;;) {
+                        switch ($step) {
+                            case 0: {
+                                $task1 = Bridge.Task.delay(100);
+                                $step = 1;
+                                $task1.continueWith($asyncBody);
+                                return;
+                            }
+                            case 1: {
+                                $task1.getResult();
+                                $returnTask.setResult(i1 + i2 + this.i3);
+                                return;
+                            }
+                            default: {
+                                $returnTask.setResult(null);
+                                return;
+                            }
+                        }
+                    }
+                } catch($e1) {
+                    $e1 = Bridge.Exception.create($e1);
+                    $returnTask.setError($e1);
+                }
+            }, arguments);
+
+        $asyncBody();
+        return $returnTask;
+    },
+    start: function () {
+        var $step = 0,
+            $task1, 
+            $taskResult1, 
+            $jumpFromFinally, 
+            $returnTask = new Bridge.Task(), 
+            $returnValue, 
+            $asyncBody = Bridge.fn.bind(this, function () {
+                try {
+                    for (;;) {
+                        switch ($step) {
+                            case 0: {
+                                $task1 = this.asyncSum(2, 3);
+                                $step = 1;
+                                $task1.continueWith($asyncBody);
+                                return;
+                            }
+                            case 1: {
+                                $taskResult1 = $task1.getResult();
+                                $returnTask.setResult($taskResult1);
+                                return;
+                            }
+                            default: {
+                                $returnTask.setResult(null);
+                                return;
+                            }
+                        }
+                    }
+                } catch($e1) {
+                    $e1 = Bridge.Exception.create($e1);
+                    $returnTask.setError($e1);
+                }
+            }, arguments);
+
+        $asyncBody();
+        return $returnTask;
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge690B', {
+    statics: {
+        i3: 17,
+        asyncSum: function (i1, i2) {
+            var $step = 0,
+                $task1, 
+                $jumpFromFinally, 
+                $returnTask = new Bridge.Task(), 
+                $returnValue, 
+                $asyncBody = Bridge.fn.bind(this, function () {
+                    try {
+                        for (;;) {
+                            switch ($step) {
+                                case 0: {
+                                    $task1 = Bridge.Task.delay(100);
+                                    $step = 1;
+                                    $task1.continueWith($asyncBody);
+                                    return;
+                                }
+                                case 1: {
+                                    $task1.getResult();
+                                    $returnTask.setResult(i1 + i2 + Bridge.get(ClientTestLibrary.Bridge690B).i3);
+                                    return;
+                                }
+                                default: {
+                                    $returnTask.setResult(null);
+                                    return;
+                                }
+                            }
+                        }
+                    } catch($e1) {
+                        $e1 = Bridge.Exception.create($e1);
+                        $returnTask.setError($e1);
+                    }
+                }, arguments);
+
+            $asyncBody();
+            return $returnTask;
+        },
+        start: function () {
+            var $step = 0,
+                $task1, 
+                $taskResult1, 
+                $jumpFromFinally, 
+                $returnTask = new Bridge.Task(), 
+                $returnValue, 
+                $asyncBody = Bridge.fn.bind(this, function () {
+                    try {
+                        for (;;) {
+                            switch ($step) {
+                                case 0: {
+                                    $task1 = Bridge.get(ClientTestLibrary.Bridge690B).asyncSum(19, 23);
+                                    $step = 1;
+                                    $task1.continueWith($asyncBody);
+                                    return;
+                                }
+                                case 1: {
+                                    $taskResult1 = $task1.getResult();
+                                    $returnTask.setResult($taskResult1);
+                                    return;
+                                }
+                                default: {
+                                    $returnTask.setResult(null);
+                                    return;
+                                }
+                            }
+                        }
+                    } catch($e1) {
+                        $e1 = Bridge.Exception.create($e1);
+                        $returnTask.setError($e1);
+                    }
+                }, arguments);
+
+            $asyncBody();
+            return $returnTask;
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge708', {
     statics: {
         testUseCase: function (assert) {
             assert.expect(1);
-
             assert.equal(Bridge.get(ClientTestLibrary.Bridge708).testIssue(), 12, "Bridge708 TestIssue");
         },
         testIssue: function () {
@@ -3357,6 +3512,85 @@ Bridge.define('ClientTestLibrary.Bridge660MessageStore', {
             init: function () {
                 this._initialEditState = new ClientTestLibrary.Bridge660MessageEditState(new ClientTestLibrary.Bridge660TextInputState("constructor", "Message"));
             }
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge690', {
+    statics: {
+        testUseCaseForInstance: function (assert) {
+            var $step = 0,
+                $task1, 
+                $taskResult1, 
+                $jumpFromFinally, 
+                done, 
+                c, 
+                r, 
+                $asyncBody = Bridge.fn.bind(this, function () {
+                    for (;;) {
+                        switch ($step) {
+                            case 0: {
+                                assert.expect(1);
+                                
+                                done = assert.async();
+                                c = new ClientTestLibrary.Bridge690A();
+                                $task1 = c.start();
+                                $step = 1;
+                                $task1.continueWith($asyncBody, true);
+                                return;
+                            }
+                            case 1: {
+                                $taskResult1 = $task1.getResult();
+                                r = $taskResult1;
+                                
+                                assert.equal(r, 8, "Bridge690 TestUseCaseForInstance");
+                                done();
+                                return;
+                            }
+                            default: {
+                                return;
+                            }
+                        }
+                    }
+                }, arguments);
+
+            $asyncBody();
+        },
+        testUseCaseForStatic: function (assert) {
+            var $step = 0,
+                $task1, 
+                $taskResult1, 
+                $jumpFromFinally, 
+                done, 
+                r, 
+                $asyncBody = Bridge.fn.bind(this, function () {
+                    for (;;) {
+                        switch ($step) {
+                            case 0: {
+                                assert.expect(1);
+                                
+                                done = assert.async();
+                                $task1 = Bridge.get(ClientTestLibrary.Bridge690B).start();
+                                $step = 1;
+                                $task1.continueWith($asyncBody, true);
+                                return;
+                            }
+                            case 1: {
+                                $taskResult1 = $task1.getResult();
+                                r = $taskResult1;
+                                
+                                assert.equal(r, 59, "Bridge690 TestUseCaseForStatic");
+                                done();
+                                return;
+                            }
+                            default: {
+                                return;
+                            }
+                        }
+                    }
+                }, arguments);
+
+            $asyncBody();
         }
     }
 });
