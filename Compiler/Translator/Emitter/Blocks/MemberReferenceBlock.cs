@@ -231,7 +231,7 @@ namespace Bridge.Translator
                 {
                     if (member != null && member.Member is IMethod)
                     {
-                        var r = new Regex(@"([$\w]+)\(\s*\S.*\)");
+                        var r = new Regex(@"([$\w\.]+)\(\s*\S.*\)");
                         var match = r.Match(inline);
 
                         if (match.Success)
