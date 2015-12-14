@@ -192,6 +192,7 @@ Bridge.define('ClientTestLibrary.RunTests', {
             QUnit.test("#674", Bridge.get(ClientTestLibrary.Bridge674).testUseCase);
             QUnit.test("#675", Bridge.get(ClientTestLibrary.Bridge675).testUseCase);
             QUnit.test("#689", Bridge.get(ClientTestLibrary.Bridge689).testUseCase);
+            QUnit.test("#694", Bridge.get(ClientTestLibrary.Bridge694).testUseCase);
             QUnit.test("#708", Bridge.get(ClientTestLibrary.Bridge708).testUseCase);
 
             QUnit.module("LINQ");
