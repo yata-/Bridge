@@ -7,6 +7,7 @@ using ICSharpCode.NRefactory.TypeSystem.Implementation;
 using Object.Net.Utilities;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Bridge.Translator
 {
@@ -203,7 +204,14 @@ namespace Bridge.Translator
                 }
                 else
                 {
-                    this.Write(inline);
+                    if (member != null && member.Member is IMethod)
+                    {
+                        throw new EmitterException(memberReferenceExpression, "The templated method (" + member.Member.FullName + ") cannot be used like reference");
+                    }
+                    else
+                    {
+                        this.Write(inline);  
+                    }
                 }
 
                 return;
@@ -221,8 +229,24 @@ namespace Bridge.Translator
                 }
                 else
                 {
-                    //this.Write(inline);
-                    new InlineArgumentsBlock(this.Emitter, new ArgumentsInfo(this.Emitter, memberReferenceExpression, resolveResult), inline).Emit();
+                    if (member != null && member.Member is IMethod)
+                    {
+                        var r = new Regex(@"([$\w\.]+)\(\s*\S.*\)");
+                        var match = r.Match(inline);
+
+                        if (match.Success)
+                        {
+                            this.Write(match.Groups[1].Value);
+                        }
+                        else
+                        {
+                            throw new EmitterException(memberReferenceExpression, "The templated method (" + member.Member.FullName + ") cannot be used like reference");    
+                        }
+                    }
+                    else
+                    {
+                        new InlineArgumentsBlock(this.Emitter, new ArgumentsInfo(this.Emitter, memberReferenceExpression, resolveResult), inline).Emit();
+                    }
                 }
             }
             else
