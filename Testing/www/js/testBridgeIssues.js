@@ -2210,6 +2210,17 @@ Bridge.define('ClientTestLibrary.Bridge689', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge699', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var blob = new Blob(["blobData"], { type: "type" });
+            assert.notEqual(blob, null);
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge708', {
     statics: {
         testUseCase: function (assert) {
