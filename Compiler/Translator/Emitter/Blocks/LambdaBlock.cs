@@ -1,6 +1,10 @@
 using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using System.Collections.Generic;
+using ICSharpCode.NRefactory.CSharp.Resolver;
+using ICSharpCode.NRefactory.Semantics;
+using ICSharpCode.NRefactory.TypeSystem;
+using Object.Net.Utilities;
 
 namespace Bridge.Translator
 {
@@ -147,9 +151,11 @@ namespace Bridge.Translator
             this.EmitMethodParameters(parameters, context);
             this.WriteSpace();
 
+            int pos = 0;
             if (!block && !this.IsAsync)
             {
                 this.BeginBlock();
+                pos = this.Emitter.Output.Length;
             }
 
             bool isSimpleLambda = body.Parent is LambdaExpression && !block && !this.IsAsync;
@@ -157,7 +163,12 @@ namespace Bridge.Translator
             if (isSimpleLambda)
             {
                 this.ConvertParamsToReferences(parameters);
-                this.WriteReturn(true);
+                var rr = this.Emitter.Resolver.ResolveNode(this.Context, this.Emitter) as LambdaResolveResult;
+
+                if (rr == null || rr.ReturnType.Kind != TypeKind.Void)
+                {
+                    this.WriteReturn(true);    
+                }
             }
 
             if (this.IsAsync)
@@ -184,6 +195,11 @@ namespace Bridge.Translator
             {
                 this.Emitter.Output.Insert(savedPos, Bridge.Translator.Emitter.ROOT + "." + Bridge.Translator.Emitter.DELEGATE_BIND + "(this, ");
                 this.WriteCloseParentheses();
+            }
+
+            if (!block && !this.IsAsync)
+            {
+                this.EmitTempVars(pos);
             }
 
             this.PopLocals();
