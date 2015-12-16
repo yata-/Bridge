@@ -39,7 +39,7 @@ Bridge.define('ClientTestLibrary.Linq.TestLinqQueryExecution', {
 
             // TEST
             Bridge.Linq.Enumerable.from(numbers).forEach(function (x, index) {
-                return numbers[index] = -numbers[index];
+                numbers[index] = -numbers[index];
             });
             assert.deepEqual(Bridge.Linq.Enumerable.from(numbers).toArray(), [-5, -4, -1, -3, -9, -8, -6, -7, -2, 0], "ForEach()");
 

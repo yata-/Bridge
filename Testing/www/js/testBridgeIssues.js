@@ -12,7 +12,7 @@ Bridge.define('ClientTestLibrary.Bridge169', {
         },
         m2: function () {
             (function () {
-                return Bridge.get(ClientTestLibrary.Bridge169).number = 2;
+                Bridge.get(ClientTestLibrary.Bridge169).number = 2;
             })();
         }
     }
@@ -1176,7 +1176,7 @@ Bridge.define('ClientTestLibrary.Bridge563', {
                 (function () {
                     var itm = $t.getCurrent();
                     handlers[i++] = function () {
-                        return result += itm;
+                        result += itm;
                     };
                 }).call(this);
             }
@@ -1197,7 +1197,7 @@ Bridge.define('ClientTestLibrary.Bridge563', {
                 (function () {
                     var itm1 = $t2.getCurrent();
                     handlers[i++] = function () {
-                        return result += itm1;
+                        result += itm1;
                     };
                 }).call(this);
             }
@@ -1223,7 +1223,7 @@ Bridge.define('ClientTestLibrary.Bridge563', {
                 (function () {
                     var itm = keys[j];
                     handlers[i++] = function () {
-                        return result += itm;
+                        result += itm;
                     };
                 }).call(this);
             }
@@ -2434,6 +2434,41 @@ Bridge.define('ClientTestLibrary.Bridge708', {
 
             return sum;
         }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge722', {
+    statics: {
+        m1: function (i) {
+            return i;
+        },
+        testUseCase: function (assert) {
+            var $t, $t1, $t2, $t3, $t4, $t5;
+            assert.expect(5);
+
+            var c1 = new ClientTestLibrary.Bridge722();
+            var asset1 = 1;
+            asset1 = ($t = 2, c1.setItem("path", $t), $t);
+
+            assert.equal(asset1, 2, "Bridge722 asset1");
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge722).m1(($t1 = 3, c1.setItem("path", $t1), $t1)), 3, "Bridge722 M1 3");
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge722).m1(($t2 = ($t3 = 4, c1.setItem("path", $t3), $t3), asset1 = $t2, $t2)), 4, "Bridge722 M1 4");
+
+            var c2 = { };
+            var asset2 = ($t4 = 5, c2.path = $t4, $t4);
+            assert.equal(asset2, 5, "Bridge722 asset2");
+
+            var c3 = new Bridge.Dictionary$2(String,Bridge.Int)();
+            var asset3 = ($t5 = 6, c3.set("path", $t5), $t5);
+            assert.equal(asset3, 6, "Bridge722 asset3");
+        }
+    },
+    lastItem: 0,
+    getItem: function (item) {
+        return this.lastItem;
+    },
+    setItem: function (item, value) {
+        this.lastItem = value;
     }
 });
 
