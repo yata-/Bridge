@@ -2426,6 +2426,25 @@ Bridge.define('ClientTestLibrary.Bridge694', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge696', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            var namedCallbacks = new Bridge.Dictionary$2(String,Function)();
+            namedCallbacks.add("Shout", function (message) {
+                return message.length;
+            });
+            namedCallbacks.add("Whisper", function (message) {
+                return message.length;
+            });
+
+            assert.equal(namedCallbacks.get("Shout")("HELLO!"), 6, "Bridge696 HELLO!");
+            assert.equal(namedCallbacks.get("Whisper")("HELLO"), 5, "Bridge696 HELLO");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge708', {
     statics: {
         testUseCase: function (assert) {
