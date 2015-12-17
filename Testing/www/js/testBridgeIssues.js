@@ -331,8 +331,9 @@ Bridge.define('ClientTestLibrary.Bridge467', {
     },
     equals: function (obj) {
         var other = Bridge.as(obj, ClientTestLibrary.Bridge467);
-        if (other === null)
+        if (other === null) {
             return false;
+        }
 
         if (this.getMyProperty() < 0 || other.getMyProperty() < 0) {
             return this === other;
@@ -2472,6 +2473,29 @@ Bridge.define('ClientTestLibrary.Bridge722', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge726', {
+    statics: {
+        testUseCase: function (assert) {
+            var $t;
+            assert.expect(1);
+
+            var b = true;
+            var t = [1, 2, 3];
+
+            var sum = 0;
+            if (b) {
+                $t = Bridge.getEnumerator(t);
+                while ($t.moveNext()) {
+                    var i = $t.getCurrent();
+                    sum += i;
+                }
+            }
+
+            assert.equal(sum, 6, "Bridge726");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
@@ -2548,8 +2572,9 @@ Bridge.define('ClientTestLibrary.Bridge381', {
 
 
             var sArr = Bridge.Array.init(10, null);
-            for (var i = 0; i < 10; i++)
+            for (var i = 0; i < 10; i++) {
                 sArr[i] = Bridge.String.format("{0,-3}", i * 5);
+            }
 
             var s4 = sArr.join(":");
             assert.equal(s4, "0  :5  :10 :15 :20 :25 :30 :35 :40 :45 ", "Join4");
@@ -4355,8 +4380,9 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
                 var $t = (function () {
                     if (!Bridge.Linq.Enumerable.from(testList).any(function (x) {
                         return x === i;
-                    }))
+                    })) {
                         return 1;
+                    }
 
                     count++;
                 }).call(this);

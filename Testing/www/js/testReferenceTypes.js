@@ -72,8 +72,9 @@ Bridge.define('ClientTestLibrary.ClassA', {
     constructor$1: function (d) {
         ClientTestLibrary.ClassA.prototype.$constructor.call(this);
 
-        if (d === null)
+        if (d === null) {
             throw new Bridge.Exception("Related should not be null");
+        }
 
         this.setData(d);
     },

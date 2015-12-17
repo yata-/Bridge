@@ -417,19 +417,27 @@ Bridge.define('Bridge.ClientTest.DecimalMathTests.Logger', {
                 var j = i + 1;
                 if (Bridge.is(o, Bridge.Decimal)) {
                     var d1 = Bridge.cast(o, Bridge.Decimal);
-                    if (d1.equals(Bridge.get(Bridge.ClientTest.DecimalMathTests).maxValue))
+                    if (d1.equals(Bridge.get(Bridge.ClientTest.DecimalMathTests).maxValue)) {
                         result[j] = "DecimalMathTests.MaxValue";
-                    else 
-                        if (d1.equals(Bridge.get(Bridge.ClientTest.DecimalMathTests).minValue))
+                    }
+                    else  {
+                        if (d1.equals(Bridge.get(Bridge.ClientTest.DecimalMathTests).minValue)) {
                             result[j] = "DecimalMathTests.MinValue";
-                        else 
-                            if (d1.equals(Bridge.Decimal.MinusOne))
+                        }
+                        else  {
+                            if (d1.equals(Bridge.Decimal.MinusOne)) {
                                 result[j] = "decimal.MinusOne";
-                            else 
-                                if (d1.equals(Bridge.Decimal.One))
+                            }
+                            else  {
+                                if (d1.equals(Bridge.Decimal.One)) {
                                     result[j] = "decimal.One";
-                                else 
+                                }
+                                else  {
                                     result[j] = d1.toString() + "m";
+                                }
+                            }
+                        }
+                    }
                 }
                 else  {
                     result[j] = o;
@@ -445,20 +453,23 @@ Bridge.define('Bridge.ClientTest.DecimalMathTests.Logger', {
         }
     },
     constructor: function () {
-        if (Bridge.get(Bridge.ClientTest.DecimalMathTests).useLogging)
+        if (Bridge.get(Bridge.ClientTest.DecimalMathTests).useLogging) {
             this.setText(new Bridge.Text.StringBuilder());
+        }
     },
     onLogBegin: function (name) {
-        if (!Bridge.get(Bridge.ClientTest.DecimalMathTests).useLogging)
+        if (!Bridge.get(Bridge.ClientTest.DecimalMathTests).useLogging) {
             return;
+        }
 
         this.getText().appendLine("//------------------------------" + name + "------------------------------");
         this.getText().appendLine("object[,] input = new object[,]");
         this.getText().append("{");
     },
     onLog: function (parameters) {
-        if (!Bridge.get(Bridge.ClientTest.DecimalMathTests).useLogging)
+        if (!Bridge.get(Bridge.ClientTest.DecimalMathTests).useLogging) {
             return;
+        }
 
         var sb = new Bridge.Text.StringBuilder("{{");
         for (var i = 0; i < parameters.length + 1; i++) {
@@ -475,14 +486,17 @@ Bridge.define('Bridge.ClientTest.DecimalMathTests.Logger', {
         //Fix
         //this.Text.AppendFormat(format, ConvertParameters(parameters));
         var convertedParams = Bridge.get(Bridge.ClientTest.DecimalMathTests.Logger).convertParameters(parameters);
-        if (convertedParams.length === 4)
+        if (convertedParams.length === 4) {
             this.getText().appendFormat(format, convertedParams[0], convertedParams[1], convertedParams[2], convertedParams[3]);
-        if (convertedParams.length === 5)
+        }
+        if (convertedParams.length === 5) {
             this.getText().appendFormat(format, convertedParams[0], convertedParams[1], convertedParams[2], convertedParams[3], convertedParams[4]);
+        }
     },
     onLogEnd: function () {
-        if (!Bridge.get(Bridge.ClientTest.DecimalMathTests).useLogging)
+        if (!Bridge.get(Bridge.ClientTest.DecimalMathTests).useLogging) {
             return;
+        }
 
         var sb = this.getText();
 
@@ -1296,13 +1310,14 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.GenericDictionaryTests', {
             if (kvp.key === "1") {
                 Bridge.get(Bridge.Test.Assert).areEqual(kvp.value, "a");
             }
-            else 
+            else  {
                 if (kvp.key === "2") {
                     Bridge.get(Bridge.Test.Assert).areEqual(kvp.value, "b");
                 }
                 else  {
                     Bridge.get(Bridge.Test.Assert).fail$1("Invalid key " + kvp.key);
                 }
+            }
             count++;
         }
         Bridge.get(Bridge.Test.Assert).areEqual(count, 2);
@@ -1841,8 +1856,9 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
         while ($t.moveNext()) {
             var i = $t.getCurrent();
             sb.appendLine("got " + i);
-            if (++n === 2)
+            if (++n === 2) {
                 break;
+            }
         }
 
         this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding 2\r\nyielding 3\r\nyielding 4\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\n");
@@ -2627,11 +2643,13 @@ Bridge.define('Bridge.ClientTest.DecimalMathTests', {
         },
         parseDotNetDiff: function (input, i, lowerBound) {
             var o = input.get([i, lowerBound + 1]);
-            if (o === null)
+            if (o === null) {
                 return Bridge.Decimal.lift(null);
+            }
 
-            if (Bridge.is(o, String))
+            if (Bridge.is(o, String)) {
                 return Bridge.Decimal(o.toString());
+            }
 
             var dotNetDiff = Bridge.cast(input.get([i, lowerBound + 1]), Bridge.Decimal, true);
             return dotNetDiff;
@@ -3349,8 +3367,9 @@ Bridge.define('Bridge.ClientTest.IEquatableTests', {
 Bridge.define('Bridge.ClientTest.MathTests', {
     assertAlmostEqual: function (d1, d2) {
         var diff = d2 - d1;
-        if (diff < 0)
+        if (diff < 0) {
             diff = -diff;
+        }
         Bridge.get(Bridge.Test.Assert).$true(diff < 1E-08);
     },
     assertIsDecimalAndEqualTo: function (v, d, message) {
@@ -7076,8 +7095,9 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.TimeSpanTests', {
     },
     assertAlmostEqual: function (d1, d2) {
         var diff = d2 - d1;
-        if (diff < 0)
+        if (diff < 0) {
             diff = -diff;
+        }
         Bridge.get(Bridge.Test.Assert).$true(diff < 1E-08);
     },
     comparisonOperatorsWork: function () {
