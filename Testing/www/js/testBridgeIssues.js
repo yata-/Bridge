@@ -2625,6 +2625,28 @@ Bridge.define('ClientTestLibrary.Bridge726', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge751', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            for (var i = 0; i < 5; i++) {
+                var el = i;
+            }
+
+            var values = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+                [1],
+                [2]
+            ] );
+            var v1 = Bridge.Linq.Enumerable.from(values).count(function (el1) {
+                return el1 === 1;
+            });
+
+            assert.equal(v1, 1, "Bridge751");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
