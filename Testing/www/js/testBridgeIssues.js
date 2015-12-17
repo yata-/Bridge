@@ -2448,10 +2448,18 @@ Bridge.define('ClientTestLibrary.Bridge696', {
 Bridge.define('ClientTestLibrary.Bridge699', {
     statics: {
         testUseCase: function (assert) {
-            assert.expect(1);
+            assert.expect(5);
 
-            var blob = new Blob(["blobData"], { type: "type" });
-            assert.notEqual(blob, null);
+            var blob1 = new Blob(["blobData1"], { type: "text/richtext", endings: "transparent" });
+
+            assert.notEqual(blob1, null, "blob1 is not null");
+            assert.equal(blob1.size, 9, "blob1.Size equals 9");
+            assert.equal(blob1.type, "text/richtext", "blob1.Type equals 'text/richtext'");
+
+            var blob2 = new Blob(["data2"]);
+            assert.notEqual(blob2, null, "blob2 is not null");
+            assert.equal(blob2.size, 5, "blob2.Size equals 5");
+
         }
     }
 });
