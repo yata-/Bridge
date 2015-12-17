@@ -66,6 +66,12 @@ namespace Bridge.Translator
             set;
         }
 
+        public bool? HandleReturn
+        {
+            get;
+            set;
+        }
+
         public int BeginPosition
         {
             get;
@@ -122,15 +128,20 @@ namespace Bridge.Translator
 
                 if (this.WrapByFn.Value)
                 {
-                    var jumpVisitor = new ContinueBreakVisitor();
+                    var jumpVisitor = new ContinueBreakVisitor(false);
                     this.BlockStatement.AcceptVisitor(jumpVisitor);
                     this.HandleContinue = jumpVisitor.Continue.Count > 0;
                     this.HandleBreak = jumpVisitor.Break.Count > 0;
+
+                    jumpVisitor = new ContinueBreakVisitor(true);
+                    this.BlockStatement.AcceptVisitor(jumpVisitor);
+                    this.HandleReturn = jumpVisitor.Return.Count > 0;
                 }
 
                 this.OldReplaceJump = this.Emitter.ReplaceJump;
                 this.Emitter.ReplaceJump = (this.HandleContinue.HasValue && this.HandleContinue.Value) ||
-                                           (this.HandleBreak.HasValue && this.HandleBreak.Value);
+                                           (this.HandleBreak.HasValue && this.HandleBreak.Value) ||
+                                           (this.HandleReturn.HasValue && this.HandleReturn.Value);
             }
 
             this.EmitBlock();
@@ -293,7 +304,8 @@ namespace Bridge.Translator
             if (this.WrapByFn.HasValue && this.WrapByFn.Value)
             {
                 var isBlock = (this.HandleContinue.HasValue && this.HandleContinue.Value) ||
-                              (this.HandleBreak.HasValue && this.HandleBreak.Value);
+                              (this.HandleBreak.HasValue && this.HandleBreak.Value) ||
+                              (this.HandleReturn.HasValue && this.HandleReturn.Value);
 
                 if (this.NoBraces)
                 {
@@ -305,18 +317,40 @@ namespace Bridge.Translator
                     this.Write("}");
                 }
 
-                this.Write(").call(this);");
+                this.Write(").call(this)");
+
+                if (isBlock)
+                {
+                    this.Write(" || {}");
+                }
+
+                this.Write(";");
 
                 if (this.HandleContinue.HasValue && this.HandleContinue.Value)
                 {
                     this.WriteNewLine();
-                    this.Write("if(" + this.LoopVar + " == 1) continue;");
+                    this.Write("if(" + this.LoopVar + ".jump == 1) continue;");
                 }
 
                 if (this.HandleBreak.HasValue && this.HandleBreak.Value)
                 {
                     this.WriteNewLine();
-                    this.Write("if(" + this.LoopVar + " == 2) break;");
+                    this.Write("if(" + this.LoopVar + ".jump == 2) break;");
+                }
+
+                if (this.HandleReturn.HasValue && this.HandleReturn.Value)
+                {
+                    this.WriteNewLine();
+                    this.Write("if(" + this.LoopVar + ".jump == 3) return ");
+
+                    if (this.OldReplaceJump.HasValue && this.OldReplaceJump.Value && this.Emitter.JumpStatements == null)
+                    {
+                        this.Write("{jump: 3, v: " + this.LoopVar + ".v};");    
+                    }
+                    else
+                    {
+                        this.Write(this.LoopVar + ".v;");    
+                    }
                 }
 
                 if (!this.NoBraces)
@@ -361,7 +395,8 @@ namespace Bridge.Translator
                 }
 
                 if ((this.HandleContinue.HasValue && this.HandleContinue.Value) ||
-                    (this.HandleBreak.HasValue && this.HandleBreak.Value))
+                    (this.HandleBreak.HasValue && this.HandleBreak.Value) ||
+                    (this.HandleReturn.HasValue && this.HandleReturn.Value))
                 {
                     this.LoopVar = this.GetTempVarName();
                     this.Write("var " + this.LoopVar + " = ");

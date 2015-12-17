@@ -2381,17 +2381,17 @@ Bridge.define('ClientTestLibrary.Bridge691', {
                     }
 
                     if (!(pos < lines.length)) {
-                        return 2;
+                        return {jump:2};
                     }
 
                     var a = function (p) {
                     };
 
                     if (pos > 0) {
-                        return 2;
+                        return {jump:2};
                     }
-                }).call(this);
-                if($t == 2) break;
+                }).call(this) || {};
+                if($t.jump == 2) break;
             }
 
             assert.equal(pos, 2, "Bridge691");
@@ -2403,6 +2403,66 @@ Bridge.define('ClientTestLibrary.Bridge693A$1', function (T) { return {
     constructor: function (props) {
     }
 }; });
+
+Bridge.define('ClientTestLibrary.Bridge694', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(3);
+
+            var fruits = Bridge.Array.init(3, null);
+            fruits[0] = "mango";
+            fruits[1] = "apple";
+            fruits[2] = "lemon";
+
+            var list = Bridge.Linq.Enumerable.from(fruits).select(function(x) { return Bridge.cast(x, String); }).orderBy(function (fruit) {
+                return fruit;
+            }).select(function (fruit) {
+                return fruit;
+            }).toList(String);
+            assert.equal(list.getItem(0), "apple", "Bridge694 apple");
+            assert.equal(list.getItem(1), "lemon", "Bridge694 lemon");
+            assert.equal(list.getItem(2), "mango", "Bridge694 mango");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge696', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            var namedCallbacks = new Bridge.Dictionary$2(String,Function)();
+            namedCallbacks.add("Shout", function (message) {
+                return message.length;
+            });
+            namedCallbacks.add("Whisper", function (message) {
+                return message.length;
+            });
+
+            assert.equal(namedCallbacks.get("Shout")("HELLO!"), 6, "Bridge696 HELLO!");
+            assert.equal(namedCallbacks.get("Whisper")("HELLO"), 5, "Bridge696 HELLO");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge699', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(5);
+
+            var blob1 = new Blob(["blobData1"], { type: "text/richtext", endings: "transparent" });
+
+            assert.notEqual(blob1, null, "blob1 is not null");
+            assert.equal(blob1.size, 9, "blob1.Size equals 9");
+            assert.equal(blob1.type, "text/richtext", "blob1.Type equals 'text/richtext'");
+
+            var blob2 = new Blob(["data2"]);
+            assert.notEqual(blob2, null, "blob2 is not null");
+            assert.equal(blob2.size, 5, "blob2.Size equals 5");
+
+        }
+    }
+});
 
 Bridge.define('ClientTestLibrary.Bridge708', {
     statics: {
@@ -2433,6 +2493,75 @@ Bridge.define('ClientTestLibrary.Bridge708', {
             f();
 
             return sum;
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge721', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(4);
+
+            var testList = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+                [3]
+            ] );
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge721).check(testList), "ThirdLoop", "Bridge721 ThirdLoop");
+
+            testList = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+                [5]
+            ] );
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge721).check(testList), "SecondLoop", "Bridge721 SecondLoop");
+
+            testList = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+                [15]
+            ] );
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge721).check(testList), "FirstLoop", "Bridge721 FirstLoop");
+
+            testList = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+                [25]
+            ] );
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge721).check(testList), "NoLoops", "Bridge721 NoLoops");
+        },
+        check: function (testList) {
+            var $t, $t1, $t2;
+            var i = 0;
+            while (i < 20) {
+                var $t = (function () {
+                    while (i < 10) {
+                        var $t1 = (function () {
+                            while (i < 5) {
+                                var $t2 = (function () {
+                                    if (Bridge.Linq.Enumerable.from(testList).any(function (x) {
+                                        return x === i;
+                                    })) {
+                                        return {jump: 3, v: "ThirdLoop"};
+                                    }
+                                    i++;
+                                }).call(this) || {};
+                                if($t2.jump == 3) return {jump: 3, v: $t2.v};
+                            }
+
+                            if (Bridge.Linq.Enumerable.from(testList).any(function (x) {
+                                return x === i;
+                            })) {
+                                return {jump: 3, v: "SecondLoop"};
+                            }
+                            i++;
+                        }).call(this) || {};
+                        if($t1.jump == 3) return {jump: 3, v: $t1.v};
+                    }
+
+                    if (Bridge.Linq.Enumerable.from(testList).any(function (x) {
+                        return x === i;
+                    })) {
+                        return {jump: 3, v: "FirstLoop"};
+                    }
+                    i++;
+                }).call(this) || {};
+                if($t.jump == 3) return $t.v;
+            }
+
+            return "NoLoops";
         }
     }
 });
@@ -4356,11 +4485,11 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
                     if (!Bridge.Linq.Enumerable.from(testList).any(function (x) {
                         return x === i;
                     }))
-                        return 1;
+                        return {jump:1};
 
                     count++;
-                }).call(this);
-                if($t == 1) continue;
+                }).call(this) || {};
+                if($t.jump == 1) continue;
             }
 
             assert.equal(count, 1, "\"continue\" generated correctly");
