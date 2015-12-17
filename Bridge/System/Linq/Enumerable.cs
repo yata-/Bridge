@@ -956,7 +956,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidCastException">
         /// An element in the sequence cannot be cast to type TResult.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).select(function(x) {{ return Bridge.cast(x, {TResult}); }})")]
+        [Template("Bridge.Linq.Enumerable.from({source}).select(function(x) { return Bridge.cast(x, {TResult}); })")]
         public static EnumerableInstance<TResult> Cast<TResult>(this IEnumerable source)
         {
             return default(EnumerableInstance<TResult>);

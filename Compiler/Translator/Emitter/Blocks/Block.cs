@@ -102,7 +102,7 @@ namespace Bridge.Translator
             set;
         }
 
-        public bool OldReplaceJump
+        public bool? OldReplaceJump
         {
             get;
             set;
@@ -329,8 +329,11 @@ namespace Bridge.Translator
                 {
                     this.RemoveTempVar(this.LoopVar);
                 }
+            }
 
-                this.Emitter.ReplaceJump = this.OldReplaceJump;
+            if (this.OldReplaceJump.HasValue)
+            {
+                this.Emitter.ReplaceJump = this.OldReplaceJump.Value;
             }
 
             if (!this.KeepLineAfterBlock(this.BlockStatement))
