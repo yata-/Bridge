@@ -290,7 +290,7 @@ namespace Bridge.Translator
             this.WriteNewLine();
 
             this.Indent();
-            this.Write("$asyncBody = ");
+            this.Write("$asyncBody = Bridge.fn.bind(this, ");
             this.WriteFunction();
             this.Write("() ");
 
@@ -307,12 +307,12 @@ namespace Bridge.Translator
             }
 
             this.Emitter.Output.Append(temp);
-
+            this.Write(", arguments)");
             this.WriteSemiColon();
             this.WriteNewLine();
             this.WriteNewLine();
             this.Outdent();
-            this.Write("$asyncBody.apply(this, arguments);");
+            this.Write("$asyncBody();");
 
             if (this.IsTaskReturn)
             {
