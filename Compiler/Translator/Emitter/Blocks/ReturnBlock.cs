@@ -91,7 +91,20 @@ namespace Bridge.Translator
             {
                 this.WriteReturn(false);
 
-                if (!returnStatement.Expression.IsNull)
+                if (this.Emitter.ReplaceJump && this.Emitter.JumpStatements == null)
+                {
+                    this.WriteSpace();
+                    this.Write("{jump: 3");
+
+                    if (!returnStatement.Expression.IsNull)
+                    {
+                        this.Write(", v: ");
+                        returnStatement.Expression.AcceptVisitor(this.Emitter);
+                    }
+
+                    this.Write("}");
+                }
+                else if (!returnStatement.Expression.IsNull)
                 {
                     this.WriteSpace();
                     returnStatement.Expression.AcceptVisitor(this.Emitter);

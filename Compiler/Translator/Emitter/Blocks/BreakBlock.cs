@@ -67,7 +67,7 @@ namespace Bridge.Translator
             {
                 if (this.Emitter.ReplaceJump)
                 {
-                    this.Write("return 2");
+                    this.Write("return {jump:2}");
                 }
                 else
                 {

@@ -31,10 +31,20 @@ namespace Bridge.Translator
 
     public class ContinueBreakVisitor : DepthFirstAstVisitor
     {
-        public ContinueBreakVisitor()
+        private bool findReturn;
+        public ContinueBreakVisitor(bool findReturn)
         {
-            this.Continue = new List<ContinueStatement>();
-            this.Break = new List<BreakStatement>();
+            this.findReturn = findReturn;
+
+            if (findReturn)
+            {
+                this.Return = new List<ReturnStatement>();
+            }
+            else
+            {
+                this.Continue = new List<ContinueStatement>();
+                this.Break = new List<BreakStatement>();    
+            }
         }
 
         public List<ContinueStatement> Continue
@@ -49,32 +59,78 @@ namespace Bridge.Translator
             set;
         }
 
+        public List<ReturnStatement> Return
+        {
+            get;
+            set;
+        }
+
+        public override void VisitLambdaExpression(LambdaExpression lambdaExpression)
+        {
+        }
+
+        public override void VisitAnonymousMethodExpression(AnonymousMethodExpression anonymousMethodExpression)
+        {
+        }
+
         public override void VisitForStatement(ForStatement forStatement)
         {
+            if (findReturn)
+            {
+                base.VisitForStatement(forStatement);
+            }
         }
 
         public override void VisitForeachStatement(ForeachStatement foreachStatement)
         {
+            if (findReturn)
+            {
+                base.VisitForeachStatement(foreachStatement);
+            }
         }
 
         public override void VisitWhileStatement(WhileStatement whileStatement)
         {
+            if (findReturn)
+            {
+                base.VisitWhileStatement(whileStatement);
+            }
         }
 
         public override void VisitDoWhileStatement(DoWhileStatement doWhileStatement)
         {
+            if (findReturn)
+            {
+                base.VisitDoWhileStatement(doWhileStatement);
+            }
         }
 
         public override void VisitContinueStatement(ContinueStatement continueStatement)
         {
-            this.Continue.Add(continueStatement);
+            if (!findReturn)
+            {
+                this.Continue.Add(continueStatement);
+            }
             base.VisitContinueStatement(continueStatement);
         }
 
         public override void VisitBreakStatement(BreakStatement breakStatement)
         {
-            this.Break.Add(breakStatement);
+            if (!findReturn)
+            {
+                this.Break.Add(breakStatement);    
+            }
+            
             base.VisitBreakStatement(breakStatement);
+        }
+
+        public override void VisitReturnStatement(ReturnStatement returnStatement)
+        {
+            if (findReturn)
+            {
+                this.Return.Add(returnStatement);
+            }
+            base.VisitReturnStatement(returnStatement);
         }
     }
 }
