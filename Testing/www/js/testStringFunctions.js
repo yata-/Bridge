@@ -45,10 +45,10 @@ Bridge.define('ClientTestLibrary.TestStringFunctions', {
 
             assert.deepEqual(Bridge.String.indexOfAny(s, anyOf), 8, "'" + s + "'.IndexOfAny(" + sAnyOf + ")");
             assert.throws(function () {
-                return Bridge.String.indexOfAny(s, anyOf, 18, 8);
+                Bridge.String.indexOfAny(s, anyOf, 18, 8);
             }, "'" + s + "'.IndexOfAny(" + sAnyOf + ")");
             assert.throws(function () {
-                return Bridge.String.indexOfAny(s, null);
+                Bridge.String.indexOfAny(s, null);
             }, "'" + s + "'.IndexOfAny(null)");
 
             s = "";
@@ -64,7 +64,7 @@ Bridge.define('ClientTestLibrary.TestStringFunctions', {
             assert.deepEqual(Bridge.String.indexOf(s, "e."), 11, "'" + s + "'.IndexOf('e.')");
             assert.deepEqual(Bridge.String.indexOf(s, String.fromCharCode(101), 6, 8), 11, "'" + s + "'.IndexOf('e', 6, 8)");
             assert.throws(function () {
-                return Bridge.String.indexOf(s, null);
+                Bridge.String.indexOf(s, null);
             }, "'" + s + "'.IndexOf(null)");
 
             if (!isPhantomJs) {
@@ -114,7 +114,7 @@ Bridge.define('ClientTestLibrary.TestStringFunctions', {
             assert.deepEqual(Bridge.String.contains(s,""), true, "'" + s + "'.Contains(String.Empty)");
             assert.deepEqual(Bridge.String.contains("","Bridge"), false, "String.Empty.Contains('Bridge')");
             assert.throws(function () {
-                return Bridge.String.contains(s,null);
+                Bridge.String.contains(s,null);
             }, "null.Contains('Bridge')");
 
             // TEST Concat
