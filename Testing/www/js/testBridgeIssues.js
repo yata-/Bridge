@@ -2404,6 +2404,28 @@ Bridge.define('ClientTestLibrary.Bridge693A$1', function (T) { return {
     }
 }; });
 
+Bridge.define('ClientTestLibrary.Bridge694', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(3);
+
+            var fruits = Bridge.Array.init(3, null);
+            fruits[0] = "mango";
+            fruits[1] = "apple";
+            fruits[2] = "lemon";
+
+            var list = Bridge.Linq.Enumerable.from(fruits).select(function(x) { return Bridge.cast(x, String); }).orderBy(function (fruit) {
+                return fruit;
+            }).select(function (fruit) {
+                return fruit;
+            }).toList(String);
+            assert.equal(list.getItem(0), "apple", "Bridge694 apple");
+            assert.equal(list.getItem(1), "lemon", "Bridge694 lemon");
+            assert.equal(list.getItem(2), "mango", "Bridge694 mango");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge708', {
     statics: {
         testUseCase: function (assert) {
