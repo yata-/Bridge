@@ -229,6 +229,11 @@ namespace Bridge.Contract
                 return "Array";
             }
 
+            if (type.Kind == TypeKind.Delegate)
+            {
+                return "Function";
+            }
+
             if (type.Kind == TypeKind.Dynamic)
             {
                 return "Object";

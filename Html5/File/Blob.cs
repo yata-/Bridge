@@ -1,5 +1,49 @@
 namespace Bridge.Html5
 {
+    [External]
+    [Name("Object")]
+    public class BlobDataObject
+    {
+        public static implicit operator BlobDataObject(ArrayBuffer t)
+        {
+            return null;
+        }
+
+        public static implicit operator BlobDataObject(ArrayBufferView t)
+        {
+            return null;
+        }
+
+        public static implicit operator BlobDataObject(Blob t)
+        {
+            return null;
+        }
+
+        public static implicit operator BlobDataObject(string t)
+        {
+            return null;
+        }
+
+        public static explicit operator ArrayBuffer(BlobDataObject value)
+        {
+            return default(ArrayBuffer);
+        }
+
+        public static explicit operator ArrayBufferView(BlobDataObject value)
+        {
+            return default(ArrayBufferView);
+        }
+
+        public static explicit operator Blob(BlobDataObject value)
+        {
+            return default(Blob);
+        }
+
+        public static explicit operator string(BlobDataObject value)
+        {
+            return default(string);
+        }
+    }
     /// <summary>
     /// A Blob object represents a file-like object of immutable, raw data. Blobs represent data that isn't necessarily in a JavaScript-native format. The File interface is based on Blob, inheriting blob functionality and expanding it to support files on the user's system.
     /// An easy way to construct a Blob is by invoking the Blob constuctor. Another way is to use the slice() method to create a blob that contains a subset of another blob's data.
@@ -19,7 +63,7 @@ namespace Bridge.Html5
         ///
         /// </summary>
         /// <param name="parts">An Array of data objects to put into the new Blob object. This can be any number of ArrayBuffer, ArrayBufferView (typed array), Blob, or strings, in any order.</param>
-        public Blob(Any<ArrayBuffer, ArrayBufferView, Blob, string>[] parts)
+        public Blob(BlobDataObject[] parts)
         {
         }
 
@@ -28,7 +72,7 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="parts">An Array of data objects to put into the new Blob object. This can be any number of ArrayBuffer, ArrayBufferView (typed array), Blob, or strings, in any order.</param>
         /// <param name="properties">A BlobPropertyBag object that provides the properties for the new Blob object.</param>
-        public Blob(Any<ArrayBuffer, ArrayBufferView, Blob, string>[] parts, BlobPropertyBag properties)
+        public Blob(BlobDataObject[] parts, BlobPropertyBag properties)
         {
         }
 
