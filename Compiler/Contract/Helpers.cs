@@ -25,7 +25,7 @@ namespace Bridge.Contract
             return name.Replace('`', '$').Replace('/', '.').Replace("+", ".");
         }
 
-        public static bool HasGenericArgument(GenericInstanceType type, TypeDefinition searchType, IEmitter emitter)
+        public static bool HasGenericArgument(GenericInstanceType type, TypeDefinition searchType, IEmitter emitter, bool deep)
         {
             foreach (var gArg in type.GenericArguments)
             {
@@ -51,9 +51,15 @@ namespace Bridge.Contract
                     return true;
                 }
 
+                if (deep && gTypeDef != null && (Helpers.IsSubclassOf(gTypeDef, searchType, emitter) ||
+                    (searchType.IsInterface && Helpers.IsImplementationOf(gTypeDef, searchType, emitter))))
+                {
+                    return true;
+                }
+
                 if (orig.IsGenericInstance)
                 {
-                    var result = Helpers.HasGenericArgument((GenericInstanceType)orig, searchType, emitter);
+                    var result = Helpers.HasGenericArgument((GenericInstanceType)orig, searchType, emitter, deep);
 
                     if (result)
                     {
@@ -70,7 +76,7 @@ namespace Bridge.Contract
             foreach (TypeReference interfaceReference in thisTypeDefinition.Interfaces)
             {
                 var gBaseType = interfaceReference as GenericInstanceType;
-                if (gBaseType != null && Helpers.HasGenericArgument(gBaseType, typeArgDefinition, emitter))
+                if (gBaseType != null && Helpers.HasGenericArgument(gBaseType, typeArgDefinition, emitter, deep))
                 {
                     return true;
                 }
@@ -81,7 +87,7 @@ namespace Bridge.Contract
                 TypeDefinition baseTypeDefinition = null;
 
                 var gBaseType = thisTypeDefinition.BaseType as GenericInstanceType;
-                if (gBaseType != null && Helpers.HasGenericArgument(gBaseType, typeArgDefinition, emitter))
+                if (gBaseType != null && Helpers.HasGenericArgument(gBaseType, typeArgDefinition, emitter, deep))
                 {
                     return true;
                 }
