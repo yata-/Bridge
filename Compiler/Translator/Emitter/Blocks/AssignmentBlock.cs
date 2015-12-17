@@ -321,6 +321,11 @@ namespace Bridge.Translator
                     this.PopWriter();
                 }
 
+                if (needReturnValue)
+                {
+                    this.Write(", " + variable + ")");    
+                }
+
                 return;
             }
 
@@ -521,7 +526,6 @@ namespace Bridge.Translator
                 if (variable != null)
                 {
                     this.Write(variable);
-                    this.Write(", " + variable + ")");
                 }
                 else
                 {
@@ -640,11 +644,6 @@ namespace Bridge.Translator
                     }
                     
                     this.WriteCloseParentheses();
-                }
-
-                if (variable != null)
-                {
-                    this.Write(", " + variable + ")");
                 }
             }
         }
