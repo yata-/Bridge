@@ -166,6 +166,22 @@ namespace Bridge.Translator
             return null;
         }
 
+        public static string GetStructDefaultValue(AstType type, IEmitter emitter)
+        {
+            var rr = emitter.Resolver.ResolveNode(type, emitter);
+            return GetStructDefaultValue(rr.Type, emitter);
+        }
+
+        public static string GetStructDefaultValue(IType type, IEmitter emitter)
+        {
+            if (type.IsKnownType(KnownTypeCode.DateTime))
+            {
+                return "new Date(-864e13)";
+            }
+
+            return "new " + BridgeTypes.ToJsName(type, emitter) + "()";
+        }
+
         protected virtual bool IsValidStaticInitializer(Expression expr)
         {
             if (expr.IsNull || expr is PrimitiveExpression)
