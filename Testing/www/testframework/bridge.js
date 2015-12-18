@@ -261,7 +261,7 @@
             } else if (type === Boolean) {
                 return false;
             } else if (type === Date) {
-                return new Date(0);
+                return new Date(-864e13);
             } else if (type === Number) {
                 return 0;
             }
