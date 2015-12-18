@@ -331,8 +331,9 @@ Bridge.define('ClientTestLibrary.Bridge467', {
     },
     equals: function (obj) {
         var other = Bridge.as(obj, ClientTestLibrary.Bridge467);
-        if (other === null)
+        if (other === null) {
             return false;
+        }
 
         if (this.getMyProperty() < 0 || other.getMyProperty() < 0) {
             return this === other;
@@ -2597,7 +2598,7 @@ Bridge.define('ClientTestLibrary.Bridge722', {
             var c4 = new Bridge.Dictionary$2(String,Bridge.Decimal)();
             var asset4 = ($t6 = Bridge.Linq.Enumerable.from(data4).select(function (x) {
                 return x;
-            }).last(), c4.set("path", $t6, $t6));
+            }).last(), c4.set("path", $t6), $t6);
             assert.equal(asset4, 7, "Bridge722 asset4");
             assert.equal(c4.get("path"), 7, "Bridge722 c4");
         }
@@ -2608,6 +2609,29 @@ Bridge.define('ClientTestLibrary.Bridge722', {
     },
     setItem: function (item, value) {
         this.lastItem = value;
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge726', {
+    statics: {
+        testUseCase: function (assert) {
+            var $t;
+            assert.expect(1);
+
+            var b = true;
+            var t = [1, 2, 3];
+
+            var sum = 0;
+            if (b) {
+                $t = Bridge.getEnumerator(t);
+                while ($t.moveNext()) {
+                    var i = $t.getCurrent();
+                    sum += i;
+                }
+            }
+
+            assert.equal(sum, 6, "Bridge726");
+        }
     }
 });
 
@@ -2687,8 +2711,9 @@ Bridge.define('ClientTestLibrary.Bridge381', {
 
 
             var sArr = Bridge.Array.init(10, null);
-            for (var i = 0; i < 10; i++)
+            for (var i = 0; i < 10; i++) {
                 sArr[i] = Bridge.String.format("{0,-3}", i * 5);
+            }
 
             var s4 = sArr.join(":");
             assert.equal(s4, "0  :5  :10 :15 :20 :25 :30 :35 :40 :45 ", "Join4");
@@ -4494,8 +4519,9 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
                 var $t = (function () {
                     if (!Bridge.Linq.Enumerable.from(testList).any(function (x) {
                         return x === i;
-                    }))
+                    })) {
                         return {jump:1};
+                    }
 
                     count++;
                 }).call(this) || {};
