@@ -2635,6 +2635,21 @@ Bridge.define('ClientTestLibrary.Bridge726', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge732', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var decimalValue = Bridge.Decimal(5.0);
+            var assign = false;
+            var test = assign ? decimalValue : Bridge.Decimal(2);
+            var test2 = test.mul(decimalValue);
+
+            assert.ok(test2.equalsT(Bridge.Decimal(10)), "Bridge732");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
