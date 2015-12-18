@@ -2573,8 +2573,8 @@ Bridge.define('ClientTestLibrary.Bridge722', {
             return i;
         },
         testUseCase: function (assert) {
-            var $t, $t1, $t2, $t3, $t4, $t5;
-            assert.expect(5);
+            var $t, $t1, $t2, $t3, $t4, $t5, $t6;
+            assert.expect(9);
 
             var c1 = new ClientTestLibrary.Bridge722();
             var asset1 = 1;
@@ -2587,10 +2587,20 @@ Bridge.define('ClientTestLibrary.Bridge722', {
             var c2 = { };
             var asset2 = ($t4 = 5, c2.path = $t4, $t4);
             assert.equal(asset2, 5, "Bridge722 asset2");
+            assert.equal(c2.path, 5, "Bridge722 c2");
 
             var c3 = new Bridge.Dictionary$2(String,Bridge.Int)();
             var asset3 = ($t5 = 6, c3.set("path", $t5), $t5);
             assert.equal(asset3, 6, "Bridge722 asset3");
+            assert.equal(c3.get("path"), 6, "Bridge722 c3");
+
+            var data4 = [Bridge.Decimal(1.0), Bridge.Decimal(2.0), Bridge.Decimal(3.0), Bridge.Decimal(4.0), Bridge.Decimal(7.0)];
+            var c4 = new Bridge.Dictionary$2(String,Bridge.Decimal)();
+            var asset4 = ($t6 = Bridge.Linq.Enumerable.from(data4).select(function (x) {
+                return x;
+            }).last(), c4.set("path", $t6), $t6);
+            assert.equal(asset4, 7, "Bridge722 asset4");
+            assert.equal(c4.get("path"), 7, "Bridge722 c4");
         }
     },
     lastItem: 0,
