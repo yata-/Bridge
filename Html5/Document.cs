@@ -604,7 +604,7 @@ namespace Bridge.Html5
         /// EventHandler representing the code to be called when the click event is raised.
         /// </summary>
         [Name("onclick")]
-        public static Action<Event> OnClick;
+        public static Action<MouseEvent> OnClick;
 
         /// <summary>
         /// EventHandler representing the code to be called when the close event is raised.
@@ -628,7 +628,7 @@ namespace Bridge.Html5
         /// EventHandler representing the code to be called when the dblclick event is raised.
         /// </summary>
         [Name("ondblclick")]
-        public static Action<Event> OnDblClick;
+        public static Action<MouseEvent> OnDblClick;
 
         /// <summary>
         /// EventHandler representing the code to be called when the drag event is raised.
@@ -712,19 +712,19 @@ namespace Bridge.Html5
         /// Is an EventHandler representing the code to be called when the keydown event is raised
         /// </summary>
         [Name("onkeydown")]
-        public static Action<Event> OnKeyDown;
+        public static Action<KeyboardEvent> OnKeyDown;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the keypress event is raised
         /// </summary>
         [Name("onkeypress")]
-        public static Action<Event> OnKeyPress;
+        public static Action<KeyboardEvent> OnKeyPress;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the keyup event is raised
         /// </summary>
         [Name("onkeyup")]
-        public static Action<Event> OnKeyUp;
+        public static Action<KeyboardEvent> OnKeyUp;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the load event is raised
@@ -754,49 +754,49 @@ namespace Bridge.Html5
         /// Is an EventHandler representing the code to be called when the mousedown event is raised
         /// </summary>
         [Name("onmousedown")]
-        public static Action<Event> OnMouseDown;
+        public static Action<MouseEvent> OnMouseDown;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the mouseenter event is raised
         /// </summary>
         [Name("onmouseenter")]
-        public static Action<Event> OnMouseEnter;
+        public static Action<MouseEvent> OnMouseEnter;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the mouseleave event is raised
         /// </summary>
         [Name("onmouseleave")]
-        public static Action<Event> OnMouseLeave;
+        public static Action<MouseEvent> OnMouseLeave;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the mousemove event is raised
         /// </summary>
         [Name("onmousemove")]
-        public static Action<Event> OnMouseMove;
+        public static Action<MouseEvent> OnMouseMove;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the mouseout event is raised
         /// </summary>
         [Name("onmouseout")]
-        public static Action<Event> OnMouseOut;
+        public static Action<MouseEvent> OnMouseOut;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the mouseover event is raised
         /// </summary>
         [Name("onmouseover")]
-        public static Action<Event> OnMouseOver;
+        public static Action<MouseEvent> OnMouseOver;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the mouseup event is raised
         /// </summary>
         [Name("onmouseup")]
-        public static Action<Event> OnMouseUp;
+        public static Action<MouseEvent> OnMouseUp;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the mousewheel event is raised
         /// </summary>
         [Name("onmousewheel")]
-        public static Action<Event> OnMouseWheel;
+        public static Action<MouseEvent> OnMouseWheel;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the pause event is raised
