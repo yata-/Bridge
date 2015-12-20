@@ -2691,6 +2691,24 @@ Bridge.define('ClientTestLibrary.Bridge751', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge758', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(3);
+
+            var list = new Bridge.List$1(Date)();
+            list.add(new Date(2015, 1 - 1, 2));
+            list.add(new Date(2015, 1 - 1, 1));
+            list.add(new Date(2015, 1 - 1, 3));
+
+            list.sort();
+            assert.ok(Bridge.equals(list.getItem(0), new Date(2015, 1 - 1, 1)), "Bridge758 2015/1/1");
+            assert.ok(Bridge.equals(list.getItem(1), new Date(2015, 1 - 1, 2)), "Bridge758 2015/1/2");
+            assert.ok(Bridge.equals(list.getItem(2), new Date(2015, 1 - 1, 3)), "Bridge758 2015/1/3");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
