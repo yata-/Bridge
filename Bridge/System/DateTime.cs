@@ -431,6 +431,11 @@ namespace System
         {
             return null;
         }
+        
+        public string ToISOString()
+        {
+            return null;
+        }
 
         [Template("new Date({d} - new Date(({t}).ticks / 10000))")]
         public static DateTime operator -(DateTime d, TimeSpan t)
