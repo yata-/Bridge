@@ -50,11 +50,11 @@ namespace Bridge.Translator
 
                 if (item.ParameterModifier == ParameterModifier.Out || item.ParameterModifier == ParameterModifier.Ref)
                 {
-                    this.Emitter.LocalsMap[item.Name] = name + ".v";
+                    this.Emitter.LocalsMap[item.Name] = vName + ".v";
                 }
                 else
                 {
-                    this.Emitter.LocalsMap[item.Name] = name;
+                    this.Emitter.LocalsMap[item.Name] = vName;
                 }
             });
 
