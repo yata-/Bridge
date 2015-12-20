@@ -214,7 +214,7 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
 
         sort: function (comparison) {
             this.checkReadOnly();
-            this.items.sort(comparison);
+            this.items.sort(comparison || Bridge.Comparer$1.$default.compare);
         },
 
         splice: function (start, count, items) {

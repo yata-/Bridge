@@ -1605,7 +1605,8 @@ Bridge.define('ClientTestLibrary.Bridge597A', {
 Bridge.define('ClientTestLibrary.Bridge603A', {
     statics: {
         op_Implicit: function (value) {
-            value = Bridge.coalesce(value, "[Null]");
+            var $t;
+            value = ($t = value, Bridge.hasValue($t) ? $t : "[Null]");
             return new ClientTestLibrary.Bridge603A("constructor$1", value);
         },
         getDefaultValue: function () { return new ClientTestLibrary.Bridge603A(); }
@@ -2647,6 +2648,40 @@ Bridge.define('ClientTestLibrary.Bridge726', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge732', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var decimalValue = Bridge.Decimal(5.0);
+            var assign = false;
+            var test = assign ? decimalValue : Bridge.Decimal(2);
+            var test2 = test.mul(decimalValue);
+
+            assert.ok(test2.equalsT(Bridge.Decimal(10)), "Bridge732");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge733', {
+    statics: {
+        config: {
+            init: function () {
+                this.dateb = new Date(-864e13);
+                Bridge.property(this, "DateA", new Date(-864e13));
+            }
+        },
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            assert.ok(Bridge.equals(Bridge.get(ClientTestLibrary.Bridge733).getDateA(), new Date(-864e13)), "Bridge733 DateA");
+            assert.ok(Bridge.equals(Bridge.get(ClientTestLibrary.Bridge733).dateb, new Date(-864e13)), "Bridge733 dateb");
+
+            Bridge.get(ClientTestLibrary.Bridge733).dateb = new Date(); // to prevent warning that dateb is never assigned
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge751', {
     statics: {
         testUseCase: function (assert) {
@@ -2665,6 +2700,42 @@ Bridge.define('ClientTestLibrary.Bridge751', {
             });
 
             assert.equal(v1, 1, "Bridge751");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge758', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(3);
+
+            var list = new Bridge.List$1(Date)();
+            list.add(new Date(2015, 1 - 1, 2));
+            list.add(new Date(2015, 1 - 1, 1));
+            list.add(new Date(2015, 1 - 1, 3));
+
+            list.sort();
+            assert.ok(Bridge.equals(list.getItem(0), new Date(2015, 1 - 1, 1)), "Bridge758 2015/1/1");
+            assert.ok(Bridge.equals(list.getItem(1), new Date(2015, 1 - 1, 2)), "Bridge758 2015/1/2");
+            assert.ok(Bridge.equals(list.getItem(2), new Date(2015, 1 - 1, 3)), "Bridge758 2015/1/3");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge760', {
+    statics: {
+        testUseCase: function (assert) {
+            var $t;
+            assert.expect(1);
+
+            var a = null;
+            var b = 10;
+
+            var c = ($t = b, Bridge.hasValue($t) ? $t : Bridge.get(ClientTestLibrary.Bridge760).doSomething(a));
+            assert.equal(c, 10, "Bridge760");
+        },
+        doSomething: function (test) {
+            return Bridge.Nullable.getValue(test);
         }
     }
 });
@@ -3505,14 +3576,16 @@ Bridge.define('ClientTestLibrary.Bridge597', {
 Bridge.define('ClientTestLibrary.Bridge603B', {
     statics: {
         op_Implicit$2: function (value) {
-            value = Bridge.coalesce(value, "[Null]");
+            var $t;
+            value = ($t = value, Bridge.hasValue($t) ? $t : "[Null]");
             return new ClientTestLibrary.Bridge603B("constructor$3", value);
         },
         op_Implicit$1: function (value) {
             return new ClientTestLibrary.Bridge603B("constructor$2", value);
         },
         op_Implicit: function (value) {
-            value = Bridge.coalesce(value, Bridge.merge(new ClientTestLibrary.Bridge603Class(), {
+            var $t;
+            value = ($t = value, Bridge.hasValue($t) ? $t : Bridge.merge(new ClientTestLibrary.Bridge603Class(), {
                 setData: "[Null]"
             } ));
             return new ClientTestLibrary.Bridge603B("constructor$1", value);

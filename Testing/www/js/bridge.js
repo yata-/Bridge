@@ -261,7 +261,7 @@
             } else if (type === Boolean) {
                 return false;
             } else if (type === Date) {
-                return new Date(0);
+                return new Date(-864e13);
             } else if (type === Number) {
                 return 0;
             }
@@ -5887,10 +5887,7 @@ Bridge.Class.generic('Bridge.Comparer$1', function (T) {
 
         constructor: function (fn) {
             this.fn = fn;
-        },
-
-        compare: function (x, y) {
-            return this.fn(x, y);
+            this.compare = fn;
         }
     }));
 });
@@ -6393,7 +6390,7 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
 
         sort: function (comparison) {
             this.checkReadOnly();
-            this.items.sort(comparison);
+            this.items.sort(comparison || Bridge.Comparer$1.$default.compare);
         },
 
         splice: function (start, count, items) {

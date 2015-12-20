@@ -1266,7 +1266,7 @@ namespace Bridge.Html5
         /// An event handler property for click events on the window
         /// </summary>
         [Name("onclick")]
-        public static Action<Event> OnClick;
+        public static Action<MouseEvent> OnClick;
 
         /// <summary>
         /// An event handler property for handling the window close event
@@ -1332,19 +1332,19 @@ namespace Bridge.Html5
         /// An event handler property for keydown events on the window
         /// </summary>
         [Name("onkeydown")]
-        public static Action<Event> OnKeyDown;
+        public static Action<KeyboardEvent> OnKeyDown;
 
         /// <summary>
         /// An event handler property for keypress events on the window
         /// </summary>
         [Name("onkeypress")]
-        public static Action<Event> OnKeyPress;
+        public static Action<KeyboardEvent> OnKeyPress;
 
         /// <summary>
         /// An event handler property for keyup events on the window
         /// </summary>
         [Name("onkeyup")]
-        public static Action<Event> OnKeyUp;
+        public static Action<KeyboardEvent> OnKeyUp;
 
         /// <summary>
         /// An event handler property for window loading
@@ -1356,31 +1356,31 @@ namespace Bridge.Html5
         /// An event handler property for mousedown events on the window
         /// </summary>
         [Name("onmousedown")]
-        public static Action<Event> OnMouseDown;
+        public static Action<MouseEvent> OnMouseDown;
 
         /// <summary>
         /// An event handler property for mousemove events on the window
         /// </summary>
         [Name("onmousemove")]
-        public static Action<Event> OnMouseMove;
+        public static Action<MouseEvent> OnMouseMove;
 
         /// <summary>
         /// An event handler property for mouseout events on the window
         /// </summary>
         [Name("onmouseout")]
-        public static Action<Event> OnMouseOut;
+        public static Action<MouseEvent> OnMouseOut;
 
         /// <summary>
         /// An event handler property for mouseover events on the window
         /// </summary>
         [Name("onmouseover")]
-        public static Action<Event> OnMouseOver;
+        public static Action<MouseEvent> OnMouseOver;
 
         /// <summary>
         /// An event handler property for mouseup events on the window
         /// </summary>
         [Name("onmouseup")]
-        public static Action<Event> OnMouseUp;
+        public static Action<MouseEvent> OnMouseUp;
 
         /// <summary>
         /// An event handler property for paint events on the window
