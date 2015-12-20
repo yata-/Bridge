@@ -6,10 +6,7 @@ Bridge.Class.generic('Bridge.Comparer$1', function (T) {
 
         constructor: function (fn) {
             this.fn = fn;
-        },
-
-        compare: function (x, y) {
-            return this.fn(x, y);
+            this.compare = fn;
         }
     }));
 });
