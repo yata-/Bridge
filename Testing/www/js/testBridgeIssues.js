@@ -2747,6 +2747,35 @@ Bridge.define('ClientTestLibrary.Bridge762A', {
     $clone: function (to) { return this; }
 });
 
+Bridge.define('ClientTestLibrary.Bridge762B', {
+    statics: {
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge762B(); }
+    },
+    config: {
+        properties: {
+            Data: 0
+        }
+    },
+    constructor: function () {
+    },
+    getHashCode: function () {
+        var hash = 17;
+        hash = hash * 23 + (this.Data == null ? 0 : Bridge.getHashCode(this.Data));
+        return hash;
+    },
+    equals: function (o) {
+        if (!Bridge.is(o,ClientTestLibrary.Bridge762B)) {
+            return false;
+        }
+        return Bridge.equals(this.Data, o.Data);
+    },
+    $clone: function (to) {
+        var s = to || new ClientTestLibrary.Bridge762B();
+        s.Data = this.Data;
+        return s;
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
@@ -3975,15 +4004,20 @@ Bridge.define('ClientTestLibrary.Bridge693', {
 Bridge.define('ClientTestLibrary.Bridge762', {
     statics: {
         testUseCase: function (assert) {
-            assert.expect(2);
+            assert.expect(4);
 
             var test1 = null;
             var test2 = null;
+            var test3 = null;
+
             var value1 = Bridge.Nullable.getValueOrDefault(test1, Bridge.getDefaultValue(Bridge.Int));
             var value2 = Bridge.Nullable.getValueOrDefault(test2, Bridge.getDefaultValue(ClientTestLibrary.Bridge762A));
+            var value3 = Bridge.Nullable.getValueOrDefault(test3, Bridge.getDefaultValue(ClientTestLibrary.Bridge762B));
 
             assert.equal(value1, 0, "Bridge762 int");
-            assert.notEqual(value2.$clone(), null, "Bridge762 struct");
+            assert.notEqual(value2.$clone(), null, "Bridge762A struct");
+            assert.notEqual(value3.$clone(), null, "Bridge762B struct");
+            assert.equal(value3.getData(), 0, "Bridge762B.Data struct");
         }
     }
 });
