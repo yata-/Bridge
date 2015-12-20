@@ -2650,6 +2650,25 @@ Bridge.define('ClientTestLibrary.Bridge732', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge733', {
+    statics: {
+        config: {
+            init: function () {
+                this.dateb = new Date(-864e13);
+                Bridge.property(this, "DateA", new Date(-864e13));
+            }
+        },
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            assert.ok(Bridge.equals(Bridge.get(ClientTestLibrary.Bridge733).getDateA(), new Date(-864e13)), "Bridge733 DateA");
+            assert.ok(Bridge.equals(Bridge.get(ClientTestLibrary.Bridge733).dateb, new Date(-864e13)), "Bridge733 dateb");
+
+            Bridge.get(ClientTestLibrary.Bridge733).dateb = new Date(); // to prevent warning that dateb is never assigned
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge751', {
     statics: {
         testUseCase: function (assert) {
