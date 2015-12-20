@@ -213,7 +213,12 @@ namespace System
         {
             return null;
         }
-
+        
+        public virtual string ToISOString()
+        {
+            return null;
+        }
+        
         public virtual string ToUTCString()
         {
             return null;
