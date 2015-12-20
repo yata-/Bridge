@@ -174,7 +174,7 @@ namespace Bridge.Translator
                     var idx = binaryOpExpr.Left == expression ? 0 : 1;
                     var binaryOpRr = block.Emitter.Resolver.ResolveNode(binaryOpExpr, block.Emitter) as OperatorResolveResult;
 
-                    if (Helpers.IsDecimalType(binaryOpRr.Operands[idx].Type, block.Emitter.Resolver) && !Helpers.IsDecimalType(rr.Type, block.Emitter.Resolver))
+                    if (binaryOpRr != null && Helpers.IsDecimalType(binaryOpRr.Operands[idx].Type, block.Emitter.Resolver) && !Helpers.IsDecimalType(rr.Type, block.Emitter.Resolver))
                     {
                         if (expression.IsNull)
                         {
@@ -183,6 +183,29 @@ namespace Bridge.Translator
 
                         block.Write("Bridge.Decimal");
                         if (NullableType.IsNullable(binaryOpRr.Operands[idx].Type) && ConversionBlock.ShouldBeLifted(expression))
+                        {
+                            block.Write(".lift");
+                        }
+                        block.WriteOpenParentheses();
+                        return true;
+                    }
+                }
+
+                var conditionalExpr = expression.Parent as ConditionalExpression;
+                if (conditionalExpr != null && conditionalExpr.Condition != expression)
+                {
+                    var idx = conditionalExpr.TrueExpression == expression ? 0 : 1;
+                    var conditionalrr = block.Emitter.Resolver.ResolveNode(conditionalExpr, block.Emitter) as OperatorResolveResult;
+
+                    if (conditionalrr != null && Helpers.IsDecimalType(conditionalrr.Operands[idx].Type, block.Emitter.Resolver) && !Helpers.IsDecimalType(rr.Type, block.Emitter.Resolver))
+                    {
+                        if (expression.IsNull)
+                        {
+                            return false;
+                        }
+
+                        block.Write("Bridge.Decimal");
+                        if (NullableType.IsNullable(conditionalrr.Operands[idx].Type) && ConversionBlock.ShouldBeLifted(expression))
                         {
                             block.Write(".lift");
                         }
