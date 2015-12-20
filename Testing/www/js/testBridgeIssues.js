@@ -242,7 +242,8 @@ Bridge.define('ClientTestLibrary.Bridge407', {
             return Bridge.merge(new ClientTestLibrary.Bridge407(), {
                 setA: x.getA() + y.getA()
             } );
-        }
+        },
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge407(); }
     },
     config: {
         properties: {
@@ -1312,10 +1313,16 @@ Bridge.define('ClientTestLibrary.Bridge572', {
 });
 
 Bridge.define('ClientTestLibrary.Bridge577.Bridge577UnitA', {
+    statics: {
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge577.Bridge577UnitA(); }
+    },
     $clone: function (to) { return this; }
 });
 
 Bridge.define('ClientTestLibrary.Bridge577.Bridge577UnitB', {
+    statics: {
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge577.Bridge577UnitB(); }
+    },
     config: {
         properties: {
             Number: 0
@@ -1601,7 +1608,8 @@ Bridge.define('ClientTestLibrary.Bridge603A', {
             var $t;
             value = ($t = value, Bridge.hasValue($t) ? $t : "[Null]");
             return new ClientTestLibrary.Bridge603A("constructor$1", value);
-        }
+        },
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge603A(); }
     },
     value: null,
     constructor$1: function (value) {
@@ -1684,6 +1692,9 @@ Bridge.define('ClientTestLibrary.Class1', {
 });
 
 Bridge.define('ClientTestLibrary.Bridge608A', {
+    statics: {
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge608A(); }
+    },
     field: null,
     constructor$1: function (field) {
         this.field = field;
@@ -2010,7 +2021,8 @@ Bridge.define('ClientTestLibrary.Bridge660Optional$1', function (T) { return {
         },
         getMissing: function () {
             return Bridge.get(ClientTestLibrary.Bridge660Optional$1(T))._missing.$clone();
-        }
+        },
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge660Optional$1(T)(); }
     },
     value: null,
     isDefined: false,
@@ -2725,6 +2737,42 @@ Bridge.define('ClientTestLibrary.Bridge760', {
         doSomething: function (test) {
             return Bridge.Nullable.getValue(test);
         }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge762A', {
+    statics: {
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge762A(); }
+    },
+    $clone: function (to) { return this; }
+});
+
+Bridge.define('ClientTestLibrary.Bridge762B', {
+    statics: {
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge762B(); }
+    },
+    config: {
+        properties: {
+            Data: 0
+        }
+    },
+    constructor: function () {
+    },
+    getHashCode: function () {
+        var hash = 17;
+        hash = hash * 23 + (this.Data == null ? 0 : Bridge.getHashCode(this.Data));
+        return hash;
+    },
+    equals: function (o) {
+        if (!Bridge.is(o,ClientTestLibrary.Bridge762B)) {
+            return false;
+        }
+        return Bridge.equals(this.Data, o.Data);
+    },
+    $clone: function (to) {
+        var s = to || new ClientTestLibrary.Bridge762B();
+        s.Data = this.Data;
+        return s;
     }
 });
 
@@ -3570,7 +3618,8 @@ Bridge.define('ClientTestLibrary.Bridge603B', {
                 setData: "[Null]"
             } ));
             return new ClientTestLibrary.Bridge603B("constructor$1", value);
-        }
+        },
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge603B(); }
     },
     value: null,
     intValue: 0,
@@ -3948,6 +3997,27 @@ Bridge.define('ClientTestLibrary.Bridge693', {
 
             var c = new ClientTestLibrary.Bridge693B();
             assert.notEqual(c, null, "Bridge693 not null");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge762', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(4);
+
+            var test1 = null;
+            var test2 = null;
+            var test3 = null;
+
+            var value1 = Bridge.Nullable.getValueOrDefault(test1, Bridge.getDefaultValue(Bridge.Int));
+            var value2 = Bridge.Nullable.getValueOrDefault(test2, Bridge.getDefaultValue(ClientTestLibrary.Bridge762A));
+            var value3 = Bridge.Nullable.getValueOrDefault(test3, Bridge.getDefaultValue(ClientTestLibrary.Bridge762B));
+
+            assert.equal(value1, 0, "Bridge762 int");
+            assert.notEqual(value2.$clone(), null, "Bridge762A struct");
+            assert.notEqual(value3.$clone(), null, "Bridge762B struct");
+            assert.equal(value3.getData(), 0, "Bridge762B.Data struct");
         }
     }
 });

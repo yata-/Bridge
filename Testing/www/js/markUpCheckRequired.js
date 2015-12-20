@@ -7,6 +7,9 @@ Bridge.define('ClientTestLibrary.CI1');
 Bridge.define('ClientTestLibrary.CI2');
 
 Bridge.define('ClientTestLibrary.Point69', {
+    statics: {
+        getDefaultValue: function () { return new ClientTestLibrary.Point69(); }
+    },
     x: 0,
     y: 0,
     constructor$1: function (y1) {
