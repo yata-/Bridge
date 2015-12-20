@@ -1201,6 +1201,9 @@ Bridge.define('Bridge.Collections.HashSet$1', function (T) { return {
 }; });
 
 Bridge.define('Bridge.Collections.HashSet$1.ElementCount', function (T) { return {
+    statics: {
+        getDefaultValue: function () { return new Bridge.Collections.HashSet$1.ElementCount(); }
+    },
     uniqueCount: 0,
     unfoundCount: 0,
     constructor: function () {
@@ -1227,6 +1230,9 @@ Bridge.define('Bridge.Collections.HashSet$1.ElementCount', function (T) { return
 
 Bridge.define('Bridge.Collections.HashSet$1.Enumerator', function (T) { return {
     inherits: [Bridge.IEnumerator$1(T)],
+    statics: {
+        getDefaultValue: function () { return new Bridge.Collections.HashSet$1.Enumerator(); }
+    },
     _set: null,
     _index: 0,
     _version: 0,
@@ -1298,6 +1304,9 @@ Bridge.define('Bridge.Collections.HashSet$1.Enumerator', function (T) { return {
 }; });
 
 Bridge.define('Bridge.Collections.HashSet$1.Slot', function (T) { return {
+    statics: {
+        getDefaultValue: function () { return new Bridge.Collections.HashSet$1.Slot(); }
+    },
     hashCode: 0,
     value: null,
     next: 0,
@@ -1523,6 +1532,9 @@ Bridge.define('Bridge.Collections.Queue$1', function (T) { return {
 
 Bridge.define('Bridge.Collections.Queue$1.Enumerator', function (T) { return {
     inherits: [Bridge.IEnumerator$1(T),Bridge.IEnumerator],
+    statics: {
+        getDefaultValue: function () { return new Bridge.Collections.Queue$1.Enumerator(); }
+    },
     _q: null,
     _index: 0,
     _version: 0,
@@ -1762,6 +1774,9 @@ Bridge.define('Bridge.Collections.Stack$1', function (T) { return {
 
 Bridge.define('Bridge.Collections.Stack$1.Enumerator', function (T) { return {
     inherits: [Bridge.IEnumerator$1(T),Bridge.IEnumerator],
+    statics: {
+        getDefaultValue: function () { return new Bridge.Collections.Stack$1.Enumerator(); }
+    },
     _stack: null,
     _index: 0,
     _version: 0,
