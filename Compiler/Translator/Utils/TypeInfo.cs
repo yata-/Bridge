@@ -146,7 +146,8 @@ namespace Bridge.Translator
 
         public bool HasRealStatic(IEmitter emitter)
         {
-            var result = this.StaticConfig.HasMembers
+            var result = this.ClassType == ClassType.Struct
+                       || this.StaticConfig.HasMembers
                        || this.StaticProperties.Count > 0
                        || this.StaticCtor != null
                        || this.Operators.Count > 0;
