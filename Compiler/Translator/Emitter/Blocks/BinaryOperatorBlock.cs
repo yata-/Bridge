@@ -89,6 +89,7 @@ namespace Bridge.Translator
             var leftResolverResult = this.Emitter.Resolver.ResolveNode(binaryOperatorExpression.Left, this.Emitter);
             var rightResolverResult = this.Emitter.Resolver.ResolveNode(binaryOperatorExpression.Right, this.Emitter);
             var charToString = -1;
+            string variable = null;
 
             if (orr != null && orr.Type.IsKnownType(KnownTypeCode.String))
             {
@@ -160,27 +161,37 @@ namespace Bridge.Translator
             bool nullable = orr != null && orr.IsLiftedOperator;
             bool isCoalescing = binaryOperatorExpression.Operator == BinaryOperatorType.NullCoalescing;
             string root = Bridge.Translator.Emitter.ROOT + ".Nullable.";
-            bool special = nullable || isCoalescing;
+            bool special = nullable;
             bool rootSpecial = nullable;
 
             if (rootSpecial)
             {
                 this.Write(root);
             }
-            else if (isCoalescing)
-            {
-                this.Write(Bridge.Translator.Emitter.ROOT + ".");
-            }
             else
             {
-                if (charToString == 0)
+                if (isCoalescing)
+                {
+                    this.Write("(");
+                    variable = this.GetTempVarName();
+                    this.Write(variable);
+                    this.Write(" = ");
+                }
+                else if (charToString == 0)
                 {
                     this.Write("String.fromCharCode(");
                 }
 
                 binaryOperatorExpression.Left.AcceptVisitor(this.Emitter);
 
-                if (charToString == 0)
+                if (isCoalescing)
+                {
+                    this.Write(", Bridge.hasValue(");
+                    this.Write(variable);
+                    this.Write(") ? ");
+                    this.Write(variable);
+                }
+                else if (charToString == 0)
                 {
                     this.Write(")");
                 }
@@ -245,7 +256,7 @@ namespace Bridge.Translator
                         break;
 
                     case BinaryOperatorType.NullCoalescing:
-                        this.Write("coalesce");
+                        this.Write(":");
                         break;
 
                     case BinaryOperatorType.ConditionalOr:
@@ -350,7 +361,7 @@ namespace Bridge.Translator
 
             binaryOperatorExpression.Right.AcceptVisitor(this.Emitter);
 
-            if (charToString == 1)
+            if (charToString == 1 || isCoalescing)
             {
                 this.Write(")");
             }
