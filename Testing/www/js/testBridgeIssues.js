@@ -1598,7 +1598,8 @@ Bridge.define('ClientTestLibrary.Bridge597A', {
 Bridge.define('ClientTestLibrary.Bridge603A', {
     statics: {
         op_Implicit: function (value) {
-            value = Bridge.coalesce(value, "[Null]");
+            var $t;
+            value = ($t = value, Bridge.hasValue($t) ? $t : "[Null]");
             return new ClientTestLibrary.Bridge603A("constructor$1", value);
         }
     },
@@ -2709,6 +2710,24 @@ Bridge.define('ClientTestLibrary.Bridge758', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge760', {
+    statics: {
+        testUseCase: function (assert) {
+            var $t;
+            assert.expect(1);
+
+            var a = null;
+            var b = 10;
+
+            var c = ($t = b, Bridge.hasValue($t) ? $t : Bridge.get(ClientTestLibrary.Bridge760).doSomething(a));
+            assert.equal(c, 10, "Bridge760");
+        },
+        doSomething: function (test) {
+            return Bridge.Nullable.getValue(test);
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
@@ -3538,14 +3557,16 @@ Bridge.define('ClientTestLibrary.Bridge597', {
 Bridge.define('ClientTestLibrary.Bridge603B', {
     statics: {
         op_Implicit$2: function (value) {
-            value = Bridge.coalesce(value, "[Null]");
+            var $t;
+            value = ($t = value, Bridge.hasValue($t) ? $t : "[Null]");
             return new ClientTestLibrary.Bridge603B("constructor$3", value);
         },
         op_Implicit$1: function (value) {
             return new ClientTestLibrary.Bridge603B("constructor$2", value);
         },
         op_Implicit: function (value) {
-            value = Bridge.coalesce(value, Bridge.merge(new ClientTestLibrary.Bridge603Class(), {
+            var $t;
+            value = ($t = value, Bridge.hasValue($t) ? $t : Bridge.merge(new ClientTestLibrary.Bridge603Class(), {
                 setData: "[Null]"
             } ));
             return new ClientTestLibrary.Bridge603B("constructor$1", value);
