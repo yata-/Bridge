@@ -164,7 +164,7 @@ namespace Bridge.Translator
                         }
                         else
                         {
-                            value = "new " + BridgeTypes.ToJsName((AstType)constValue, this.Emitter) + "()";
+                            value = Inspector.GetStructDefaultValue((AstType)constValue, this.Emitter);
                         }
                     }
 
@@ -185,7 +185,7 @@ namespace Bridge.Translator
                     }
                     else
                     {
-                        this.Write("new " + BridgeTypes.ToJsName((AstType)constValue, this.Emitter) + "()");
+                        this.Write(Inspector.GetStructDefaultValue((AstType)constValue, this.Emitter));
                     }
                 }
                 else

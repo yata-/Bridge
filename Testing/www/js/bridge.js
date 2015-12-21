@@ -261,7 +261,7 @@
             } else if (type === Boolean) {
                 return false;
             } else if (type === Date) {
-                return new Date(0);
+                return new Date(-864e13);
             } else if (type === Number) {
                 return 0;
             }
@@ -1746,7 +1746,7 @@
 
 	if (document) {
 	    var check = function (regex) {
-	        return regex.test(navigator.userAgent);
+	        return regex.test(navigator.userAgent.toLowerCase());
 	    },
 
         isStrict = document.compatMode === "CSS1Compat",
@@ -1754,7 +1754,7 @@
         version = function (is, regex) {
             var m;
 
-            return (is && (m = regex.exec(navigator.userAgent))) ? parseFloat(m[1]) : 0;
+            return (is && (m = regex.exec(navigator.userAgent.toLowerCase()))) ? parseFloat(m[1]) : 0;
         },
 
         docMode = document.documentMode,
@@ -5883,10 +5883,7 @@ Bridge.Class.generic('Bridge.Comparer$1', function (T) {
 
         constructor: function (fn) {
             this.fn = fn;
-        },
-
-        compare: function (x, y) {
-            return this.fn(x, y);
+            this.compare = fn;
         }
     }));
 });
@@ -6389,7 +6386,7 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
 
         sort: function (comparison) {
             this.checkReadOnly();
-            this.items.sort(comparison);
+            this.items.sort(comparison || Bridge.Comparer$1.$default.compare);
         },
 
         splice: function (start, count, items) {

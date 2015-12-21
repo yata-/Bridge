@@ -15,7 +15,8 @@ Bridge.define('ClientTestLibrary.Point', {
         CONST_CHAR: 87,
         test3: function () {
             return Bridge.get(ClientTestLibrary.Point).statitIntNotInitialized + Bridge.get(ClientTestLibrary.Point).staticInt;
-        }
+        },
+        getDefaultValue: function () { return new ClientTestLibrary.Point(); }
     },
     x: 0,
     y: 0,
@@ -51,6 +52,9 @@ Bridge.define('ClientTestLibrary.Point', {
 });
 
 Bridge.define('ClientTestLibrary.Rectangle', {
+    statics: {
+        getDefaultValue: function () { return new ClientTestLibrary.Rectangle(); }
+    },
     config: {
         init: function () {
             this.l = new ClientTestLibrary.Point();

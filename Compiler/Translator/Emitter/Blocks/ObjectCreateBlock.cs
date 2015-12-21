@@ -348,7 +348,7 @@ namespace Bridge.Translator
 
                             if (primitiveExpr != null && primitiveExpr.Value is AstType)
                             {
-                                this.Write("new " + BridgeTypes.ToJsName((AstType)primitiveExpr.Value, this.Emitter) + "()");
+                                this.Write(Inspector.GetStructDefaultValue((AstType)primitiveExpr.Value, this.Emitter));
                             }
                             else
                             {
