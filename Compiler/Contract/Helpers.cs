@@ -219,6 +219,11 @@ namespace Bridge.Contract
                 return true;
             }
 
+            if (emitter.AssemblyInfo.IgnoreCast)
+            {
+                return true;
+            }
+
             return emitter.Validator.HasAttribute(typeDef.Attributes, "Bridge.IgnoreCastAttribute");
         }
 
