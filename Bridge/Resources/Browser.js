@@ -10,7 +10,7 @@
         version = function (is, regex) {
             var m;
 
-            return (is && (m = regex.exec(navigator.userAgent))) ? parseFloat(m[1]) : 0;
+            return (is && (m = regex.exec(navigator.userAgent.toLowerCase()))) ? parseFloat(m[1]) : 0;
         },
 
         docMode = document.documentMode,
