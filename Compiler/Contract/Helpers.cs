@@ -330,6 +330,13 @@ namespace Bridge.Contract
             }
         }
 
+        public static bool IsAutoProperty(IProperty propertyDeclaration)
+        {
+            // auto properties don't have bodies
+            return (propertyDeclaration.CanGet && !propertyDeclaration.Getter.HasBody) ||
+                   (propertyDeclaration.CanSet && !propertyDeclaration.Setter.HasBody);
+        }
+
         public static bool IsAutoProperty(PropertyDefinition propDef)
         {
             var typeDef = propDef.DeclaringType;
@@ -347,18 +354,34 @@ namespace Bridge.Contract
             return typeDef.Fields.Any(f => !f.IsPublic && !f.IsStatic && f.Name.Contains("BackingField") && f.Name.Contains("<" + propDef.Name + ">"));
         }
 
-        public static bool IsFieldProperty(IMember property, IEmitter emitter)
+        public static bool IsFieldProperty(IMember propertyMember, IAssemblyInfo assemblyInfo)
         {
-            if (property.ImplementedInterfaceMembers.Count > 0)
+            if (propertyMember.ImplementedInterfaceMembers.Count > 0 || propertyMember.DeclaringType.Kind == TypeKind.Interface)
             {
                 return false;
             }
 
-            bool isAuto = property.Attributes.Any(a => a.AttributeType.FullName == "Bridge.FieldPropertyAttribute");
+            bool isAuto = propertyMember.Attributes.Any(a => a.AttributeType.FullName == "Bridge.FieldPropertyAttribute");
+            if (!isAuto && assemblyInfo.AutoPropertyToField && propertyMember is IProperty)
+            {
+                return Helpers.IsAutoProperty((IProperty)propertyMember);
+            }
+
+            return isAuto || assemblyInfo.AutoPropertyToField;
+        }
+
+        public static bool IsFieldProperty(IMember propertyMember, IEmitter emitter)
+        {
+            if (propertyMember.ImplementedInterfaceMembers.Count > 0)
+            {
+                return false;
+            }
+
+            bool isAuto = propertyMember.Attributes.Any(a => a.AttributeType.FullName == "Bridge.FieldPropertyAttribute");
             if (!isAuto && emitter.AssemblyInfo.AutoPropertyToField)
             {
-                var typeDef = emitter.GetTypeDefinition(property.DeclaringType);
-                var propDef = typeDef.Properties.FirstOrDefault(p => p.Name == property.Name);
+                var typeDef = emitter.GetTypeDefinition(propertyMember.DeclaringType);
+                var propDef = typeDef.Properties.FirstOrDefault(p => p.Name == propertyMember.Name);
                 return Helpers.IsAutoProperty(propDef);
             }
             return isAuto;
