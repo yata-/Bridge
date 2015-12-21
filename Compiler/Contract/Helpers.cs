@@ -349,6 +349,11 @@ namespace Bridge.Contract
 
         public static bool IsFieldProperty(IMember property, IEmitter emitter)
         {
+            if (property.ImplementedInterfaceMembers.Count > 0)
+            {
+                return false;
+            }
+
             bool isAuto = property.Attributes.Any(a => a.AttributeType.FullName == "Bridge.FieldPropertyAttribute");
             if (!isAuto && emitter.AssemblyInfo.AutoPropertyToField)
             {
@@ -371,6 +376,12 @@ namespace Bridge.Contract
 
         public static bool IsFieldProperty(PropertyDeclaration property, IEmitter emitter)
         {
+            ResolveResult resolveResult = emitter.Resolver.ResolveNode(property, emitter) as MemberResolveResult;
+            if (resolveResult != null && ((MemberResolveResult)resolveResult).Member != null)
+            {
+                return IsFieldProperty(((MemberResolveResult)resolveResult).Member, emitter);
+            }
+
             string name = "Bridge.FieldProperty";
             string name1 = name + "Attribute";
             foreach (var i in property.Attributes)
@@ -381,17 +392,19 @@ namespace Bridge.Contract
                     {
                         return true;
                     }
-                    var resolveResult = emitter.Resolver.ResolveNode(j, emitter);
+                    resolveResult = emitter.Resolver.ResolveNode(j, emitter);
                     if (resolveResult != null && resolveResult.Type != null && resolveResult.Type.FullName == name1)
                     {
                         return true;
                     }
                 }
             }
+
             if (!emitter.AssemblyInfo.AutoPropertyToField)
             {
                 return false;
             }
+
             var typeDef = emitter.GetTypeDefinition();
             var propDef = typeDef.Properties.FirstOrDefault(p => p.Name == property.Name);
             return Helpers.IsAutoProperty(propDef);
