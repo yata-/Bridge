@@ -1779,6 +1779,16 @@ Bridge.define('ClientTestLibrary.Bridge623B2', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge625A', {
+    inherits: [Bridge.IEqualityComparer$1(Bridge.Int)],
+    equals: function (x, y) {
+        return x === y;
+    },
+    getHashCode: function (obj) {
+        return Bridge.getHashCode(obj);
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge634A$1', function (T) { return {
 
 }; });
@@ -3747,6 +3757,41 @@ Bridge.define('ClientTestLibrary.Bridge623', {
 
             assert.equal(point7.call(), 1021, "Bridge623B2 point7 func3");
             assert.equal(point8.call(), 1024, "Bridge623B2 point8 func3");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge625', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(4);
+
+            var list = [1, 2, 3];
+
+            var d1 = Bridge.Linq.Enumerable.from(list).toDictionary(function (x) {
+                return x;
+            }, null, Bridge.Int, Bridge.Int);
+            assert.ok(true, "Bridge625 d1");
+
+            var d2 = Bridge.Linq.Enumerable.from(list).toDictionary(function (x) {
+                return x;
+            }, null, Bridge.Int, Bridge.Int, new ClientTestLibrary.Bridge625A());
+            assert.ok(true, "Bridge625 d2");
+
+            var d3 = Bridge.Linq.Enumerable.from(list).toDictionary(function (x) {
+                return x;
+            }, function (y) {
+                return y;
+            }, Bridge.Int, Bridge.Int);
+            assert.ok(true, "Bridge625 d3");
+
+            var d4 = Bridge.Linq.Enumerable.from(list).toDictionary(function (x) {
+                return x;
+            }, function (y) {
+                return y;
+            }, Bridge.Int, Bridge.Int, new ClientTestLibrary.Bridge625A());
+            assert.ok(true, "Bridge625 d4");
+
         }
     }
 });

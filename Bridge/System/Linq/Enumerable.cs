@@ -5249,10 +5249,10 @@ namespace System.Linq
         /// keySelector produces duplicate keys for two elements.
         /// </exception>
         [Template("Bridge.Linq.Enumerable.from({source}).toDictionary({keySelector}, null, {TKey}, {TSource})")]
-        public static IDictionary<TKey, TSource> ToDictionary<TSource, TKey>(this IEnumerable<TSource> source,
+        public static Dictionary<TKey, TSource> ToDictionary<TSource, TKey>(this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector)
         {
-            return default(IDictionary<TKey, TSource>);
+            return default(Dictionary<TKey, TSource>);
         }
 
         /// <summary>
@@ -5290,10 +5290,10 @@ namespace System.Linq
         /// keySelector produces duplicate keys for two elements.
         /// </exception>
         [Template("Bridge.Linq.Enumerable.from({source}).toDictionary({keySelector}, {elementSelector}, {TKey}, {TElement})")]
-        public static IDictionary<TKey, TElement> ToDictionary<TSource, TKey, TElement>(this IEnumerable<TSource> source,
+        public static Dictionary<TKey, TElement> ToDictionary<TSource, TKey, TElement>(this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector)
         {
-            return default(IDictionary<TKey, TElement>);
+            return default(Dictionary<TKey, TElement>);
         }
 
         /// <summary>
@@ -5327,10 +5327,10 @@ namespace System.Linq
         /// keySelector produces duplicate keys for two elements.
         /// </exception>
         [Template("Bridge.Linq.Enumerable.from({source}).toDictionary({keySelector}, null, {TKey}, {TSource}, {comparer})")]
-        public static IDictionary<TKey, TSource> ToDictionary<TSource, TKey>(this IEnumerable<TSource> source,
+        public static Dictionary<TKey, TSource> ToDictionary<TSource, TKey>(this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector, IEqualityComparer<TKey> comparer)
         {
-            return default(IDictionary<TKey, TSource>);
+            return default(Dictionary<TKey, TSource>);
         }
 
         /// <summary>
@@ -5372,10 +5372,10 @@ namespace System.Linq
         /// keySelector produces duplicate keys for two elements.
         /// </exception>
         [Template("Bridge.Linq.Enumerable.from({source}).toDictionary({keySelector}, {elementSelector}, {TKey}, {TElement}, {comparer})")]
-        public static IDictionary<TKey, TElement> ToDictionary<TSource, TKey, TElement>(this IEnumerable<TSource> source,
+        public static Dictionary<TKey, TElement> ToDictionary<TSource, TKey, TElement>(this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, IEqualityComparer<TKey> comparer)
         {
-            return default(IDictionary<TKey, TElement>);
+            return default(Dictionary<TKey, TElement>);
         }
 
         /// <summary>
