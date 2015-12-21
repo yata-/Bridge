@@ -53,6 +53,9 @@ Bridge.define('Classes.Dog', {
 });
 
 Bridge.define('Classes.Point', {
+    statics: {
+        getDefaultValue: function () { return new Classes.Point(); }
+    },
     x: 0,
     y: 0,
     constructor$1: function (x, y) {
