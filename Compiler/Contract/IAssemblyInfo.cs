@@ -230,5 +230,11 @@ namespace Bridge.Contract
             get;
             set;
         }
+
+        bool UseTypedArrays
+        {
+            get;
+            set;
+        }
     }
 }

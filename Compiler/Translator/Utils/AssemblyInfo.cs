@@ -247,5 +247,11 @@ namespace Bridge.Translator
             get;
             set;
         }
+
+        public bool UseTypedArrays
+        {
+            get;
+            set;
+        }
     }
 }

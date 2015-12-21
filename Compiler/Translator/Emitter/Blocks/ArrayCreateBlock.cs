@@ -35,29 +35,38 @@ namespace Bridge.Translator
 
             if (arrayCreateExpression.Initializer.IsNull && rank == 1)
             {
-                this.Write("Bridge.Array.init(");
-                arrayCreateExpression.Arguments.First().AcceptVisitor(this.Emitter);
-                this.WriteComma();
-
-                var def = Inspector.GetDefaultFieldValue(at.ElementType);
-                if (def == at.ElementType)
+                var typedArrayName = this.GetTypedArrayName(at.ElementType);
+                if (this.Emitter.AssemblyInfo.UseTypedArrays && typedArrayName != null)
                 {
-                    this.WriteFunction();
-                    this.WriteOpenCloseParentheses();
-                    this.BeginBlock();
-                    this.WriteReturn(true);
-                    this.Write(Inspector.GetStructDefaultValue(at.ElementType, this.Emitter));
-                    this.WriteSemiColon();
-                    this.WriteNewLine();
-                    this.EndBlock();
+                    this.Write("new ", typedArrayName, "(");
+                    arrayCreateExpression.Arguments.First().AcceptVisitor(this.Emitter);
+                    this.Write(")");
                 }
                 else
                 {
-                    this.WriteScript(def);
+                    this.Write("Bridge.Array.init(");
+                    arrayCreateExpression.Arguments.First().AcceptVisitor(this.Emitter);
+                    this.WriteComma();
+
+                    var def = Inspector.GetDefaultFieldValue(at.ElementType);
+                    if (def == at.ElementType)
+                    {
+                        this.WriteFunction();
+                        this.WriteOpenCloseParentheses();
+                        this.BeginBlock();
+                        this.WriteReturn(true);
+                        this.Write(Inspector.GetStructDefaultValue(at.ElementType, this.Emitter));
+                        this.WriteSemiColon();
+                        this.WriteNewLine();
+                        this.EndBlock();
+                    }
+                    else
+                    {
+                        this.WriteScript(def);
+                    }
+
+                    this.Write(")");
                 }
-
-                this.Write(")");
-
                 return;
             }
 
@@ -122,6 +131,30 @@ namespace Bridge.Translator
                 this.Write(")");
                 this.Emitter.Comma = false;
             }
+        }
+
+        private string GetTypedArrayName(IType elementType)
+        {
+            switch (elementType.FullName)
+            {
+                case "System.Byte":
+                    return "Uint8Array";
+                case "System.SByte":
+                    return "Int8Array";
+                case "System.Int16":
+                    return "Int16Array";
+                case "System.UInt16":
+                    return "Uint16Array";
+                case "System.Int32":
+                    return "Int32Array";
+                case "System.UInt32":
+                    return "Uint32Array";
+                case "System.Single":
+                    return "Float32Array";
+                case "System.Double":
+                    return "Float64Array";
+            }
+            return null;
         }
     }
 }
