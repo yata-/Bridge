@@ -2195,12 +2195,8 @@
                 }
             };
 
-            if (document && (document.readyState === "complete" || document.readyState === "loaded")) {
-                fn();
-            } else {
-                Bridge.Class.$queue.push(Class);
-                Class.$staticInit = fn;
-            }
+            Bridge.Class.$queue.push(Class);
+            Class.$staticInit = fn;
 
             return Class;
         },
