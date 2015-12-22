@@ -86,7 +86,7 @@ namespace Bridge.Translator
 
             if (Helpers.IsReservedWord(name))
             {
-                vName = this.GetUniqueName(name);
+                vName = "$" + name; //this.GetUniqueName(name);
             }
 
             if (!this.Emitter.LocalsNamesMap.ContainsKey(name))
