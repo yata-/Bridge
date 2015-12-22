@@ -3979,7 +3979,7 @@ Bridge.define('ClientTestLibrary.Bridge687', {
 
             var c = new ClientTestLibrary.Bridge687A(null);
             var case1 = false;
-            if (ClientTestLibrary.Bridge687A.op_Implicit(c) === null) {
+            if (c === null) {
                 case1 = true;
             }
             assert.equal(case1, false, "Bridge687 case1");
