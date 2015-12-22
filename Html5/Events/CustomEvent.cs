@@ -48,5 +48,5 @@ namespace Bridge.Html5
     /// <typeparam name="TCurrentTarget">The CurrentTarget type</typeparam>
     [External]
     [Name("CustomEvent")]
-    public class CustomEvent<TCurrentTarget> : Event<TCurrentTarget> { }
+    public class CustomEvent<TCurrentTarget> : Event<TCurrentTarget> where TCurrentTarget : Element { }
 }
