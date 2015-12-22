@@ -265,7 +265,15 @@ namespace Bridge.Translator
             }
             else if (resolveResult.Type.Kind == TypeKind.Array)
             {
-                this.Write("Array");
+                var typedArrayName = Helpers.GetTypedArrayName(resolveResult.Type);
+                if (typedArrayName != null && this.Emitter.AssemblyInfo.UseTypedArrays)
+                {
+                    this.Write(typedArrayName);
+                }
+                else
+                {
+                    this.Write("Array");
+                }
             }
             else
             {
@@ -285,7 +293,15 @@ namespace Bridge.Translator
             }
             else if (iType.Kind == TypeKind.Array)
             {
-                this.Write("Array");
+                var typedArrayName = Helpers.GetTypedArrayName(iType);
+                if (typedArrayName != null && this.Emitter.AssemblyInfo.UseTypedArrays)
+                {
+                    this.Write(typedArrayName);
+                }
+                else
+                {
+                    this.Write("Array");
+                }
             }
             else if (iType.Kind == TypeKind.Anonymous)
             {

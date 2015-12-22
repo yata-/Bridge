@@ -841,5 +841,30 @@ namespace Bridge.Contract
 
             return null;
         }
+
+        public static string GetTypedArrayName(IType elementType)
+        {
+            switch (elementType.FullName)
+            {
+                case "System.Byte":
+                    return "Uint8Array";
+                case "System.SByte":
+                    return "Int8Array";
+                case "System.Int16":
+                    return "Int16Array";
+                case "System.UInt16":
+                    return "Uint16Array";
+                case "System.Int32":
+                    return "Int32Array";
+                case "System.UInt32":
+                    return "Uint32Array";
+                case "System.Single":
+                    return "Float32Array";
+                case "System.Double":
+                    return "Float64Array";
+            }
+            return null;
+        }
+
     }
 }
