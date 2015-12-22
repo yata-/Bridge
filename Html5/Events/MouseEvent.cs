@@ -190,4 +190,12 @@ namespace Bridge.Html5
         /// </summary>
         public int ScreenY;
     }
+
+    /// <summary>
+    /// A generic version of the MouseEvent class. The type parameter is a type of CurrentTarget.
+    /// </summary>
+    /// <typeparam name="TCurrentTarget">The CurrentTarget type</typeparam>
+    [External]
+    [Name("MouseEvent")]
+    public class MouseEvent<TCurrentTarget> : UIEvent<TCurrentTarget> where TCurrentTarget : Element { }
 }
