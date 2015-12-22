@@ -57,11 +57,13 @@
     <Compile Include="Tests\BridgeIssues\N582.cs" />
     <Compile Include="Tests\BridgeIssues\N592.cs" />
     <Compile Include="Tests\BridgeIssues\N606.cs" />
+    <Compile Include="Tests\BridgeIssues\N625.cs" />
     <Compile Include="Tests\BridgeIssues\N634.cs" />
     <Compile Include="Tests\BridgeIssues\N652.cs" />
     <Compile Include="Tests\BridgeIssues\N655.cs" />
     <Compile Include="Tests\BridgeIssues\N660.cs" />
     <Compile Include="Tests\BridgeIssues\N661.cs" />
+    <Compile Include="Tests\BridgeIssues\N687.cs" />
     <Compile Include="Tests\BridgeIssues\N689.cs" />
     <Compile Include="Tests\BridgeIssues\N690.cs" />
     <Compile Include="Tests\BridgeIssues\N691.cs" />
