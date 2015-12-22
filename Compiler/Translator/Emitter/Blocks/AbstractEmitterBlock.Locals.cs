@@ -4,6 +4,7 @@ using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
 using System.Collections.Generic;
 using System.Linq;
+using ICSharpCode.NRefactory.TypeSystem;
 
 namespace Bridge.Translator
 {
@@ -201,7 +202,15 @@ namespace Bridge.Translator
                                 if (prm.IsOptional)
                                 {
                                     this.Write(string.Format("if ({0} === void 0) {{ {0} = ", prm.Name));
-                                    this.WriteScript(prm.ConstantValue);
+                                    if (prm.ConstantValue == null && prm.Type.Kind == TypeKind.Struct)
+                                    {
+                                        this.Write(Inspector.GetStructDefaultValue(prm.Type, this.Emitter));
+                                    }
+                                    else
+                                    {
+                                        this.WriteScript(prm.ConstantValue);    
+                                    }
+                                    
                                     this.Write("; }");
                                     this.WriteNewLine();
                                 }
