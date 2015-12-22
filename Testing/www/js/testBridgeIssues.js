@@ -2786,6 +2786,20 @@ Bridge.define('ClientTestLibrary.Bridge762B', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge786', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge786).get(true), "true", "Bridge786 true");
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge786).get(false), "false", "Bridge786 false");
+        },
+        get: function ($throws) {
+            return $throws ? "true" : "false";
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
