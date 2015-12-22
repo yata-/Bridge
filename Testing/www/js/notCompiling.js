@@ -76,6 +76,9 @@ Bridge.define('ClientTestLibrary.Class84', {
 });
 
 Bridge.define('ClientTestLibrary.Rectangle66', {
+    statics: {
+        getDefaultValue: function () { return new ClientTestLibrary.Rectangle66(); }
+    },
     constructor$1: function (x1) {
         (new ClientTestLibrary.Rectangle66("constructor")).$clone(this);
     },

@@ -12,7 +12,7 @@ Bridge.define('ClientTestLibrary.Bridge169', {
         },
         m2: function () {
             (function () {
-                return Bridge.get(ClientTestLibrary.Bridge169).number = 2;
+                Bridge.get(ClientTestLibrary.Bridge169).number = 2;
             })();
         }
     }
@@ -48,14 +48,14 @@ Bridge.define('ClientTestLibrary.Bridge272.MyEnum', {
         def: 2,
         ghi: 3
     },
-    enum: true
+    $enum: true
 });
 
 Bridge.define('ClientTestLibrary.Bridge277', {
     statics: {
         $int: 0
     },
-    enum: true
+    $enum: true
 });
 
 Bridge.define('ClientTestLibrary.Bridge294', {
@@ -242,7 +242,8 @@ Bridge.define('ClientTestLibrary.Bridge407', {
             return Bridge.merge(new ClientTestLibrary.Bridge407(), {
                 setA: x.getA() + y.getA()
             } );
-        }
+        },
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge407(); }
     },
     config: {
         properties: {
@@ -286,7 +287,7 @@ Bridge.define('ClientTestLibrary.Bridge422', {
         next: 100,
         afterNext: 101
     },
-    enum: true
+    $enum: true
 });
 
 Bridge.define('ClientTestLibrary.Bridge436First', {
@@ -331,8 +332,9 @@ Bridge.define('ClientTestLibrary.Bridge467', {
     },
     equals: function (obj) {
         var other = Bridge.as(obj, ClientTestLibrary.Bridge467);
-        if (other === null)
+        if (other === null) {
             return false;
+        }
 
         if (this.getMyProperty() < 0 || other.getMyProperty() < 0) {
             return this === other;
@@ -571,7 +573,7 @@ Bridge.define('ClientTestLibrary.Bridge508', {
                 $taskResult1, 
                 $jumpFromFinally, 
                 result, 
-                $asyncBody = function () {
+                $asyncBody = Bridge.fn.bind(this, function () {
                     for (;;) {
                         switch ($step) {
                             case 0: {
@@ -596,9 +598,9 @@ Bridge.define('ClientTestLibrary.Bridge508', {
                             }
                         }
                     }
-                };
+                }, arguments);
 
-            $asyncBody.apply(this, arguments);
+            $asyncBody();
         },
         method1: function () {
             var $step = 0,
@@ -615,7 +617,7 @@ Bridge.define('ClientTestLibrary.Bridge508', {
                 i, 
                 np, 
                 np1, 
-                $asyncBody = function () {
+                $asyncBody = Bridge.fn.bind(this, function () {
                     try {
                         for (;;) {
                             switch ($step) {
@@ -703,9 +705,9 @@ Bridge.define('ClientTestLibrary.Bridge508', {
                         $e1 = Bridge.Exception.create($e1);
                         $returnTask.setError($e1);
                     }
-                };
+                }, arguments);
 
-            $asyncBody.apply(this, arguments);
+            $asyncBody();
             return $returnTask;
         },
         initPage: function () {
@@ -714,7 +716,7 @@ Bridge.define('ClientTestLibrary.Bridge508', {
                 $jumpFromFinally, 
                 $returnTask = new Bridge.Task(), 
                 $returnValue, 
-                $asyncBody = function () {
+                $asyncBody = Bridge.fn.bind(this, function () {
                     try {
                         for (;;) {
                             switch ($step) {
@@ -740,9 +742,9 @@ Bridge.define('ClientTestLibrary.Bridge508', {
                         $e1 = Bridge.Exception.create($e1);
                         $returnTask.setError($e1);
                     }
-                };
+                }, arguments);
 
-            $asyncBody.apply(this, arguments);
+            $asyncBody();
             return $returnTask;
         },
         nextPage: function () {
@@ -751,7 +753,7 @@ Bridge.define('ClientTestLibrary.Bridge508', {
                 $jumpFromFinally, 
                 $returnTask = new Bridge.Task(), 
                 $returnValue, 
-                $asyncBody = function () {
+                $asyncBody = Bridge.fn.bind(this, function () {
                     try {
                         for (;;) {
                             switch ($step) {
@@ -777,9 +779,9 @@ Bridge.define('ClientTestLibrary.Bridge508', {
                         $e1 = Bridge.Exception.create($e1);
                         $returnTask.setError($e1);
                     }
-                };
+                }, arguments);
 
-            $asyncBody.apply(this, arguments);
+            $asyncBody();
             return $returnTask;
         },
         nextPage1: function () {
@@ -1176,7 +1178,7 @@ Bridge.define('ClientTestLibrary.Bridge563', {
                 (function () {
                     var itm = $t.getCurrent();
                     handlers[i++] = function () {
-                        return result += itm;
+                        result += itm;
                     };
                 }).call(this);
             }
@@ -1197,7 +1199,7 @@ Bridge.define('ClientTestLibrary.Bridge563', {
                 (function () {
                     var itm1 = $t2.getCurrent();
                     handlers[i++] = function () {
-                        return result += itm1;
+                        result += itm1;
                     };
                 }).call(this);
             }
@@ -1223,7 +1225,7 @@ Bridge.define('ClientTestLibrary.Bridge563', {
                 (function () {
                     var itm = keys[j];
                     handlers[i++] = function () {
-                        return result += itm;
+                        result += itm;
                     };
                 }).call(this);
             }
@@ -1311,10 +1313,16 @@ Bridge.define('ClientTestLibrary.Bridge572', {
 });
 
 Bridge.define('ClientTestLibrary.Bridge577.Bridge577UnitA', {
+    statics: {
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge577.Bridge577UnitA(); }
+    },
     $clone: function (to) { return this; }
 });
 
 Bridge.define('ClientTestLibrary.Bridge577.Bridge577UnitB', {
+    statics: {
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge577.Bridge577UnitB(); }
+    },
     config: {
         properties: {
             Number: 0
@@ -1597,9 +1605,11 @@ Bridge.define('ClientTestLibrary.Bridge597A', {
 Bridge.define('ClientTestLibrary.Bridge603A', {
     statics: {
         op_Implicit: function (value) {
-            value = Bridge.coalesce(value, "[Null]");
+            var $t;
+            value = ($t = value, Bridge.hasValue($t) ? $t : "[Null]");
             return new ClientTestLibrary.Bridge603A("constructor$1", value);
-        }
+        },
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge603A(); }
     },
     value: null,
     constructor$1: function (value) {
@@ -1682,6 +1692,9 @@ Bridge.define('ClientTestLibrary.Class1', {
 });
 
 Bridge.define('ClientTestLibrary.Bridge608A', {
+    statics: {
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge608A(); }
+    },
     field: null,
     constructor$1: function (field) {
         this.field = field;
@@ -1763,6 +1776,16 @@ Bridge.define('ClientTestLibrary.Bridge623B2', {
     },
     call: function () {
         return this.func() + 1000;
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge625A', {
+    inherits: [Bridge.IEqualityComparer$1(Bridge.Int)],
+    equals: function (x, y) {
+        return x === y;
+    },
+    getHashCode: function (obj) {
+        return Bridge.getHashCode(obj);
     }
 });
 
@@ -2008,7 +2031,8 @@ Bridge.define('ClientTestLibrary.Bridge660Optional$1', function (T) { return {
         },
         getMissing: function () {
             return Bridge.get(ClientTestLibrary.Bridge660Optional$1(T))._missing.$clone();
-        }
+        },
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge660Optional$1(T)(); }
     },
     value: null,
     isDefined: false,
@@ -2208,11 +2232,282 @@ Bridge.define('ClientTestLibrary.Bridge687A', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge689', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            var fn1 = parseInt;
+            assert.equal(fn1("5"), 5, "Bridge689 should equals 5");
+
+            var fn2 = parseInt;
+            assert.equal(fn2("6"), 6, "Bridge689 should equals 6");
+
+            //object a = 7;
+            //Func<object, bool> fn3 = a.BridgeEquals;
+            //assert.Equal(fn3("7"), 7, "Bridge689 should equals 7");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge690A', {
+    i3: 3,
+    asyncSum: function (i1, i2) {
+        var $step = 0,
+            $task1, 
+            $jumpFromFinally, 
+            $returnTask = new Bridge.Task(), 
+            $returnValue, 
+            $asyncBody = Bridge.fn.bind(this, function () {
+                try {
+                    for (;;) {
+                        switch ($step) {
+                            case 0: {
+                                $task1 = Bridge.Task.delay(100);
+                                $step = 1;
+                                $task1.continueWith($asyncBody);
+                                return;
+                            }
+                            case 1: {
+                                $task1.getResult();
+                                $returnTask.setResult(i1 + i2 + this.i3);
+                                return;
+                            }
+                            default: {
+                                $returnTask.setResult(null);
+                                return;
+                            }
+                        }
+                    }
+                } catch($e1) {
+                    $e1 = Bridge.Exception.create($e1);
+                    $returnTask.setError($e1);
+                }
+            }, arguments);
+
+        $asyncBody();
+        return $returnTask;
+    },
+    start: function () {
+        var $step = 0,
+            $task1, 
+            $taskResult1, 
+            $jumpFromFinally, 
+            $returnTask = new Bridge.Task(), 
+            $returnValue, 
+            $asyncBody = Bridge.fn.bind(this, function () {
+                try {
+                    for (;;) {
+                        switch ($step) {
+                            case 0: {
+                                $task1 = this.asyncSum(2, 3);
+                                $step = 1;
+                                $task1.continueWith($asyncBody);
+                                return;
+                            }
+                            case 1: {
+                                $taskResult1 = $task1.getResult();
+                                $returnTask.setResult($taskResult1);
+                                return;
+                            }
+                            default: {
+                                $returnTask.setResult(null);
+                                return;
+                            }
+                        }
+                    }
+                } catch($e1) {
+                    $e1 = Bridge.Exception.create($e1);
+                    $returnTask.setError($e1);
+                }
+            }, arguments);
+
+        $asyncBody();
+        return $returnTask;
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge690B', {
+    statics: {
+        i3: 17,
+        asyncSum: function (i1, i2) {
+            var $step = 0,
+                $task1, 
+                $jumpFromFinally, 
+                $returnTask = new Bridge.Task(), 
+                $returnValue, 
+                $asyncBody = Bridge.fn.bind(this, function () {
+                    try {
+                        for (;;) {
+                            switch ($step) {
+                                case 0: {
+                                    $task1 = Bridge.Task.delay(100);
+                                    $step = 1;
+                                    $task1.continueWith($asyncBody);
+                                    return;
+                                }
+                                case 1: {
+                                    $task1.getResult();
+                                    $returnTask.setResult(i1 + i2 + Bridge.get(ClientTestLibrary.Bridge690B).i3);
+                                    return;
+                                }
+                                default: {
+                                    $returnTask.setResult(null);
+                                    return;
+                                }
+                            }
+                        }
+                    } catch($e1) {
+                        $e1 = Bridge.Exception.create($e1);
+                        $returnTask.setError($e1);
+                    }
+                }, arguments);
+
+            $asyncBody();
+            return $returnTask;
+        },
+        start: function () {
+            var $step = 0,
+                $task1, 
+                $taskResult1, 
+                $jumpFromFinally, 
+                $returnTask = new Bridge.Task(), 
+                $returnValue, 
+                $asyncBody = Bridge.fn.bind(this, function () {
+                    try {
+                        for (;;) {
+                            switch ($step) {
+                                case 0: {
+                                    $task1 = Bridge.get(ClientTestLibrary.Bridge690B).asyncSum(19, 23);
+                                    $step = 1;
+                                    $task1.continueWith($asyncBody);
+                                    return;
+                                }
+                                case 1: {
+                                    $taskResult1 = $task1.getResult();
+                                    $returnTask.setResult($taskResult1);
+                                    return;
+                                }
+                                default: {
+                                    $returnTask.setResult(null);
+                                    return;
+                                }
+                            }
+                        }
+                    } catch($e1) {
+                        $e1 = Bridge.Exception.create($e1);
+                        $returnTask.setError($e1);
+                    }
+                }, arguments);
+
+            $asyncBody();
+            return $returnTask;
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge691', {
+    statics: {
+        testUseCase: function (assert) {
+            var $t;
+            assert.expect(1);
+
+            var pos = 0;
+            var lines = ["", "", "str"];
+            while (pos < lines.length) {
+                var $t = (function () {
+                    while (pos < lines.length && lines[pos].length === 0) {
+                        pos++;
+                    }
+
+                    if (!(pos < lines.length)) {
+                        return {jump:2};
+                    }
+
+                    var a = function (p) {
+                    };
+
+                    if (pos > 0) {
+                        return {jump:2};
+                    }
+                }).call(this) || {};
+                if($t.jump == 2) break;
+            }
+
+            assert.equal(pos, 2, "Bridge691");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge693A$1', function (T) { return {
+    constructor: function (props) {
+    }
+}; });
+
+Bridge.define('ClientTestLibrary.Bridge694', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(3);
+
+            var fruits = Bridge.Array.init(3, null);
+            fruits[0] = "mango";
+            fruits[1] = "apple";
+            fruits[2] = "lemon";
+
+            var list = Bridge.Linq.Enumerable.from(fruits).select(function(x) { return Bridge.cast(x, String); }).orderBy(function (fruit) {
+                return fruit;
+            }).select(function (fruit) {
+                return fruit;
+            }).toList(String);
+            assert.equal(list.getItem(0), "apple", "Bridge694 apple");
+            assert.equal(list.getItem(1), "lemon", "Bridge694 lemon");
+            assert.equal(list.getItem(2), "mango", "Bridge694 mango");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge696', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            var namedCallbacks = new Bridge.Dictionary$2(String,Function)();
+            namedCallbacks.add("Shout", function (message) {
+                return message.length;
+            });
+            namedCallbacks.add("Whisper", function (message) {
+                return message.length;
+            });
+
+            assert.equal(namedCallbacks.get("Shout")("HELLO!"), 6, "Bridge696 HELLO!");
+            assert.equal(namedCallbacks.get("Whisper")("HELLO"), 5, "Bridge696 HELLO");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge699', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(5);
+
+            var blob1 = new Blob(["blobData1"], { type: "text/richtext", endings: "transparent" });
+
+            assert.notEqual(blob1, null, "blob1 is not null");
+            assert.equal(blob1.size, 9, "blob1.Size equals 9");
+            assert.equal(blob1.type, "text/richtext", "blob1.Type equals 'text/richtext'");
+
+            var blob2 = new Blob(["data2"]);
+            assert.notEqual(blob2, null, "blob2 is not null");
+            assert.equal(blob2.size, 5, "blob2.Size equals 5");
+
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge708', {
     statics: {
         testUseCase: function (assert) {
             assert.expect(1);
-
             assert.equal(Bridge.get(ClientTestLibrary.Bridge708).testIssue(), 12, "Bridge708 TestIssue");
         },
         testIssue: function () {
@@ -2242,6 +2537,271 @@ Bridge.define('ClientTestLibrary.Bridge708', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge721', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(4);
+
+            var testList = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+                [3]
+            ] );
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge721).check(testList), "ThirdLoop", "Bridge721 ThirdLoop");
+
+            testList = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+                [5]
+            ] );
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge721).check(testList), "SecondLoop", "Bridge721 SecondLoop");
+
+            testList = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+                [15]
+            ] );
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge721).check(testList), "FirstLoop", "Bridge721 FirstLoop");
+
+            testList = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+                [25]
+            ] );
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge721).check(testList), "NoLoops", "Bridge721 NoLoops");
+        },
+        check: function (testList) {
+            var $t, $t1, $t2;
+            var i = 0;
+            while (i < 20) {
+                var $t = (function () {
+                    while (i < 10) {
+                        var $t1 = (function () {
+                            while (i < 5) {
+                                var $t2 = (function () {
+                                    if (Bridge.Linq.Enumerable.from(testList).any(function (x) {
+                                        return x === i;
+                                    })) {
+                                        return {jump: 3, v: "ThirdLoop"};
+                                    }
+                                    i++;
+                                }).call(this) || {};
+                                if($t2.jump == 3) return {jump: 3, v: $t2.v};
+                            }
+
+                            if (Bridge.Linq.Enumerable.from(testList).any(function (x) {
+                                return x === i;
+                            })) {
+                                return {jump: 3, v: "SecondLoop"};
+                            }
+                            i++;
+                        }).call(this) || {};
+                        if($t1.jump == 3) return {jump: 3, v: $t1.v};
+                    }
+
+                    if (Bridge.Linq.Enumerable.from(testList).any(function (x) {
+                        return x === i;
+                    })) {
+                        return {jump: 3, v: "FirstLoop"};
+                    }
+                    i++;
+                }).call(this) || {};
+                if($t.jump == 3) return $t.v;
+            }
+
+            return "NoLoops";
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge722', {
+    statics: {
+        m1: function (i) {
+            return i;
+        },
+        testUseCase: function (assert) {
+            var $t, $t1, $t2, $t3, $t4, $t5, $t6;
+            assert.expect(9);
+
+            var c1 = new ClientTestLibrary.Bridge722();
+            var asset1 = 1;
+            asset1 = ($t = 2, c1.setItem("path", $t), $t);
+
+            assert.equal(asset1, 2, "Bridge722 asset1");
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge722).m1(($t1 = 3, c1.setItem("path", $t1), $t1)), 3, "Bridge722 M1 3");
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge722).m1(($t2 = ($t3 = 4, c1.setItem("path", $t3), $t3), asset1 = $t2, $t2)), 4, "Bridge722 M1 4");
+
+            var c2 = { };
+            var asset2 = ($t4 = 5, c2.path = $t4, $t4);
+            assert.equal(asset2, 5, "Bridge722 asset2");
+            assert.equal(c2.path, 5, "Bridge722 c2");
+
+            var c3 = new Bridge.Dictionary$2(String,Bridge.Int)();
+            var asset3 = ($t5 = 6, c3.set("path", $t5), $t5);
+            assert.equal(asset3, 6, "Bridge722 asset3");
+            assert.equal(c3.get("path"), 6, "Bridge722 c3");
+
+            var data4 = [Bridge.Decimal(1.0), Bridge.Decimal(2.0), Bridge.Decimal(3.0), Bridge.Decimal(4.0), Bridge.Decimal(7.0)];
+            var c4 = new Bridge.Dictionary$2(String,Bridge.Decimal)();
+            var asset4 = ($t6 = Bridge.Linq.Enumerable.from(data4).select(function (x) {
+                return x;
+            }).last(), c4.set("path", $t6), $t6);
+            assert.equal(asset4, 7, "Bridge722 asset4");
+            assert.equal(c4.get("path"), 7, "Bridge722 c4");
+        }
+    },
+    lastItem: 0,
+    getItem: function (item) {
+        return this.lastItem;
+    },
+    setItem: function (item, value) {
+        this.lastItem = value;
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge726', {
+    statics: {
+        testUseCase: function (assert) {
+            var $t;
+            assert.expect(1);
+
+            var b = true;
+            var t = [1, 2, 3];
+
+            var sum = 0;
+            if (b) {
+                $t = Bridge.getEnumerator(t);
+                while ($t.moveNext()) {
+                    var i = $t.getCurrent();
+                    sum += i;
+                }
+            }
+
+            assert.equal(sum, 6, "Bridge726");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge732', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var decimalValue = Bridge.Decimal(5.0);
+            var assign = false;
+            var test = assign ? decimalValue : Bridge.Decimal(2);
+            var test2 = test.mul(decimalValue);
+
+            assert.ok(test2.equalsT(Bridge.Decimal(10)), "Bridge732");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge733', {
+    statics: {
+        config: {
+            init: function () {
+                this.dateb = new Date(-864e13);
+                Bridge.property(this, "DateA", new Date(-864e13));
+            }
+        },
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            assert.ok(Bridge.equals(Bridge.get(ClientTestLibrary.Bridge733).getDateA(), new Date(-864e13)), "Bridge733 DateA");
+            assert.ok(Bridge.equals(Bridge.get(ClientTestLibrary.Bridge733).dateb, new Date(-864e13)), "Bridge733 dateb");
+
+            Bridge.get(ClientTestLibrary.Bridge733).dateb = new Date(); // to prevent warning that dateb is never assigned
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge751', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            for (var i = 0; i < 5; i++) {
+                var el = i;
+            }
+
+            var values = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+                [1],
+                [2]
+            ] );
+            var v1 = Bridge.Linq.Enumerable.from(values).count(function (el1) {
+                return el1 === 1;
+            });
+
+            assert.equal(v1, 1, "Bridge751");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge758', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(3);
+
+            var list = new Bridge.List$1(Date)();
+            list.add(new Date(2015, 1 - 1, 2));
+            list.add(new Date(2015, 1 - 1, 1));
+            list.add(new Date(2015, 1 - 1, 3));
+
+            list.sort();
+            assert.ok(Bridge.equals(list.getItem(0), new Date(2015, 1 - 1, 1)), "Bridge758 2015/1/1");
+            assert.ok(Bridge.equals(list.getItem(1), new Date(2015, 1 - 1, 2)), "Bridge758 2015/1/2");
+            assert.ok(Bridge.equals(list.getItem(2), new Date(2015, 1 - 1, 3)), "Bridge758 2015/1/3");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge760', {
+    statics: {
+        testUseCase: function (assert) {
+            var $t;
+            assert.expect(1);
+
+            var a = null;
+            var b = 10;
+
+            var c = ($t = b, Bridge.hasValue($t) ? $t : Bridge.get(ClientTestLibrary.Bridge760).doSomething(a));
+            assert.equal(c, 10, "Bridge760");
+        },
+        doSomething: function (test) {
+            return Bridge.Nullable.getValue(test);
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge762A', {
+    statics: {
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge762A(); }
+    },
+    $clone: function (to) { return this; }
+});
+
+Bridge.define('ClientTestLibrary.Bridge762B', {
+    statics: {
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge762B(); }
+    },
+    config: {
+        properties: {
+            Data: 0
+        }
+    },
+    constructor: function () {
+    },
+    getHashCode: function () {
+        var hash = 17;
+        hash = hash * 23 + (this.Data == null ? 0 : Bridge.getHashCode(this.Data));
+        return hash;
+    },
+    equals: function (o) {
+        if (!Bridge.is(o,ClientTestLibrary.Bridge762B)) {
+            return false;
+        }
+        return Bridge.equals(this.Data, o.Data);
+    },
+    $clone: function (to) {
+        var s = to || new ClientTestLibrary.Bridge762B();
+        s.Data = this.Data;
+        return s;
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
@@ -2256,6 +2816,20 @@ Bridge.define('ClientTestLibrary.Bridge304', {
     },
     f$1: function () {
         this.setX("void F()");
+    }
+});
+
+Bridge.define('ClientTestLibrary.IBridge693D');
+
+Bridge.define('ClientTestLibrary.Bridge693B.Bridge693C', {
+    inherits: [ClientTestLibrary.IBridge693D]
+});
+
+Bridge.define('ClientTestLibrary.Bridge693B', {
+    inherits: [ClientTestLibrary.Bridge693A$1(ClientTestLibrary.Bridge693B.Bridge693C)],
+    constructor: function () {
+        ClientTestLibrary.Bridge693A$1(ClientTestLibrary.Bridge693B.Bridge693C).prototype.$constructor.call(this, new ClientTestLibrary.Bridge693B.Bridge693C());
+
     }
 });
 
@@ -2304,8 +2878,9 @@ Bridge.define('ClientTestLibrary.Bridge381', {
 
 
             var sArr = Bridge.Array.init(10, null);
-            for (var i = 0; i < 10; i++)
+            for (var i = 0; i < 10; i++) {
                 sArr[i] = Bridge.String.format("{0,-3}", i * 5);
+            }
 
             var s4 = sArr.join(":");
             assert.equal(s4, "0  :5  :10 :15 :20 :25 :30 :35 :40 :45 ", "Join4");
@@ -3056,18 +3631,21 @@ Bridge.define('ClientTestLibrary.Bridge597', {
 Bridge.define('ClientTestLibrary.Bridge603B', {
     statics: {
         op_Implicit$2: function (value) {
-            value = Bridge.coalesce(value, "[Null]");
+            var $t;
+            value = ($t = value, Bridge.hasValue($t) ? $t : "[Null]");
             return new ClientTestLibrary.Bridge603B("constructor$3", value);
         },
         op_Implicit$1: function (value) {
             return new ClientTestLibrary.Bridge603B("constructor$2", value);
         },
         op_Implicit: function (value) {
-            value = Bridge.coalesce(value, Bridge.merge(new ClientTestLibrary.Bridge603Class(), {
+            var $t;
+            value = ($t = value, Bridge.hasValue($t) ? $t : Bridge.merge(new ClientTestLibrary.Bridge603Class(), {
                 setData: "[Null]"
             } ));
             return new ClientTestLibrary.Bridge603B("constructor$1", value);
-        }
+        },
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge603B(); }
     },
     value: null,
     intValue: 0,
@@ -3195,6 +3773,41 @@ Bridge.define('ClientTestLibrary.Bridge623', {
 
             assert.equal(point7.call(), 1021, "Bridge623B2 point7 func3");
             assert.equal(point8.call(), 1024, "Bridge623B2 point8 func3");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge625', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(4);
+
+            var list = [1, 2, 3];
+
+            var d1 = Bridge.Linq.Enumerable.from(list).toDictionary(function (x) {
+                return x;
+            }, null, Bridge.Int, Bridge.Int);
+            assert.ok(true, "Bridge625 d1");
+
+            var d2 = Bridge.Linq.Enumerable.from(list).toDictionary(function (x) {
+                return x;
+            }, null, Bridge.Int, Bridge.Int, new ClientTestLibrary.Bridge625A());
+            assert.ok(true, "Bridge625 d2");
+
+            var d3 = Bridge.Linq.Enumerable.from(list).toDictionary(function (x) {
+                return x;
+            }, function (y) {
+                return y;
+            }, Bridge.Int, Bridge.Int);
+            assert.ok(true, "Bridge625 d3");
+
+            var d4 = Bridge.Linq.Enumerable.from(list).toDictionary(function (x) {
+                return x;
+            }, function (y) {
+                return y;
+            }, Bridge.Int, Bridge.Int, new ClientTestLibrary.Bridge625A());
+            assert.ok(true, "Bridge625 d4");
+
         }
     }
 });
@@ -3366,7 +3979,7 @@ Bridge.define('ClientTestLibrary.Bridge687', {
 
             var c = new ClientTestLibrary.Bridge687A(null);
             var case1 = false;
-            if (c === null) {
+            if (ClientTestLibrary.Bridge687A.op_Implicit(c) === null) {
                 case1 = true;
             }
             assert.equal(case1, false, "Bridge687 case1");
@@ -3377,6 +3990,117 @@ Bridge.define('ClientTestLibrary.Bridge687', {
                 case2 = true;
             }
             assert.equal(case2, true, "Bridge687 case2");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge690', {
+    statics: {
+        testUseCaseForInstance: function (assert) {
+            var $step = 0,
+                $task1, 
+                $taskResult1, 
+                $jumpFromFinally, 
+                done, 
+                c, 
+                r, 
+                $asyncBody = Bridge.fn.bind(this, function () {
+                    for (;;) {
+                        switch ($step) {
+                            case 0: {
+                                assert.expect(1);
+                                
+                                done = assert.async();
+                                c = new ClientTestLibrary.Bridge690A();
+                                $task1 = c.start();
+                                $step = 1;
+                                $task1.continueWith($asyncBody, true);
+                                return;
+                            }
+                            case 1: {
+                                $taskResult1 = $task1.getResult();
+                                r = $taskResult1;
+                                
+                                assert.equal(r, 8, "Bridge690 TestUseCaseForInstance");
+                                done();
+                                return;
+                            }
+                            default: {
+                                return;
+                            }
+                        }
+                    }
+                }, arguments);
+
+            $asyncBody();
+        },
+        testUseCaseForStatic: function (assert) {
+            var $step = 0,
+                $task1, 
+                $taskResult1, 
+                $jumpFromFinally, 
+                done, 
+                r, 
+                $asyncBody = Bridge.fn.bind(this, function () {
+                    for (;;) {
+                        switch ($step) {
+                            case 0: {
+                                assert.expect(1);
+                                
+                                done = assert.async();
+                                $task1 = Bridge.get(ClientTestLibrary.Bridge690B).start();
+                                $step = 1;
+                                $task1.continueWith($asyncBody, true);
+                                return;
+                            }
+                            case 1: {
+                                $taskResult1 = $task1.getResult();
+                                r = $taskResult1;
+                                
+                                assert.equal(r, 59, "Bridge690 TestUseCaseForStatic");
+                                done();
+                                return;
+                            }
+                            default: {
+                                return;
+                            }
+                        }
+                    }
+                }, arguments);
+
+            $asyncBody();
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge693', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var c = new ClientTestLibrary.Bridge693B();
+            assert.notEqual(c, null, "Bridge693 not null");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge762', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(4);
+
+            var test1 = null;
+            var test2 = null;
+            var test3 = null;
+
+            var value1 = Bridge.Nullable.getValueOrDefault(test1, Bridge.getDefaultValue(Bridge.Int));
+            var value2 = Bridge.Nullable.getValueOrDefault(test2, Bridge.getDefaultValue(ClientTestLibrary.Bridge762A));
+            var value3 = Bridge.Nullable.getValueOrDefault(test3, Bridge.getDefaultValue(ClientTestLibrary.Bridge762B));
+
+            assert.equal(value1, 0, "Bridge762 int");
+            assert.notEqual(value2.$clone(), null, "Bridge762A struct");
+            assert.notEqual(value3.$clone(), null, "Bridge762B struct");
+            assert.equal(value3.getData(), 0, "Bridge762B.Data struct");
         }
     }
 });
@@ -4043,12 +4767,13 @@ Bridge.define('ClientTestLibrary.TestBridgeIssues', {
                 var $t = (function () {
                     if (!Bridge.Linq.Enumerable.from(testList).any(function (x) {
                         return x === i;
-                    }))
-                        return 1;
+                    })) {
+                        return {jump:1};
+                    }
 
                     count++;
-                }).call(this);
-                if($t == 1) continue;
+                }).call(this) || {};
+                if($t.jump == 1) continue;
             }
 
             assert.equal(count, 1, "\"continue\" generated correctly");

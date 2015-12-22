@@ -417,19 +417,27 @@ Bridge.define('Bridge.ClientTest.DecimalMathTests.Logger', {
                 var j = i + 1;
                 if (Bridge.is(o, Bridge.Decimal)) {
                     var d1 = Bridge.cast(o, Bridge.Decimal);
-                    if (d1.equals(Bridge.get(Bridge.ClientTest.DecimalMathTests).maxValue))
+                    if (d1.equals(Bridge.get(Bridge.ClientTest.DecimalMathTests).maxValue)) {
                         result[j] = "DecimalMathTests.MaxValue";
-                    else 
-                        if (d1.equals(Bridge.get(Bridge.ClientTest.DecimalMathTests).minValue))
+                    }
+                    else  {
+                        if (d1.equals(Bridge.get(Bridge.ClientTest.DecimalMathTests).minValue)) {
                             result[j] = "DecimalMathTests.MinValue";
-                        else 
-                            if (d1.equals(Bridge.Decimal.MinusOne))
+                        }
+                        else  {
+                            if (d1.equals(Bridge.Decimal.MinusOne)) {
                                 result[j] = "decimal.MinusOne";
-                            else 
-                                if (d1.equals(Bridge.Decimal.One))
+                            }
+                            else  {
+                                if (d1.equals(Bridge.Decimal.One)) {
                                     result[j] = "decimal.One";
-                                else 
+                                }
+                                else  {
                                     result[j] = d1.toString() + "m";
+                                }
+                            }
+                        }
+                    }
                 }
                 else  {
                     result[j] = o;
@@ -445,20 +453,23 @@ Bridge.define('Bridge.ClientTest.DecimalMathTests.Logger', {
         }
     },
     constructor: function () {
-        if (Bridge.get(Bridge.ClientTest.DecimalMathTests).useLogging)
+        if (Bridge.get(Bridge.ClientTest.DecimalMathTests).useLogging) {
             this.setText(new Bridge.Text.StringBuilder());
+        }
     },
     onLogBegin: function (name) {
-        if (!Bridge.get(Bridge.ClientTest.DecimalMathTests).useLogging)
+        if (!Bridge.get(Bridge.ClientTest.DecimalMathTests).useLogging) {
             return;
+        }
 
         this.getText().appendLine("//------------------------------" + name + "------------------------------");
         this.getText().appendLine("object[,] input = new object[,]");
         this.getText().append("{");
     },
     onLog: function (parameters) {
-        if (!Bridge.get(Bridge.ClientTest.DecimalMathTests).useLogging)
+        if (!Bridge.get(Bridge.ClientTest.DecimalMathTests).useLogging) {
             return;
+        }
 
         var sb = new Bridge.Text.StringBuilder("{{");
         for (var i = 0; i < parameters.length + 1; i++) {
@@ -475,14 +486,17 @@ Bridge.define('Bridge.ClientTest.DecimalMathTests.Logger', {
         //Fix
         //this.Text.AppendFormat(format, ConvertParameters(parameters));
         var convertedParams = Bridge.get(Bridge.ClientTest.DecimalMathTests.Logger).convertParameters(parameters);
-        if (convertedParams.length === 4)
+        if (convertedParams.length === 4) {
             this.getText().appendFormat(format, convertedParams[0], convertedParams[1], convertedParams[2], convertedParams[3]);
-        if (convertedParams.length === 5)
+        }
+        if (convertedParams.length === 5) {
             this.getText().appendFormat(format, convertedParams[0], convertedParams[1], convertedParams[2], convertedParams[3], convertedParams[4]);
+        }
     },
     onLogEnd: function () {
-        if (!Bridge.get(Bridge.ClientTest.DecimalMathTests).useLogging)
+        if (!Bridge.get(Bridge.ClientTest.DecimalMathTests).useLogging) {
             return;
+        }
 
         var sb = this.getText();
 
@@ -701,8 +715,8 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.EnumTests.FlagsEnum', {
         secondValue: 2,
         thirdValue: 4
     },
-    enum: true,
-    flags: true
+    $enum: true,
+    $flags: true
 });
 
 Bridge.define('Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum', {
@@ -711,7 +725,7 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum', {
         secondValue: 1,
         thirdValue: 2
     },
-    enum: true
+    $enum: true
 });
 
 Bridge.define('Bridge.ClientTest.SimpleTypes.ObjectTests.C1', {
@@ -848,14 +862,14 @@ Bridge.define('Bridge.ClientTest.ArrayTests', {
     foreachWithArrayItemCallbackWorks: function () {
         var result = "";
         Bridge.Linq.Enumerable.from(["a", "b", "c"]).forEach(function (s) {
-            return result += s;
+            result += s;
         });
         Bridge.get(Bridge.Test.Assert).areEqual(result, "abc");
     },
     foreachWithArrayCallbackWorks: function () {
         var result = "";
         Bridge.Linq.Enumerable.from(["a", "b", "c"]).forEach(function (s, i) {
-            return result += s + i;
+            result += s + i;
         });
         Bridge.get(Bridge.Test.Assert).areEqual(result, "a0b1c2");
     },
@@ -1296,13 +1310,14 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.GenericDictionaryTests', {
             if (kvp.key === "1") {
                 Bridge.get(Bridge.Test.Assert).areEqual(kvp.value, "a");
             }
-            else 
+            else  {
                 if (kvp.key === "2") {
                     Bridge.get(Bridge.Test.Assert).areEqual(kvp.value, "b");
                 }
                 else  {
                     Bridge.get(Bridge.Test.Assert).fail$1("Invalid key " + kvp.key);
                 }
+            }
             count++;
         }
         Bridge.get(Bridge.Test.Assert).areEqual(count, 2);
@@ -1841,8 +1856,9 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
         while ($t.moveNext()) {
             var i = $t.getCurrent();
             sb.appendLine("got " + i);
-            if (++n === 2)
+            if (++n === 2) {
                 break;
+            }
         }
 
         this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding 2\r\nyielding 3\r\nyielding 4\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\n");
@@ -2099,7 +2115,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
             ["b"],
             ["c"]
         ] )).forEach(function (s) {
-            return result += s;
+            result += s;
         });
         Bridge.get(Bridge.Test.Assert).areEqual(result, "abc");
     },
@@ -2110,7 +2126,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
             ["b"],
             ["c"]
         ] )).forEach(function (s, i) {
-            return result += s + i;
+            result += s + i;
         });
         Bridge.get(Bridge.Test.Assert).areEqual(result, "a0b1c2");
     },
@@ -2627,11 +2643,13 @@ Bridge.define('Bridge.ClientTest.DecimalMathTests', {
         },
         parseDotNetDiff: function (input, i, lowerBound) {
             var o = input.get([i, lowerBound + 1]);
-            if (o === null)
+            if (o === null) {
                 return Bridge.Decimal.lift(null);
+            }
 
-            if (Bridge.is(o, String))
+            if (Bridge.is(o, String)) {
                 return Bridge.Decimal(o.toString());
+            }
 
             var dotNetDiff = Bridge.cast(input.get([i, lowerBound + 1]), Bridge.Decimal, true);
             return dotNetDiff;
@@ -3349,8 +3367,9 @@ Bridge.define('Bridge.ClientTest.IEquatableTests', {
 Bridge.define('Bridge.ClientTest.MathTests', {
     assertAlmostEqual: function (d1, d2) {
         var diff = d2 - d1;
-        if (diff < 0)
+        if (diff < 0) {
             diff = -diff;
+        }
         Bridge.get(Bridge.Test.Assert).$true(diff < 1E-08);
     },
     assertIsDecimalAndEqualTo: function (v, d, message) {
@@ -3949,44 +3968,44 @@ Bridge.define('Bridge.ClientTest.MultidimArrayTests', {
         var arr = Bridge.Array.create(0, null, 2, 3, 4);
         var i = arr.get([1, 2, 3]);
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return i = arr.get([2, 2, 1]);
+            i = arr.get([2, 2, 1]);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return i = arr.get([1, 3, 1]);
+            i = arr.get([1, 3, 1]);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return i = arr.get([1, 2, 4]);
+            i = arr.get([1, 2, 4]);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return i = arr.get([-1, 0, 0]);
+            i = arr.get([-1, 0, 0]);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return i = arr.get([0, -1, 0]);
+            i = arr.get([0, -1, 0]);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return i = arr.get([0, 0, -1]);
+            i = arr.get([0, 0, -1]);
         });
     },
     setValueWithIndexOutOfRangeThrowsAnException: function () {
         var arr = Bridge.Array.create(0, null, 2, 3, 4);
         arr.set([1, 2, 3], 0);
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return arr.set([2, 2, 1], 0);
+            arr.set([2, 2, 1], 0);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return arr.set([1, 3, 1], 0);
+            arr.set([1, 3, 1], 0);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return arr.set([1, 2, 4], 0);
+            arr.set([1, 2, 4], 0);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return arr.set([-1, 0, 0], 0);
+            arr.set([-1, 0, 0], 0);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return arr.set([0, -1, 0], 0);
+            arr.set([0, -1, 0], 0);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return arr.set([0, 0, -1], 0);
+            arr.set([0, 0, -1], 0);
         });
     }
 });
@@ -4217,13 +4236,14 @@ Bridge.define('Bridge.ClientTest.NullableTests', {
         Bridge.get(Bridge.Test.Assert).areStrictEqual(Bridge.Nullable.bnot(b), null);
     },
     coalesceWorks: function () {
+        var $t, $t1, $t2, $t3, $t4;
         var v1 = null, v2 = 1, v3 = 0, v4 = 2;
         var s1 = null, s2 = "x";
-        Bridge.get(Bridge.Test.Assert).areStrictEqual(Bridge.coalesce(v1, v1), null);
-        Bridge.get(Bridge.Test.Assert).areStrictEqual(Bridge.coalesce(v1, v2), 1);
-        Bridge.get(Bridge.Test.Assert).areStrictEqual(Bridge.coalesce(v3, v4), 0);
-        Bridge.get(Bridge.Test.Assert).areStrictEqual(Bridge.coalesce(s1, s1), null);
-        Bridge.get(Bridge.Test.Assert).areStrictEqual(Bridge.coalesce(s1, s2), "x");
+        Bridge.get(Bridge.Test.Assert).areStrictEqual(($t = v1, Bridge.hasValue($t) ? $t : v1), null);
+        Bridge.get(Bridge.Test.Assert).areStrictEqual(($t1 = v1, Bridge.hasValue($t1) ? $t1 : v2), 1);
+        Bridge.get(Bridge.Test.Assert).areStrictEqual(($t2 = v3, Bridge.hasValue($t2) ? $t2 : v4), 0);
+        Bridge.get(Bridge.Test.Assert).areStrictEqual(($t3 = s1, Bridge.hasValue($t3) ? $t3 : s1), null);
+        Bridge.get(Bridge.Test.Assert).areStrictEqual(($t4 = s1, Bridge.hasValue($t4) ? $t4 : s2), "x");
     }
 });
 
@@ -4498,22 +4518,22 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.ByteTests', {
     parseWorks: function () {
         Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.parseInt("234", 0, 255), 234);
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("", 0, 255);
+            Bridge.Int.parseInt("", 0, 255);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt(null, 0, 255);
+            Bridge.Int.parseInt(null, 0, 255);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("notanumber", 0, 255);
+            Bridge.Int.parseInt("notanumber", 0, 255);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("54768", 0, 255);
+            Bridge.Int.parseInt("54768", 0, 255);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("-1", 0, 255);
+            Bridge.Int.parseInt("-1", 0, 255);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("2.5", 0, 255);
+            Bridge.Int.parseInt("2.5", 0, 255);
         });
     },
     toStringWithoutRadixWorks: function () {
@@ -4627,13 +4647,13 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.CharTests', {
     parseWorks: function () {
         Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Char.charCodeAt("a", 0), 97, "Parse 1");
         Bridge.get(Bridge.Test.Assert).throws$5(function () {
-            return Bridge.Char.charCodeAt(null, 0);
+            Bridge.Char.charCodeAt(null, 0);
         }, "Parse 2");
         Bridge.get(Bridge.Test.Assert).throws$5(function () {
-            return Bridge.Char.charCodeAt("", 0);
+            Bridge.Char.charCodeAt("", 0);
         }, "Parse 3");
         Bridge.get(Bridge.Test.Assert).throws$5(function () {
-            return Bridge.Char.charCodeAt("ab", 0);
+            Bridge.Char.charCodeAt("ab", 0);
         }, "Parse 4");
     },
     formatWorks: function () {
@@ -4963,13 +4983,14 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.DecimalTests', {
         this.assertIsDecimalAndEqualTo(b, 2);
     },
     shortCoalesceWorks: function () {
+        var $t, $t1;
         var c = Bridge.Decimal(1.0);
-        var d = Bridge.coalesce(c, Bridge.Decimal(2.0));
+        var d = ($t = c, Bridge.hasValue($t) ? $t : Bridge.Decimal(2.0));
 
         this.assertIsDecimalAndEqualTo(d, 1);
 
         var e = Bridge.Decimal(3);
-        var f = Bridge.coalesce(e, Bridge.Decimal(0));
+        var f = ($t1 = e, Bridge.hasValue($t1) ? $t1 : Bridge.Decimal(0));
 
         this.assertIsDecimalAndEqualTo(f, 3);
     }
@@ -5239,22 +5260,22 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.Int16Tests', {
     parseWorks: function () {
         Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.parseInt("234", -32768, 32767), 234);
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("", -32768, 32767);
+            Bridge.Int.parseInt("", -32768, 32767);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt(null, -32768, 32767);
+            Bridge.Int.parseInt(null, -32768, 32767);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("notanumber", -32768, 32767);
+            Bridge.Int.parseInt("notanumber", -32768, 32767);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("54768", -32768, 32767);
+            Bridge.Int.parseInt("54768", -32768, 32767);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("-55678", -32768, 32767);
+            Bridge.Int.parseInt("-55678", -32768, 32767);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("2.5", -32768, 32767);
+            Bridge.Int.parseInt("2.5", -32768, 32767);
         });
     },
     toStringWithoutRadixWorks: function () {
@@ -5425,22 +5446,22 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.Int32Tests', {
         Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.parseInt("-14", -2147483648, 2147483647), -14);
 
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("", -2147483648, 2147483647);
+            Bridge.Int.parseInt("", -2147483648, 2147483647);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt(null, -2147483648, 2147483647);
+            Bridge.Int.parseInt(null, -2147483648, 2147483647);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("notanumber", -2147483648, 2147483647);
+            Bridge.Int.parseInt("notanumber", -2147483648, 2147483647);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("2147483648", -2147483648, 2147483647);
+            Bridge.Int.parseInt("2147483648", -2147483648, 2147483647);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("-2147483649", -2147483648, 2147483647);
+            Bridge.Int.parseInt("-2147483649", -2147483648, 2147483647);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("2.5", -2147483648, 2147483647);
+            Bridge.Int.parseInt("2.5", -2147483648, 2147483647);
         });
     },
     toStringWithoutRadixWorks: function () {
@@ -5617,22 +5638,22 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.Int64Tests', {
         Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.parseInt("13453634535", -9007199254740991, 9007199254740991), 13453634535);
         Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.parseInt("-234253069384953", -9007199254740991, 9007199254740991), -234253069384953);
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("", -9007199254740991, 9007199254740991);
+            Bridge.Int.parseInt("", -9007199254740991, 9007199254740991);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt(null, -9007199254740991, 9007199254740991);
+            Bridge.Int.parseInt(null, -9007199254740991, 9007199254740991);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("notanumber", -9007199254740991, 9007199254740991);
+            Bridge.Int.parseInt("notanumber", -9007199254740991, 9007199254740991);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("2.5", -9007199254740991, 9007199254740991);
+            Bridge.Int.parseInt("2.5", -9007199254740991, 9007199254740991);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("-10000000000000000000", -9007199254740991, 9007199254740991);
+            Bridge.Int.parseInt("-10000000000000000000", -9007199254740991, 9007199254740991);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("10000000000000000000", -9007199254740991, 9007199254740991);
+            Bridge.Int.parseInt("10000000000000000000", -9007199254740991, 9007199254740991);
         });
     },
     castingOfLargeDoublesToInt64Works: function () {
@@ -6164,19 +6185,19 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.SByteTests', {
         Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.parseInt("124", -128, 127), 124);
         Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.parseInt("-123", -128, 127), -123);
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("", -128, 127);
+            Bridge.Int.parseInt("", -128, 127);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt(null, -128, 127);
+            Bridge.Int.parseInt(null, -128, 127);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("notanumber", -128, 127);
+            Bridge.Int.parseInt("notanumber", -128, 127);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("54768", -128, 127);
+            Bridge.Int.parseInt("54768", -128, 127);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("2.5", -128, 127);
+            Bridge.Int.parseInt("2.5", -128, 127);
         });
     },
     toStringWithoutRadixWorks: function () {
@@ -7076,8 +7097,9 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.TimeSpanTests', {
     },
     assertAlmostEqual: function (d1, d2) {
         var diff = d2 - d1;
-        if (diff < 0)
+        if (diff < 0) {
             diff = -diff;
+        }
         Bridge.get(Bridge.Test.Assert).$true(diff < 1E-08);
     },
     comparisonOperatorsWork: function () {
@@ -7322,22 +7344,22 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.UInt16Tests', {
     parseWorks: function () {
         Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.parseInt("23445", 0, 65535), 23445);
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("", 0, 65535);
+            Bridge.Int.parseInt("", 0, 65535);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt(null, 0, 65535);
+            Bridge.Int.parseInt(null, 0, 65535);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("notanumber", 0, 65535);
+            Bridge.Int.parseInt("notanumber", 0, 65535);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("65536", 0, 65535);
+            Bridge.Int.parseInt("65536", 0, 65535);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("-1", 0, 65535);
+            Bridge.Int.parseInt("-1", 0, 65535);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("2.5", 0, 65535);
+            Bridge.Int.parseInt("2.5", 0, 65535);
         });
     },
     toStringWithoutRadixWorks: function () {
@@ -7479,22 +7501,22 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.UInt32Tests', {
     parseWorks: function () {
         Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.parseInt("23445", 0, 4294967295), 23445);
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("", 0, 4294967295);
+            Bridge.Int.parseInt("", 0, 4294967295);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt(null, 0, 4294967295);
+            Bridge.Int.parseInt(null, 0, 4294967295);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("notanumber", 0, 4294967295);
+            Bridge.Int.parseInt("notanumber", 0, 4294967295);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("4294967296", 0, 4294967295);
+            Bridge.Int.parseInt("4294967296", 0, 4294967295);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("-1", 0, 4294967295);
+            Bridge.Int.parseInt("-1", 0, 4294967295);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("2.5", 0, 4294967295);
+            Bridge.Int.parseInt("2.5", 0, 4294967295);
         });
     },
     toStringWithoutRadixWorks: function () {
@@ -7642,22 +7664,22 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.UInt64Tests', {
     parseWorks: function () {
         Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.parseInt("23445", 0, 9007199254740991), 23445);
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("", 0, 9007199254740991);
+            Bridge.Int.parseInt("", 0, 9007199254740991);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt(null, 0, 9007199254740991);
+            Bridge.Int.parseInt(null, 0, 9007199254740991);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("notanumber", 0, 9007199254740991);
+            Bridge.Int.parseInt("notanumber", 0, 9007199254740991);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("-1", 0, 9007199254740991);
+            Bridge.Int.parseInt("-1", 0, 9007199254740991);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("2.5", 0, 9007199254740991);
+            Bridge.Int.parseInt("2.5", 0, 9007199254740991);
         });
         Bridge.get(Bridge.Test.Assert).$throws(function () {
-            return Bridge.Int.parseInt("100000000000000000000", 0, 9007199254740991);
+            Bridge.Int.parseInt("100000000000000000000", 0, 9007199254740991);
         });
     },
     toStringWithoutRadixWorks: function () {

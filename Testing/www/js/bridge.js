@@ -261,7 +261,7 @@
             } else if (type === Boolean) {
                 return false;
             } else if (type === Date) {
-                return new Date(0);
+                return new Date(-864e13);
             } else if (type === Number) {
                 return 0;
             }
@@ -1568,7 +1568,7 @@
                 throw new Bridge.ArgumentNullException("enumType");
             }
 
-            if (!enumType.prototype.enum) {
+            if (!enumType.prototype.$enum) {
                 throw new Bridge.ArgumentException("", "enumType");
             }
         },
@@ -1582,7 +1582,7 @@
 
             Bridge.Enum.checkEnumType(enumType);
 
-            if (!enumType.prototype.flags) {
+            if (!enumType.prototype.$flags) {
                 for (var f in values) {
                     if (enumMethods.nameEquals(f, s, ignoreCase)) {
                         return values[f];
@@ -1627,7 +1627,7 @@
             Bridge.Enum.checkEnumType(enumType);
 
             var values = enumType;
-            if ((!enumType.prototype.flags && forceFlags !== true) || (value === 0)) {
+            if ((!enumType.prototype.$flags && forceFlags !== true) || (value === 0)) {
                 for (var i in values) {
                     if (values[i] === value) {
                         return enumMethods.toName(i);
@@ -1741,6 +1741,133 @@
     };
 
     Bridge.Enum = enumMethods;
+
+    // @source Browser.js
+
+	if (document) {
+	    var check = function (regex) {
+	        return regex.test(navigator.userAgent.toLowerCase());
+	    },
+
+        isStrict = document.compatMode === "CSS1Compat",
+
+        version = function (is, regex) {
+            var m;
+
+            return (is && (m = regex.exec(navigator.userAgent.toLowerCase()))) ? parseFloat(m[1]) : 0;
+        },
+
+        docMode = document.documentMode,
+        isOpera = check(/opera/),
+        isOpera10_5 = isOpera && check(/version\/10\.5/),
+        isChrome = check(/\bchrome\b/),
+        isWebKit = check(/webkit/),
+        isSafari = !isChrome && check(/safari/),
+        isSafari2 = isSafari && check(/applewebkit\/4/),
+        isSafari3 = isSafari && check(/version\/3/),
+        isSafari4 = isSafari && check(/version\/4/),
+        isSafari5_0 = isSafari && check(/version\/5\.0/),
+        isSafari5 = isSafari && check(/version\/5/),
+        isIE = !isOpera && (check(/msie/) || check(/trident/)),
+        isIE7 = isIE && ((check(/msie 7/) && docMode !== 8 && docMode !== 9 && docMode !== 10) || docMode === 7),
+        isIE8 = isIE && ((check(/msie 8/) && docMode !== 7 && docMode !== 9 && docMode !== 10) || docMode === 8),
+        isIE9 = isIE && ((check(/msie 9/) && docMode !== 7 && docMode !== 8 && docMode !== 10) || docMode === 9),
+        isIE10 = isIE && ((check(/msie 10/) && docMode !== 7 && docMode !== 8 && docMode !== 9) || docMode === 10),
+        isIE11 = isIE && ((check(/trident\/7\.0/) && docMode !== 7 && docMode !== 8 && docMode !== 9 && docMode !== 10) || docMode === 11),
+        isIE6 = isIE && check(/msie 6/),
+        isGecko = !isWebKit && !isIE && check(/gecko/),
+        isGecko3 = isGecko && check(/rv:1\.9/),
+        isGecko4 = isGecko && check(/rv:2\.0/),
+        isGecko5 = isGecko && check(/rv:5\./),
+        isGecko10 = isGecko && check(/rv:10\./),
+        isFF3_0 = isGecko3 && check(/rv:1\.9\.0/),
+        isFF3_5 = isGecko3 && check(/rv:1\.9\.1/),
+        isFF3_6 = isGecko3 && check(/rv:1\.9\.2/),
+        isWindows = check(/windows|win32/),
+        isMac = check(/macintosh|mac os x/),
+        isLinux = check(/linux/),
+        scrollbarSize = null,
+        chromeVersion = version(true, /\bchrome\/(\d+\.\d+)/),
+        firefoxVersion = version(true, /\bfirefox\/(\d+\.\d+)/),
+        ieVersion = version(isIE, /msie (\d+\.\d+)/),
+        operaVersion = version(isOpera, /version\/(\d+\.\d+)/),
+        safariVersion = version(isSafari, /version\/(\d+\.\d+)/),
+        webKitVersion = version(isWebKit, /webkit\/(\d+\.\d+)/),
+        isSecure = Bridge.global.location ? /^https/i.test(Bridge.global.location.protocol) : false,
+        isiPhone = /iPhone/i.test(navigator.platform),
+        isiPod = /iPod/i.test(navigator.platform),
+        isiPad = /iPad/i.test(navigator.userAgent),
+        isBlackberry = /Blackberry/i.test(navigator.userAgent),
+        isAndroid = /Android/i.test(navigator.userAgent),
+        isDesktop = isMac || isWindows || (isLinux && !isAndroid),
+        isTablet = isiPad,
+        isPhone = !isDesktop && !isTablet;
+
+	    var browser = {
+	        isStrict: isStrict,
+	        isIEQuirks: isIE && (!isStrict && (isIE6 || isIE7 || isIE8 || isIE9)),
+	        isOpera: isOpera,
+	        isOpera10_5: isOpera10_5,
+	        isWebKit: isWebKit,
+	        isChrome: isChrome,
+	        isSafari: isSafari,
+	        isSafari3: isSafari3,
+	        isSafari4: isSafari4,
+	        isSafari5: isSafari5,
+	        isSafari5_0: isSafari5_0,
+	        isSafari2: isSafari2,
+	        isIE: isIE,
+	        isIE6: isIE6,
+	        isIE7: isIE7,
+	        isIE7m: isIE6 || isIE7,
+	        isIE7p: isIE && !isIE6,
+	        isIE8: isIE8,
+	        isIE8m: isIE6 || isIE7 || isIE8,
+	        isIE8p: isIE && !(isIE6 || isIE7),
+	        isIE9: isIE9,
+	        isIE9m: isIE6 || isIE7 || isIE8 || isIE9,
+	        isIE9p: isIE && !(isIE6 || isIE7 || isIE8),
+	        isIE10: isIE10,
+	        isIE10m: isIE6 || isIE7 || isIE8 || isIE9 || isIE10,
+	        isIE10p: isIE && !(isIE6 || isIE7 || isIE8 || isIE9),
+	        isIE11: isIE11,
+	        isIE11m: isIE6 || isIE7 || isIE8 || isIE9 || isIE10 || isIE11,
+	        isIE11p: isIE && !(isIE6 || isIE7 || isIE8 || isIE9 || isIE10),
+	        isGecko: isGecko,
+	        isGecko3: isGecko3,
+	        isGecko4: isGecko4,
+	        isGecko5: isGecko5,
+	        isGecko10: isGecko10,
+	        isFF3_0: isFF3_0,
+	        isFF3_5: isFF3_5,
+	        isFF3_6: isFF3_6,
+	        isFF4: 4 <= firefoxVersion && firefoxVersion < 5,
+	        isFF5: 5 <= firefoxVersion && firefoxVersion < 6,
+	        isFF10: 10 <= firefoxVersion && firefoxVersion < 11,
+	        isLinux: isLinux,
+	        isWindows: isWindows,
+	        isMac: isMac,
+	        chromeVersion: chromeVersion,
+	        firefoxVersion: firefoxVersion,
+	        ieVersion: ieVersion,
+	        operaVersion: operaVersion,
+	        safariVersion: safariVersion,
+	        webKitVersion: webKitVersion,
+	        isSecure: isSecure,
+	        isiPhone: isiPhone,
+	        isiPod: isiPod,
+	        isiPad: isiPad,
+	        isBlackberry: isBlackberry,
+	        isAndroid: isAndroid,
+	        isDesktop: isDesktop,
+	        isTablet: isTablet,
+	        isPhone: isPhone,
+	        iOS: isiPhone || isiPad || isiPod,
+	        standalone: Bridge.global.navigator ? !!Bridge.global.navigator.standalone : false
+	    };
+
+	    Bridge.Browser = browser;
+	}
 
     // @source Class.js
 
@@ -1969,7 +2096,21 @@
             // Copy the properties over onto the new prototype
             ctorCounter = 0;
 
+            var keys = [];
+
             for (name in prop) {
+                keys.push(name);
+            }
+
+            if (Bridge.Browser.isIE8) {
+                if (prop.hasOwnProperty("constructor") && keys.indexOf("constructor") < 0) {
+                    keys.push("constructor");
+                }
+            }            
+
+            for (var i = 0; i < keys.length; i++) {
+                name = keys[i];
+
                 v = prop[name];
                 isCtor = name === "constructor";
                 ctorName = isCtor ? "$constructor" : name;
@@ -2054,12 +2195,8 @@
                 }
             };
 
-            if (document && (document.readyState === "complete" || document.readyState === "loaded")) {
-                fn();
-            } else {
-                Bridge.Class.$queue.push(Class);
-                Class.$staticInit = fn;
-            }
+            Bridge.Class.$queue.push(Class);
+            Class.$staticInit = fn;
 
             return Class;
         },
@@ -5038,135 +5175,6 @@ Bridge.define("Bridge.Text.StringBuilder", {
     Bridge.regexpEscape = regexpEscape;
 })();
 
-    // @source Browser.js
-
-	if (!document) {
-		return;
-	}
-	
-    var check = function (regex) {
-        return regex.test(navigator.userAgent);
-    },
-
-    isStrict = document.compatMode === "CSS1Compat",
-
-    version = function (is, regex) {
-        var m;
-
-        return (is && (m = regex.exec(navigator.userAgent))) ? parseFloat(m[1]) : 0;
-    },
-
-    docMode = document.documentMode,
-    isOpera = check(/opera/),
-    isOpera10_5 = isOpera && check(/version\/10\.5/),
-    isChrome = check(/\bchrome\b/),
-    isWebKit = check(/webkit/),
-    isSafari = !isChrome && check(/safari/),
-    isSafari2 = isSafari && check(/applewebkit\/4/),
-    isSafari3 = isSafari && check(/version\/3/),
-    isSafari4 = isSafari && check(/version\/4/),
-    isSafari5_0 = isSafari && check(/version\/5\.0/),
-    isSafari5 = isSafari && check(/version\/5/),
-    isIE = !isOpera && (check(/msie/) || check(/trident/)),
-    isIE7 = isIE && ((check(/msie 7/) && docMode !== 8 && docMode !== 9 && docMode !== 10) || docMode === 7),
-    isIE8 = isIE && ((check(/msie 8/) && docMode !== 7 && docMode !== 9 && docMode !== 10) || docMode === 8),
-    isIE9 = isIE && ((check(/msie 9/) && docMode !== 7 && docMode !== 8 && docMode !== 10) || docMode === 9),
-    isIE10 = isIE && ((check(/msie 10/) && docMode !== 7 && docMode !== 8 && docMode !== 9) || docMode === 10),
-    isIE11 = isIE && ((check(/trident\/7\.0/) && docMode !== 7 && docMode !== 8 && docMode !== 9 && docMode !== 10) || docMode === 11),
-    isIE6 = isIE && check(/msie 6/),
-    isGecko = !isWebKit && !isIE && check(/gecko/),
-    isGecko3 = isGecko && check(/rv:1\.9/),
-    isGecko4 = isGecko && check(/rv:2\.0/),
-    isGecko5 = isGecko && check(/rv:5\./),
-    isGecko10 = isGecko && check(/rv:10\./),
-    isFF3_0 = isGecko3 && check(/rv:1\.9\.0/),
-    isFF3_5 = isGecko3 && check(/rv:1\.9\.1/),
-    isFF3_6 = isGecko3 && check(/rv:1\.9\.2/),
-    isWindows = check(/windows|win32/),
-    isMac = check(/macintosh|mac os x/),
-    isLinux = check(/linux/),
-    scrollbarSize = null,
-    chromeVersion = version(true, /\bchrome\/(\d+\.\d+)/),
-    firefoxVersion = version(true, /\bfirefox\/(\d+\.\d+)/),
-    ieVersion = version(isIE, /msie (\d+\.\d+)/),
-    operaVersion = version(isOpera, /version\/(\d+\.\d+)/),
-    safariVersion = version(isSafari, /version\/(\d+\.\d+)/),
-    webKitVersion = version(isWebKit, /webkit\/(\d+\.\d+)/),
-    isSecure = Bridge.global.location ? /^https/i.test(Bridge.global.location.protocol) : false,
-    isiPhone = /iPhone/i.test(navigator.platform),
-    isiPod = /iPod/i.test(navigator.platform),
-    isiPad = /iPad/i.test(navigator.userAgent),
-    isBlackberry = /Blackberry/i.test(navigator.userAgent),
-    isAndroid = /Android/i.test(navigator.userAgent),
-    isDesktop = isMac || isWindows || (isLinux && !isAndroid),
-    isTablet = isiPad,
-    isPhone = !isDesktop && !isTablet;
-
-    var browser = {
-        isStrict: isStrict,
-        isIEQuirks: isIE && (!isStrict && (isIE6 || isIE7 || isIE8 || isIE9)),
-        isOpera: isOpera,
-        isOpera10_5: isOpera10_5,
-        isWebKit: isWebKit,
-        isChrome: isChrome,
-        isSafari: isSafari,
-        isSafari3: isSafari3,
-        isSafari4: isSafari4,
-        isSafari5: isSafari5,
-        isSafari5_0: isSafari5_0,
-        isSafari2: isSafari2,
-        isIE: isIE,
-        isIE6: isIE6,
-        isIE7: isIE7,
-        isIE7m: isIE6 || isIE7,
-        isIE7p: isIE && !isIE6,
-        isIE8: isIE8,
-        isIE8m: isIE6 || isIE7 || isIE8,
-        isIE8p: isIE && !(isIE6 || isIE7),
-        isIE9: isIE9,
-        isIE9m: isIE6 || isIE7 || isIE8 || isIE9,
-        isIE9p: isIE && !(isIE6 || isIE7 || isIE8),
-        isIE10: isIE10,
-        isIE10m: isIE6 || isIE7 || isIE8 || isIE9 || isIE10,
-        isIE10p: isIE && !(isIE6 || isIE7 || isIE8 || isIE9),
-        isIE11: isIE11,
-        isIE11m: isIE6 || isIE7 || isIE8 || isIE9 || isIE10 || isIE11,
-        isIE11p: isIE && !(isIE6 || isIE7 || isIE8 || isIE9 || isIE10),
-        isGecko: isGecko,
-        isGecko3: isGecko3,
-        isGecko4: isGecko4,
-        isGecko5: isGecko5,
-        isGecko10: isGecko10,
-        isFF3_0: isFF3_0,
-        isFF3_5: isFF3_5,
-        isFF3_6: isFF3_6,
-        isFF4: 4 <= firefoxVersion && firefoxVersion < 5,
-        isFF5: 5 <= firefoxVersion && firefoxVersion < 6,
-        isFF10: 10 <= firefoxVersion && firefoxVersion < 11,
-        isLinux: isLinux,
-        isWindows: isWindows,
-        isMac: isMac,
-        chromeVersion: chromeVersion,
-        firefoxVersion: firefoxVersion,
-        ieVersion: ieVersion,
-        operaVersion: operaVersion,
-        safariVersion: safariVersion,
-        webKitVersion: webKitVersion,
-        isSecure: isSecure,
-        isiPhone: isiPhone,
-        isiPod: isiPod,
-        isiPad: isiPad,
-        isBlackberry: isBlackberry,
-        isAndroid: isAndroid,
-        isDesktop: isDesktop,
-        isTablet: isTablet,
-        isPhone: isPhone,
-        iOS: isiPhone || isiPad || isiPod,
-        standalone: Bridge.global.navigator ? !!Bridge.global.navigator.standalone : false
-    };
-
-    Bridge.Browser = browser;
-
     // @source Array.js
 
     var array = {
@@ -5621,6 +5629,68 @@ Bridge.define("Bridge.Text.StringBuilder", {
 
     Bridge.Array = array;
 
+    if (!Array.prototype.map) {
+        Array.prototype.map = function (callback, instance) {
+            var length = this.length;
+            var mapped = new Array(length);
+            for (var i = 0; i < length; i++) {
+                if (i in this) {
+                    mapped[i] = callback.call(instance, this[i], i, this);
+                }
+            }
+            return mapped;
+        };
+    }
+        
+    if (!Array.prototype.some) {
+        Array.prototype.some = function (callback, instance) {
+            var length = this.length;
+            for (var i = 0; i < length; i++) {
+                if (i in this && callback.call(instance, this[i], i, this)) {
+                    return true;
+                }
+            }
+            return false;
+        };
+     }
+ 
+    if (!Array.prototype.indexOf) {
+        Array.prototype.indexOf = function (searchElement, fromIndex) {
+            var k;
+
+            if (this == null) {
+                throw new TypeError('"this" is null or not defined');
+            }
+
+            var O = Object(this);
+
+            var len = O.length >>> 0;
+
+            if (len === 0) {
+                return -1;
+            }
+
+            var n = +fromIndex || 0;
+
+            if (Math.abs(n) === Infinity) {
+                n = 0;
+            }
+
+            if (n >= len) {
+                return -1;
+            }
+
+            k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
+
+            while (k < len) {
+                if (k in O && O[k] === searchElement) {
+                    return k;
+                }
+                k++;
+            }
+            return -1;
+        };
+    }
 // @source /Collections/Interfaces.js
 
 Bridge.define('Bridge.IEnumerable');
@@ -5813,10 +5883,7 @@ Bridge.Class.generic('Bridge.Comparer$1', function (T) {
 
         constructor: function (fn) {
             this.fn = fn;
-        },
-
-        compare: function (x, y) {
-            return this.fn(x, y);
+            this.compare = fn;
         }
     }));
 });
@@ -6319,7 +6386,7 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
 
         sort: function (comparison) {
             this.checkReadOnly();
-            this.items.sort(comparison);
+            this.items.sort(comparison || Bridge.Comparer$1.$default.compare);
         },
 
         splice: function (start, count, items) {

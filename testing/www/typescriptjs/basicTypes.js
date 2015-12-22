@@ -30,7 +30,7 @@ Bridge.define('BasicTypes.Color', {
         green: 1,
         blue: 2
     },
-    enum: true
+    $enum: true
 });
 
 Bridge.define('BasicTypes.Keywords', {

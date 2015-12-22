@@ -101,8 +101,9 @@ Bridge.define('Bridge.Collections.BitArray', {
         this.m_length = values.length;
 
         for (var i = 0; i < values.length; i++) {
-            if (values[i])
+            if (values[i]) {
                 this.m_array[Bridge.Int.div(i, 32)] |= (1 << (i % 32));
+            }
         }
 
         this._version = 0;
@@ -213,10 +214,12 @@ Bridge.define('Bridge.Collections.BitArray', {
         this._version++;
     },
     and: function (value) {
-        if (value === null)
+        if (value === null) {
             throw new Bridge.ArgumentNullException("value");
-        if (this.getLength() !== value.getLength())
+        }
+        if (this.getLength() !== value.getLength()) {
             throw new Bridge.ArgumentException("Array lengths must be the same.");
+        }
 
         var ints = Bridge.get(Bridge.Collections.BitArray).getArrayLength(this.m_length, Bridge.get(Bridge.Collections.BitArray).BitsPerInt32);
         for (var i = 0; i < ints; i++) {
@@ -227,10 +230,12 @@ Bridge.define('Bridge.Collections.BitArray', {
         return this;
     },
     or: function (value) {
-        if (value === null)
+        if (value === null) {
             throw new Bridge.ArgumentNullException("value");
-        if (this.getLength() !== value.getLength())
+        }
+        if (this.getLength() !== value.getLength()) {
             throw new Bridge.ArgumentException("Array lengths must be the same.");
+        }
 
         var ints = Bridge.get(Bridge.Collections.BitArray).getArrayLength(this.m_length, Bridge.get(Bridge.Collections.BitArray).BitsPerInt32);
         for (var i = 0; i < ints; i++) {
@@ -241,10 +246,12 @@ Bridge.define('Bridge.Collections.BitArray', {
         return this;
     },
     xor: function (value) {
-        if (value === null)
+        if (value === null) {
             throw new Bridge.ArgumentNullException("value");
-        if (this.getLength() !== value.getLength())
+        }
+        if (this.getLength() !== value.getLength()) {
             throw new Bridge.ArgumentException("Array lengths must be the same.");
+        }
 
         var ints = Bridge.get(Bridge.Collections.BitArray).getArrayLength(this.m_length, Bridge.get(Bridge.Collections.BitArray).BitsPerInt32);
         for (var i = 0; i < ints; i++) {
@@ -286,28 +293,33 @@ Bridge.define('Bridge.Collections.BitArray.BitArrayEnumeratorSimple', {
         this.version = bitarray._version;
     },
     getCurrent: function () {
-        if (this.index === -1)
+        if (this.index === -1) {
             throw new Bridge.InvalidOperationException("Enumeration has not started. Call MoveNext.");
-        if (this.index >= this.bitarray.getCount())
+        }
+        if (this.index >= this.bitarray.getCount()) {
             throw new Bridge.InvalidOperationException("Enumeration already finished.");
+        }
         return this.currentElement;
     },
     moveNext: function () {
-        if (this.version !== this.bitarray._version)
+        if (this.version !== this.bitarray._version) {
             throw new Bridge.InvalidOperationException("Collection was modified; enumeration operation may not execute.");
+        }
         if (this.index < (this.bitarray.getCount() - 1)) {
             this.index++;
             this.currentElement = this.bitarray.get(this.index);
             return true;
         }
-        else 
+        else  {
             this.index = this.bitarray.getCount();
+        }
 
         return false;
     },
     reset: function () {
-        if (this.version !== this.bitarray._version)
+        if (this.version !== this.bitarray._version) {
             throw new Bridge.InvalidOperationException("Collection was modified; enumeration operation may not execute.");
+        }
         this.index = -1;
     }
 });
@@ -454,24 +466,28 @@ Bridge.define('Bridge.Collections.HashHelpers', {
             if ((candidate & 1) !== 0) {
                 var limit = Bridge.Int.trunc(Math.sqrt(candidate));
                 for (var divisor = 3; divisor <= limit; divisor += 2) {
-                    if ((candidate % divisor) === 0)
+                    if ((candidate % divisor) === 0) {
                         return false;
+                    }
                 }
                 return true;
             }
             return (candidate === 2);
         },
         getPrime: function (min) {
-            if (min < 0)
+            if (min < 0) {
                 throw new Bridge.ArgumentException("Hashtable's capacity overflowed and went negative. Check load factor, capacity and the current size of the table.");
+            }
             for (var i = 0; i < Bridge.get(Bridge.Collections.HashHelpers).primes.length; i++) {
                 var prime = Bridge.get(Bridge.Collections.HashHelpers).primes[i];
-                if (prime >= min)
+                if (prime >= min) {
                     return prime;
+                }
             }
             for (var i1 = (min | 1); i1 < 2147483647; i1 += 2) {
-                if (Bridge.get(Bridge.Collections.HashHelpers).isPrime(i1) && ((i1 - 1) % Bridge.get(Bridge.Collections.HashHelpers).HashPrime !== 0))
+                if (Bridge.get(Bridge.Collections.HashHelpers).isPrime(i1) && ((i1 - 1) % Bridge.get(Bridge.Collections.HashHelpers).HashPrime !== 0)) {
                     return i1;
+                }
             }
             return min;
         },
@@ -498,10 +514,11 @@ Bridge.define('Bridge.Collections.HashSet$1', function (T) { return {
             if (set1 === null) {
                 return (set2 === null);
             }
-            else 
+            else  {
                 if (set2 === null) {
                     return false;
                 }
+            }
             if (Bridge.get(Bridge.Collections.HashSet$1(T)).areEqualityComparersEqual(set1, set2)) {
                 if (set1.getCount() !== set2.getCount()) {
                     return false;
@@ -1184,6 +1201,9 @@ Bridge.define('Bridge.Collections.HashSet$1', function (T) { return {
 }; });
 
 Bridge.define('Bridge.Collections.HashSet$1.ElementCount', function (T) { return {
+    statics: {
+        getDefaultValue: function () { return new Bridge.Collections.HashSet$1.ElementCount(); }
+    },
     uniqueCount: 0,
     unfoundCount: 0,
     constructor: function () {
@@ -1210,6 +1230,9 @@ Bridge.define('Bridge.Collections.HashSet$1.ElementCount', function (T) { return
 
 Bridge.define('Bridge.Collections.HashSet$1.Enumerator', function (T) { return {
     inherits: [Bridge.IEnumerator$1(T)],
+    statics: {
+        getDefaultValue: function () { return new Bridge.Collections.HashSet$1.Enumerator(); }
+    },
     _set: null,
     _index: 0,
     _version: 0,
@@ -1281,6 +1304,9 @@ Bridge.define('Bridge.Collections.HashSet$1.Enumerator', function (T) { return {
 }; });
 
 Bridge.define('Bridge.Collections.HashSet$1.Slot', function (T) { return {
+    statics: {
+        getDefaultValue: function () { return new Bridge.Collections.HashSet$1.Slot(); }
+    },
     hashCode: 0,
     value: null,
     next: 0,
@@ -1324,13 +1350,15 @@ Bridge.define('Bridge.Collections.Queue$1', function (T) { return {
         this._array = Bridge.Array.init(0, null);
     },
     constructor$2: function (capacity) {
-        if (capacity < 0)
+        if (capacity < 0) {
             throw new Bridge.ArgumentOutOfRangeException("capacity", "Non-negative number required.");
+        }
         this._array = Bridge.Array.init(capacity, null);
     },
     constructor$1: function (collection) {
-        if (collection === null)
+        if (collection === null) {
             throw new Bridge.ArgumentNullException("collection");
+        }
 
         this._array = Bridge.Array.init(Bridge.get(Bridge.Collections.Queue$1(T)).DefaultCapacity, null);
 
@@ -1350,8 +1378,9 @@ Bridge.define('Bridge.Collections.Queue$1', function (T) { return {
         return this._size;
     },
     clear: function () {
-        if (this._head < this._tail)
+        if (this._head < this._tail) {
             Bridge.Array.fill(this._array, T.getDefaultValue || Bridge.getDefaultValue(T), this._head, this._size);
+        }
         else  {
             Bridge.Array.fill(this._array, T.getDefaultValue || Bridge.getDefaultValue(T), this._head, this._array.length - this._head);
             Bridge.Array.fill(this._array, T.getDefaultValue || Bridge.getDefaultValue(T), 0, this._tail);
@@ -1377,8 +1406,9 @@ Bridge.define('Bridge.Collections.Queue$1', function (T) { return {
         }
 
         var numToCopy = (arrayLen - arrayIndex < this._size) ? (arrayLen - arrayIndex) : this._size;
-        if (numToCopy === 0)
+        if (numToCopy === 0) {
             return;
+        }
 
         var firstPart = (this._array.length - this._head < numToCopy) ? this._array.length - this._head : numToCopy;
         Bridge.Array.copy(this._array, this._head, array, arrayIndex, firstPart);
@@ -1411,8 +1441,9 @@ Bridge.define('Bridge.Collections.Queue$1', function (T) { return {
         return new Bridge.Collections.Queue$1.Enumerator(T)("constructor$1", this);
     },
     dequeue: function () {
-        if (this._size === 0)
+        if (this._size === 0) {
             throw new Bridge.InvalidOperationException("Queue empty.");
+        }
 
         var removed = this._array[this._head];
         this._array[this._head] = Bridge.getDefaultValue(T);
@@ -1422,8 +1453,9 @@ Bridge.define('Bridge.Collections.Queue$1', function (T) { return {
         return removed;
     },
     peek: function () {
-        if (this._size === 0)
+        if (this._size === 0) {
             throw new Bridge.InvalidOperationException("Queue empty.");
+        }
 
         return this._array[this._head];
     },
@@ -1434,13 +1466,15 @@ Bridge.define('Bridge.Collections.Queue$1', function (T) { return {
         var c = new Bridge.EqualityComparer$1(T)();
         while (count-- > 0) {
             if (item === null) {
-                if (this._array[index] === null)
+                if (this._array[index] === null) {
                     return true;
+                }
             }
-            else 
+            else  {
                 if (this._array[index] !== null && c.equals(this._array[index], item)) {
                     return true;
                 }
+            }
             index = this.moveNext(index);
         }
 
@@ -1451,8 +1485,9 @@ Bridge.define('Bridge.Collections.Queue$1', function (T) { return {
     },
     toArray: function () {
         var arr = Bridge.Array.init(this._size, null);
-        if (this._size === 0)
-            return arr; // consider replacing with Array.Empty<T>() to be consistent with non-generic Queue
+        if (this._size === 0) {
+            return arr;
+        } // consider replacing with Array.Empty<T>() to be consistent with non-generic Queue
 
         if (this._head < this._tail) {
             Bridge.Array.copy(this._array, this._head, arr, 0, this._size);
@@ -1497,6 +1532,9 @@ Bridge.define('Bridge.Collections.Queue$1', function (T) { return {
 
 Bridge.define('Bridge.Collections.Queue$1.Enumerator', function (T) { return {
     inherits: [Bridge.IEnumerator$1(T),Bridge.IEnumerator],
+    statics: {
+        getDefaultValue: function () { return new Bridge.Collections.Queue$1.Enumerator(); }
+    },
     _q: null,
     _index: 0,
     _version: 0,
@@ -1511,10 +1549,12 @@ Bridge.define('Bridge.Collections.Queue$1.Enumerator', function (T) { return {
     },
     getCurrent$1: function () {
         if (this._index < 0) {
-            if (this._index === -1)
+            if (this._index === -1) {
                 throw new Bridge.InvalidOperationException("Enumeration has not started. Call MoveNext.");
-            else 
+            }
+            else  {
                 throw new Bridge.InvalidOperationException("Enumeration already finished.");
+            }
         }
         return this._currentElement;
     },
@@ -1526,11 +1566,13 @@ Bridge.define('Bridge.Collections.Queue$1.Enumerator', function (T) { return {
         this._currentElement = Bridge.getDefaultValue(T);
     },
     moveNext: function () {
-        if (this._version !== this._q._version)
+        if (this._version !== this._q._version) {
             throw new Bridge.InvalidOperationException("Collection was modified; enumeration operation may not execute.");
+        }
 
-        if (this._index === -2)
+        if (this._index === -2) {
             return false;
+        }
 
         this._index++;
 
@@ -1544,8 +1586,9 @@ Bridge.define('Bridge.Collections.Queue$1.Enumerator', function (T) { return {
         return true;
     },
     reset: function () {
-        if (this._version !== this._q._version)
+        if (this._version !== this._q._version) {
             throw new Bridge.InvalidOperationException("Collection was modified; enumeration operation may not execute.");
+        }
         this._index = -1;
         this._currentElement = Bridge.getDefaultValue(T);
     },
@@ -1585,13 +1628,15 @@ Bridge.define('Bridge.Collections.Stack$1', function (T) { return {
         this._array = Bridge.Array.init(0, null);
     },
     constructor$2: function (capacity) {
-        if (capacity < 0)
+        if (capacity < 0) {
             throw new Bridge.ArgumentOutOfRangeException("capacity", "Non-negative number required.");
+        }
         this._array = Bridge.Array.init(capacity, null);
     },
     constructor$1: function (collection) {
-        if (collection === null)
+        if (collection === null) {
             throw new Bridge.ArgumentNullException("collection");
+        }
         var length = { };
         this._array = Bridge.get(Bridge.Collections.EnumerableHelpers).toArray$1(T)(collection, length);
         this._size = length.v;
@@ -1610,13 +1655,15 @@ Bridge.define('Bridge.Collections.Stack$1', function (T) { return {
         var c = new Bridge.EqualityComparer$1(T)();
         while (count-- > 0) {
             if (item === null) {
-                if (this._array[count] === null)
+                if (this._array[count] === null) {
                     return true;
+                }
             }
-            else 
+            else  {
                 if (this._array[count] !== null && c.equals(this._array[count], item)) {
                     return true;
                 }
+            }
         }
         return false;
     },
@@ -1636,8 +1683,9 @@ Bridge.define('Bridge.Collections.Stack$1', function (T) { return {
         if (array !== this._array) {
             var srcIndex = 0;
             var dstIndex = arrayIndex + this._size;
-            for (var i = 0; i < this._size; i++)
+            for (var i = 0; i < this._size; i++) {
                 array[--dstIndex] = this._array[srcIndex++];
+            }
         }
         else  {
             // Legacy fallback in case we ever end up copying within the same array.
@@ -1692,13 +1740,15 @@ Bridge.define('Bridge.Collections.Stack$1', function (T) { return {
         }
     },
     peek: function () {
-        if (this._size === 0)
+        if (this._size === 0) {
             throw new Bridge.InvalidOperationException("Stack empty.");
+        }
         return this._array[this._size - 1];
     },
     pop: function () {
-        if (this._size === 0)
+        if (this._size === 0) {
             throw new Bridge.InvalidOperationException("Stack empty.");
+        }
         this._version++;
         var item = this._array[--this._size];
         this._array[this._size] = Bridge.getDefaultValue(T); // Free memory quicker.
@@ -1724,6 +1774,9 @@ Bridge.define('Bridge.Collections.Stack$1', function (T) { return {
 
 Bridge.define('Bridge.Collections.Stack$1.Enumerator', function (T) { return {
     inherits: [Bridge.IEnumerator$1(T),Bridge.IEnumerator],
+    statics: {
+        getDefaultValue: function () { return new Bridge.Collections.Stack$1.Enumerator(); }
+    },
     _stack: null,
     _index: 0,
     _version: 0,
@@ -1737,17 +1790,21 @@ Bridge.define('Bridge.Collections.Stack$1.Enumerator', function (T) { return {
     constructor: function () {
     },
     getCurrent$1: function () {
-        if (this._index === -2)
+        if (this._index === -2) {
             throw new Bridge.InvalidOperationException("Enumeration has not started. Call MoveNext.");
-        if (this._index === -1)
+        }
+        if (this._index === -1) {
             throw new Bridge.InvalidOperationException("Enumeration already finished.");
+        }
         return this._currentElement;
     },
     getCurrent: function () {
-        if (this._index === -2)
+        if (this._index === -2) {
             throw new Bridge.InvalidOperationException("Enumeration has not started. Call MoveNext.");
-        if (this._index === -1)
+        }
+        if (this._index === -1) {
             throw new Bridge.InvalidOperationException("Enumeration already finished.");
+        }
         return this._currentElement;
     },
     dispose: function () {
@@ -1755,13 +1812,15 @@ Bridge.define('Bridge.Collections.Stack$1.Enumerator', function (T) { return {
     },
     moveNext: function () {
         var retval;
-        if (this._version !== this._stack._version)
+        if (this._version !== this._stack._version) {
             throw new Bridge.InvalidOperationException("Collection was modified; enumeration operation may not execute.");
+        }
         if (this._index === -2) { // First call to enumerator.
             this._index = this._stack._size - 1;
             retval = (this._index >= 0);
-            if (retval)
+            if (retval) {
                 this._currentElement = this._stack._array[this._index];
+            }
             return retval;
         }
         if (this._index === -1) { // End of enumeration.
@@ -1769,15 +1828,18 @@ Bridge.define('Bridge.Collections.Stack$1.Enumerator', function (T) { return {
         }
 
         retval = (--this._index >= 0);
-        if (retval)
+        if (retval) {
             this._currentElement = this._stack._array[this._index];
-        else 
+        }
+        else  {
             this._currentElement = Bridge.getDefaultValue(T);
+        }
         return retval;
     },
     reset: function () {
-        if (this._version !== this._stack._version)
+        if (this._version !== this._stack._version) {
             throw new Bridge.InvalidOperationException("Collection was modified; enumeration operation may not execute.");
+        }
         this._index = -2;
         this._currentElement = Bridge.getDefaultValue(T);
     },

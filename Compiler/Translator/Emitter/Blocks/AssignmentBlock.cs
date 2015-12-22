@@ -5,6 +5,7 @@ using ICSharpCode.NRefactory.TypeSystem;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
 using System;
 using System.Linq;
+using ICSharpCode.NRefactory.CSharp.Resolver;
 
 namespace Bridge.Translator
 {
@@ -119,6 +120,19 @@ namespace Bridge.Translator
             AssignmentExpression assignmentExpression = this.AssignmentExpression;
             var oldAssigment = this.Emitter.IsAssignment;
             var oldAssigmentType = this.Emitter.AssignmentType;
+            string variable = null;
+
+            bool needReturnValue = !(assignmentExpression.Parent is ExpressionStatement);
+
+            if (needReturnValue && assignmentExpression.Parent is LambdaExpression)
+            {
+                var lambdarr = this.Emitter.Resolver.ResolveNode(assignmentExpression.Parent, this.Emitter) as LambdaResolveResult;
+
+                if (lambdarr != null && lambdarr.ReturnType.Kind == TypeKind.Void)
+                {
+                    needReturnValue = false;
+                }
+            }
 
             var delegateAssigment = false;
             bool isEvent = false;
@@ -152,6 +166,19 @@ namespace Bridge.Translator
                 }
             }
 
+            if (needReturnValue)
+            {
+                variable = this.GetTempVarName();
+                this.Write("(" + variable + " = ");
+
+                var oldValue1 = this.Emitter.ReplaceAwaiterByVar;
+                this.Emitter.ReplaceAwaiterByVar = true;
+                assignmentExpression.Right.AcceptVisitor(this.Emitter);
+
+                this.Emitter.ReplaceAwaiterByVar = oldValue1;
+                this.Write(", ");
+            }
+
             if (assignmentExpression.Operator == AssignmentOperatorType.Divide &&
                 (
                     (Helpers.IsIntegerType(leftResolverResult.Type, this.Emitter.Resolver) &&
@@ -181,7 +208,15 @@ namespace Bridge.Translator
                 this.Write(", ");
                 oldValue1 = this.Emitter.ReplaceAwaiterByVar;
                 this.Emitter.ReplaceAwaiterByVar = true;
-                assignmentExpression.Right.AcceptVisitor(this.Emitter);
+                if (needReturnValue)
+                {
+                    this.Write(variable);
+                }
+                else
+                {
+                    assignmentExpression.Right.AcceptVisitor(this.Emitter);    
+                }
+                
                 this.Write(")");
 
                 this.Emitter.ReplaceAwaiterByVar = oldValue1;
@@ -279,11 +314,16 @@ namespace Bridge.Translator
                     this.Write(" = ");
                 }
 
-                this.HandleDecimal(rr);
+                this.HandleDecimal(rr, variable);
 
                 if (this.Emitter.Writers.Count > initCount)
                 {
                     this.PopWriter();
+                }
+
+                if (needReturnValue)
+                {
+                    this.Write(", " + variable + ")");    
                 }
 
                 return;
@@ -432,7 +472,14 @@ namespace Bridge.Translator
                 this.Write("String.fromCharCode(");
             }
 
-            assignmentExpression.Right.AcceptVisitor(this.Emitter);
+            if (needReturnValue)
+            {
+                this.Write(variable);
+            }
+            else
+            {
+                assignmentExpression.Right.AcceptVisitor(this.Emitter);
+            }
 
             if (charToString == 1)
             {
@@ -465,14 +512,26 @@ namespace Bridge.Translator
             {
                 this.WriteCloseParentheses();
             }
+
+            if (needReturnValue)
+            {
+                this.Write(", " + variable + ")");
+            }
         }
 
-        private void HandleDecimal(ResolveResult resolveOperator)
+        private void HandleDecimal(ResolveResult resolveOperator, string variable)
         {
             if (this.AssignmentExpression.Operator == AssignmentOperatorType.Assign)
             {
-                new ExpressionListBlock(this.Emitter,
-                        new Expression[] { this.AssignmentExpression.Right }, null).Emit();
+                if (variable != null)
+                {
+                    this.Write(variable);
+                }
+                else
+                {
+                    new ExpressionListBlock(this.Emitter, new Expression[] { this.AssignmentExpression.Right }, null).Emit();    
+                }
+                
                 return;
             }
 
@@ -550,9 +609,15 @@ namespace Bridge.Translator
                     this.WriteOpenParentheses();
                     this.WriteScript(op_name);
                     this.WriteComma();
-                    new ExpressionListBlock(this.Emitter,
-                        new Expression[] { this.AssignmentExpression.Left, this.AssignmentExpression.Right }, null).Emit();
-                    this.WriteCloseParentheses();
+                    if (variable != null)
+                    {
+                        new ExpressionListBlock(this.Emitter, new Expression[] { this.AssignmentExpression.Left }, null).Emit();
+                    }
+                    else
+                    {
+                        new ExpressionListBlock(this.Emitter, new Expression[] {this.AssignmentExpression.Left, this.AssignmentExpression.Right}, null).Emit();
+                    }
+                    this.WriteCloseParentheses();        
                 }
                 else if (!string.IsNullOrWhiteSpace(inline))
                 {
@@ -568,8 +633,16 @@ namespace Bridge.Translator
 
                     this.WriteOpenParentheses();
 
-                    new ExpressionListBlock(this.Emitter,
-                        new Expression[] { this.AssignmentExpression.Left, this.AssignmentExpression.Right }, null).Emit();
+                    if (variable != null)
+                    {
+                        new ExpressionListBlock(this.Emitter, new Expression[] { this.AssignmentExpression.Left }, null).Emit();
+                        this.Write(", " + variable);
+                    }
+                    else
+                    {
+                        new ExpressionListBlock(this.Emitter, new Expression[] { this.AssignmentExpression.Left, this.AssignmentExpression.Right }, null).Emit();    
+                    }
+                    
                     this.WriteCloseParentheses();
                 }
             }
