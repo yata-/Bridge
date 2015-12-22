@@ -1317,4 +1317,12 @@ namespace Bridge.Html5
         /// </summary>
         Joystick = 5
     }
+
+    /// <summary>
+    /// A generic version of the KeyboardEvent class. The type parameter is a type of CurrentTarget.
+    /// </summary>
+    /// <typeparam name="TCurrentTarget">The CurrentTarget type</typeparam>
+    [External]
+    [Name("KeyboardEvent")]
+    public class KeyboardEvent<TCurrentTarget> : UIEvent<TCurrentTarget> { }
 }

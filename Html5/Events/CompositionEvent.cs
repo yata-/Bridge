@@ -23,4 +23,12 @@ namespace Bridge.Html5
         /// </summary>
         public readonly string Locale;
     }
+
+    /// <summary>
+    /// A generic version of the CompositionEvent class. The type parameter is a type of CurrentTarget.
+    /// </summary>
+    /// <typeparam name="TCurrentTarget">The CurrentTarget type</typeparam>
+    [External]
+    [Name("CompositionEvent")]
+    public class CompositionEvent<TCurrentTarget> : UIEvent<TCurrentTarget> { }
 }

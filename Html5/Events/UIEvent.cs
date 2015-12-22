@@ -83,4 +83,12 @@ namespace Bridge.Html5
         /// </summary>
         public WindowInstance View;
     }
+
+    /// <summary>
+    /// A generic version of the UIEvent class. The type parameter is a type of CurrentTarget.
+    /// </summary>
+    /// <typeparam name="TCurrentTarget">The CurrentTarget type</typeparam>
+    [External]
+    [Name("UIEvent")]
+    public class UIEvent<TCurrentTarget> : Event<TCurrentTarget> { }
 }

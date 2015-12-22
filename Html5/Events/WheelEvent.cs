@@ -53,4 +53,12 @@ namespace Bridge.Html5
         /// </summary>
         Page = 2
     }
+
+    /// <summary>
+    /// A generic version of the WheelEvent class. The type parameter is a type of CurrentTarget.
+    /// </summary>
+    /// <typeparam name="TCurrentTarget">The CurrentTarget type</typeparam>
+    [External]
+    [Name("WheelEvent")]
+    public class WheelEvent<TCurrentTarget> : Event<TCurrentTarget> { }
 }
