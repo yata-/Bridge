@@ -44,9 +44,9 @@ namespace Bridge.ClientTest
             Assert.AreEqual(format.ShortTimePattern, "h:mm tt");
 
             Assert.AreEqual(format.FirstDayOfWeek, 0);
-            Assert.AreEqual(format.DayNames, new[] { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" });
+            Assert.AreDeepEqual(format.DayNames, new[] { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" });
 
-            Assert.AreEqual(format.MonthNames, new[] {
+            Assert.AreDeepEqual(format.MonthNames, new[] {
 			  "January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
 			  "November", "December", ""
 			});

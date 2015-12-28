@@ -421,8 +421,8 @@ namespace Bridge.ClientTest.SimpleTypes
         [Test]
         public void SubtractMethodReturningTimeSpanWorks()
         {
-            Assert.AreEqual(new DateTime(2011, 6, 12).Subtract(new DateTime(2011, 6, 11)), new TimeSpan(1, 0, 0, 0));
-            Assert.AreEqual(new DateTime(2011, 6, 12, 15, 0, 0).Subtract(new DateTime(2011, 6, 11, 13, 0, 0)), new TimeSpan(1, 2, 0, 0));
+            Assert.AreDeepEqual(new DateTime(2011, 6, 12).Subtract(new DateTime(2011, 6, 11)), new TimeSpan(1, 0, 0, 0));
+            Assert.AreDeepEqual(new DateTime(2011, 6, 12, 15, 0, 0).Subtract(new DateTime(2011, 6, 11, 13, 0, 0)), new TimeSpan(1, 2, 0, 0));
         }
 
         [Test]
@@ -672,7 +672,7 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.True(((IComparable<DateTime>)new DateTime(0)).CompareTo(new DateTime(1)) < 0);
         }
 
-        [Test(ExpectedCount = 2)]
+        [Test(ExpectedCount = 1)]
         public static void DateTimes()
         {
             // TEST
@@ -681,16 +681,16 @@ namespace Bridge.ClientTest.SimpleTypes
             var bridgeDate = DateTime.Parse(str);
             var bridgeDate1 = new DateTime(str);
 
-            Assert.AreEqual(bridgeDate, bridgeDate1, "[#83] C# bridgeDate = bridgeDate1");
+            Assert.AreDeepEqual(bridgeDate, bridgeDate1, "[#83] C# bridgeDate = bridgeDate1");
 
             // TEST
             // [#83] by JavaScript code. This is to check the same issue as above and just to check another way of calling QUnit from JavaScript
-            Script.Write<dynamic>("var str = \"2015-03-24T10:48:09.1500225+03:00\";");
-            Script.Write<dynamic>("var bridgeDate2 = Bridge.Date.parse(str);");
-            Script.Write<dynamic>("var jsDate = new Date(Date.parse(str));");
-            Script.Write<dynamic>("var format = \"yyyy-MM-dd hh:mm:ss\";");
+            //Script.Write<dynamic>("var str = \"2015-03-24T10:48:09.1500225+03:00\";");
+            //Script.Write<dynamic>("var bridgeDate2 = Bridge.Date.parse(str);");
+            //Script.Write<dynamic>("var jsDate = new Date(Date.parse(str));");
+            //Script.Write<dynamic>("var format = \"yyyy-MM-dd hh:mm:ss\";");
 
-            Script.Write<dynamic>("assert.deepEqual(Bridge.Date.format(bridgeDate2, format), Bridge.Date.format(jsDate, format), \"[#83] js\");");
+            //Script.Write<dynamic>("assert.deepEqual(Bridge.Date.format(bridgeDate2, format), Bridge.Date.format(jsDate, format), \"[#83] js\");");
         }
     }
 }

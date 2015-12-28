@@ -410,7 +410,7 @@ namespace Bridge.ClientTest.SimpleTypes
         public void MatchWorks()
         {
             var result = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".Match(new Regex("[A-E]", "gi"));
-            Assert.AreEqual(result, new[] { "A", "B", "C", "D", "E", "a", "b", "c", "d", "e" });
+            Assert.AreDeepEqual(result, new[] { "A", "B", "C", "D", "E", "a", "b", "c", "d", "e" });
         }
 
         [Test]
@@ -508,96 +508,96 @@ namespace Bridge.ClientTest.SimpleTypes
         [Test]
         public void SplitWithStringWorks()
         {
-            Assert.AreEqual("abcabcabc".Split("b"), new[] { "a", "ca", "ca", "c" });
+            Assert.AreDeepEqual("abcabcabc".Split("b"), new[] { "a", "ca", "ca", "c" });
         }
 
         [Test]
         public void SplitWithCharWorks()
         {
-            Assert.AreEqual("abcabcabc".Split('b'), new[] { "a", "ca", "ca", "c" });
+            Assert.AreDeepEqual("abcabcabc".Split('b'), new[] { "a", "ca", "ca", "c" });
         }
 
         [Test]
         public void JsSplitWithStringAndLimitWorks()
         {
-            Assert.AreEqual("abcaxbcabce".Split("bc", 2), new[] { "a", "ax" });
+            Assert.AreDeepEqual("abcaxbcabce".Split("bc", 2), new[] { "a", "ax" });
         }
 
         [Test]
         public void JsSplitWithCharAndLimitWorks()
         {
-            Assert.AreEqual("abcabcabc".Split('b', 2), new[] { "a", "ca" });
+            Assert.AreDeepEqual("abcabcabc".Split('b', 2), new[] { "a", "ca" });
         }
 
         [Test]
         public void SplitWithCharsAndLimitWorks()
         {
-            Assert.AreEqual("abcabcabc".Split(new[] { 'b' }, 2), new[] { "a", "cabcabc" });
+            Assert.AreDeepEqual("abcabcabc".Split(new[] { 'b' }, 2), new[] { "a", "cabcabc" });
         }
 
         [Test]
         public void SplitWithCharsAndStringSplitOptionsAndLimitWorks()
         {
-            Assert.AreEqual("abxcabcabc".Split(new[] { 'b', 'x' }, 2, StringSplitOptions.RemoveEmptyEntries), new[] { "a", "cabcabc" });
+            Assert.AreDeepEqual("abxcabcabc".Split(new[] { 'b', 'x' }, 2, StringSplitOptions.RemoveEmptyEntries), new[] { "a", "cabcabc" });
         }
 
         [Test]
         public void SplitWithRegexWorks()
         {
-            Assert.AreEqual("abcaxcaxc".Split(new Regex("b|x", "g")), new[] { "a", "ca", "ca", "c" });
+            Assert.AreDeepEqual("abcaxcaxc".Split(new Regex("b|x", "g")), new[] { "a", "ca", "ca", "c" });
         }
 
         [Test]
         public void SomeNetSplitTests()
         {
-            Assert.AreEqual("axybcxzde".Split(new[] { "xy", "xz" }, StringSplitOptions.None), new[] { "a", "bc", "de" });
-            Assert.AreEqual("axybcxzdexz".Split(new[] { "xy", "xz" }, StringSplitOptions.None), new[] { "a", "bc", "de", "" });
-            Assert.AreEqual("xzaxybcxzdexz".Split(new[] { "xy", "xz" }, StringSplitOptions.None), new[] { "", "a", "bc", "de", "" });
-            Assert.AreEqual("xzaxyxzbcxzdexz".Split(new[] { "xy", "xz" }, StringSplitOptions.None), new[] { "", "a", "", "bc", "de", "" });
-            Assert.AreEqual("xzaxyxzxybcxzdexz".Split(new[] { "xy", "xz" }, StringSplitOptions.None), new[] { "", "a", "", "", "bc", "de", "" });
+            Assert.AreDeepEqual("axybcxzde".Split(new[] { "xy", "xz" }, StringSplitOptions.None), new[] { "a", "bc", "de" });
+            Assert.AreDeepEqual("axybcxzdexz".Split(new[] { "xy", "xz" }, StringSplitOptions.None), new[] { "a", "bc", "de", "" });
+            Assert.AreDeepEqual("xzaxybcxzdexz".Split(new[] { "xy", "xz" }, StringSplitOptions.None), new[] { "", "a", "bc", "de", "" });
+            Assert.AreDeepEqual("xzaxyxzbcxzdexz".Split(new[] { "xy", "xz" }, StringSplitOptions.None), new[] { "", "a", "", "bc", "de", "" });
+            Assert.AreDeepEqual("xzaxyxzxybcxzdexz".Split(new[] { "xy", "xz" }, StringSplitOptions.None), new[] { "", "a", "", "", "bc", "de", "" });
 
-            Assert.AreEqual("axybcxzde".Split(new[] { "xy", "xz" }, StringSplitOptions.RemoveEmptyEntries), new[] { "a", "bc", "de" });
-            Assert.AreEqual("axybcxzdexz".Split(new[] { "xy", "xz" }, StringSplitOptions.RemoveEmptyEntries), new[] { "a", "bc", "de" });
-            Assert.AreEqual("xzaxybcxzdexz".Split(new[] { "xy", "xz" }, StringSplitOptions.RemoveEmptyEntries), new[] { "a", "bc", "de" });
-            Assert.AreEqual("xzaxyxzbcxzdexz".Split(new[] { "xy", "xz" }, StringSplitOptions.RemoveEmptyEntries), new[] { "a", "bc", "de" });
-            Assert.AreEqual("xzaxyxzxybcxzdexz".Split(new[] { "xy", "xz" }, StringSplitOptions.RemoveEmptyEntries), new[] { "a", "bc", "de" });
+            Assert.AreDeepEqual("axybcxzde".Split(new[] { "xy", "xz" }, StringSplitOptions.RemoveEmptyEntries), new[] { "a", "bc", "de" });
+            Assert.AreDeepEqual("axybcxzdexz".Split(new[] { "xy", "xz" }, StringSplitOptions.RemoveEmptyEntries), new[] { "a", "bc", "de" });
+            Assert.AreDeepEqual("xzaxybcxzdexz".Split(new[] { "xy", "xz" }, StringSplitOptions.RemoveEmptyEntries), new[] { "a", "bc", "de" });
+            Assert.AreDeepEqual("xzaxyxzbcxzdexz".Split(new[] { "xy", "xz" }, StringSplitOptions.RemoveEmptyEntries), new[] { "a", "bc", "de" });
+            Assert.AreDeepEqual("xzaxyxzxybcxzdexz".Split(new[] { "xy", "xz" }, StringSplitOptions.RemoveEmptyEntries), new[] { "a", "bc", "de" });
 
-            Assert.AreEqual("axybcxzde".Split(new[] { "xy", "xz" }, 100, StringSplitOptions.None), new[] { "a", "bc", "de" });
-            Assert.AreEqual("axybcxzdexz".Split(new[] { "xy", "xz" }, 100, StringSplitOptions.None), new[] { "a", "bc", "de", "" });
-            Assert.AreEqual("xzaxybcxzdexz".Split(new[] { "xy", "xz" }, 100, StringSplitOptions.None), new[] { "", "a", "bc", "de", "" });
-            Assert.AreEqual("xzaxyxzbcxzdexz".Split(new[] { "xy", "xz" }, 100, StringSplitOptions.None), new[] { "", "a", "", "bc", "de", "" });
-            Assert.AreEqual("xzaxyxzxybcxzdexz".Split(new[] { "xy", "xz" }, 100, StringSplitOptions.None), new[] { "", "a", "", "", "bc", "de", "" });
+            Assert.AreDeepEqual("axybcxzde".Split(new[] { "xy", "xz" }, 100, StringSplitOptions.None), new[] { "a", "bc", "de" });
+            Assert.AreDeepEqual("axybcxzdexz".Split(new[] { "xy", "xz" }, 100, StringSplitOptions.None), new[] { "a", "bc", "de", "" });
+            Assert.AreDeepEqual("xzaxybcxzdexz".Split(new[] { "xy", "xz" }, 100, StringSplitOptions.None), new[] { "", "a", "bc", "de", "" });
+            Assert.AreDeepEqual("xzaxyxzbcxzdexz".Split(new[] { "xy", "xz" }, 100, StringSplitOptions.None), new[] { "", "a", "", "bc", "de", "" });
+            Assert.AreDeepEqual("xzaxyxzxybcxzdexz".Split(new[] { "xy", "xz" }, 100, StringSplitOptions.None), new[] { "", "a", "", "", "bc", "de", "" });
 
-            Assert.AreEqual("axybcxzde".Split(new[] { "xy", "xz" }, 2, StringSplitOptions.None), new[] { "a", "bcxzde" });
-            Assert.AreEqual("axybcxzdexz".Split(new[] { "xy", "xz" }, 2, StringSplitOptions.None), new[] { "a", "bcxzdexz" });
-            Assert.AreEqual("axyxzbcxzdexz".Split(new[] { "xy", "xz" }, 2, StringSplitOptions.None), new[] { "a", "xzbcxzdexz" });
-            Assert.AreEqual("xzaxybcxzdexz".Split(new[] { "xy", "xz" }, 2, StringSplitOptions.None), new[] { "", "axybcxzdexz" });
+            Assert.AreDeepEqual("axybcxzde".Split(new[] { "xy", "xz" }, 2, StringSplitOptions.None), new[] { "a", "bcxzde" });
+            Assert.AreDeepEqual("axybcxzdexz".Split(new[] { "xy", "xz" }, 2, StringSplitOptions.None), new[] { "a", "bcxzdexz" });
+            Assert.AreDeepEqual("axyxzbcxzdexz".Split(new[] { "xy", "xz" }, 2, StringSplitOptions.None), new[] { "a", "xzbcxzdexz" });
+            Assert.AreDeepEqual("xzaxybcxzdexz".Split(new[] { "xy", "xz" }, 2, StringSplitOptions.None), new[] { "", "axybcxzdexz" });
 
-            Assert.AreEqual("axybcxzde".Split(new[] { "xy", "xz" }, 2, StringSplitOptions.RemoveEmptyEntries), new[] { "a", "bcxzde" });
-            Assert.AreEqual("axybcxzdexz".Split(new[] { "xy", "xz" }, 2, StringSplitOptions.RemoveEmptyEntries), new[] { "a", "bcxzdexz" });
-            Assert.AreEqual("axyxzbcxzdexz".Split(new[] { "xy", "xz" }, 2, StringSplitOptions.RemoveEmptyEntries), new[] { "a", "bcxzdexz" });
-            Assert.AreEqual("xzaxyxzbcxzdexz".Split(new[] { "xy", "xz" }, 2, StringSplitOptions.RemoveEmptyEntries), new[] { "a", "bcxzdexz" });
+            Assert.AreDeepEqual("axybcxzde".Split(new[] { "xy", "xz" }, 2, StringSplitOptions.RemoveEmptyEntries), new[] { "a", "bcxzde" });
+            Assert.AreDeepEqual("axybcxzdexz".Split(new[] { "xy", "xz" }, 2, StringSplitOptions.RemoveEmptyEntries), new[] { "a", "bcxzdexz" });
+            Assert.AreDeepEqual("axyxzbcxzdexz".Split(new[] { "xy", "xz" }, 2, StringSplitOptions.RemoveEmptyEntries), new[] { "a", "bcxzdexz" });
+            Assert.AreDeepEqual("xzaxyxzbcxzdexz".Split(new[] { "xy", "xz" }, 2, StringSplitOptions.RemoveEmptyEntries), new[] { "a", "bcxzdexz" });
         }
 
         [Test]
         public void SplitWithCharsWorks()
         {
-            Assert.AreEqual("Lorem Ipsum, dolor[sit amet".Split(new[] { ',', ' ', '[' }), new[] { "Lorem", "Ipsum", "", "dolor", "sit", "amet" });
-            Assert.AreEqual("Lorem Ipsum, dolor[sit amet".Split(new[] { ',', ' ', '[' }, StringSplitOptions.None), new[] { "Lorem", "Ipsum", "", "dolor", "sit", "amet" });
-            Assert.AreEqual("Lorem Ipsum, dolor[sit amet".Split(new[] { ',', ' ', '[' }, StringSplitOptions.RemoveEmptyEntries), new[] { "Lorem", "Ipsum", "dolor", "sit", "amet" });
+            Assert.AreDeepEqual("Lorem Ipsum, dolor[sit amet".Split(new[] { ',', ' ', '[' }), new[] { "Lorem", "Ipsum", "", "dolor", "sit", "amet" });
+            Assert.AreDeepEqual("Lorem Ipsum, dolor[sit amet".Split(new[] { ',', ' ', '[' }, StringSplitOptions.None), new[] { "Lorem", "Ipsum", "", "dolor", "sit", "amet" });
+            Assert.AreDeepEqual("Lorem Ipsum, dolor[sit amet".Split(new[] { ',', ' ', '[' }, StringSplitOptions.RemoveEmptyEntries), new[] { "Lorem", "Ipsum", "dolor", "sit", "amet" });
         }
 
         [Test]
         public void SplitWithStringsWorks()
         {
-            Assert.AreEqual("a is b if b is c and c isifis d if d is e".Split(new[] { "is", "if" }, StringSplitOptions.None), new[] { "a ", " b ", " b ", " c and c ", "", "", " d ", " d ", " e" });
-            Assert.AreEqual("a is b if b is c and c isifis d if d is e".Split(new[] { "is", "if" }, StringSplitOptions.RemoveEmptyEntries), new[] { "a ", " b ", " b ", " c and c ", " d ", " d ", " e" });
+            Assert.AreDeepEqual("a is b if b is c and c isifis d if d is e".Split(new[] { "is", "if" }, StringSplitOptions.None), new[] { "a ", " b ", " b ", " c and c ", "", "", " d ", " d ", " e" });
+            Assert.AreDeepEqual("a is b if b is c and c isifis d if d is e".Split(new[] { "is", "if" }, StringSplitOptions.RemoveEmptyEntries), new[] { "a ", " b ", " b ", " c and c ", " d ", " d ", " e" });
         }
 
         [Test]
         public void SplitWithStringsAndLimitWorks()
         {
-            Assert.AreEqual("abcbcabcabc".Split(new[] { "bc" }, 2, StringSplitOptions.RemoveEmptyEntries), new[] { "a", "abcabc" });
+            Assert.AreDeepEqual("abcbcabcabc".Split(new[] { "bc" }, 2, StringSplitOptions.RemoveEmptyEntries), new[] { "a", "abcabc" });
         }
 
         [Test]
@@ -886,7 +886,7 @@ namespace Bridge.ClientTest.SimpleTypes
         public void ToCharArrayWorks()
         {
             string text = "Lorem sit dolor";
-            Assert.AreEqual(text.ToCharArray(), new[] { 'L', 'o', 'r', 'e', 'm', ' ', 's', 'i', 't', ' ', 'd', 'o', 'l', 'o', 'r' });
+            Assert.AreDeepEqual(text.ToCharArray(), new[] { 'L', 'o', 'r', 'e', 'm', ' ', 's', 'i', 't', ' ', 'd', 'o', 'l', 'o', 'r' });
         }
 
         [Test]

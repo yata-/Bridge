@@ -78,9 +78,9 @@ namespace Bridge.ClientTest.BasicCSharp
         [Test(ExpectedCount = 2)]
         public static void TestGetValues()
         {
-            Assert.AreEqual(Enum.GetValues(typeof(Abc)), new[] { Abc.A, Abc.B, Abc.C }, "Abc values");
+            Assert.AreDeepEqual(Enum.GetValues(typeof(Abc)), new[] { Abc.A, Abc.B, Abc.C }, "Abc values");
 
-            Assert.AreEqual(Enum.GetValues(typeof(Digits)), new[] { Digits.Zero, Digits.One, Digits.Two }, "Digits values");
+            Assert.AreDeepEqual(Enum.GetValues(typeof(Digits)), new[] { Digits.Zero, Digits.One, Digits.Two }, "Digits values");
         }
 
         [Test(ExpectedCount = 3)]
@@ -133,9 +133,9 @@ namespace Bridge.ClientTest.BasicCSharp
         [Test(ExpectedCount = 2)]
         public static void TestGetNames()
         {
-            Assert.AreEqual(Enum.GetNames(typeof(Abc)), new[] { "A", "B", "C" }, "Abc names");
+            Assert.AreDeepEqual(Enum.GetNames(typeof(Abc)), new[] { "A", "B", "C" }, "Abc names");
 
-            Assert.AreEqual(Enum.GetNames(typeof(Digits)), new[] { "Zero", "One", "Two" }, "Digits names");
+            Assert.AreDeepEqual(Enum.GetNames(typeof(Digits)), new[] { "Zero", "One", "Two" }, "Digits names");
         }
 
         [Test(ExpectedCount = 5)]

@@ -263,7 +263,7 @@ namespace Bridge.ClientTest.BasicCSharp
             Assert.AreEqual(a.StringA, "Str", "StringA Str");
             Assert.AreEqual(a.BoolA, true, "BoolA true");
             Assert.True(a.DoubleA == Double.PositiveInfinity, "DoubleA Double.PositiveInfinity");
-            Assert.AreEqual(a.DecimalA, -1m, "DecimalA Decimal.MinusOne");
+            Assert.AreDeepEqual(a.DecimalA, -1m, "DecimalA Decimal.MinusOne");
             Assert.True(a.Data != null, "Data not null");
             Assert.AreEqual(a.Data.Number, 700, "Data.Number 700");
 
@@ -284,7 +284,7 @@ namespace Bridge.ClientTest.BasicCSharp
             Assert.AreEqual(a.StringA, "151", "StringA 151");
             Assert.AreEqual(a.BoolA, true, "BoolA true");
             Assert.AreEqual(a.DoubleA, 1.53, "DoubleA Double.PositiveInfinity");
-            Assert.AreEqual(a.DecimalA, 1.54m, "DecimalA 154");
+            Assert.AreDeepEqual(a.DecimalA, 1.54m, "DecimalA 154");
             Assert.True(a.Data != null, "Data not null");
             Assert.AreEqual(a.Data.Number, 155, "Data.Number 155");
 
@@ -339,7 +339,7 @@ namespace Bridge.ClientTest.BasicCSharp
 
             Assert.AreEqual(ClassA.StatitIntNotInitialized, 678, "StatitIntNotInitialized 678");
             Assert.AreEqual(ClassA.StatitStringNotInitialized, "ASD", "ClassA.StatitStringNotInitialized ASD");
-            Assert.AreEqual(a.DoubleA, double.NaN, "DoubleA double.NaN");
+            Assert.AreDeepEqual(a.DoubleA, double.NaN, "DoubleA double.NaN");
 
             a = ClassA.StaticMethod2((object)678, "QWE", 234);
             Assert.AreEqual(ClassA.StatitIntNotInitialized, 1678, "StatitIntNotInitialized 1678");

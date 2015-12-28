@@ -26,13 +26,13 @@ namespace Bridge.ClientTest.Linq
                  new { Number = 5, IsOdd = true},
                  };
 
-            Assert.AreEqual(numbers, numbersExpected, "Range() 6 items from 0");
+            Assert.AreDeepEqual(numbers, numbersExpected, "Range() 6 items from 0");
 
             // TEST
             var repeatNumbers = Enumerable.Repeat(-3, 4).ToArray();
             var repeatNumbersExpected = new[] { -3, -3, -3, -3 };
 
-            Assert.AreEqual(repeatNumbers, repeatNumbersExpected, "Repeat() -3 four times");
+            Assert.AreDeepEqual(repeatNumbers, repeatNumbersExpected, "Repeat() -3 four times");
         }
     }
 }

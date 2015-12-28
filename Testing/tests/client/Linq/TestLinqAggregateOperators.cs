@@ -41,7 +41,7 @@ namespace Bridge.ClientTest.Linq
                         new { Group = "D", PersonCount = 0 }
                  };
 
-            Assert.AreEqual(groupJoin, groupJoinExpected, "Count() within joint collections");
+            Assert.AreDeepEqual(groupJoin, groupJoinExpected, "Count() within joint collections");
 
             // TEST
             var grouped = (from p in Person.GetPersons()
@@ -60,7 +60,7 @@ namespace Bridge.ClientTest.Linq
                         new { Group = (string)null, PersonCount = 1 }
                  };
 
-            Assert.AreEqual(grouped, groupedExpected, "Count() within group");
+            Assert.AreDeepEqual(grouped, groupedExpected, "Count() within group");
 
             // TEST
             double numSum = numbers.Sum();
@@ -87,7 +87,7 @@ namespace Bridge.ClientTest.Linq
                         new { Group = (string)null, Sum = 3000 }
                  };
 
-            Assert.AreEqual(groupedSum, groupedSumExpected, "Sum() within group");
+            Assert.AreDeepEqual(groupedSum, groupedSumExpected, "Sum() within group");
 
             // TEST
             int minNum = numbers.Min();
@@ -114,7 +114,7 @@ namespace Bridge.ClientTest.Linq
                         new { Group = (string)null, Min = 3000 }
                  };
 
-            Assert.AreEqual(groupedMin, groupedMinExpected, "Min() within group");
+            Assert.AreDeepEqual(groupedMin, groupedMinExpected, "Min() within group");
 
             // TEST
             var groupedMinWithLet = (from p in Person.GetPersons()
@@ -134,7 +134,7 @@ namespace Bridge.ClientTest.Linq
                         new { Group = (string)null, Name = new[]{ "Nemo"} }
                  };
 
-            Assert.AreEqual(groupedMinWithLet, groupedMinWithLetExpected, "Min() within group with let");
+            Assert.AreDeepEqual(groupedMinWithLet, groupedMinWithLetExpected, "Min() within group with let");
 
             // TEST
             int maxNum = numbers.Max();
@@ -161,7 +161,7 @@ namespace Bridge.ClientTest.Linq
                         new { Group = (string)null, Max = 3000 }
                  };
 
-            Assert.AreEqual(groupedMax, groupedMaxExpected, "Max() within group");
+            Assert.AreDeepEqual(groupedMax, groupedMaxExpected, "Max() within group");
 
             // TEST
             var groupedMaxWithLet = (from p in Person.GetPersons()
@@ -181,7 +181,7 @@ namespace Bridge.ClientTest.Linq
                         new { Group = (string)null, Name = new[]{ "Nemo"} }
                  };
 
-            Assert.AreEqual(groupedMaxWithLet, groupedMaxWithLetExpected, "Max() within group with let");
+            Assert.AreDeepEqual(groupedMaxWithLet, groupedMaxWithLetExpected, "Max() within group with let");
 
             // TEST
             double averageNum = numbers.Average();
@@ -209,7 +209,7 @@ namespace Bridge.ClientTest.Linq
                         new { Group = (string)null, Average = 3000 }
                  };
 
-            Assert.AreEqual(groupedAverage, groupedAverageExpected, "Average() within group");
+            Assert.AreDeepEqual(groupedAverage, groupedAverageExpected, "Average() within group");
 
             // TEST
             var doublesForAggregate = new[] { 1.0, 2.0, 3.0, 4.0, 5.0 };
@@ -233,7 +233,7 @@ namespace Bridge.ClientTest.Linq
         {
             var q = "a,b,c,a".ToUpperCase().Split(",").Aggregate("", (workingSentence, next) => next + " " + workingSentence);
 
-            Assert.AreEqual(q, "A C B A ", "Enumerable.Aggregate");
+            Assert.AreStrictEqual(q, "A C B A ", "Enumerable.Aggregate");
         }
     }
 }

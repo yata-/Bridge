@@ -62,7 +62,7 @@ namespace Bridge.ClientTest.Collections.Generic
             var arr = new[] { 1, 4, 7, 8 };
             var l = new List<int>(arr);
             Assert.False((object)l == (object)arr);
-            Assert.AreEqual(l.ToArray(), arr);
+            Assert.AreDeepEqual(l.ToArray(), arr);
         }
 
         [Test]
@@ -71,7 +71,7 @@ namespace Bridge.ClientTest.Collections.Generic
             var arr = new List<int>(new[] { 1, 4, 7, 8 });
             var l = new List<int>(arr);
             Assert.False((object)l == (object)arr);
-            Assert.AreEqual(l, arr);
+            Assert.AreDeepEqual(l, arr);
         }
 
         [Test]
@@ -80,7 +80,7 @@ namespace Bridge.ClientTest.Collections.Generic
             var enm = (IEnumerable<int>)new List<int>(new[] { 1, 4, 7, 8 });
             var l = new List<int>(enm);
             Assert.False((object)l == (object)enm);
-            Assert.AreEqual(l.ToArray(), new[] { 1, 4, 7, 8 });
+            Assert.AreDeepEqual(l.ToArray(), new[] { 1, 4, 7, 8 });
         }
 
         [Test]
@@ -125,7 +125,7 @@ namespace Bridge.ClientTest.Collections.Generic
         {
             var l = new List<string> { "x", "y" };
             l.Add("a");
-            Assert.AreEqual(l.ToArray(), new[] { "x", "y", "a" });
+            Assert.AreDeepEqual(l.ToArray(), new[] { "x", "y", "a" });
         }
 
         [Test]
@@ -133,7 +133,7 @@ namespace Bridge.ClientTest.Collections.Generic
         {
             var l = new List<string> { "x", "y" };
             l.AddRange(new[] { "a", "b", "c" });
-            Assert.AreEqual(l.ToArray(), new[] { "x", "y", "a", "b", "c" });
+            Assert.AreDeepEqual(l.ToArray(), new[] { "x", "y", "a", "b", "c" });
         }
 
         [Test]
@@ -208,13 +208,13 @@ namespace Bridge.ClientTest.Collections.Generic
         [Test]
         public void SliceWithoutEndWorks()
         {
-            Assert.AreEqual(new List<string> { "a", "b", "c", "d" }.Slice(2).ToArray(), new[] { "c", "d" });
+            Assert.AreDeepEqual(new List<string> { "a", "b", "c", "d" }.Slice(2).ToArray(), new[] { "c", "d" });
         }
 
         [Test]
         public void SliceWithEndWorks()
         {
-            Assert.AreEqual(new List<string> { "a", "b", "c", "d" }.Slice(1, 3).ToArray(), new[] { "b", "c" });
+            Assert.AreDeepEqual(new List<string> { "a", "b", "c", "d" }.Slice(1, 3).ToArray(), new[] { "b", "c" });
         }
 
         [Test]
@@ -264,7 +264,7 @@ namespace Bridge.ClientTest.Collections.Generic
         {
             var l = new List<string> { "x", "y" };
             l.Insert(1, "a");
-            Assert.AreEqual(l.ToArray(), new[] { "x", "a", "y" });
+            Assert.AreDeepEqual(l.ToArray(), new[] { "x", "a", "y" });
         }
 
         [Test]
@@ -273,10 +273,10 @@ namespace Bridge.ClientTest.Collections.Generic
             var l = new List<string> { "x", "y" };
 
             l.InsertRange(1, new[] { "a", "b" });
-            Assert.AreEqual(l.ToArray(), new[] { "x", "a", "b", "y" });
+            Assert.AreDeepEqual(l.ToArray(), new[] { "x", "a", "b", "y" });
 
             l.InsertRange(0, new[] { "q", "q" });
-            Assert.AreEqual(l.ToArray(), new[] { "q", "q", "x", "a", "b", "y" });
+            Assert.AreDeepEqual(l.ToArray(), new[] { "q", "q", "x", "a", "b", "y" });
         }
 
         [Test]
@@ -296,7 +296,7 @@ namespace Bridge.ClientTest.Collections.Generic
         {
             var list = new List<string> { "a", "b", "c", "a" };
             Assert.True(list.Remove("a"));
-            Assert.AreEqual(list.ToArray(), new[] { "b", "c", "a" });
+            Assert.AreDeepEqual(list.ToArray(), new[] { "b", "c", "a" });
         }
 
         [Test]
@@ -304,7 +304,7 @@ namespace Bridge.ClientTest.Collections.Generic
         {
             var list = new List<string> { "a", "b", "c", "a" };
             Assert.False(list.Remove("d"));
-            Assert.AreEqual(list.ToArray(), new[] { "a", "b", "c", "a" });
+            Assert.AreDeepEqual(list.ToArray(), new[] { "a", "b", "c", "a" });
         }
 
         [Test]
@@ -312,7 +312,7 @@ namespace Bridge.ClientTest.Collections.Generic
         {
             var list = new List<string> { "a", null, "c", null };
             Assert.True(list.Remove(null));
-            Assert.AreEqual(list.ToArray(), new[] { "a", "c", null });
+            Assert.AreDeepEqual(list.ToArray(), new[] { "a", "c", null });
         }
 
         [Test]
@@ -330,7 +330,7 @@ namespace Bridge.ClientTest.Collections.Generic
         {
             var list = new List<string> { "a", "b", "c", "a" };
             list.RemoveAt(1);
-            Assert.AreEqual(list.ToArray(), new[] { "a", "c", "a" });
+            Assert.AreDeepEqual(list.ToArray(), new[] { "a", "c", "a" });
         }
 
         [Test]
@@ -338,7 +338,7 @@ namespace Bridge.ClientTest.Collections.Generic
         {
             var list = new List<string> { "a", "b", "c", "d" };
             list.RemoveRange(1, 2);
-            Assert.AreEqual(list.ToArray(), new[] { "a", "d" });
+            Assert.AreDeepEqual(list.ToArray(), new[] { "a", "d" });
         }
 
         [Test]
@@ -346,7 +346,7 @@ namespace Bridge.ClientTest.Collections.Generic
         {
             var list = new List<int> { 1, 3, 4, 1, 3, 2 };
             list.Reverse();
-            Assert.AreEqual(list.ToArray(), new[] { 2, 3, 1, 4, 3, 1 });
+            Assert.AreDeepEqual(list.ToArray(), new[] { 2, 3, 1, 4, 3, 1 });
         }
 
         [Test]
@@ -354,7 +354,7 @@ namespace Bridge.ClientTest.Collections.Generic
         {
             var list = new List<int> { 1, 6, 6, 4, 2 };
             list.Sort();
-            Assert.AreEqual(list.ToArray(), new[] { 1, 2, 4, 6, 6 });
+            Assert.AreDeepEqual(list.ToArray(), new[] { 1, 2, 4, 6, 6 });
         }
 
         [Test]
@@ -362,7 +362,7 @@ namespace Bridge.ClientTest.Collections.Generic
         {
             var list = new List<int> { 1, 6, 6, 4, 2 };
             list.Sort((x, y) => (int)y - (int)x);
-            Assert.AreEqual(list.ToArray(), new[] { 6, 6, 4, 2, 1 });
+            Assert.AreDeepEqual(list.ToArray(), new[] { 6, 6, 4, 2, 1 });
         }
 
         [Test]
@@ -370,7 +370,7 @@ namespace Bridge.ClientTest.Collections.Generic
         {
             var list = new List<int> { 1, 6, 6, 4, 2 };
             list.Sort(new TestReverseComparer());
-            Assert.AreEqual(list.ToArray(), new[] { 6, 6, 4, 2, 1 });
+            Assert.AreDeepEqual(list.ToArray(), new[] { 6, 6, 4, 2, 1 });
         }
 
         [Test]
@@ -409,7 +409,7 @@ namespace Bridge.ClientTest.Collections.Generic
         {
             IList<string> l = new List<string> { "x", "y", "z" };
             l.Add("a");
-            Assert.AreEqual(((List<string>)l).ToArray(), new[] { "x", "y", "z", "a" });
+            Assert.AreDeepEqual(((List<string>)l).ToArray(), new[] { "x", "y", "z", "a" });
         }
 
         [Test]
@@ -417,7 +417,7 @@ namespace Bridge.ClientTest.Collections.Generic
         {
             IList<string> l = new List<string> { "x", "y", "z" };
             l.Clear();
-            Assert.AreEqual(((List<string>)l).ToArray(), new string[0]);
+            Assert.AreDeepEqual(((List<string>)l).ToArray(), new string[0]);
         }
 
         [Test]
@@ -444,7 +444,7 @@ namespace Bridge.ClientTest.Collections.Generic
             Assert.False(l.Remove("a"));
 
             var ll = l as List<string>;
-            Assert.AreEqual(ll.ToArray(), new[] { "x", "z" });
+            Assert.AreDeepEqual(ll.ToArray(), new[] { "x", "z" });
         }
 
         [Test]
@@ -452,7 +452,7 @@ namespace Bridge.ClientTest.Collections.Generic
         {
             IList<string> list = new List<string> { "a", null, "c", null };
             Assert.True(list.Remove(null));
-            Assert.AreEqual(((List<string>)list).ToArray(), new[] { "a", "c", null });
+            Assert.AreDeepEqual(((List<string>)list).ToArray(), new[] { "a", "c", null });
         }
 
         [Test]
@@ -471,7 +471,7 @@ namespace Bridge.ClientTest.Collections.Generic
             IList<string> l = new List<string> { "x", "y", "z" };
             Assert.AreEqual(l[1], "y");
             l[1] = "a";
-            Assert.AreEqual(((List<string>)l).ToArray(), new[] { "x", "a", "z" });
+            Assert.AreDeepEqual(((List<string>)l).ToArray(), new[] { "x", "a", "z" });
         }
 
         [Test]
@@ -495,7 +495,7 @@ namespace Bridge.ClientTest.Collections.Generic
         {
             IList<string> l = new List<string> { "x", "y", "z" };
             l.Insert(1, "a");
-            Assert.AreEqual(((List<string>)l).ToArray(), new[] { "x", "a", "y", "z" });
+            Assert.AreDeepEqual(((List<string>)l).ToArray(), new[] { "x", "a", "y", "z" });
         }
 
         [Test]
@@ -503,7 +503,7 @@ namespace Bridge.ClientTest.Collections.Generic
         {
             IList<string> l = new List<string> { "x", "y", "z" };
             l.RemoveAt(1);
-            Assert.AreEqual(((List<string>)l).ToArray(), new[] { "x", "z" });
+            Assert.AreDeepEqual(((List<string>)l).ToArray(), new[] { "x", "z" });
         }
 
         [Test]
@@ -515,7 +515,7 @@ namespace Bridge.ClientTest.Collections.Generic
             var actual = l.ToArray();
             Assert.False(ReferenceEquals(l, actual));
             Assert.True(actual is Array);
-            Assert.AreEqual(actual, new[] { "a", "b" });
+            Assert.AreDeepEqual(actual, new[] { "a", "b" });
         }
     }
 }

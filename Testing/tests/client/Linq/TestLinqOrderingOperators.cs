@@ -16,19 +16,19 @@ namespace Bridge.ClientTest.Linq
             var sortedWords = (from word in words
                                orderby word
                                select word).ToArray();
-            Assert.AreEqual(sortedWords, new[] { "", "a", "ab", "ab12", "ab2", "ac", "bac", "z" }, "Order by words");
+            Assert.AreDeepEqual(sortedWords, new[] { "", "a", "ab", "ab12", "ab2", "ac", "bac", "z" }, "Order by words");
 
             // TEST
             var sortedWordsByLength = (from word in words
                                        orderby word.Length
                                        select word).ToArray();
-            Assert.AreEqual(sortedWordsByLength, new[] { "", "a", "z", "ac", "ab", "ab2", "bac", "ab12" }, "Order by word length");
+            Assert.AreDeepEqual(sortedWordsByLength, new[] { "", "a", "z", "ac", "ab", "ab2", "bac", "ab12" }, "Order by word length");
 
             // TEST
             var sortedPersonsByName = (from p in Person.GetPersons()
                                        orderby p.Name
                                        select p.Name).ToArray();
-            Assert.AreEqual(sortedPersonsByName, new[] { "Billy", "Dora", "Frank", "Ian", "John", "Mary", "Nemo", "Zeppa" }, "Order by person names");
+            Assert.AreDeepEqual(sortedPersonsByName, new[] { "Billy", "Dora", "Frank", "Ian", "John", "Mary", "Nemo", "Zeppa" }, "Order by person names");
 
             // TODO test with System.StringComparison
 
@@ -37,29 +37,29 @@ namespace Bridge.ClientTest.Linq
             var sortedDoubles = (from d in doubles
                                  orderby d descending
                                  select d).ToArray();
-            Assert.AreEqual(sortedDoubles, new[] { 2.9, 2.1, 1.4, 1.0, 0.9, -0.7 }, "Order by descending double");
+            Assert.AreDeepEqual(sortedDoubles, new[] { 2.9, 2.1, 1.4, 1.0, 0.9, -0.7 }, "Order by descending double");
 
             // TEST
             var sortedPersonsByCountDesc = (from p in Person.GetPersons()
                                             orderby p.Count descending
                                             select p.Count).ToArray();
-            Assert.AreEqual(sortedPersonsByCountDesc, new[] { 3000, 700, 700, 550, 500, 300, 100, 50 }, "Order by person count descending");
+            Assert.AreDeepEqual(sortedPersonsByCountDesc, new[] { 3000, 700, 700, 550, 500, 300, 100, 50 }, "Order by person count descending");
 
             // TEST
             var sortedWordsByLengthAndLetters = (from word in words
                                                  orderby word.Length, word
                                                  select word).ToArray();
-            Assert.AreEqual(sortedWordsByLengthAndLetters, new[] { "", "a", "z", "ab", "ac", "ab2", "bac", "ab12" }, "Order by word length then by letters");
+            Assert.AreDeepEqual(sortedWordsByLengthAndLetters, new[] { "", "a", "z", "ab", "ac", "ab2", "bac", "ab12" }, "Order by word length then by letters");
 
             // TEST
             var sortedWordsByLengthAndLettersLambda = words.OrderBy(x => x.Length).ThenByDescending(x => x).ToArray();
-            Assert.AreEqual(sortedWordsByLengthAndLettersLambda, new[] { "", "z", "a", "ac", "ab", "bac", "ab2", "ab12" }, "Order by word length then by letters as lambda");
+            Assert.AreDeepEqual(sortedWordsByLengthAndLettersLambda, new[] { "", "z", "a", "ac", "ab", "bac", "ab2", "ab12" }, "Order by word length then by letters as lambda");
 
             // TEST
             // var numbers = new[] { 2, 4, 6, 1, 5, 7, 9, 0, 8, 3};
             var numbers = new[] { 2, 4, 6, 1, 5 };
             var numbersReversed = numbers.Reverse<int>().ToArray();
-            Assert.AreEqual(numbersReversed, new[] { 5, 1, 6, 4, 2 }, "Reverse() numbers");
+            Assert.AreDeepEqual(numbersReversed, new[] { 5, 1, 6, 4, 2 }, "Reverse() numbers");
         }
     }
 }

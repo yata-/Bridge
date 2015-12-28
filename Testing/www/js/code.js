@@ -3062,13 +3062,13 @@ Bridge.define('Bridge.ClientTest.ArrayTests', {
         var arr = ["x", "y"];
         var arr2 = (Bridge.Array.clone(arr));
         Bridge.get(Bridge.Test.Assert).$false(arr === arr2);
-        Bridge.get(Bridge.Test.Assert).areEqual(arr, arr2);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(arr, arr2);
     },
     concatWorks: function () {
         var arr = ["a", "b"];
-        Bridge.get(Bridge.Test.Assert).areEqual(arr.concat("c"), ["a", "b", "c"]);
-        Bridge.get(Bridge.Test.Assert).areEqual(arr.concat("c", "d"), ["a", "b", "c", "d"]);
-        Bridge.get(Bridge.Test.Assert).areEqual(arr, ["a", "b"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(arr.concat("c"), ["a", "b", "c"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(arr.concat("c", "d"), ["a", "b", "c", "d"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(arr, ["a", "b"]);
     },
     containsWorks: function () {
         var arr = ["x", "y"];
@@ -3089,8 +3089,8 @@ Bridge.define('Bridge.ClientTest.ArrayTests', {
         }));
     },
     sliceWithoutEndWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(["a", "b", "c", "d"].slice(2), ["c", "d"]);
-        Bridge.get(Bridge.Test.Assert).areEqual(["a", "b", "c", "d"].slice(1, 3), ["b", "c"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(["a", "b", "c", "d"].slice(2), ["c", "d"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(["a", "b", "c", "d"].slice(1, 3), ["b", "c"]);
     },
     foreachWithArrayItemCallbackWorks: function () {
         var result = "";
@@ -3125,7 +3125,7 @@ Bridge.define('Bridge.ClientTest.ArrayTests', {
     reverseWorks: function () {
         var arr = [1, 3, 4, 1, 3, 2];
         arr.reverse();
-        Bridge.get(Bridge.Test.Assert).areEqual(arr, [2, 3, 1, 4, 3, 1]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(arr, [2, 3, 1, 4, 3, 1]);
     },
     anyWithArrayItemFilterCallbackWorks: function () {
         Bridge.get(Bridge.Test.Assert).$true(Bridge.Linq.Enumerable.from([1, 2, 3, 4]).any(function (i) {
@@ -3176,27 +3176,27 @@ Bridge.define('Bridge.ClientTest.ArrayTests', {
     sortWithDefaultCompareWorks: function () {
         var arr = [1, 6, 6, 4, 2];
         arr.sort();
-        Bridge.get(Bridge.Test.Assert).areEqual(arr, [1, 2, 4, 6, 6]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(arr, [1, 2, 4, 6, 6]);
     },
     sort1Works: function () {
         var arr = [1, 6, 6, 4, 2];
         Bridge.Array.sort(arr);
-        Bridge.get(Bridge.Test.Assert).areEqual(arr, [1, 2, 4, 6, 6]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(arr, [1, 2, 4, 6, 6]);
     },
     sort2Works: function () {
         var arr = [1, 6, 6, 4, 2];
         Bridge.Array.sort(arr, 2, 3);
-        Bridge.get(Bridge.Test.Assert).areEqual(arr, [1, 6, 2, 4, 6]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(arr, [1, 6, 2, 4, 6]);
     },
     sort3Works: function () {
         var arr = [1, 2, 6, 3, 6, 7];
         Bridge.Array.sort(arr, 2, 3, new Bridge.ClientTest.ArrayTests.TestReverseComparer());
-        Bridge.get(Bridge.Test.Assert).areEqual(arr, [1, 2, 6, 6, 3, 7]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(arr, [1, 2, 6, 6, 3, 7]);
     },
     sort4Works: function () {
         var arr = [1, 6, 6, 4, 2];
         Bridge.Array.sort(arr, new Bridge.ClientTest.ArrayTests.TestReverseComparer());
-        Bridge.get(Bridge.Test.Assert).areEqual(arr, [6, 6, 4, 2, 1]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(arr, [6, 6, 4, 2, 1]);
     },
     sortExceptionsWorks: function () {
         var arr1 = null;
@@ -3223,12 +3223,12 @@ Bridge.define('Bridge.ClientTest.ArrayTests', {
     iCollectionAddWorks: function () {
         var l = ["x", "y", "z"];
         Bridge.Array.add(l, "a");
-        Bridge.get(Bridge.Test.Assert).areEqual(l, ["x", "y", "z", "a"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(l, ["x", "y", "z", "a"]);
     },
     iCollectionClearWorks: function () {
         var l = ["x", "y", "z"];
         Bridge.Array.clear(l);
-        Bridge.get(Bridge.Test.Assert).areEqual(l, Bridge.Array.init(0, null));
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(l, Bridge.Array.init(0, null));
     },
     iCollectionContainsWorks: function () {
         var l = ["x", "y", "z"];
@@ -3244,13 +3244,13 @@ Bridge.define('Bridge.ClientTest.ArrayTests', {
         var l = ["x", "y", "z"];
         Bridge.get(Bridge.Test.Assert).$true(Bridge.Array.remove(l, "y"));
         Bridge.get(Bridge.Test.Assert).$false(Bridge.Array.remove(l, "a"));
-        Bridge.get(Bridge.Test.Assert).areEqual(l, ["x", "z"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(l, ["x", "z"]);
     },
     iListIndexingWorks: function () {
         var l = ["x", "y", "z"];
         Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getItem(l, 1), "y");
         Bridge.Array.setItem(l, 1, "a");
-        Bridge.get(Bridge.Test.Assert).areEqual(l, ["x", "a", "z"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(l, ["x", "a", "z"]);
     },
     iListIndexOfWorks: function () {
         var l = ["x", "y", "z"];
@@ -3265,12 +3265,12 @@ Bridge.define('Bridge.ClientTest.ArrayTests', {
     iListInsertWorks: function () {
         var l = ["x", "y", "z"];
         Bridge.Array.insert(l, 1, "a");
-        Bridge.get(Bridge.Test.Assert).areEqual(l, ["x", "a", "y", "z"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(l, ["x", "a", "y", "z"]);
     },
     iListRemoveAtWorks: function () {
         var l = ["x", "y", "z"];
         Bridge.Array.removeAt(l, 1);
-        Bridge.get(Bridge.Test.Assert).areEqual(l, ["x", "z"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(l, ["x", "z"]);
     }
 });
 
@@ -3334,9 +3334,9 @@ Bridge.define('Bridge.ClientTest.BasicCSharp.TestEnum', {
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.toString(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, 150), "150", "ToString (Digits)150");
         },
         testGetValues: function () {
-            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.getValues(Bridge.ClientTest.BasicCSharp.TestEnum.Abc), [Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Abc).a, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Abc).b, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Abc).c], "Abc values");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(Bridge.Enum.getValues(Bridge.ClientTest.BasicCSharp.TestEnum.Abc), [Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Abc).a, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Abc).b, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Abc).c], "Abc values");
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.getValues(Bridge.ClientTest.BasicCSharp.TestEnum.Digits), [Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).zero, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).one, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).two], "Digits values");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(Bridge.Enum.getValues(Bridge.ClientTest.BasicCSharp.TestEnum.Digits), [Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).zero, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).one, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).two], "Digits values");
         },
         testCompareTo: function () {
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.compare(Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).two, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).two), 0, "CompareTo Digits.Two with Digits.Two");
@@ -3377,9 +3377,9 @@ Bridge.define('Bridge.ClientTest.BasicCSharp.TestEnum', {
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.getName(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, 100), null, "GetName 100");
         },
         testGetNames: function () {
-            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.getNames(Bridge.ClientTest.BasicCSharp.TestEnum.Abc), ["A", "B", "C"], "Abc names");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(Bridge.Enum.getNames(Bridge.ClientTest.BasicCSharp.TestEnum.Abc), ["A", "B", "C"], "Abc names");
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.getNames(Bridge.ClientTest.BasicCSharp.TestEnum.Digits), ["Zero", "One", "Two"], "Digits names");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(Bridge.Enum.getNames(Bridge.ClientTest.BasicCSharp.TestEnum.Digits), ["Zero", "One", "Two"], "Digits names");
         },
         testHasFlag: function () {
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.hasFlag(((3)), Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Pets).cat), true, "(Pets.Dog | Pets.Cat).HasFlag(Pets.Cat)");
@@ -4649,9 +4649,9 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge532', {
         testUseCase: function () {
             var list = new Bridge.List$1(Bridge.Int)([1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(list.getRange(0, 2).toArray(), [1, 2], "Bridge532 (0, 2)");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(list.getRange(1, 2).toArray(), [2, 3], "Bridge532 (1, 2)");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(list.getRange(6, 3).toArray(), [7, 8, 9], "Bridge532 (6, 3)");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(list.getRange(0, 2).toArray(), [1, 2], "Bridge532 (0, 2)");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(list.getRange(1, 2).toArray(), [2, 3], "Bridge532 (1, 2)");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(list.getRange(6, 3).toArray(), [7, 8, 9], "Bridge532 (6, 3)");
 
         }
     }
@@ -5389,7 +5389,7 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge578', {
             var r = Bridge.String.split(s, [124, 38].map(function(i) {{ return String.fromCharCode(i); }}));
             var expected = ["ab", "abc", "ab", "abc", "de", "ef", ""];
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(r, expected, "#578 Split(params char[] separator)");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(r, expected, "#578 Split(params char[] separator)");
         }
     }
 });
@@ -5907,13 +5907,13 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge634', {
             var a5 = new Bridge.ClientTest.BridgeIssues.Bridge634A$1.Nested$1.SubNested(String,Bridge.Int)();
             var a6 = new Bridge.ClientTest.BridgeIssues.Bridge634A$1.Nested$1.SubNested$1(String,Bridge.Int,Bridge.Int)();
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(a), "ClientTestLibrary.Bridge634A$1$String", "Bridge634 A a");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(a1), "ClientTestLibrary.Bridge634A$1.Nested$String", "Bridge634 A a1");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(a2), "ClientTestLibrary.Bridge634A$1.Nested$1$String$Bridge.Int", "Bridge634 A a2");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(a3), "ClientTestLibrary.Bridge634A$1.Nested.SubNested$String", "Bridge634 A a3");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(a4), "ClientTestLibrary.Bridge634A$1.Nested.SubNested$1$String$Bridge.Int", "Bridge634 A a4");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(a5), "ClientTestLibrary.Bridge634A$1.Nested$1.SubNested$String$Bridge.Int", "Bridge634 A a5");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(a6), "ClientTestLibrary.Bridge634A$1.Nested$1.SubNested$1$String$Bridge.Int$Bridge.Int", "Bridge634 A a6");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(a), "Bridge.ClientTest.BridgeIssues.Bridge634A$1$String", "Bridge634 A a");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(a1), "Bridge.ClientTest.BridgeIssues.Bridge634A$1.Nested$String", "Bridge634 A a1");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(a2), "Bridge.ClientTest.BridgeIssues.Bridge634A$1.Nested$1$String$Bridge.Int", "Bridge634 A a2");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(a3), "Bridge.ClientTest.BridgeIssues.Bridge634A$1.Nested.SubNested$String", "Bridge634 A a3");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(a4), "Bridge.ClientTest.BridgeIssues.Bridge634A$1.Nested.SubNested$1$String$Bridge.Int", "Bridge634 A a4");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(a5), "Bridge.ClientTest.BridgeIssues.Bridge634A$1.Nested$1.SubNested$String$Bridge.Int", "Bridge634 A a5");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(a6), "Bridge.ClientTest.BridgeIssues.Bridge634A$1.Nested$1.SubNested$1$String$Bridge.Int$Bridge.Int", "Bridge634 A a6");
 
             var b = new ClientTestLibraryCustom.Bridge634B$1(String)();
             var b1 = new ClientTestLibraryCustom.Bridge634B$1.Nested(String)();
@@ -5939,13 +5939,13 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge634', {
             var c5 = new Bridge.ClientTest.BridgeIssues.Bridge634C.Nested$1.SubNested(Bridge.Int)();
             var c6 = new Bridge.ClientTest.BridgeIssues.Bridge634C.Nested$1.SubNested$1(Bridge.Int,Bridge.Int)();
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(c), "ClientTestLibrary.Bridge634C", "Bridge634 C c");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(c1), "ClientTestLibrary.Bridge634C.Nested", "Bridge634 C c1");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(c2), "ClientTestLibrary.Bridge634C.Nested$1$Bridge.Int", "Bridge634 C c2");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(c3), "ClientTestLibrary.Bridge634C.Nested.SubNested", "Bridge634 C c3");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(c4), "ClientTestLibrary.Bridge634C.Nested.SubNested$1$Bridge.Int", "Bridge634 C c4");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(c5), "ClientTestLibrary.Bridge634C.Nested$1.SubNested$Bridge.Int", "Bridge634 C c5");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(c6), "ClientTestLibrary.Bridge634C.Nested$1.SubNested$1$Bridge.Int$Bridge.Int", "Bridge634 C c6");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(c), "Bridge.ClientTest.BridgeIssues.Bridge634C", "Bridge634 C c");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(c1), "Bridge.ClientTest.BridgeIssues.Bridge634C.Nested", "Bridge634 C c1");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(c2), "Bridge.ClientTest.BridgeIssues.Bridge634C.Nested$1$Bridge.Int", "Bridge634 C c2");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(c3), "Bridge.ClientTest.BridgeIssues.Bridge634C.Nested.SubNested", "Bridge634 C c3");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(c4), "Bridge.ClientTest.BridgeIssues.Bridge634C.Nested.SubNested$1$Bridge.Int", "Bridge634 C c4");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(c5), "Bridge.ClientTest.BridgeIssues.Bridge634C.Nested$1.SubNested$Bridge.Int", "Bridge634 C c5");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(c6), "Bridge.ClientTest.BridgeIssues.Bridge634C.Nested$1.SubNested$1$Bridge.Int$Bridge.Int", "Bridge634 C c6");
         },
         testUseCaseFor658: function () {
             var d = new Bridge634D();
@@ -6166,7 +6166,7 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge674', {
 Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge675', {
     statics: {
         testUseCase: function () {
-            var me = Bridge.global.ClientTestLibrary.Bridge675;
+            var me = Bridge.global.Bridge.ClientTest.BridgeIssues.Bridge675;
             me.id = "str1";
             me.i1 = 1;
             me.i2 = 2;
@@ -7290,22 +7290,22 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IListTests', {
     classImplementingIListInsertWorks: function () {
         var l = new Bridge.ClientTest.Collections.Generic.IListTests.MyList(["x", "y"]);
         l.insert(1, "z");
-        Bridge.get(Bridge.Test.Assert).areEqual(l.getItems().toArray(), ["x", "z", "y"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(l.getItems().toArray(), ["x", "z", "y"]);
     },
     classImplementingIListCastToIListInsertWorks: function () {
         var l = new Bridge.ClientTest.Collections.Generic.IListTests.MyList(["x", "y"]);
         Bridge.Array.insert(l, 1, "z");
-        Bridge.get(Bridge.Test.Assert).areEqual((Bridge.cast(l, Bridge.ClientTest.Collections.Generic.IListTests.MyList)).getItems().toArray(), ["x", "z", "y"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual((Bridge.cast(l, Bridge.ClientTest.Collections.Generic.IListTests.MyList)).getItems().toArray(), ["x", "z", "y"]);
     },
     classImplementingIListRemoveAtWorks: function () {
         var l = new Bridge.ClientTest.Collections.Generic.IListTests.MyList(["x", "y", "z"]);
         l.removeAt(1);
-        Bridge.get(Bridge.Test.Assert).areEqual(l.getItems().toArray(), ["x", "z"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(l.getItems().toArray(), ["x", "z"]);
     },
     classImplementingIListCastToIListRemoveAtWorks: function () {
         var l = new Bridge.ClientTest.Collections.Generic.IListTests.MyList(["x", "y", "z"]);
         Bridge.Array.removeAt(l, 1);
-        Bridge.get(Bridge.Test.Assert).areEqual((Bridge.cast(l, Bridge.ClientTest.Collections.Generic.IListTests.MyList)).getItems().toArray(), ["x", "z"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual((Bridge.cast(l, Bridge.ClientTest.Collections.Generic.IListTests.MyList)).getItems().toArray(), ["x", "z"]);
     }
 });
 
@@ -7483,19 +7483,19 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
         var arr = [1, 4, 7, 8];
         var l = new Bridge.List$1(Bridge.Int)(arr);
         Bridge.get(Bridge.Test.Assert).$false(l === arr);
-        Bridge.get(Bridge.Test.Assert).areEqual(l.toArray(), arr);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(l.toArray(), arr);
     },
     constructingFromListWorks: function () {
         var arr = new Bridge.List$1(Bridge.Int)([1, 4, 7, 8]);
         var l = new Bridge.List$1(Bridge.Int)(arr);
         Bridge.get(Bridge.Test.Assert).$false(l === arr);
-        Bridge.get(Bridge.Test.Assert).areEqual(l, arr);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(l, arr);
     },
     constructingFromIEnumerableWorks: function () {
         var enm = Bridge.cast(new Bridge.List$1(Bridge.Int)([1, 4, 7, 8]), Bridge.IEnumerable$1(Bridge.Int));
         var l = new Bridge.List$1(Bridge.Int)(enm);
         Bridge.get(Bridge.Test.Assert).$false(l === enm);
-        Bridge.get(Bridge.Test.Assert).areEqual(l.toArray(), [1, 4, 7, 8]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(l.toArray(), [1, 4, 7, 8]);
     },
     countWorks: function () {
         Bridge.get(Bridge.Test.Assert).areEqual(new Bridge.List$1(String)().getCount(), 0);
@@ -7547,7 +7547,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
             ["y"]
         ] );
         l.add("a");
-        Bridge.get(Bridge.Test.Assert).areEqual(l.toArray(), ["x", "y", "a"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(l.toArray(), ["x", "y", "a"]);
     },
     addRangeWorks: function () {
         var l = Bridge.merge(new Bridge.List$1(String)(), [
@@ -7555,7 +7555,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
             ["y"]
         ] );
         l.addRange(["a", "b", "c"]);
-        Bridge.get(Bridge.Test.Assert).areEqual(l.toArray(), ["x", "y", "a", "b", "c"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(l.toArray(), ["x", "y", "a", "b", "c"]);
     },
     binarySearch1Works: function () {
         var arr = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
@@ -7635,7 +7635,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
         Bridge.get(Bridge.Test.Assert).$false(l.contains(new Bridge.ClientTest.Collections.Generic.ListTests.C(4)));
     },
     sliceWithoutEndWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.merge(new Bridge.List$1(String)(), [
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.merge(new Bridge.List$1(String)(), [
             ["a"],
             ["b"],
             ["c"],
@@ -7643,7 +7643,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
         ] ).slice(2).toArray(), ["c", "d"]);
     },
     sliceWithEndWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.merge(new Bridge.List$1(String)(), [
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.merge(new Bridge.List$1(String)(), [
             ["a"],
             ["b"],
             ["c"],
@@ -7706,7 +7706,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
             ["y"]
         ] );
         l.insert(1, "a");
-        Bridge.get(Bridge.Test.Assert).areEqual(l.toArray(), ["x", "a", "y"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(l.toArray(), ["x", "a", "y"]);
     },
     insertRangeWorks: function () {
         var l = Bridge.merge(new Bridge.List$1(String)(), [
@@ -7715,10 +7715,10 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
         ] );
 
         l.insertRange(1, ["a", "b"]);
-        Bridge.get(Bridge.Test.Assert).areEqual(l.toArray(), ["x", "a", "b", "y"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(l.toArray(), ["x", "a", "b", "y"]);
 
         l.insertRange(0, ["q", "q"]);
-        Bridge.get(Bridge.Test.Assert).areEqual(l.toArray(), ["q", "q", "x", "a", "b", "y"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(l.toArray(), ["q", "q", "x", "a", "b", "y"]);
     },
     joinWithoutDelimiterWorks: function () {
         Bridge.get(Bridge.Test.Assert).areEqual(Bridge.merge(new Bridge.List$1(String)(), [
@@ -7744,7 +7744,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
             ["a"]
         ] );
         Bridge.get(Bridge.Test.Assert).$true(list.remove("a"));
-        Bridge.get(Bridge.Test.Assert).areEqual(list.toArray(), ["b", "c", "a"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(list.toArray(), ["b", "c", "a"]);
     },
     removeReturnsFalseIfTheElementWasNotFound: function () {
         var list = Bridge.merge(new Bridge.List$1(String)(), [
@@ -7754,7 +7754,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
             ["a"]
         ] );
         Bridge.get(Bridge.Test.Assert).$false(list.remove("d"));
-        Bridge.get(Bridge.Test.Assert).areEqual(list.toArray(), ["a", "b", "c", "a"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(list.toArray(), ["a", "b", "c", "a"]);
     },
     removeCanRemoveNullItem: function () {
         var list = Bridge.merge(new Bridge.List$1(String)(), [
@@ -7764,7 +7764,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
             [null]
         ] );
         Bridge.get(Bridge.Test.Assert).$true(list.remove(null));
-        Bridge.get(Bridge.Test.Assert).areEqual(list.toArray(), ["a", "c", null]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(list.toArray(), ["a", "c", null]);
     },
     removeUsesEqualsMethod: function () {
         var list = Bridge.merge(new Bridge.List$1(Bridge.ClientTest.Collections.Generic.ListTests.C)(), [
@@ -7785,7 +7785,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
             ["a"]
         ] );
         list.removeAt(1);
-        Bridge.get(Bridge.Test.Assert).areEqual(list.toArray(), ["a", "c", "a"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(list.toArray(), ["a", "c", "a"]);
     },
     removeRangeWorks: function () {
         var list = Bridge.merge(new Bridge.List$1(String)(), [
@@ -7795,7 +7795,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
             ["d"]
         ] );
         list.removeRange(1, 2);
-        Bridge.get(Bridge.Test.Assert).areEqual(list.toArray(), ["a", "d"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(list.toArray(), ["a", "d"]);
     },
     reverseWorks: function () {
         var list = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
@@ -7807,7 +7807,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
             [2]
         ] );
         list.reverse();
-        Bridge.get(Bridge.Test.Assert).areEqual(list.toArray(), [2, 3, 1, 4, 3, 1]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(list.toArray(), [2, 3, 1, 4, 3, 1]);
     },
     sortWithDefaultCompareWorks: function () {
         var list = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
@@ -7818,7 +7818,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
             [2]
         ] );
         list.sort();
-        Bridge.get(Bridge.Test.Assert).areEqual(list.toArray(), [1, 2, 4, 6, 6]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(list.toArray(), [1, 2, 4, 6, 6]);
     },
     sortWithCompareCallbackWorks: function () {
         var list = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
@@ -7831,7 +7831,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
         list.sort(function (x, y) {
             return y - x;
         });
-        Bridge.get(Bridge.Test.Assert).areEqual(list.toArray(), [6, 6, 4, 2, 1]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(list.toArray(), [6, 6, 4, 2, 1]);
     },
     sortWithIComparerWorks: function () {
         var list = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
@@ -7842,7 +7842,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
             [2]
         ] );
         list.sort(Bridge.fn.bind(new Bridge.ClientTest.Collections.Generic.ListTests.TestReverseComparer(), new Bridge.ClientTest.Collections.Generic.ListTests.TestReverseComparer().compare));
-        Bridge.get(Bridge.Test.Assert).areEqual(list.toArray(), [6, 6, 4, 2, 1]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(list.toArray(), [6, 6, 4, 2, 1]);
     },
     foreachWhenCastToIEnumerableWorks: function () {
         var $t;
@@ -7885,7 +7885,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
             ["z"]
         ] );
         Bridge.Array.add(l, "a");
-        Bridge.get(Bridge.Test.Assert).areEqual((Bridge.cast(l, Bridge.List$1(String))).toArray(), ["x", "y", "z", "a"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual((Bridge.cast(l, Bridge.List$1(String))).toArray(), ["x", "y", "z", "a"]);
     },
     iCollectionClearWorks: function () {
         var l = Bridge.merge(new Bridge.List$1(String)(), [
@@ -7894,7 +7894,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
             ["z"]
         ] );
         Bridge.Array.clear(l);
-        Bridge.get(Bridge.Test.Assert).areEqual((Bridge.cast(l, Bridge.List$1(String))).toArray(), Bridge.Array.init(0, null));
+        Bridge.get(Bridge.Test.Assert).areDeepEqual((Bridge.cast(l, Bridge.List$1(String))).toArray(), Bridge.Array.init(0, null));
     },
     iCollectionContainsWorks: function () {
         var l = Bridge.merge(new Bridge.List$1(String)(), [
@@ -7924,7 +7924,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
         Bridge.get(Bridge.Test.Assert).$false(Bridge.Array.remove(l, "a"));
 
         var ll = Bridge.as(l, Bridge.List$1(String));
-        Bridge.get(Bridge.Test.Assert).areEqual(ll.toArray(), ["x", "z"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(ll.toArray(), ["x", "z"]);
     },
     iCollectionRemoveCanRemoveNullItem: function () {
         var list = Bridge.merge(new Bridge.List$1(String)(), [
@@ -7934,7 +7934,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
             [null]
         ] );
         Bridge.get(Bridge.Test.Assert).$true(Bridge.Array.remove(list, null));
-        Bridge.get(Bridge.Test.Assert).areEqual((Bridge.cast(list, Bridge.List$1(String))).toArray(), ["a", "c", null]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual((Bridge.cast(list, Bridge.List$1(String))).toArray(), ["a", "c", null]);
     },
     iCollectionRemoveUsesEqualsMethod: function () {
         var list = Bridge.merge(new Bridge.List$1(Bridge.ClientTest.Collections.Generic.ListTests.C)(), [
@@ -7955,7 +7955,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
         ] );
         Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getItem(l, 1), "y");
         Bridge.Array.setItem(l, 1, "a");
-        Bridge.get(Bridge.Test.Assert).areEqual((Bridge.cast(l, Bridge.List$1(String))).toArray(), ["x", "a", "z"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual((Bridge.cast(l, Bridge.List$1(String))).toArray(), ["x", "a", "z"]);
     },
     iListIndexOfWorks: function () {
         var l = Bridge.merge(new Bridge.List$1(String)(), [
@@ -7982,7 +7982,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
             ["z"]
         ] );
         Bridge.Array.insert(l, 1, "a");
-        Bridge.get(Bridge.Test.Assert).areEqual((Bridge.cast(l, Bridge.List$1(String))).toArray(), ["x", "a", "y", "z"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual((Bridge.cast(l, Bridge.List$1(String))).toArray(), ["x", "a", "y", "z"]);
     },
     iListRemoveAtWorks: function () {
         var l = Bridge.merge(new Bridge.List$1(String)(), [
@@ -7991,7 +7991,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
             ["z"]
         ] );
         Bridge.Array.removeAt(l, 1);
-        Bridge.get(Bridge.Test.Assert).areEqual((Bridge.cast(l, Bridge.List$1(String))).toArray(), ["x", "z"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual((Bridge.cast(l, Bridge.List$1(String))).toArray(), ["x", "z"]);
     },
     toArrayWorks: function () {
         var l = new Bridge.List$1(String)();
@@ -8000,7 +8000,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
         var actual = l.toArray();
         Bridge.get(Bridge.Test.Assert).$false(l === actual);
         Bridge.get(Bridge.Test.Assert).$true(Bridge.is(actual, Array));
-        Bridge.get(Bridge.Test.Assert).areEqual(actual, ["a", "b"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(actual, ["a", "b"]);
     }
 });
 
@@ -8052,9 +8052,9 @@ Bridge.define('Bridge.ClientTest.DateTimeFormatInfoTests', {
         Bridge.get(Bridge.Test.Assert).areEqual(format.shortTimePattern, "h:mm tt");
 
         Bridge.get(Bridge.Test.Assert).areEqual(format.firstDayOfWeek, 0);
-        Bridge.get(Bridge.Test.Assert).areEqual(format.dayNames, ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(format.dayNames, ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]);
 
-        Bridge.get(Bridge.Test.Assert).areEqual(format.monthNames, ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", ""]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(format.monthNames, ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", ""]);
     }
 });
 
@@ -8934,7 +8934,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqAggregateOperators', {
 
             var groupJoinExpected = [{ group: "A", personCount: 1 }, { group: "B", personCount: 4 }, { group: "C", personCount: 2 }, { group: "D", personCount: 0 }];
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(groupJoin, groupJoinExpected, "Count() within joint collections");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(groupJoin, groupJoinExpected, "Count() within joint collections");
 
             // TEST
             var grouped = (Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons()).groupBy(function (p) {
@@ -8945,7 +8945,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqAggregateOperators', {
 
             var groupedExpected = [{ group: "A", personCount: 1 }, { group: "C", personCount: 2 }, { group: "B", personCount: 4 }, { group: Bridge.cast(null, String), personCount: 1 }];
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(grouped, groupedExpected, "Count() within group");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(grouped, groupedExpected, "Count() within group");
 
             // TEST
             var numSum = Bridge.Linq.Enumerable.from(numbers).sum();
@@ -8968,7 +8968,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqAggregateOperators', {
 
             var groupedSumExpected = [{ group: "A", sum: 300 }, { group: "C", sum: 600 }, { group: "B", sum: 2000 }, { group: Bridge.cast(null, String), sum: 3000 }];
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(groupedSum, groupedSumExpected, "Sum() within group");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(groupedSum, groupedSumExpected, "Sum() within group");
 
             // TEST
             var minNum = Bridge.Linq.Enumerable.from(numbers).min();
@@ -8991,7 +8991,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqAggregateOperators', {
 
             var groupedMinExpected = [{ group: "A", min: 300 }, { group: "C", min: 100 }, { group: "B", min: 50 }, { group: Bridge.cast(null, String), min: 3000 }];
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(groupedMin, groupedMinExpected, "Min() within group");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(groupedMin, groupedMinExpected, "Min() within group");
 
             // TEST
             var groupedMinWithLet = (Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons()).groupBy(function (p) {
@@ -9010,7 +9010,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqAggregateOperators', {
 
             var groupedMinWithLetExpected = [{ group: "A", name: ["Frank"] }, { group: "C", name: ["Zeppa"] }, { group: "B", name: ["Dora"] }, { group: Bridge.cast(null, String), name: ["Nemo"] }];
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(groupedMinWithLet, groupedMinWithLetExpected, "Min() within group with let");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(groupedMinWithLet, groupedMinWithLetExpected, "Min() within group with let");
 
             // TEST
             var maxNum = Bridge.Linq.Enumerable.from(numbers).max();
@@ -9033,7 +9033,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqAggregateOperators', {
 
             var groupedMaxExpected = [{ group: "A", max: 300 }, { group: "C", max: 500 }, { group: "B", max: 700 }, { group: Bridge.cast(null, String), max: 3000 }];
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(groupedMax, groupedMaxExpected, "Max() within group");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(groupedMax, groupedMaxExpected, "Max() within group");
 
             // TEST
             var groupedMaxWithLet = (Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons()).groupBy(function (p) {
@@ -9052,7 +9052,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqAggregateOperators', {
 
             var groupedMaxWithLetExpected = [{ group: "A", name: ["Frank"] }, { group: "C", name: ["Billy"] }, { group: "B", name: ["John", "Mary"] }, { group: Bridge.cast(null, String), name: ["Nemo"] }];
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(groupedMaxWithLet, groupedMaxWithLetExpected, "Max() within group with let");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(groupedMaxWithLet, groupedMaxWithLetExpected, "Max() within group with let");
 
             // TEST
             var averageNum = Bridge.Linq.Enumerable.from(numbers).average();
@@ -9076,7 +9076,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqAggregateOperators', {
 
             var groupedAverageExpected = [{ group: "A", average: 300 }, { group: "C", average: 300 }, { group: "B", average: 500 }, { group: Bridge.cast(null, String), average: 3000 }];
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(groupedAverage, groupedAverageExpected, "Average() within group");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(groupedAverage, groupedAverageExpected, "Average() within group");
 
             // TEST
             var doublesForAggregate = [1.0, 2.0, 3.0, 4.0, 5.0];
@@ -9100,7 +9100,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqAggregateOperators', {
                 return next + " " + workingSentence;
             });
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(q, "A C B A ", "Enumerable.Aggregate");
+            Bridge.get(Bridge.Test.Assert).areStrictEqual$1(q, "A C B A ", "Enumerable.Aggregate");
         }
     }
 });
@@ -9117,7 +9117,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqConversionOperators', {
             var doublesArray = sameDoubles.toArray();
 
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.String.contains(Bridge.getType(doublesArray).toString(),"function Array()"), "ToArray() conversion for doubles - check type name");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(doublesArray, doubles, "ToArray() conversion for doubles - check content");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(doublesArray, doubles, "ToArray() conversion for doubles - check content");
 
             // TEST
             var words = ["1.one", "2.two", "3.three"];
@@ -9128,7 +9128,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqConversionOperators', {
             var wordListExpected1 = new Bridge.List$1(String)(["3.three", "2.two", "1.one"]);
 
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.Utilities.TypeHelper).getTypeName(wordList1), "Bridge.List$1$String", "ToList() conversion with explicit String type for string - check type name");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(wordList1, wordListExpected1, "ToList() conversion for strings with explicit String type - check content");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(wordList1, wordListExpected1, "ToList() conversion for strings with explicit String type - check content");
 
             // TEST
             var wordList2 = (Bridge.Linq.Enumerable.from(words).orderByDescending(function (w) {
@@ -9137,7 +9137,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqConversionOperators', {
             var wordListExpected2 = new Bridge.List$1(String)(["3.three", "2.two", "1.one"]);
 
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.Utilities.TypeHelper).getTypeName(wordList2), "Bridge.List$1$String", "ToList() conversion for string - check type name");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(wordList2, wordListExpected2, "ToList() conversion for strings - check content");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(wordList2, wordListExpected2, "ToList() conversion for strings - check content");
 
             // TEST
             var groups = Bridge.get(Bridge.ClientTest.Utilities.Group).getGroups();
@@ -9166,8 +9166,8 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqConversionOperators', {
                 setName: "D",
                 setLimit: 200
             } ));
-            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.Utilities.TypeHelper).getTypeName(groupDictionary1), "Bridge.Dictionary$2$String$ClientTestLibrary.Utilities.Group", "ToDictionary(keySelector, elementSelector) conversion for <string, Group> - check type name");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(groupDictionary1, expectedGroupDictionary1, "ToDictionary(keySelector, elementSelector) conversion for <string, Group> - check content");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.Utilities.TypeHelper).getTypeName(groupDictionary1), "Bridge.Dictionary$2$String$Bridge.ClientTest.Utilities.Group", "ToDictionary(keySelector, elementSelector) conversion for <string, Group> - check type name");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(groupDictionary1, expectedGroupDictionary1, "ToDictionary(keySelector, elementSelector) conversion for <string, Group> - check content");
 
             // TEST
             var comparer = new Bridge.ClientTest.Linq.TestLinqConversionOperatorsIEqualityComparer();
@@ -9198,8 +9198,8 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqConversionOperators', {
                 return g;
             }, String, Bridge.ClientTest.Utilities.Group, comparer);
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.Utilities.TypeHelper).getTypeName(groupDictionary2), "Bridge.Dictionary$2$String$ClientTestLibrary.Utilities.Group", "ToDictionary(keySelector, elementSelector, IEqualityComparer) conversion for <string, Group> - check type name");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(groupDictionary2, expectedGroupDictionary2, "ToDictionary(keySelector, elementSelector, IEqualityComparer) conversion for <string, Group> - check content");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.Utilities.TypeHelper).getTypeName(groupDictionary2), "Bridge.Dictionary$2$String$Bridge.ClientTest.Utilities.Group", "ToDictionary(keySelector, elementSelector, IEqualityComparer) conversion for <string, Group> - check type name");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(groupDictionary2, expectedGroupDictionary2, "ToDictionary(keySelector, elementSelector, IEqualityComparer) conversion for <string, Group> - check content");
 
             // TEST
             var groupDictionary3 = (Bridge.Linq.Enumerable.from(groups).select(function (g) {
@@ -9208,15 +9208,15 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqConversionOperators', {
                 return g.getName();
             }, null, String, Bridge.ClientTest.Utilities.Group);
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.Utilities.TypeHelper).getTypeName(groupDictionary3), "Bridge.Dictionary$2$String$ClientTestLibrary.Utilities.Group", "ToDictionary(keySelector) conversion for <string, Group> - check type name");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(groupDictionary3, expectedGroupDictionary1, "ToDictionary(keySelector) conversion for <string, Group> - check content");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.Utilities.TypeHelper).getTypeName(groupDictionary3), "Bridge.Dictionary$2$String$Bridge.ClientTest.Utilities.Group", "ToDictionary(keySelector) conversion for <string, Group> - check type name");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(groupDictionary3, expectedGroupDictionary1, "ToDictionary(keySelector) conversion for <string, Group> - check content");
 
             // TEST
             var numbers = [null, 1.0, "two", 3, "four", 5, "six", 7.0];
 
             var doubleNumbers = Bridge.Linq.Enumerable.from(numbers).ofType(Number).toArray();
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(doubleNumbers, [1.0, 3, 5, 7.0], "Issue #218. OfType<double> should get only double type items");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(doubleNumbers, [1.0, 3, 5, 7.0], "Issue #218. OfType<double> should get only double type items");
         }
     }
 });
@@ -9230,14 +9230,14 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqElementOperators', {
                 return p.getID() === 3;
             })).first();
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(person3, Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons().getItem(2), "First() with ID = 3");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Linq.Enumerable.from(persons).first(function (x) {
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(person3, Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons().getItem(2), "First() with ID = 3");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(Bridge.Linq.Enumerable.from(persons).first(function (x) {
                 return x.getID() === 3;
             }), Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons().getItem(2), "First() with ID = 3 by lambda");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Linq.Enumerable.from(persons).where(function (x) {
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(Bridge.Linq.Enumerable.from(persons).where(function (x) {
                 return x.getID() === 3;
             }).first(), Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons().getItem(2), "First() with Where() with ID = 3 by lambda");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Linq.Enumerable.from(persons).first(function (x) {
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(Bridge.Linq.Enumerable.from(persons).first(function (x) {
                 return x.getGroup() === "C";
             }), Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons().getItem(1), "First() with Group = 'C' by lambda");
             Bridge.get(Bridge.Test.Assert).throws$5(Bridge.get(Bridge.ClientTest.Linq.TestLinqElementOperators).throwExceptionOnFirst1, "First() should throw exception if no element found");
@@ -9263,11 +9263,11 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqElementOperators', {
                 return p;
             })).last();
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(lastPerson, Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons().getItem(7), "Last() person");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Linq.Enumerable.from(persons).last(function (x) {
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(lastPerson, Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons().getItem(7), "Last() person");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(Bridge.Linq.Enumerable.from(persons).last(function (x) {
                 return x.getID() === 4;
             }), Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons().getItem(3), "Last() with ID = 4 by lambda");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Linq.Enumerable.from(persons).last(function (x) {
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(Bridge.Linq.Enumerable.from(persons).last(function (x) {
                 return x.getGroup() === "B";
             }), Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons().getItem(6), "Last() with Group = 'B' by lambda");
             Bridge.get(Bridge.Test.Assert).throws$5(Bridge.get(Bridge.ClientTest.Linq.TestLinqElementOperators).throwExceptionOnLast1, "Last() should throw exception if no element found");
@@ -9357,13 +9357,13 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqGenerationOperators', {
             })).toArray();
             var numbersExpected = [{ number: 0, isOdd: false }, { number: 1, isOdd: true }, { number: 2, isOdd: false }, { number: 3, isOdd: true }, { number: 4, isOdd: false }, { number: 5, isOdd: true }];
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(numbers, numbersExpected, "Range() 6 items from 0");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(numbers, numbersExpected, "Range() 6 items from 0");
 
             // TEST
             var repeatNumbers = Bridge.Linq.Enumerable.repeat(-3, 4).toArray();
             var repeatNumbersExpected = [-3, -3, -3, -3];
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(repeatNumbers, repeatNumbersExpected, "Repeat() -3 four times");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(repeatNumbers, repeatNumbersExpected, "Repeat() -3 four times");
         }
     }
 });
@@ -9383,7 +9383,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqGroupingOperators', {
 
             var numberGroupsExpected = [{ remainder: 2, numbers: [2] }, { remainder: 0, numbers: [10, 5, 30, -15] }, { remainder: 3, numbers: [3] }, { remainder: 1, numbers: [1] }];
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(numberGroups, numberGroupsExpected, "Group numbers by remainders");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(numberGroups, numberGroupsExpected, "Group numbers by remainders");
 
             // TEST
             var wordGroups = (Bridge.Linq.Enumerable.from(words).groupBy(function (w) {
@@ -9394,7 +9394,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqGroupingOperators', {
 
             var wordGroupsExpected = [{ firstLetter: 49, words: ["1.one", "11.eleven"] }, { firstLetter: 51, words: ["3.three", "30.thirty"] }, { firstLetter: 50, words: ["2.two", "22.twentytwo"] }];
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(wordGroups, wordGroupsExpected, "Group words by first letters");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(wordGroups, wordGroupsExpected, "Group words by first letters");
 
             // TEST
             var personGroups = (Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons()).groupBy(function (p) {
@@ -9407,7 +9407,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqGroupingOperators', {
 
             var personGroupsExpected = [{ group: "A", persons: ["Frank"] }, { group: "C", persons: ["Zeppa", "Billy"] }, { group: "B", persons: ["John", "Dora", "Ian", "Mary"] }, { group: Bridge.cast(null, String), persons: ["Nemo"] }];
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(personGroups, personGroupsExpected, "Person group by Group field");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(personGroups, personGroupsExpected, "Person group by Group field");
         },
         testComplexGrouping: function () {
             // TEST
@@ -9431,7 +9431,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqGroupingOperators', {
             })).toArray();
 
             var complexGroupingExpected = Bridge.get(Bridge.ClientTest.Linq.TestLinqGroupingOperators).getComplexGroupingExpectedResult();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(complexGrouping, complexGroupingExpected, "Complex grouping for numbers and words");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(complexGrouping, complexGroupingExpected, "Complex grouping for numbers and words");
         },
         testAnagrams: function () {
             // TEST
@@ -9445,7 +9445,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqGroupingOperators', {
 
             var anagramsGroupsExpected = [{ key: "from", words: [" from ", " form "] }, { key: "salt", words: [" salt ", " last "] }, { key: "earn", words: [" earn ", " near "] }];
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(anagramsGroups, anagramsGroupsExpected, "Anagram grouping with equality comparer");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(anagramsGroups, anagramsGroupsExpected, "Anagram grouping with equality comparer");
 
             // TEST
             var anagramsGroups1 = Bridge.Linq.Enumerable.from(anagrams).groupBy(function (w) {
@@ -9457,7 +9457,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqGroupingOperators', {
             }).toArray();
             var anagramsGroupsExpected1 = [{ key: "from", words: [" FROM ", " FORM "] }, { key: "salt", words: [" SALT ", " LAST "] }, { key: "earn", words: [" EARN ", " NEAR "] }];
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(anagramsGroups1, anagramsGroupsExpected1, "Anagram grouping with equality compare and upper case");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(anagramsGroups1, anagramsGroupsExpected1, "Anagram grouping with equality compare and upper case");
         },
         getComplexGroupingExpectedResult: function () {
             var complexGroupingExpected = [{ number: 2, words: [{ letter: 50, letterGroups: [{ letter: "2.two", letters: ["2.two"] }, { letter: "22.twentytwo", letters: ["22.twentytwo"] }] }] }, { number: 10, words: [] }, { number: 3, words: [{ letter: 51, letterGroups: [{ letter: "3.three", letters: ["3.three"] }, { letter: "30.thirty", letters: ["30.thirty"] }] }] }, { number: 5, words: [] }, { number: 30, words: [] }, { number: 1, words: [{ letter: 49, letterGroups: [{ letter: "1.one", letters: ["1.one"] }, { letter: "11.eleven", letters: ["11.eleven"] }] }] }, { number: -15, words: [] }];
@@ -9481,7 +9481,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqJoinOperators', {
 
             var personsExpected = [{ name: "Frank", limit: 1000 }, { name: "Zeppa", limit: 800 }, { name: "John", limit: 400 }, { name: "Billy", limit: 800 }, { name: "Dora", limit: 400 }, { name: "Ian", limit: 400 }, { name: "Mary", limit: 400 }];
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(persons, personsExpected, "Join Persons and Groups");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(persons, personsExpected, "Join Persons and Groups");
 
             // TEST
             var personsByLambda = Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons()).join(Bridge.get(Bridge.ClientTest.Utilities.Group).getGroups(), function (p) {
@@ -9494,7 +9494,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqJoinOperators', {
 
             var personsByLambdaExpected = [{ name: "Frank", limit: 1000 }, { name: "Zeppa", limit: 800 }, { name: "John", limit: 400 }, { name: "Billy", limit: 800 }, { name: "Dora", limit: 400 }, { name: "Ian", limit: 400 }, { name: "Mary", limit: 400 }];
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(personsByLambda, personsByLambdaExpected, "Join Persons and Groups by lambda");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(personsByLambda, personsByLambdaExpected, "Join Persons and Groups by lambda");
 
             // TEST
             var groupJoin = (Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.Utilities.Group).getGroups()).groupJoin(Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons(), function (g) {
@@ -9509,7 +9509,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqJoinOperators', {
 
             var groupJoinExpected = [{ group: "A", persons: ["Frank"] }, { group: "B", persons: ["John", "Dora", "Ian", "Mary"] }, { group: "C", persons: ["Zeppa", "Billy"] }, { group: "D", persons: [] }];
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(groupJoin, groupJoinExpected, "Grouped join Persons and Groups");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(groupJoin, groupJoinExpected, "Grouped join Persons and Groups");
 
             // TEST
             var groupJoinWithDefault = (Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.Utilities.Group).getGroups()).groupJoin(Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons(), function (g) {
@@ -9526,7 +9526,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqJoinOperators', {
 
             var groupJoinWithDefaultExpected = [{ groupName: "A", personName: "Frank" }, { groupName: "B", personName: "John" }, { groupName: "B", personName: "Dora" }, { groupName: "B", personName: "Ian" }, { groupName: "B", personName: "Mary" }, { groupName: "C", personName: "Zeppa" }, { groupName: "C", personName: "Billy" }, { groupName: "D", personName: "" }];
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(groupJoinWithDefault, groupJoinWithDefaultExpected, "Grouped join Persons and Groups with DefaultIfEmpty");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(groupJoinWithDefault, groupJoinWithDefaultExpected, "Grouped join Persons and Groups with DefaultIfEmpty");
 
             // TEST
             var groupJoinWithDefaultAndComplexEquals = (Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.Utilities.Group).getGroups()).groupJoin(Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons(), function (g) {
@@ -9547,7 +9547,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqJoinOperators', {
 
             var groupJoinWithDefaultAndComplexEqualsExpected = [{ groupName: "C", personName: "Zeppa" }, { groupName: "B", personName: "Mary" }, { groupName: "B", personName: "John" }, { groupName: "B", personName: "Ian" }, { groupName: "A", personName: "Frank" }, { groupName: "B", personName: "Dora" }, { groupName: "C", personName: "Billy" }, { groupName: "D", personName: Bridge.cast(null, String) }];
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(groupJoinWithDefaultAndComplexEquals, groupJoinWithDefaultAndComplexEqualsExpected, "Issue #209. Grouped join Persons and Groups with DefaultIfEmpty, complex equals and ordering");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(groupJoinWithDefaultAndComplexEquals, groupJoinWithDefaultAndComplexEqualsExpected, "Issue #209. Grouped join Persons and Groups with DefaultIfEmpty, complex equals and ordering");
         }
     }
 });
@@ -9560,7 +9560,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqMiscellaneousOperators', {
             var numbersB = [2, 3, 5];
 
             var concatNumbers = numbersA.concat(numbersB);
-            Bridge.get(Bridge.Test.Assert).areEqual$1(concatNumbers, [4, 1, 3, 2, 3, 5], "Concat() numbers");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(concatNumbers, [4, 1, 3, 2, 3, 5], "Concat() numbers");
 
             // TEST
             var names = Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons()).select(function (p) {
@@ -9571,7 +9571,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqMiscellaneousOperators', {
             });
             var concatNames = names.concat(cities).toArray();
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(concatNames, ["Frank", "Zeppa", "John", "Billy", "Dora", "Ian", "Mary", "Nemo", "Edmonton", "Tokyo", "Lisbon", "Paris", "Budapest", "Rome", "Dortmund", "Ocean"], "Concat() two sequences");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(concatNames, ["Frank", "Zeppa", "John", "Billy", "Dora", "Ian", "Mary", "Nemo", "Edmonton", "Tokyo", "Lisbon", "Paris", "Budapest", "Rome", "Dortmund", "Ocean"], "Concat() two sequences");
 
             // TEST
             var a = ["a", "b", "z"];
@@ -9596,13 +9596,13 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqOrderingOperators', {
             var sortedWords = (Bridge.Linq.Enumerable.from(words).orderBy(function (word) {
                 return word;
             })).toArray();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(sortedWords, ["", "a", "ab", "ab12", "ab2", "ac", "bac", "z"], "Order by words");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(sortedWords, ["", "a", "ab", "ab12", "ab2", "ac", "bac", "z"], "Order by words");
 
             // TEST
             var sortedWordsByLength = (Bridge.Linq.Enumerable.from(words).orderBy(function (word) {
                 return word.length;
             })).toArray();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(sortedWordsByLength, ["", "a", "z", "ac", "ab", "ab2", "bac", "ab12"], "Order by word length");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(sortedWordsByLength, ["", "a", "z", "ac", "ab", "ab2", "bac", "ab12"], "Order by word length");
 
             // TEST
             var sortedPersonsByName = (Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons()).orderBy(function (p) {
@@ -9610,7 +9610,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqOrderingOperators', {
             }).select(function (p) {
                 return p.getName();
             })).toArray();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(sortedPersonsByName, ["Billy", "Dora", "Frank", "Ian", "John", "Mary", "Nemo", "Zeppa"], "Order by person names");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(sortedPersonsByName, ["Billy", "Dora", "Frank", "Ian", "John", "Mary", "Nemo", "Zeppa"], "Order by person names");
 
             // TODO test with System.StringComparison
 
@@ -9619,7 +9619,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqOrderingOperators', {
             var sortedDoubles = (Bridge.Linq.Enumerable.from(doubles).orderByDescending(function (d) {
                 return d;
             })).toArray();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(sortedDoubles, [2.9, 2.1, 1.4, 1.0, 0.9, -0.7], "Order by descending double");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(sortedDoubles, [2.9, 2.1, 1.4, 1.0, 0.9, -0.7], "Order by descending double");
 
             // TEST
             var sortedPersonsByCountDesc = (Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons()).orderByDescending(function (p) {
@@ -9627,7 +9627,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqOrderingOperators', {
             }).select(function (p) {
                 return p.getCount();
             })).toArray();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(sortedPersonsByCountDesc, [3000, 700, 700, 550, 500, 300, 100, 50], "Order by person count descending");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(sortedPersonsByCountDesc, [3000, 700, 700, 550, 500, 300, 100, 50], "Order by person count descending");
 
             // TEST
             var sortedWordsByLengthAndLetters = (Bridge.Linq.Enumerable.from(words).orderBy(function (word) {
@@ -9635,7 +9635,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqOrderingOperators', {
             }).thenBy(function (word) {
                 return word;
             })).toArray();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(sortedWordsByLengthAndLetters, ["", "a", "z", "ab", "ac", "ab2", "bac", "ab12"], "Order by word length then by letters");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(sortedWordsByLengthAndLetters, ["", "a", "z", "ab", "ac", "ab2", "bac", "ab12"], "Order by word length then by letters");
 
             // TEST
             var sortedWordsByLengthAndLettersLambda = Bridge.Linq.Enumerable.from(words).orderBy(function (x) {
@@ -9643,13 +9643,13 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqOrderingOperators', {
             }).thenByDescending(function (x) {
                 return x;
             }).toArray();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(sortedWordsByLengthAndLettersLambda, ["", "z", "a", "ac", "ab", "bac", "ab2", "ab12"], "Order by word length then by letters as lambda");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(sortedWordsByLengthAndLettersLambda, ["", "z", "a", "ac", "ab", "bac", "ab2", "ab12"], "Order by word length then by letters as lambda");
 
             // TEST
             // var numbers = new[] { 2, 4, 6, 1, 5, 7, 9, 0, 8, 3};
             var numbers = [2, 4, 6, 1, 5];
             var numbersReversed = Bridge.Linq.Enumerable.from(numbers).reverse().toArray();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(numbersReversed, [5, 1, 6, 4, 2], "Reverse() numbers");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(numbersReversed, [5, 1, 6, 4, 2], "Reverse() numbers");
         }
     }
 });
@@ -9660,43 +9660,43 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqPartitioningOperators', {
             // TEST
             var numbers = [1, 3, 5, 7, 9];
             var firstTwo = Bridge.Linq.Enumerable.from(numbers).take(2).toArray();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(firstTwo, [1, 3], "Take() the first two array elements");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(firstTwo, [1, 3], "Take() the first two array elements");
 
             // TEST
             var lastThree = Bridge.Linq.Enumerable.from(numbers).takeFromLast(3).toArray();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(lastThree, [5, 7, 9], "TakeFromLast() the last three array elements");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(lastThree, [5, 7, 9], "TakeFromLast() the last three array elements");
 
             // TEST
             var exceptTwoLast = Bridge.Linq.Enumerable.from(numbers).takeExceptLast(2).toArray();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(exceptTwoLast, [1, 3, 5], "TakeExceptLast() the first array elements except the last two");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(exceptTwoLast, [1, 3, 5], "TakeExceptLast() the first array elements except the last two");
 
             // TEST
             var takeWhileLessTwo = Bridge.Linq.Enumerable.from(numbers).takeWhile(function (number) {
                 return number < 2;
             }).toArray();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(takeWhileLessTwo, [1], "TakeWhile() less two");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(takeWhileLessTwo, [1], "TakeWhile() less two");
 
             // TEST
             var takeWhileSome = Bridge.Linq.Enumerable.from(numbers).takeWhile(function (number, index) {
                 return number - index <= 4;
             }).toArray();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(takeWhileSome, [1, 3, 5, 7], "TakeWhile() by value and index");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(takeWhileSome, [1, 3, 5, 7], "TakeWhile() by value and index");
 
             // TEST
             var skipThree = Bridge.Linq.Enumerable.from(numbers).skip(3).toArray();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(skipThree, [7, 9], "Skip() the first three");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(skipThree, [7, 9], "Skip() the first three");
 
             // TEST
             var skipWhileLessNine = Bridge.Linq.Enumerable.from(numbers).skipWhile(function (number) {
                 return number < 9;
             }).toArray();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(skipWhileLessNine, [9], "SkipWhile() less then 9");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(skipWhileLessNine, [9], "SkipWhile() less then 9");
 
             // TEST
             var skipWhileSome = Bridge.Linq.Enumerable.from(numbers).skipWhile(function (number, index) {
                 return number <= 3 && index < 2;
             }).toArray();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(skipWhileSome, [5, 7, 9], "SkipWhile() by value and index");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(skipWhileSome, [5, 7, 9], "SkipWhile() by value and index");
         }
     }
 });
@@ -9709,14 +9709,14 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqProjectionOperators', {
             var numberPlusOne = (Bridge.Linq.Enumerable.from(numbers).select(function (n) {
                 return n + 1;
             })).toArray();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(numberPlusOne, [2, 4, 6, 8], "A sequence of ints one higher than the numbers[]");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(numberPlusOne, [2, 4, 6, 8], "A sequence of ints one higher than the numbers[]");
 
             // TEST
             var persons = Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons();
             var names = (Bridge.Linq.Enumerable.from(persons).select(function (p) {
                 return p.getName();
             })).toArray();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(names, ["Frank", "Zeppa", "John", "Billy", "Dora", "Ian", "Mary", "Nemo"], "Selects names as instance field");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(names, ["Frank", "Zeppa", "John", "Billy", "Dora", "Ian", "Mary", "Nemo"], "Selects names as instance field");
 
             // TEST
             var strings = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
@@ -9724,7 +9724,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqProjectionOperators', {
             var textNumbers = (Bridge.Linq.Enumerable.from(numbers).select(function (n) {
                 return strings[n];
             })).toArray();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(textNumbers, ["one", "three", "five", "seven"], "Selects names as items of another array");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(textNumbers, ["one", "three", "five", "seven"], "Selects names as items of another array");
 
             // TEST
             var anonimNames = (Bridge.Linq.Enumerable.from(persons).select(function (p) {
@@ -9733,7 +9733,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqProjectionOperators', {
 
             var anonimNamesToCompare = [{ name: "Frank" }, { name: "Zeppa" }, { name: "John" }, { name: "Billy" }, { name: "Dora" }, { name: "Ian" }, { name: "Mary" }, { name: "Nemo" }];
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(anonimNames, anonimNamesToCompare, "Selects names as an anonymous type");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(anonimNames, anonimNamesToCompare, "Selects names as an anonymous type");
 
             // TEST
             numbers = [0, 1, 3, 3];
@@ -9744,7 +9744,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqProjectionOperators', {
 
             var anonimNumbersToCompare = [{ number: 0, isIndex: true }, { number: 1, isIndex: true }, { number: 3, isIndex: false }, { number: 3, isIndex: true }];
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(numberssInPlace, anonimNumbersToCompare, "Selects numbers as an anonymous type");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(numberssInPlace, anonimNumbersToCompare, "Selects numbers as an anonymous type");
 
             // TEST
             var numbersA = [1, 5, 2];
@@ -9761,7 +9761,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqProjectionOperators', {
 
             var expectedSimplePairs = [{ a: 1, b: 3 }, { a: 1, b: 4 }, { a: 1, b: 2 }, { a: 2, b: 3 }, { a: 2, b: 4 }];
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(simplePairs, expectedSimplePairs, "Join two numeric arrays with one where clause");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(simplePairs, expectedSimplePairs, "Join two numeric arrays with one where clause");
 
             // TEST
             numbersA = [1, 5, 2, 4, 3];
@@ -9781,7 +9781,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqProjectionOperators', {
 
             var expectedPairs = [{ sum: 8 }, { sum: 7 }, { sum: 6 }, { sum: 3 }, { sum: 7 }, { sum: 6 }, { sum: 5 }, { sum: 5 }, { sum: 4 }];
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(pairs, expectedPairs, "Join two numeric arrays with two where clauses");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(pairs, expectedPairs, "Join two numeric arrays with two where clauses");
 
             // TEST
             numbersA = [1, 5, 2, 4, 3];
@@ -9797,7 +9797,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqProjectionOperators', {
 
             var expectedManyNumbers = [{ a: 1, b: 1, i: 0 }, { a: 5, b: 5, i: 1 }, { a: 4, b: 4, i: 3 }];
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(manyNumbers, expectedManyNumbers, "SelectMany() two number arrays");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(manyNumbers, expectedManyNumbers, "SelectMany() two number arrays");
         }
     }
 });
@@ -9841,7 +9841,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqQuantifiers', {
 
             var productGroupsExpected = [{ group: "C", names: ["Zeppa", "Billy"] }, { group: "B", names: ["John", "Dora", "Ian", "Mary"] }, { group: Bridge.cast(null, String), names: ["Nemo"] }];
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(productGroups, productGroupsExpected, "Any() to return a grouped array of names only for groups having any item with Count > 500");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(productGroups, productGroupsExpected, "Any() to return a grouped array of names only for groups having any item with Count > 500");
         }
     }
 });
@@ -9877,16 +9877,16 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqQueryExecution', {
             var smallerEvenNumbers = smallNumbers.where(function (n) {
                 return n % 2 === 0;
             });
-            Bridge.get(Bridge.Test.Assert).areEqual$1(smallerEvenNumbers.toArray(), [2, 0], "Query in a query");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(smallerEvenNumbers.toArray(), [2, 0], "Query in a query");
 
             // TEST
             Bridge.Linq.Enumerable.from(numbers).forEach(function (x, index) {
                 numbers[index] = -numbers[index];
             });
-            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Linq.Enumerable.from(numbers).toArray(), [-5, -4, -1, -3, -9, -8, -6, -7, -2, 0], "ForEach()");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(Bridge.Linq.Enumerable.from(numbers).toArray(), [-5, -4, -1, -3, -9, -8, -6, -7, -2, 0], "ForEach()");
 
             // TEST
-            Bridge.get(Bridge.Test.Assert).areEqual$1(smallerEvenNumbers.toArray(), [-4, -8, -6, -2, 0], "Second query run on a modified source");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(smallerEvenNumbers.toArray(), [-4, -8, -6, -2, 0], "Second query run on a modified source");
         }
     }
 });
@@ -9899,7 +9899,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqRestrictionOperators', {
             var filteredNumbers = (Bridge.Linq.Enumerable.from(numbers).where(function (n) {
                 return n <= 6;
             })).toArray();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(filteredNumbers, [5, 4, 1, 3, 6, 2, 0], "Where elements in integer array are below or equal 6");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(filteredNumbers, [5, 4, 1, 3, 6, 2, 0], "Where elements in integer array are below or equal 6");
 
             // TEST
             var filteredCounts = (Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons()).where(function (p) {
@@ -9907,7 +9907,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqRestrictionOperators', {
             }).select(function (p) {
                 return p.getCount();
             })).toArray();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(filteredCounts, [300, 100, 500, 50], "Where elements in Person array have Count below 501");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(filteredCounts, [300, 100, 500, 50], "Where elements in Person array have Count below 501");
 
             // TEST
             filteredCounts = (Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons()).where(function (p) {
@@ -9915,7 +9915,7 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqRestrictionOperators', {
             }).select(function (p) {
                 return p.getCount();
             })).toArray();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(filteredCounts, [300], "Where elements in Person array have Count below 501 ang in group 'A'");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(filteredCounts, [300], "Where elements in Person array have Count below 501 ang in group 'A'");
 
             // TEST
             var persons = Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons();
@@ -9923,14 +9923,14 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqRestrictionOperators', {
                 return p.getCount() < 501;
             })).toArray();
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(filteredPersonByCounts, [persons.getItem(0), persons.getItem(1), persons.getItem(3), persons.getItem(4)], "Where elements in Person array have Count below 501. Returns Person instances");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(filteredPersonByCounts, [persons.getItem(0), persons.getItem(1), persons.getItem(3), persons.getItem(4)], "Where elements in Person array have Count below 501. Returns Person instances");
 
             // TEST
             var filteredPersonByCountAndIndex = Bridge.Linq.Enumerable.from(persons).where(function (p, index) {
                 return p.getCount() < index * 100;
             }).toArray();
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(filteredPersonByCountAndIndex, [persons.getItem(4)], "Where elements in Person array have Count meet condition (p.Count < index * 100). Returns Person instances");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(filteredPersonByCountAndIndex, [persons.getItem(4)], "Where elements in Person array have Count meet condition (p.Count < index * 100). Returns Person instances");
         }
     }
 });
@@ -9948,20 +9948,20 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqSetOperators', {
             var numbers = [1, 2, 3, 3, 1, 5, 4, 2, 3];
 
             var uniqueNumbers = Bridge.Linq.Enumerable.from(numbers).distinct().toArray();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(uniqueNumbers, [1, 2, 3, 5, 4], "Distinct() to remove duplicate elements");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(uniqueNumbers, [1, 2, 3, 5, 4], "Distinct() to remove duplicate elements");
 
             // TEST
             var distinctPersonGroups = (Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons()).select(function (p) {
                 return p.getGroup();
             })).distinct().toArray();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(distinctPersonGroups, ["A", "C", "B", null], "Distinct() to remove duplicate Group elements");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(distinctPersonGroups, ["A", "C", "B", null], "Distinct() to remove duplicate Group elements");
 
             // TEST
             var numbersA = [0, 2, 4, 5, 6, 8, 9];
             var numbersB = [1, 3, 5, 7, 8];
 
             var uniqueNumbersAB = Bridge.Linq.Enumerable.from(numbersA).union(numbersB).toArray();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(uniqueNumbersAB, [0, 2, 4, 5, 6, 8, 9, 1, 3, 7], "Union() to get unique number sequence");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(uniqueNumbersAB, [0, 2, 4, 5, 6, 8, 9, 1, 3, 7], "Union() to get unique number sequence");
 
             // TEST
             var nameChars = Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons()).select(function (p) {
@@ -9972,11 +9972,11 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqSetOperators', {
             });
             var uniqueFirstChars = nameChars.union(cityChars).toArray();
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(uniqueFirstChars, [Bridge.cast(70, Bridge.Int), Bridge.cast(90, Bridge.Int), Bridge.cast(74, Bridge.Int), Bridge.cast(66, Bridge.Int), Bridge.cast(68, Bridge.Int), Bridge.cast(73, Bridge.Int), Bridge.cast(77, Bridge.Int), Bridge.cast(78, Bridge.Int), Bridge.cast(69, Bridge.Int), Bridge.cast(84, Bridge.Int), Bridge.cast(76, Bridge.Int), Bridge.cast(80, Bridge.Int), Bridge.cast(82, Bridge.Int), Bridge.cast(79, Bridge.Int)], "Union to get unique first letters of Name and City");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(uniqueFirstChars, [Bridge.cast(70, Bridge.Int), Bridge.cast(90, Bridge.Int), Bridge.cast(74, Bridge.Int), Bridge.cast(66, Bridge.Int), Bridge.cast(68, Bridge.Int), Bridge.cast(73, Bridge.Int), Bridge.cast(77, Bridge.Int), Bridge.cast(78, Bridge.Int), Bridge.cast(69, Bridge.Int), Bridge.cast(84, Bridge.Int), Bridge.cast(76, Bridge.Int), Bridge.cast(80, Bridge.Int), Bridge.cast(82, Bridge.Int), Bridge.cast(79, Bridge.Int)], "Union to get unique first letters of Name and City");
 
             // TEST
             var commonNumbersCD = Bridge.Linq.Enumerable.from(numbersA).intersect(numbersB).toArray();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(commonNumbersCD, [5, 8], "Intersect() to get common number sequence");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(commonNumbersCD, [5, 8], "Intersect() to get common number sequence");
 
             // TEST
             nameChars = Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons()).select(function (p) {
@@ -9987,15 +9987,15 @@ Bridge.define('Bridge.ClientTest.Linq.TestLinqSetOperators', {
             });
 
             var commonFirstChars = Bridge.Linq.Enumerable.from(nameChars).intersect(cityChars).toArray();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(commonFirstChars, [Bridge.cast(66, Bridge.Int), Bridge.cast(68, Bridge.Int)], "Intersect() to get common first letters of Name and City");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(commonFirstChars, [Bridge.cast(66, Bridge.Int), Bridge.cast(68, Bridge.Int)], "Intersect() to get common first letters of Name and City");
 
             // TEST
             var exceptNumbersCD = Bridge.Linq.Enumerable.from(numbersA).except(numbersB).toArray();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(exceptNumbersCD, [0, 2, 4, 6, 9], "Except() to get numbers from first sequence and does not contain the second sequence numbers");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(exceptNumbersCD, [0, 2, 4, 6, 9], "Except() to get numbers from first sequence and does not contain the second sequence numbers");
 
             // TEST
             var exceptFirstChars = nameChars.except(cityChars).toArray();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(exceptFirstChars, [Bridge.cast(70, Bridge.Int), Bridge.cast(90, Bridge.Int), Bridge.cast(74, Bridge.Int), Bridge.cast(73, Bridge.Int), Bridge.cast(77, Bridge.Int), Bridge.cast(78, Bridge.Int)], "Except() to get letters from Name sequence and does not contain City letters");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(exceptFirstChars, [Bridge.cast(70, Bridge.Int), Bridge.cast(90, Bridge.Int), Bridge.cast(74, Bridge.Int), Bridge.cast(73, Bridge.Int), Bridge.cast(77, Bridge.Int), Bridge.cast(78, Bridge.Int)], "Except() to get letters from Name sequence and does not contain City letters");
         }
     }
 });
@@ -10903,7 +10903,7 @@ Bridge.define('Bridge.ClientTest.NumberFormatInfoTests', {
         Bridge.get(Bridge.Test.Assert).areEqual(format.positiveInfinitySymbol, "Infinity");
 
         Bridge.get(Bridge.Test.Assert).areEqual(format.percentSymbol, "%");
-        Bridge.get(Bridge.Test.Assert).areEqual(format.percentGroupSizes, [3]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(format.percentGroupSizes, [3]);
         Bridge.get(Bridge.Test.Assert).areEqual(format.percentDecimalDigits, 2);
         Bridge.get(Bridge.Test.Assert).areEqual(format.percentDecimalSeparator, ".");
         Bridge.get(Bridge.Test.Assert).areEqual(format.percentGroupSeparator, ",");
@@ -10911,14 +10911,14 @@ Bridge.define('Bridge.ClientTest.NumberFormatInfoTests', {
         Bridge.get(Bridge.Test.Assert).areEqual(format.percentNegativePattern, 0);
 
         Bridge.get(Bridge.Test.Assert).areEqual(format.currencySymbol, "¤");
-        Bridge.get(Bridge.Test.Assert).areEqual(format.currencyGroupSizes, [3]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(format.currencyGroupSizes, [3]);
         Bridge.get(Bridge.Test.Assert).areEqual(format.currencyDecimalDigits, 2);
         Bridge.get(Bridge.Test.Assert).areEqual(format.currencyDecimalSeparator, ".");
         Bridge.get(Bridge.Test.Assert).areEqual(format.currencyGroupSeparator, ",");
         Bridge.get(Bridge.Test.Assert).areEqual(format.currencyNegativePattern, 0);
         Bridge.get(Bridge.Test.Assert).areEqual(format.currencyPositivePattern, 0);
 
-        Bridge.get(Bridge.Test.Assert).areEqual(format.numberGroupSizes, [3]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(format.numberGroupSizes, [3]);
         Bridge.get(Bridge.Test.Assert).areEqual(format.numberDecimalDigits, 2);
         Bridge.get(Bridge.Test.Assert).areEqual(format.numberDecimalSeparator, ".");
         Bridge.get(Bridge.Test.Assert).areEqual(format.numberGroupSeparator, ",");
@@ -11436,17 +11436,17 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.DecimalTests', {
     },
     conversionsToDecimalWork: function () {
         var x = 0;
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Decimal.lift(Bridge.cast((x + 1), Bridge.Int)), Bridge.Decimal(1.0));
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Decimal.lift(Bridge.cast((x + 2), Bridge.Int)), Bridge.Decimal(2.0));
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Decimal.lift(Bridge.cast((x + 3), Bridge.Int)), Bridge.Decimal(3.0));
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Decimal.lift(Bridge.cast((x + 4), Bridge.Int)), Bridge.Decimal(4.0));
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Decimal.lift(Bridge.cast((x + 5), Bridge.Int)), Bridge.Decimal(5.0));
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Decimal.lift((x + 6)), Bridge.Decimal(6.0));
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Decimal.lift(Bridge.cast((x + 7), Bridge.Int)), Bridge.Decimal(7.0));
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Decimal.lift(Bridge.cast((x + 8), Bridge.Int)), Bridge.Decimal(8.0));
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Decimal.lift(Bridge.cast((x + 9), Bridge.Int)), Bridge.Decimal(9.0));
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Decimal.lift(Bridge.cast((x + 10.5), Number)), Bridge.Decimal(10.5));
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Decimal.lift((x + 11.5)), Bridge.Decimal(11.5));
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.Decimal.lift(Bridge.cast((x + 1), Bridge.Int)), Bridge.Decimal(1.0));
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.Decimal.lift(Bridge.cast((x + 2), Bridge.Int)), Bridge.Decimal(2.0));
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.Decimal.lift(Bridge.cast((x + 3), Bridge.Int)), Bridge.Decimal(3.0));
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.Decimal.lift(Bridge.cast((x + 4), Bridge.Int)), Bridge.Decimal(4.0));
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.Decimal.lift(Bridge.cast((x + 5), Bridge.Int)), Bridge.Decimal(5.0));
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.Decimal.lift((x + 6)), Bridge.Decimal(6.0));
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.Decimal.lift(Bridge.cast((x + 7), Bridge.Int)), Bridge.Decimal(7.0));
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.Decimal.lift(Bridge.cast((x + 8), Bridge.Int)), Bridge.Decimal(8.0));
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.Decimal.lift(Bridge.cast((x + 9), Bridge.Int)), Bridge.Decimal(9.0));
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.Decimal.lift(Bridge.cast((x + 10.5), Number)), Bridge.Decimal(10.5));
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.Decimal.lift((x + 11.5)), Bridge.Decimal(11.5));
     },
     conversionsFromDecimalWork: function () {
         var x = 0;
@@ -11490,7 +11490,7 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.DecimalTests', {
         Bridge.get(Bridge.Test.Assert).$false(x.lte(Bridge.Decimal(2.0)));
     },
     addWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Decimal(3.0).add(Bridge.Decimal(4.0)), Bridge.Decimal(7.0));
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.Decimal(3.0).add(Bridge.Decimal(4.0)), Bridge.Decimal(7.0));
     },
     ceilingWorks: function () {
         this.assertIsDecimalAndEqualTo(Bridge.Decimal(3.4).ceil(), 4);
@@ -11581,8 +11581,8 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.DecimalTests', {
         this.assertIsDecimalAndEqualTo(Bridge.Decimal(7.0).sub(Bridge.Decimal(3.0)), 4);
     },
     getHashCodeWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.getHashCode(((Bridge.Decimal.lift(0)))), Bridge.getHashCode(((Bridge.Decimal.lift(0)))));
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.getHashCode(((Bridge.Decimal.lift(1)))), Bridge.getHashCode(((Bridge.Decimal.lift(1)))));
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.getHashCode(((Bridge.Decimal.lift(0)))), Bridge.getHashCode(((Bridge.Decimal.lift(0)))));
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.getHashCode(((Bridge.Decimal.lift(1)))), Bridge.getHashCode(((Bridge.Decimal.lift(1)))));
         Bridge.get(Bridge.Test.Assert).areNotEqual(Bridge.getHashCode(((Bridge.Decimal.lift(0)))), Bridge.getHashCode(((Bridge.Decimal.lift(1)))));
         Bridge.get(Bridge.Test.Assert).areNotEqual(Bridge.getHashCode(((Bridge.Decimal.lift(0)))), Bridge.getHashCode(((Bridge.Decimal.lift(0.5)))));
     },
@@ -12353,16 +12353,16 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.JsDateTimeTests', {
             var bridgeDate = Bridge.Date.parse(str);
             var bridgeDate1 = new Date(str);
 
-            Bridge.get(Bridge.Test.Assert).areEqual$1(bridgeDate, bridgeDate1, "[#83] C# bridgeDate = bridgeDate1");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(bridgeDate, bridgeDate1, "[#83] C# bridgeDate = bridgeDate1");
 
             // TEST
             // [#83] by JavaScript code. This is to check the same issue as above and just to check another way of calling QUnit from JavaScript
-            var str = "2015-03-24T10:48:09.1500225+03:00";
-            var bridgeDate2 = Bridge.Date.parse(str);
-            var jsDate = new Date(Date.parse(str));
-            var format = "yyyy-MM-dd hh:mm:ss";
+            //Script.Write<dynamic>("var str = \"2015-03-24T10:48:09.1500225+03:00\";");
+            //Script.Write<dynamic>("var bridgeDate2 = Bridge.Date.parse(str);");
+            //Script.Write<dynamic>("var jsDate = new Date(Date.parse(str));");
+            //Script.Write<dynamic>("var format = \"yyyy-MM-dd hh:mm:ss\";");
 
-            assert.deepEqual(Bridge.Date.format(bridgeDate2, format), Bridge.Date.format(jsDate, format), "[#83] js");
+            //Script.Write<dynamic>("assert.deepEqual(Bridge.Date.format(bridgeDate2, format), Bridge.Date.format(jsDate, format), \"[#83] js\");");
         }
     },
     typePropertiesAreCorrect: function () {
@@ -12621,8 +12621,8 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.JsDateTimeTests', {
         Bridge.get(Bridge.Test.Assert).areEqual(ts.getTotalMilliseconds(), 86400000);
     },
     subtractMethodReturningTimeSpanWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(new Bridge.TimeSpan((new Date(2011, 6 - 1, 12) - new Date(2011, 6 - 1, 11)) * 10000), new Bridge.TimeSpan(1, 0, 0, 0));
-        Bridge.get(Bridge.Test.Assert).areEqual(new Bridge.TimeSpan((new Date(2011, 6 - 1, 12, 15, 0, 0) - new Date(2011, 6 - 1, 11, 13, 0, 0)) * 10000), new Bridge.TimeSpan(1, 2, 0, 0));
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(new Bridge.TimeSpan((new Date(2011, 6 - 1, 12) - new Date(2011, 6 - 1, 11)) * 10000), new Bridge.TimeSpan(1, 0, 0, 0));
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(new Bridge.TimeSpan((new Date(2011, 6 - 1, 12, 15, 0, 0) - new Date(2011, 6 - 1, 11, 13, 0, 0)) * 10000), new Bridge.TimeSpan(1, 2, 0, 0));
     },
     dateEqualityWorks: function () {
         Bridge.get(Bridge.Test.Assert).$true(Bridge.equals(new Date(2011, 7 - 1, 12), new Date(2011, 7 - 1, 12)));
@@ -13411,7 +13411,7 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.StringTests', {
     },
     matchWorks: function () {
         var result = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz").match(new RegExp("[A-E]", "gi"));
-        Bridge.get(Bridge.Test.Assert).areEqual(result, ["A", "B", "C", "D", "E", "a", "b", "c", "d", "e"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(result, ["A", "B", "C", "D", "E", "a", "b", "c", "d", "e"]);
     },
     padLeftWorks: function () {
         Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.alignString(("abc"), 5), "  abc");
@@ -13472,66 +13472,66 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.StringTests', {
         Bridge.get(Bridge.Test.Assert).areEqual("", numbers.slice(100, 101));
     },
     splitWithStringWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(("abcabcabc").split("b"), ["a", "ca", "ca", "c"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(("abcabcabc").split("b"), ["a", "ca", "ca", "c"]);
     },
     splitWithCharWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(("abcabcabc").split(String.fromCharCode(98)), ["a", "ca", "ca", "c"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(("abcabcabc").split(String.fromCharCode(98)), ["a", "ca", "ca", "c"]);
     },
     jsSplitWithStringAndLimitWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(("abcaxbcabce").split("bc", 2), ["a", "ax"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(("abcaxbcabce").split("bc", 2), ["a", "ax"]);
     },
     jsSplitWithCharAndLimitWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(("abcabcabc").split(String.fromCharCode(98), 2), ["a", "ca"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(("abcabcabc").split(String.fromCharCode(98), 2), ["a", "ca"]);
     },
     splitWithCharsAndLimitWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("abcabcabc"), [98].map(function(i) {{ return String.fromCharCode(i); }}), 2), ["a", "cabcabc"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("abcabcabc"), [98].map(function(i) {{ return String.fromCharCode(i); }}), 2), ["a", "cabcabc"]);
     },
     splitWithCharsAndStringSplitOptionsAndLimitWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("abxcabcabc"), [98, 120].map(function(i) {{ return String.fromCharCode(i); }}), 2, 1), ["a", "cabcabc"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("abxcabcabc"), [98, 120].map(function(i) {{ return String.fromCharCode(i); }}), 2, 1), ["a", "cabcabc"]);
     },
     splitWithRegexWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(("abcaxcaxc").split(new RegExp("b|x", "g")), ["a", "ca", "ca", "c"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(("abcaxcaxc").split(new RegExp("b|x", "g")), ["a", "ca", "ca", "c"]);
     },
     someNetSplitTests: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("axybcxzde"), ["xy", "xz"], null, 0), ["a", "bc", "de"]);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("axybcxzdexz"), ["xy", "xz"], null, 0), ["a", "bc", "de", ""]);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("xzaxybcxzdexz"), ["xy", "xz"], null, 0), ["", "a", "bc", "de", ""]);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("xzaxyxzbcxzdexz"), ["xy", "xz"], null, 0), ["", "a", "", "bc", "de", ""]);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("xzaxyxzxybcxzdexz"), ["xy", "xz"], null, 0), ["", "a", "", "", "bc", "de", ""]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("axybcxzde"), ["xy", "xz"], null, 0), ["a", "bc", "de"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("axybcxzdexz"), ["xy", "xz"], null, 0), ["a", "bc", "de", ""]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("xzaxybcxzdexz"), ["xy", "xz"], null, 0), ["", "a", "bc", "de", ""]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("xzaxyxzbcxzdexz"), ["xy", "xz"], null, 0), ["", "a", "", "bc", "de", ""]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("xzaxyxzxybcxzdexz"), ["xy", "xz"], null, 0), ["", "a", "", "", "bc", "de", ""]);
 
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("axybcxzde"), ["xy", "xz"], null, 1), ["a", "bc", "de"]);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("axybcxzdexz"), ["xy", "xz"], null, 1), ["a", "bc", "de"]);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("xzaxybcxzdexz"), ["xy", "xz"], null, 1), ["a", "bc", "de"]);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("xzaxyxzbcxzdexz"), ["xy", "xz"], null, 1), ["a", "bc", "de"]);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("xzaxyxzxybcxzdexz"), ["xy", "xz"], null, 1), ["a", "bc", "de"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("axybcxzde"), ["xy", "xz"], null, 1), ["a", "bc", "de"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("axybcxzdexz"), ["xy", "xz"], null, 1), ["a", "bc", "de"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("xzaxybcxzdexz"), ["xy", "xz"], null, 1), ["a", "bc", "de"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("xzaxyxzbcxzdexz"), ["xy", "xz"], null, 1), ["a", "bc", "de"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("xzaxyxzxybcxzdexz"), ["xy", "xz"], null, 1), ["a", "bc", "de"]);
 
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("axybcxzde"), ["xy", "xz"], 100, 0), ["a", "bc", "de"]);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("axybcxzdexz"), ["xy", "xz"], 100, 0), ["a", "bc", "de", ""]);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("xzaxybcxzdexz"), ["xy", "xz"], 100, 0), ["", "a", "bc", "de", ""]);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("xzaxyxzbcxzdexz"), ["xy", "xz"], 100, 0), ["", "a", "", "bc", "de", ""]);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("xzaxyxzxybcxzdexz"), ["xy", "xz"], 100, 0), ["", "a", "", "", "bc", "de", ""]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("axybcxzde"), ["xy", "xz"], 100, 0), ["a", "bc", "de"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("axybcxzdexz"), ["xy", "xz"], 100, 0), ["a", "bc", "de", ""]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("xzaxybcxzdexz"), ["xy", "xz"], 100, 0), ["", "a", "bc", "de", ""]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("xzaxyxzbcxzdexz"), ["xy", "xz"], 100, 0), ["", "a", "", "bc", "de", ""]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("xzaxyxzxybcxzdexz"), ["xy", "xz"], 100, 0), ["", "a", "", "", "bc", "de", ""]);
 
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("axybcxzde"), ["xy", "xz"], 2, 0), ["a", "bcxzde"]);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("axybcxzdexz"), ["xy", "xz"], 2, 0), ["a", "bcxzdexz"]);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("axyxzbcxzdexz"), ["xy", "xz"], 2, 0), ["a", "xzbcxzdexz"]);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("xzaxybcxzdexz"), ["xy", "xz"], 2, 0), ["", "axybcxzdexz"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("axybcxzde"), ["xy", "xz"], 2, 0), ["a", "bcxzde"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("axybcxzdexz"), ["xy", "xz"], 2, 0), ["a", "bcxzdexz"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("axyxzbcxzdexz"), ["xy", "xz"], 2, 0), ["a", "xzbcxzdexz"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("xzaxybcxzdexz"), ["xy", "xz"], 2, 0), ["", "axybcxzdexz"]);
 
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("axybcxzde"), ["xy", "xz"], 2, 1), ["a", "bcxzde"]);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("axybcxzdexz"), ["xy", "xz"], 2, 1), ["a", "bcxzdexz"]);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("axyxzbcxzdexz"), ["xy", "xz"], 2, 1), ["a", "bcxzdexz"]);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("xzaxyxzbcxzdexz"), ["xy", "xz"], 2, 1), ["a", "bcxzdexz"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("axybcxzde"), ["xy", "xz"], 2, 1), ["a", "bcxzde"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("axybcxzdexz"), ["xy", "xz"], 2, 1), ["a", "bcxzdexz"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("axyxzbcxzdexz"), ["xy", "xz"], 2, 1), ["a", "bcxzdexz"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("xzaxyxzbcxzdexz"), ["xy", "xz"], 2, 1), ["a", "bcxzdexz"]);
     },
     splitWithCharsWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("Lorem Ipsum, dolor[sit amet"), [44, 32, 91].map(function(i) {{ return String.fromCharCode(i); }})), ["Lorem", "Ipsum", "", "dolor", "sit", "amet"]);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("Lorem Ipsum, dolor[sit amet"), [44, 32, 91].map(function(i) {{ return String.fromCharCode(i); }}), null, 0), ["Lorem", "Ipsum", "", "dolor", "sit", "amet"]);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("Lorem Ipsum, dolor[sit amet"), [44, 32, 91].map(function(i) {{ return String.fromCharCode(i); }}), null, 1), ["Lorem", "Ipsum", "dolor", "sit", "amet"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("Lorem Ipsum, dolor[sit amet"), [44, 32, 91].map(function(i) {{ return String.fromCharCode(i); }})), ["Lorem", "Ipsum", "", "dolor", "sit", "amet"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("Lorem Ipsum, dolor[sit amet"), [44, 32, 91].map(function(i) {{ return String.fromCharCode(i); }}), null, 0), ["Lorem", "Ipsum", "", "dolor", "sit", "amet"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("Lorem Ipsum, dolor[sit amet"), [44, 32, 91].map(function(i) {{ return String.fromCharCode(i); }}), null, 1), ["Lorem", "Ipsum", "dolor", "sit", "amet"]);
     },
     splitWithStringsWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("a is b if b is c and c isifis d if d is e"), ["is", "if"], null, 0), ["a ", " b ", " b ", " c and c ", "", "", " d ", " d ", " e"]);
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("a is b if b is c and c isifis d if d is e"), ["is", "if"], null, 1), ["a ", " b ", " b ", " c and c ", " d ", " d ", " e"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("a is b if b is c and c isifis d if d is e"), ["is", "if"], null, 0), ["a ", " b ", " b ", " c and c ", "", "", " d ", " d ", " e"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("a is b if b is c and c isifis d if d is e"), ["is", "if"], null, 1), ["a ", " b ", " b ", " c and c ", " d ", " d ", " e"]);
     },
     splitWithStringsAndLimitWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.split(("abcbcabcabc"), ["bc"], 2, 1), ["a", "abcabc"]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.split(("abcbcabcabc"), ["bc"], 2, 1), ["a", "abcabc"]);
     },
     startsWithCharWorks: function () {
         Bridge.get(Bridge.Test.Assert).$true(Bridge.String.startsWith(("abc"), "a"));
@@ -13739,7 +13739,7 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.StringTests', {
     },
     toCharArrayWorks: function () {
         var text = "Lorem sit dolor";
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.toCharArray(text, 0, text.length), [76, 111, 114, 101, 109, 32, 115, 105, 116, 32, 100, 111, 108, 111, 114]);
+        Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.String.toCharArray(text, 0, text.length), [76, 111, 114, 101, 109, 32, 115, 105, 116, 32, 100, 111, 108, 111, 114]);
     }
 });
 
@@ -14966,7 +14966,7 @@ Bridge.define('Bridge.ClientTest.BasicCSharp.TestReferenceTypes', {
             Bridge.get(Bridge.Test.Assert).areEqual$1(a.getStringA(), "Str", "StringA Str");
             Bridge.get(Bridge.Test.Assert).areEqual$1(a.getBoolA(), true, "BoolA true");
             Bridge.get(Bridge.Test.Assert).true$1(a.getDoubleA() === Number.POSITIVE_INFINITY, "DoubleA Double.PositiveInfinity");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(a.getDecimalA(), Bridge.Decimal(-1.0), "DecimalA Decimal.MinusOne");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(a.getDecimalA(), Bridge.Decimal(-1.0), "DecimalA Decimal.MinusOne");
             Bridge.get(Bridge.Test.Assert).true$1(a.getData() !== null, "Data not null");
             Bridge.get(Bridge.Test.Assert).areEqual$1(a.getData().getNumber(), 700, "Data.Number 700");
 
@@ -14986,7 +14986,7 @@ Bridge.define('Bridge.ClientTest.BasicCSharp.TestReferenceTypes', {
             Bridge.get(Bridge.Test.Assert).areEqual$1(a.getStringA(), "151", "StringA 151");
             Bridge.get(Bridge.Test.Assert).areEqual$1(a.getBoolA(), true, "BoolA true");
             Bridge.get(Bridge.Test.Assert).areEqual$1(a.getDoubleA(), 1.53, "DoubleA Double.PositiveInfinity");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(a.getDecimalA(), Bridge.Decimal(1.54), "DecimalA 154");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(a.getDecimalA(), Bridge.Decimal(1.54), "DecimalA 154");
             Bridge.get(Bridge.Test.Assert).true$1(a.getData() !== null, "Data not null");
             Bridge.get(Bridge.Test.Assert).areEqual$1(a.getData().getNumber(), 155, "Data.Number 155");
 
@@ -15037,7 +15037,7 @@ Bridge.define('Bridge.ClientTest.BasicCSharp.TestReferenceTypes', {
 
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BasicCSharp.ClassA).statitIntNotInitialized, 678, "StatitIntNotInitialized 678");
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BasicCSharp.ClassA).statitStringNotInitialized, "ASD", "ClassA.StatitStringNotInitialized ASD");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(a.getDoubleA(), Number.NaN, "DoubleA double.NaN");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(a.getDoubleA(), Number.NaN, "DoubleA double.NaN");
 
             a = Bridge.get(Bridge.ClientTest.BasicCSharp.ClassA).staticMethod2([678, "QWE", 234]);
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BasicCSharp.ClassA).statitIntNotInitialized, 1678, "StatitIntNotInitialized 1678");

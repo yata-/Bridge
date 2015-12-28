@@ -19,7 +19,7 @@ namespace Bridge.ClientTest.BridgeIssues
             var r = s.Split('|', '&');
             var expected = new[] { "ab", "abc", "ab", "abc", "de", "ef", "" };
 
-            Assert.AreEqual(r, expected, "#578 Split(params char[] separator)");
+            Assert.AreDeepEqual(r, expected, "#578 Split(params char[] separator)");
         }
     }
 }

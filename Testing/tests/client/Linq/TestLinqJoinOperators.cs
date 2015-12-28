@@ -31,7 +31,7 @@ namespace Bridge.ClientTest.Linq
                  new { Name = "Mary", Limit = 400}
                  };
 
-            Assert.AreEqual(persons, personsExpected, "Join Persons and Groups");
+            Assert.AreDeepEqual(persons, personsExpected, "Join Persons and Groups");
 
             // TEST
             var personsByLambda = Person.GetPersons()
@@ -55,7 +55,7 @@ namespace Bridge.ClientTest.Linq
                  new { Name = "Mary", Limit = 400}
             };
 
-            Assert.AreEqual(personsByLambda, personsByLambdaExpected, "Join Persons and Groups by lambda");
+            Assert.AreDeepEqual(personsByLambda, personsByLambdaExpected, "Join Persons and Groups by lambda");
 
             // TEST
             var groupJoin = (from g in Group.GetGroups()
@@ -74,7 +74,7 @@ namespace Bridge.ClientTest.Linq
                 new { Group = "D", Persons = new string [] {} }
             };
 
-            Assert.AreEqual(groupJoin, groupJoinExpected, "Grouped join Persons and Groups");
+            Assert.AreDeepEqual(groupJoin, groupJoinExpected, "Grouped join Persons and Groups");
 
             // TEST
             var groupJoinWithDefault =
@@ -99,7 +99,7 @@ namespace Bridge.ClientTest.Linq
                 new { GroupName = "D", PersonName = string.Empty }
             };
 
-            Assert.AreEqual(groupJoinWithDefault, groupJoinWithDefaultExpected, "Grouped join Persons and Groups with DefaultIfEmpty");
+            Assert.AreDeepEqual(groupJoinWithDefault, groupJoinWithDefaultExpected, "Grouped join Persons and Groups with DefaultIfEmpty");
 
             // TEST
             var groupJoinWithDefaultAndComplexEquals =
@@ -133,7 +133,7 @@ namespace Bridge.ClientTest.Linq
                 new { GroupName = "D", PersonName = (string)null }
             };
 
-            Assert.AreEqual(groupJoinWithDefaultAndComplexEquals, groupJoinWithDefaultAndComplexEqualsExpected, "Issue #209. Grouped join Persons and Groups with DefaultIfEmpty, complex equals and ordering");
+            Assert.AreDeepEqual(groupJoinWithDefaultAndComplexEquals, groupJoinWithDefaultAndComplexEqualsExpected, "Issue #209. Grouped join Persons and Groups with DefaultIfEmpty, complex equals and ordering");
         }
     }
 }

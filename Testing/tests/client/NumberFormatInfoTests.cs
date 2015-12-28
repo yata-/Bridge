@@ -36,7 +36,7 @@ namespace Bridge.ClientTest
             Assert.AreEqual(format.PositiveInfinitySymbol, "Infinity");
 
             Assert.AreEqual(format.PercentSymbol, "%");
-            Assert.AreEqual(format.PercentGroupSizes, new[] { 3 });
+            Assert.AreDeepEqual(format.PercentGroupSizes, new[] { 3 });
             Assert.AreEqual(format.PercentDecimalDigits, 2);
             Assert.AreEqual(format.PercentDecimalSeparator, ".");
             Assert.AreEqual(format.PercentGroupSeparator, ",");
@@ -44,14 +44,14 @@ namespace Bridge.ClientTest
             Assert.AreEqual(format.PercentNegativePattern, 0);
 
             Assert.AreEqual(format.CurrencySymbol, "¤");
-            Assert.AreEqual(format.CurrencyGroupSizes, new[] { 3 });
+            Assert.AreDeepEqual(format.CurrencyGroupSizes, new[] { 3 });
             Assert.AreEqual(format.CurrencyDecimalDigits, 2);
             Assert.AreEqual(format.CurrencyDecimalSeparator, ".");
             Assert.AreEqual(format.CurrencyGroupSeparator, ",");
             Assert.AreEqual(format.CurrencyNegativePattern, 0);
             Assert.AreEqual(format.CurrencyPositivePattern, 0);
 
-            Assert.AreEqual(format.NumberGroupSizes, new[] { 3 });
+            Assert.AreDeepEqual(format.NumberGroupSizes, new[] { 3 });
             Assert.AreEqual(format.NumberDecimalDigits, 2);
             Assert.AreEqual(format.NumberDecimalSeparator, ".");
             Assert.AreEqual(format.NumberGroupSeparator, ",");

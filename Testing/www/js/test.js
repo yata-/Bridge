@@ -10,9 +10,15 @@ Bridge.define('Bridge.Test.Assert', {
     statics: {
         assert: null,
         areEqual: function (actual, expected) {
-            Bridge.get(Bridge.Test.Assert).assert.deepEqual(actual, expected);
+            Bridge.get(Bridge.Test.Assert).assert.equal(actual, expected);
         },
         areEqual$1: function (actual, expected, description) {
+            Bridge.get(Bridge.Test.Assert).assert.equal(actual, expected, description);
+        },
+        areDeepEqual: function (actual, expected) {
+            Bridge.get(Bridge.Test.Assert).assert.deepEqual(actual, expected);
+        },
+        areDeepEqual$1: function (actual, expected, description) {
             Bridge.get(Bridge.Test.Assert).assert.deepEqual(actual, expected, description);
         },
         areStrictEqual: function (actual, expected) {
@@ -22,10 +28,22 @@ Bridge.define('Bridge.Test.Assert', {
             Bridge.get(Bridge.Test.Assert).assert.strictEqual(actual, expected, description);
         },
         areNotEqual: function (actual, expected) {
-            Bridge.get(Bridge.Test.Assert).assert.notDeepEqual(actual, expected);
+            Bridge.get(Bridge.Test.Assert).assert.notEqual(actual, expected);
         },
         areNotEqual$1: function (actual, expected, description) {
+            Bridge.get(Bridge.Test.Assert).assert.notEqual(actual, expected, description);
+        },
+        areNotDeepEqual: function (actual, expected) {
+            Bridge.get(Bridge.Test.Assert).assert.notDeepEqual(actual, expected);
+        },
+        areNotDeepEqual$1: function (actual, expected, description) {
             Bridge.get(Bridge.Test.Assert).assert.notDeepEqual(actual, expected, description);
+        },
+        areNotStrictEqual: function (actual, expected) {
+            Bridge.get(Bridge.Test.Assert).assert.notStrictEqual(actual, expected);
+        },
+        areNotStrictEqual$1: function (actual, expected, description) {
+            Bridge.get(Bridge.Test.Assert).assert.notStrictEqual(actual, expected, description);
         },
         $true: function (condition) {
             Bridge.get(Bridge.Test.Assert).assert.ok(condition);
@@ -1808,7 +1826,7 @@ Bridge.define('Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesJsDate
         },
         dateTimes: function (assert) {
             var t = Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesJsDateTimeTests).beforeTest(true, assert);
-            assert.expect(2);
+            assert.expect(1);
             Bridge.get(Bridge.ClientTest.SimpleTypes.JsDateTimeTests).dateTimes();
         }
     }

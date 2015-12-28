@@ -13,7 +13,7 @@ namespace Bridge.ClientTest.BridgeIssues
         [Test(ExpectedCount = 3)]
         public static void TestUseCase()
         {
-            var me = Global.ToDynamic().ClientTestLibrary.Bridge675;
+            var me = Global.ToDynamic().Bridge.ClientTest.BridgeIssues.Bridge675;
             me.id = "str1";
             me.i1 = 1;
             me.i2 = 2;

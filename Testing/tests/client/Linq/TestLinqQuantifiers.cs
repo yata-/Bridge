@@ -42,7 +42,7 @@ namespace Bridge.ClientTest.Linq
                                                  new {Group = (string)null, Names = new[]{"Nemo"}}
                                              };
 
-            Assert.AreEqual(productGroups, productGroupsExpected, "Any() to return a grouped array of names only for groups having any item with Count > 500");
+            Assert.AreDeepEqual(productGroups, productGroupsExpected, "Any() to return a grouped array of names only for groups having any item with Count > 500");
         }
     }
 }

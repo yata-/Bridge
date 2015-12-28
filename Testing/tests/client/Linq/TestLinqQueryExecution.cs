@@ -37,14 +37,14 @@ namespace Bridge.ClientTest.Linq
             var smallerEvenNumbers = from n in smallNumbers
                                      where n % 2 == 0
                                      select n;
-            Assert.AreEqual(smallerEvenNumbers.ToArray(), new[] { 2, 0 }, "Query in a query");
+            Assert.AreDeepEqual(smallerEvenNumbers.ToArray(), new[] { 2, 0 }, "Query in a query");
 
             // TEST
             numbers.ForEach((x, index) => numbers[index] = -numbers[index]);
-            Assert.AreEqual(numbers.ToArray(), new int[] { -5, -4, -1, -3, -9, -8, -6, -7, -2, 0 }, "ForEach()");
+            Assert.AreDeepEqual(numbers.ToArray(), new int[] { -5, -4, -1, -3, -9, -8, -6, -7, -2, 0 }, "ForEach()");
 
             // TEST
-            Assert.AreEqual(smallerEvenNumbers.ToArray(), new[] { -4, -8, -6, -2, 0 }, "Second query run on a modified source");
+            Assert.AreDeepEqual(smallerEvenNumbers.ToArray(), new[] { -4, -8, -6, -2, 0 }, "Second query run on a modified source");
         }
     }
 }

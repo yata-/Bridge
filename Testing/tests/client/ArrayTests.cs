@@ -138,16 +138,16 @@ namespace Bridge.ClientTest
             var arr = new[] { "x", "y" };
             var arr2 = arr.Clone();
             Assert.False(arr == arr2);
-            Assert.AreEqual(arr, arr2);
+            Assert.AreDeepEqual(arr, arr2);
         }
 
         [Test]
         public void ConcatWorks()
         {
             var arr = new[] { "a", "b" };
-            Assert.AreEqual(arr.Concat("c"), new[] { "a", "b", "c" });
-            Assert.AreEqual(arr.Concat("c", "d"), new[] { "a", "b", "c", "d" });
-            Assert.AreEqual(arr, new[] { "a", "b" });
+            Assert.AreDeepEqual(arr.Concat("c"), new[] { "a", "b", "c" });
+            Assert.AreDeepEqual(arr.Concat("c", "d"), new[] { "a", "b", "c", "d" });
+            Assert.AreDeepEqual(arr, new[] { "a", "b" });
         }
 
         [Test]
@@ -176,8 +176,8 @@ namespace Bridge.ClientTest
         [Test]
         public void SliceWithoutEndWorks()
         {
-            Assert.AreEqual(new[] { "a", "b", "c", "d" }.Slice(2), new[] { "c", "d" });
-            Assert.AreEqual(new[] { "a", "b", "c", "d" }.Slice(1, 3), new[] { "b", "c" });
+            Assert.AreDeepEqual(new[] { "a", "b", "c", "d" }.Slice(2), new[] { "c", "d" });
+            Assert.AreDeepEqual(new[] { "a", "b", "c", "d" }.Slice(1, 3), new[] { "b", "c" });
         }
 
         [Test]
@@ -229,7 +229,7 @@ namespace Bridge.ClientTest
         {
             var arr = new[] { 1, 3, 4, 1, 3, 2 };
             arr.Reverse();
-            Assert.AreEqual(arr, new[] { 2, 3, 1, 4, 3, 1 });
+            Assert.AreDeepEqual(arr, new[] { 2, 3, 1, 4, 3, 1 });
         }
 
         [Test]
@@ -298,7 +298,7 @@ namespace Bridge.ClientTest
         {
             var arr = new[] { 1, 6, 6, 4, 2 };
             arr.JsSort();
-            Assert.AreEqual(arr, new[] { 1, 2, 4, 6, 6 });
+            Assert.AreDeepEqual(arr, new[] { 1, 2, 4, 6, 6 });
         }
 
         [Test]
@@ -306,7 +306,7 @@ namespace Bridge.ClientTest
         {
             var arr = new[] { 1, 6, 6, 4, 2 };
             Array.Sort(arr);
-            Assert.AreEqual(arr, new[] { 1, 2, 4, 6, 6 });
+            Assert.AreDeepEqual(arr, new[] { 1, 2, 4, 6, 6 });
         }
 
         [Test]
@@ -314,7 +314,7 @@ namespace Bridge.ClientTest
         {
             var arr = new[] { 1, 6, 6, 4, 2 };
             Array.Sort(arr, 2, 3);
-            Assert.AreEqual(arr, new[] { 1, 6, 2, 4, 6 });
+            Assert.AreDeepEqual(arr, new[] { 1, 6, 2, 4, 6 });
         }
 
         [Test]
@@ -322,7 +322,7 @@ namespace Bridge.ClientTest
         {
             var arr = new[] { 1, 2, 6, 3, 6, 7 };
             Array.Sort(arr, 2, 3, new TestReverseComparer());
-            Assert.AreEqual(arr, new[] { 1, 2, 6, 6, 3, 7 });
+            Assert.AreDeepEqual(arr, new[] { 1, 2, 6, 6, 3, 7 });
         }
 
         [Test]
@@ -330,7 +330,7 @@ namespace Bridge.ClientTest
         {
             var arr = new[] { 1, 6, 6, 4, 2 };
             Array.Sort(arr, new TestReverseComparer());
-            Assert.AreEqual(arr, new[] { 6, 6, 4, 2, 1 });
+            Assert.AreDeepEqual(arr, new[] { 6, 6, 4, 2, 1 });
         }
 
         [Test]
@@ -365,7 +365,7 @@ namespace Bridge.ClientTest
         {
             IList<string> l = new[] { "x", "y", "z" };
             l.Add("a");
-            Assert.AreEqual(l, new[] { "x", "y", "z", "a" });
+            Assert.AreDeepEqual(l, new[] { "x", "y", "z", "a" });
         }
 
         [Test]
@@ -373,7 +373,7 @@ namespace Bridge.ClientTest
         {
             IList<string> l = new[] { "x", "y", "z" };
             l.Clear();
-            Assert.AreEqual(l, new string[0]);
+            Assert.AreDeepEqual(l, new string[0]);
         }
 
         [Test]
@@ -398,7 +398,7 @@ namespace Bridge.ClientTest
             IList<string> l = new[] { "x", "y", "z" };
             Assert.True(l.Remove("y"));
             Assert.False(l.Remove("a"));
-            Assert.AreEqual(l, new[] { "x", "z" });
+            Assert.AreDeepEqual(l, new[] { "x", "z" });
         }
 
         [Test]
@@ -407,7 +407,7 @@ namespace Bridge.ClientTest
             IList<string> l = new[] { "x", "y", "z" };
             Assert.AreEqual(l[1], "y");
             l[1] = "a";
-            Assert.AreEqual(l, new[] { "x", "a", "z" });
+            Assert.AreDeepEqual(l, new[] { "x", "a", "z" });
         }
 
         [Test]
@@ -431,7 +431,7 @@ namespace Bridge.ClientTest
         {
             IList<string> l = new[] { "x", "y", "z" };
             l.Insert(1, "a");
-            Assert.AreEqual(l, new[] { "x", "a", "y", "z" });
+            Assert.AreDeepEqual(l, new[] { "x", "a", "y", "z" });
         }
 
         [Test]
@@ -439,7 +439,7 @@ namespace Bridge.ClientTest
         {
             IList<string> l = new[] { "x", "y", "z" };
             l.RemoveAt(1);
-            Assert.AreEqual(l, new[] { "x", "z" });
+            Assert.AreDeepEqual(l, new[] { "x", "z" });
         }
     }
 }

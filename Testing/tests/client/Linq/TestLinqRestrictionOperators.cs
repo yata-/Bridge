@@ -16,19 +16,19 @@ namespace Bridge.ClientTest.Linq
             var filteredNumbers = (from n in numbers
                                    where n <= 6
                                    select n).ToArray();
-            Assert.AreEqual(filteredNumbers, new[] { 5, 4, 1, 3, 6, 2, 0 }, "Where elements in integer array are below or equal 6");
+            Assert.AreDeepEqual(filteredNumbers, new[] { 5, 4, 1, 3, 6, 2, 0 }, "Where elements in integer array are below or equal 6");
 
             // TEST
             var filteredCounts = (from p in Person.GetPersons()
                                   where p.Count < 501
                                   select p.Count).ToArray();
-            Assert.AreEqual(filteredCounts, new[] { 300, 100, 500, 50 }, "Where elements in Person array have Count below 501");
+            Assert.AreDeepEqual(filteredCounts, new[] { 300, 100, 500, 50 }, "Where elements in Person array have Count below 501");
 
             // TEST
             filteredCounts = (from p in Person.GetPersons()
                               where p.Count < 501 && p.Group == "A"
                               select p.Count).ToArray();
-            Assert.AreEqual(filteredCounts, new[] { 300 }, "Where elements in Person array have Count below 501 ang in group 'A'");
+            Assert.AreDeepEqual(filteredCounts, new[] { 300 }, "Where elements in Person array have Count below 501 ang in group 'A'");
 
             // TEST
             var persons = Person.GetPersons();
@@ -36,13 +36,13 @@ namespace Bridge.ClientTest.Linq
                                           where p.Count < 501
                                           select p).ToArray();
 
-            Assert.AreEqual(filteredPersonByCounts, new[] { persons[0], persons[1], persons[3], persons[4] },
+            Assert.AreDeepEqual(filteredPersonByCounts, new[] { persons[0], persons[1], persons[3], persons[4] },
                 "Where elements in Person array have Count below 501. Returns Person instances");
 
             // TEST
             var filteredPersonByCountAndIndex = persons.Where((p, index) => p.Count < index * 100).ToArray();
 
-            Assert.AreEqual(filteredPersonByCountAndIndex, new[] { persons[4] },
+            Assert.AreDeepEqual(filteredPersonByCountAndIndex, new[] { persons[4] },
                 "Where elements in Person array have Count meet condition (p.Count < index * 100). Returns Person instances");
         }
     }

@@ -17,10 +17,10 @@ namespace Bridge.ClientTest.Linq
                            where p.ID == 3
                            select p).First();
 
-            Assert.AreEqual(person3, Person.GetPersons()[2], "First() with ID = 3");
-            Assert.AreEqual(persons.First(x => x.ID == 3), Person.GetPersons()[2], "First() with ID = 3 by lambda");
-            Assert.AreEqual(persons.Where(x => x.ID == 3).First(), Person.GetPersons()[2], "First() with Where() with ID = 3 by lambda");
-            Assert.AreEqual(persons.First(x => x.Group == "C"), Person.GetPersons()[1], "First() with Group = 'C' by lambda");
+            Assert.AreDeepEqual(person3, Person.GetPersons()[2], "First() with ID = 3");
+            Assert.AreDeepEqual(persons.First(x => x.ID == 3), Person.GetPersons()[2], "First() with ID = 3 by lambda");
+            Assert.AreDeepEqual(persons.Where(x => x.ID == 3).First(), Person.GetPersons()[2], "First() with Where() with ID = 3 by lambda");
+            Assert.AreDeepEqual(persons.First(x => x.Group == "C"), Person.GetPersons()[1], "First() with Group = 'C' by lambda");
             Assert.Throws(TestLinqElementOperators.ThrowExceptionOnFirst1, "First() should throw exception if no element found");
             Assert.Throws(TestLinqElementOperators.ThrowExceptionOnFirst2, "First() should throw exception on empty collection");
 
@@ -35,9 +35,9 @@ namespace Bridge.ClientTest.Linq
             var lastPerson = (from p in Person.GetPersons()
                               select p).Last();
 
-            Assert.AreEqual(lastPerson, Person.GetPersons()[7], "Last() person");
-            Assert.AreEqual(persons.Last(x => x.ID == 4), Person.GetPersons()[3], "Last() with ID = 4 by lambda");
-            Assert.AreEqual(persons.Last(x => x.Group == "B"), Person.GetPersons()[6], "Last() with Group = 'B' by lambda");
+            Assert.AreDeepEqual(lastPerson, Person.GetPersons()[7], "Last() person");
+            Assert.AreDeepEqual(persons.Last(x => x.ID == 4), Person.GetPersons()[3], "Last() with ID = 4 by lambda");
+            Assert.AreDeepEqual(persons.Last(x => x.Group == "B"), Person.GetPersons()[6], "Last() with Group = 'B' by lambda");
             Assert.Throws(TestLinqElementOperators.ThrowExceptionOnLast1, "Last() should throw exception if no element found");
             Assert.Throws(TestLinqElementOperators.ThrowExceptionOnLast2, "Last() should throw exception on empty collection");
 

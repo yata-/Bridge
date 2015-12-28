@@ -148,17 +148,17 @@ namespace Bridge.ClientTest.SimpleTypes
         public void ConversionsToDecimalWork()
         {
             int x = 0;
-            Assert.AreEqual((decimal)(byte)(x + 1), 1m);
-            Assert.AreEqual((decimal)(sbyte)(x + 2), 2m);
-            Assert.AreEqual((decimal)(short)(x + 3), 3m);
-            Assert.AreEqual((decimal)(ushort)(x + 4), 4m);
-            Assert.AreEqual((decimal)(char)(x + '\x5'), 5m);
-            Assert.AreEqual((decimal)(int)(x + 6), 6m);
-            Assert.AreEqual((decimal)(uint)(x + 7), 7m);
-            Assert.AreEqual((decimal)(long)(x + 8), 8m);
-            Assert.AreEqual((decimal)(ulong)(x + 9), 9m);
-            Assert.AreEqual((decimal)(float)(x + 10.5), 10.5m);
-            Assert.AreEqual((decimal)(double)(x + 11.5), 11.5m);
+            Assert.AreDeepEqual((decimal)(byte)(x + 1), 1m);
+            Assert.AreDeepEqual((decimal)(sbyte)(x + 2), 2m);
+            Assert.AreDeepEqual((decimal)(short)(x + 3), 3m);
+            Assert.AreDeepEqual((decimal)(ushort)(x + 4), 4m);
+            Assert.AreDeepEqual((decimal)(char)(x + '\x5'), 5m);
+            Assert.AreDeepEqual((decimal)(int)(x + 6), 6m);
+            Assert.AreDeepEqual((decimal)(uint)(x + 7), 7m);
+            Assert.AreDeepEqual((decimal)(long)(x + 8), 8m);
+            Assert.AreDeepEqual((decimal)(ulong)(x + 9), 9m);
+            Assert.AreDeepEqual((decimal)(float)(x + 10.5), 10.5m);
+            Assert.AreDeepEqual((decimal)(double)(x + 11.5), 11.5m);
         }
 
         [Test]
@@ -210,7 +210,7 @@ namespace Bridge.ClientTest.SimpleTypes
         [Test]
         public void AddWorks()
         {
-            Assert.AreEqual(decimal.Add(3m, 4m), 7m);
+            Assert.AreDeepEqual(decimal.Add(3m, 4m), 7m);
         }
 
         [Test]
@@ -331,8 +331,8 @@ namespace Bridge.ClientTest.SimpleTypes
         [Test]
         public void GetHashCodeWorks()
         {
-            Assert.AreEqual(((decimal)0).GetHashCode(), ((decimal)0).GetHashCode());
-            Assert.AreEqual(((decimal)1).GetHashCode(), ((decimal)1).GetHashCode());
+            Assert.AreDeepEqual(((decimal)0).GetHashCode(), ((decimal)0).GetHashCode());
+            Assert.AreDeepEqual(((decimal)1).GetHashCode(), ((decimal)1).GetHashCode());
             Assert.AreNotEqual(((decimal)0).GetHashCode(), ((decimal)1).GetHashCode());
             Assert.AreNotEqual(((decimal)0).GetHashCode(), ((decimal)0.5).GetHashCode());
         }
