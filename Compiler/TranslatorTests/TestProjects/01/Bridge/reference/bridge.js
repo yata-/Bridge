@@ -1,7 +1,7 @@
 ﻿/*
- * @version   : 1.10.2 - Bridge.NET
+ * @version   : 1.10.3 - Bridge.NET
  * @author    : Object.NET, Inc. http://bridge.net/
- * @date      : 2015-12-02
+ * @date      : 2015-12-22
  * @copyright : Copyright (c) 2008-2015, Object.NET, Inc. (http://object.net/). All rights reserved.
  * @license   : See license.txt and https://github.com/bridgedotnet/Bridge.NET/blob/master/LICENSE.
  */
@@ -1756,7 +1756,7 @@
 
 	if (document) {
 	    var check = function (regex) {
-	        return regex.test(navigator.userAgent);
+	        return regex.test(navigator.userAgent.toLowerCase());
 	    },
 
         isStrict = document.compatMode === "CSS1Compat",
@@ -1764,7 +1764,7 @@
         version = function (is, regex) {
             var m;
 
-            return (is && (m = regex.exec(navigator.userAgent))) ? parseFloat(m[1]) : 0;
+            return (is && (m = regex.exec(navigator.userAgent.toLowerCase()))) ? parseFloat(m[1]) : 0;
         },
 
         docMode = document.documentMode,
@@ -2205,12 +2205,8 @@
                 }
             };
 
-            if (document && (document.readyState === "complete" || document.readyState === "loaded")) {
-                fn();
-            } else {
-                Bridge.Class.$queue.push(Class);
-                Class.$staticInit = fn;
-            }
+            Bridge.Class.$queue.push(Class);
+            Class.$staticInit = fn;
 
             return Class;
         },
