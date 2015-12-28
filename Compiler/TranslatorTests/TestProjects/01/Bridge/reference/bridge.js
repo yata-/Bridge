@@ -1748,7 +1748,7 @@
 	    return regex.test(navigator.userAgent.toLowerCase());
 	},
 
-    isStrict = Bridge.globals.document && Bridge.globals.document.compatMode === "CSS1Compat",
+    isStrict = Bridge.global.document && Bridge.global.document.compatMode === "CSS1Compat",
 
     version = function (is, regex) {
         var m;
@@ -1756,7 +1756,7 @@
         return (is && (m = regex.exec(navigator.userAgent.toLowerCase()))) ? parseFloat(m[1]) : 0;
     },
 
-    docMode = Bridge.globals.document ? Bridge.globals.document.documentMode : null,
+    docMode = Bridge.global.document ? Bridge.global.document.documentMode : null,
     isOpera = check(/opera/),
     isOpera10_5 = isOpera && check(/version\/10\.5/),
     isChrome = check(/\bchrome\b/),
