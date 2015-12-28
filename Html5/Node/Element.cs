@@ -892,7 +892,7 @@ namespace Bridge.Html5
         /// EventHandler representing the code to be called when the click event is raised.
         /// </summary>
         [Name("onclick")]
-        public new Action<Event<TCurrentTarget>> OnClick;
+        public new Action<MouseEvent<TCurrentTarget>> OnClick;
 
         /// <summary>
         /// EventHandler representing the code to be called when the close event is raised.
@@ -916,7 +916,7 @@ namespace Bridge.Html5
         /// EventHandler representing the code to be called when the dblclick event is raised.
         /// </summary>
         [Name("ondblclick")]
-        public new Action<Event<TCurrentTarget>> OnDblClick;
+        public new Action<MouseEvent<TCurrentTarget>> OnDblClick;
 
         /// <summary>
         /// EventHandler representing the code to be called when the drag event is raised.
@@ -1000,19 +1000,19 @@ namespace Bridge.Html5
         /// Is an EventHandler representing the code to be called when the keydown event is raised
         /// </summary>
         [Name("onkeydown")]
-        public new Action<Event<TCurrentTarget>> OnKeyDown;
+        public new Action<KeyboardEvent<TCurrentTarget>> OnKeyDown;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the keypress event is raised
         /// </summary>
         [Name("onkeypress")]
-        public new Action<Event<TCurrentTarget>> OnKeyPress;
+        public new Action<KeyboardEvent<TCurrentTarget>> OnKeyPress;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the keyup event is raised
         /// </summary>
         [Name("onkeyup")]
-        public new Action<Event<TCurrentTarget>> OnKeyUp;
+        public new Action<KeyboardEvent<TCurrentTarget>> OnKeyUp;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the load event is raised
@@ -1042,49 +1042,49 @@ namespace Bridge.Html5
         /// Is an EventHandler representing the code to be called when the mousedown event is raised
         /// </summary>
         [Name("onmousedown")]
-        public new Action<Event<TCurrentTarget>> OnMouseDown;
+        public new Action<MouseEvent<TCurrentTarget>> OnMouseDown;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the mouseenter event is raised
         /// </summary>
         [Name("onmouseenter")]
-        public new Action<Event<TCurrentTarget>> OnMouseEnter;
+        public new Action<MouseEvent<TCurrentTarget>> OnMouseEnter;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the mouseleave event is raised
         /// </summary>
         [Name("onmouseleave")]
-        public new Action<Event<TCurrentTarget>> OnMouseLeave;
+        public new Action<MouseEvent<TCurrentTarget>> OnMouseLeave;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the mousemove event is raised
         /// </summary>
         [Name("onmousemove")]
-        public new Action<Event<TCurrentTarget>> OnMouseMove;
+        public new Action<MouseEvent<TCurrentTarget>> OnMouseMove;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the mouseout event is raised
         /// </summary>
         [Name("onmouseout")]
-        public new Action<Event<TCurrentTarget>> OnMouseOut;
+        public new Action<MouseEvent<TCurrentTarget>> OnMouseOut;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the mouseover event is raised
         /// </summary>
         [Name("onmouseover")]
-        public new Action<Event<TCurrentTarget>> OnMouseOver;
+        public new Action<MouseEvent<TCurrentTarget>> OnMouseOver;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the mouseup event is raised
         /// </summary>
         [Name("onmouseup")]
-        public new Action<Event<TCurrentTarget>> OnMouseUp;
+        public new Action<MouseEvent<TCurrentTarget>> OnMouseUp;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the mousewheel event is raised
         /// </summary>
         [Name("onmousewheel")]
-        public new Action<Event<TCurrentTarget>> OnMouseWheel;
+        public new Action<MouseEvent<TCurrentTarget>> OnMouseWheel;
 
         /// <summary>
         /// Is an EventHandler representing the code to be called when the pause event is raised

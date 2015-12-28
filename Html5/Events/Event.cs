@@ -102,7 +102,7 @@ namespace Bridge.Html5
     }
 
     /// <summary>
-    /// A generic version of the Event class. The type parameters is a type of CurrentTarget.
+    /// A generic version of the Event class. The type parameter is a type of CurrentTarget.
     /// </summary>
     /// <typeparam name="TCurrentTarget">The CurrentTarget type</typeparam>
     [External]

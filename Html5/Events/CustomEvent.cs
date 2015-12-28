@@ -41,4 +41,12 @@ namespace Bridge.Html5
         /// </summary>
         public object Detail;
     }
+
+    /// <summary>
+    /// A generic version of the CustomEvent class. The type parameter is a type of CurrentTarget.
+    /// </summary>
+    /// <typeparam name="TCurrentTarget">The CurrentTarget type</typeparam>
+    [External]
+    [Name("CustomEvent")]
+    public class CustomEvent<TCurrentTarget> : Event<TCurrentTarget> where TCurrentTarget : Element { }
 }

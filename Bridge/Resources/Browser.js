@@ -2,7 +2,7 @@
 
 	if (document) {
 	    var check = function (regex) {
-	        return regex.test(navigator.userAgent);
+	        return regex.test(navigator.userAgent.toLowerCase());
 	    },
 
         isStrict = document.compatMode === "CSS1Compat",
@@ -10,7 +10,7 @@
         version = function (is, regex) {
             var m;
 
-            return (is && (m = regex.exec(navigator.userAgent))) ? parseFloat(m[1]) : 0;
+            return (is && (m = regex.exec(navigator.userAgent.toLowerCase()))) ? parseFloat(m[1]) : 0;
         },
 
         docMode = document.documentMode,

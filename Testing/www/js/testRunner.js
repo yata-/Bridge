@@ -176,6 +176,7 @@ Bridge.define('ClientTestLibrary.RunTests', {
             QUnit.test("#608", Bridge.get(ClientTestLibrary.Bridge608).testUseCase);
             QUnit.test("#615", Bridge.get(ClientTestLibrary.Bridge615).testUseCase);
             QUnit.test("#623", Bridge.get(ClientTestLibrary.Bridge623).testUseCase);
+            QUnit.test("#625", Bridge.get(ClientTestLibrary.Bridge625).testUseCase);
             QUnit.test("#634", Bridge.get(ClientTestLibrary.Bridge634).testUseCase1);
             QUnit.test("#634", Bridge.get(ClientTestLibrary.Bridge634).testUseCase2);
             QUnit.test("#634", Bridge.get(ClientTestLibrary.Bridge634).testUseCaseFor658);
@@ -191,6 +192,7 @@ Bridge.define('ClientTestLibrary.RunTests', {
             QUnit.test("#671", Bridge.get(ClientTestLibrary.Bridge671).testUseCase);
             QUnit.test("#674", Bridge.get(ClientTestLibrary.Bridge674).testUseCase);
             QUnit.test("#675", Bridge.get(ClientTestLibrary.Bridge675).testUseCase);
+            QUnit.test("#687", Bridge.get(ClientTestLibrary.Bridge687).testUseCase);
             QUnit.test("#689", Bridge.get(ClientTestLibrary.Bridge689).testUseCase);
             QUnit.test("#690", Bridge.get(ClientTestLibrary.Bridge690).testUseCaseForInstance);
             QUnit.test("#690", Bridge.get(ClientTestLibrary.Bridge690).testUseCaseForStatic);

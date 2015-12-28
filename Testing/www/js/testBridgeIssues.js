@@ -1779,6 +1779,16 @@ Bridge.define('ClientTestLibrary.Bridge623B2', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge625A', {
+    inherits: [Bridge.IEqualityComparer$1(Bridge.Int)],
+    equals: function (x, y) {
+        return x === y;
+    },
+    getHashCode: function (obj) {
+        return Bridge.getHashCode(obj);
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge634A$1', function (T) { return {
 
 }; });
@@ -2203,6 +2213,22 @@ Bridge.define('ClientTestLibrary.Bridge675', {
         method1: function (i1, i2) {
             return i1 + i2;
         }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge687A', {
+    statics: {
+        op_Implicit: function (value) {
+            return value.getValue();
+        }
+    },
+    config: {
+        properties: {
+            Value: null
+        }
+    },
+    constructor: function (value) {
+        this.setValue(value);
     }
 });
 
@@ -3751,6 +3777,41 @@ Bridge.define('ClientTestLibrary.Bridge623', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge625', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(4);
+
+            var list = [1, 2, 3];
+
+            var d1 = Bridge.Linq.Enumerable.from(list).toDictionary(function (x) {
+                return x;
+            }, null, Bridge.Int, Bridge.Int);
+            assert.ok(true, "Bridge625 d1");
+
+            var d2 = Bridge.Linq.Enumerable.from(list).toDictionary(function (x) {
+                return x;
+            }, null, Bridge.Int, Bridge.Int, new ClientTestLibrary.Bridge625A());
+            assert.ok(true, "Bridge625 d2");
+
+            var d3 = Bridge.Linq.Enumerable.from(list).toDictionary(function (x) {
+                return x;
+            }, function (y) {
+                return y;
+            }, Bridge.Int, Bridge.Int);
+            assert.ok(true, "Bridge625 d3");
+
+            var d4 = Bridge.Linq.Enumerable.from(list).toDictionary(function (x) {
+                return x;
+            }, function (y) {
+                return y;
+            }, Bridge.Int, Bridge.Int, new ClientTestLibrary.Bridge625A());
+            assert.ok(true, "Bridge625 d4");
+
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge634', {
     statics: {
         testUseCase1: function (assert) {
@@ -3907,6 +3968,28 @@ Bridge.define('ClientTestLibrary.Bridge660MessageStore', {
             init: function () {
                 this._initialEditState = new ClientTestLibrary.Bridge660MessageEditState(new ClientTestLibrary.Bridge660TextInputState("constructor", "Message"));
             }
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge687', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            var c = new ClientTestLibrary.Bridge687A(null);
+            var case1 = false;
+            if (c === null) {
+                case1 = true;
+            }
+            assert.equal(case1, false, "Bridge687 case1");
+
+            c = new ClientTestLibrary.Bridge687A("test");
+            var case2 = false;
+            if (ClientTestLibrary.Bridge687A.op_Implicit(c) === "test") {
+                case2 = true;
+            }
+            assert.equal(case2, true, "Bridge687 case2");
         }
     }
 });

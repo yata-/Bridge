@@ -26,4 +26,12 @@ namespace Bridge.Html5
         /// </summary>
         public readonly string PseudoElement;
     }
+
+    /// <summary>
+    /// A generic version of the AnimationEvent class. The type parameter is a type of CurrentTarget.
+    /// </summary>
+    /// <typeparam name="TCurrentTarget">The CurrentTarget type</typeparam>
+    [External]
+    [Name("AnimationEvent")]
+    public class AnimationEvent<TCurrentTarget> : Event<TCurrentTarget> where TCurrentTarget : Element { }
 }
