@@ -1,11 +1,12 @@
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BasicCSharp
 {
-    internal class TestVirtualMethods
+    [Category(Constants.MODULE_BASIC_CSHARP)]
+    [TestFixture(TestNameFormat = "Virtual methods - {0}")]
+    public class TestVirtualMethods
     {
-        [FileName("testVirtualMethods.js")]
         private class A
         {
             public virtual string Test()
@@ -14,7 +15,6 @@ namespace ClientTestLibrary
             }
         }
 
-        [FileName("testVirtualMethods.js")]
         private class B : A
         {
             public string TestA()
@@ -28,25 +28,24 @@ namespace ClientTestLibrary
             }
         }
 
-        public static void TestB(Assert assert)
+        [Test(ExpectedCount = 7)]
+        public static void TestB()
         {
-            assert.Expect(7);
-
             var a = new A();
 
-            assert.Ok(a != null, "Instance of A created");
-            assert.Equal(a.Test(), "A", "a.Test() = 'A'");
+            Assert.True(a != null, "Instance of A created");
+            Assert.AreEqual(a.Test(), "A", "a.Test() = 'A'");
 
             var b = new B();
 
-            assert.Ok(b != null, "Instance of B created");
-            assert.Equal(b.Test(), "B", "b.Test() = 'B'");
-            assert.Equal(b.TestA(), "A", "b.TestA() = 'A'");
+            Assert.True(b != null, "Instance of B created");
+            Assert.AreEqual(b.Test(), "B", "b.Test() = 'B'");
+            Assert.AreEqual(b.TestA(), "A", "b.TestA() = 'A'");
 
             A c = new B();
 
-            assert.Ok(c != null, "Instance of C created");
-            assert.Equal(c.Test(), "B", "c.Test() = 'B'");
+            Assert.True(c != null, "Instance of C created");
+            Assert.AreEqual(c.Test(), "B", "c.Test() = 'B'");
         }
     }
 }

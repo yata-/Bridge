@@ -1,9 +1,8 @@
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
-    [FileName("testBridgeIssues.js")]
     public static class Bridge606A
     {
 
@@ -12,8 +11,6 @@ namespace ClientTestLibrary
             return source + " - " + x + " - " + y;
         }
     }
-
-    [FileName("testBridgeIssues.js")]
     public class Bridge606B
     {
         public string X { get; set; }
@@ -25,8 +22,6 @@ namespace ClientTestLibrary
             Y = y;
         }
     }
-
-    [FileName("testBridgeIssues.js")]
     public class Bridge606C
     {
         public string X { get; set; }
@@ -40,24 +35,24 @@ namespace ClientTestLibrary
     }
 
     // Bridge[#606]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge606
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#606 - {0}")]
+    public class Bridge606
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 5)]
+        public static void TestUseCase()
         {
-            assert.Expect(5);
-
             var c = new Bridge606C();
             c.Example1(y: "a", x: "b");
-            assert.Equal(c.X, "b", "Bridge606 C X");
-            assert.Equal(c.Y, "a", "Bridge606 C Y");
+            Assert.AreEqual(c.X, "b", "Bridge606 C X");
+            Assert.AreEqual(c.Y, "a", "Bridge606 C Y");
 
             var b = new Bridge606B(y: "a", x: "b");
-            assert.Equal(b.X, "b", "Bridge606 B X");
-            assert.Equal(b.Y, "a", "Bridge606 B Y");
+            Assert.AreEqual(b.X, "b", "Bridge606 B X");
+            Assert.AreEqual(b.Y, "a", "Bridge606 B Y");
 
             var s = "123".Example2(y: "a", x: "b");
-            assert.Equal(s, "123 - b - a", "Bridge606 123");
+            Assert.AreEqual(s, "123 - b - a", "Bridge606 123");
         }
     }
 }

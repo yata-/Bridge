@@ -2,27 +2,27 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 using Bridge.Html5;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
     // Bridge[#696]
-    [FileName("testBridgeIssues.js")]
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#696 - {0}")]
     public class Bridge696
     {
         public delegate int Speak(string message);
 
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 2)]
+        public static void TestUseCase()
         {
-            assert.Expect(2);
-
             var namedCallbacks = new Dictionary<string, Speak>();
             namedCallbacks.Add("Shout", message => message.Length);
             namedCallbacks.Add("Whisper", message => message.Length);
 
-            assert.Equal(namedCallbacks["Shout"]("HELLO!"), 6, "Bridge696 HELLO!");
-            assert.Equal(namedCallbacks["Whisper"]("HELLO"), 5, "Bridge696 HELLO");
+            Assert.AreEqual(namedCallbacks["Shout"]("HELLO!"), 6, "Bridge696 HELLO!");
+            Assert.AreEqual(namedCallbacks["Whisper"]("HELLO"), 5, "Bridge696 HELLO");
         }
     }
 }

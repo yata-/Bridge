@@ -1,11 +1,10 @@
 using System;
 using System.Threading.Tasks;
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
-    [FileName("testBridgeIssues.js")]
     public class Bridge690A
     {
         private int i3 = 3;
@@ -20,8 +19,6 @@ namespace ClientTestLibrary
             return await this.AsyncSum(2, 3);
         }
     }
-
-    [FileName("testBridgeIssues.js")]
     public class Bridge690B
     {
         private static int i3 = 17;
@@ -38,30 +35,31 @@ namespace ClientTestLibrary
     }
 
     // Bridge[#690]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge690
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#690 - {0}")]
+    public class Bridge690
     {
-        public static async void TestUseCaseForInstance(Assert assert)
-        {
-            assert.Expect(1);
+        //TODO Async
+        //[Test(ExpectedCount = 1)]
+        //public static async void TestUseCaseForInstance()
+        //{
+            //var done = assert.Async();
+            //var c = new Bridge690A();
+            //var r = await c.Start();
 
-            var done = assert.Async();
-            var c = new Bridge690A();
-            var r = await c.Start();
+            //Assert.AreEqual(r, 8, "Bridge690 TestUseCaseForInstance");
+            //done();
+        //}
 
-            assert.Equal(r, 8, "Bridge690 TestUseCaseForInstance");
-            done();
-        }
+        //TODO Async
+        //[Test(ExpectedCount = 1)]
+        //public static async void TestUseCaseForStatic()
+        //{
+        //    var done = assert.Async();
+        //    var r = await Bridge690B.Start();
 
-        public static async void TestUseCaseForStatic(Assert assert)
-        {
-            assert.Expect(1);
-
-            var done = assert.Async();
-            var r = await Bridge690B.Start();
-
-            assert.Equal(r, 59, "Bridge690 TestUseCaseForStatic");
-            done();
-        }
+        //    Assert.AreEqual(r, 59, "Bridge690 TestUseCaseForStatic");
+        //    done();
+        //}
     }
 }

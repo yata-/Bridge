@@ -1,19 +1,19 @@
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
     // Bridge[#592]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge592
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#592 - {0}")]
+    public class Bridge592
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 6)]
+        public static void TestUseCase()
         {
-            assert.Expect(6);
-
             SByte i8_1 = -2;
             SByte i8_2 = (SByte)(i8_1 >> 4);
             Byte u8_1 = 0xFE;
@@ -29,12 +29,12 @@ namespace ClientTestLibrary
             UInt32 u32_1 = 0xFFFFFFFE;
             UInt32 u32_2 = u32_1 >> 16;
 
-            assert.Equal(i8_2, -1, "Bridge592 i8_2");
-            assert.Equal(u8_2, 0xF, "Bridge592 u8_2");
-            assert.Equal(i16_2, -1, "Bridge592 i16_2");
-            assert.Equal(u16_2, 0xFF, "Bridge592 u16_2");
-            assert.Equal(i32_2, -1, "Bridge592 i32_2");
-            assert.Equal(u32_2, 0xFFFF, "Bridge592 u32_2");
+            Assert.AreEqual(i8_2, -1, "Bridge592 i8_2");
+            Assert.AreEqual(u8_2, 0xF, "Bridge592 u8_2");
+            Assert.AreEqual(i16_2, -1, "Bridge592 i16_2");
+            Assert.AreEqual(u16_2, 0xFF, "Bridge592 u16_2");
+            Assert.AreEqual(i32_2, -1, "Bridge592 i32_2");
+            Assert.AreEqual(u32_2, 0xFFFF, "Bridge592 u32_2");
         }
     }
 }

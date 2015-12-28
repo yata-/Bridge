@@ -1,10 +1,9 @@
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 using System;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BasicCSharp
 {
-    [FileName("testReferenceTypes.js")]
     internal class ClassA
     {
         // TODO Add more types
@@ -209,8 +208,6 @@ namespace ClientTestLibrary
         {
             return default(int);
         }
-
-        [FileName("testReferenceTypes.js")]
         // due to [#73] needs priority to be generated after the parent class
         // [Priority(-1)]
         public class Aux1
@@ -233,8 +230,6 @@ namespace ClientTestLibrary
             }
         }
     }
-
-    [FileName("testReferenceTypes.js")]
     // [#68] Multiple field declaration renders incorrectly
     public class Class68
     {
@@ -252,124 +247,123 @@ namespace ClientTestLibrary
     // Tests:
     // Reference type constructors, params method parameters, method overloading, nested classes, [FileName]
     // Full properties, short get/set properties, exceptions
-    internal class TestReferenceTypes
+    [Category(Constants.MODULE_BASIC_CSHARP)]
+    [TestFixture(TestNameFormat = "Reference types - {0}")]
+    public class TestReferenceTypes
     {
         // Check instance methods and constructors
-        public static void TestInstanceConstructorsAndMethods(Assert assert)
+        [Test(ExpectedCount = 26)]
+        public static void TestInstanceConstructorsAndMethods()
         {
-            assert.Expect(26);
-
             // Check parameterless constructor
             var a = new ClassA();
 
             // TEST
-            assert.DeepEqual(a.NumberA, 10, "NumberA 10");
-            assert.DeepEqual(a.StringA, "Str", "StringA Str");
-            assert.DeepEqual(a.BoolA, true, "BoolA true");
-            assert.Ok(a.DoubleA == Double.PositiveInfinity, "DoubleA Double.PositiveInfinity");
-            assert.DeepEqual(a.DecimalA, -1m, "DecimalA Decimal.MinusOne");
-            assert.Ok(a.Data != null, "Data not null");
-            assert.DeepEqual(a.Data.Number, 700, "Data.Number 700");
+            Assert.AreEqual(a.NumberA, 10, "NumberA 10");
+            Assert.AreEqual(a.StringA, "Str", "StringA Str");
+            Assert.AreEqual(a.BoolA, true, "BoolA true");
+            Assert.True(a.DoubleA == Double.PositiveInfinity, "DoubleA Double.PositiveInfinity");
+            Assert.AreEqual(a.DecimalA, -1m, "DecimalA Decimal.MinusOne");
+            Assert.True(a.Data != null, "Data not null");
+            Assert.AreEqual(a.Data.Number, 700, "Data.Number 700");
 
             // TEST
             // Check constructor with parameter
-            assert.Throws(TestSet1FailureHelper.TestConstructor1Failure, "Related should not be null", "Related should not be null");
+            Assert.Throws(TestSet1FailureHelper.TestConstructor1Failure, "Related should not be null", "Related should not be null");
 
             // TEST
             // Check constructor with parameter
-            assert.Throws(TestSet1FailureHelper.TestConstructor2Failure, "Should pass six parameters", "Should pass six parameters");
+            Assert.Throws(TestSet1FailureHelper.TestConstructor2Failure, "Should pass six parameters", "Should pass six parameters");
 
             a = new ClassA(150, "151", true, 1.53d, 1.54m, new ClassA.Aux1()
             {
                 Number = 155
             });
 
-            assert.DeepEqual(a.NumberA, 150, "NumberA 150");
-            assert.DeepEqual(a.StringA, "151", "StringA 151");
-            assert.DeepEqual(a.BoolA, true, "BoolA true");
-            assert.DeepEqual(a.DoubleA, 1.53, "DoubleA Double.PositiveInfinity");
-            assert.DeepEqual(a.DecimalA, 1.54m, "DecimalA 154");
-            assert.Ok(a.Data != null, "Data not null");
-            assert.DeepEqual(a.Data.Number, 155, "Data.Number 155");
+            Assert.AreEqual(a.NumberA, 150, "NumberA 150");
+            Assert.AreEqual(a.StringA, "151", "StringA 151");
+            Assert.AreEqual(a.BoolA, true, "BoolA true");
+            Assert.AreEqual(a.DoubleA, 1.53, "DoubleA Double.PositiveInfinity");
+            Assert.AreEqual(a.DecimalA, 1.54m, "DecimalA 154");
+            Assert.True(a.Data != null, "Data not null");
+            Assert.AreEqual(a.Data.Number, 155, "Data.Number 155");
 
             // TEST
             // Check instance methods
             var b = a.Method1();
 
-            assert.Ok(b != null, "b not null");
-            assert.DeepEqual(b.Number, 2, "b Number 2");
-            assert.Ok(b.Related != null, "b.Related not null");
-            assert.DeepEqual(b.Related.Number, 1, "b.Related Number 1");
+            Assert.True(b != null, "b not null");
+            Assert.AreEqual(b.Number, 2, "b Number 2");
+            Assert.True(b.Related != null, "b.Related not null");
+            Assert.AreEqual(b.Related.Number, 1, "b.Related Number 1");
 
             a.Data = b;
-            assert.DeepEqual(a.Method3(), "2 Has related 1", "Method3 2 Has related 1");
+            Assert.AreEqual(a.Method3(), "2 Has related 1", "Method3 2 Has related 1");
             a.Data = null;
-            assert.DeepEqual(a.Method3(), "no data", "Method3 no data");
+            Assert.AreEqual(a.Method3(), "no data", "Method3 no data");
 
             // TEST
             // Check [#68]
             var c68 = new Class68();
 
-            assert.DeepEqual(c68.x, 0, "c68.x 0");
-            assert.DeepEqual(c68.y, 1, "c68.y 1");
+            Assert.AreEqual(c68.x, 0, "c68.x 0");
+            Assert.AreEqual(c68.y, 1, "c68.y 1");
 
             // TEST
             // Check local vars do not get overridden by fields
             c68.Test();
 
-            assert.DeepEqual(c68.x, 0, "c68.x 0");
-            assert.DeepEqual(c68.y, 1, "c68.y 1");
+            Assert.AreEqual(c68.x, 0, "c68.x 0");
+            Assert.AreEqual(c68.y, 1, "c68.y 1");
         }
 
         // Check static methods and constructor
-        public static void TestStaticConstructorsAndMethods(Assert assert)
+        [Test(ExpectedCount = 13)]
+        public static void TestStaticConstructorsAndMethods()
         {
-            assert.Expect(13);
-
             // TEST
             // Check static fields initialization
-            assert.DeepEqual(ClassA.StatitIntNotInitialized, 0, "#74 StatitInt not initialized");
-            assert.DeepEqual(ClassA.StatitStringNotInitialized, null, "#74 StatitString not initialized");
-            assert.DeepEqual(ClassA.CONST_CHAR, 81, "#74 CONST_CHAR Q");
-            assert.DeepEqual(ClassA.CONST_DECIMAL == 3.123456789324324324m, true, "#74 CONST_DECIMAL 3.123456789324324324m");
+            Assert.AreEqual(ClassA.StatitIntNotInitialized, 0, "#74 StatitInt not initialized");
+            Assert.AreEqual(ClassA.StatitStringNotInitialized, null, "#74 StatitString not initialized");
+            Assert.AreEqual(ClassA.CONST_CHAR, 81, "#74 CONST_CHAR Q");
+            Assert.AreEqual(ClassA.CONST_DECIMAL == 3.123456789324324324m, true, "#74 CONST_DECIMAL 3.123456789324324324m");
 
             // TEST
             // Check static constructor
-            assert.DeepEqual(ClassA.StaticInt, -340, "StatitInt initialized");
-            assert.DeepEqual(ClassA.StaticString, "Defined string", "StatitString initialized");
+            Assert.AreEqual(ClassA.StaticInt, -340, "StatitInt initialized");
+            Assert.AreEqual(ClassA.StaticString, "Defined string", "StatitString initialized");
 
             // TEST
             // Check static methods
             var a = ClassA.StaticMethod1(678, "ASD", double.NaN);
 
-            assert.DeepEqual(ClassA.StatitIntNotInitialized, 678, "StatitIntNotInitialized 678");
-            assert.DeepEqual(ClassA.StatitStringNotInitialized, "ASD", "ClassA.StatitStringNotInitialized ASD");
-            assert.DeepEqual(a.DoubleA, double.NaN, "DoubleA double.NaN");
+            Assert.AreEqual(ClassA.StatitIntNotInitialized, 678, "StatitIntNotInitialized 678");
+            Assert.AreEqual(ClassA.StatitStringNotInitialized, "ASD", "ClassA.StatitStringNotInitialized ASD");
+            Assert.AreEqual(a.DoubleA, double.NaN, "DoubleA double.NaN");
 
             a = ClassA.StaticMethod2((object)678, "QWE", 234);
-            assert.DeepEqual(ClassA.StatitIntNotInitialized, 1678, "StatitIntNotInitialized 1678");
-            assert.DeepEqual(ClassA.StatitStringNotInitialized, "QWE", "ClassA.StatitStringNotInitialized QWE");
-            assert.DeepEqual(a.DoubleA, 234, "DoubleA 234");
+            Assert.AreEqual(ClassA.StatitIntNotInitialized, 1678, "StatitIntNotInitialized 1678");
+            Assert.AreEqual(ClassA.StatitStringNotInitialized, "QWE", "ClassA.StatitStringNotInitialized QWE");
+            Assert.AreEqual(a.DoubleA, 234, "DoubleA 234");
 
-            assert.Throws(TestSet1FailureHelper.StaticMethod2Failure, "Unable to cast type String to type Bridge.Int", "Cast exception should occur");
+            Assert.Throws(TestSet1FailureHelper.StaticMethod2Failure, "Unable to cast type String to type Bridge.Int", "Cast exception should occur");
         }
 
         // Check default parameters, method parameters, default values
-        public static void TestMethodParameters(Assert assert)
+        [Test(ExpectedCount = 16)]
+        public static void TestMethodParameters()
         {
-            assert.Expect(16);
-
             // Check default parameters
             var ra = new ClassA();
             int r = ra.Method5(5);
 
-            assert.DeepEqual(r, 5, "r 5");
+            Assert.AreEqual(r, 5, "r 5");
             r = ra.Method5(i: 15);
-            assert.DeepEqual(r, 15, "r 15");
+            Assert.AreEqual(r, 15, "r 15");
             r = ra.Method5(5, 6);
-            assert.DeepEqual(r, 11, "r 11");
+            Assert.AreEqual(r, 11, "r 11");
             r = ra.Method5(k: 6);
-            assert.DeepEqual(r, -44, "r -44");
+            Assert.AreEqual(r, -44, "r -44");
 
             // Check referencing did not change data
             var a = new ClassA();
@@ -377,26 +371,26 @@ namespace ClientTestLibrary
             var c = b.Related;
 
             a.Method2(b);
-            assert.Ok(b != null, "b not null");
-            assert.DeepEqual(b.Number, 2, "b Number 2");
-            assert.Ok(b.Related != null, "b.Related not null");
-            assert.DeepEqual(b.Related.Number, 2, "b.Related Number 2");
+            Assert.True(b != null, "b not null");
+            Assert.AreEqual(b.Number, 2, "b Number 2");
+            Assert.True(b.Related != null, "b.Related not null");
+            Assert.AreEqual(b.Related.Number, 2, "b.Related Number 2");
 
-            assert.Ok(c != null, "c not null");
-            assert.DeepEqual(c.Number, 1, "c Number 1");
-            assert.Ok(c.Related == null, "c.Related null");
+            Assert.True(c != null, "c not null");
+            Assert.AreEqual(c.Number, 1, "c Number 1");
+            Assert.True(c.Related == null, "c.Related null");
 
             // Check value local parameter
             var input = 1;
             var result = a.Method4(input, 4);
 
-            assert.DeepEqual(input, 1, "input 1");
-            assert.DeepEqual(result, 5, "result 5");
+            Assert.AreEqual(input, 1, "input 1");
+            Assert.AreEqual(result, 5, "result 5");
 
             // TEST
             // [#86]
             var di = ClassA.GetDefaultInt();
-            assert.DeepEqual(di, 0, "di 0");
+            Assert.AreEqual(di, 0, "di 0");
 
             // TEST
             // Check  "out parameter"
@@ -404,12 +398,11 @@ namespace ClientTestLibrary
             int i;
             var tryResult = ClassA.TryParse("", out i);
 
-            assert.Ok(tryResult, "tryResult");
-            assert.DeepEqual(i, 3, "i 3");
+            Assert.True(tryResult, "tryResult");
+            Assert.AreEqual(i, 3, "i 3");
         }
     }
 
-    [FileName("testReferenceTypes.js")]
     public class TestSet1FailureHelper
     {
         // For testing exception throwing in constructors we need a separate method as constructors cannot be delegates

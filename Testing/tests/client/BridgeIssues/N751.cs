@@ -2,18 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
     // Bridge[#751]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge751
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#751 - {0}")]
+    public class Bridge751
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 1)]
+        public static void TestUseCase()
         {
-            assert.Expect(1);
-
             for (int i = 0; i < 5; i++)
             {
                 var el = i;
@@ -22,7 +22,7 @@ namespace ClientTestLibrary
             var values = new List<int>() { 1, 2 };
             var v1 = values.Count(el => el == 1);
 
-            assert.Equal(v1, 1, "Bridge751");
+            Assert.AreEqual(v1, 1, "Bridge751");
         }
     }
 }

@@ -1,10 +1,11 @@
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BasicCSharp
 {
-    [FileName("testMethodParameters.js")]
-    internal class TestMethodParametersClass
+    [Category(Constants.MODULE_BASIC_CSHARP)]
+    [TestFixture(TestNameFormat = "Method parameters - {0}")]
+    public class TestMethodParametersClass
     {
         private static int MethodDefault(int i = 5)
         {
@@ -22,14 +23,13 @@ namespace ClientTestLibrary
             return sum;
         }
 
-        public static void Test(Assert assert)
+        [Test(ExpectedCount = 3)]
+        public static void Test()
         {
-            assert.Expect(3);
+            Assert.AreEqual(TestMethodParametersClass.MethodDefault(), 5, "Default parameter - 5");
+            Assert.AreEqual(TestMethodParametersClass.MethodDefault(10), 10, "Default parameter - 10");
 
-            assert.Equal(TestMethodParametersClass.MethodDefault(), 5, "Default parameter - 5");
-            assert.Equal(TestMethodParametersClass.MethodDefault(10), 10, "Default parameter - 10");
-
-            assert.Equal(TestMethodParametersClass.MethodParams(new[] { 1, 2, 3 }), 6, "params int[]");
+            Assert.AreEqual(TestMethodParametersClass.MethodParams(new[] { 1, 2, 3 }), 6, "params int[]");
         }
     }
 }

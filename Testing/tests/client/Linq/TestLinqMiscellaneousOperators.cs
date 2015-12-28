@@ -1,21 +1,22 @@
-using Bridge.QUnit;
-using ClientTestLibrary.Utilities;
+using Bridge.Test;
+using Bridge.ClientTest.Utilities;
 using System.Linq;
 
-namespace ClientTestLibrary.Linq
+namespace Bridge.ClientTest.Linq
 {
-    internal class TestLinqMiscellaneousOperators
+    [Category(Constants.MODULE_LINQ)]
+    [TestFixture(TestNameFormat = "Misc - {0}")]
+    public class TestLinqMiscellaneousOperators
     {
-        public static void Test(Assert assert)
+        [Test(ExpectedCount = 4)]
+        public static void Test()
         {
-            assert.Expect(4);
-
             // TEST
             int[] numbersA = { 4, 1, 3 };
             int[] numbersB = { 2, 3, 5 };
 
             var concatNumbers = numbersA.Concat(numbersB);
-            assert.DeepEqual(concatNumbers, new[] { 4, 1, 3, 2, 3, 5 }, "Concat() numbers");
+            Assert.AreEqual(concatNumbers, new[] { 4, 1, 3, 2, 3, 5 }, "Concat() numbers");
 
             // TEST
             var names = from p in Person.GetPersons()
@@ -24,7 +25,7 @@ namespace ClientTestLibrary.Linq
                          select p.City;
             var concatNames = names.Concat(cities).ToArray();
 
-            assert.DeepEqual(concatNames,
+            Assert.AreEqual(concatNames,
                             new[] { "Frank", "Zeppa", "John", "Billy", "Dora", "Ian", "Mary", "Nemo",
                                     "Edmonton", "Tokyo", "Lisbon", "Paris", "Budapest", "Rome", "Dortmund", "Ocean"},
                             "Concat() two sequences");
@@ -33,13 +34,13 @@ namespace ClientTestLibrary.Linq
             var a = new[] { "a", "b", "z" };
             var b = new[] { "a", "b", "z" };
 
-            assert.Ok(a.SequenceEqual(b), "SequenceEqual() for equal sequences");
+            Assert.True(a.SequenceEqual(b), "SequenceEqual() for equal sequences");
 
             // TEST
             var c = new[] { "a", "b", "z" };
             var d = new[] { "a", "z", "b" };
 
-            assert.Ok(!c.SequenceEqual(d), "SequenceEqual() for not equal sequences");
+            Assert.True(!c.SequenceEqual(d), "SequenceEqual() for not equal sequences");
         }
     }
 }

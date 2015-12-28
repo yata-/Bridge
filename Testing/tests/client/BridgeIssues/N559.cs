@@ -1,9 +1,8 @@
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
-    [FileName("testBridgeIssues.js")]
     public class Bridge559A1
     {
         public string result = "";
@@ -18,8 +17,6 @@ namespace ClientTestLibrary
             result += " -> Bridge559A1$1";
         }
     }
-
-    [FileName("testBridgeIssues.js")]
     public class Bridge559B1 : Bridge559A1
     {
         public Bridge559B1()
@@ -33,8 +30,6 @@ namespace ClientTestLibrary
             result += " -> Bridge559B1$1";
         }
     }
-
-    [FileName("testBridgeIssues.js")]
     public class Bridge559A2
     {
         public string result = "";
@@ -48,8 +43,6 @@ namespace ClientTestLibrary
             result += " ClassA$1";
         }
     }
-
-    [FileName("testBridgeIssues.js")]
     public class Bridge559B2 : Bridge559A2
     {
         public Bridge559B2()
@@ -62,8 +55,6 @@ namespace ClientTestLibrary
             result += " ClassB$1";
         }
     }
-
-    [FileName("testBridgeIssues.js")]
     public class Bridge559A3
     {
         public Bridge559A3(string value)
@@ -81,36 +72,34 @@ namespace ClientTestLibrary
 
 
     // Bridge[#559]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge559
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#559 - {0}")]
+    public class Bridge559
     {
-        public static void TestUseCase1(Assert assert)
+        [Test(ExpectedCount = 1)]
+        public static void TestUseCase1()
         {
             var b = new Bridge559B1(1);
 
-            assert.Expect(1);
-
-            assert.Equal(b.result, " -> Bridge559A1 -> Bridge559A1$1 -> Bridge559B1$1", "Bridge559 TestUseCase1");
+            Assert.AreEqual(b.result, " -> Bridge559A1 -> Bridge559A1$1 -> Bridge559B1$1", "Bridge559 TestUseCase1");
         }
 
-        public static void TestUseCase2(Assert assert)
+        [Test(ExpectedCount = 1)]
+        public static void TestUseCase2()
         {
             var b = new Bridge559B2(1);
 
-            assert.Expect(1);
-
-            assert.Equal(b.result, " ClassA ClassA$1 ClassB$1", "Bridge559 TestUseCase2");
+            Assert.AreEqual(b.result, " ClassA ClassA$1 ClassB$1", "Bridge559 TestUseCase2");
         }
 
-        public static void TestUseCase3(Assert assert)
+        [Test(ExpectedCount = 1)]
+        public static void TestUseCase3()
         {
             var a = new Bridge559A3(1);
             var b = new Bridge559A3(2);
 
-            assert.Expect(1);
-
             var r = a.Data + "|" + b.Data;
-            assert.Equal(r, "1|2", "Bridge559 TestUseCase3");
+            Assert.AreEqual(r, "1|2", "Bridge559 TestUseCase3");
         }
     }
 }

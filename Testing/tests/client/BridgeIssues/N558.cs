@@ -1,9 +1,8 @@
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
-    [FileName("testBridgeIssues.js")]
     public class Bridge558A
     {
         public virtual int zz(int a)
@@ -15,8 +14,6 @@ namespace ClientTestLibrary
             return 2;
         }
     }
-
-    [FileName("testBridgeIssues.js")]
     public class Bridge558B : Bridge558A
     {
         public override int zz(int a)
@@ -30,21 +27,21 @@ namespace ClientTestLibrary
     }
 
     // Bridge[#5558]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge558
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#558 - {0}")]
+    public class Bridge558
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 4)]
+        public static void TestUseCase()
         {
-            assert.Expect(4);
-
             var a = new Bridge558A();
             var b = new Bridge558B();
 
-            assert.Equal(a.zz(1), 1, "Bridge558 a.zz int");
-            assert.Equal(a.zz(""), 2, "Bridge558 a.zz string");
+            Assert.AreEqual(a.zz(1), 1, "Bridge558 a.zz int");
+            Assert.AreEqual(a.zz(""), 2, "Bridge558 a.zz string");
 
-            assert.Equal(b.zz(1), 1, "Bridge558 b.zz int");
-            assert.Equal(b.zz(""), 2, "Bridge558 b.zz string");
+            Assert.AreEqual(b.zz(1), 1, "Bridge558 b.zz int");
+            Assert.AreEqual(b.zz(""), 2, "Bridge558 b.zz string");
         }
     }
 }

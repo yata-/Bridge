@@ -1,17 +1,18 @@
 using System;
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
     // Bridge[#708]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge708
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#708 - {0}")]
+    public class Bridge708
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 1)]
+        public static void TestUseCase()
         {
-            assert.Expect(1);
-            assert.Equal(TestIssue(), 12, "Bridge708 TestIssue");
+            Assert.AreEqual(TestIssue(), 12, "Bridge708 TestIssue");
         }
 
         private static int TestIssue()

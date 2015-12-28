@@ -1,8 +1,8 @@
 using System;
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
     [External]
     [ObjectLiteral]
@@ -24,19 +24,19 @@ namespace ClientTestLibrary
     }
 
     // Bridge[#647]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge647
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#647 - {0}")]
+    public class Bridge647
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 3)]
+        public static void TestUseCase()
         {
-            assert.Expect(3);
-
             var a = new Bridge647A { foo = 1 };
-            assert.Equal(a["bar"], 1, "Bridge647 A");
+            Assert.AreEqual(a["bar"], 1, "Bridge647 A");
 
             var b = new Bridge647B { foo = 1 };
-            assert.Equal(b["bar"], 1, "Bridge647 B bar");
-            assert.Equal(b["bar1"], 12, "Bridge647 B bar1");
+            Assert.AreEqual(b["bar"], 1, "Bridge647 B bar");
+            Assert.AreEqual(b["bar1"], 12, "Bridge647 B bar1");
         }
     }
 }

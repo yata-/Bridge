@@ -1,10 +1,9 @@
 using System;
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
-    [FileName("testBridgeIssues.js")]
     public static class Bridge615A
     {
         public static string Method1(this object o)
@@ -19,18 +18,18 @@ namespace ClientTestLibrary
     }
 
     // Bridge[#615]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge615
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#615 - {0}")]
+    public class Bridge615
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 2)]
+        public static void TestUseCase()
         {
-            assert.Expect(2);
-
             int i = 0;
             object o = null;
 
-            assert.Equal(o.Method1(), "object", "Bridge615 object");
-            assert.Equal(i.Method1(), "int", "Bridge615 int");
+            Assert.AreEqual(o.Method1(), "object", "Bridge615 object");
+            Assert.AreEqual(i.Method1(), "int", "Bridge615 int");
         }
     }
 }

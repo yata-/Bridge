@@ -1,21 +1,19 @@
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
 using System;
 using System.Collections.Generic;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
     // Bridge[#577]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge577
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#577 - {0}")]
+    public class Bridge577
     {
-        [FileName("testBridgeIssues.js")]
         public struct Bridge577UnitA
         {
         }
-
-        [FileName("testBridgeIssues.js")]
         public struct Bridge577UnitB
         {
             public int Number { get; set; }
@@ -34,15 +32,14 @@ namespace ClientTestLibrary
             return v;
         }
 
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 2)]
+        public static void TestUseCase()
         {
-            assert.Expect(2);
-
             var a = SomeMethodA(1);
-            assert.Ok(a, "#577 Bridge577UnitA created");
+            Assert.NotNull(a, "#577 Bridge577UnitA created");
 
             var b = SomeMethodB(7);
-            assert.Equal(b.Number, 7, "#577 Bridge577UnitB created");
+            Assert.AreEqual(b.Number, 7, "#577 Bridge577UnitB created");
         }
     }
 }

@@ -1,16 +1,16 @@
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
 using System;
 using System.Collections.Generic;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
     // Bridge[#381]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge381
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#381 - {0}")]
+    public class Bridge381
     {
-        [FileName("testBridgeIssues.js")]
         public class Animal
         {
             public string Kind;
@@ -28,12 +28,11 @@ namespace ClientTestLibrary
             }
         }
 
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 6)]
+        public static void TestUseCase()
         {
-            assert.Expect(6);
-
             var s1 = string.Join(",", new[] { "a", "b" });
-            assert.Equal(s1, "a,b", "Join1");
+            Assert.AreEqual(s1, "a,b", "Join1");
 
             var animals = new List<Animal>();
             animals.Add(new Animal("Squirrel", "Rodent"));
@@ -41,15 +40,15 @@ namespace ClientTestLibrary
             animals.Add(new Animal("Capybara", "Rodent"));
 
             string s2 = String.Join(" ", animals);
-            assert.Equal(s2, "Squirrel Gray Wolf Capybara", "Join2");
+            Assert.AreEqual(s2, "Squirrel Gray Wolf Capybara", "Join2");
 
             object[] values = { null, "Cobb", 4189, 11434, .366 };
             string s31 = String.Join("|", values);
-            assert.Equal(s31, "|Cobb|4189|11434|0.366", "Join31");
+            Assert.AreEqual(s31, "|Cobb|4189|11434|0.366", "Join31");
 
             values[0] = String.Empty;
             string s32 = String.Join("|", values);
-            assert.Equal(s32, "|Cobb|4189|11434|0.366", "Join32");
+            Assert.AreEqual(s32, "|Cobb|4189|11434|0.366", "Join32");
 
 
             string[] sArr = new string[10];
@@ -57,11 +56,11 @@ namespace ClientTestLibrary
                 sArr[i] = String.Format("{0,-3}", i * 5);
 
             string s4 = String.Join(":", sArr);
-            assert.Equal(s4, "0  :5  :10 :15 :20 :25 :30 :35 :40 :45 ", "Join4");
+            Assert.AreEqual(s4, "0  :5  :10 :15 :20 :25 :30 :35 :40 :45 ", "Join4");
 
             var val = new string[] { "apple", "orange", "grape", "pear" };
             var s5 = string.Join(", ", val, 1, 2);
-            assert.Equal(s5, "orange, grape", "Join5");
+            Assert.AreEqual(s5, "orange, grape", "Join5");
         }
     }
 }

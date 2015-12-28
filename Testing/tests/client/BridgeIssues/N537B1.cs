@@ -1,8 +1,7 @@
 using Bridge;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
-    [FileName("testBridgeIssues.js")]
     public partial class Bridge537B
     {
         public int GetCount()

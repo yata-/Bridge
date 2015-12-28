@@ -1,24 +1,24 @@
 using System;
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
     // Bridge[#687]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge687
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#687 - {0}")]
+    public class Bridge687
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 2)]
+        public static void TestUseCase()
         {
-            assert.Expect(2);
-
             var c = new Bridge687A(null);
             bool case1 = false;
             if (c == null)
             {
                 case1 = true;
             }
-            assert.Equal(case1, false, "Bridge687 case1");
+            Assert.AreEqual(case1, false, "Bridge687 case1");
 
             c = new Bridge687A("test");
             bool case2 = false;
@@ -26,11 +26,9 @@ namespace ClientTestLibrary
             {
                 case2 = true;
             }
-            assert.Equal(case2, true, "Bridge687 case2");
+            Assert.AreEqual(case2, true, "Bridge687 case2");
         }
     }
-
-    [FileName("testBridgeIssues.js")]
     internal class Bridge687A
     {
         public Bridge687A(string value)

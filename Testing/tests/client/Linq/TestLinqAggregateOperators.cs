@@ -1,27 +1,28 @@
 using Bridge.Html5;
-using Bridge.QUnit;
-using ClientTestLibrary.Utilities;
+using Bridge.Test;
+using Bridge.ClientTest.Utilities;
 using System.Linq;
 
-namespace ClientTestLibrary.Linq
+namespace Bridge.ClientTest.Linq
 {
-    internal class TestLinqAggregateOperators
+    [Category(Constants.MODULE_LINQ)]
+    [TestFixture(TestNameFormat = "Aggregate - {0}")]
+    public class TestLinqAggregateOperators
     {
-        public static void Test(Assert assert)
+        [Test(ExpectedCount = 20)]
+        public static void Test()
         {
-            assert.Expect(20);
-
             int[] numbers = { 2, 2, 3, 5, 5, -1, 2, -1 };
             string[] words = { "one", "two", "three" };
             double[] doubles = { 1.7, 2.3, 1.9, 4.1, 2.9 };
 
             // TEST
             int uniqueNumbers = numbers.Distinct().Count();
-            assert.DeepEqual(uniqueNumbers, 4, "Count() distinct numbers");
+            Assert.AreEqual(uniqueNumbers, 4, "Count() distinct numbers");
 
             // TEST
             int oddNumbers = numbers.Count(n => n % 2 == 1);
-            assert.DeepEqual(oddNumbers, 3, "Count() odd numbers");
+            Assert.AreEqual(oddNumbers, 3, "Count() odd numbers");
 
             // TEST
             var groupJoin = (from g in Group.GetGroups()
@@ -40,7 +41,7 @@ namespace ClientTestLibrary.Linq
                         new { Group = "D", PersonCount = 0 }
                  };
 
-            assert.DeepEqual(groupJoin, groupJoinExpected, "Count() within joint collections");
+            Assert.AreEqual(groupJoin, groupJoinExpected, "Count() within joint collections");
 
             // TEST
             var grouped = (from p in Person.GetPersons()
@@ -59,15 +60,15 @@ namespace ClientTestLibrary.Linq
                         new { Group = (string)null, PersonCount = 1 }
                  };
 
-            assert.DeepEqual(grouped, groupedExpected, "Count() within group");
+            Assert.AreEqual(grouped, groupedExpected, "Count() within group");
 
             // TEST
             double numSum = numbers.Sum();
-            assert.DeepEqual(numSum, 17, "Sum() numbers");
+            Assert.AreEqual(numSum, 17, "Sum() numbers");
 
             // TEST
             double totalChars = words.Sum(w => w.Length);
-            assert.DeepEqual(totalChars, 11, "Sum() total chars");
+            Assert.AreEqual(totalChars, 11, "Sum() total chars");
 
             // TEST
             var groupedSum = (from p in Person.GetPersons()
@@ -86,15 +87,15 @@ namespace ClientTestLibrary.Linq
                         new { Group = (string)null, Sum = 3000 }
                  };
 
-            assert.DeepEqual(groupedSum, groupedSumExpected, "Sum() within group");
+            Assert.AreEqual(groupedSum, groupedSumExpected, "Sum() within group");
 
             // TEST
             int minNum = numbers.Min();
-            assert.DeepEqual(minNum, -1, "Min() number");
+            Assert.AreEqual(minNum, -1, "Min() number");
 
             // TEST
             int shortestWordLength = words.Min(w => w.Length);
-            assert.DeepEqual(shortestWordLength, 3, "Min() for shortest word");
+            Assert.AreEqual(shortestWordLength, 3, "Min() for shortest word");
 
             // TEST
             var groupedMin = (from p in Person.GetPersons()
@@ -113,7 +114,7 @@ namespace ClientTestLibrary.Linq
                         new { Group = (string)null, Min = 3000 }
                  };
 
-            assert.DeepEqual(groupedMin, groupedMinExpected, "Min() within group");
+            Assert.AreEqual(groupedMin, groupedMinExpected, "Min() within group");
 
             // TEST
             var groupedMinWithLet = (from p in Person.GetPersons()
@@ -133,15 +134,15 @@ namespace ClientTestLibrary.Linq
                         new { Group = (string)null, Name = new[]{ "Nemo"} }
                  };
 
-            assert.DeepEqual(groupedMinWithLet, groupedMinWithLetExpected, "Min() within group with let");
+            Assert.AreEqual(groupedMinWithLet, groupedMinWithLetExpected, "Min() within group with let");
 
             // TEST
             int maxNum = numbers.Max();
-            assert.DeepEqual(maxNum, 5, "Max() number");
+            Assert.AreEqual(maxNum, 5, "Max() number");
 
             // TEST
             int longestWordLength = words.Max(w => w.Length);
-            assert.DeepEqual(longestWordLength, 5, "Max() for longest word");
+            Assert.AreEqual(longestWordLength, 5, "Max() for longest word");
 
             // TEST
             var groupedMax = (from p in Person.GetPersons()
@@ -160,7 +161,7 @@ namespace ClientTestLibrary.Linq
                         new { Group = (string)null, Max = 3000 }
                  };
 
-            assert.DeepEqual(groupedMax, groupedMaxExpected, "Max() within group");
+            Assert.AreEqual(groupedMax, groupedMaxExpected, "Max() within group");
 
             // TEST
             var groupedMaxWithLet = (from p in Person.GetPersons()
@@ -180,16 +181,16 @@ namespace ClientTestLibrary.Linq
                         new { Group = (string)null, Name = new[]{ "Nemo"} }
                  };
 
-            assert.DeepEqual(groupedMaxWithLet, groupedMaxWithLetExpected, "Max() within group with let");
+            Assert.AreEqual(groupedMaxWithLet, groupedMaxWithLetExpected, "Max() within group with let");
 
             // TEST
             double averageNum = numbers.Average();
-            assert.DeepEqual(averageNum, 2.125, "Average() number");
+            Assert.AreEqual(averageNum, 2.125, "Average() number");
 
             // TEST
             var averageWordLengths = new[] { "1", "22", "333", "4444", "55555" };
             double averageWordLength = averageWordLengths.Average(w => w.Length);
-            assert.DeepEqual(averageWordLength, 3, "Average() for word lengths");
+            Assert.AreEqual(averageWordLength, 3, "Average() for word lengths");
 
             // TEST
             var groupedAverage = (from p in Person.GetPersons()
@@ -208,12 +209,12 @@ namespace ClientTestLibrary.Linq
                         new { Group = (string)null, Average = 3000 }
                  };
 
-            assert.DeepEqual(groupedAverage, groupedAverageExpected, "Average() within group");
+            Assert.AreEqual(groupedAverage, groupedAverageExpected, "Average() within group");
 
             // TEST
             var doublesForAggregate = new[] { 1.0, 2.0, 3.0, 4.0, 5.0 };
             double product = doublesForAggregate.Aggregate((runningProduct, nextFactor) => runningProduct * nextFactor);
-            assert.DeepEqual(product, 120, "Aggregate() within doubles");
+            Assert.AreEqual(product, 120, "Aggregate() within doubles");
 
             // TEST
             var startBalance = 100.0;
@@ -224,16 +225,15 @@ namespace ClientTestLibrary.Linq
                     (balance, nextWithdrawal) =>
                         ((nextWithdrawal <= balance) ? (balance - nextWithdrawal) : balance));
 
-            assert.DeepEqual(endBalance, 20, "Aggregate() balance");
+            Assert.AreEqual(endBalance, 20, "Aggregate() balance");
         }
 
-        public static void Bridge315(Assert assert)
+        [Test(ExpectedCount = 1)]
+        public static void Bridge315()
         {
-            assert.Expect(1);
-
             var q = "a,b,c,a".ToUpperCase().Split(",").Aggregate("", (workingSentence, next) => next + " " + workingSentence);
 
-            assert.Equal(q, "A C B A ", "Enumerable.Aggregate");
+            Assert.AreEqual(q, "A C B A ", "Enumerable.Aggregate");
         }
     }
 }

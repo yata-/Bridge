@@ -2,23 +2,24 @@
 using System.Threading.Tasks;
 
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
     // Bridge[#508]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge508
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#508 - {0}")]
+    public class Bridge508
     {
         public static Action QUnitAsyncDone { get; set; }
 
-        public static async void TestUseCase(Assert assert)
+        public static async void TestUseCase()
         {
-            Bridge508.QUnitAsyncDone = assert.Async();
+            //TODO Async Bridge508.QUnitAsyncDone = assert.Async();
 
             var result = await Method1();
 
-            assert.Equal(result, "A(0)A(1)B(0)B(1)B(2)", "#508 Method1");
+            Assert.AreEqual(result, "A(0)A(1)B(0)B(1)B(2)", "#508 Method1");
 
             QUnitAsyncDone();
         }

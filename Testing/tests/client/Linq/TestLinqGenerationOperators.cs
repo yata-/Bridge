@@ -1,14 +1,15 @@
-using Bridge.QUnit;
+using Bridge.Test;
 using System.Linq;
 
-namespace ClientTestLibrary.Linq
+namespace Bridge.ClientTest.Linq
 {
-    internal class TestLinqGenerationOperators
+    [Category(Constants.MODULE_LINQ)]
+    [TestFixture(TestNameFormat = "Generation - {0}")]
+    public class TestLinqGenerationOperators
     {
-        public static void Test(Assert assert)
+        [Test(ExpectedCount = 2)]
+        public static void Test()
         {
-            assert.Expect(2);
-
             // TEST
             var numbers = (from n in Enumerable.Range(0, 6)
                            select new
@@ -25,13 +26,13 @@ namespace ClientTestLibrary.Linq
                  new { Number = 5, IsOdd = true},
                  };
 
-            assert.DeepEqual(numbers, numbersExpected, "Range() 6 items from 0");
+            Assert.AreEqual(numbers, numbersExpected, "Range() 6 items from 0");
 
             // TEST
             var repeatNumbers = Enumerable.Repeat(-3, 4).ToArray();
             var repeatNumbersExpected = new[] { -3, -3, -3, -3 };
 
-            assert.DeepEqual(repeatNumbers, repeatNumbersExpected, "Repeat() -3 four times");
+            Assert.AreEqual(repeatNumbers, repeatNumbersExpected, "Repeat() -3 four times");
         }
     }
 }

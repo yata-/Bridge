@@ -1,19 +1,19 @@
 using Bridge;
 using Bridge.Html5;
-using Bridge.QUnit;
+using Bridge.Test;
 
 using System.Linq;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
     // Bridge[#485]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge485
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#485 - {0}")]
+    public class Bridge485
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 1)]
+        public static void TestUseCase()
         {
-            assert.Expect(1);
-
             var list = new[] { new { LastName = "", FirstName = "", } }.Skip(1).ToList();
             list.Add(new
             {
@@ -46,7 +46,7 @@ namespace ClientTestLibrary
 
             var s = JSON.Stringify(query.ToList());
 
-            assert.Equal(s, "{\"items\":[{\"lastName\":\"Ruth\",\"firstName\":\"Babe\"},{\"lastName\":\"Cobb\",\"firstName\":\"Ty\"}]}", "#485");
+            Assert.AreEqual(s, "{\"items\":[{\"lastName\":\"Ruth\",\"firstName\":\"Babe\"},{\"lastName\":\"Cobb\",\"firstName\":\"Ty\"}]}", "#485");
         }
     }
 }

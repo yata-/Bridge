@@ -1,10 +1,9 @@
 using System;
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
-    [FileName("testBridgeIssues.js")]
     public class Bridge648A
     {
         public Bridge648A(string value)
@@ -19,18 +18,18 @@ namespace ClientTestLibrary
     }
 
     // Bridge[#648]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge648
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#648 - {0}")]
+    public class Bridge648
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 1)]
+        public static void TestUseCase()
         {
-            assert.Expect(1);
-
             var wrappedString = new Bridge648A("test");
             var stringArray = new string[0];
             stringArray.Push(wrappedString);
 
-            assert.Equal(stringArray[0], "test");
+            Assert.AreEqual(stringArray[0], "test");
         }
     }
 }

@@ -1,19 +1,19 @@
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
 using System;
 using System.Collections.Generic;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
     // Bridge[#572]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge572
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#572 - {0}")]
+    public class Bridge572
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 4)]
+        public static void TestUseCase()
         {
-            assert.Expect(4);
-
             var d1 = new Dictionary<int, string>();
 
             var d = d1 as IDictionary<int, string>;
@@ -21,14 +21,14 @@ namespace ClientTestLibrary
             d.Add(1, "One");
             d.Add(2, "Two");
 
-            assert.Equal(d[1], "One", "#572 getItem One");
-            assert.Equal(d[2], "Two", "#572 getItem Two");
+            Assert.AreEqual(d[1], "One", "#572 getItem One");
+            Assert.AreEqual(d[2], "Two", "#572 getItem Two");
 
             d[1] = "New one";
             d[2] = "New two";
 
-            assert.Equal(d[1], "New one", "#572 setItem New one");
-            assert.Equal(d[2], "New two", "#572 setItem New two");
+            Assert.AreEqual(d[1], "New one", "#572 setItem New one");
+            Assert.AreEqual(d[2], "New two", "#572 setItem New two");
         }
     }
 }

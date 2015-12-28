@@ -1,19 +1,19 @@
 using System;
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
     // Bridge[#674]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge674
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#674 - {0}")]
+    public class Bridge674
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 1)]
+        public static void TestUseCase()
         {
-            assert.Expect(1);
-
             object o = Script.Undefined;
-            assert.Throws(() => { var s = (string)o; }, "Unable to cast type 'null' to type String");
+            Assert.Throws(() => { var s = (string)o; }, "Unable to cast type 'null' to type String");
         }
     }
 }

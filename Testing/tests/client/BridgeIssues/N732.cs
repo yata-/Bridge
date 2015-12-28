@@ -1,24 +1,24 @@
 using System;
 using System.Collections.Generic;
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
     // Bridge[#732]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge732
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "# 732- {0}")]
+    public class Bridge732
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 1)]
+        public static void TestUseCase()
         {
-            assert.Expect(1);
-
             var decimalValue = 5m;
             bool assign = false;
             decimal test = assign ? decimalValue : 2;
             var test2 = test * decimalValue;
 
-            assert.Ok(test2 == 10, "Bridge732");
+            Assert.True(test2 == 10, "Bridge732");
         }
     }
 }

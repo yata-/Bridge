@@ -1,11 +1,12 @@
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BasicCSharp
 {
-    internal class TestAbstractClass
+    [Category(Constants.MODULE_BASIC_CSHARP)]
+    [TestFixture(TestNameFormat = "Abstract types - {0}")]
+    public class TestAbstractClass
     {
-        [FileName("testAbstractClass.js")]
         private abstract class A
         {
             public int Data
@@ -17,7 +18,6 @@ namespace ClientTestLibrary
             public abstract string GetString();
         }
 
-        [FileName("testAbstractClass.js")]
         private class B : A
         {
             public override string GetString()
@@ -27,7 +27,6 @@ namespace ClientTestLibrary
             }
         }
 
-        [FileName("testAbstractClass.js")]
         private class C : B
         {
             public override string GetString()
@@ -37,42 +36,39 @@ namespace ClientTestLibrary
             }
         }
 
-        public static void TestB(Assert assert)
+        [Test(ExpectedCount = 3)]
+        public static void TestB()
         {
-            assert.Expect(3);
-
             var b = new B();
 
-            assert.Ok(b != null, "Instance of B created");
-            assert.Equal(b.GetString(), "B", "b.GetString() = 'B'");
-            assert.Equal(b.Data, 1, "b.Data = 1");
+            Assert.True(b != null, "Instance of B created");
+            Assert.AreEqual(b.GetString(), "B", "b.GetString() = 'B'");
+            Assert.AreEqual(b.Data, 1, "b.Data = 1");
         }
 
-        public static void TestC(Assert assert)
+        [Test(ExpectedCount = 3)]
+        public static void TestC()
         {
-            assert.Expect(3);
-
             var c = new C();
 
-            assert.Ok(c != null, "Instance of C created");
-            assert.Equal(c.GetString(), "C", "c.GetString() = 'C'");
-            assert.Equal(c.Data, -1, "c.Data = -1");
+            Assert.True(c != null, "Instance of C created");
+            Assert.AreEqual(c.GetString(), "C", "c.GetString() = 'C'");
+            Assert.AreEqual(c.Data, -1, "c.Data = -1");
         }
 
-        public static void TestBC(Assert assert)
+        [Test(ExpectedCount = 6)]
+        public static void TestBC()
         {
-            assert.Expect(6);
-
             A b = new B();
 
-            assert.Ok(b != null, "Instance of B created as instance of A");
-            assert.Equal(b.GetString(), "B", "b.GetString() = 'B'");
-            assert.Equal(b.Data, 1, "b.Data = 1");
+            Assert.True(b != null, "Instance of B created as instance of A");
+            Assert.AreEqual(b.GetString(), "B", "b.GetString() = 'B'");
+            Assert.AreEqual(b.Data, 1, "b.Data = 1");
 
             A c = new C();
-            assert.Ok(c != null, "Instance of C created as instance of A");
-            assert.Equal(c.GetString(), "C", "c.GetString() = 'C'");
-            assert.Equal(c.Data, -1, "c.Data = -1");
+            Assert.True(c != null, "Instance of C created as instance of A");
+            Assert.AreEqual(c.GetString(), "C", "c.GetString() = 'C'");
+            Assert.AreEqual(c.Data, -1, "c.Data = -1");
         }
     }
 }

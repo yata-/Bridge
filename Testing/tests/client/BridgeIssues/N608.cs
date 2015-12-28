@@ -1,10 +1,9 @@
 using System;
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
-    [FileName("testBridgeIssues.js")]
     public struct Bridge608A
     {
         public readonly string field;
@@ -29,19 +28,19 @@ namespace ClientTestLibrary
             return this.field.GetHashCode();
         }
     }
-    
-    // Bridge[#608]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge608
-    {
-        public static void TestUseCase(Assert assert)
-        {
-            assert.Expect(2);
 
+    // Bridge[#608]
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#608 - {0}")]
+    public class Bridge608
+    {
+        [Test(ExpectedCount = 2)]
+        public static void TestUseCase()
+        {
             var s = new Bridge608A("test");
             object o = "test";
-            assert.Ok(s.Equals(o), "Bridge608 Object");
-            assert.Ok(s.Equals("test"), "Bridge608 String");
+            Assert.True(s.Equals(o), "Bridge608 Object");
+            Assert.True(s.Equals("test"), "Bridge608 String");
         }
     }
 }

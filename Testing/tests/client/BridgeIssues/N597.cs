@@ -1,13 +1,12 @@
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Bridge.Html5;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
-    [FileName("testBridgeIssues.js")]
     public class Bridge597A
     {
         private string _something = "HI!";
@@ -28,16 +27,16 @@ namespace ClientTestLibrary
     }
 
     // Bridge[#597]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge597
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#597 - {0}")]
+    public class Bridge597
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 2)]
+        public static void TestUseCase()
         {
-            assert.Expect(2);
-
             var inst = new Bridge597A();
-            assert.Equal(inst.Get(), "0:a", "Bridge597 Without instance member access");
-            assert.Equal(inst.GetWithMember(), "HI!:0:a", "Bridge597 With instance member access");
+            Assert.AreEqual(inst.Get(), "0:a", "Bridge597 Without instance member access");
+            Assert.AreEqual(inst.GetWithMember(), "HI!:0:a", "Bridge597 With instance member access");
         }
     }
 }

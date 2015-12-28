@@ -1,12 +1,11 @@
 using Bridge;
-using Bridge.QUnit;
-using ClientTestLibrary.Utilities;
+using Bridge.Test;
+using Bridge.ClientTest.Utilities;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ClientTestLibrary.Linq
+namespace Bridge.ClientTest.Linq
 {
-    [FileName("testLinqConversionOperators.js")]
     public class TestLinqConversionOperatorsIEqualityComparer : System.Collections.Generic.EqualityComparer<string>
     {
         public override bool Equals(string x, string y)
@@ -25,12 +24,13 @@ namespace ClientTestLibrary.Linq
         }
     }
 
-    internal class TestLinqConversionOperators
+    [Category(Constants.MODULE_LINQ)]
+    [TestFixture(TestNameFormat = "Conversion - {0}")]
+    public class TestLinqConversionOperators
     {
-        public static void Test(Assert assert)
+        [Test(ExpectedCount = 13)]
+        public static void Test()
         {
-            assert.Expect(13);
-
             // TEST
             double[] doubles = { 1.7, 2.3, 1.9, 4.1, 2.9 };
 
@@ -38,8 +38,8 @@ namespace ClientTestLibrary.Linq
                               select d;
             var doublesArray = sameDoubles.ToArray();
 
-            assert.Ok(doublesArray.GetType().ToString().Contains("function Array()"), "ToArray() conversion for doubles - check type name");
-            assert.DeepEqual(doublesArray, doubles, "ToArray() conversion for doubles - check content");
+            Assert.True(doublesArray.GetType().ToString().Contains("function Array()"), "ToArray() conversion for doubles - check type name");
+            Assert.AreEqual(doublesArray, doubles, "ToArray() conversion for doubles - check content");
 
             // TEST
             string[] words = { "1.one", "2.two", "3.three" };
@@ -49,8 +49,8 @@ namespace ClientTestLibrary.Linq
                              select w).ToList<string>();
             var wordListExpected1 = new List<string>(new[] { "3.three", "2.two", "1.one" });
 
-            assert.DeepEqual(TypeHelper.GetTypeName(wordList1), "Bridge.List$1$String", "ToList() conversion with explicit String type for string - check type name");
-            assert.DeepEqual(wordList1, wordListExpected1, "ToList() conversion for strings with explicit String type - check content");
+            Assert.AreEqual(TypeHelper.GetTypeName(wordList1), "Bridge.List$1$String", "ToList() conversion with explicit String type for string - check type name");
+            Assert.AreEqual(wordList1, wordListExpected1, "ToList() conversion for strings with explicit String type - check content");
 
             // TEST
             var wordList2 = (from w in words
@@ -58,8 +58,8 @@ namespace ClientTestLibrary.Linq
                              select w).ToList();
             var wordListExpected2 = new List<string>(new[] { "3.three", "2.two", "1.one" });
 
-            assert.DeepEqual(TypeHelper.GetTypeName(wordList2), "Bridge.List$1$String", "ToList() conversion for string - check type name");
-            assert.DeepEqual(wordList2, wordListExpected2, "ToList() conversion for strings - check content");
+            Assert.AreEqual(TypeHelper.GetTypeName(wordList2), "Bridge.List$1$String", "ToList() conversion for string - check type name");
+            Assert.AreEqual(wordList2, wordListExpected2, "ToList() conversion for strings - check content");
 
             // TEST
             var groups = Group.GetGroups();
@@ -87,8 +87,8 @@ namespace ClientTestLibrary.Linq
                 Name = "D",
                 Limit = 200
             });
-            assert.DeepEqual(TypeHelper.GetTypeName(groupDictionary1), "Bridge.Dictionary$2$String$ClientTestLibrary.Utilities.Group", "ToDictionary(keySelector, elementSelector) conversion for <string, Group> - check type name");
-            assert.DeepEqual(groupDictionary1, expectedGroupDictionary1, "ToDictionary(keySelector, elementSelector) conversion for <string, Group> - check content");
+            Assert.AreEqual(TypeHelper.GetTypeName(groupDictionary1), "Bridge.Dictionary$2$String$ClientTestLibrary.Utilities.Group", "ToDictionary(keySelector, elementSelector) conversion for <string, Group> - check type name");
+            Assert.AreEqual(groupDictionary1, expectedGroupDictionary1, "ToDictionary(keySelector, elementSelector) conversion for <string, Group> - check content");
 
             // TEST
             var comparer = new TestLinqConversionOperatorsIEqualityComparer();
@@ -118,22 +118,22 @@ namespace ClientTestLibrary.Linq
             var groupDictionary2 = (from g in groups
                                     select g).ToDictionary(g => g.Name, g => g, comparer);
 
-            assert.DeepEqual(TypeHelper.GetTypeName(groupDictionary2), "Bridge.Dictionary$2$String$ClientTestLibrary.Utilities.Group", "ToDictionary(keySelector, elementSelector, IEqualityComparer) conversion for <string, Group> - check type name");
-            assert.DeepEqual(groupDictionary2, expectedGroupDictionary2, "ToDictionary(keySelector, elementSelector, IEqualityComparer) conversion for <string, Group> - check content");
+            Assert.AreEqual(TypeHelper.GetTypeName(groupDictionary2), "Bridge.Dictionary$2$String$ClientTestLibrary.Utilities.Group", "ToDictionary(keySelector, elementSelector, IEqualityComparer) conversion for <string, Group> - check type name");
+            Assert.AreEqual(groupDictionary2, expectedGroupDictionary2, "ToDictionary(keySelector, elementSelector, IEqualityComparer) conversion for <string, Group> - check content");
 
             // TEST
             var groupDictionary3 = (from g in groups
                                     select g).ToDictionary(g => g.Name);
 
-            assert.DeepEqual(TypeHelper.GetTypeName(groupDictionary3), "Bridge.Dictionary$2$String$ClientTestLibrary.Utilities.Group", "ToDictionary(keySelector) conversion for <string, Group> - check type name");
-            assert.DeepEqual(groupDictionary3, expectedGroupDictionary1, "ToDictionary(keySelector) conversion for <string, Group> - check content");
+            Assert.AreEqual(TypeHelper.GetTypeName(groupDictionary3), "Bridge.Dictionary$2$String$ClientTestLibrary.Utilities.Group", "ToDictionary(keySelector) conversion for <string, Group> - check type name");
+            Assert.AreEqual(groupDictionary3, expectedGroupDictionary1, "ToDictionary(keySelector) conversion for <string, Group> - check content");
 
             // TEST
             object[] numbers = { null, 1.0, "two", 3, "four", 5, "six", 7.0 };
 
             var doubleNumbers = numbers.OfType<double>().ToArray();
 
-            assert.DeepEqual(doubleNumbers, new[] { 1.0, 3, 5, 7.0 }, "Issue #218. OfType<double> should get only double type items");
+            Assert.AreEqual(doubleNumbers, new[] { 1.0, 3, 5, 7.0 }, "Issue #218. OfType<double> should get only double type items");
         }
     }
 }

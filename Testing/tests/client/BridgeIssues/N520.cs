@@ -1,16 +1,17 @@
 using Bridge;
 using Bridge.Html5;
-using Bridge.QUnit;
+using Bridge.Test;
 
 using System;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
     // Bridge[#520]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge520
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#520 - {0}")]
+    public class Bridge520
     {
         public class Source
         {
@@ -29,14 +30,13 @@ namespace ClientTestLibrary
             }
         }
 
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 1)]
+        public static void TestUseCase()
         {
-            assert.Expect(1);
-
             var s = new Source();
             s.Fire();
 
-            assert.Equal(s.Counter, 1, "Bridge520 Counter");
+            Assert.AreEqual(s.Counter, 1, "Bridge520 Counter");
         }
     }
 }

@@ -1,71 +1,69 @@
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 using System;
 
 #pragma warning disable 162	// CS0162: Unreachable code detected. Disable because we want to assert that code does not reach unreachable parts
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BasicCSharp
 {
     // Tests try and catch blocks
-    internal class TestTryCatchBlocks
+    [Category(Constants.MODULE_BASIC_CSHARP)]
+    [TestFixture(TestNameFormat = "Try/Catch - {0}")]
+    public class TestTryCatchBlocks
     {
         #region Tests
 
         // [#84] Does not compile
-        public static void SimpleTryCatch(Assert assert)
+        [Test(ExpectedCount = 1)]
+        public static void SimpleTryCatch()
         {
-            assert.Expect(1);
-
             var result = TryCatch("Good");
 
-            assert.Equal(result, "Good", "TryCatch() executes");
+            Assert.AreEqual(result, "Good", "TryCatch() executes");
         }
 
-        public static void CaughtExceptions(Assert assert)
+        [Test(ExpectedCount = 3)]
+        public static void CaughtExceptions()
         {
-            assert.Expect(3);
-
             TryCatchWithCaughtException();
-            assert.Ok(true, "Exception catch");
+            Assert.True(true, "Exception catch");
 
             TryCatchWithCaughtTypedException();
-            assert.Ok(true, "Typed exception catch");
+            Assert.True(true, "Typed exception catch");
 
             var exceptionMessage = TryCatchWithCaughtArgumentException();
-            assert.DeepEqual(exceptionMessage, "catch me", "Typed exception catch with exception message");
+            Assert.AreEqual(exceptionMessage, "catch me", "Typed exception catch with exception message");
         }
 
-        public static void ThrownExceptions(Assert assert)
+        [Test(ExpectedCount = 12)]
+        public static void ThrownExceptions()
         {
-            assert.Expect(12);
-
             // #230
-            assert.Throws(TryCatchWithNotCaughtTypedException, "catch me", "A.Typed exception is not Caught");
-            assert.Ok(IsATry, "A. exception not caught - try section called");
-            assert.Ok(!IsACatch, "A. exception not caught - catch section not called");
+            Assert.Throws(TryCatchWithNotCaughtTypedException, "catch me", "A.Typed exception is not Caught");
+            Assert.True(IsATry, "A. exception not caught - try section called");
+            Assert.True(!IsACatch, "A. exception not caught - catch section not called");
 
             // #229
-            assert.Throws(TryCatchWithNotCaughtTypedExceptionAndArgument, "catch me", "[#229] B. Typed exception is not Caught; and argument");
-            assert.Ok(IsBTry, "[#229] B. exception not caught - try section called");
-            assert.Ok(!IsBCatch, "B. exception not caught - catch section not called");
+            Assert.Throws(TryCatchWithNotCaughtTypedExceptionAndArgument, "catch me", "[#229] B. Typed exception is not Caught; and argument");
+            Assert.True(IsBTry, "[#229] B. exception not caught - try section called");
+            Assert.True(!IsBCatch, "B. exception not caught - catch section not called");
 
             // #231
-            assert.Throws(TryCatchWithRethrow, "catch me", "[#231] C. Rethrow");
-            assert.Ok(IsCTry, "C. exception caught and re-thrown - try section called");
-            assert.Ok(IsCCatch, "C. exception caught and re-thrown - catch section called");
+            Assert.Throws(TryCatchWithRethrow, "catch me", "[#231] C. Rethrow");
+            Assert.True(IsCTry, "C. exception caught and re-thrown - try section called");
+            Assert.True(IsCCatch, "C. exception caught and re-thrown - catch section called");
 
-            assert.Throws(TryCatchWithRethrowEx, new Func<object, bool>((error) =>
+            Assert.Throws(TryCatchWithRethrowEx, new Func<object, bool>((error) =>
             {
                 return error.ToString() == "catch me";
             }), "D. Rethrow with parameter");
-            assert.Ok(IsDTry, "D. exception caught and re-thrown  - try section called");
-            assert.Ok(IsDCatch, "D. exception caught and re-thrown  - catch section called");
+            Assert.True(IsDTry, "D. exception caught and re-thrown  - try section called");
+            Assert.True(IsDCatch, "D. exception caught and re-thrown  - catch section called");
         }
 
-        public static void Bridge320(Assert assert)
+        [Test(ExpectedCount = 1)]
+        public static void Bridge320()
         {
-            assert.Expect(1);
-
             string exceptionMessage = string.Empty;
 
             try
@@ -81,13 +79,12 @@ namespace ClientTestLibrary
             //    ? "undefined is not a constructor (evaluating '\"someString\".SomeNotExistingMethod()')"
             //    : "\"someString\".SomeNotExistingMethod is not a function";
 
-            assert.Ok(exceptionMessage.Contains("SomeNotExistingMethod"), "ex.Message works on built-in JavaScript type");
+            Assert.True(exceptionMessage.Contains("SomeNotExistingMethod"), "ex.Message works on built-in JavaScript type");
         }
 
-        public static void Bridge343(Assert assert)
+        [Test(ExpectedCount = 1)]
+        public static void Bridge343()
         {
-            assert.Expect(1);
-
             string exceptionMessage = string.Empty;
 
             var i = 0;
@@ -104,7 +101,7 @@ namespace ClientTestLibrary
                 exceptionMessage = ex.Message;
             }
 
-            assert.Ok(!string.IsNullOrEmpty(exceptionMessage), "Double catch block with general Exception works");
+            Assert.True(!string.IsNullOrEmpty(exceptionMessage), "Double catch block with general Exception works");
         }
 
         #endregion Tests

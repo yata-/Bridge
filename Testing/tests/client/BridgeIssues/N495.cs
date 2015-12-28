@@ -1,19 +1,19 @@
 using Bridge;
 using Bridge.Html5;
-using Bridge.QUnit;
+using Bridge.Test;
 
 using System.Linq;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
     // Bridge[#495]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge495
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#495 - {0}")]
+    public class Bridge495
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 3)]
+        public static void TestUseCase()
         {
-            assert.Expect(3);
-
             var root = Document.GetElementById("qunit-fixture");
 
             var button1 = new ButtonElement();
@@ -24,7 +24,7 @@ namespace ClientTestLibrary
             root.AppendChild(button1);
 
             var b1 = Document.GetElementById("button1");
-            assert.Equal(b1.Style.Color, "green", "b1.Style.Color green");
+            Assert.AreEqual(b1.Style.Color, "green", "b1.Style.Color green");
 
             var button2 = new ButtonElement();
             button2.InnerHTML = "Button 2";
@@ -34,7 +34,7 @@ namespace ClientTestLibrary
             root.AppendChild(button2);
 
             var b2 = Document.GetElementById("button2");
-            assert.Equal(b2.Style.BackgroundColor, HTMLColor.Yellow, "b2.Style.BackgroundColor HTMLColor.Yellow");
+            Assert.AreEqual(b2.Style.BackgroundColor, HTMLColor.Yellow, "b2.Style.BackgroundColor HTMLColor.Yellow");
 
             var hexColor = "#FFEEAA";
             var divElement1 = new DivElement();
@@ -45,7 +45,7 @@ namespace ClientTestLibrary
             root.AppendChild(divElement1);
 
             var div1 = Document.GetElementById("div1");
-            assert.Equal(div1.Style.Color, "rgb(255, 238, 170)", "div1.Style.Color " + hexColor);
+            Assert.AreEqual(div1.Style.Color, "rgb(255, 238, 170)", "div1.Style.Color " + hexColor);
 
         }
     }

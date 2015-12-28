@@ -1,10 +1,12 @@
 ﻿using Bridge;
+using Bridge.Html5;
+using Bridge.Test;
+
+using Bridge.ClientTest;
 
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Bridge.Test;
-using Bridge.ClientTest;
 using System.Text.RegularExpressions;
 
 namespace Bridge.ClientTest.SimpleTypes
@@ -885,6 +887,167 @@ namespace Bridge.ClientTest.SimpleTypes
         {
             string text = "Lorem sit dolor";
             Assert.AreEqual(text.ToCharArray(), new[] { 'L', 'o', 'r', 'e', 'm', ' ', 's', 'i', 't', ' ', 'd', 'o', 'l', 'o', 'r' });
+        }
+
+        [Test]
+        public static void Strings()
+        {
+            // In PhantomJS some correct tests failed. We will skip them in this environment.
+            var isPhantomJs = Utilities.BrowserHelper.IsPhantomJs();
+
+            //var expectedCount = isPhantomJs ? 28 : 48;
+            //assert.Expect(expectedCount);
+
+            // TEST ToLower, ToLowerCase, ToLocaleLowerCase
+            var s = "HELLO".ToLower();
+            Assert.AreEqual(s, "hello", "'HELLO'.ToLower()");
+
+            s = "HELLO".ToLowerCase();
+            Assert.AreEqual(s, "hello", "'HELLO'.ToLowerCase()");
+
+            s = "HELLO".ToLocaleLowerCase();
+            Assert.AreEqual(s, "hello", "'HELLO'.ToLocaleLowerCase()");
+
+            // TEST ToUpper, ToUpperCase, ToLocaleUpperCase
+            s = "hello".ToUpper();
+            Assert.AreEqual(s, "HELLO", "'hello'.ToUpper()");
+
+            s = "hello".ToUpperCase();
+            Assert.AreEqual(s, "HELLO", "'hello'.ToUpperCase()");
+
+            s = "HELLO".ToLocaleUpperCase();
+            Assert.AreEqual(s, "HELLO", "'hello'.ToLocaleUpperCase()");
+
+            s = "Hello Bridge.NET";
+            // TEST String(string) constructor
+            Assert.AreEqual(new String(s), s, "new String('" + s + "')");
+
+            // TEST String(char, count) constructor
+            Assert.AreEqual(new String('-', 4), "----", "new String('-',4)");
+
+            // TEST IndexOfAny
+            char[] anyOf = new char[] { 'x', 'b', 'i' };
+            string sAnyOf = "['x','b','i']";
+
+            Assert.AreEqual(s.IndexOfAny(anyOf), 8, "'" + s + "'.IndexOfAny(" + sAnyOf + ")");
+            Assert.Throws(() => s.IndexOfAny(anyOf, 18, 8), "'" + s + "'.IndexOfAny(" + sAnyOf + ")");
+            Assert.Throws(() => s.IndexOfAny(null), "'" + s + "'.IndexOfAny(null)");
+
+            s = string.Empty;
+            Assert.AreEqual(s.IndexOfAny(anyOf), -1, "String.Empty.IndexOfAny(" + sAnyOf + ")");
+
+            s = null;
+            Assert.AreEqual(s.IndexOfAny(anyOf), -1, "null.IndexOfAny(" + sAnyOf + ")");
+
+            // TEST IndexOf
+            s = "Hello Bridge.NET";
+
+            Assert.AreEqual(s.IndexOf('e'), 1, "'" + s + "'.IndexOf('e')");
+            Assert.AreEqual(s.IndexOf("e."), 11, "'" + s + "'.IndexOf('e.')");
+            Assert.AreEqual(s.IndexOf('e', 6, 8), 11, "'" + s + "'.IndexOf('e', 6, 8)");
+            Assert.Throws(() => s.IndexOf(null), "'" + s + "'.IndexOf(null)");
+
+            if (!isPhantomJs)
+            {
+                Assert.AreEqual(s.IndexOf("E", 6, 8, StringComparison.CurrentCultureIgnoreCase), 11, "'" + s + "'.IndexOf('E', 6, 8, StringComparison.CurrentCultureIgnoreCase)");
+            }
+
+            s = string.Empty;
+            Assert.AreEqual(s.IndexOf('e'), -1, "String.Empty.IndexOf('e')");
+
+            s = null;
+            Assert.AreEqual(s.IndexOf('e'), -1, "null.IndexOf('e')");
+
+            // TEST Compare
+            string s1 = "Animal";
+            string s2 = "animal";
+
+            Assert.AreEqual(string.Compare(s1, s2, true), 0, "String.Compare('" + s1 + "', '" + s2 + "', true)");
+
+            if (!isPhantomJs)
+            {
+                Assert.AreEqual(string.Compare(s1, s2, false), 1, "String.Compare('" + s1 + "', '" + s2 + "', false)");
+            }
+
+            if (!isPhantomJs)
+            {
+                string[] threeIs = new string[3];
+                threeIs[0] = "\u0069";
+                threeIs[1] = "\u0131";
+                threeIs[2] = "\u0049";
+
+                StringComparison[] scValues = {
+                StringComparison.CurrentCulture,
+                StringComparison.CurrentCultureIgnoreCase,
+                StringComparison.InvariantCulture,
+                StringComparison.InvariantCultureIgnoreCase,
+                StringComparison.Ordinal,
+                StringComparison.OrdinalIgnoreCase };
+
+                int[] expected = { -1, -1, 1, -1, 0, 1, -1, -1, 1, -1, 0, 1, -1, 1, 1, 0, 0, 0 };
+                int expectedIndex = 0;
+
+                foreach (StringComparison sc in scValues)
+                {
+                    Test(0, 1, sc, threeIs, expected, expectedIndex++);
+                    Test(0, 2, sc, threeIs, expected, expectedIndex++);
+                    Test(1, 2, sc, threeIs, expected, expectedIndex++);
+                }
+            }
+
+            // TEST Contains
+            s = "Hello Bridge.NET";
+
+            Assert.AreEqual(s.Contains("Bridge"), true, "'" + s + "'.Contains('Bridge')");
+            Assert.AreEqual(s.Contains(String.Empty), true, "'" + s + "'.Contains(String.Empty)");
+            Assert.AreEqual(String.Empty.Contains("Bridge"), false, "String.Empty.Contains('Bridge')");
+            Assert.Throws(() => s.Contains(null), "null.Contains('Bridge')");
+
+            // TEST Concat
+            s = string.Concat(s, "2", "3", "4");
+            Assert.AreEqual(s, "Hello Bridge.NET234", "string.Concat()");
+
+            s = string.Concat(null, true, 3, false);
+            Assert.AreEqual(s, "true3false", "string.Concat()");
+
+            s = string.Concat(new string[] { "1", "2", "3", "4", "5" });
+            Assert.AreEqual(s, "12345", "string.Concat()");
+
+            s = string.Concat(new object[] { 1, null, 2, null, 3 });
+            Assert.AreEqual(s, "123", "string.Concat()");
+        }
+
+        protected static void Test(int x,
+                                    int y,
+                                    StringComparison comparison,
+                                    string[] testI,
+                                    int[] expected,
+                                    int expectedIndex)
+        {
+            int cmpValue = 0;
+            cmpValue = String.Compare(testI[x], testI[y], comparison);
+            Assert.AreEqual(cmpValue, expected[expectedIndex], "String.Compare('" + testI[x] + "', '" + testI[y] + "'," + comparison + ")");
+        }
+
+        [Test(ExpectedCount = 5)]
+        public static void Enumerable()
+        {
+            char a;
+            int i = 0;
+            var result = new char[5];
+            foreach (var c in "danny")
+            {
+                a = c;
+                result[i] = a;
+
+                i++;
+            }
+
+            Assert.AreEqual(result[0], 'd');
+            Assert.AreEqual(result[1], 'a');
+            Assert.AreEqual(result[2], 'n');
+            Assert.AreEqual(result[3], 'n');
+            Assert.AreEqual(result[4], 'y');
         }
     }
 }

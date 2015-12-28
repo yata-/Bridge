@@ -1,15 +1,12 @@
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
-    [FileName("testBridgeIssues.js")]
     internal class Bridge603Class
     {
         public object Data { get; set; }
     }
-
-    [FileName("testBridgeIssues.js")]
     internal struct Bridge603A
     {
         public string value;
@@ -25,8 +22,6 @@ namespace ClientTestLibrary
             return new Bridge603A(value);
         }
     }
-
-    [FileName("testBridgeIssues.js")]
     internal struct Bridge603B
     {
         public string value;
@@ -69,38 +64,37 @@ namespace ClientTestLibrary
     }
 
     // Bridge[#603]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge603
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#603 - {0}")]
+    public class Bridge603
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 2)]
+        public static void TestUseCase()
         {
-            assert.Expect(2);
-
             Bridge603A c = null;
-            assert.Equal(c.value, "[Null]", "Bridge603A TestUseCase Null");
+            Assert.AreEqual(c.value, "[Null]", "Bridge603A TestUseCase Null");
 
             c = "Test";
-            assert.Equal(c.value, "Test", "Bridge603A TestUseCase String");
+            Assert.AreEqual(c.value, "Test", "Bridge603A TestUseCase String");
         }
 
-        public static void TestRelated(Assert assert)
+        [Test(ExpectedCount = 5)]
+        public static void TestRelated()
         {
-            assert.Expect(5);
-
             Bridge603B b = 12345;
-            assert.Equal(b.intValue, 12345, "Bridge603B TestRelated Int");
+            Assert.AreEqual(b.intValue, 12345, "Bridge603B TestRelated Int");
 
             Bridge603B c = (string)null;
-            assert.Equal(c.value, "[Null]", "Bridge603B TestRelated String Null");
+            Assert.AreEqual(c.value, "[Null]", "Bridge603B TestRelated String Null");
 
             c = "Test";
-            assert.Equal(c.value, "Test", "Bridge603B TestRelated String");
+            Assert.AreEqual(c.value, "Test", "Bridge603B TestRelated String");
 
             Bridge603B d = (Bridge603Class)null;
-            assert.Equal(d.value, "[Null]", "Bridge603B TestRelated Bridge603Class Null");
+            Assert.AreEqual(d.value, "[Null]", "Bridge603B TestRelated Bridge603Class Null");
 
             d = new Bridge603Class() { Data = "Test 603B" };
-            assert.Equal(d.value, "Test 603B", "Bridge603B TestRelated Bridge603Class");
+            Assert.AreEqual(d.value, "Test 603B", "Bridge603B TestRelated Bridge603Class");
         }
     }
 }

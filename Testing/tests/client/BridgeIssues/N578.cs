@@ -1,25 +1,25 @@
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
 using System;
 using System.Collections.Generic;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
     // Bridge[#578]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge578
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#578 - {0}")]
+    public class Bridge578
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 1)]
+        public static void TestUseCase()
         {
-            assert.Expect(1);
-
             var s = "ab|abc&ab&abc|de&ef&";
 
             var r = s.Split('|', '&');
             var expected = new[] { "ab", "abc", "ab", "abc", "de", "ef", "" };
 
-            assert.DeepEqual(r, expected, "#578 Split(params char[] separator)");
+            Assert.AreEqual(r, expected, "#578 Split(params char[] separator)");
         }
     }
 }

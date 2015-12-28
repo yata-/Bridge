@@ -1,15 +1,16 @@
-using Bridge.QUnit;
-using ClientTestLibrary.Utilities;
+using Bridge.Test;
+using Bridge.ClientTest.Utilities;
 using System.Linq;
 
-namespace ClientTestLibrary.Linq
+namespace Bridge.ClientTest.Linq
 {
-    internal class TestLinqJoinOperators
+    [Category(Constants.MODULE_LINQ)]
+    [TestFixture(TestNameFormat = "Join - {0}")]
+    public class TestLinqJoinOperators
     {
-        public static void Test(Assert assert)
+        [Test(ExpectedCount = 5)]
+        public static void Test()
         {
-            assert.Expect(5);
-
             // TEST
             var persons =
                    (from p in Person.GetPersons()
@@ -30,7 +31,7 @@ namespace ClientTestLibrary.Linq
                  new { Name = "Mary", Limit = 400}
                  };
 
-            assert.DeepEqual(persons, personsExpected, "Join Persons and Groups");
+            Assert.AreEqual(persons, personsExpected, "Join Persons and Groups");
 
             // TEST
             var personsByLambda = Person.GetPersons()
@@ -54,7 +55,7 @@ namespace ClientTestLibrary.Linq
                  new { Name = "Mary", Limit = 400}
             };
 
-            assert.DeepEqual(personsByLambda, personsByLambdaExpected, "Join Persons and Groups by lambda");
+            Assert.AreEqual(personsByLambda, personsByLambdaExpected, "Join Persons and Groups by lambda");
 
             // TEST
             var groupJoin = (from g in Group.GetGroups()
@@ -73,7 +74,7 @@ namespace ClientTestLibrary.Linq
                 new { Group = "D", Persons = new string [] {} }
             };
 
-            assert.DeepEqual(groupJoin, groupJoinExpected, "Grouped join Persons and Groups");
+            Assert.AreEqual(groupJoin, groupJoinExpected, "Grouped join Persons and Groups");
 
             // TEST
             var groupJoinWithDefault =
@@ -98,7 +99,7 @@ namespace ClientTestLibrary.Linq
                 new { GroupName = "D", PersonName = string.Empty }
             };
 
-            assert.DeepEqual(groupJoinWithDefault, groupJoinWithDefaultExpected, "Grouped join Persons and Groups with DefaultIfEmpty");
+            Assert.AreEqual(groupJoinWithDefault, groupJoinWithDefaultExpected, "Grouped join Persons and Groups with DefaultIfEmpty");
 
             // TEST
             var groupJoinWithDefaultAndComplexEquals =
@@ -132,7 +133,7 @@ namespace ClientTestLibrary.Linq
                 new { GroupName = "D", PersonName = (string)null }
             };
 
-            assert.DeepEqual(groupJoinWithDefaultAndComplexEquals, groupJoinWithDefaultAndComplexEqualsExpected, "Issue #209. Grouped join Persons and Groups with DefaultIfEmpty, complex equals and ordering");
+            Assert.AreEqual(groupJoinWithDefaultAndComplexEquals, groupJoinWithDefaultAndComplexEqualsExpected, "Issue #209. Grouped join Persons and Groups with DefaultIfEmpty, complex equals and ordering");
         }
     }
 }

@@ -1,12 +1,11 @@
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
-    [FileName("testBridgeIssues.js")]
     public class Bridge595A
     {
         private StringBuilder buffer;
@@ -27,8 +26,6 @@ namespace ClientTestLibrary
             buffer.Append("Render1");
         }
     }
-
-    [FileName("testBridgeIssues.js")]
     public class Bridge595B
     {
         private StringBuilder buffer;
@@ -51,22 +48,22 @@ namespace ClientTestLibrary
     }
 
     // Bridge[#595]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge595
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#595 - {0}")]
+    public class Bridge595
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 2)]
+        public static void TestUseCase()
         {
-            assert.Expect(2);
-
             StringBuilder buffer = new StringBuilder();
             var a = new Bridge595A(buffer);
             a.Render();
-            assert.Equal(buffer.ToString(), "Render0Render1", "Bridge595 A");
+            Assert.AreEqual(buffer.ToString(), "Render0Render1", "Bridge595 A");
 
             buffer.Clear();
             var b = new Bridge595B(buffer);
             b.Render();
-            assert.Equal(buffer.ToString(), "Render0Render1", "Bridge595 B");
+            Assert.AreEqual(buffer.ToString(), "Render0Render1", "Bridge595 B");
         }
     }
 }

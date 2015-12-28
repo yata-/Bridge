@@ -1,11 +1,12 @@
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BasicCSharp
 {
-    internal class TestInheritance
+    [Category(Constants.MODULE_BASIC_CSHARP)]
+    [TestFixture(TestNameFormat = "Static overloads - {0}")]
+    public class TestInheritance
     {
-        [FileName("testInheritance.js")]
         private class A
         {
             public int X
@@ -30,7 +31,6 @@ namespace ClientTestLibrary
             }
         }
 
-        [FileName("testInheritance.js")]
         private class B : A
         {
             public int Y
@@ -51,41 +51,38 @@ namespace ClientTestLibrary
             }
         }
 
-        public static void TestA(Assert assert)
+        [Test(ExpectedCount = 4)]
+        public static void TestA()
         {
-            assert.Expect(4);
-
             var a = new A(10);
 
-            assert.Ok(a != null, "Instance of A created");
-            assert.Equal(a.X, 10, "a.X = 10");
-            assert.Equal(a.HandleNumber(100), 100, "a.HandleNumber(100) = 100");
-            assert.Equal(a.HandleString("Hundred"), "Hundred", "a.HandleString('Hundred') = 'Hundred'");
+            Assert.True(a != null, "Instance of A created");
+            Assert.AreEqual(a.X, 10, "a.X = 10");
+            Assert.AreEqual(a.HandleNumber(100), 100, "a.HandleNumber(100) = 100");
+            Assert.AreEqual(a.HandleString("Hundred"), "Hundred", "a.HandleString('Hundred') = 'Hundred'");
         }
 
-        public static void TestB(Assert assert)
+        [Test(ExpectedCount = 5)]
+        public static void TestB()
         {
-            assert.Expect(5);
-
             var b = new B(10, 20);
 
-            assert.Ok(b != null, "Instance of B created");
-            assert.Equal(b.X, 10, "b.X = 10");
-            assert.Equal(b.Y, 20, "b.Y = 20");
-            assert.Equal(b.HandleNumber(1), 100, "b.HandleNumber(1) = 100");
-            assert.Equal(b.HandleString("Hundred"), "Hundred", "b.HandleString('Hundred') = 'Hundred'");
+            Assert.True(b != null, "Instance of B created");
+            Assert.AreEqual(b.X, 10, "b.X = 10");
+            Assert.AreEqual(b.Y, 20, "b.Y = 20");
+            Assert.AreEqual(b.HandleNumber(1), 100, "b.HandleNumber(1) = 100");
+            Assert.AreEqual(b.HandleString("Hundred"), "Hundred", "b.HandleString('Hundred') = 'Hundred'");
         }
 
-        public static void TestAB(Assert assert)
+        [Test(ExpectedCount = 4)]
+        public static void TestAB()
         {
-            assert.Expect(4);
-
             A b = new B(10, 20);
 
-            assert.Ok(b != null, "Instance of B created as A type");
-            assert.Equal(b.X, 10, "b.X = 10");
-            assert.Equal(b.HandleNumber(10), 10, "b.HandleNumber(10) = 10");
-            assert.Equal(b.HandleString("Hundred"), "Hundred", "b.HandleString('Hundred') = 'Hundred'");
+            Assert.True(b != null, "Instance of B created as A type");
+            Assert.AreEqual(b.X, 10, "b.X = 10");
+            Assert.AreEqual(b.HandleNumber(10), 10, "b.HandleNumber(10) = 10");
+            Assert.AreEqual(b.HandleString("Hundred"), "Hundred", "b.HandleString('Hundred') = 'Hundred'");
         }
     }
 }

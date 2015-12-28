@@ -1,17 +1,17 @@
 using System;
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
     // Bridge[#691]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge691
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#691 - {0}")]
+    public class Bridge691
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 1)]
+        public static void TestUseCase()
         {
-            assert.Expect(1);
-
             var pos = 0;
             var lines = new string[] { "", "", "str" };
             while (pos < lines.Length)
@@ -34,7 +34,7 @@ namespace ClientTestLibrary
                 }
             }
 
-            assert.Equal(pos, 2, "Bridge691");
+            Assert.AreEqual(pos, 2, "Bridge691");
         }
     }
 }

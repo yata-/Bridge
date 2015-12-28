@@ -2,23 +2,23 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
     // Bridge[#760]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge760
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#760 - {0}")]
+    public class Bridge760
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 1)]
+        public static void TestUseCase()
         {
-            assert.Expect(1);
-
             int? a = null;
             int? b = 10;
 
             var c = b ?? DoSomething(a);
-            assert.Equal(c, 10, "Bridge760");
+            Assert.AreEqual(c, 10, "Bridge760");
         }
 
         public static int DoSomething(int? test)

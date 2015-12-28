@@ -1,12 +1,11 @@
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 using System;
 
 #pragma warning disable 162	// CS0162: Unreachable code detected. Disable because we want to assert that code does not reach unreachable parts
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BasicCSharp
 {
-    [FileName("testTryCatchFinallyBlocks.js")]
     internal class Data
     {
         public int Count
@@ -17,70 +16,69 @@ namespace ClientTestLibrary
     }
 
     // Tests try and catch blocks
-    internal class TestTryCatchFinallyBlocks
+    [Category(Constants.MODULE_BASIC_CSHARP)]
+    [TestFixture(TestNameFormat = "Try/Catch/Finally - {0}")]
+    public class TestTryCatchFinallyBlocks
     {
         #region Tests
 
-        public static void SimpleTryCatchFinally(Assert assert)
+        [Test(ExpectedCount = 1)]
+        public static void SimpleTryCatchFinally()
         {
-            assert.Expect(1);
-
             var data = new Data();
             TryCatchFinally(data);
 
-            assert.Equal(data.Count, 2, "TryCatchFinally() executes");
+            Assert.AreEqual(data.Count, 2, "TryCatchFinally() executes");
         }
 
-        public static void CaughtExceptions(Assert assert)
+        [Test(ExpectedCount = 4)]
+        public static void CaughtExceptions()
         {
-            assert.Expect(4);
-
             var data = new Data();
             TryCatchFinallyWithCaughtException(data);
 
-            assert.Equal(data.Count, 7, "Exception catch, Finally works");
+            Assert.AreEqual(data.Count, 7, "Exception catch, Finally works");
 
             data = new Data();
             TryCatchFinallyWithCaughtTypedException(data);
 
-            assert.Equal(data.Count, 7, "Typed exception catch, Finally works");
+            Assert.AreEqual(data.Count, 7, "Typed exception catch, Finally works");
 
             data = new Data();
             var exceptionMessage = TryCatchFinallyWithCaughtArgumentException(data);
 
-            assert.Equal(exceptionMessage, "catch me", "Typed exception catch with exception message");
-            assert.Equal(data.Count, 7, "Typed exception catch with exception message, Finally works");
+            Assert.AreEqual(exceptionMessage, "catch me", "Typed exception catch with exception message");
+            Assert.AreEqual(data.Count, 7, "Typed exception catch with exception message, Finally works");
         }
 
-        public static void ThrownExceptions(Assert assert)
+        [Test(ExpectedCount = 16)]
+        public static void ThrownExceptions()
         {
-            assert.Expect(16);
-
             //#230
-            assert.Throws(TryCatchFinallyWithNotCaughtTypedException, "catch me", "A. Typed exception is not caught");
-            assert.Ok(IsATry, "A. exception not caught - try section called");
-            assert.Ok(!IsACatch, "A. exception not caught - catch section not called");
-            assert.Ok(IsAFinally, "A. exception not caught - finally section called");
+            Assert.Throws(TryCatchFinallyWithNotCaughtTypedException, "catch me", "A. Typed exception is not caught");
+            Assert.True(IsATry, "A. exception not caught - try section called");
+            Assert.True(!IsACatch, "A. exception not caught - catch section not called");
+            Assert.True(IsAFinally, "A. exception not caught - finally section called");
 
             //#229
-            assert.Throws(TryCatchWithNotCaughtTypedExceptionAndArgument, "catch me", "[#229] B. Typed exception is not caught; and argument");
-            assert.Ok(IsBTry, "B. exception not caught - try section called");
-            assert.Ok(!IsBCatch, "B. exception not caught - catch section not called");
-            assert.Ok(IsBFinally, "B. exception not caught - finally section called");
+            Assert.Throws(TryCatchWithNotCaughtTypedExceptionAndArgument, "catch me", "[#229] B. Typed exception is not caught; and argument");
+            Assert.True(IsBTry, "B. exception not caught - try section called");
+            Assert.True(!IsBCatch, "B. exception not caught - catch section not called");
+            Assert.True(IsBFinally, "B. exception not caught - finally section called");
 
             //#231
-            assert.Throws(TryCatchWithRethrow, "catch me", "[#231] C. Rethrow");
-            assert.Ok(IsCTry, "C. exception caught and re-thrown  - try section called");
-            assert.Ok(IsCCatch, "C. exception caught and re-thrown  - catch section called");
-            assert.Ok(IsCFinally, "C. exception caught and re-thrown  - finally section called");
+            Assert.Throws(TryCatchWithRethrow, "catch me", "[#231] C. Rethrow");
+            Assert.True(IsCTry, "C. exception caught and re-thrown  - try section called");
+            Assert.True(IsCCatch, "C. exception caught and re-thrown  - catch section called");
+            Assert.True(IsCFinally, "C. exception caught and re-thrown  - finally section called");
 
-            assert.Throws(TryCatchWithRethrowEx, new Func<object, bool>((error) =>
+            Assert.Throws(TryCatchWithRethrowEx, new Func<object, bool>((error) =>
             {
                 return error.ToString() == "catch me";
             }), "D. Rethrow with parameter");
-            assert.Ok(IsDTry, "D. exception caught and re-thrown  - try section called");
-            assert.Ok(IsDCatch, "D. exception caught and re-thrown  - catch section called");
-            assert.Ok(IsDFinally, "D. exception caught and re-thrown  - finally section called");
+            Assert.True(IsDTry, "D. exception caught and re-thrown  - try section called");
+            Assert.True(IsDCatch, "D. exception caught and re-thrown  - catch section called");
+            Assert.True(IsDFinally, "D. exception caught and re-thrown  - finally section called");
         }
 
         #endregion Tests

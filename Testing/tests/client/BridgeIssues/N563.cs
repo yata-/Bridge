@@ -1,18 +1,18 @@
 using System;
 using Bridge;
 using Bridge.Html5;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
     // Bridge[#563]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge563
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#563 - {0}")]
+    public class Bridge563
     {
-        public static void TesForeach(Assert assert)
+        [Test(ExpectedCount = 2)]
+        public static void TesForeach()
         {
-            assert.Expect(2);
-
             string[] keys = new[] { "1", "2", "3" };
             Action[] handlers = new Action[3];
             int i = 0;
@@ -26,7 +26,7 @@ namespace ClientTestLibrary
                 handler();
             }
 
-            assert.Equal(result, "123", "Bridge563 No block foreach loop");
+            Assert.AreEqual(result, "123", "Bridge563 No block foreach loop");
 
             i = 0;
             result = "";
@@ -41,13 +41,12 @@ namespace ClientTestLibrary
                 handler();
             }
 
-            assert.Equal(result, "123", "Bridge563 block foreach loop");
+            Assert.AreEqual(result, "123", "Bridge563 block foreach loop");
         }
 
-        public static void TesFor(Assert assert)
+        [Test(ExpectedCount = 1)]
+        public static void TesFor()
         {
-            assert.Expect(1);
-
             string[] keys = new[] { "1", "2", "3" };
             Action[] handlers = new Action[3];
             int i = 0;
@@ -57,14 +56,14 @@ namespace ClientTestLibrary
             {
                 var itm = keys[j];
                 handlers[i++] = () => result += itm;
-            }    
+            }
 
             foreach (var handler in handlers)
             {
                 handler();
             }
 
-            assert.Equal(result, "123", "Bridge563 For loop");
+            Assert.AreEqual(result, "123", "Bridge563 For loop");
         }
     }
 }

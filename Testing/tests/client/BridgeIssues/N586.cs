@@ -1,13 +1,12 @@
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-using ClientTestLibrary.Utilities;
+using Bridge.ClientTest.Utilities;
 
 using System;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
-    [FileName("testBridgeIssues.js")]
     internal class Bridge586A
     {
         [External]
@@ -28,8 +27,6 @@ namespace ClientTestLibrary
             return true;
         }
     }
-
-    [FileName("testBridgeIssues.js")]
     [External]
     internal class Bridge586B
     {
@@ -53,18 +50,18 @@ namespace ClientTestLibrary
     }
 
     // Bridge[#586]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge586
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#586 - {0}")]
+    public class Bridge586
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 4)]
+        public static void TestUseCase()
         {
-            assert.Expect(4);
+            Assert.Throws(() => { Bridge586A.SomeDataStatic = 4; }, "a.SomeDataStatic is external");
+            Assert.Throws(() => { Bridge586A.DoSomethingStatic(); }, "a.DoSomethingStatic() is external");
 
-            assert.Throws(() => { Bridge586A.SomeDataStatic = 4; }, "a.SomeDataStatic is external");
-            assert.Throws(() => { Bridge586A.DoSomethingStatic(); }, "a.DoSomethingStatic() is external");
-
-            assert.Throws(() => { Bridge586B.SomeDataStatic = 4; }, "b.SomeDataStatic is external");
-            assert.Throws(() => { Bridge586B.DoSomethingStatic(); }, "b.DoSomethingStatic() is external");
+            Assert.Throws(() => { Bridge586B.SomeDataStatic = 4; }, "b.SomeDataStatic is external");
+            Assert.Throws(() => { Bridge586B.DoSomethingStatic(); }, "b.DoSomethingStatic() is external");
         }
     }
 }

@@ -1,10 +1,9 @@
 using System;
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
-    [FileName("testBridgeIssues.js")]
     static class Bridge655A
     {
         internal static bool IsNullOrUndefined(this object subject)
@@ -29,34 +28,34 @@ namespace ClientTestLibrary
     }
 
     // Bridge[#655]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge655
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#655 - {0}")]
+    public class Bridge655
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 12)]
+        public static void TestUseCase()
         {
-            assert.Expect(12);
-
             Func<object> item11 = () => 11;
-            assert.Equal(item11.IsNullOrUndefined(), false, "Bridge655 IsNullOrUndefined11");
-            assert.Equal(item11(), 11, "Bridge655 item11");
+            Assert.AreEqual(item11.IsNullOrUndefined(), false, "Bridge655 IsNullOrUndefined11");
+            Assert.AreEqual(item11(), 11, "Bridge655 item11");
 
             Func<int, int> item12 = (i) => i;
-            assert.Equal(item12.IsNullOrUndefined(), false, "Bridge655 IsNullOrUndefined12");
-            assert.Equal(item12(12), 12, "Bridge655 item12");
+            Assert.AreEqual(item12.IsNullOrUndefined(), false, "Bridge655 IsNullOrUndefined12");
+            Assert.AreEqual(item12(12), 12, "Bridge655 item12");
 
             Func<object> item21 = () => 21;
-            assert.Equal(item21.IsNullOrUndefined(21), false, "Bridge655 IsNullOrUndefined21 false");
-            assert.Equal(item21.IsNullOrUndefined(0), true, "Bridge655 IsNullOrUndefined21 true");
-            assert.Equal(item21(), 21, "Bridge655 item21");
+            Assert.AreEqual(item21.IsNullOrUndefined(21), false, "Bridge655 IsNullOrUndefined21 false");
+            Assert.AreEqual(item21.IsNullOrUndefined(0), true, "Bridge655 IsNullOrUndefined21 true");
+            Assert.AreEqual(item21(), 21, "Bridge655 item21");
 
             Func<int, string, int> item22 = (i, s) => i + s.Length;
-            assert.Equal(item22.IsNullOrUndefined("22"), "false", "Bridge655 IsNullOrUndefined22 false");
-            assert.Equal(item22.IsNullOrUndefined(string.Empty), "true", "Bridge655 IsNullOrUndefined22 true");
-            assert.Equal(item22(19, "two"), 22, "Bridge655 item22");
+            Assert.AreEqual(item22.IsNullOrUndefined("22"), "false", "Bridge655 IsNullOrUndefined22 false");
+            Assert.AreEqual(item22.IsNullOrUndefined(string.Empty), "true", "Bridge655 IsNullOrUndefined22 true");
+            Assert.AreEqual(item22(19, "two"), 22, "Bridge655 item22");
 
             Action<int, string> item32 = (i, s) => { var b = i == s.Length; };
-            assert.Equal(item32.IsNullOrUndefined("32"), "false", "Bridge655 IsNullOrUndefined32 false");
-            assert.Equal(item32.IsNullOrUndefined(string.Empty), "true", "Bridge655 IsNullOrUndefined32 true");
+            Assert.AreEqual(item32.IsNullOrUndefined("32"), "false", "Bridge655 IsNullOrUndefined32 false");
+            Assert.AreEqual(item32.IsNullOrUndefined(string.Empty), "true", "Bridge655 IsNullOrUndefined32 true");
         }
     }
 }

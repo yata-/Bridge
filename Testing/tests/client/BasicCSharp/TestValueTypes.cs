@@ -1,9 +1,8 @@
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BasicCSharp
 {
-    [FileName("testValueTypes.js")]
     public struct Point
     {
         // TODO Add more types
@@ -43,7 +42,6 @@ namespace ClientTestLibrary
         }
     }
 
-    [FileName("testValueTypes.js")]
     public struct Rectangle
     {
         public Point l;
@@ -70,46 +68,47 @@ namespace ClientTestLibrary
 
     // Tests:
     // Check value types
-    internal class TestValueTypes
+    [Category(Constants.MODULE_BASIC_CSHARP)]
+    [TestFixture(TestNameFormat = "Value types - {0}")]
+    public class TestValueTypes
     {
         // Check instance methods and constructors
-        public static void TestInstanceConstructorsAndMethods(Assert assert)
+        [Test(ExpectedCount = 18)]
+        public static void TestInstanceConstructorsAndMethods()
         {
-            assert.Expect(18);
-
             // Check parameterless constructor
             var a = new Point();
 
-            assert.DeepEqual(a.x, 0, "x 0");
-            assert.DeepEqual(a.y, 0, "y 0");
+            Assert.AreEqual(a.x, 0, "x 0");
+            Assert.AreEqual(a.y, 0, "y 0");
 
             var r = new Rectangle();
 
-            assert.DeepEqual(r.l.x, 0, "r.l.x 0");
-            assert.DeepEqual(r.l.y, 0, "r.l.y 0");
-            assert.DeepEqual(r.t.x, 0, "r.t.x 0");
-            assert.DeepEqual(r.t.y, 0, "r.t.y 0");
+            Assert.AreEqual(r.l.x, 0, "r.l.x 0");
+            Assert.AreEqual(r.l.y, 0, "r.l.y 0");
+            Assert.AreEqual(r.t.x, 0, "r.t.x 0");
+            Assert.AreEqual(r.t.y, 0, "r.t.y 0");
 
             r = new Rectangle(10, 20);
 
-            assert.DeepEqual(r.l.x, 10, "r.l.x 10");
-            assert.DeepEqual(r.l.y, 20, "r.l.y 20");
-            assert.DeepEqual(r.t.x, 0, "r.t.x 0");
-            assert.DeepEqual(r.t.y, 0, "r.t.y 0");
+            Assert.AreEqual(r.l.x, 10, "r.l.x 10");
+            Assert.AreEqual(r.l.y, 20, "r.l.y 20");
+            Assert.AreEqual(r.t.x, 0, "r.t.x 0");
+            Assert.AreEqual(r.t.y, 0, "r.t.y 0");
 
             r = new Rectangle(30, 40, 50, 60);
 
-            assert.DeepEqual(r.l.x, 30, "r.l.x 30");
-            assert.DeepEqual(r.l.y, 40, "r.l.y 40");
-            assert.DeepEqual(r.t.x, 50, "r.t.x 50");
-            assert.DeepEqual(r.t.y, 60, "r.t.y 60");
+            Assert.AreEqual(r.l.x, 30, "r.l.x 30");
+            Assert.AreEqual(r.l.y, 40, "r.l.y 40");
+            Assert.AreEqual(r.t.x, 50, "r.t.x 50");
+            Assert.AreEqual(r.t.y, 60, "r.t.y 60");
 
             var i = a.Test1();
 
-            assert.DeepEqual(i, 500, "i 500");
+            Assert.AreEqual(i, 500, "i 500");
             a.x = 300;
             i = a.Test1();
-            assert.DeepEqual(i, 800, "i 800");
+            Assert.AreEqual(i, 800, "i 800");
 
             a.y = 400;
 
@@ -120,26 +119,25 @@ namespace ClientTestLibrary
             };
             var c = b.Test2(a);
 
-            assert.DeepEqual(c.x, 305, "c.x 305");
-            assert.DeepEqual(c.y, 407, "c.y 407");
+            Assert.AreEqual(c.x, 305, "c.x 305");
+            Assert.AreEqual(c.y, 407, "c.y 407");
         }
 
         // Check static methods and constructor
-        public static void TestStaticConstructorsAndMethods(Assert assert)
+        [Test(ExpectedCount = 7)]
+        public static void TestStaticConstructorsAndMethods()
         {
-            assert.Expect(7);
-
-            assert.DeepEqual(Point.StaticInt, 500, "Point.StaticInt 500");
-            assert.DeepEqual(Point.StaticString, "Initialized", "Point.StaticString Initialized");
-            assert.DeepEqual(Point.StatitIntNotInitialized, 0, "Point.StatitIntNotInitialized 0");
-            assert.DeepEqual(Point.StatitStringNotInitialized, null, "Point.StatitStringNotInitialized null");
-            assert.DeepEqual(Point.CONST_CHAR, (int)'W', "Point.CONST_CHAR W");
+            Assert.AreEqual(Point.StaticInt, 500, "Point.StaticInt 500");
+            Assert.AreEqual(Point.StaticString, "Initialized", "Point.StaticString Initialized");
+            Assert.AreEqual(Point.StatitIntNotInitialized, 0, "Point.StatitIntNotInitialized 0");
+            Assert.AreEqual(Point.StatitStringNotInitialized, null, "Point.StatitStringNotInitialized null");
+            Assert.AreEqual(Point.CONST_CHAR, (int)'W', "Point.CONST_CHAR W");
 
             Point.StatitIntNotInitialized = -1;
-            assert.DeepEqual(Point.StatitIntNotInitialized, -1, "Point.StatitIntNotInitialized -1");
+            Assert.AreEqual(Point.StatitIntNotInitialized, -1, "Point.StatitIntNotInitialized -1");
 
             var i = Point.Test3();
-            assert.DeepEqual(i, 499, "i 499");
+            Assert.AreEqual(i, 499, "i 499");
         }
     }
 }

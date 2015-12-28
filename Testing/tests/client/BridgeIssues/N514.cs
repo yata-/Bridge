@@ -1,37 +1,36 @@
 using Bridge;
 using Bridge.Html5;
-using Bridge.QUnit;
+using Bridge.Test;
 
 using System;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
     // Bridge[#514]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge514
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#514 - {0}")]
+    public class Bridge514
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 2)]
+        public static void TestUseCase()
         {
-            assert.Expect(2);
-
             double d1 = 5.43;
-            assert.Equal(Math.Sign(d1), 1, "Bridge514 Sign(double 5.43)");
+            Assert.AreEqual(Math.Sign(d1), 1, "Bridge514 Sign(double 5.43)");
 
             double d2 = -7.1;
-            assert.Equal(Math.Sign(d2), -1, "Bridge514 Sign(double -7.1)");
+            Assert.AreEqual(Math.Sign(d2), -1, "Bridge514 Sign(double -7.1)");
         }
 
-        public static void TestRelated(Assert assert)
+        [Test(ExpectedCount = 2)]
+        public static void TestRelated()
         {
-            assert.Expect(2);
-
             decimal d1 = 5.43M;
-            assert.Equal(Math.Sign(d1), 1, "Bridge514 Sign(decimal 5.43)");
+            Assert.AreEqual(Math.Sign(d1), 1, "Bridge514 Sign(decimal 5.43)");
 
             decimal d2 = -7.1M;
-            assert.Equal(Math.Sign(d2), -1, "Bridge514 Sign(decimal -7.1)");
+            Assert.AreEqual(Math.Sign(d2), -1, "Bridge514 Sign(decimal -7.1)");
         }
     }
 }

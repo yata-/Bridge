@@ -3,7 +3,7 @@ using Bridge;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
     public partial class Bridge537B : IEnumerable<Bridge537A>
     {

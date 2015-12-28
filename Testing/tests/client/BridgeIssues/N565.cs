@@ -1,38 +1,38 @@
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
 using System;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
     // Bridge[#565]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge565
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#565 - {0}")]
+    public class Bridge565
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 7)]
+        public static void TestUseCase()
         {
-            assert.Expect(7);
-
             var t1 = new Type();
-            assert.Ok(t1 != null, "#565 t1");
+            Assert.True(t1 != null, "#565 t1");
 
             var t2 = new ValueType();
-            assert.Ok(t2 != null, "#565 t2");
+            Assert.True(t2 != null, "#565 t2");
 
             var t3 = new IntPtr();
-            assert.Ok(t3.GetType() == typeof(IntPtr) , "#565 t3");
+            Assert.True(t3.GetType() == typeof(IntPtr) , "#565 t3");
 
             var t4 = new UIntPtr();
-            assert.Ok(t4.GetType() == typeof(UIntPtr), "#565 t4");
+            Assert.True(t4.GetType() == typeof(UIntPtr), "#565 t4");
 
             var t5 = new ParamArrayAttribute();
-            assert.Ok(t5 != null, "#565 t5");
+            Assert.True(t5 != null, "#565 t5");
 
             var t6 = new RuntimeTypeHandle();
-            assert.Ok(t6.GetType() == typeof(RuntimeTypeHandle), "#565 t6");
+            Assert.True(t6.GetType() == typeof(RuntimeTypeHandle), "#565 t6");
 
             var t7 = new RuntimeFieldHandle();
-            assert.Ok(t7.GetType() == typeof(RuntimeFieldHandle), "#565 t7");
+            Assert.True(t7.GetType() == typeof(RuntimeFieldHandle), "#565 t7");
         }
     }
 }

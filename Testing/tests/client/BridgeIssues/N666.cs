@@ -1,18 +1,18 @@
 using System;
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
     // Bridge[#666]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge666
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#666 - {0}")]
+    public class Bridge666
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 1)]
+        public static void TestUseCase()
         {
-            assert.Expect(1);
-
-            assert.Equal(GetSum(), 360, "Bridge666 GetSum 360");
+            Assert.AreEqual(GetSum(), 360, "Bridge666 GetSum 360");
         }
 
         private static int GetSum()

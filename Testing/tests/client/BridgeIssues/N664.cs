@@ -1,8 +1,8 @@
 using System;
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
     [External]
     internal sealed class Bridge664A
@@ -31,18 +31,18 @@ namespace ClientTestLibrary
     }
 
     // Bridge[#664]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge664
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#664 - {0}")]
+    public class Bridge664
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 2)]
+        public static void TestUseCase()
         {
-            assert.Expect(2);
-
             Func<string, Bridge664A> f = s => (Bridge664A)s;
             // if cast will be emitted then exception will be thrown because Bridge664A is not emitted
-            assert.Equal(f("test"), "test", "Bridge664");
+            Assert.AreEqual(f("test"), "test", "Bridge664");
 
-            assert.Throws(() => { Bridge664C b = Script.Write<Bridge664C>("{ }"); var s = (Bridge664B)b; }, "Bridge664 Should throw exception");
+            Assert.Throws(() => { Bridge664C b = Script.Write<Bridge664C>("{ }"); var s = (Bridge664B)b; }, "Bridge664 Should throw exception");
 
 
         }

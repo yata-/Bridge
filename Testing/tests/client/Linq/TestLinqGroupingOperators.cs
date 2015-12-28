@@ -1,12 +1,11 @@
 using Bridge;
-using Bridge.QUnit;
-using ClientTestLibrary.Utilities;
+using Bridge.Test;
+using Bridge.ClientTest.Utilities;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ClientTestLibrary.Linq
+namespace Bridge.ClientTest.Linq
 {
-    [FileName("testLinqGroupingOperators.js")]
     public class AnagramEqualityComparer : EqualityComparer<string>
     {
         public override bool Equals(string x, string y)
@@ -33,12 +32,13 @@ namespace ClientTestLibrary.Linq
         }
     }
 
-    internal class TestLinqGroupingOperators
+    [Category(Constants.MODULE_LINQ)]
+    [TestFixture(TestNameFormat = "Grouping - {0}")]
+    public class TestLinqGroupingOperators
     {
-        public static void Test(Assert assert)
+        [Test(ExpectedCount = 3)]
+        public static void Test()
         {
-            assert.Expect(3);
-
             // TEST
             var numbers = new[] { 2, 10, 3, 5, 30, 1, -15 };
             var words = new[] { "1.one", "3.three", "2.two", "22.twentytwo", "11.eleven", "30.thirty" };
@@ -60,7 +60,7 @@ namespace ClientTestLibrary.Linq
                     new {Remainder = 1, Numbers = new[] { 1 } }
                 };
 
-            assert.DeepEqual(numberGroups, numberGroupsExpected, "Group numbers by remainders");
+            Assert.AreEqual(numberGroups, numberGroupsExpected, "Group numbers by remainders");
 
             // TEST
             var wordGroups =
@@ -79,7 +79,7 @@ namespace ClientTestLibrary.Linq
                     new {FirstLetter = '2', Words = new[] { "2.two", "22.twentytwo" } }
                 };
 
-            assert.DeepEqual(wordGroups, wordGroupsExpected, "Group words by first letters");
+            Assert.AreEqual(wordGroups, wordGroupsExpected, "Group words by first letters");
 
             // TEST
             var personGroups =
@@ -100,13 +100,12 @@ namespace ClientTestLibrary.Linq
                 new { Group = (string)null, Persons = new [] {"Nemo"} }
             };
 
-            assert.DeepEqual(personGroups, personGroupsExpected, "Person group by Group field");
+            Assert.AreEqual(personGroups, personGroupsExpected, "Person group by Group field");
         }
 
-        public static void TestComplexGrouping(Assert assert)
+        [Test(ExpectedCount = 1)]
+        public static void TestComplexGrouping()
         {
-            assert.Expect(1);
-
             // TEST
             var numbers = new[] { 2, 10, 3, 5, 30, 1, -15 };
             var words = new[] { "1.one", "3.three", "2.two", "22.twentytwo", "11.eleven", "30.thirty" };
@@ -143,13 +142,12 @@ namespace ClientTestLibrary.Linq
            ).ToArray();
 
             var complexGroupingExpected = GetComplexGroupingExpectedResult();
-            assert.DeepEqual(complexGrouping, complexGroupingExpected, "Complex grouping for numbers and words");
+            Assert.AreEqual(complexGrouping, complexGroupingExpected, "Complex grouping for numbers and words");
         }
 
-        public static void TestAnagrams(Assert assert)
+        [Test(ExpectedCount = 2)]
+        public static void TestAnagrams()
         {
-            assert.Expect(2);
-
             // TEST
             var anagrams = new[]{
                     " from ",
@@ -175,7 +173,7 @@ namespace ClientTestLibrary.Linq
                     new {Key = "earn",  Words = new []{ " earn ", " near "} }
                 };
 
-            assert.DeepEqual(anagramsGroups, anagramsGroupsExpected, "Anagram grouping with equality comparer");
+            Assert.AreEqual(anagramsGroups, anagramsGroupsExpected, "Anagram grouping with equality comparer");
 
             // TEST
             var anagramsGroups1 = anagrams.GroupBy(w => w.Trim(), a => a.ToUpper(), new AnagramEqualityComparer())
@@ -192,7 +190,7 @@ namespace ClientTestLibrary.Linq
                     new {Key = "earn",  Words = new []{ " EARN ", " NEAR "} }
                 };
 
-            assert.DeepEqual(anagramsGroups1, anagramsGroupsExpected1, "Anagram grouping with equality compare and upper case");
+            Assert.AreEqual(anagramsGroups1, anagramsGroupsExpected1, "Anagram grouping with equality compare and upper case");
         }
 
         private static object GetComplexGroupingExpectedResult()

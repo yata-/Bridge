@@ -2,29 +2,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
     // Bridge[#721]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge721
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#721 - {0}")]
+    public class Bridge721
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 4)]
+        public static void TestUseCase()
         {
-            assert.Expect(4);
-
             List<int> testList = new List<int> { 3 };
-            assert.Equal(Check(testList), "ThirdLoop", "Bridge721 ThirdLoop");
+            Assert.AreEqual(Check(testList), "ThirdLoop", "Bridge721 ThirdLoop");
 
             testList = new List<int> { 5 };
-            assert.Equal(Check(testList), "SecondLoop", "Bridge721 SecondLoop");
+            Assert.AreEqual(Check(testList), "SecondLoop", "Bridge721 SecondLoop");
 
             testList = new List<int> { 15 };
-            assert.Equal(Check(testList), "FirstLoop", "Bridge721 FirstLoop");
+            Assert.AreEqual(Check(testList), "FirstLoop", "Bridge721 FirstLoop");
 
             testList = new List<int> { 25 };
-            assert.Equal(Check(testList), "NoLoops", "Bridge721 NoLoops");
+            Assert.AreEqual(Check(testList), "NoLoops", "Bridge721 NoLoops");
         }
 
         public static string Check(List<int> testList)

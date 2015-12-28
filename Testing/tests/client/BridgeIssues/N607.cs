@@ -1,10 +1,9 @@
 using System;
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
-    [FileName("testBridgeIssues.js")]
     public class Opti<T> : IEquatable<Opti<T>>
     {
         public bool Equals(Opti<T> obj)
@@ -12,8 +11,6 @@ namespace ClientTestLibrary
             return this == obj;
         }
     }
-
-    [FileName("testBridgeIssues.js")]
     public class Class1 : IEquatable<Class1>
     {
         public bool Equals(Class1 other)
@@ -23,21 +20,21 @@ namespace ClientTestLibrary
     }
 
     // Bridge[#607]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge607
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#607 - {0}")]
+    public class Bridge607
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 4)]
+        public static void TestUseCase()
         {
-            assert.Expect(4);
-
             var c = new Opti<string>();
             var c1 = new Class1();
 
-            assert.Ok(c.Equals(c));
-            assert.NotOk(c.Equals(null));
+            Assert.True(c.Equals(c));
+            Assert.False(c.Equals(null));
 
-            assert.Ok(c1.Equals(c1));
-            assert.NotOk(c1.Equals(null));
+            Assert.True(c1.Equals(c1));
+            Assert.False(c1.Equals(null));
         }
     }
 }

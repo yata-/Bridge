@@ -1,14 +1,13 @@
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
-    [FileName("testBridgeIssues.js")]
     public class Bridge625A : IEqualityComparer<int>
     {
         public bool Equals(int x, int y)
@@ -23,26 +22,26 @@ namespace ClientTestLibrary
     }
 
     // Bridge[#625]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge625
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#625 - {0}")]
+    public class Bridge625
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 4)]
+        public static void TestUseCase()
         {
-            assert.Expect(4);
-
             var list = new int[] { 1, 2, 3 };
 
             var d1 = list.ToDictionary(x => x);
-            assert.Ok(d1 is Dictionary<int, int>,"Bridge625 d1");
+            Assert.True(d1 is Dictionary<int, int>,"Bridge625 d1");
 
             var d2 = list.ToDictionary(x => x, new Bridge625A());
-            assert.Ok(d2 is Dictionary<int, int>, "Bridge625 d2");
+            Assert.True(d2 is Dictionary<int, int>, "Bridge625 d2");
 
             var d3 = list.ToDictionary(x => x, y => y);
-            assert.Ok(d3 is Dictionary<int, int>, "Bridge625 d3");
+            Assert.True(d3 is Dictionary<int, int>, "Bridge625 d3");
 
             var d4 = list.ToDictionary(x => x, y => y, new Bridge625A());
-            assert.Ok(d4 is Dictionary<int, int>, "Bridge625 d4");
+            Assert.True(d4 is Dictionary<int, int>, "Bridge625 d4");
 
         }
     }

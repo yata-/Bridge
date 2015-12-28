@@ -1,11 +1,12 @@
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BasicCSharp
 {
-    internal class TestInterfaces
+    [Category(Constants.MODULE_BASIC_CSHARP)]
+    [TestFixture(TestNameFormat = "Interfaces - {0}")]
+    public class TestInterfaces
     {
-        [FileName("testInterfaces.js")]
         private interface ISimple
         {
             int Data
@@ -17,7 +18,6 @@ namespace ClientTestLibrary
             string GetString();
         }
 
-        [FileName("testInterfaces.js")]
         private interface ISimpleAsWell
         {
             int DataAsWell
@@ -29,7 +29,6 @@ namespace ClientTestLibrary
             string GetStringAsWell();
         }
 
-        [FileName("testInterfaces.js")]
         private class A : ISimple
         {
             public int Data
@@ -49,7 +48,6 @@ namespace ClientTestLibrary
             }
         }
 
-        [FileName("testInterfaces.js")]
         private class B : ISimple
         {
             private int data;
@@ -77,7 +75,6 @@ namespace ClientTestLibrary
             }
         }
 
-        [FileName("testInterfaces.js")]
         private class C : ISimple, ISimpleAsWell
         {
             private int data;
@@ -125,51 +122,48 @@ namespace ClientTestLibrary
             }
         }
 
-        public static void TestInterfaceMethodAndProperty(Assert assert)
+        [Test(ExpectedCount = 6)]
+        public static void TestInterfaceMethodAndProperty()
         {
-            assert.Expect(6);
-
             ISimple a = new A();
 
-            assert.Ok(a != null, "Instance of A created through ISimple interface");
-            assert.Equal(a.GetString(), "A.ISimple", "a.GetString() = A.ISimple  through interface");
-            assert.Equal(a.Data, 1, "a.Data = 1  through interface");
+            Assert.True(a != null, "Instance of A created through ISimple interface");
+            Assert.AreEqual(a.GetString(), "A.ISimple", "a.GetString() = A.ISimple  through interface");
+            Assert.AreEqual(a.Data, 1, "a.Data = 1  through interface");
 
             var b = a as A;
-            assert.Ok(b != null, "Instance of ISimple as A");
-            assert.Equal(a.GetString(), "A.ISimple", "a.GetString() = A.ISimple through instance");
-            assert.Equal(a.Data, 1, "a.Data = 1 through instance");
+            Assert.True(b != null, "Instance of ISimple as A");
+            Assert.AreEqual(a.GetString(), "A.ISimple", "a.GetString() = A.ISimple through instance");
+            Assert.AreEqual(a.Data, 1, "a.Data = 1 through instance");
         }
 
-        public static void TestExplicitInterfaceMethodAndProperty(Assert assert)
+        [Test(ExpectedCount = 3)]
+        public static void TestExplicitInterfaceMethodAndProperty()
         {
-            assert.Expect(3);
-
             ISimple b = new B();
-            assert.Ok(b != null, "Instance of B created through ISimple interface explicitly");
-            assert.Equal(b.GetString(), "explicit B.ISimple", "b.GetString() = explicit B.ISimple");
-            assert.Equal(b.Data, 2, "a.Data = 2");
+            Assert.True(b != null, "Instance of B created through ISimple interface explicitly");
+            Assert.AreEqual(b.GetString(), "explicit B.ISimple", "b.GetString() = explicit B.ISimple");
+            Assert.AreEqual(b.Data, 2, "a.Data = 2");
         }
 
-        public static void TestTwoInterfaces(Assert assert)
+        [Test(ExpectedCount = 9)]
+        public static void TestTwoInterfaces()
         {
-            assert.Expect(9);
-
             var c = new C();
 
-            assert.Ok(c != null, "Instance of C created through ISimpleAsWell interface");
-            assert.Equal(c.GetStringAsWell(), "C.ISimpleAsWell", "a.GetStringAsWell() = A.ISimple through instance");
-            assert.Equal(c.DataAsWell, 4, "c.DataAsWell = 4  through instance");
+            Assert.True(c != null, "Instance of C created through ISimpleAsWell interface");
+            Assert.AreEqual(c.GetStringAsWell(), "C.ISimpleAsWell", "a.GetStringAsWell() = A.ISimple through instance");
+            Assert.AreEqual(c.DataAsWell, 4, "c.DataAsWell = 4  through instance");
 
             var a = c as ISimple;
-            assert.Ok(a != null, "Instance of ISimple as C");
-            assert.Equal(a.GetString(), "C.ISimple", "a.GetString() = C.ISimple  through interface");
-            assert.Equal(a.Data, 3, "a.Data = 3 through interface");
+            Assert.True(a != null, "Instance of ISimple as C");
+            Assert.AreEqual(a.GetString(), "C.ISimple", "a.GetString() = C.ISimple  through interface");
+            Assert.AreEqual(a.Data, 3, "a.Data = 3 through interface");
 
             var b = c as ISimpleAsWell;
-            assert.Ok(b != null, "Instance of ISimpleAsWell as C");
-            assert.Equal(b.GetStringAsWell(), "C.ISimpleAsWell", "b.GetStringAsWell() = C.ISimpleAsWell  through interface");
-            assert.Equal(b.DataAsWell, 4, "b.DataAsWell = 4 through interface");
+            Assert.True(b != null, "Instance of ISimpleAsWell as C");
+            Assert.AreEqual(b.GetStringAsWell(), "C.ISimpleAsWell", "b.GetStringAsWell() = C.ISimpleAsWell  through interface");
+            Assert.AreEqual(b.DataAsWell, 4, "b.DataAsWell = 4 through interface");
         }
     }
 }

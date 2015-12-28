@@ -671,5 +671,26 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.True(((IComparable<DateTime>)new DateTime(1)).CompareTo(new DateTime(0)) > 0);
             Assert.True(((IComparable<DateTime>)new DateTime(0)).CompareTo(new DateTime(1)) < 0);
         }
+
+        [Test(ExpectedCount = 2)]
+        public static void DateTimes()
+        {
+            // TEST
+            // [#83] by C#
+            var str = "2015-03-24T10:48:09.1500225+03:00";
+            var bridgeDate = DateTime.Parse(str);
+            var bridgeDate1 = new DateTime(str);
+
+            Assert.AreEqual(bridgeDate, bridgeDate1, "[#83] C# bridgeDate = bridgeDate1");
+
+            // TEST
+            // [#83] by JavaScript code. This is to check the same issue as above and just to check another way of calling QUnit from JavaScript
+            Script.Write<dynamic>("var str = \"2015-03-24T10:48:09.1500225+03:00\";");
+            Script.Write<dynamic>("var bridgeDate2 = Bridge.Date.parse(str);");
+            Script.Write<dynamic>("var jsDate = new Date(Date.parse(str));");
+            Script.Write<dynamic>("var format = \"yyyy-MM-dd hh:mm:ss\";");
+
+            Script.Write<dynamic>("assert.deepEqual(Bridge.Date.format(bridgeDate2, format), Bridge.Date.format(jsDate, format), \"[#83] js\");");
+        }
     }
 }

@@ -1,27 +1,27 @@
 using Bridge;
 using Bridge.Html5;
-using Bridge.QUnit;
+using Bridge.Test;
 
 using System;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
     // Bridge[#538]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge538
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#538 - {0}")]
+    public class Bridge538
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 1)]
+        public static void TestUseCase()
         {
-            assert.Expect(1);
-
             var srcString = "123";
             var destString = "4";
 
             destString += srcString[2];
 
-            assert.DeepEqual(destString, "43", "Bridge538 '43'");
+            Assert.AreEqual(destString, "43", "Bridge538 '43'");
         }
     }
 }

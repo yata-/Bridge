@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
     // Bridge[#733]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge733
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#733 - {0}")]
+    public class Bridge733
     {
         private static DateTime DateA
         {
@@ -16,12 +17,11 @@ namespace ClientTestLibrary
 
         private static DateTime dateb;
 
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 2)]
+        public static void TestUseCase()
         {
-            assert.Expect(2);
-
-            assert.Ok(DateA == DateTime.MinValue, "Bridge733 DateA");
-            assert.Ok(dateb == DateTime.MinValue, "Bridge733 dateb");
+            Assert.True(DateA == DateTime.MinValue, "Bridge733 DateA");
+            Assert.True(dateb == DateTime.MinValue, "Bridge733 dateb");
 
             dateb = DateTime.Now; // to prevent warning that dateb is never assigned
         }

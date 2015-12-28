@@ -1,26 +1,26 @@
 using System;
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 using Bridge.Html5;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
     // Bridge[#675]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge675
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#675 - {0}")]
+    public class Bridge675
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 3)]
+        public static void TestUseCase()
         {
-            assert.Expect(3);
-
             var me = Global.ToDynamic().ClientTestLibrary.Bridge675;
             me.id = "str1";
             me.i1 = 1;
             me.i2 = 2;
 
-            assert.Equal(me.dynMethod(me.id), "str1", "Bridge675 DynMethod");
-            assert.Equal(Method1(me.id), "str1", "Bridge675 Method1 id");
-            assert.Equal(Method1(me.i1, me.i2), 3, "Bridge675 Method1 i1 i2");
+            Assert.AreEqual(me.dynMethod(me.id), "str1", "Bridge675 DynMethod");
+            Assert.AreEqual(Method1(me.id), "str1", "Bridge675 Method1 id");
+            Assert.AreEqual(Method1(me.i1, me.i2), 3, "Bridge675 Method1 i1 i2");
         }
 
         public static string DynMethod(string s)

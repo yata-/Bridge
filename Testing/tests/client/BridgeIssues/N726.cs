@@ -1,18 +1,18 @@
 using System;
 using System.Collections.Generic;
 using Bridge;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
     // Bridge[#726]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge726
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#726 - {0}")]
+    public class Bridge726
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 1)]
+        public static void TestUseCase()
         {
-            assert.Expect(1);
-
             bool b = true;
             int[] t = new[] { 1, 2, 3 };
 
@@ -21,7 +21,7 @@ namespace ClientTestLibrary
                 foreach (int i in t)
                     sum += i;
 
-            assert.Equal(sum, 6, "Bridge726");
+            Assert.AreEqual(sum, 6, "Bridge726");
         }
     }
 }

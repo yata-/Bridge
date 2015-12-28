@@ -1,21 +1,21 @@
 using Bridge;
 using Bridge.Html5;
-using Bridge.QUnit;
+using Bridge.Test;
 
 using System;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace ClientTestLibrary
+namespace Bridge.ClientTest.BridgeIssues
 {
     // Bridge[#502]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge502
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#502 - {0}")]
+    public class Bridge502
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 1)]
+        public static void TestUseCase()
         {
-            assert.Expect(1);
-
             int[] numbers = { 1, 2, 3 };
 
             int sum = 0;
@@ -40,7 +40,7 @@ namespace ClientTestLibrary
                 sum = sum + a;
             }
 
-            assert.Equal(sum, 24, "Bridge502 sum");
+            Assert.AreEqual(sum, 24, "Bridge502 sum");
         }
     }
 }
