@@ -7,8 +7,8 @@
     <ProjectGuid>{306AD788-87E9-4DF9-A216-95948E024BC8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ClientTestLibrary</RootNamespace>
-    <AssemblyName>ClientTestLibrary</AssemblyName>
+    <RootNamespace>Bridge.ClientTest</RootNamespace>
+    <AssemblyName>Bridge.ClientTest</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
@@ -23,6 +23,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoStdLib>True</NoStdLib>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,9 +33,13 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoStdLib>True</NoStdLib>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="$(OS) != Unix">
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Tests\BasicCSharp\TestMethodParametersClass.cs" />
@@ -156,6 +161,69 @@
     <Compile Include="Utilities\TestData.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArrayTests.cs" />
+    <Compile Include="Collections\Generic\IDictionaryTests.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="Exceptions\RankExceptionTests.cs" />
+    <Compile Include="Exceptions\ArithmeticExceptionTests.cs" />
+    <Compile Include="Exceptions\OverflowExceptionTests.cs" />
+    <Compile Include="DecimalMathTests.cs" />
+    <Compile Include="PropertyAccessorTests.cs" />
+    <Compile Include="EnvironmentTests.cs" />
+    <Compile Include="Exceptions\NotImplementedExceptionTests.cs" />
+    <Compile Include="Exceptions\DivideByZeroExceptionTests.cs" />
+    <Compile Include="CultureInfoTests.cs" />
+    <Compile Include="NumberFormatInfoTests.cs" />
+    <Compile Include="DateTimeFormatInfoTests.cs" />
+    <Compile Include="Exceptions\ArgumentExceptionTests.cs" />
+    <Compile Include="Exceptions\ArgumentNullExceptionTests.cs" />
+    <Compile Include="Exceptions\ArgumentOutOfRangeExceptionTests.cs" />
+    <Compile Include="Exceptions\ExceptionTests.cs" />
+    <Compile Include="Exceptions\InvalidCastExceptionTests.cs" />
+    <Compile Include="Exceptions\NullReferenceExceptionTests.cs" />
+    <Compile Include="Exceptions\KeyNotFoundExceptionTests.cs" />
+    <Compile Include="Exceptions\InvalidOperationExceptionTests.cs" />
+    <Compile Include="Exceptions\NotSupportedExceptionTests.cs" />
+    <Compile Include="Exceptions\FormatExceptionTests.cs" />
+    <Compile Include="SimpleTypes\CharTests.cs" />
+    <Compile Include="Collections\Generic\ComparerTests.cs" />
+    <Compile Include="Collections\Generic\IListTests.cs" />
+    <Compile Include="Collections\Generic\ICollectionTests.cs" />
+    <Compile Include="Collections\Generic\IEnumerableTests.cs" />
+    <Compile Include="Globals.cs" />
+    <Compile Include="ExceptionTests.cs" />
+    <Compile Include="IEquatableTests.cs" />
+    <Compile Include="Collections\Generic\EqualityComparerTests.cs" />
+    <Compile Include="IComparableTests.cs" />
+    <Compile Include="SimpleTypes\ObjectTests.cs" />
+    <Compile Include="MultidimArrayTests.cs" />
+    <Compile Include="Collections\Generic\IteratorBlockTests.cs" />
+    <Compile Include="SimpleTypes\BooleanTests.cs" />
+    <Compile Include="SimpleTypes\TimeSpanTests.cs" />
+    <Compile Include="SimpleTypes\ByteTests.cs" />
+    <Compile Include="Collections\Generic\GenericDictionaryTests.cs" />
+    <Compile Include="Text\RegularExpressions\RegexTests.cs" />
+    <Compile Include="Text\StringBuilderTests.cs" />
+    <Compile Include="Collections\Generic\ListTests.cs" />
+    <Compile Include="SimpleTypes\UInt16Tests.cs" />
+    <Compile Include="SimpleTypes\UInt32Tests.cs" />
+    <Compile Include="SimpleTypes\UInt64Tests.cs" />
+    <Compile Include="SimpleTypes\TupleTests.cs" />
+    <Compile Include="SimpleTypes\SingleTests.cs" />
+    <Compile Include="SimpleTypes\SByteTests.cs" />
+    <Compile Include="NullableTests.cs" />
+    <Compile Include="MathTests.cs" />
+    <Compile Include="SimpleTypes\Int64Tests.cs" />
+    <Compile Include="SimpleTypes\Int32Tests.cs" />
+    <Compile Include="SimpleTypes\Int16Tests.cs" />
+    <Compile Include="SimpleTypes\EnumTests.cs" />
+    <Compile Include="SimpleTypes\DoubleTests.cs" />
+    <Compile Include="SimpleTypes\DecimalTests.cs" />
+    <Compile Include="SimpleTypes\StringTests.cs" />
+    <Compile Include="SimpleTypes\JsDateTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Bridge\bridge.test.json" />
     <None Include="Bridge\bridge.json" />
   </ItemGroup>
   <ItemGroup>
@@ -171,10 +239,15 @@
       <Project>{99decd28-d3e3-4ea7-acae-ab5dfc9913bd}</Project>
       <Name>Bridge.Html5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Frameworks\QUnit\Bridge.QUnit.csproj">
-      <Project>{96cb97f5-1bac-433d-b5ce-ad6e7b244f12}</Project>
-      <Name>Bridge.QUnit</Name>
+    <ProjectReference Include="..\..\..\..\Test\Bridge.Test\Bridge.Test.csproj">
+      <Project>{880f8d17-853c-4864-be92-edcf04654fdd}</Project>
+      <Name>Bridge.Test</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Bridge\plugins\Bridge.Test.Plugin.dll" />
+    <Content Include="Bridge\plugins\Bridge.Test.Plugin.QUnit.dll" />
+    <Content Include="Bridge\plugins\TestFrameworks\Bridge.QUnit.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
@@ -200,6 +273,16 @@ cp -p "$(ProjectDir)../../../Bridge/Resources/Locales/*.js" "$(ProjectDir)../../
     </PostBuildEvent>
     <AddAdditionalExplicitAssemblyReferences>false</AddAdditionalExplicitAssemblyReferences>
     <AdditionalExplicitAssemblyReferences />
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>xcopy "$(ProjectDir)..\..\..\..\Test\Bridge.Test.Plugin\$(OutDir)Bridge.Test.Plugin.dll" "$(ProjectDir)Bridge\plugins" /c /q /y
+xcopy "$(ProjectDir)..\..\..\..\Test\Bridge.Test.Plugin\$(OutDir)Bridge.Test.Plugin.pdb" "$(ProjectDir)Bridge\plugins" /c /q /y
+
+xcopy "$(ProjectDir)..\..\..\..\Test\Bridge.Test.Plugin.QUnit\$(OutDir)Bridge.Test.Plugin.QUnit.dll" "$(ProjectDir)Bridge\plugins" /c /q /y
+xcopy "$(ProjectDir)..\..\..\..\Test\Bridge.Test.Plugin.QUnit\$(OutDir)Bridge.Test.Plugin.QUnit.pdb" "$(ProjectDir)Bridge\plugins" /c /q /y
+
+xcopy "$(ProjectDir)..\..\..\..\Frameworks\QUnit\$(OutDir)Bridge.QUnit.dll" "$(ProjectDir)Bridge\plugins\TestFrameworks" /c /q /y
+xcopy "$(ProjectDir)..\..\..\..\Frameworks\QUnit\$(OutDir)Bridge.QUnit.pdb" "$(ProjectDir)Bridge\plugins\TestFrameworks" /c /q /y</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

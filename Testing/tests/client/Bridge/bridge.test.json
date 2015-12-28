@@ -1,0 +1,9 @@
+﻿{
+    "fileName": "test.js",
+
+    "testFramework": "qunit",
+    "autoRun": "true",
+
+    "testRunClassName": "RunQUnitTests",
+    "TestCommonRunMethodName" : "Run"
+}
