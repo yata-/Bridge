@@ -6448,8 +6448,8 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge722', {
             var asset4 = ($t6 = Bridge.Linq.Enumerable.from(data4).select(function (x) {
                 return x;
             }).last(), c4.set("path", $t6), $t6);
-            Bridge.get(Bridge.Test.Assert).areEqual$1(asset4, 7, "Bridge722 asset4");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(c4.get("path"), 7, "Bridge722 c4");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(asset4, Bridge.Decimal(7.0), "Bridge722 asset4");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(c4.get("path"), Bridge.Decimal(7.0), "Bridge722 c4");
         }
     },
     lastItem: 0,

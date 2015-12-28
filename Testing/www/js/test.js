@@ -10,10 +10,10 @@ Bridge.define('Bridge.Test.Assert', {
     statics: {
         assert: null,
         areEqual: function (actual, expected) {
-            Bridge.get(Bridge.Test.Assert).assert.equal(actual, expected);
+            Bridge.get(Bridge.Test.Assert).assert.deepEqual(actual, expected);
         },
         areEqual$1: function (actual, expected, description) {
-            Bridge.get(Bridge.Test.Assert).assert.equal(actual, expected, description);
+            Bridge.get(Bridge.Test.Assert).assert.deepEqual(actual, expected, description);
         },
         areDeepEqual: function (actual, expected) {
             Bridge.get(Bridge.Test.Assert).assert.deepEqual(actual, expected);
@@ -28,10 +28,10 @@ Bridge.define('Bridge.Test.Assert', {
             Bridge.get(Bridge.Test.Assert).assert.strictEqual(actual, expected, description);
         },
         areNotEqual: function (actual, expected) {
-            Bridge.get(Bridge.Test.Assert).assert.notEqual(actual, expected);
+            Bridge.get(Bridge.Test.Assert).assert.notDeepEqual(actual, expected);
         },
         areNotEqual$1: function (actual, expected, description) {
-            Bridge.get(Bridge.Test.Assert).assert.notEqual(actual, expected, description);
+            Bridge.get(Bridge.Test.Assert).assert.notDeepEqual(actual, expected, description);
         },
         areNotDeepEqual: function (actual, expected) {
             Bridge.get(Bridge.Test.Assert).assert.notDeepEqual(actual, expected);

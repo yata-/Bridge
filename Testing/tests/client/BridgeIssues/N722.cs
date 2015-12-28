@@ -53,8 +53,8 @@ namespace Bridge.ClientTest.BridgeIssues
             decimal[] data4 = { 1m, 2m, 3m, 4m, 7m };
             var c4 = new Dictionary<string, decimal>();
             var asset4 = c4["path"] = data4.Select(x => x).Last();
-            Assert.AreEqual(asset4, 7, "Bridge722 asset4");
-            Assert.AreEqual(c4["path"], 7, "Bridge722 c4");
+            Assert.AreDeepEqual(asset4, 7m, "Bridge722 asset4");
+            Assert.AreDeepEqual(c4["path"], 7m, "Bridge722 c4");
         }
     }
 }
