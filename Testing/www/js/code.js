@@ -15260,12 +15260,12 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.TestBridgeIssues', {
             var b = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge306B).$new(Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge306B.Props(), {
                 name: "B"
             } ));
-            Bridge.get(Bridge.Test.Assert).areEqual$1(b, "ClientTestLibrary.Bridge306B.Props:B", "Bridge306B.New() works");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(b, "Bridge.ClientTest.BridgeIssues.Bridge306B.Props:B", "Bridge306B.New() works");
 
             var a = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge306A).$new(Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge306A.Props(), {
                 name: "A"
             } ));
-            Bridge.get(Bridge.Test.Assert).areEqual$1(a, "ClientTestLibrary.Bridge306A.Props:A", "Bridge306A.New() works");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(a, "Bridge.ClientTest.BridgeIssues.Bridge306A.Props:A", "Bridge306A.New() works");
         },
         n329: function () {
             var d1 = { };
