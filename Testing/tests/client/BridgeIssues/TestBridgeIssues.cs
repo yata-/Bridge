@@ -461,7 +461,7 @@ namespace Bridge.ClientTest.BridgeIssues
 
     // Tests Bridge GitHub issues
     [Category(Constants.MODULE_ISSUES)]
-    //[TestFixture(TestNameFormat = " - {0}")]
+    [TestFixture]
     public class TestBridgeIssues
     {
         // Bridge[#169]
@@ -591,13 +591,13 @@ namespace Bridge.ClientTest.BridgeIssues
             {
                 Name = "B"
             });
-            Assert.AreEqual(b, "ClientTestLibrary.Bridge306B.Props:B", "Bridge306B.New() works");
+            Assert.AreEqual(b, "Bridge.ClientTest.BridgeIssues.Bridge306B.Props:B", "Bridge306B.New() works");
 
             var a = Bridge306A.New(new Bridge306A.Props()
             {
                 Name = "A"
             });
-            Assert.AreEqual(a, "ClientTestLibrary.Bridge306A.Props:A", "Bridge306A.New() works");
+            Assert.AreEqual(a, "Bridge.ClientTest.BridgeIssues.Bridge306A.Props:A", "Bridge306A.New() works");
         }
 
         [Test(Name = "#329", ExpectedCount = 5)]
