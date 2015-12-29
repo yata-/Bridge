@@ -109,6 +109,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{1E40E97A-9E1D-4767-A9E7-B773B5E9C6EB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Test", "..\Test\Bridge.Test\Bridge.Test.csproj", "{880F8D17-853C-4864-BE92-EDCF04654FDD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0967F040-CECC-4B33-9EBA-775111D001CB} = {0967F040-CECC-4B33-9EBA-775111D001CB}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Test.Plugin", "..\Test\Bridge.Test.Plugin\Bridge.Test.Plugin.csproj", "{0967F040-CECC-4B33-9EBA-775111D001CB}"
 EndProject
