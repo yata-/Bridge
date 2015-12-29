@@ -46,7 +46,7 @@ namespace Bridge.Translator
             declarations.ToList().ForEach(item =>
             {
                 var name = this.Emitter.GetEntityName(item);
-                var vName = this.AddLocal(item.Name, item.Type);
+                var vName = this.AddLocal(item.Name, item.Type, name);
 
                 if (item.ParameterModifier == ParameterModifier.Out || item.ParameterModifier == ParameterModifier.Ref)
                 {
@@ -77,16 +77,16 @@ namespace Bridge.Translator
             }
         }
 
-        public string AddLocal(string name, AstType type)
+        public string AddLocal(string name, AstType type, string valueName = null)
         {
             this.Emitter.Locals.Add(name, type);
 
             name = name.StartsWith(Bridge.Translator.Emitter.FIX_ARGUMENT_NAME) ? name.Substring(Bridge.Translator.Emitter.FIX_ARGUMENT_NAME.Length) : name;
-            string vName = name;
+            string vName = valueName ?? name;
 
-            if (Helpers.IsReservedWord(name))
+            if (Helpers.IsReservedWord(vName))
             {
-                vName = this.GetUniqueName(name);
+                vName = this.GetUniqueName(vName);
             }
 
             if (!this.Emitter.LocalsNamesMap.ContainsKey(name))
