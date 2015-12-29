@@ -2802,6 +2802,32 @@ Bridge.define('ClientTestLibrary.Bridge762B', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge793', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(5);
+
+            var js = new Bridge.List$1(String)();
+            js.add("1");
+            var test = new Bridge.ReadOnlyCollection$1(String)(js);
+            assert.equal(test.getCount(), 1, "Bridge793 Count");
+            assert.equal(test.get(0), "1", "Bridge793 [0]");
+
+            var ilist = Bridge.cast(test, Bridge.IList$1(String));
+
+            assert.throws(function () {
+                Bridge.Array.setItem(ilist, 0, "0");
+            }, "Bridge793 Setter should throw an exception");
+            assert.throws(function () {
+                Bridge.Array.add(ilist, "1");
+            }, "Bridge793 Add should throw an exception");
+            assert.throws(function () {
+                Bridge.Array.removeAt(ilist, 0);
+            }, "Bridge793 RemoveAt should throw an exception");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
