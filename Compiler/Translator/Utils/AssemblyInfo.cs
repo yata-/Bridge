@@ -55,6 +55,10 @@ namespace Bridge.Translator
         {
             get
             {
+                if (this.CombineScripts)
+                {
+                    return OutputBy.Project;
+                }
                 return this.outputBy;
             }
             set
