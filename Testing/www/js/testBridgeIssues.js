@@ -2802,6 +2802,44 @@ Bridge.define('ClientTestLibrary.Bridge762B', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge795A', {
+    statics: {
+        op_Equality: function (x, y) {
+            return x.equals(y.$clone());
+        },
+        op_Inequality: function (x, y) {
+            return !(ClientTestLibrary.Bridge795A.op_Equality(x, y));
+        },
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge795A(); }
+    },
+    config: {
+        properties: {
+            Value: 0
+        }
+    },
+    constructor$1: function (value) {
+        ClientTestLibrary.Bridge795A.prototype.$constructor.call(this);
+
+        this.setValue(value);
+    },
+    constructor: function () {
+    },
+    equals: function (o) {
+        if (!(Bridge.is(o, ClientTestLibrary.Bridge795A))) {
+            return false;
+        }
+        return (Bridge.cast(o, ClientTestLibrary.Bridge795A)).getValue() === this.getValue();
+    },
+    getHashCode: function () {
+        return this.getValue();
+    },
+    $clone: function (to) {
+        var s = to || new ClientTestLibrary.Bridge795A();
+        s.Value = this.Value;
+        return s;
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
@@ -4101,6 +4139,19 @@ Bridge.define('ClientTestLibrary.Bridge762', {
             assert.notEqual(value2.$clone(), null, "Bridge762A struct");
             assert.notEqual(value3.$clone(), null, "Bridge762B struct");
             assert.equal(value3.getData(), 0, "Bridge762B.Data struct");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge795', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var wrappedValue = new ClientTestLibrary.Bridge795A("constructor$1", 1);
+            var wrappedValueIsNull = (Bridge.Nullable.lifteq(ClientTestLibrary.Bridge795A.op_Equality, wrappedValue, null));
+
+            assert.equal(wrappedValueIsNull, false, "Bridge795");
         }
     }
 });
