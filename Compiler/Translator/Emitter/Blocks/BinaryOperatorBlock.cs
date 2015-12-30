@@ -50,7 +50,38 @@ namespace Bridge.Translator
                 {
                     if (orr.IsLiftedOperator)
                     {
-                        this.Write(Bridge.Translator.Emitter.ROOT + ".Nullable.lift(");
+                        this.Write(Bridge.Translator.Emitter.ROOT + ".Nullable.");
+
+                        string action = "lift";
+
+                        switch (this.BinaryOperatorExpression.Operator)
+                        {
+                            case BinaryOperatorType.GreaterThan:
+                                action = "liftcmp";
+                                break;
+
+                            case BinaryOperatorType.GreaterThanOrEqual:
+                                action = "liftcmp";
+                                break;
+
+                            case BinaryOperatorType.Equality:
+                                action = "lifteq";
+                                break;
+
+                            case BinaryOperatorType.InEquality:
+                                action = "liftne";
+                                break;
+
+                            case BinaryOperatorType.LessThan:
+                                action = "liftcmp";
+                                break;
+
+                            case BinaryOperatorType.LessThanOrEqual:
+                                action = "liftcmp";
+                                break;
+                        }
+
+                        this.Write(action + "(");
                     }
 
                     this.Write(BridgeTypes.ToJsName(method.DeclaringType, this.Emitter));
