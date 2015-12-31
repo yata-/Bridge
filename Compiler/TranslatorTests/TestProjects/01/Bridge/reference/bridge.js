@@ -6453,7 +6453,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
                 throw new Bridge.ArgumentNullException("list");
             }
 
-            Bridge.ReadOnlyCollection$1.prototype.$constructor.call(this, list);
+            Bridge.List$1(T).prototype.$constructor.call(this, list);
             this.readOnly = true;
         }
     }));
