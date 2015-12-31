@@ -2,8 +2,11 @@ using Bridge.Contract;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using System.ComponentModel.Composition.Primitives;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using Mono.Cecil;
 
 namespace Bridge.Translator
 {
@@ -28,20 +31,44 @@ namespace Bridge.Translator
         public static IPlugins GetPlugins(ITranslator translator, IAssemblyInfo config)
         {
             var path = GetPluginPath(translator, config);
+            var catalogs = new List<ComposablePartCatalog>();
 
-            if (!System.IO.Directory.Exists(path))
+            if (System.IO.Directory.Exists(path))
             {
-                return new Plugins()
-                {
-                    plugins = new IPlugin[0]
-                };
+                catalogs.Add(new DirectoryCatalog(path, "*.dll"));
             }
 
-            DirectoryCatalog dirCatalog = new DirectoryCatalog(path, "*.dll");
-            var catalog = new AggregateCatalog(dirCatalog);
+            foreach (var reference in translator.References)
+            {
+                var assemblies = reference.MainModule.Resources.Where(res => res.Name.StartsWith("Bridge.Plugins."));
+
+                if (assemblies.Any())
+                {
+                    foreach (var res_assembly in assemblies)
+                    {
+                        using (var resourcesStream = ((EmbeddedResource)res_assembly).GetResourceStream())
+                        {
+                            var ba = new byte[(int)resourcesStream.Length];
+                            resourcesStream.Read(ba, 0, (int)resourcesStream.Length);
+
+                            var assembly = Assembly.Load(ba);
+
+                            catalogs.Add(new AssemblyCatalog(assembly));
+                        }
+                    }
+                }
+            }
+
+            if (catalogs.Count == 0)
+            {
+                return new Plugins(){plugins = new IPlugin[0]};
+            }
+
+            var catalog = new AggregateCatalog(catalogs);
 
             CompositionContainer container = new CompositionContainer(catalog);
             var plugins = new Plugins();
+
             container.ComposeParts(plugins);
 
             return plugins;

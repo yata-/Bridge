@@ -2802,6 +2802,20 @@ Bridge.define('ClientTestLibrary.Bridge762B', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge786', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge786).get(true), "true", "Bridge786 true");
+            assert.equal(Bridge.get(ClientTestLibrary.Bridge786).get(false), "false", "Bridge786 false");
+        },
+        get: function ($throws) {
+            return $throws ? "true" : "false";
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge788', {
     statics: {
         testUseCase: function (assert) {
@@ -2809,6 +2823,34 @@ Bridge.define('ClientTestLibrary.Bridge788', {
 
             assert.ok(Bridge.Validation.url("http://127.0.0.1"));
             assert.notOk(Bridge.Validation.url("http://127.0.1"));
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge796', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(5);
+            var b = { v : true };
+
+            assert.ok(Bridge.get(ClientTestLibrary.Bridge796).method1(true), "Bridge796 Method1");
+            assert.ok(Bridge.get(ClientTestLibrary.Bridge796).method1_1(true), "Bridge796 Method1_1");
+            assert.ok(Bridge.get(ClientTestLibrary.Bridge796).method2(true), "Bridge796 Method2");
+            assert.notOk(Bridge.get(ClientTestLibrary.Bridge796).method3(b), "Bridge796 Method3");
+            assert.notOk(b.v, "Bridge796 Method3 b");
+        },
+        method1: function ($num) {
+            return $num;
+        },
+        method1_1: function ($throws) {
+            return $throws;
+        },
+        method2: function ($throws) {
+            return $throws;
+        },
+        method3: function ($throws) {
+            $throws.v = false;
+            return $throws.v;
         }
     }
 });

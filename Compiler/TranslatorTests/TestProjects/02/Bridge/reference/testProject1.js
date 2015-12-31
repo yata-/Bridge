@@ -5,7 +5,7 @@
 Bridge.define('TestProject1.TestClassA', {
     config: {
         properties: {
-            Value1: 0
+            value1: 0
         }
     }
 });
