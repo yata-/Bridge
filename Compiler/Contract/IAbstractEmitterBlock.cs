@@ -4,7 +4,7 @@ namespace Bridge.Contract
 {
     public interface IAbstractEmitterBlock
     {
-        string AddLocal(string name, ICSharpCode.NRefactory.CSharp.AstType type);
+        string AddLocal(string name, ICSharpCode.NRefactory.CSharp.AstType type, string valueName = null);
 
         void AddLocals(System.Collections.Generic.IEnumerable<ICSharpCode.NRefactory.CSharp.ParameterDeclaration> declarations, ICSharpCode.NRefactory.CSharp.AstNode statement);
 
