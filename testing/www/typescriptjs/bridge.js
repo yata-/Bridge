@@ -3983,7 +3983,11 @@
 
     // @source Date.js
 
-    var date = {
+var date = {
+        getDefaultValue: function() {
+            return new Date(-864e13);
+        },
+
         utcNow:  function () {
             var d = new Date();
 
