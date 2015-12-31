@@ -3,5 +3,6 @@
   "cleanOutputFolderBeforeBuild": true,
   "outputFormatting": "Formatted",
 
-  "autoPropertyToField": true
+  "autoPropertyToField": true,
+  "combineScripts":  true
 }
