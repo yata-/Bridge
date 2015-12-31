@@ -63,6 +63,7 @@
     <Compile Include="Tests\BridgeIssues\N655.cs" />
     <Compile Include="Tests\BridgeIssues\N660.cs" />
     <Compile Include="Tests\BridgeIssues\N661.cs" />
+    <Compile Include="Tests\BridgeIssues\N687.cs" />
     <Compile Include="Tests\BridgeIssues\N689.cs" />
     <Compile Include="Tests\BridgeIssues\N690.cs" />
     <Compile Include="Tests\BridgeIssues\N691.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Tests\BridgeIssues\N696.cs" />
     <Compile Include="Tests\BridgeIssues\N699.cs" />
     <Compile Include="Tests\BridgeIssues\N786.cs" />
+    <Compile Include="Tests\BridgeIssues\N796.cs" />
     <Compile Include="Tests\BridgeIssues\N762.cs" />
     <Compile Include="Tests\BridgeIssues\N760.cs" />
     <Compile Include="Tests\BridgeIssues\N732.cs" />

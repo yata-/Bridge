@@ -21,4 +21,12 @@ namespace Bridge.Html5
         /// </summary>
         public readonly string OldURL;
     }
+
+    /// <summary>
+    /// A generic version of the HashChangeEvent class. The type parameter is a type of CurrentTarget.
+    /// </summary>
+    /// <typeparam name="TCurrentTarget">The CurrentTarget type</typeparam>
+    [External]
+    [Name("HashChangeEvent")]
+    public class HashChangeEvent<TCurrentTarget> : Event<TCurrentTarget> where TCurrentTarget : Element { }
 }

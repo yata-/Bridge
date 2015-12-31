@@ -72,22 +72,6 @@ namespace Bridge.Translator
                 this.DefineConstants = this.DefineConstants.Distinct().ToList();
             }
 
-            this.Plugins = Bridge.Translator.Plugins.GetPlugins(this, config);
-            this.Plugins.OnConfigRead(config);
-
-            if (config != null && !string.IsNullOrWhiteSpace(config.BeforeBuild))
-            {
-                try
-                {
-                    this.RunEvent(config.BeforeBuild);
-                }
-                catch (Exception exc)
-                {
-                    throw new Bridge.Translator.Exception("Error: Unable to run beforeBuild event command: " +
-                        exc.Message + "\nStack trace:\n" + exc.StackTrace);
-                }
-            }
-
             if (this.FolderMode)
             {
                 this.ReadFolderFiles();
@@ -103,6 +87,23 @@ namespace Bridge.Translator
             }
 
             var references = this.InspectReferences();
+            this.References = references;
+
+            this.Plugins = Bridge.Translator.Plugins.GetPlugins(this, config);
+            this.Plugins.OnConfigRead(config);
+
+            if (!string.IsNullOrWhiteSpace(config.BeforeBuild))
+            {
+                try
+                {
+                    this.RunEvent(config.BeforeBuild);
+                }
+                catch (Exception exc)
+                {
+                    throw new Bridge.Translator.Exception("Error: Unable to run beforeBuild event command: " +
+                        exc.Message + "\nStack trace:\n" + exc.StackTrace);
+                }
+            }
 
             this.BuildSyntaxTree();
             var resolver = new MemberResolver(this.ParsedSourceFiles, Emitter.ToAssemblyReferences(references));
@@ -117,7 +118,7 @@ namespace Bridge.Translator
             emitter.SourceFiles = this.SourceFiles;
             emitter.Log = this.Log;
             emitter.Plugins = this.Plugins;
-            this.References = references;
+            
             this.SortReferences();
             this.Plugins.BeforeEmit(emitter, this);
             this.Outputs = emitter.Emit();

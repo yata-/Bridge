@@ -2216,6 +2216,22 @@ Bridge.define('ClientTestLibrary.Bridge675', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge687A', {
+    statics: {
+        op_Implicit: function (value) {
+            return value.getValue();
+        }
+    },
+    config: {
+        properties: {
+            Value: null
+        }
+    },
+    constructor: function (value) {
+        this.setValue(value);
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge689', {
     statics: {
         testUseCase: function (assert) {
@@ -2796,6 +2812,34 @@ Bridge.define('ClientTestLibrary.Bridge786', {
         },
         get: function ($throws) {
             return $throws ? "true" : "false";
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge796', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(5);
+            var b = { v : true };
+
+            assert.ok(Bridge.get(ClientTestLibrary.Bridge796).method1(true), "Bridge796 Method1");
+            assert.ok(Bridge.get(ClientTestLibrary.Bridge796).method1_1(true), "Bridge796 Method1_1");
+            assert.ok(Bridge.get(ClientTestLibrary.Bridge796).method2(true), "Bridge796 Method2");
+            assert.notOk(Bridge.get(ClientTestLibrary.Bridge796).method3(b), "Bridge796 Method3");
+            assert.notOk(b.v, "Bridge796 Method3 b");
+        },
+        method1: function ($num) {
+            return $num;
+        },
+        method1_1: function ($throws) {
+            return $throws;
+        },
+        method2: function ($throws) {
+            return $throws;
+        },
+        method3: function ($throws) {
+            $throws.v = false;
+            return $throws.v;
         }
     }
 });
@@ -3966,6 +4010,28 @@ Bridge.define('ClientTestLibrary.Bridge660MessageStore', {
             init: function () {
                 this._initialEditState = new ClientTestLibrary.Bridge660MessageEditState(new ClientTestLibrary.Bridge660TextInputState("constructor", "Message"));
             }
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge687', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(2);
+
+            var c = new ClientTestLibrary.Bridge687A(null);
+            var case1 = false;
+            if (c === null) {
+                case1 = true;
+            }
+            assert.equal(case1, false, "Bridge687 case1");
+
+            c = new ClientTestLibrary.Bridge687A("test");
+            var case2 = false;
+            if (ClientTestLibrary.Bridge687A.op_Implicit(c) === "test") {
+                case2 = true;
+            }
+            assert.equal(case2, true, "Bridge687 case2");
         }
     }
 });
