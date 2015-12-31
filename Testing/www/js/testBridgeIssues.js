@@ -2878,6 +2878,95 @@ Bridge.define('ClientTestLibrary.Bridge793', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge795A', {
+    statics: {
+        op_Equality: function (x, y) {
+            return x.equals(y.$clone());
+        },
+        op_Inequality: function (x, y) {
+            return !(ClientTestLibrary.Bridge795A.op_Equality(x, y));
+        },
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge795A(); }
+    },
+    config: {
+        properties: {
+            Value: 0
+        }
+    },
+    constructor$1: function (value) {
+        ClientTestLibrary.Bridge795A.prototype.$constructor.call(this);
+
+        this.setValue(value);
+    },
+    constructor: function () {
+    },
+    equals: function (o) {
+        if (!(Bridge.is(o, ClientTestLibrary.Bridge795A))) {
+            return false;
+        }
+        return (Bridge.cast(o, ClientTestLibrary.Bridge795A)).getValue() === this.getValue();
+    },
+    getHashCode: function () {
+        return this.getValue();
+    },
+    $clone: function (to) {
+        var s = to || new ClientTestLibrary.Bridge795A();
+        s.Value = this.Value;
+        return s;
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge795B', {
+    statics: {
+        op_Equality: function (x, y) {
+            return x.getValue() === y.getValue();
+        },
+        op_Inequality: function (x, y) {
+            return !(ClientTestLibrary.Bridge795B.op_Equality(x, y));
+        },
+        op_GreaterThanOrEqual: function (x, y) {
+            return x.getValue() >= y.getValue();
+        },
+        op_GreaterThan: function (x, y) {
+            return x.getValue() > y.getValue();
+        },
+        op_LessThanOrEqual: function (x, y) {
+            return x.getValue() <= y.getValue();
+        },
+        op_LessThan: function (x, y) {
+            return x.getValue() < y.getValue();
+        },
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge795B(); }
+    },
+    config: {
+        properties: {
+            Value: 0
+        }
+    },
+    constructor$1: function (value) {
+        ClientTestLibrary.Bridge795B.prototype.$constructor.call(this);
+
+        this.setValue(value);
+    },
+    constructor: function () {
+    },
+    equals: function (o) {
+        if (!(Bridge.is(o, ClientTestLibrary.Bridge795B))) {
+            return false;
+        }
+
+        return (Bridge.cast(o, ClientTestLibrary.Bridge795B)).getValue() === this.getValue();
+    },
+    getHashCode: function () {
+        return this.getValue();
+    },
+    $clone: function (to) {
+        var s = to || new ClientTestLibrary.Bridge795B();
+        s.Value = this.Value;
+        return s;
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge796', {
     statics: {
         testUseCase: function (assert) {
@@ -4225,6 +4314,43 @@ Bridge.define('ClientTestLibrary.Bridge789', {
         method2: function (s) {
             if (s === void 0) { s = new ClientTestLibrary.Bridge789A(); }
             return s.$clone();
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge795', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var wrappedValue = new ClientTestLibrary.Bridge795A("constructor$1", 1);
+            var wrappedValueIsNull = (Bridge.Nullable.lifteq(ClientTestLibrary.Bridge795A.op_Equality, wrappedValue, null));
+
+            assert.equal(wrappedValueIsNull, false, "Bridge795");
+        },
+        testRelated: function (assert) {
+            assert.expect(16);
+
+            var v1 = new ClientTestLibrary.Bridge795B("constructor$1", 1);
+            var v2 = new ClientTestLibrary.Bridge795B("constructor$1", 2);
+            var v3 = new ClientTestLibrary.Bridge795B("constructor$1", 1);
+
+            assert.equal(ClientTestLibrary.Bridge795B.op_Equality(v1, v2), false, "Bridge795 lift == 12");
+            assert.equal(ClientTestLibrary.Bridge795B.op_Equality(v1, v3), true, "Bridge795 lift == 13");
+            assert.equal(ClientTestLibrary.Bridge795B.op_Inequality(v1, v2), true, "Bridge795 lift != 12");
+            assert.equal(ClientTestLibrary.Bridge795B.op_Inequality(v1, v3), false, "Bridge795 lift != 13");
+            assert.equal(ClientTestLibrary.Bridge795B.op_GreaterThanOrEqual(v1, v2), false, "Bridge795 lift >= 12");
+            assert.equal(ClientTestLibrary.Bridge795B.op_GreaterThanOrEqual(v2, v1), true, "Bridge795 lift >= 21");
+            assert.equal(ClientTestLibrary.Bridge795B.op_GreaterThanOrEqual(v1, v3), true, "Bridge795 lift >= 13");
+            assert.equal(ClientTestLibrary.Bridge795B.op_GreaterThan(v1, v2), false, "Bridge795 lift > 12");
+            assert.equal(ClientTestLibrary.Bridge795B.op_GreaterThan(v2, v1), true, "Bridge795 lift > 21");
+            assert.equal(ClientTestLibrary.Bridge795B.op_GreaterThan(v1, v3), false, "Bridge795 lift > 13");
+            assert.equal(ClientTestLibrary.Bridge795B.op_LessThanOrEqual(v1, v2), true, "Bridge795 lift <= 12");
+            assert.equal(ClientTestLibrary.Bridge795B.op_LessThanOrEqual(v2, v1), false, "Bridge795 lift <= 21");
+            assert.equal(ClientTestLibrary.Bridge795B.op_LessThanOrEqual(v1, v3), true, "Bridge795 lift <= 13");
+            assert.equal(ClientTestLibrary.Bridge795B.op_LessThan(v1, v2), true, "Bridge795 lift < 12");
+            assert.equal(ClientTestLibrary.Bridge795B.op_LessThan(v2, v1), false, "Bridge795 lift < 21");
+            assert.equal(ClientTestLibrary.Bridge795B.op_LessThan(v1, v3), false, "Bridge795 lift < 13");
         }
     }
 });
