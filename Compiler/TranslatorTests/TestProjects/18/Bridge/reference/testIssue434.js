@@ -2,6 +2,7 @@
 
 "use strict";
 
+// Top;
 
 Bridge.init(function(){
     Bridge.get(TestIssue434.Issue434A).doSomething(2);
@@ -50,6 +51,13 @@ Bridge.init(TestIssue434.Issue434B.method1);
 Bridge.init(TestIssue434.Issue434B.method3);
 Bridge.init(TestIssue434.Issue434B.method4);
 
+Bridge.define('TestIssue434.Issue434C', {
+    statics: {
+
+    }
+});
+
 
 
 Bridge.init();
+// Bottom;
