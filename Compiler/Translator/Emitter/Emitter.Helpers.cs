@@ -170,7 +170,7 @@ namespace Bridge.Translator
                         {
                             var value = (int)argExpr.ConstantValue;
 
-                            if (value == 1 || value == 2)
+                            if (value > 0)
                             {
                                 return true;
                             }

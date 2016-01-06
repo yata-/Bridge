@@ -40,7 +40,25 @@ namespace Bridge.Translator
                     WriteNewLine(output.NonModuletOutput, moduleOutput.Value.ToString());
                 }
 
-                result.Add(fileName, output.NonModuletOutput.ToString() + (isJs ? "\n\nBridge.init();" : ""));
+                var tmp = new StringBuilder(output.TopOutput.Length + output.BottomOutput.Length + output.NonModuletOutput.Length + 100);
+
+                if (output.TopOutput.Length > 0)
+                {
+                    tmp.Append(output.TopOutput.ToString());
+                }
+
+                if (output.NonModuletOutput.Length > 0)
+                {
+                    tmp.Append(output.NonModuletOutput.ToString() + (isJs ? "\n\nBridge.init();" : ""));
+                }
+
+                if (output.BottomOutput.Length > 0)
+                {
+                    tmp.AppendLine();
+                    tmp.Append(output.BottomOutput.ToString());
+                }
+
+                result.Add(fileName, tmp.ToString());
             }
 
             return result;

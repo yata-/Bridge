@@ -253,6 +253,12 @@ namespace Bridge.Translator
             set;
         }
 
+        public IEmitterOutput EmitterOutput
+        {
+            get;
+            set;
+        }
+
         public bool SkipSemiColon
         {
             get;
