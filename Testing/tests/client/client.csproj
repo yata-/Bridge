@@ -242,8 +242,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Bridge\plugins\Bridge.Test.Plugin.dll" />
-    <Content Include="Bridge\plugins\Bridge.Test.Plugin.QUnit.dll" />
     <Content Include="Bridge\plugins\TestFrameworks\Bridge.QUnit.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -272,14 +270,20 @@ cp -p "$(ProjectDir)../../../Bridge/Resources/Locales/*.js" "$(ProjectDir)../../
     <AdditionalExplicitAssemblyReferences />
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>xcopy "$(ProjectDir)..\..\..\..\Test\Bridge.Test.Plugin\$(OutDir)Bridge.Test.Plugin.dll" "$(ProjectDir)Bridge\plugins" /c /q /y
-xcopy "$(ProjectDir)..\..\..\..\Test\Bridge.Test.Plugin\$(OutDir)Bridge.Test.Plugin.pdb" "$(ProjectDir)Bridge\plugins" /c /q /y
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>REM Run Bridge Compiler for the project
+"$(ProjectDir)..\..\..\Compiler\Builder\$(OutDir)Bridge.Builder.exe" -p "$(ProjectPath)" -b "$(ProjectDir)$(OutDir)Bridge.dll"
 
-xcopy "$(ProjectDir)..\..\..\..\Test\Bridge.Test.Plugin.QUnit\$(OutDir)Bridge.Test.Plugin.QUnit.dll" "$(ProjectDir)Bridge\plugins" /c /q /y
-xcopy "$(ProjectDir)..\..\..\..\Test\Bridge.Test.Plugin.QUnit\$(OutDir)Bridge.Test.Plugin.QUnit.pdb" "$(ProjectDir)Bridge\plugins" /c /q /y
-
-xcopy "$(ProjectDir)..\..\..\..\Frameworks\QUnit\$(OutDir)Bridge.QUnit.dll" "$(ProjectDir)Bridge\plugins\TestFrameworks" /c /q /y
-xcopy "$(ProjectDir)..\..\..\..\Frameworks\QUnit\$(OutDir)Bridge.QUnit.pdb" "$(ProjectDir)Bridge\plugins\TestFrameworks" /c /q /y</PreBuildEvent>
+REM Copy locales
+IF EXIST "$(ProjectDir)..\..\www\js\locales" GOTO NOLOCALESFOLDER
+  md "$(ProjectDir)..\..\www\js\locales"
+:NOLOCALESFOLDER
+del /F /Q "$(ProjectDir)..\..\www\js\locales\*.js"
+xcopy "$(ProjectDir)..\..\..\Bridge\Resources\Locales\*.js" "$(ProjectDir)..\..\www\js\locales" /c /q /y
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

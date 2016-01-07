@@ -12,6 +12,8 @@ namespace Bridge.Translator
 {
     public class Plugins : IPlugins
     {
+        public static bool IsLoaded { get; set; }
+
         public static string GetPluginPath(ITranslator translator, IAssemblyInfo config)
         {
             string path = null;
@@ -28,8 +30,34 @@ namespace Bridge.Translator
             return path;
         }
 
+
+        static Assembly CurrentDomain_AssemblyResolve(object sender, System.ResolveEventArgs args)
+        {
+            AssemblyName askedAssembly = new AssemblyName(args.Name);
+
+            var domain = sender as System.AppDomain;
+            var assemblies = domain.GetAssemblies();
+            foreach (var assembly in assemblies)
+            {
+                if (assembly.FullName == askedAssembly.FullName)
+                {
+                    return assembly;
+                }
+            }
+
+            return null;
+        }
+
         public static IPlugins GetPlugins(ITranslator translator, IAssemblyInfo config)
         {
+            if (!IsLoaded)
+            {
+                System.AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+
+                IsLoaded = true;
+            }
+
+
             var path = GetPluginPath(translator, config);
             var catalogs = new List<ComposablePartCatalog>();
 
