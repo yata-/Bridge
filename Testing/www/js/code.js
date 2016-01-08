@@ -2017,6 +2017,120 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge762B', {
     }
 });
 
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge789A', {
+    statics: {
+        getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge789A(); }
+    },
+    field1: 0,
+    constructor: function () {
+    },
+    getHashCode: function () {
+        var hash = 17;
+        hash = hash * 23 + (this.field1 == null ? 0 : Bridge.getHashCode(this.field1));
+        return hash;
+    },
+    equals: function (o) {
+        if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge789A)) {
+            return false;
+        }
+        return Bridge.equals(this.field1, o.field1);
+    },
+    $clone: function (to) {
+        var s = to || new Bridge.ClientTest.BridgeIssues.Bridge789A();
+        s.field1 = this.field1;
+        return s;
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge795A', {
+    statics: {
+        op_Equality: function (x, y) {
+            return x.equals(y.$clone());
+        },
+        op_Inequality: function (x, y) {
+            return !(Bridge.ClientTest.BridgeIssues.Bridge795A.op_Equality(x, y));
+        },
+        getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge795A(); }
+    },
+    config: {
+        properties: {
+            Value: 0
+        }
+    },
+    constructor$1: function (value) {
+        Bridge.ClientTest.BridgeIssues.Bridge795A.prototype.$constructor.call(this);
+
+        this.setValue(value);
+    },
+    constructor: function () {
+    },
+    equals: function (o) {
+        if (!(Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge795A))) {
+            return false;
+        }
+        return (Bridge.cast(o, Bridge.ClientTest.BridgeIssues.Bridge795A)).getValue() === this.getValue();
+    },
+    getHashCode: function () {
+        return this.getValue();
+    },
+    $clone: function (to) {
+        var s = to || new Bridge.ClientTest.BridgeIssues.Bridge795A();
+        s.Value = this.Value;
+        return s;
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge795B', {
+    statics: {
+        op_Equality: function (x, y) {
+            return x.getValue() === y.getValue();
+        },
+        op_Inequality: function (x, y) {
+            return !(Bridge.ClientTest.BridgeIssues.Bridge795B.op_Equality(x, y));
+        },
+        op_GreaterThanOrEqual: function (x, y) {
+            return x.getValue() >= y.getValue();
+        },
+        op_GreaterThan: function (x, y) {
+            return x.getValue() > y.getValue();
+        },
+        op_LessThanOrEqual: function (x, y) {
+            return x.getValue() <= y.getValue();
+        },
+        op_LessThan: function (x, y) {
+            return x.getValue() < y.getValue();
+        },
+        getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge795B(); }
+    },
+    config: {
+        properties: {
+            Value: 0
+        }
+    },
+    constructor$1: function (value) {
+        Bridge.ClientTest.BridgeIssues.Bridge795B.prototype.$constructor.call(this);
+
+        this.setValue(value);
+    },
+    constructor: function () {
+    },
+    equals: function (o) {
+        if (!(Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge795B))) {
+            return false;
+        }
+
+        return (Bridge.cast(o, Bridge.ClientTest.BridgeIssues.Bridge795B)).getValue() === this.getValue();
+    },
+    getHashCode: function () {
+        return this.getValue();
+    },
+    $clone: function (to) {
+        var s = to || new Bridge.ClientTest.BridgeIssues.Bridge795B();
+        s.Value = this.Value;
+        return s;
+    }
+});
+
 Bridge.define('Bridge.ClientTest.BridgeIssues.CI1');
 
 Bridge.define('Bridge.ClientTest.BridgeIssues.CI2');
@@ -6579,6 +6693,130 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge762', {
             Bridge.get(Bridge.Test.Assert).areNotEqual$1(value2.$clone(), null, "Bridge762A struct");
             Bridge.get(Bridge.Test.Assert).areNotEqual$1(value3.$clone(), null, "Bridge762B struct");
             Bridge.get(Bridge.Test.Assert).areEqual$1(value3.getData(), 0, "Bridge762B.Data struct");
+        }
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge786', {
+    statics: {
+        testUseCase: function () {
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge786).get(true), "true", "Bridge786 true");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge786).get(false), "false", "Bridge786 false");
+        },
+        get: function ($throws) {
+            return $throws ? "true" : "false";
+        }
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge788', {
+    statics: {
+        testUseCase: function () {
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Validation.url("http://127.0.0.1"));
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.Validation.url("http://127.0.1"));
+        }
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge789', {
+    statics: {
+        testUseCase: function () {
+            Bridge.get(Bridge.Test.Assert).areNotEqual(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge789).method1(), null);
+            Bridge.get(Bridge.Test.Assert).areNotEqual(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge789).method2().$clone(), null);
+            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge789).method2().field1, 0);
+        },
+        method1: function (dt) {
+            if (dt === void 0) { dt = new Date(-864e13); }
+            return dt;
+        },
+        method2: function (s) {
+            if (s === void 0) { s = new Bridge.ClientTest.BridgeIssues.Bridge789A(); }
+            return s.$clone();
+        }
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge793', {
+    statics: {
+        testUseCase: function () {
+            var js = new Bridge.List$1(String)();
+            js.add("1");
+            var test = new Bridge.ReadOnlyCollection$1(String)(js);
+
+            Bridge.get(Bridge.Test.Assert).areEqual$1(test.getCount(), 1, "Bridge793 Count");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(test.get(0), "1", "Bridge793 [0]");
+
+            var ilist = Bridge.cast(test, Bridge.IList$1(String));
+
+            Bridge.get(Bridge.Test.Assert).throws$5(function () {
+                Bridge.Array.setItem(ilist, 0, "0");
+            }, "Bridge793 Setter should throw an exception");
+            Bridge.get(Bridge.Test.Assert).throws$5(function () {
+                Bridge.Array.add(ilist, "1");
+            }, "Bridge793 Add should throw an exception");
+            Bridge.get(Bridge.Test.Assert).throws$5(function () {
+                Bridge.Array.removeAt(ilist, 0);
+            }, "Bridge793 RemoveAt should throw an exception");
+        }
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge795', {
+    statics: {
+        testUseCase: function () {
+            var wrappedValue = new Bridge.ClientTest.BridgeIssues.Bridge795A("constructor$1", 1);
+            var wrappedValueIsNull = (Bridge.Nullable.lifteq(Bridge.ClientTest.BridgeIssues.Bridge795A.op_Equality, wrappedValue, null));
+
+            Bridge.get(Bridge.Test.Assert).areEqual$1(wrappedValueIsNull, false, "Bridge795");
+        },
+        testRelated: function () {
+            var v1 = new Bridge.ClientTest.BridgeIssues.Bridge795B("constructor$1", 1);
+            var v2 = new Bridge.ClientTest.BridgeIssues.Bridge795B("constructor$1", 2);
+            var v3 = new Bridge.ClientTest.BridgeIssues.Bridge795B("constructor$1", 1);
+
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge795B.op_Equality(v1, v2), false, "Bridge795 lift == 12");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge795B.op_Equality(v1, v3), true, "Bridge795 lift == 13");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge795B.op_Inequality(v1, v2), true, "Bridge795 lift != 12");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge795B.op_Inequality(v1, v3), false, "Bridge795 lift != 13");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge795B.op_GreaterThanOrEqual(v1, v2), false, "Bridge795 lift >= 12");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge795B.op_GreaterThanOrEqual(v2, v1), true, "Bridge795 lift >= 21");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge795B.op_GreaterThanOrEqual(v1, v3), true, "Bridge795 lift >= 13");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge795B.op_GreaterThan(v1, v2), false, "Bridge795 lift > 12");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge795B.op_GreaterThan(v2, v1), true, "Bridge795 lift > 21");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge795B.op_GreaterThan(v1, v3), false, "Bridge795 lift > 13");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge795B.op_LessThanOrEqual(v1, v2), true, "Bridge795 lift <= 12");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge795B.op_LessThanOrEqual(v2, v1), false, "Bridge795 lift <= 21");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge795B.op_LessThanOrEqual(v1, v3), true, "Bridge795 lift <= 13");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge795B.op_LessThan(v1, v2), true, "Bridge795 lift < 12");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge795B.op_LessThan(v2, v1), false, "Bridge795 lift < 21");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge795B.op_LessThan(v1, v3), false, "Bridge795 lift < 13");
+        }
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge796', {
+    statics: {
+        testUseCase: function () {
+            var b = { v : true };
+
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge796).method1(true), "Bridge796 Method1");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge796).method1_1(true), "Bridge796 Method1_1");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge796).method2(true), "Bridge796 Method2");
+            Bridge.get(Bridge.Test.Assert).false$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge796).method3(b), "Bridge796 Method3");
+            Bridge.get(Bridge.Test.Assert).false$1(b.v, "Bridge796 Method3 b");
+        },
+        method1: function ($num) {
+            return $num;
+        },
+        method1_1: function ($throws) {
+            return $throws;
+        },
+        method2: function ($throws) {
+            return $throws;
+        },
+        method3: function ($throws) {
+            $throws.v = false;
+            return $throws.v;
         }
     }
 });

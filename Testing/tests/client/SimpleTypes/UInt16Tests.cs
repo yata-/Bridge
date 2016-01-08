@@ -65,7 +65,7 @@ namespace Bridge.ClientTest.SimpleTypes
             return default(T);
         }
 
-        //[Test]
+        [Test]
         public void DefaultValueIs0()
         {
             Assert.AreStrictEqual(GetDefaultValue<ushort>(), 0);

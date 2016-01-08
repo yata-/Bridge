@@ -4599,6 +4599,167 @@ Bridge.define('Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridg
     }
 });
 
+Bridge.define('Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge786', {
+    statics: {
+        instance: null,
+        getInstance: function () {
+            if (Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge786).instance === null) {
+                Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge786).instance = new Bridge.ClientTest.BridgeIssues.Bridge786();
+            }
+            return Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge786).instance;
+        },
+        setInstance: function (value) {
+            Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge786).instance = value;
+        },
+        beforeTest: function (isStatic, assert) {
+            Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge786).setInstance(null);
+            Bridge.get(Bridge.Test.Assert).assert = assert;
+            var r = isStatic ? null : Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge786).getInstance();
+            return r;
+        },
+        testUseCase: function (assert) {
+            var t = Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge786).beforeTest(true, assert);
+            assert.expect(2);
+            Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge786).testUseCase();
+        }
+    }
+});
+
+Bridge.define('Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge788', {
+    statics: {
+        instance: null,
+        getInstance: function () {
+            if (Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge788).instance === null) {
+                Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge788).instance = new Bridge.ClientTest.BridgeIssues.Bridge788();
+            }
+            return Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge788).instance;
+        },
+        setInstance: function (value) {
+            Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge788).instance = value;
+        },
+        beforeTest: function (isStatic, assert) {
+            Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge788).setInstance(null);
+            Bridge.get(Bridge.Test.Assert).assert = assert;
+            var r = isStatic ? null : Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge788).getInstance();
+            return r;
+        },
+        testUseCase: function (assert) {
+            var t = Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge788).beforeTest(true, assert);
+            assert.expect(2);
+            Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge788).testUseCase();
+        }
+    }
+});
+
+Bridge.define('Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge789', {
+    statics: {
+        instance: null,
+        getInstance: function () {
+            if (Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge789).instance === null) {
+                Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge789).instance = new Bridge.ClientTest.BridgeIssues.Bridge789();
+            }
+            return Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge789).instance;
+        },
+        setInstance: function (value) {
+            Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge789).instance = value;
+        },
+        beforeTest: function (isStatic, assert) {
+            Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge789).setInstance(null);
+            Bridge.get(Bridge.Test.Assert).assert = assert;
+            var r = isStatic ? null : Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge789).getInstance();
+            return r;
+        },
+        testUseCase: function (assert) {
+            var t = Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge789).beforeTest(true, assert);
+            assert.expect(3);
+            Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge789).testUseCase();
+        }
+    }
+});
+
+Bridge.define('Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge793', {
+    statics: {
+        instance: null,
+        getInstance: function () {
+            if (Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge793).instance === null) {
+                Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge793).instance = new Bridge.ClientTest.BridgeIssues.Bridge793();
+            }
+            return Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge793).instance;
+        },
+        setInstance: function (value) {
+            Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge793).instance = value;
+        },
+        beforeTest: function (isStatic, assert) {
+            Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge793).setInstance(null);
+            Bridge.get(Bridge.Test.Assert).assert = assert;
+            var r = isStatic ? null : Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge793).getInstance();
+            return r;
+        },
+        testUseCase: function (assert) {
+            var t = Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge793).beforeTest(true, assert);
+            assert.expect(5);
+            Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge793).testUseCase();
+        }
+    }
+});
+
+Bridge.define('Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge795', {
+    statics: {
+        instance: null,
+        getInstance: function () {
+            if (Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge795).instance === null) {
+                Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge795).instance = new Bridge.ClientTest.BridgeIssues.Bridge795();
+            }
+            return Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge795).instance;
+        },
+        setInstance: function (value) {
+            Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge795).instance = value;
+        },
+        beforeTest: function (isStatic, assert) {
+            Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge795).setInstance(null);
+            Bridge.get(Bridge.Test.Assert).assert = assert;
+            var r = isStatic ? null : Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge795).getInstance();
+            return r;
+        },
+        testUseCase: function (assert) {
+            var t = Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge795).beforeTest(true, assert);
+            assert.expect(1);
+            Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge795).testUseCase();
+        },
+        testRelated: function (assert) {
+            var t = Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge795).beforeTest(true, assert);
+            assert.expect(16);
+            Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge795).testRelated();
+        }
+    }
+});
+
+Bridge.define('Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge796', {
+    statics: {
+        instance: null,
+        getInstance: function () {
+            if (Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge796).instance === null) {
+                Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge796).instance = new Bridge.ClientTest.BridgeIssues.Bridge796();
+            }
+            return Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge796).instance;
+        },
+        setInstance: function (value) {
+            Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge796).instance = value;
+        },
+        beforeTest: function (isStatic, assert) {
+            Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge796).setInstance(null);
+            Bridge.get(Bridge.Test.Assert).assert = assert;
+            var r = isStatic ? null : Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge796).getInstance();
+            return r;
+        },
+        testUseCase: function (assert) {
+            var t = Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge796).beforeTest(true, assert);
+            assert.expect(5);
+            Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge796).testUseCase();
+        }
+    }
+});
+
 Bridge.define('Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge537', {
     statics: {
         instance: null,
@@ -7000,6 +7161,10 @@ Bridge.define('Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesUInt16
             var t = Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesUInt16Tests).beforeTest(false, assert);
             t.castsWork();
         },
+        defaultValueIs0: function (assert) {
+            var t = Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesUInt16Tests).beforeTest(false, assert);
+            t.defaultValueIs0();
+        },
         defaultConstructorReturnsZero: function (assert) {
             var t = Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesUInt16Tests).beforeTest(false, assert);
             t.defaultConstructorReturnsZero();
@@ -8380,6 +8545,13 @@ Bridge.define('Bridge.Test.QUnit.RunQUnitTests', {
             QUnit.test("#758 - TestUseCase", Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge758).testUseCase);
             QUnit.test("#760 - TestUseCase", Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge760).testUseCase);
             QUnit.test("#762 - TestUseCase", Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge762).testUseCase);
+            QUnit.test("#786 - TestUseCase", Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge786).testUseCase);
+            QUnit.test("#788 - TestUseCase", Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge788).testUseCase);
+            QUnit.test("#789 - TestUseCase", Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge789).testUseCase);
+            QUnit.test("#793 - TestUseCase", Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge793).testUseCase);
+            QUnit.test("#795 - TestUseCase", Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge795).testUseCase);
+            QUnit.test("#795 - TestRelated", Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge795).testRelated);
+            QUnit.test("#796 - TestUseCase", Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge796).testUseCase);
             QUnit.test("#537 - TestUseCase", Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge537).testUseCase);
             QUnit.test("#588 - TestUseCase2", Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge588C).testUseCase2);
             QUnit.test("#603 - TestUseCase", Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestBridgeIssuesBridge603).testUseCase);
@@ -8769,6 +8941,7 @@ Bridge.define('Bridge.Test.QUnit.RunQUnitTests', {
             QUnit.test("Tuple - Tuple8Works", Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesTupleTests).tuple8Works);
             QUnit.test("UInt16 - TypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesUInt16Tests).typePropertiesAreCorrect);
             QUnit.test("UInt16 - CastsWork", Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesUInt16Tests).castsWork);
+            QUnit.test("UInt16 - DefaultValueIs0", Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesUInt16Tests).defaultValueIs0);
             QUnit.test("UInt16 - DefaultConstructorReturnsZero", Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesUInt16Tests).defaultConstructorReturnsZero);
             QUnit.test("UInt16 - ConstantsWork", Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesUInt16Tests).constantsWork);
             QUnit.test("UInt16 - FormatWorks", Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesUInt16Tests).formatWorks);

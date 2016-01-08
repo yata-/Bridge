@@ -10392,3 +10392,36 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
 
 })(this);
 
+
+/* global Bridge */
+
+"use strict";
+
+Bridge.define('Test.BridgeIssues.N770.IBase');
+
+Bridge.define('Test.BridgeIssues.N770.Impl', {
+    inherits: [Test.BridgeIssues.N770.IBase],
+    config: {
+        properties: {
+            Prop: 0
+        }
+    }
+});
+
+Bridge.define('TestProject1.TestClassA', {
+    config: {
+        properties: {
+            value1: 0
+        }
+    }
+});
+
+Bridge.define('TestProject2.TestClassB', {
+    config: {
+        properties: {
+            value1: 0
+        }
+    }
+});
+
+Bridge.init();
