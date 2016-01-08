@@ -7000,10 +7000,6 @@ Bridge.define('Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesUInt16
             var t = Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesUInt16Tests).beforeTest(false, assert);
             t.castsWork();
         },
-        defaultValueIs0: function (assert) {
-            var t = Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesUInt16Tests).beforeTest(false, assert);
-            t.defaultValueIs0();
-        },
         defaultConstructorReturnsZero: function (assert) {
             var t = Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesUInt16Tests).beforeTest(false, assert);
             t.defaultConstructorReturnsZero();
@@ -8773,7 +8769,6 @@ Bridge.define('Bridge.Test.QUnit.RunQUnitTests', {
             QUnit.test("Tuple - Tuple8Works", Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesTupleTests).tuple8Works);
             QUnit.test("UInt16 - TypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesUInt16Tests).typePropertiesAreCorrect);
             QUnit.test("UInt16 - CastsWork", Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesUInt16Tests).castsWork);
-            QUnit.test("UInt16 - DefaultValueIs0", Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesUInt16Tests).defaultValueIs0);
             QUnit.test("UInt16 - DefaultConstructorReturnsZero", Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesUInt16Tests).defaultConstructorReturnsZero);
             QUnit.test("UInt16 - ConstantsWork", Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesUInt16Tests).constantsWork);
             QUnit.test("UInt16 - FormatWorks", Bridge.get(Bridge.Test.QUnit.RunQUnitTests.BridgeClientTestSimpleTypesUInt16Tests).formatWorks);
