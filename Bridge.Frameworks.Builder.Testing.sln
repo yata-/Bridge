@@ -117,10 +117,15 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Test.Plugin", "..\Test\Bridge.Test.Plugin\Bridge.Test.Plugin.csproj", "{0967F040-CECC-4B33-9EBA-775111D001CB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Test.Plugin.QUnit", "..\Test\Bridge.Test.Plugin.QUnit\Bridge.Test.Plugin.QUnit.csproj", "{F6C604F2-A484-4DE6-8E6D-48DD22F4DE03}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AE37F3F0-D46C-48A0-B561-2BBFD622313B} = {AE37F3F0-D46C-48A0-B561-2BBFD622313B}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sandbox", "Sandbox", "{D793BA13-A244-4DBD-A051-5E233DF7D235}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Sandbox", "..\Sandbox\Sandbox\Bridge.Sandbox.csproj", "{82F62EA8-8F17-4922-94D4-466E1B453AE9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Test.QUnit", "..\Test\Bridge.Test.QUnit\Bridge.Test.QUnit.csproj", "{AE37F3F0-D46C-48A0-B561-2BBFD622313B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -208,6 +213,10 @@ Global
 		{82F62EA8-8F17-4922-94D4-466E1B453AE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82F62EA8-8F17-4922-94D4-466E1B453AE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82F62EA8-8F17-4922-94D4-466E1B453AE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE37F3F0-D46C-48A0-B561-2BBFD622313B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE37F3F0-D46C-48A0-B561-2BBFD622313B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE37F3F0-D46C-48A0-B561-2BBFD622313B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE37F3F0-D46C-48A0-B561-2BBFD622313B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -235,5 +244,6 @@ Global
 		{0967F040-CECC-4B33-9EBA-775111D001CB} = {1E40E97A-9E1D-4767-A9E7-B773B5E9C6EB}
 		{F6C604F2-A484-4DE6-8E6D-48DD22F4DE03} = {1E40E97A-9E1D-4767-A9E7-B773B5E9C6EB}
 		{82F62EA8-8F17-4922-94D4-466E1B453AE9} = {D793BA13-A244-4DBD-A051-5E233DF7D235}
+		{AE37F3F0-D46C-48A0-B561-2BBFD622313B} = {1E40E97A-9E1D-4767-A9E7-B773B5E9C6EB}
 	EndGlobalSection
 EndGlobal
