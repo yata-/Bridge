@@ -118,7 +118,7 @@ namespace Bridge.Translator
             emitter.SourceFiles = this.SourceFiles;
             emitter.Log = this.Log;
             emitter.Plugins = this.Plugins;
-            
+
             this.SortReferences();
             this.Plugins.BeforeEmit(emitter, this);
             this.Outputs = emitter.Emit();
@@ -233,7 +233,7 @@ namespace Bridge.Translator
                     var fileNameMin = Path.GetFileNameWithoutExtension(filePath) + ".min" + extension;
 
                     var file = CreateFileDirectory(Path.GetDirectoryName(filePath), fileNameMin);
-                    this.SaveToFile(file.FullName, minifier.MinifyJavaScript(code, Translator.GetMinifierSettings(fileNameMin)));
+                    this.SaveToFile(file.FullName, minifier.MinifyJavaScript(code, this.GetMinifierSettings(fileNameMin)));
                 }
             }
 
@@ -297,8 +297,14 @@ namespace Bridge.Translator
             return path.Replace('-', '_') + name;
         }
 
-        private static string GetOutputHeader(bool needGlobalComment, bool needStrictModeInstruction)
+        private string GetOutputHeader(bool needGlobalComment, bool needStrictModeInstruction)
         {
+            if (this.NoStrictModeAndGlobal)
+            {
+                needGlobalComment = false;
+                needStrictModeInstruction = false;
+            }
+
             string header = needGlobalComment ? "/* global Bridge */\n\n" : string.Empty;
             header = header + (needStrictModeInstruction ? "\"use strict\";\n\n" : string.Empty);
 
@@ -359,7 +365,7 @@ namespace Bridge.Translator
                                 this.ExtractResourceAndWriteToFile(outputPath, reference, resName, fileName.ReplaceLastInstanceOf(".js", ".min.js"), (content) =>
                                 {
                                     var minifier = new Minifier();
-                                    return minifier.MinifyJavaScript(content, Translator.GetMinifierSettings(fileName));
+                                    return minifier.MinifyJavaScript(content, this.GetMinifierSettings(fileName));
                                 });
                             }
                         }
@@ -524,14 +530,22 @@ namespace Bridge.Translator
             this.SaveToFile(file.FullName, content);
         }
 
-        private static CodeSettings GetMinifierSettings(string fileName)
+        private CodeSettings GetMinifierSettings(string fileName)
         {
+            //Different settings depending on whether a file is an internal Bridge (like bridge.js) or user project's file
             if (MinifierCodeSettingsInternalFileNames.Contains(fileName.ToLower()))
             {
                 return MinifierCodeSettingsInternal;
             }
 
-            return MinifierCodeSettingsSafe;
+            var settings = MinifierCodeSettingsSafe;
+            if (this.NoStrictModeAndGlobal)
+            {
+                settings = settings.Clone();
+                settings.StrictMode = false;
+            }
+
+            return settings;
         }
 
         private static FileInfo CreateFileDirectory(string outputPath, string fileName)
