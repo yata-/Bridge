@@ -1,7 +1,4 @@
-﻿/// <reference path="..\..\www\qunit\qunit.d.ts" />
-/// <reference path="..\..\www\typescriptjs\bridge.d.ts" />
-/// <reference path="..\..\www\typescriptjs\basicTypes.d.ts" />
-QUnit.module("TypeScript - Basic Types");
+﻿QUnit.module("TypeScript - Basic Types");
 QUnit.test("Fields of basic types", function (assert) {
     var instance = new BasicTypes.BasicTypes();
 

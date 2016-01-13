@@ -4236,13 +4236,14 @@ Bridge.define('Bridge.ClientTest.NullableTests', {
         Bridge.get(Bridge.Test.Assert).areStrictEqual(Bridge.Nullable.bnot(b), null);
     },
     coalesceWorks: function () {
+        var $t, $t1, $t2, $t3, $t4;
         var v1 = null, v2 = 1, v3 = 0, v4 = 2;
         var s1 = null, s2 = "x";
-        Bridge.get(Bridge.Test.Assert).areStrictEqual(Bridge.coalesce(v1, v1), null);
-        Bridge.get(Bridge.Test.Assert).areStrictEqual(Bridge.coalesce(v1, v2), 1);
-        Bridge.get(Bridge.Test.Assert).areStrictEqual(Bridge.coalesce(v3, v4), 0);
-        Bridge.get(Bridge.Test.Assert).areStrictEqual(Bridge.coalesce(s1, s1), null);
-        Bridge.get(Bridge.Test.Assert).areStrictEqual(Bridge.coalesce(s1, s2), "x");
+        Bridge.get(Bridge.Test.Assert).areStrictEqual(($t = v1, Bridge.hasValue($t) ? $t : v1), null);
+        Bridge.get(Bridge.Test.Assert).areStrictEqual(($t1 = v1, Bridge.hasValue($t1) ? $t1 : v2), 1);
+        Bridge.get(Bridge.Test.Assert).areStrictEqual(($t2 = v3, Bridge.hasValue($t2) ? $t2 : v4), 0);
+        Bridge.get(Bridge.Test.Assert).areStrictEqual(($t3 = s1, Bridge.hasValue($t3) ? $t3 : s1), null);
+        Bridge.get(Bridge.Test.Assert).areStrictEqual(($t4 = s1, Bridge.hasValue($t4) ? $t4 : s2), "x");
     }
 });
 
@@ -4982,13 +4983,14 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.DecimalTests', {
         this.assertIsDecimalAndEqualTo(b, 2);
     },
     shortCoalesceWorks: function () {
+        var $t, $t1;
         var c = Bridge.Decimal(1.0);
-        var d = Bridge.coalesce(c, Bridge.Decimal(2.0));
+        var d = ($t = c, Bridge.hasValue($t) ? $t : Bridge.Decimal(2.0));
 
         this.assertIsDecimalAndEqualTo(d, 1);
 
         var e = Bridge.Decimal(3);
-        var f = Bridge.coalesce(e, Bridge.Decimal(0));
+        var f = ($t1 = e, Bridge.hasValue($t1) ? $t1 : Bridge.Decimal(0));
 
         this.assertIsDecimalAndEqualTo(f, 3);
     }

@@ -112,10 +112,10 @@
             if (typeof Bridge.global.jQuery !== "undefined") {
                 Bridge.global.jQuery(delayfn);
             } else {
-                if (!document || document.readyState === "complete" || document.readyState === "loaded") {
+                if (typeof Bridge.global.document === "undefined" || Bridge.global.document.readyState === "complete" || Bridge.global.document.readyState === "loaded") {
                     delayfn();
                 } else {
-                    Bridge.on("DOMContentLoaded", document, delayfn);
+                    Bridge.on("DOMContentLoaded", Bridge.global.document, delayfn);
                 }
             }
         },
@@ -250,7 +250,7 @@
             } else if (type === Boolean) {
                 return false;
             } else if (type === Date) {
-                return new Date(0);
+                return new Date(-864e13);
             } else if (type === Number) {
                 return 0;
             }

@@ -214,7 +214,7 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
 
         sort: function (comparison) {
             this.checkReadOnly();
-            this.items.sort(comparison);
+            this.items.sort(comparison || Bridge.Comparer$1.$default.compare);
         },
 
         splice: function (start, count, items) {
@@ -277,7 +277,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
                 throw new Bridge.ArgumentNullException("list");
             }
 
-            Bridge.ReadOnlyCollection$1.prototype.$constructor.call(this, list);
+            Bridge.List$1(T).prototype.$constructor.call(this, list);
             this.readOnly = true;
         }
     }));

@@ -83,9 +83,26 @@ namespace Bridge.Translator
                 }
             }
 
-            if (this.TypeInfo.ClassType == ClassType.Struct && !this.StaticBlock)
+            if (this.TypeInfo.ClassType == ClassType.Struct)
             {
-                this.EmitStructMethods();
+                if (!this.StaticBlock)
+                {
+                    this.EmitStructMethods();
+                }
+                else
+                {
+                    var typeDef = this.Emitter.GetTypeDefinition();
+                    string structName = this.Emitter.Validator.GetCustomTypeName(typeDef, this.Emitter);
+
+                    if (structName.IsEmpty())
+                    {
+                        structName = BridgeTypes.ToJsName(this.TypeInfo.Type, this.Emitter);
+                    }
+
+                    this.EnsureComma();
+                    this.Write("getDefaultValue: function () { return new " + structName + "(); }");
+                    this.Emitter.Comma = true;
+                }
             }
         }
 

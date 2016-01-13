@@ -312,7 +312,19 @@ namespace Bridge.Translator
             {
                 Expression initializer = this.GetDefaultFieldInitializer(propertyDeclaration.ReturnType);
                 TypeConfigInfo info = isStatic ? this.CurrentType.StaticConfig : this.CurrentType.InstanceConfig;
-                if (!this.AssemblyInfo.AutoPropertyToField)
+
+                var resolvedProperty = Resolver.ResolveNode(propertyDeclaration, null) as MemberResolveResult;
+                bool autoPropertyToField = false;
+                if (resolvedProperty != null && resolvedProperty.Member != null)
+                {
+                    autoPropertyToField = Helpers.IsFieldProperty(resolvedProperty.Member, AssemblyInfo);
+                }
+                else
+                {
+                    autoPropertyToField = AssemblyInfo.AutoPropertyToField;
+                }
+
+                if (!autoPropertyToField)
                 {
                     info.Properties.Add(new TypeConfigItem
                     {

@@ -26,4 +26,12 @@ namespace Bridge.Html5
         /// </summary>
         public readonly int Total;
     }
+
+    /// <summary>
+    /// A generic version of the ProgressEvent class. The type parameter is a type of CurrentTarget.
+    /// </summary>
+    /// <typeparam name="TCurrentTarget">The CurrentTarget type</typeparam>
+    [External]
+    [Name("ProgressEvent")]
+    public class ProgressEvent<TCurrentTarget> : Event<TCurrentTarget> where TCurrentTarget : Element { }
 }

@@ -46,7 +46,7 @@ namespace Bridge.Translator
                     this.WriteOpenCloseParentheses();
                     this.BeginBlock();
                     this.WriteReturn(true);
-                    this.Write("new " + BridgeTypes.ToJsName(at.ElementType, this.Emitter) + "()");
+                    this.Write(Inspector.GetStructDefaultValue(at.ElementType, this.Emitter));
                     this.WriteSemiColon();
                     this.WriteNewLine();
                     this.EndBlock();
@@ -66,22 +66,13 @@ namespace Bridge.Translator
                 this.Write("Bridge.Array.create(");
                 var defaultInitializer = new PrimitiveExpression(Inspector.GetDefaultFieldValue(at.ElementType), "?");
 
-                if (defaultInitializer == null)
+                if (defaultInitializer.Value is AstType)
                 {
-                    this.Write("Bridge.getDefaultValue(" + BridgeTypes.ToJsName(arrayCreateExpression.Type, this.Emitter) + ")");
+                    this.Write(Inspector.GetStructDefaultValue((AstType)defaultInitializer.Value, this.Emitter));
                 }
                 else
                 {
-                    var primitiveExpr = defaultInitializer as PrimitiveExpression;
-
-                    if (primitiveExpr != null && primitiveExpr.Value is AstType)
-                    {
-                        this.Write("new " + BridgeTypes.ToJsName((AstType)primitiveExpr.Value, this.Emitter) + "()");
-                    }
-                    else
-                    {
-                        defaultInitializer.AcceptVisitor(this.Emitter);
-                    }
+                    defaultInitializer.AcceptVisitor(this.Emitter);
                 }
 
                 this.WriteComma();

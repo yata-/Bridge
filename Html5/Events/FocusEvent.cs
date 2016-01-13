@@ -16,4 +16,12 @@ namespace Bridge.Html5
         /// </summary>
         public readonly Element RelatedTarget;
     }
+
+    /// <summary>
+    /// A generic version of the FocusEvent class. The type parameter is a type of CurrentTarget.
+    /// </summary>
+    /// <typeparam name="TCurrentTarget">The CurrentTarget type</typeparam>
+    [External]
+    [Name("FocusEvent")]
+    public class FocusEvent<TCurrentTarget> : UIEvent<TCurrentTarget> where TCurrentTarget : Element { }
 }
