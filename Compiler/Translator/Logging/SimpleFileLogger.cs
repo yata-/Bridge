@@ -2,11 +2,13 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace Bridge.Translator.Tests
+using Bridge.Contract;
+
+namespace Bridge.Translator.Logging
 {
-    public sealed class SimpleLogger : IDisposable
+    public sealed class SimpleFileLogger : ILogger, IDisposable
     {
-        public static SimpleLogger Instance
+        public static SimpleFileLogger Instance
         {
             get
             {
@@ -21,7 +23,7 @@ namespace Bridge.Translator.Tests
             {
             }
 
-            internal static readonly SimpleLogger instance = new SimpleLogger();
+            internal static readonly SimpleFileLogger instance = new SimpleFileLogger();
         }
 
         private TextWriter Writer
@@ -30,10 +32,10 @@ namespace Bridge.Translator.Tests
             set;
         }
 
-        private const string LoggerFileName = "Bridge.Translator.Tests.run.log";
-        private const int LoggerFileMaxLength = 1024 * 1024;
+        private const string LoggerFileName = "bridge.log";
+        private const int LoggerFileMaxLength = 16 * 1024 * 1024;
 
-        private SimpleLogger()
+        private SimpleFileLogger()
         {
             var loggerFile = new FileInfo(LoggerFileName);
 
@@ -48,48 +50,48 @@ namespace Bridge.Translator.Tests
             );
         }
 
-        public void Write(string s)
+        private void Write(string s)
         {
             Writer.Write(s);
             Writer.Flush();
         }
 
-        public void Write(string format, params object[] arg)
+        private void Write(string format, params object[] arg)
         {
             Writer.Write(format, arg);
             Writer.Flush();
         }
 
-        public void WriteLine(string s)
+        private void WriteLine(string s)
         {
             Writer.WriteLine(s);
             Writer.Flush();
         }
 
-        public void WriteLine(string format, params object[] arg)
+        private void WriteLine(string format, params object[] arg)
         {
             Writer.WriteLine(format, arg);
             Writer.Flush();
         }
 
-        public void LogInfo(string s)
+        public void Error(string message)
         {
-            WriteLine("INFO: " + s);
+            WriteLine(message);
         }
 
-        public void LogInfo(string format, params object[] arg)
+        public void Warn(string message)
         {
-            WriteLine("INFO: " + format, arg);
+            WriteLine(message);
         }
 
-        public void LogWarning(string s)
+        public void Info(string message)
         {
-            WriteLine("WARNING: " + s);
+            WriteLine(message);
         }
 
-        public void LogWarning(string format, params object[] arg)
+        public void Trace(string message)
         {
-            WriteLine("WARNING: " + format, arg);
+            WriteLine(message);
         }
 
         public void Dispose()

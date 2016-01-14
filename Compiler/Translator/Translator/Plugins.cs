@@ -30,66 +30,121 @@ namespace Bridge.Translator
             return path;
         }
 
-
-        static Assembly CurrentDomain_AssemblyResolve(object sender, System.ResolveEventArgs args)
+        class AssemblyResolver
         {
-            AssemblyName askedAssembly = new AssemblyName(args.Name);
+            public ILogger Logger { get; set; }
 
-            var domain = sender as System.AppDomain;
-            var assemblies = domain.GetAssemblies();
-            foreach (var assembly in assemblies)
+            public Assembly CurrentDomain_AssemblyResolve(object sender, System.ResolveEventArgs args)
             {
-                if (assembly.FullName == askedAssembly.FullName)
-                {
-                    return assembly;
-                }
-            }
+                var domain = sender as System.AppDomain;
+                this.Logger.Trace("Domain " + domain.FriendlyName + " resolving assembly " + args.Name + " requested by " + args.RequestingAssembly.FullName + " ...");
 
-            return null;
+                AssemblyName askedAssembly = new AssemblyName(args.Name);
+                var assemblies = domain.GetAssemblies();
+                foreach (var assembly in assemblies)
+                {
+                    if (assembly.FullName == askedAssembly.FullName)
+                    {
+                        this.Logger.Trace("Resolved for " + assembly.FullName);
+                        return assembly;
+                    }
+                }
+
+                return null;
+            }
         }
 
-        public static IPlugins GetPlugins(ITranslator translator, IAssemblyInfo config)
+        public static IPlugins GetPlugins(ITranslator translator, IAssemblyInfo config, ILogger logger)
         {
+            logger.Info("Discovering plugins...");
+
             if (!IsLoaded)
             {
-                System.AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+                var resolver = new AssemblyResolver() { Logger = logger };
+
+                System.AppDomain.CurrentDomain.AssemblyResolve += resolver.CurrentDomain_AssemblyResolve;
 
                 IsLoaded = true;
+
+                logger.Trace("Set assembly resolver event");
             }
 
 
             var path = GetPluginPath(translator, config);
+            logger.Info("Will use the following plugin path \"" + path + "\"");
+
             var catalogs = new List<ComposablePartCatalog>();
 
             if (System.IO.Directory.Exists(path))
             {
                 catalogs.Add(new DirectoryCatalog(path, "*.dll"));
+                logger.Info("The plugin path exists. Will use it as DirectoryCatalog");
             }
+            else
+            {
+                logger.Info("The plugin path does not exist. Skipping searching test framework plugins in the plugin folder.");
+            }
+
+            string[] skipPluginAssemblies = null;
+            var translatorInstance = translator as Translator;
+            if (translatorInstance != null)
+            {
+                skipPluginAssemblies = translatorInstance.SkipPluginAssemblies;
+            }
+
+            logger.Trace("Will search all translator references to find resource(s) with names starting from \"Bridge.Plugins.\" ...");
 
             foreach (var reference in translator.References)
             {
+                logger.Trace("Searching plugins in reference " + reference.FullName + " ...");
+
+                if (skipPluginAssemblies != null && skipPluginAssemblies.FirstOrDefault(x => reference.Name.FullName.Contains(x)) != null)
+                {
+                    logger.Trace("Skipping the reference " + reference.Name.FullName + " as it is in skipPluginAssemblies");
+                    continue;
+                }
+
                 var assemblies = reference.MainModule.Resources.Where(res => res.Name.StartsWith("Bridge.Plugins."));
+
+                logger.Info("The reference contains " + assemblies.Count() + " resource(s) needed");
 
                 if (assemblies.Any())
                 {
                     foreach (var res_assembly in assemblies)
                     {
-                        using (var resourcesStream = ((EmbeddedResource)res_assembly).GetResourceStream())
+                        logger.Trace("Searching plugins in resource " + res_assembly.Name + " ...");
+
+                        try
                         {
-                            var ba = new byte[(int)resourcesStream.Length];
-                            resourcesStream.Read(ba, 0, (int)resourcesStream.Length);
+                            using (var resourcesStream = ((EmbeddedResource)res_assembly).GetResourceStream())
+                            {
+                                var ba = new byte[(int)resourcesStream.Length];
+                                resourcesStream.Read(ba, 0, (int)resourcesStream.Length);
 
-                            var assembly = Assembly.Load(ba);
+                                logger.Trace("Read the assembly resource stream of " + resourcesStream.Length + " bytes length");
+                                logger.Trace("Loading the assembly into domain " + System.AppDomain.CurrentDomain.FriendlyName + " ...");
 
-                            catalogs.Add(new AssemblyCatalog(assembly));
+                                var assembly = Assembly.Load(ba);
+
+                                catalogs.Add(new AssemblyCatalog(assembly));
+
+                                logger.Trace("Assembly " + assembly.FullName + " is loaded into domain " + System.AppDomain.CurrentDomain.FriendlyName);
+                            }
                         }
+                        catch (Exception ex)
+                        {
+                            logger.Error("Exception occurred:");
+                            logger.Error(ex.Message);
+                        }
+
                     }
                 }
             }
 
             if (catalogs.Count == 0)
             {
-                return new Plugins(){plugins = new IPlugin[0]};
+                logger.Info("No AssemblyCatalogs found");
+                return new Plugins() { plugins = new IPlugin[0] };
             }
 
             var catalog = new AggregateCatalog(catalogs);
@@ -97,7 +152,28 @@ namespace Bridge.Translator
             CompositionContainer container = new CompositionContainer(catalog);
             var plugins = new Plugins();
 
-            container.ComposeParts(plugins);
+            logger.Info("ComposingParts to discover plugins...");
+
+            try
+            {
+                container.ComposeParts(plugins);
+            }
+            catch(Exception ex)
+            {
+                logger.Error("Exception occurred:");
+                logger.Error(ex.Message);
+            }
+
+            if (plugins.Parts != null)
+            {
+
+                foreach (var plugin in plugins.Parts)
+                {
+                    plugin.Logger = translator.Log;
+                }
+
+                logger.Info("Discovered " + plugins.Parts.Count() + " plugin(s)");
+            }
 
             return plugins;
         }

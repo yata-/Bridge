@@ -59,52 +59,68 @@ namespace Bridge.Translator
 
         public Dictionary<string, string> Translate()
         {
+            var logger = this.Log;
+            logger.Trace("Translating...");
+
             var config = this.ReadConfig();
+
+            logger.Trace("Read config file: " + Utils.AssemblyConfigHelper.ConfigToString(config));
 
             if (!string.IsNullOrWhiteSpace(config.Configuration))
             {
                 this.Configuration = config.Configuration;
+                logger.Trace("Set configuration: " + this.Configuration);
             }
 
             if (config.DefineConstants != null && config.DefineConstants.Count > 0)
             {
                 this.DefineConstants.AddRange(config.DefineConstants);
                 this.DefineConstants = this.DefineConstants.Distinct().ToList();
+
+                logger.Trace("Set constants: " + string.Join(",", this.DefineConstants));
             }
 
             if (this.FolderMode)
             {
                 this.ReadFolderFiles();
+                logger.Trace("Read folder files");
             }
             else
             {
                 this.ReadProjectFile();
+                logger.Trace("Read project file");
 
                 if (this.Rebuild || !File.Exists(this.AssemblyLocation))
                 {
                     this.BuildAssembly();
+                    logger.Trace("Build assembly");
                 }
             }
 
             var references = this.InspectReferences();
             this.References = references;
 
-            this.Plugins = Bridge.Translator.Plugins.GetPlugins(this, config);
+            this.Plugins = Bridge.Translator.Plugins.GetPlugins(this, config, logger);
             this.Plugins.OnConfigRead(config);
 
             if (!string.IsNullOrWhiteSpace(config.BeforeBuild))
             {
                 try
                 {
+                    logger.Trace("Running BeforeBuild event");
                     this.RunEvent(config.BeforeBuild);
                 }
                 catch (Exception exc)
                 {
-                    throw new Bridge.Translator.Exception("Error: Unable to run beforeBuild event command: " +
-                        exc.Message + "\nStack trace:\n" + exc.StackTrace);
+                    var message = "Error: Unable to run beforeBuild event command: " + exc.Message + "\nStack trace:\n" + exc.StackTrace;
+
+                    logger.Error("Exception occurred. Message: " + message);
+
+                    throw new Bridge.Translator.Exception(message);
                 }
             }
 
+            logger.Trace("BuildSyntaxTree");
             this.BuildSyntaxTree();
             var resolver = new MemberResolver(this.ParsedSourceFiles, Emitter.ToAssemblyReferences(references));
 
@@ -180,11 +196,16 @@ namespace Bridge.Translator
 
         public virtual void SaveTo(string path, string defaultFileName)
         {
+            var logger = this.Log;
+            logger.Trace("Starts SaveTo path = " + path);
+
             var minifier = new Minifier();
             var files = new Dictionary<string, string>();
             foreach (var item in this.Outputs)
             {
                 string fileName = item.Key;
+                logger.Trace("Output " + item.Key);
+
                 string code = item.Value;
 
                 if (fileName.Contains(Bridge.Translator.AssemblyInfo.DEFAULT_FILENAME))
@@ -210,8 +231,11 @@ namespace Bridge.Translator
                     oldFNlen = fileName.Length;
                 }
 
+                logger.Trace("Output file name changed to " + fileName);
+
                 // If 'fileName' is an absolute path, Path.Combine will ignore the 'path' prefix.
                 string filePath = Path.Combine(path, fileName);
+                logger.Trace("Output file path changed to " + filePath);
                 string extension = Path.GetExtension(fileName);
                 bool isJs = extension == ('.' + Bridge.Translator.AssemblyInfo.JAVASCRIPT_EXTENSION);
 
@@ -222,6 +246,8 @@ namespace Bridge.Translator
                 {
                     string header = GetOutputHeader(isJs, isJs);
                     var file = CreateFileDirectory(filePath);
+
+                    logger.Trace("Output non-minified " + file.FullName);
                     this.SaveToFile(file.FullName, string.IsNullOrWhiteSpace(header) ? code : header + code);
                     files.Add(fileName, file.FullName);
                 }
@@ -233,12 +259,15 @@ namespace Bridge.Translator
                     var fileNameMin = Path.GetFileNameWithoutExtension(filePath) + ".min" + extension;
 
                     var file = CreateFileDirectory(Path.GetDirectoryName(filePath), fileNameMin);
+                    logger.Trace("Output non-formatted " + file.FullName);
+
                     this.SaveToFile(file.FullName, minifier.MinifyJavaScript(code, this.GetMinifierSettings(fileNameMin)));
                 }
             }
 
             if (this.AssemblyInfo.InjectScriptToAssembly)
             {
+                logger.Trace("Injecting resources");
                 this.InjectResources(files);
             }
 
@@ -246,12 +275,15 @@ namespace Bridge.Translator
             {
                 try
                 {
+                    logger.Trace("Run AfterBuild event");
                     this.RunEvent(this.AssemblyInfo.AfterBuild);
                 }
-                catch (Exception exc)
+                catch (Exception ex)
                 {
-                    throw new Bridge.Translator.Exception("Error: Unable to run afterBuild event command: " +
-                        exc.Message + "\nStack trace:\n" + exc.StackTrace);
+                    var message = "Error: Unable to run afterBuild event command: " + ex.Message + "\nStack trace:\n" + ex.StackTrace;
+
+                    logger.Error(message);
+                    throw new Bridge.Translator.Exception(message);
                 }
             }
         }
@@ -580,6 +612,8 @@ namespace Bridge.Translator
 
             if (this.AssemblyInfo.CombineScripts && !isTs)
             {
+                this.Log.Trace("Combining scripts...");
+
                 bool isJs = fileName.EndsWith(".js");
                 bool isMinJs = isJs && fileName.EndsWith(".min.js");
                 StringBuilder buffer;
@@ -617,9 +651,13 @@ namespace Bridge.Translator
                     this.removeList = new List<string>();
                 }
                 this.removeList.Add(fileName);
+
+                this.Log.Trace("Combining scripts done");
             }
 
             File.WriteAllText(fileName, content, OutputEncoding);
+
+            this.Log.Trace("Save file " + fileName);
         }
 
         public void Flush(string path, string defaultFileName)

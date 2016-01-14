@@ -20,7 +20,7 @@ namespace Bridge.Translator
             set;
         }
 
-        public Action<string, string> Log
+        public ILogger Log
         {
             get;
             set;
@@ -181,6 +181,12 @@ namespace Bridge.Translator
         }
 
         public bool NoStrictModeAndGlobal
+        {
+            get;
+            set;
+        }
+
+        public string[] SkipPluginAssemblies
         {
             get;
             set;
