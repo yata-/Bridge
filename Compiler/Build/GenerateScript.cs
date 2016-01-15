@@ -98,7 +98,7 @@ namespace Bridge.Build
 
                 translator.BridgeLocation = Path.Combine(this.AssembliesPath, "Bridge.dll");
                 translator.Rebuild = false;
-                translator.Log = new LoggerChain("Bridge.Build.Task", true, new ConsoleLogger(), SimpleFileLogger.Instance);
+                translator.Log = new Translator.Logging.Logger("Bridge.Build.Task", true, new ConsoleLoggerWriter(), SimpleFileLoggerWriter.Instance);
                 translator.Translate();
 
                 string fileName = Path.GetFileNameWithoutExtension(this.Assembly.ItemSpec);

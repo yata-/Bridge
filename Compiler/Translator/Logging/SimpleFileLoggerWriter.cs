@@ -6,9 +6,9 @@ using Bridge.Contract;
 
 namespace Bridge.Translator.Logging
 {
-    public sealed class SimpleFileLogger : ILogger, IDisposable
+    public sealed class SimpleFileLoggerWriter : ILogger, IDisposable
     {
-        public static SimpleFileLogger Instance
+        public static SimpleFileLoggerWriter Instance
         {
             get
             {
@@ -23,7 +23,7 @@ namespace Bridge.Translator.Logging
             {
             }
 
-            internal static readonly SimpleFileLogger instance = new SimpleFileLogger();
+            internal static readonly SimpleFileLoggerWriter instance = new SimpleFileLoggerWriter();
         }
 
         private TextWriter Writer
@@ -35,7 +35,7 @@ namespace Bridge.Translator.Logging
         private const string LoggerFileName = "bridge.log";
         private const int LoggerFileMaxLength = 16 * 1024 * 1024;
 
-        private SimpleFileLogger()
+        private SimpleFileLoggerWriter()
         {
             var loggerFile = new FileInfo(LoggerFileName);
 

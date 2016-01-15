@@ -95,7 +95,7 @@ namespace Bridge.Translator.Tests
         [TestCase("18", true, true, TestName = "OutputTest 18 - Features")]
         public void Test(string folder, bool isToTranslate, bool useSpecialFileCompare)
         {
-            var logger = new LoggerChain("Bridge.Test.Runner", true, SimpleFileLogger.Instance, new ConsoleLogger());
+            var logger = new Logger("Bridge.Test.Runner", true, SimpleFileLoggerWriter.Instance, new ConsoleLoggerWriter());
 
             GetPaths(folder);
 

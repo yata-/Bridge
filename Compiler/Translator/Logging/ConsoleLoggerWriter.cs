@@ -7,7 +7,7 @@ using Bridge.Contract;
 
 namespace Bridge.Translator.Logging
 {
-    public class ConsoleLogger : ILogger
+    public class ConsoleLoggerWriter : ILogger
     {
         public void Error(string message)
         {
