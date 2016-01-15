@@ -60,9 +60,18 @@ namespace Bridge.Translator
         public Dictionary<string, string> Translate()
         {
             var logger = this.Log;
-            logger.Trace("Translating...");
+            logger.Info("Translating...");
 
             var config = this.ReadConfig();
+
+            if (config.LoggerLevel.HasValue)
+            {
+                var l = logger as Bridge.Translator.Logging.Logger;
+                if (l != null)
+                {
+                    l.LoggerLevel = config.LoggerLevel.Value;
+                }
+            }
 
             logger.Trace("Read config file: " + Utils.AssemblyConfigHelper.ConfigToString(config));
 
@@ -139,6 +148,8 @@ namespace Bridge.Translator
             this.Plugins.BeforeEmit(emitter, this);
             this.Outputs = emitter.Emit();
             this.Plugins.AfterEmit(emitter, this);
+
+            logger.Info("Translating done");
 
             return this.Outputs;
         }
@@ -286,6 +297,8 @@ namespace Bridge.Translator
                     throw new Bridge.Translator.Exception(message);
                 }
             }
+
+            logger.Trace("SaveTo path = " + path + " done");
         }
 
         protected virtual void InjectResources(Dictionary<string, string> files)

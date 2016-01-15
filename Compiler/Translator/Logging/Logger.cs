@@ -7,15 +7,6 @@ using Bridge.Contract;
 
 namespace Bridge.Translator.Logging
 {
-    [Flags]
-    public enum LoggerLevel
-    {
-        Error = 1,
-        Warning = 2,
-        Info = 4,
-        Trace = 8,
-    }
-
     public class Logger : ILogger
     {
         public string Name { get; set; }
@@ -28,13 +19,13 @@ namespace Bridge.Translator.Logging
             get { return this.loggerLevel; }
             set
             {
-                if (value < 0)
+                if (value <= 0)
                 {
                     this.loggerLevel = 0;
                 }
                 else
                 {
-                    var maxValue = (LoggerLevel.Error | LoggerLevel.Warning | LoggerLevel.Info | LoggerLevel.Trace);
+                    var maxValue = LoggerLevel.Trace;
                     if (value > maxValue)
                     {
                         this.loggerLevel = maxValue;
@@ -53,7 +44,7 @@ namespace Bridge.Translator.Logging
 
             if (loggerLevel == 0)
             {
-                loggerLevel = LoggerLevel.Error | LoggerLevel.Warning | LoggerLevel.Info;
+                loggerLevel = LoggerLevel.Info;
             }
 
             this.LoggerWriters = loggerWriters.Where(x => x != null).ToList();
@@ -71,7 +62,7 @@ namespace Bridge.Translator.Logging
             string wrappedMessage;
 
             var level = LoggerLevel.Error;
-            if (this.LoggerLevel.HasFlag(level) && (wrappedMessage = this.WrapMessage(message, level)) != null)
+            if (this.LoggerLevel >= level && (wrappedMessage = this.WrapMessage(message, level)) != null)
             {
                 foreach (var logger in this.LoggerWriters)
                 {
@@ -85,7 +76,7 @@ namespace Bridge.Translator.Logging
             string wrappedMessage;
 
             var level = LoggerLevel.Warning;
-            if (this.LoggerLevel.HasFlag(level) && (wrappedMessage = this.WrapMessage(message, level)) != null)
+            if (this.LoggerLevel >= level && (wrappedMessage = this.WrapMessage(message, level)) != null)
             {
                 foreach (var logger in this.LoggerWriters)
                 {
@@ -99,7 +90,7 @@ namespace Bridge.Translator.Logging
             string wrappedMessage;
 
             var level = LoggerLevel.Info;
-            if (this.LoggerLevel.HasFlag(level) && (wrappedMessage = this.WrapMessage(message, level)) != null)
+            if (this.LoggerLevel >= level && (wrappedMessage = this.WrapMessage(message, level)) != null)
             {
                 foreach (var logger in this.LoggerWriters)
                 {
@@ -113,7 +104,7 @@ namespace Bridge.Translator.Logging
             string wrappedMessage;
 
             var level = LoggerLevel.Trace;
-            if (this.LoggerLevel.HasFlag(level) && (wrappedMessage = this.WrapMessage(message, level)) != null)
+            if (this.LoggerLevel >= level && (wrappedMessage = this.WrapMessage(message, level)) != null)
             {
                 foreach (var logger in this.LoggerWriters)
                 {

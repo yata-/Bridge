@@ -4,5 +4,5 @@
     "outputFormatting": "Formatted",
     "fileName": "code.js",
     "outputBy": "Project",
-    "generateTypeScript": "false"
+    "loggerLevel": "Trace"
 }
