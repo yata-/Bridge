@@ -111,6 +111,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Test", "..\Test\Bridge.Test\Bridge.Test.csproj", "{880F8D17-853C-4864-BE92-EDCF04654FDD}"
 	ProjectSection(ProjectDependencies) = postProject
 		{0967F040-CECC-4B33-9EBA-775111D001CB} = {0967F040-CECC-4B33-9EBA-775111D001CB}
+		{AE37F3F0-D46C-48A0-B561-2BBFD622313B} = {AE37F3F0-D46C-48A0-B561-2BBFD622313B}
 		{F6C604F2-A484-4DE6-8E6D-48DD22F4DE03} = {F6C604F2-A484-4DE6-8E6D-48DD22F4DE03}
 	EndProjectSection
 EndProject
@@ -126,6 +127,15 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Sandbox", "..\Sandbox\Sandbox\Bridge.Sandbox.csproj", "{82F62EA8-8F17-4922-94D4-466E1B453AE9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Test.QUnit", "..\Test\Bridge.Test.QUnit\Bridge.Test.QUnit.csproj", "{AE37F3F0-D46C-48A0-B561-2BBFD622313B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{FF71255A-A020-49DC-A635-B6EBFA1302B4}"
+	ProjectSection(SolutionItems) = preProject
+		..\Test\.nuget\Bridge.nuspec = ..\Test\.nuget\Bridge.nuspec
+		..\Test\.nuget\Bridge.Test.nuspec = ..\Test\.nuget\Bridge.Test.nuspec
+		..\Test\.nuget\NuGet.Build.Package.targets = ..\Test\.nuget\NuGet.Build.Package.targets
+		..\Test\.nuget\NuGet.Config = ..\Test\.nuget\NuGet.Config
+		..\Test\.nuget\NuGet.exe = ..\Test\.nuget\NuGet.exe
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -245,5 +255,6 @@ Global
 		{F6C604F2-A484-4DE6-8E6D-48DD22F4DE03} = {1E40E97A-9E1D-4767-A9E7-B773B5E9C6EB}
 		{82F62EA8-8F17-4922-94D4-466E1B453AE9} = {D793BA13-A244-4DBD-A051-5E233DF7D235}
 		{AE37F3F0-D46C-48A0-B561-2BBFD622313B} = {1E40E97A-9E1D-4767-A9E7-B773B5E9C6EB}
+		{FF71255A-A020-49DC-A635-B6EBFA1302B4} = {1E40E97A-9E1D-4767-A9E7-B773B5E9C6EB}
 	EndGlobalSection
 EndGlobal
