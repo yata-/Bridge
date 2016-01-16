@@ -30,7 +30,7 @@ namespace Bridge.Translator
             return path;
         }
 
-        class AssemblyResolver
+        protected class AssemblyResolver
         {
             public ILogger Logger { get; set; }
 
@@ -40,12 +40,25 @@ namespace Bridge.Translator
                 this.Logger.Trace("Domain " + domain.FriendlyName + " resolving assembly " + args.Name + " requested by " + args.RequestingAssembly.FullName + " ...");
 
                 AssemblyName askedAssembly = new AssemblyName(args.Name);
+                var assemblyLoaded = AssemblyResolver.CheckIfAssemblyLoaded(askedAssembly.Name, domain);
+
+                if (assemblyLoaded != null)
+                {
+                    this.Logger.Trace("Resolved for " + assemblyLoaded.FullName);
+                    return assemblyLoaded;
+                }
+
+                return null;
+            }
+
+            public static Assembly CheckIfAssemblyLoaded(string fullAssemblyName, System.AppDomain domain)
+            {
                 var assemblies = domain.GetAssemblies();
                 foreach (var assembly in assemblies)
                 {
-                    if (assembly.FullName == askedAssembly.FullName)
+                    var assemblyName = new AssemblyName(assembly.FullName);
+                    if (assemblyName.Name == fullAssemblyName)
                     {
-                        this.Logger.Trace("Resolved for " + assembly.FullName);
                         return assembly;
                     }
                 }
@@ -122,13 +135,14 @@ namespace Bridge.Translator
                                 resourcesStream.Read(ba, 0, (int)resourcesStream.Length);
 
                                 logger.Trace("Read the assembly resource stream of " + resourcesStream.Length + " bytes length");
-                                logger.Trace("Loading the assembly into domain " + System.AppDomain.CurrentDomain.FriendlyName + " ...");
 
-                                var assembly = Assembly.Load(ba);
+                                var trimmedName = res_assembly.Name.Remove(res_assembly.Name.IndexOf("Bridge.Plugins."), "Bridge.Plugins.".Length);
+                                trimmedName = trimmedName.Remove(trimmedName.LastIndexOf(".dll"), 4);
+
+                                var assembly = CheckIfAssemblyLoaded(logger, ba, null, trimmedName);
 
                                 catalogs.Add(new AssemblyCatalog(assembly));
-
-                                logger.Trace("Assembly " + assembly.FullName + " is loaded into domain " + System.AppDomain.CurrentDomain.FriendlyName);
+                                logger.Trace("The assembly " + assembly.FullName + " addied to the catalogs");
                             }
                         }
                         catch (Exception ex)
@@ -176,6 +190,32 @@ namespace Bridge.Translator
             }
 
             return plugins;
+        }
+
+        public static Assembly CheckIfAssemblyLoaded(ILogger logger, byte[] ba, AssemblyName assemblyName, string trimmedName)
+        {
+            logger.Trace("Check if assembly " + trimmedName + " already loaded");
+            Assembly assembly = AssemblyResolver.CheckIfAssemblyLoaded(trimmedName, System.AppDomain.CurrentDomain);
+            if (assembly != null)
+            {
+                logger.Trace("The assembly " + trimmedName + " is already loaded. Addin it to the catalogs");
+            }
+            else
+            {
+                logger.Trace("Loading the assembly into domain " + System.AppDomain.CurrentDomain.FriendlyName + " ...");
+
+                if (ba != null)
+                {
+                    assembly = Assembly.Load(ba);
+                }
+                else
+                {
+                    assembly = Assembly.Load(assemblyName);
+                }
+
+                logger.Trace("Assembly " + assembly.FullName + " is loaded into domain " + System.AppDomain.CurrentDomain.FriendlyName);
+            }
+            return assembly;
         }
 
         [ImportMany]
