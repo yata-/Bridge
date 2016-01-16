@@ -104,6 +104,11 @@ namespace Bridge.Html5
         public readonly ValidityState Validity;
 
         /// <summary>
+        /// The raw value contained in the control.
+        /// </summary>
+        public string Value;
+
+        /// <summary>
         /// Indicates whether the element is a candidate for constraint validation. It is false if any conditions bar it from constraint validation.
         /// </summary>
         public readonly bool WillValidate;
