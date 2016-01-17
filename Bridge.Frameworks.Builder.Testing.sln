@@ -132,6 +132,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{FF7125
 	ProjectSection(SolutionItems) = preProject
 		..\Test\.nuget\Bridge.nuspec = ..\Test\.nuget\Bridge.nuspec
 		..\Test\.nuget\Bridge.Test.nuspec = ..\Test\.nuget\Bridge.Test.nuspec
+		..\Test\.nuget\Bridge.Test.targets = ..\Test\.nuget\Bridge.Test.targets
 		..\Test\.nuget\NuGet.Build.Package.targets = ..\Test\.nuget\NuGet.Build.Package.targets
 		..\Test\.nuget\NuGet.Config = ..\Test\.nuget\NuGet.Config
 		..\Test\.nuget\NuGet.exe = ..\Test\.nuget\NuGet.exe
