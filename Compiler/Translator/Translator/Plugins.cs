@@ -12,6 +12,8 @@ namespace Bridge.Translator
 {
     public class Plugins : IPlugins
     {
+        private const string PLUGIN_RESOURCE_NAME_PREFIX = "Bridge.Plugins.";
+
         public static bool IsLoaded { get; set; }
 
         public static string GetPluginPath(ITranslator translator, IAssemblyInfo config)
@@ -105,7 +107,7 @@ namespace Bridge.Translator
                 skipPluginAssemblies = translatorInstance.SkipPluginAssemblies;
             }
 
-            logger.Trace("Will search all translator references to find resource(s) with names starting from \"Bridge.Plugins.\" ...");
+            logger.Trace("Will search all translator references to find resource(s) with names starting from \"" + PLUGIN_RESOURCE_NAME_PREFIX + "\" ...");
 
             foreach (var reference in translator.References)
             {
@@ -116,8 +118,12 @@ namespace Bridge.Translator
                     logger.Trace("Skipping the reference " + reference.Name.FullName + " as it is in skipPluginAssemblies");
                     continue;
                 }
+                else
+                {
+                    logger.Trace("skipPluginAssemblies is not set");
+                }
 
-                var assemblies = reference.MainModule.Resources.Where(res => res.Name.StartsWith("Bridge.Plugins."));
+                var assemblies = reference.MainModule.Resources.Where(res => res.Name.StartsWith(PLUGIN_RESOURCE_NAME_PREFIX));
 
                 logger.Info("The reference contains " + assemblies.Count() + " resource(s) needed");
 
@@ -136,8 +142,7 @@ namespace Bridge.Translator
 
                                 logger.Trace("Read the assembly resource stream of " + resourcesStream.Length + " bytes length");
 
-                                var trimmedName = res_assembly.Name.Remove(res_assembly.Name.IndexOf("Bridge.Plugins."), "Bridge.Plugins.".Length);
-                                trimmedName = trimmedName.Remove(trimmedName.LastIndexOf(".dll"), 4);
+                                var trimmedName = Plugins.TrimResourceAssemblyName(res_assembly, PLUGIN_RESOURCE_NAME_PREFIX);
 
                                 var assembly = CheckIfAssemblyLoaded(logger, ba, null, trimmedName);
 
@@ -192,13 +197,32 @@ namespace Bridge.Translator
             return plugins;
         }
 
+        public static string TrimResourceAssemblyName(Resource resource, string resourceNamePrefix)
+        {
+            var trimmedName = resource.Name;
+
+            var i = trimmedName.IndexOf(resourceNamePrefix);
+            if (i >= 0)
+            {
+                trimmedName = trimmedName.Remove(i, resourceNamePrefix.Length);
+            }
+
+            i = trimmedName.LastIndexOf(".dll");
+            if (i >= 0)
+            {
+                trimmedName = trimmedName.Remove(i, 4);
+            }
+
+            return trimmedName;
+        }
+
         public static Assembly CheckIfAssemblyLoaded(ILogger logger, byte[] ba, AssemblyName assemblyName, string trimmedName)
         {
             logger.Trace("Check if assembly " + trimmedName + " already loaded");
             Assembly assembly = AssemblyResolver.CheckIfAssemblyLoaded(trimmedName, System.AppDomain.CurrentDomain);
             if (assembly != null)
             {
-                logger.Trace("The assembly " + trimmedName + " is already loaded. Addin it to the catalogs");
+                logger.Trace("The assembly " + trimmedName + " is already loaded");
             }
             else
             {
