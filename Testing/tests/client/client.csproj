@@ -248,7 +248,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <Import Project="$(SolutionDir)\..\Test\.nuget\Bridge.Test.targets" Condition="Exists('$(SolutionDir)\..\Test\.nuget\Bridge.Test.targets')" />
+  <Import Project="$(SolutionDir)\..\Test\Bridge.Test\build\package\Bridge.Test.targets" Condition="Exists('$(SolutionDir)\..\Test\Bridge.Test\build\package\Bridge.Test.targets')" />
   <PropertyGroup>
     <PostBuildEvent Condition="$(OS) != Unix">
 "$(ProjectDir)..\..\..\Compiler\Builder\$(OutDir)Bridge.Builder.exe" -p "$(ProjectPath)" -b "$(ProjectDir)$(OutDir)Bridge.dll"
