@@ -139,6 +139,16 @@ var convert = {
         throw new Bridge.NotSupportedException("IConvertible interface is not supported.");
     },
 
+    toUInt16: function (value, formatProvider) {
+        var result = this.toNumber(value, formatProvider, 0, 65535, "UInt16");
+        if (result != null) {
+            return result;
+        }
+
+        //TODO: IConvertible 
+        throw new Bridge.NotSupportedException("IConvertible interface is not supported.");
+    },
+
     toInt32: function (value, formatProvider) {
         //TODO: TO BE implemented, only NUMBER types are supported.
         var type = typeof (value);
