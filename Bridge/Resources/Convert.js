@@ -75,6 +75,30 @@ var convert = {
         throw new Bridge.NotSupportedException("IConvertible interface is not supported.");
     },
 
+    roundToInt: function() {
+        if (value % 1 !== 0) {
+            var intPart = value | 0;
+            var floatPart = value - intPart;
+
+            if (value >= 0.0) {
+                if (value < 2147483647.5) {
+                    if (floatPart > 0.5 || floatPart === 0.5 && (intPart & 1) !== 0)
+                        ++intPart;
+                    return intPart;
+                }
+            }
+            else if (value >= -2147483648.5) {
+                if (floatPart < -0.5 || floatPart === -0.5 && (intPart & 1) !== 0)
+                    --intPart;
+                return intPart;
+            }
+
+            throw new Bridge.OverflowException("Value was either too large or too small for an Int32.");
+        }
+
+        return value;
+    },
+
     toNumber: function (value, formatProvider, minValue, maxValue, typeName) {
         var type = typeof (value);
         switch (type) {
@@ -83,7 +107,7 @@ var convert = {
 
             case "number":
                 if (value % 1 !== 0) {
-                    value = this.toInt32(value);
+                    value = this.roundToInt(value);
                 }
                 if (value < minValue || value > maxValue) {
                     throw new Bridge.OverflowException("Value was either too large or too small for '" + typeName + "'.");
@@ -150,31 +174,13 @@ var convert = {
     },
 
     toInt32: function (value, formatProvider) {
-        //TODO: TO BE implemented, only NUMBER types are supported.
-        var type = typeof (value);
-        switch (type) {
-            case "boolean":
-                return value ? 1 : 0;
-
-            case "number":
-                var intPart = value | 0;
-                var floatPart = value - intPart;
-
-                if (value >= 0.0) {
-                    if (value < 2147483647.5) {
-                        if (floatPart > 0.5 || floatPart === 0.5 && (intPart & 1) !== 0)
-                            ++intPart;
-                        return intPart;
-                    }
-                }
-                else if (value >= -2147483648.5) {
-                    if (floatPart < -0.5 || floatPart === -0.5 && (intPart & 1) !== 0)
-                        --intPart;
-                    return intPart;
-                }
-
-                throw new Bridge.OverflowException("Value was either too large or too small for an Int32.");
+        var result = this.toNumber(value, formatProvider, -2147483648, 2147483647, "Int32");
+        if (result != null) {
+            return result;
         }
+
+        //TODO: IConvertible 
+        throw new Bridge.NotSupportedException("IConvertible interface is not supported.");
     }
 };
 
