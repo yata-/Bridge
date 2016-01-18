@@ -692,5 +692,16 @@ namespace Bridge.ClientTest.SimpleTypes
 
             //Script.Write<dynamic>("assert.deepEqual(Bridge.Date.format(bridgeDate2, format), Bridge.Date.format(jsDate, format), \"[#83] js\");");
         }
+
+        [Test(ExpectedCount = 2)]
+        public static void GetTicksReturnsCorrectValue()
+        {
+            var val = 946710000000;
+            var ticks = new DateTime(val).Ticks;
+            var ticksString = new DateTime(val).Ticks.ToString();
+
+            Assert.AreDeepEqual(ticks, 9467100000000000, "[#823] Ticks returning correct int");
+            Assert.AreDeepEqual(ticksString, "9467100000000000", "[#823] Ticks returning correct value if .ToString() called");
+        }
     }
 }
