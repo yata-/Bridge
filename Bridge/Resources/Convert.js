@@ -106,11 +106,17 @@ var convert = {
                 }
                 break;
         }
+        return null;
     },
 
     toSByte: function (value, formatProvider) {
         var result = this.toNumber(value, formatProvider, -128, 127, "SByte");
-        return result;
+        if (result != null) {
+            return result;
+        }
+
+        //TODO: IConvertible 
+        throw new Bridge.NotSupportedException("IConvertible interface is not supported.");
     },
 
     toInt32: function (value, formatProvider) {
