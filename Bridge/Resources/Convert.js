@@ -75,28 +75,30 @@ var convert = {
         throw new Bridge.NotSupportedException("IConvertible interface is not supported.");
     },
 
-    roundToInt: function() {
-        if (value % 1 !== 0) {
-            var intPart = value | 0;
-            var floatPart = value - intPart;
-
-            if (value >= 0.0) {
-                if (value < 2147483647.5) {
-                    if (floatPart > 0.5 || floatPart === 0.5 && (intPart & 1) !== 0)
-                        ++intPart;
-                    return intPart;
-                }
-            }
-            else if (value >= -2147483648.5) {
-                if (floatPart < -0.5 || floatPart === -0.5 && (intPart & 1) !== 0)
-                    --intPart;
-                return intPart;
-            }
-
-            throw new Bridge.OverflowException("Value was either too large or too small for an Int32.");
+    roundToInt: function (value, minValue, maxValue, typeName) {
+        if (value % 1 === 0) {
+            return value;
         }
 
-        return value;
+        var intPart = value | 0;
+        var floatPart = value - intPart;
+
+        if (value >= 0.0) {
+            if (value < (maxValue + 0.5)) {
+                if (floatPart > 0.5 || floatPart === 0.5 && (intPart & 1) !== 0) {
+                    ++intPart;
+                }
+                return intPart;
+            }
+        }
+        else if (value >= (minValue - 0.5)) {
+            if (floatPart < -0.5 || floatPart === -0.5 && (intPart & 1) !== 0) {
+                --intPart;
+            }
+            return intPart;
+        }
+
+        throw new Bridge.OverflowException("Value was either too large or too small for an '" + typeName + "'.");
     },
 
     toNumber: function (value, formatProvider, minValue, maxValue, typeName) {
@@ -107,7 +109,7 @@ var convert = {
 
             case "number":
                 if (value % 1 !== 0) {
-                    value = this.roundToInt(value);
+                    value = this.roundToInt(value, minValue, maxValue, typeName);
                 }
                 if (value < minValue || value > maxValue) {
                     throw new Bridge.OverflowException("Value was either too large or too small for '" + typeName + "'.");
@@ -116,7 +118,7 @@ var convert = {
 
             case "string":
                 value = Bridge.Int.parseInt(value);
-                if (value < -128 || value > 127) {
+                if (value < -minValue || value > maxValue) {
                     throw new Bridge.OverflowException("Value was either too large or too small for '" + typeName + "'.");
                 }
                 return value;
