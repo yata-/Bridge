@@ -77,5 +77,19 @@ namespace System
         /// </summary>
         [Template("Bridge.Convert.toSByte({value}, {provider})")]
         public static extern sbyte ToSByte(object value, IFormatProvider provider);
+
+        /// <summary>
+        /// Converts the value of the specified object to an 8-bit unsigned integer.
+        /// Note: Calling this method for <see cref="DateTime"/> value always throws <see cref="T:System.InvalidCastException"/>.
+        /// </summary>
+        [Template("Bridge.Convert.toByte({value}, null)")]
+        public static extern byte ToByte(object value);
+
+        /// <summary>
+        /// Converts the value of the specified object to an 8-bit unsigned integer, using the specified culture-specific formatting information.
+        /// Note: Calling this method for <see cref="DateTime"/> value always throws <see cref="T:System.InvalidCastException"/>.
+        /// </summary>
+        [Template("Bridge.Convert.toByte({value}, {provider})")]
+        public static extern byte ToByte(object value, IFormatProvider provider);
     }
 }
