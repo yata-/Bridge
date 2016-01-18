@@ -183,6 +183,16 @@ var convert = {
 
         //TODO: IConvertible 
         throw new Bridge.NotSupportedException("IConvertible interface is not supported.");
+    },
+
+    toUInt32: function (value, formatProvider) {
+        var result = this.toNumber(value, formatProvider, 0, 4294967295, "UInt32");
+        if (result != null) {
+            return result;
+        }
+
+        //TODO: IConvertible 
+        throw new Bridge.NotSupportedException("IConvertible interface is not supported.");
     }
 };
 

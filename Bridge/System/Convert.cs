@@ -133,5 +133,19 @@ namespace System
         /// </summary>
         [Template("Bridge.Convert.toInt32({value}, {provider})")]
         public static extern int ToInt32(object value, IFormatProvider provider);
+
+        /// <summary>
+        /// Converts the value of the specified object to a 32-bit unsigned integer.
+        /// Note: Calling this method for <see cref="DateTime"/> value always throws <see cref="T:System.InvalidCastException"/>.
+        /// </summary>
+        [Template("Bridge.Convert.toUInt32({value}, null)")]
+        public static extern uint ToUInt32(object value);
+
+        /// <summary>
+        /// Converts the value of the specified object to a 32-bit unsigned integer, using the specified culture-specific formatting information.
+        /// Note: Calling this method for <see cref="DateTime"/> value always throws <see cref="T:System.InvalidCastException"/>.
+        /// </summary>
+        [Template("Bridge.Convert.toUInt32({value}, {provider})")]
+        public static extern uint ToUInt32(object value, IFormatProvider provider);
     }
 }
