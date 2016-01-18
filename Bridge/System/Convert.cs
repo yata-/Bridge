@@ -91,5 +91,19 @@ namespace System
         /// </summary>
         [Template("Bridge.Convert.toByte({value}, {provider})")]
         public static extern byte ToByte(object value, IFormatProvider provider);
+
+        /// <summary>
+        /// Converts the value of the specified object to a 16-bit signed integer.
+        /// Note: Calling this method for <see cref="DateTime"/> value always throws <see cref="T:System.InvalidCastException"/>.
+        /// </summary>
+        [Template("Bridge.Convert.toInt16({value}, null)")]
+        public static extern short ToInt16(object value);
+
+        /// <summary>
+        /// Converts the value of the specified object to a 16-bit signed integer, using the specified culture-specific formatting information.
+        /// Note: Calling this method for <see cref="DateTime"/> value always throws <see cref="T:System.InvalidCastException"/>.
+        /// </summary>
+        [Template("Bridge.Convert.toInt16({value}, {provider})")]
+        public static extern short ToInt16(object value, IFormatProvider provider);
     }
 }
