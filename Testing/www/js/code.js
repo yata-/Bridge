@@ -5578,7 +5578,7 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge582', {
         testTicks: function () {
             var centuryBegin = new Date(2001, 1 - 1, 1);
             var currentDate = new Date(2007, 12 - 1, 14, 15, 23);
-            var elapsedTicks = currentDate.getTime() * 10000 - centuryBegin.getTime() * 10000;
+            var elapsedTicks = (currentDate.getTime() * 10000) - (centuryBegin.getTime() * 10000);
             var elapsedSpan = new Bridge.TimeSpan(elapsedTicks);
 
             Bridge.get(Bridge.Test.Assert).areEqual$1(elapsedTicks, 2193385800000000, "Bridge582 TestTicks ticks");
@@ -6817,6 +6817,23 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge796', {
         method3: function ($throws) {
             $throws.v = false;
             return $throws.v;
+        }
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge823', {
+    statics: {
+        getTicksReturnsCorrectValue: function () {
+            var val = 946710000000;
+            var result = 9467100000000000;
+
+            var ticks = (new Date(val).getTime() * 10000);
+            var ticksPlusOne = (new Date(val).getTime() * 10000) + 1;
+            var ticksString = (new Date(val).getTime() * 10000).toString();
+
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(ticks, result, "Ticks returning correct int value");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(ticksPlusOne, result + 1, "Adding to a Tick value is correct");
+            Bridge.get(Bridge.Test.Assert).areDeepEqual$1(ticksString, result.toString(), "Ticks returning correct value if .ToString() called on int");
         }
     }
 });
