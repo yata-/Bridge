@@ -127,6 +127,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Sandbox", "..\Sandbox\Sandbox\Bridge.Sandbox.csproj", "{82F62EA8-8F17-4922-94D4-466E1B453AE9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Test.QUnit", "..\Test\Bridge.Test.QUnit\Bridge.Test.QUnit.csproj", "{AE37F3F0-D46C-48A0-B561-2BBFD622313B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{28703D12-116A-4968-BD85-F26D7F7E7DA4} = {28703D12-116A-4968-BD85-F26D7F7E7DA4}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{FF71255A-A020-49DC-A635-B6EBFA1302B4}"
 	ProjectSection(SolutionItems) = preProject
