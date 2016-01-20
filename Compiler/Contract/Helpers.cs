@@ -823,6 +823,17 @@ namespace Bridge.Contract
                     return Helpers.GetInheritedAttribute(member, attrName);
                 }
             }
+            else if (member.ImplementedInterfaceMembers != null && member.ImplementedInterfaceMembers.Count > 0)
+            {
+                foreach (var interfaceMember in member.ImplementedInterfaceMembers)
+                {
+                    var attr = Helpers.GetInheritedAttribute(interfaceMember, attrName);
+                    if (attr != null)
+                    {
+                        return attr;
+                    }
+                }
+            }
 
             return null;
         }
