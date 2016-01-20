@@ -2995,6 +2995,36 @@ Bridge.define('ClientTestLibrary.Bridge796', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge826A', {
+    statics: {
+        op_Implicit: function (val) {
+            return new ClientTestLibrary.Bridge826A(val);
+        },
+        op_Implicit$1: function (val) {
+            return val !== null ? val._val : Bridge.Decimal(0);
+        }
+    },
+    _val: Bridge.Decimal(0.0),
+    constructor: function (val) {
+        this._val  = val;
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge826B', {
+    statics: {
+        op_Implicit: function (val) {
+            return new ClientTestLibrary.Bridge826B(val);
+        },
+        op_Implicit$1: function (val) {
+            return val !== null ? val._val : 0;
+        }
+    },
+    _val: 0,
+    constructor: function (val) {
+        this._val = val;
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
@@ -4351,6 +4381,32 @@ Bridge.define('ClientTestLibrary.Bridge795', {
             assert.equal(ClientTestLibrary.Bridge795B.op_LessThan(v1, v2), true, "Bridge795 lift < 12");
             assert.equal(ClientTestLibrary.Bridge795B.op_LessThan(v2, v1), false, "Bridge795 lift < 21");
             assert.equal(ClientTestLibrary.Bridge795B.op_LessThan(v1, v3), false, "Bridge795 lift < 13");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge826', {
+    statics: {
+        echoDecimal: function (d) {
+            if (d === void 0) { d = Bridge.Decimal(42.0); }
+            return d;
+        },
+        testUseCase: function (assert) {
+            assert.expect(5);
+
+            var d = null;
+            assert.ok(Bridge.get(ClientTestLibrary.Bridge826).echoDecimal(ClientTestLibrary.Bridge826A.op_Implicit$1(d)).equalsT(Bridge.Decimal(0)), "Bridge826 decimal 0");
+
+            d = ClientTestLibrary.Bridge826A.op_Implicit(Bridge.Decimal(1));
+            assert.ok(Bridge.get(ClientTestLibrary.Bridge826).echoDecimal(ClientTestLibrary.Bridge826A.op_Implicit$1(d)).equalsT(Bridge.Decimal(1)), "Bridge826 decimal 1");
+
+            var i = null;
+            assert.ok(Bridge.get(ClientTestLibrary.Bridge826).echoDecimal(Bridge.Decimal(ClientTestLibrary.Bridge826B.op_Implicit$1(i))).equalsT(Bridge.Decimal(0)), "Bridge826 int 0");
+
+            i = ClientTestLibrary.Bridge826B.op_Implicit(1);
+            assert.ok(Bridge.get(ClientTestLibrary.Bridge826).echoDecimal(Bridge.Decimal(ClientTestLibrary.Bridge826B.op_Implicit$1(i))).equalsT(Bridge.Decimal(1)), "Bridge826 int 1");
+
+            assert.ok(Bridge.get(ClientTestLibrary.Bridge826).echoDecimal().equalsT(Bridge.Decimal(42)), "Bridge826 42");
         }
     }
 });
