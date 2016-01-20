@@ -1,40 +1,54 @@
 using System;
 using Bridge;
-using Bridge.Test;
+using Bridge.QUnit;
 
-namespace Bridge.ClientTest.BridgeIssues
+namespace ClientTestLibrary
 {
-    public class Opti<T> : IEquatable<Opti<T>>
+    [FileName("testBridgeIssues.js")]
+    public class Bridge607A<T> : IEquatable<Bridge607A<T>>
     {
-        public bool Equals(Opti<T> obj)
+        public bool Equals(Bridge607A<T> obj)
         {
             return this == obj;
         }
     }
-    public class Class1 : IEquatable<Class1>
+
+    [FileName("testBridgeIssues.js")]
+    public class Bridge607B : IEquatable<Bridge607B>
     {
-        public bool Equals(Class1 other)
+        public bool Equals(Bridge607B other)
         {
             return this == other;
         }
     }
 
-    // Bridge[#607]
-    [Category(Constants.MODULE_ISSUES)]
-    [TestFixture(TestNameFormat = "#607 - {0}")]
-    public class Bridge607
+    [FileName("testBridgeIssues.js")]
+    public class Bridge607C : IEquatable<Bridge607C>
     {
-        [Test(ExpectedCount = 4)]
-        public static void TestUseCase()
+        bool IEquatable<Bridge607C>.Equals(Bridge607C other)
         {
-            var c = new Opti<string>();
-            var c1 = new Class1();
+            return Equals(this, other);
+        }
+    }
 
-            Assert.True(c.Equals(c));
-            Assert.False(c.Equals(null));
+    // Bridge[#607]
+    [FileName("testBridgeIssues.js")]
+    internal class Bridge607
+    {
+        public static void TestUseCase(Assert assert)
+        {
+            assert.Expect(5);
 
-            Assert.True(c1.Equals(c1));
-            Assert.False(c1.Equals(null));
+            var c = new Bridge607A<string>();
+            var c1 = new Bridge607B();
+
+            assert.Ok(c.Equals(c), "Bridge607A c");
+            assert.NotOk(c.Equals(null), "Bridge607A null");
+
+            assert.Ok(c1.Equals(c1), "Bridge607B c");
+            assert.NotOk(c1.Equals(null), "Bridge607B null");
+
+            assert.NotOk(new Bridge607C().Equals(null), "Bridge607C null");
         }
     }
 }
