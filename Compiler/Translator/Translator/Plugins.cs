@@ -1,4 +1,6 @@
 using Bridge.Contract;
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
@@ -6,6 +8,7 @@ using System.ComponentModel.Composition.Primitives;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+
 using Mono.Cecil;
 
 namespace Bridge.Translator
@@ -53,13 +56,23 @@ namespace Bridge.Translator
                 return null;
             }
 
+            public void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
+            {
+                this.Logger.Trace("LoadedAssembly: " + args.LoadedAssembly.FullName);
+            }
+
             public static Assembly CheckIfAssemblyLoaded(string fullAssemblyName, System.AppDomain domain)
             {
+                //var mergedAssemblies = new string[] { "Bridge.Contract", "Bridge.Translator", "ICSharpCode.NRefactory.Cecil", "ICSharpCode.NRefactory.CSharp",
+                //"ICSharpCode.NRefactory", "Mono.Cecil", "Newtonsoft.Json", "Object.Net.Utilities", "TopologicalSorting"};
+
                 var assemblies = domain.GetAssemblies();
                 foreach (var assembly in assemblies)
                 {
                     var assemblyName = new AssemblyName(assembly.FullName);
-                    if (assemblyName.Name == fullAssemblyName)
+                    if (assemblyName.Name == fullAssemblyName
+                        //|| (assemblyName.Name.Contains("Bridge.Build") && mergedAssemblies.Any(x => fullAssemblyName.Contains(x)))
+                        )
                     {
                         return assembly;
                     }
@@ -77,11 +90,40 @@ namespace Bridge.Translator
             {
                 var resolver = new AssemblyResolver() { Logger = logger };
 
-                System.AppDomain.CurrentDomain.AssemblyResolve += resolver.CurrentDomain_AssemblyResolve;
+                AppDomain.CurrentDomain.AssemblyResolve += resolver.CurrentDomain_AssemblyResolve;
+
+                AppDomain.CurrentDomain.AssemblyLoad += resolver.CurrentDomain_AssemblyLoad;
 
                 IsLoaded = true;
 
-                logger.Trace("Set assembly resolver event");
+                logger.Trace("Set assembly resolver event for domain " + AppDomain.CurrentDomain.FriendlyName);
+
+                if (AppDomain.CurrentDomain.SetupInformation.ApplicationBase.Contains("MSBuild"))
+                {
+                    logger.Trace("Setting app base for domain " + AppDomain.CurrentDomain.FriendlyName);
+                    AppDomain.CurrentDomain.SetupInformation.ApplicationBase = @"C:\Users\Leonid\Documents\visual studio 2015\Projects\ClassLibrary2\packages\Bridge.1.11.0\tools";
+                }
+
+                //AppDomain root = AppDomain.CurrentDomain;
+
+                //var setup = new AppDomainSetup();
+
+                //setup.ApplicationBase =
+
+                //new System.AppDomainSetup().PrivateBinPath
+
+            }
+            logger.Trace("Current domain domain " + AppDomain.CurrentDomain.FriendlyName);
+
+            AppDomain.CurrentDomain.SetupInformation.PrivateBinPath = @"C:\Users\Leonid\Documents\visual studio 2015\Projects\ClassLibrary2\packages\Bridge.1.11.0\tools";
+
+            logger.Trace("Application base: " + AppDomain.CurrentDomain.SetupInformation.ApplicationBase);
+            logger.Trace("Private bin path: " + AppDomain.CurrentDomain.SetupInformation.PrivateBinPath);
+
+            logger.Trace("Loaded assemblies:");
+            foreach (var item in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                logger.Trace("\t" + item.FullName);
             }
 
 
@@ -147,7 +189,7 @@ namespace Bridge.Translator
                                 var assembly = CheckIfAssemblyLoaded(logger, ba, null, trimmedName);
 
                                 catalogs.Add(new AssemblyCatalog(assembly));
-                                logger.Trace("The assembly " + assembly.FullName + " addied to the catalogs");
+                                logger.Trace("The assembly " + assembly.FullName + " added to the catalogs");
                             }
                         }
                         catch (Exception ex)
