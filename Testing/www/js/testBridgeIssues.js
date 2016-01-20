@@ -148,7 +148,7 @@ Bridge.define('ClientTestLibrary.Bridge341B', {
             Str: null
         }
     },
-    equals: function (other) {
+    equalsT: function (other) {
         if (other === null) {
             return false;
         }
@@ -1460,13 +1460,13 @@ Bridge.define('ClientTestLibrary.Bridge582', {
             var date3 = new Date(Date.UTC(1996, 10 - 1, 12, 8, 42, 0));
 
             var diff1 = new Bridge.TimeSpan((date2 - date1) * 10000);
-            assert.ok(diff1.equals(new Bridge.TimeSpan(185, 14, 47, 0)), "Bridge582 TestSubtractTimeSpan diff1");
+            assert.ok(diff1.equalsT(new Bridge.TimeSpan(185, 14, 47, 0)), "Bridge582 TestSubtractTimeSpan diff1");
 
             var date4 = new Date(date3 - new Date((diff1).ticks / 10000));
             assert.ok(Bridge.equalsT(date4, new Date(Date.UTC(1996, 4 - 1, 9, 17, 55, 0))), "Bridge582 TestSubtractTimeSpan date4");
 
             var diff2 = new Bridge.TimeSpan((date2 - date3) * 10000);
-            assert.ok(diff2.equals(new Bridge.TimeSpan(55, 4, 20, 0)), "Bridge582 TestSubtractTimeSpan diff2");
+            assert.ok(diff2.equalsT(new Bridge.TimeSpan(55, 4, 20, 0)), "Bridge582 TestSubtractTimeSpan diff2");
 
             var date5 = new Date(date1 - new Date((diff2).ticks / 10000));
             assert.ok(Bridge.equalsT(date5, new Date(Date.UTC(1996, 4 - 1, 9, 17, 55, 0))), "Bridge582 TestSubtractTimeSpan date5");
@@ -1476,15 +1476,15 @@ Bridge.define('ClientTestLibrary.Bridge582', {
 
             var date = new Date(2013, 9 - 1, 14, 9, 28, 0);
             assert.ok(Bridge.equalsT(new Date(date.getFullYear(), date.getMonth(), date.getDate()), new Date(2013, 9 - 1, 14)), "Bridge582 TestTimeOfDay Date 2013, 9, 14, 9, 28, 0");
-            assert.ok(Bridge.Date.timeOfDay(date).equals(new Bridge.TimeSpan(9, 28, 0)), "Bridge582 TestTimeOfDay TimeOfDay 2013, 9, 14, 9, 28, 0");
+            assert.ok(Bridge.Date.timeOfDay(date).equalsT(new Bridge.TimeSpan(9, 28, 0)), "Bridge582 TestTimeOfDay TimeOfDay 2013, 9, 14, 9, 28, 0");
 
             date = new Date(2011, 5 - 1, 28, 10, 35, 0);
             assert.ok(Bridge.equalsT(new Date(date.getFullYear(), date.getMonth(), date.getDate()), new Date(2011, 5 - 1, 28)), "Bridge582 TestTimeOfDay Date 2011, 5, 28, 10, 35, 0");
-            assert.ok(Bridge.Date.timeOfDay(date).equals(new Bridge.TimeSpan(10, 35, 0)), "Bridge582 TestTimeOfDay TimeOfDay 2011, 5, 28, 10, 35, 0");
+            assert.ok(Bridge.Date.timeOfDay(date).equalsT(new Bridge.TimeSpan(10, 35, 0)), "Bridge582 TestTimeOfDay TimeOfDay 2011, 5, 28, 10, 35, 0");
 
             date = new Date(1979, 12 - 1, 25, 14, 30, 0);
             assert.ok(Bridge.equalsT(new Date(date.getFullYear(), date.getMonth(), date.getDate()), new Date(1979, 12 - 1, 25)), "Bridge582 TestTimeOfDay Date 1979, 12, 25, 14, 30, 0");
-            assert.ok(Bridge.Date.timeOfDay(date).equals(new Bridge.TimeSpan(14, 30, 0)), "Bridge582 TestTimeOfDay TimeOfDay 1979, 12, 25, 14, 30, 0");
+            assert.ok(Bridge.Date.timeOfDay(date).equalsT(new Bridge.TimeSpan(14, 30, 0)), "Bridge582 TestTimeOfDay TimeOfDay 1979, 12, 25, 14, 30, 0");
         }
     }
 });
@@ -1677,17 +1677,24 @@ Bridge.define('ClientTestLibrary.Bridge606A', {
     }
 });
 
-Bridge.define('ClientTestLibrary.Opti$1', function (T) { return {
-    inherits: function () { return [Bridge.IEquatable$1(ClientTestLibrary.Opti$1(T))]; },
-    equals: function (obj) {
+Bridge.define('ClientTestLibrary.Bridge607A$1', function (T) { return {
+    inherits: function () { return [Bridge.IEquatable$1(ClientTestLibrary.Bridge607A$1(T))]; },
+    equalsT: function (obj) {
         return this === obj;
     }
 }; });
 
-Bridge.define('ClientTestLibrary.Class1', {
-    inherits: function () { return [Bridge.IEquatable$1(ClientTestLibrary.Class1)]; },
-    equals: function (other) {
+Bridge.define('ClientTestLibrary.Bridge607B', {
+    inherits: function () { return [Bridge.IEquatable$1(ClientTestLibrary.Bridge607B)]; },
+    equalsT: function (other) {
         return this === other;
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge607C', {
+    inherits: function () { return [Bridge.IEquatable$1(ClientTestLibrary.Bridge607C)]; },
+    equalsT: function (other) {
+        return Bridge.equals(this, other);
     }
 });
 
@@ -3899,16 +3906,18 @@ Bridge.define('ClientTestLibrary.Bridge606', {
 Bridge.define('ClientTestLibrary.Bridge607', {
     statics: {
         testUseCase: function (assert) {
-            assert.expect(4);
+            assert.expect(5);
 
-            var c = new ClientTestLibrary.Opti$1(String)();
-            var c1 = new ClientTestLibrary.Class1();
+            var c = new ClientTestLibrary.Bridge607A$1(String)();
+            var c1 = new ClientTestLibrary.Bridge607B();
 
-            assert.ok(c.equals(c));
-            assert.notOk(c.equals(null));
+            assert.ok(c.equalsT(c), "Bridge607A c");
+            assert.notOk(c.equalsT(null), "Bridge607A null");
 
-            assert.ok(c1.equals(c1));
-            assert.notOk(c1.equals(null));
+            assert.ok(c1.equalsT(c1), "Bridge607B c");
+            assert.notOk(c1.equalsT(null), "Bridge607B null");
+
+            assert.notOk(Bridge.equals(new ClientTestLibrary.Bridge607C(), null), "Bridge607C null");
         }
     }
 });

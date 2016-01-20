@@ -99,12 +99,12 @@ Bridge.define('ClientTestLibrary.TestVersion', {
             var o = { };
             var o2 = v2;
 
-            assert.ok(v1.equals(v2), "v1.Equals(v2)");
-            assert.notOk(v1.equals(v3), "v1.Equals(v3)");
-            assert.notOk(v1.equals$1(o), "v1.Equals(o)");
-            assert.notOk(v1.equals(null), "v1.Equals(null)");
-            assert.notOk(v1.equals$1(100), "v1.Equals(100)");
-            assert.ok(v1.equals$1(o2), "v1.Equals(o2)");
+            assert.ok(v1.equalsT(v2), "v1.Equals(v2)");
+            assert.notOk(v1.equalsT(v3), "v1.Equals(v3)");
+            assert.notOk(v1.equals(o), "v1.Equals(o)");
+            assert.notOk(v1.equalsT(null), "v1.Equals(null)");
+            assert.notOk(v1.equals(100), "v1.Equals(100)");
+            assert.ok(v1.equals(o2), "v1.Equals(o2)");
 
             assert.equal(v1.getHashCode(), 1283637748, "v1.GetHashCode()");
             assert.equal(v2.getHashCode(), 1283637748, "v2.GetHashCode()");
