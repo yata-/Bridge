@@ -251,5 +251,11 @@ namespace Bridge.Translator
             get;
             set;
         }
+
+        public bool IgnoreCast
+        {
+            get;
+            set;
+        }
     }
 }
