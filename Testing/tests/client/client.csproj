@@ -78,6 +78,7 @@
     <Compile Include="Tests\BridgeIssues\N788.cs" />
     <Compile Include="Tests\BridgeIssues\N786.cs" />
     <Compile Include="Tests\BridgeIssues\N793.cs" />
+    <Compile Include="Tests\BridgeIssues\N835.cs" />
     <Compile Include="Tests\BridgeIssues\N796.cs" />
     <Compile Include="Tests\BridgeIssues\N762.cs" />
     <Compile Include="Tests\BridgeIssues\N760.cs" />

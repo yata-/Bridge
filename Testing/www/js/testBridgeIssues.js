@@ -2995,6 +2995,24 @@ Bridge.define('ClientTestLibrary.Bridge796', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge835', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var arr = Bridge.Array.create(new ClientTestLibrary.Bridge835.Dot(), null, 10, 10);
+            assert.notEqual(arr, null, "Bridge835");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge835.Dot', {
+    statics: {
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge835.Dot(); }
+    },
+    $clone: function (to) { return this; }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
