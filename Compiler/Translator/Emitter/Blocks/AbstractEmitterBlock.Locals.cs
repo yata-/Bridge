@@ -202,7 +202,7 @@ namespace Bridge.Translator
                                 if (prm.IsOptional)
                                 {
                                     this.Write(string.Format("if ({0} === void 0) {{ {0} = ", prm.Name));
-                                    if (prm.ConstantValue == null && prm.Type.Kind == TypeKind.Struct)
+                                    if (prm.ConstantValue == null && prm.Type.Kind == TypeKind.Struct && !prm.Type.IsKnownType(KnownTypeCode.NullableOfT))
                                     {
                                         this.Write(Inspector.GetStructDefaultValue(prm.Type, this.Emitter));
                                     }
