@@ -294,17 +294,18 @@ namespace Bridge.Contract
                 }
             }
 
-            if (resolveResult.Type.Kind == TypeKind.Struct)
+            var type = resolveResult.Type.IsKnownType(KnownTypeCode.NullableOfT) ? ((ParameterizedType)resolveResult.Type).TypeArguments[0] : resolveResult.Type;
+            if (type.Kind == TypeKind.Struct)
             {
-                var typeDef = block.Emitter.GetTypeDefinition(resolveResult.Type);
+                var typeDef = block.Emitter.GetTypeDefinition(type);
                 if (block.Emitter.Validator.IsIgnoreType(typeDef))
                 {
                     return;
                 }
 
-                var mutableFields = resolveResult.Type.GetFields(f => !f.IsReadOnly && !f.IsConst, GetMemberOptions.IgnoreInheritedMembers);
+                var mutableFields = type.GetFields(f => !f.IsReadOnly && !f.IsConst, GetMemberOptions.IgnoreInheritedMembers);
                 var autoProps = typeDef.Properties.Where(Helpers.IsAutoProperty);
-                var autoEvents = resolveResult.Type.GetEvents(null, GetMemberOptions.IgnoreInheritedMembers);
+                var autoEvents = type.GetEvents(null, GetMemberOptions.IgnoreInheritedMembers);
 
                 if (!mutableFields.Any() && !autoProps.Any() && !autoEvents.Any())
                 {
