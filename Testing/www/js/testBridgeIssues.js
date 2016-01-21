@@ -2439,6 +2439,178 @@ Bridge.define('ClientTestLibrary.Bridge691', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge692.A', {
+    statics: {
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge692.A(); }
+    },
+    $clone: function (to) { return this; }
+});
+
+Bridge.define('ClientTestLibrary.Bridge692.B1', {
+    statics: {
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge692.B1(); }
+    },
+    field1: 0,
+    constructor$1: function (f) {
+        this.field1 = f;
+    },
+    constructor: function () {
+    },
+    getHashCode: function () {
+        var hash = 17;
+        hash = hash * 23 + (this.field1 == null ? 0 : Bridge.getHashCode(this.field1));
+        return hash;
+    },
+    equals: function (o) {
+        if (!Bridge.is(o,ClientTestLibrary.Bridge692.B1)) {
+            return false;
+        }
+        return Bridge.equals(this.field1, o.field1);
+    },
+    $clone: function (to) {
+        var s = to || new ClientTestLibrary.Bridge692.B1();
+        s.field1 = this.field1;
+        return s;
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge692.B3', {
+    statics: {
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge692.B3(); }
+    },
+    constructor: function () {
+    },
+    getProp1: function () {
+        return 0;
+    },
+    $clone: function (to) { return this; }
+});
+
+Bridge.define('ClientTestLibrary.Bridge692.C1', {
+    statics: {
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge692.C1(); }
+    },
+    field1: 0,
+    constructor$1: function (i) {
+        this.field1 = i;
+    },
+    constructor: function () {
+    },
+    getProp1: function () {
+        return this.field1;
+    },
+    getHashCode: function () {
+        var hash = 17;
+        hash = hash * 23 + (this.field1 == null ? 0 : Bridge.getHashCode(this.field1));
+        return hash;
+    },
+    equals: function (o) {
+        if (!Bridge.is(o,ClientTestLibrary.Bridge692.C1)) {
+            return false;
+        }
+        return Bridge.equals(this.field1, o.field1);
+    },
+    $clone: function (to) {
+        var s = to || new ClientTestLibrary.Bridge692.C1();
+        s.field1 = this.field1;
+        return s;
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge692.C2', {
+    statics: {
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge692.C2(); }
+    },
+    field1: 0,
+    constructor$1: function (i) {
+        this.field1 = i;
+    },
+    constructor: function () {
+    },
+    getProp1: function () {
+        return this.field1;
+    },
+    setProp1: function (value) {
+
+    },
+    getHashCode: function () {
+        var hash = 17;
+        hash = hash * 23 + (this.field1 == null ? 0 : Bridge.getHashCode(this.field1));
+        return hash;
+    },
+    equals: function (o) {
+        if (!Bridge.is(o,ClientTestLibrary.Bridge692.C2)) {
+            return false;
+        }
+        return Bridge.equals(this.field1, o.field1);
+    },
+    $clone: function (to) {
+        var s = to || new ClientTestLibrary.Bridge692.C2();
+        s.field1 = this.field1;
+        return s;
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge692.C3', {
+    statics: {
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge692.C3(); }
+    },
+    config: {
+        properties: {
+            Prop1: 0
+        }
+    },
+    constructor: function () {
+    },
+    getHashCode: function () {
+        var hash = 17;
+        hash = hash * 23 + (this.Prop1 == null ? 0 : Bridge.getHashCode(this.Prop1));
+        return hash;
+    },
+    equals: function (o) {
+        if (!Bridge.is(o,ClientTestLibrary.Bridge692.C3)) {
+            return false;
+        }
+        return Bridge.equals(this.Prop1, o.Prop1);
+    },
+    $clone: function (to) {
+        var s = to || new ClientTestLibrary.Bridge692.C3();
+        s.Prop1 = this.Prop1;
+        return s;
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge692.B2', {
+    statics: {
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge692.B2(); }
+    },
+    field1: 0,
+    constructor$1: function (f) {
+        this.field1 = f;
+    },
+    constructor: function () {
+    },
+    getProp1: function () {
+        return this.field1;
+    },
+    getHashCode: function () {
+        var hash = 17;
+        hash = hash * 23 + (this.field1 == null ? 0 : Bridge.getHashCode(this.field1));
+        return hash;
+    },
+    equals: function (o) {
+        if (!Bridge.is(o,ClientTestLibrary.Bridge692.B2)) {
+            return false;
+        }
+        return Bridge.equals(this.field1, o.field1);
+    },
+    $clone: function (to) {
+        var s = to || new ClientTestLibrary.Bridge692.B2();
+        s.field1 = this.field1;
+        return s;
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge693A$1', function (T) { return {
     constructor: function (props) {
     }
@@ -3649,7 +3821,7 @@ Bridge.define('ClientTestLibrary.Bridge577', {
             assert.expect(2);
 
             var a = Bridge.get(ClientTestLibrary.Bridge577).someMethodA(1);
-            assert.ok(a.$clone(), "#577 Bridge577UnitA created");
+            assert.ok(a, "#577 Bridge577UnitA created");
 
             var b = Bridge.get(ClientTestLibrary.Bridge577).someMethodB(7);
             assert.equal(b.getNumber(), 7, "#577 Bridge577UnitB created");
@@ -4266,6 +4438,35 @@ Bridge.define('ClientTestLibrary.Bridge690', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge692', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(7);
+
+            var a = new ClientTestLibrary.Bridge692.A();
+            assert.equal(a, a, "Bridge692 A");
+
+            var b1 = new ClientTestLibrary.Bridge692.B1("constructor");
+            assert.equal(b1, b1, "Bridge692 B1");
+
+            var b2 = new ClientTestLibrary.Bridge692.B1("constructor");
+            assert.equal(b2, b2, "Bridge692 B2");
+
+            var b3 = new ClientTestLibrary.Bridge692.B3();
+            assert.equal(b3, b3, "Bridge692 B3");
+
+            var c1 = new ClientTestLibrary.Bridge692.C1("constructor");
+            assert.notEqual(c1.$clone(), c1.$clone(), "Bridge692 C1");
+
+            var c2 = new ClientTestLibrary.Bridge692.C2("constructor");
+            assert.notEqual(c2.$clone(), c2.$clone(), "Bridge692 C2");
+
+            var c3 = new ClientTestLibrary.Bridge692.C3();
+            assert.notEqual(c3.$clone(), c3.$clone(), "Bridge692 C3");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.Bridge693', {
     statics: {
         testUseCase: function (assert) {
@@ -4291,7 +4492,7 @@ Bridge.define('ClientTestLibrary.Bridge762', {
             var value3 = Bridge.Nullable.getValueOrDefault(test3, Bridge.getDefaultValue(ClientTestLibrary.Bridge762B));
 
             assert.equal(value1, 0, "Bridge762 int");
-            assert.notEqual(value2.$clone(), null, "Bridge762A struct");
+            assert.notEqual(value2, null, "Bridge762A struct");
             assert.notEqual(value3.$clone(), null, "Bridge762B struct");
             assert.equal(value3.getData(), 0, "Bridge762B.Data struct");
         }
