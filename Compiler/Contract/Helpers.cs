@@ -297,6 +297,15 @@ namespace Bridge.Contract
                     return;
                 }
 
+                var mutableFields = resolveResult.Type.GetFields(f => !f.IsReadOnly && !f.IsConst, GetMemberOptions.IgnoreInheritedMembers);
+                var autoProps = typeDef.Properties.Where(Helpers.IsAutoProperty);
+                var autoEvents = resolveResult.Type.GetEvents(null, GetMemberOptions.IgnoreInheritedMembers);
+
+                if (!mutableFields.Any() && !autoProps.Any() && !autoEvents.Any())
+                {
+                    return;
+                }
+
                 var memberResult = resolveResult as MemberResolveResult;
 
                 var field = memberResult != null ? memberResult.Member as DefaultResolvedField : null;
