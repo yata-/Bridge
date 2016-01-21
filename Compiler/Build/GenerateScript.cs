@@ -78,7 +78,7 @@ namespace Bridge.Build
             var success = true;
 
 #if DEBUG
-            //if (AttachDebugger)
+            if (AttachDebugger)
             {
                 System.Diagnostics.Debugger.Launch();
             };

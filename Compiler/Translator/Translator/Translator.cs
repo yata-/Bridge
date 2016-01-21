@@ -22,24 +22,18 @@ namespace Bridge.Translator
             EvalTreatment = Microsoft.Ajax.Utilities.EvalTreatment.MakeAllSafe,
             LocalRenaming = Microsoft.Ajax.Utilities.LocalRenaming.KeepAll,
             TermSemicolons = true,
-            StrictMode = true,
-            ErrorIfNotInlineSafe = false,
-            IgnoreAllErrors = true
+            StrictMode = true
         };
 
         private static readonly CodeSettings MinifierCodeSettingsInternal = new CodeSettings
         {
             TermSemicolons = true,
-            StrictMode = true,
-            ErrorIfNotInlineSafe = false,
-            IgnoreAllErrors = true
+            StrictMode = true
         };
 
         private static readonly CodeSettings MinifierCodeSettingsLocales = new CodeSettings
         {
-            TermSemicolons = true,
-            ErrorIfNotInlineSafe = false,
-            IgnoreAllErrors = true
+            TermSemicolons = true
         };
 
         public const string LocalesPrefix = "Bridge.Resources.Locales.";
@@ -217,10 +211,6 @@ namespace Bridge.Translator
             logger.Trace("Starts SaveTo path = " + path);
 
             var minifier = new Minifier();
-
-            logger.Trace("WarningLevel: " + minifier.WarningLevel);
-            minifier.WarningLevel = 0;
-
             var files = new Dictionary<string, string>();
             foreach (var item in this.Outputs)
             {
@@ -282,22 +272,7 @@ namespace Bridge.Translator
                     var file = CreateFileDirectory(Path.GetDirectoryName(filePath), fileNameMin);
                     logger.Trace("Output non-formatted " + file.FullName);
 
-                    var content = minifier.MinifyJavaScript(code, this.GetMinifierSettings(fileNameMin));
-                    if (minifier.Errors != null && minifier.Errors.Count > 0)
-                    {
-                        logger.Error("Minifier errors:");
-                        foreach (var error in minifier.Errors)
-	                    {
-                            logger.Warn(error);
-	                    }
-                        logger.Error("Minifier context errors:");
-                        foreach (var error in minifier.ErrorList)
-                        {
-                            logger.Warn(error.ToString());
-                        }
-                    }
-
-                    this.SaveToFile(file.FullName, content);
+                    this.SaveToFile(file.FullName, minifier.MinifyJavaScript(code, this.GetMinifierSettings(fileNameMin)));
                 }
             }
 
@@ -435,7 +410,6 @@ namespace Bridge.Translator
                                 this.ExtractResourceAndWriteToFile(outputPath, reference, resName, fileName.ReplaceLastInstanceOf(".js", ".min.js"), (content) =>
                                 {
                                     var minifier = new Minifier();
-                                    minifier.WarningLevel = 0;
                                     return minifier.MinifyJavaScript(content, this.GetMinifierSettings(fileName));
                                 });
                             }
@@ -542,7 +516,6 @@ namespace Bridge.Translator
             if (this.AssemblyInfo.OutputFormatting != JavaScriptOutputType.Formatted && !nodebug)
             {
                 var minifier = new Minifier();
-                minifier.WarningLevel = 0;
                 resourcesStrMin = minifier.MinifyJavaScript(resourcesStr, MinifierCodeSettingsLocales);
             }
 
