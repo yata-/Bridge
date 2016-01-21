@@ -90,7 +90,7 @@ namespace ClientTestLibrary
 
         public static void TestUseCase(Assert assert)
         {
-            assert.Expect(7);
+            assert.Expect(8);
 
             var a = new A();
             assert.Equal(a, a, "Bridge692 A");
@@ -112,6 +112,9 @@ namespace ClientTestLibrary
 
             var c3 = new C3();
             assert.NotEqual(c3, c3, "Bridge692 C3");
+
+            C3? c3_1 = new C3();
+            assert.NotEqual(c3_1, c3_1, "Bridge692 C3_1");
         }
     }
 }

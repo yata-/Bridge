@@ -4441,7 +4441,7 @@ Bridge.define('ClientTestLibrary.Bridge690', {
 Bridge.define('ClientTestLibrary.Bridge692', {
     statics: {
         testUseCase: function (assert) {
-            assert.expect(7);
+            assert.expect(8);
 
             var a = new ClientTestLibrary.Bridge692.A();
             assert.equal(a, a, "Bridge692 A");
@@ -4463,6 +4463,9 @@ Bridge.define('ClientTestLibrary.Bridge692', {
 
             var c3 = new ClientTestLibrary.Bridge692.C3();
             assert.notEqual(c3.$clone(), c3.$clone(), "Bridge692 C3");
+
+            var c3_1 = new ClientTestLibrary.Bridge692.C3();
+            assert.notEqual(c3_1.$clone(), c3_1.$clone(), "Bridge692 C3_1");
         }
     }
 });
