@@ -2995,6 +2995,50 @@ Bridge.define('ClientTestLibrary.Bridge796', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge815.A', {
+    config: {
+        properties: {
+            Property: null
+        }
+    },
+    method: function (param) {
+        if (param === void 0) { param = null; }
+        this.setProperty(param);
+    },
+    method2: function (param) {
+        if (param === void 0) { param = new ClientTestLibrary.Bridge815.B(); }
+        this.setProperty(param.$clone());
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge815.B', {
+    statics: {
+        getDefaultValue: function () { return new ClientTestLibrary.Bridge815.B(); }
+    },
+    field: 0,
+    constructor$1: function (i) {
+        this.field = i;
+    },
+    constructor: function () {
+    },
+    getHashCode: function () {
+        var hash = 17;
+        hash = hash * 23 + (this.field == null ? 0 : Bridge.getHashCode(this.field));
+        return hash;
+    },
+    equals: function (o) {
+        if (!Bridge.is(o,ClientTestLibrary.Bridge815.B)) {
+            return false;
+        }
+        return Bridge.equals(this.field, o.field);
+    },
+    $clone: function (to) {
+        var s = to || new ClientTestLibrary.Bridge815.B();
+        s.field = this.field;
+        return s;
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
@@ -4351,6 +4395,30 @@ Bridge.define('ClientTestLibrary.Bridge795', {
             assert.equal(ClientTestLibrary.Bridge795B.op_LessThan(v1, v2), true, "Bridge795 lift < 12");
             assert.equal(ClientTestLibrary.Bridge795B.op_LessThan(v2, v1), false, "Bridge795 lift < 21");
             assert.equal(ClientTestLibrary.Bridge795B.op_LessThan(v1, v3), false, "Bridge795 lift < 13");
+        }
+    }
+});
+
+Bridge.define('ClientTestLibrary.Bridge815', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(7);
+            var a = new ClientTestLibrary.Bridge815.A();
+
+            a.method();
+            assert.equal(a.getProperty(), null, "Bridge815 null");
+
+            a.method(new ClientTestLibrary.Bridge815.B("constructor$1", 1).$clone());
+            assert.ok(Bridge.Nullable.hasValue(a.getProperty()), "Bridge815 Property.HasValue");
+            assert.equal(Bridge.Nullable.getValue(a.getProperty()).field, 1, "Bridge815 Property.Value.field == 1");
+
+            a.method2();
+            assert.ok(Bridge.Nullable.hasValue(a.getProperty()), "Bridge815 Method2 Property.HasValue");
+            assert.equal(Bridge.Nullable.getValue(a.getProperty()).field, 0, "Bridge815 Method2 Property.Value.field == 0");
+
+            a.method2(new ClientTestLibrary.Bridge815.B("constructor$1", 2).$clone());
+            assert.ok(Bridge.Nullable.hasValue(a.getProperty()), "Bridge815 Method2 Property.HasValue 2");
+            assert.equal(Bridge.Nullable.getValue(a.getProperty()).field, 2, "Bridge815 Method2 Property.Value.field == 2");
         }
     }
 });
