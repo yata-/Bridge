@@ -245,17 +245,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Readme\Bridge.NET\README.Bridge.Test.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="Bridge.Test, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Bridge.Test.1.0.0\lib\net40\Bridge.Test.dll</HintPath>
+      <HintPath>..\..\..\packages\Bridge.Testing.1.0.0\lib\net40\Bridge.Test.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <Import Project="$(SolutionDir)\..\Test\Bridge.Test\build\package\Bridge.Test.targets" Condition="Exists('$(SolutionDir)\..\Test\Bridge.Test\build\package\Bridge.Test.targets')" />
   <PropertyGroup>
     <PostBuildEvent Condition="$(OS) != Unix">
 "$(ProjectDir)..\..\..\Compiler\Builder\$(OutDir)Bridge.Builder.exe" -p "$(ProjectPath)" -b "$(ProjectDir)$(OutDir)Bridge.dll"
@@ -295,14 +291,7 @@ del /F /Q "$(ProjectDir)..\..\www\js\locales\*.js"
 xcopy "$(ProjectDir)..\..\..\Bridge\Resources\Locales\*.js" "$(ProjectDir)..\..\www\js\locales" /c /q /y
 </PostBuildEvent>
   </PropertyGroup>
-  <Import Project="..\..\..\packages\Bridge.Test.1.0.0\build\Bridge.Test.targets" Condition="Exists('..\..\..\packages\Bridge.Test.1.0.0\build\Bridge.Test.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\..\..\packages\Bridge.Test.1.0.0\build\Bridge.Test.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Bridge.Test.1.0.0\build\Bridge.Test.targets'))" />
-  </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
