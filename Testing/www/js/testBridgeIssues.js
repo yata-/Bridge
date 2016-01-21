@@ -2995,6 +2995,31 @@ Bridge.define('ClientTestLibrary.Bridge796', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge818', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(3);
+
+            var z = 0;
+            for (; ; ) {
+                z++;
+                if (z === 10) {
+                    break;
+                }
+            }
+            assert.equal(z, 10, "Bridge818 z");
+
+            var i;
+            var j;
+            for (i = 0, j = 1; i < 10; i++, j++) {
+
+            }
+            assert.equal(i, 10, "Bridge818 i");
+            assert.equal(j, 11, "Bridge818 j");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {

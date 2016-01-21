@@ -181,10 +181,10 @@ namespace Bridge.Translator
         {
             ForStatement forStatement = this.ForStatement;
 
-            if (forStatement.Initializers.Count > 1)
+            /*if (forStatement.Initializers.Count > 1)
             {
                 throw new EmitterException(forStatement, "Too many initializers");
-            }
+            }*/
 
             this.PushLocals();
             this.Emitter.EnableSemicolon = false;
@@ -205,7 +205,10 @@ namespace Bridge.Translator
             this.WriteSemiColon();
             this.WriteSpace();
 
-            forStatement.Condition.AcceptVisitor(this.Emitter);
+            if (!forStatement.Condition.IsNull)
+            {
+                forStatement.Condition.AcceptVisitor(this.Emitter);    
+            }
 
             this.WriteSemiColon();
             this.WriteSpace();
