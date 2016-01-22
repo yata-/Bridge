@@ -211,6 +211,16 @@ var convert = {
 
         //TODO: IConvertible 
         throw new Bridge.NotSupportedException("IConvertible interface is not supported.");
+    },
+
+    toUInt64: function (value, formatProvider) {
+        var result = this.toNumber(value, formatProvider, 0, Number.MAX_SAFE_INTEGER, "UInt64");
+        if (result != null) {
+            return result;
+        }
+
+        //TODO: IConvertible 
+        throw new Bridge.NotSupportedException("IConvertible interface is not supported.");
     }
 };
 

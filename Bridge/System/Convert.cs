@@ -150,14 +150,30 @@ namespace System
 
         /// <summary>
         /// Converts the value of the specified object to a 64-bit signed integer.
+        /// Note: Calling this method for <see cref="DateTime"/> value always throws <see cref="T:System.InvalidCastException"/>.
         /// </summary>
         [Template("Bridge.Convert.toInt64({value}, null)")]
         public static extern long ToInt64(object value);
 
         /// <summary>
         /// Converts the value of the specified object to a 64-bit signed integer, using the specified culture-specific formatting information.
+        /// Note: Calling this method for <see cref="DateTime"/> value always throws <see cref="T:System.InvalidCastException"/>.
         /// </summary>
         [Template("Bridge.Convert.toInt64({value}, {provider})")]
         public static extern long ToInt64(object value, IFormatProvider provider);
+
+        /// <summary>
+        /// Converts the value of the specified object to a 64-bit unsigned integer.
+        /// Note: Calling this method for <see cref="DateTime"/> value always throws <see cref="T:System.InvalidCastException"/>.
+        /// </summary>
+        [Template("Bridge.Convert.toUInt64({value}, null)")]
+        public static extern ulong ToUInt64(object value);
+
+        /// <summary>
+        /// Converts the value of the specified object to a 64-bit unsigned integer, using the specified culture-specific formatting information.
+        /// Note: Calling this method for <see cref="DateTime"/> value always throws <see cref="T:System.InvalidCastException"/>.
+        /// </summary>
+        [Template("Bridge.Convert.toUInt64({value}, {provider})")]
+        public static extern ulong ToUInt64(object value, IFormatProvider provider);
     }
 }
