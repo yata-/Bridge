@@ -217,5 +217,19 @@ namespace System
         /// </summary>
         [Template("Bridge.Convert.toDecimal({value}, {provider})")]
         public static extern decimal ToDecimal(object value, IFormatProvider provider);
+
+        /// <summary>
+        /// Converts the value of the specified object to a <see cref="T:System.DateTime"/> object.
+        /// Note: Calling this method for built-in types (except <see cref="DateTime"/>, <see cref="string"/>) always throws <see cref="T:System.InvalidCastException"/>.
+        /// </summary>
+        [Template("Bridge.Convert.toDateTime({value}, null)")]
+        public static extern DateTime ToDateTime(object value);
+
+        /// <summary>
+        /// Converts the value of the specified object to a <see cref="T:System.DateTime"/> object, using the specified culture-specific formatting information.
+        /// Note: Calling this method for built-in types (except <see cref="DateTime"/>, <see cref="string"/>) always throws <see cref="T:System.InvalidCastException"/>.
+        /// </summary>
+        [Template("Bridge.Convert.toDateTime({value}, {provider})")]
+        public static extern DateTime ToDateTime(object value, IFormatProvider provider);
     }
 }
