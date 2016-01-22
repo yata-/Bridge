@@ -2995,6 +2995,40 @@ Bridge.define('ClientTestLibrary.Bridge796', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge841', {
+    statics: {
+        testUseCase: function (assert) {
+            var $t;
+            assert.expect(1);
+            var testListA = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+                [1],
+                [2]
+            ] );
+
+            var result = 0;
+            $t = Bridge.getEnumerator(testListA);
+            while ($t.moveNext()) {
+                (function () {
+                    var item = $t.getCurrent();
+                    var fn = function () {
+                    };
+
+                    switch (item) {
+                        case 1: 
+                            result += 1;
+                            break;
+                        case 2: 
+                            result += 2;
+                            break;
+                    }
+                }).call(this);
+            }
+
+            assert.equal(result, 3, "Bridge841");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
