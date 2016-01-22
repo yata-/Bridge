@@ -257,5 +257,11 @@ namespace Bridge.Translator
             get;
             set;
         }
+
+        public LoggerLevel? LoggerLevel
+        {
+            get;
+            set;
+        }
     }
 }

@@ -236,5 +236,11 @@ namespace Bridge.Contract
             get;
             set;
         }
+
+        LoggerLevel? LoggerLevel
+        {
+            get;
+            set;
+        }
     }
 }
