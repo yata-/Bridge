@@ -1,4 +1,6 @@
 using Bridge.Contract;
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
@@ -6,6 +8,7 @@ using System.ComponentModel.Composition.Primitives;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+
 using Mono.Cecil;
 
 namespace Bridge.Translator
@@ -36,10 +39,19 @@ namespace Bridge.Translator
         {
             public ILogger Logger { get; set; }
 
-            public Assembly CurrentDomain_AssemblyResolve(object sender, System.ResolveEventArgs args)
+            public void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
             {
-                var domain = sender as System.AppDomain;
-                this.Logger.Trace("Domain " + domain.FriendlyName + " resolving assembly " + args.Name + " requested by " + args.RequestingAssembly.FullName + " ...");
+                this.Logger.Trace("Loaded assembly: " + (args.LoadedAssembly != null ? args.LoadedAssembly.FullName : "none"));
+            }
+
+            public Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+            {
+                var domain = sender as AppDomain;
+
+                this.Logger.Trace("Domain " + domain.FriendlyName
+                    + " resolving assembly " + args.Name
+                    + " requested by " + (args.RequestingAssembly != null ? args.RequestingAssembly.FullName : "none")
+                    + " ...");
 
                 AssemblyName askedAssembly = new AssemblyName(args.Name);
                 var assemblyLoaded = AssemblyResolver.CheckIfAssemblyLoaded(askedAssembly.Name, domain);
@@ -50,10 +62,12 @@ namespace Bridge.Translator
                     return assemblyLoaded;
                 }
 
+                this.Logger.Trace("Did not resolve assembly " + args.Name);
+
                 return null;
             }
 
-            public static Assembly CheckIfAssemblyLoaded(string fullAssemblyName, System.AppDomain domain)
+            public static Assembly CheckIfAssemblyLoaded(string fullAssemblyName, AppDomain domain)
             {
                 var assemblies = domain.GetAssemblies();
                 foreach (var assembly in assemblies)
@@ -73,24 +87,35 @@ namespace Bridge.Translator
         {
             logger.Info("Discovering plugins...");
 
-            if (!IsLoaded)
+            if (!Plugins.IsLoaded)
             {
                 var resolver = new AssemblyResolver() { Logger = logger };
 
-                System.AppDomain.CurrentDomain.AssemblyResolve += resolver.CurrentDomain_AssemblyResolve;
+                AppDomain.CurrentDomain.AssemblyResolve += resolver.CurrentDomain_AssemblyResolve;
 
-                IsLoaded = true;
+                AppDomain.CurrentDomain.AssemblyLoad += resolver.CurrentDomain_AssemblyLoad;
 
-                logger.Trace("Set assembly resolver event");
+                Plugins.IsLoaded = true;
+
+                logger.Trace("Set assembly Resolve and Load events for domain " + AppDomain.CurrentDomain.FriendlyName);
             }
 
+            logger.Trace("Current domain " + AppDomain.CurrentDomain.FriendlyName);
+
+            logger.Trace("Application base: " + AppDomain.CurrentDomain.SetupInformation.ApplicationBase);
+
+            logger.Trace("Loaded assemblies:");
+            foreach (var a in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                logger.Trace("\t" + a.FullName);
+            }
 
             var path = GetPluginPath(translator, config);
             logger.Info("Will use the following plugin path \"" + path + "\"");
 
             var catalogs = new List<ComposablePartCatalog>();
 
-            if (System.IO.Directory.Exists(path))
+            if (Directory.Exists(path))
             {
                 catalogs.Add(new DirectoryCatalog(path, "*.dll"));
                 logger.Info("The plugin path exists. Will use it as DirectoryCatalog");
@@ -147,7 +172,7 @@ namespace Bridge.Translator
                                 var assembly = CheckIfAssemblyLoaded(logger, ba, null, trimmedName);
 
                                 catalogs.Add(new AssemblyCatalog(assembly));
-                                logger.Trace("The assembly " + assembly.FullName + " addied to the catalogs");
+                                logger.Trace("The assembly " + assembly.FullName + " added to the catalogs");
                             }
                         }
                         catch (Exception ex)
@@ -177,7 +202,7 @@ namespace Bridge.Translator
             {
                 container.ComposeParts(plugins);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.Error("Exception occurred:");
                 logger.Error(ex.Message);
@@ -219,14 +244,14 @@ namespace Bridge.Translator
         public static Assembly CheckIfAssemblyLoaded(ILogger logger, byte[] ba, AssemblyName assemblyName, string trimmedName)
         {
             logger.Trace("Check if assembly " + trimmedName + " already loaded");
-            Assembly assembly = AssemblyResolver.CheckIfAssemblyLoaded(trimmedName, System.AppDomain.CurrentDomain);
+            Assembly assembly = AssemblyResolver.CheckIfAssemblyLoaded(trimmedName, AppDomain.CurrentDomain);
             if (assembly != null)
             {
                 logger.Trace("The assembly " + trimmedName + " is already loaded");
             }
             else
             {
-                logger.Trace("Loading the assembly into domain " + System.AppDomain.CurrentDomain.FriendlyName + " ...");
+                logger.Trace("Loading the assembly into domain " + AppDomain.CurrentDomain.FriendlyName + " ...");
 
                 if (ba != null)
                 {
@@ -237,7 +262,7 @@ namespace Bridge.Translator
                     assembly = Assembly.Load(assemblyName);
                 }
 
-                logger.Trace("Assembly " + assembly.FullName + " is loaded into domain " + System.AppDomain.CurrentDomain.FriendlyName);
+                logger.Trace("Assembly " + assembly.FullName + " is loaded into domain " + AppDomain.CurrentDomain.FriendlyName);
             }
             return assembly;
         }
