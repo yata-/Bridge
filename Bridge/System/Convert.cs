@@ -203,5 +203,19 @@ namespace System
         /// </summary>
         [Template("Bridge.Convert.toDouble({value}, {provider})")]
         public static extern double ToDouble(object value, IFormatProvider provider);
+
+        /// <summary>
+        /// Converts the value of the specified object to an equivalent decimal number.
+        /// Note: Calling this method for <see cref="DateTime"/> value always throws <see cref="T:System.InvalidCastException"/>.
+        /// </summary>
+        [Template("Bridge.Convert.toDecimal({value}, null)")]
+        public static extern decimal ToDecimal(object value);
+
+        /// <summary>
+        /// Converts the value of the specified object to an equivalent decimal number, using the specified culture-specific formatting information.
+        /// Note: Calling this method for <see cref="DateTime"/> value always throws <see cref="T:System.InvalidCastException"/>.
+        /// </summary>
+        [Template("Bridge.Convert.toDecimal({value}, {provider})")]
+        public static extern decimal ToDecimal(object value, IFormatProvider provider);
     }
 }

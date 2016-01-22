@@ -1,6 +1,23 @@
 ﻿// @source Convert.js
 
 var convert = {
+    typeNames: {
+        Bool : "Boolean",
+        Char : "Char",
+        SByte : "SByte",
+        Byte : "Byte",
+        Int16 : "Int16",
+        UInt16 : "UInt16",
+        Int32 : "Int32",
+        UInt32 : "UInt32",
+        Int64 : "Int64",
+        UInt64 : "UInt64",
+        Single : "Single",
+        Double : "Double",
+        Decimal : "Decimal"
+
+    },
+
     toBoolean: function (value, formatProvider) {
         var type = typeof (value);
         switch (type) {
@@ -101,8 +118,10 @@ var convert = {
         throw new Bridge.OverflowException("Value was either too large or too small for an '" + typeName + "'.");
     },
 
-    toNumber: function (value, formatProvider, minValue, maxValue, typeName, isFloating) {
+    toNumber: function (value, formatProvider, minValue, maxValue, typeName) {
         var type = typeof (value);
+        var isFloating = typeName === this.typeNames.Single || typeName === this.typeNames.Double || typeName === this.typeNames.Decimal;
+
         switch (type) {
             case "boolean":
                 return value ? 1 : 0;
@@ -118,14 +137,16 @@ var convert = {
 
             case "string":
                 if (isFloating) {
-                    // TODO: implement infinity
-                    // TODO: implement exponential notation
+                    if (typeName !== this.typeNames.Decimal) {
+                        // TODO: implement infinity
+                        // TODO: implement exponential notation
+                    }
                     // TODO: implement culture-specific params: decimal symbol, digit grouping symbol
                     if (!/^[+-]?[0-9]+[.,]?[0-9]$/.test(value)) {
                         throw new Bridge.FormatException("Input string was not in a correct format.");
                     }
                     value = parseFloat(value);
-                    
+
                 } else {
                     if (!/^[+-]?[0-9]+$/.test(value)) {
                         throw new Bridge.FormatException("Input string was not in a correct format.");
@@ -155,7 +176,7 @@ var convert = {
     },
 
     toSByte: function (value, formatProvider) {
-        var result = this.toNumber(value, formatProvider, -128, 127, "SByte", false);
+        var result = this.toNumber(value, formatProvider, -128, 127, this.typeNames.SByte);
         if (result != null) {
             return result;
         }
@@ -165,7 +186,7 @@ var convert = {
     },
 
     toByte: function (value, formatProvider) {
-        var result = this.toNumber(value, formatProvider, 0, 255, "Byte", false);
+        var result = this.toNumber(value, formatProvider, 0, 255, this.typeNames.Byte);
         if (result != null) {
             return result;
         }
@@ -175,7 +196,7 @@ var convert = {
     },
 
     toInt16: function (value, formatProvider) {
-        var result = this.toNumber(value, formatProvider, -32768, 32767, "Int16", false);
+        var result = this.toNumber(value, formatProvider, -32768, 32767, this.typeNames.Int16);
         if (result != null) {
             return result;
         }
@@ -185,7 +206,7 @@ var convert = {
     },
 
     toUInt16: function (value, formatProvider) {
-        var result = this.toNumber(value, formatProvider, 0, 65535, "UInt16", false);
+        var result = this.toNumber(value, formatProvider, 0, 65535, this.typeNames.UInt16);
         if (result != null) {
             return result;
         }
@@ -195,7 +216,7 @@ var convert = {
     },
 
     toInt32: function (value, formatProvider) {
-        var result = this.toNumber(value, formatProvider, -2147483648, 2147483647, "Int32", false);
+        var result = this.toNumber(value, formatProvider, -2147483648, 2147483647, this.typeNames.Int32);
         if (result != null) {
             return result;
         }
@@ -205,7 +226,7 @@ var convert = {
     },
 
     toUInt32: function (value, formatProvider) {
-        var result = this.toNumber(value, formatProvider, 0, 4294967295, "UInt32", false);
+        var result = this.toNumber(value, formatProvider, 0, 4294967295, this.typeNames.UInt32);
         if (result != null) {
             return result;
         }
@@ -215,7 +236,7 @@ var convert = {
     },
 
     toInt64: function (value, formatProvider) {
-        var result = this.toNumber(value, formatProvider, Number.MIN_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, "Int64", false);
+        var result = this.toNumber(value, formatProvider, Number.MIN_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, this.typeNames.Int64);
         if (result != null) {
             return result;
         }
@@ -225,7 +246,7 @@ var convert = {
     },
 
     toUInt64: function (value, formatProvider) {
-        var result = this.toNumber(value, formatProvider, 0, Number.MAX_SAFE_INTEGER, "UInt64", false);
+        var result = this.toNumber(value, formatProvider, 0, Number.MAX_SAFE_INTEGER, this.typeNames.UInt64);
         if (result != null) {
             return result;
         }
@@ -235,7 +256,7 @@ var convert = {
     },
 
     toSingle: function (value, formatProvider) {
-        var result = this.toNumber(value, formatProvider, -3.402823e+38, 3.402823e+38, "Single", true);
+        var result = this.toNumber(value, formatProvider, -3.402823e+38, 3.402823e+38, this.typeNames.Single);
         if (result != null) {
             return result;
         }
@@ -245,7 +266,17 @@ var convert = {
     },
 
     toDouble: function (value, formatProvider) {
-        var result = this.toNumber(value, formatProvider, -1.7976931348623157e+308, 1.7976931348623157e+308, "Single", true);
+        var result = this.toNumber(value, formatProvider, -1.7976931348623157e+308, 1.7976931348623157e+308, this.typeNames.Double);
+        if (result != null) {
+            return result;
+        }
+
+        //TODO: IConvertible 
+        throw new Bridge.NotSupportedException("IConvertible interface is not supported.");
+    },
+
+    toDecimal: function (value, formatProvider) {
+        var result = this.toNumber(value, formatProvider, -79228162514264337593543950335, 79228162514264337593543950335, this.typeNames.Decimal);
         if (result != null) {
             return result;
         }
