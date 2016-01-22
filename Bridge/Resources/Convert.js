@@ -235,8 +235,17 @@ var convert = {
     },
 
     toSingle: function (value, formatProvider) {
-
         var result = this.toNumber(value, formatProvider, -3.402823e+38, 3.402823e+38, "Single", true);
+        if (result != null) {
+            return result;
+        }
+
+        //TODO: IConvertible 
+        throw new Bridge.NotSupportedException("IConvertible interface is not supported.");
+    },
+
+    toDouble: function (value, formatProvider) {
+        var result = this.toNumber(value, formatProvider, -1.7976931348623157e+308, 1.7976931348623157e+308, "Single", true);
         if (result != null) {
             return result;
         }

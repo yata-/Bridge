@@ -178,14 +178,30 @@ namespace System
 
         /// <summary>
         /// Converts the value of the specified object to a single-precision floating-point number.
+        /// Note: Calling this method for <see cref="DateTime"/> value always throws <see cref="T:System.InvalidCastException"/>.
         /// </summary>
         [Template("Bridge.Convert.toSingle({value}, null)")]
         public static extern float ToSingle(object value);
 
         /// <summary>
         /// Converts the value of the specified object to an single-precision floating-point number, using the specified culture-specific formatting information.
+        /// Note: Calling this method for <see cref="DateTime"/> value always throws <see cref="T:System.InvalidCastException"/>.
         /// </summary>
         [Template("Bridge.Convert.toSingle({value}, {provider})")]
         public static extern float ToSingle(object value, IFormatProvider provider);
+
+        /// <summary>
+        /// Converts the value of the specified object to a double-precision floating-point number.
+        /// Note: Calling this method for <see cref="DateTime"/> value always throws <see cref="T:System.InvalidCastException"/>.
+        /// </summary>
+        [Template("Bridge.Convert.toDouble({value}, null)")]
+        public static extern double ToDouble(object value);
+
+        /// <summary>
+        /// Converts the value of the specified object to an double-precision floating-point number, using the specified culture-specific formatting information.
+        /// Note: Calling this method for <see cref="DateTime"/> value always throws <see cref="T:System.InvalidCastException"/>.
+        /// </summary>
+        [Template("Bridge.Convert.toDouble({value}, {provider})")]
+        public static extern double ToDouble(object value, IFormatProvider provider);
     }
 }
