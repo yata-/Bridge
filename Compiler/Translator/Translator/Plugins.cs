@@ -40,6 +40,10 @@ namespace Bridge.Translator
             {
                 var domain = sender as System.AppDomain;
                 this.Logger.Trace("Domain " + domain.FriendlyName + " resolving assembly " + args.Name + " requested by " + args.RequestingAssembly.FullName + " ...");
+                this.Logger.Trace("Domain " + domain.FriendlyName 
+                    + " resolving assembly " + args.Name
+                    + " requested by " + (args.RequestingAssembly != null ? args.RequestingAssembly.FullName : "none")
+                    + " ...");
 
                 AssemblyName askedAssembly = new AssemblyName(args.Name);
                 var assemblyLoaded = AssemblyResolver.CheckIfAssemblyLoaded(askedAssembly.Name, domain);
@@ -49,6 +53,8 @@ namespace Bridge.Translator
                     this.Logger.Trace("Resolved for " + assemblyLoaded.FullName);
                     return assemblyLoaded;
                 }
+
+                this.Logger.Trace("Did not resolve assembly " + args.Name);
 
                 return null;
             }
