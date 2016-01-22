@@ -207,6 +207,11 @@ namespace Bridge.Contract
 
         public static bool IsIgnoreCast(AstType astType, IEmitter emitter)
         {
+            if (emitter.AssemblyInfo.IgnoreCast)
+            {
+                return true;
+            }
+
             var typeDef = emitter.BridgeTypes.ToType(astType).GetDefinition();
 
             if (typeDef == null)

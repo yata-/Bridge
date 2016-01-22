@@ -252,6 +252,12 @@ namespace Bridge.Translator
             set;
         }
 
+        public bool IgnoreCast
+        {
+            get;
+            set;
+        }
+
         public LoggerLevel? LoggerLevel
         {
             get;
