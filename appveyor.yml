@@ -15,7 +15,7 @@ version: 1.11.{build}-{branch}
 branches:
   # whitelist
   only:
-    - master
+    - temp
 
   # blacklist
   #except:
@@ -72,7 +72,7 @@ configuration: Release
 
 build:
   # parallel: true                  # enable MSBuild parallel builds
-  project: c:\projects\Bridge\Bridge.Frameworks.Builder.Testing.sln      # path to Visual Studio solution or project
+  project: c:\projects\Bridge\Bridge.sln      # path to Visual Studio solution or project
 
   # MSBuild verbosity level
   verbosity: minimal
