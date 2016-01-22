@@ -175,5 +175,17 @@ namespace System
         /// </summary>
         [Template("Bridge.Convert.toUInt64({value}, {provider})")]
         public static extern ulong ToUInt64(object value, IFormatProvider provider);
+
+        /// <summary>
+        /// Converts the value of the specified object to a single-precision floating-point number.
+        /// </summary>
+        [Template("Bridge.Convert.toSingle({value}, null)")]
+        public static extern float ToSingle(object value);
+
+        /// <summary>
+        /// Converts the value of the specified object to an single-precision floating-point number, using the specified culture-specific formatting information.
+        /// </summary>
+        [Template("Bridge.Convert.toSingle({value}, {provider})")]
+        public static extern float ToSingle(object value, IFormatProvider provider);
     }
 }

@@ -101,14 +101,14 @@ var convert = {
         throw new Bridge.OverflowException("Value was either too large or too small for an '" + typeName + "'.");
     },
 
-    toNumber: function (value, formatProvider, minValue, maxValue, typeName) {
+    toNumber: function (value, formatProvider, minValue, maxValue, typeName, isFloating) {
         var type = typeof (value);
         switch (type) {
             case "boolean":
                 return value ? 1 : 0;
 
             case "number":
-                if (value % 1 !== 0) {
+                if (!isFloating && (value % 1 !== 0)) {
                     value = this.roundToInt(value, minValue, maxValue, typeName);
                 }
                 if (value < minValue || value > maxValue) {
@@ -117,11 +117,22 @@ var convert = {
                 return value;
 
             case "string":
-                if (!/^[+-]?[0-9]+$/.test(value)) {
-                    throw new Bridge.FormatException("Input string was not in a correct format.");
+                if (isFloating) {
+                    // TODO: implement infinity
+                    // TODO: implement exponential notation
+                    // TODO: implement culture-specific params: decimal symbol, digit grouping symbol
+                    if (!/^[+-]?[0-9]+[.,]?[0-9]$/.test(value)) {
+                        throw new Bridge.FormatException("Input string was not in a correct format.");
+                    }
+                    value = parseFloat(value);
+                    
+                } else {
+                    if (!/^[+-]?[0-9]+$/.test(value)) {
+                        throw new Bridge.FormatException("Input string was not in a correct format.");
+                    }
+                    value = parseInt(value, 10);
                 }
-
-                value = parseInt(value, 10);
+                
                 if (isNaN(result)) {
                     throw new Bridge.FormatException("Input string was not in a correct format.");
                 }
@@ -144,7 +155,7 @@ var convert = {
     },
 
     toSByte: function (value, formatProvider) {
-        var result = this.toNumber(value, formatProvider, -128, 127, "SByte");
+        var result = this.toNumber(value, formatProvider, -128, 127, "SByte", false);
         if (result != null) {
             return result;
         }
@@ -154,7 +165,7 @@ var convert = {
     },
 
     toByte: function (value, formatProvider) {
-        var result = this.toNumber(value, formatProvider, 0, 255, "Byte");
+        var result = this.toNumber(value, formatProvider, 0, 255, "Byte", false);
         if (result != null) {
             return result;
         }
@@ -164,7 +175,7 @@ var convert = {
     },
 
     toInt16: function (value, formatProvider) {
-        var result = this.toNumber(value, formatProvider, -32768, 32767, "Int16");
+        var result = this.toNumber(value, formatProvider, -32768, 32767, "Int16", false);
         if (result != null) {
             return result;
         }
@@ -174,7 +185,7 @@ var convert = {
     },
 
     toUInt16: function (value, formatProvider) {
-        var result = this.toNumber(value, formatProvider, 0, 65535, "UInt16");
+        var result = this.toNumber(value, formatProvider, 0, 65535, "UInt16", false);
         if (result != null) {
             return result;
         }
@@ -184,7 +195,7 @@ var convert = {
     },
 
     toInt32: function (value, formatProvider) {
-        var result = this.toNumber(value, formatProvider, -2147483648, 2147483647, "Int32");
+        var result = this.toNumber(value, formatProvider, -2147483648, 2147483647, "Int32", false);
         if (result != null) {
             return result;
         }
@@ -194,7 +205,7 @@ var convert = {
     },
 
     toUInt32: function (value, formatProvider) {
-        var result = this.toNumber(value, formatProvider, 0, 4294967295, "UInt32");
+        var result = this.toNumber(value, formatProvider, 0, 4294967295, "UInt32", false);
         if (result != null) {
             return result;
         }
@@ -204,7 +215,7 @@ var convert = {
     },
 
     toInt64: function (value, formatProvider) {
-        var result = this.toNumber(value, formatProvider, Number.MIN_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, "Int64");
+        var result = this.toNumber(value, formatProvider, Number.MIN_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, "Int64", false);
         if (result != null) {
             return result;
         }
@@ -214,7 +225,18 @@ var convert = {
     },
 
     toUInt64: function (value, formatProvider) {
-        var result = this.toNumber(value, formatProvider, 0, Number.MAX_SAFE_INTEGER, "UInt64");
+        var result = this.toNumber(value, formatProvider, 0, Number.MAX_SAFE_INTEGER, "UInt64", false);
+        if (result != null) {
+            return result;
+        }
+
+        //TODO: IConvertible 
+        throw new Bridge.NotSupportedException("IConvertible interface is not supported.");
+    },
+
+    toSingle: function (value, formatProvider) {
+
+        var result = this.toNumber(value, formatProvider, -3.402823e+38, 3.402823e+38, "Single", true);
         if (result != null) {
             return result;
         }
