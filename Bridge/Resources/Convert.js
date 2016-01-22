@@ -117,8 +117,16 @@ var convert = {
                 return value;
 
             case "string":
-                value = Bridge.Int.parseInt(value);
-                if (value < -minValue || value > maxValue) {
+                if (!/^[+-]?[0-9]+$/.test(value)) {
+                    throw new Bridge.FormatException("Input string was not in a correct format.");
+                }
+
+                value = parseInt(value, 10);
+                if (isNaN(result)) {
+                    throw new Bridge.FormatException("Input string was not in a correct format.");
+                }
+
+                if (value < minValue || value > maxValue) {
                     throw new Bridge.OverflowException("Value was either too large or too small for '" + typeName + "'.");
                 }
                 return value;
@@ -187,6 +195,16 @@ var convert = {
 
     toUInt32: function (value, formatProvider) {
         var result = this.toNumber(value, formatProvider, 0, 4294967295, "UInt32");
+        if (result != null) {
+            return result;
+        }
+
+        //TODO: IConvertible 
+        throw new Bridge.NotSupportedException("IConvertible interface is not supported.");
+    },
+
+    toInt64: function (value, formatProvider) {
+        var result = this.toNumber(value, formatProvider, Number.MIN_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, "Int64");
         if (result != null) {
             return result;
         }

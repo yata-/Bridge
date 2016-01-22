@@ -147,5 +147,17 @@ namespace System
         /// </summary>
         [Template("Bridge.Convert.toUInt32({value}, {provider})")]
         public static extern uint ToUInt32(object value, IFormatProvider provider);
+
+        /// <summary>
+        /// Converts the value of the specified object to a 64-bit signed integer.
+        /// </summary>
+        [Template("Bridge.Convert.toInt64({value}, null)")]
+        public static extern long ToInt64(object value);
+
+        /// <summary>
+        /// Converts the value of the specified object to a 64-bit signed integer, using the specified culture-specific formatting information.
+        /// </summary>
+        [Template("Bridge.Convert.toInt64({value}, {provider})")]
+        public static extern long ToInt64(object value, IFormatProvider provider);
     }
 }
