@@ -6917,7 +6917,7 @@ Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypesSByteTe
         },
         defaultValueIs0: function (assert) {
             var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypesSByteTests).beforeTest(false, assert);
-            t.defaultValueIs0();
+            t.keysWorks();
         },
         defaultConstructorReturnsZero: function (assert) {
             var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypesSByteTests).beforeTest(false, assert);
