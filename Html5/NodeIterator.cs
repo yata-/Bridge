@@ -37,26 +37,18 @@ namespace Bridge.Html5
         /// <summary>
         /// This operation is a no-op. It doesn't do anything. Previously it was telling the engine that the NodeIterator was no more used, but this is now useless.
         /// </summary>
-        public virtual void Detach()
-        {
-        }
+        public virtual extern void Detach();
 
         /// <summary>
         /// Returns the previous Node in the document, or null if there are none.
         /// </summary>
         /// <returns></returns>
-        public virtual Node PreviousNode()
-        {
-            return null;
-        }
+        public virtual extern Node PreviousNode();
 
         /// <summary>
         /// Returns the next Node in the document, or null if there are none.
         /// </summary>
         /// <returns></returns>
-        public virtual Node NextNode()
-        {
-            return null;
-        }
+        public virtual extern Node NextNode();
     }
 }

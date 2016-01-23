@@ -183,15 +183,9 @@ namespace System.Globalization
             set;
         }
 
-        public object GetFormat(Type formatType)
-        {
-            return null;
-        }
+        public extern object GetFormat(Type formatType);
 
-        public object Clone()
-        {
-            return null;
-        }
+        public extern object Clone();
 
         [FieldProperty]
         public static DateTimeFormatInfo CurrentInfo
@@ -202,39 +196,18 @@ namespace System.Globalization
             }
         }
 
-        public string GetAbbreviatedDayName(DayOfWeek dayofweek)
-        {
-            return null;
-        }
+        public extern string GetAbbreviatedDayName(DayOfWeek dayofweek);
 
-        public string GetAbbreviatedMonthName(int month)
-        {
-            return null;
-        }
+        public extern string GetAbbreviatedMonthName(int month);
 
-        public string[] GetAllDateTimePatterns()
-        {
-            return null;
-        }
+        public extern string[] GetAllDateTimePatterns();
 
-        public string[] GetAllDateTimePatterns(string format)
-        {
-            return null;
-        }
+        public extern string[] GetAllDateTimePatterns(string format);
 
-        public string GetDayName(DayOfWeek dayofweek)
-        {
-            return null;
-        }
+        public extern string GetDayName(DayOfWeek dayofweek);
 
-        public string GetMonthName(int month)
-        {
-            return null;
-        }
+        public extern string GetMonthName(int month);
 
-        public string GetShortestDayName(DayOfWeek dayOfWeek)
-        {
-            return null;
-        }
+        public extern string GetShortestDayName(DayOfWeek dayOfWeek);
     }
 }

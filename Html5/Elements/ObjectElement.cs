@@ -96,8 +96,6 @@ namespace Bridge.Html5
         /// Sets a custom validity message for the element. If this message is not the empty string, then the element is suffering from a custom validity error, and does not validate.
         /// </summary>
         /// <param name="error">The custom validity message</param>
-        public virtual void SetCustomValidity(string error)
-        {
-        }
+        public virtual extern void SetCustomValidity(string error);
     }
 }

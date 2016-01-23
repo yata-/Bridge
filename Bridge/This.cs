@@ -8,32 +8,19 @@ namespace Bridge
         public static ThisInstance Instance;
 
         [Template("{this}[{name}].call(null, {args})")]
-        public static void Call(string name, params object[] args)
-        {
-        }
+        public static extern void Call(string name, params object[] args);
 
         [Template("{this}[{name}].call(null, {args})")]
-        public static T Call<T>(string name, params object[] args)
-        {
-            return default(T);
-        }
+        public static extern T Call<T>(string name, params object[] args);
 
         [Template("{this}[{name}]")]
-        public static object Get(string name)
-        {
-            return null;
-        }
+        public static extern object Get(string name);
 
         [Template("{this}[{name}]")]
-        public static T Get<T>(string name)
-        {
-            return default(T);
-        }
+        public static extern T Get<T>(string name);
 
         [Template("{this}[{name}] = {value}")]
-        public static void Set(string name, object value)
-        {
-        }
+        public static extern void Set(string name, object value);
     }
 
     [External]
