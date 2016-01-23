@@ -782,7 +782,7 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge341B', {
             Str: null
         }
     },
-    equals: function (other) {
+    equalsT: function (other) {
         if (other === null) {
             return false;
         }
@@ -1456,17 +1456,24 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge606A', {
     }
 });
 
-Bridge.define('Bridge.ClientTest.BridgeIssues.Opti$1', function (T) { return {
-    inherits: function () { return [Bridge.IEquatable$1(Bridge.ClientTest.BridgeIssues.Opti$1(T))]; },
-    equals: function (obj) {
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge607A$1', function (T) { return {
+    inherits: function () { return [Bridge.IEquatable$1(Bridge.ClientTest.BridgeIssues.Bridge607A$1(T))]; },
+    equalsT: function (obj) {
         return this === obj;
     }
 }; });
 
-Bridge.define('Bridge.ClientTest.BridgeIssues.Class1', {
-    inherits: function () { return [Bridge.IEquatable$1(Bridge.ClientTest.BridgeIssues.Class1)]; },
-    equals: function (other) {
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge607B', {
+    inherits: function () { return [Bridge.IEquatable$1(Bridge.ClientTest.BridgeIssues.Bridge607B)]; },
+    equalsT: function (other) {
         return this === other;
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge607C', {
+    inherits: function () { return [Bridge.IEquatable$1(Bridge.ClientTest.BridgeIssues.Bridge607C)]; },
+    equalsT: function (other) {
+        return Bridge.equals(this, other);
     }
 });
 
@@ -2643,19 +2650,19 @@ Bridge.define('Bridge.ClientTest.DecimalMathTests.Logger', {
                 var j = i + 1;
                 if (Bridge.is(o, Bridge.Decimal)) {
                     var d1 = Bridge.cast(o, Bridge.Decimal);
-                    if (d1.equals(Bridge.get(Bridge.ClientTest.DecimalMathTests).maxValue)) {
+                    if (d1.equalsT(Bridge.get(Bridge.ClientTest.DecimalMathTests).maxValue)) {
                         result[j] = "DecimalMathTests.MaxValue";
                     }
                     else  {
-                        if (d1.equals(Bridge.get(Bridge.ClientTest.DecimalMathTests).minValue)) {
+                        if (d1.equalsT(Bridge.get(Bridge.ClientTest.DecimalMathTests).minValue)) {
                             result[j] = "DecimalMathTests.MinValue";
                         }
                         else  {
-                            if (d1.equals(Bridge.Decimal.MinusOne)) {
+                            if (d1.equalsT(Bridge.Decimal.MinusOne)) {
                                 result[j] = "decimal.MinusOne";
                             }
                             else  {
-                                if (d1.equals(Bridge.Decimal.One)) {
+                                if (d1.equalsT(Bridge.Decimal.One)) {
                                     result[j] = "decimal.One";
                                 }
                                 else  {
@@ -2790,7 +2797,7 @@ Bridge.define('Bridge.ClientTest.IEquatableTests.MyEquatable', {
     inherits: function () { return [Bridge.IEquatable$1(Bridge.ClientTest.IEquatableTests.MyEquatable)]; },
     result: false,
     other: null,
-    equals: function (other) {
+    equalsT: function (other) {
         this.other = other;
         return this.result;
     }
@@ -5625,13 +5632,13 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge582', {
             var date3 = new Date(Date.UTC(1996, 10 - 1, 12, 8, 42, 0));
 
             var diff1 = new Bridge.TimeSpan((date2 - date1) * 10000);
-            Bridge.get(Bridge.Test.Assert).true$1(diff1.equals(new Bridge.TimeSpan(185, 14, 47, 0)), "Bridge582 TestSubtractTimeSpan diff1");
+            Bridge.get(Bridge.Test.Assert).true$1(diff1.equalsT(new Bridge.TimeSpan(185, 14, 47, 0)), "Bridge582 TestSubtractTimeSpan diff1");
 
             var date4 = new Date(date3 - new Date((diff1).ticks / 10000));
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.equalsT(date4, new Date(Date.UTC(1996, 4 - 1, 9, 17, 55, 0))), "Bridge582 TestSubtractTimeSpan date4");
 
             var diff2 = new Bridge.TimeSpan((date2 - date3) * 10000);
-            Bridge.get(Bridge.Test.Assert).true$1(diff2.equals(new Bridge.TimeSpan(55, 4, 20, 0)), "Bridge582 TestSubtractTimeSpan diff2");
+            Bridge.get(Bridge.Test.Assert).true$1(diff2.equalsT(new Bridge.TimeSpan(55, 4, 20, 0)), "Bridge582 TestSubtractTimeSpan diff2");
 
             var date5 = new Date(date1 - new Date((diff2).ticks / 10000));
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.equalsT(date5, new Date(Date.UTC(1996, 4 - 1, 9, 17, 55, 0))), "Bridge582 TestSubtractTimeSpan date5");
@@ -5639,15 +5646,15 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge582', {
         testTimeOfDay: function () {
             var date = new Date(2013, 9 - 1, 14, 9, 28, 0);
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.equalsT(new Date(date.getFullYear(), date.getMonth(), date.getDate()), new Date(2013, 9 - 1, 14)), "Bridge582 TestTimeOfDay Date 2013, 9, 14, 9, 28, 0");
-            Bridge.get(Bridge.Test.Assert).true$1(Bridge.Date.timeOfDay(date).equals(new Bridge.TimeSpan(9, 28, 0)), "Bridge582 TestTimeOfDay TimeOfDay 2013, 9, 14, 9, 28, 0");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.Date.timeOfDay(date).equalsT(new Bridge.TimeSpan(9, 28, 0)), "Bridge582 TestTimeOfDay TimeOfDay 2013, 9, 14, 9, 28, 0");
 
             date = new Date(2011, 5 - 1, 28, 10, 35, 0);
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.equalsT(new Date(date.getFullYear(), date.getMonth(), date.getDate()), new Date(2011, 5 - 1, 28)), "Bridge582 TestTimeOfDay Date 2011, 5, 28, 10, 35, 0");
-            Bridge.get(Bridge.Test.Assert).true$1(Bridge.Date.timeOfDay(date).equals(new Bridge.TimeSpan(10, 35, 0)), "Bridge582 TestTimeOfDay TimeOfDay 2011, 5, 28, 10, 35, 0");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.Date.timeOfDay(date).equalsT(new Bridge.TimeSpan(10, 35, 0)), "Bridge582 TestTimeOfDay TimeOfDay 2011, 5, 28, 10, 35, 0");
 
             date = new Date(1979, 12 - 1, 25, 14, 30, 0);
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.equalsT(new Date(date.getFullYear(), date.getMonth(), date.getDate()), new Date(1979, 12 - 1, 25)), "Bridge582 TestTimeOfDay Date 1979, 12, 25, 14, 30, 0");
-            Bridge.get(Bridge.Test.Assert).true$1(Bridge.Date.timeOfDay(date).equals(new Bridge.TimeSpan(14, 30, 0)), "Bridge582 TestTimeOfDay TimeOfDay 1979, 12, 25, 14, 30, 0");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.Date.timeOfDay(date).equalsT(new Bridge.TimeSpan(14, 30, 0)), "Bridge582 TestTimeOfDay TimeOfDay 1979, 12, 25, 14, 30, 0");
         }
     }
 });
@@ -5912,14 +5919,16 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge606', {
 Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge607', {
     statics: {
         testUseCase: function () {
-            var c = new Bridge.ClientTest.BridgeIssues.Opti$1(String)();
-            var c1 = new Bridge.ClientTest.BridgeIssues.Class1();
+            var c = new Bridge.ClientTest.BridgeIssues.Bridge607A$1(String)();
+            var c1 = new Bridge.ClientTest.BridgeIssues.Bridge607B();
 
-            Bridge.get(Bridge.Test.Assert).$true(c.equals(c));
-            Bridge.get(Bridge.Test.Assert).$false(c.equals(null));
+            Bridge.get(Bridge.Test.Assert).true$1(c.equalsT(c), "Bridge607A c");
+            Bridge.get(Bridge.Test.Assert).false$1(c.equalsT(null), "Bridge607A null");
 
-            Bridge.get(Bridge.Test.Assert).$true(c1.equals(c1));
-            Bridge.get(Bridge.Test.Assert).$false(c1.equals(null));
+            Bridge.get(Bridge.Test.Assert).true$1(c1.equalsT(c1), "Bridge607B c");
+            Bridge.get(Bridge.Test.Assert).false$1(c1.equalsT(null), "Bridge607B null");
+
+            Bridge.get(Bridge.Test.Assert).false$1(Bridge.equals(new Bridge.ClientTest.BridgeIssues.Bridge607C(), null), "Bridge607C null");
         }
     }
 });
@@ -9202,16 +9211,16 @@ Bridge.define('Bridge.ClientTest.IEquatableTests', {
         Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT((Bridge.cast(a, Bridge.IEquatable$1(Bridge.ClientTest.IEquatableTests.MyEquatable))), null));
 
         a.result = true;
-        Bridge.get(Bridge.Test.Assert).$true(a.equals(b));
+        Bridge.get(Bridge.Test.Assert).$true(a.equalsT(b));
         Bridge.get(Bridge.Test.Assert).areStrictEqual(a.other, b);
         a.result = false;
-        Bridge.get(Bridge.Test.Assert).$false(a.equals(b));
+        Bridge.get(Bridge.Test.Assert).$false(a.equalsT(b));
 
         a.result = true;
-        Bridge.get(Bridge.Test.Assert).$true(a.equals(null));
+        Bridge.get(Bridge.Test.Assert).$true(a.equalsT(null));
         Bridge.get(Bridge.Test.Assert).areStrictEqual(a.other, null);
         a.result = false;
-        Bridge.get(Bridge.Test.Assert).$false(a.equals(null));
+        Bridge.get(Bridge.Test.Assert).$false(a.equalsT(null));
     }
 });
 
@@ -11903,11 +11912,11 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.DecimalTests', {
         Bridge.get(Bridge.Test.Assert).$false(Bridge.equals(((Bridge.Decimal.lift(0))), Bridge.Decimal.MaxValue));
     },
     decimalEqualsWorks: function () {
-        Bridge.get(Bridge.Test.Assert).$true(((Bridge.Decimal.lift(0))).equals(Bridge.Decimal.lift(0)));
-        Bridge.get(Bridge.Test.Assert).$false(((Bridge.Decimal.lift(1))).equals(Bridge.Decimal.lift(0)));
-        Bridge.get(Bridge.Test.Assert).$false(((Bridge.Decimal.lift(0))).equals(Bridge.Decimal.lift(0.5)));
-        Bridge.get(Bridge.Test.Assert).$true(((Bridge.Decimal.lift(1))).equals(Bridge.Decimal.lift(1)));
-        Bridge.get(Bridge.Test.Assert).$false(((Bridge.Decimal.lift(0))).equals(Bridge.Decimal.MaxValue));
+        Bridge.get(Bridge.Test.Assert).$true(((Bridge.Decimal.lift(0))).equalsT(Bridge.Decimal.lift(0)));
+        Bridge.get(Bridge.Test.Assert).$false(((Bridge.Decimal.lift(1))).equalsT(Bridge.Decimal.lift(0)));
+        Bridge.get(Bridge.Test.Assert).$false(((Bridge.Decimal.lift(0))).equalsT(Bridge.Decimal.lift(0.5)));
+        Bridge.get(Bridge.Test.Assert).$true(((Bridge.Decimal.lift(1))).equalsT(Bridge.Decimal.lift(1)));
+        Bridge.get(Bridge.Test.Assert).$false(((Bridge.Decimal.lift(0))).equalsT(Bridge.Decimal.MaxValue));
     },
     compareToWorks: function () {
         Bridge.get(Bridge.Test.Assert).$true(((Bridge.Decimal.lift(0))).compareTo(Bridge.Decimal.lift(0)) === 0);
@@ -14143,12 +14152,12 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.TestVersion', {
             var o = { };
             var o2 = v2;
 
-            Bridge.get(Bridge.Test.Assert).true$1(v1.equals(v2), "v1.Equals(v2)");
-            Bridge.get(Bridge.Test.Assert).false$1(v1.equals(v3), "v1.Equals(v3)");
-            Bridge.get(Bridge.Test.Assert).false$1(v1.equals$1(o), "v1.Equals(o)");
-            Bridge.get(Bridge.Test.Assert).false$1(v1.equals(null), "v1.Equals(null)");
-            Bridge.get(Bridge.Test.Assert).false$1(v1.equals$1(100), "v1.Equals(100)");
-            Bridge.get(Bridge.Test.Assert).true$1(v1.equals$1(o2), "v1.Equals(o2)");
+            Bridge.get(Bridge.Test.Assert).true$1(v1.equalsT(v2), "v1.Equals(v2)");
+            Bridge.get(Bridge.Test.Assert).false$1(v1.equalsT(v3), "v1.Equals(v3)");
+            Bridge.get(Bridge.Test.Assert).false$1(v1.equals(o), "v1.Equals(o)");
+            Bridge.get(Bridge.Test.Assert).false$1(v1.equalsT(null), "v1.Equals(null)");
+            Bridge.get(Bridge.Test.Assert).false$1(v1.equals(100), "v1.Equals(100)");
+            Bridge.get(Bridge.Test.Assert).true$1(v1.equals(o2), "v1.Equals(o2)");
 
             Bridge.get(Bridge.Test.Assert).areEqual$1(v1.getHashCode(), 1283637748, "v1.GetHashCode()");
             Bridge.get(Bridge.Test.Assert).areEqual$1(v2.getHashCode(), 1283637748, "v2.GetHashCode()");
@@ -14358,8 +14367,8 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.TimeSpanTests', {
         var time2 = new Bridge.TimeSpan(14, 10, 20, 5, 14);
         var time3 = new Bridge.TimeSpan(15, 10, 20, 5, 14);
 
-        Bridge.get(Bridge.Test.Assert).$false(time1.equals(time2));
-        Bridge.get(Bridge.Test.Assert).$true(time1.equals(time3));
+        Bridge.get(Bridge.Test.Assert).$false(time1.equalsT(time2));
+        Bridge.get(Bridge.Test.Assert).$true(time1.equalsT(time3));
     },
     iEquatableEqualsWorks: function () {
         var time1 = new Bridge.TimeSpan(15, 10, 20, 5, 14);
