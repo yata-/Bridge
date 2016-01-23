@@ -140,6 +140,7 @@
     <Compile Include="BridgeIssues\N472.cs" />
     <Compile Include="BridgeIssues\N548.cs" />
     <Compile Include="BridgeIssues\N549.cs" />
+    <Compile Include="BridgeIssues\N826.cs" />
     <Compile Include="BridgeIssues\TestBridgeIssues.cs" />
     <Compile Include="Linq\TestLinqGroupingOperators.cs" />
     <Compile Include="Linq\TestLinqConversionOperators.cs" />
@@ -158,7 +159,6 @@
     <Compile Include="SimpleTypes\TestVersion.cs" />
     <Compile Include="Tests\MarkupCheckRequired.cs" />
     <Compile Include="Tests\NotCompiling.cs" />
-    <Compile Include="Tests\RunTests.cs" />
     <Compile Include="Utilities\BrowserHelper.cs" />
     <Compile Include="Utilities\DecimalHelper.cs" />
     <Compile Include="Utilities\TypeHelper.cs" />
