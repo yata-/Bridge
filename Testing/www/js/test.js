@@ -3721,7 +3721,7 @@ Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge
         },
         testUseCase: function (assert) {
             var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge607).beforeTest(true, assert);
-            assert.expect(4);
+            assert.expect(5);
             Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge607).testUseCase();
         }
     }
@@ -6917,7 +6917,7 @@ Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypesSByteTe
         },
         defaultValueIs0: function (assert) {
             var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypesSByteTests).beforeTest(false, assert);
-            t.keysWorks();
+            t.defaultValueIs0();
         },
         defaultConstructorReturnsZero: function (assert) {
             var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypesSByteTests).beforeTest(false, assert);
