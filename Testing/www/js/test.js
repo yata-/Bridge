@@ -4782,6 +4782,32 @@ Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge
     }
 });
 
+Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge844', {
+    statics: {
+        instance: null,
+        getInstance: function () {
+            if (Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge844).instance === null) {
+                Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge844).instance = new Bridge.ClientTest.BridgeIssues.Bridge844();
+            }
+            return Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge844).instance;
+        },
+        setInstance: function (value) {
+            Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge844).instance = value;
+        },
+        beforeTest: function (isStatic, assert) {
+            Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge844).setInstance(null);
+            Bridge.get(Bridge.Test.Assert).assert = assert;
+            var r = isStatic ? null : Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge844).getInstance();
+            return r;
+        },
+        nullableAndSimpleDateTimeToStringEquals: function (assert) {
+            var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge844).beforeTest(true, assert);
+            assert.expect(1);
+            Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge844).nullableAndSimpleDateTimeToStringEquals();
+        }
+    }
+});
+
 Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge537', {
     statics: {
         instance: null,
@@ -8575,6 +8601,7 @@ Bridge.define('Bridge.Test.QUnit.TestRunner', {
             QUnit.test("#795 - TestRelated", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge795).testRelated);
             QUnit.test("#796 - TestUseCase", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge796).testUseCase);
             QUnit.test("#823 - GetTicksReturnsCorrectValue", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge823).getTicksReturnsCorrectValue);
+            QUnit.test("#844 - NullableAndSimpleDateTimeToStringEquals", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge844).nullableAndSimpleDateTimeToStringEquals);
             QUnit.test("#537 - TestUseCase", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge537).testUseCase);
             QUnit.test("#588 - TestUseCase2", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge588C).testUseCase2);
             QUnit.test("#603 - TestUseCase", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge603).testUseCase);
