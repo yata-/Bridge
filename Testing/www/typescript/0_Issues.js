@@ -1,8 +1,4 @@
-﻿/// <reference path="..\..\www\qunit\qunit.d.ts" />
-/// <reference path="..\..\www\typescriptjs\bridge.d.ts" />
-/// <reference path="..\..\www\typescriptjs\misc.a.d.ts" />
-/// <reference path="..\..\www\typescriptjs\misc.b.d.ts" />
-QUnit.module("TypeScript - Issues");
+﻿QUnit.module("TypeScript - Issues");
 QUnit.test("#290", function (assert) {
     var c1 = new Misc.A.Class1();
     var c2 = new Misc.B.Class2();
