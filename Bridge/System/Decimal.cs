@@ -76,6 +76,12 @@ namespace System
             return null;
         }
 
+        [Template("Bridge.Int.format({this}.toFloat(), 'G')")]
+        public override string ToString()
+        {
+            return null;
+        }
+
         public extern decimal Abs();
 
         [Name("ceil")]

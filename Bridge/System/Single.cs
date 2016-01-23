@@ -58,6 +58,18 @@ namespace System
             return null;
         }
 
+        [Template("Bridge.Int.format({this}, 'G')")]
+        public override string ToString()
+        {
+            return null;
+        }
+
+        [Template("Bridge.Int.format({this}, 'G', {provider})")]
+        public string ToString(IFormatProvider provider)
+        {
+            return null;
+        }
+
         [Template("Bridge.Int.parseFloat({s})")]
         public static float Parse(string s)
         {
