@@ -4856,10 +4856,6 @@ var date = {
             return other.ticks === this.ticks;
         },
 
-        equalsT: function (other) {
-            return other.ticks === this.ticks;
-        },
-
         format: function (formatStr, provider) {
             return this.toString(formatStr, provider);
         },
@@ -5866,17 +5862,7 @@ Bridge.Class.generic('Bridge.EqualityComparer$1', function (T) {
             } else if (Bridge.isDefined(y, true)) {
                 var isBridge = x && x.$$name;
 
-                if (!isBridge) {
-                    return Bridge.equals(x, y);
-                }
-                else if (Bridge.isFunction(x.equalsT)) {
-                    return Bridge.equalsT(x, y);
-                }
-                else if (Bridge.isFunction(x.equals)) {
-                    return Bridge.equals(x, y);
-                }
-
-                return x === y;
+                return (!isBridge || Bridge.isFunction(x.equals)) ? Bridge.equals(x, y) : x === y;
             }
 
             return false;
@@ -7298,9 +7284,6 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
             return true;
         },
         equals: function(v) {
-            return this.equals$1(v);
-        },
-        equalsT: function (v) {
             return this.equals$1(v);
         },
         getHashCode: function () {
