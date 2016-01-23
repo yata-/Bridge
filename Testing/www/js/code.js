@@ -2131,6 +2131,36 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge795B', {
     }
 });
 
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge826A', {
+    statics: {
+        op_Implicit: function (val) {
+            return new Bridge.ClientTest.BridgeIssues.Bridge826A(val);
+        },
+        op_Implicit$1: function (val) {
+            return val !== null ? val._val : Bridge.Decimal(0);
+        }
+    },
+    _val: Bridge.Decimal(0.0),
+    constructor: function (val) {
+        this._val  = val;
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge826B', {
+    statics: {
+        op_Implicit: function (val) {
+            return new Bridge.ClientTest.BridgeIssues.Bridge826B(val);
+        },
+        op_Implicit$1: function (val) {
+            return val !== null ? val._val : 0;
+        }
+    },
+    _val: 0,
+    constructor: function (val) {
+        this._val = val;
+    }
+});
+
 Bridge.define('Bridge.ClientTest.BridgeIssues.CI1');
 
 Bridge.define('Bridge.ClientTest.BridgeIssues.CI2');
@@ -6834,6 +6864,30 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge823', {
             Bridge.get(Bridge.Test.Assert).areDeepEqual$1(ticks, result, "Ticks returning correct int value");
             Bridge.get(Bridge.Test.Assert).areDeepEqual$1(ticksPlusOne, result + 1, "Adding to a Tick value is correct");
             Bridge.get(Bridge.Test.Assert).areDeepEqual$1(ticksString, result.toString(), "Ticks returning correct value if .ToString() called on int");
+        }
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge826', {
+    statics: {
+        echoDecimal: function (d) {
+            if (d === void 0) { d = Bridge.Decimal(42.0); }
+            return d;
+        },
+        testUseCase: function () {
+            var d = null;
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge826).echoDecimal(Bridge.ClientTest.BridgeIssues.Bridge826A.op_Implicit$1(d)).equalsT(Bridge.Decimal(0)), "Bridge826 decimal 0");
+
+            d = Bridge.ClientTest.BridgeIssues.Bridge826A.op_Implicit(Bridge.Decimal(1));
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge826).echoDecimal(Bridge.ClientTest.BridgeIssues.Bridge826A.op_Implicit$1(d)).equalsT(Bridge.Decimal(1)), "Bridge826 decimal 1");
+
+            var i = null;
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge826).echoDecimal(Bridge.Decimal(Bridge.ClientTest.BridgeIssues.Bridge826B.op_Implicit$1(i))).equalsT(Bridge.Decimal(0)), "Bridge826 int 0");
+
+            i = Bridge.ClientTest.BridgeIssues.Bridge826B.op_Implicit(1);
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge826).echoDecimal(Bridge.Decimal(Bridge.ClientTest.BridgeIssues.Bridge826B.op_Implicit$1(i))).equalsT(Bridge.Decimal(1)), "Bridge826 int 1");
+
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge826).echoDecimal().equalsT(Bridge.Decimal(42)), "Bridge826 42");
         }
     }
 });
