@@ -1125,12 +1125,12 @@ Bridge.define('Bridge.ClientTest.Utilities.DecimalHelper', {
         assertIsDecimalAndEqualTo$1: function (v, d, message) {
             if (message === void 0) { message = null; }
             Bridge.get(Bridge.Test.Assert).areStrictEqual$1(Bridge.is(v, Bridge.Decimal), true, message);
-            Bridge.get(Bridge.Test.Assert).areStrictEqual$1(v.toString(), d.toString(), message);
+            Bridge.get(Bridge.Test.Assert).areStrictEqual$1(v.toString(), Bridge.Int.format(d, 'G'), message);
         },
         assertIsDecimalAndEqualTo: function (v, d, message) {
             if (message === void 0) { message = null; }
             Bridge.get(Bridge.Test.Assert).areStrictEqual$1(Bridge.is(v, Bridge.Decimal), true, message);
-            Bridge.get(Bridge.Test.Assert).areStrictEqual$1(v.toString(), d.toString(), message);
+            Bridge.get(Bridge.Test.Assert).areStrictEqual$1(v.toString(), Bridge.Int.format(d.toFloat(), 'G'), message);
         }
     }
 });
@@ -2629,7 +2629,7 @@ Bridge.define('Bridge.ClientTest.DecimalMathTests.Logger', {
                                     result[j] = "decimal.One";
                                 }
                                 else  {
-                                    result[j] = d1.toString() + "m";
+                                    result[j] = Bridge.Int.format(d1.toFloat(), 'G') + "m";
                                 }
                             }
                         }
@@ -6821,6 +6821,38 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge796', {
     }
 });
 
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge821', {
+    statics: {
+        testUseCase: function () {
+            var defaultCulture = Bridge.get(Bridge.CultureInfo).getCurrentCulture();
+
+            var d = Bridge.Decimal(1.25);
+            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(d.toFloat(), 'G'), "1.25");
+            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(d.toFloat(), 'G', Bridge.get(Bridge.CultureInfo).getCultureInfo("ru-RU")), "1,25");
+            Bridge.get(Bridge.CultureInfo).setCurrentCulture(Bridge.get(Bridge.CultureInfo).getCultureInfo("ru-RU"));
+            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(d.toFloat(), 'G'), "1,25");
+
+            Bridge.get(Bridge.CultureInfo).setCurrentCulture(defaultCulture);
+
+            var d1 = 1.25;
+            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(d1, 'G'), "1.25");
+            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(d1, 'G', Bridge.get(Bridge.CultureInfo).getCultureInfo("ru-RU")), "1,25");
+            Bridge.get(Bridge.CultureInfo).setCurrentCulture(Bridge.get(Bridge.CultureInfo).getCultureInfo("ru-RU"));
+            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(d1, 'G'), "1,25");
+
+            Bridge.get(Bridge.CultureInfo).setCurrentCulture(defaultCulture);
+
+            var f = 1.25;
+            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(f, 'G'), "1.25");
+            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(f, 'G', Bridge.get(Bridge.CultureInfo).getCultureInfo("ru-RU")), "1,25");
+            Bridge.get(Bridge.CultureInfo).setCurrentCulture(Bridge.get(Bridge.CultureInfo).getCultureInfo("ru-RU"));
+            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(f, 'G'), "1,25");
+
+            Bridge.get(Bridge.CultureInfo).setCurrentCulture(defaultCulture);
+        }
+    }
+});
+
 Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge823', {
     statics: {
         getTicksReturnsCorrectValue: function () {
@@ -7582,7 +7614,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine("got " + enm.getCurrent$1());
         }
 
-        this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\ngot -1\r\n");
+        this.assertEqual(sb.toString(), "yielding 0\nyielding 1\nyielding -1\nin finally\ngot 0\ngot 1\ngot -1\n");
     },
     prematureDisposalOfIEnumeratorIteratorExecutesFinallyBlocks: function () {
         //TODO expected for v1: yield iterator works with no state machine
@@ -7596,7 +7628,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
         }
         enm.dispose();
 
-        this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding 2\r\nyielding 3\r\nyielding 4\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\n");
+        this.assertEqual(sb.toString(), "yielding 0\nyielding 1\nyielding 2\nyielding 3\nyielding 4\nyielding -1\nin finally\ngot 0\ngot 1\n");
     },
     exceptionInIEnumeratorIteratorBodyExecutesFinallyBlocks: function () {
         //TODO expected for v1: yield iterator works with no state machine
@@ -7616,7 +7648,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine("caught exception");
         }
 
-        this.assertEqual(sb.toString(), "yielding 1\r\nyielding 2\r\nthrowing\r\nin finally\r\ncaught exception\r\n");
+        this.assertEqual(sb.toString(), "yielding 1\nyielding 2\nthrowing\nin finally\ncaught exception\n");
     },
     typeReturnedByIteratorBlockReturningIEnumerableImplementsThatInterface: function () {
         var enm = new Bridge.ClientTest.Collections.Generic.IteratorBlockTests.C(new Bridge.Text.StringBuilder()).getEnumerable(0);
@@ -7641,7 +7673,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine("got " + i1);
         }
 
-        this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\ngot -1\r\n-\r\ngot 0\r\ngot 1\r\ngot -1\r\n");
+        this.assertEqual(sb.toString(), "yielding 0\nyielding 1\nyielding -1\nin finally\ngot 0\ngot 1\ngot -1\n-\ngot 0\ngot 1\ngot -1\n");
     },
     prematureDisposalOfIEnumerableIteratorExecutesFinallyBlocks: function () {
         var $t;
@@ -7658,7 +7690,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             }
         }
 
-        this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding 2\r\nyielding 3\r\nyielding 4\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\n");
+        this.assertEqual(sb.toString(), "yielding 0\nyielding 1\nyielding 2\nyielding 3\nyielding 4\nyielding -1\nin finally\ngot 0\ngot 1\n");
     },
     exceptionInIEnumerableIteratorBodyExecutesFinallyBlocks: function () {
         //TODO expected for v1: yield iterator works with no state machine
@@ -7680,7 +7712,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine("caught exception");
         }
 
-        this.assertEqual(sb.toString(), "yielding 1\r\nyielding 2\r\nthrowing\r\nin finally\r\ncaught exception\r\n");
+        this.assertEqual(sb.toString(), "yielding 1\nyielding 2\nthrowing\nin finally\ncaught exception\n");
     },
     enumeratingAnIteratorBlockReturningIEnumerableMultipleTimesUsesTheInitialValuesForParameters: function () {
         var $t, $t1;
@@ -7698,7 +7730,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine(i1.toString());
         }
 
-        this.assertEqual(sb.toString(), "3\r\n2\r\n1\r\n3\r\n2\r\n1\r\n");
+        this.assertEqual(sb.toString(), "3\n2\n1\n3\n2\n1\n");
     },
     differentGetEnumeratorCallsOnIteratorBlockReturningIEnumerableGetOwnCopiesOfLocals: function () {
         var sb = new Bridge.Text.StringBuilder();
@@ -7713,7 +7745,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine(enm2.getCurrent$1().toString());
         }
 
-        this.assertEqual(sb.toString(), "0\r\n0\r\n1\r\n1\r\n2\r\n2\r\n-1\r\n-1\r\n");
+        this.assertEqual(sb.toString(), "0\n0\n1\n1\n2\n2\n-1\n-1\n");
     }
 });
 
@@ -8464,7 +8496,7 @@ Bridge.define('Bridge.ClientTest.DecimalMathTests', {
             Bridge.get(Bridge.Test.Assert).areStrictEqual$1(actual.toString(), expected.toString(), "StrictEqual " + message);
         },
         getDifferenceReport: function (difference) {
-            var differenceReport = difference.ne(Bridge.Decimal(0.0)) ? "; result diff is " + difference.toString() : "";
+            var differenceReport = difference.ne(Bridge.Decimal(0.0)) ? "; result diff is " + Bridge.Int.format(difference.toFloat(), 'G') : "";
             return differenceReport;
         },
         getDifference: function (expected, result) {
@@ -11633,7 +11665,7 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.DecimalTests', {
     assertIsDecimalAndEqualTo: function (v, d, message) {
         if (message === void 0) { message = null; }
         Bridge.get(Bridge.Test.Assert).areStrictEqual$1(Bridge.is(v, Bridge.Decimal), true, message);
-        Bridge.get(Bridge.Test.Assert).areStrictEqual$1(v.toString(), d.toString(), message);
+        Bridge.get(Bridge.Test.Assert).areStrictEqual$1(v.toString(), Bridge.Int.format(d, 'G'), message);
     },
     typePropertiesAreCorrect: function () {
         Bridge.get(Bridge.Test.Assert).$true(Bridge.is(Bridge.Decimal.lift(0.5), Bridge.Decimal));
@@ -11676,7 +11708,7 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.DecimalTests', {
         Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format((Bridge.Decimal(291.0)).toFloat(), "x"), "123");
     },
     toStringWithoutRadixWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual((Bridge.Decimal(123.0)).toString(), "123");
+        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format((Bridge.Decimal(123.0)).toFloat(), 'G'), "123");
     },
     addWithStringWorks: function () {
         var d1 = Bridge.Decimal(1.0);
@@ -11924,7 +11956,7 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.DoubleTests', {
         Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format((291.0), "x"), "123");
     },
     toStringWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(((123.0)).toString(), "123");
+        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(((123.0)), 'G'), "123");
     },
     toExponentialWorks: function () {
         Bridge.get(Bridge.Test.Assert).areEqual(((123.0)).toExponential(), "1.23e+2");
@@ -13191,7 +13223,7 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.SingleTests', {
         Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(((Bridge.cast(291.0, Number))), "x"), "123");
     },
     toStringWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(((Bridge.cast(123.0, Number))).toString(), "123");
+        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(((Bridge.cast(123.0, Number))), 'G'), "123");
     },
     toExponentialWorks: function () {
         Bridge.get(Bridge.Test.Assert).areEqual(((Bridge.cast(123.0, Number))).toExponential(), "1.23e+2");

@@ -62,6 +62,7 @@
     <Compile Include="BridgeIssues\N550.cs" />
     <Compile Include="BridgeIssues\N578.cs" />
     <Compile Include="BridgeIssues\N577.cs" />
+    <Compile Include="BridgeIssues\N821.cs" />
     <Compile Include="BridgeIssues\N823.cs" />
     <Compile Include="BridgeIssues\N586.cs" />
     <Compile Include="BridgeIssues\N583.cs" />
