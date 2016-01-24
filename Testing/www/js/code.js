@@ -7109,29 +7109,32 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge821', {
         testUseCase: function () {
             var defaultCulture = Bridge.get(Bridge.CultureInfo).getCurrentCulture();
 
-            var d = Bridge.Decimal(1.25);
-            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(d.toFloat(), 'G'), "1.25");
-            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(d.toFloat(), 'G', Bridge.get(Bridge.CultureInfo).getCultureInfo("ru-RU")), "1,25");
-            Bridge.get(Bridge.CultureInfo).setCurrentCulture(Bridge.get(Bridge.CultureInfo).getCultureInfo("ru-RU"));
-            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(d.toFloat(), 'G'), "1,25");
+            try {
+                var d = Bridge.Decimal("443534569034876.12345678901235");
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(d.toFloat(), 'G'), "443534569034876.12345678901235");
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(d.toFloat(), 'G', Bridge.get(Bridge.CultureInfo).getCultureInfo("ru-RU")), "443534569034876,12345678901235");
+                Bridge.get(Bridge.CultureInfo).setCurrentCulture(Bridge.get(Bridge.CultureInfo).getCultureInfo("ru-RU"));
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(d.toFloat(), 'G'), "443534569034876,12345678901235");
 
-            Bridge.get(Bridge.CultureInfo).setCurrentCulture(defaultCulture);
+                Bridge.get(Bridge.CultureInfo).setCurrentCulture(defaultCulture);
 
-            var d1 = 1.25;
-            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(d1, 'G'), "1.25");
-            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(d1, 'G', Bridge.get(Bridge.CultureInfo).getCultureInfo("ru-RU")), "1,25");
-            Bridge.get(Bridge.CultureInfo).setCurrentCulture(Bridge.get(Bridge.CultureInfo).getCultureInfo("ru-RU"));
-            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(d1, 'G'), "1,25");
+                var d1 = 1.25;
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(d1, 'G'), "1.25");
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(d1, 'G', Bridge.get(Bridge.CultureInfo).getCultureInfo("ru-RU")), "1,25");
+                Bridge.get(Bridge.CultureInfo).setCurrentCulture(Bridge.get(Bridge.CultureInfo).getCultureInfo("ru-RU"));
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(d1, 'G'), "1,25");
 
-            Bridge.get(Bridge.CultureInfo).setCurrentCulture(defaultCulture);
+                Bridge.get(Bridge.CultureInfo).setCurrentCulture(defaultCulture);
 
-            var f = 1.25;
-            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(f, 'G'), "1.25");
-            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(f, 'G', Bridge.get(Bridge.CultureInfo).getCultureInfo("ru-RU")), "1,25");
-            Bridge.get(Bridge.CultureInfo).setCurrentCulture(Bridge.get(Bridge.CultureInfo).getCultureInfo("ru-RU"));
-            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(f, 'G'), "1,25");
-
-            Bridge.get(Bridge.CultureInfo).setCurrentCulture(defaultCulture);
+                var f = 1.25;
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(f, 'G'), "1.25");
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(f, 'G', Bridge.get(Bridge.CultureInfo).getCultureInfo("ru-RU")), "1,25");
+                Bridge.get(Bridge.CultureInfo).setCurrentCulture(Bridge.get(Bridge.CultureInfo).getCultureInfo("ru-RU"));
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(f, 'G'), "1,25");
+            }
+            finally {
+                Bridge.get(Bridge.CultureInfo).setCurrentCulture(defaultCulture);
+            }
         }
     }
 });
