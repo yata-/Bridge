@@ -6,60 +6,27 @@ namespace Bridge
     [Name("Bridge.Validation")]
     public sealed class Validation
     {
-        public static bool IsNull(object value)
-        {
-            return false;
-        }
+        public static extern bool IsNull(object value);
 
-        public static bool IsEmpty(object value)
-        {
-            return false;
-        }
+        public static extern bool IsEmpty(object value);
 
-        public static bool IsNotEmptyOrWhitespace(string value)
-        {
-            return false;
-        }
+        public static extern bool IsNotEmptyOrWhitespace(string value);
 
-        public static bool IsNotNull(object value)
-        {
-            return false;
-        }
+        public static extern bool IsNotNull(object value);
 
-        public static bool IsNotEmpty(object value)
-        {
-            return false;
-        }
+        public static extern bool IsNotEmpty(object value);
 
-        public static bool Email(string value)
-        {
-            return false;
-        }
+        public static extern bool Email(string value);
 
-        public static bool Url(string value)
-        {
-            return false;
-        }
+        public static extern bool Url(string value);
 
-        public static bool Alpha(string value)
-        {
-            return false;
-        }
+        public static extern bool Alpha(string value);
 
-        public static bool AlphaNum(string value)
-        {
-            return false;
-        }
+        public static extern bool AlphaNum(string value);
 
-        public static bool CreditCard(string value)
-        {
-            return false;
-        }
+        public static extern bool CreditCard(string value);
 
-        public static bool CreditCard(string value, CreditCardType type)
-        {
-            return false;
-        }
+        public static extern bool CreditCard(string value, CreditCardType type);
     }
 
     [External]

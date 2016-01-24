@@ -26,20 +26,11 @@ namespace System.Collections.ObjectModel
             }
         }
 
-        public bool Contains(T value)
-        {
-            return false;
-        }
+        public extern bool Contains(T value);
 
-        public IEnumerator<T> GetEnumerator()
-        {
-            return null;
-        }
+        public extern IEnumerator<T> GetEnumerator();
 
-        public int IndexOf(T value)
-        {
-            return 0;
-        }
+        public extern int IndexOf(T value);
 
         T IList<T>.this[int index]
         {
@@ -53,30 +44,16 @@ namespace System.Collections.ObjectModel
             }
         }
 
-        void ICollection<T>.Add(T value)
-        {
-        }
+        extern void ICollection<T>.Add(T value);
 
-        void ICollection<T>.Clear()
-        {
-        }
+        extern void ICollection<T>.Clear();
 
-        void IList<T>.Insert(int index, T value)
-        {
-        }
+        extern void IList<T>.Insert(int index, T value);
 
-        bool ICollection<T>.Remove(T value)
-        {
-            return false;
-        }
+        extern bool ICollection<T>.Remove(T value);
 
-        void IList<T>.RemoveAt(int index)
-        {
-        }
+        extern void IList<T>.RemoveAt(int index);
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return null;
-        }
+        extern IEnumerator IEnumerable.GetEnumerator();
     }
 }

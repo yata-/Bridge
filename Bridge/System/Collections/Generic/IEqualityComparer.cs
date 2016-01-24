@@ -27,15 +27,9 @@ namespace System.Collections.Generic
         }
 
         [Template("{this}.equals({x}, {y})")]
-        public virtual bool Equals(T x, T y)
-        {
-            return false;
-        }
+        public virtual extern bool Equals(T x, T y);
 
         [Template("{this}.getHashCode({obj}, true)")]
-        public virtual int GetHashCode(T obj)
-        {
-            return 0;
-        }
+        public virtual extern int GetHashCode(T obj);
     }
 }

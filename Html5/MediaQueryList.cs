@@ -21,33 +21,25 @@ namespace Bridge.Html5
         /// Adds a new listener to the media query list. If the specified listener is already in the list, this method has no effect.
         /// </summary>
         /// <param name="listener">The MediaQueryListListener to invoke when the media query's evaluated result changes.</param>
-        public virtual void AddListener(Delegate listener)
-        {
-        }
+        public virtual extern void AddListener(Delegate listener);
 
         /// <summary>
         /// Adds a new listener to the media query list. If the specified listener is already in the list, this method has no effect.
         /// </summary>
         /// <param name="listener">The MediaQueryListListener to invoke when the media query's evaluated result changes.</param>
-        public virtual void AddListener(Action<MediaQueryList> listener)
-        {
-        }
+        public virtual extern void AddListener(Action<MediaQueryList> listener);
 
         /// <summary>
         /// Removes a listener from the media query list. Does nothing if the specified listener isn't already in the list.
         /// </summary>
         /// <param name="listener">The MediaQueryListListener to stop calling on changes to the media query's evaluated result.</param>
-        public virtual void RemoveListener(Delegate listener)
-        {
-        }
+        public virtual extern void RemoveListener(Delegate listener);
 
         /// <summary>
         /// Removes a listener from the media query list. Does nothing if the specified listener isn't already in the list.
         /// </summary>
         /// <param name="listener">The MediaQueryListListener to stop calling on changes to the media query's evaluated result.</param>
-        public virtual void RemoveListener(Action<MediaQueryList> listener)
-        {
-        }
+        public virtual extern void RemoveListener(Action<MediaQueryList> listener);
 
         /// <summary>
         /// true if the document currently matches the media query list; otherwise false. Read only.

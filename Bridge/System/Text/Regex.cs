@@ -77,20 +77,11 @@ namespace System.Text.RegularExpressions
             }
         }
 
-        public string[] Exec(string s)
-        {
-            return null;
-        }
+        public extern string[] Exec(string s);
 
-        public bool Test(string s)
-        {
-            return false;
-        }
+        public extern bool Test(string s);
 
         [Template("Bridge.regexpEscape({s})")]
-        public static string Escape(string s)
-        {
-            return null;
-        }
+        public static extern string Escape(string s);
     }
 }

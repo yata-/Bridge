@@ -21,13 +21,9 @@ namespace System.Threading.Tasks
         }
 
         [Name("continueWith")]
-        public void OnCompleted(Action continuation)
-        {
-        }
+        public extern void OnCompleted(Action continuation);
 
-        public void GetResult()
-        {
-        }
+        public extern void GetResult();
     }
 
     [External]
@@ -48,9 +44,7 @@ namespace System.Threading.Tasks
         }
 
         [Name("continueWith")]
-        public void OnCompleted(Action continuation)
-        {
-        }
+        public extern void OnCompleted(Action continuation);
 
         public TResult GetResult()
         {
