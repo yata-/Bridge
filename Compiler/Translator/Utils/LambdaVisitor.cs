@@ -65,6 +65,11 @@ namespace Bridge.Translator
             set;
         }
 
+        public bool InsideSwitch
+        {
+            get; set;
+        }
+
         public override void VisitLambdaExpression(LambdaExpression lambdaExpression)
         {
         }
@@ -116,7 +121,7 @@ namespace Bridge.Translator
 
         public override void VisitBreakStatement(BreakStatement breakStatement)
         {
-            if (!findReturn)
+            if (!findReturn && !this.InsideSwitch)
             {
                 this.Break.Add(breakStatement);    
             }
@@ -131,6 +136,14 @@ namespace Bridge.Translator
                 this.Return.Add(returnStatement);
             }
             base.VisitReturnStatement(returnStatement);
+        }
+
+        public override void VisitSwitchStatement(SwitchStatement switchStatement)
+        {
+            var oldValue = this.InsideSwitch;
+            this.InsideSwitch = true;
+            base.VisitSwitchStatement(switchStatement);
+            this.InsideSwitch = oldValue;
         }
     }
 }

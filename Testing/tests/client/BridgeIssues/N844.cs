@@ -1,5 +1,4 @@
 using System;
-using Bridge;
 using Bridge.Test;
 
 namespace Bridge.ClientTest.BridgeIssues
@@ -13,7 +12,7 @@ namespace Bridge.ClientTest.BridgeIssues
         public static void NullableAndSimpleDateTimeToStringEquals()
         {
             DateTime dt1 = DateTime.Now;
-            DateTime? dt2 = DateTime.Now;
+            DateTime? dt2 = dt1;
 
             Assert.AreEqual(dt1.ToString(), dt2.ToString(), "Bridge844");
         }

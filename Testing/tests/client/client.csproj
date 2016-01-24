@@ -90,6 +90,11 @@
     <Compile Include="BridgeIssues\N788.cs" />
     <Compile Include="BridgeIssues\N786.cs" />
     <Compile Include="BridgeIssues\N793.cs" />
+    <Compile Include="BridgeIssues\N841.cs" />
+    <Compile Include="BridgeIssues\N818.cs" />
+    <Compile Include="BridgeIssues\N835.cs" />
+    <Compile Include="BridgeIssues\N817.cs" />
+    <Compile Include="BridgeIssues\N692.cs" />
     <Compile Include="BridgeIssues\N796.cs" />
     <Compile Include="BridgeIssues\N762.cs" />
     <Compile Include="BridgeIssues\N760.cs" />
@@ -141,6 +146,7 @@
     <Compile Include="BridgeIssues\N472.cs" />
     <Compile Include="BridgeIssues\N548.cs" />
     <Compile Include="BridgeIssues\N549.cs" />
+    <Compile Include="BridgeIssues\N826.cs" />
     <Compile Include="BridgeIssues\TestBridgeIssues.cs" />
     <Compile Include="Linq\TestLinqGroupingOperators.cs" />
     <Compile Include="Linq\TestLinqConversionOperators.cs" />
@@ -159,7 +165,6 @@
     <Compile Include="SimpleTypes\TestVersion.cs" />
     <Compile Include="Tests\MarkupCheckRequired.cs" />
     <Compile Include="Tests\NotCompiling.cs" />
-    <Compile Include="Tests\RunTests.cs" />
     <Compile Include="Utilities\BrowserHelper.cs" />
     <Compile Include="Utilities\DecimalHelper.cs" />
     <Compile Include="Utilities\TypeHelper.cs" />
