@@ -3,27 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using Bridge;
 using Bridge.Html5;
-using Bridge.QUnit;
+using Bridge.Test;
 
-namespace ClientTestLibrary
+
+namespace Bridge.ClientTest.BridgeIssues
 {
     // Bridge[#816]
-    [FileName("testBridgeIssues.js")]
-    internal class Bridge816
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#816 - {0}")]
+    public class Bridge816
     {
-        public static void TestUseCase(Assert assert)
+        [Test(ExpectedCount = 1)]
+        public static void TestUseCase()
         {
-            assert.Expect(1);
-
             var textArea = new TextAreaElement();
             textArea.Id = "textArea1";
             textArea.Value = "Test";
-
+            
             var root = Document.GetElementById("qunit-fixture");
             root.AppendChild(textArea);
-
+            
             var ta = Document.GetElementById("textArea1");
-            assert.Equal(ta["value"], "Test", "textArea1.value Test");
+            Assert.Equal(ta["value"], "Test", "Bridge816 textArea1.value");
         }
     }
 }
