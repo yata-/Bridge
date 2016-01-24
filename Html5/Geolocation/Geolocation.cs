@@ -23,35 +23,27 @@ namespace Bridge.Html5
         /// Determines the device's current location and gives back a Position object with the data.
         /// </summary>
         /// <param name="success">A callback function that takes a Position object as its sole input parameter.</param>
-        public virtual void GetCurrentPosition(Delegate success)
-        {
-        }
+        public virtual extern void GetCurrentPosition(Delegate success);
 
         /// <summary>
         /// Determines the device's current location and gives back a Position object with the data.
         /// </summary>
         /// <param name="success">A callback function that takes a Position object as its sole input parameter.</param>
-        public virtual void GetCurrentPosition(Action<GeolocationPosition> success)
-        {
-        }
-
-        /// <summary>
-        /// Determines the device's current location and gives back a Position object with the data.
-        /// </summary>
-        /// <param name="success">A callback function that takes a Position object as its sole input parameter.</param>
-        /// <param name="error">An optional callback function that takes a PositionError object as its sole input parameter.</param>
-        public virtual void GetCurrentPosition(Delegate success, Delegate error)
-        {
-        }
+        public virtual extern void GetCurrentPosition(Action<GeolocationPosition> success);
 
         /// <summary>
         /// Determines the device's current location and gives back a Position object with the data.
         /// </summary>
         /// <param name="success">A callback function that takes a Position object as its sole input parameter.</param>
         /// <param name="error">An optional callback function that takes a PositionError object as its sole input parameter.</param>
-        public virtual void GetCurrentPosition(Action<GeolocationPosition> success, Action<GeolocationPositionError> error)
-        {
-        }
+        public virtual extern void GetCurrentPosition(Delegate success, Delegate error);
+
+        /// <summary>
+        /// Determines the device's current location and gives back a Position object with the data.
+        /// </summary>
+        /// <param name="success">A callback function that takes a Position object as its sole input parameter.</param>
+        /// <param name="error">An optional callback function that takes a PositionError object as its sole input parameter.</param>
+        public virtual extern void GetCurrentPosition(Action<GeolocationPosition> success, Action<GeolocationPositionError> error);
 
         /// <summary>
         /// Determines the device's current location and gives back a Position object with the data.
@@ -59,9 +51,7 @@ namespace Bridge.Html5
         /// <param name="success">A callback function that takes a Position object as its sole input parameter.</param>
         /// <param name="error">An optional callback function that takes a PositionError object as its sole input parameter.</param>
         /// <param name="options">An optional PositionOptions object.</param>
-        public virtual void GetCurrentPosition(Delegate success, Delegate error, GeolocationPositionOptions options)
-        {
-        }
+        public virtual extern void GetCurrentPosition(Delegate success, Delegate error, GeolocationPositionOptions options);
 
         /// <summary>
         /// Determines the device's current location and gives back a Position object with the data.
@@ -69,29 +59,21 @@ namespace Bridge.Html5
         /// <param name="success">A callback function that takes a Position object as its sole input parameter.</param>
         /// <param name="error">An optional callback function that takes a PositionError object as its sole input parameter.</param>
         /// <param name="options">An optional PositionOptions object.</param>
-        public virtual void GetCurrentPosition(Action<GeolocationPosition> success, Action<GeolocationPositionError> error, GeolocationPositionOptions options)
-        {
-        }
+        public virtual extern void GetCurrentPosition(Action<GeolocationPosition> success, Action<GeolocationPositionError> error, GeolocationPositionOptions options);
 
         /// <summary>
         /// The Geolocation.watchPosition() method is used to register a handler function that will be called automatically each time the position of the device changes. You can also, optionally, specify an error handling callback function.
         /// </summary>
         /// <param name="success">A callback function that takes a Position object as an input parameter.</param>
         /// <returns>This method returns a watch ID value than can be used to unregister the handler by passing it to the Geolocation.clearWatch() method.</returns>
-        public virtual object WatchPosition(Delegate success)
-        {
-            return null;
-        }
+        public virtual extern object WatchPosition(Delegate success);
 
         /// <summary>
         /// The Geolocation.watchPosition() method is used to register a handler function that will be called automatically each time the position of the device changes. You can also, optionally, specify an error handling callback function.
         /// </summary>
         /// <param name="success">A callback function that takes a Position object as an input parameter.</param>
         /// <returns>This method returns a watch ID value than can be used to unregister the handler by passing it to the Geolocation.clearWatch() method.</returns>
-        public virtual object WatchPosition(Action<GeolocationPosition> success)
-        {
-            return null;
-        }
+        public virtual extern object WatchPosition(Action<GeolocationPosition> success);
 
         /// <summary>
         /// The Geolocation.watchPosition() method is used to register a handler function that will be called automatically each time the position of the device changes. You can also, optionally, specify an error handling callback function.
@@ -99,10 +81,7 @@ namespace Bridge.Html5
         /// <param name="success">A callback function that takes a Position object as an input parameter.</param>
         /// <param name="error">An optional callback function that takes a PositionError object as an input parameter.</param>
         /// <returns>This method returns a watch ID value than can be used to unregister the handler by passing it to the Geolocation.clearWatch() method.</returns>
-        public virtual object WatchPosition(Delegate success, Delegate error)
-        {
-            return null;
-        }
+        public virtual extern object WatchPosition(Delegate success, Delegate error);
 
         /// <summary>
         /// The Geolocation.watchPosition() method is used to register a handler function that will be called automatically each time the position of the device changes. You can also, optionally, specify an error handling callback function.
@@ -110,10 +89,7 @@ namespace Bridge.Html5
         /// <param name="success">A callback function that takes a Position object as an input parameter.</param>
         /// <param name="error">An optional callback function that takes a PositionError object as an input parameter.</param>
         /// <returns>This method returns a watch ID value than can be used to unregister the handler by passing it to the Geolocation.clearWatch() method.</returns>
-        public virtual object WatchPosition(Action<GeolocationPosition> success, Action<GeolocationPositionError> error)
-        {
-            return null;
-        }
+        public virtual extern object WatchPosition(Action<GeolocationPosition> success, Action<GeolocationPositionError> error);
 
         /// <summary>
         /// The Geolocation.watchPosition() method is used to register a handler function that will be called automatically each time the position of the device changes. You can also, optionally, specify an error handling callback function.
@@ -122,10 +98,7 @@ namespace Bridge.Html5
         /// <param name="error">An optional callback function that takes a PositionError object as an input parameter.</param>
         /// <param name="options">An optional PositionOptions object.</param>
         /// <returns>This method returns a watch ID value than can be used to unregister the handler by passing it to the Geolocation.clearWatch() method.</returns>
-        public virtual object WatchPosition(Delegate success, Delegate error, GeolocationPositionOptions options)
-        {
-            return null;
-        }
+        public virtual extern object WatchPosition(Delegate success, Delegate error, GeolocationPositionOptions options);
 
         /// <summary>
         /// The Geolocation.watchPosition() method is used to register a handler function that will be called automatically each time the position of the device changes. You can also, optionally, specify an error handling callback function.
@@ -134,17 +107,12 @@ namespace Bridge.Html5
         /// <param name="error">An optional callback function that takes a PositionError object as an input parameter.</param>
         /// <param name="options">An optional PositionOptions object.</param>
         /// <returns>This method returns a watch ID value than can be used to unregister the handler by passing it to the Geolocation.clearWatch() method.</returns>
-        public virtual object WatchPosition(Action<GeolocationPosition> success, Action<GeolocationPositionError> error, GeolocationPositionOptions options)
-        {
-            return null;
-        }
+        public virtual extern object WatchPosition(Action<GeolocationPosition> success, Action<GeolocationPositionError> error, GeolocationPositionOptions options);
 
         /// <summary>
         /// Removes the particular handler previously installed using watchPosition().
         /// </summary>
         /// <param name="id">The ID number returned by the Geolocation.watchPosition() method when installing the handler you wish to remove.</param>
-        public virtual void ClearWatch(object id)
-        {
-        }
+        public virtual extern void ClearWatch(object id);
     }
 }

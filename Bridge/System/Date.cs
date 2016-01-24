@@ -189,256 +189,118 @@ namespace System
         {
         }
 
-        public static double Parse(string value)
-        {
-            return 0;
-        }
+        public static extern double Parse(string value);
 
-        public virtual string ToDateString()
-        {
-            return null;
-        }
+        public virtual extern string ToDateString();
 
-        public virtual string ToTimeString()
-        {
-            return null;
-        }
+        public virtual extern string ToTimeString();
 
-        public virtual string ToLocaleDateString(string value)
-        {
-            return null;
-        }
+        public virtual extern string ToLocaleDateString(string value);
 
-        public virtual string ToLocaleTimeString()
-        {
-            return null;
-        }
+        public virtual extern string ToLocaleTimeString();
 
-        public virtual string ToUTCString()
-        {
-            return null;
-        }
+        public virtual extern string ToUTCString();
 
-        public virtual double GetTime()
-        {
-            return 0;
-        }
+        public virtual extern double GetTime();
 
-        public virtual void SetTime(double time)
-        {
-        }
+        public virtual extern void SetTime(double time);
 
-        public virtual int GetTimezoneOffset()
-        {
-            return 0;
-        }
+        public virtual extern int GetTimezoneOffset();
 
-        public virtual int GetFullYear()
-        {
-            return 0;
-        }
+        public virtual extern int GetFullYear();
 
-        public virtual int GetUTCFullYear()
-        {
-            return 0;
-        }
+        public virtual extern int GetUTCFullYear();
 
-        public virtual int GetMonth()
-        {
-            return 0;
-        }
+        public virtual extern int GetMonth();
 
-        public virtual int GetUTCMonth()
-        {
-            return 0;
-        }
+        public virtual extern int GetUTCMonth();
 
-        public virtual int GetDate()
-        {
-            return 0;
-        }
+        public virtual extern int GetDate();
 
-        public virtual int GetUTCDate()
-        {
-            return 0;
-        }
+        public virtual extern int GetUTCDate();
 
-        public virtual int GetDay()
-        {
-            return 0;
-        }
+        public virtual extern int GetDay();
 
-        public virtual int GetUTCDay()
-        {
-            return 0;
-        }
+        public virtual extern int GetUTCDay();
 
-        public virtual int GetHours()
-        {
-            return 0;
-        }
+        public virtual extern int GetHours();
 
-        public virtual int GetUTCHours()
-        {
-            return 0;
-        }
+        public virtual extern int GetUTCHours();
 
-        public virtual int GetMinutes()
-        {
-            return 0;
-        }
+        public virtual extern int GetMinutes();
 
-        public virtual int GetUTCMinutes()
-        {
-            return 0;
-        }
+        public virtual extern int GetUTCMinutes();
 
-        public virtual int GetSeconds()
-        {
-            return 0;
-        }
+        public virtual extern int GetSeconds();
 
-        public virtual int GetUTCSeconds()
-        {
-            return 0;
-        }
+        public virtual extern int GetUTCSeconds();
 
-        public virtual int GetMilliseconds()
-        {
-            return 0;
-        }
+        public virtual extern int GetMilliseconds();
 
-        public virtual int GetUTCMilliseconds()
-        {
-            return 0;
-        }
+        public virtual extern int GetUTCMilliseconds();
 
-        public virtual void SetMilliseconds(int ms)
-        {
-        }
+        public virtual extern void SetMilliseconds(int ms);
 
-        public virtual void SetUTCMilliseconds(int ms)
-        {
-        }
+        public virtual extern void SetUTCMilliseconds(int ms);
 
-        public virtual void SetSeconds(int sec)
-        {
-        }
+        public virtual extern void SetSeconds(int sec);
 
-        public virtual void SetSeconds(int sec, int ms)
-        {
-        }
+        public virtual extern void SetSeconds(int sec, int ms);
 
-        public virtual void SetUTCSeconds(int sec)
-        {
-        }
+        public virtual extern void SetUTCSeconds(int sec);
 
-        public virtual void SetUTCSeconds(int sec, int ms)
-        {
-        }
+        public virtual extern void SetUTCSeconds(int sec, int ms);
 
-        public virtual void SetMinutes(int min)
-        {
-        }
+        public virtual extern void SetMinutes(int min);
 
-        public virtual void SetMinutes(int min, int sec)
-        {
-        }
+        public virtual extern void SetMinutes(int min, int sec);
 
-        public virtual void SetMinutes(int min, int sec, int ms)
-        {
-        }
+        public virtual extern void SetMinutes(int min, int sec, int ms);
 
-        public virtual void SetUTCMinutes(int min)
-        {
-        }
+        public virtual extern void SetUTCMinutes(int min);
 
-        public virtual void SetUTCMinutes(int min, int sec)
-        {
-        }
+        public virtual extern void SetUTCMinutes(int min, int sec);
 
-        public virtual void SetUTCMinutes(int min, int sec, int ms)
-        {
-        }
+        public virtual extern void SetUTCMinutes(int min, int sec, int ms);
 
-        public virtual void SetHours(int hour)
-        {
-        }
+        public virtual extern void SetHours(int hour);
 
-        public virtual void SetHours(int hour, int min)
-        {
-        }
+        public virtual extern void SetHours(int hour, int min);
 
-        public virtual void SetHours(int hour, int min, int sec)
-        {
-        }
+        public virtual extern void SetHours(int hour, int min, int sec);
 
-        public virtual void SetHours(int hour, int min, int sec, int ms)
-        {
-        }
+        public virtual extern void SetHours(int hour, int min, int sec, int ms);
 
-        public virtual void SetUTCHours(int hour)
-        {
-        }
+        public virtual extern void SetUTCHours(int hour);
 
-        public virtual void SetUTCHours(int hour, int min)
-        {
-        }
+        public virtual extern void SetUTCHours(int hour, int min);
 
-        public virtual void SetUTCHours(int hour, int min, int sec)
-        {
-        }
+        public virtual extern void SetUTCHours(int hour, int min, int sec);
 
-        public virtual void SetUTCHours(int hour, int min, int sec, int ms)
-        {
-        }
+        public virtual extern void SetUTCHours(int hour, int min, int sec, int ms);
 
-        public virtual void SetDate(int day)
-        {
-        }
+        public virtual extern void SetDate(int day);
 
-        public virtual void SetUTCDate(int day)
-        {
-        }
+        public virtual extern void SetUTCDate(int day);
 
-        public virtual void SetMonth(int month)
-        {
-        }
+        public virtual extern void SetMonth(int month);
 
-        public virtual void SetMonth(int month, int date)
-        {
-        }
+        public virtual extern void SetMonth(int month, int date);
 
-        public virtual void SetUTCMonth(int month)
-        {
-        }
+        public virtual extern void SetUTCMonth(int month);
 
-        public virtual void SetUTCMonth(int month, int date)
-        {
-        }
+        public virtual extern void SetUTCMonth(int month, int date);
 
-        public virtual void SetFullYear(int year)
-        {
-        }
+        public virtual extern void SetFullYear(int year);
 
-        public virtual void SetFullYear(int year, int month)
-        {
-        }
+        public virtual extern void SetFullYear(int year, int month);
 
-        public virtual void SetFullYear(int year, int month, int date)
-        {
-        }
+        public virtual extern void SetFullYear(int year, int month, int date);
 
-        public virtual void SetUTCFullYear(int year)
-        {
-        }
+        public virtual extern void SetUTCFullYear(int year);
 
-        public virtual void SetUTCFullYear(int year, int month)
-        {
-        }
+        public virtual extern void SetUTCFullYear(int year, int month);
 
-        public virtual void SetUTCFullYear(int year, int month, int date)
-        {
-        }
+        public virtual extern void SetUTCFullYear(int year, int month, int date);
     }
 }

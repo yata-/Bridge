@@ -40,47 +40,32 @@ namespace Bridge.Html5
         /// <summary>
         /// Returns an HTMLElement representing the first &lt;thead&gt; that is a child of the element. If none is found, a new one is created and inserted in the tree immediately before the first element that is neither a &lt;caption&gt;, nor a &lt;colgroup&gt;, or as the last child if there is no such element.
         /// </summary>
-        public virtual TableSectionElement CreateTHead()
-        {
-            return null;
-        }
+        public virtual extern TableSectionElement CreateTHead();
 
         /// <summary>
         /// Removes the first &lt;thead&gt; that is a child of the element.
         /// </summary>
-        public virtual void DeleteTHead()
-        {
-        }
+        public virtual extern void DeleteTHead();
 
         /// <summary>
         /// Returns an HTMLElement representing the first &lt;tfoot&gt; that is a child of the element. If none is found, a new one is created and inserted in the tree immediately before the first element that is neither a &lt;caption&gt;, a &lt;colgroup&gt;, nor a &lt;thead&gt;, or as the last child if there is no such element.
         /// </summary>
-        public virtual TableSectionElement CreateTFoot()
-        {
-            return null;
-        }
+        public virtual extern TableSectionElement CreateTFoot();
 
         /// <summary>
         /// Removes the first &lt;tfoot&gt; that is a child of the element.
         /// </summary>
-        public virtual void DeleteTFoot()
-        {
-        }
+        public virtual extern void DeleteTFoot();
 
         /// <summary>
         /// Returns an HTMLElement representing the first &lt;caption&gt; that is a child of the element. If none is found, a new one is created and inserted in the tree as the first child of the &lt;table&gt; element.
         /// </summary>
-        public virtual TableCaptionElement CreateCaption()
-        {
-            return null;
-        }
+        public virtual extern TableCaptionElement CreateCaption();
 
         /// <summary>
         /// Removes the first &lt;caption&gt; that is a child of the element.
         /// </summary>
-        public virtual void DeleteCaption()
-        {
-        }
+        public virtual extern void DeleteCaption();
 
         /// <summary>
         /// Inserts a new row in the table and returns a reference to the row.
@@ -90,16 +75,11 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="index">The row index of the new row. Defaults to -1.</param>
         /// <returns>Returns the TableRowElement representing the new row of the table.</returns>
-        public virtual TableRowElement InsertRow(int index = -1)
-        {
-            return null;
-        }
+        public virtual extern TableRowElement InsertRow(int index = -1);
 
         /// <summary>
         /// Removes the row corresponding to the index given in parameter. If the index value is -1 the last row is removed; if it smaller than -1 or greater than the amount of rows in the collection, a DOMException with the value IndexSizeError is raised.
         /// </summary>
-        public virtual void DeleteRow(int index)
-        {
-        }
+        public virtual extern void DeleteRow(int index);
     }
 }

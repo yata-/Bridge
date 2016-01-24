@@ -30,15 +30,9 @@ namespace System.Text
         {
         }
 
-        public override string ToString()
-        {
-            return null;
-        }
+        public override extern string ToString();
 
-        public string ToString(int startIndex, int length)
-        {
-            return null;
-        }
+        public extern string ToString(int startIndex, int length);
 
         /// <summary>
         /// Gets or sets the length of the current StringBuilder object.
@@ -147,10 +141,7 @@ namespace System.Text
             return new StringBuilder();
         }
 
-        public bool Equals(StringBuilder sb)
-        {
-            return false;
-        }
+        public extern bool Equals(StringBuilder sb);
 
         public StringBuilder Insert(int index, bool value)
         {

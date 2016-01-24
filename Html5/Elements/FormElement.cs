@@ -74,24 +74,17 @@ namespace Bridge.Html5
         /// <summary>
         /// Returns true if all controls that are subject to constraint validation satisfy their constraints, or false if some controls do not satisfy their constraints. Fires an event named invalid at any control that does not satisfy its constraints; such controls are considered invalid if the event is not canceled.
         /// </summary>
-        public virtual bool CheckValidity()
-        {
-            return false;
-        }
+        public virtual extern bool CheckValidity();
 
         /// <summary>
         /// Submits the form to the server.
         /// </summary>
-        public virtual void Submit()
-        {
-        }
+        public virtual extern void Submit();
 
         /// <summary>
         /// Resets the forms to its initial state.
         /// </summary>
-        public virtual void Reset()
-        {
-        }
+        public virtual extern void Reset();
 
         /// <summary>
         /// Gets the item in the elements collection at the specified index, or null if there is no item at that index. You can also specify the index in array-style brackets or parentheses after the form object name, without calling this method explicitly.
@@ -125,29 +118,17 @@ namespace Bridge.Html5
         /// <param name="index"></param>
         /// <returns></returns>
         [Name("item")]
-        public virtual Element GetItem(int index)
-        {
-            return null;
-        }
+        public virtual extern Element GetItem(int index);
 
         /// <summary>
         /// Gets the item or list of items in elements collection whose name or id match the specified name, or null if no items match. You can also specify the name in array-style brackets or parentheses after the form object name, without calling this method explicitly.
         /// </summary>
         /// <param name="name">The name to match the Elements' name and id</param>
         /// <returns>An Element or an HTMLCollection</returns>
-        public virtual Any<Element, HTMLCollection> NamedItem(string name)
-        {
-            return null;
-        }
+        public virtual extern Any<Element, HTMLCollection> NamedItem(string name);
 
-        public virtual IEnumerator<Element> GetEnumerator()
-        {
-            return null;
-        }
+        public virtual extern IEnumerator<Element> GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return null;
-        }
+        extern IEnumerator IEnumerable.GetEnumerator();
     }
 }
