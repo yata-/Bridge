@@ -27,7 +27,7 @@ echo f | xcopy /f /y "%root%Bridge\Bridge\bin\%build%\*.nupkg"			%output%
 echo f | xcopy /f /y "%root%Test\Bridge.Test\bin\%build%\*.nupkg"		%output%
 
 :: Bridge.Aspect
-echo f | xcopy /f /y "%root%Test\Bridge.Aspect\bin\%build%\*.nupkg"		%output%
+echo f | xcopy /f /y "%root%Aspect\Bridge.Aspect\bin\%build%\*.nupkg"		%output%
 
 :: Bridge.AngularJS
 echo f | xcopy /f /y "%root%Frameworks\AngularJS\bin\%build%\*.nupkg"	%output%
