@@ -102,9 +102,10 @@ namespace Bridge
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="code"></param>
+        /// <param name="args"></param>
         /// <returns></returns>
         [Template]
-        public static T Write<T>(string code)
+        public static T Write<T>(string code, params object[] args)
         {
             return default(T);
         }
@@ -113,9 +114,10 @@ namespace Bridge
         /// Inject javascript code
         /// </summary>
         /// <param name="code"></param>
+        /// <param name="args"></param>
         /// <returns></returns>
         [Template]
-        public static void Write(string code)
+        public static void Write(string code, params object[] args)
         {
         }
 

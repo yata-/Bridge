@@ -87,7 +87,7 @@ namespace Bridge.Translator
 
                 if (isInlineMethod)
                 {
-                    if (invocationExpression.Arguments.Count == 1)
+                    if (invocationExpression.Arguments.Count > 0)
                     {
                         var code = invocationExpression.Arguments.First();
                         var inlineExpression = code as PrimitiveExpression;
@@ -101,7 +101,8 @@ namespace Bridge.Translator
 
                         if (value.Length > 0)
                         {
-                            this.Write(inlineExpression.Value);
+                            value = InlineArgumentsBlock.ReplaceInlineArgs(this, inlineExpression.Value.ToString(), invocationExpression.Arguments.Skip(1).ToArray());
+                            this.Write(value);
 
                             if (value[value.Length - 1] == ';')
                             {
