@@ -7187,6 +7187,17 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge841', {
     }
 });
 
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge844', {
+    statics: {
+        nullableAndSimpleDateTimeToStringEquals: function () {
+            var dt1 = new Date();
+            var dt2 = dt1;
+
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Date.format(dt1), Bridge.Date.format(dt2), "Bridge844");
+        }
+    }
+});
+
 Bridge.define('Bridge.ClientTest.Collections.Generic.ComparerTests', {
     typePropertiesAreCorrect: function () {
         Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(Bridge.Comparer$1(Object)), "Bridge.Comparer$1$Object", "GetClassName()");
