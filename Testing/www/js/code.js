@@ -7062,6 +7062,18 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge796', {
     }
 });
 
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge817', {
+    statics: {
+        testUseCase: function () {
+            Bridge.get(Bridge.Test.Assert).true$1((Bridge.Char.isDigit(65) || Bridge.Char.isLetter(65)), "Bridge817 IsLetterOrDigit");
+            Bridge.get(Bridge.Test.Assert).true$1((Bridge.Char.isDigit("A".charCodeAt(0)) || Bridge.Char.isLetter("A".charCodeAt(0))), "Bridge817 IsLetterOrDigit string");
+
+            Bridge.get(Bridge.Test.Assert).false$1(!(Bridge.Char.isDigit(65) || Bridge.Char.isLetter(65)), "Bridge817 IsLetterOrDigit !");
+            Bridge.get(Bridge.Test.Assert).false$1(!(Bridge.Char.isDigit("A".charCodeAt(0)) || Bridge.Char.isLetter("A".charCodeAt(0))), "Bridge817 IsLetterOrDigit string !");
+        }
+    }
+});
+
 Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge823', {
     statics: {
         getTicksReturnsCorrectValue: function () {
