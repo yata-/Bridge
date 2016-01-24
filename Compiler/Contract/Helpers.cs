@@ -207,6 +207,11 @@ namespace Bridge.Contract
 
         public static bool IsIgnoreCast(AstType astType, IEmitter emitter)
         {
+            if (emitter.AssemblyInfo.IgnoreCast)
+            {
+                return true;
+            }
+
             var typeDef = emitter.BridgeTypes.ToType(astType).GetDefinition();
 
             if (typeDef == null)
@@ -289,10 +294,20 @@ namespace Bridge.Contract
                 }
             }
 
-            if (resolveResult.Type.Kind == TypeKind.Struct)
+            var type = resolveResult.Type.IsKnownType(KnownTypeCode.NullableOfT) ? ((ParameterizedType)resolveResult.Type).TypeArguments[0] : resolveResult.Type;
+            if (type.Kind == TypeKind.Struct)
             {
-                var typeDef = block.Emitter.GetTypeDefinition(resolveResult.Type);
+                var typeDef = block.Emitter.GetTypeDefinition(type);
                 if (block.Emitter.Validator.IsIgnoreType(typeDef))
+                {
+                    return;
+                }
+
+                var mutableFields = type.GetFields(f => !f.IsReadOnly && !f.IsConst, GetMemberOptions.IgnoreInheritedMembers);
+                var autoProps = typeDef.Properties.Where(Helpers.IsAutoProperty);
+                var autoEvents = type.GetEvents(null, GetMemberOptions.IgnoreInheritedMembers);
+
+                if (!mutableFields.Any() && !autoProps.Any() && !autoEvents.Any())
                 {
                     return;
                 }
@@ -816,6 +831,17 @@ namespace Bridge.Contract
                 if (member != null)
                 {
                     return Helpers.GetInheritedAttribute(member, attrName);
+                }
+            }
+            else if (member.ImplementedInterfaceMembers != null && member.ImplementedInterfaceMembers.Count > 0)
+            {
+                foreach (var interfaceMember in member.ImplementedInterfaceMembers)
+                {
+                    var attr = Helpers.GetInheritedAttribute(interfaceMember, attrName);
+                    if (attr != null)
+                    {
+                        return attr;
+                    }
                 }
             }
 

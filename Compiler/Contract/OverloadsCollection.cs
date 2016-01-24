@@ -204,7 +204,7 @@ namespace Bridge.Contract
             this.TypeDefinition = this.Member.DeclaringTypeDefinition;
             this.Type = this.Member.DeclaringType;
             this.InitMembers();
-            this.Emitter.OverloadsCache[fieldDeclaration.GetHashCode().ToString()] = this;
+            //this.Emitter.OverloadsCache[fieldDeclaration.GetHashCode().ToString()] = this;
         }
 
         private OverloadsCollection(IEmitter emitter, EventDeclaration eventDeclaration)
@@ -219,7 +219,7 @@ namespace Bridge.Contract
             this.TypeDefinition = this.Member.DeclaringTypeDefinition;
             this.Type = this.Member.DeclaringType;
             this.InitMembers();
-            this.Emitter.OverloadsCache[eventDeclaration.GetHashCode().ToString()] = this;
+            //this.Emitter.OverloadsCache[eventDeclaration.GetHashCode().ToString()] = this;
         }
 
         private OverloadsCollection(IEmitter emitter, CustomEventDeclaration eventDeclaration, bool remove)
@@ -236,7 +236,7 @@ namespace Bridge.Contract
             this.TypeDefinition = this.Member.DeclaringTypeDefinition;
             this.Type = this.Member.DeclaringType;
             this.InitMembers();
-            this.Emitter.OverloadsCache[eventDeclaration.GetHashCode().ToString() + remove.GetHashCode().ToString()] = this;
+            //this.Emitter.OverloadsCache[eventDeclaration.GetHashCode().ToString() + remove.GetHashCode().ToString()] = this;
         }
 
         private OverloadsCollection(IEmitter emitter, MethodDeclaration methodDeclaration)
@@ -250,7 +250,7 @@ namespace Bridge.Contract
             this.TypeDefinition = this.Member.DeclaringTypeDefinition;
             this.Type = this.Member.DeclaringType;
             this.InitMembers();
-            this.Emitter.OverloadsCache[methodDeclaration.GetHashCode().ToString()] = this;
+            //this.Emitter.OverloadsCache[methodDeclaration.GetHashCode().ToString()] = this;
         }
 
         private OverloadsCollection(IEmitter emitter, ConstructorDeclaration constructorDeclaration)
@@ -265,7 +265,7 @@ namespace Bridge.Contract
             this.TypeDefinition = this.Member.DeclaringTypeDefinition;
             this.Type = this.Member.DeclaringType;
             this.InitMembers();
-            this.Emitter.OverloadsCache[constructorDeclaration.GetHashCode().ToString()] = this;
+            //this.Emitter.OverloadsCache[constructorDeclaration.GetHashCode().ToString()] = this;
         }
 
         private OverloadsCollection(IEmitter emitter, PropertyDeclaration propDeclaration, bool isSetter)
@@ -282,7 +282,7 @@ namespace Bridge.Contract
             this.TypeDefinition = this.Member.DeclaringTypeDefinition;
             this.Type = this.Member.DeclaringType;
             this.InitMembers();
-            this.Emitter.OverloadsCache[propDeclaration.GetHashCode().ToString() + isSetter.GetHashCode().ToString()] = this;
+            //this.Emitter.OverloadsCache[propDeclaration.GetHashCode().ToString() + isSetter.GetHashCode().ToString()] = this;
         }
 
         private OverloadsCollection(IEmitter emitter, IndexerDeclaration indexerDeclaration, bool isSetter)
@@ -299,7 +299,7 @@ namespace Bridge.Contract
             this.TypeDefinition = this.Member.DeclaringTypeDefinition;
             this.Type = this.Member.DeclaringType;
             this.InitMembers();
-            this.Emitter.OverloadsCache[indexerDeclaration.GetHashCode().ToString() + isSetter.GetHashCode().ToString()] = this;
+            //this.Emitter.OverloadsCache[indexerDeclaration.GetHashCode().ToString() + isSetter.GetHashCode().ToString()] = this;
         }
 
         private OverloadsCollection(IEmitter emitter, OperatorDeclaration operatorDeclaration)
@@ -313,7 +313,7 @@ namespace Bridge.Contract
             this.TypeDefinition = this.Member.DeclaringTypeDefinition;
             this.Type = this.Member.DeclaringType;
             this.InitMembers();
-            this.Emitter.OverloadsCache[operatorDeclaration.GetHashCode().ToString()] = this;
+            //this.Emitter.OverloadsCache[operatorDeclaration.GetHashCode().ToString()] = this;
         }
 
         private OverloadsCollection(IEmitter emitter, IMember member, bool isSetter = false, bool includeInline = false)
@@ -359,7 +359,7 @@ namespace Bridge.Contract
             this.IsSetter = isSetter;
             this.InitMembers();
             string key = (member.MemberDefinition != null ? member.MemberDefinition.GetHashCode().ToString() : member.GetHashCode().ToString()) + isSetter.GetHashCode().ToString();
-            this.Emitter.OverloadsCache[key] = this;
+            //this.Emitter.OverloadsCache[key] = this;
         }
 
         public List<IMethod> Methods

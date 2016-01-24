@@ -70,37 +70,27 @@ namespace Bridge.Html5
         /// <summary>
         /// Aborts the request if it has already been sent.
         /// </summary>
-        public virtual void Abort()
-        {
-        }
+        public virtual extern void Abort();
 
         /// <summary>
         /// Returns all the response headers as a string, or null if no response has been received. Note: For multipart requests, this returns the headers from the current part of the request, not from the original channel.
         /// </summary>
         /// <returns></returns>
-        public virtual string GetAllResponseHeaders()
-        {
-            return null;
-        }
+        public virtual extern string GetAllResponseHeaders();
 
         /// <summary>
         /// Returns the string containing the text of the specified header, or null if either the response has not yet been received or the header doesn't exist in the response.
         /// </summary>
         /// <param name="header"></param>
         /// <returns></returns>
-        public virtual string GetResponseHeader(string header)
-        {
-            return null;
-        }
+        public virtual extern string GetResponseHeader(string header);
 
         /// <summary>
         /// Initializes a request. This method is to be used from JavaScript code; to initialize a request from native code, use openRequest()instead.
         /// </summary>
         /// <param name="method">The HTTP method to use, such as "GET", "POST", "PUT", "DELETE", etc. Ignored for non-HTTP(S) URLs.</param>
         /// <param name="url">The URL to send the request to.</param>
-        public virtual void Open(string method, string url)
-        {
-        }
+        public virtual extern void Open(string method, string url);
 
         /// <summary>
         /// Initializes a request. This method is to be used from JavaScript code; to initialize a request from native code, use openRequest()instead.
@@ -108,9 +98,7 @@ namespace Bridge.Html5
         /// <param name="method">The HTTP method to use, such as "GET", "POST", "PUT", "DELETE", etc. Ignored for non-HTTP(S) URLs.</param>
         /// <param name="url">The URL to send the request to.</param>
         /// <param name="async">An optional boolean parameter, defaulting to true, indicating whether or not to perform the operation asynchronously. If this value is false, the send()method does not return until the response is received. If true, notification of a completed transaction is provided using event listeners. This must be true if the multipart attribute is true, or an exception will be thrown.</param>
-        public virtual void Open(string method, string url, bool async)
-        {
-        }
+        public virtual extern void Open(string method, string url, bool async);
 
         /// <summary>
         /// Initializes a request. This method is to be used from JavaScript code; to initialize a request from native code, use openRequest()instead.
@@ -119,9 +107,7 @@ namespace Bridge.Html5
         /// <param name="url">The URL to send the request to.</param>
         /// <param name="async">An optional boolean parameter, defaulting to true, indicating whether or not to perform the operation asynchronously. If this value is false, the send()method does not return until the response is received. If true, notification of a completed transaction is provided using event listeners. This must be true if the multipart attribute is true, or an exception will be thrown.</param>
         /// <param name="user">The optional user name to use for authentication purposes; by default, this is an empty string.</param>
-        public virtual void Open(string method, string url, bool async, string user)
-        {
-        }
+        public virtual extern void Open(string method, string url, bool async, string user);
 
         /// <summary>
         /// Initializes a request. This method is to be used from JavaScript code; to initialize a request from native code, use openRequest()instead.
@@ -131,80 +117,60 @@ namespace Bridge.Html5
         /// <param name="async">An optional boolean parameter, defaulting to true, indicating whether or not to perform the operation asynchronously. If this value is false, the send()method does not return until the response is received. If true, notification of a completed transaction is provided using event listeners. This must be true if the multipart attribute is true, or an exception will be thrown.</param>
         /// <param name="user">The optional user name to use for authentication purposes; by default, this is an empty string.</param>
         /// <param name="password">The optional password to use for authentication purposes; by default, this is an empty string.</param>
-        public virtual void Open(string method, string url, bool async, string user, string password)
-        {
-        }
+        public virtual extern void Open(string method, string url, bool async, string user, string password);
 
         /// <summary>
         /// Overrides the MIME type returned by the server. This may be used, for example, to force a stream to be treated and parsed as text/xml, even if the server does not report it as such. This method must be called before send().
         /// </summary>
         /// <param name="mimetype"></param>
-        public virtual void OverrideMimeType(string mimetype)
-        {
-        }
+        public virtual extern void OverrideMimeType(string mimetype);
 
         /// <summary>
         /// Sends the request. If the request is asynchronous (which is the default), this method returns as soon as the request is sent. If the request is synchronous, this method doesn't return until the response has arrived.
         /// </summary>
-        public virtual void Send()
-        {
-        }
-
-        /// <summary>
-        /// Sends the request. If the request is asynchronous (which is the default), this method returns as soon as the request is sent. If the request is synchronous, this method doesn't return until the response has arrived.
-        /// </summary>
-        /// <param name="data"></param>
-        public virtual void Send(ArrayBuffer data)
-        {
-        }
+        public virtual extern void Send();
 
         /// <summary>
         /// Sends the request. If the request is asynchronous (which is the default), this method returns as soon as the request is sent. If the request is synchronous, this method doesn't return until the response has arrived.
         /// </summary>
         /// <param name="data"></param>
-        public virtual void Send(ArrayBufferView data)
-        {
-        }
+        public virtual extern void Send(ArrayBuffer data);
 
         /// <summary>
         /// Sends the request. If the request is asynchronous (which is the default), this method returns as soon as the request is sent. If the request is synchronous, this method doesn't return until the response has arrived.
         /// </summary>
         /// <param name="data"></param>
-        public virtual void Send(Blob data)
-        {
-        }
+        public virtual extern void Send(ArrayBufferView data);
 
         /// <summary>
         /// Sends the request. If the request is asynchronous (which is the default), this method returns as soon as the request is sent. If the request is synchronous, this method doesn't return until the response has arrived.
         /// </summary>
         /// <param name="data"></param>
-        public virtual void Send(DocumentInstance data)
-        {
-        }
+        public virtual extern void Send(Blob data);
 
         /// <summary>
         /// Sends the request. If the request is asynchronous (which is the default), this method returns as soon as the request is sent. If the request is synchronous, this method doesn't return until the response has arrived.
         /// </summary>
         /// <param name="data"></param>
-        public virtual void Send(string data)
-        {
-        }
+        public virtual extern void Send(DocumentInstance data);
 
         /// <summary>
         /// Sends the request. If the request is asynchronous (which is the default), this method returns as soon as the request is sent. If the request is synchronous, this method doesn't return until the response has arrived.
         /// </summary>
         /// <param name="data"></param>
-        public virtual void Send(FormData data)
-        {
-        }
+        public virtual extern void Send(string data);
+
+        /// <summary>
+        /// Sends the request. If the request is asynchronous (which is the default), this method returns as soon as the request is sent. If the request is synchronous, this method doesn't return until the response has arrived.
+        /// </summary>
+        /// <param name="data"></param>
+        public virtual extern void Send(FormData data);
 
         /// <summary>
         /// Sets the value of an HTTP request header. You must call setRequestHeader() after open(), but before send(). If this method is called several times with the same header, the values are merged into one single request header.
         /// </summary>
         /// <param name="header">The name of the header whose value is to be set.</param>
         /// <param name="value">The value to set as the body of the header.</param>
-        public virtual void SetRequestHeader(string header, string value)
-        {
-        }
+        public virtual extern void SetRequestHeader(string header, string value);
     }
 }

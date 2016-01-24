@@ -43,14 +43,8 @@ namespace Bridge.Html5
         /// </summary>
         public readonly int Length;
 
-        public virtual IEnumerator<File> GetEnumerator()
-        {
-            return null;
-        }
+        public virtual extern IEnumerator<File> GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return null;
-        }
+        extern IEnumerator IEnumerable.GetEnumerator();
     }
 }
