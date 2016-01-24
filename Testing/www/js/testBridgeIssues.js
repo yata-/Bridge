@@ -2995,6 +2995,24 @@ Bridge.define('ClientTestLibrary.Bridge796', {
     }
 });
 
+Bridge.define('ClientTestLibrary.Bridge816', {
+    statics: {
+        testUseCase: function (assert) {
+            assert.expect(1);
+
+            var textArea = document.createElement('textarea');
+            textArea.id = "textArea1";
+            textArea.value = "Test";
+
+            var root = document.getElementById("qunit-fixture");
+            root.appendChild(textArea);
+
+            var ta = document.getElementById("textArea1");
+            assert.equal(ta.value, "Test", "textArea1.value Test");
+        }
+    }
+});
+
 Bridge.define('ClientTestLibrary.IBridge304');
 
 Bridge.define('ClientTestLibrary.Bridge304', {
