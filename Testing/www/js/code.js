@@ -2340,6 +2340,13 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge826B', {
     }
 });
 
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge835.Dot', {
+    statics: {
+        getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge835.Dot(); }
+    },
+    $clone: function (to) { return this; }
+});
+
 Bridge.define('Bridge.ClientTest.BridgeIssues.CI1');
 
 Bridge.define('Bridge.ClientTest.BridgeIssues.CI2');
@@ -7111,6 +7118,15 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge826', {
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge826).echoDecimal(Bridge.Decimal(Bridge.ClientTest.BridgeIssues.Bridge826B.op_Implicit$1(i))).equalsT(Bridge.Decimal(1)), "Bridge826 int 1");
 
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge826).echoDecimal().equalsT(Bridge.Decimal(42)), "Bridge826 42");
+        }
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge835', {
+    statics: {
+        testUseCase: function () {
+            var arr = Bridge.Array.create(new Bridge.ClientTest.BridgeIssues.Bridge835.Dot(), null, 10, 10);
+            Bridge.get(Bridge.Test.Assert).areNotEqual$1(arr, null, "Bridge835");
         }
     }
 });
