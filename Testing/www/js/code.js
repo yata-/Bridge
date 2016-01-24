@@ -7154,6 +7154,39 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge835', {
     }
 });
 
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge841', {
+    statics: {
+        testUseCase: function () {
+            var $t;
+            var testListA = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+                [1],
+                [2]
+            ] );
+
+            var result = 0;
+            $t = Bridge.getEnumerator(testListA);
+            while ($t.moveNext()) {
+                (function () {
+                    var item = $t.getCurrent();
+                    var fn = function () {
+                    };
+
+                    switch (item) {
+                        case 1: 
+                            result += 1;
+                            break;
+                        case 2: 
+                            result += 2;
+                            break;
+                    }
+                }).call(this);
+            }
+
+            Bridge.get(Bridge.Test.Assert).areEqual$1(result, 3, "Bridge841");
+        }
+    }
+});
+
 Bridge.define('Bridge.ClientTest.Collections.Generic.ComparerTests', {
     typePropertiesAreCorrect: function () {
         Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(Bridge.Comparer$1(Object)), "Bridge.Comparer$1$Object", "GetClassName()");
