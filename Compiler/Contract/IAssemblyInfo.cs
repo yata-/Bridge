@@ -230,5 +230,17 @@ namespace Bridge.Contract
             get;
             set;
         }
+
+        bool IgnoreCast
+        {
+            get;
+            set;
+        }
+
+        LoggerLevel? LoggerLevel
+        {
+            get;
+            set;
+        }
     }
 }

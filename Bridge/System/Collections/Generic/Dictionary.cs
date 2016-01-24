@@ -80,13 +80,9 @@ namespace System.Collections.Generic
             }
         }
 
-        public void Set(TKey key, TValue value)
-        {
-        }
+        public extern void Set(TKey key, TValue value);
 
-        public void Add(TKey key, TValue value)
-        {
-        }
+        public extern void Add(TKey key, TValue value);
 
         public TValue Get(TKey key)
         {
@@ -98,34 +94,17 @@ namespace System.Collections.Generic
             return default(TValue);
         }
 
-        public void Clear()
-        {
-        }
+        public extern void Clear();
 
-        public bool ContainsKey(TKey key)
-        {
-            return false;
-        }
+        public extern bool ContainsKey(TKey key);
 
-        public bool ContainsValue(TValue value)
-        {
-            return false;
-        }
+        public extern bool ContainsValue(TValue value);
 
-        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
-        {
-            return null;
-        }
+        public extern IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return null;
-        }
+        extern IEnumerator IEnumerable.GetEnumerator();
 
-        public bool Remove(TKey key)
-        {
-            return false;
-        }
+        public extern bool Remove(TKey key);
 
         public bool TryGetValue(TKey key, out TValue value)
         {
