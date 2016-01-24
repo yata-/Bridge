@@ -2310,6 +2310,50 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge795B', {
     }
 });
 
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge815.A', {
+    config: {
+        properties: {
+            Property: null
+        }
+    },
+    method: function (param) {
+        if (param === void 0) { param = null; }
+        this.setProperty(param.$clone());
+    },
+    method2: function (param) {
+        if (param === void 0) { param = new Bridge.ClientTest.BridgeIssues.Bridge815.B(); }
+        this.setProperty(param.$clone());
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge815.B', {
+    statics: {
+        getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge815.B(); }
+    },
+    field: 0,
+    constructor$1: function (i) {
+        this.field = i;
+    },
+    constructor: function () {
+    },
+    getHashCode: function () {
+        var hash = 17;
+        hash = hash * 23 + (this.field == null ? 0 : Bridge.getHashCode(this.field));
+        return hash;
+    },
+    equals: function (o) {
+        if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge815.B)) {
+            return false;
+        }
+        return Bridge.equals(this.field, o.field);
+    },
+    $clone: function (to) {
+        var s = to || new Bridge.ClientTest.BridgeIssues.Bridge815.B();
+        s.field = this.field;
+        return s;
+    }
+});
+
 Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge826A', {
     statics: {
         op_Implicit: function (val) {
@@ -7058,6 +7102,29 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge796', {
         method3: function ($throws) {
             $throws.v = false;
             return $throws.v;
+        }
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge815', {
+    statics: {
+        testUseCase: function () {
+            var a = new Bridge.ClientTest.BridgeIssues.Bridge815.A();
+
+            a.method();
+            Bridge.get(Bridge.Test.Assert).areEqual$1(a.getProperty().$clone(), null, "Bridge815 null");
+
+            a.method(new Bridge.ClientTest.BridgeIssues.Bridge815.B("constructor$1", 1).$clone());
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.Nullable.hasValue(a.getProperty()), "Bridge815 Property.HasValue");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Nullable.getValue(a.getProperty()).field, 1, "Bridge815 Property.Value.field == 1");
+
+            a.method2();
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.Nullable.hasValue(a.getProperty()), "Bridge815 Method2 Property.HasValue");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Nullable.getValue(a.getProperty()).field, 0, "Bridge815 Method2 Property.Value.field == 0");
+
+            a.method2(new Bridge.ClientTest.BridgeIssues.Bridge815.B("constructor$1", 2).$clone());
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.Nullable.hasValue(a.getProperty()), "Bridge815 Method2 Property.HasValue 2");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Nullable.getValue(a.getProperty()).field, 2, "Bridge815 Method2 Property.Value.field == 2");
         }
     }
 });
