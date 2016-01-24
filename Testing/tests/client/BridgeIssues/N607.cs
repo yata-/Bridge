@@ -4,18 +4,27 @@ using Bridge.Test;
 
 namespace Bridge.ClientTest.BridgeIssues
 {
-    public class Opti<T> : IEquatable<Opti<T>>
+    public class Bridge607A<T> : IEquatable<Bridge607A<T>>
     {
-        public bool Equals(Opti<T> obj)
+        public bool Equals(Bridge607A<T> obj)
         {
             return this == obj;
         }
     }
-    public class Class1 : IEquatable<Class1>
+
+    public class Bridge607B : IEquatable<Bridge607B>
     {
-        public bool Equals(Class1 other)
+        public bool Equals(Bridge607B other)
         {
             return this == other;
+        }
+    }
+
+    public class Bridge607C : IEquatable<Bridge607C>
+    {
+        bool IEquatable<Bridge607C>.Equals(Bridge607C other)
+        {
+            return Equals(this, other);
         }
     }
 
@@ -24,17 +33,19 @@ namespace Bridge.ClientTest.BridgeIssues
     [TestFixture(TestNameFormat = "#607 - {0}")]
     public class Bridge607
     {
-        [Test(ExpectedCount = 4)]
+        [Test(ExpectedCount = 5)]
         public static void TestUseCase()
         {
-            var c = new Opti<string>();
-            var c1 = new Class1();
+            var c = new Bridge607A<string>();
+            var c1 = new Bridge607B();
 
-            Assert.True(c.Equals(c));
-            Assert.False(c.Equals(null));
-
-            Assert.True(c1.Equals(c1));
-            Assert.False(c1.Equals(null));
+            Assert.True(c.Equals(c), "Bridge607A c");
+            Assert.False(c.Equals(null), "Bridge607A null");
+            
+            Assert.True(c1.Equals(c1), "Bridge607B c");
+            Assert.False(c1.Equals(null), "Bridge607B null");
+            
+            Assert.False(new Bridge607C().Equals(null), "Bridge607C null");
         }
     }
 }

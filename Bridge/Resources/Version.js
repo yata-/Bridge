@@ -357,6 +357,9 @@
         equals: function(v) {
             return this.equals$1(v);
         },
+        equalsT: function (v) {
+            return this.equals$1(v);
+        },
         getHashCode: function () {
             // Let's assume that most version numbers will be pretty small and just OR some lower order bits together.
             var accumulator = 0;
