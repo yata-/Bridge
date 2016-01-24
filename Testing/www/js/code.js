@@ -2347,6 +2347,15 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge835.Dot', {
     $clone: function (to) { return this; }
 });
 
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge849A', {
+    statics: {
+        setToBlah: function (value, blah) {
+            if (blah === void 0) { blah = true; }
+            return blah;
+        }
+    }
+});
+
 Bridge.define('Bridge.ClientTest.BridgeIssues.CI1');
 
 Bridge.define('Bridge.ClientTest.BridgeIssues.CI2');
@@ -7194,6 +7203,15 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge844', {
             var dt2 = dt1;
 
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Date.format(dt1), Bridge.Date.format(dt2), "Bridge844");
+        }
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge849', {
+    statics: {
+        testUseCase: function () {
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge849A.setToBlah(""), true, "Bridge849 true");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge849A.setToBlah("", false), false, "Bridge849 false");
         }
     }
 });
