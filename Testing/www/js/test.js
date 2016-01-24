@@ -4667,7 +4667,7 @@ Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge
         },
         testUseCase: function (assert) {
             var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge785).beforeTest(true, assert);
-            assert.expect(2);
+            assert.expect(7);
             Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge785).testUseCase();
         }
     }

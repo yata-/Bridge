@@ -2196,6 +2196,53 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge762B', {
     }
 });
 
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge785.DataClass', {
+    config: {
+        properties: {
+            Value: 0
+        }
+    },
+    getSomething: function (i) {
+        return Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge785.DataClass(), {
+            setValue: i
+        } );
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge785.DataStruct', {
+    statics: {
+        getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge785.DataStruct(); }
+    },
+    config: {
+        properties: {
+            Value: 0
+        }
+    },
+    constructor: function () {
+    },
+    getSomething: function (i) {
+        return Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge785.DataStruct(), {
+            setValue: i
+        } );
+    },
+    getHashCode: function () {
+        var hash = 17;
+        hash = hash * 23 + (this.Value == null ? 0 : Bridge.getHashCode(this.Value));
+        return hash;
+    },
+    equals: function (o) {
+        if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge785.DataStruct)) {
+            return false;
+        }
+        return Bridge.equals(this.Value, o.Value);
+    },
+    $clone: function (to) {
+        var s = to || new Bridge.ClientTest.BridgeIssues.Bridge785.DataStruct();
+        s.Value = this.Value;
+        return s;
+    }
+});
+
 Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge789A', {
     statics: {
         getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge789A(); }
@@ -6975,6 +7022,41 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge785', {
                 var i1 = 2;
                 var j1 = i1;
                 Bridge.get(Bridge.Test.Assert).areEqual$1(j1, 2, "Bridge785 by index");
+            }
+            {
+                var i2 = Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge785.DataClass(), {
+                    setValue: 3
+                } );
+                var j2 = i2.getValue();
+                Bridge.get(Bridge.Test.Assert).areEqual$1(j2, 3, "Bridge785 by index for DataClass property");
+            }
+            {
+                var i3 = Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge785.DataClass(), {
+                    setValue: 4
+                } );
+                var j3 = i3;
+                Bridge.get(Bridge.Test.Assert).areEqual$1(j3, i3, "Bridge785 by index for DataClass");
+            }
+            {
+                var i4 = Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge785.DataClass(), {
+                    setValue: 5
+                } );
+                var j4 = i4.getSomething(55).getValue();
+                Bridge.get(Bridge.Test.Assert).areEqual$1(j4, 55, "Bridge785 by index for DataClass method");
+            }
+            {
+                var i5 = Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge785.DataStruct(), {
+                    setValue: 6
+                } );
+                var j5 = i5.getValue();
+                Bridge.get(Bridge.Test.Assert).areEqual$1(j5, 6, "Bridge785 by index for DataStruct property");
+            }
+            {
+                var i6 = Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge785.DataStruct(), {
+                    setValue: 7
+                } );
+                var j6 = i6.getSomething(77).getValue();
+                Bridge.get(Bridge.Test.Assert).areEqual$1(j6, 77, "Bridge785 by index for DataStruct method");
             }
         }
     }
