@@ -22,32 +22,19 @@ namespace Bridge.Html5
             }
         }
 
-        public virtual void AppendMedium(string newMedium)
-        {
-        }
+        public virtual extern void AppendMedium(string newMedium);
 
-        public virtual void DeleteMedium(string oldMedium)
-        {
-        }
+        public virtual extern void DeleteMedium(string oldMedium);
 
         [Name("item")]
-        public virtual string GetItem(int index)
-        {
-            return null;
-        }
+        public virtual extern string GetItem(int index);
 
         public readonly int Length;
 
         public string MediaText;
 
-        public virtual IEnumerator<string> GetEnumerator()
-        {
-            return null;
-        }
+        public virtual extern IEnumerator<string> GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return null;
-        }
+        extern IEnumerator IEnumerable.GetEnumerator();
     }
 }

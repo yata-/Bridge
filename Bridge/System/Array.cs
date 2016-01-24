@@ -27,20 +27,14 @@ namespace System
             }
         }
 
-        public Array Concat(params object[] items)
-        {
-            return null;
-        }
+        public extern Array Concat(params object[] items);
 
         /// <summary>
         /// The indexOf() method returns the first index at which a given element can be found in the array, or -1 if it is not present.
         /// </summary>
         /// <param name="searchElement"></param>
         /// <returns></returns>
-        public int IndexOf(string searchElement)
-        {
-            return 0;
-        }
+        public extern int IndexOf(string searchElement);
 
         /// <summary>
         /// The indexOf() method returns the first index at which a given element can be found in the array, or -1 if it is not present.
@@ -48,20 +42,14 @@ namespace System
         /// <param name="searchElement"></param>
         /// <param name="fromIndex"></param>
         /// <returns></returns>
-        public int IndexOf(string searchElement, int fromIndex)
-        {
-            return 0;
-        }
+        public extern int IndexOf(string searchElement, int fromIndex);
 
         /// <summary>
         /// The lastIndexOf() method returns the last index at which a given element can be found in the array, or -1 if it is not present. The array is searched backwards, starting at fromIndex.
         /// </summary>
         /// <param name="searchString"></param>
         /// <returns></returns>
-        public int LastIndexOf(string searchString)
-        {
-            return 0;
-        }
+        public extern int LastIndexOf(string searchString);
 
         /// <summary>
         /// The lastIndexOf() method returns the last index at which a given element can be found in the array, or -1 if it is not present. The array is searched backwards, starting at fromIndex.
@@ -69,86 +57,43 @@ namespace System
         /// <param name="searchString"></param>
         /// <param name="fromIndex"></param>
         /// <returns></returns>
-        public int LastIndexOf(string searchString, int fromIndex)
-        {
-            return 0;
-        }
+        public extern int LastIndexOf(string searchString, int fromIndex);
 
-        public string Join()
-        {
-            return null;
-        }
+        public extern string Join();
 
-        public string Join(string separator)
-        {
-            return null;
-        }
+        public extern string Join(string separator);
 
-        public object Pop()
-        {
-            return null;
-        }
+        public extern object Pop();
 
-        public void Reverse()
-        {
-        }
+        public extern void Reverse();
 
-        public object Shift()
-        {
-            return null;
-        }
+        public extern object Shift();
 
-        public Array Slice(int start)
-        {
-            return null;
-        }
+        public extern Array Slice(int start);
 
-        public Array Slice(int start, int end)
-        {
-            return null;
-        }
+        public extern Array Slice(int start, int end);
 
         [Name("sort")]
-        public void JsSort()
-        {
-        }
+        public extern void JsSort();
 
         [Name("sort")]
-        public void JsSort(Func<object, object, int> compareFunction)
-        {
-        }
+        public extern void JsSort(Func<object, object, int> compareFunction);
 
-        public Array Splice(int start, int deleteCount, params object[] newItems)
-        {
-            return null;
-        }
+        public extern Array Splice(int start, int deleteCount, params object[] newItems);
 
-        public void Unshift(params object[] items)
-        {
-        }
+        public extern void Unshift(params object[] items);
 
         [Template("Bridge.getEnumerator({this})")]
-        public IEnumerator GetEnumerator()
-        {
-            return null;
-        }
+        public extern IEnumerator GetEnumerator();
 
         [Template("Bridge.Array.get({this}, {indices})")]
-        public object GetValue(params int[] indices)
-        {
-            return null;
-        }
+        public extern object GetValue(params int[] indices);
 
         [Template("Bridge.Array.set({this}, {value}, {indices})")]
-        public void SetValue(object value, params int[] indices)
-        {
-        }
+        public extern void SetValue(object value, params int[] indices);
 
         [Template("Bridge.Array.getLength({this}, {dimension})")]
-        public int GetLength(int dimension)
-        {
-            return 0;
-        }
+        public extern int GetLength(int dimension);
 
         public int Rank
         {
@@ -160,46 +105,25 @@ namespace System
         }
 
         [Template("Bridge.Array.getLower({this}, {dimension})")]
-        public int GetLowerBound(int dimension)
-        {
-            return 0;
-        }
+        public extern int GetLowerBound(int dimension);
 
         [Template("(Bridge.Array.getLength({this}, {dimension}) - 1)")]
-        public int GetUpperBound(int dimension)
-        {
-            return 0;
-        }
+        public extern int GetUpperBound(int dimension);
 
         [Template("(Bridge.Array.toEnumerable({this})")]
-        public IEnumerable ToEnumerable()
-        {
-            return null;
-        }
+        public extern IEnumerable ToEnumerable();
 
         [Template("(Bridge.Array.toEnumerable({this})")]
-        public IEnumerable<T> ToEnumerable<T>()
-        {
-            return null;
-        }
+        public extern IEnumerable<T> ToEnumerable<T>();
 
         [Template("(Bridge.Array.toEnumerator({this})")]
-        public IEnumerator ToEnumerator()
-        {
-            return null;
-        }
+        public extern IEnumerator ToEnumerator();
 
         [Template("(Bridge.Array.toEnumerator({this})")]
-        public IEnumerator<T> ToEnumerator<T>()
-        {
-            return null;
-        }
+        public extern IEnumerator<T> ToEnumerator<T>();
 
         [Template("(Bridge.Array.clone({this}))")]
-        public object Clone()
-        {
-            return null;
-        }
+        public extern object Clone();
 
         [Template("Bridge.Array.init({count}, {value})")]
         public static extern T[] Repeat<T>(T value, int count);

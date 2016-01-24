@@ -22,10 +22,7 @@ namespace Bridge.Html5
         /// Performs matrix multiplication. This matrix is post-multiplied by another matrix, returning
         /// the resulting new matrix.
         /// </summary>
-        public virtual SVGMatrix Multiply(SVGMatrix secondMatrix)
-        {
-            return null;
-        }
+        public virtual extern SVGMatrix Multiply(SVGMatrix secondMatrix);
 
         /// <summary>
         /// Return the inverse matrix
@@ -33,10 +30,7 @@ namespace Bridge.Html5
         /// </summary>
         /// <returns></returns>
         /// //
-        public virtual SVGMatrix Inverse()
-        {
-            return null;
-        }
+        public virtual extern SVGMatrix Inverse();
 
         /// <summary>
         /// Post-multiplies a translation transformation on the current matrix and returns the resulting matrix.
@@ -44,20 +38,14 @@ namespace Bridge.Html5
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public virtual SVGMatrix Translate(float x, float y)
-        {
-            return null;
-        }
+        public virtual extern SVGMatrix Translate(float x, float y);
 
         /// <summary>
         /// Post-multiplies a uniform scale transformation on the current matrix and returns the resulting matrix.
         /// </summary>
         /// <param name="scaleFactor"></param>
         /// <returns></returns>
-        public virtual SVGMatrix Scale(float scaleFactor)
-        {
-            return null;
-        }
+        public virtual extern SVGMatrix Scale(float scaleFactor);
 
         /// <summary>
         /// Post-multiplies a non-uniform scale transformation on the current matrix and returns the resulting matrix.
@@ -65,10 +53,7 @@ namespace Bridge.Html5
         /// <param name="scaleFactorX"></param>
         /// <param name="scaleFactorY"></param>
         /// <returns></returns>
-        public virtual SVGMatrix ScaleNonUniform(float scaleFactorX, float scaleFactorY)
-        {
-            return null;
-        }
+        public virtual extern SVGMatrix ScaleNonUniform(float scaleFactorX, float scaleFactorY);
 
         /// <summary>
         /// Post-multiplies a rotation transformation on the current matrix and returns the resulting matrix.
@@ -76,10 +61,7 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="angle"></param>
         /// <returns></returns>
-        public virtual SVGMatrix Rotate(float angle)
-        {
-            return null;
-        }
+        public virtual extern SVGMatrix Rotate(float angle);
 
         /// <summary>
         /// Post-multiplies a rotation transformation on the current matrix and returns the resulting matrix.
@@ -90,47 +72,32 @@ namespace Bridge.Html5
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public virtual SVGMatrix RotateFromVector(float x, float y)
-        {
-            return null;
-        }
+        public virtual extern SVGMatrix RotateFromVector(float x, float y);
 
         /// <summary>
         /// Post-multiplies the transformation [-1 0 0 1 0 0] and returns the resulting matrix.
         /// </summary>
         /// <returns></returns>
-        public virtual SVGMatrix FlipX()
-        {
-            return null;
-        }
+        public virtual extern SVGMatrix FlipX();
 
         /// <summary>
         /// Post-multiplies the transformation [1 0 0 -1 0 0] and returns the resulting matrix.
         /// </summary>
         /// <returns></returns>
-        public virtual SVGMatrix FlipY()
-        {
-            return null;
-        }
+        public virtual extern SVGMatrix FlipY();
 
         /// <summary>
         /// Post-multiplies a skewX transformation on the current matrix and returns the resulting matrix.
         /// </summary>
         /// <param name="angle"></param>
         /// <returns></returns>
-        public virtual SVGMatrix SkewX(float angle)
-        {
-            return null;
-        }
+        public virtual extern SVGMatrix SkewX(float angle);
 
         /// <summary>
         /// Post-multiplies a skewY transformation on the current matrix and returns the resulting matrix.
         /// </summary>
         /// <param name="angle"></param>
         /// <returns></returns>
-        public virtual SVGMatrix SkewY(float angle)
-        {
-            return null;
-        }
+        public virtual extern SVGMatrix SkewY(float angle);
     }
 }

@@ -108,6 +108,8 @@ namespace Bridge.Contract
 
         Tuple<bool, bool, string> GetInlineCode(ICSharpCode.NRefactory.CSharp.InvocationExpression node);
 
+        Tuple<bool, bool, string> GetInlineCode(ICSharpCode.NRefactory.CSharp.MemberReferenceExpression node);
+
         bool IsForbiddenInvocation(InvocationExpression node);
 
         string GetDefinitionName(IEmitter emitter, IMemberDefinition member, bool changeCase = true);

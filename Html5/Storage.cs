@@ -32,45 +32,33 @@ namespace Bridge.Html5
         /// <summary>
         ///
         /// </summary>
-        public virtual void Clear()
-        {
-        }
+        public virtual extern void Clear();
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public virtual object GetItem(string key)
-        {
-            return null;
-        }
+        public virtual extern object GetItem(string key);
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public virtual string Key(int index)
-        {
-            return null;
-        }
+        public virtual extern string Key(int index);
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="key"></param>
-        public virtual void RemoveItem(string key)
-        {
-        }
+        public virtual extern void RemoveItem(string key);
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public virtual void SetItem(string key, object value)
-        {
-        }
+        public virtual extern void SetItem(string key, object value);
     }
 }

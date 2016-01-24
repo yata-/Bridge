@@ -7,95 +7,48 @@ namespace Bridge
     [Name("Bridge")]
     public static class Script
     {
-        public static object Apply(object obj, object values)
-        {
-            return null;
-        }
+        public static extern object Apply(object obj, object values);
 
-        public static T Apply<T>(T obj, object values)
-        {
-            return default(T);
-        }
+        public static extern T Apply<T>(T obj, object values);
 
-        public static bool IsDefined(object value)
-        {
-            return false;
-        }
+        public static extern bool IsDefined(object value);
 
-        public static bool IsArray(object obj)
-        {
-            return false;
-        }
+        public static extern bool IsArray(object obj);
 
-        public static T[] ToArray<T>(IEnumerable<T> items)
-        {
-            return null;
-        }
+        public static extern T[] ToArray<T>(IEnumerable<T> items);
 
         [Template("delete {0}")]
-        public static void Delete(object value)
-        {
-        }
+        public static extern void Delete(object value);
 
         [Template("Bridge.is({0}, {1})")]
-        public static bool Is(object type, string typeName)
-        {
-            return false;
-        }
+        public static extern bool Is(object type, string typeName);
 
         [Template("Bridge.copy({0}, {1}, {2})")]
-        public static object Copy(object to, object from, string[] keys)
-        {
-            return null;
-        }
+        public static extern object Copy(object to, object from, string[] keys);
 
         [Template("Bridge.copy({0}, {1}, {2})")]
-        public static object Copy(object to, object from, string keys)
-        {
-            return null;
-        }
+        public static extern object Copy(object to, object from, string keys);
 
         [Template("Bridge.copy({0}, {1}, {2}, {3})")]
-        public static object Copy(object to, object from, string[] keys, bool toIf)
-        {
-            return null;
-        }
+        public static extern object Copy(object to, object from, string[] keys, bool toIf);
 
         [Template("Bridge.copy({0}, {1}, {2}, {3})")]
-        public static object Copy(object to, object from, string keys, bool toIf)
-        {
-            return null;
-        }
+        public static extern object Copy(object to, object from, string keys, bool toIf);
 
         [Template("Bridge.ns({0}, {1})")]
-        public static object NS(string ns, object scope)
-        {
-            return null;
-        }
+        public static extern object NS(string ns, object scope);
 
         [Template("Bridge.ns({0})")]
-        public static object NS(string ns)
-        {
-            return null;
-        }
+        public static extern object NS(string ns);
 
         [Template("Bridge.getHashCode({0})")]
-        public static int GetHashCode(object value)
-        {
-            return 0;
-        }
+        public static extern int GetHashCode(object value);
 
         [Template("Bridge.getDefaultValue({0})")]
-        public static T GetDefaultValue<T>(Type type)
-        {
-            return default(T);
-        }
+        public static extern T GetDefaultValue<T>(Type type);
 
         [Template("Bridge.getDefaultValue({0})")]
-        public static object GetDefaultValue(Type type)
-        {
-            return null;
-        }
+        public static extern object GetDefaultValue(Type type);
 
         /// <summary>
         /// Inject javascript code
@@ -104,10 +57,7 @@ namespace Bridge
         /// <param name="code"></param>
         /// <returns></returns>
         [Template]
-        public static T Write<T>(string code)
-        {
-            return default(T);
-        }
+        public static extern T Write<T>(string code);
 
         /// <summary>
         /// Inject javascript code
@@ -115,9 +65,7 @@ namespace Bridge
         /// <param name="code"></param>
         /// <returns></returns>
         [Template]
-        public static void Write(string code)
-        {
-        }
+        public static extern void Write(string code);
 
         /// <summary>
         /// An Array-like object corresponding to the arguments passed to a function.
@@ -144,9 +92,7 @@ namespace Bridge
         public static readonly object Infinity;
 
         [Template("debugger")]
-        public static void Debugger()
-        {
-        }
+        public static extern void Debugger();
 
         /// <summary>
         /// The eval() method evaluates JavaScript code represented as a string.
@@ -155,10 +101,7 @@ namespace Bridge
         /// <param name="expression">A string representing a JavaScript expression, statement, or sequence of statements. The expression can include variables and properties of existing objects.</param>
         /// <returns></returns>
         [Template("eval({0})")]
-        public static T Eval<T>(string expression)
-        {
-            return default(T);
-        }
+        public static extern T Eval<T>(string expression);
 
         /// <summary>
         /// The eval() method evaluates JavaScript code represented as a string.
@@ -166,9 +109,7 @@ namespace Bridge
         /// <param name="expression">A string representing a JavaScript expression, statement, or sequence of statements. The expression can include variables and properties of existing objects.</param>
         /// <returns></returns>
         [Template("eval({0})")]
-        public static void Eval(string expression)
-        {
-        }
+        public static extern void Eval(string expression);
 
         /// <summary>
         /// The global isFinite() function determines whether the passed value is a finite number. If needed, the parameter is first converted to a number.
@@ -176,10 +117,7 @@ namespace Bridge
         /// <param name="testValue">The value to be tested for finiteness.</param>
         /// <returns></returns>
         [Template("isFinite({0})")]
-        public static bool IsFinite(object testValue)
-        {
-            return false;
-        }
+        public static extern bool IsFinite(object testValue);
 
         /// <summary>
         /// The parseFloat() function parses a string argument and returns a floating point number.
@@ -187,10 +125,7 @@ namespace Bridge
         /// <param name="value">A string that represents the value you want to parse.</param>
         /// <returns></returns>
         [Template("parseFloat({0})")]
-        public static double ParseFloat(string value)
-        {
-            return 0;
-        }
+        public static extern double ParseFloat(string value);
 
         /// <summary>
         /// The parseInt() function parses a string argument and returns an integer of the specified radix or base.
@@ -198,10 +133,7 @@ namespace Bridge
         /// <param name="value">The value to parse. If string is not a string, then it is converted to one. Leading whitespace in the string is ignored.</param>
         /// <returns></returns>
         [Template("parseInt({0})")]
-        public static int ParseInt(string value)
-        {
-            return 0;
-        }
+        public static extern int ParseInt(string value);
 
         /// <summary>
         /// The parseInt() function parses a string argument and returns an integer of the specified radix or base.
@@ -210,10 +142,7 @@ namespace Bridge
         /// <param name="radix">An integer that represents the radix of the above mentioned string. Always specify this parameter to eliminate reader confusion and to guarantee predictable behavior. Different implementations produce different results when a radix is not specified.</param>
         /// <returns></returns>
         [Template("parseInt({0}, {1})")]
-        public static int ParseInt(string value, int radix)
-        {
-            return 0;
-        }
+        public static extern int ParseInt(string value, int radix);
 
         /// <summary>
         /// The isNaN() function determines whether a value is NaN or not. Be careful, this function is broken. You may be interested in Number.isNaN() as defined in ECMAScript 6 or you can use typeof to determine if the value is Not-A-Number.
@@ -221,10 +150,7 @@ namespace Bridge
         /// <param name="testValue">The value to be tested.</param>
         /// <returns></returns>
         [Template("isNaN({0})")]
-        public static bool IsNaN(object testValue)
-        {
-            return false;
-        }
+        public static extern bool IsNaN(object testValue);
 
         /// <summary>
         /// The decodeURI() function decodes a Uniform Resource Identifier (URI) previously created by encodeURI or by a similar routine.
@@ -232,10 +158,7 @@ namespace Bridge
         /// <param name="encodedURI">A complete, encoded Uniform Resource Identifier.</param>
         /// <returns></returns>
         [Template("decodeURI({0})")]
-        public static string DecodeURI(string encodedURI)
-        {
-            return null;
-        }
+        public static extern string DecodeURI(string encodedURI);
 
         /// <summary>
         /// The decodeURIComponent() method decodes a Uniform Resource Identifier (URI) component previously created by encodeURIComponent or by a similar routine.
@@ -243,10 +166,7 @@ namespace Bridge
         /// <param name="encodedURI">An encoded component of a Uniform Resource Identifier.</param>
         /// <returns></returns>
         [Template("decodeURIComponent({0})")]
-        public static string DecodeURIComponent(string encodedURI)
-        {
-            return null;
-        }
+        public static extern string DecodeURIComponent(string encodedURI);
 
         /// <summary>
         /// The encodeURI() method encodes a Uniform Resource Identifier (URI) by replacing each instance of certain characters by one, two, three, or four escape sequences representing the UTF-8 encoding of the character (will only be four escape sequences for characters composed of two "surrogate" characters).
@@ -254,10 +174,7 @@ namespace Bridge
         /// <param name="uri">A complete Uniform Resource Identifier.</param>
         /// <returns></returns>
         [Template("encodeURI({0})")]
-        public static string EncodeURI(string uri)
-        {
-            return null;
-        }
+        public static extern string EncodeURI(string uri);
 
         /// <summary>
         /// The encodeURIComponent() method encodes a Uniform Resource Identifier (URI) component by replacing each instance of certain characters by one, two, three, or four escape sequences representing the UTF-8 encoding of the character (will only be four escape sequences for characters composed of two "surrogate" characters).
@@ -265,89 +182,48 @@ namespace Bridge
         /// <param name="component">A component of a URI.</param>
         /// <returns></returns>
         [Template("encodeURIComponent({0})")]
-        public static string EncodeURIComponent(string component)
-        {
-            return null;
-        }
+        public static extern string EncodeURIComponent(string component);
 
         [Template("typeof {0}")]
-        public static string TypeOf(object obj)
-        {
-            return null;
-        }
+        public static extern string TypeOf(object obj);
 
         [Template("this")]
-        public static T This<T>()
-        {
-            return default(T);
-        }
+        public static extern T This<T>();
 
         [Template("(Bridge.caller[0] || this)")]
-        public static T Caller<T>()
-        {
-            return default(T);
-        }
+        public static extern T Caller<T>();
 
         [Template("{scope:raw}[{name}] = {value}")]
-        public static void Set(object scope, string name, object value)
-        {
-        }
+        public static extern void Set(object scope, string name, object value);
 
         [Template("{name:raw} = {value}")]
-        public static void Set(string name, object value)
-        {
-        }
+        public static extern void Set(string name, object value);
 
         [Template("{name:raw}")]
-        public static object Get(string name)
-        {
-            return null;
-        }
+        public static extern object Get(string name);
 
         [Template("{scope:raw}[{name}]")]
-        public static object Get(object scope, string name)
-        {
-            return null;
-        }
+        public static extern object Get(object scope, string name);
 
         [Template("{name:raw}")]
-        public static T Get<T>(string name)
-        {
-            return default(T);
-        }
+        public static extern T Get<T>(string name);
 
         [Template("{scope:raw}[{name}]")]
-        public static T Get<T>(object scope, string name)
-        {
-            return default(T);
-        }
+        public static extern T Get<T>(object scope, string name);
 
         [Template("{name:raw}({args})")]
-        public static void Call(string name, params object[] args)
-        {
-        }
+        public static extern void Call(string name, params object[] args);
 
         [Template("{name:raw}()")]
-        public static void Call(string name)
-        {
-        }
+        public static extern void Call(string name);
 
         [Template("{name:raw}({args})")]
-        public static T Call<T>(string name, params object[] args)
-        {
-            return default(T);
-        }
+        public static extern T Call<T>(string name, params object[] args);
 
         [Template("{name:raw}()")]
-        public static T Call<T>(string name)
-        {
-            return default(T);
-        }
+        public static extern T Call<T>(string name);
 
         [GlobalTarget("Bridge.global")]
-        public new static dynamic ToDynamic()
-        {
-            return null;
-        }
+        public new static extern dynamic ToDynamic();
     }
 }
