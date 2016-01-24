@@ -7186,6 +7186,22 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge796', {
     }
 });
 
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge816', {
+    statics: {
+        testUseCase: function () {
+            var textArea = document.createElement('textarea');
+            textArea.id = "textArea1";
+            textArea.value = "Test";
+
+            var root = document.getElementById("qunit-fixture");
+            root.appendChild(textArea);
+
+            var ta = document.getElementById("textArea1");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ta.value, "Test", "Bridge816 textArea1.value");
+        }
+    }
+});
+
 Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge817', {
     statics: {
         testUseCase: function () {
