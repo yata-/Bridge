@@ -7081,6 +7081,29 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge817', {
     }
 });
 
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge818', {
+    statics: {
+        testUseCase: function () {
+            var z = 0;
+            for (; ; ) {
+                z++;
+                if (z === 10) {
+                    break;
+                }
+            }
+            Bridge.get(Bridge.Test.Assert).areEqual$1(z, 10, "Bridge818 z");
+
+            var i;
+            var j;
+            for (i = 0, j = 1; i < 10; i++, j++) {
+
+            }
+            Bridge.get(Bridge.Test.Assert).areEqual$1(i, 10, "Bridge818 i");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(j, 11, "Bridge818 j");
+        }
+    }
+});
+
 Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge823', {
     statics: {
         getTicksReturnsCorrectValue: function () {
