@@ -62,6 +62,8 @@
     <Compile Include="BridgeIssues\N550.cs" />
     <Compile Include="BridgeIssues\N578.cs" />
     <Compile Include="BridgeIssues\N577.cs" />
+    <Compile Include="BridgeIssues\N849.cs" />
+    <Compile Include="BridgeIssues\N844.cs" />
     <Compile Include="BridgeIssues\N823.cs" />
     <Compile Include="BridgeIssues\N586.cs" />
     <Compile Include="BridgeIssues\N583.cs" />
@@ -89,6 +91,11 @@
     <Compile Include="BridgeIssues\N788.cs" />
     <Compile Include="BridgeIssues\N786.cs" />
     <Compile Include="BridgeIssues\N793.cs" />
+    <Compile Include="BridgeIssues\N841.cs" />
+    <Compile Include="BridgeIssues\N818.cs" />
+    <Compile Include="BridgeIssues\N835.cs" />
+    <Compile Include="BridgeIssues\N817.cs" />
+    <Compile Include="BridgeIssues\N692.cs" />
     <Compile Include="BridgeIssues\N796.cs" />
     <Compile Include="BridgeIssues\N762.cs" />
     <Compile Include="BridgeIssues\N760.cs" />
@@ -141,6 +148,7 @@
     <Compile Include="BridgeIssues\N548.cs" />
     <Compile Include="BridgeIssues\N549.cs" />
     <Compile Include="BridgeIssues\N785.cs" />
+    <Compile Include="BridgeIssues\N782.cs" />
     <Compile Include="BridgeIssues\N826.cs" />
     <Compile Include="BridgeIssues\TestBridgeIssues.cs" />
     <Compile Include="Linq\TestLinqGroupingOperators.cs" />

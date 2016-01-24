@@ -2,7 +2,7 @@ using Bridge.Test;
 
 namespace Bridge.ClientTest.BridgeIssues
 {
-    // Bridge[#826]
+    // Bridge[#785]
     [Category(Constants.MODULE_ISSUES)]
     [TestFixture(TestNameFormat = "#785 - {0}")]
     public class Bridge785

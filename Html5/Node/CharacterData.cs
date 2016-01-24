@@ -35,34 +35,26 @@ namespace Bridge.Html5
         /// Appends the given DOMString to the CharacterData.data string; when this method returns, data contains the concatenated DOMString.
         /// </summary>
         /// <param name="data"></param>
-        public virtual void AppendData(string data)
-        {
-        }
+        public virtual extern void AppendData(string data);
 
         /// <summary>
         /// Removes the specified amount of characters, starting at the specified offset, from the CharacterData.data string; when this method returns, data contains the shortened DOMString.
         /// </summary>
         /// <param name="offset"></param>
         /// <param name="count"></param>
-        public virtual void DeleteData(int offset, int count)
-        {
-        }
+        public virtual extern void DeleteData(int offset, int count);
 
         /// <summary>
         /// Inserts the specified characters, at the specified offset, in the CharacterData.data string; when this method returns, data contains the modified DOMString.
         /// </summary>
         /// <param name="offset"></param>
         /// <param name="data"></param>
-        public virtual void InsertData(int offset, string data)
-        {
-        }
+        public virtual extern void InsertData(int offset, string data);
 
         /// <summary>
         /// Removes the object from its parent children list.
         /// </summary>
-        public virtual void Remove()
-        {
-        }
+        public virtual extern void Remove();
 
         /// <summary>
         /// Replaces the specified amount of characters, starting at the specified offset, with the specified DOMString; when this method returns, data contains the modified DOMString.
@@ -70,9 +62,7 @@ namespace Bridge.Html5
         /// <param name="offset"></param>
         /// <param name="count"></param>
         /// <param name="data"></param>
-        public virtual void ReplaceData(int offset, int count, string data)
-        {
-        }
+        public virtual extern void ReplaceData(int offset, int count, string data);
 
         /// <summary>
         /// Returns a DOMString containing the part of CharacterData.data of the specified length and starting at the specified offset.
@@ -80,9 +70,6 @@ namespace Bridge.Html5
         /// <param name="offset"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public virtual string SubstringData(int offset, int count)
-        {
-            return null;
-        }
+        public virtual extern string SubstringData(int offset, int count);
     }
 }

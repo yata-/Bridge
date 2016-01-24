@@ -264,7 +264,7 @@ namespace Bridge.Translator
 
                                     this.WriteThisExtension(invocationExpression.Target);
 
-                                    if (argsCount > 0)
+                                    if (invocationExpression.Arguments.Count > 0)
                                     {
                                         this.WriteComma();
                                     }

@@ -119,13 +119,13 @@ namespace System
             return false;
         }
 
-        [Template("Bridge.Char.isDigit({ch}) || Bridge.Char.isLetter({ch})")]
+        [Template("(Bridge.Char.isDigit({ch}) || Bridge.Char.isLetter({ch}))")]
         public static bool IsLetterOrDigit(char ch)
         {
             return false;
         }
 
-        [Template("Bridge.Char.isDigit({s}.charCodeAt({index})) || Bridge.Char.isLetter({s}.charCodeAt({index}))")]
+        [Template("(Bridge.Char.isDigit({s}.charCodeAt({index})) || Bridge.Char.isLetter({s}.charCodeAt({index})))")]
         public static bool IsLetterOrDigit(string s, int index)
         {
             return false;
@@ -179,13 +179,13 @@ namespace System
             return false;
         }
 
-        [Template("Bridge.Char.isHighSurrogate({ch1}) && Bridge.Char.isLowSurrogate({ch2})")]
+        [Template("(Bridge.Char.isHighSurrogate({ch1}) && Bridge.Char.isLowSurrogate({ch2}))")]
         public static bool IsSurrogatePair(char ch1, char ch2)
         {
             return false;
         }
 
-        [Template("Bridge.Char.isHighSurrogate({s}.charCodeAt({index})) && Bridge.Char.isLowSurrogate({s}.charCodeAt({index}+1))")]
+        [Template("(Bridge.Char.isHighSurrogate({s}.charCodeAt({index})) && Bridge.Char.isLowSurrogate({s}.charCodeAt({index}+1)))")]
         public static bool IsSurrogatePair(string s, int index)
         {
             return false;

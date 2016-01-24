@@ -30,9 +30,6 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public virtual Any<ElementList, Element> NamedItem(string name)
-        {
-            return null;
-        }
+        public virtual extern Any<ElementList, Element> NamedItem(string name);
     }
 }

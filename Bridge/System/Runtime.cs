@@ -409,9 +409,7 @@ namespace System.Runtime.CompilerServices
     [External]
     public static class RuntimeHelpers
     {
-        public static void InitializeArray(Array array, RuntimeFieldHandle handle)
-        {
-        }
+        public static extern void InitializeArray(Array array, RuntimeFieldHandle handle);
 
         public static int OffsetToStringData
         {
@@ -421,10 +419,7 @@ namespace System.Runtime.CompilerServices
             }
         }
 
-        public static int GetHashCode(object obj)
-        {
-            return 0;
-        }
+        public static extern int GetHashCode(object obj);
     }
 
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Class | AttributeTargets.Method)]
@@ -468,10 +463,7 @@ namespace System.Runtime.CompilerServices
             }
         }
 
-        public static CallSite Create(Type delegateType, CallSiteBinder binder)
-        {
-            return null;
-        }
+        public static extern CallSite Create(Type delegateType, CallSiteBinder binder);
     }
 
     [External]
@@ -487,10 +479,7 @@ namespace System.Runtime.CompilerServices
 
         public T Target;
 
-        public static CallSite<T> Create(CallSiteBinder binder)
-        {
-            return null;
-        }
+        public static extern CallSite<T> Create(CallSiteBinder binder);
     }
 
     [External]
@@ -504,10 +493,7 @@ namespace System.Runtime.CompilerServices
             }
         }
 
-        public T BindDelegate<T>(CallSite<T> site, object[] args) where T : class
-        {
-            return null;
-        }
+        public extern T BindDelegate<T>(CallSite<T> site, object[] args) where T : class;
     }
 
     [External]
@@ -663,60 +649,27 @@ namespace Microsoft.CSharp.RuntimeBinder
     [External]
     public static class Binder
     {
-        public static CallSiteBinder BinaryOperation(CSharpBinderFlags flags, ExpressionType operation, Type context, IEnumerable<CSharpArgumentInfo> argumentInfo)
-        {
-            return null;
-        }
+        public static extern CallSiteBinder BinaryOperation(CSharpBinderFlags flags, ExpressionType operation, Type context, IEnumerable<CSharpArgumentInfo> argumentInfo);
 
-        public static CallSiteBinder Convert(CSharpBinderFlags flags, Type type, Type context)
-        {
-            return null;
-        }
+        public static extern CallSiteBinder Convert(CSharpBinderFlags flags, Type type, Type context);
 
-        public static CallSiteBinder GetIndex(CSharpBinderFlags flags, Type context, IEnumerable<CSharpArgumentInfo> argumentInfo)
-        {
-            return null;
-        }
+        public static extern CallSiteBinder GetIndex(CSharpBinderFlags flags, Type context, IEnumerable<CSharpArgumentInfo> argumentInfo);
 
-        public static CallSiteBinder GetMember(CSharpBinderFlags flags, string name, Type context, IEnumerable<CSharpArgumentInfo> argumentInfo)
-        {
-            return null;
-        }
+        public static extern CallSiteBinder GetMember(CSharpBinderFlags flags, string name, Type context, IEnumerable<CSharpArgumentInfo> argumentInfo);
 
-        public static CallSiteBinder Invoke(CSharpBinderFlags flags, Type context, IEnumerable<CSharpArgumentInfo> argumentInfo)
-        {
-            return null;
-        }
+        public static extern CallSiteBinder Invoke(CSharpBinderFlags flags, Type context, IEnumerable<CSharpArgumentInfo> argumentInfo);
 
-        public static CallSiteBinder InvokeMember(CSharpBinderFlags flags, string name, IEnumerable<Type> typeArguments, Type context, IEnumerable<CSharpArgumentInfo> argumentInfo)
-        {
-            return null;
-        }
+        public static extern CallSiteBinder InvokeMember(CSharpBinderFlags flags, string name, IEnumerable<Type> typeArguments, Type context, IEnumerable<CSharpArgumentInfo> argumentInfo);
 
-        public static CallSiteBinder InvokeConstructor(CSharpBinderFlags flags, Type context, IEnumerable<CSharpArgumentInfo> argumentInfo)
-        {
-            return null;
-        }
+        public static extern CallSiteBinder InvokeConstructor(CSharpBinderFlags flags, Type context, IEnumerable<CSharpArgumentInfo> argumentInfo);
 
-        public static CallSiteBinder IsEvent(CSharpBinderFlags flags, string name, Type context)
-        {
-            return null;
-        }
+        public static extern CallSiteBinder IsEvent(CSharpBinderFlags flags, string name, Type context);
 
-        public static CallSiteBinder SetIndex(CSharpBinderFlags flags, Type context, IEnumerable<CSharpArgumentInfo> argumentInfo)
-        {
-            return null;
-        }
+        public static extern CallSiteBinder SetIndex(CSharpBinderFlags flags, Type context, IEnumerable<CSharpArgumentInfo> argumentInfo);
 
-        public static CallSiteBinder SetMember(CSharpBinderFlags flags, string name, Type context, IEnumerable<CSharpArgumentInfo> argumentInfo)
-        {
-            return null;
-        }
+        public static extern CallSiteBinder SetMember(CSharpBinderFlags flags, string name, Type context, IEnumerable<CSharpArgumentInfo> argumentInfo);
 
-        public static CallSiteBinder UnaryOperation(CSharpBinderFlags flags, ExpressionType operation, Type context, IEnumerable<CSharpArgumentInfo> argumentInfo)
-        {
-            return null;
-        }
+        public static extern CallSiteBinder UnaryOperation(CSharpBinderFlags flags, ExpressionType operation, Type context, IEnumerable<CSharpArgumentInfo> argumentInfo);
     }
 
     [External]
@@ -737,10 +690,7 @@ namespace Microsoft.CSharp.RuntimeBinder
     [External]
     public sealed class CSharpArgumentInfo
     {
-        public static CSharpArgumentInfo Create(CSharpArgumentInfoFlags flags, string name)
-        {
-            return null;
-        }
+        public static extern CSharpArgumentInfo Create(CSharpArgumentInfoFlags flags, string name);
     }
 
     [External]

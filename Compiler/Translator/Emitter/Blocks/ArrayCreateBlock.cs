@@ -66,9 +66,9 @@ namespace Bridge.Translator
                 this.Write("Bridge.Array.create(");
                 var defaultInitializer = new PrimitiveExpression(Inspector.GetDefaultFieldValue(at.ElementType), "?");
 
-                if (defaultInitializer.Value is AstType)
+                if (defaultInitializer.Value is IType)
                 {
-                    this.Write(Inspector.GetStructDefaultValue((AstType)defaultInitializer.Value, this.Emitter));
+                    this.Write(Inspector.GetStructDefaultValue((IType)defaultInitializer.Value, this.Emitter));
                 }
                 else
                 {

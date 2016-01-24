@@ -72,25 +72,18 @@ namespace Bridge.Html5
         /// <summary>
         /// Removes focus from input; keystrokes will subsequently go nowhere.
         /// </summary>
-        public new virtual void Blur()
-        {
-        }
+        public new virtual extern void Blur();
 
         /// <summary>
         /// Always returns true because keygen objects are never candidates for constraint validation.
         /// </summary>
         /// <returns></returns>
-        public virtual bool CheckValidity()
-        {
-            return false;
-        }
+        public virtual extern bool CheckValidity();
 
         /// <summary>
         /// Sets a custom validity message for the element. If this message is not the empty string, then the element is suffering from a custom validity error, and does not validate.
         /// </summary>
         /// <param name="error"></param>
-        public virtual void SetCustomValidity(string error)
-        {
-        }
+        public virtual extern void SetCustomValidity(string error);
     }
 }
