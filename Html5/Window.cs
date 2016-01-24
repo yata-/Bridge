@@ -195,54 +195,42 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="type">A string representing the event type to listen for.</param>
         /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
-        public static void AddEventListener(string type, Delegate listener)
-        {
-        }
+        public static extern void AddEventListener(string type, Delegate listener);
 
         /// <summary>
         /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
         /// </summary>
         /// <param name="type">A string representing the event type to listen for.</param>
         /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
-        public static void AddEventListener(string type, Action listener)
-        {
-        }
+        public static extern void AddEventListener(string type, Action listener);
 
         /// <summary>
         /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
         /// </summary>
         /// <param name="type">A string representing the event type to listen for.</param>
         /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
-        public static void AddEventListener(EventType type, Delegate listener)
-        {
-        }
+        public static extern void AddEventListener(EventType type, Delegate listener);
 
         /// <summary>
         /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
         /// </summary>
         /// <param name="type">A string representing the event type to listen for.</param>
         /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
-        public static void AddEventListener(EventType type, Action listener)
-        {
-        }
+        public static extern void AddEventListener(EventType type, Action listener);
 
         /// <summary>
         /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
         /// </summary>
         /// <param name="type">A string representing the event type to listen for.</param>
         /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
-        public static void AddEventListener(string type, Action<Event> listener)
-        {
-        }
+        public static extern void AddEventListener(string type, Action<Event> listener);
 
         /// <summary>
         /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
         /// </summary>
         /// <param name="type">A string representing the event type to listen for.</param>
         /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
-        public static void AddEventListener(EventType type, Action<Event> listener)
-        {
-        }
+        public static extern void AddEventListener(EventType type, Action<Event> listener);
 
         /// <summary>
         /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
@@ -250,9 +238,7 @@ namespace Bridge.Html5
         /// <param name="type">A string representing the event type to listen for.</param>
         /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
         /// <param name="useCapture"></param>
-        public static void AddEventListener(string type, Delegate listener, bool useCapture)
-        {
-        }
+        public static extern void AddEventListener(string type, Delegate listener, bool useCapture);
 
         /// <summary>
         /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
@@ -260,9 +246,7 @@ namespace Bridge.Html5
         /// <param name="type">A string representing the event type to listen for.</param>
         /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
         /// <param name="useCapture"></param>
-        public static void AddEventListener(string type, Action listener, bool useCapture)
-        {
-        }
+        public static extern void AddEventListener(string type, Action listener, bool useCapture);
 
         /// <summary>
         /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
@@ -270,9 +254,7 @@ namespace Bridge.Html5
         /// <param name="type">A string representing the event type to listen for.</param>
         /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
         /// <param name="useCapture"></param>
-        public static void AddEventListener(EventType type, Delegate listener, bool useCapture)
-        {
-        }
+        public static extern void AddEventListener(EventType type, Delegate listener, bool useCapture);
 
         /// <summary>
         /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
@@ -280,9 +262,7 @@ namespace Bridge.Html5
         /// <param name="type">A string representing the event type to listen for.</param>
         /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
         /// <param name="useCapture"></param>
-        public static void AddEventListener(EventType type, Action listener, bool useCapture)
-        {
-        }
+        public static extern void AddEventListener(EventType type, Action listener, bool useCapture);
 
         /// <summary>
         /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
@@ -290,9 +270,7 @@ namespace Bridge.Html5
         /// <param name="type">A string representing the event type to listen for.</param>
         /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
         /// <param name="useCapture"></param>
-        public static void AddEventListener(string type, Action<Event> listener, bool useCapture)
-        {
-        }
+        public static extern void AddEventListener(string type, Action<Event> listener, bool useCapture);
 
         /// <summary>
         /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
@@ -300,37 +278,21 @@ namespace Bridge.Html5
         /// <param name="type">A string representing the event type to listen for.</param>
         /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
         /// <param name="useCapture"></param>
-        public static void AddEventListener(EventType type, Action<Event> listener, bool useCapture)
-        {
-        }
+        public static extern void AddEventListener(EventType type, Action<Event> listener, bool useCapture);
 
         /// <summary>
         /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
         /// </summary>
         /// <param name="type">A string representing the event type to listen for.</param>
         /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
-        public static void AddEventListener(string type, IEventListener listener)
-        {
-        }
+        public static extern void AddEventListener(string type, IEventListener listener);
 
         /// <summary>
         /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
         /// </summary>
         /// <param name="type">A string representing the event type to listen for.</param>
         /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
-        public static void AddEventListener(EventType type, IEventListener listener)
-        {
-        }
-
-        /// <summary>
-        /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
-        /// </summary>
-        /// <param name="type">A string representing the event type to listen for.</param>
-        /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
-        /// <param name="useCapture"></param>
-        public static void AddEventListener(string type, IEventListener listener, bool useCapture)
-        {
-        }
+        public static extern void AddEventListener(EventType type, IEventListener listener);
 
         /// <summary>
         /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
@@ -338,48 +300,43 @@ namespace Bridge.Html5
         /// <param name="type">A string representing the event type to listen for.</param>
         /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
         /// <param name="useCapture"></param>
-        public static void AddEventListener(EventType type, IEventListener listener, bool useCapture)
-        {
-        }
+        public static extern void AddEventListener(string type, IEventListener listener, bool useCapture);
+
+        /// <summary>
+        /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
+        /// </summary>
+        /// <param name="type">A string representing the event type to listen for.</param>
+        /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
+        /// <param name="useCapture"></param>
+        public static extern void AddEventListener(EventType type, IEventListener listener, bool useCapture);
 
         /// <summary>
         /// The Window.alert() method displays an alert dialog with the optional specified content and an OK button.
         /// </summary>
-        public static void Alert()
-        {
-        }
+        public static extern void Alert();
 
         /// <summary>
         /// The Window.alert() method displays an alert dialog with the optional specified content and an OK button.
         /// </summary>
         /// <param name="message">message is an optional string of text you want to display in the alert dialog, or, alternatively, an object that is converted into a string and displayed.</param>
-        public static void Alert(string message)
-        {
-        }
+        public static extern void Alert(string message);
 
         /// <summary>
         /// The Window.atob()decodes a string of data which has been encoded using base-64 encoding. You can use the window.btoa() method to encode and transmit data which may otherwise cause communication problems, then transmit it and use the window.atob() method to decode the data again. For example, you can encode, transmit, and decode control characters such as ASCII values 0 through 31.
         /// </summary>
         /// <param name="encodedData">encoded string</param>
         /// <returns></returns>
-        public static string Atob(string encodedData)
-        {
-            return null;
-        }
+        public static extern string Atob(string encodedData);
 
         /// <summary>
         /// Returns the window to the previous item in the history.
         /// </summary>
-        public static void Back()
-        {
-        }
+        public static extern void Back();
 
         /// <summary>
         /// Shifts focus away from the window.
         /// </summary>
-        public static void Blur()
-        {
-        }
+        public static extern void Blur();
 
         /// <summary>
         /// Creates a base-64 encoded ASCII string from a "string" of binary data.
@@ -387,61 +344,44 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="stringToEncode">String to encode</param>
         /// <returns></returns>
-        public static string Btoa(string stringToEncode)
-        {
-            return null;
-        }
+        public static extern string Btoa(string stringToEncode);
 
         /// <summary>
         /// Cancels an animation frame request previously scheduled through a call to window.requestAnimationFrame().
         /// </summary>
         /// <param name="requestID">The ID value returned by the call to window.requestAnimationFrame() that requested the callback.</param>
-        public static void CancelAnimationFrame(int requestID)
-        {
-        }
+        public static extern void CancelAnimationFrame(int requestID);
 
         /// <summary>
         /// Cancels repeated action which was set up using setInterval.
         /// </summary>
         /// <param name="intervalID">intervalID is the identifier of the repeated action you want to cancel. This ID is returned from setInterval().</param>
-        public static void ClearInterval(int intervalID)
-        {
-        }
+        public static extern void ClearInterval(int intervalID);
 
         /// <summary>
         /// Clears the delay set by window.setTimeout().
         /// </summary>
         /// <param name="timeoutID">timeoutID is the ID of the timeout you wish to clear, as returned by window.setTimeout().</param>
-        public static void ClearTimeout(int timeoutID)
-        {
-        }
+        public static extern void ClearTimeout(int timeoutID);
 
         /// <summary>
         /// Closes the current window, or a referenced window.
         /// This method is only allowed to be called for windows that were opened by a script using the window.open method. If the window was not opened by a script, the following error appears in the JavaScript Console: Scripts may not close windows that were not opened by script.
         /// </summary>
-        public static void Close()
-        {
-        }
+        public static extern void Close();
 
         /// <summary>
         /// The Window.confirm() method displays a modal dialog with an optional message and two buttons, OK and Cancel.
         /// </summary>
         /// <returns>result is a boolean value indicating whether OK or Cancel was selected (true means OK).</returns>
-        public static bool Confirm()
-        {
-            return false;
-        }
+        public static extern bool Confirm();
 
         /// <summary>
         /// The Window.confirm() method displays a modal dialog with an optional message and two buttons, OK and Cancel.
         /// </summary>
         /// <param name="message">message is the optional string to be displayed in the dialog.</param>
         /// <returns>result is a boolean value indicating whether OK or Cancel was selected (true means OK).</returns>
-        public static bool Confirm(string message)
-        {
-            return false;
-        }
+        public static extern bool Confirm(string message);
 
         /// <summary>
         /// Dispatches the specified event to the current element.
@@ -449,28 +389,20 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="e">Required. Reference to an event object to be dispatched.</param>
         /// <returns>Boolean that indicates whether the default action of the event was not canceled.</returns>
-        public static bool DispatchEvent(Event e)
-        {
-            return false;
-        }
+        public static extern bool DispatchEvent(Event e);
 
         /// <summary>
         /// Prints messages to the (native) console.
         /// </summary>
         /// <param name="message">message is the string message to log.</param>
-        public static void Dump(string message)
-        {
-        }
+        public static extern void Dump(string message);
 
         /// <summary>
         /// Finds a string in a window.
         /// </summary>
         /// <param name="str">The text string for which to search.</param>
         /// <returns>true if the string is found; otherwise, false.</returns>
-        public static bool Find(string str)
-        {
-            return false;
-        }
+        public static extern bool Find(string str);
 
         /// <summary>
         /// Finds a string in a window.
@@ -478,10 +410,7 @@ namespace Bridge.Html5
         /// <param name="str">The text string for which to search.</param>
         /// <param name="caseSensitive">Boolean value. If true, specifies a case-sensitive search.</param>
         /// <returns>true if the string is found; otherwise, false.</returns>
-        public static bool Find(string str, bool caseSensitive)
-        {
-            return false;
-        }
+        public static extern bool Find(string str, bool caseSensitive);
 
         /// <summary>
         /// Finds a string in a window.
@@ -490,10 +419,7 @@ namespace Bridge.Html5
         /// <param name="caseSensitive">Boolean value. If true, specifies a case-sensitive search.</param>
         /// <param name="backwards">Boolean. If true, specifies a backward search.</param>
         /// <returns>true if the string is found; otherwise, false.</returns>
-        public static bool Find(string str, bool caseSensitive, bool backwards)
-        {
-            return false;
-        }
+        public static extern bool Find(string str, bool caseSensitive, bool backwards);
 
         /// <summary>
         /// Finds a string in a window.
@@ -503,10 +429,7 @@ namespace Bridge.Html5
         /// <param name="backwards">Boolean. If true, specifies a backward search.</param>
         /// <param name="wrapAround">Boolean. If true, specifies a wrap around search.</param>
         /// <returns>true if the string is found; otherwise, false.</returns>
-        public static bool Find(string str, bool caseSensitive, bool backwards, bool wrapAround)
-        {
-            return false;
-        }
+        public static extern bool Find(string str, bool caseSensitive, bool backwards, bool wrapAround);
 
         /// <summary>
         /// Finds a string in a window.
@@ -517,10 +440,7 @@ namespace Bridge.Html5
         /// <param name="wrapAround">Boolean. If true, specifies a wrap around search.</param>
         /// <param name="wholeWord">Boolean. If true, specifies a whole word search. </param>
         /// <returns>true if the string is found; otherwise, false.</returns>
-        public static bool Find(string str, bool caseSensitive, bool backwards, bool wrapAround, bool wholeWord)
-        {
-            return false;
-        }
+        public static extern bool Find(string str, bool caseSensitive, bool backwards, bool wrapAround, bool wholeWord);
 
         /// <summary>
         /// Finds a string in a window.
@@ -532,10 +452,7 @@ namespace Bridge.Html5
         /// <param name="wholeWord">Boolean. If true, specifies a whole word search. </param>
         /// <param name="searchInFrames">Boolean. If true, specifies a search in frames.</param>
         /// <returns>true if the string is found; otherwise, false.</returns>
-        public static bool Find(string str, bool caseSensitive, bool backwards, bool wrapAround, bool wholeWord, bool searchInFrames)
-        {
-            return false;
-        }
+        public static extern bool Find(string str, bool caseSensitive, bool backwards, bool wrapAround, bool wholeWord, bool searchInFrames);
 
         /// <summary>
         /// Finds a string in a window.
@@ -548,34 +465,24 @@ namespace Bridge.Html5
         /// <param name="searchInFrames">Boolean. If true, specifies a search in frames.</param>
         /// <param name="showDialog">Boolean. If true, specifies a show Dialog.</param>
         /// <returns>true if the string is found; otherwise, false.</returns>
-        public static bool Find(string str, bool caseSensitive, bool backwards, bool wrapAround, bool wholeWord, bool searchInFrames, bool showDialog)
-        {
-            return false;
-        }
+        public static extern bool Find(string str, bool caseSensitive, bool backwards, bool wrapAround, bool wholeWord, bool searchInFrames, bool showDialog);
 
         /// <summary>
         /// Makes a request to bring the window to the front. It may fail due to user settings and the window isn't guaranteed to be frontmost before this method returns.
         /// </summary>
-        public static void Focus()
-        {
-        }
+        public static extern void Focus();
 
         /// <summary>
         /// Moves the window one document forward in the history.
         /// </summary>
-        public static void Forward()
-        {
-        }
+        public static extern void Forward();
 
         /// <summary>
         /// The Window.getComputedStyle() method gives the values of all the CSS properties of an element after applying the active stylesheets and resolving any basic computation those values may contain
         /// </summary>
         /// <param name="el">The Element for which to get the computed style.</param>
         /// <returns>The returned style is a CSSStyleDeclaration object.</returns>
-        public static CSSStyleDeclaration GetComputedStyle(Element el)
-        {
-            return null;
-        }
+        public static extern CSSStyleDeclaration GetComputedStyle(Element el);
 
         /// <summary>
         /// The Window.getComputedStyle() method gives the values of all the CSS properties of an element after applying the active stylesheets and resolving any basic computation those values may contain
@@ -583,20 +490,14 @@ namespace Bridge.Html5
         /// <param name="el">The Element for which to get the computed style.</param>
         /// <param name="pseudoElt">A string specifying the pseudo-element to match. Must be omitted (or null) for regular elements.</param>
         /// <returns>The returned style is a CSSStyleDeclaration object.</returns>
-        public static CSSStyleDeclaration GetComputedStyle(Element el, string pseudoElt)
-        {
-            return null;
-        }
+        public static extern CSSStyleDeclaration GetComputedStyle(Element el, string pseudoElt);
 
         /// <summary>
         /// getDefaultComputedStyle() gives the default computed values of all the CSS properties of an element, ignoring author styling.  That is, only user-agent and user styles are taken into account.
         /// </summary>
         /// <param name="el">The Element for which to get the computed style.</param>
         /// <returns>The returned style is a CSSStyleDeclaration object.</returns>
-        public static CSSStyleDeclaration GetDefaultComputedStyle(Element el)
-        {
-            return null;
-        }
+        public static extern CSSStyleDeclaration GetDefaultComputedStyle(Element el);
 
         /// <summary>
         /// getDefaultComputedStyle() gives the default computed values of all the CSS properties of an element, ignoring author styling.  That is, only user-agent and user styles are taken into account.
@@ -604,45 +505,32 @@ namespace Bridge.Html5
         /// <param name="el">The Element for which to get the computed style.</param>
         /// <param name="pseudoElt">A string specifying the pseudo-element to match. Must be null (or not specified) for regular elements.</param>
         /// <returns>The returned style is a CSSStyleDeclaration object.</returns>
-        public static CSSStyleDeclaration GetDefaultComputedStyle(Element el, string pseudoElt)
-        {
-            return null;
-        }
+        public static extern CSSStyleDeclaration GetDefaultComputedStyle(Element el, string pseudoElt);
 
         /// <summary>
         /// Returns a selection object representing the range of text selected by the user.
         /// </summary>
         /// <returns>selection is a Selection object. When cast to string, either by adding empty quotes "" or using .toString, this object is the text selected.</returns>
-        public static Selection GetSelection()
-        {
-            return null;
-        }
+        public static extern Selection GetSelection();
 
         /// <summary>
         /// Returns the window to the home page.
         /// </summary>
-        public static void Home()
-        {
-        }
+        public static extern void Home();
 
         /// <summary>
         /// Returns a new MediaQueryList object representing the parsed results of the specified media query string.
         /// </summary>
         /// <param name="mediaQueryString">string representing the media query for which to return a new MediaQueryList object.</param>
         /// <returns></returns>
-        public static MediaQueryList MatchMedia(string mediaQueryString)
-        {
-            return null;
-        }
+        public static extern MediaQueryList MatchMedia(string mediaQueryString);
 
         /// <summary>
         /// Moves the current window by a specified amount.
         /// </summary>
         /// <param name="deltaX">the amount of pixels to move the window horizontally.</param>
         /// <param name="deltaY">the amount of pixels to move the window vertically.</param>
-        public static void MoveBy(int deltaX, int deltaY)
-        {
-        }
+        public static extern void MoveBy(int deltaX, int deltaY);
 
         /// <summary>
         /// The window.requestAnimationFrame() method tells the browser that you wish to perform an animation and requests that the browser call a specified function to update an animation before the next repaint. The method takes as an argument a callback to be invoked before the repaint.
@@ -678,20 +566,14 @@ namespace Bridge.Html5
         /// The URL to be loaded in the newly opened window. strUrl can be an HTML document on the web, image file or any resource supported by the browser.
         /// </summary>
         /// <returns>A reference to the newly created window. If the call failed, it will be null. The reference can be used to access properties and methods of the new window provided it complies with Same origin policy security requirements.</returns>
-        public static WindowInstance Open()
-        {
-            return null;
-        }
+        public static extern WindowInstance Open();
 
         /// <summary>
         /// The URL to be loaded in the newly opened window. strUrl can be an HTML document on the web, image file or any resource supported by the browser.
         /// </summary>
         /// <param name="url">The URL to be loaded in the newly opened window. strUrl can be an HTML document on the web, image file or any resource supported by the browser.</param>
         /// <returns>A reference to the newly created window. If the call failed, it will be null. The reference can be used to access properties and methods of the new window provided it complies with Same origin policy security requirements.</returns>
-        public static WindowInstance Open(string url)
-        {
-            return null;
-        }
+        public static extern WindowInstance Open(string url);
 
         /// <summary>
         /// The URL to be loaded in the newly opened window. strUrl can be an HTML document on the web, image file or any resource supported by the browser.
@@ -699,10 +581,7 @@ namespace Bridge.Html5
         /// <param name="url">The URL to be loaded in the newly opened window. strUrl can be an HTML document on the web, image file or any resource supported by the browser.</param>
         /// <param name="name">A string name for the new window. The name can be used as the target of links and forms using the target attribute of an &lt;a&gt; or &lt;form&gt; element. The name should not contain any blank space. Note that strWindowName does not specify the title of the new window.</param>
         /// <returns>A reference to the newly created window. If the call failed, it will be null. The reference can be used to access properties and methods of the new window provided it complies with Same origin policy security requirements.</returns>
-        public static WindowInstance Open(string url, string name)
-        {
-            return null;
-        }
+        public static extern WindowInstance Open(string url, string name);
 
         /// <summary>
         /// The URL to be loaded in the newly opened window. strUrl can be an HTML document on the web, image file or any resource supported by the browser.
@@ -711,29 +590,20 @@ namespace Bridge.Html5
         /// <param name="name">A string name for the new window. The name can be used as the target of links and forms using the target attribute of an &lt;a&gt; or &lt;form&gt; element. The name should not contain any blank space. Note that strWindowName does not specify the title of the new window.</param>
         /// <param name="features">Optional parameter listing the features (size, position, scrollbars, etc.) of the new window. The string must not contain any blank space, each feature name and value must be separated by a comma.</param>
         /// <returns>A reference to the newly created window. If the call failed, it will be null. The reference can be used to access properties and methods of the new window provided it complies with Same origin policy security requirements.</returns>
-        public static WindowInstance Open(string url, string name, string features)
-        {
-            return null;
-        }
+        public static extern WindowInstance Open(string url, string name, string features);
 
         /// <summary>
         /// window.openDialog is an extension to window.open. It behaves the same, except that it can optionally take one or more parameters past windowFeatures, and windowFeatures itself is treated a little differently.
         /// </summary>
         /// <returns>A reference to the newly created window. If the call failed, it will be null. The reference can be used to access properties and methods of the new window provided it complies with Same origin policy security requirements.</returns>
-        public static WindowInstance OpenDialog()
-        {
-            return null;
-        }
+        public static extern WindowInstance OpenDialog();
 
         /// <summary>
         /// window.openDialog is an extension to window.open. It behaves the same, except that it can optionally take one or more parameters past windowFeatures, and windowFeatures itself is treated a little differently.
         /// </summary>
         /// <param name="url">The URL to be loaded in the newly opened window. strUrl can be an HTML document on the web, image file or any resource supported by the browser.</param>
         /// <returns>A reference to the newly created window. If the call failed, it will be null. The reference can be used to access properties and methods of the new window provided it complies with Same origin policy security requirements.</returns>
-        public static WindowInstance OpenDialog(string url)
-        {
-            return null;
-        }
+        public static extern WindowInstance OpenDialog(string url);
 
         /// <summary>
         /// window.openDialog is an extension to window.open. It behaves the same, except that it can optionally take one or more parameters past windowFeatures, and windowFeatures itself is treated a little differently.
@@ -741,10 +611,7 @@ namespace Bridge.Html5
         /// <param name="url">The URL to be loaded in the newly opened window. strUrl can be an HTML document on the web, image file or any resource supported by the browser.</param>
         /// <param name="name">A string name for the new window. The name can be used as the target of links and forms using the target attribute of an &lt;a&gt; or &lt;form&gt; element. The name should not contain any blank space. Note that strWindowName does not specify the title of the new window.</param>
         /// <returns>A reference to the newly created window. If the call failed, it will be null. The reference can be used to access properties and methods of the new window provided it complies with Same origin policy security requirements.</returns>
-        public static WindowInstance OpenDialog(string url, string name)
-        {
-            return null;
-        }
+        public static extern WindowInstance OpenDialog(string url, string name);
 
         /// <summary>
         /// window.openDialog is an extension to window.open. It behaves the same, except that it can optionally take one or more parameters past windowFeatures, and windowFeatures itself is treated a little differently.
@@ -753,10 +620,7 @@ namespace Bridge.Html5
         /// <param name="name">A string name for the new window. The name can be used as the target of links and forms using the target attribute of an &lt;a&gt; or &lt;form&gt; element. The name should not contain any blank space. Note that strWindowName does not specify the title of the new window.</param>
         /// <param name="features">Optional parameter listing the features (size, position, scrollbars, etc.) of the new window. The string must not contain any blank space, each feature name and value must be separated by a comma.</param>
         /// <returns>A reference to the newly created window. If the call failed, it will be null. The reference can be used to access properties and methods of the new window provided it complies with Same origin policy security requirements.</returns>
-        public static WindowInstance OpenDialog(string url, string name, string features)
-        {
-            return null;
-        }
+        public static extern WindowInstance OpenDialog(string url, string name, string features);
 
         /// <summary>
         /// window.openDialog is an extension to window.open. It behaves the same, except that it can optionally take one or more parameters past windowFeatures, and windowFeatures itself is treated a little differently.
@@ -766,19 +630,14 @@ namespace Bridge.Html5
         /// <param name="features">Optional parameter listing the features (size, position, scrollbars, etc.) of the new window. The string must not contain any blank space, each feature name and value must be separated by a comma.</param>
         /// <param name="args">The arguments to be passed to the new window (optional).</param>
         /// <returns>A reference to the newly created window. If the call failed, it will be null. The reference can be used to access properties and methods of the new window provided it complies with Same origin policy security requirements.</returns>
-        public static WindowInstance OpenDialog(string url, string name, string features, params object[] args)
-        {
-            return null;
-        }
+        public static extern WindowInstance OpenDialog(string url, string name, string features, params object[] args);
 
         /// <summary>
         /// The window.postMessage method safely enables cross-origin communication.
         /// </summary>
         /// <param name="message">Data to be sent to the other window.</param>
         /// <param name="targetOrigin">Specifies what the origin of otherWindow must be for the event to be dispatched, either as the literal string "*" (indicating no preference) or as a URI.</param>
-        public static void PostMessage(object message, string targetOrigin)
-        {
-        }
+        public static extern void PostMessage(object message, string targetOrigin);
 
         /// <summary>
         /// The window.postMessage method safely enables cross-origin communication.
@@ -786,35 +645,25 @@ namespace Bridge.Html5
         /// <param name="message">Data to be sent to the other window.</param>
         /// <param name="targetOrigin">Specifies what the origin of otherWindow must be for the event to be dispatched, either as the literal string "*" (indicating no preference) or as a URI.</param>
         /// <param name="transfer">Is a sequence of Transferable objects that are transferred with the message.</param>
-        public static void PostMessage(object message, string targetOrigin, object[] transfer)
-        {
-        }
+        public static extern void PostMessage(object message, string targetOrigin, object[] transfer);
 
         /// <summary>
         /// Opens the Print Dialog to print the current document.
         /// </summary>
-        public static void Print()
-        {
-        }
+        public static extern void Print();
 
         /// <summary>
         /// The Window.prompt() displays a dialog with an optional message prompting the user to input some text.
         /// </summary>
         /// <returns>string containing the text entered by the user, or the value null.</returns>
-        public static string Prompt()
-        {
-            return null;
-        }
+        public static extern string Prompt();
 
         /// <summary>
         /// The Window.prompt() displays a dialog with an optional message prompting the user to input some text.
         /// </summary>
         /// <param name="message">string of text to display to the user. This parameter is optional and can be omitted if there is nothing to show in the prompt window.</param>
         /// <returns>string containing the text entered by the user, or the value null.</returns>
-        public static string Prompt(string message)
-        {
-            return null;
-        }
+        public static extern string Prompt(string message);
 
         /// <summary>
         /// The Window.prompt() displays a dialog with an optional message prompting the user to input some text.
@@ -822,38 +671,14 @@ namespace Bridge.Html5
         /// <param name="message">string of text to display to the user. This parameter is optional and can be omitted if there is nothing to show in the prompt window.</param>
         /// <param name="value">string containing the default value displayed in the text input field. It is an optional parameter. Note that in Internet Explorer 7 and 8, if you do not provide this parameter, the string "undefined" is the default value.</param>
         /// <returns>string containing the text entered by the user, or the value null.</returns>
-        public static string Prompt(string message, string value)
-        {
-            return null;
-        }
+        public static extern string Prompt(string message, string value);
 
         /// <summary>
         /// Removes the event listener previously registered with EventTarget.addEventListener.
         /// </summary>
         /// <param name="type">A string representing the event type being removed.</param>
         /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
-        public static void RemoveEventListener(EventType type, IEventListener listener)
-        {
-        }
-
-        /// <summary>
-        /// Removes the event listener previously registered with EventTarget.addEventListener.
-        /// </summary>
-        /// <param name="type">A string representing the event type being removed.</param>
-        /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
-        /// <param name="capture">Specifies whether the EventListener being removed was registered as a capturing listener or not. If not specified, useCapture defaults to false.</param>
-        public static void RemoveEventListener(EventType type, IEventListener listener, bool capture)
-        {
-        }
-
-        /// <summary>
-        /// Removes the event listener previously registered with EventTarget.addEventListener.
-        /// </summary>
-        /// <param name="type">A string representing the event type being removed.</param>
-        /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
-        public static void RemoveEventListener(string type, IEventListener listener)
-        {
-        }
+        public static extern void RemoveEventListener(EventType type, IEventListener listener);
 
         /// <summary>
         /// Removes the event listener previously registered with EventTarget.addEventListener.
@@ -861,27 +686,14 @@ namespace Bridge.Html5
         /// <param name="type">A string representing the event type being removed.</param>
         /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
         /// <param name="capture">Specifies whether the EventListener being removed was registered as a capturing listener or not. If not specified, useCapture defaults to false.</param>
-        public static void RemoveEventListener(string type, IEventListener listener, bool capture)
-        {
-        }
+        public static extern void RemoveEventListener(EventType type, IEventListener listener, bool capture);
 
         /// <summary>
         /// Removes the event listener previously registered with EventTarget.addEventListener.
         /// </summary>
         /// <param name="type">A string representing the event type being removed.</param>
         /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
-        public static void RemoveEventListener(EventType type, Delegate listener)
-        {
-        }
-
-        /// <summary>
-        /// Removes the event listener previously registered with EventTarget.addEventListener.
-        /// </summary>
-        /// <param name="type">A string representing the event type being removed.</param>
-        /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
-        public static void RemoveEventListener(EventType type, Action listener)
-        {
-        }
+        public static extern void RemoveEventListener(string type, IEventListener listener);
 
         /// <summary>
         /// Removes the event listener previously registered with EventTarget.addEventListener.
@@ -889,9 +701,21 @@ namespace Bridge.Html5
         /// <param name="type">A string representing the event type being removed.</param>
         /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
         /// <param name="capture">Specifies whether the EventListener being removed was registered as a capturing listener or not. If not specified, useCapture defaults to false.</param>
-        public static void RemoveEventListener(EventType type, Delegate listener, bool capture)
-        {
-        }
+        public static extern void RemoveEventListener(string type, IEventListener listener, bool capture);
+
+        /// <summary>
+        /// Removes the event listener previously registered with EventTarget.addEventListener.
+        /// </summary>
+        /// <param name="type">A string representing the event type being removed.</param>
+        /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
+        public static extern void RemoveEventListener(EventType type, Delegate listener);
+
+        /// <summary>
+        /// Removes the event listener previously registered with EventTarget.addEventListener.
+        /// </summary>
+        /// <param name="type">A string representing the event type being removed.</param>
+        /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
+        public static extern void RemoveEventListener(EventType type, Action listener);
 
         /// <summary>
         /// Removes the event listener previously registered with EventTarget.addEventListener.
@@ -899,27 +723,7 @@ namespace Bridge.Html5
         /// <param name="type">A string representing the event type being removed.</param>
         /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
         /// <param name="capture">Specifies whether the EventListener being removed was registered as a capturing listener or not. If not specified, useCapture defaults to false.</param>
-        public static void RemoveEventListener(EventType type, Action listener, bool capture)
-        {
-        }
-
-        /// <summary>
-        /// Removes the event listener previously registered with EventTarget.addEventListener.
-        /// </summary>
-        /// <param name="type">A string representing the event type being removed.</param>
-        /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
-        public static void RemoveEventListener(string type, Delegate listener)
-        {
-        }
-
-        /// <summary>
-        /// Removes the event listener previously registered with EventTarget.addEventListener.
-        /// </summary>
-        /// <param name="type">A string representing the event type being removed.</param>
-        /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
-        public static void RemoveEventListener(string type, Action listener)
-        {
-        }
+        public static extern void RemoveEventListener(EventType type, Delegate listener, bool capture);
 
         /// <summary>
         /// Removes the event listener previously registered with EventTarget.addEventListener.
@@ -927,9 +731,21 @@ namespace Bridge.Html5
         /// <param name="type">A string representing the event type being removed.</param>
         /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
         /// <param name="capture">Specifies whether the EventListener being removed was registered as a capturing listener or not. If not specified, useCapture defaults to false.</param>
-        public static void RemoveEventListener(string type, Delegate listener, bool capture)
-        {
-        }
+        public static extern void RemoveEventListener(EventType type, Action listener, bool capture);
+
+        /// <summary>
+        /// Removes the event listener previously registered with EventTarget.addEventListener.
+        /// </summary>
+        /// <param name="type">A string representing the event type being removed.</param>
+        /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
+        public static extern void RemoveEventListener(string type, Delegate listener);
+
+        /// <summary>
+        /// Removes the event listener previously registered with EventTarget.addEventListener.
+        /// </summary>
+        /// <param name="type">A string representing the event type being removed.</param>
+        /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
+        public static extern void RemoveEventListener(string type, Action listener);
 
         /// <summary>
         /// Removes the event listener previously registered with EventTarget.addEventListener.
@@ -937,18 +753,7 @@ namespace Bridge.Html5
         /// <param name="type">A string representing the event type being removed.</param>
         /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
         /// <param name="capture">Specifies whether the EventListener being removed was registered as a capturing listener or not. If not specified, useCapture defaults to false.</param>
-        public static void RemoveEventListener(string type, Action listener, bool capture)
-        {
-        }
-
-        /// <summary>
-        /// Removes the event listener previously registered with EventTarget.addEventListener.
-        /// </summary>
-        /// <param name="type">A string representing the event type being removed.</param>
-        /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
-        public static void RemoveEventListener(EventType type, Action<Event> listener)
-        {
-        }
+        public static extern void RemoveEventListener(string type, Delegate listener, bool capture);
 
         /// <summary>
         /// Removes the event listener previously registered with EventTarget.addEventListener.
@@ -956,18 +761,14 @@ namespace Bridge.Html5
         /// <param name="type">A string representing the event type being removed.</param>
         /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
         /// <param name="capture">Specifies whether the EventListener being removed was registered as a capturing listener or not. If not specified, useCapture defaults to false.</param>
-        public static void RemoveEventListener(EventType type, Action<Event> listener, bool capture)
-        {
-        }
+        public static extern void RemoveEventListener(string type, Action listener, bool capture);
 
         /// <summary>
         /// Removes the event listener previously registered with EventTarget.addEventListener.
         /// </summary>
         /// <param name="type">A string representing the event type being removed.</param>
         /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
-        public static void RemoveEventListener(string type, Action<Event> listener)
-        {
-        }
+        public static extern void RemoveEventListener(EventType type, Action<Event> listener);
 
         /// <summary>
         /// Removes the event listener previously registered with EventTarget.addEventListener.
@@ -975,80 +776,76 @@ namespace Bridge.Html5
         /// <param name="type">A string representing the event type being removed.</param>
         /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
         /// <param name="capture">Specifies whether the EventListener being removed was registered as a capturing listener or not. If not specified, useCapture defaults to false.</param>
-        public static void RemoveEventListener(string type, Action<Event> listener, bool capture)
-        {
-        }
+        public static extern void RemoveEventListener(EventType type, Action<Event> listener, bool capture);
+
+        /// <summary>
+        /// Removes the event listener previously registered with EventTarget.addEventListener.
+        /// </summary>
+        /// <param name="type">A string representing the event type being removed.</param>
+        /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
+        public static extern void RemoveEventListener(string type, Action<Event> listener);
+
+        /// <summary>
+        /// Removes the event listener previously registered with EventTarget.addEventListener.
+        /// </summary>
+        /// <param name="type">A string representing the event type being removed.</param>
+        /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
+        /// <param name="capture">Specifies whether the EventListener being removed was registered as a capturing listener or not. If not specified, useCapture defaults to false.</param>
+        public static extern void RemoveEventListener(string type, Action<Event> listener, bool capture);
 
         /// <summary>
         /// Resizes the current window by a certain amount.
         /// </summary>
         /// <param name="xDelta">the number of pixels to grow the window horizontally.</param>
         /// <param name="yDelta">the number of pixels to grow the window vertically.</param>
-        public static void ResizeBy(int xDelta, int yDelta)
-        {
-        }
+        public static extern void ResizeBy(int xDelta, int yDelta);
 
         /// <summary>
         /// Dynamically resizes window.
         /// </summary>
         /// <param name="width">integer representing the new outerWidth in pixels (including scroll bars, title bars, etc).</param>
         /// <param name="height">integer value representing the new outerHeight in pixels (including scroll bars, title bars, etc).</param>
-        public static void ResizeTo(int width, int height)
-        {
-        }
+        public static extern void ResizeTo(int width, int height);
 
         /// <summary>
         /// Scrolls the window to a particular place in the document.
         /// </summary>
         /// <param name="xcoord">the pixel along the horizontal axis of the document that you want displayed in the upper left.</param>
         /// <param name="ycoord">the pixel along the vertical axis of the document that you want displayed in the upper left.</param>
-        public static void Scroll(int xcoord, int ycoord)
-        {
-        }
+        public static extern void Scroll(int xcoord, int ycoord);
 
         /// <summary>
         /// Scrolls the document in the window by the given amount.
         /// </summary>
         /// <param name="x">X is the offset in pixels to scroll horizontally.</param>
         /// <param name="y">Y is the offset in pixels to scroll vertically.</param>
-        public static void ScrollBy(int x, int y)
-        {
-        }
+        public static extern void ScrollBy(int x, int y);
 
         /// <summary>
         /// Scrolls the document by the given number of lines.
         /// </summary>
         /// <param name="lines">the number of lines to scroll the document by.</param>
-        public static void ScrollByLines(int lines)
-        {
-        }
+        public static extern void ScrollByLines(int lines);
 
         /// <summary>
         /// Scrolls the current document by the specified number of pages.
         /// </summary>
         /// <param name="pages">the number of pages to scroll.</param>
-        public static void ScrollByPages(int pages)
-        {
-        }
+        public static extern void ScrollByPages(int pages);
 
         /// <summary>
         /// Scrolls to a particular set of coordinates in the document.
         /// </summary>
         /// <param name="x">the pixel along the horizontal axis of the document that you want displayed in the upper left.</param>
         /// <param name="y">the pixel along the vertical axis of the document that you want displayed in the upper left.</param>
-        public static void ScrollTo(int x, int y)
-        {
-        }
+        public static extern void ScrollTo(int x, int y);
 
         /// <summary>
         /// Calls a function or executes a code snippet repeatedly, with a fixed time delay between each call to that function.
         /// </summary>
         /// <param name="handler">the function you want to be called repeatedly.</param>
         /// <returns>a unique interval ID you can pass to clearInterval().</returns>
-        public static int SetInterval(Action handler)
-        {
-            return 0;
-        }
+        public static extern int SetInterval(Action handler);
 
         /// <summary>
         /// Calls a function or executes a code snippet repeatedly, with a fixed time delay between each call to that function.
@@ -1056,10 +853,7 @@ namespace Bridge.Html5
         /// <param name="handler">the function you want to be called repeatedly.</param>
         /// <param name="delay">the number of milliseconds (thousandths of a second) that the setInterval() function should wait before each call to func.</param>
         /// <returns>a unique interval ID you can pass to clearInterval().</returns>
-        public static int SetInterval(Action handler, int delay)
-        {
-            return 0;
-        }
+        public static extern int SetInterval(Action handler, int delay);
 
         /// <summary>
         /// Calls a function or executes a code snippet repeatedly, with a fixed time delay between each call to that function.
@@ -1068,20 +862,14 @@ namespace Bridge.Html5
         /// <param name="delay">the number of milliseconds (thousandths of a second) that the setInterval() function should wait before each call to func.</param>
         /// <param name="arguments"></param>
         /// <returns>a unique interval ID you can pass to clearInterval().</returns>
-        public static int SetInterval(Action handler, int delay, params object[] arguments)
-        {
-            return 0;
-        }
+        public static extern int SetInterval(Action handler, int delay, params object[] arguments);
 
         /// <summary>
         /// Calls a function or executes a code snippet repeatedly, with a fixed time delay between each call to that function.
         /// </summary>
         /// <param name="handler">the function you want to be called repeatedly.</param>
         /// <returns>a unique interval ID you can pass to clearInterval().</returns>
-        public static int SetInterval(string handler)
-        {
-            return 0;
-        }
+        public static extern int SetInterval(string handler);
 
         /// <summary>
         /// Calls a function or executes a code snippet repeatedly, with a fixed time delay between each call to that function.
@@ -1089,10 +877,7 @@ namespace Bridge.Html5
         /// <param name="handler">the function you want to be called repeatedly.</param>
         /// <param name="delay">the number of milliseconds (thousandths of a second) that the setInterval() function should wait before each call to func.</param>
         /// <returns>a unique interval ID you can pass to clearInterval().</returns>
-        public static int SetInterval(string handler, int delay)
-        {
-            return 0;
-        }
+        public static extern int SetInterval(string handler, int delay);
 
         /// <summary>
         /// Calls a function or executes a code snippet repeatedly, with a fixed time delay between each call to that function.
@@ -1101,10 +886,7 @@ namespace Bridge.Html5
         /// <param name="delay">the number of milliseconds (thousandths of a second) that the setInterval() function should wait before each call to func.</param>
         /// <param name="arguments"></param>
         /// <returns>a unique interval ID you can pass to clearInterval().</returns>
-        public static int SetInterval(string handler, int delay, params object[] arguments)
-        {
-            return 0;
-        }
+        public static extern int SetInterval(string handler, int delay, params object[] arguments);
 
         /// <summary>
         /// Calls a function or executes a code snippet repeatedly, with a fixed time delay between each call to that function.
@@ -1113,20 +895,14 @@ namespace Bridge.Html5
         /// <param name="delay">the number of milliseconds (thousandths of a second) that the setInterval() function should wait before each call to func.</param>
         /// <param name="arguments"></param>
         /// <returns>a unique interval ID you can pass to clearInterval().</returns>
-        public static int SetInterval(Delegate handler, int delay, params object[] arguments)
-        {
-            return 0;
-        }
+        public static extern int SetInterval(Delegate handler, int delay, params object[] arguments);
 
         /// <summary>
         /// Calls a function or executes a code snippet after a specified delay.
         /// </summary>
         /// <param name="handler"> the function you want to execute after delay milliseconds.</param>
         /// <returns> the numerical ID of the timeout, which can be used later with window.clearTimeout().</returns>
-        public static int SetTimeout(Action handler)
-        {
-            return 0;
-        }
+        public static extern int SetTimeout(Action handler);
 
         /// <summary>
         /// Calls a function or executes a code snippet after a specified delay.
@@ -1134,10 +910,7 @@ namespace Bridge.Html5
         /// <param name="handler"> the function you want to execute after delay milliseconds.</param>
         /// <param name="delay"> the number of milliseconds (thousandths of a second) that the function call should be delayed by. The actual delay may be longer;</param>
         /// <returns> the numerical ID of the timeout, which can be used later with window.clearTimeout().</returns>
-        public static int SetTimeout(Action handler, int delay)
-        {
-            return 0;
-        }
+        public static extern int SetTimeout(Action handler, int delay);
 
         /// <summary>
         /// Calls a function or executes a code snippet after a specified delay.
@@ -1146,20 +919,14 @@ namespace Bridge.Html5
         /// <param name="delay"> the number of milliseconds (thousandths of a second) that the function call should be delayed by. The actual delay may be longer;</param>
         /// <param name="arguments"></param>
         /// <returns> the numerical ID of the timeout, which can be used later with window.clearTimeout().</returns>
-        public static int SetTimeout(Action handler, int delay, params object[] arguments)
-        {
-            return 0;
-        }
+        public static extern int SetTimeout(Action handler, int delay, params object[] arguments);
 
         /// <summary>
         /// Calls a function or executes a code snippet after a specified delay.
         /// </summary>
         /// <param name="handler"> the function you want to execute after delay milliseconds.</param>
         /// <returns> the numerical ID of the timeout, which can be used later with window.clearTimeout().</returns>
-        public static int SetTimeout(string handler)
-        {
-            return 0;
-        }
+        public static extern int SetTimeout(string handler);
 
         /// <summary>
         /// Calls a function or executes a code snippet after a specified delay.
@@ -1167,10 +934,7 @@ namespace Bridge.Html5
         /// <param name="handler"> the function you want to execute after delay milliseconds.</param>
         /// <param name="delay"> the number of milliseconds (thousandths of a second) that the function call should be delayed by. The actual delay may be longer;</param>
         /// <returns> the numerical ID of the timeout, which can be used later with window.clearTimeout().</returns>
-        public static int SetTimeout(string handler, int delay)
-        {
-            return 0;
-        }
+        public static extern int SetTimeout(string handler, int delay);
 
         /// <summary>
         /// Calls a function or executes a code snippet after a specified delay.
@@ -1179,10 +943,7 @@ namespace Bridge.Html5
         /// <param name="delay"> the number of milliseconds (thousandths of a second) that the function call should be delayed by. The actual delay may be longer;</param>
         /// <param name="arguments"></param>
         /// <returns> the numerical ID of the timeout, which can be used later with window.clearTimeout().</returns>
-        public static int SetTimeout(string handler, int delay, params object[] arguments)
-        {
-            return 0;
-        }
+        public static extern int SetTimeout(string handler, int delay, params object[] arguments);
 
         /// <summary>
         /// Calls a function or executes a code snippet after a specified delay.
@@ -1191,20 +952,14 @@ namespace Bridge.Html5
         /// <param name="delay"> the number of milliseconds (thousandths of a second) that the function call should be delayed by. The actual delay may be longer;</param>
         /// <param name="arguments"></param>
         /// <returns> the numerical ID of the timeout, which can be used later with window.clearTimeout().</returns>
-        public static int SetTimeout(Delegate handler, int delay, params object[] arguments)
-        {
-            return 0;
-        }
+        public static extern int SetTimeout(Delegate handler, int delay, params object[] arguments);
 
         /// <summary>
         /// The Window.showModalDialog() creates and displays a modal dialog box containing a specified HTML document.
         /// </summary>
         /// <param name="uri"> the URI of the document to display in the dialog box.</param>
         /// <returns> a variant, indicating the returnValue property as set by the window of the document specified by uri.</returns>
-        public static object ShowModalDialog(string uri)
-        {
-            return null;
-        }
+        public static extern object ShowModalDialog(string uri);
 
         /// <summary>
         /// The Window.showModalDialog() creates and displays a modal dialog box containing a specified HTML document.
@@ -1212,10 +967,7 @@ namespace Bridge.Html5
         /// <param name="uri"> the URI of the document to display in the dialog box.</param>
         /// <param name="arguments">an optional variant that contains values that should be passed to the dialog box; these are made available in the window object's window.dialogArguments property.</param>
         /// <returns> a variant, indicating the returnValue property as set by the window of the document specified by uri.</returns>
-        public static object ShowModalDialog(string uri, object arguments)
-        {
-            return null;
-        }
+        public static extern object ShowModalDialog(string uri, object arguments);
 
         /// <summary>
         /// The Window.showModalDialog() creates and displays a modal dialog box containing a specified HTML document.
@@ -1224,32 +976,23 @@ namespace Bridge.Html5
         /// <param name="arguments">an optional variant that contains values that should be passed to the dialog box; these are made available in the window object's window.dialogArguments property.</param>
         /// <param name="options">an optional string that specifies window ornamentation for the dialog box, using one or more semicolon delimited values:</param>
         /// <returns> a variant, indicating the returnValue property as set by the window of the document specified by uri.</returns>
-        public static object ShowModalDialog(string uri, object arguments, string options)
-        {
-            return null;
-        }
+        public static extern object ShowModalDialog(string uri, object arguments, string options);
 
         /// <summary>
         /// Sizes the window according to its content.
         /// </summary>
-        public static void SizeToContent()
-        {
-        }
+        public static extern void SizeToContent();
 
         /// <summary>
         /// This method stops window loading.
         /// </summary>
-        public static void Stop()
-        {
-        }
+        public static extern void Stop();
 
         /// <summary>
         /// Updates the state of commands of the current chrome window (UI).
         /// </summary>
         /// <param name="commandName">a particular string which describes what kind of update event this is (e.g. whether we are in bold right now).</param>
-        public static void UpdateCommands(string commandName)
-        {
-        }
+        public static extern void UpdateCommands(string commandName);
 
         /// <summary>
         /// An event handler property for abort events on the window
@@ -1486,10 +1229,7 @@ namespace Bridge.Html5
         /// <param name="expression">A string representing a JavaScript expression, statement, or sequence of statements. The expression can include variables and properties of existing objects.</param>
         /// <returns></returns>
         [Template("eval({0})")]
-        public static T Eval<T>(string expression)
-        {
-            return default(T);
-        }
+        public static extern T Eval<T>(string expression);
 
         /// <summary>
         /// The global isFinite() function determines whether the passed value is a finite number. If needed, the parameter is first converted to a number.
@@ -1497,10 +1237,7 @@ namespace Bridge.Html5
         /// <param name="testValue">The value to be tested for finiteness.</param>
         /// <returns></returns>
         [Template("isFinite({0})")]
-        public static bool IsFinite(object testValue)
-        {
-            return false;
-        }
+        public static extern bool IsFinite(object testValue);
 
         /// <summary>
         /// The parseFloat() function parses a string argument and returns a floating point number.
@@ -1508,10 +1245,7 @@ namespace Bridge.Html5
         /// <param name="value">A string that represents the value you want to parse.</param>
         /// <returns></returns>
         [Template("parseFloat({0})")]
-        public static double ParseFloat(string value)
-        {
-            return 0;
-        }
+        public static extern double ParseFloat(string value);
 
         /// <summary>
         /// The parseInt() function parses a string argument and returns an integer of the specified radix or base.
@@ -1519,10 +1253,7 @@ namespace Bridge.Html5
         /// <param name="value">The value to parse. If string is not a string, then it is converted to one. Leading whitespace in the string is ignored.</param>
         /// <returns></returns>
         [Template("parseInt({0})")]
-        public static int ParseInt(string value)
-        {
-            return 0;
-        }
+        public static extern int ParseInt(string value);
 
         /// <summary>
         /// The parseInt() function parses a string argument and returns an integer of the specified radix or base.
@@ -1531,10 +1262,7 @@ namespace Bridge.Html5
         /// <param name="radix">An integer that represents the radix of the above mentioned string. Always specify this parameter to eliminate reader confusion and to guarantee predictable behavior. Different implementations produce different results when a radix is not specified.</param>
         /// <returns></returns>
         [Template("parseInt({0}, {1})")]
-        public static int ParseInt(string value, int radix)
-        {
-            return 0;
-        }
+        public static extern int ParseInt(string value, int radix);
 
         /// <summary>
         /// The isNaN() function determines whether a value is NaN or not. Be careful, this function is broken. You may be interested in Number.isNaN() as defined in ECMAScript 6 or you can use typeof to determine if the value is Not-A-Number.
@@ -1542,10 +1270,7 @@ namespace Bridge.Html5
         /// <param name="testValue">The value to be tested.</param>
         /// <returns></returns>
         [Template("isNaN({0})")]
-        public static bool IsNaN(object testValue)
-        {
-            return false;
-        }
+        public static extern bool IsNaN(object testValue);
 
         /// <summary>
         /// The decodeURI() function decodes a Uniform Resource Identifier (URI) previously created by encodeURI or by a similar routine.
@@ -1553,10 +1278,7 @@ namespace Bridge.Html5
         /// <param name="encodedURI">A complete, encoded Uniform Resource Identifier.</param>
         /// <returns></returns>
         [Template("decodeURI({0})")]
-        public static string DecodeURI(string encodedURI)
-        {
-            return null;
-        }
+        public static extern string DecodeURI(string encodedURI);
 
         /// <summary>
         /// The decodeURIComponent() method decodes a Uniform Resource Identifier (URI) component previously created by encodeURIComponent or by a similar routine.
@@ -1564,10 +1286,7 @@ namespace Bridge.Html5
         /// <param name="encodedURI">An encoded component of a Uniform Resource Identifier.</param>
         /// <returns></returns>
         [Template("decodeURIComponent({0})")]
-        public static string DecodeURIComponent(string encodedURI)
-        {
-            return null;
-        }
+        public static extern string DecodeURIComponent(string encodedURI);
 
         /// <summary>
         /// The encodeURI() method encodes a Uniform Resource Identifier (URI) by replacing each instance of certain characters by one, two, three, or four escape sequences representing the UTF-8 encoding of the character (will only be four escape sequences for characters composed of two "surrogate" characters).
@@ -1575,10 +1294,7 @@ namespace Bridge.Html5
         /// <param name="uri">A complete Uniform Resource Identifier.</param>
         /// <returns></returns>
         [Template("encodeURI({0})")]
-        public static string EncodeURI(string uri)
-        {
-            return null;
-        }
+        public static extern string EncodeURI(string uri);
 
         /// <summary>
         /// The encodeURIComponent() method encodes a Uniform Resource Identifier (URI) component by replacing each instance of certain characters by one, two, three, or four escape sequences representing the UTF-8 encoding of the character (will only be four escape sequences for characters composed of two "surrogate" characters).
@@ -1586,10 +1302,7 @@ namespace Bridge.Html5
         /// <param name="component">A component of a URI.</param>
         /// <returns></returns>
         [Template("encodeURIComponent({0})")]
-        public static string EncodeURIComponent(string component)
-        {
-            return null;
-        }
+        public static extern string EncodeURIComponent(string component);
 
         #endregion Methods
 
@@ -1597,37 +1310,21 @@ namespace Bridge.Html5
         public static WindowInstance Instance;
 
         [Template("window")]
-        public new static dynamic ToDynamic()
-        {
-            return null;
-        }
+        public new static extern dynamic ToDynamic();
 
         [Template("{this}[{name}].call(null, {args})")]
-        public static void Call(string name, params object[] args)
-        {
-        }
+        public static extern void Call(string name, params object[] args);
 
         [Template("{this}[{name}].call(null, {args})")]
-        public static T Call<T>(string name, params object[] args)
-        {
-            return default(T);
-        }
+        public static extern T Call<T>(string name, params object[] args);
 
         [Template("{this}[{name}]")]
-        public static object Get(string name)
-        {
-            return null;
-        }
+        public static extern object Get(string name);
 
         [Template("{this}[{name}]")]
-        public static T Get<T>(string name)
-        {
-            return default(T);
-        }
+        public static extern T Get<T>(string name);
 
         [Template("{this}[{name}] = {value}")]
-        public static void Set(string name, object value)
-        {
-        }
+        public static extern void Set(string name, object value);
     }
 }

@@ -17,9 +17,6 @@ namespace System.Collections.Generic
         public abstract int Compare(T x, T y);
 
         [Template("new Bridge.Comparer$1({T})({comparison})")]
-        public static Comparer<T> Create(Comparison<T> comparison)
-        {
-            return null;
-        }
+        public static extern Comparer<T> Create(Comparison<T> comparison);
     }
 }

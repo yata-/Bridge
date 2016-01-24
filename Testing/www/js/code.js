@@ -1983,6 +1983,178 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge690B', {
     }
 });
 
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge692.A', {
+    statics: {
+        getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge692.A(); }
+    },
+    $clone: function (to) { return this; }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge692.B1', {
+    statics: {
+        getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge692.B1(); }
+    },
+    field1: 0,
+    constructor$1: function (f) {
+        this.field1 = f;
+    },
+    constructor: function () {
+    },
+    getHashCode: function () {
+        var hash = 17;
+        hash = hash * 23 + (this.field1 == null ? 0 : Bridge.getHashCode(this.field1));
+        return hash;
+    },
+    equals: function (o) {
+        if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge692.B1)) {
+            return false;
+        }
+        return Bridge.equals(this.field1, o.field1);
+    },
+    $clone: function (to) {
+        var s = to || new Bridge.ClientTest.BridgeIssues.Bridge692.B1();
+        s.field1 = this.field1;
+        return s;
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge692.B3', {
+    statics: {
+        getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge692.B3(); }
+    },
+    constructor: function () {
+    },
+    getProp1: function () {
+        return 0;
+    },
+    $clone: function (to) { return this; }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge692.C1', {
+    statics: {
+        getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge692.C1(); }
+    },
+    field1: 0,
+    constructor$1: function (i) {
+        this.field1 = i;
+    },
+    constructor: function () {
+    },
+    getProp1: function () {
+        return this.field1;
+    },
+    getHashCode: function () {
+        var hash = 17;
+        hash = hash * 23 + (this.field1 == null ? 0 : Bridge.getHashCode(this.field1));
+        return hash;
+    },
+    equals: function (o) {
+        if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge692.C1)) {
+            return false;
+        }
+        return Bridge.equals(this.field1, o.field1);
+    },
+    $clone: function (to) {
+        var s = to || new Bridge.ClientTest.BridgeIssues.Bridge692.C1();
+        s.field1 = this.field1;
+        return s;
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge692.C2', {
+    statics: {
+        getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge692.C2(); }
+    },
+    field1: 0,
+    constructor$1: function (i) {
+        this.field1 = i;
+    },
+    constructor: function () {
+    },
+    getProp1: function () {
+        return this.field1;
+    },
+    setProp1: function (value) {
+
+    },
+    getHashCode: function () {
+        var hash = 17;
+        hash = hash * 23 + (this.field1 == null ? 0 : Bridge.getHashCode(this.field1));
+        return hash;
+    },
+    equals: function (o) {
+        if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge692.C2)) {
+            return false;
+        }
+        return Bridge.equals(this.field1, o.field1);
+    },
+    $clone: function (to) {
+        var s = to || new Bridge.ClientTest.BridgeIssues.Bridge692.C2();
+        s.field1 = this.field1;
+        return s;
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge692.C3', {
+    statics: {
+        getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge692.C3(); }
+    },
+    config: {
+        properties: {
+            Prop1: 0
+        }
+    },
+    constructor: function () {
+    },
+    getHashCode: function () {
+        var hash = 17;
+        hash = hash * 23 + (this.Prop1 == null ? 0 : Bridge.getHashCode(this.Prop1));
+        return hash;
+    },
+    equals: function (o) {
+        if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge692.C3)) {
+            return false;
+        }
+        return Bridge.equals(this.Prop1, o.Prop1);
+    },
+    $clone: function (to) {
+        var s = to || new Bridge.ClientTest.BridgeIssues.Bridge692.C3();
+        s.Prop1 = this.Prop1;
+        return s;
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge692.B2', {
+    statics: {
+        getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge692.B2(); }
+    },
+    field1: 0,
+    constructor$1: function (f) {
+        this.field1 = f;
+    },
+    constructor: function () {
+    },
+    getProp1: function () {
+        return this.field1;
+    },
+    getHashCode: function () {
+        var hash = 17;
+        hash = hash * 23 + (this.field1 == null ? 0 : Bridge.getHashCode(this.field1));
+        return hash;
+    },
+    equals: function (o) {
+        if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge692.B2)) {
+            return false;
+        }
+        return Bridge.equals(this.field1, o.field1);
+    },
+    $clone: function (to) {
+        var s = to || new Bridge.ClientTest.BridgeIssues.Bridge692.B2();
+        s.field1 = this.field1;
+        return s;
+    }
+});
+
 Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge693A$1', function (T) { return {
     constructor: function (props) {
     }
@@ -2165,6 +2337,22 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge826B', {
     _val: 0,
     constructor: function (val) {
         this._val = val;
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge835.Dot', {
+    statics: {
+        getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge835.Dot(); }
+    },
+    $clone: function (to) { return this; }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge849A', {
+    statics: {
+        setToBlah: function (value, blah) {
+            if (blah === void 0) { blah = true; }
+            return blah;
+        }
     }
 });
 
@@ -5524,7 +5712,7 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge577', {
         },
         testUseCase: function () {
             var a = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge577).someMethodA(1);
-            Bridge.get(Bridge.Test.Assert).notNull$1(a.$clone(), "#577 Bridge577UnitA created");
+            Bridge.get(Bridge.Test.Assert).notNull$1(a, "#577 Bridge577UnitA created");
 
             var b = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge577).someMethodB(7);
             Bridge.get(Bridge.Test.Assert).areEqual$1(b.getNumber(), 7, "#577 Bridge577UnitB created");
@@ -6409,6 +6597,36 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge691', {
     }
 });
 
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge692', {
+    statics: {
+        testUseCase: function () {
+            var a = new Bridge.ClientTest.BridgeIssues.Bridge692.A();
+            Bridge.get(Bridge.Test.Assert).areEqual$1(a, a, "Bridge692 A");
+
+            var b1 = new Bridge.ClientTest.BridgeIssues.Bridge692.B1("constructor");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(b1, b1, "Bridge692 B1");
+
+            var b2 = new Bridge.ClientTest.BridgeIssues.Bridge692.B1("constructor");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(b2, b2, "Bridge692 B2");
+
+            var b3 = new Bridge.ClientTest.BridgeIssues.Bridge692.B3();
+            Bridge.get(Bridge.Test.Assert).areEqual$1(b3, b3, "Bridge692 B3");
+
+            var c1 = new Bridge.ClientTest.BridgeIssues.Bridge692.C1("constructor");
+            Bridge.get(Bridge.Test.Assert).areNotStrictEqual$1(c1.$clone(), c1.$clone(), "Bridge692 C1");
+
+            var c2 = new Bridge.ClientTest.BridgeIssues.Bridge692.C2("constructor");
+            Bridge.get(Bridge.Test.Assert).areNotStrictEqual$1(c2.$clone(), c2.$clone(), "Bridge692 C2");
+
+            var c3 = new Bridge.ClientTest.BridgeIssues.Bridge692.C3();
+            Bridge.get(Bridge.Test.Assert).areNotStrictEqual$1(c3.$clone(), c3.$clone(), "Bridge692 C3");
+
+            var c3_1 = new Bridge.ClientTest.BridgeIssues.Bridge692.C3();
+            Bridge.get(Bridge.Test.Assert).areNotStrictEqual$1(c3_1.$clone(), c3_1.$clone(), "Bridge692 C3_1");
+        }
+    }
+});
+
 Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge693', {
     statics: {
         testUseCase: function () {
@@ -6729,7 +6947,7 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge762', {
             var value3 = Bridge.Nullable.getValueOrDefault(test3, Bridge.getDefaultValue(Bridge.ClientTest.BridgeIssues.Bridge762B));
 
             Bridge.get(Bridge.Test.Assert).areEqual$1(value1, 0, "Bridge762 int");
-            Bridge.get(Bridge.Test.Assert).areNotEqual$1(value2.$clone(), null, "Bridge762A struct");
+            Bridge.get(Bridge.Test.Assert).areNotEqual$1(value2, null, "Bridge762A struct");
             Bridge.get(Bridge.Test.Assert).areNotEqual$1(value3.$clone(), null, "Bridge762B struct");
             Bridge.get(Bridge.Test.Assert).areEqual$1(value3.getData(), 0, "Bridge762B.Data struct");
         }
@@ -6869,6 +7087,41 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge796', {
     }
 });
 
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge817', {
+    statics: {
+        testUseCase: function () {
+            Bridge.get(Bridge.Test.Assert).true$1((Bridge.Char.isDigit(65) || Bridge.Char.isLetter(65)), "Bridge817 IsLetterOrDigit");
+            Bridge.get(Bridge.Test.Assert).true$1((Bridge.Char.isDigit("A".charCodeAt(0)) || Bridge.Char.isLetter("A".charCodeAt(0))), "Bridge817 IsLetterOrDigit string");
+
+            Bridge.get(Bridge.Test.Assert).false$1(!(Bridge.Char.isDigit(65) || Bridge.Char.isLetter(65)), "Bridge817 IsLetterOrDigit !");
+            Bridge.get(Bridge.Test.Assert).false$1(!(Bridge.Char.isDigit("A".charCodeAt(0)) || Bridge.Char.isLetter("A".charCodeAt(0))), "Bridge817 IsLetterOrDigit string !");
+        }
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge818', {
+    statics: {
+        testUseCase: function () {
+            var z = 0;
+            for (; ; ) {
+                z++;
+                if (z === 10) {
+                    break;
+                }
+            }
+            Bridge.get(Bridge.Test.Assert).areEqual$1(z, 10, "Bridge818 z");
+
+            var i;
+            var j;
+            for (i = 0, j = 1; i < 10; i++, j++) {
+
+            }
+            Bridge.get(Bridge.Test.Assert).areEqual$1(i, 10, "Bridge818 i");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(j, 11, "Bridge818 j");
+        }
+    }
+});
+
 Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge823', {
     statics: {
         getTicksReturnsCorrectValue: function () {
@@ -6906,6 +7159,68 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge826', {
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge826).echoDecimal(Bridge.Decimal(Bridge.ClientTest.BridgeIssues.Bridge826B.op_Implicit$1(i))).equalsT(Bridge.Decimal(1)), "Bridge826 int 1");
 
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge826).echoDecimal().equalsT(Bridge.Decimal(42)), "Bridge826 42");
+        }
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge835', {
+    statics: {
+        testUseCase: function () {
+            var arr = Bridge.Array.create(new Bridge.ClientTest.BridgeIssues.Bridge835.Dot(), null, 10, 10);
+            Bridge.get(Bridge.Test.Assert).areNotEqual$1(arr, null, "Bridge835");
+        }
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge841', {
+    statics: {
+        testUseCase: function () {
+            var $t;
+            var testListA = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+                [1],
+                [2]
+            ] );
+
+            var result = 0;
+            $t = Bridge.getEnumerator(testListA);
+            while ($t.moveNext()) {
+                (function () {
+                    var item = $t.getCurrent();
+                    var fn = function () {
+                    };
+
+                    switch (item) {
+                        case 1: 
+                            result += 1;
+                            break;
+                        case 2: 
+                            result += 2;
+                            break;
+                    }
+                }).call(this);
+            }
+
+            Bridge.get(Bridge.Test.Assert).areEqual$1(result, 3, "Bridge841");
+        }
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge844', {
+    statics: {
+        nullableAndSimpleDateTimeToStringEquals: function () {
+            var dt1 = new Date();
+            var dt2 = dt1;
+
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Date.format(dt1), Bridge.Date.format(dt2), "Bridge844");
+        }
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge849', {
+    statics: {
+        testUseCase: function () {
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge849A.setToBlah(""), true, "Bridge849 true");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge849A.setToBlah("", false), false, "Bridge849 false");
         }
     }
 });

@@ -9,15 +9,9 @@ namespace System.Globalization
         {
         }
 
-        public static CultureInfo GetCultureInfo(string name)
-        {
-            return null;
-        }
+        public static extern CultureInfo GetCultureInfo(string name);
 
-        public static CultureInfo[] GetCultures()
-        {
-            return null;
-        }
+        public static extern CultureInfo[] GetCultures();
 
         public static CultureInfo CurrentCulture
         {
@@ -71,14 +65,8 @@ namespace System.Globalization
             set;
         }
 
-        public object GetFormat(Type formatType)
-        {
-            return null;
-        }
+        public extern object GetFormat(Type formatType);
 
-        public object Clone()
-        {
-            return null;
-        }
+        public extern object Clone();
     }
 }
