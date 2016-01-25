@@ -31,7 +31,15 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <NuGetBuildPackage>true</NuGetBuildPackage>
+    <NuGetPackageOutputDir>$(SolutionDir)Compiler\Contract\bin\Release</NuGetPackageOutputDir>
   </PropertyGroup>
+  <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <NuGetPackageSourcePath Include="$(SolutionDir).nuget\Bridge.Contract.nuspec">
+      <Path>$(SolutionDir).nuget\Bridge.Contract.nuspec</Path>
+      <SubType>Designer</SubType>
+    </NuGetPackageSourcePath>
+  </ItemGroup>
   <PropertyGroup Condition="$(OS) != Unix">
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
@@ -114,6 +122,9 @@
     <Compile Include="IWriterInfo.cs" />
     <Compile Include="OverloadsCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\..\.common\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="ITypeInfo.cs" />
     <Compile Include="XmlToJsDoc.cs" />
   </ItemGroup>
@@ -127,5 +138,13 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.Build.Package.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.Build.Package.targets')" />
+  <Target Name="CleanBridge" BeforeTargets="Clean">
+    <ItemGroup>
+      <BridgeFilesToDelete Include="$(ProjectDir)$(OutDir)*.nupkg" />
+    </ItemGroup>
+    <Message Text="Cleaning NuGet packages in $(ProjectDir)$(OutDir)" Importance="high" />
+    <Delete Files="@(BridgeFilesToDelete)" ContinueOnError="true" />
   </Target>
 </Project>

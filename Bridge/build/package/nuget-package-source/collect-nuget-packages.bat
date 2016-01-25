@@ -23,6 +23,12 @@ SET output="%root%Bridge\Bridge\build\package\nuget-package-source\*"
 :: Bridge
 echo f | xcopy /f /y "%root%Bridge\Bridge\bin\%build%\*.nupkg"			%output%
 
+:: Bridge.Contract
+echo f | xcopy /f /y "%root%Bridge\Compiler\Contract\bin\%build%\*.nupkg"			%output%
+
+:: Bridge.Compiler
+echo f | xcopy /f /y "%root%Bridge\Compiler\Translator\bin\%build%\*.nupkg"			%output%
+
 :: Bridge.Test
 echo f | xcopy /f /y "%root%Test\Bridge.Test\bin\%build%\*.nupkg"		%output%
 
