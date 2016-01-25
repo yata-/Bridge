@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata minClientVersion="2.5">
     <id>Bridge.Compiler</id>
-    <version>1.11.0</version>
+    <version>0.0.0</version>
     <title>Bridge.NET</title>
     <authors>Object.NET, Inc.</authors>
     <iconUrl>http://speed.bridge.net/identity/bridgedotnet-100x100.png</iconUrl>
