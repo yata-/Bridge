@@ -59,6 +59,9 @@
   <ItemGroup>
     <Compile Include="GenerateScript.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\..\.common\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Contract\Bridge.Contract.csproj">
