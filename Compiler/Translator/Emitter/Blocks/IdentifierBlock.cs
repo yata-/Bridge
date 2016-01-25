@@ -35,7 +35,7 @@ namespace Bridge.Translator
         protected void VisitIdentifierExpression()
         {
             IdentifierExpression identifierExpression = this.IdentifierExpression;
-
+            int pos = this.Emitter.Output.Length;
             ResolveResult resolveResult = null;
 
             resolveResult = this.Emitter.Resolver.ResolveNode(identifierExpression, this.Emitter);
@@ -60,7 +60,7 @@ namespace Bridge.Translator
                     this.Write(id);
                 }
 
-                Helpers.CheckValueTypeClone(resolveResult, identifierExpression, this);
+                Helpers.CheckValueTypeClone(resolveResult, identifierExpression, this, pos);
 
                 return;
             }
@@ -474,8 +474,6 @@ namespace Bridge.Translator
                     {
                         this.Write(resolveResult.ToString());
                     }
-
-                    Helpers.CheckValueTypeClone(resolveResult, identifierExpression, this);
                 }
                 else
                 {
@@ -487,6 +485,8 @@ namespace Bridge.Translator
             {
                 this.Write(appendAdditionalCode);
             }
+
+            Helpers.CheckValueTypeClone(resolveResult, identifierExpression, this, pos);
         }
 
         protected void WriteTarget(MemberResolveResult memberResult)

@@ -2318,7 +2318,7 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge815.A', {
     },
     method: function (param) {
         if (param === void 0) { param = null; }
-        this.setProperty(param.$clone());
+        this.setProperty(Bridge.Nullable.lift1("$clone", param));
     },
     method2: function (param) {
         if (param === void 0) { param = new Bridge.ClientTest.BridgeIssues.Bridge815.B(); }
@@ -6650,7 +6650,7 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge692', {
             Bridge.get(Bridge.Test.Assert).areNotStrictEqual$1(c3.$clone(), c3.$clone(), "Bridge692 C3");
 
             var c3_1 = new Bridge.ClientTest.BridgeIssues.Bridge692.C3();
-            Bridge.get(Bridge.Test.Assert).areNotStrictEqual$1(c3_1.$clone(), c3_1.$clone(), "Bridge692 C3_1");
+            Bridge.get(Bridge.Test.Assert).areNotStrictEqual$1(Bridge.Nullable.lift1("$clone", c3_1), Bridge.Nullable.lift1("$clone", c3_1), "Bridge692 C3_1");
         }
     }
 });
@@ -7112,9 +7112,9 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge815', {
             var a = new Bridge.ClientTest.BridgeIssues.Bridge815.A();
 
             a.method();
-            Bridge.get(Bridge.Test.Assert).areEqual$1(a.getProperty().$clone(), null, "Bridge815 null");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Nullable.lift1("$clone", a.getProperty()), null, "Bridge815 null");
 
-            a.method(new Bridge.ClientTest.BridgeIssues.Bridge815.B("constructor$1", 1).$clone());
+            a.method(new Bridge.ClientTest.BridgeIssues.Bridge815.B("constructor$1", 1));
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.Nullable.hasValue(a.getProperty()), "Bridge815 Property.HasValue");
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Nullable.getValue(a.getProperty()).field, 1, "Bridge815 Property.Value.field == 1");
 
@@ -7122,7 +7122,7 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge815', {
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.Nullable.hasValue(a.getProperty()), "Bridge815 Method2 Property.HasValue");
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Nullable.getValue(a.getProperty()).field, 0, "Bridge815 Method2 Property.Value.field == 0");
 
-            a.method2(new Bridge.ClientTest.BridgeIssues.Bridge815.B("constructor$1", 2).$clone());
+            a.method2(new Bridge.ClientTest.BridgeIssues.Bridge815.B("constructor$1", 2));
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.Nullable.hasValue(a.getProperty()), "Bridge815 Method2 Property.HasValue 2");
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Nullable.getValue(a.getProperty()).field, 2, "Bridge815 Method2 Property.Value.field == 2");
         }
@@ -7914,7 +7914,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine("got " + enm.getCurrent$1());
         }
 
-        this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\ngot -1\r\n");
+        this.assertEqual(sb.toString(), "yielding 0\nyielding 1\nyielding -1\nin finally\ngot 0\ngot 1\ngot -1\n");
     },
     prematureDisposalOfIEnumeratorIteratorExecutesFinallyBlocks: function () {
         //TODO expected for v1: yield iterator works with no state machine
@@ -7928,7 +7928,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
         }
         enm.dispose();
 
-        this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding 2\r\nyielding 3\r\nyielding 4\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\n");
+        this.assertEqual(sb.toString(), "yielding 0\nyielding 1\nyielding 2\nyielding 3\nyielding 4\nyielding -1\nin finally\ngot 0\ngot 1\n");
     },
     exceptionInIEnumeratorIteratorBodyExecutesFinallyBlocks: function () {
         //TODO expected for v1: yield iterator works with no state machine
@@ -7948,7 +7948,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine("caught exception");
         }
 
-        this.assertEqual(sb.toString(), "yielding 1\r\nyielding 2\r\nthrowing\r\nin finally\r\ncaught exception\r\n");
+        this.assertEqual(sb.toString(), "yielding 1\nyielding 2\nthrowing\nin finally\ncaught exception\n");
     },
     typeReturnedByIteratorBlockReturningIEnumerableImplementsThatInterface: function () {
         var enm = new Bridge.ClientTest.Collections.Generic.IteratorBlockTests.C(new Bridge.Text.StringBuilder()).getEnumerable(0);
@@ -7973,7 +7973,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine("got " + i1);
         }
 
-        this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\ngot -1\r\n-\r\ngot 0\r\ngot 1\r\ngot -1\r\n");
+        this.assertEqual(sb.toString(), "yielding 0\nyielding 1\nyielding -1\nin finally\ngot 0\ngot 1\ngot -1\n-\ngot 0\ngot 1\ngot -1\n");
     },
     prematureDisposalOfIEnumerableIteratorExecutesFinallyBlocks: function () {
         var $t;
@@ -7990,7 +7990,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             }
         }
 
-        this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding 2\r\nyielding 3\r\nyielding 4\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\n");
+        this.assertEqual(sb.toString(), "yielding 0\nyielding 1\nyielding 2\nyielding 3\nyielding 4\nyielding -1\nin finally\ngot 0\ngot 1\n");
     },
     exceptionInIEnumerableIteratorBodyExecutesFinallyBlocks: function () {
         //TODO expected for v1: yield iterator works with no state machine
@@ -8012,7 +8012,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine("caught exception");
         }
 
-        this.assertEqual(sb.toString(), "yielding 1\r\nyielding 2\r\nthrowing\r\nin finally\r\ncaught exception\r\n");
+        this.assertEqual(sb.toString(), "yielding 1\nyielding 2\nthrowing\nin finally\ncaught exception\n");
     },
     enumeratingAnIteratorBlockReturningIEnumerableMultipleTimesUsesTheInitialValuesForParameters: function () {
         var $t, $t1;
@@ -8030,7 +8030,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine(i1.toString());
         }
 
-        this.assertEqual(sb.toString(), "3\r\n2\r\n1\r\n3\r\n2\r\n1\r\n");
+        this.assertEqual(sb.toString(), "3\n2\n1\n3\n2\n1\n");
     },
     differentGetEnumeratorCallsOnIteratorBlockReturningIEnumerableGetOwnCopiesOfLocals: function () {
         var sb = new Bridge.Text.StringBuilder();
@@ -8045,7 +8045,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine(enm2.getCurrent$1().toString());
         }
 
-        this.assertEqual(sb.toString(), "0\r\n0\r\n1\r\n1\r\n2\r\n2\r\n-1\r\n-1\r\n");
+        this.assertEqual(sb.toString(), "0\n0\n1\n1\n2\n2\n-1\n-1\n");
     }
 });
 

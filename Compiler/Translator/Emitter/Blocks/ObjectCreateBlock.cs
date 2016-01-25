@@ -38,6 +38,7 @@ namespace Bridge.Translator
         protected void VisitObjectCreateExpression()
         {
             ObjectCreateExpression objectCreateExpression = this.ObjectCreateExpression;
+            int pos = this.Emitter.Output.Length;
 
             var resolveResult = this.Emitter.Resolver.ResolveNode(objectCreateExpression.Type, this.Emitter) as TypeResolveResult;
             bool isTypeParam = resolveResult.Type.Kind == TypeKind.TypeParameter;
@@ -227,7 +228,7 @@ namespace Bridge.Translator
                 }
             }
 
-            Helpers.CheckValueTypeClone(invocationResolveResult, this.ObjectCreateExpression, this);
+            //Helpers.CheckValueTypeClone(invocationResolveResult, this.ObjectCreateExpression, this, pos);
         }
 
         protected virtual void WriteObjectInitializer(IEnumerable<Expression> expressions, bool preserveMemberCase, TypeDefinition type, InvocationResolveResult rr)

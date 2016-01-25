@@ -56,6 +56,7 @@ namespace Bridge.Translator
         protected void VisitInvocationExpression()
         {
             InvocationExpression invocationExpression = this.InvocationExpression;
+            int pos = this.Emitter.Output.Length;
 
             if (this.Emitter.IsForbiddenInvocation(invocationExpression))
             {
@@ -490,7 +491,7 @@ namespace Bridge.Translator
                 }
             }
 
-            Helpers.CheckValueTypeClone(this.Emitter.Resolver.ResolveNode(invocationExpression, this.Emitter), invocationExpression, this);
+            Helpers.CheckValueTypeClone(this.Emitter.Resolver.ResolveNode(invocationExpression, this.Emitter), invocationExpression, this, pos);
 
             this.Emitter.ReplaceAwaiterByVar = oldValue;
             this.Emitter.AsyncExpressionHandling = oldAsyncExpressionHandling;
