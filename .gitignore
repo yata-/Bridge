@@ -190,3 +190,4 @@ FakesAssemblies/
 /Bridge.dev.sln
 /Testing/tests/client/Bridge/plugins/*
 Bridge/build/package/nuget-package-source/*.nupkg
+*.nupkg
