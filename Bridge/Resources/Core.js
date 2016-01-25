@@ -388,7 +388,7 @@
 	            for (key in from) {
 	                value = from[key];
 
-	                if (typeof to[key] === "function" && typeof value !== "function") {
+	                if (typeof to[key] === "function"/* && typeof value !== "function"*/) {
 	                    if (key.match(/^\s*get[A-Z]/)) {
 	                        Bridge.merge(to[key](), value);
 	                    } else {
