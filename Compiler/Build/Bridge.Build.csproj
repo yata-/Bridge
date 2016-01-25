@@ -36,8 +36,8 @@
     <NuGetBuildPackage>true</NuGetBuildPackage>
     <NuGetPackageOutputDir>$(SolutionDir)Bridge\bin\Release</NuGetPackageOutputDir>
   </PropertyGroup>
-    <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <NuGetPackageSourcePath Include="Bridge">
+  <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <NuGetPackageSourcePath Include="$(SolutionDir).nuget\Bridge.nuspec">
       <Path>$(SolutionDir).nuget\Bridge.nuspec</Path>
     </NuGetPackageSourcePath>
   </ItemGroup>
