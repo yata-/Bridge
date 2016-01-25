@@ -77,7 +77,8 @@
       <Message Text="Retrieved assembly version from Bridge.dll %(AssemblyInfo.Version)" Importance="high" />
 
       <PropertyGroup>
-        <NuGetPackageVersion Condition=" '%(AssemblyInfo.Version)' != '' And '%(AssemblyInfo.Version)' != '*Undefined*' "> -Version "%(AssemblyInfo.Version)"</NuGetPackageVersion>
+        <TrimmedAssemblyVersion  Condition=" '%(AssemblyInfo.Version)' != '' And '%(AssemblyInfo.Version)' != '*Undefined*' ">$([System.Version]::Parse(%(AssemblyInfo.Version)).ToString(3))</TrimmedAssemblyVersion>
+        <NuGetPackageVersion Condition=" '%(AssemblyInfo.Version)' != '' And '%(AssemblyInfo.Version)' != '*Undefined*' "> -Version "$(TrimmedAssemblyVersion)"</NuGetPackageVersion>
         <NuGetPackageVersion Condition=" '%(AssemblyInfo.Version)' == '' Or '%(AssemblyInfo.Version)' == '*Undefined*' "></NuGetPackageVersion>
       </PropertyGroup>
       
