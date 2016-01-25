@@ -225,3 +225,57 @@
             Bridge.Exception.prototype.$constructor.call(this, message || "Attempted to operate on an array with the incorrect number of dimensions.", innerException);
         }
     });
+
+    Bridge.define("Bridge.PromiseException", {
+        inherits: [Bridge.Exception],
+
+        constructor: function (args, message, innerException) {
+            Bridge.Exception.prototype.$constructor.call(this, message || (args.length && args[0] ? args[0].toString() : "An error occurred"), innerException);
+            this.arguments = Bridge.Array.clone(args);
+        },
+
+        getArguments: function () {
+            return this.arguments;
+        }
+    });
+
+    Bridge.define("Bridge.OperationCanceledException", {
+        inherits: [Bridge.Exception],
+
+        constructor: function (message, token, innerException) {
+            Bridge.Exception.prototype.$constructor.call(this, message || "Operation was canceled.", innerException);
+            this.cancellationToken = token || Bridge.CancellationToken.none;
+        }
+    });
+
+    Bridge.define("Bridge.TaskCanceledException", {
+        inherits: [Bridge.OperationCanceledException],
+
+        constructor: function (message, task, innerException) {
+            Bridge.OperationCanceledException.prototype.$constructor.call(this, message || "A task was canceled.", null, innerException);
+            this.task = task || null;
+        }
+    });
+
+    Bridge.define("Bridge.AggregateException", {
+        inherits: [Bridge.Exception],
+
+        constructor: function (message, innerExceptions) {
+            this.innerExceptions = Bridge.isValue(innerExceptions) ? Bridge.toArray(innerExceptions) : [];
+            Bridge.Exception.prototype.$constructor.call(this, message || 'One or more errors occurred.', this.innerExceptions.length ? this.innerExceptions[0] : null);
+        },
+
+        flatten: function () {
+            var inner = [];
+            for (var i = 0; i < this.innerExceptions.length; i++) {
+                var e = this.innerExceptions[i];
+                if (Bridge.is(e, Bridge.AggregateException)) {
+                    inner.push.apply(inner, e.flatten().innerExceptions);
+                }
+                else {
+                    inner.push(e);
+                }
+            }
+            return new Bridge.AggregateException(this.message, inner);
+        }
+    });

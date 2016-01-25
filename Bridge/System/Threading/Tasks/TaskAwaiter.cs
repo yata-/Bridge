@@ -25,6 +25,7 @@ namespace System.Threading.Tasks
         {
         }
 
+        [Name("getAwaitedResult")]
         public void GetResult()
         {
         }
@@ -52,6 +53,7 @@ namespace System.Threading.Tasks
         {
         }
 
+        [Name("getAwaitedResult")]
         public TResult GetResult()
         {
             return default(TResult);
