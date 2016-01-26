@@ -43,14 +43,7 @@
     <Prefer32Bit>false</Prefer32Bit>
     <NoWarn>1591, 0626, 0824, 0660, 0661</NoWarn>
     <DocumentationFile>bin\Release\Bridge.xml</DocumentationFile>
-    <NuGetBuildPackage>true</NuGetBuildPackage>
-    <NuGetPackageOutputDir>$(SolutionDir)Bridge\bin\Release</NuGetPackageOutputDir>
   </PropertyGroup>
-  <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <NuGetPackageSourcePath Include="$(SolutionDir).nuget\Bridge.Dev.nuspec">
-      <Path>$(SolutionDir).nuget\Bridge.Dev.nuspec</Path>
-    </NuGetPackageSourcePath>
-  </ItemGroup>
   <PropertyGroup Condition="$(OS) != Unix">
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
@@ -673,6 +666,15 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+  <!-- NuGet packaging starts -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <NuGetBuildPackage>true</NuGetBuildPackage>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <NuGetPackageSourcePath Include="$(SolutionDir).nuget\Bridge.Dev.nuspec">
+      <Path>$(SolutionDir).nuget\Bridge.Dev.nuspec</Path>
+    </NuGetPackageSourcePath>
+  </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.Build.Package.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.Build.Package.targets')" />
   <Target Name="CleanBridge" BeforeTargets="Clean">
     <ItemGroup>
@@ -681,4 +683,5 @@
     <Message Text="Cleaning NuGet packages in $(ProjectDir)$(OutDir)" Importance="high" />
     <Delete Files="@(BridgeFilesToDelete)" ContinueOnError="true" />
   </Target>
+  <!-- NuGet packaging finishes -->
 </Project>
