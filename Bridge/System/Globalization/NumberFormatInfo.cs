@@ -181,15 +181,9 @@ namespace System.Globalization
             set;
         }
 
-        public object GetFormat(Type formatType)
-        {
-            return null;
-        }
+        public extern object GetFormat(Type formatType);
 
-        public object Clone()
-        {
-            return null;
-        }
+        public extern object Clone();
 
         [FieldProperty]
         public static NumberFormatInfo CurrentInfo

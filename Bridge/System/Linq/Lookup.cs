@@ -47,19 +47,10 @@ namespace System.Linq
             }
         }
 
-        public bool Contains(TKey key)
-        {
-            return false;
-        }
+        public extern bool Contains(TKey key);
 
-        public IEnumerator<Grouping<TKey, TElement>> GetEnumerator()
-        {
-            return null;
-        }
+        public extern IEnumerator<Grouping<TKey, TElement>> GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return null;
-        }
+        extern IEnumerator IEnumerable.GetEnumerator();
     }
 }

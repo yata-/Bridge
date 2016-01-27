@@ -81,24 +81,18 @@ namespace Bridge.Html5
         /// <summary>
         /// Cancels the event if it is cancelable, without stopping further propagation of the event.
         /// </summary>
-        public virtual void PreventDefault()
-        {
-        }
+        public virtual extern void PreventDefault();
 
         /// <summary>
         /// Prevents other listeners of the same event to be called.
         /// If several listeners are attached to the same element for the same event type, they are called in order in which they have been added. If during one such call, event.stopImmediatePropagation() is called, no remaining listeners will be called.
         /// </summary>
-        public virtual void StopImmediatePropagation()
-        {
-        }
+        public virtual extern void StopImmediatePropagation();
 
         /// <summary>
         /// Prevents further propagation of the current event.
         /// </summary>
-        public virtual void StopPropagation()
-        {
-        }
+        public virtual extern void StopPropagation();
     }
 
     /// <summary>
@@ -138,27 +132,15 @@ namespace Bridge.Html5
     public static class EventsExtension
     {
         [Template("Bridge.is({0}, MouseEvent)")]
-        public static bool IsMouseEvent(this Event e)
-        {
-            return false;
-        }
+        public static extern bool IsMouseEvent(this Event e);
 
         [Template("Bridge.is({0}, FocusEvent)")]
-        public static bool IsFocusEvent(this Event e)
-        {
-            return false;
-        }
+        public static extern bool IsFocusEvent(this Event e);
 
         [Template("Bridge.is({0}, UIEvent)")]
-        public static bool IsUIEvent(this Event e)
-        {
-            return false;
-        }
+        public static extern bool IsUIEvent(this Event e);
 
         [Template("Bridge.is({0}, KeyboardEvent)")]
-        public static bool IsKeyboardEvent(this Event e)
-        {
-            return false;
-        }
+        public static extern bool IsKeyboardEvent(this Event e);
     }
 }

@@ -79,20 +79,11 @@ namespace System
             }
         }
 
-        public Object Clone()
-        {
-            return null;
-        }
+        public extern Object Clone();
 
-        public int CompareTo(Object version)
-        {
-            return 0;
-        }
+        public extern int CompareTo(Object version);
 
-        public int CompareTo(Version value)
-        {
-            return 0;
-        }
+        public extern int CompareTo(Version value);
 
         public override bool Equals(Object obj)
         {
@@ -104,25 +95,13 @@ namespace System
             return true;
         }
 
-        public override int GetHashCode()
-        {
-            return 0;
-        }
+        public override extern int GetHashCode();
 
-        public override String ToString()
-        {
-            return null;
-        }
+        public override extern String ToString();
 
-        public String ToString(int fieldCount)
-        {
-            return null;
-        }
+        public extern String ToString(int fieldCount);
 
-        public static Version Parse(string input)
-        {
-            return null;
-        }
+        public static extern Version Parse(string input);
 
         public static bool TryParse(string input, out Version result)
         {

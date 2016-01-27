@@ -32,10 +32,7 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
-        public virtual bool Contains(string str)
-        {
-            return false;
-        }
+        public virtual extern bool Contains(string str);
 
         /// <summary>
         ///  returns a DOMString (a string)
@@ -43,24 +40,15 @@ namespace Bridge.Html5
         /// <param name="index"></param>
         /// <returns></returns>
         [Name("item")]
-        public virtual string GetItem(int index)
-        {
-            return null;
-        }
+        public virtual extern string GetItem(int index);
 
         /// <summary>
         /// Gives length of the list
         /// </summary>
         public readonly int Length;
 
-        public virtual IEnumerator<string> GetEnumerator()
-        {
-            return null;
-        }
+        public virtual extern IEnumerator<string> GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return null;
-        }
+        extern IEnumerator IEnumerable.GetEnumerator();
     }
 }

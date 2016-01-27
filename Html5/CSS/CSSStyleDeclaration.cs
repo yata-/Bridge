@@ -1304,40 +1304,28 @@ namespace Bridge.Html5
         /// </summary>
         public string ZIndex;
 
-        public virtual IEnumerator<string> GetEnumerator()
-        {
-            return null;
-        }
+        public virtual extern IEnumerator<string> GetEnumerator();
 
         /// <summary>
         /// Returns the optional priority, "important". Example: priString= styleObj.getPropertyPriority('color')
         /// </summary>
         /// <param name="property"></param>
         /// <returns></returns>
-        public virtual string GetPropertyPriority(string property)
-        {
-            return null;
-        }
+        public virtual extern string GetPropertyPriority(string property);
 
         /// <summary>
         /// Returns the property value. Example: valString= styleObj.getPropertyValue('color')
         /// </summary>
         /// <param name="property"></param>
         /// <returns></returns>
-        public virtual string GetPropertyValue(string property)
-        {
-            return null;
-        }
+        public virtual extern string GetPropertyValue(string property);
 
         /// <summary>
         /// Returns a property name. Example: nameString= styleObj.item(0) Alternative: nameString= styleObj[0]
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public virtual string Item(int index)
-        {
-            return null;
-        }
+        public virtual extern string Item(int index);
 
         /// <summary>
         ///
@@ -1355,19 +1343,14 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="property"></param>
         /// <returns></returns>
-        public virtual string RemoveProperty(string property)
-        {
-            return null;
-        }
+        public virtual extern string RemoveProperty(string property);
 
         /// <summary>
         /// No return. Example: styleObj.setProperty('color', 'red', 'important')
         /// </summary>
         /// <param name="property"></param>
         /// <param name="value"></param>
-        public virtual void SetProperty(string property, string value)
-        {
-        }
+        public virtual extern void SetProperty(string property, string value);
 
         /// <summary>
         /// No return. Example: styleObj.setProperty('color', 'red', 'important')
@@ -1375,13 +1358,8 @@ namespace Bridge.Html5
         /// <param name="property"></param>
         /// <param name="value"></param>
         /// <param name="priority"></param>
-        public virtual void SetProperty(string property, string value, string priority)
-        {
-        }
+        public virtual extern void SetProperty(string property, string value, string priority);
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return null;
-        }
+        extern IEnumerator IEnumerable.GetEnumerator();
     }
 }

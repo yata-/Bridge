@@ -121,6 +121,32 @@ namespace Bridge.Translator
             var rightResolverResult = this.Emitter.Resolver.ResolveNode(binaryOperatorExpression.Right, this.Emitter);
             var charToString = -1;
             string variable = null;
+            bool leftIsNull = this.BinaryOperatorExpression.Left is NullReferenceExpression;
+            bool rightIsNull = this.BinaryOperatorExpression.Right is NullReferenceExpression;
+
+            if ((leftIsNull || rightIsNull) && (binaryOperatorExpression.Operator == BinaryOperatorType.Equality || binaryOperatorExpression.Operator == BinaryOperatorType.InEquality))
+            {
+                if (binaryOperatorExpression.Operator == BinaryOperatorType.Equality)
+                {
+                    this.Write("!");
+                }
+
+                this.Write("Bridge.hasValue");
+                
+                this.WriteOpenParentheses();
+                
+                if (leftIsNull)
+                {
+                    binaryOperatorExpression.Right.AcceptVisitor(this.Emitter);
+                }
+                else
+                {
+                    binaryOperatorExpression.Left.AcceptVisitor(this.Emitter);
+                }
+                
+                this.WriteCloseParentheses();
+                return;
+            }
 
             if (orr != null && orr.Type.IsKnownType(KnownTypeCode.String))
             {
