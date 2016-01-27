@@ -7073,6 +7073,41 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge762', {
     }
 });
 
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge777', {
+    statics: {
+        config: {
+            properties: {
+                SomeProperty: null,
+                P1: null,
+                P2: null
+            }
+        },
+        method: function (o) {
+            return null;
+        },
+        testUseCase: function () {
+            var $t, $t1, $t2;
+            var o = { };
+            o;
+            {
+                var i = 555;
+                Bridge.get(Bridge.Test.Assert).areEqual$1(i, 555, "Bridge777 i");
+            }
+
+            Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge777).method(($t = o, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge777).setSomeProperty($t), $t));
+            {
+                Bridge.get(Bridge.Test.Assert).notNull$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge777).getSomeProperty(), "Bridge777 SomeProperty");
+            }
+
+            ($t1 = ($t2 = o, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge777).setP2($t2), $t2), Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge777).setP1($t1), $t1);
+            {
+                Bridge.get(Bridge.Test.Assert).notNull$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge777).getP1(), "Bridge777 P1");
+                Bridge.get(Bridge.Test.Assert).notNull$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge777).getP2(), "Bridge777 P2");
+            }
+        }
+    }
+});
+
 Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge782', {
     statics: {
         testUseCase: function () {
