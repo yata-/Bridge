@@ -56,17 +56,12 @@ namespace Bridge.Html5
         /// <summary>
         /// Always returns true because &lt;fieldset&gt; objects are never candidates for constraint validation.
         /// </summary>
-        public virtual bool CheckValidity()
-        {
-            return false;
-        }
+        public virtual extern bool CheckValidity();
 
         /// <summary>
         /// Sets a custom validity message for the field set. If this message is not the empty string, then the field set is suffering from a custom validity error, and does not validate.
         /// </summary>
         /// <param name="error"></param>
-        public virtual void SetCustomValidity(string error)
-        {
-        }
+        public virtual extern void SetCustomValidity(string error);
     }
 }

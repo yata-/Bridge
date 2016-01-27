@@ -2517,59 +2517,6 @@
         }
     });
 
-    Bridge.define("Bridge.PromiseException", {
-        inherits: [Bridge.Exception],
-
-        constructor: function (args, message, innerException) {
-            Bridge.Exception.prototype.$constructor.call(this, message || (args.length && args[0] ? args[0].toString() : "An error occurred"), innerException);
-            this.arguments = Bridge.Array.clone(args);
-        },
-
-        getArguments: function () {
-            return this.arguments;
-        }
-    });
-
-    Bridge.define("Bridge.OperationCanceledException", {
-        inherits: [Bridge.Exception],
-
-        constructor: function (message, token, innerException) {
-            Bridge.Exception.prototype.$constructor.call(this, message || "Operation was canceled.", innerException);
-            this.cancellationToken = token || Bridge.CancellationToken.none;
-        }
-    });
-
-    Bridge.define("Bridge.TaskCanceledException", {
-        inherits: [Bridge.OperationCanceledException],
-
-        constructor: function (message, task, innerException) {
-            Bridge.OperationCanceledException.prototype.$constructor.call(this, message || "A task was canceled.", null, innerException);
-            this.task = task || null;
-        }
-    });
-
-    Bridge.define("Bridge.AggregateException", {
-        inherits: [Bridge.Exception],
-
-        constructor: function (message, innerExceptions) {
-            this.innerExceptions = Bridge.isValue(innerExceptions) ? Bridge.toArray(innerExceptions) : [];
-            Bridge.Exception.prototype.$constructor.call(this, message || 'One or more errors occurred.', this.innerExceptions.length ? this.innerExceptions[0] : null);
-        },
-
-        flatten: function () {
-            var inner = [];
-            for (var i = 0; i < this.innerExceptions.length; i++) {
-                var e = this.innerExceptions[i];
-                if (Bridge.is(e, Bridge.AggregateException)) {
-                    inner.push.apply(inner, e.flatten().innerExceptions);
-                }
-                else {
-                    inner.push(e);
-                }
-            }
-            return new Bridge.AggregateException(this.message, inner);
-        }
-    });
     // @source Interfaces.js
 
     Bridge.define("Bridge.IFormattable", {
@@ -4909,10 +4856,6 @@ var date = {
             return other.ticks === this.ticks;
         },
 
-        equalsT: function (other) {
-            return other.ticks === this.ticks;
-        },
-
         format: function (formatStr, provider) {
             return this.toString(formatStr, provider);
         },
@@ -5682,25 +5625,6 @@ Bridge.define("Bridge.Text.StringBuilder", {
                     array[i] = newarray[i-index];
                 }
             }
-        },
-
-        addRange: function (arr, items) {
-            if (Bridge.isArray(items)) {
-                arr.push.apply(arr, items);
-            }
-            else {
-                var e = Bridge.getEnumerator(items);
-                try {
-                    while (e.moveNext()) {
-                        arr.push(e.getCurrent());
-                    }
-                }
-                finally {
-                    if (Bridge.is(e, Bridge.IDisposable)) {
-                        e.dispose();
-                    }
-                }
-            }
         }
     };
 
@@ -5938,17 +5862,7 @@ Bridge.Class.generic('Bridge.EqualityComparer$1', function (T) {
             } else if (Bridge.isDefined(y, true)) {
                 var isBridge = x && x.$$name;
 
-                if (!isBridge) {
-                    return Bridge.equals(x, y);
-                }
-                else if (Bridge.isFunction(x.equalsT)) {
-                    return Bridge.equalsT(x, y);
-                }
-                else if (Bridge.isFunction(x.equals)) {
-                    return Bridge.equals(x, y);
-                }
-
-                return x === y;
+                return (!isBridge || Bridge.isFunction(x.equals)) ? Bridge.equals(x, y) : x === y;
             }
 
             return false;
@@ -6548,7 +6462,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         constructor: function (action, state) {
             this.action = action;
             this.state = state;
-            this.exception = null;
+            this.error = null;
             this.status = Bridge.TaskStatus.created;
             this.callbacks = [];
             this.result = null;
@@ -6556,13 +6470,13 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
 
         statics: {
             delay: function (delay, state) {
-                var tcs = new Bridge.TaskCompletionSource();
+                var task = new Bridge.Task();
 
                 setTimeout(function () {
-                    tcs.setResult(state);
+                    task.setResult(state);
                 }, delay);
 
-                return tcs.task;
+                return task;
             },
 
             fromResult: function (result) {
@@ -6575,25 +6489,25 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
             },
 
             run: function (fn) {
-                var tcs = new Bridge.TaskCompletionSource();
+                var task = new Bridge.Task();
 
                 setTimeout(function () {
                     try {
-                        tcs.setResult(fn());
+                        task.setResult(fn());
                     } catch (e) {
-                        tcs.setException(Bridge.Exception.create(e));
+                        task.setError(e);
                     }
                 }, 0);
 
-                return tcs.task;
+                return task;
             },
 
             whenAll: function (tasks) {
-                var tcs = new Bridge.TaskCompletionSource(),
+                var task = new Bridge.Task(),
                     result,
-                    executing,
+                    executing = tasks.length,
                     cancelled = false,
-                    exceptions = [],
+                    errors = [],
                     i;
 
                 if (Bridge.is(tasks, Bridge.IEnumerable)) {
@@ -6604,44 +6518,45 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
                 }
 
                 if (tasks.length === 0) {
-                    tcs.setResult([]);
-                    return tcs.task;
+                    task.setResult([]);
+
+                    return task;
                 }
 
-                executing = tasks.length;
                 result = new Array(tasks.length);
 
                 for (i = 0; i < tasks.length; i++) {
-                    (function(i) {
-                        tasks[i].continueWith(function (t) {
-                            switch (t.status) {
-                                case Bridge.TaskStatus.ranToCompletion:
-                                    result[i] = t.getResult();
-                                    break;
-                                case Bridge.TaskStatus.canceled:
-                                    cancelled = true;
-                                    break;
-                                case Bridge.TaskStatus.faulted:
-                                    Bridge.Array.addRange(exceptions, t.exception.innerExceptions);
-                                    break;
-                                default:
-                                    throw new Bridge.InvalidOperationException("Invalid task status: " + t.status);
-                            }
+                    tasks[i].$index = i;
+                    tasks[i].continueWith(function (t) {
+                        switch (t.status) {
+                            case Bridge.TaskStatus.ranToCompletion:
+                                result[t.$index] = t.getResult();
+                                break;
+                            case Bridge.TaskStatus.canceled:
+                                cancelled = true;
+                                break;
+                            case Bridge.TaskStatus.faulted:
+                                errors.push(t.error);
+                                break;
+                            default:
+                                throw new Bridge.InvalidOperationException("Invalid task status: " + t.status);
+                        }
 
-                            if (--executing === 0) {
-                                if (exceptions.length > 0) {
-                                    tcs.setException(exceptions);
-                                } else if (cancelled) {
-                                    tcs.setCanceled();
-                                } else {
-                                    tcs.setResult(result);
-                                }
+                        executing--;
+
+                        if (!executing) {
+                            if (errors.length > 0) {
+                                task.setError(errors);
+                            } else if (cancelled) {
+                                task.setCanceled();
+                            } else {
+                                task.setResult(result);
                             }
-                        });
-                    })(i);
+                        }
+                    });
                 }
 
-                return tcs.task;
+                return task;
             },
 
             whenAny: function (tasks) {
@@ -6656,20 +6571,20 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
                     throw new Bridge.ArgumentException("At least one task is required");
                 }
 
-                var tcs = new Bridge.TaskCompletionSource(),
+                var task = new Bridge.Task(),
                     i;
 
                 for (i = 0; i < tasks.length; i++) {
                     tasks[i].continueWith(function (t) {
                         switch (t.status) {
                             case Bridge.TaskStatus.ranToCompletion:
-                                tcs.trySetResult(t);
+                                task.complete(t);
                                 break;
                             case Bridge.TaskStatus.canceled:
-                                tcs.trySetCanceled();
+                                task.cancel();
                                 break;
                             case Bridge.TaskStatus.faulted:
-                                tcs.trySetException(t.exception.innerExceptions);
+                                task.fail(t.error);
                                 break;
                             default:
                                 throw new Bridge.InvalidOperationException("Invalid task status: " + t.status);
@@ -6677,48 +6592,48 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
                     });
                 }
 
-                return tcs.task;
+                return task;
             },
 
             fromCallback: function (target, method) {
-                var tcs = new Bridge.TaskCompletionSource(),
+                var task = new Bridge.Task(),
                     args = Array.prototype.slice.call(arguments, 2),
                     callback;
 
                 callback = function (value) {
-                    tcs.setResult(value);
+                    task.setResult(value);
                 };
 
                 args.push(callback);
 
                 target[method].apply(target, args);
 
-                return tcs.task;
+                return task;
             },
 
             fromCallbackResult: function (target, method, resultHandler) {
-                var tcs = new Bridge.TaskCompletionSource(),
+                var task = new Bridge.Task(),
                     args = Array.prototype.slice.call(arguments, 3),
                     callback;
 
                 callback = function (value) {
-                    tcs.setResult(value);
+                    task.setResult(value);
                 };
 
                 resultHandler(args, callback);
 
                 target[method].apply(target, args);
 
-                return tcs.task;
+                return task;
             },
 
             fromCallbackOptions: function (target, method, name) {
-                var tcs = new Bridge.TaskCompletionSource(),
+                var task = new Bridge.Task(),
                     args = Array.prototype.slice.call(arguments, 3),
                     callback;
 
                 callback = function (value) {
-                    tcs.setResult(value);
+                    task.setResult(value);
                 };
 
                 args[0] = args[0] || { };
@@ -6726,20 +6641,20 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
 
                 target[method].apply(target, args);
 
-                return tcs.task;
+                return task;
             },
 
             fromPromise: function (promise, handler, errorHandler) {
-                var tcs = new Bridge.TaskCompletionSource();
+                var task = new Bridge.Task();
 
                 if (!promise.then) {
                     promise = promise.promise();
                 }
 
                 promise.then(function () {
-                    tcs.setResult(handler ? handler.apply(null, arguments) : arguments);
+                    task.setResult(handler ? handler.apply(null, arguments) : arguments);
                 }, function () {
-                    tcs.setException(errorHandler ? errorHandler.apply(null, arguments) : new Bridge.PromiseException(Array.prototype.slice.call(arguments, 0)));
+                    task.setError(errorHandler ? errorHandler.apply(null, arguments) : new Error(Array.prototype.slice.call(arguments, 0)));
                 });
 
                 return task;
@@ -6747,16 +6662,16 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         },
 
         continueWith: function (continuationAction, raise) {
-            var tcs = new Bridge.TaskCompletionSource(),
+            var task = new Bridge.Task(),
                 me = this,
                 fn = raise ? function () {
-                    tcs.setResult(continuationAction(me));
+                    task.setResult(continuationAction(me));
                 } : function () {
                     try {
-                        tcs.setResult(continuationAction(me));
+                        task.setResult(continuationAction(me));
                     }
                     catch (e) {
-                        tcs.setException(Bridge.Exception.create(e));
+                        task.setError(e);
                     }
                 };
 
@@ -6766,12 +6681,12 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
                 this.callbacks.push(fn);
             }
 
-            return tcs.task;
+            return task;
         },
 
         start: function () {
             if (this.status !== Bridge.TaskStatus.created) {
-                throw new Bridge.InvalidOperationException("Task was already started.");
+                throw new Error("Task was already started.");
             }
 
             var me = this;
@@ -6785,7 +6700,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
                     delete me.state;
                     me.complete(result);
                 } catch (e) {
-                    me.fail(new Bridge.AggregateException(null, [Bridge.Exception.create(e)]));
+                    me.fail(e);
                 }
             }, 0);
         },
@@ -6819,7 +6734,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
                 return false;
             }
 
-            this.exception = error;
+            this.error = error;
             this.status = Bridge.TaskStatus.faulted;
             this.runCallbacks();
 
@@ -6849,22 +6764,35 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
             return this.status === Bridge.TaskStatus.faulted;
         },
 
-        _getResult: function (await) {
+        getResult: function () {
             switch (this.status) {
                 case Bridge.TaskStatus.ranToCompletion:
                     return this.result;
                 case Bridge.TaskStatus.canceled:
-                    var ex = new Bridge.TaskCanceledException(null, this);
-                    throw await ? ex : new Bridge.AggregateException(null, [ex]);
+                    throw new Error("Task was cancelled.");
                 case Bridge.TaskStatus.faulted:
-                    throw await ? this.exception.innerExceptions[0] : this.exception;
+                    throw this.error;
                 default:
-                    throw new Bridge.InvalidOperationException("Task is not yet completed.");
+                    throw new Error("Task is not yet completed.");
             }
         },
 
-        getResult: function () {
-            return this._getResult(false);
+        setCanceled: function () {
+            if (!this.cancel()) {
+                throw new Error("Task was already completed.");
+            }
+        },
+
+        setResult: function (result) {
+            if (!this.complete(result)) {
+                throw new Error("Task was already completed.");
+            }
+        },
+
+        setError: function (error) {
+            if (!this.fail(error)) {
+                throw new Error("Task was already completed.");
+            }
         },
 
         dispose: function () {
@@ -6872,15 +6800,10 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
 
         getAwaiter: function () {
             return this;
-        },
-
-        getAwaitedResult: function () {
-            return this._getResult(true);
         }
     });
 
     Bridge.define("Bridge.TaskStatus", {
-        $enum: true,
         $statics: {
             created: 0,
             waitingForActivation: 1,
@@ -6893,219 +6816,6 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         }
     });
 
-
-    Bridge.define("Bridge.TaskCompletionSource", {
-        constructor: function() {
-            this.task = new Bridge.Task();
-            this.task.status = Bridge.TaskStatus.running;
-        },
-
-        setCanceled: function () {
-            if (!this.task.cancel()) {
-                throw new Bridge.InvalidOperationException("Task was already completed.");
-            }
-        },
-
-        setResult: function(result) {
-            if (!this.task.complete(result)) {
-                throw new Bridge.InvalidOperationException("Task was already completed.");
-            }
-        },
-
-        setException: function(exception) {
-            if (!this.trySetException(exception)) {
-                throw new Bridge.InvalidOperationException("Task was already completed.");
-            }
-        },
-
-        trySetCanceled: function() {
-            return this.task.cancel();
-        },
-
-        trySetResult: function(result) {
-            return this.task.complete(result);
-        },
-
-        trySetException: function(exception) {
-            if (Bridge.is(exception, Bridge.Exception)) {
-                exception = [exception];
-            }
-                
-            return this.task.fail(new Bridge.AggregateException(null, exception));
-        }
-    });
-
-    Bridge.define("Bridge.CancellationToken", {
-        constructor: function (source) {
-            if (!Bridge.is(source, Bridge.CancellationTokenSource)) {
-                source = source ? Bridge.CancellationToken.sourceTrue : Bridge.CancellationToken.sourceFalse;
-            }
-                
-            this.source = source;
-        },
-
-        getCanBeCanceled: function () {
-            return !this.source.uncancellable;
-        },
-
-        get_isCancellationRequested: function () {
-            return this.source.isCancellationRequested;
-        },
-
-        throwIfCancellationRequested: function () {
-            if (this.source.isCancellationRequested) {
-                throw new Bridge.OperationCanceledException(this);
-            }
-        },
-
-        register: function (cb, s) {
-            return this.source.register(cb, s);
-        },
-
-        statics: {
-            sourceTrue: {
-                isCancellationRequested: true, 
-                register: function(f, s) {
-                    f(s); 
-                    return new Bridge.CancellationTokenRegistration();
-                } 
-            },
-            sourceFalse: {
-                uncancellable: true, 
-                isCancellationRequested: false, 
-                register: function() {
-                     return new Bridge.CancellationTokenRegistration();
-                }
-            }
-        }
-    });
-
-    Bridge.CancellationToken.none = new Bridge.CancellationToken();
-
-    Bridge.define("Bridge.CancellationTokenRegistration", {
-        inherits: function() {
-            return [Bridge.IDisposable, Bridge.IEquatable$1(Bridge.CancellationTokenRegistration)];
-        },
-        constructor: function (cts, o) {
-            this.cts = cts;
-            this.o = o;
-        },
-
-        dispose: function () {
-            if (this.cts) {
-                this.cts.deregister(this.o);
-                this.cts = this.o = null;
-            }
-        },
-
-        equalsT: function (o) {
-            return this === o;
-        }
-    });
-
-    Bridge.define("Bridge.CancellationTokenSource", {
-        inherits: [Bridge.IDisposable],
-
-        constructor: function (delay) {
-            this.timeout = typeof delay === "number" && delay >= 0 ? setTimeout(Bridge.fn.bind(this, this.cancel), delay, -1) : null;
-            this.isCancellationRequested = false;
-            this.token = new Bridge.CancellationToken(this);
-            this.handlers = [];
-        },
-
-        cancel: function (throwFirst) {
-            if (this.isCancellationRequested) {
-                return ;
-            }
-
-            this.isCancellationRequested = true;
-            var x = [];
-            var h = this.handlers;
-
-            this.clean();
-
-            for (var i = 0; i < h.length; i++) {
-                try {
-                    h[i].f(h[i].s);
-                }
-                catch (ex) {
-                    if (throwFirst && throwFirst !== -1) {
-                        throw ex;
-                    }
-                        
-                    x.push(ex);
-                }
-            }
-            if (x.length > 0 && throwFirst !== -1) {
-                throw new Bridge.AggregateException(null, x);
-            }
-                
-        },
-
-        cancelAfter: function (delay) {
-            if (this.isCancellationRequested) {
-                return;
-            }
-                
-            if (this.timeout) {
-                clearTimeout(this.timeout);
-            }
-                
-            this.timeout = setTimeout(Bridge.fn.bind(this, this.cancel), delay, -1);
-        },
-
-        register: function (f, s) {
-            if (this.isCancellationRequested) {
-                f(s);
-                return new Bridge.CancellationTokenRegistration();
-            }
-            else {
-                var o = {f: f, s: s };
-                this.handlers.push(o);
-                return new Bridge.CancellationTokenRegistration(this, o);
-            }
-        },
-
-        deregister: function (o) {
-            var ix = this.handlers.indexOf(o);
-            if (ix >= 0) {
-                this.handlers.splice(ix, 1);
-            }
-        },
-
-        dispose: function () {
-            this.clean();
-        },
-
-        clean: function () {
-            if (this.timeout) {
-                clearTimeout(this.timeout);
-            }
-                
-            this.timeout = null;
-            this.handlers = [];
-
-            if (this.links) {
-                for (var i = 0; i < this.links.length; i++) {
-                    this.links[i].dispose();
-                }
-                    
-                this.links = null;
-            }
-        },
-
-        statics: {
-            createLinked: function () {
-                var cts = new Bridge.CancellationTokenSource();
-                cts.links = [];
-                var d = Bridge.fn.bind(this, this.cancel);
-                for (var i = 0; i < arguments.length; i++) {
-                    cts.links.push(arguments[i].register(d));
-                }
-                return cts;
-            }
-        }
-    });
     // @source Validation.js
 
     var validation = {
@@ -7574,9 +7284,6 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
             return true;
         },
         equals: function(v) {
-            return this.equals$1(v);
-        },
-        equalsT: function (v) {
             return this.equals$1(v);
         },
         getHashCode: function () {

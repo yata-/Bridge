@@ -51,127 +51,61 @@ namespace System.Threading.Tasks
             get;
         }
 
-        public Task ContinueWith(Action<Task> continuationAction)
-        {
-            return null;
-        }
+        public extern Task ContinueWith(Action<Task> continuationAction);
 
-        public Task<TResult> ContinueWith<TResult>(Func<Task, TResult> continuationFunction)
-        {
-            return null;
-        }
+        public extern Task<TResult> ContinueWith<TResult>(Func<Task, TResult> continuationFunction);
 
-        public void Start()
-        {
-        }
+        public extern void Start();
 
-        public TaskAwaiter GetAwaiter()
-        {
-            return null;
-        }
+        public extern TaskAwaiter GetAwaiter();
 
-        public void Dispose()
-        {
-        }
+        public extern void Dispose();
 
-        public void Complete(object result = null)
-        {
-        }
+        public extern void SetCanceled();
 
-        public static Task Delay(int millisecondDelay)
-        {
-            return null;
-        }
+        public extern void SetError(IEnumerable<Exception> exceptions);
 
-        public static Task<TResult> FromResult<TResult>(TResult result)
-        {
-            return null;
-        }
+        public extern void SetError(Exception exception);
 
-        public static Task Run(Action action)
-        {
-            return null;
-        }
+        public extern void Complete(object result = null);
 
-        public static Task<TResult> Run<TResult>(Func<TResult> function)
-        {
-            return null;
-        }
+        public static extern Task Delay(int millisecondDelay);
 
-        public static Task WhenAll(params Task[] tasks)
-        {
-            return null;
-        }
+        public static extern Task<TResult> FromResult<TResult>(TResult result);
 
-        public static Task WhenAll(IEnumerable<Task> tasks)
-        {
-            return null;
-        }
+        public static extern Task Run(Action action);
 
-        public static Task<TResult[]> WhenAll<TResult>(params Task<TResult>[] tasks)
-        {
-            return null;
-        }
+        public static extern Task<TResult> Run<TResult>(Func<TResult> function);
 
-        public static Task<TResult[]> WhenAll<TResult>(IEnumerable<Task<TResult>> tasks)
-        {
-            return null;
-        }
+        public static extern Task WhenAll(params Task[] tasks);
 
-        public static Task<Task> WhenAny(params Task[] tasks)
-        {
-            return null;
-        }
+        public static extern Task WhenAll(IEnumerable<Task> tasks);
 
-        public static Task<Task> WhenAny(IEnumerable<Task> tasks)
-        {
-            return null;
-        }
+        public static extern Task<TResult[]> WhenAll<TResult>(params Task<TResult>[] tasks);
 
-        public static Task<Task<TResult>> WhenAny<TResult>(params Task<TResult>[] tasks)
-        {
-            return null;
-        }
+        public static extern Task<TResult[]> WhenAll<TResult>(IEnumerable<Task<TResult>> tasks);
 
-        public static Task<Task<TResult>> WhenAny<TResult>(IEnumerable<Task<TResult>> tasks)
-        {
-            return null;
-        }
+        public static extern Task<Task> WhenAny(params Task[] tasks);
 
-        public static Task FromCallback(object target, string method, params object[] otherArguments)
-        {
-            return null;
-        }
+        public static extern Task<Task> WhenAny(IEnumerable<Task> tasks);
 
-        public static Task FromCallbackResult(object target, string method, Delegate resultHandler, params object[] otherArguments)
-        {
-            return null;
-        }
+        public static extern Task<Task<TResult>> WhenAny<TResult>(params Task<TResult>[] tasks);
 
-        public static Task<TResult> FromCallback<TResult>(object target, string method, params object[] otherArguments)
-        {
-            return null;
-        }
+        public static extern Task<Task<TResult>> WhenAny<TResult>(IEnumerable<Task<TResult>> tasks);
 
-        public static Task<TResult> FromCallbackResult<TResult>(object target, string method, Delegate resultHandler, params object[] otherArguments)
-        {
-            return null;
-        }
+        public static extern Task FromCallback(object target, string method, params object[] otherArguments);
 
-        public static Task<object[]> FromPromise(IPromise promise)
-        {
-            return null;
-        }
+        public static extern Task FromCallbackResult(object target, string method, Delegate resultHandler, params object[] otherArguments);
 
-        public static Task<TResult> FromPromise<TResult>(IPromise promise, Delegate resultHandler)
-        {
-            return null;
-        }
+        public static extern Task<TResult> FromCallback<TResult>(object target, string method, params object[] otherArguments);
 
-        public static Task<TResult> FromPromise<TResult>(IPromise promise, Delegate resultHandler, Delegate errorHandler)
-        {
-            return null;
-        }
+        public static extern Task<TResult> FromCallbackResult<TResult>(object target, string method, Delegate resultHandler, params object[] otherArguments);
+
+        public static extern Task<object[]> FromPromise(IPromise promise);
+
+        public static extern Task<TResult> FromPromise<TResult>(IPromise promise, Delegate resultHandler);
+
+        public static extern Task<TResult> FromPromise<TResult>(IPromise promise, Delegate resultHandler, Delegate errorHandler);
     }
 
     [External]
@@ -202,23 +136,12 @@ namespace System.Threading.Tasks
             }
         }
 
-        public Task ContinueWith(Action<Task<TResult>> continuationAction)
-        {
-            return null;
-        }
+        public extern Task ContinueWith(Action<Task<TResult>> continuationAction);
 
-        public Task<TNewResult> ContinueWith<TNewResult>(Func<Task<TResult>, TNewResult> continuationFunction)
-        {
-            return null;
-        }
+        public extern Task<TNewResult> ContinueWith<TNewResult>(Func<Task<TResult>, TNewResult> continuationFunction);
 
-        public new TaskAwaiter<TResult> GetAwaiter()
-        {
-            return null;
-        }
+        public new extern TaskAwaiter<TResult> GetAwaiter();
 
-        public void SetResult(TResult result)
-        {
-        }
+        public extern void SetResult(TResult result);
     }
 }

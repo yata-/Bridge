@@ -1,3 +1,4 @@
+using System;
 using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
@@ -39,6 +40,7 @@ namespace Bridge.Translator
         protected void VisitMemberReferenceExpression()
         {
             MemberReferenceExpression memberReferenceExpression = this.MemberReferenceExpression;
+            int pos = this.Emitter.Output.Length;
 
             ResolveResult resolveResult = null;
             ResolveResult expressionResolveResult = null;
@@ -173,7 +175,9 @@ namespace Bridge.Translator
                 return;
             }
 
-            string inline = member != null ? this.Emitter.GetInline(member.Member) : null;
+            Tuple<bool, bool, string> inlineInfo = member != null ? this.Emitter.GetInlineCode(memberReferenceExpression) : null;
+            //string inline = member != null ? this.Emitter.GetInline(member.Member) : null;
+            string inline = inlineInfo != null ? inlineInfo.Item3 : null;
             bool hasInline = !string.IsNullOrEmpty(inline);
             bool hasThis = hasInline && inline.Contains("{this}");
 
@@ -929,7 +933,7 @@ namespace Bridge.Translator
                     this.Write(this.Emitter.GetEntityName(member.Member));
                 }
 
-                Helpers.CheckValueTypeClone(resolveResult, memberReferenceExpression, this);
+                Helpers.CheckValueTypeClone(resolveResult, memberReferenceExpression, this, pos);
             }
         }
     }

@@ -104,7 +104,7 @@ Bridge.define('Classes.MovePoint', {
         }
     },
     move: function (dx, dy) {
-        this.setPoint(Bridge.get(Classes.MovePoint).move(this.getPoint().$clone(), dx, dy));
+        this.setPoint(Bridge.get(Classes.MovePoint).move(this.getPoint().$clone(), dx, dy).$clone());
     }
 });
 

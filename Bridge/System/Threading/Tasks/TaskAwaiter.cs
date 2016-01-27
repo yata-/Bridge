@@ -21,14 +21,10 @@ namespace System.Threading.Tasks
         }
 
         [Name("continueWith")]
-        public void OnCompleted(Action continuation)
-        {
-        }
+        public extern void OnCompleted(Action continuation);
 
         [Name("getAwaitedResult")]
-        public void GetResult()
-        {
-        }
+        public extern void GetResult();
     }
 
     [External]
@@ -49,9 +45,7 @@ namespace System.Threading.Tasks
         }
 
         [Name("continueWith")]
-        public void OnCompleted(Action continuation)
-        {
-        }
+        public extern void OnCompleted(Action continuation);
 
         [Name("getAwaitedResult")]
         public TResult GetResult()
