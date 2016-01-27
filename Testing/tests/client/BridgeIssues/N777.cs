@@ -39,8 +39,8 @@ namespace Bridge.ClientTest.BridgeIssues
             object o = new { };
             lock (o)
             {
-                int i = 0;
-                Assert.AreEqual(i, 0, "Bridge777 i");
+                int i = 555;
+                Assert.AreEqual(i, 555, "Bridge777 i");
             }
 
             lock (Method(SomeProperty = o))

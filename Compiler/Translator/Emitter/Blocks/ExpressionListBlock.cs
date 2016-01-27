@@ -78,12 +78,18 @@ namespace Bridge.Translator
                 }
 
                 needComma = true;
+                int pos = this.Emitter.Output.Length;
                 expr.AcceptVisitor(this.Emitter);
 
                 if (this.Emitter.Writers.Count != count)
                 {
                     this.PopWriter();
                     count = this.Emitter.Writers.Count;
+                }
+
+                if (expr is AssignmentExpression)
+                {
+                    Helpers.CheckValueTypeClone(this.Emitter.Resolver.ResolveNode(expr, this.Emitter), expr, this, pos);
                 }
             }
 

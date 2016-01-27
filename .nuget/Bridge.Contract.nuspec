@@ -29,6 +29,6 @@
 
     <!--NET40-->
     <file src="..\..\Bridge\Compiler\Contract\bin\Release\Bridge.Contract.dll" target="lib\net40\Bridge.Contract.dll"/>
-    <file src="..\..\Bridge\Compiler\Contract\bin\Release\Bridge.Contract.pdb" target="lib\net40\Bridge.Contract.pdb"/>
+    <file src="..\..\Bridge\Compiler\Contract\bin\Release\Bridge.Contract.pdb" target="lib\net40\pdb\Bridge.Contract.pdb"/>
   </files>
 </package>
