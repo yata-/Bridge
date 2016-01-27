@@ -1125,12 +1125,12 @@ Bridge.define('Bridge.ClientTest.Utilities.DecimalHelper', {
         assertIsDecimalAndEqualTo$1: function (v, d, message) {
             if (message === void 0) { message = null; }
             Bridge.get(Bridge.Test.Assert).areStrictEqual$1(Bridge.is(v, Bridge.Decimal), true, message);
-            Bridge.get(Bridge.Test.Assert).areStrictEqual$1(v.toString(), d.toString(), message);
+            Bridge.get(Bridge.Test.Assert).areStrictEqual$1(v.toString(), Bridge.Int.format(d, 'G'), message);
         },
         assertIsDecimalAndEqualTo: function (v, d, message) {
             if (message === void 0) { message = null; }
             Bridge.get(Bridge.Test.Assert).areStrictEqual$1(Bridge.is(v, Bridge.Decimal), true, message);
-            Bridge.get(Bridge.Test.Assert).areStrictEqual$1(v.toString(), d.toString(), message);
+            Bridge.get(Bridge.Test.Assert).areStrictEqual$1(v.toString(), Bridge.Int.format(d, 'G'), message);
         }
     }
 });
@@ -2920,7 +2920,7 @@ Bridge.define('Bridge.ClientTest.DecimalMathTests.Logger', {
                 if (i === 0) {
                     var d = Bridge.cast(parameters[0], Bridge.Decimal, true);
                     result[0] = Bridge.Nullable.hasValue(d) ? "HasDotNetDiff" : "NoDotNetDiff";
-                    result[1] = Bridge.Nullable.hasValue(d) ? d.toString() + "m" : "null";
+                    result[1] = Bridge.Nullable.hasValue(d) ? Bridge.Int.format(d, 'G') + "m" : "null";
 
                     continue;
                 }
@@ -2945,7 +2945,7 @@ Bridge.define('Bridge.ClientTest.DecimalMathTests.Logger', {
                                     result[j] = "decimal.One";
                                 }
                                 else  {
-                                    result[j] = d1.toString() + "m";
+                                    result[j] = Bridge.Int.format(d1, 'G') + "m";
                                 }
                             }
                         }
@@ -7304,6 +7304,41 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge818', {
     }
 });
 
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge821', {
+    statics: {
+        testUseCase: function () {
+            var defaultCulture = Bridge.get(Bridge.CultureInfo).getCurrentCulture();
+
+            try {
+                var d = Bridge.Decimal("443534569034876.12345678901235");
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(d, 'G'), "443534569034876.12345678901235");
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(d, 'G', Bridge.get(Bridge.CultureInfo).getCultureInfo("ru-RU")), "443534569034876,12345678901235");
+                Bridge.get(Bridge.CultureInfo).setCurrentCulture(Bridge.get(Bridge.CultureInfo).getCultureInfo("ru-RU"));
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(d, 'G'), "443534569034876,12345678901235");
+
+                Bridge.get(Bridge.CultureInfo).setCurrentCulture(defaultCulture);
+
+                var d1 = 1.25;
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(d1, 'G'), "1.25");
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(d1, 'G', Bridge.get(Bridge.CultureInfo).getCultureInfo("ru-RU")), "1,25");
+                Bridge.get(Bridge.CultureInfo).setCurrentCulture(Bridge.get(Bridge.CultureInfo).getCultureInfo("ru-RU"));
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(d1, 'G'), "1,25");
+
+                Bridge.get(Bridge.CultureInfo).setCurrentCulture(defaultCulture);
+
+                var f = 1.25;
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(f, 'G'), "1.25");
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(f, 'G', Bridge.get(Bridge.CultureInfo).getCultureInfo("ru-RU")), "1,25");
+                Bridge.get(Bridge.CultureInfo).setCurrentCulture(Bridge.get(Bridge.CultureInfo).getCultureInfo("ru-RU"));
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(f, 'G'), "1,25");
+            }
+            finally {
+                Bridge.get(Bridge.CultureInfo).setCurrentCulture(defaultCulture);
+            }
+        }
+    }
+});
+
 Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge823', {
     statics: {
         getTicksReturnsCorrectValue: function () {
@@ -9033,7 +9068,7 @@ Bridge.define('Bridge.ClientTest.DecimalMathTests', {
             Bridge.get(Bridge.Test.Assert).areStrictEqual$1(actual.toString(), expected.toString(), "StrictEqual " + message);
         },
         getDifferenceReport: function (difference) {
-            var differenceReport = difference.ne(Bridge.Decimal(0.0)) ? "; result diff is " + difference.toString() : "";
+            var differenceReport = difference.ne(Bridge.Decimal(0.0)) ? "; result diff is " + Bridge.Int.format(difference, 'G') : "";
             return differenceReport;
         },
         getDifference: function (expected, result) {
@@ -12202,7 +12237,7 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.DecimalTests', {
     assertIsDecimalAndEqualTo: function (v, d, message) {
         if (message === void 0) { message = null; }
         Bridge.get(Bridge.Test.Assert).areStrictEqual$1(Bridge.is(v, Bridge.Decimal), true, message);
-        Bridge.get(Bridge.Test.Assert).areStrictEqual$1(v.toString(), d.toString(), message);
+        Bridge.get(Bridge.Test.Assert).areStrictEqual$1(v.toString(), Bridge.Int.format(d, 'G'), message);
     },
     typePropertiesAreCorrect: function () {
         Bridge.get(Bridge.Test.Assert).$true(Bridge.is(Bridge.Decimal.lift(0.5), Bridge.Decimal));
@@ -12239,13 +12274,13 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.DecimalTests', {
         this.assertIsDecimalAndEqualTo(Bridge.Decimal(Bridge.cast(5, Bridge.Int)), 5);
     },
     formatWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format((Bridge.Decimal(291.0)).toFloat(), "x"), "123");
+        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format((Bridge.Decimal(291.0)), "x"), "123");
     },
     iFormattableToStringWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format((Bridge.Decimal(291.0)).toFloat(), "x"), "123");
+        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format((Bridge.Decimal(291.0)), "x"), "123");
     },
     toStringWithoutRadixWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual((Bridge.Decimal(123.0)).toString(), "123");
+        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format((Bridge.Decimal(123.0)), 'G'), "123");
     },
     addWithStringWorks: function () {
         var d1 = Bridge.Decimal(1.0);
@@ -12493,7 +12528,7 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.DoubleTests', {
         Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format((291.0), "x"), "123");
     },
     toStringWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(((123.0)).toString(), "123");
+        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(((123.0)), 'G'), "123");
     },
     toExponentialWorks: function () {
         Bridge.get(Bridge.Test.Assert).areEqual(((123.0)).toExponential(), "1.23e+2");
@@ -13760,7 +13795,7 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.SingleTests', {
         Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(((Bridge.cast(291.0, Number))), "x"), "123");
     },
     toStringWorks: function () {
-        Bridge.get(Bridge.Test.Assert).areEqual(((Bridge.cast(123.0, Number))).toString(), "123");
+        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(((Bridge.cast(123.0, Number))), 'G'), "123");
     },
     toExponentialWorks: function () {
         Bridge.get(Bridge.Test.Assert).areEqual(((Bridge.cast(123.0, Number))).toExponential(), "1.23e+2");
