@@ -66,7 +66,8 @@ namespace Bridge.ClientTest.SimpleTypes
         }
 
         //[Test]
-        //public void CompareToWorks() {
+        //public void CompareToWorks()
+        //{
         //    Assert.True(true.CompareTo(true) == 0);
         //    Assert.True(true.CompareTo(false) > 0);
         //    Assert.True(false.CompareTo(true) < 0);
@@ -74,7 +75,8 @@ namespace Bridge.ClientTest.SimpleTypes
         //}
 
         //[Test]
-        //public void IComparableCompareToWorks() {
+        //public void IComparableCompareToWorks()
+        //{
         //    Assert.True(((IComparable<bool>)true).CompareTo(true) == 0);
         //    Assert.True(((IComparable<bool>)true).CompareTo(false) > 0);
         //    Assert.True(((IComparable<bool>)false).CompareTo(true) < 0);

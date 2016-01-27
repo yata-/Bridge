@@ -41,6 +41,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{42D82A
 		.nuget\Bridge.Compiler.nuspec = .nuget\Bridge.Compiler.nuspec
 		.nuget\Bridge.Contract.nuspec = .nuget\Bridge.Contract.nuspec
 		.nuget\Bridge.Dev.nuspec = .nuget\Bridge.Dev.nuspec
+		.nuget\Bridge.Html5.Dev.nuspec = .nuget\Bridge.Html5.Dev.nuspec
 		.nuget\Bridge.nuspec = .nuget\Bridge.nuspec
 		.nuget\NuGet.Build.Package.targets = .nuget\NuGet.Build.Package.targets
 		.nuget\NuGet.Config = .nuget\NuGet.Config
