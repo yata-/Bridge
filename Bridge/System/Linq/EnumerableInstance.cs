@@ -12,15 +12,9 @@ namespace System.Linq
         {
         }
 
-        public IEnumerator<TElement> GetEnumerator()
-        {
-            return null;
-        }
+        public extern IEnumerator<TElement> GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return null;
-        }
+        extern IEnumerator IEnumerable.GetEnumerator();
 
         public TElement Aggregate(Func<TElement, TElement, TElement> func)
         {
@@ -38,156 +32,69 @@ namespace System.Linq
             return default(TResult);
         }
 
-        public bool All(Func<TElement, bool> predicate)
-        {
-            return false;
-        }
+        public extern bool All(Func<TElement, bool> predicate);
 
-        public EnumerableInstance<TElement> Alternate(TElement value)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> Alternate(TElement value);
 
-        public bool Any()
-        {
-            return false;
-        }
+        public extern bool Any();
 
-        public bool Any(Func<TElement, bool> predicate)
-        {
-            return false;
-        }
+        public extern bool Any(Func<TElement, bool> predicate);
 
-        public double Average(Func<TElement, int> selector)
-        {
-            return 0;
-        }
+        public extern double Average(Func<TElement, int> selector);
 
-        public double Average(Func<TElement, long> selector)
-        {
-            return 0;
-        }
+        public extern double Average(Func<TElement, long> selector);
 
-        public float Average(Func<TElement, float> selector)
-        {
-            return 0;
-        }
+        public extern float Average(Func<TElement, float> selector);
 
-        public double Average(Func<TElement, double> selector)
-        {
-            return 0;
-        }
+        public extern double Average(Func<TElement, double> selector);
 
-        public decimal Average(Func<TElement, decimal> selector)
-        {
-            return 0;
-        }
+        public extern decimal Average(Func<TElement, decimal> selector);
 
-        public EnumerableInstance<TElement[]> Buffer(int count)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement[]> Buffer(int count);
 
-        public EnumerableInstance<TElement> CascadeBreadthFirst(Func<TElement, IEnumerable<TElement>> func)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> CascadeBreadthFirst(Func<TElement, IEnumerable<TElement>> func);
 
-        public EnumerableInstance<TResult> CascadeBreadthFirst<TResult>(Func<TElement, IEnumerable<TElement>> func,
-            Func<TElement, TResult> resultSelector)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TResult> CascadeBreadthFirst<TResult>(Func<TElement, IEnumerable<TElement>> func,
+            Func<TElement, TResult> resultSelector);
 
-        public EnumerableInstance<TResult> CascadeBreadthFirst<TResult>(Func<TElement, IEnumerable<TElement>> func,
-            Func<TElement, int, TResult> resultSelector)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TResult> CascadeBreadthFirst<TResult>(Func<TElement, IEnumerable<TElement>> func,
+            Func<TElement, int, TResult> resultSelector);
 
-        public EnumerableInstance<TElement> CascadeDepthFirst(Func<TElement, IEnumerable<TElement>> func)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> CascadeDepthFirst(Func<TElement, IEnumerable<TElement>> func);
 
-        public EnumerableInstance<TResult> CascadeDepthFirst<TResult>(Func<TElement, IEnumerable<TElement>> func,
-            Func<TElement, TResult> resultSelector)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TResult> CascadeDepthFirst<TResult>(Func<TElement, IEnumerable<TElement>> func,
+            Func<TElement, TResult> resultSelector);
 
-        public EnumerableInstance<TResult> CascadeDepthFirst<TResult>(Func<TElement, IEnumerable<TElement>> func,
-            Func<TElement, int, TResult> resultSelector)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TResult> CascadeDepthFirst<TResult>(Func<TElement, IEnumerable<TElement>> func,
+            Func<TElement, int, TResult> resultSelector);
 
         [Template("{this}.select(function(x) {{ return Bridge.cast(x, {TResult}); }})")]
-        public EnumerableInstance<TResult> Cast<TResult>()
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TResult> Cast<TResult>();
 
-        public EnumerableInstance<TElement> CatchError(Action<Exception> action)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> CatchError(Action<Exception> action);
 
-        public EnumerableInstance<TElement> Concat(IEnumerable<TElement> other)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> Concat(IEnumerable<TElement> other);
 
-        public bool Contains(TElement value)
-        {
-            return false;
-        }
+        public extern bool Contains(TElement value);
 
-        public bool Contains(TElement value, IEqualityComparer<TElement> comparer)
-        {
-            return false;
-        }
+        public extern bool Contains(TElement value, IEqualityComparer<TElement> comparer);
 
-        public int Count()
-        {
-            return 0;
-        }
+        public extern int Count();
 
-        public int Count(Func<TElement, bool> predicate)
-        {
-            return 0;
-        }
+        public extern int Count(Func<TElement, bool> predicate);
 
         [Template("{this}.defaultIfEmpty(Bridge.getDefaultValue({TElement}))")]
-        public EnumerableInstance<TElement> DefaultIfEmpty()
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> DefaultIfEmpty();
 
-        public EnumerableInstance<TElement> DefaultIfEmpty(TElement defaultValue)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> DefaultIfEmpty(TElement defaultValue);
 
-        public EnumerableInstance<TElement> Distinct()
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> Distinct();
 
-        public EnumerableInstance<TElement> Distinct(IEqualityComparer<TElement> comparer)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> Distinct(IEqualityComparer<TElement> comparer);
 
-        public EnumerableInstance<TElement> DoAction(Action<TElement> action)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> DoAction(Action<TElement> action);
 
-        public EnumerableInstance<TElement> DoAction(Action<TElement, int> action)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> DoAction(Action<TElement, int> action);
 
         public TElement ElementAt(int index)
         {
@@ -205,20 +112,11 @@ namespace System.Linq
             return default(TElement);
         }
 
-        public EnumerableInstance<TElement> Except(IEnumerable<TElement> other)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> Except(IEnumerable<TElement> other);
 
-        public EnumerableInstance<TElement> Except(IEnumerable<TElement> other, IEqualityComparer<TElement> comparer)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> Except(IEnumerable<TElement> other, IEqualityComparer<TElement> comparer);
 
-        public EnumerableInstance<TElement> FinallyAction(Action action)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> FinallyAction(Action action);
 
         public TElement First()
         {
@@ -254,130 +152,69 @@ namespace System.Linq
             return default(TElement);
         }
 
-        public EnumerableInstance<object> Flatten()
-        {
-            return null;
-        }
+        public extern EnumerableInstance<object> Flatten();
 
-        public void Force()
-        {
-        }
+        public extern void Force();
 
-        public void ForEach(Action<TElement> action)
-        {
-        }
+        public extern void ForEach(Action<TElement> action);
 
-        public void ForEach(Func<TElement, bool> action)
-        {
-        }
+        public extern void ForEach(Func<TElement, bool> action);
 
-        public void ForEach(Action<TElement, int> action)
-        {
-        }
+        public extern void ForEach(Action<TElement, int> action);
 
-        public void ForEach(Func<TElement, int, bool> action)
-        {
-        }
+        public extern void ForEach(Func<TElement, int, bool> action);
 
-        public EnumerableInstance<Grouping<TKey, TElement>> GroupBy<TKey>(Func<TElement, TKey> keySelector)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<Grouping<TKey, TElement>> GroupBy<TKey>(Func<TElement, TKey> keySelector);
 
         [Template("{this}.groupBy({keySelector}, null, null, {comparer})")]
-        public EnumerableInstance<Grouping<TKey, TElement>> GroupBy<TKey>(Func<TElement, TKey> keySelector,
-            IEqualityComparer<TKey> comparer)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<Grouping<TKey, TElement>> GroupBy<TKey>(Func<TElement, TKey> keySelector,
+            IEqualityComparer<TKey> comparer);
 
-        public EnumerableInstance<Grouping<TKey, TSource>> GroupBy<TKey, TSource>(Func<TSource, TKey> keySelector,
-            Func<TSource, TSource> elementSelector)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<Grouping<TKey, TSource>> GroupBy<TKey, TSource>(Func<TSource, TKey> keySelector,
+            Func<TSource, TSource> elementSelector);
 
         [Template("{this}.groupBy({keySelector}, null, {resultSelector})")]
-        public EnumerableInstance<TResult> GroupBy<TKey, TResult>(Func<TElement, TKey> keySelector,
-            Func<TKey, IEnumerable<TElement>, TResult> resultSelector)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TResult> GroupBy<TKey, TResult>(Func<TElement, TKey> keySelector,
+            Func<TKey, IEnumerable<TElement>, TResult> resultSelector);
 
         [Template("{this}.groupBy({keySelector}, {elementSelector}, null, {comparer})")]
-        public EnumerableInstance<Grouping<TKey, TSource>> GroupBy<TKey, TSource>(Func<TSource, TKey> keySelector,
-            Func<TSource, TSource> elementSelector, IEqualityComparer<TKey> comparer)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<Grouping<TKey, TSource>> GroupBy<TKey, TSource>(Func<TSource, TKey> keySelector,
+            Func<TSource, TSource> elementSelector, IEqualityComparer<TKey> comparer);
 
-        public EnumerableInstance<TResult> GroupBy<TKey, TSource, TResult>(Func<TSource, TKey> keySelector,
-            Func<TSource, TSource> elementSelector, Func<TKey, IEnumerable<TSource>, TResult> resultSelector)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TResult> GroupBy<TKey, TSource, TResult>(Func<TSource, TKey> keySelector,
+            Func<TSource, TSource> elementSelector, Func<TKey, IEnumerable<TSource>, TResult> resultSelector);
 
         [Template("{this}.groupBy({keySelector}, null, {resultSelector}, {comparer})")]
-        public EnumerableInstance<TResult> GroupBy<TKey, TResult>(Func<TElement, TKey> keySelector,
-            Func<TKey, IEnumerable<TElement>, TResult> resultSelector, IEqualityComparer<TKey> comparer)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TResult> GroupBy<TKey, TResult>(Func<TElement, TKey> keySelector,
+            Func<TKey, IEnumerable<TElement>, TResult> resultSelector, IEqualityComparer<TKey> comparer);
 
-        public EnumerableInstance<TResult> GroupBy<TKey, TSource, TResult>(Func<TSource, TKey> keySelector,
+        public extern EnumerableInstance<TResult> GroupBy<TKey, TSource, TResult>(Func<TSource, TKey> keySelector,
             Func<TSource, TSource> elementSelector, Func<TKey, IEnumerable<TSource>, TResult> resultSelector,
-            IEqualityComparer<TKey> comperer)
-        {
-            return null;
-        }
+            IEqualityComparer<TKey> comperer);
 
-        public EnumerableInstance<TResult> GroupJoin<TInner, TKey, TResult>(IEnumerable<TInner> inner,
+        public extern EnumerableInstance<TResult> GroupJoin<TInner, TKey, TResult>(IEnumerable<TInner> inner,
             Func<TElement, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector,
-            Func<TElement, IEnumerable<TInner>, TResult> resultSelector)
-        {
-            return null;
-        }
+            Func<TElement, IEnumerable<TInner>, TResult> resultSelector);
 
-        public EnumerableInstance<TResult> GroupJoin<TInner, TKey, TResult>(IEnumerable<TInner> inner,
+        public extern EnumerableInstance<TResult> GroupJoin<TInner, TKey, TResult>(IEnumerable<TInner> inner,
             Func<TElement, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector,
-            Func<TElement, IEnumerable<TInner>, TResult> resultSelector, IEqualityComparer<TKey> comparer)
-        {
-            return null;
-        }
+            Func<TElement, IEnumerable<TInner>, TResult> resultSelector, IEqualityComparer<TKey> comparer);
 
-        public int IndexOf(TElement item)
-        {
-            return 0;
-        }
+        public extern int IndexOf(TElement item);
 
-        public int IndexOf(TElement item, Func<TElement, bool> predicate)
-        {
-            return 0;
-        }
+        public extern int IndexOf(TElement item, Func<TElement, bool> predicate);
 
-        public int IndexOf(TElement item, IEqualityComparer<TElement> comparer)
-        {
-            return 0;
-        }
+        public extern int IndexOf(TElement item, IEqualityComparer<TElement> comparer);
 
-        public EnumerableInstance<TElement> Insert(int index, IEnumerable<TElement> other)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> Insert(int index, IEnumerable<TElement> other);
 
-        public EnumerableInstance<TResult> Join<TInner, TKey, TResult>(IEnumerable<TInner> inner,
+        public extern EnumerableInstance<TResult> Join<TInner, TKey, TResult>(IEnumerable<TInner> inner,
             Func<TElement, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector,
-            Func<TElement, TInner, TResult> resultSelector)
-        {
-            return null;
-        }
+            Func<TElement, TInner, TResult> resultSelector);
 
-        public EnumerableInstance<TResult> Join<TInner, TKey, TResult>(IEnumerable<TInner> inner,
+        public extern EnumerableInstance<TResult> Join<TInner, TKey, TResult>(IEnumerable<TInner> inner,
             Func<TElement, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector,
-            Func<TElement, TInner, TResult> resultSelector, IEqualityComparer<TKey> comparer)
-        {
-            return null;
-        }
+            Func<TElement, TInner, TResult> resultSelector, IEqualityComparer<TKey> comparer);
 
         public TElement Last()
         {
@@ -389,20 +226,11 @@ namespace System.Linq
             return default(TElement);
         }
 
-        public int LastIndexOf(TElement item)
-        {
-            return 0;
-        }
+        public extern int LastIndexOf(TElement item);
 
-        public int LastIndexOf(TElement item, Func<TElement, bool> predicate)
-        {
-            return 0;
-        }
+        public extern int LastIndexOf(TElement item, Func<TElement, bool> predicate);
 
-        public int LastIndexOf(TElement item, IEqualityComparer<TElement> comparer)
-        {
-            return 0;
-        }
+        public extern int LastIndexOf(TElement item, IEqualityComparer<TElement> comparer);
 
         [Template("{this}.count()")]
         public static long LongCount<TSource>()
@@ -440,10 +268,7 @@ namespace System.Linq
             return default(TElement);
         }
 
-        public EnumerableInstance<TResult> LetBind<TResult>(Func<IEnumerable<TElement>, IEnumerable<TResult>> func)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TResult> LetBind<TResult>(Func<IEnumerable<TElement>, IEnumerable<TResult>> func);
 
         public static TSource Max<TSource>()
         {
@@ -455,30 +280,15 @@ namespace System.Linq
             return default(TResult);
         }
 
-        public int Max(Func<TElement, int> selector)
-        {
-            return 0;
-        }
+        public extern int Max(Func<TElement, int> selector);
 
-        public long Max(Func<TElement, long> selector)
-        {
-            return 0;
-        }
+        public extern long Max(Func<TElement, long> selector);
 
-        public float Max(Func<TElement, float> selector)
-        {
-            return 0;
-        }
+        public extern float Max(Func<TElement, float> selector);
 
-        public double Max(Func<TElement, double> selector)
-        {
-            return 0;
-        }
+        public extern double Max(Func<TElement, double> selector);
 
-        public decimal Max(Func<TElement, decimal> selector)
-        {
-            return 0;
-        }
+        public extern decimal Max(Func<TElement, decimal> selector);
 
         public TElement MaxBy(Func<TElement, int> selector)
         {
@@ -505,10 +315,7 @@ namespace System.Linq
             return default(TElement);
         }
 
-        public EnumerableInstance<TElement> Memoize()
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> Memoize();
 
         public static TSource Min<TSource>()
         {
@@ -520,30 +327,15 @@ namespace System.Linq
             return default(TResult);
         }
 
-        public int Min(Func<TElement, int> selector)
-        {
-            return 0;
-        }
+        public extern int Min(Func<TElement, int> selector);
 
-        public long Min(Func<TElement, long> selector)
-        {
-            return 0;
-        }
+        public extern long Min(Func<TElement, long> selector);
 
-        public float Min(Func<TElement, float> selector)
-        {
-            return 0;
-        }
+        public extern float Min(Func<TElement, float> selector);
 
-        public double Min(Func<TElement, double> selector)
-        {
-            return 0;
-        }
+        public extern double Min(Func<TElement, double> selector);
 
-        public decimal Min(Func<TElement, decimal> selector)
-        {
-            return 0;
-        }
+        public extern decimal Min(Func<TElement, decimal> selector);
 
         public TElement MinBy(Func<TElement, int> selector)
         {
@@ -571,168 +363,81 @@ namespace System.Linq
         }
 
         [Template("{this}.ofType({TResult})")]
-        public EnumerableInstance<TResult> OfType<TResult>()
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TResult> OfType<TResult>();
 
-        public OrderedEnumerable<TElement> OrderBy()
-        {
-            return null;
-        }
+        public extern OrderedEnumerable<TElement> OrderBy();
 
-        public OrderedEnumerable<TElement> OrderBy<TKey>(Func<TElement, TKey> keySelector)
-        {
-            return null;
-        }
+        public extern OrderedEnumerable<TElement> OrderBy<TKey>(Func<TElement, TKey> keySelector);
 
-        public OrderedEnumerable<TElement> OrderBy<TKey>(Func<TElement, TKey> keySelector, IComparer<TKey> comparer)
-        {
-            return null;
-        }
+        public extern OrderedEnumerable<TElement> OrderBy<TKey>(Func<TElement, TKey> keySelector, IComparer<TKey> comparer);
 
-        public OrderedEnumerable<TElement> OrderByDescending()
-        {
-            return null;
-        }
+        public extern OrderedEnumerable<TElement> OrderByDescending();
 
-        public OrderedEnumerable<TElement> OrderByDescending<TKey>(Func<TElement, TKey> keySelector)
-        {
-            return null;
-        }
+        public extern OrderedEnumerable<TElement> OrderByDescending<TKey>(Func<TElement, TKey> keySelector);
 
-        public OrderedEnumerable<TElement> OrderByDescending<TKey>(Func<TElement, TKey> keySelector,
-            IComparer<TKey> comparer)
-        {
-            return null;
-        }
+        public extern OrderedEnumerable<TElement> OrderByDescending<TKey>(Func<TElement, TKey> keySelector,
+            IComparer<TKey> comparer);
 
-        public EnumerableInstance<TResult> Pairwise<TResult>(Func<TElement, TElement, TResult> selector)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TResult> Pairwise<TResult>(Func<TElement, TElement, TResult> selector);
 
-        public EnumerableInstance<Grouping<TKey, TElement>> PartitionBy<TKey>(Func<TElement, TKey> keySelector)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<Grouping<TKey, TElement>> PartitionBy<TKey>(Func<TElement, TKey> keySelector);
 
         [Template("{this}.partitionBy({keySelector}, null, null, {comparer})")]
-        public EnumerableInstance<Grouping<TKey, TElement>> PartitionBy<TKey>(Func<TElement, TKey> keySelector,
-            IEqualityComparer<TKey> comparer)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<Grouping<TKey, TElement>> PartitionBy<TKey>(Func<TElement, TKey> keySelector,
+            IEqualityComparer<TKey> comparer);
 
-        public EnumerableInstance<Grouping<TKey, TSource>> PartitionBy<TKey, TSource>(
-            Func<TSource, TKey> keySelector, Func<TSource, TSource> elementSelector)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<Grouping<TKey, TSource>> PartitionBy<TKey, TSource>(
+            Func<TSource, TKey> keySelector, Func<TSource, TSource> elementSelector);
 
         [Template("{this}.partitionBy({keySelector}, null, {resultSelector})")]
-        public EnumerableInstance<TResult> PartitionBy<TKey, TResult>(Func<TElement, TKey> keySelector,
-            Func<TKey, IEnumerable<TElement>, TResult> resultSelector)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TResult> PartitionBy<TKey, TResult>(Func<TElement, TKey> keySelector,
+            Func<TKey, IEnumerable<TElement>, TResult> resultSelector);
 
         [Template("{this}.partitionBy({keySelector}, {elementSelector}, null, {comparer})")]
-        public EnumerableInstance<Grouping<TKey, TSource>> PartitionBy<TKey, TSource>(
-            Func<TSource, TKey> keySelector, Func<TSource, TSource> elementSelector, IEqualityComparer<TKey> comparer)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<Grouping<TKey, TSource>> PartitionBy<TKey, TSource>(
+            Func<TSource, TKey> keySelector, Func<TSource, TSource> elementSelector, IEqualityComparer<TKey> comparer);
 
-        public EnumerableInstance<TResult> PartitionBy<TKey, TSource, TResult>(Func<TSource, TKey> keySelector,
-            Func<TSource, TSource> elementSelector, Func<TKey, IEnumerable<TSource>, TResult> resultSelector)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TResult> PartitionBy<TKey, TSource, TResult>(Func<TSource, TKey> keySelector,
+            Func<TSource, TSource> elementSelector, Func<TKey, IEnumerable<TSource>, TResult> resultSelector);
 
         [Template("{this}.partitionBy({keySelector}, null, {resultSelector}, {comparer})")]
-        public EnumerableInstance<TResult> PartitionBy<TKey, TResult>(Func<TElement, TKey> keySelector,
-            Func<TKey, IEnumerable<TElement>, TResult> resultSelector, IEqualityComparer<TKey> comparer)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TResult> PartitionBy<TKey, TResult>(Func<TElement, TKey> keySelector,
+            Func<TKey, IEnumerable<TElement>, TResult> resultSelector, IEqualityComparer<TKey> comparer);
 
-        public EnumerableInstance<TResult> PartitionBy<TKey, TSource, TResult>(Func<TSource, TKey> keySelector,
+        public extern EnumerableInstance<TResult> PartitionBy<TKey, TSource, TResult>(Func<TSource, TKey> keySelector,
             Func<TSource, TSource> elementSelector, Func<TKey, IEnumerable<TSource>, TResult> resultSelector,
-            IEqualityComparer<TKey> comperer)
-        {
-            return null;
-        }
+            IEqualityComparer<TKey> comperer);
 
-        public EnumerableInstance<TElement> Reverse()
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> Reverse();
 
-        public static EnumerableInstance<T> Scan<T>(Func<T, T, T> func)
-        {
-            return null;
-        }
+        public static extern EnumerableInstance<T> Scan<T>(Func<T, T, T> func);
 
-        public EnumerableInstance<TAccumulate> Scan<TAccumulate>(TAccumulate seed,
-            Func<TAccumulate, TElement, TAccumulate> func)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TAccumulate> Scan<TAccumulate>(TAccumulate seed,
+            Func<TAccumulate, TElement, TAccumulate> func);
 
-        public EnumerableInstance<TResult> Select<TResult>(Func<TElement, TResult> selector)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TResult> Select<TResult>(Func<TElement, TResult> selector);
 
-        public EnumerableInstance<TResult> Select<TResult>(Func<TElement, int, TResult> selector)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TResult> Select<TResult>(Func<TElement, int, TResult> selector);
 
-        public EnumerableInstance<TResult> SelectMany<TResult>(Func<TElement, IEnumerable<TResult>> selector)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TResult> SelectMany<TResult>(Func<TElement, IEnumerable<TResult>> selector);
 
-        public EnumerableInstance<TResult> SelectMany<TResult>(Func<TElement, int, IEnumerable<TResult>> selector)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TResult> SelectMany<TResult>(Func<TElement, int, IEnumerable<TResult>> selector);
 
-        public EnumerableInstance<TResult> SelectMany<TCollection, TResult>(
+        public extern EnumerableInstance<TResult> SelectMany<TCollection, TResult>(
             Func<TElement, IEnumerable<TCollection>> collectionSelector,
-            Func<TElement, TCollection, TResult> resultSelector)
-        {
-            return null;
-        }
+            Func<TElement, TCollection, TResult> resultSelector);
 
-        public EnumerableInstance<TResult> SelectMany<TCollection, TResult>(
+        public extern EnumerableInstance<TResult> SelectMany<TCollection, TResult>(
             Func<TElement, int, IEnumerable<TCollection>> collectionSelector,
-            Func<TElement, TCollection, TResult> resultSelector)
-        {
-            return null;
-        }
+            Func<TElement, TCollection, TResult> resultSelector);
 
-        public bool SequenceEqual(IEnumerable<TElement> other)
-        {
-            return false;
-        }
+        public extern bool SequenceEqual(IEnumerable<TElement> other);
 
-        public bool SequenceEqual<TKey>(IEnumerable<TElement> other, Func<TElement, TKey> compareSelector)
-        {
-            return false;
-        }
+        public extern bool SequenceEqual<TKey>(IEnumerable<TElement> other, Func<TElement, TKey> compareSelector);
 
-        public EnumerableInstance<TElement> Share()
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> Share();
 
-        public EnumerableInstance<TElement> Shuffle()
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> Shuffle();
 
         public TElement Single()
         {
@@ -768,75 +473,33 @@ namespace System.Linq
             return default(TElement);
         }
 
-        public EnumerableInstance<TElement> Skip(int count)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> Skip(int count);
 
-        public EnumerableInstance<TElement> SkipWhile(Func<TElement, bool> predicate)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> SkipWhile(Func<TElement, bool> predicate);
 
-        public EnumerableInstance<TElement> SkipWhile(Func<TElement, int, bool> predicate)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> SkipWhile(Func<TElement, int, bool> predicate);
 
-        public int Sum(Func<TElement, int> selector)
-        {
-            return 0;
-        }
+        public extern int Sum(Func<TElement, int> selector);
 
-        public long Sum(Func<TElement, long> selector)
-        {
-            return 0;
-        }
+        public extern long Sum(Func<TElement, long> selector);
 
-        public float Sum(Func<TElement, float> selector)
-        {
-            return 0;
-        }
+        public extern float Sum(Func<TElement, float> selector);
 
-        public double Sum(Func<TElement, double> selector)
-        {
-            return 0;
-        }
+        public extern double Sum(Func<TElement, double> selector);
 
-        public decimal Sum(Func<TElement, decimal> selector)
-        {
-            return 0;
-        }
+        public extern decimal Sum(Func<TElement, decimal> selector);
 
-        public EnumerableInstance<TElement> Take(int count)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> Take(int count);
 
-        public EnumerableInstance<TElement> TakeExceptLast()
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> TakeExceptLast();
 
-        public EnumerableInstance<TElement> TakeExceptLast(int count)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> TakeExceptLast(int count);
 
-        public EnumerableInstance<TElement> TakeFromLast(int count)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> TakeFromLast(int count);
 
-        public EnumerableInstance<TElement> TakeWhile(Func<TElement, bool> predicate)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> TakeWhile(Func<TElement, bool> predicate);
 
-        public EnumerableInstance<TElement> TakeWhile(Func<TElement, int, bool> predicate)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> TakeWhile(Func<TElement, int, bool> predicate);
 
         public static IOrderedEnumerable<TSource> ThenBy<TSource, TKey>(Func<TSource, TKey> keySelector)
         {
@@ -858,133 +521,64 @@ namespace System.Linq
             return default(IOrderedEnumerable<TSource>);
         }
 
-        public TElement[] ToArray()
-        {
-            return null;
-        }
+        public extern TElement[] ToArray();
 
         [Template("{this}.toDictionary({keySelector}, null, {TKey}, {TElement})")]
-        public IDictionary<TKey, TElement> ToDictionary<TKey>(Func<TElement, TKey> keySelector)
-        {
-            return null;
-        }
+        public extern IDictionary<TKey, TElement> ToDictionary<TKey>(Func<TElement, TKey> keySelector);
 
         [Template("{this}.toDictionary({keySelector}, null, {TKey}, {TElement}, {comparer})")]
-        public IDictionary<TKey, TElement> ToDictionary<TKey>(Func<TElement, TKey> keySelector,
-            IEqualityComparer<TKey> comparer)
-        {
-            return null;
-        }
+        public extern IDictionary<TKey, TElement> ToDictionary<TKey>(Func<TElement, TKey> keySelector,
+            IEqualityComparer<TKey> comparer);
 
         [Template("{this}.toDictionary({keySelector}, {elementSelector}, {TKey}, {TValue})")]
-        public IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(Func<TElement, TKey> keySelector,
-            Func<TElement, TValue> elementSelector)
-        {
-            return null;
-        }
+        public extern IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(Func<TElement, TKey> keySelector,
+            Func<TElement, TValue> elementSelector);
 
         [Template("{this}.toDictionary({keySelector}, {elementSelector}, {TKey}, {TValue}, {comparer})")]
-        public IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(Func<TElement, TKey> keySelector,
-            Func<TElement, TValue> elementSelector, IEqualityComparer<TKey> comparer)
-        {
-            return null;
-        }
+        public extern IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(Func<TElement, TKey> keySelector,
+            Func<TElement, TValue> elementSelector, IEqualityComparer<TKey> comparer);
 
-        public string ToJoinedString()
-        {
-            return null;
-        }
+        public extern string ToJoinedString();
 
-        public string ToJoinedString(string separator)
-        {
-            return null;
-        }
+        public extern string ToJoinedString(string separator);
 
-        public string ToJoinedString(string separator, Func<TElement, string> selector)
-        {
-            return null;
-        }
+        public extern string ToJoinedString(string separator, Func<TElement, string> selector);
 
         [Template("{this}.toList({TElement})")]
-        public List<TElement> ToList()
-        {
-            return null;
-        }
+        public extern List<TElement> ToList();
 
-        public Lookup<TKey, TElement> ToLookup<TKey>(Func<TElement, TKey> keySelector)
-        {
-            return null;
-        }
+        public extern Lookup<TKey, TElement> ToLookup<TKey>(Func<TElement, TKey> keySelector);
 
         [Template("{this}.toLookup({keySelector}, null, {comparer})")]
-        public Lookup<TKey, TElement> ToLookup<TKey>(Func<TElement, TKey> keySelector, IEqualityComparer<TKey> comparer)
-        {
-            return null;
-        }
+        public extern Lookup<TKey, TElement> ToLookup<TKey>(Func<TElement, TKey> keySelector, IEqualityComparer<TKey> comparer);
 
-        public Lookup<TKey, TSource> ToLookup<TKey, TSource>(Func<TSource, TKey> keySelector,
-            Func<TSource, TSource> elementSelector)
-        {
-            return null;
-        }
+        public extern Lookup<TKey, TSource> ToLookup<TKey, TSource>(Func<TSource, TKey> keySelector,
+            Func<TSource, TSource> elementSelector);
 
-        public Lookup<TKey, TSource> ToLookup<TKey, TSource>(Func<TSource, TKey> keySelector,
-            Func<TSource, TSource> elementSelector, IEqualityComparer<TKey> comparer)
-        {
-            return null;
-        }
+        public extern Lookup<TKey, TSource> ToLookup<TKey, TSource>(Func<TSource, TKey> keySelector,
+            Func<TSource, TSource> elementSelector, IEqualityComparer<TKey> comparer);
 
-        public object ToObject<TKey, TValue>(Func<TElement, TKey> keySelector,
-            Func<TElement, TValue> valueSelector)
-        {
-            return null;
-        }
+        public extern object ToObject<TKey, TValue>(Func<TElement, TKey> keySelector,
+            Func<TElement, TValue> valueSelector);
 
-        public EnumerableInstance<TElement> Trace()
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> Trace();
 
-        public EnumerableInstance<TElement> Trace(string message)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> Trace(string message);
 
-        public EnumerableInstance<TElement> Trace(string message, Func<TElement, string> selector)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> Trace(string message, Func<TElement, string> selector);
 
-        public EnumerableInstance<TElement> Union(IEnumerable<TElement> other)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> Union(IEnumerable<TElement> other);
 
-        public EnumerableInstance<TElement> Union(IEnumerable<TElement> other, IEqualityComparer<TElement> comparer)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> Union(IEnumerable<TElement> other, IEqualityComparer<TElement> comparer);
 
-        public EnumerableInstance<TElement> Where(Func<TElement, bool> predicate)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> Where(Func<TElement, bool> predicate);
 
-        public EnumerableInstance<TElement> Where(Func<TElement, int, bool> predicate)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TElement> Where(Func<TElement, int, bool> predicate);
 
-        public EnumerableInstance<TResult> Zip<TOther, TResult>(IEnumerable<TOther> other,
-            Func<TElement, TOther, TResult> selector)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TResult> Zip<TOther, TResult>(IEnumerable<TOther> other,
+            Func<TElement, TOther, TResult> selector);
 
-        public EnumerableInstance<TResult> Zip<TOther, TResult>(IEnumerable<TOther> other,
-            Func<TElement, TOther, int, TResult> selector)
-        {
-            return null;
-        }
+        public extern EnumerableInstance<TResult> Zip<TOther, TResult>(IEnumerable<TOther> other,
+            Func<TElement, TOther, int, TResult> selector);
     }
 }

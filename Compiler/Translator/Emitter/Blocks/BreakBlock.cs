@@ -67,7 +67,32 @@ namespace Bridge.Translator
             {
                 if (this.Emitter.ReplaceJump)
                 {
-                    this.Write("return {jump:2}");
+                    var found = false;
+                    this.BreakStatement.GetParent(n =>
+                    {
+                        if (n is SwitchStatement)
+                        {
+                            found = true;
+                            return true;
+                        }
+
+                        if (n is ForStatement || n is ForeachStatement || n is WhileStatement || n is DoWhileStatement || n is AnonymousMethodExpression || n is LambdaExpression)
+                        {
+                            found = false;
+                            return true;
+                        }
+
+                        return false;
+                    });
+
+                    if (!found)
+                    {
+                        this.Write("return {jump:2}");    
+                    }
+                    else
+                    {
+                        this.Write("break");
+                    }
                 }
                 else
                 {

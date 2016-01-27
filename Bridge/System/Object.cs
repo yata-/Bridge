@@ -21,122 +21,62 @@ namespace System
             }
         }
 
-        public virtual string ToString()
-        {
-            return null;
-        }
+        public virtual extern string ToString();
 
-        public virtual string ToLocaleString()
-        {
-            return null;
-        }
+        public virtual extern string ToLocaleString();
 
-        public virtual object ValueOf()
-        {
-            return null;
-        }
+        public virtual extern object ValueOf();
 
-        public virtual bool HasOwnProperty(object v)
-        {
-            return false;
-        }
+        public virtual extern bool HasOwnProperty(object v);
 
-        public virtual bool IsPrototypeOf(object v)
-        {
-            return false;
-        }
+        public virtual extern bool IsPrototypeOf(object v);
 
-        public virtual bool PropertyIsEnumerable(object v)
-        {
-            return false;
-        }
+        public virtual extern bool PropertyIsEnumerable(object v);
 
         [Template("Bridge.getType({this})")]
-        public Type GetType()
-        {
-            return null;
-        }
+        public extern Type GetType();
 
         [Template("{a} === {b}")]
-        public static bool ReferenceEquals(object a, object b)
-        {
-            return false;
-        }
+        public static extern bool ReferenceEquals(object a, object b);
 
         [Template("Bridge.equals({this}, {o})")]
-        public virtual bool Equals(object o)
-        {
-            return false;
-        }
+        public virtual extern bool Equals(object o);
 
         [Template("Bridge.equals({a}, {b})")]
-        public static bool Equals(object a, object b)
-        {
-            return false;
-        }
+        public static extern bool Equals(object a, object b);
 
         [Template("Bridge.getHashCode({this})")]
-        public virtual int GetHashCode()
-        {
-            return 0;
-        }
+        public virtual extern int GetHashCode();
 
-        public static string[] Keys(object obj)
-        {
-            return null;
-        }
+        public static extern string[] Keys(object obj);
 
-        public static string[] GetOwnPropertyNames(object obj)
-        {
-            return null;
-        }
+        public static extern string[] GetOwnPropertyNames(object obj);
 
         [Template("{T}.prototype")]
-        public static dynamic GetPrototype<T>()
-        {
-            return null;
-        }
+        public static extern dynamic GetPrototype<T>();
 
         public readonly Type Constructor;
 
         [Template("{this}")]
-        public virtual dynamic ToDynamic()
-        {
-            return null;
-        }
+        public virtual extern dynamic ToDynamic();
 
         [Template("Bridge.getTypeName({this})")]
-        public virtual string GetClassName()
-        {
-            return null;
-        }
+        public virtual extern string GetClassName();
     }
 
     [External]
     public static class ObjectExtensions
     {
         [Template("{0}")]
-        public static T As<T>(this object obj)
-        {
-            return default(T);
-        }
+        public static extern T As<T>(this object obj);
 
         [Template("Bridge.cast({obj}, {T})")]
-        public static T Cast<T>(this object obj)
-        {
-            return default(T);
-        }
+        public static extern T Cast<T>(this object obj);
 
         [Template("Bridge.as({obj}, {T})")]
-        public static T TryCast<T>(this object obj) where T : class
-        {
-            return default(T);
-        }
+        public static extern T TryCast<T>(this object obj) where T : class;
 
         [Template("Bridge.is({obj}, {T})")]
-        public static bool Is<T>(this object obj)
-        {
-            return false;
-        }
+        public static extern bool Is<T>(this object obj);
     }
 }

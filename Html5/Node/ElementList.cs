@@ -33,24 +33,15 @@ namespace Bridge.Html5
         /// <param name="index"></param>
         /// <returns></returns>
         [Name("item")]
-        public virtual Element GetItem(int index)
-        {
-            return null;
-        }
+        public virtual extern Element GetItem(int index);
 
         /// <summary>
         /// The number of nodes in the NodeList.
         /// </summary>
         public readonly int Length;
 
-        public virtual IEnumerator<Element> GetEnumerator()
-        {
-            return null;
-        }
+        public virtual extern IEnumerator<Element> GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return null;
-        }
+        extern IEnumerator IEnumerable.GetEnumerator();
     }
 }

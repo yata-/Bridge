@@ -66,10 +66,7 @@ namespace System
         /// <param name="value">The string to test. </param>
         /// <returns>true if the value parameter is null or an empty string (""); otherwise, false.</returns>
         [Template("Bridge.String.isNullOrEmpty({value})")]
-        public static bool IsNullOrEmpty(string value)
-        {
-            return false;
-        }
+        public static extern bool IsNullOrEmpty(string value);
 
         /// <summary>
         /// Indicates whether a specified string is null, empty, or consists only of white-space characters.
@@ -77,49 +74,34 @@ namespace System
         /// <param name="value">The string to test.</param>
         /// <returns>true if the value parameter is null or String.Empty, or if value consists exclusively of white-space characters. </returns>
         [Template("Bridge.String.isNullOrWhiteSpace({value})")]
-        public static bool IsNullOrWhiteSpace(string value)
-        {
-            return false;
-        }
+        public static extern bool IsNullOrWhiteSpace(string value);
 
         /// <summary>
         /// The static String.fromCharCode() method returns a string created by using the specified sequence of Unicode values.
         /// </summary>
         /// <returns>String.Empty</returns>
-        public static string FromCharCode()
-        {
-            return null;
-        }
+        public static extern string FromCharCode();
 
         /// <summary>
         /// The static String.fromCharCode() method returns a string created by using the specified sequence of Unicode values.
         /// </summary>
         /// <param name="numbers">A sequence of numbers that are Unicode values.</param>
         /// <returns></returns>
-        public static string FromCharCode(params int[] numbers)
-        {
-            return null;
-        }
+        public static extern string FromCharCode(params int[] numbers);
 
         /// <summary>
         /// The charAt() method returns the specified character from a string.
         /// </summary>
         /// <param name="index">An integer between 0 and 1-less-than the length of the string.</param>
         /// <returns></returns>
-        public string CharAt(int index)
-        {
-            return null;
-        }
+        public extern string CharAt(int index);
 
         /// <summary>
         /// The charCodeAt() method returns the numeric Unicode value of the character at the given index (except for unicode codepoints > 0x10000).
         /// </summary>
         /// <param name="index">An integer greater than or equal to 0 and less than the length of the string; if it is not a number, it defaults to 0.</param>
         /// <returns></returns>
-        public int CharCodeAt(int index)
-        {
-            return 0;
-        }
+        public extern int CharCodeAt(int index);
 
         /// <summary>
         /// Determines whether two specified String objects have the same value.
@@ -128,10 +110,7 @@ namespace System
         /// <param name="b">The second string to compare, or null. </param>
         /// <returns>true if the value of a is the same as the value of b; otherwise, false. If both a and b are null, the method returns true.</returns>
         [Template("Bridge.String.equals({a}, {b})")]
-        public static bool Equals(string a, string b)
-        {
-            return false;
-        }
+        public static extern bool Equals(string a, string b);
 
         /// <summary>
         /// Determines whether two specified String objects have the same value. A parameter specifies the culture, case, and sort rules used in the comparison.
@@ -141,10 +120,7 @@ namespace System
         /// <param name="comparisonType">One of the enumeration values that specifies the rules for the comparison.</param>
         /// <returns>true if the value of a is the same as the value of b; otherwise, false. If both a and b are null, the method returns true.</returns>
         [Template("Bridge.String.equals({a}, {b}, {comparisonType})")]
-        public static bool Equals(string a, string b, StringComparison comparisonType)
-        {
-            return false;
-        }
+        public static extern bool Equals(string a, string b, StringComparison comparisonType);
 
         /// <summary>
         /// Determines whether this string and a specified String object have the same value. A parameter specifies the culture, case, and sort rules used in the comparison.
@@ -153,10 +129,7 @@ namespace System
         /// <param name="comparisonType">One of the enumeration values that specifies how the strings will be compared. </param>
         /// <returns>true if the value of the value parameter is the same as this string; otherwise, false.</returns>
         [Template("Bridge.String.equals({this}, {value}, {comparisonType})")]
-        public bool Equals(string value, StringComparison comparisonType)
-        {
-            return false;
-        }
+        public extern bool Equals(string value, StringComparison comparisonType);
 
         /// <summary>
         /// Determines whether this instance and another specified String object have the same value.
@@ -164,10 +137,7 @@ namespace System
         /// <param name="value">The string to compare to this instance.</param>
         /// <returns>true if the value of the value parameter is the same as this string; otherwise, false.</returns>
         [Template("Bridge.String.equals({this}, {value})")]
-        public bool Equals(string value)
-        {
-            return false;
-        }
+        public extern bool Equals(string value);
 
         /// <summary>
         /// The concat() method combines the text of two or more strings and returns a new string.
@@ -176,10 +146,7 @@ namespace System
         /// <param name="string2">Strings to concatenate to this string.</param>
         /// <returns></returns>
         [Template("[{string1}, {string2}].join('')")]
-        public static string Concat(string string1, string string2)
-        {
-            return null;
-        }
+        public static extern string Concat(string string1, string string2);
 
         /// <summary>
         /// The concat() method combines the text of two or more strings and returns a new string.
@@ -189,10 +156,7 @@ namespace System
         /// <param name="string3">Strings to concatenate to this string.</param>
         /// <returns></returns>
         [Template("[{string1}, {string2}, {string3}].join('')")]
-        public static string Concat(string string1, string string2, string string3)
-        {
-            return null;
-        }
+        public static extern string Concat(string string1, string string2, string string3);
 
         /// <summary>
         /// The concat() method combines the text of two or more strings and returns a new string.
@@ -203,10 +167,7 @@ namespace System
         /// <param name="string4">Strings to concatenate to this string.</param>
         /// <returns></returns>
         [Template("[{string1}, {string2}, {string3}, {string4}].join('')")]
-        public static string Concat(string string1, string string2, string string3, string string4)
-        {
-            return null;
-        }
+        public static extern string Concat(string string1, string string2, string string3, string string4);
 
         /// <summary>
         /// The concat() method combines the text of two or more strings and returns a new string.
@@ -214,10 +175,7 @@ namespace System
         /// <param name="strings">Strings to concatenate to this string.</param>
         /// <returns></returns>
         [Template("{strings:array}.toString().split(',').join('')")]
-        public static string Concat(params string[] strings)
-        {
-            return null;
-        }
+        public static extern string Concat(params string[] strings);
 
         /// <summary>
         /// The concat() method combines the text of two or more strings and returns a new string.
@@ -226,10 +184,7 @@ namespace System
         /// <param name="object2">Strings to concatenate to this string.</param>
         /// <returns></returns>
         [Template("[{object1}, {object2}].join('')")]
-        public static string Concat(object object1, object object2)
-        {
-            return null;
-        }
+        public static extern string Concat(object object1, object object2);
 
         /// <summary>
         /// The concat() method combines the text of two or more strings and returns a new string.
@@ -239,10 +194,7 @@ namespace System
         /// <param name="object3">Strings to concatenate to this string.</param>
         /// <returns></returns>
         [Template("[{object1}, {object2}, {object3}].join('')")]
-        public static string Concat(object object1, object object2, object object3)
-        {
-            return null;
-        }
+        public static extern string Concat(object object1, object object2, object object3);
 
         /// <summary>
         /// The concat() method combines the text of two or more strings and returns a new string.
@@ -253,10 +205,7 @@ namespace System
         /// <param name="object4">Strings to concatenate to this string.</param>
         /// <returns></returns>
         [Template("[{object1}, {object2}, {object3}, {object4}].join('')")]
-        public static string Concat(object object1, object object2, object object3, object object4)
-        {
-            return null;
-        }
+        public static extern string Concat(object object1, object object2, object object3, object object4);
 
         /// <summary>
         /// The concat() method combines the text of two or more strings and returns a new string.
@@ -264,10 +213,7 @@ namespace System
         /// <param name="objects">Strings to concatenate to this string.</param>
         /// <returns></returns>
         [Template("{objects:array}.toString().split(',').join('')")]
-        public static string Concat(params object[] objects)
-        {
-            return null;
-        }
+        public static extern string Concat(params object[] objects);
 
         /// <summary>
         /// The compare() method compares two specified String objects and returns an integer that indicates their relative position in the sort order.
@@ -276,10 +222,7 @@ namespace System
         /// <param name="strB">The second string to compare.</param>
         /// <returns></returns>
         [Template("Bridge.String.compare({strA}, {strB})")]
-        public static int Compare(string strA, string strB)
-        {
-            return 0;
-        }
+        public static extern int Compare(string strA, string strB);
 
         /// <summary>
         /// The compare() method compares two specified String objects, ignoring or honoring their case, and returns an integer that indicates their relative position in the sort order.
@@ -289,10 +232,7 @@ namespace System
         /// <param name="ignoreCase">true to ignore case during the comparison; otherwise, false.</param>
         /// <returns></returns>
         [Template("Bridge.String.compare({strA}, {strB}, {ignoreCase})")]
-        public static int Compare(string strA, string strB, bool ignoreCase)
-        {
-            return 0;
-        }
+        public static extern int Compare(string strA, string strB, bool ignoreCase);
 
         /// <summary>
         /// The compare() method compares substrings of two specified String objects and returns an integer that indicates their relative position in the sort order.
@@ -304,10 +244,7 @@ namespace System
         /// <param name="length">The maximum number of characters in the substrings to compare.</param>
         /// <returns></returns>
         [Template("Bridge.String.compare({strA}.substr({indexA}, {length}), {strB}.substr({indexB}, {length}))")]
-        public static int Compare(string strA, int indexA, string strB, int indexB, int length)
-        {
-            return 0;
-        }
+        public static extern int Compare(string strA, int indexA, string strB, int indexB, int length);
 
         /// <summary>
         /// The compare() method compares substrings of two specified String objects and returns an integer that indicates their relative position in the sort order.
@@ -320,34 +257,19 @@ namespace System
         /// <param name="ignoreCase">true to ignore case during the comparison; otherwise, false.</param>
         /// <returns></returns>
         [Template("Bridge.String.compare({strA}.substr({indexA}, {length}), {strB}.substr({indexB}, {length}), {ignoreCase})")]
-        public static int Compare(string strA, int indexA, string strB, int indexB, int length, bool ignoreCase)
-        {
-            return 0;
-        }
+        public static extern int Compare(string strA, int indexA, string strB, int indexB, int length, bool ignoreCase);
 
         [Template("Bridge.String.compare({strA}, {strB}, {comparisonType})")]
-        public static int Compare(string strA, string strB, StringComparison comparisonType)
-        {
-            return 0;
-        }
+        public static extern int Compare(string strA, string strB, StringComparison comparisonType);
 
         [Template("Bridge.String.compare({strA}, {strB}, {ignoreCase}, {culture})")]
-        public static int Compare(string strA, string strB, bool ignoreCase, CultureInfo culture)
-        {
-            return 0;
-        }
+        public static extern int Compare(string strA, string strB, bool ignoreCase, CultureInfo culture);
 
         [Template("Bridge.String.compare({strA}.substr({indexA}, {length}), {strB}.substr({indexB}, {length}), {comparisonType})")]
-        public static int Compare(string strA, int indexA, string strB, int indexB, int length, StringComparison comparisonType)
-        {
-            return 0;
-        }
+        public static extern int Compare(string strA, int indexA, string strB, int indexB, int length, StringComparison comparisonType);
 
         [Template("Bridge.String.compare({strA}.substr({indexA}, {length}), {strB}.substr({indexB}, {length}), {ignoreCase}, {culture})")]
-        public static int Compare(string strA, int indexA, string strB, int indexB, int length, bool ignoreCase, CultureInfo culture)
-        {
-            return 0;
-        }
+        public static extern int Compare(string strA, int indexA, string strB, int indexB, int length, bool ignoreCase, CultureInfo culture);
 
         /// <summary>
         /// The indexOf() method returns the index within the calling String object of the first occurrence of the specified value. Returns -1 if the value is not found.
@@ -497,10 +419,7 @@ namespace System
         /// </summary>
         /// <param name="compareString">The string against which the referring string is comparing</param>
         /// <returns></returns>
-        public int LocaleCompare(string compareString)
-        {
-            return 0;
-        }
+        public extern int LocaleCompare(string compareString);
 
         /// <summary>
         /// The localeCompare() method returns a number indicating whether a reference string comes before or after or is the same as the given string in sort order.
@@ -509,10 +428,7 @@ namespace System
         /// <param name="compareString">The string against which the referring string is comparing</param>
         /// <param name="locales">A string with a BCP 47 language tag, or an array of such strings. For the general form and interpretation of the locales argument, see the Intl page. The following Unicode extension keys are allowed:</param>
         /// <returns></returns>
-        public int LocaleCompare(string compareString, string locales)
-        {
-            return 0;
-        }
+        public extern int LocaleCompare(string compareString, string locales);
 
         /// <summary>
         /// The localeCompare() method returns a number indicating whether a reference string comes before or after or is the same as the given string in sort order.
@@ -522,30 +438,21 @@ namespace System
         /// <param name="locales">A string with a BCP 47 language tag, or an array of such strings. For the general form and interpretation of the locales argument, see the Intl page. The following Unicode extension keys are allowed:</param>
         /// <param name="options">An object with some or all of the following properties:</param>
         /// <returns></returns>
-        public int LocaleCompare(string compareString, string locales, LocaleOptions options)
-        {
-            return 0;
-        }
+        public extern int LocaleCompare(string compareString, string locales, LocaleOptions options);
 
         /// <summary>
         /// The match() method retrieves the matches when matching a string against a regular expression.
         /// </summary>
         /// <param name="Regex">A regular expression object. If a non-Regex object obj is passed, it is implicitly converted to a Regex by using new Regex(obj).</param>
         /// <returns></returns>
-        public string[] Match(Regex Regex)
-        {
-            return null;
-        }
+        public extern string[] Match(Regex Regex);
 
         /// <summary>
         /// The match() method retrieves the matches when matching a string against a regular expression.
         /// </summary>
         /// <param name="Regex">A regular expression object. If a non-Regex object obj is passed, it is implicitly converted to a Regex by using new Regex(obj).</param>
         /// <returns></returns>
-        public string[] Match(string Regex)
-        {
-            return null;
-        }
+        public extern string[] Match(string Regex);
 
         /// <summary>
         /// The replace() method returns a new string with some or all matches of a pattern replaced by a replacement.  The pattern can be a string or a Regex, and the replacement can be a string or a function to be called for each match.
@@ -553,10 +460,7 @@ namespace System
         /// <param name="Regex">A Regex object. The match is replaced by the return value of parameter #2.</param>
         /// <param name="newSubStr">The String that replaces the substring received from parameter #1. A number of special replacement patterns are supported; see the "Specifying a string as a parameter" section below.</param>
         /// <returns></returns>
-        public string Replace(Regex Regex, string newSubStr)
-        {
-            return null;
-        }
+        public extern string Replace(Regex Regex, string newSubStr);
 
         /// <summary>
         /// The replace() method returns a new string with some or all matches of a pattern replaced by a replacement.  The pattern can be a string or a Regex, and the replacement can be a string or a function to be called for each match.
@@ -564,10 +468,7 @@ namespace System
         /// <param name="Regex">A Regex object. The match is replaced by the return value of parameter #2.</param>
         /// <param name="callback"></param>
         /// <returns></returns>
-        public string Replace(Regex Regex, Delegate callback)
-        {
-            return null;
-        }
+        public extern string Replace(Regex Regex, Delegate callback);
 
         /// <summary>
         /// The replace() method returns a new string with some or all matches of a pattern replaced by a replacement.  The pattern can be a string or a Regex, and the replacement can be a string or a function to be called for each match.
@@ -575,10 +476,7 @@ namespace System
         /// <param name="Regex">A Regex object. The match is replaced by the return value of parameter #2.</param>
         /// <param name="callback"></param>
         /// <returns></returns>
-        public string Replace(Regex Regex, Func<string, string> callback)
-        {
-            return null;
-        }
+        public extern string Replace(Regex Regex, Func<string, string> callback);
 
         /// <summary>
         /// The replace() method returns a new string with some or all matches of a pattern replaced by a replacement.  The pattern can be a string or a Regex, and the replacement can be a string or a function to be called for each match.
@@ -586,10 +484,7 @@ namespace System
         /// <param name="Regex">A Regex object. The match is replaced by the return value of parameter #2.</param>
         /// <param name="callback"></param>
         /// <returns></returns>
-        public string Replace(Regex Regex, Func<string, int, string> callback)
-        {
-            return null;
-        }
+        public extern string Replace(Regex Regex, Func<string, int, string> callback);
 
         /// <summary>
         /// The replace() method returns a new string with some or all matches of a pattern replaced by a replacement.  The pattern can be a string or a Regex, and the replacement can be a string or a function to be called for each match.
@@ -597,10 +492,7 @@ namespace System
         /// <param name="Regex">A Regex object. The match is replaced by the return value of parameter #2.</param>
         /// <param name="callback"></param>
         /// <returns></returns>
-        public string Replace(Regex Regex, Func<string, int, string, string> callback)
-        {
-            return null;
-        }
+        public extern string Replace(Regex Regex, Func<string, int, string, string> callback);
 
         /// <summary>
         /// The replace() method returns a new string with some or all matches of a pattern replaced by a replacement.  The pattern can be a string or a Regex, and the replacement can be a string or a function to be called for each match.
@@ -609,10 +501,7 @@ namespace System
         /// <param name="newSubStr">The String that replaces the substring received from parameter #1. A number of special replacement patterns are supported; see the "Specifying a string as a parameter" section below.</param>
         /// <returns></returns>
         [Template("Bridge.String.replaceAll({this}, {substr}, {newSubStr})")]
-        public string Replace(string substr, string newSubStr)
-        {
-            return null;
-        }
+        public extern string Replace(string substr, string newSubStr);
 
         [Template("Bridge.String.replaceAll({this}, String.fromCharCode({oldChar}), String.fromCharCode({replaceChar}))")]
         public extern string Replace(char oldChar, char replaceChar);
@@ -624,10 +513,7 @@ namespace System
         /// <param name="callback"></param>
         /// <returns></returns>
         [Template("Bridge.String.replaceAll({this}, {substr}, {callback})")]
-        public string Replace(string substr, Delegate callback)
-        {
-            return null;
-        }
+        public extern string Replace(string substr, Delegate callback);
 
         /// <summary>
         /// The replace() method returns a new string with some or all matches of a pattern replaced by a replacement.  The pattern can be a string or a Regex, and the replacement can be a string or a function to be called for each match.
@@ -636,10 +522,7 @@ namespace System
         /// <param name="callback"></param>
         /// <returns></returns>
         [Template("Bridge.String.replaceAll({this}, {substr}, {callback})")]
-        public string Replace(string substr, Func<string, string> callback)
-        {
-            return null;
-        }
+        public extern string Replace(string substr, Func<string, string> callback);
 
         /// <summary>
         /// The replace() method returns a new string with some or all matches of a pattern replaced by a replacement.  The pattern can be a string or a Regex, and the replacement can be a string or a function to be called for each match.
@@ -648,10 +531,7 @@ namespace System
         /// <param name="callback"></param>
         /// <returns></returns>
         [Template("Bridge.String.replaceAll({this}, {substr}, {callback})")]
-        public string Replace(string substr, Func<string, int, string> callback)
-        {
-            return null;
-        }
+        public extern string Replace(string substr, Func<string, int, string> callback);
 
         /// <summary>
         /// The replace() method returns a new string with some or all matches of a pattern replaced by a replacement.  The pattern can be a string or a Regex, and the replacement can be a string or a function to be called for each match.
@@ -660,40 +540,28 @@ namespace System
         /// <param name="callback"></param>
         /// <returns></returns>
         [Template("Bridge.String.replaceAll({this}, {substr}, {callback})")]
-        public string Replace(string substr, Func<string, int, string, string> callback)
-        {
-            return null;
-        }
+        public extern string Replace(string substr, Func<string, int, string, string> callback);
 
         /// <summary>
         /// The search() method executes a search for a match between a regular expression and this String object.
         /// </summary>
         /// <param name="Regex">A regular expression object. If a non-Regex object obj is passed, it is implicitly converted to a Regex by using new Regex(obj).</param>
         /// <returns></returns>
-        public int Search(Regex Regex)
-        {
-            return 0;
-        }
+        public extern int Search(Regex Regex);
 
         /// <summary>
         /// The search() method executes a search for a match between a regular expression and this String object.
         /// </summary>
         /// <param name="Regex">A regular expression object. If a non-Regex object obj is passed, it is implicitly converted to a Regex by using new Regex(obj).</param>
         /// <returns></returns>
-        public int Search(string Regex)
-        {
-            return 0;
-        }
+        public extern int Search(string Regex);
 
         /// <summary>
         /// The slice() method extracts a section of a string and returns a new string.
         /// </summary>
         /// <param name="beginSlice">The zero-based index at which to begin extraction. If negative, it is treated as (sourceLength-beginSlice) where sourceLength is the length of the string (for example, if beginSlice is -3 it is treated as sourceLength-3).</param>
         /// <returns></returns>
-        public string Slice(int beginSlice)
-        {
-            return null;
-        }
+        public extern string Slice(int beginSlice);
 
         /// <summary>
         /// The slice() method extracts a section of a string and returns a new string.
@@ -701,10 +569,7 @@ namespace System
         /// <param name="beginSlice">The zero-based index at which to begin extraction. If negative, it is treated as (sourceLength-beginSlice) where sourceLength is the length of the string (for example, if beginSlice is -3 it is treated as sourceLength-3).</param>
         /// <param name="endSlice">The zero-based index at which to end extraction. If omitted, slice extracts to the end of the string. If negative, it is treated as (sourceLength-endSlice) where sourceLength is the length of the string.</param>
         /// <returns></returns>
-        public string Slice(int beginSlice, int endSlice)
-        {
-            return null;
-        }
+        public extern string Slice(int beginSlice, int endSlice);
 
         [Template("Bridge.String.split({this}, {separator:array}.map(function(i) {{ return String.fromCharCode(i); }}))")]
         public extern string[] Split(params char[] separator);
@@ -744,10 +609,7 @@ namespace System
         /// <param name="indexA">An integer between 0 and the length of the string.</param>
         /// <returns></returns>
         [Name("substring")]
-        public string JsSubstring(int indexA)
-        {
-            return null;
-        }
+        public extern string JsSubstring(int indexA);
 
         /// <summary>
         /// The substring() method returns a subset of a string between one index and another, or through the end of the string.
@@ -756,20 +618,14 @@ namespace System
         /// <param name="indexB">An integer between 0 and the length of the string.</param>
         /// <returns></returns>
         [Name("substring")]
-        public string JsSubstring(int indexA, int indexB)
-        {
-            return null;
-        }
+        public extern string JsSubstring(int indexA, int indexB);
 
         /// <summary>
         /// The substr() method returns the characters in a string beginning at the specified location through the specified number of characters.
         /// </summary>
         /// <param name="start">Location at which to begin extracting characters. If a negative number is given, it is treated as strLength+start where strLength = to the length of the string (for example, if start is -3 it is treated as strLength-3.)</param>
         /// <returns></returns>
-        public string Substr(int start)
-        {
-            return null;
-        }
+        public extern string Substr(int start);
 
         /// <summary>
         /// The substr() method returns the characters in a string beginning at the specified location through the specified number of characters.
@@ -777,10 +633,7 @@ namespace System
         /// <param name="start">Location at which to begin extracting characters. If a negative number is given, it is treated as strLength+start where strLength = to the length of the string (for example, if start is -3 it is treated as strLength-3.)</param>
         /// <returns></returns>
         [Name("substr")]
-        public string Substring(int start)
-        {
-            return null;
-        }
+        public extern string Substring(int start);
 
         /// <summary>
         /// The substr() method returns the characters in a string beginning at the specified location through the specified number of characters.
@@ -788,10 +641,7 @@ namespace System
         /// <param name="start">Location at which to begin extracting characters. If a negative number is given, it is treated as strLength+start where strLength = to the length of the string (for example, if start is -3 it is treated as strLength-3.)</param>
         /// <param name="length">The number of characters to extract.</param>
         /// <returns></returns>
-        public string Substr(int start, int length)
-        {
-            return null;
-        }
+        public extern string Substr(int start, int length);
 
         /// <summary>
         /// The substr() method returns the characters in a string beginning at the specified location through the specified number of characters.
@@ -800,39 +650,27 @@ namespace System
         /// <param name="length">The number of characters to extract.</param>
         /// <returns></returns>
         [Name("substr")]
-        public string Substring(int start, int length)
-        {
-            return null;
-        }
+        public extern string Substring(int start, int length);
 
         /// <summary>
         /// The toLower() method returns the calling string value converted to lowercase.
         /// </summary>
         /// <returns></returns>
         [Template("{this}.toLowerCase()")]
-        public string ToLower()
-        {
-            return null;
-        }
+        public extern string ToLower();
 
         /// <summary>
         /// The toUpper() method returns the calling string value converted to uppercase.
         /// </summary>
         /// <returns></returns>
         [Template("{this}.toUpperCase()")]
-        public string ToUpper()
-        {
-            return null;
-        }
+        public extern string ToUpper();
 
         /// <summary>
         /// The trim() method removes whitespace from both ends of a string. Whitespace in this context is all the whitespace characters (space, tab, no-break space, etc.) and all the line terminator characters (LF, CR, etc.).
         /// </summary>
         /// <returns>The trimmed string</returns>
-        public string Trim()
-        {
-            return null;
-        }
+        public extern string Trim();
 
         [Template("Bridge.String.trim({this}, {values:array})")]
         public extern string Trim(params char[] values);
@@ -855,22 +693,13 @@ namespace System
         /// <param name="value">The string to seek. </param>
         /// <returns>true if the value parameter occurs within this string, or if value is the empty string (""); otherwise, false.</returns>
         [Template("Bridge.String.contains({this},{value})")]
-        public bool Contains(string value)
-        {
-            return false;
-        }
+        public extern bool Contains(string value);
 
         [Template("Bridge.String.endsWith({this}, {suffix})")]
-        public bool EndsWith(string suffix)
-        {
-            return false;
-        }
+        public extern bool EndsWith(string suffix);
 
         [Template("Bridge.String.startsWith({this}, {prefix})")]
-        public bool StartsWith(string prefix)
-        {
-            return false;
-        }
+        public extern bool StartsWith(string prefix);
 
         /// Summary:
         ///     Replaces the format item in a specified string with the string representation
@@ -888,10 +717,7 @@ namespace System
         ///     of the corresponding objects in args.
         ///
         [Template("Bridge.String.format({format}, {args})")]
-        public static string Format(string format, params object[] args)
-        {
-            return null;
-        }
+        public static extern string Format(string format, params object[] args);
 
         ///
         /// Summary:
@@ -909,10 +735,7 @@ namespace System
         ///     A copy of format in which any format items are replaced by the string representation
         ///     of arg0.
         [Template("Bridge.String.format({format}, {arg0})")]
-        public static String Format(String format, object arg0)
-        {
-            return null;
-        }
+        public static extern String Format(String format, object arg0);
 
         ///
         /// Summary:
@@ -934,10 +757,7 @@ namespace System
         ///     A copy of format in which the format items have been replaced by the string representation
         ///     of the corresponding objects in args.
         [Template("Bridge.String.format({format}, {args})")]
-        public static String Format(IFormatProvider provider, String format, params object[] args)
-        {
-            return null;
-        }
+        public static extern String Format(IFormatProvider provider, String format, params object[] args);
 
         ///
         /// Summary:
@@ -958,10 +778,7 @@ namespace System
         ///     A copy of format in which format items are replaced by the string representations
         ///     of arg0 and arg1.
         [Template("Bridge.String.format({format}, {arg0}, {arg1})")]
-        public static String Format(String format, object arg0, object arg1)
-        {
-            return null;
-        }
+        public static extern String Format(String format, object arg0, object arg1);
 
         ///
         /// Summary:
@@ -985,10 +802,7 @@ namespace System
         ///     A copy of format in which the format items have been replaced by the string representations
         ///     of arg0, arg1, and arg2.
         [Template("Bridge.String.format({format}, {arg0}, {arg1}, {arg2})")]
-        public static String Format(String format, object arg0, object arg1, object arg2)
-        {
-            return null;
-        }
+        public static extern String Format(String format, object arg0, object arg1, object arg2);
 
         [Template("Bridge.String.indexOfAny({this}, {anyOf})")]
         public int IndexOfAny(char[] anyOf)
@@ -1009,16 +823,10 @@ namespace System
         }
 
         [Template("Bridge.String.toCharArray({this}, 0, {this}.length)")]
-        public char[] ToCharArray()
-        {
-            return null;
-        }
+        public extern char[] ToCharArray();
 
         [Template("Bridge.String.toCharArray({this}, {startIndex}, {count})")]
-        public char[] ToCharArray(int startIndex, int count)
-        {
-            return null;
-        }
+        public extern char[] ToCharArray(int startIndex, int count);
 
         public static bool operator ==(string s1, string s2)
         {
@@ -1042,22 +850,13 @@ namespace System
         }
 
         [Template("Bridge.getEnumerator({this})")]
-        public CharEnumerator GetEnumerator()
-        {
-            return null;
-        }
+        public extern CharEnumerator GetEnumerator();
 
         [Template("Bridge.getEnumerator({this})")]
-        IEnumerator<char> IEnumerable<char>.GetEnumerator()
-        {
-            return null;
-        }
+        extern IEnumerator<char> IEnumerable<char>.GetEnumerator();
 
         [Template("Bridge.getEnumerator({this})")]
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return null;
-        }
+        extern IEnumerator IEnumerable.GetEnumerator();
 
         [Template("Bridge.String.compare({this}, {other})")]
         public extern int CompareTo(string other);

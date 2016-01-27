@@ -24,21 +24,12 @@ namespace Bridge.Html5
         }
 
         [Name("item")]
-        public virtual StyleSheet GetItem(int index)
-        {
-            return null;
-        }
+        public virtual extern StyleSheet GetItem(int index);
 
         public readonly int Length;
 
-        public virtual IEnumerator<StyleSheet> GetEnumerator()
-        {
-            return null;
-        }
+        public virtual extern IEnumerator<StyleSheet> GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return null;
-        }
+        extern IEnumerator IEnumerable.GetEnumerator();
     }
 }

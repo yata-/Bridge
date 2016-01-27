@@ -6,10 +6,7 @@ namespace System
     [Name("Function")]
     public class Type
     {
-        public static Type GetTypeFromHandle(RuntimeTypeHandle typeHandle)
-        {
-            return null;
-        }
+        public static extern Type GetTypeFromHandle(RuntimeTypeHandle typeHandle);
     }
 
     [External]
