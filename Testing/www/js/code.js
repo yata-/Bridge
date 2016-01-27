@@ -2447,6 +2447,20 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge849A', {
     }
 });
 
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge861A', {
+    config: {
+        properties: {
+            MyId: 0,
+            Delegates: null
+        }
+    },
+    invokeDelegates: function () {
+        if (Bridge.hasValue(this.getDelegates())) {
+            this.getDelegates()(this);
+        }
+    }
+});
+
 Bridge.define('Bridge.ClientTest.BridgeIssues.CI1');
 
 Bridge.define('Bridge.ClientTest.BridgeIssues.CI2');
@@ -7438,6 +7452,33 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge849', {
         testUseCase: function () {
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge849A.setToBlah(""), true, "Bridge849 true");
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge849A.setToBlah("", false), false, "Bridge849 false");
+        }
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge861', {
+    statics: {
+        testUseCase: function () {
+            var testA = Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge861A(), {
+                setMyId: 1
+            } );
+
+            testA.setDelegates(Bridge.fn.combine(testA.getDelegates(), function (data) {
+                var $t;
+                ($t = data.getMyId(), data.setMyId($t+1), $t);
+            }));
+
+            var testB = Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge861A(), {
+                setMyId: 2,
+                setDelegates: testA.getDelegates()
+            } );
+
+            testB.setDelegates(Bridge.fn.combine(testB.getDelegates(), function (data) {
+                data.setMyId(0);
+            }));
+            testB.invokeDelegates();
+
+            Bridge.get(Bridge.Test.Assert).areEqual(testB.getMyId(), 0);
         }
     }
 });
