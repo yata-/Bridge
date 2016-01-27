@@ -6477,6 +6477,38 @@ Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypesBoolean
         boolEqualsWorks: function (assert) {
             var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypesBooleanTests).beforeTest(false, assert);
             t.boolEqualsWorks();
+        },
+        logicalExclusiveOrWorks: function (assert) {
+            var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypesBooleanTests).beforeTest(false, assert);
+            t.logicalExclusiveOrWorks();
+        },
+        logicalAndWorks: function (assert) {
+            var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypesBooleanTests).beforeTest(false, assert);
+            t.logicalAndWorks();
+        },
+        logicalNegationWorks: function (assert) {
+            var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypesBooleanTests).beforeTest(false, assert);
+            t.logicalNegationWorks();
+        },
+        conditionalOperatorWorks: function (assert) {
+            var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypesBooleanTests).beforeTest(false, assert);
+            t.conditionalOperatorWorks();
+        },
+        conditionalAndWorks: function (assert) {
+            var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypesBooleanTests).beforeTest(false, assert);
+            t.conditionalAndWorks();
+        },
+        conditionalOrWorks: function (assert) {
+            var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypesBooleanTests).beforeTest(false, assert);
+            t.conditionalOrWorks();
+        },
+        equalityWorks: function (assert) {
+            var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypesBooleanTests).beforeTest(false, assert);
+            t.equalityWorks();
+        },
+        inequalityWorks: function (assert) {
+            var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypesBooleanTests).beforeTest(false, assert);
+            t.inequalityWorks();
         }
     }
 });
@@ -9165,6 +9197,14 @@ Bridge.define('Bridge.Test.QUnit.TestRunner', {
             QUnit.test("Boolean - GetHashCodeWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypesBooleanTests).getHashCodeWorks);
             QUnit.test("Boolean - ObjectEqualsWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypesBooleanTests).objectEqualsWorks);
             QUnit.test("Boolean - BoolEqualsWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypesBooleanTests).boolEqualsWorks);
+            QUnit.test("Boolean - LogicalExclusiveOrWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypesBooleanTests).logicalExclusiveOrWorks);
+            QUnit.test("Boolean - LogicalAndWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypesBooleanTests).logicalAndWorks);
+            QUnit.test("Boolean - LogicalNegationWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypesBooleanTests).logicalNegationWorks);
+            QUnit.test("Boolean - ConditionalOperatorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypesBooleanTests).conditionalOperatorWorks);
+            QUnit.test("Boolean - ConditionalAndWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypesBooleanTests).conditionalAndWorks);
+            QUnit.test("Boolean - ConditionalOrWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypesBooleanTests).conditionalOrWorks);
+            QUnit.test("Boolean - EqualityWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypesBooleanTests).equalityWorks);
+            QUnit.test("Boolean - InequalityWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypesBooleanTests).inequalityWorks);
             QUnit.test("Byte - TypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypesByteTests).typePropertiesAreCorrect);
             QUnit.test("Byte - CastsWork", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypesByteTests).castsWork);
             QUnit.test("Byte - DefaultValueIs0", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypesByteTests).defaultValueIs0);

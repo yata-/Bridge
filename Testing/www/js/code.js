@@ -3385,6 +3385,20 @@ Bridge.define('Bridge.ClientTest.PropertyAccessorTests.C2$1', function (T) { ret
     }
 }; });
 
+Bridge.define('Bridge.ClientTest.SimpleTypes.BooleanTests.Counter', {
+    config: {
+        properties: {
+            Count: 0
+        }
+    },
+    increment: function (r) {
+        if (r === void 0) { r = true; }
+        this.setCount(this.getCount()+1);
+
+        return r;
+    }
+});
+
 Bridge.define('Bridge.ClientTest.SimpleTypes.EnumTests.FlagsEnum', {
     statics: {
         none: 0,
@@ -11971,6 +11985,122 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.BooleanTests', {
         Bridge.get(Bridge.Test.Assert).$false(Bridge.equals((true), false));
         Bridge.get(Bridge.Test.Assert).$false(Bridge.equals((false), true));
         Bridge.get(Bridge.Test.Assert).$true(Bridge.equals((false), false));
+    },
+    logicalExclusiveOrWorks: function () {
+        Bridge.get(Bridge.Test.Assert).$true(true);
+        Bridge.get(Bridge.Test.Assert).$false(false);
+        Bridge.get(Bridge.Test.Assert).$false(false);
+        var t = true;
+        var f = false;
+        Bridge.get(Bridge.Test.Assert).$true(t ^ f);
+        Bridge.get(Bridge.Test.Assert).$false(f ^ f);
+        Bridge.get(Bridge.Test.Assert).$false(t ^ t);
+    },
+    logicalAndWorks: function () {
+        Bridge.get(Bridge.Test.Assert).$false(false);
+        Bridge.get(Bridge.Test.Assert).$false(false);
+        Bridge.get(Bridge.Test.Assert).$true(true);
+        var t = true;
+        var f = false;
+        Bridge.get(Bridge.Test.Assert).$false(t && f);
+        Bridge.get(Bridge.Test.Assert).$false(f && f);
+        Bridge.get(Bridge.Test.Assert).$true(t && t);
+    },
+    logicalNegationWorks: function () {
+        Bridge.get(Bridge.Test.Assert).$false(false);
+        Bridge.get(Bridge.Test.Assert).$true(true);
+        var t = true;
+        var f = false;
+        Bridge.get(Bridge.Test.Assert).$false(!t);
+        Bridge.get(Bridge.Test.Assert).$true(!f);
+    },
+    conditionalOperatorWorks: function () {
+        var t = true;
+        var f = false;
+        Bridge.get(Bridge.Test.Assert).$false(!t ? true : false);
+        Bridge.get(Bridge.Test.Assert).$true(!f ? true : false);
+    },
+    conditionalAndWorks: function () {
+        var counterAnd = new Bridge.ClientTest.SimpleTypes.BooleanTests.Counter();
+
+        Bridge.get(Bridge.Test.Assert).$true(counterAnd.increment() && counterAnd.increment());
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterAnd.getCount(), 2, "1. Counter 2");
+        Bridge.get(Bridge.Test.Assert).$false(counterAnd.increment() && counterAnd.increment(false));
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterAnd.getCount(), 4, "2. Counter 4");
+
+        Bridge.get(Bridge.Test.Assert).$false(counterAnd.increment(false) && counterAnd.increment());
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterAnd.getCount(), 5, "3. Counter 5");
+        Bridge.get(Bridge.Test.Assert).$false(counterAnd.increment(false) && counterAnd.increment(false));
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterAnd.getCount(), 6, "4. Counter 6");
+
+        var t = true;
+        var f = false;
+
+        Bridge.get(Bridge.Test.Assert).$true(t && counterAnd.increment());
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterAnd.getCount(), 7, "5. Counter 7");
+        Bridge.get(Bridge.Test.Assert).$false(t && counterAnd.increment(false));
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterAnd.getCount(), 8, "6. Counter 8");
+
+        Bridge.get(Bridge.Test.Assert).$false(f && counterAnd.increment());
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterAnd.getCount(), 8, "7. Counter 8");
+        Bridge.get(Bridge.Test.Assert).$false(f && counterAnd.increment(false));
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterAnd.getCount(), 8, "8. Counter 8");
+    },
+    conditionalOrWorks: function () {
+        var counterOr = new Bridge.ClientTest.SimpleTypes.BooleanTests.Counter();
+
+        Bridge.get(Bridge.Test.Assert).$true(counterOr.increment() || counterOr.increment());
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterOr.getCount(), 1, "1. Counter 1");
+        Bridge.get(Bridge.Test.Assert).$true(counterOr.increment() || counterOr.increment(false));
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterOr.getCount(), 2, "2. Counter 2");
+
+        Bridge.get(Bridge.Test.Assert).$true(counterOr.increment(false) || counterOr.increment());
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterOr.getCount(), 4, "3. Counter 4");
+        Bridge.get(Bridge.Test.Assert).$false(counterOr.increment(false) || counterOr.increment(false));
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterOr.getCount(), 6, "4. Counter 6");
+
+        var t = true;
+        var f = false;
+
+        Bridge.get(Bridge.Test.Assert).$true(t || counterOr.increment());
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterOr.getCount(), 6, "5. Counter 6");
+        Bridge.get(Bridge.Test.Assert).$true(t || counterOr.increment(false));
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterOr.getCount(), 6, "6. Counter 6");
+
+        Bridge.get(Bridge.Test.Assert).$true(f || counterOr.increment());
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterOr.getCount(), 7, "7. Counter 7");
+        Bridge.get(Bridge.Test.Assert).$false(f || counterOr.increment(false));
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterOr.getCount(), 8, "8. Counter 8");
+    },
+    equalityWorks: function () {
+        Bridge.get(Bridge.Test.Assert).$true(true);
+        Bridge.get(Bridge.Test.Assert).$false(false);
+        Bridge.get(Bridge.Test.Assert).$false(false);
+        Bridge.get(Bridge.Test.Assert).$true(true);
+
+        var t = true;
+        var t1 = true;
+        var f = false;
+        var f1 = false;
+        Bridge.get(Bridge.Test.Assert).$true(t === t1);
+        Bridge.get(Bridge.Test.Assert).$false(t === f);
+        Bridge.get(Bridge.Test.Assert).$false(f === t);
+        Bridge.get(Bridge.Test.Assert).$true(f === f1);
+    },
+    inequalityWorks: function () {
+        Bridge.get(Bridge.Test.Assert).$false(false);
+        Bridge.get(Bridge.Test.Assert).$true(true);
+        Bridge.get(Bridge.Test.Assert).$true(true);
+        Bridge.get(Bridge.Test.Assert).$false(false);
+
+        var t = true;
+        var t1 = true;
+        var f = false;
+        var f1 = false;
+        Bridge.get(Bridge.Test.Assert).$false(t !== t1);
+        Bridge.get(Bridge.Test.Assert).$true(t !== f);
+        Bridge.get(Bridge.Test.Assert).$true(f !== t);
+        Bridge.get(Bridge.Test.Assert).$false(f !== f1);
     }
 });
 
