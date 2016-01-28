@@ -2447,6 +2447,39 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge849A', {
     }
 });
 
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge857A', {
+    statics: {
+        all: 4294967295
+    },
+    $enum: true
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge857B', {
+    statics: {
+        all: 4294967295
+    },
+    $enum: true
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge857C', {
+    statics: {
+        all1: 0,
+        all2: 1,
+        all: 4294967295
+    },
+    $enum: true
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge857D', {
+    statics: {
+        all1: 1,
+        all2: 2,
+        all: 4294967295
+    },
+    $enum: true,
+    $flags: true
+});
+
 Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge861A', {
     config: {
         properties: {
@@ -7505,6 +7538,21 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge849', {
     }
 });
 
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge857', {
+    statics: {
+        testUseCase: function () {
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857A).all, 4294967295, "Bridge857 Bridge857A");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857B).all, 4294967295, "Bridge857 Bridge857B");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857C).all, 4294967295, "Bridge857 Bridge857C All");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857C).all1, 0, "Bridge857 Bridge857C All1");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857C).all2, 1, "Bridge857 Bridge857C All2");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857D).all, 4294967295, "Bridge857 Bridge857D All");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857D).all1, 1, "Bridge857 Bridge857D All1");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857D).all2, 2, "Bridge857 Bridge857D All2");
+        }
+    }
+});
+
 Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge861', {
     statics: {
         testUseCase: function () {
@@ -8298,7 +8346,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine("got " + enm.getCurrent$1());
         }
 
-        this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\ngot -1\r\n");
+        this.assertEqual(sb.toString(), "yielding 0\nyielding 1\nyielding -1\nin finally\ngot 0\ngot 1\ngot -1\n");
     },
     prematureDisposalOfIEnumeratorIteratorExecutesFinallyBlocks: function () {
         //TODO expected for v1: yield iterator works with no state machine
@@ -8312,7 +8360,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
         }
         enm.dispose();
 
-        this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding 2\r\nyielding 3\r\nyielding 4\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\n");
+        this.assertEqual(sb.toString(), "yielding 0\nyielding 1\nyielding 2\nyielding 3\nyielding 4\nyielding -1\nin finally\ngot 0\ngot 1\n");
     },
     exceptionInIEnumeratorIteratorBodyExecutesFinallyBlocks: function () {
         //TODO expected for v1: yield iterator works with no state machine
@@ -8332,7 +8380,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine("caught exception");
         }
 
-        this.assertEqual(sb.toString(), "yielding 1\r\nyielding 2\r\nthrowing\r\nin finally\r\ncaught exception\r\n");
+        this.assertEqual(sb.toString(), "yielding 1\nyielding 2\nthrowing\nin finally\ncaught exception\n");
     },
     typeReturnedByIteratorBlockReturningIEnumerableImplementsThatInterface: function () {
         var enm = new Bridge.ClientTest.Collections.Generic.IteratorBlockTests.C(new Bridge.Text.StringBuilder()).getEnumerable(0);
@@ -8357,7 +8405,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine("got " + i1);
         }
 
-        this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\ngot -1\r\n-\r\ngot 0\r\ngot 1\r\ngot -1\r\n");
+        this.assertEqual(sb.toString(), "yielding 0\nyielding 1\nyielding -1\nin finally\ngot 0\ngot 1\ngot -1\n-\ngot 0\ngot 1\ngot -1\n");
     },
     prematureDisposalOfIEnumerableIteratorExecutesFinallyBlocks: function () {
         var $t;
@@ -8374,7 +8422,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             }
         }
 
-        this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding 2\r\nyielding 3\r\nyielding 4\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\n");
+        this.assertEqual(sb.toString(), "yielding 0\nyielding 1\nyielding 2\nyielding 3\nyielding 4\nyielding -1\nin finally\ngot 0\ngot 1\n");
     },
     exceptionInIEnumerableIteratorBodyExecutesFinallyBlocks: function () {
         //TODO expected for v1: yield iterator works with no state machine
@@ -8396,7 +8444,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine("caught exception");
         }
 
-        this.assertEqual(sb.toString(), "yielding 1\r\nyielding 2\r\nthrowing\r\nin finally\r\ncaught exception\r\n");
+        this.assertEqual(sb.toString(), "yielding 1\nyielding 2\nthrowing\nin finally\ncaught exception\n");
     },
     enumeratingAnIteratorBlockReturningIEnumerableMultipleTimesUsesTheInitialValuesForParameters: function () {
         var $t, $t1;
@@ -8414,7 +8462,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine(i1.toString());
         }
 
-        this.assertEqual(sb.toString(), "3\r\n2\r\n1\r\n3\r\n2\r\n1\r\n");
+        this.assertEqual(sb.toString(), "3\n2\n1\n3\n2\n1\n");
     },
     differentGetEnumeratorCallsOnIteratorBlockReturningIEnumerableGetOwnCopiesOfLocals: function () {
         var sb = new Bridge.Text.StringBuilder();
@@ -8429,7 +8477,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine(enm2.getCurrent$1().toString());
         }
 
-        this.assertEqual(sb.toString(), "0\r\n0\r\n1\r\n1\r\n2\r\n2\r\n-1\r\n-1\r\n");
+        this.assertEqual(sb.toString(), "0\n0\n1\n1\n2\n2\n-1\n-1\n");
     }
 });
 
