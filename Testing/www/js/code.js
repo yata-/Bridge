@@ -2447,6 +2447,39 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge849A', {
     }
 });
 
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge857A', {
+    statics: {
+        all: 4294967295
+    },
+    $enum: true
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge857B', {
+    statics: {
+        all: 4294967295
+    },
+    $enum: true
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge857C', {
+    statics: {
+        all1: 0,
+        all2: 1,
+        all: 4294967295
+    },
+    $enum: true
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge857D', {
+    statics: {
+        all1: 1,
+        all2: 2,
+        all: 4294967295
+    },
+    $enum: true,
+    $flags: true
+});
+
 Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge861A', {
     config: {
         properties: {
@@ -7501,6 +7534,21 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge849', {
         testUseCase: function () {
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge849A.setToBlah(""), true, "Bridge849 true");
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge849A.setToBlah("", false), false, "Bridge849 false");
+        }
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge857', {
+    statics: {
+        testUseCase: function () {
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857A).all, 4294967295, "Bridge857 Bridge857A");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857B).all, 4294967295, "Bridge857 Bridge857B");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857C).all, 4294967295, "Bridge857 Bridge857C All");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857C).all1, 0, "Bridge857 Bridge857C All1");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857C).all2, 1, "Bridge857 Bridge857C All2");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857D).all, 4294967295, "Bridge857 Bridge857D All");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857D).all1, 1, "Bridge857 Bridge857D All1");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857D).all2, 2, "Bridge857 Bridge857D All2");
         }
     }
 });
