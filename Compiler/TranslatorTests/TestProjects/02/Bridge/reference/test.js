@@ -488,7 +488,17 @@
 	    },
 
         isArray: function (obj) {
-            return Object.prototype.toString.call(obj) === "[object Array]";
+            return Object.prototype.toString.call(obj) in {
+                "[object Array]": 1,
+                "[object Uint8Array]": 1,
+                "[object Int8Array]": 1,
+                "[object Int16Array]": 1,
+                "[object Uint16Array]": 1,
+                "[object Int32Array]": 1,
+                "[object Uint32Array]": 1,
+                "[object Float32Array]": 1,
+                "[object Float64Array]": 1
+            };
         },
 
         isFunction: function (obj) {

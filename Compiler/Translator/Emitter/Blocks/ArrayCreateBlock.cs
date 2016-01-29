@@ -35,29 +35,38 @@ namespace Bridge.Translator
 
             if (arrayCreateExpression.Initializer.IsNull && rank == 1)
             {
-                this.Write("Bridge.Array.init(");
-                arrayCreateExpression.Arguments.First().AcceptVisitor(this.Emitter);
-                this.WriteComma();
-
-                var def = Inspector.GetDefaultFieldValue(at.ElementType);
-                if (def == at.ElementType)
+                var typedArrayName = Helpers.GetTypedArrayName(at.ElementType);
+                if (this.Emitter.AssemblyInfo.UseTypedArrays && typedArrayName != null)
                 {
-                    this.WriteFunction();
-                    this.WriteOpenCloseParentheses();
-                    this.BeginBlock();
-                    this.WriteReturn(true);
-                    this.Write(Inspector.GetStructDefaultValue(at.ElementType, this.Emitter));
-                    this.WriteSemiColon();
-                    this.WriteNewLine();
-                    this.EndBlock();
+                    this.Write("new ", typedArrayName, "(");
+                    arrayCreateExpression.Arguments.First().AcceptVisitor(this.Emitter);
+                    this.Write(")");
                 }
                 else
                 {
-                    this.WriteScript(def);
+                    this.Write("Bridge.Array.init(");
+                    arrayCreateExpression.Arguments.First().AcceptVisitor(this.Emitter);
+                    this.WriteComma();
+
+                    var def = Inspector.GetDefaultFieldValue(at.ElementType);
+                    if (def == at.ElementType)
+                    {
+                        this.WriteFunction();
+                        this.WriteOpenCloseParentheses();
+                        this.BeginBlock();
+                        this.WriteReturn(true);
+                        this.Write(Inspector.GetStructDefaultValue(at.ElementType, this.Emitter));
+                        this.WriteSemiColon();
+                        this.WriteNewLine();
+                        this.EndBlock();
+                    }
+                    else
+                    {
+                        this.WriteScript(def);
+                    }
+
+                    this.Write(")");
                 }
-
-                this.Write(")");
-
                 return;
             }
 
