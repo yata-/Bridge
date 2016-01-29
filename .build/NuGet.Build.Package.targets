@@ -3,12 +3,6 @@
   <PropertyGroup>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">$(MSBuildProjectDirectory)\..\</SolutionDir>
 
-    <!-- Property that enables building a package from a project -->
-    <BuildPackage Condition=" '$(BuildPackage)' == '' ">false</BuildPackage>
-
-    <!-- Determines if package restore consent is required to restore packages -->
-    <RequireRestoreConsent Condition=" '$(RequireRestoreConsent)' != 'false' ">true</RequireRestoreConsent>
-
     <!-- Download NuGet.exe if it does not already exist -->
     <DownloadNuGetExe Condition=" '$(DownloadNuGetExe)' == '' ">false</DownloadNuGetExe>
   </PropertyGroup>
@@ -23,15 +17,6 @@
     <NuGetToolsPath>$(SolutionDir).nuget</NuGetToolsPath>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <PackagesProjectConfig Condition=" '$(OS)' == 'Windows_NT'">$(MSBuildProjectDirectory)\packages.$(MSBuildProjectName.Replace(' ', '_')).config</PackagesProjectConfig>
-    <PackagesProjectConfig Condition=" '$(OS)' != 'Windows_NT'">$(MSBuildProjectDirectory)\packages.$(MSBuildProjectName).config</PackagesProjectConfig>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <PackagesConfig Condition="Exists('$(MSBuildProjectDirectory)\packages.config')">$(MSBuildProjectDirectory)\packages.config</PackagesConfig>
-    <PackagesConfig Condition="Exists('$(PackagesProjectConfig)')">$(PackagesProjectConfig)</PackagesConfig>
-  </PropertyGroup>
 
   <PropertyGroup>
     <!-- NuGet command -->
@@ -40,7 +25,6 @@
     <NuGetCommand Condition=" '$(OS)' == 'Windows_NT'">"$(NuGetExePath)"</NuGetCommand>
     <NuGetCommand Condition=" '$(OS)' != 'Windows_NT' ">mono --runtime=v4.0.30319 "$(NuGetExePath)"</NuGetCommand>
 
-    <PackageOutputDir Condition="$(PackageOutputDir) == ''">$(TargetDir.Trim('\\'))</PackageOutputDir>
 
     <RequireConsentSwitch Condition=" $(RequireRestoreConsent) == 'true' ">-RequireConsent</RequireConsentSwitch>
     <NonInteractiveSwitch Condition=" '$(VisualStudioVersion)' != '' AND '$(OS)' == 'Windows_NT' ">-NonInteractive</NonInteractiveSwitch>
@@ -73,6 +57,9 @@
   <Target Name="BuildPackage" DependsOnTargets="CheckPrerequisites">
     <PropertyGroup>
       <NuGetUseExplicitVersion Condition=" '$(NuGetUseExplicitVersion)' == '' ">false</NuGetUseExplicitVersion>
+      <!-- Set default NuGetPackageOutputDir if not defined-->
+      <!-- NuGetPackageOutputDir == true means package version will be taken from nuspec-->
+      <!-- NuGetPackageOutputDir == false means package version will be taken from project's output assembly version-->
       <NuGetPackageOutputDir Condition="$(NuGetPackageOutputDir) == '' Or $(NuGetPackageOutputDir) == '*Undefined*'">$(ProjectDir)$(OutDir)</NuGetPackageOutputDir>
       <NuGetPackageOutputDir>$(NuGetPackageOutputDir.Trim('\\'))</NuGetPackageOutputDir>
     </PropertyGroup>
@@ -85,12 +72,13 @@
     <Message Condition="$(NuGetUseExplicitVersion) == 'true'" Text="Will use package version from nuspec" Importance="high" />
 
     <PropertyGroup>
+      <!--For $(NuGetUseExplicitVersion) == 'false' scenario, define nuget.exe VErsion parameter into NuGetPackageVersion as "-Version " + major.minor.build-->
       <TrimmedAssemblyVersion  Condition=" '%(AssemblyInfo.Version)' != '' And '%(AssemblyInfo.Version)' != '*Undefined*' ">$([System.Version]::Parse(%(AssemblyInfo.Version)).ToString(3))</TrimmedAssemblyVersion>
       <NuGetPackageVersion Condition=" '%(AssemblyInfo.Version)' != '' And '%(AssemblyInfo.Version)' != '*Undefined*' "> -Version "$(TrimmedAssemblyVersion)"</NuGetPackageVersion>
       <NuGetPackageVersion Condition=" '%(AssemblyInfo.Version)' == '' Or '%(AssemblyInfo.Version)' == '*Undefined*' "></NuGetPackageVersion>
     </PropertyGroup>
 
-    <Message Condition=" '$(NuGetPackageVersion)' != '' And '$(NuGetPackageVersion)' != '*Undefined*'" Text="Applying $(NuGetPackageVersion) for NuGet package %(NuGetPackageSourcePath.Path)" Importance="high" />
+    <Message Condition="$(NuGetUseExplicitVersion) == 'false'" Text="Applying $(NuGetPackageVersion) for NuGet package %(NuGetPackageSourcePath.Path)" Importance="high" />
 
     <Exec Command="$(NuGetCommand) pack  &quot;%(NuGetPackageSourcePath.Path)&quot;$(NuGetPackageVersion) -Properties &quot;Configuration=$(Configuration);Platform=$(Platform)&quot; $(NonInteractiveSwitch) -OutputDirectory &quot;$(NuGetPackageOutputDir)&quot;"
           Condition=" '$(OS)' != 'Windows_NT' " />
