@@ -8512,6 +8512,27 @@ Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge
     }
 });
 
+Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge830', {
+    statics: {
+        instance: null,
+        getInstance: function () {
+            if (!Bridge.hasValue(Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge830).instance)) {
+                Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge830).instance = new Bridge.ClientTest.BridgeIssues.Bridge830();
+            }
+            return Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge830).instance;
+        },
+        setInstance: function (value) {
+            Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge830).instance = value;
+        },
+        beforeTest: function (isStatic, assert) {
+            Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge830).setInstance(null);
+            Bridge.get(Bridge.Test.Assert).assert = assert;
+            var r = isStatic ? null : Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge830).getInstance();
+            return r;
+        }
+    }
+});
+
 Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTestIComparableTests', {
     statics: {
         instance: null,

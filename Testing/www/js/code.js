@@ -1838,6 +1838,7 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge690A', {
             $asyncBody = Bridge.fn.bind(this, function () {
                 try {
                     for (;;) {
+                        $step = Bridge.Array.min([0,1], $step);
                         switch ($step) {
                             case 0: {
                                 $task1 = Bridge.Task.delay(100);
@@ -1875,6 +1876,7 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge690A', {
             $asyncBody = Bridge.fn.bind(this, function () {
                 try {
                     for (;;) {
+                        $step = Bridge.Array.min([0,1], $step);
                         switch ($step) {
                             case 0: {
                                 $task1 = this.asyncSum(2, 3);
@@ -1916,6 +1918,7 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge690B', {
                 $asyncBody = Bridge.fn.bind(this, function () {
                     try {
                         for (;;) {
+                            $step = Bridge.Array.min([0,1], $step);
                             switch ($step) {
                                 case 0: {
                                     $task1 = Bridge.Task.delay(100);
@@ -1953,6 +1956,7 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge690B', {
                 $asyncBody = Bridge.fn.bind(this, function () {
                     try {
                         for (;;) {
+                            $step = Bridge.Array.min([0,1], $step);
                             switch ($step) {
                                 case 0: {
                                     $task1 = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge690B).asyncSum(19, 23);
@@ -4866,6 +4870,7 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge508', {
                 result, 
                 $asyncBody = Bridge.fn.bind(this, function () {
                     for (;;) {
+                        $step = Bridge.Array.min([0,1], $step);
                         switch ($step) {
                             case 0: {
                                 //TODO Async Bridge508.QUnitAsyncDone = assert.Async();
@@ -4911,6 +4916,7 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge508', {
                 $asyncBody = Bridge.fn.bind(this, function () {
                     try {
                         for (;;) {
+                            $step = Bridge.Array.min([0,1,2,3,4,5,6,7,8,9,10,11], $step);
                             switch ($step) {
                                 case 0: {
                                     result = "";
@@ -5010,6 +5016,7 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge508', {
                 $asyncBody = Bridge.fn.bind(this, function () {
                     try {
                         for (;;) {
+                            $step = Bridge.Array.min([0,1], $step);
                             switch ($step) {
                                 case 0: {
                                     $task1 = Bridge.Task.delay(0);
@@ -5047,6 +5054,7 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge508', {
                 $asyncBody = Bridge.fn.bind(this, function () {
                     try {
                         for (;;) {
+                            $step = Bridge.Array.min([0,1], $step);
                             switch ($step) {
                                 case 0: {
                                     $task1 = Bridge.Task.delay(0);
@@ -7520,6 +7528,139 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge826', {
     }
 });
 
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge830', {
+    statics: {
+        testMethod: function (method, throwException) {
+            var $step = 0,
+                $task1, 
+                $taskResult1, 
+                $jumpFromFinally, 
+                $returnTask = new Bridge.Task(), 
+                $returnValue, 
+                task, 
+                exception, 
+                $e, 
+                $asyncBody = Bridge.fn.bind(this, function () {
+                    try {
+                        for (;;) {
+                            $step = Bridge.Array.min([0,1,3,4,5,6,7,8], $step);
+                            switch ($step) {
+                                case 0: {
+                                    if (!Bridge.hasValue(method)) {
+                                        $step = 1;
+                                        continue;
+                                    } 
+                                    $step = 2;
+                                    continue;
+                                }
+                                case 1: {
+                                    throw new Bridge.ArgumentNullException("method");
+                                    $step = 2;
+                                    continue;
+                                }
+
+                                case 3: {
+                                    task = Bridge.Task.fromResult(new Bridge.Exception("Success"));
+                                    if (throwException) {
+                                        $step = 4;
+                                        continue;
+                                    } 
+                                    $step = 5;
+                                    continue;
+                                }
+                                case 4: {
+                                    throw new Bridge.Exception("test");
+                                    $step = 5;
+                                    continue;
+                                }
+                                case 5: {
+                                    
+                                    $task1 = task;
+                                    $step = 6;
+                                    $task1.continueWith($asyncBody);
+                                    return;
+                                }
+                                case 6: {
+                                    $taskResult1 = $task1.getResult();
+                                    $returnTask.setResult($taskResult1);
+                                    return;
+                                }
+                                case 7: {
+                                    $returnTask.setResult(new Bridge.Exception("Fail: " + exception.getMessage()));
+                                    return;
+                                }
+                                case 8: {
+                                    $returnTask.setResult(null);
+                                    return;
+                                }
+                                default: {
+                                    $returnTask.setResult(null);
+                                    return;
+                                }
+                            }
+                        }
+                    } catch($e1) {
+                        $e1 = Bridge.Exception.create($e1);
+                        if ( $step >= 3 && $step <= 6 ){
+                            exception = $e1;
+                            $step = 7;
+                            setTimeout($asyncBody, 0);
+                            return;
+                        }
+                        $returnTask.setError($e1);
+                    }
+                }, arguments);
+
+            $asyncBody();
+            return $returnTask;
+        },
+        testUseCase: function () {
+            var $step = 0,
+                $task1, 
+                $taskResult1, 
+                $task2, 
+                $taskResult2, 
+                $jumpFromFinally, 
+                res, 
+                $asyncBody = Bridge.fn.bind(this, function () {
+                    for (;;) {
+                        $step = Bridge.Array.min([0,1,2], $step);
+                        switch ($step) {
+                            case 0: {
+                                //TODO Async 
+                                $task2 = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge830).testMethod("", false);
+                                $step = 1;
+                                $task2.continueWith($asyncBody, true);
+                                return;
+                            }
+                            case 1: {
+                                $taskResult2 = $task2.getResult();
+                                res = $taskResult2;
+                                Bridge.get(Bridge.Test.Assert).areEqual(res.getMessage(), "Success");
+                                
+                                $task1 = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge830).testMethod("", true);
+                                $step = 2;
+                                $task1.continueWith($asyncBody, true);
+                                return;
+                            }
+                            case 2: {
+                                $taskResult1 = $task1.getResult();
+                                res = $taskResult1;
+                                Bridge.get(Bridge.Test.Assert).areEqual(res.getMessage(), "Fail: test");
+                                return;
+                            }
+                            default: {
+                                return;
+                            }
+                        }
+                    }
+                }, arguments);
+
+            $asyncBody();
+        }
+    }
+});
+
 Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge835', {
     statics: {
         testUseCase: function () {
@@ -8390,7 +8531,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine("got " + enm.getCurrent$1());
         }
 
-        this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\ngot -1\r\n");
+        this.assertEqual(sb.toString(), "yielding 0\nyielding 1\nyielding -1\nin finally\ngot 0\ngot 1\ngot -1\n");
     },
     prematureDisposalOfIEnumeratorIteratorExecutesFinallyBlocks: function () {
         //TODO expected for v1: yield iterator works with no state machine
@@ -8404,7 +8545,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
         }
         enm.dispose();
 
-        this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding 2\r\nyielding 3\r\nyielding 4\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\n");
+        this.assertEqual(sb.toString(), "yielding 0\nyielding 1\nyielding 2\nyielding 3\nyielding 4\nyielding -1\nin finally\ngot 0\ngot 1\n");
     },
     exceptionInIEnumeratorIteratorBodyExecutesFinallyBlocks: function () {
         //TODO expected for v1: yield iterator works with no state machine
@@ -8424,7 +8565,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine("caught exception");
         }
 
-        this.assertEqual(sb.toString(), "yielding 1\r\nyielding 2\r\nthrowing\r\nin finally\r\ncaught exception\r\n");
+        this.assertEqual(sb.toString(), "yielding 1\nyielding 2\nthrowing\nin finally\ncaught exception\n");
     },
     typeReturnedByIteratorBlockReturningIEnumerableImplementsThatInterface: function () {
         var enm = new Bridge.ClientTest.Collections.Generic.IteratorBlockTests.C(new Bridge.Text.StringBuilder()).getEnumerable(0);
@@ -8449,7 +8590,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine("got " + i1);
         }
 
-        this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\ngot -1\r\n-\r\ngot 0\r\ngot 1\r\ngot -1\r\n");
+        this.assertEqual(sb.toString(), "yielding 0\nyielding 1\nyielding -1\nin finally\ngot 0\ngot 1\ngot -1\n-\ngot 0\ngot 1\ngot -1\n");
     },
     prematureDisposalOfIEnumerableIteratorExecutesFinallyBlocks: function () {
         var $t;
@@ -8466,7 +8607,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             }
         }
 
-        this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding 2\r\nyielding 3\r\nyielding 4\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\n");
+        this.assertEqual(sb.toString(), "yielding 0\nyielding 1\nyielding 2\nyielding 3\nyielding 4\nyielding -1\nin finally\ngot 0\ngot 1\n");
     },
     exceptionInIEnumerableIteratorBodyExecutesFinallyBlocks: function () {
         //TODO expected for v1: yield iterator works with no state machine
@@ -8488,7 +8629,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine("caught exception");
         }
 
-        this.assertEqual(sb.toString(), "yielding 1\r\nyielding 2\r\nthrowing\r\nin finally\r\ncaught exception\r\n");
+        this.assertEqual(sb.toString(), "yielding 1\nyielding 2\nthrowing\nin finally\ncaught exception\n");
     },
     enumeratingAnIteratorBlockReturningIEnumerableMultipleTimesUsesTheInitialValuesForParameters: function () {
         var $t, $t1;
@@ -8506,7 +8647,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine(i1.toString());
         }
 
-        this.assertEqual(sb.toString(), "3\r\n2\r\n1\r\n3\r\n2\r\n1\r\n");
+        this.assertEqual(sb.toString(), "3\n2\n1\n3\n2\n1\n");
     },
     differentGetEnumeratorCallsOnIteratorBlockReturningIEnumerableGetOwnCopiesOfLocals: function () {
         var sb = new Bridge.Text.StringBuilder();
@@ -8521,7 +8662,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine(enm2.getCurrent$1().toString());
         }
 
-        this.assertEqual(sb.toString(), "0\r\n0\r\n1\r\n1\r\n2\r\n2\r\n-1\r\n-1\r\n");
+        this.assertEqual(sb.toString(), "0\n0\n1\n1\n2\n2\n-1\n-1\n");
     }
 });
 
