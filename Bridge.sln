@@ -38,12 +38,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Testing\tests\cli
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{42D82A7C-EC6C-4C9F-A169-3F22275ED2BB}"
 	ProjectSection(SolutionItems) = preProject
-		.nuget\Bridge.Compiler.nuspec = .nuget\Bridge.Compiler.nuspec
-		.nuget\Bridge.Contract.nuspec = .nuget\Bridge.Contract.nuspec
-		.nuget\Bridge.Dev.nuspec = .nuget\Bridge.Dev.nuspec
-		.nuget\Bridge.Html5.Dev.nuspec = .nuget\Bridge.Html5.Dev.nuspec
-		.nuget\Bridge.nuspec = .nuget\Bridge.nuspec
-		.nuget\NuGet.Build.Package.targets = .nuget\NuGet.Build.Package.targets
 		.nuget\NuGet.Config = .nuget\NuGet.Config
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
@@ -77,9 +71,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "www", "www", "{F8D2127F-704
 		Testing\www\testTypeScript.html = Testing\www\testTypeScript.html
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".common", ".common", "{00CA952C-4292-47FC-8D03-B525B294B846}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{00CA952C-4292-47FC-8D03-B525B294B846}"
 	ProjectSection(SolutionItems) = preProject
 		.common\CommonAssemblyInfo.cs = .common\CommonAssemblyInfo.cs
+		.build\NuGet.Build.Package.targets = .build\NuGet.Build.Package.targets
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clientOne", "Testing\tests\clientOne\clientOne.csproj", "{AE48EC97-AFCB-49ED-82F6-8863F9860C9C}"
@@ -88,6 +83,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clientOne", "Testing\tests\
 		{28703D12-116A-4968-BD85-F26D7F7E7DA4} = {28703D12-116A-4968-BD85-F26D7F7E7DA4}
 		{44124331-C60A-4071-B387-4B8E71324B10} = {44124331-C60A-4071-B387-4B8E71324B10}
 		{52AE9E3E-6929-4720-AB7A-F9F22B9A8972} = {52AE9E3E-6929-4720-AB7A-F9F22B9A8972}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "specs", "specs", "{E12E9F2A-984B-4340-A62E-E356C716358E}"
+	ProjectSection(SolutionItems) = preProject
+		.build\specs\Bridge.Compiler.nuspec = .build\specs\Bridge.Compiler.nuspec
+		.build\specs\Bridge.Contract.nuspec = .build\specs\Bridge.Contract.nuspec
+		.build\specs\Bridge.Dev.nuspec = .build\specs\Bridge.Dev.nuspec
+		.build\specs\Bridge.Html5.Dev.nuspec = .build\specs\Bridge.Html5.Dev.nuspec
+		.build\specs\Bridge.nuspec = .build\specs\Bridge.nuspec
 	EndProjectSection
 EndProject
 Global
@@ -157,5 +161,6 @@ Global
 		{6E1D7559-DAA0-41B7-B0E5-8E106072D704} = {47D6D365-36CE-43C2-91D0-5A071928C62A}
 		{F8D2127F-7042-40D2-8ABC-0E3F58D09C42} = {4466FE4E-78E3-46A8-BAA4-C304D7FFABD9}
 		{AE48EC97-AFCB-49ED-82F6-8863F9860C9C} = {4466FE4E-78E3-46A8-BAA4-C304D7FFABD9}
+		{E12E9F2A-984B-4340-A62E-E356C716358E} = {00CA952C-4292-47FC-8D03-B525B294B846}
 	EndGlobalSection
 EndGlobal

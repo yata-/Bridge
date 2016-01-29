@@ -288,7 +288,7 @@
     <Compile Include="Node\TextDirection.cs" />
     <Compile Include="Performance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="..\.common\CommonAssemblyInfo.cs">
+    <Compile Include="..\.build\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ReadyState.cs" />
@@ -330,17 +330,17 @@
     <NuGetBuildPackage>true</NuGetBuildPackage>
   </PropertyGroup>
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <NuGetPackageSourcePath Include="$(SolutionDir).nuget\Bridge.Html5.Dev.nuspec">
-      <Path>$(SolutionDir).nuget\Bridge.Html5.Dev.nuspec</Path>
+    <NuGetPackageSourcePath Include="$(SolutionDir).build\specs\Bridge.Html5.Dev.nuspec">
+      <Path>$(SolutionDir).build\specs\Bridge.Html5.Dev.nuspec</Path>
     </NuGetPackageSourcePath>
   </ItemGroup>
-  <Import Project="$(SolutionDir)\.nuget\NuGet.Build.Package.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.Build.Package.targets')" />
-  <Target Name="CleanBridge" BeforeTargets="Clean">
+  <Import Project="$(SolutionDir)\.build\NuGet.Build.Package.targets" />
+  <Target Name="CleanProjectNuGetOutput" BeforeTargets="Clean">
     <ItemGroup>
-      <BridgeFilesToDelete Include="$(ProjectDir)$(OutDir)Bridge.*.nupkg" />
+      <FilesToDelete Include="$(ProjectDir)$(OutDir)Bridge.*.nupkg" />
     </ItemGroup>
     <Message Text="Cleaning NuGet packages in $(ProjectDir)$(OutDir)" Importance="high" />
-    <Delete Files="@(BridgeFilesToDelete)" ContinueOnError="true" />
+    <Delete Files="@(FilesToDelete)" ContinueOnError="true" />
   </Target>
   <!-- NuGet packaging finishes -->
 </Project>
