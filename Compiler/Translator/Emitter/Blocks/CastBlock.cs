@@ -265,15 +265,7 @@ namespace Bridge.Translator
             }
             else if (resolveResult.Type.Kind == TypeKind.Array)
             {
-                var typedArrayName = Helpers.GetTypedArrayName(resolveResult.Type);
-                if (typedArrayName != null && this.Emitter.AssemblyInfo.UseTypedArrays)
-                {
-                    this.Write(typedArrayName);
-                }
-                else
-                {
-                    this.Write("Array");
-                }
+                this.EmitArray(resolveResult.Type);
             }
             else
             {
@@ -293,15 +285,7 @@ namespace Bridge.Translator
             }
             else if (iType.Kind == TypeKind.Array)
             {
-                var typedArrayName = Helpers.GetTypedArrayName(iType);
-                if (typedArrayName != null && this.Emitter.AssemblyInfo.UseTypedArrays)
-                {
-                    this.Write(typedArrayName);
-                }
-                else
-                {
-                    this.Write("Array");
-                }
+                this.EmitArray(iType);
             }
             else if (iType.Kind == TypeKind.Anonymous)
             {
@@ -336,6 +320,19 @@ namespace Bridge.Translator
             }
 
             return null;
+        }
+
+        private void EmitArray(IType iType)
+        {
+            string typedArrayName = null;
+            if (this.Emitter.AssemblyInfo.UseTypedArrays && (typedArrayName = Helpers.GetTypedArrayName(iType)) != null)
+            {
+                this.Write(typedArrayName);
+            }
+            else
+            {
+                this.Write("Array");
+            }
         }
 
         private IMethod GetCastMethod(IType fromType, IType toType, out string template)

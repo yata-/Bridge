@@ -35,8 +35,8 @@ namespace Bridge.Translator
 
             if (arrayCreateExpression.Initializer.IsNull && rank == 1)
             {
-                var typedArrayName = Helpers.GetTypedArrayName(at.ElementType);
-                if (this.Emitter.AssemblyInfo.UseTypedArrays && typedArrayName != null)
+                string typedArrayName = null;
+                if (this.Emitter.AssemblyInfo.UseTypedArrays && (typedArrayName = Helpers.GetTypedArrayName(at.ElementType)) != null)
                 {
                     this.Write("new ", typedArrayName, "(");
                     arrayCreateExpression.Arguments.First().AcceptVisitor(this.Emitter);
