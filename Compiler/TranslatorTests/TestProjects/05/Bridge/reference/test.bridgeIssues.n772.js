@@ -6,14 +6,14 @@ Bridge.define('Test.BridgeIssues.N772.App', {
     statics: {
         main: function () {
             //These arrays depend on "useTypedArray" bridge.json option
-            var byteArray = new Uint8Array(1);
-            var sbyteArray = new Int8Array(2);
-            var shortArray = new Int16Array(3);
-            var ushortArray = new Uint16Array(4);
-            var intArray = new Int32Array(5);
-            var uintArray = new Uint32Array(6);
-            var floatArray = new Float32Array(7);
-            var doubleArray = new Float64Array(8);
+            var byteArray = Bridge.Array.init(1, 0);
+            var sbyteArray = Bridge.Array.init(2, 0);
+            var shortArray = Bridge.Array.init(3, 0);
+            var ushortArray = Bridge.Array.init(4, 0);
+            var intArray = Bridge.Array.init(5, 0);
+            var uintArray = Bridge.Array.init(6, 0);
+            var floatArray = Bridge.Array.init(7, 0);
+            var doubleArray = Bridge.Array.init(8, 0);
 
             //These arrays do not depend on "useTypedArray" bridge.json option
             var stringArray = Bridge.Array.init(9, null);
@@ -34,20 +34,6 @@ Bridge.define('Test.BridgeIssues.N772.App', {
     }
 });
 
-Bridge.define('TestProject1.TestClassA', {
-    config: {
-        properties: {
-            Value1: 0
-        }
-    }
-});
 
-Bridge.define('TestProject2.TestClassB', {
-    config: {
-        properties: {
-            Value1: 0
-        }
-    }
-});
 
 Bridge.init();

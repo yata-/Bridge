@@ -252,6 +252,12 @@ namespace Bridge.Translator
             set;
         }
 
+        public bool UseTypedArrays
+        {
+            get;
+            set;
+        }
+
         public bool IgnoreCast
         {
             get;

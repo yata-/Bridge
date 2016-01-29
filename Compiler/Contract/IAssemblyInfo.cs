@@ -231,6 +231,12 @@ namespace Bridge.Contract
             set;
         }
 
+        bool UseTypedArrays
+        {
+            get;
+            set;
+        }
+
         bool IgnoreCast
         {
             get;

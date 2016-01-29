@@ -7106,6 +7106,50 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge762', {
     }
 });
 
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge772', {
+    statics: {
+        testUseCase: function () {
+            //These arrays depend on "useTypedArray" bridge.json option
+            var byteArray = Bridge.Array.init(1, 0);
+            var sbyteArray = Bridge.Array.init(2, 0);
+            var shortArray = Bridge.Array.init(3, 0);
+            var ushortArray = Bridge.Array.init(4, 0);
+            var intArray = Bridge.Array.init(5, 0);
+            var uintArray = Bridge.Array.init(6, 0);
+            var floatArray = Bridge.Array.init(7, 0);
+            var doubleArray = Bridge.Array.init(8, 0);
+
+            //These arrays do not depend on "useTypedArray" bridge.json option
+            var stringArray = Bridge.Array.init(9, null);
+            var decimalArray = Bridge.Array.init(10, 0);
+
+            byteArray[0] = 1;
+            sbyteArray[0] = 2;
+            shortArray[0] = 3;
+            ushortArray[0] = 4;
+            intArray[0] = 5;
+            uintArray[0] = 6;
+            floatArray[0] = 7;
+            doubleArray[0] = 8;
+
+            stringArray[0] = "9";
+            decimalArray[0]  = Bridge.Decimal(10.0);
+
+            Bridge.get(Bridge.Test.Assert).areEqual$1(byteArray[0], 1, "get byteArray[0]");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(sbyteArray[0], 2, "get sbyteArray[0]");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(shortArray[0], 3, "get shortArray[0]");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ushortArray[0], 4, "get ushortArray[0]");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(intArray[0], 5, "get intArray[0]");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(uintArray[0], 6, "get uintArray[0]");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(floatArray[0], 7, "get floatArray[0]");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(doubleArray[0], 8, "get doubleArray[0]");
+
+            Bridge.get(Bridge.Test.Assert).areEqual$1(stringArray[0], "9", "get stringArray[0]");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(decimalArray[0], Bridge.Decimal(10.0), "get decimalArray[0]");
+        }
+    }
+});
+
 Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge777', {
     statics: {
         config: {
