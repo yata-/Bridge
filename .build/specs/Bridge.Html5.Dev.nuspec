@@ -21,10 +21,12 @@
     </frameworkAssemblies>
   </metadata>
   <files>
-<!--BRIDGE-->
+    <!--content-->
+    <file src="..\..\..\Bridge\Bridge\build\package\LICENSE.txt" target="content\App_Readme\Bridge.NET\LICENSE.txt"/>
+
     <!--NET40-->
-    <file src="..\..\Bridge\Html5\bin\Release\Bridge.Html5.dll" target="lib\net40\Bridge.Html5.dll"/>
-    <file src="..\..\Bridge\Html5\bin\Release\Bridge.Html5.xml" target="lib\net40\Bridge.Html5.xml"/>
-    <file src="..\..\Bridge\Html5\bin\Release\Bridge.Html5.pdb" target="lib\net40\pdb\Bridge.Html5.pdb"/>
+    <file src="..\..\..\Bridge\Html5\bin\Release\Bridge.Html5.dll" target="lib\net40\Bridge.Html5.dll"/>
+    <file src="..\..\..\Bridge\Html5\bin\Release\Bridge.Html5.xml" target="lib\net40\Bridge.Html5.xml"/>
+    <file src="..\..\..\Bridge\Html5\bin\Release\Bridge.Html5.pdb" target="lib\net40\pdb\Bridge.Html5.pdb"/>
   </files>
 </package>
