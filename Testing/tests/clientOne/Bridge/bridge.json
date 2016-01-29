@@ -1,0 +1,10 @@
+﻿{
+  "output": "..\\..\\www\\jsOne",
+  "cleanOutputFolderBeforeBuild": true,
+  "outputFormatting": "Formatted",
+  "fileName": "code.js",
+  "outputBy": "Project",
+  "loggerLevel": "Trace",
+
+  "useTypedArrays": true
+}
