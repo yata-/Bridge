@@ -81,7 +81,7 @@
       <Output TaskParameter="Assemblies" ItemName="AssemblyInfo"/>
     </GetAssemblyIdentity>
 
-    <Message Condition="$(NuGetUseExplicitVersion) == 'false'" Text="Retrieved assembly version from Bridge.dll %(AssemblyInfo.Version)" Importance="high" />
+    <Message Condition="$(NuGetUseExplicitVersion) == 'false'" Text="Retrieved assembly version from $(ProjectDir)$(OutDir)$(AssemblyName).dll %(AssemblyInfo.Version)" Importance="high" />
     <Message Condition="$(NuGetUseExplicitVersion) == 'true'" Text="Will use package version from nuspec" Importance="high" />
 
     <PropertyGroup>
