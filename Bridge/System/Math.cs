@@ -30,84 +30,42 @@ namespace System
         [Name(false)]
         public static readonly double SQRT2 = 0;
 
-        public static int Abs(int x)
-        {
-            return 0;
-        }
+        public static extern int Abs(int x);
 
-        public static double Abs(double x)
-        {
-            return 0;
-        }
+        public static extern double Abs(double x);
 
-        public static double Abs(long x)
-        {
-            return 0;
-        }
+        public static extern double Abs(long x);
 
         [Template("{l}.abs()")]
         public static extern decimal Abs(decimal l);
 
-        public static int Max(params int[] values)
-        {
-            return 0;
-        }
+        public static extern int Max(params int[] values);
 
-        public static double Max(params double[] values)
-        {
-            return 0;
-        }
+        public static extern double Max(params double[] values);
 
-        public static double Max(params long[] values)
-        {
-            return 0;
-        }
+        public static extern double Max(params long[] values);
 
-        public static double Max(params ulong[] values)
-        {
-            return 0;
-        }
+        public static extern double Max(params ulong[] values);
 
         [Template("Bridge.Decimal.max({*values})")]
         public static extern decimal Max(params decimal[] values);
 
-        public static int Min(params int[] values)
-        {
-            return 0;
-        }
+        public static extern int Min(params int[] values);
 
-        public static double Min(params double[] values)
-        {
-            return 0;
-        }
+        public static extern double Min(params double[] values);
 
-        public static double Min(params long[] values)
-        {
-            return 0;
-        }
+        public static extern double Min(params long[] values);
 
-        public static double Min(params ulong[] values)
-        {
-            return 0;
-        }
+        public static extern double Min(params ulong[] values);
 
         [Template("Bridge.Decimal.min({*values})")]
         public static extern decimal Min(params decimal[] values);
 
-        public static double Random()
-        {
-            return 0;
-        }
+        public static extern double Random();
 
-        public static double Sqrt(int x)
-        {
-            return 0;
-        }
+        public static extern double Sqrt(int x);
 
-        public static double Sqrt(double x)
-        {
-            return 0;
-        }
+        public static extern double Sqrt(double x);
 
         [Template("{d}.ceil()")]
         public static extern decimal Ceiling(decimal d);
@@ -115,19 +73,13 @@ namespace System
         [Name("ceil")]
         public static extern double Ceiling(double d);
 
-        public static double Floor(double x)
-        {
-            return 0;
-        }
+        public static extern double Floor(double x);
 
         [Template("{d}.floor()")]
         public static extern decimal Floor(decimal d);
 
         [Template("Bridge.Decimal.round({x}, 6)")]
-        public static decimal Round(decimal x)
-        {
-            return 0;
-        }
+        public static extern decimal Round(decimal x);
 
         [Template("Bridge.Math.round({d}, 0, 6)")]
         public static extern double Round(double d);
@@ -156,90 +108,42 @@ namespace System
         [Template("{x} - ({y} * Math.round({x} / {y}))")]
         public static extern double IEEERemainder(double x, double y);
 
-        public static double Exp(double x)
-        {
-            return 0;
-        }
+        public static extern double Exp(double x);
 
         [Template("{x}.exponential()")]
-        public static decimal Exp(decimal x)
-        {
-            return 0;
-        }
+        public static extern decimal Exp(decimal x);
 
         [Template("{x}.ln()")]
-        public static decimal Ln(decimal x)
-        {
-            return 0;
-        }
+        public static extern decimal Ln(decimal x);
 
         [Template("{x}.log({logBase})")]
-        public static decimal Log(decimal x, decimal logBase)
-        {
-            return 0;
-        }
+        public static extern decimal Log(decimal x, decimal logBase);
 
         [Template("{x}.pow({y})")]
-        public static decimal Pow(decimal x, decimal y)
-        {
-            return 0;
-        }
+        public static extern decimal Pow(decimal x, decimal y);
 
         [Template("{x}.sqrt()")]
-        public static decimal Sqrt(decimal x)
-        {
-            return 0;
-        }
+        public static extern decimal Sqrt(decimal x);
 
-        public static double Log(double x)
-        {
-            return 0;
-        }
+        public static extern double Log(double x);
 
-        public static double Pow(double x, double y)
-        {
-            return 0;
-        }
+        public static extern double Pow(double x, double y);
 
-        public static double Pow(int x, int y)
-        {
-            return 0;
-        }
+        public static extern double Pow(int x, int y);
 
-        public static double Acos(double x)
-        {
-            return 0;
-        }
+        public static extern double Acos(double x);
 
-        public static double Asin(double x)
-        {
-            return 0;
-        }
+        public static extern double Asin(double x);
 
-        public static double Atan(double x)
-        {
-            return 0;
-        }
+        public static extern double Atan(double x);
 
-        public static double Atan2(double y, double x)
-        {
-            return 0;
-        }
+        public static extern double Atan2(double y, double x);
 
-        public static double Cos(double x)
-        {
-            return 0;
-        }
+        public static extern double Cos(double x);
 
-        public static double Sin(double x)
-        {
-            return 0;
-        }
+        public static extern double Sin(double x);
 
-        public static double Tan(double x)
-        {
-            return 0;
-        }
+        public static extern double Tan(double x);
 
         [Template("Bridge.Int.trunc({d})")]
         public static extern double Truncate(double d);

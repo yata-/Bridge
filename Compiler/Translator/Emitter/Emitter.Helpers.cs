@@ -122,22 +122,73 @@ namespace Bridge.Translator
             return this.GetAttribute(method.Attributes, "Delegate") != null;
         }
 
+        public virtual Tuple<bool, bool, string> GetInlineCode(MemberReferenceExpression node)
+        {
+            var member = LiftNullableMember(node);
+            return GetInlineCodeFromMember(member, node);
+        }
+        
         public virtual Tuple<bool, bool, string> GetInlineCode(InvocationExpression node)
         {
-            var resolveResult = this.Resolver.ResolveNode(node, this);
-            var memberResolveResult = resolveResult as MemberResolveResult;
-
-            if (memberResolveResult == null)
+            var target = node.Target as MemberReferenceExpression;
+            IMember member = null;
+            if (target != null)
             {
-                return new Tuple<bool, bool, string>(false, false, null);
+                member = LiftNullableMember(target);
             }
 
-            var member = memberResolveResult.Member;
+            return GetInlineCodeFromMember(member, node);
+        }
+
+        private Tuple<bool, bool, string> GetInlineCodeFromMember(IMember member, Expression node)
+        {
+            if (member == null)
+            {
+                var resolveResult = this.Resolver.ResolveNode(node, this);
+                var memberResolveResult = resolveResult as MemberResolveResult;
+
+                if (memberResolveResult == null)
+                {
+                    return new Tuple<bool, bool, string>(false, false, null);
+                }
+
+                member = memberResolveResult.Member;
+            }
+
+
             bool isInlineMethod = this.IsInlineMethod(member);
             var inlineCode = isInlineMethod ? null : this.GetInline(member);
             var isStatic = member.IsStatic;
 
             return new Tuple<bool, bool, string>(isStatic, isInlineMethod, inlineCode);
+        }
+
+        private IMember LiftNullableMember(MemberReferenceExpression target)
+        {
+            var targetrr = this.Resolver.ResolveNode(target.Target, this);
+            IMember member = null;
+            if (targetrr.Type.IsKnownType(KnownTypeCode.NullableOfT))
+            {
+                string name = null;
+                int count = 0;
+                if (target.MemberName == "ToString" || target.MemberName == "GetHashCode")
+                {
+                    name = target.MemberName;
+                }
+                else if (target.MemberName == "Equals")
+                {
+                    name = target.MemberName;
+                    count = 1;
+                }
+
+                if (name != null)
+                {
+                    var type = ((ParameterizedType) targetrr.Type).TypeArguments[0];
+                    member = type.GetMethods(null, GetMemberOptions.IgnoreInheritedMembers)
+                            .FirstOrDefault(m => m.Name == name && m.Parameters.Count == count);
+                }
+            }
+            return member;
         }
 
         public virtual bool IsForbiddenInvocation(InvocationExpression node)

@@ -20,7 +20,7 @@ namespace Bridge.Translator
             set;
         }
 
-        public Action<string, string> Log
+        public ILogger Log
         {
             get;
             set;
@@ -175,6 +175,21 @@ namespace Bridge.Translator
         }
 
         public virtual IEnumerable<AssemblyDefinition> References
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Indicates whether strict mode and global header will be added to generated script files
+        /// </summary>
+        public bool NoStrictModeAndGlobal
+        {
+            get;
+            set;
+        }
+
+        public string[] SkipPluginAssemblies
         {
             get;
             set;

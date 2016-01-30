@@ -161,10 +161,7 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="e">Required. Reference to an event object to be dispatched.</param>
         /// <returns>Boolean that indicates whether the default action of the event was not canceled.</returns>
-        public new virtual bool DispatchEvent(Event e)
-        {
-            return false;
-        }
+        public new virtual extern bool DispatchEvent(Event e);
 
         /// <summary>
         /// Returns the value of a specified attribute on the element. If the given attribute does not exist, the value returned will either be null or "" (the empty string)
@@ -172,10 +169,7 @@ namespace Bridge.Html5
         /// <param name="attributeName">name of the attribute whose value you want to get.</param>
         /// <returns>string containing the value of attributeName.</returns>
         ///
-        public virtual string GetAttribute(string attributeName)
-        {
-            return null;
-        }
+        public virtual extern string GetAttribute(string attributeName);
 
         /// <summary>
         ///  returns the string value of the attribute with the specified namespace and name. If the named attribute does not exist, the value returned will either be null or "" (the empty string);
@@ -183,48 +177,33 @@ namespace Bridge.Html5
         /// <param name="namespace">The namespace in which to look for the specified attribute.</param>
         /// <param name="attributeName"></param>
         /// <returns>The string value of the specified attribute. If the attribute doesn't exist, the result is null.</returns>
-        public virtual string GetAttributeNS(string @namespace, string attributeName)
-        {
-            return null;
-        }
+        public virtual extern string GetAttributeNS(string @namespace, string attributeName);
 
         /// <summary>
         /// The Element.getBoundingClientRect() method returns a text rectangle object that encloses a group of text rectangles.
         /// </summary>
         /// <returns></returns>
-        public virtual ClientRect GetBoundingClientRect()
-        {
-            return null;
-        }
+        public virtual extern ClientRect GetBoundingClientRect();
 
         /// <summary>
         /// The Element.getClientRects() method returns a collection of rectangles that indicate the bounding rectangles for each box in a client.
         /// </summary>
         /// <returns></returns>
-        public virtual ClientRectList GetClientRects()
-        {
-            return null;
-        }
+        public virtual extern ClientRectList GetClientRects();
 
         /// <summary>
         /// Returns an array-like object of all child elements which have all of the given class names.
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public virtual HTMLCollection GetElementsByClassName(string name)
-        {
-            return null;
-        }
+        public virtual extern HTMLCollection GetElementsByClassName(string name);
 
         /// <summary>
         /// Retrieve a set of all descendant elements, of a particular tag name, from the current element.
         /// </summary>
         /// <param name="tagName"></param>
         /// <returns></returns>
-        public virtual HTMLCollection GetElementsByTagName(string tagName)
-        {
-            return null;
-        }
+        public virtual extern HTMLCollection GetElementsByTagName(string tagName);
 
         /// <summary>
         /// Retrieve a set of all descendant elements, of a particular tag name and namespace, from the current element.
@@ -232,20 +211,14 @@ namespace Bridge.Html5
         /// <param name="namespaceURI">namespace URI of elements to look for</param>
         /// <param name="localName">local name of elements to look for or the special value "*", which matches all elements </param>
         /// <returns></returns>
-        public virtual HTMLCollection GetElementsByTagNameNS(string namespaceURI, string localName)
-        {
-            return null;
-        }
+        public virtual extern HTMLCollection GetElementsByTagNameNS(string namespaceURI, string localName);
 
         /// <summary>
         /// Check if the element has the specified attribute, or not.
         /// </summary>
         /// <param name="attName">string representing the name of the attribute.</param>
         /// <returns>holds the return value true or false.</returns>
-        public virtual bool HasAttribute(string attName)
-        {
-            return false;
-        }
+        public virtual extern bool HasAttribute(string attName);
 
         /// <summary>
         /// Check if the element has the specified attribute, in the specified namespace, or not.
@@ -253,71 +226,52 @@ namespace Bridge.Html5
         /// <param name="namespace">string specifying the namespace of the attribute.</param>
         /// <param name="localName">name of the attribute.</param>
         /// <returns></returns>
-        public virtual bool HasAttributeNS(string @namespace, string localName)
-        {
-            return false;
-        }
+        public virtual extern bool HasAttributeNS(string @namespace, string localName);
 
         /// <summary>
         /// Returns the first element that is a descendant of the element on which it is invoked that matches the specified group of selectors.
         /// </summary>
         /// <param name="selectors">selectors is a group of selectors to match on.</param>
         /// <returns></returns>
-        public virtual Node QuerySelector(string selectors)
-        {
-            return null;
-        }
+        public virtual extern Node QuerySelector(string selectors);
 
         /// <summary>
         /// Returns a non-live NodeList of all elements descended from the element on which it is invoked that match the specified group of CSS selectors.
         /// </summary>
         /// <param name="selectors">selectors is a group of selectors to match on.</param>
         /// <returns></returns>
-        public virtual NodeList QuerySelectorAll(string selectors)
-        {
-            return null;
-        }
+        public virtual extern NodeList QuerySelectorAll(string selectors);
 
         /// <summary>
         /// The ChildNode.remove method removes the object from the tree it belongs to.
         /// </summary>
-        public virtual void Remove()
-        {
-        }
+        public virtual extern void Remove();
 
         /// <summary>
         /// Removes an attribute from the specified element.
         /// </summary>
         /// <param name="attrName">String that names the attribute to be removed from element.</param>
-        public virtual void RemoveAttribute(string attrName)
-        {
-        }
+        public virtual extern void RemoveAttribute(string attrName);
 
         /// <summary>
         /// Remove the attribute with the specified name and namespace, from the current node.
         /// </summary>
         /// <param name="namespaceURI">String that contains the namespace of the attribute.</param>
         /// <param name="attrName">String that names the attribute to be removed from the current node.</param>
-        public virtual void RemoveAttributeNS(string namespaceURI, string attrName)
-        {
-        }
+        public virtual extern void RemoveAttributeNS(string namespaceURI, string attrName);
 
         /// <summary>
         /// Scrolls the page until the element gets into the view.
         /// </summary>
         /// <param name="alignWithTop">If true, the scrolled element is aligned with the top of the scroll area. If false, it is aligned with the bottom.</param>
-        public virtual void ScrollIntoView(bool alignWithTop)
-        {
-        }
+        public virtual extern void ScrollIntoView(bool alignWithTop);
 
         /// <summary>
         /// Adds a new attribute or changes the value of an existing attribute on the specified element.
         /// </summary>
         /// <param name="name">the name of the attribute as a string.</param>
         /// <param name="value">the desired new value of the attribute.</param>
-        public virtual void SetAttribute(string name, string value)
-        {
-        }
+        public virtual extern void SetAttribute(string name, string value);
 
         /// <summary>
         /// Adds a new attribute or changes the value of an attribute with the given namespace and name.
@@ -325,33 +279,25 @@ namespace Bridge.Html5
         /// <param name="namespaceURI">String specifying the namespace of the attribute.</param>
         /// <param name="name">string identifying the attribute to be set.</param>
         /// <param name="value">the desired string value of the new attribute.</param>
-        public virtual void SetAttributeNS(string namespaceURI, string name, string value)
-        {
-        }
+        public virtual extern void SetAttributeNS(string namespaceURI, string name, string value);
 
         /// <summary>
         /// Call this method during the handling of a mousedown event to retarget all mouse events to this element until the mouse button is released or document.releaseCapture() is called.
         /// </summary>
-        public virtual void SetCapture()
-        {
-        }
+        public virtual extern void SetCapture();
 
         /// <summary>
         /// Call this method during the handling of a mousedown event to retarget all mouse events to this element until the mouse button is released or document.releaseCapture() is called.
         /// </summary>
         /// <param name="retargetToElement">If true, all events are targeted directly to this element; if false, events can also fire at descendants of this element.</param>
-        public virtual void SetCapture(bool retargetToElement)
-        {
-        }
+        public virtual extern void SetCapture(bool retargetToElement);
 
         /// <summary>
         /// Parses the specified text as HTML or XML and inserts the resulting nodes into the DOM tree at a specified position. It does not reparse the element it is being used on and thus it does not corrupt the existing elements inside the element. This, and avoiding the extra step of serialization make it much faster than direct innerHTML manipulation.
         /// </summary>
         /// <param name="position">The position relative to the element</param>
         /// <param name="text">String to be parsed as HTML or XML and inserted into the tree.</param>
-        public virtual void InsertAdjacentHTML(InsertPosition position, string text)
-        {
-        }
+        public virtual extern void InsertAdjacentHTML(InsertPosition position, string text);
 
         /// <summary>
         /// The access key assigned to the element.
@@ -821,23 +767,17 @@ namespace Bridge.Html5
         /// <summary>
         /// Removes keyboard focus from the currently focused element.
         /// </summary>
-        public virtual void Blur()
-        {
-        }
+        public virtual extern void Blur();
 
         /// <summary>
         /// Sends a mouse click event to the element.
         /// </summary>
-        public virtual void Click()
-        {
-        }
+        public virtual extern void Click();
 
         /// <summary>
         /// Makes the element the current keyboard focus.
         /// </summary>
-        public virtual void Focus()
-        {
-        }
+        public virtual extern void Focus();
     }
 
     /// <summary>

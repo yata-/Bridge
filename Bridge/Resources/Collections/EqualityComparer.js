@@ -12,7 +12,17 @@ Bridge.Class.generic('Bridge.EqualityComparer$1', function (T) {
             } else if (Bridge.isDefined(y, true)) {
                 var isBridge = x && x.$$name;
 
-                return (!isBridge || Bridge.isFunction(x.equals)) ? Bridge.equals(x, y) : x === y;
+                if (!isBridge) {
+                    return Bridge.equals(x, y);
+                }
+                else if (Bridge.isFunction(x.equalsT)) {
+                    return Bridge.equalsT(x, y);
+                }
+                else if (Bridge.isFunction(x.equals)) {
+                    return Bridge.equals(x, y);
+                }
+
+                return x === y;
             }
 
             return false;

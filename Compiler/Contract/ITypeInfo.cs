@@ -99,7 +99,7 @@ namespace Bridge.Contract
             get;
         }
 
-        int LastEnumValue
+        object LastEnumValue
         {
             get;
             set;

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Security.Policy;
 
 namespace Bridge.Contract
 {
@@ -207,6 +208,11 @@ namespace Bridge.Contract
 
         public static bool IsIgnoreCast(AstType astType, IEmitter emitter)
         {
+            if (emitter.AssemblyInfo.IgnoreCast)
+            {
+                return true;
+            }
+
             var typeDef = emitter.BridgeTypes.ToType(astType).GetDefinition();
 
             if (typeDef == null)
@@ -259,7 +265,7 @@ namespace Bridge.Contract
             return type.Equals(resolver.Compilation.FindType(KnownTypeCode.Decimal));
         }
 
-        public static void CheckValueTypeClone(ResolveResult resolveResult, Expression expression, IAbstractEmitterBlock block)
+        public static void CheckValueTypeClone(ResolveResult resolveResult, Expression expression, IAbstractEmitterBlock block, int insertPosition)
         {
             if (resolveResult == null || resolveResult.IsError)
             {
@@ -282,6 +288,10 @@ namespace Bridge.Contract
                         ret = false;
                     }
                 }
+                else if (expression.Parent is AssignmentExpression)
+                {
+                    ret = false;
+                }
 
                 if (ret)
                 {
@@ -289,10 +299,21 @@ namespace Bridge.Contract
                 }
             }
 
-            if (resolveResult.Type.Kind == TypeKind.Struct)
+            var nullable = resolveResult.Type.IsKnownType(KnownTypeCode.NullableOfT);
+            var type = nullable ? ((ParameterizedType)resolveResult.Type).TypeArguments[0] : resolveResult.Type;
+            if (type.Kind == TypeKind.Struct)
             {
-                var typeDef = block.Emitter.GetTypeDefinition(resolveResult.Type);
+                var typeDef = block.Emitter.GetTypeDefinition(type);
                 if (block.Emitter.Validator.IsIgnoreType(typeDef))
+                {
+                    return;
+                }
+
+                var mutableFields = type.GetFields(f => !f.IsReadOnly && !f.IsConst, GetMemberOptions.IgnoreInheritedMembers);
+                var autoProps = typeDef.Properties.Where(Helpers.IsAutoProperty);
+                var autoEvents = type.GetEvents(null, GetMemberOptions.IgnoreInheritedMembers);
+
+                if (!mutableFields.Any() && !autoProps.Any() && !autoEvents.Any())
                 {
                     return;
                 }
@@ -303,7 +324,16 @@ namespace Bridge.Contract
 
                 if (field != null && field.IsReadOnly)
                 {
-                    block.Write(".$clone()");
+                    if (nullable)
+                    {
+                        block.Emitter.Output.Insert(insertPosition, "Bridge.Nullable.lift1(\"$clone\", ");
+                        block.WriteCloseParentheses();
+                    }
+                    else
+                    {
+                        block.Write(".$clone()");    
+                    }
+                    
                     return;
                 }
 
@@ -325,7 +355,15 @@ namespace Bridge.Contract
                         }
                     }
 
-                    block.Write(".$clone()");
+                    if (nullable)
+                    {
+                        block.Emitter.Output.Insert(insertPosition, "Bridge.Nullable.lift1(\"$clone\", ");
+                        block.WriteCloseParentheses();
+                    }
+                    else
+                    {
+                        block.Write(".$clone()");
+                    }
                 }
             }
         }
@@ -818,6 +856,17 @@ namespace Bridge.Contract
                     return Helpers.GetInheritedAttribute(member, attrName);
                 }
             }
+            else if (member.ImplementedInterfaceMembers != null && member.ImplementedInterfaceMembers.Count > 0)
+            {
+                foreach (var interfaceMember in member.ImplementedInterfaceMembers)
+                {
+                    var attr = Helpers.GetInheritedAttribute(interfaceMember, attrName);
+                    if (attr != null)
+                    {
+                        return attr;
+                    }
+                }
+            }
 
             return null;
         }
@@ -877,5 +926,30 @@ namespace Bridge.Contract
 
             return null;
         }
+
+        public static string GetTypedArrayName(IType elementType)
+        {
+            switch (elementType.FullName)
+            {
+                case "System.Byte":
+                    return "Uint8Array";
+                case "System.SByte":
+                    return "Int8Array";
+                case "System.Int16":
+                    return "Int16Array";
+                case "System.UInt16":
+                    return "Uint16Array";
+                case "System.Int32":
+                    return "Int32Array";
+                case "System.UInt32":
+                    return "Uint32Array";
+                case "System.Single":
+                    return "Float32Array";
+                case "System.Double":
+                    return "Float64Array";
+            }
+            return null;
+        }
+
     }
 }

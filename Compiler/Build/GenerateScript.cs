@@ -1,9 +1,13 @@
 using Bridge.Contract;
-using Microsoft.Build.Framework;
-using Microsoft.Build.Utilities;
+using Bridge.Translator.Logging;
+
 using System;
 using System.IO;
 using System.Linq;
+
+using Microsoft.Build.Framework;
+using Microsoft.Build.Utilities;
+
 
 namespace Bridge.Build
 {
@@ -69,26 +73,6 @@ namespace Bridge.Build
 
 #endif
 
-        protected virtual void LogMessage(string level, string message)
-        {
-            level = level ?? "message";
-
-            switch (level.ToLowerInvariant())
-            {
-                case "message":
-                    this.Log.LogMessage(message);
-                    break;
-
-                case "warning":
-                    this.Log.LogWarning(message);
-                    break;
-
-                case "error":
-                    this.Log.LogError(message);
-                    break;
-            }
-        }
-
         public override bool Execute()
         {
             var success = true;
@@ -114,7 +98,7 @@ namespace Bridge.Build
 
                 translator.BridgeLocation = Path.Combine(this.AssembliesPath, "Bridge.dll");
                 translator.Rebuild = false;
-                translator.Log = this.LogMessage;
+                translator.Log = new Translator.Logging.Logger("Bridge.Build.Task", true, SimpleFileLoggerWriter.Instance);
                 translator.Translate();
 
                 string fileName = Path.GetFileNameWithoutExtension(this.Assembly.ItemSpec);
@@ -123,16 +107,14 @@ namespace Bridge.Build
                     ? Path.Combine(Path.GetDirectoryName(this.ProjectPath), translator.AssemblyInfo.Output)
                     : this.OutputPath;
 
-                if (translator.AssemblyInfo != null && translator.AssemblyInfo.CleanOutputFolderBeforeBuild)
-                {
-                    Console.WriteLine("Cleaning output folder before extracting scripts...");
-                    CleanDirectory(outputPath);
-                }
+
+                translator.CleanOutputFolderIfRequired(outputPath);
 
                 if (!this.NoCore)
                 {
                     translator.ExtractCore(outputPath);
                 }
+
                 translator.SaveTo(outputPath, fileName);
                 translator.Flush(outputPath, fileName);
                 translator.Plugins.AfterOutput(translator, outputPath, this.NoCore);
@@ -158,23 +140,9 @@ namespace Bridge.Build
                 success = false;
             }
 
-            return success;
-        }
+            translator = null;
 
-        private static void CleanDirectory(string outputPath)
-        {
-            var outputDirectory = new DirectoryInfo(outputPath);
-            if (outputDirectory.Exists)
-            {
-                foreach (var file in outputDirectory.GetFiles())
-                {
-                    file.Delete();
-                }
-                foreach (var dir in outputDirectory.GetDirectories())
-                {
-                    dir.Delete(true);
-                }
-            }
+            return success;
         }
     }
 }

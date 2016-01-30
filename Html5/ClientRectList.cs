@@ -33,24 +33,15 @@ namespace Bridge.Html5
         /// <param name="index"></param>
         /// <returns></returns>
         [Name("item")]
-        public virtual ClientRect GetItem(int index)
-        {
-            return null;
-        }
+        public virtual extern ClientRect GetItem(int index);
 
         /// <summary>
         /// The number of items in the ClientRectList.
         /// </summary>
         public readonly int Length;
 
-        public virtual IEnumerator<ClientRect> GetEnumerator()
-        {
-            return null;
-        }
+        public virtual extern IEnumerator<ClientRect> GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return null;
-        }
+        extern IEnumerator IEnumerable.GetEnumerator();
     }
 }

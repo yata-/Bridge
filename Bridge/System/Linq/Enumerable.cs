@@ -2564,10 +2564,7 @@ namespace System.Linq
         /// source contains no elements.
         /// </exception>
         [Template("Bridge.Linq.Enumerable.from({source}).max()")]
-        public static long Max(this IEnumerable<long> source)
-        {
-            return 0;
-        }
+        public static extern long Max(this IEnumerable<long> source);
 
         /// <summary>
         /// Invokes a transform function on each element of a sequence and returns the

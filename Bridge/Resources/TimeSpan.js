@@ -124,6 +124,10 @@
             return other.ticks === this.ticks;
         },
 
+        equalsT: function (other) {
+            return other.ticks === this.ticks;
+        },
+
         format: function (formatStr, provider) {
             return this.toString(formatStr, provider);
         },

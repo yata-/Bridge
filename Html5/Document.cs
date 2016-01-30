@@ -16,54 +16,42 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="type">A string representing the event type to listen for.</param>
         /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
-        public static void AddEventListener(string type, Delegate listener)
-        {
-        }
+        public static extern void AddEventListener(string type, Delegate listener);
 
         /// <summary>
         /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
         /// </summary>
         /// <param name="type">A string representing the event type to listen for.</param>
         /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
-        public static void AddEventListener(string type, Action listener)
-        {
-        }
+        public static extern void AddEventListener(string type, Action listener);
 
         /// <summary>
         /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
         /// </summary>
         /// <param name="type">A string representing the event type to listen for.</param>
         /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
-        public static void AddEventListener(EventType type, Delegate listener)
-        {
-        }
+        public static extern void AddEventListener(EventType type, Delegate listener);
 
         /// <summary>
         /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
         /// </summary>
         /// <param name="type">A string representing the event type to listen for.</param>
         /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
-        public static void AddEventListener(EventType type, Action listener)
-        {
-        }
+        public static extern void AddEventListener(EventType type, Action listener);
 
         /// <summary>
         /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
         /// </summary>
         /// <param name="type">A string representing the event type to listen for.</param>
         /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
-        public static void AddEventListener(string type, Action<Event> listener)
-        {
-        }
+        public static extern void AddEventListener(string type, Action<Event> listener);
 
         /// <summary>
         /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
         /// </summary>
         /// <param name="type">A string representing the event type to listen for.</param>
         /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
-        public static void AddEventListener(EventType type, Action<Event> listener)
-        {
-        }
+        public static extern void AddEventListener(EventType type, Action<Event> listener);
 
         /// <summary>
         /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
@@ -71,9 +59,7 @@ namespace Bridge.Html5
         /// <param name="type">A string representing the event type to listen for.</param>
         /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
         /// <param name="useCapture"></param>
-        public static void AddEventListener(string type, Delegate listener, bool useCapture)
-        {
-        }
+        public static extern void AddEventListener(string type, Delegate listener, bool useCapture);
 
         /// <summary>
         /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
@@ -81,9 +67,7 @@ namespace Bridge.Html5
         /// <param name="type">A string representing the event type to listen for.</param>
         /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
         /// <param name="useCapture"></param>
-        public static void AddEventListener(string type, Action listener, bool useCapture)
-        {
-        }
+        public static extern void AddEventListener(string type, Action listener, bool useCapture);
 
         /// <summary>
         /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
@@ -91,9 +75,7 @@ namespace Bridge.Html5
         /// <param name="type">A string representing the event type to listen for.</param>
         /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
         /// <param name="useCapture"></param>
-        public static void AddEventListener(EventType type, Delegate listener, bool useCapture)
-        {
-        }
+        public static extern void AddEventListener(EventType type, Delegate listener, bool useCapture);
 
         /// <summary>
         /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
@@ -101,9 +83,7 @@ namespace Bridge.Html5
         /// <param name="type">A string representing the event type to listen for.</param>
         /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
         /// <param name="useCapture"></param>
-        public static void AddEventListener(EventType type, Action listener, bool useCapture)
-        {
-        }
+        public static extern void AddEventListener(EventType type, Action listener, bool useCapture);
 
         /// <summary>
         /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
@@ -111,9 +91,7 @@ namespace Bridge.Html5
         /// <param name="type">A string representing the event type to listen for.</param>
         /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
         /// <param name="useCapture"></param>
-        public static void AddEventListener(string type, Action<Event> listener, bool useCapture)
-        {
-        }
+        public static extern void AddEventListener(string type, Action<Event> listener, bool useCapture);
 
         /// <summary>
         /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
@@ -121,37 +99,21 @@ namespace Bridge.Html5
         /// <param name="type">A string representing the event type to listen for.</param>
         /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
         /// <param name="useCapture"></param>
-        public static void AddEventListener(EventType type, Action<Event> listener, bool useCapture)
-        {
-        }
+        public static extern void AddEventListener(EventType type, Action<Event> listener, bool useCapture);
 
         /// <summary>
         /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
         /// </summary>
         /// <param name="type">A string representing the event type to listen for.</param>
         /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
-        public static void AddEventListener(string type, IEventListener listener)
-        {
-        }
+        public static extern void AddEventListener(string type, IEventListener listener);
 
         /// <summary>
         /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
         /// </summary>
         /// <param name="type">A string representing the event type to listen for.</param>
         /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
-        public static void AddEventListener(EventType type, IEventListener listener)
-        {
-        }
-
-        /// <summary>
-        /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
-        /// </summary>
-        /// <param name="type">A string representing the event type to listen for.</param>
-        /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
-        /// <param name="useCapture"></param>
-        public static void AddEventListener(string type, IEventListener listener, bool useCapture)
-        {
-        }
+        public static extern void AddEventListener(EventType type, IEventListener listener);
 
         /// <summary>
         /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
@@ -159,9 +121,15 @@ namespace Bridge.Html5
         /// <param name="type">A string representing the event type to listen for.</param>
         /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
         /// <param name="useCapture"></param>
-        public static void AddEventListener(EventType type, IEventListener listener, bool useCapture)
-        {
-        }
+        public static extern void AddEventListener(string type, IEventListener listener, bool useCapture);
+
+        /// <summary>
+        /// The method registers the specified listener on the EventTarget it's called on. The event target may be an Element in a document, the Document itself, a Window, or any other object that supports events.
+        /// </summary>
+        /// <param name="type">A string representing the event type to listen for.</param>
+        /// <param name="listener">The object that receives a notification when an event of the specified type occurs. This must be an object implementing the EventListener interface, or simply a JavaScript function.</param>
+        /// <param name="useCapture"></param>
+        public static extern void AddEventListener(EventType type, IEventListener listener, bool useCapture);
 
         /// <summary>
         /// Dispatches the specified event to the current element.
@@ -169,38 +137,14 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="e">Required. Reference to an event object to be dispatched.</param>
         /// <returns>Boolean that indicates whether the default action of the event was not canceled.</returns>
-        public static bool DispatchEvent(Event e)
-        {
-            return false;
-        }
+        public static extern bool DispatchEvent(Event e);
 
         /// <summary>
         /// Removes the event listener previously registered with EventTarget.addEventListener.
         /// </summary>
         /// <param name="type">A string representing the event type being removed.</param>
         /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
-        public static void RemoveEventListener(EventType type, IEventListener listener)
-        {
-        }
-
-        /// <summary>
-        /// Removes the event listener previously registered with EventTarget.addEventListener.
-        /// </summary>
-        /// <param name="type">A string representing the event type being removed.</param>
-        /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
-        /// <param name="capture">Specifies whether the EventListener being removed was registered as a capturing listener or not. If not specified, useCapture defaults to false.</param>
-        public static void RemoveEventListener(EventType type, IEventListener listener, bool capture)
-        {
-        }
-
-        /// <summary>
-        /// Removes the event listener previously registered with EventTarget.addEventListener.
-        /// </summary>
-        /// <param name="type">A string representing the event type being removed.</param>
-        /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
-        public static void RemoveEventListener(string type, IEventListener listener)
-        {
-        }
+        public static extern void RemoveEventListener(EventType type, IEventListener listener);
 
         /// <summary>
         /// Removes the event listener previously registered with EventTarget.addEventListener.
@@ -208,27 +152,14 @@ namespace Bridge.Html5
         /// <param name="type">A string representing the event type being removed.</param>
         /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
         /// <param name="capture">Specifies whether the EventListener being removed was registered as a capturing listener or not. If not specified, useCapture defaults to false.</param>
-        public static void RemoveEventListener(string type, IEventListener listener, bool capture)
-        {
-        }
+        public static extern void RemoveEventListener(EventType type, IEventListener listener, bool capture);
 
         /// <summary>
         /// Removes the event listener previously registered with EventTarget.addEventListener.
         /// </summary>
         /// <param name="type">A string representing the event type being removed.</param>
         /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
-        public static void RemoveEventListener(EventType type, Delegate listener)
-        {
-        }
-
-        /// <summary>
-        /// Removes the event listener previously registered with EventTarget.addEventListener.
-        /// </summary>
-        /// <param name="type">A string representing the event type being removed.</param>
-        /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
-        public static void RemoveEventListener(EventType type, Action listener)
-        {
-        }
+        public static extern void RemoveEventListener(string type, IEventListener listener);
 
         /// <summary>
         /// Removes the event listener previously registered with EventTarget.addEventListener.
@@ -236,9 +167,21 @@ namespace Bridge.Html5
         /// <param name="type">A string representing the event type being removed.</param>
         /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
         /// <param name="capture">Specifies whether the EventListener being removed was registered as a capturing listener or not. If not specified, useCapture defaults to false.</param>
-        public static void RemoveEventListener(EventType type, Delegate listener, bool capture)
-        {
-        }
+        public static extern void RemoveEventListener(string type, IEventListener listener, bool capture);
+
+        /// <summary>
+        /// Removes the event listener previously registered with EventTarget.addEventListener.
+        /// </summary>
+        /// <param name="type">A string representing the event type being removed.</param>
+        /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
+        public static extern void RemoveEventListener(EventType type, Delegate listener);
+
+        /// <summary>
+        /// Removes the event listener previously registered with EventTarget.addEventListener.
+        /// </summary>
+        /// <param name="type">A string representing the event type being removed.</param>
+        /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
+        public static extern void RemoveEventListener(EventType type, Action listener);
 
         /// <summary>
         /// Removes the event listener previously registered with EventTarget.addEventListener.
@@ -246,27 +189,7 @@ namespace Bridge.Html5
         /// <param name="type">A string representing the event type being removed.</param>
         /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
         /// <param name="capture">Specifies whether the EventListener being removed was registered as a capturing listener or not. If not specified, useCapture defaults to false.</param>
-        public static void RemoveEventListener(EventType type, Action listener, bool capture)
-        {
-        }
-
-        /// <summary>
-        /// Removes the event listener previously registered with EventTarget.addEventListener.
-        /// </summary>
-        /// <param name="type">A string representing the event type being removed.</param>
-        /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
-        public static void RemoveEventListener(string type, Delegate listener)
-        {
-        }
-
-        /// <summary>
-        /// Removes the event listener previously registered with EventTarget.addEventListener.
-        /// </summary>
-        /// <param name="type">A string representing the event type being removed.</param>
-        /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
-        public static void RemoveEventListener(string type, Action listener)
-        {
-        }
+        public static extern void RemoveEventListener(EventType type, Delegate listener, bool capture);
 
         /// <summary>
         /// Removes the event listener previously registered with EventTarget.addEventListener.
@@ -274,9 +197,21 @@ namespace Bridge.Html5
         /// <param name="type">A string representing the event type being removed.</param>
         /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
         /// <param name="capture">Specifies whether the EventListener being removed was registered as a capturing listener or not. If not specified, useCapture defaults to false.</param>
-        public static void RemoveEventListener(string type, Delegate listener, bool capture)
-        {
-        }
+        public static extern void RemoveEventListener(EventType type, Action listener, bool capture);
+
+        /// <summary>
+        /// Removes the event listener previously registered with EventTarget.addEventListener.
+        /// </summary>
+        /// <param name="type">A string representing the event type being removed.</param>
+        /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
+        public static extern void RemoveEventListener(string type, Delegate listener);
+
+        /// <summary>
+        /// Removes the event listener previously registered with EventTarget.addEventListener.
+        /// </summary>
+        /// <param name="type">A string representing the event type being removed.</param>
+        /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
+        public static extern void RemoveEventListener(string type, Action listener);
 
         /// <summary>
         /// Removes the event listener previously registered with EventTarget.addEventListener.
@@ -284,18 +219,7 @@ namespace Bridge.Html5
         /// <param name="type">A string representing the event type being removed.</param>
         /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
         /// <param name="capture">Specifies whether the EventListener being removed was registered as a capturing listener or not. If not specified, useCapture defaults to false.</param>
-        public static void RemoveEventListener(string type, Action listener, bool capture)
-        {
-        }
-
-        /// <summary>
-        /// Removes the event listener previously registered with EventTarget.addEventListener.
-        /// </summary>
-        /// <param name="type">A string representing the event type being removed.</param>
-        /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
-        public static void RemoveEventListener(EventType type, Action<Event> listener)
-        {
-        }
+        public static extern void RemoveEventListener(string type, Delegate listener, bool capture);
 
         /// <summary>
         /// Removes the event listener previously registered with EventTarget.addEventListener.
@@ -303,18 +227,14 @@ namespace Bridge.Html5
         /// <param name="type">A string representing the event type being removed.</param>
         /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
         /// <param name="capture">Specifies whether the EventListener being removed was registered as a capturing listener or not. If not specified, useCapture defaults to false.</param>
-        public static void RemoveEventListener(EventType type, Action<Event> listener, bool capture)
-        {
-        }
+        public static extern void RemoveEventListener(string type, Action listener, bool capture);
 
         /// <summary>
         /// Removes the event listener previously registered with EventTarget.addEventListener.
         /// </summary>
         /// <param name="type">A string representing the event type being removed.</param>
         /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
-        public static void RemoveEventListener(string type, Action<Event> listener)
-        {
-        }
+        public static extern void RemoveEventListener(EventType type, Action<Event> listener);
 
         /// <summary>
         /// Removes the event listener previously registered with EventTarget.addEventListener.
@@ -322,9 +242,22 @@ namespace Bridge.Html5
         /// <param name="type">A string representing the event type being removed.</param>
         /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
         /// <param name="capture">Specifies whether the EventListener being removed was registered as a capturing listener or not. If not specified, useCapture defaults to false.</param>
-        public static void RemoveEventListener(string type, Action<Event> listener, bool capture)
-        {
-        }
+        public static extern void RemoveEventListener(EventType type, Action<Event> listener, bool capture);
+
+        /// <summary>
+        /// Removes the event listener previously registered with EventTarget.addEventListener.
+        /// </summary>
+        /// <param name="type">A string representing the event type being removed.</param>
+        /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
+        public static extern void RemoveEventListener(string type, Action<Event> listener);
+
+        /// <summary>
+        /// Removes the event listener previously registered with EventTarget.addEventListener.
+        /// </summary>
+        /// <param name="type">A string representing the event type being removed.</param>
+        /// <param name="listener">The listener parameter indicates the EventListener function to be removed.</param>
+        /// <param name="capture">Specifies whether the EventListener being removed was registered as a capturing listener or not. If not specified, useCapture defaults to false.</param>
+        public static extern void RemoveEventListener(string type, Action<Event> listener, bool capture);
 
         /// <summary>
         /// Returns a DOMString representing the base URL. The concept of base URL changes from one language to another; in HTML, it corresponds to the protocol, the domain name and the directory structure, that is all until the last '/'.
@@ -396,29 +329,20 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="child">child is the node to append underneath element. Also returned.</param>
         /// <returns></returns>
-        public static Node AppendChild(Node child)
-        {
-            return null;
-        }
+        public static extern Node AppendChild(Node child);
 
         /// <summary>
         /// Returns a duplicate of the node on which this method was called.
         /// </summary>
         /// <returns>The new node that will be a clone of this node</returns>
-        public static Node CloneNode()
-        {
-            return null;
-        }
+        public static extern Node CloneNode();
 
         /// <summary>
         /// Returns a duplicate of the node on which this method was called.
         /// </summary>
         /// <param name="deep">true if the children of the node should also be cloned, or false to clone only the specified node.</param>
         /// <returns>The new node that will be a clone of this node</returns>
-        public static Node CloneNode(bool deep)
-        {
-            return null;
-        }
+        public static extern Node CloneNode(bool deep);
 
         /// <summary>
         /// Compares the position of the current node against another node in any other document.
@@ -435,19 +359,13 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="node">is the node that's being compared against.</param>
         /// <returns>The return value is true if otherNode is a descendant of node, or node itself. Otherwise the return value is false.</returns>
-        public static bool Contains(Node node)
-        {
-            return false;
-        }
+        public static extern bool Contains(Node node);
 
         /// <summary>
         ///  returns a Boolean value indicating whether the current Node has child nodes or not.
         /// </summary>
         /// <returns>Boolean value indicating whether the current Node has child nodes or not</returns>
-        public static bool HasChildNodes()
-        {
-            return false;
-        }
+        public static extern bool HasChildNodes();
 
         /// <summary>
         /// Inserts the specified node before a reference element as a child of the current node.
@@ -455,47 +373,33 @@ namespace Bridge.Html5
         /// <param name="newElement">The node to insert.</param>
         /// <param name="referenceElement">The node before which newElement is inserted.</param>
         /// <returns>The node being inserted, that is newElement</returns>
-        public static Node InsertBefore(Node newElement, Node referenceElement)
-        {
-            return null;
-        }
+        public static extern Node InsertBefore(Node newElement, Node referenceElement);
 
         /// <summary>
         /// Accepts a namespace URI as an argument and returns true if the namespace is the default namespace on the given node or false if not.
         /// </summary>
         /// <param name="namespaceURI">string representing the namespace against which the element will be checked.</param>
         /// <returns>holds the return value true or false.</returns>
-        public static bool IsDefaultNamespace(string namespaceURI)
-        {
-            return false;
-        }
+        public static extern bool IsDefaultNamespace(string namespaceURI);
 
         /// <summary>
         /// Tests whether two nodes are equal.
         /// </summary>
         /// <param name="node">The node to compare equality with.</param>
         /// <returns></returns>
-        public static bool IsEqualNode(Node node)
-        {
-            return false;
-        }
+        public static extern bool IsEqualNode(Node node);
 
         /// <summary>
         /// Clean up all the text nodes under this element (merge adjacent, remove empty).
         /// </summary>
-        public static void Normalize()
-        {
-        }
+        public static extern void Normalize();
 
         /// <summary>
         /// Removes a child node from the DOM. Returns removed node.
         /// </summary>
         /// <param name="child">child node to be removed from the DOM.</param>
         /// <returns>Reference to the removed child node</returns>
-        public static Node RemoveChild(Node child)
-        {
-            return null;
-        }
+        public static extern Node RemoveChild(Node child);
 
         /// <summary>
         /// Replaces one child node of the specified element with another.
@@ -503,10 +407,7 @@ namespace Bridge.Html5
         /// <param name="newChild">new node to replace oldChild. If it already exists in the DOM, it is first removed.</param>
         /// <param name="oldChild">the existing child to be replaced.</param>
         /// <returns>the replaced node. This is the same node as oldChild.</returns>
-        public static Node ReplaceChild(Node newChild, Node oldChild)
-        {
-            return null;
-        }
+        public static extern Node ReplaceChild(Node newChild, Node oldChild);
 
         /// <summary>
         /// The number of child nodes that are elements.
@@ -1119,10 +1020,7 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="externalNode">the node from another document to be adopted.</param>
         /// <returns>the adopted node that can be used in the current document. The new node's parentNode is null, since it has not yet been inserted into the document tree.</returns>
-        public static Node AdoptNode(Node externalNode)
-        {
-            return null;
-        }
+        public static extern Node AdoptNode(Node externalNode);
 
         /// <summary>
         /// This method is used to retrieve the caret position in a document based on two coordinates. A CaretPosition is returned, containing the found DOM node and the character offset in that node.
@@ -1130,10 +1028,7 @@ namespace Bridge.Html5
         /// <param name="x">Horizontal point on the page at where to determine the caret position.</param>
         /// <param name="y">Vertical point on the page at where to determine the caret position.</param>
         /// <returns>A CaretPosition. Null, if x or y are negative or greater than the viewport.</returns>
-        public static CaretPosition CaretPositionFromPoint(double x, double y)
-        {
-            return null;
-        }
+        public static extern CaretPosition CaretPositionFromPoint(double x, double y);
 
         /// <summary>
         /// This method is used to retrieve the caret position in a document based on two coordinates. A Range is returned, containing the found DOM node and the character offset in that node.
@@ -1141,20 +1036,14 @@ namespace Bridge.Html5
         /// <param name="x">Horizontal point on the page at where to determine the caret position.</param>
         /// <param name="y">Vertical point on the page at where to determine the caret position.</param>
         /// <returns>A Range. Null, if x or y are negative or greater than the viewport.</returns>
-        public static Range CaretRangeFromPoint(double x, double y)
-        {
-            return null;
-        }
+        public static extern Range CaretRangeFromPoint(double x, double y);
 
         /// <summary>
         /// Creates a new Attr object and returns it.
         /// </summary>
         /// <param name="name">name is a string containing the name of the attribute.</param>
         /// <returns>an attribute node</returns>
-        public static Attr CreateAttribute(string name)
-        {
-            return null;
-        }
+        public static extern Attr CreateAttribute(string name);
 
         /// <summary>
         /// Creates a new attribute node in a given namespace and returns it.
@@ -1162,39 +1051,27 @@ namespace Bridge.Html5
         /// <param name="namespace"></param>
         /// <param name="name">name is a string containing the name of the attribute.</param>
         /// <returns>an attribute node</returns>
-        public static Attr CreateAttributeNS(string @namespace, string name)
-        {
-            return null;
-        }
+        public static extern Attr CreateAttributeNS(string @namespace, string name);
 
         /// <summary>
         /// Creates a new CDATA node and returns it.
         /// </summary>
         /// <param name="data">string containing the data to be added to the CDATA Section.</param>
         /// <returns>CDATA Section node.</returns>
-        public static CDATASection CreateCDATASection(string data)
-        {
-            return null;
-        }
+        public static extern CDATASection CreateCDATASection(string data);
 
         /// <summary>
         /// Creates a new comment node and returns it.
         /// </summary>
         /// <param name="comment">string containing the data to be added to the Comment.</param>
         /// <returns>Comment node.</returns>
-        public static Comment CreateComment(string comment)
-        {
-            return null;
-        }
+        public static extern Comment CreateComment(string comment);
 
         /// <summary>
         /// Creates a new document fragment.
         /// </summary>
         /// <returns></returns>
-        public static DocumentFragment CreateDocumentFragment()
-        {
-            return null;
-        }
+        public static extern DocumentFragment CreateDocumentFragment();
 
         /// <summary>
         /// In an HTML document creates the specified HTML element or HTMLUnknownElement if the element is not known.
@@ -1203,10 +1080,7 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="tagName">tagName is a string that specifies the type of element to be created. The nodeName of the created element is initialized with the value of tagName. Don't use qualified names (like "html:a") with this method.</param>
         /// <returns>created element object</returns>
-        public static Element CreateElement(string tagName)
-        {
-            return null;
-        }
+        public static extern Element CreateElement(string tagName);
 
         /// <summary>
         /// In an HTML document creates the specified HTML element or HTMLUnknownElement if the element is not known.
@@ -1215,10 +1089,7 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="tagName">tagName is a string that specifies the type of element to be created. The nodeName of the created element is initialized with the value of tagName. Don't use qualified names (like "html:a") with this method.</param>
         /// <returns>created element object</returns>
-        public static T CreateElement<T>(string tagName) where T : Element
-        {
-            return null;
-        }
+        public static extern T CreateElement<T>(string tagName) where T : Element;
 
         /// <summary>
         /// Creates an element with the specified namespace URI and qualified name.
@@ -1226,10 +1097,7 @@ namespace Bridge.Html5
         /// <param name="namespaceURI"> a string that specifies the namespace URI to associate with the element. The namespaceURI property of the created element is initialized with the value of namespaceURI. (see section below for "Valid Namespace URI's")</param>
         /// <param name="qualifiedName">a string that specifies the type of element to be created. The nodeName property of the created element is initialized with the value of qualifiedName</param>
         /// <returns>the created element.</returns>
-        public static Element CreateElementNS(string namespaceURI, string qualifiedName)
-        {
-            return null;
-        }
+        public static extern Element CreateElementNS(string namespaceURI, string qualifiedName);
 
         /// <summary>
         /// Creates an element with the specified namespace URI and qualified name.
@@ -1237,40 +1105,28 @@ namespace Bridge.Html5
         /// <param name="namespaceURI"> a string that specifies the namespace URI to associate with the element. The namespaceURI property of the created element is initialized with the value of namespaceURI. (see section below for "Valid Namespace URI's")</param>
         /// <param name="qualifiedName">a string that specifies the type of element to be created. The nodeName property of the created element is initialized with the value of qualifiedName</param>
         /// <returns>the created element.</returns>
-        public static T CreateElementNS<T>(string namespaceURI, string qualifiedName) where T : Element
-        {
-            return null;
-        }
+        public static extern T CreateElementNS<T>(string namespaceURI, string qualifiedName) where T : Element;
 
         /// <summary>
         /// Creates an event of the type specified. The returned object should be first initialized and can then be passed to element.dispatchEvent.
         /// </summary>
         /// <param name="type">type is a string that represents the type of event to be created. Possible event types include "UIEvents", "MouseEvents", "MutationEvents", and "HTMLEvents".</param>
         /// <returns>the created Event object.</returns>
-        public static Event CreateEvent(string type)
-        {
-            return null;
-        }
+        public static extern Event CreateEvent(string type);
 
         /// <summary>
         /// Creates an event of the type specified. The returned object should be first initialized and can then be passed to element.dispatchEvent.
         /// </summary>
         /// <param name="type">type is a string that represents the type of event to be created. Possible event types include "UIEvents", "MouseEvents", "MutationEvents", and "HTMLEvents".</param>
         /// <returns>the created Event object.</returns>
-        public static T CreateEvent<T>(string type) where T : Event
-        {
-            return null;
-        }
+        public static extern T CreateEvent<T>(string type) where T : Event;
 
         /// <summary>
         /// Returns a new NodeIterator object.
         /// </summary>
         /// <param name="root">The root node at which to begin the NodeIterator's traversal.</param>
         /// <returns></returns>
-        public static NodeIterator CreateNodeIterator(Node root)
-        {
-            return null;
-        }
+        public static extern NodeIterator CreateNodeIterator(Node root);
 
         /// <summary>
         /// Returns a new NodeIterator object.
@@ -1278,10 +1134,7 @@ namespace Bridge.Html5
         /// <param name="root">The root node at which to begin the NodeIterator's traversal.</param>
         /// <param name="whatToShow">Bitwise OR'd list of Filter specification constants from the NodeFilter DOM interface, indicating which nodes to iterate over.</param>
         /// <returns></returns>
-        public static NodeIterator CreateNodeIterator(Node root, NodeFilter whatToShow)
-        {
-            return null;
-        }
+        public static extern NodeIterator CreateNodeIterator(Node root, NodeFilter whatToShow);
 
         /// <summary>
         /// Returns a new NodeIterator object.
@@ -1290,10 +1143,7 @@ namespace Bridge.Html5
         /// <param name="whatToShow">Bitwise OR'd list of Filter specification constants from the NodeFilter DOM interface, indicating which nodes to iterate over.</param>
         /// <param name="filter">An object implementing the NodeFilter interface; its acceptNode() method will be called for each node in the subtree based at root which is accepted as included by the whatToShow flag to determine whether or not to include it in the list of iterable nodes (a simple callback function may also be used instead). The method should return one of NodeFilter.FILTER_ACCEPT, NodeFilter.FILTER_REJECT, or NodeFilter.FILTER_SKIP.</param>
         /// <returns></returns>
-        public static NodeIterator CreateNodeIterator(Node root, NodeFilter whatToShow, INodeFilter filter)
-        {
-            return null;
-        }
+        public static extern NodeIterator CreateNodeIterator(Node root, NodeFilter whatToShow, INodeFilter filter);
 
         /// <summary>
         /// Creates a new ProcessingInstruction object.
@@ -1301,39 +1151,27 @@ namespace Bridge.Html5
         /// <param name="target"> refers to the target part of the processing instruction node</param>
         /// <param name="data">string containing the data to be added to the data within the node.</param>
         /// <returns></returns>
-        public static ProcessingInstruction CreateProcessingInstruction(string target, string data)
-        {
-            return null;
-        }
+        public static extern ProcessingInstruction CreateProcessingInstruction(string target, string data);
 
         /// <summary>
         /// Returns a new Range object.
         /// </summary>
         /// <returns></returns>
-        public static Range CreateRange()
-        {
-            return null;
-        }
+        public static extern Range CreateRange();
 
         /// <summary>
         /// Creates a new Text node.
         /// </summary>
         /// <param name="data">string containing the data to be put in the text node.</param>
         /// <returns></returns>
-        public static Text CreateTextNode(string data)
-        {
-            return null;
-        }
+        public static extern Text CreateTextNode(string data);
 
         /// <summary>
         /// The Document.createTreeWalker() creator method returns a newly created TreeWalker object.
         /// </summary>
         /// <param name="root">Is the root Node of this TreeWalker traversal. Typically this will be an element owned by the document.</param>
         /// <returns></returns>
-        public static TreeWalker CreateTreeWalker(Node root)
-        {
-            return null;
-        }
+        public static extern TreeWalker CreateTreeWalker(Node root);
 
         /// <summary>
         /// The Document.createTreeWalker() creator method returns a newly created TreeWalker object.
@@ -1341,10 +1179,7 @@ namespace Bridge.Html5
         /// <param name="root">Is the root Node of this TreeWalker traversal. Typically this will be an element owned by the document.</param>
         /// <param name="whatToShow">Is an optionale unsigned long representing a bitmask created by combining the constant properties of NodeFilter. It is a convenient way of filtering for certain types of node. It defaults to 0xFFFFFFFF representing the SHOW_ALL constant.</param>
         /// <returns></returns>
-        public static TreeWalker CreateTreeWalker(Node root, NodeFilter whatToShow)
-        {
-            return null;
-        }
+        public static extern TreeWalker CreateTreeWalker(Node root, NodeFilter whatToShow);
 
         /// <summary>
         /// The Document.createTreeWalker() creator method returns a newly created TreeWalker object.
@@ -1353,10 +1188,7 @@ namespace Bridge.Html5
         /// <param name="whatToShow">Is an optionale unsigned long representing a bitmask created by combining the constant properties of NodeFilter. It is a convenient way of filtering for certain types of node. It defaults to 0xFFFFFFFF representing the SHOW_ALL constant.</param>
         /// <param name="filter">Is an optional NodeFilter, that is an object with a method acceptNode, which is called by the TreeWalker to determine whether or not to accept a node that has passed the whatToShow check.</param>
         /// <returns></returns>
-        public static TreeWalker CreateTreeWalker(Node root, NodeFilter whatToShow, INodeFilter filter)
-        {
-            return null;
-        }
+        public static extern TreeWalker CreateTreeWalker(Node root, NodeFilter whatToShow, INodeFilter filter);
 
         /// <summary>
         /// Returns the element from the document whose elementFromPoint method is being called which is the topmost element which lies under the given point.  To get an element, specify the point via coordinates, in CSS pixels, relative to the upper-left-most point in the window or frame containing the document.
@@ -1364,46 +1196,33 @@ namespace Bridge.Html5
         /// <param name="x">x and y specify the coordinates to check, in CSS pixels relative to the upper-left corner of the document's containing window or frame.</param>
         /// <param name="y">x and y specify the coordinates to check, in CSS pixels relative to the upper-left corner of the document's containing window or frame.</param>
         /// <returns></returns>
-        public static Element ElementFromPoint(int x, int y)
-        {
-            return null;
-        }
+        public static extern Element ElementFromPoint(int x, int y);
 
         /// <summary>
         /// Enables the style sheets matching the specified name in the current style sheet set, and disables all other style sheets (except those without a title, which are always enabled).
         /// </summary>
         /// <param name="name">The name of the style sheets to enable. All style sheets with a title that match this name will be enabled, while all others that have a title will be disabled. Specify an empty string for the name parameter to disable all alternate and preferred style sheets (but not the persistent style sheets; that is, those with no title attribute).</param>
-        public static void EnableStyleSheetsForSet(string name)
-        {
-        }
+        public static extern void EnableStyleSheetsForSet(string name);
 
         /// <summary>
         /// The exitPointerLock asynchronously releases a pointer lock previously requested through Element.requestPointerLock.
         /// To track the success or failure of the request, it is necessary to listen for the pointerlockchange and pointerlockerror events.
         /// </summary>
-        public static void ExitPointerLock()
-        {
-        }
+        public static extern void ExitPointerLock();
 
         /// <summary>
         /// Returns an array-like object of all child elements which have all of the given class names. When called on the document object, the complete document is searched, including the root node. You may also call getElementsByClassName() on any element; it will return only elements which are descendants of the specified root element with the given class names.
         /// </summary>
         /// <param name="names">string representing the list of class names to match; class names are separated by whitespace</param>
         /// <returns>HTMLCollection of found elements.</returns>
-        public static HTMLCollection GetElementsByClassName(string names)
-        {
-            return null;
-        }
+        public static extern HTMLCollection GetElementsByClassName(string names);
 
         /// <summary>
         /// Returns an HTMLCollection of elements with the given tag name. The complete document is searched, including the root node. The returned HTMLCollection is live, meaning that it updates itself automatically to stay in sync with the DOM tree without having to call document.getElementsByTagName() again.
         /// </summary>
         /// <param name="name">a string representing the name of the elements. The special string "*" represents all elements.</param>
         /// <returns> a live HTMLCollection of found elements in the order they appear in the tree.</returns>
-        public static HTMLCollection GetElementsByTagName(string name)
-        {
-            return null;
-        }
+        public static extern HTMLCollection GetElementsByTagName(string name);
 
         /// <summary>
         /// Returns a list of elements with the given tag name belonging to the given namespace. The complete document is searched, including the root node.
@@ -1411,20 +1230,14 @@ namespace Bridge.Html5
         /// <param name="namespace"> the namespace URI of elements to look for.</param>
         /// <param name="name"> the local name of elements to look for or the special value "*", which matches all elements</param>
         /// <returns>live NodeList of found elements in the order they appear in the tree.</returns>
-        public static HTMLCollection GetElementsByTagNameNS(string @namespace, string name)
-        {
-            return null;
-        }
+        public static extern HTMLCollection GetElementsByTagNameNS(string @namespace, string name);
 
         /// <summary>
         /// Creates a copy of a node from an external document that can be inserted into the current document.
         /// </summary>
         /// <param name="externalNode">The node from another document to be imported.</param>
         /// <returns>The new node that is imported into the document. The new node's parentNode is null, since it has not yet been inserted into the document tree.</returns>
-        public static Node ImportNode(Node externalNode)
-        {
-            return null;
-        }
+        public static extern Node ImportNode(Node externalNode);
 
         /// <summary>
         /// Creates a copy of a node from an external document that can be inserted into the current document.
@@ -1432,27 +1245,19 @@ namespace Bridge.Html5
         /// <param name="externalNode">The node from another document to be imported.</param>
         /// <param name="deep">A boolean, indicating whether the descendants of the imported node need to be imported.</param>
         /// <returns>The new node that is imported into the document. The new node's parentNode is null, since it has not yet been inserted into the document tree.</returns>
-        public static Node ImportNode(Node externalNode, bool deep)
-        {
-            return null;
-        }
+        public static extern Node ImportNode(Node externalNode, bool deep);
 
         /// <summary>
         /// Releases mouse capture if it's currently enabled on an element within this document. Enabling mouse capture on an element is done by calling element.setCapture().
         /// </summary>
-        public static void ReleaseCapture()
-        {
-        }
+        public static extern void ReleaseCapture();
 
         /// <summary>
         /// Returns a reference to the element by its ID.
         /// </summary>
         /// <param name="id">id is a case-sensitive string representing the unique ID of the element being sought.</param>
         /// <returns>element is a reference to an Element object, or null if an element with the specified ID is not in the document.</returns>
-        public static Element GetElementById(string id)
-        {
-            return null;
-        }
+        public static extern Element GetElementById(string id);
 
         /// <summary>
         /// Returns a reference to the element by its ID.
@@ -1460,57 +1265,40 @@ namespace Bridge.Html5
         /// <typeparam name="T"></typeparam>
         /// <param name="id">id is a case-sensitive string representing the unique ID of the element being sought.</param>
         /// <returns>element is a reference to an Element object, or null if an element with the specified ID is not in the document.</returns>
-        public static T GetElementById<T>(string id) where T : Element
-        {
-            return null;
-        }
+        public static extern T GetElementById<T>(string id) where T : Element;
 
         /// <summary>
         /// Returns the first element within the document (using depth-first pre-order traversal of the document's nodes) that matches the specified group of selectors.
         /// </summary>
         /// <param name="selectors">selectors is a string containing one or more CSS selectors separated by commas.</param>
         /// <returns></returns>
-        public static Element QuerySelector(string selectors)
-        {
-            return null;
-        }
+        public static extern Element QuerySelector(string selectors);
 
         /// <summary>
         /// Returns the first element within the document (using depth-first pre-order traversal of the document's nodes) that matches the specified group of selectors.
         /// </summary>
         /// <param name="selectors">selectors is a string containing one or more CSS selectors separated by commas.</param>
         /// <returns></returns>
-        public static T QuerySelector<T>(string selectors) where T : Element
-        {
-            return null;
-        }
+        public static extern T QuerySelector<T>(string selectors) where T : Element;
 
         /// <summary>
         /// Returns a list of the elements within the document (using depth-first pre-order traversal of the document's nodes) that match the specified group of selectors. The object returned is a NodeList.
         /// </summary>
         /// <param name="selectors">selectors is a string containing one or more CSS selectors separated by commas.</param>
         /// <returns></returns>
-        public static ElementList QuerySelectorAll(string selectors)
-        {
-            return null;
-        }
+        public static extern ElementList QuerySelectorAll(string selectors);
 
         /// <summary>
         /// Closes a document stream for writing.
         /// </summary>
-        public static void Close()
-        {
-        }
+        public static extern void Close();
 
         /// <summary>
         /// When an HTML document has been switched to designMode, the document object exposes the execCommand method which allows one to run commands to manipulate the contents of the editable region. Most commands affect the document's selection (bold, italics, etc), while others insert new elements (adding a link) or affect an entire line (indenting). When using contentEditable, calling execCommand will affect the currently active editable element.
         /// </summary>
         /// <param name="commandName">the name of the command</param>
         /// <returns></returns>
-        public static bool ExecCommand(string commandName)
-        {
-            return false;
-        }
+        public static extern bool ExecCommand(string commandName);
 
         /// <summary>
         /// When an HTML document has been switched to designMode, the document object exposes the execCommand method which allows one to run commands to manipulate the contents of the editable region. Most commands affect the document's selection (bold, italics, etc), while others insert new elements (adding a link) or affect an entire line (indenting). When using contentEditable, calling execCommand will affect the currently active editable element.
@@ -1518,10 +1306,7 @@ namespace Bridge.Html5
         /// <param name="commandName">the name of the command</param>
         /// <param name="showDefaultUI">whether the default user interface should be shown. This is not implemented in Mozilla.</param>
         /// <returns></returns>
-        public static bool ExecCommand(string commandName, bool showDefaultUI)
-        {
-            return false;
-        }
+        public static extern bool ExecCommand(string commandName, bool showDefaultUI);
 
         /// <summary>
         /// When an HTML document has been switched to designMode, the document object exposes the execCommand method which allows one to run commands to manipulate the contents of the editable region. Most commands affect the document's selection (bold, italics, etc), while others insert new elements (adding a link) or affect an entire line (indenting). When using contentEditable, calling execCommand will affect the currently active editable element.
@@ -1530,150 +1315,100 @@ namespace Bridge.Html5
         /// <param name="showDefaultUI">whether the default user interface should be shown. This is not implemented in Mozilla.</param>
         /// <param name="valueArgument">some commands (such as insertimage) require an extra value argument (the image's url). Pass an argument of null if no argument is needed.</param>
         /// <returns></returns>
-        public static bool ExecCommand(string commandName, bool showDefaultUI, string valueArgument)
-        {
-            return false;
-        }
+        public static extern bool ExecCommand(string commandName, bool showDefaultUI, string valueArgument);
 
         /// <summary>
         /// Returns a list of elements with a given name in the (X)HTML document.
         /// </summary>
         /// <param name="name">name is the value of the name attribute of the element.</param>
         /// <returns>elements is an HTMLCollection of elements.</returns>
-        public static ElementList GetElementsByName(string name)
-        {
-            return null;
-        }
+        public static extern ElementList GetElementsByName(string name);
 
         /// <summary>
         /// The DOM getSelection() method is available on the Window and Document interfaces.
         /// </summary>
         /// <returns></returns>
-        public static Selection GetSelection()
-        {
-            return null;
-        }
+        public static extern Selection GetSelection();
 
         /// <summary>
         /// Returns a Boolean value indicating whether the document or any element inside the document has focus. This method can be used to determine whether the active element in a document has focus.
         /// </summary>
         /// <returns>false if the active element in the document has no focus; true if the active element in the document has focus.</returns>
-        public static bool HasFocus()
-        {
-            return false;
-        }
+        public static extern bool HasFocus();
 
         /// <summary>
         /// Opens a document stream for writing.
         /// </summary>
         /// <returns></returns>
-        public static DocumentInstance Open()
-        {
-            return null;
-        }
+        public static extern DocumentInstance Open();
 
         /// <summary>
         /// Returns true if the formating command can be executed on the current range.
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        public static bool QueryCommandEnabled(string command)
-        {
-            return false;
-        }
+        public static extern bool QueryCommandEnabled(string command);
 
         /// <summary>
         /// Returns true if the formating command is in an indeterminate state on the current range.
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        public static bool QueryCommandIndeterm(string command)
-        {
-            return false;
-        }
+        public static extern bool QueryCommandIndeterm(string command);
 
         /// <summary>
         /// Returns true if the formating command has been executed on the current range.
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        public static bool QueryCommandState(string command)
-        {
-            return false;
-        }
+        public static extern bool QueryCommandState(string command);
 
         /// <summary>
         /// Returns true if the formating command is supported on the current range.
         /// </summary>
         /// <param name="command">The command for which to determine support.</param>
         /// <returns></returns>
-        public static bool QueryCommandSupported(string command)
-        {
-            return false;
-        }
+        public static extern bool QueryCommandSupported(string command);
 
         /// <summary>
         /// Returns the current value of the current range for a formating command.
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        public static string QueryCommandValue(string command)
-        {
-            return null;
-        }
+        public static extern string QueryCommandValue(string command);
 
         /// <summary>
         /// Writes a string of text to a document stream opened by document.open().
         /// </summary>
         /// <param name="markup">markup is a string containing the text to be written to the document.</param>
-        public static void Write(string markup)
-        {
-        }
+        public static extern void Write(string markup);
 
         /// <summary>
         /// Writes a string of text followed by a newline character to a document.
         /// </summary>
         /// <param name="line">line is string containing a line of text.</param>
-        public static void Writeln(string line)
-        {
-        }
+        public static extern void Writeln(string line);
 
         [Template("document")]
         public static DocumentInstance Instance;
 
         [Template("document")]
-        public new static dynamic ToDynamic()
-        {
-            return null;
-        }
+        public new static extern dynamic ToDynamic();
 
         [Template("{this}[{name}].call(null, {args})")]
-        public static void Call(string name, params object[] args)
-        {
-        }
+        public static extern void Call(string name, params object[] args);
 
         [Template("{this}[{name}].call(null, {args})")]
-        public static T Call<T>(string name, params object[] args)
-        {
-            return default(T);
-        }
+        public static extern T Call<T>(string name, params object[] args);
 
         [Template("{this}[{name}]")]
-        public static object Get(string name)
-        {
-            return null;
-        }
+        public static extern object Get(string name);
 
         [Template("{this}[{name}]")]
-        public static T Get<T>(string name)
-        {
-            return default(T);
-        }
+        public static extern T Get<T>(string name);
 
         [Template("{this}[{name}] = {value}")]
-        public static void Set(string name, object value)
-        {
-        }
+        public static extern void Set(string name, object value);
 
         // TODO: Document.createExpression(String expression, XPathNSResolver resolver)
         // TODO: Document.createNSResolver(Node resolver)

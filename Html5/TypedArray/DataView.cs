@@ -55,30 +55,21 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="byteOffset">The offset, in byte, from the start of the view where to read the data.</param>
         /// <returns></returns>
-        public virtual sbyte GetInt8(long byteOffset)
-        {
-            return 0;
-        }
+        public virtual extern sbyte GetInt8(long byteOffset);
 
         /// <summary>
         /// Gets an unsigned 8-bit integer at the specified byte offset from the start of the view.
         /// </summary>
         /// <param name="byteOffset">The offset, in byte, from the start of the view where to read the data.</param>
         /// <returns></returns>
-        public virtual byte GetUint8(long byteOffset)
-        {
-            return 0;
-        }
+        public virtual extern byte GetUint8(long byteOffset);
 
         /// <summary>
         /// Gets a signed 16-bit integer at the specified byte offset from the start of the view.
         /// </summary>
         /// <param name="byteOffset">The offset, in byte, from the start of the view where to read the data.</param>
         /// <returns></returns>
-        public virtual short GetInt16(long byteOffset)
-        {
-            return 0;
-        }
+        public virtual extern short GetInt16(long byteOffset);
 
         /// <summary>
         /// Gets a signed 16-bit integer at the specified byte offset from the start of the view.
@@ -86,20 +77,14 @@ namespace Bridge.Html5
         /// <param name="byteOffset">The offset, in byte, from the start of the view where to read the data.</param>
         /// <param name="littleEndian">Indicates whether the 16-bit int is stored in little- or big-endian format. If false or undefined, a big-endian value is read.</param>
         /// <returns></returns>
-        public virtual short GetInt16(long byteOffset, bool littleEndian)
-        {
-            return 0;
-        }
+        public virtual extern short GetInt16(long byteOffset, bool littleEndian);
 
         /// <summary>
         /// Gets an unsigned 16-bit integer at the specified byte offset from the start of the view.
         /// </summary>
         /// <param name="byteOffset">The offset, in byte, from the start of the view where to read the data.</param>
         /// <returns></returns>
-        public virtual ushort GetUint16(long byteOffset)
-        {
-            return 0;
-        }
+        public virtual extern ushort GetUint16(long byteOffset);
 
         /// <summary>
         /// Gets an unsigned 16-bit integer at the specified byte offset from the start of the view.
@@ -107,20 +92,14 @@ namespace Bridge.Html5
         /// <param name="byteOffset">The offset, in byte, from the start of the view where to read the data.</param>
         /// <param name="littleEndian">Indicates whether the 16-bit int is stored in little- or big-endian format. If false or undefined, a big-endian value is read.</param>
         /// <returns></returns>
-        public virtual ushort GetUint16(long byteOffset, bool littleEndian)
-        {
-            return 0;
-        }
+        public virtual extern ushort GetUint16(long byteOffset, bool littleEndian);
 
         /// <summary>
         /// Gets an signed 32-bit integer at the specified byte offset from the start of the view.
         /// </summary>
         /// <param name="byteOffset">The offset, in byte, from the start of the view where to read the data.</param>
         /// <returns></returns>
-        public virtual int GetInt32(long byteOffset)
-        {
-            return 0;
-        }
+        public virtual extern int GetInt32(long byteOffset);
 
         /// <summary>
         /// Gets an signed 32-bit integer at the specified byte offset from the start of the view.
@@ -128,20 +107,14 @@ namespace Bridge.Html5
         /// <param name="byteOffset">The offset, in byte, from the start of the view where to read the data.</param>
         /// <param name="littleEndian">Indicates whether the 32-bit int is stored in little- or big-endian format. If false or undefined, a big-endian value is read.</param>
         /// <returns></returns>
-        public virtual int GetInt32(long byteOffset, bool littleEndian)
-        {
-            return 0;
-        }
+        public virtual extern int GetInt32(long byteOffset, bool littleEndian);
 
         /// <summary>
         /// Gets an unsigned 32-bit integer at the specified byte offset from the start of the view.
         /// </summary>
         /// <param name="byteOffset">The offset, in byte, from the start of the view where to read the data.</param>
         /// <returns></returns>
-        public virtual uint GetUint32(long byteOffset)
-        {
-            return 0;
-        }
+        public virtual extern uint GetUint32(long byteOffset);
 
         /// <summary>
         /// Gets an unsigned 32-bit integer at the specified byte offset from the start of the view.
@@ -149,85 +122,42 @@ namespace Bridge.Html5
         /// <param name="byteOffset">The offset, in byte, from the start of the view where to read the data.</param>
         /// <param name="littleEndian">Indicates whether the 32-bit int is stored in little- or big-endian format. If false or undefined, a big-endian value is read.</param>
         /// <returns></returns>
-        public virtual uint GetUint32(long byteOffset, bool littleEndian)
-        {
-            return 0;
-        }
+        public virtual extern uint GetUint32(long byteOffset, bool littleEndian);
 
-        public virtual float GetFloat32(long byteOffset)
-        {
-            return 0;
-        }
+        public virtual extern float GetFloat32(long byteOffset);
 
-        public virtual float GetFloat32(long byteOffset, bool littleEndian)
-        {
-            return 0;
-        }
+        public virtual extern float GetFloat32(long byteOffset, bool littleEndian);
 
-        public virtual double GetFloat64(long byteOffset)
-        {
-            return 0;
-        }
+        public virtual extern double GetFloat64(long byteOffset);
 
-        public virtual double GetFloat64(long byteOffset, bool littleEndian)
-        {
-            return 0;
-        }
+        public virtual extern double GetFloat64(long byteOffset, bool littleEndian);
 
-        public virtual void SetInt8(long byteOffset, sbyte value)
-        {
-        }
+        public virtual extern void SetInt8(long byteOffset, sbyte value);
 
-        public virtual void SetUint8(long byteOffset, byte value)
-        {
-        }
+        public virtual extern void SetUint8(long byteOffset, byte value);
 
-        public virtual void SetInt16(long byteOffset, short value)
-        {
-        }
+        public virtual extern void SetInt16(long byteOffset, short value);
 
-        public virtual void SetInt16(long byteOffset, short value, bool littleEndian)
-        {
-        }
+        public virtual extern void SetInt16(long byteOffset, short value, bool littleEndian);
 
-        public virtual void SetUint16(long byteOffset, ushort value)
-        {
-        }
+        public virtual extern void SetUint16(long byteOffset, ushort value);
 
-        public virtual void SetUint16(ulong byteOffset, ushort value, bool littleEndian)
-        {
-        }
+        public virtual extern void SetUint16(ulong byteOffset, ushort value, bool littleEndian);
 
-        public virtual void SetInt32(long byteOffset, int value)
-        {
-        }
+        public virtual extern void SetInt32(long byteOffset, int value);
 
-        public virtual void SetInt32(long byteOffset, int value, bool littleEndian)
-        {
-        }
+        public virtual extern void SetInt32(long byteOffset, int value, bool littleEndian);
 
-        public virtual void SetUint32(long byteOffset, uint value)
-        {
-        }
+        public virtual extern void SetUint32(long byteOffset, uint value);
 
-        public virtual void SetUint32(ulong byteOffset, uint value, bool littleEndian)
-        {
-        }
+        public virtual extern void SetUint32(ulong byteOffset, uint value, bool littleEndian);
 
-        public virtual void SetFloat32(long byteOffset, float value)
-        {
-        }
+        public virtual extern void SetFloat32(long byteOffset, float value);
 
-        public virtual void SetFloat32(long byteOffset, float value, bool littleEndian)
-        {
-        }
+        public virtual extern void SetFloat32(long byteOffset, float value, bool littleEndian);
 
-        public virtual void SetFloat64(long byteOffset, double value)
-        {
-        }
+        public virtual extern void SetFloat64(long byteOffset, double value);
 
-        public virtual void SetFloat64(long byteOffset, double value, bool littleEndian)
-        {
-        }
+        public virtual extern void SetFloat64(long byteOffset, double value, bool littleEndian);
     }
 }

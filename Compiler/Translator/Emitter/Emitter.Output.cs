@@ -49,7 +49,7 @@ namespace Bridge.Translator
 
                 if (isJs)
                 {
-                    tmp.AppendLine(Bridge.Translator.Translator.GetOutputHeader(true, false));    
+                    tmp.AppendLine(this.GetOutputHeader(true, false));
                 }
 
                 if (output.NonModuletOutput.Length > 0)
@@ -57,7 +57,7 @@ namespace Bridge.Translator
                     if (isJs)
                     {
                         tmp.AppendLine("(function (globals) {");
-                        tmp.AppendLine("    " + Bridge.Translator.Translator.GetOutputHeader(false, true)); 
+                        tmp.AppendLine("    " + this.GetOutputHeader(false, true)); 
                     }
 
                     var code = output.NonModuletOutput.ToString() + (isJs ? "\n\nBridge.init();" : "");
@@ -86,6 +86,20 @@ namespace Bridge.Translator
             }
 
             return result;
+        }
+
+        protected string GetOutputHeader(bool needGlobalComment, bool needStrictModeInstruction)
+        {
+            if (this.Translator.NoStrictModeAndGlobal)
+            {
+                needGlobalComment = false;
+                needStrictModeInstruction = false;
+            }
+
+            string header = needGlobalComment ? "/* global Bridge */\n" : string.Empty;
+            header = header + (needStrictModeInstruction ? "\"use strict\";\n" : string.Empty);
+
+            return header;
         }
 
         protected virtual void WrapToModules()

@@ -334,6 +334,8 @@ namespace Bridge.Translator
                 return;
             }
 
+            bool isBool = NullableType.IsNullable(rr.Type) ? NullableType.GetUnderlyingType(rr.Type).IsKnownType(KnownTypeCode.Boolean) : rr.Type.IsKnownType(KnownTypeCode.Boolean);
+
             if (!delegateAssigment)
             {
                 if (!special)
@@ -348,11 +350,18 @@ namespace Bridge.Translator
                             break;
 
                         case AssignmentOperatorType.BitwiseAnd:
-                            this.Write("&");
+                            if (!isBool)
+                            {
+                                this.Write("&");    
+                            }
                             break;
 
                         case AssignmentOperatorType.BitwiseOr:
-                            this.Write("|");
+                            if (!isBool)
+                            {
+                                this.Write("|");    
+                            }
+                            
                             break;
 
                         case AssignmentOperatorType.Divide:
@@ -393,7 +402,7 @@ namespace Bridge.Translator
                 {
                     if (this.Emitter.Writers.Count == initCount)
                     {
-                        this.Write(" = ");
+                        this.Write("= ");
                     }
                     this.Write(root);
 
@@ -407,11 +416,11 @@ namespace Bridge.Translator
                             break;
 
                         case AssignmentOperatorType.BitwiseAnd:
-                            this.Write("band");
+                            this.Write(isBool ? "and" : "band");
                             break;
 
                         case AssignmentOperatorType.BitwiseOr:
-                            this.Write("bor");
+                            this.Write(isBool ? "or" : "bor");
                             break;
 
                         case AssignmentOperatorType.Divide:
@@ -462,6 +471,12 @@ namespace Bridge.Translator
             else if (!isEvent)
             {
                 this.WriteComma();
+            }
+
+            if (!special && isBool && (assignmentExpression.Operator == AssignmentOperatorType.BitwiseAnd || assignmentExpression.Operator == AssignmentOperatorType.BitwiseOr))
+            {
+                assignmentExpression.Left.AcceptVisitor(this.Emitter);
+                this.Write(assignmentExpression.Operator == AssignmentOperatorType.BitwiseAnd ? " && " : " || ");
             }
 
             oldValue = this.Emitter.ReplaceAwaiterByVar;

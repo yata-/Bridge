@@ -13,47 +13,23 @@ namespace System
         {
         }
 
-        public virtual object Apply(object thisArg)
-        {
-            return null;
-        }
+        public virtual extern object Apply(object thisArg);
 
-        public virtual object Apply()
-        {
-            return null;
-        }
+        public virtual extern object Apply();
 
-        public virtual object Apply(object thisArg, Array args)
-        {
-            return null;
-        }
+        public virtual extern object Apply(object thisArg, Array args);
 
-        public virtual object Call(object thisArg, params object[] args)
-        {
-            return null;
-        }
+        public virtual extern object Call(object thisArg, params object[] args);
 
-        public virtual object Call(object thisArg)
-        {
-            return null;
-        }
+        public virtual extern object Call(object thisArg);
 
-        public virtual object Call()
-        {
-            return null;
-        }
+        public virtual extern object Call();
 
         [Template("Bridge.fn.combine({0}, {1});")]
-        public static Delegate Combine(Delegate a, Delegate b)
-        {
-            return null;
-        }
+        public static extern Delegate Combine(Delegate a, Delegate b);
 
         [Template("Bridge.fn.remove({0}, {1});")]
-        public static Delegate Remove(Delegate source, Delegate value)
-        {
-            return null;
-        }
+        public static extern Delegate Remove(Delegate source, Delegate value);
     }
 
     [External]
