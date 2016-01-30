@@ -189,7 +189,20 @@ namespace Bridge.Contract
             set;
         }
 
+        /// <summary>
+        /// Deletes files from output directory using pattern "*.js|*.d.ts" before build (before extracting scripts after translation).
+        /// It is useful to replace BeforeBuild event if it just contain commands to clean the output folder.
+        /// </summary>
         bool CleanOutputFolderBeforeBuild
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Sets search pattern for cleaning output directory.
+        /// </summary>
+        string CleanOutputFolderBeforeBuildPattern
         {
             get;
             set;
@@ -226,6 +239,12 @@ namespace Bridge.Contract
         }
 
         bool CombineScripts
+        {
+            get;
+            set;
+        }
+
+        bool UseTypedArrays
         {
             get;
             set;

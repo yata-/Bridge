@@ -52,26 +52,32 @@ namespace System
         [EditorBrowsable(EditorBrowsableState.Never)]
         public extern Decimal(int lo, int mid, int hi, bool isNegative, byte scale);
 
-        [Template("Bridge.Int.format({this}.toFloat(), {format})")]
+        [Template("Bridge.Int.format({this}, {format})")]
         public extern string Format(string format);
 
-        [Template("Bridge.Int.format({this}.toFloat(), {format}, {provider})")]
+        [Template("Bridge.Int.format({this}, {format}, {provider})")]
         public extern string Format(string format, IFormatProvider provider);
 
-        [Template("Bridge.Int.format({this}.toFloat(), {format})")]
+        [Template("Bridge.Int.format({this}, {format})")]
         public string ToString(string format)
         {
             return null;
         }
 
-        [Template("Bridge.Int.format({this}.toFloat(), {format}, {provider})")]
+        [Template("Bridge.Int.format({this}, {format}, {provider})")]
         public string ToString(string format, IFormatProvider provider)
         {
             return null;
         }
 
-        [Template("Bridge.Int.format({this}.toFloat(), 'G', {provider})")]
+        [Template("Bridge.Int.format({this}, 'G', {provider})")]
         public string ToString(IFormatProvider provider)
+        {
+            return null;
+        }
+
+        [Template("Bridge.Int.format({this}, 'G')")]
+        public override string ToString()
         {
             return null;
         }

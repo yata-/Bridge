@@ -354,22 +354,26 @@ namespace Bridge.Translator
             Expression initializer = enumMemberDeclaration.Initializer;
             if (enumMemberDeclaration.Initializer.IsNull)
             {
+                dynamic i = this.CurrentType.LastEnumValue;
+
                 if (this.CurrentType.Type.GetDefinition().Attributes.Any(attr => attr.AttributeType.FullName == "System.FlagsAttribute"))
                 {
-                    if (this.CurrentType.LastEnumValue <= 0)
+                    if (i <= 0)
                     {
                         this.CurrentType.LastEnumValue = 1;
                     }
                     else
                     {
-                        this.CurrentType.LastEnumValue *= 2;
+                        this.CurrentType.LastEnumValue = i * 2;
                     }
 
                     initializer = new PrimitiveExpression(this.CurrentType.LastEnumValue);
                 }
                 else
                 {
-                    initializer = new PrimitiveExpression(++this.CurrentType.LastEnumValue);
+                    ++i;
+                    this.CurrentType.LastEnumValue = i;
+                    initializer = new PrimitiveExpression(this.CurrentType.LastEnumValue);
                 }
             }
             else
@@ -378,7 +382,7 @@ namespace Bridge.Translator
                 if (rr != null)
                 {
                     initializer = new PrimitiveExpression(rr.ConstantValue);
-                    this.CurrentType.LastEnumValue = (int)rr.ConstantValue;
+                    this.CurrentType.LastEnumValue = rr.ConstantValue;
                 }
             }
 

@@ -55,17 +55,18 @@ namespace Bridge
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="code"></param>
+        /// <param name="args"></param>
         /// <returns></returns>
         [Template]
-        public static extern T Write<T>(string code);
-
+        public static extern T Write<T>(string code, params object[] args);
         /// <summary>
         /// Inject javascript code
         /// </summary>
         /// <param name="code"></param>
+        /// <param name="args"></param>
         /// <returns></returns>
         [Template]
-        public static extern void Write(string code);
+        public static extern void Write(string code, params object[] args);
 
         /// <summary>
         /// An Array-like object corresponding to the arguments passed to a function.

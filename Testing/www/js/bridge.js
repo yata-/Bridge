@@ -399,7 +399,7 @@
 	            for (key in from) {
 	                value = from[key];
 
-	                if (typeof to[key] === "function" && typeof value !== "function") {
+	                if (typeof to[key] === "function") {
 	                    if (key.match(/^\s*get[A-Z]/)) {
 	                        Bridge.merge(to[key](), value);
 	                    } else {
@@ -488,7 +488,17 @@
 	    },
 
         isArray: function (obj) {
-            return Object.prototype.toString.call(obj) === "[object Array]";
+            return Object.prototype.toString.call(obj) in {
+                "[object Array]": 1,
+                "[object Uint8Array]": 1,
+                "[object Int8Array]": 1,
+                "[object Int16Array]": 1,
+                "[object Uint16Array]": 1,
+                "[object Int32Array]": 1,
+                "[object Uint32Array]": 1,
+                "[object Float32Array]": 1,
+                "[object Float64Array]": 1
+            };
         },
 
         isFunction: function (obj) {
@@ -2999,13 +3009,15 @@
                 var nf = (provider || Bridge.CultureInfo.getCurrentCulture()).getFormat(Bridge.NumberFormatInfo),
                     decimalSeparator = nf.numberDecimalSeparator,
                     groupSeparator = nf.numberGroupSeparator,
+                    isDecimal = number instanceof Bridge.Decimal,
+                    isNeg = isDecimal ? number.isNegative() : number < 0,
                     match,
                     precision,
                     groups,
                     fs;
 
-                if (!isFinite(number)) {
-                    return Number.NEGATIVE_INFINITY === number ? nf.negativeInfinitySymbol : nf.positiveInfinitySymbol;
+                if (isDecimal ? !number.isFinite() : !isFinite(number)) {
+                    return Number.NEGATIVE_INFINITY === number || (isDecimal && isNeg) ? nf.negativeInfinitySymbol : nf.positiveInfinitySymbol;
                 }
 
                 if (!format) {
@@ -3031,26 +3043,35 @@
                         case "G":
                         case "E":
                             var exponent = 0,
-                                coefficient = Math.abs(number),
+                                coefficient = isDecimal ? number.abs() : Math.abs(number),
                                 exponentPrefix = match[1],
                                 exponentPrecision = 3,
                                 minDecimals,
                                 maxDecimals;
 
-                            while (coefficient >= 10) {
-                                coefficient /= 10;
+                            while (isDecimal ? coefficient.gte(10) : (coefficient >= 10)) {
+                                if (isDecimal) {
+                                    coefficient = coefficient.div(10);
+                                } else {
+                                    coefficient /= 10;
+                                }
+                                
                                 exponent++;
                             }
 
-                            while (coefficient !== 0 && coefficient < 1) {
-                                coefficient *= 10;
+                            while (isDecimal ? (coefficient.ne(0) && coefficient.lt(1)) : (coefficient !== 0 && coefficient < 1)) {
+                                if (isDecimal) {
+                                    coefficient = coefficient.mul(10);
+                                } else {
+                                    coefficient *= 10;
+                                }
                                 exponent--;
                             }
 
                             if (fs === "G") {
                                 if (exponent > -5 && (!precision || exponent < precision)) {
                                     minDecimals = precision ? precision - (exponent > 0 ? exponent + 1 : 1) : 0;
-                                    maxDecimals = precision ? precision - (exponent > 0 ? exponent + 1 : 1) : 10;
+                                    maxDecimals = precision ? precision - (exponent > 0 ? exponent + 1 : 1) : 15;
                                     return this.defaultFormat(number, 1, minDecimals, maxDecimals, nf, true);
                                 }
 
@@ -3069,8 +3090,12 @@
                                 exponent = -exponent;
                             }
 
-                            if (number < 0) {
-                                coefficient *= -1;
+                            if (isNeg) {
+                                if (isDecimal) {
+                                    coefficient = coefficient.mul(-1);
+                                } else {
+                                    coefficient *= -1;
+                                }
                             }
 
                             return this.defaultFormat(coefficient, 1, minDecimals, maxDecimals, nf) + exponentPrefix + this.defaultFormat(exponent, exponentPrecision, 0, 0, nf, true);
@@ -3081,7 +3106,7 @@
 
                             return this.defaultFormat(number * 100, 1, precision, precision, nf, false, "percent");
                         case "X":
-                            var result = Math.round(number).toString(16);
+                            var result = isDecimal ? number.round().value.toString(16) : Math.round(number).toString(16);
 
                             if (match[1] === "X") {
                                 result = result.toUpperCase();
@@ -3101,7 +3126,7 @@
 
                             return this.defaultFormat(number, 1, precision, precision, nf, false, "currency");
                         case "R":
-                            return "" + number;
+                            return isDecimal ? (number.toString()) : ("" + number);
                     }
                 }
 
@@ -3118,20 +3143,33 @@
                         index--;
                     }
 
-                    number /= Math.pow(1000, count);
+                    if (isDecimal) {
+                        number = number.div(Math.pow(1000, count));
+                    } else {
+                        number /= Math.pow(1000, count);
+                    }
                 }
 
                 if (format.indexOf("%") !== -1) {
-                    number *= 100;
+                    if (isDecimal) {
+                        number = number.mul(100);
+                    } else {
+                        number *= 100;
+                    }
                 }
 
                 groups = format.split(";");
 
-                if (number < 0 && groups.length > 1) {
-                    number *= -1;
+                if ((isDecimal ? number.lt(0) : (number < 0)) && groups.length > 1) {
+                    if (isDecimal) {
+                        number = number.mul(-1);
+                    } else {
+                        number *= -1;
+                    }
+                    
                     format = groups[1];
                 } else {
-                    format = groups[!number && groups.length > 2 ? 2 : 0];
+                    format = groups[(isDecimal ? number.ne(0) : !number) && groups.length > 2 ? 2 : 0];
                 }
 
                 return this.customFormat(number, format, nf, !format.match(/^[^\.]*[0#],[0#]/));
@@ -3155,10 +3193,17 @@
                     length,
                     part,
                     sep,
-                    buffer = "";
+                    buffer = "",
+                    isDecimal = number instanceof Bridge.Decimal,
+                    isNeg = isDecimal ? number.isNegative() : number < 0;
 
                 roundingFactor = Math.pow(10, maxDecLen);
-                str = "" + (Math.round(Math.abs(number) * roundingFactor) / roundingFactor);
+
+                if (isDecimal) {
+                    str = number.abs().mul(roundingFactor).round().div(roundingFactor).toString();
+                } else {
+                    str = "" + (Math.round(Math.abs(number) * roundingFactor) / roundingFactor);
+                }
 
                 decimalIndex = str.indexOf(".");
 
@@ -3233,7 +3278,7 @@
                     }
                 }
 
-                if (number < 0) {
+                if (isNeg) {
                     negPattern = Bridge.NumberFormatInfo[name + "NegativePatterns"][nf[name + "NegativePattern"]];
 
                     return negPattern.replace("-", nf.negativeSign).replace("%", nf.percentSymbol).replace("$", nf.currencySymbol).replace("n", buffer);
@@ -3261,7 +3306,9 @@
                     isNegative = false,
                     name,
                     groupCfg,
-                    buffer = "";
+                    buffer = "",
+                    isDecimal = number instanceof Bridge.Decimal,
+                    isNeg = isDecimal ? number.isNegative() : number < 0;
 
                 name = "number";
 
@@ -3302,12 +3349,17 @@
                 }
                 forcedDigits = forcedDigits < 0 ? 1 : digits - forcedDigits;
 
-                if (number < 0) {
+                if (isNeg) {
                     isNegative = true;
                 }
 
                 roundingFactor = Math.pow(10, decimals);
-                number = "" + (Math.round(Math.abs(number) * roundingFactor) / roundingFactor);
+
+                if (isDecimal) {
+                    number = number.abs().mul(roundingFactor).round().div(roundingFactor).toString();
+                } else {
+                    number = "" + (Math.round(Math.abs(number) * roundingFactor) / roundingFactor);
+                }
 
                 decimalIndex = number.indexOf(".");
                 integralDigits = decimalIndex < 0 ? number.length : decimalIndex;
@@ -3638,7 +3690,7 @@
             return this.value.toString();
         }
 
-        return Bridge.Int.format(this.toFloat(), format, provider);
+        return Bridge.Int.format(this, format, provider);
     };
 
     Bridge.Decimal.prototype.toFloat = function () {

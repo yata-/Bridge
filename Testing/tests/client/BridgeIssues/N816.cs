@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Bridge;
-using Bridge.Html5;
+﻿using Bridge.Html5;
 using Bridge.Test;
 
 
@@ -24,7 +20,7 @@ namespace Bridge.ClientTest.BridgeIssues
             root.AppendChild(textArea);
             
             var ta = Document.GetElementById("textArea1");
-            Assert.Equal(ta["value"], "Test", "Bridge816 textArea1.value");
+            Assert.AreEqual(ta["value"], "Test", "Bridge816 textArea1.value");
         }
     }
 }

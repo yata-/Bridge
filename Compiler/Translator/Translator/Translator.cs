@@ -746,5 +746,65 @@ namespace Bridge.Translator
                 File.WriteAllText(filePath.ReplaceLastInstanceOf(".js", ".min.js"), this.jsminbuffer.ToString(), OutputEncoding);
             }
         }
+
+        public void CleanOutputFolderIfRequired(string outputPath)
+        {
+            if (this.AssemblyInfo != null
+                && (this.AssemblyInfo.CleanOutputFolderBeforeBuild || !string.IsNullOrEmpty(this.AssemblyInfo.CleanOutputFolderBeforeBuildPattern)))
+            {
+                var searchPattern = string.IsNullOrEmpty(this.AssemblyInfo.CleanOutputFolderBeforeBuildPattern)
+                    ? "*.js|*.d.ts"
+                    : this.AssemblyInfo.CleanOutputFolderBeforeBuildPattern;
+
+                CleanDirectory(outputPath, searchPattern);
+            }
+        }
+
+        private void CleanDirectory(string outputPath, string searchPattern)
+        {
+            this.Log.Info("Cleaning output folder " + (outputPath ?? string.Empty) + " with search pattern (" + (searchPattern ?? string.Empty) + ") ...");
+
+            if (string.IsNullOrWhiteSpace(outputPath))
+            {
+                this.Log.Warn("Output directory is not specified. No files deleted.");
+                return;
+            }
+
+            try
+            {
+                var outputDirectory = new DirectoryInfo(outputPath);
+                if (!outputDirectory.Exists)
+                {
+                    this.Log.Warn("Output directory does not exist " + outputPath + ". No files deleted.");
+                    return;
+                }
+
+                var patterns = searchPattern.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+
+                if (patterns.Length == 0)
+                {
+                    this.Log.Warn("Incorrect search pattern - empty. No files deleted.");
+                    return;
+                }
+
+                var filesToDelete = new List<FileInfo>();
+                foreach (var pattern in patterns)
+                {
+                    filesToDelete.AddRange(outputDirectory.GetFiles(pattern, SearchOption.AllDirectories));
+                }
+
+                foreach (var file in filesToDelete)
+                {
+                    this.Log.Trace("cleaning " + file.FullName);
+                    file.Delete();
+                }
+
+                this.Log.Info("Cleaning output folder done");
+            }
+            catch (Exception ex)
+            {
+                this.Log.Error("Exception occurred: " + ex.Message);
+            }
+        }
     }
 }
