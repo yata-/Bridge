@@ -231,5 +231,50 @@ namespace System
         /// </summary>
         [Template("Bridge.Convert.toDateTime({value}, {provider})")]
         public static extern DateTime ToDateTime(object value, IFormatProvider provider);
+
+        /// <summary>
+        /// Converts an array of 8-bit unsigned integers to its equivalent string representation that is encoded with base-64 digits.
+        /// </summary>
+        [Template("Bridge.Convert.toBase64String({inArray}, null, null, null)")]
+        public static extern string ToBase64String(byte[] inArray);
+
+        /// <summary>
+        /// Converts an array of 8-bit unsigned integers to its equivalent string representation that is encoded with base-64 digits. A parameter specifies whether to insert line breaks in the return value.
+        /// </summary>
+        /// <param name="inArray">An array of 8-bit unsigned integers. </param><param name="options"><see cref="F:System.Base64FormattingOptions.InsertLineBreaks"/> to insert a line break every 76 characters, or <see cref="F:System.Base64FormattingOptions.None"/> to not insert line breaks.</param><exception cref="T:System.ArgumentNullException"><paramref name="inArray"/> is null. </exception><exception cref="T:System.ArgumentException"><paramref name="options"/> is not a valid <see cref="T:System.Base64FormattingOptions"/> value. </exception><filterpriority>1</filterpriority>
+        [Template("Bridge.Convert.toBase64String({inArray}, null, null, {options})")]
+        public static extern string ToBase64String(byte[] inArray, Base64FormattingOptions options);
+
+        /// <summary>
+        /// Converts a subset of an array of 8-bit unsigned integers to its equivalent string representation that is encoded with base-64 digits. Parameters specify the subset as an offset in the input array, and the number of elements in the array to convert.
+        /// </summary>
+        [Template("Bridge.Convert.toBase64String({inArray}, {offset}, {length}, null)")]
+        public static extern string ToBase64String(byte[] inArray, int offset, int length);
+
+        /// <summary>
+        /// Converts a subset of an array of 8-bit unsigned integers to its equivalent string representation that is encoded with base-64 digits. Parameters specify the subset as an offset in the input array, the number of elements in the array to convert, and whether to insert line breaks in the return value.
+        /// </summary>
+        [Template("Bridge.Convert.toBase64String({inArray}, {offset}, {length}, {options})")]
+        public static extern string ToBase64String(byte[] inArray, int offset, int length, Base64FormattingOptions options);
+
+        /// <summary>
+        /// Converts a subset of an 8-bit unsigned integer array to an equivalent subset of a Unicode character array encoded with base-64 digits. Parameters specify the subsets as offsets in the input and output arrays, and the number of elements in the input array to convert.
+        /// </summary>
+        /// 
+        /// <returns>
+        /// A 32-bit signed integer containing the number of bytes in <paramref name="outArray"/>.
+        /// </returns>
+        [Template("Bridge.Convert.toBase64CharArray({inArray}, {offsetIn}, {length}, {outArray}, {offsetOut}, null)")]
+        public static extern int ToBase64CharArray(byte[] inArray, int offsetIn, int length, char[] outArray, int offsetOut);
+
+        /// <summary>
+        /// Converts a subset of an 8-bit unsigned integer array to an equivalent subset of a Unicode character array encoded with base-64 digits. Parameters specify the subsets as offsets in the input and output arrays, the number of elements in the input array to convert, and whether line breaks are inserted in the output array.
+        /// </summary>
+        /// 
+        /// <returns>
+        /// A 32-bit signed integer containing the number of bytes in <paramref name="outArray"/>.
+        /// </returns>
+        [Template("Bridge.Convert.toBase64CharArray({inArray}, {offsetIn}, {length}, {outArray}, {offsetOut}, {options})")]
+        public static extern int ToBase64CharArray(byte[] inArray, int offsetIn, int length, char[] outArray, int offsetOut, Base64FormattingOptions options);
     }
 }
