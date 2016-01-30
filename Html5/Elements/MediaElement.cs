@@ -162,39 +162,28 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="type">The media type</param>
         /// <returns>The string representing that the specified type may be played or not</returns>
-        public virtual string CanPlayType(string type)
-        {
-            return null;
-        }
+        public virtual extern string CanPlayType(string type);
 
         /// <summary>
         /// Directly seek to the given time.
         /// </summary>
         /// <param name="time">The time to seek</param>
-        public virtual void FastSeek(double time)
-        {
-        }
+        public virtual extern void FastSeek(double time);
 
         /// <summary>
         /// Begins loading the media content from the server.
         /// </summary>
-        public virtual void Load()
-        {
-        }
+        public virtual extern void Load();
 
         /// <summary>
         /// Pauses the media playback.
         /// </summary>
-        public virtual void Pause()
-        {
-        }
+        public virtual extern void Pause();
 
         /// <summary>
         /// Begins playback of the media. If you have changed the src attribute of the media element since the page was loaded, you must call load() before play(), otherwise the original media plays again.
         /// </summary>
-        public virtual void Play()
-        {
-        }
+        public virtual extern void Play();
     }
 
     /// <summary>
@@ -224,10 +213,7 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="index">The range number to return the starting time for.</param>
         /// <returns>Returns the time offset at which a specified time range begins.</returns>
-        public virtual double Start(int index)
-        {
-            return 0;
-        }
+        public virtual extern double Start(int index);
 
         /// <summary>
         /// Returns the time offset at which a specified time range ends.
@@ -235,10 +221,7 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="index">The range number to return the ending time for.</param>
         /// <returns>Returns the time offset at which a specified time range ends.</returns>
-        public virtual double End(int index)
-        {
-            return 0;
-        }
+        public virtual extern double End(int index);
     }
 
     public class MediaError

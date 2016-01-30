@@ -188,3 +188,7 @@ FakesAssemblies/
 *.ts
 *.d.ts
 /Bridge.dev.sln
+/Testing/tests/client/Bridge/plugins/*
+Bridge/build/package/nuget-package-source/*.nupkg
+*.nupkg
+/Testing/www/jsOne/bridge.js

@@ -134,10 +134,7 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="text">The text to measure.</param>
         /// <returns>A TextMetrics object.</returns>
-        public virtual TextMetrics MeasureText(string text)
-        {
-            return null;
-        }
+        public virtual extern TextMetrics MeasureText(string text);
 
         #endregion Drawing Text
 
@@ -175,10 +172,7 @@ namespace Bridge.Html5
         /// For example, setting the line dash to [5, 15, 25] will result in getting back
         /// [5, 15, 25, 5, 15, 25].
         /// </returns>
-        public virtual double[] GetLineDash()
-        {
-            return null;
-        }
+        public virtual extern double[] GetLineDash();
 
         /// <summary>
         /// Sets the current line dash pattern.
@@ -255,11 +249,8 @@ namespace Bridge.Html5
         /// <param name="x1">The x axis of the coordinate of the end point.</param>
         /// <param name="y1">The y axis of the coordinate of the end point.</param>
         /// <returns>A linear CanvasGradient initialized with the specified line.</returns>
-        public virtual CanvasGradient CreateLinearGradient(Any<uint, int, double> x0, Any<uint, int, double> y0,
-                                                           Any<uint, int, double> x1, Any<uint, int, double> y1)
-        {
-            return null;
-        }
+        public virtual extern CanvasGradient CreateLinearGradient(Any<uint, int, double> x0, Any<uint, int, double> y0,
+                                                           Any<uint, int, double> x1, Any<uint, int, double> y1);
 
         /// <summary>
         /// Creates a radial gradient along the line given by the coordinates represented by the parameters.
@@ -271,12 +262,9 @@ namespace Bridge.Html5
         /// <param name="y1">The y axis of the coordinate of the end circle.</param>
         /// <param name="r1">The radius of the end circle.</param>
         /// <returns>A radial CanvasGradient initialized with the two specified circles.</returns>
-        public virtual CanvasGradient CreateRadialGradient(
+        public virtual extern CanvasGradient CreateRadialGradient(
             Any<uint, int, double> x0, Any<uint, int, double> y0, Any<uint, int, double> r0,
-            Any<uint, int, double> x1, Any<uint, int, double> y1, Any<uint, int, double> r1)
-        {
-            return null;
-        }
+            Any<uint, int, double> x1, Any<uint, int, double> y1, Any<uint, int, double> r1);
 
         /// <summary>
         /// Creates a pattern using the specified image (a CanvasImageSource). It repeats the source in the
@@ -298,12 +286,9 @@ namespace Bridge.Html5
         /// At the time of implementation, ImageBitmap had no documentation and Bridge.NET did not have
         /// it defined inside.
         /// </remarks>
-        public virtual CanvasPattern CreatePattern(
+        public virtual extern CanvasPattern CreatePattern(
             Any<ImageElement, VideoElement, CanvasElement, CanvasRenderingContext2D, object, ImageData, Blob> image,
-            CanvasTypes.CanvasRepetitionTypes repetition)
-        {
-            return null;
-        }
+            CanvasTypes.CanvasRepetitionTypes repetition);
 
         #endregion Gradients and Patterns
 
@@ -482,10 +467,7 @@ namespace Bridge.Html5
         /// A Boolean, which is true if the specified point is contained in the current or specfied path,
         /// otherwise false.
         /// </returns>
-        public virtual bool IsPointInPath(Any<uint, int, double> x, Any<uint, int, double> y)
-        {
-            return false;
-        }
+        public virtual extern bool IsPointInPath(Any<uint, int, double> x, Any<uint, int, double> y);
 
         /// <summary>
         /// Reports whether or not the specified point is contained in the current path.
@@ -499,11 +481,8 @@ namespace Bridge.Html5
         /// A Boolean, which is true if the specified point is contained in the current or specfied path,
         /// otherwise false.
         /// </returns>
-        public virtual bool IsPointInPath(Any<uint, int, double> x, Any<uint, int, double> y,
-                                          CanvasTypes.CanvasFillRule? fillRule)
-        {
-            return false;
-        }
+        public virtual extern bool IsPointInPath(Any<uint, int, double> x, Any<uint, int, double> y,
+                                          CanvasTypes.CanvasFillRule? fillRule);
 
         /// <summary>
         /// Reports whether or not the specified point is contained in the current path.
@@ -515,10 +494,7 @@ namespace Bridge.Html5
         /// A Boolean, which is true if the specified point is contained in the current or specfied path,
         /// otherwise false.
         /// </returns>
-        public virtual bool IsPointInPath(Path2D path, Any<uint, int, double> x, Any<uint, int, double> y)
-        {
-            return false;
-        }
+        public virtual extern bool IsPointInPath(Path2D path, Any<uint, int, double> x, Any<uint, int, double> y);
 
         /// <summary>
         /// Reports whether or not the specified point is contained in the current path.
@@ -533,11 +509,8 @@ namespace Bridge.Html5
         /// A Boolean, which is true if the specified point is contained in the current or specfied path,
         /// otherwise false.
         /// </returns>
-        public virtual bool IsPointInPath(Path2D path, Any<uint, int, double> x, Any<uint, int, double> y,
-                                          CanvasTypes.CanvasFillRule? fillRule)
-        {
-            return false;
-        }
+        public virtual extern bool IsPointInPath(Path2D path, Any<uint, int, double> x, Any<uint, int, double> y,
+                                          CanvasTypes.CanvasFillRule? fillRule);
 
         /// <summary>
         /// Reports whether or not the specified point is inside the area contained by the stroking of a path.
@@ -548,10 +521,7 @@ namespace Bridge.Html5
         /// A Boolean, which is true if the point is inside the area contained by the stroking of a path,
         /// otherwise false.
         /// </returns>
-        public virtual bool IsPointInStroke(Any<uint, int, double> x, Any<uint, int, double> y)
-        {
-            return false;
-        }
+        public virtual extern bool IsPointInStroke(Any<uint, int, double> x, Any<uint, int, double> y);
 
         /// <summary>
         /// Reports whether or not the specified point is inside the area contained by the stroking of a path.
@@ -563,10 +533,7 @@ namespace Bridge.Html5
         /// A Boolean, which is true if the point is inside the area contained by the stroking of a path,
         /// otherwise false.
         /// </returns>
-        public virtual bool IsPointInStroke(Path2D path, Any<uint, int, double> x, Any<uint, int, double> y)
-        {
-            return false;
-        }
+        public virtual extern bool IsPointInStroke(Path2D path, Any<uint, int, double> x, Any<uint, int, double> y);
 
         #endregion Drawing Paths
 
@@ -795,10 +762,7 @@ namespace Bridge.Html5
         /// A new ImageData object with the specified width and height. The new object is filled with
         /// transparent black pixels.
         /// </returns>
-        public virtual ImageData CreateImageData(Any<uint, int> width, Any<uint, int> height)
-        {
-            return null;
-        }
+        public virtual extern ImageData CreateImageData(Any<uint, int> width, Any<uint, int> height);
 
         /// <summary>
         /// Creates a new, blank ImageData object with the specified dimensions. All of the pixels in the
@@ -811,10 +775,7 @@ namespace Bridge.Html5
         /// A new ImageData object with the specified width and height. The new object is filled with
         /// transparent black pixels.
         /// </returns>
-        public virtual ImageData CreateImageData(ImageData imagedata)
-        {
-            return null;
-        }
+        public virtual extern ImageData CreateImageData(ImageData imagedata);
 
         /// <summary>
         /// Returns an ImageData object representing the underlying pixel data for the area of the canvas
@@ -833,10 +794,7 @@ namespace Bridge.Html5
         /// The height of the rectangle from which the ImageData will be extracted.
         /// </param>
         /// <returns></returns>
-        public virtual ImageData GetImageData(Any<uint, int> sx, Any<uint, int> sy, Any<uint, int> sw, Any<uint, int> sh)
-        {
-            return null;
-        }
+        public virtual extern ImageData GetImageData(Any<uint, int> sx, Any<uint, int> sy, Any<uint, int> sw, Any<uint, int> sh);
 
         /// <summary>
         /// Paints data from the given ImageData object onto the bitmap. If a dirty rectangle is provided,

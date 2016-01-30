@@ -221,9 +221,9 @@ namespace Bridge.Translator
             }
         }
 
-        private int enumValue = -1;
+        private object enumValue = -1;
 
-        public virtual int LastEnumValue
+        public virtual object LastEnumValue
         {
             get
             {

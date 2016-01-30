@@ -67,13 +67,64 @@ namespace Bridge.Translator
             return types.Where(e => e.Name == key && e.IType != null).Select(e => e.IType).FirstOrDefault();
         }
 
+        public static string ReplaceInlineArgs(AbstractEmitterBlock block, string inline, Expression[] args)
+        {
+            var emitter = block.Emitter;
+            inline = _formatArg.Replace(inline, delegate(Match m)
+            {
+                int count = emitter.Writers.Count;
+                string key = m.Groups[2].Value;
+                string modifier = m.Groups[1].Success ? m.Groups[4].Value : null;
+
+                StringBuilder oldSb = emitter.Output;
+                emitter.Output = new StringBuilder();
+
+                Expression expr = null;
+
+                if (Regex.IsMatch(key, "^\\d+$"))
+                {
+                    expr = args.Skip(int.Parse(key)).FirstOrDefault();
+                }
+                else
+                {
+                    expr = args.FirstOrDefault(e => e.ToString() == key);
+                }
+
+                string s = "";
+                if (expr != null)
+                {
+                    var writer = block.SaveWriter();
+                    block.NewWriter();
+                    expr.AcceptVisitor(emitter);
+                    s = emitter.Output.ToString();
+                    block.RestoreWriter(writer);
+
+                    if (modifier == "raw")
+                    {
+                        s = s.Trim('"');
+                    }
+                }
+
+                block.Write(block.WriteIndentToString(s));
+
+                if (emitter.Writers.Count != count)
+                {
+                    block.PopWriter();
+                }
+
+                string replacement = emitter.Output.ToString();
+                emitter.Output = oldSb;
+
+                return replacement;
+            });
+
+            return inline;
+        }
+
         protected virtual void EmitInlineExpressionList(ArgumentsInfo argsInfo, string inline)
         {
             IEnumerable<NamedParamExpression> expressions = argsInfo.NamedExpressions;
             IEnumerable<TypeParamExpression> typeParams = argsInfo.TypeArguments;
-            Expression paramsArg = argsInfo.ParamsExpression;
-
-            var matches = _formatArg.Matches(inline);
 
             this.Write("");
 

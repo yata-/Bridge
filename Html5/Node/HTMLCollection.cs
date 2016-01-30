@@ -47,10 +47,7 @@ namespace Bridge.Html5
         /// <param name="index"></param>
         /// <returns></returns>
         [Name("item")]
-        public virtual T GetItem(int index)
-        {
-            return null;
-        }
+        public virtual extern T GetItem(int index);
 
         /// <summary>
         /// Returns the specific node whose ID or, as a fallback, name matches the string specified by name. Matching by name is only done as a last resort, only in HTML, and only if the referenced element supports the name attribute. Returns null if no node exists by the given name.
@@ -58,25 +55,16 @@ namespace Bridge.Html5
         /// <param name="name"></param>
         /// <returns></returns>
         [Name("namedItem")]
-        public virtual T GetNamedItem(string name)
-        {
-            return null;
-        }
+        public virtual extern T GetNamedItem(string name);
 
         /// <summary>
         /// The number of items in the collection.
         /// </summary>
         public readonly int Length;
 
-        public virtual IEnumerator<T> GetEnumerator()
-        {
-            return null;
-        }
+        public virtual extern IEnumerator<T> GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return null;
-        }
+        extern IEnumerator IEnumerable.GetEnumerator();
     }
 
     /// <summary>

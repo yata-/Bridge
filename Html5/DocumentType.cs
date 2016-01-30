@@ -30,8 +30,6 @@ namespace Bridge.Html5
         /// <summary>
         /// Removes the object from its parent children list.
         /// </summary>
-        public virtual void Remove()
-        {
-        }
+        public virtual extern void Remove();
     }
 }
