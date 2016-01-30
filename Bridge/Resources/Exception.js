@@ -47,6 +47,26 @@
         }
     });
 
+    Bridge.define("Bridge.SystemException", {
+        inherits: [Bridge.Exception],
+
+        constructor: function (message, innerException) {
+            Bridge.Exception.prototype.$constructor.call(this, message || "System error.", innerException);
+        }
+    });
+
+    Bridge.define("Bridge.OutOfMemoryException", {
+        inherits: [Bridge.SystemException],
+
+        constructor: function (message, innerException) {
+            if (!message) {
+                message = "Insufficient memory to continue the execution of the program.";
+            }
+
+            Bridge.SystemException.prototype.$constructor.call(this, message, innerException);
+        }
+    });
+
     Bridge.define("Bridge.ErrorException", {
         inherits: [Bridge.Exception],
 
