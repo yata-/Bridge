@@ -157,6 +157,7 @@
     <Compile Include="BridgeIssues\N782.cs" />
     <Compile Include="BridgeIssues\N826.cs" />
     <Compile Include="BridgeIssues\N857.cs" />
+    <Compile Include="BridgeIssues\N874.cs" />
     <Compile Include="BridgeIssues\N863.cs" />
     <Compile Include="BridgeIssues\TestBridgeIssues.cs" />
     <Compile Include="Linq\TestLinqGroupingOperators.cs" />

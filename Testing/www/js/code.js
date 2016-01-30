@@ -7646,6 +7646,29 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge863', {
     }
 });
 
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge874', {
+    statics: {
+        testUseCase: function () {
+            var myValue = 1;
+
+            switch (myValue) {
+                case 0: 
+                    
+                    myValue = 2;
+                    
+                    break;
+                case 1: 
+                    
+                    myValue = 3;
+                    
+                    break;
+            }
+
+            Bridge.get(Bridge.Test.Assert).areEqual(myValue, 3);
+        }
+    }
+});
+
 Bridge.define('Bridge.ClientTest.Collections.Generic.ComparerTests', {
     typePropertiesAreCorrect: function () {
         Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(Bridge.Comparer$1(Object)), "Bridge.Comparer$1$Object", "GetClassName()");
@@ -8390,7 +8413,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine("got " + enm.getCurrent$1());
         }
 
-        this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\ngot -1\r\n");
+        this.assertEqual(sb.toString(), "yielding 0\nyielding 1\nyielding -1\nin finally\ngot 0\ngot 1\ngot -1\n");
     },
     prematureDisposalOfIEnumeratorIteratorExecutesFinallyBlocks: function () {
         //TODO expected for v1: yield iterator works with no state machine
@@ -8404,7 +8427,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
         }
         enm.dispose();
 
-        this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding 2\r\nyielding 3\r\nyielding 4\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\n");
+        this.assertEqual(sb.toString(), "yielding 0\nyielding 1\nyielding 2\nyielding 3\nyielding 4\nyielding -1\nin finally\ngot 0\ngot 1\n");
     },
     exceptionInIEnumeratorIteratorBodyExecutesFinallyBlocks: function () {
         //TODO expected for v1: yield iterator works with no state machine
@@ -8424,7 +8447,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine("caught exception");
         }
 
-        this.assertEqual(sb.toString(), "yielding 1\r\nyielding 2\r\nthrowing\r\nin finally\r\ncaught exception\r\n");
+        this.assertEqual(sb.toString(), "yielding 1\nyielding 2\nthrowing\nin finally\ncaught exception\n");
     },
     typeReturnedByIteratorBlockReturningIEnumerableImplementsThatInterface: function () {
         var enm = new Bridge.ClientTest.Collections.Generic.IteratorBlockTests.C(new Bridge.Text.StringBuilder()).getEnumerable(0);
@@ -8449,7 +8472,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine("got " + i1);
         }
 
-        this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\ngot -1\r\n-\r\ngot 0\r\ngot 1\r\ngot -1\r\n");
+        this.assertEqual(sb.toString(), "yielding 0\nyielding 1\nyielding -1\nin finally\ngot 0\ngot 1\ngot -1\n-\ngot 0\ngot 1\ngot -1\n");
     },
     prematureDisposalOfIEnumerableIteratorExecutesFinallyBlocks: function () {
         var $t;
@@ -8466,7 +8489,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             }
         }
 
-        this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding 2\r\nyielding 3\r\nyielding 4\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\n");
+        this.assertEqual(sb.toString(), "yielding 0\nyielding 1\nyielding 2\nyielding 3\nyielding 4\nyielding -1\nin finally\ngot 0\ngot 1\n");
     },
     exceptionInIEnumerableIteratorBodyExecutesFinallyBlocks: function () {
         //TODO expected for v1: yield iterator works with no state machine
@@ -8488,7 +8511,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine("caught exception");
         }
 
-        this.assertEqual(sb.toString(), "yielding 1\r\nyielding 2\r\nthrowing\r\nin finally\r\ncaught exception\r\n");
+        this.assertEqual(sb.toString(), "yielding 1\nyielding 2\nthrowing\nin finally\ncaught exception\n");
     },
     enumeratingAnIteratorBlockReturningIEnumerableMultipleTimesUsesTheInitialValuesForParameters: function () {
         var $t, $t1;
@@ -8506,7 +8529,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine(i1.toString());
         }
 
-        this.assertEqual(sb.toString(), "3\r\n2\r\n1\r\n3\r\n2\r\n1\r\n");
+        this.assertEqual(sb.toString(), "3\n2\n1\n3\n2\n1\n");
     },
     differentGetEnumeratorCallsOnIteratorBlockReturningIEnumerableGetOwnCopiesOfLocals: function () {
         var sb = new Bridge.Text.StringBuilder();
@@ -8521,7 +8544,7 @@ Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests', {
             sb.appendLine(enm2.getCurrent$1().toString());
         }
 
-        this.assertEqual(sb.toString(), "0\r\n0\r\n1\r\n1\r\n2\r\n2\r\n-1\r\n-1\r\n");
+        this.assertEqual(sb.toString(), "0\n0\n1\n1\n2\n2\n-1\n-1\n");
     }
 });
 
