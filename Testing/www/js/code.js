@@ -6716,7 +6716,80 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge689', {
     }
 });
 
-Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge690');
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge690', {
+    statics: {
+        testUseCaseForInstance: function () {
+            var $step = 0,
+                $task1, 
+                $taskResult1, 
+                $jumpFromFinally, 
+                done, 
+                c, 
+                r, 
+                $asyncBody = Bridge.fn.bind(this, function () {
+                    for (;;) {
+                        switch ($step) {
+                            case 0: {
+                                done = Bridge.get(Bridge.Test.Assert).async();
+                                c = new Bridge.ClientTest.BridgeIssues.Bridge690A();
+                                $task1 = c.start();
+                                $step = 1;
+                                $task1.continueWith($asyncBody, true);
+                                return;
+                            }
+                            case 1: {
+                                $taskResult1 = $task1.getResult();
+                                r = $taskResult1;
+                                
+                                Bridge.get(Bridge.Test.Assert).areEqual$1(r, 8, "Bridge690 TestUseCaseForInstance");
+                                done();
+                                return;
+                            }
+                            default: {
+                                return;
+                            }
+                        }
+                    }
+                }, arguments);
+
+            $asyncBody();
+        },
+        testUseCaseForStatic: function () {
+            var $step = 0,
+                $task1, 
+                $taskResult1, 
+                $jumpFromFinally, 
+                done, 
+                r, 
+                $asyncBody = Bridge.fn.bind(this, function () {
+                    for (;;) {
+                        switch ($step) {
+                            case 0: {
+                                done = Bridge.get(Bridge.Test.Assert).async();
+                                $task1 = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge690B).start();
+                                $step = 1;
+                                $task1.continueWith($asyncBody, true);
+                                return;
+                            }
+                            case 1: {
+                                $taskResult1 = $task1.getResult();
+                                r = $taskResult1;
+                                
+                                Bridge.get(Bridge.Test.Assert).areEqual$1(r, 59, "Bridge690 TestUseCaseForStatic");
+                                done();
+                                return;
+                            }
+                            default: {
+                                return;
+                            }
+                        }
+                    }
+                }, arguments);
+
+            $asyncBody();
+        }
+    }
+});
 
 Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge691', {
     statics: {
