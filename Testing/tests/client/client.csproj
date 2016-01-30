@@ -277,6 +277,20 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="CleanBridgeTest" BeforeTargets="Clean">
+    <ItemGroup>
+      <BridgeTestFilesToDelete Include="$(ProjectDir)$(OutDir)bridgeTest*.log"/>
+    </ItemGroup>
+    <Message Text="Cleaning Bridge.Test log files in $(ProjectDir)$(OutDir)" Importance="high" />
+    <Delete Files="@(BridgeTestFilesToDelete)" ContinueOnError="true" />
+    <ItemGroup>
+      <BridgeTestFilesToDelete Include="$(ProjectDir)bridgeTest*.log"/>
+    </ItemGroup>
+    <Message Text="Cleaning Brdge.Test log files in $(ProjectDir)" Importance="high" />
+    <Delete Files="@(BridgeTestFilesToDelete)" ContinueOnError="true" />
+    <Message Text="Cleaning Bridge.Test temp project folder $(ProjectDir)$(OutDir)Bridge.Test" Importance="high" />
+    <RemoveDir Directories="$(ProjectDir)$(OutDir)Bridge.Test" ContinueOnError="true"/>
+  </Target>
   <PropertyGroup>
     <PostBuildEvent Condition="$(OS) != Unix">
 "$(ProjectDir)..\..\..\Compiler\Builder\$(OutDir)Bridge.Builder.exe" -p "$(ProjectPath)" -b "$(ProjectDir)$(OutDir)Bridge.dll"
@@ -299,10 +313,6 @@ cp -p "$(ProjectDir)../../../Bridge/Resources/Locales/*.js" "$(ProjectDir)../../
     </PostBuildEvent>
     <AddAdditionalExplicitAssemblyReferences>false</AddAdditionalExplicitAssemblyReferences>
     <AdditionalExplicitAssemblyReferences />
-  </PropertyGroup>
-  <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>REM Run Bridge Compiler for the project
