@@ -98,7 +98,7 @@ namespace Bridge.Build
 
                 translator.BridgeLocation = Path.Combine(this.AssembliesPath, "Bridge.dll");
                 translator.Rebuild = false;
-                translator.Log = new Translator.Logging.Logger("Bridge.Build.Task", true, new ConsoleLoggerWriter(), SimpleFileLoggerWriter.Instance);
+                translator.Log = new Translator.Logging.Logger("Bridge.Build.Task", true, SimpleFileLoggerWriter.Instance);
                 translator.Translate();
 
                 string fileName = Path.GetFileNameWithoutExtension(this.Assembly.ItemSpec);
@@ -107,16 +107,14 @@ namespace Bridge.Build
                     ? Path.Combine(Path.GetDirectoryName(this.ProjectPath), translator.AssemblyInfo.Output)
                     : this.OutputPath;
 
-                if (translator.AssemblyInfo != null && translator.AssemblyInfo.CleanOutputFolderBeforeBuild)
-                {
-                    Console.WriteLine("Cleaning output folder before extracting scripts...");
-                    CleanDirectory(outputPath);
-                }
+
+                translator.CleanOutputFolderIfRequired(outputPath);
 
                 if (!this.NoCore)
                 {
                     translator.ExtractCore(outputPath);
                 }
+
                 translator.SaveTo(outputPath, fileName);
                 translator.Flush(outputPath, fileName);
                 translator.Plugins.AfterOutput(translator, outputPath, this.NoCore);
@@ -142,23 +140,9 @@ namespace Bridge.Build
                 success = false;
             }
 
-            return success;
-        }
+            translator = null;
 
-        private static void CleanDirectory(string outputPath)
-        {
-            var outputDirectory = new DirectoryInfo(outputPath);
-            if (outputDirectory.Exists)
-            {
-                foreach (var file in outputDirectory.GetFiles())
-                {
-                    file.Delete();
-                }
-                foreach (var dir in outputDirectory.GetDirectories())
-                {
-                    dir.Delete(true);
-                }
-            }
+            return success;
         }
     }
 }
