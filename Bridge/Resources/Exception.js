@@ -261,7 +261,7 @@
         inherits: [Bridge.Exception],
 
         constructor: function (message, innerExceptions) {
-            this.innerExceptions = Bridge.isValue(innerExceptions) ? Bridge.toArray(innerExceptions) : [];
+            this.innerExceptions = Bridge.hasValue(innerExceptions) ? Bridge.toArray(innerExceptions) : [];
             Bridge.Exception.prototype.$constructor.call(this, message || 'One or more errors occurred.', this.innerExceptions.length ? this.innerExceptions[0] : null);
         },
 
