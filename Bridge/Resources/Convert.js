@@ -264,12 +264,12 @@ var convert = {
         }
 
         var insertLineBreaks = (options === 1);
-        var strArrayLen = internal.toBase64_CalculateAndValidateOutputLength(length, insertLineBreaks);
+        var strArrayLen = this.internal.toBase64_CalculateAndValidateOutputLength(length, insertLineBreaks);
 
         var strArray = [];
         strArray.length = strArrayLen;
 
-        internal.convertToBase64Array(strArray, inArray, offset, length, insertLineBreaks);
+        this.internal.convertToBase64Array(strArray, inArray, offset, length, insertLineBreaks);
         var str = strArray.join();
         return str;
     },
@@ -307,20 +307,56 @@ var convert = {
         var outArrayLength = outArray.Length;   //This is the maximally required length that must be available in the char array
 
         // Length of the char buffer required
-        var numElementsToCopy = internal.toBase64_CalculateAndValidateOutputLength(length, insertLineBreaks);
+        var numElementsToCopy = this.internal.toBase64_CalculateAndValidateOutputLength(length, insertLineBreaks);
 
         if (offsetOut > (outArrayLength - numElementsToCopy)) {
             throw new Bridge.ArgumentOutOfRangeException("offsetOut", "Either offset did not refer to a position in the string, or there is an insufficient length of destination character array.");
         }
 
         var strArray = [];
-        var strArrayLength = internal.convertToBase64Array(strArray, inArray, offsetIn, length, insertLineBreaks);
+        var strArrayLength = this.internal.convertToBase64Array(strArray, inArray, offsetIn, length, insertLineBreaks);
 
         for (var i = 0; i < strArrayLength; i++) {
             outArray[i] = strArray[i].charCodeAt(0);
         }
 
         return strArrayLength;
+    },
+
+    fromBase64String: function(s) {
+        // "s" is an unfortunate parameter name, but we need to keep it for backward compat.
+
+        if (s == null) {
+            throw new Bridge.ArgumentNullException("s");
+        }
+
+        var sChars = s.split("");
+        var bytes = this.internal.fromBase64CharPtr(sChars, 0, sChars.length);
+        return bytes;
+    },
+
+    fromBase64CharArray: function (inArray, offset, length) {
+        if (inArray == null) {
+            throw new Bridge.ArgumentNullException("inArray");
+        }
+        if (length < 0) {
+            throw new Bridge.ArgumentOutOfRangeException("length", "Index was out of range. Must be non-negative and less than the size of the collection.");
+        }
+        if (offset < 0) {
+            throw new Bridge.ArgumentOutOfRangeException("offset", "Value must be positive.");
+        }
+        if (offset > (inArray.length - length)) {
+            throw new Bridge.ArgumentOutOfRangeException("offset", "Offset and length must refer to a position in the string.");
+        }
+
+        var chars = [];
+        for (var i = 0; i < inArray.length; i++) {
+            var code = inArray[i];
+            chars[i] = String.fromCharCode(code);
+        }
+
+        var bytes = this.internal.fromBase64CharPtr(chars, offset, length);
+        return bytes;
     },
 
     internal: {
@@ -359,7 +395,7 @@ var convert = {
             return outlen;
         },
         
-        convertToBase64Array : function(outChars, inData, offset, length, insertLineBreaks) {
+        convertToBase64Array: function(outChars, inData, offset, length, insertLineBreaks) {
             var lengthmod3 = length % 3;
             var calcLength = offset + (length - lengthmod3);
             var charCount = 0;
@@ -410,6 +446,292 @@ var convert = {
             }
 
             return j;
+        },
+
+        fromBase64CharPtr: function (input, offset, inputLength) {
+            if (inputLength < 0) {
+                throw new Bridge.ArgumentOutOfRangeException("inputLength", "Index was out of range. Must be non-negative and less than the size of the collection.");
+            }
+            if (offset < 0) {
+                throw new Bridge.ArgumentOutOfRangeException("offset", "Value must be positive.");
+            }
+
+            // We need to get rid of any trailing white spaces.
+            // Otherwise we would be rejecting input such as "abc= ":
+            while (inputLength > 0)
+            {
+                var lastChar = input[offset + inputLength - 1];
+                if (lastChar !== " " && lastChar !== "\n" && lastChar !== "\r" && lastChar !== "\t") {
+                    break;
+                }
+
+                inputLength--;
+            }
+
+            // Compute the output length:
+            var resultLength = this.fromBase64_ComputeResultLength(input, offset, inputLength);
+            if (0 > resultLength) {
+                throw new Bridge.InvalidOperationException("Contract voilation: 0 <= resultLength.");
+            }
+
+            // resultLength can be zero. We will still enter FromBase64_Decode and process the input.
+            // It may either simply write no bytes (e.g. input = " ") or throw (e.g. input = "ab").
+            
+            // Create result byte blob:
+            var decodedBytes = [];
+            decodedBytes.length = resultLength;
+
+            // Convert Base64 chars into bytes:
+            this.fromBase64_Decode(input, offset, inputLength, decodedBytes, 0, resultLength);
+
+            // We are done:
+            return decodedBytes;
+        },
+
+        fromBase64_Decode(input, inputIndex, inputLength, dest, destIndex, destLength) {
+            var startDestIndex = destIndex;
+
+            // You may find this method weird to look at. Its written for performance, not aesthetics.
+            // You will find unrolled loops label jumps and bit manipulations.
+
+            var intA =     "A";            
+            var inta =     "a";            
+            var int0 =     "0";         
+            var intEq =    "=";
+            var intPlus =  "+";
+            var intSlash = "/";
+            var intSpace = " ";
+            var intTab =   "\t";
+            var intNLn =   "\n";
+            var intCRt =   "\r";
+            var intAtoZ =  ("Z" - "A");  // = ('z' - 'a')
+            var int0To9 =  ("9" - "0");
+
+            var endInputIndex = inputIndex + inputLength;
+            var endDestIndex = destIndex + destLength;
+
+            // Current char code/value:
+            var currCode;
+             
+            // This 4-byte integer will contain the 4 codes of the current 4-char group.
+            // Eeach char codes for 6 bits = 24 bits.
+            // The remaining byte will be FF, we use it as a marker when 4 chars have been processed.            
+            var currBlockCodes = 0x000000FF;
+
+            var allInputConsumed = false;
+            var equalityCharEncountered = false;
+                          
+            while (true) {
+
+                // break when done:
+                if (inputIndex >= endInputIndex) {
+                    allInputConsumed = true;
+                    break;
+                }
+
+                // Get current char:
+                currCode = input[inputIndex];
+                inputIndex++;
+
+                // Determine current char code:
+                if (currCode - intA <= intAtoZ) {
+                    currCode -= intA;
+                } else if (currCode - inta <= intAtoZ) {
+                    currCode -= (inta - 26);
+                } else if (currCode - int0 <= int0To9) {
+                    currCode -= (int0 - 52);
+                } else {
+                    // Use the slower switch for less common cases:
+                    switch(currCode) {
+                        // Significant chars:
+                        case intPlus:  
+                            currCode = 62;
+                            break;
+
+                        case intSlash: 
+                            currCode = 63;
+                            break;
+
+                        // Legal no-value chars (we ignore these):
+                        case intCRt:
+                        case intNLn:
+                        case intSpace:
+                        case intTab:
+                            continue;
+
+                        // The equality char is only legal at the end of the input.
+                        // Jump after the loop to make it easier for the JIT register predictor to do a good job for the loop itself:
+                        case intEq:
+                            equalityCharEncountered = true;
+                            break;
+
+                        // Other chars are illegal:
+                        default:
+                            throw new Bridge.FormatException("The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.");
+                    }
+                }
+
+                if (equalityCharEncountered) {
+                    break;
+                }
+
+                // Ok, we got the code. Save it:
+                currBlockCodes = (currBlockCodes << 6) | currCode;
+
+                // Last bit in currBlockCodes will be on after in shifted right 4 times:
+                if ((currBlockCodes & 0x80000000) !== 0) {
+
+                    if ((endDestIndex - destIndex) < 3) {
+                        return -1;
+                    }
+
+                    dest[destIndex] = 0xFF & (currBlockCodes >> 16);
+                    dest[destIndex + 1] = 0xFF & (currBlockCodes >> 8);
+                    dest[destIndex + 2] = 0xFF & (currBlockCodes);
+                    destIndex += 3;
+
+                    currBlockCodes = 0x000000FF;
+                }
+
+            } // end of while
+
+            if (!allInputConsumed && !equalityCharEncountered) {
+                throw new Bridge.InvalidOperationException("Contract violation: should never get here.");
+            }
+
+            if (equalityCharEncountered) {
+                if (currCode !== intEq) {
+                    throw new Bridge.InvalidOperationException("Contract violation: currCode == intEq.");
+                }
+
+                // Recall that inputIndex is now one position past where '=' was read.
+                // '=' can only be at the last input pos:
+                if (inputIndex === endInputIndex) {
+
+                    // Code is zero for trailing '=':
+                    currBlockCodes <<= 6;
+
+                    // The '=' did not complete a 4-group. The input must be bad:
+                    if ((currBlockCodes & 0x80000000) === 0) {
+                        throw new Bridge.FormatException("Invalid length for a Base-64 char array or string.");
+                    }
+
+                    if ((endDestIndex - destIndex) < 2) {
+                        // Autch! We underestimated the output length!
+                        return -1;
+                    }
+
+                    // We are good, store bytes form this past group. We had a single "=", so we take two bytes:
+                    dest[destIndex] = 0xFF & (currBlockCodes >> 16);
+                    dest[destIndex+1] = 0xFF & (currBlockCodes >> 8);
+                    destIndex += 2;
+
+                    currBlockCodes = 0x000000FF;
+
+                } else { // '=' can also be at the pre-last position iff the last is also a '=' excluding the white spaces:
+				
+                    // We need to get rid of any intermediate white spaces.
+                    // Otherwise we would be rejecting input such as "abc= =":
+                    while (inputIndex < (endInputIndex - 1)) {
+                        var lastChar = input[inputIndex];
+                        if (lastChar !== " " && lastChar !== "\n" && lastChar !== "\r" && lastChar !== "\t") {
+                            break;
+                        }
+                        inputIndex++;
+                    }
+
+                    if (inputIndex === (endInputIndex - 1) && input[inputIndex] === "=") {
+
+                        // Code is zero for each of the two '=':
+                        currBlockCodes <<= 12;
+
+                        // The '=' did not complete a 4-group. The input must be bad:
+                        if ((currBlockCodes & 0x80000000) === 0) {
+                            throw new Bridge.FormatException("Invalid length for a Base-64 char array or string.");
+                        }
+
+                        if ((endDestIndex - destIndex) < 1) {
+                            // Autch! We underestimated the output length!
+                            return -1;
+                        }
+
+                        // We are good, store bytes form this past group. We had a "==", so we take only one byte:
+                        dest[destIndex] = 0xFF & (currBlockCodes >> 16);
+                        destIndex ++;
+
+                        currBlockCodes = 0x000000FF;
+
+                    } else {
+                        // '=' is not ok at places other than the end:
+                        throw new FormatException("The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.");
+                    }
+                }
+                
+            } 
+            
+            // We get here either from above or by jumping out of the loop:
+            // The last block of chars has less than 4 items
+            if (currBlockCodes !== 0x000000FF) {
+                throw new Bridge.FormatException("Invalid length for a Base-64 char array or string.");
+            }
+
+            // Return how many bytes were actually recovered:
+            return (destIndex - startDestIndex);
+            
+        },
+
+        fromBase64_ComputeResultLength: function(input, startIndex, inputLength) {
+            var intEq = "=";
+            var intSpace = " ";
+
+            if (inputLength < 0) {
+                throw new Bridge.ArgumentOutOfRangeException("inputLength", "Index was out of range. Must be non-negative and less than the size of the collection.");
+            }
+
+            var endIndex = startIndex + inputLength;
+            var usefulInputLength = inputLength;
+            var padding = 0;
+
+            while (startIndex < endIndex) {
+
+                var c = input[startIndex];
+                startIndex++;
+
+                // We want to be as fast as possible and filter out spaces with as few comparisons as possible.
+                // We end up accepting a number of illegal chars as legal white-space chars.
+                // This is ok: as soon as we hit them during actual decode we will recognise them as illegal and throw.
+                if (c <= intSpace) {
+                    usefulInputLength--;
+                } else if (c === intEq) {
+                    usefulInputLength--;
+                    padding++;
+                }
+            }
+
+            if(0 > usefulInputLength) {
+                throw new Bridge.InvalidOperationException("Contract violation: 0 <= usefulInputLength.");
+            }
+            if (0 > padding) {
+                // For legal input, we can assume that 0 <= padding < 3. But it may be more for illegal input.
+                // We will notice it at decode when we see a '=' at the wrong place.
+                throw new Bridge.InvalidOperationException("Contract violation: 0 <= padding.");
+            }
+
+            // Perf: reuse the variable that stored the number of '=' to store the number of bytes encoded by the
+            // last group that contains the '=':
+            if (padding !== 0) {
+
+                if (padding === 1) {
+                    padding = 2;
+                } else if (padding === 2) {
+                    padding = 1;
+                } else {
+                    throw new FormatException("The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.");
+                }  
+            }
+
+            // Done:
+            return (usefulInputLength / 4) * 3 + padding;
         }
     },
 

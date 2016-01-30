@@ -276,5 +276,17 @@ namespace System
         /// </returns>
         [Template("Bridge.Convert.toBase64CharArray({inArray}, {offsetIn}, {length}, {outArray}, {offsetOut}, {options})")]
         public static extern int ToBase64CharArray(byte[] inArray, int offsetIn, int length, char[] outArray, int offsetOut, Base64FormattingOptions options);
+
+        /// <summary>
+        /// Converts the specified string, which encodes binary data as base-64 digits, to an equivalent 8-bit unsigned integer array.
+        /// </summary>
+        [Template("Bridge.Convert.fromBase64String({s})")]
+        public static extern byte[] FromBase64String(string s);
+
+        /// <summary>
+        /// Converts a subset of a Unicode character array, which encodes binary data as base-64 digits, to an equivalent 8-bit unsigned integer array. Parameters specify the subset in the input array and the number of elements to convert.
+        /// </summary>
+        [Template("Bridge.Convert.fromBase64CharArray({inArray}, {offset}, {length})")]
+        public static extern byte[] FromBase64CharArray(char[] inArray, int offset, int length);
     }
 }
