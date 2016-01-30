@@ -40,10 +40,66 @@ namespace Bridge.Translator
                     WriteNewLine(output.NonModuletOutput, moduleOutput.Value.ToString());
                 }
 
-                result.Add(fileName, output.NonModuletOutput.ToString() + (isJs ? "\n\nBridge.init();" : ""));
+                var tmp = new StringBuilder(output.TopOutput.Length + output.BottomOutput.Length + output.NonModuletOutput.Length + 100);
+
+                if (output.TopOutput.Length > 0)
+                {
+                    tmp.AppendLine(output.TopOutput.ToString());
+                }
+
+                if (isJs)
+                {
+                    tmp.AppendLine(this.GetOutputHeader(true, false));
+                }
+
+                if (output.NonModuletOutput.Length > 0)
+                {
+                    if (isJs)
+                    {
+                        tmp.AppendLine("(function (globals) {");
+                        tmp.AppendLine("    " + this.GetOutputHeader(false, true)); 
+                    }
+
+                    var code = output.NonModuletOutput.ToString() + (isJs ? "\n\nBridge.init();" : "");
+
+                    if (isJs)
+                    {
+                        code = "    " + AbstractEmitterBlock.WriteIndentToString(code, 1);
+                    }
+
+                    tmp.Append(code);
+
+                    if (isJs)
+                    {
+                        tmp.AppendLine();
+                        tmp.AppendLine("})(this);");
+                    }
+                }
+
+                if (output.BottomOutput.Length > 0)
+                {
+                    tmp.AppendLine();
+                    tmp.Append(output.BottomOutput.ToString());
+                }
+
+                result.Add(fileName, tmp.ToString());
             }
 
             return result;
+        }
+
+        protected string GetOutputHeader(bool needGlobalComment, bool needStrictModeInstruction)
+        {
+            if (this.Translator.NoStrictModeAndGlobal)
+            {
+                needGlobalComment = false;
+                needStrictModeInstruction = false;
+            }
+
+            string header = needGlobalComment ? "/* global Bridge */\n" : string.Empty;
+            header = header + (needStrictModeInstruction ? "\"use strict\";\n" : string.Empty);
+
+            return header;
         }
 
         protected virtual void WrapToModules()

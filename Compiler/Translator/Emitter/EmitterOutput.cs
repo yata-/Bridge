@@ -12,10 +12,24 @@ namespace Bridge.Translator
             this.FileName = fileName;
             this.ModuleOutput = new Dictionary<string, StringBuilder>();
             this.NonModuletOutput = new StringBuilder();
+            this.TopOutput = new StringBuilder();
+            this.BottomOutput = new StringBuilder();
             this.ModuleDependencies = new Dictionary<string, List<IPluginDependency>>();
         }
 
         public string FileName
+        {
+            get;
+            set;
+        }
+
+        public StringBuilder TopOutput
+        {
+            get;
+            set;
+        }
+
+        public StringBuilder BottomOutput
         {
             get;
             set;
