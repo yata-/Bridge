@@ -4868,9 +4868,9 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge508', {
                     for (;;) {
                         switch ($step) {
                             case 0: {
-                                //TODO Async Bridge508.QUnitAsyncDone = assert.Async();
+                                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge508).setQUnitAsyncDone(Bridge.get(Bridge.Test.Assert).async());
                                 
-                                $task1 = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge508).method1();
+                                $task1 = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge508).doSomethingAsync();
                                 $step = 1;
                                 $task1.continueWith($asyncBody, true);
                                 return;
@@ -4879,7 +4879,7 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge508', {
                                 $taskResult1 = $task1.getResult();
                                 result = $taskResult1;
                                 
-                                Bridge.get(Bridge.Test.Assert).areEqual$1(result, "A(0)A(1)B(0)B(1)B(2)", "#508 Method1");
+                                Bridge.get(Bridge.Test.Assert).areEqual$1(result, "A(0)A(1)B(0)B(1)B(2)", "#508 DoSomethingAsync");
                                 
                                 Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge508).getQUnitAsyncDone()();
                                 return;
@@ -4893,7 +4893,7 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge508', {
 
             $asyncBody();
         },
-        method1: function () {
+        doSomethingAsync: function () {
             var $step = 0,
                 $task1, 
                 $taskResult1, 

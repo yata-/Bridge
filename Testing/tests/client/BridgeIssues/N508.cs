@@ -1,8 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using Bridge.Test;
 
-using Bridge;
-using Bridge.Test;
+using System;
+using System.Threading.Tasks;
 
 namespace Bridge.ClientTest.BridgeIssues
 {
@@ -13,18 +12,19 @@ namespace Bridge.ClientTest.BridgeIssues
     {
         public static Action QUnitAsyncDone { get; set; }
 
+        [Test(ExpectedCount = 1)]
         public static async void TestUseCase()
         {
-            //TODO Async Bridge508.QUnitAsyncDone = assert.Async();
+            Bridge508.QUnitAsyncDone = Assert.Async();
 
-            var result = await Method1();
+            var result = await DoSomethingAsync();
 
-            Assert.AreEqual(result, "A(0)A(1)B(0)B(1)B(2)", "#508 Method1");
+            Assert.AreEqual(result, "A(0)A(1)B(0)B(1)B(2)", "#508 DoSomethingAsync");
 
             QUnitAsyncDone();
         }
 
-        public static async Task<string> Method1()
+        public static async Task<string> DoSomethingAsync()
         {
             var result = string.Empty;
 
@@ -53,7 +53,7 @@ namespace Bridge.ClientTest.BridgeIssues
             return count < 2 ? new { } : null;
         }
 
-        public static async System.Threading.Tasks.Task<object> NextPage()
+        public static async Task<object> NextPage()
         {
             await Task.Delay(0);
             count++;
