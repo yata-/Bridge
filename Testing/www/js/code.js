@@ -2447,6 +2447,53 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge849A', {
     }
 });
 
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge857A', {
+    statics: {
+        all: 4294967295
+    },
+    $enum: true
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge857B', {
+    statics: {
+        all: 4294967295
+    },
+    $enum: true
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge857C', {
+    statics: {
+        all1: 0,
+        all2: 1,
+        all: 4294967295
+    },
+    $enum: true
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge857D', {
+    statics: {
+        all1: 1,
+        all2: 2,
+        all: 4294967295
+    },
+    $enum: true,
+    $flags: true
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge861A', {
+    config: {
+        properties: {
+            MyId: 0,
+            Delegates: null
+        }
+    },
+    invokeDelegates: function () {
+        if (Bridge.hasValue(this.getDelegates())) {
+            this.getDelegates()(this);
+        }
+    }
+});
+
 Bridge.define('Bridge.ClientTest.BridgeIssues.CI1');
 
 Bridge.define('Bridge.ClientTest.BridgeIssues.CI2');
@@ -3370,6 +3417,20 @@ Bridge.define('Bridge.ClientTest.PropertyAccessorTests.C2$1', function (T) { ret
         this.f3 = value - 1;
     }
 }; });
+
+Bridge.define('Bridge.ClientTest.SimpleTypes.BooleanTests.Counter', {
+    config: {
+        properties: {
+            Count: 0
+        }
+    },
+    increment: function (r) {
+        if (r === void 0) { r = true; }
+        this.setCount(this.getCount()+1);
+
+        return r;
+    }
+});
 
 Bridge.define('Bridge.ClientTest.SimpleTypes.EnumTests.FlagsEnum', {
     statics: {
@@ -4807,9 +4868,9 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge508', {
                     for (;;) {
                         switch ($step) {
                             case 0: {
-                                //TODO Async Bridge508.QUnitAsyncDone = assert.Async();
+                                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge508).setQUnitAsyncDone(Bridge.get(Bridge.Test.Assert).async());
                                 
-                                $task1 = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge508).method1();
+                                $task1 = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge508).doSomethingAsync();
                                 $step = 1;
                                 $task1.continueWith($asyncBody, true);
                                 return;
@@ -4818,7 +4879,7 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge508', {
                                 $taskResult1 = $task1.getResult();
                                 result = $taskResult1;
                                 
-                                Bridge.get(Bridge.Test.Assert).areEqual$1(result, "A(0)A(1)B(0)B(1)B(2)", "#508 Method1");
+                                Bridge.get(Bridge.Test.Assert).areEqual$1(result, "A(0)A(1)B(0)B(1)B(2)", "#508 DoSomethingAsync");
                                 
                                 Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge508).getQUnitAsyncDone()();
                                 return;
@@ -4832,7 +4893,7 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge508', {
 
             $asyncBody();
         },
-        method1: function () {
+        doSomethingAsync: function () {
             var $step = 0,
                 $task1, 
                 $taskResult1, 
@@ -6655,7 +6716,80 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge689', {
     }
 });
 
-Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge690');
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge690', {
+    statics: {
+        testUseCaseForInstance: function () {
+            var $step = 0,
+                $task1, 
+                $taskResult1, 
+                $jumpFromFinally, 
+                done, 
+                c, 
+                r, 
+                $asyncBody = Bridge.fn.bind(this, function () {
+                    for (;;) {
+                        switch ($step) {
+                            case 0: {
+                                done = Bridge.get(Bridge.Test.Assert).async();
+                                c = new Bridge.ClientTest.BridgeIssues.Bridge690A();
+                                $task1 = c.start();
+                                $step = 1;
+                                $task1.continueWith($asyncBody, true);
+                                return;
+                            }
+                            case 1: {
+                                $taskResult1 = $task1.getResult();
+                                r = $taskResult1;
+                                
+                                Bridge.get(Bridge.Test.Assert).areEqual$1(r, 8, "Bridge690 TestUseCaseForInstance");
+                                done();
+                                return;
+                            }
+                            default: {
+                                return;
+                            }
+                        }
+                    }
+                }, arguments);
+
+            $asyncBody();
+        },
+        testUseCaseForStatic: function () {
+            var $step = 0,
+                $task1, 
+                $taskResult1, 
+                $jumpFromFinally, 
+                done, 
+                r, 
+                $asyncBody = Bridge.fn.bind(this, function () {
+                    for (;;) {
+                        switch ($step) {
+                            case 0: {
+                                done = Bridge.get(Bridge.Test.Assert).async();
+                                $task1 = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge690B).start();
+                                $step = 1;
+                                $task1.continueWith($asyncBody, true);
+                                return;
+                            }
+                            case 1: {
+                                $taskResult1 = $task1.getResult();
+                                r = $taskResult1;
+                                
+                                Bridge.get(Bridge.Test.Assert).areEqual$1(r, 59, "Bridge690 TestUseCaseForStatic");
+                                done();
+                                return;
+                            }
+                            default: {
+                                return;
+                            }
+                        }
+                    }
+                }, arguments);
+
+            $asyncBody();
+        }
+    }
+});
 
 Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge691', {
     statics: {
@@ -7041,6 +7175,85 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge762', {
             Bridge.get(Bridge.Test.Assert).areNotEqual$1(value2, null, "Bridge762A struct");
             Bridge.get(Bridge.Test.Assert).areNotEqual$1(value3.$clone(), null, "Bridge762B struct");
             Bridge.get(Bridge.Test.Assert).areEqual$1(value3.getData(), 0, "Bridge762B.Data struct");
+        }
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge772', {
+    statics: {
+        testUseCase: function () {
+            //These arrays depend on "useTypedArray" bridge.json option
+            var byteArray = Bridge.Array.init(1, 0);
+            var sbyteArray = Bridge.Array.init(2, 0);
+            var shortArray = Bridge.Array.init(3, 0);
+            var ushortArray = Bridge.Array.init(4, 0);
+            var intArray = Bridge.Array.init(5, 0);
+            var uintArray = Bridge.Array.init(6, 0);
+            var floatArray = Bridge.Array.init(7, 0);
+            var doubleArray = Bridge.Array.init(8, 0);
+
+            //These arrays do not depend on "useTypedArray" bridge.json option
+            var stringArray = Bridge.Array.init(9, null);
+            var decimalArray = Bridge.Array.init(10, 0);
+
+            byteArray[0] = 1;
+            sbyteArray[0] = 2;
+            shortArray[0] = 3;
+            ushortArray[0] = 4;
+            intArray[0] = 5;
+            uintArray[0] = 6;
+            floatArray[0] = 7;
+            doubleArray[0] = 8;
+
+            stringArray[0] = "9";
+            decimalArray[0]  = Bridge.Decimal(10.0);
+
+            Bridge.get(Bridge.Test.Assert).areEqual$1(byteArray[0], 1, "get byteArray[0]");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(sbyteArray[0], 2, "get sbyteArray[0]");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(shortArray[0], 3, "get shortArray[0]");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ushortArray[0], 4, "get ushortArray[0]");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(intArray[0], 5, "get intArray[0]");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(uintArray[0], 6, "get uintArray[0]");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(floatArray[0], 7, "get floatArray[0]");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(doubleArray[0], 8, "get doubleArray[0]");
+
+            Bridge.get(Bridge.Test.Assert).areEqual$1(stringArray[0], "9", "get stringArray[0]");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(decimalArray[0], Bridge.Decimal(10.0), "get decimalArray[0]");
+        }
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge777', {
+    statics: {
+        config: {
+            properties: {
+                SomeProperty: null,
+                P1: null,
+                P2: null
+            }
+        },
+        method: function (o) {
+            return null;
+        },
+        testUseCase: function () {
+            var $t, $t1, $t2;
+            var o = { };
+            o;
+            {
+                var i = 555;
+                Bridge.get(Bridge.Test.Assert).areEqual$1(i, 555, "Bridge777 i");
+            }
+
+            Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge777).method(($t = o, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge777).setSomeProperty($t), $t));
+            {
+                Bridge.get(Bridge.Test.Assert).notNull$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge777).getSomeProperty(), "Bridge777 SomeProperty");
+            }
+
+            ($t1 = ($t2 = o, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge777).setP2($t2), $t2), Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge777).setP1($t1), $t1);
+            {
+                Bridge.get(Bridge.Test.Assert).notNull$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge777).getP1(), "Bridge777 P1");
+                Bridge.get(Bridge.Test.Assert).notNull$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge777).getP2(), "Bridge777 P2");
+            }
         }
     }
 });
@@ -7438,6 +7651,70 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge849', {
         testUseCase: function () {
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge849A.setToBlah(""), true, "Bridge849 true");
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge849A.setToBlah("", false), false, "Bridge849 false");
+        }
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge857', {
+    statics: {
+        testUseCase: function () {
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857A).all, 4294967295, "Bridge857 Bridge857A");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857B).all, 4294967295, "Bridge857 Bridge857B");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857C).all, 4294967295, "Bridge857 Bridge857C All");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857C).all1, 0, "Bridge857 Bridge857C All1");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857C).all2, 1, "Bridge857 Bridge857C All2");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857D).all, 4294967295, "Bridge857 Bridge857D All");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857D).all1, 1, "Bridge857 Bridge857D All1");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857D).all2, 2, "Bridge857 Bridge857D All2");
+        }
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge861', {
+    statics: {
+        testUseCase: function () {
+            var testA = Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge861A(), {
+                setMyId: 1
+            } );
+
+            testA.setDelegates(Bridge.fn.combine(testA.getDelegates(), function (data) {
+                var $t;
+                ($t = data.getMyId(), data.setMyId($t+1), $t);
+            }));
+
+            var testB = Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge861A(), {
+                setMyId: 2,
+                setDelegates: testA.getDelegates()
+            } );
+
+            testB.setDelegates(Bridge.fn.combine(testB.getDelegates(), function (data) {
+                data.setMyId(0);
+            }));
+            testB.invokeDelegates();
+
+            Bridge.get(Bridge.Test.Assert).areEqual(testB.getMyId(), 0);
+        }
+    }
+});
+
+Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge863', {
+    statics: {
+        testUseCase: function () {
+            var test = false;
+            test = test || true;
+            Bridge.get(Bridge.Test.Assert).areStrictEqual(test, true);
+
+            test = false;
+            test = test && true;
+            Bridge.get(Bridge.Test.Assert).areStrictEqual(test, false);
+
+            var test1 = false;
+            test1 = Bridge.Nullable.or(test1, true);
+            Bridge.get(Bridge.Test.Assert).areStrictEqual(test1, true);
+
+            test1 = false;
+            test1 = Bridge.Nullable.and(test1, true);
+            Bridge.get(Bridge.Test.Assert).areStrictEqual(test1, false);
         }
     }
 });
@@ -11908,6 +12185,122 @@ Bridge.define('Bridge.ClientTest.SimpleTypes.BooleanTests', {
         Bridge.get(Bridge.Test.Assert).$false(Bridge.equals((true), false));
         Bridge.get(Bridge.Test.Assert).$false(Bridge.equals((false), true));
         Bridge.get(Bridge.Test.Assert).$true(Bridge.equals((false), false));
+    },
+    logicalExclusiveOrWorks: function () {
+        Bridge.get(Bridge.Test.Assert).$true(true);
+        Bridge.get(Bridge.Test.Assert).$false(false);
+        Bridge.get(Bridge.Test.Assert).$false(false);
+        var t = true;
+        var f = false;
+        Bridge.get(Bridge.Test.Assert).$true(t ^ f);
+        Bridge.get(Bridge.Test.Assert).$false(f ^ f);
+        Bridge.get(Bridge.Test.Assert).$false(t ^ t);
+    },
+    logicalAndWorks: function () {
+        Bridge.get(Bridge.Test.Assert).$false(false);
+        Bridge.get(Bridge.Test.Assert).$false(false);
+        Bridge.get(Bridge.Test.Assert).$true(true);
+        var t = true;
+        var f = false;
+        Bridge.get(Bridge.Test.Assert).$false(t && f);
+        Bridge.get(Bridge.Test.Assert).$false(f && f);
+        Bridge.get(Bridge.Test.Assert).$true(t && t);
+    },
+    logicalNegationWorks: function () {
+        Bridge.get(Bridge.Test.Assert).$false(false);
+        Bridge.get(Bridge.Test.Assert).$true(true);
+        var t = true;
+        var f = false;
+        Bridge.get(Bridge.Test.Assert).$false(!t);
+        Bridge.get(Bridge.Test.Assert).$true(!f);
+    },
+    conditionalOperatorWorks: function () {
+        var t = true;
+        var f = false;
+        Bridge.get(Bridge.Test.Assert).$false(!t ? true : false);
+        Bridge.get(Bridge.Test.Assert).$true(!f ? true : false);
+    },
+    conditionalAndWorks: function () {
+        var counterAnd = new Bridge.ClientTest.SimpleTypes.BooleanTests.Counter();
+
+        Bridge.get(Bridge.Test.Assert).$true(counterAnd.increment() && counterAnd.increment());
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterAnd.getCount(), 2, "1. Counter 2");
+        Bridge.get(Bridge.Test.Assert).$false(counterAnd.increment() && counterAnd.increment(false));
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterAnd.getCount(), 4, "2. Counter 4");
+
+        Bridge.get(Bridge.Test.Assert).$false(counterAnd.increment(false) && counterAnd.increment());
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterAnd.getCount(), 5, "3. Counter 5");
+        Bridge.get(Bridge.Test.Assert).$false(counterAnd.increment(false) && counterAnd.increment(false));
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterAnd.getCount(), 6, "4. Counter 6");
+
+        var t = true;
+        var f = false;
+
+        Bridge.get(Bridge.Test.Assert).$true(t && counterAnd.increment());
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterAnd.getCount(), 7, "5. Counter 7");
+        Bridge.get(Bridge.Test.Assert).$false(t && counterAnd.increment(false));
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterAnd.getCount(), 8, "6. Counter 8");
+
+        Bridge.get(Bridge.Test.Assert).$false(f && counterAnd.increment());
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterAnd.getCount(), 8, "7. Counter 8");
+        Bridge.get(Bridge.Test.Assert).$false(f && counterAnd.increment(false));
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterAnd.getCount(), 8, "8. Counter 8");
+    },
+    conditionalOrWorks: function () {
+        var counterOr = new Bridge.ClientTest.SimpleTypes.BooleanTests.Counter();
+
+        Bridge.get(Bridge.Test.Assert).$true(counterOr.increment() || counterOr.increment());
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterOr.getCount(), 1, "1. Counter 1");
+        Bridge.get(Bridge.Test.Assert).$true(counterOr.increment() || counterOr.increment(false));
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterOr.getCount(), 2, "2. Counter 2");
+
+        Bridge.get(Bridge.Test.Assert).$true(counterOr.increment(false) || counterOr.increment());
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterOr.getCount(), 4, "3. Counter 4");
+        Bridge.get(Bridge.Test.Assert).$false(counterOr.increment(false) || counterOr.increment(false));
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterOr.getCount(), 6, "4. Counter 6");
+
+        var t = true;
+        var f = false;
+
+        Bridge.get(Bridge.Test.Assert).$true(t || counterOr.increment());
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterOr.getCount(), 6, "5. Counter 6");
+        Bridge.get(Bridge.Test.Assert).$true(t || counterOr.increment(false));
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterOr.getCount(), 6, "6. Counter 6");
+
+        Bridge.get(Bridge.Test.Assert).$true(f || counterOr.increment());
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterOr.getCount(), 7, "7. Counter 7");
+        Bridge.get(Bridge.Test.Assert).$false(f || counterOr.increment(false));
+        Bridge.get(Bridge.Test.Assert).areEqual$1(counterOr.getCount(), 8, "8. Counter 8");
+    },
+    equalityWorks: function () {
+        Bridge.get(Bridge.Test.Assert).$true(true);
+        Bridge.get(Bridge.Test.Assert).$false(false);
+        Bridge.get(Bridge.Test.Assert).$false(false);
+        Bridge.get(Bridge.Test.Assert).$true(true);
+
+        var t = true;
+        var t1 = true;
+        var f = false;
+        var f1 = false;
+        Bridge.get(Bridge.Test.Assert).$true(t === t1);
+        Bridge.get(Bridge.Test.Assert).$false(t === f);
+        Bridge.get(Bridge.Test.Assert).$false(f === t);
+        Bridge.get(Bridge.Test.Assert).$true(f === f1);
+    },
+    inequalityWorks: function () {
+        Bridge.get(Bridge.Test.Assert).$false(false);
+        Bridge.get(Bridge.Test.Assert).$true(true);
+        Bridge.get(Bridge.Test.Assert).$true(true);
+        Bridge.get(Bridge.Test.Assert).$false(false);
+
+        var t = true;
+        var t1 = true;
+        var f = false;
+        var f1 = false;
+        Bridge.get(Bridge.Test.Assert).$false(t !== t1);
+        Bridge.get(Bridge.Test.Assert).$true(t !== f);
+        Bridge.get(Bridge.Test.Assert).$true(f !== t);
+        Bridge.get(Bridge.Test.Assert).$false(f !== f1);
     }
 });
 

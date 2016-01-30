@@ -150,7 +150,7 @@ namespace Bridge.Translator
 
                 var assemblies = reference.MainModule.Resources.Where(res => res.Name.StartsWith(PLUGIN_RESOURCE_NAME_PREFIX));
 
-                logger.Info("The reference contains " + assemblies.Count() + " resource(s) needed");
+                logger.Trace("The reference contains " + assemblies.Count() + " resource(s) needed");
 
                 if (assemblies.Any())
                 {
