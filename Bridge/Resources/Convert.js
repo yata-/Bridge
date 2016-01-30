@@ -255,7 +255,7 @@ var convert = {
             throw new Bridge.ArgumentException("Illegal enum value.");
         }
 
-        var inArrayLength = inArray.Length;
+        var inArrayLength = inArray.length;
         if (offset > (inArrayLength - length)) {
             throw new Bridge.ArgumentOutOfRangeException("offset", "Offset and length must refer to a position in the string.");
         }
@@ -270,7 +270,7 @@ var convert = {
         strArray.length = strArrayLen;
 
         this.internal.convertToBase64Array(strArray, inArray, offset, length, insertLineBreaks);
-        var str = strArray.join();
+        var str = strArray.join("");
         return str;
     },
 
@@ -295,7 +295,7 @@ var convert = {
         if (options < 0 || options > 1) {
             throw new Bridge.ArgumentException("Illegal enum value.");
         }
-        var inArrayLength = inArray.Length;
+        var inArrayLength = inArray.length;
         if (offsetIn > inArrayLength - length) {
             throw new Bridge.ArgumentOutOfRangeException("offsetIn", "Offset and length must refer to a position in the string.");
         }
@@ -304,7 +304,7 @@ var convert = {
         }
 
         var insertLineBreaks = options === 1;
-        var outArrayLength = outArray.Length;   //This is the maximally required length that must be available in the char array
+        var outArrayLength = outArray.length;   //This is the maximally required length that must be available in the char array
 
         // Length of the char buffer required
         var numElementsToCopy = this.internal.toBase64_CalculateAndValidateOutputLength(length, insertLineBreaks);
@@ -371,7 +371,7 @@ var convert = {
         base64LineBreakPosition : 76,
 
         toBase64_CalculateAndValidateOutputLength: function(inputLength, insertLineBreaks) {
-            var outlen = inputLength / 3 * 4;               // the base length - we want integer division here. 
+            var outlen = ~~(inputLength / 3) * 4;               // the base length - we want integer division here. 
             outlen += ((inputLength % 3) !== 0) ? 4 : 0;    // at most 4 more chars for the remainder
 
             if (outlen === 0) {
@@ -379,8 +379,8 @@ var convert = {
             }
 
             if (insertLineBreaks) {
-                var newLines = outlen / base64LineBreakPosition;
-                if ((outlen % base64LineBreakPosition) === 0) {
+                var newLines = ~~(outlen / this.base64LineBreakPosition);
+                if ((outlen % this.base64LineBreakPosition) === 0) {
                     --newLines;    
                 }
                 outlen += newLines * 2;                     // the number of line break chars we'll add, "\r\n"
@@ -405,42 +405,42 @@ var convert = {
             var i;
             for (i = offset; i < calcLength; i += 3) {
                 if (insertLineBreaks) {
-                    if (charCount === base64LineBreakPosition) {
+                    if (charCount === this.base64LineBreakPosition) {
                         outChars[j++] = "\r";
                         outChars[j++] = "\n";
                         charCount = 0;
                     }
                     charCount += 4;
                 }
-                outChars[j] = base64Table[(inData[i] & 0xfc) >> 2];
-                outChars[j + 1] = base64Table[((inData[i] & 0x03) << 4) | ((inData[i + 1] & 0xf0) >> 4)];
-                outChars[j + 2] = base64Table[((inData[i + 1] & 0x0f) << 2) | ((inData[i + 2] & 0xc0) >> 6)];
-                outChars[j + 3] = base64Table[(inData[i + 2] & 0x3f)];
+                outChars[j] = this.base64Table[(inData[i] & 0xfc) >> 2];
+                outChars[j + 1] = this.base64Table[((inData[i] & 0x03) << 4) | ((inData[i + 1] & 0xf0) >> 4)];
+                outChars[j + 2] = this.base64Table[((inData[i + 1] & 0x0f) << 2) | ((inData[i + 2] & 0xc0) >> 6)];
+                outChars[j + 3] = this.base64Table[(inData[i + 2] & 0x3f)];
                 j += 4;
             }
 
             //Where we left off before
             i = calcLength;
 
-            if (insertLineBreaks && (lengthmod3 !== 0) && (charCount === base64LineBreakPosition)) {
+            if (insertLineBreaks && (lengthmod3 !== 0) && (charCount === this.base64LineBreakPosition)) {
                 outChars[j++] = "\r";
                 outChars[j++] = "\n";
             }
 
             switch (lengthmod3) {
                 case 2: //One character padding needed
-                    outChars[j] = base64Table[(inData[i] & 0xfc) >> 2];
-                    outChars[j + 1] = base64Table[((inData[i] & 0x03) << 4) | ((inData[i + 1] & 0xf0) >> 4)];
-                    outChars[j + 2] = base64Table[(inData[i + 1] & 0x0f) << 2];
-                    outChars[j + 3] = base64Table[64]; //Pad
+                    outChars[j] = this.base64Table[(inData[i] & 0xfc) >> 2];
+                    outChars[j + 1] = this.base64Table[((inData[i] & 0x03) << 4) | ((inData[i + 1] & 0xf0) >> 4)];
+                    outChars[j + 2] = this.base64Table[(inData[i + 1] & 0x0f) << 2];
+                    outChars[j + 3] = this.base64Table[64]; //Pad
                     j += 4;
                     break;
 
                 case 1: // Two character padding needed
-                    outChars[j] = base64Table[(inData[i] & 0xfc) >> 2];
-                    outChars[j + 1] = base64Table[(inData[i] & 0x03) << 4];
-                    outChars[j + 2] = base64Table[64]; //Pad
-                    outChars[j + 3] = base64Table[64]; //Pad
+                    outChars[j] = this.base64Table[(inData[i] & 0xfc) >> 2];
+                    outChars[j + 1] = this.base64Table[(inData[i] & 0x03) << 4];
+                    outChars[j + 2] = this.base64Table[64]; //Pad
+                    outChars[j + 3] = this.base64Table[64]; //Pad
                     j += 4;
                     break;
             }
@@ -494,18 +494,18 @@ var convert = {
             // You may find this method weird to look at. Its written for performance, not aesthetics.
             // You will find unrolled loops label jumps and bit manipulations.
 
-            var intA =     "A";            
-            var inta =     "a";            
-            var int0 =     "0";         
-            var intEq =    "=";
-            var intPlus =  "+";
-            var intSlash = "/";
-            var intSpace = " ";
-            var intTab =   "\t";
-            var intNLn =   "\n";
-            var intCRt =   "\r";
-            var intAtoZ =  ("Z" - "A");  // = ('z' - 'a')
-            var int0To9 =  ("9" - "0");
+            var intA = "A".charCodeAt(0);
+            var inta = "a".charCodeAt(0);
+            var int0 = "0".charCodeAt(0);
+            var intEq = "=".charCodeAt(0);
+            var intPlus = "+".charCodeAt(0);
+            var intSlash = "/".charCodeAt(0);
+            var intSpace = " ".charCodeAt(0);
+            var intTab = "\t".charCodeAt(0);
+            var intNLn = "\n".charCodeAt(0);
+            var intCRt = "\r".charCodeAt(0);
+            var intAtoZ = ("Z".charCodeAt(0) - "A".charCodeAt(0));  // = ('z' - 'a')
+            var int0To9 = ("9".charCodeAt(0) - "0".charCodeAt(0));
 
             var endInputIndex = inputIndex + inputLength;
             var endDestIndex = destIndex + destLength;
@@ -530,15 +530,15 @@ var convert = {
                 }
 
                 // Get current char:
-                currCode = input[inputIndex];
+                currCode = input[inputIndex].charCodeAt(0);
                 inputIndex++;
 
-                // Determine current char code:
-                if (currCode - intA <= intAtoZ) {
+                // Determine current char code (unsigned Int comparison):
+                if (((currCode - intA) >>> 0) <= intAtoZ) {
                     currCode -= intA;
-                } else if (currCode - inta <= intAtoZ) {
+                } else if (((currCode - inta) >>> 0) <= intAtoZ) {
                     currCode -= (inta - 26);
-                } else if (currCode - int0 <= int0To9) {
+                } else if (((currCode - int0) >>> 0) <= int0To9) {
                     currCode -= (int0 - 52);
                 } else {
                     // Use the slower switch for less common cases:
@@ -731,7 +731,7 @@ var convert = {
             }
 
             // Done:
-            return (usefulInputLength / 4) * 3 + padding;
+            return ~~(usefulInputLength / 4) * 3 + padding;
         }
     },
 
