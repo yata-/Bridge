@@ -5,6 +5,9 @@
 Bridge.define('Bridge.Test.Assert', {
     statics: {
         assert: null,
+        async: function () {
+            return Bridge.get(Bridge.Test.Assert).assert.async();
+        },
         areEqual: function (actual, expected) {
             Bridge.get(Bridge.Test.Assert).assert.deepEqual(actual, expected);
         },
