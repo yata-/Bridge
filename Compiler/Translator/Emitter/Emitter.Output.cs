@@ -44,12 +44,36 @@ namespace Bridge.Translator
 
                 if (output.TopOutput.Length > 0)
                 {
-                    tmp.Append(output.TopOutput.ToString());
+                    tmp.AppendLine(output.TopOutput.ToString());
+                }
+
+                if (isJs)
+                {
+                    tmp.AppendLine(Bridge.Translator.Translator.GetOutputHeader(true, false));    
                 }
 
                 if (output.NonModuletOutput.Length > 0)
                 {
-                    tmp.Append(output.NonModuletOutput.ToString() + (isJs ? "\n\nBridge.init();" : ""));
+                    if (isJs)
+                    {
+                        tmp.AppendLine("(function (globals) {");
+                        tmp.AppendLine("    " + Bridge.Translator.Translator.GetOutputHeader(false, true)); 
+                    }
+
+                    var code = output.NonModuletOutput.ToString() + (isJs ? "\n\nBridge.init();" : "");
+
+                    if (isJs)
+                    {
+                        code = "    " + AbstractEmitterBlock.WriteIndentToString(code, 1);
+                    }
+
+                    tmp.Append(code);
+
+                    if (isJs)
+                    {
+                        tmp.AppendLine();
+                        tmp.AppendLine("})(this);");
+                    }
                 }
 
                 if (output.BottomOutput.Length > 0)

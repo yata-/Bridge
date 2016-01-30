@@ -220,9 +220,8 @@ namespace Bridge.Translator
                 // Check by @vladsch: Output anyway if the class is not a JavaScript file.
                 if (this.AssemblyInfo.OutputFormatting != JavaScriptOutputType.Minified || !isJs)
                 {
-                    string header = GetOutputHeader(isJs, isJs);
                     var file = CreateFileDirectory(filePath);
-                    this.SaveToFile(file.FullName, string.IsNullOrWhiteSpace(header) ? code : header + code);
+                    this.SaveToFile(file.FullName, code);
                     files.Add(fileName, file.FullName);
                 }
 
@@ -297,10 +296,10 @@ namespace Bridge.Translator
             return path.Replace('-', '_') + name;
         }
 
-        private static string GetOutputHeader(bool needGlobalComment, bool needStrictModeInstruction)
+        internal static string GetOutputHeader(bool needGlobalComment, bool needStrictModeInstruction)
         {
-            string header = needGlobalComment ? "/* global Bridge */\n\n" : string.Empty;
-            header = header + (needStrictModeInstruction ? "\"use strict\";\n\n" : string.Empty);
+            string header = needGlobalComment ? "/* global Bridge */\n" : string.Empty;
+            header = header + (needStrictModeInstruction ? "\"use strict\";\n" : string.Empty);
 
             return header;
         }
