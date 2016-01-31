@@ -121,8 +121,8 @@ namespace Bridge.Translator
 
                     if (this.IsInheritedFrom(t, x))
                     {
-                        this.Types.Remove(t);
-                        this.Types.Insert(this.Types.IndexOf(x) + 1, t);
+                        this.Types.Remove(x);
+                        this.Types.Insert(this.Types.IndexOf(t), x);
                         break;
                     }
                 }
