@@ -233,6 +233,18 @@ namespace System
         public static extern DateTime ToDateTime(object value, IFormatProvider provider);
 
         /// <summary>
+        /// Converts the value of the specified object to its equivalent string representation.
+        /// </summary>
+        [Template("Bridge.Convert.toString({value}, null)")]
+        public static extern string ToString(object value);
+
+        /// <summary>
+        /// Converts the value of the specified object to its equivalent string representation using the specified culture-specific formatting information.
+        /// </summary>
+        [Template("Bridge.Convert.toString({value}, {provider})")]
+        public static extern string ToString(object value, IFormatProvider provider);
+
+        /// <summary>
         /// Converts an array of 8-bit unsigned integers to its equivalent string representation that is encoded with base-64 digits.
         /// </summary>
         [Template("Bridge.Convert.toBase64String({inArray}, null, null, null)")]

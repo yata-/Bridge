@@ -237,6 +237,30 @@ var convert = {
         return this.convertToType(this.typeNames.DateTime, value, formatProvider);
     },
 
+    toString: function(value, formatProvider) {
+        var type = typeof (value);
+
+        switch (type) {
+            case "boolean":
+                return value ? "True" : "False";
+
+            case "number":
+                return value.toString(); // TODO: format/current culture
+
+            case "string":
+                return value;
+
+            case "object":
+                if (value == null) {
+                    return "";
+                }
+                return value.toString();
+        }
+
+        // try converting using IConvertible
+        return this.convertToType(this.typeNames.DateTime, value, formatProvider);
+    },
+
     toBase64String: function(inArray, offset, length, options) {
         offset = offset || 0;
         length = length || inArray.length;
