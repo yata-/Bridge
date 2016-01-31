@@ -1833,7 +1833,7 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge690A', {
         var $step = 0,
             $task1, 
             $jumpFromFinally, 
-            $returnTask = new Bridge.Task(), 
+            $tcs = new Bridge.TaskCompletionSource(), 
             $returnValue, 
             $asyncBody = Bridge.fn.bind(this, function () {
                 try {
@@ -1847,30 +1847,30 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge690A', {
                             }
                             case 1: {
                                 $task1.getResult();
-                                $returnTask.setResult(i1 + i2 + this.i3);
+                                $tcs.setResult(i1 + i2 + this.i3);
                                 return;
                             }
                             default: {
-                                $returnTask.setResult(null);
+                                $tcs.setResult(null);
                                 return;
                             }
                         }
                     }
                 } catch($e1) {
                     $e1 = Bridge.Exception.create($e1);
-                    $returnTask.setError($e1);
+                    $tcs.setError($e1);
                 }
             }, arguments);
 
         $asyncBody();
-        return $returnTask;
+        return $tcs.task;
     },
     start: function () {
         var $step = 0,
             $task1, 
             $taskResult1, 
             $jumpFromFinally, 
-            $returnTask = new Bridge.Task(), 
+            $tcs = new Bridge.TaskCompletionSource(), 
             $returnValue, 
             $asyncBody = Bridge.fn.bind(this, function () {
                 try {
@@ -1884,23 +1884,23 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge690A', {
                             }
                             case 1: {
                                 $taskResult1 = $task1.getResult();
-                                $returnTask.setResult($taskResult1);
+                                $tcs.setResult($taskResult1);
                                 return;
                             }
                             default: {
-                                $returnTask.setResult(null);
+                                $tcs.setResult(null);
                                 return;
                             }
                         }
                     }
                 } catch($e1) {
                     $e1 = Bridge.Exception.create($e1);
-                    $returnTask.setError($e1);
+                    $tcs.setError($e1);
                 }
             }, arguments);
 
         $asyncBody();
-        return $returnTask;
+        return $tcs.task;
     }
 });
 
@@ -1911,7 +1911,7 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge690B', {
             var $step = 0,
                 $task1, 
                 $jumpFromFinally, 
-                $returnTask = new Bridge.Task(), 
+                $tcs = new Bridge.TaskCompletionSource(), 
                 $returnValue, 
                 $asyncBody = Bridge.fn.bind(this, function () {
                     try {
@@ -1925,30 +1925,30 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge690B', {
                                 }
                                 case 1: {
                                     $task1.getResult();
-                                    $returnTask.setResult(i1 + i2 + Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge690B).i3);
+                                    $tcs.setResult(i1 + i2 + Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge690B).i3);
                                     return;
                                 }
                                 default: {
-                                    $returnTask.setResult(null);
+                                    $tcs.setResult(null);
                                     return;
                                 }
                             }
                         }
                     } catch($e1) {
                         $e1 = Bridge.Exception.create($e1);
-                        $returnTask.setError($e1);
+                        $tcs.setError($e1);
                     }
                 }, arguments);
 
             $asyncBody();
-            return $returnTask;
+            return $tcs.task;
         },
         start: function () {
             var $step = 0,
                 $task1, 
                 $taskResult1, 
                 $jumpFromFinally, 
-                $returnTask = new Bridge.Task(), 
+                $tcs = new Bridge.TaskCompletionSource(), 
                 $returnValue, 
                 $asyncBody = Bridge.fn.bind(this, function () {
                     try {
@@ -1962,23 +1962,23 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge690B', {
                                 }
                                 case 1: {
                                     $taskResult1 = $task1.getResult();
-                                    $returnTask.setResult($taskResult1);
+                                    $tcs.setResult($taskResult1);
                                     return;
                                 }
                                 default: {
-                                    $returnTask.setResult(null);
+                                    $tcs.setResult(null);
                                     return;
                                 }
                             }
                         }
                     } catch($e1) {
                         $e1 = Bridge.Exception.create($e1);
-                        $returnTask.setError($e1);
+                        $tcs.setError($e1);
                     }
                 }, arguments);
 
             $asyncBody();
-            return $returnTask;
+            return $tcs.task;
         }
     }
 });
@@ -4902,7 +4902,7 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge508', {
                 $task3, 
                 $taskResult3, 
                 $jumpFromFinally, 
-                $returnTask = new Bridge.Task(), 
+                $tcs = new Bridge.TaskCompletionSource(), 
                 $returnValue, 
                 result, 
                 i, 
@@ -4983,29 +4983,29 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge508', {
                                 }
                                 case 11: {
                                     
-                                    $returnTask.setResult(result);
+                                    $tcs.setResult(result);
                                     return;
                                 }
                                 default: {
-                                    $returnTask.setResult(null);
+                                    $tcs.setResult(null);
                                     return;
                                 }
                             }
                         }
                     } catch($e1) {
                         $e1 = Bridge.Exception.create($e1);
-                        $returnTask.setError($e1);
+                        $tcs.setError($e1);
                     }
                 }, arguments);
 
             $asyncBody();
-            return $returnTask;
+            return $tcs.task;
         },
         initPage: function () {
             var $step = 0,
                 $task1, 
                 $jumpFromFinally, 
-                $returnTask = new Bridge.Task(), 
+                $tcs = new Bridge.TaskCompletionSource(), 
                 $returnValue, 
                 $asyncBody = Bridge.fn.bind(this, function () {
                     try {
@@ -5020,29 +5020,29 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge508', {
                                 case 1: {
                                     $task1.getResult();
                                     Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge508).count++;
-                                    $returnTask.setResult(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge508).count < 2 ? { } : null);
+                                    $tcs.setResult(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge508).count < 2 ? { } : null);
                                     return;
                                 }
                                 default: {
-                                    $returnTask.setResult(null);
+                                    $tcs.setResult(null);
                                     return;
                                 }
                             }
                         }
                     } catch($e1) {
                         $e1 = Bridge.Exception.create($e1);
-                        $returnTask.setError($e1);
+                        $tcs.setError($e1);
                     }
                 }, arguments);
 
             $asyncBody();
-            return $returnTask;
+            return $tcs.task;
         },
         nextPage: function () {
             var $step = 0,
                 $task1, 
                 $jumpFromFinally, 
-                $returnTask = new Bridge.Task(), 
+                $tcs = new Bridge.TaskCompletionSource(), 
                 $returnValue, 
                 $asyncBody = Bridge.fn.bind(this, function () {
                     try {
@@ -5057,23 +5057,23 @@ Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge508', {
                                 case 1: {
                                     $task1.getResult();
                                     Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge508).count++;
-                                    $returnTask.setResult(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge508).count < 3 ? { } : null);
+                                    $tcs.setResult(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge508).count < 3 ? { } : null);
                                     return;
                                 }
                                 default: {
-                                    $returnTask.setResult(null);
+                                    $tcs.setResult(null);
                                     return;
                                 }
                             }
                         }
                     } catch($e1) {
                         $e1 = Bridge.Exception.create($e1);
-                        $returnTask.setError($e1);
+                        $tcs.setError($e1);
                     }
                 }, arguments);
 
             $asyncBody();
-            return $returnTask;
+            return $tcs.task;
         },
         nextPage1: function () {
             Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge508).count++;
