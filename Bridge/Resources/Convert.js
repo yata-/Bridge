@@ -756,6 +756,103 @@ var convert = {
 
             // Done:
             return ~~(usefulInputLength / 4) * 3 + padding;
+        },
+
+        stringToLong: function (str, fromBase, minValue, maxValue) {
+            if (fromBase !== 2 && fromBase !== 8 && fromBase !== 10 && fromBase !== 16) {
+                throw new Bridge.ArgumentException("Invalid Base.");
+            }
+            if (str == null) {
+                return 0;
+            }
+            if (str.length === 0) {
+                throw new Bridge.ArgumentOutOfRangeException("Index was out of range. Must be non-negative and less than the size of the collection.");
+            }
+
+            // Calculate offset (start index)
+            var isNegative = false;
+            var startIndex = 0;
+            if (str[startIndex] === "-") {
+                if (fromBase !== 10) {
+                    throw new Bridge.ArgumentException("String cannot contain a minus sign if the base is not 10."); 
+                }
+                if (minValue >= 0) {
+                    throw new Bridge.OverflowException("The string was being parsed as an unsigned number and could not have a negative sign.");
+                }
+
+                isNegative = true;
+                ++startIndex;
+            } else if (str[startIndex] === "+") {
+                ++startIndex;
+            }
+
+            if (fromBase === 16 && str.length >= 2 && str[startIndex] === "0" && str[startIndex+1].toLowerCase() === "x") {
+                startIndex += 2;
+            }
+
+            // Fill allowed codes for the specified base:
+            var allowedCodes;
+            if (fromBase === 2) {
+                allowedCodes = this.charsToCodes("01");
+            } else if (fromBase === 8) {
+                allowedCodes = this.charsToCodes("01234567");
+            } else if (fromBase === 10) {
+                allowedCodes = this.charsToCodes("0123456789");
+            } else if (fromBase === 16) {
+                allowedCodes = this.charsToCodes("0123456789ABCDEF");
+            } else {
+                throw new Bridge.ArgumentException("Invalid Base.");
+            }
+
+            // Create charCode-to-Value map
+            var codeValues = {};
+            for (var i = 0; i < allowedCodes.length; i++) {
+                var allowedCode = allowedCodes[i];
+                codeValues[allowedCode] = i;
+            }
+
+            // Parse the number:
+            var res = 0;
+            var firstAllowed = allowedCodes[0];
+            var lastAllowed = allowedCodes[allowedCodes.length - 1];
+            for (var j = startIndex; j < str.length; j++) {
+                var code = str[j].charCodeAt(0);
+
+                if (code >= firstAllowed && code <= lastAllowed) {
+                    res *= fromBase;
+                    res += codeValues[code];
+                } else {
+                    if (j === startIndex) {
+                        throw new Bridge.FormatException("Could not find any recognizable digits.");
+                    } else {
+                        throw new Bridge.FormatException("Additional non-parsable characters are at the end of the string.");
+                    }
+                }
+            }
+
+            if (isNegative) {
+                res *= -1;
+            }
+
+            if (res < minValue || res > maxValue) {
+                throw new Bridge.OverflowException("Value was either too large or too small for an unsigned byte.");
+            }
+
+            return res;
+        },
+
+        charsToCodes: function(chars) {
+            if (chars == null) {
+                return null;
+            }
+
+            var codes = [];
+            codes.length = chars.length;
+            for (var i = 0; i < chars.length; i++) {
+                codes[i] = chars[i].charCodeAt(0);
+            }
+
+            return codes;
         }
     },
 
