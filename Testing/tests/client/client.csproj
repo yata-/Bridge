@@ -157,6 +157,7 @@
     <Compile Include="BridgeIssues\N782.cs" />
     <Compile Include="BridgeIssues\N826.cs" />
     <Compile Include="BridgeIssues\N857.cs" />
+    <Compile Include="BridgeIssues\N881.cs" />
     <Compile Include="BridgeIssues\N863.cs" />
     <Compile Include="BridgeIssues\TestBridgeIssues.cs" />
     <Compile Include="Linq\TestLinqGroupingOperators.cs" />
@@ -279,17 +280,17 @@
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="CleanBridgeTest" BeforeTargets="Clean">
     <ItemGroup>
-      <BridgeTestFilesToDelete Include="$(ProjectDir)$(OutDir)bridgeTest*.log"/>
+      <BridgeTestFilesToDelete Include="$(ProjectDir)$(OutDir)bridgeTest*.log" />
     </ItemGroup>
     <Message Text="Cleaning Bridge.Test log files in $(ProjectDir)$(OutDir)" Importance="high" />
     <Delete Files="@(BridgeTestFilesToDelete)" ContinueOnError="true" />
     <ItemGroup>
-      <BridgeTestFilesToDelete Include="$(ProjectDir)bridgeTest*.log"/>
+      <BridgeTestFilesToDelete Include="$(ProjectDir)bridgeTest*.log" />
     </ItemGroup>
     <Message Text="Cleaning Brdge.Test log files in $(ProjectDir)" Importance="high" />
     <Delete Files="@(BridgeTestFilesToDelete)" ContinueOnError="true" />
     <Message Text="Cleaning Bridge.Test temp project folder $(ProjectDir)$(OutDir)Bridge.Test" Importance="high" />
-    <RemoveDir Directories="$(ProjectDir)$(OutDir)Bridge.Test" ContinueOnError="true"/>
+    <RemoveDir Directories="$(ProjectDir)$(OutDir)Bridge.Test" ContinueOnError="true" />
   </Target>
   <PropertyGroup>
     <PostBuildEvent Condition="$(OS) != Unix">
