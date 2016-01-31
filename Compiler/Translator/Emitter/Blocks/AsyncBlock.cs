@@ -317,7 +317,7 @@ namespace Bridge.Translator
             if (this.IsTaskReturn)
             {
                 this.WriteNewLine();
-                this.Write("return $returnTask;");
+                this.Write("return $tcs.task;");
             }
 
             this.WriteNewLine();
@@ -340,7 +340,7 @@ namespace Bridge.Translator
             {
                 if (this.IsTaskReturn)
                 {
-                    this.Emitter.AsyncVariables.Add("$returnTask = new Bridge.Task()");
+                    this.Emitter.AsyncVariables.Add("$tcs = new Bridge.TaskCompletionSource()");
                 }
 
                 this.Emitter.AsyncVariables.Add("$returnValue");
@@ -517,7 +517,7 @@ namespace Bridge.Translator
 
             if (this.IsTaskReturn)
             {
-                this.Write("$returnTask.setError($e1);");
+                this.Write("$tcs.setError($e1);");
             }
             else
             {
@@ -618,7 +618,7 @@ namespace Bridge.Translator
 
                     if (this.IsTaskReturn)
                     {
-                        this.Write("$returnTask.setResult(null);");
+                        this.Write("$tcs.setResult(null);");
                         this.WriteNewLine();
                     }
 
@@ -635,7 +635,7 @@ namespace Bridge.Translator
 
             if (this.IsTaskReturn)
             {
-                this.Write("$returnTask.setResult(null);");
+                this.Write("$tcs.setResult(null);");
                 this.WriteNewLine();
             }
 
