@@ -61,8 +61,14 @@ namespace Bridge.Translator
                 this.WriteOpenCloseParentheses(true);
 
                 this.BeginBlock();
+                var beginPosition = this.Emitter.Output.Length;
 
                 ctor.Body.AcceptChildren(this.Emitter);
+
+                if (!this.Emitter.IsAsync)
+                {
+                    this.EmitTempVars(beginPosition);
+                }
 
                 this.EndBlock();
                 this.ClearLocalsNamesMap(prevNamesMap);
