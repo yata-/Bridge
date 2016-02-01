@@ -261,6 +261,16 @@ var convert = {
         return this.convertToType(this.typeNames.DateTime, value, formatProvider);
     },
 
+    toNumberInBase: function (value, fromBase, minValue, maxValue) {
+        var str = this.internal.stringToLong(value, fromBase, minValue, maxValue);
+        return str;
+    },
+
+    toStringInBase: function(value, toBase, minValue, maxValue) {
+        var str = this.internal.numberToString(value, toBase, minValue, maxValue);
+        return str;
+    },
+
     toBase64String: function(inArray, offset, length, options) {
         offset = offset || 0;
         length = length || inArray.length;
@@ -769,6 +779,9 @@ var convert = {
                 throw new Bridge.ArgumentOutOfRangeException("Index was out of range. Must be non-negative and less than the size of the collection.");
             }
 
+            // Let's process the string in lower case.
+            str = str.toLowerCase();
+
             // Calculate offset (start index)
             var isNegative = false;
             var startIndex = 0;
@@ -786,7 +799,7 @@ var convert = {
                 ++startIndex;
             }
 
-            if (fromBase === 16 && str.length >= 2 && str[startIndex] === "0" && str[startIndex+1].toLowerCase() === "x") {
+            if (fromBase === 16 && str.length >= 2 && str[startIndex] === "0" && str[startIndex+1] === "x") {
                 startIndex += 2;
             }
 
@@ -799,7 +812,7 @@ var convert = {
             } else if (fromBase === 10) {
                 allowedCodes = this.charsToCodes("0123456789");
             } else if (fromBase === 16) {
-                allowedCodes = this.charsToCodes("0123456789ABCDEF");
+                allowedCodes = this.charsToCodes("0123456789abcdef");
             } else {
                 throw new Bridge.ArgumentException("Invalid Base.");
             }
@@ -834,10 +847,74 @@ var convert = {
                 res *= -1;
             }
 
+            if (res > maxValue && fromBase !== 10 && minValue < 0) {
+                // Assume that the value is negative, transform it:
+                res = res - (maxValue + 1 - minValue);
+            }
+
             if (res < minValue || res > maxValue) {
+                throw new Bridge.OverflowException("Value was either too large or too small.");
+            }
+
+            return res;
+        },
+
+        numberToString: function (value, toBase, minValue, maxValue) {
+            if (toBase !== 2 && toBase !== 8 && toBase !== 10 && toBase !== 16) {
+                throw new Bridge.ArgumentException("Invalid Base.");
+            }
+            if (value < minValue || value > maxValue) {
                 throw new Bridge.OverflowException("Value was either too large or too small for an unsigned byte.");
             }
 
+            // Handle negative numbers:
+            var isNegative = false;
+            if (value < 0) {
+                if (toBase === 10) {
+                    isNegative = true;
+                    value *= -1;
+                } else {
+                    value = (maxValue + 1 - minValue) + value;
+                }
+            }
+
+            // Fill allowed codes for the specified base:
+            var allowedChars;
+            if (toBase === 2) {
+                allowedChars = "01";
+            } else if (toBase === 8) {
+                allowedChars = "01234567";
+            } else if (toBase === 10) {
+                allowedChars = "0123456789";
+            } else if (toBase === 16) {
+                allowedChars = "0123456789abcdef";
+            } else {
+                throw new Bridge.ArgumentException("Invalid Base.");
+            }
+
+            // Fill Value-To-Char map:
+            var charByValues = {};
+            var allowedCharArr = allowedChars.split("");
+            for (var i = 0; i < allowedCharArr.length; i++) {
+                var allowedChar = allowedCharArr[i];
+                charByValues[i] = allowedChar;
+            }
+
+            // Parse the number:
+            var res = "";
+            while (value > 0) {
+                var mod = value % toBase;
+                value = (value - mod) / toBase;
+
+                var char = charByValues[mod];
+                res += char;
+            }
+
+            if (isNegative) {
+                res += "-";
+            }
+
+            res = res.split("").reverse().join("");
             return res;
         },
 
