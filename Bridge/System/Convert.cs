@@ -245,43 +245,37 @@ namespace System
         public static extern string ToString(object value, IFormatProvider provider);
 
         /// <summary>
-        /// Parses value in base fromBase. fromBase can only be 2, 8, 10, or 16.
-        /// If fromBase is 16, the number may be preceded by 0x; any other leading or trailing characters cause an error.
+        /// Converts the string representation of a number in a specified base to an equivalent 8-bit unsigned integer.
         /// </summary>
         [Template("Bridge.Convert.toNumberInBase({value}, {toBase}, 0, 255)")]
         public static extern byte ToByte(string value, int fromBase);
 
         /// <summary>
-        /// Parses value in base fromBase. fromBase can only be 2, 8, 10, or 16.
-        /// If fromBase is 16, the number may be preceded by 0x; any other leading or trailing characters cause an error.
+        /// Converts the string representation of a number in a specified base to an equivalent 8-bit signed integer.
         /// </summary>
         [Template("Bridge.Convert.toNumberInBase({value}, {toBase}, -128, 127)")]
         public static extern sbyte ToSByte(string value, int fromBase);
 
         /// <summary>
-        /// Parses value in base fromBase. fromBase can only be 2, 8, 10, or 16.
-        /// If fromBase is 16, the number may be preceded by 0x; any other leading or trailing characters cause an error.
+        /// Converts the string representation of a number in a specified base to an equivalent 16-bit signed integer.
         /// </summary>
         [Template("Bridge.Convert.toNumberInBase({value}, {toBase}, -32768, 32767)")]
         public static extern short ToInt16(string value, int fromBase);
 
         /// <summary>
-        /// Parses value in base fromBase. fromBase can only be 2, 8, 10, or 16.
-        /// If fromBase is 16, the number may be preceded by 0x; any other leading or trailing characters cause an error.
+        /// Converts the string representation of a number in a specified base to an equivalent 16-bit unsigned integer.
         /// </summary>
         [Template("Bridge.Convert.toNumberInBase({value}, {toBase}, 0, 65535)")]
         public static extern ushort ToUInt16(string value, int fromBase);
 
         /// <summary>
-        /// Parses value in base fromBase. fromBase can only be 2, 8, 10, or 16.
-        /// If fromBase is 16, the number may be preceded by 0x; any other leading or trailing characters cause an error.
+        /// Converts the string representation of a number in a specified base to an equivalent 32-bit signed integer.
         /// </summary>
         [Template("Bridge.Convert.toNumberInBase({value}, {toBase}, -2147483648, 2147483647)")]
         public static extern int ToInt32(string value, int fromBase);
 
         /// <summary>
-        /// Parses value in base fromBase. fromBase can only be 2, 8, 10, or 16.
-        /// If fromBase is 16, the number may be preceded by 0x; any other leading or trailing characters cause an error.
+        /// Converts the string representation of a number in a specified base to an equivalent 32-bit unsigned integer.
         /// </summary>
         [Template("Bridge.Convert.toNumberInBase({value}, {toBase}, 0, 4294967295)")]
         public static extern uint ToUInt32(string value, int fromBase);
@@ -289,32 +283,30 @@ namespace System
         // TODO: Long values more than Number.MAX_SAFE_INTEGER can't be supported (?)
         // TODO: Negative long values can't be supported (?)
         ///// <summary>
-        ///// Parses value in base fromBase. fromBase can only be 2, 8, 10, or 16.
-        ///// If fromBase is 16, the number may be preceded by 0x; any other leading or trailing characters cause an error.
+        ///// Converts the string representation of a number in a specified base to an equivalent 64-bit signed integer.
         ///// </summary>
         //[Template("Bridge.Convert.toNumberInBase({value}, {toBase}, 0, 4294967295)")]
         //public static extern long ToInt64(string value, int fromBase);
 
         ///// <summary>
-        ///// Parses value in base fromBase. fromBase can only be 2, 8, 10, or 16.
-        ///// If fromBase is 16, the number may be preceded by 0x; any other leading or trailing characters cause an error.
+        ///// Converts the string representation of a number in a specified base to an equivalent 64-bit unsigned integer.
         ///// </summary>
         //public static extern ulong ToUInt64(string value, int fromBase);
 
         /// <summary>
-        /// Convert the byte value to a string in base fromBase
+        /// Converts the value of an 8-bit unsigned integer to its equivalent string representation in a specified base.
         /// </summary>
         [Template("Bridge.Convert.toStringInBase({value}, {toBase}, 0, 255)")]
         public static extern string ToString(byte value, int toBase);
 
         /// <summary>
-        /// Convert the Int16 value to a string in base fromBase
+        /// Converts the value of a 16-bit signed integer to its equivalent string representation in a specified base.
         /// </summary>
         [Template("Bridge.Convert.toStringInBase({value}, {toBase}, -32768, 32767)")]
         public static extern string ToString(short value, int toBase);
 
         /// <summary>
-        /// Convert the Int32 value to a string in base toBase
+        /// Converts the value of a 32-bit signed integer to its equivalent string representation in a specified base.
         /// </summary>
         [Template("Bridge.Convert.toStringInBase({value}, {toBase}, -2147483648, 2147483647)")]
         public static extern string ToString(int value, int toBase);
@@ -322,7 +314,7 @@ namespace System
         // TODO: Long values more than Number.MAX_SAFE_INTEGER can't be supported (?)
         // TODO: Negative long values can't be supported (?)
         ///// <summary>
-        ///// Convert the Int64 value to a string in base toBase
+        ///// Converts the value of a 64-bit signed integer to its equivalent string representation in a specified base.
         ///// </summary>
         //[Template("Bridge.Convert.toStringInBase({value}, {toBase}, -9223372036854775808, 9223372036854775807)")]
         //public static extern string ToString(long value, int toBase);
