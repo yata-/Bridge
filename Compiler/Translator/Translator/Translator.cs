@@ -255,11 +255,9 @@ namespace Bridge.Translator
                 // Check by @vladsch: Output anyway if the class is not a JavaScript file.
                 if (this.AssemblyInfo.OutputFormatting != JavaScriptOutputType.Minified || !isJs)
                 {
-                    string header = GetOutputHeader(isJs, isJs);
                     var file = CreateFileDirectory(filePath);
-
                     logger.Trace("Output non-minified " + file.FullName);
-                    this.SaveToFile(file.FullName, string.IsNullOrWhiteSpace(header) ? code : header + code);
+                    this.SaveToFile(file.FullName, code);
                     files.Add(fileName, file.FullName);
                 }
 
@@ -342,20 +340,6 @@ namespace Bridge.Translator
             string path = value.LeftOfRightmostOf('.').LeftOfRightmostOf('.');
             string name = value.Substring(path.Length);
             return path.Replace('-', '_') + name;
-        }
-
-        private string GetOutputHeader(bool needGlobalComment, bool needStrictModeInstruction)
-        {
-            if (this.NoStrictModeAndGlobal)
-            {
-                needGlobalComment = false;
-                needStrictModeInstruction = false;
-            }
-
-            string header = needGlobalComment ? "/* global Bridge */\n\n" : string.Empty;
-            header = header + (needStrictModeInstruction ? "\"use strict\";\n\n" : string.Empty);
-
-            return header;
         }
 
         protected virtual Emitter CreateEmitter(IMemberResolver resolver)

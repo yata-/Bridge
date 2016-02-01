@@ -373,9 +373,14 @@ namespace Bridge.Translator
 
         public virtual string WriteIndentToString(string value)
         {
+            return WriteIndentToString(value, this.Emitter.Level);
+        }
+
+        public static string WriteIndentToString(string value, int level)
+        {
             StringBuilder output = new StringBuilder();
 
-            for (var i = 0; i < this.Emitter.Level; i++)
+            for (var i = 0; i < level; i++)
             {
                 output.Append("    ");
             }

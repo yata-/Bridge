@@ -388,7 +388,7 @@ namespace Bridge.Translator
                         {
                             t = p.ConstantValue;
                         }
-                        if (named)
+                        if (named && !p.IsParams)
                         {
                             result[i] = new PrimitiveExpression(t);
                         }
