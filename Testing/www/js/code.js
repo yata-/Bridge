@@ -126,6 +126,7 @@
                 } );
             },
             staticMethod2: function (p) {
+                if (p === void 0) { p = []; }
                 var i = Bridge.cast(p[0], Bridge.Int) + 1000;
                 var s = Bridge.cast(p[1], String);
                 var d = Bridge.cast(p[2], Number);
@@ -173,6 +174,7 @@
         constructor$2: function (p) {
             Bridge.ClientTest.BasicCSharp.ClassA.prototype.$constructor.call(this);
     
+            if (p === void 0) { p = []; }
             if (!Bridge.hasValue(p) || p.length < 6) {
                 throw new Bridge.Exception("Should pass six parameters");
             }
@@ -2962,6 +2964,7 @@
     Bridge.define('Bridge.ClientTest.DecimalMathTests.Logger', {
         statics: {
             convertParameters: function (parameters) {
+                if (parameters === void 0) { parameters = []; }
                 var result = Bridge.Array.init(parameters.length + 1, null);
     
                 for (var i = 0; i < parameters.length; i++) {
@@ -3027,6 +3030,7 @@
             this.getText().append("{");
         },
         onLog: function (parameters) {
+            if (parameters === void 0) { parameters = []; }
             if (!Bridge.get(Bridge.ClientTest.DecimalMathTests).useLogging) {
                 return;
             }
@@ -3983,6 +3987,7 @@
                 return i;
             },
             methodParams: function (n) {
+                if (n === void 0) { n = []; }
                 var sum = 0;
                 for (var i = 0; i < n.length; i++) {
                     sum += n[i];
@@ -7716,6 +7721,44 @@
                 test1 = false;
                 test1 = Bridge.Nullable.and(test1, true);
                 Bridge.get(Bridge.Test.Assert).areStrictEqual(test1, false);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge889', {
+        statics: {
+            count: function (arr) {
+                if (arr === void 0) { arr = []; }
+                return arr.length;
+            },
+            testUseCase: function () {
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge889).count(), 0);
+            },
+            makeEnumerable: function (T) {
+                return Bridge.fn.bind(this, function (arr) {
+                    var $t;
+                    if (arr === void 0) { arr = []; }
+                    var $yield = [];
+                    $t = Bridge.getEnumerator(arr);
+                    while ($t.moveNext()) {
+                        var x = $t.getCurrent();
+                        $yield.push(x);
+                    }
+                    return Bridge.Array.toEnumerable($yield);
+                });
+            },
+            testMakeEnumerable: function () {
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge889).makeEnumerable(Object)()).count(), 0, "MakeEnumerable object 0");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge889).makeEnumerable(Object)([1, 2.0])).count(), 2, "MakeEnumerable object 2");
+    
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge889).makeEnumerable(String)()).count(), 0, "MakeEnumerable string 0");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge889).makeEnumerable(String)(["a", "b", "c"])).count(), 3, "MakeEnumerable string 3");
+    
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge889).makeEnumerable(Bridge.IEnumerable$1(Object))()).count(), 0, "MakeEnumerable IEnumerable<object> 0");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge889).makeEnumerable(Bridge.IEnumerable$1(Object))([[1, 2]])).count(), 1, "MakeEnumerable IEnumerable<object> 1");
+    
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge889).makeEnumerable(Bridge.List$1(Bridge.List$1(Object)))()).count(), 0, "MakeEnumerable List<List<object>> 0");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge889).makeEnumerable(Bridge.List$1(Bridge.List$1(Bridge.Int)))([new Bridge.List$1(Bridge.List$1(Bridge.Int))(), new Bridge.List$1(Bridge.List$1(Bridge.Int))()])).count(), 2, "MakeEnumerable List<List<object>> 2");
             }
         }
     });
@@ -11705,6 +11748,7 @@
             Bridge.get(Bridge.Test.Assert).areEqual(arr.get([2, 1]), "f");
         },
         setUpArray: function (values) {
+            if (values === void 0) { values = []; }
             var arr = Bridge.Array.create(0, null, values.length, 2);
     
             for (var i = 0; i < values.length; i++) {
