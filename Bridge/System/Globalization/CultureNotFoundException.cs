@@ -14,22 +14,22 @@ namespace System.Globalization
         {
         }
 
-        [Template("new Bridge.ArgumentOutOfRangeException(null, null, {message}, {innerException})")]
+        [Template("new Bridge.CultureNotFoundException(null, null, {message}, {innerException})")]
         public CultureNotFoundException(string message, Exception innerException)
         {
         }
 
-        [Template("new Bridge.ArgumentOutOfRangeException({paramName}, null, {message}, null)")]
+        [Template("new Bridge.CultureNotFoundException({paramName}, null, {message}, null)")]
         public CultureNotFoundException(string paramName, string message)
         {
         }
 
-        [Template("new Bridge.ArgumentOutOfRangeException(null, {invalidCultureName}, {message}, {innerException})")]
+        [Template("new Bridge.CultureNotFoundException(null, {invalidCultureName}, {message}, {innerException})")]
         public CultureNotFoundException(string message, string invalidCultureName, Exception innerException)
         {
         }
 
-        [Template("new Bridge.ArgumentOutOfRangeException({paramName}, {invalidCultureName}, {message})")]
+        [Template("new Bridge.CultureNotFoundException({paramName}, {invalidCultureName}, {message})")]
         public CultureNotFoundException(string paramName, string invalidCultureName, string message)
         {
         }
