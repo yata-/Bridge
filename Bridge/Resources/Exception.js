@@ -2,8 +2,8 @@
 
     Bridge.define("Bridge.Exception", {
         constructor: function (message, innerException) {
-            this.message = message;
-            this.innerException = innerException;
+            this.message = message ? message : null;
+            this.innerException = innerException ? innerException : null;
             this.errorStack = new Error();
             this.data = new Bridge.Dictionary$2(Object, Object)();
         },
@@ -66,7 +66,7 @@
 
         constructor: function (message, paramName, innerException) {
             Bridge.Exception.prototype.$constructor.call(this, message || "Value does not fall within the expected range.", innerException);
-            this.paramName = paramName;
+            this.paramName = paramName ? paramName : null;
         },
 
         getParamName: function () {
@@ -104,7 +104,7 @@
 
             Bridge.ArgumentException.prototype.$constructor.call(this, message, paramName, innerException);
 
-            this.actualValue = actualValue;
+            this.actualValue = actualValue ? actualValue : null;
         },
 
         getActualValue: function () {

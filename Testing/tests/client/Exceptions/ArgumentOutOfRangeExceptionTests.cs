@@ -27,9 +27,9 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new ArgumentOutOfRangeException();
             Assert.True((object)ex is ArgumentOutOfRangeException, "is ArgumentOutOfRangeException");
-            Assert.AreEqual(ex.ParamName, Script.Undefined, "ParamName");
-            Assert.AreEqual(ex.InnerException, Script.Undefined, "InnerException");
-            Assert.AreEqual(ex.ActualValue, Script.Undefined, "ActualValue");
+            Assert.AreEqual(ex.ParamName, null, "ParamName");
+            Assert.AreEqual(ex.InnerException, null, "InnerException");
+            Assert.AreEqual(ex.ActualValue, null, "ActualValue");
             Assert.AreEqual(ex.Message, "Value is out of range.");
         }
 
@@ -39,8 +39,8 @@ namespace Bridge.ClientTest.Exceptions
             var ex = new ArgumentOutOfRangeException("someParam");
             Assert.True((object)ex is ArgumentOutOfRangeException, "is ArgumentOutOfRangeException");
             Assert.AreEqual(ex.ParamName, "someParam", "ParamName");
-            Assert.AreEqual(ex.InnerException, Script.Undefined, "InnerException");
-            Assert.AreEqual(ex.ActualValue, Script.Undefined, "ActualValue");
+            Assert.AreEqual(ex.InnerException, null, "InnerException");
+            Assert.AreEqual(ex.ActualValue, null, "ActualValue");
             Assert.AreEqual(ex.Message, "Value is out of range.\nParameter name: someParam");
         }
 
@@ -50,8 +50,8 @@ namespace Bridge.ClientTest.Exceptions
             var ex = new ArgumentOutOfRangeException("someParam", "The message");
             Assert.True((object)ex is ArgumentOutOfRangeException, "is ArgumentOutOfRangeException");
             Assert.AreEqual(ex.ParamName, "someParam", "ParamName");
-            Assert.AreEqual(ex.InnerException, Script.Undefined, "InnerException");
-            Assert.AreEqual(ex.ActualValue, Script.Undefined, "ActualValue");
+            Assert.AreEqual(ex.InnerException, null, "InnerException");
+            Assert.AreEqual(ex.ActualValue, null, "ActualValue");
             Assert.AreEqual(ex.Message, "The message");
         }
 
@@ -63,7 +63,7 @@ namespace Bridge.ClientTest.Exceptions
             Assert.True((object)ex is ArgumentOutOfRangeException, "is ArgumentOutOfRangeException");
             Assert.Null(ex.ParamName, "ParamName");
             Assert.True(ReferenceEquals(ex.InnerException, inner), "InnerException");
-            Assert.AreEqual(ex.ActualValue, Script.Undefined, "ActualValue");
+            Assert.AreEqual(ex.ActualValue, null, "ActualValue");
             Assert.AreEqual(ex.Message, "The message");
         }
 
