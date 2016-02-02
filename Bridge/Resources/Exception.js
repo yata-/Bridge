@@ -115,7 +115,7 @@
     Bridge.define("Bridge.CultureNotFoundException", {
         inherits: [Bridge.ArgumentException],
 
-        constructor: function (paramName, invalidCultureName, message, innerException) {
+        constructor: function (paramName, invalidCultureName, message, innerException, invalidCultureId) {
             if (!message) {
                 message = "Culture is not supported.";
 
@@ -130,11 +130,16 @@
 
             Bridge.ArgumentException.prototype.$constructor.call(this, message, paramName, innerException);
 
-            this.invalidCultureName = invalidCultureName;
+            this.invalidCultureName = invalidCultureName ? invalidCultureName : null;
+            this.invalidCultureId = invalidCultureId ? invalidCultureId : null;
         },
 
         getInvalidCultureName: function () {
             return this.invalidCultureName;
+        },
+
+        getInvalidCultureId: function () {
+            return this.invalidCultureId;
         }
     });
 
