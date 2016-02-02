@@ -32,14 +32,18 @@ namespace Bridge.ClientTest.BridgeIssues
             }
         }
 
+        [Test(ExpectedCount = 2)]
         public async static void TestUseCase()
         {
-            //TODO Async 
+            var done = Assert.Async();
+
             var res = await TestMethod("", false);
             Assert.AreEqual(res.Message, "Success");
 
             res = await TestMethod("", true);
             Assert.AreEqual(res.Message, "Fail: test");
+
+            done();
         }
     }
 }

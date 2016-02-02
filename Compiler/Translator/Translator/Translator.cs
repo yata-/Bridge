@@ -255,11 +255,9 @@ namespace Bridge.Translator
                 // Check by @vladsch: Output anyway if the class is not a JavaScript file.
                 if (this.AssemblyInfo.OutputFormatting != JavaScriptOutputType.Minified || !isJs)
                 {
-                    string header = GetOutputHeader(isJs, isJs);
                     var file = CreateFileDirectory(filePath);
-
                     logger.Trace("Output non-minified " + file.FullName);
-                    this.SaveToFile(file.FullName, string.IsNullOrWhiteSpace(header) ? code : header + code);
+                    this.SaveToFile(file.FullName, code);
                     files.Add(fileName, file.FullName);
                 }
 
@@ -342,20 +340,6 @@ namespace Bridge.Translator
             string path = value.LeftOfRightmostOf('.').LeftOfRightmostOf('.');
             string name = value.Substring(path.Length);
             return path.Replace('-', '_') + name;
-        }
-
-        private string GetOutputHeader(bool needGlobalComment, bool needStrictModeInstruction)
-        {
-            if (this.NoStrictModeAndGlobal)
-            {
-                needGlobalComment = false;
-                needStrictModeInstruction = false;
-            }
-
-            string header = needGlobalComment ? "/* global Bridge */\n\n" : string.Empty;
-            header = header + (needStrictModeInstruction ? "\"use strict\";\n\n" : string.Empty);
-
-            return header;
         }
 
         protected virtual Emitter CreateEmitter(IMemberResolver resolver)
@@ -744,6 +728,66 @@ namespace Bridge.Translator
             if (this.jsminbuffer != null && this.jsminbuffer.Length > 0)
             {
                 File.WriteAllText(filePath.ReplaceLastInstanceOf(".js", ".min.js"), this.jsminbuffer.ToString(), OutputEncoding);
+            }
+        }
+
+        public void CleanOutputFolderIfRequired(string outputPath)
+        {
+            if (this.AssemblyInfo != null
+                && (this.AssemblyInfo.CleanOutputFolderBeforeBuild || !string.IsNullOrEmpty(this.AssemblyInfo.CleanOutputFolderBeforeBuildPattern)))
+            {
+                var searchPattern = string.IsNullOrEmpty(this.AssemblyInfo.CleanOutputFolderBeforeBuildPattern)
+                    ? "*.js|*.d.ts"
+                    : this.AssemblyInfo.CleanOutputFolderBeforeBuildPattern;
+
+                CleanDirectory(outputPath, searchPattern);
+            }
+        }
+
+        private void CleanDirectory(string outputPath, string searchPattern)
+        {
+            this.Log.Info("Cleaning output folder " + (outputPath ?? string.Empty) + " with search pattern (" + (searchPattern ?? string.Empty) + ") ...");
+
+            if (string.IsNullOrWhiteSpace(outputPath))
+            {
+                this.Log.Warn("Output directory is not specified. No files deleted.");
+                return;
+            }
+
+            try
+            {
+                var outputDirectory = new DirectoryInfo(outputPath);
+                if (!outputDirectory.Exists)
+                {
+                    this.Log.Warn("Output directory does not exist " + outputPath + ". No files deleted.");
+                    return;
+                }
+
+                var patterns = searchPattern.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+
+                if (patterns.Length == 0)
+                {
+                    this.Log.Warn("Incorrect search pattern - empty. No files deleted.");
+                    return;
+                }
+
+                var filesToDelete = new List<FileInfo>();
+                foreach (var pattern in patterns)
+                {
+                    filesToDelete.AddRange(outputDirectory.GetFiles(pattern, SearchOption.AllDirectories));
+                }
+
+                foreach (var file in filesToDelete)
+                {
+                    this.Log.Trace("cleaning " + file.FullName);
+                    file.Delete();
+                }
+
+                this.Log.Info("Cleaning output folder done");
+            }
+            catch (Exception ex)
+            {
+                this.Log.Error("Exception occurred: " + ex.Message);
             }
         }
     }

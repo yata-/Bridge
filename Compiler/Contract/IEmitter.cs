@@ -246,6 +246,12 @@ namespace Bridge.Contract
             set;
         }
 
+        IEmitterOutput EmitterOutput
+        {
+            get;
+            set;
+        }
+
         System.Collections.Generic.IEnumerable<Mono.Cecil.AssemblyDefinition> References
         {
             get;
