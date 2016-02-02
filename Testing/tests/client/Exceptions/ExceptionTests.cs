@@ -39,8 +39,8 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new Exception();
             Assert.True((object)ex is Exception, "is Exception");
-            Assert.AreEqual(ex.InnerException, Script.Undefined, "InnerException");
-            Assert.AreEqual(ex.Message, Script.Undefined);
+            Assert.AreEqual(ex.InnerException, null, "InnerException");
+            Assert.AreEqual(ex.Message, null);
         }
 
         [Test]
@@ -48,7 +48,7 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new Exception("The message");
             Assert.True((object)ex is Exception, "is Exception");
-            Assert.AreEqual(ex.InnerException, Script.Undefined, "InnerException");
+            Assert.AreEqual(ex.InnerException, null, "InnerException");
             Assert.AreEqual(ex.Message, "The message");
         }
 

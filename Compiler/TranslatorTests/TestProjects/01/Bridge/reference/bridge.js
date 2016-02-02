@@ -170,7 +170,7 @@
                 throw new Bridge.InvalidOperationException("HashCode cannot be calculated for empty value");
             }
 
-            if (Bridge.isFunction(value.getHashCode) && !value.__insideHashCode && value.getHashCode.length === 0) {
+            if (value.getHashCode && Bridge.isFunction(value.getHashCode) && !value.__insideHashCode && value.getHashCode.length === 0) {
                 value.__insideHashCode = true;
                 var r = value.getHashCode();
                 delete value.__insideHashCode;
@@ -462,7 +462,7 @@
 	    },
 
 	    isEmpty: function (value, allowEmpty) {
-	        return (value === null) || (!allowEmpty ? value === "" : false) || ((!allowEmpty && Bridge.isArray(value)) ? value.length === 0 : false);
+	        return (typeof value === "undefined" || value === null) || (!allowEmpty ? value === "" : false) || ((!allowEmpty && Bridge.isArray(value)) ? value.length === 0 : false);
 	    },
 
 	    toArray: function (ienumerable) {
@@ -552,11 +552,12 @@
                 return false;
             }
 
-            if (typeof a === "object" && typeof b === "object") {
+            var eq = a === b;
+            if (!eq && typeof a === "object" && typeof b === "object") {
                 return (Bridge.getHashCode(a) === Bridge.getHashCode(b)) && Bridge.objectEquals(a, b);
             }
 
-            return a === b;
+            return eq;
         },
 
         objectEquals: function (a, b) {
@@ -2056,6 +2057,8 @@
                 Bridge.Class.cache[cacheName] = Class;
             }
 
+            Class.$$name = className;
+
             if (extend && Bridge.isFunction(extend)) {
                 extend = extend();
             }
@@ -2165,8 +2168,6 @@
 
             // Enforce the constructor to be what we expect
             Class.prototype.constructor = Class;
-
-            Class.$$name = className;
 
             if (statics) {
                 for (name in statics) {
@@ -2303,8 +2304,8 @@
 
     Bridge.define("Bridge.Exception", {
         constructor: function (message, innerException) {
-            this.message = message;
-            this.innerException = innerException;
+            this.message = message ? message : null;
+            this.innerException = innerException ? innerException : null;
             this.errorStack = new Error();
             this.data = new Bridge.Dictionary$2(Object, Object)();
         },
@@ -2367,7 +2368,7 @@
 
         constructor: function (message, paramName, innerException) {
             Bridge.Exception.prototype.$constructor.call(this, message || "Value does not fall within the expected range.", innerException);
-            this.paramName = paramName;
+            this.paramName = paramName ? paramName : null;
         },
 
         getParamName: function () {
@@ -2405,7 +2406,7 @@
 
             Bridge.ArgumentException.prototype.$constructor.call(this, message, paramName, innerException);
 
-            this.actualValue = actualValue;
+            this.actualValue = actualValue ? actualValue : null;
         },
 
         getActualValue: function () {
@@ -2416,7 +2417,7 @@
     Bridge.define("Bridge.CultureNotFoundException", {
         inherits: [Bridge.ArgumentException],
 
-        constructor: function (paramName, invalidCultureName, message, innerException) {
+        constructor: function (paramName, invalidCultureName, message, innerException, invalidCultureId) {
             if (!message) {
                 message = "Culture is not supported.";
 
@@ -2431,11 +2432,16 @@
 
             Bridge.ArgumentException.prototype.$constructor.call(this, message, paramName, innerException);
 
-            this.invalidCultureName = invalidCultureName;
+            this.invalidCultureName = invalidCultureName ? invalidCultureName : null;
+            this.invalidCultureId = invalidCultureId ? invalidCultureId : null;
         },
 
         getInvalidCultureName: function () {
             return this.invalidCultureName;
+        },
+
+        getInvalidCultureId: function () {
+            return this.invalidCultureId;
         }
     });
 
@@ -2562,24 +2568,48 @@
         inherits: [Bridge.Exception],
 
         constructor: function (message, innerExceptions) {
-            this.innerExceptions = Bridge.hasValue(innerExceptions) ? Bridge.toArray(innerExceptions) : [];
-            Bridge.Exception.prototype.$constructor.call(this, message || 'One or more errors occurred.', this.innerExceptions.length ? this.innerExceptions[0] : null);
+            this.innerExceptions = new Bridge.ReadOnlyCollection$1(Bridge.Exception)(Bridge.hasValue(innerExceptions) ? Bridge.toArray(innerExceptions) : []);
+            Bridge.Exception.prototype.$constructor.call(this, message || 'One or more errors occurred.', this.innerExceptions.items.length ? this.innerExceptions.items[0] : null);
         },
 
         flatten: function () {
-            var inner = [];
-            for (var i = 0; i < this.innerExceptions.length; i++) {
-                var e = this.innerExceptions[i];
-                if (Bridge.is(e, Bridge.AggregateException)) {
-                    inner.push.apply(inner, e.flatten().innerExceptions);
-                }
-                else {
-                    inner.push(e);
+            // Initialize a collection to contain the flattened exceptions.
+            var flattenedExceptions = new Bridge.List$1(Bridge.Exception)();
+
+            // Create a list to remember all aggregates to be flattened, this will be accessed like a FIFO queue
+            var exceptionsToFlatten = new Bridge.List$1(Bridge.AggregateException)();
+            exceptionsToFlatten.add(this);
+            var nDequeueIndex = 0;
+
+            // Continue removing and recursively flattening exceptions, until there are no more.
+            while (exceptionsToFlatten.getCount() > nDequeueIndex) {
+                // dequeue one from exceptionsToFlatten
+                var currentInnerExceptions = exceptionsToFlatten.getItem(nDequeueIndex++).innerExceptions;
+
+                for (var i = 0; i < currentInnerExceptions.getCount() ; i++) {
+                    var currentInnerException = currentInnerExceptions.get(i);
+
+                    if (!Bridge.hasValue(currentInnerException)) {
+                        continue;
+                    }
+
+                    var currentInnerAsAggregate = Bridge.as(currentInnerException, Bridge.AggregateException);
+
+                    // If this exception is an aggregate, keep it around for later.  Otherwise,
+                    // simply add it to the list of flattened exceptions to be returned.
+                    if (Bridge.hasValue(currentInnerAsAggregate)) {
+                        exceptionsToFlatten.add(currentInnerAsAggregate);
+                    }
+                    else {
+                        flattenedExceptions.add(currentInnerException);
+                    }
                 }
             }
-            return new Bridge.AggregateException(this.message, inner);
+
+            return new Bridge.AggregateException(this.getMessage(), flattenedExceptions);
         }
     });
+
     // @source Interfaces.js
 
     Bridge.define("Bridge.IFormattable", {
@@ -5736,23 +5766,26 @@ Bridge.define("Bridge.Text.StringBuilder", {
             }
         },
 
-        addRange: function (arr, items) {
-            if (Bridge.isArray(items)) {
-                arr.push.apply(arr, items);
-            }
-            else {
-                var e = Bridge.getEnumerator(items);
-                try {
-                    while (e.moveNext()) {
-                        arr.push(e.getCurrent());
-                    }
-                }
-                finally {
-                    if (Bridge.is(e, Bridge.IDisposable)) {
-                        e.dispose();
-                    }
+        min: function(arr, minValue) {
+            var min = arr[0],
+                len = arr.length;
+            for (var i = 0; i < len; i++) {
+                if ((arr[i] < min || min < minValue) && !(arr[i] < minValue)) {
+                    min = arr[i];
                 }
             }
+            return min;
+        },
+
+        max: function (arr, maxValue) {
+            var max =  arr[0],
+                len = arr.length;
+            for (var i = 0; i < len; i++) {
+                if ((arr[i] > max || max > maxValue) && !(arr[i] > maxValue)) {
+                    max = arr[i];
+                }
+            }
+            return max;
         }
     };
 
@@ -6988,7 +7021,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
     });
 
     Bridge.define("Bridge.CancellationToken", {
-        constructor: function (source) {
+         constructor: function (source) {
             if (!Bridge.is(source, Bridge.CancellationTokenSource)) {
                 source = source ? Bridge.CancellationToken.sourceTrue : Bridge.CancellationToken.sourceFalse;
             }
@@ -7000,7 +7033,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
             return !this.source.uncancellable;
         },
 
-        get_isCancellationRequested: function () {
+        getIsCancellationRequested: function () {
             return this.source.isCancellationRequested;
         },
 
@@ -7028,6 +7061,9 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
                 register: function() {
                      return new Bridge.CancellationTokenRegistration();
                 }
+            },
+            getDefaultValue: function () {
+                return new Bridge.CancellationToken();
             }
         }
     });
@@ -7052,6 +7088,12 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
 
         equalsT: function (o) {
             return this === o;
+        },
+
+        statics: {
+            getDefaultValue: function () {
+                return new Bridge.CancellationTokenRegistration();
+            }
         }
     });
 
@@ -7150,7 +7192,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
             createLinked: function () {
                 var cts = new Bridge.CancellationTokenSource();
                 cts.links = [];
-                var d = Bridge.fn.bind(this, this.cancel);
+                var d = Bridge.fn.bind(cts, cts.cancel);
                 for (var i = 0; i < arguments.length; i++) {
                     cts.links.push(arguments[i].register(d));
                 }

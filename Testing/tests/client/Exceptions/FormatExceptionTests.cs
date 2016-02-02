@@ -25,7 +25,7 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new FormatException();
             Assert.True((object)ex is FormatException, "is FormatException");
-            Assert.AreEqual(ex.InnerException, Script.Undefined, "InnerException");
+            Assert.AreEqual(ex.InnerException, null, "InnerException");
             Assert.AreEqual(ex.Message, "Invalid format.");
         }
 
@@ -34,7 +34,7 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new FormatException("The message");
             Assert.True((object)ex is FormatException, "is FormatException");
-            Assert.AreEqual(ex.InnerException, Script.Undefined, "InnerException");
+            Assert.AreEqual(ex.InnerException, null, "InnerException");
             Assert.AreEqual(ex.Message, "The message");
         }
 

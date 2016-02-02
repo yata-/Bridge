@@ -2304,8 +2304,8 @@
 
     Bridge.define("Bridge.Exception", {
         constructor: function (message, innerException) {
-            this.message = message;
-            this.innerException = innerException;
+            this.message = message ? message : null;
+            this.innerException = innerException ? innerException : null;
             this.errorStack = new Error();
             this.data = new Bridge.Dictionary$2(Object, Object)();
         },
@@ -2368,7 +2368,7 @@
 
         constructor: function (message, paramName, innerException) {
             Bridge.Exception.prototype.$constructor.call(this, message || "Value does not fall within the expected range.", innerException);
-            this.paramName = paramName;
+            this.paramName = paramName ? paramName : null;
         },
 
         getParamName: function () {
@@ -2406,7 +2406,7 @@
 
             Bridge.ArgumentException.prototype.$constructor.call(this, message, paramName, innerException);
 
-            this.actualValue = actualValue;
+            this.actualValue = actualValue ? actualValue : null;
         },
 
         getActualValue: function () {
@@ -2417,7 +2417,7 @@
     Bridge.define("Bridge.CultureNotFoundException", {
         inherits: [Bridge.ArgumentException],
 
-        constructor: function (paramName, invalidCultureName, message, innerException) {
+        constructor: function (paramName, invalidCultureName, message, innerException, invalidCultureId) {
             if (!message) {
                 message = "Culture is not supported.";
 
@@ -2432,11 +2432,16 @@
 
             Bridge.ArgumentException.prototype.$constructor.call(this, message, paramName, innerException);
 
-            this.invalidCultureName = invalidCultureName;
+            this.invalidCultureName = invalidCultureName ? invalidCultureName : null;
+            this.invalidCultureId = invalidCultureId ? invalidCultureId : null;
         },
 
         getInvalidCultureName: function () {
             return this.invalidCultureName;
+        },
+
+        getInvalidCultureId: function () {
+            return this.invalidCultureId;
         }
     });
 
@@ -2604,6 +2609,7 @@
             return new Bridge.AggregateException(this.getMessage(), flattenedExceptions);
         }
     });
+
     // @source Interfaces.js
 
     Bridge.define("Bridge.IFormattable", {
@@ -5760,23 +5766,26 @@ Bridge.define("Bridge.Text.StringBuilder", {
             }
         },
 
-        addRange: function (arr, items) {
-            if (Bridge.isArray(items)) {
-                arr.push.apply(arr, items);
-            }
-            else {
-                var e = Bridge.getEnumerator(items);
-                try {
-                    while (e.moveNext()) {
-                        arr.push(e.getCurrent());
-                    }
-                }
-                finally {
-                    if (Bridge.is(e, Bridge.IDisposable)) {
-                        e.dispose();
-                    }
+        min: function(arr, minValue) {
+            var min = arr[0],
+                len = arr.length;
+            for (var i = 0; i < len; i++) {
+                if ((arr[i] < min || min < minValue) && !(arr[i] < minValue)) {
+                    min = arr[i];
                 }
             }
+            return min;
+        },
+
+        max: function (arr, maxValue) {
+            var max =  arr[0],
+                len = arr.length;
+            for (var i = 0; i < len; i++) {
+                if ((arr[i] > max || max > maxValue) && !(arr[i] > maxValue)) {
+                    max = arr[i];
+                }
+            }
+            return max;
         }
     };
 

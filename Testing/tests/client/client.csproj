@@ -157,14 +157,19 @@
     <Compile Include="BridgeIssues\N782.cs" />
     <Compile Include="BridgeIssues\N826.cs" />
     <Compile Include="BridgeIssues\N857.cs" />
+    <Compile Include="BridgeIssues\N874.cs" />
+    <Compile Include="BridgeIssues\N830.cs" />
+    <Compile Include="BridgeIssues\N883.cs" />
+    <Compile Include="BridgeIssues\N882.cs" />
     <Compile Include="BridgeIssues\N889.cs" />
+    <Compile Include="BridgeIssues\N881.cs" />
     <Compile Include="BridgeIssues\N863.cs" />
     <Compile Include="BridgeIssues\TestBridgeIssues.cs" />
     <Compile Include="Exceptions\AggregateExceptionTests.cs" />
     <Compile Include="Exceptions\TaskCanceledExceptionTests.cs" />
     <Compile Include="Exceptions\PromiseExceptionTests.cs" />
     <Compile Include="Exceptions\OperationCanceledExceptionTests.cs" />
-    <Compile Include="Linq\TestLinqGroupingOperators.cs" />
+    <Compile Include="Exceptions\CultureNotFoundExceptionTests.cs" />    <Compile Include="Linq\TestLinqGroupingOperators.cs" />
     <Compile Include="Linq\TestLinqConversionOperators.cs" />
     <Compile Include="Linq\TestLinqAggregateOperators.cs" />
     <Compile Include="Linq\TestLinqElementOperators.cs" />
