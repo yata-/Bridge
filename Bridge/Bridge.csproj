@@ -111,6 +111,7 @@
     <Compile Include="System\StringComparison.cs" />
     <Compile Include="System\StringSplitOptions.cs" />
     <Compile Include="System\SystemException.cs" />
+    <Compile Include="System\TypeCode.cs" />
     <Compile Include="System\Version.cs" />
     <Compile Include="This.cs" />
     <Compile Include="System\OverflowException.cs" />
