@@ -52,11 +52,26 @@ namespace Bridge.Contract
             }
             else
             {
-                fieldName = emitter.AssemblyInfo.PreserveMemberCase ? fieldName : TypeConfigItem.ToLowerCamelCase(fieldName);
-
-                if (Helpers.IsReservedWord(fieldName))
+                bool done = false;
+                if (this.Entity != null)
                 {
-                    fieldName = Helpers.ChangeReservedWord(fieldName);
+                    var rr = emitter.Resolver.ResolveNode(this.Entity, emitter) as MemberResolveResult;
+
+                    if (rr != null)
+                    {
+                        fieldName = OverloadsCollection.Create(emitter, rr.Member).GetOverloadName();
+                        done = true;
+                    }
+                }
+
+                if (!done)
+                {
+                    fieldName = emitter.AssemblyInfo.PreserveMemberCase ? fieldName : TypeConfigItem.ToLowerCamelCase(fieldName);
+
+                    if (Helpers.IsReservedWord(fieldName))
+                    {
+                        fieldName = Helpers.ChangeReservedWord(fieldName);
+                    }
                 }
             }
             return fieldName;

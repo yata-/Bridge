@@ -25,7 +25,7 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new NullReferenceException();
             Assert.True((object)ex is NullReferenceException, "is NullReferenceException");
-            Assert.AreEqual(ex.InnerException, Script.Undefined, "InnerException");
+            Assert.AreEqual(ex.InnerException, null, "InnerException");
             Assert.AreEqual(ex.Message, "Object is null.");
         }
 
@@ -34,7 +34,7 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new NullReferenceException("The message");
             Assert.True((object)ex is NullReferenceException, "is NullReferenceException");
-            Assert.AreEqual(ex.InnerException, Script.Undefined, "InnerException");
+            Assert.AreEqual(ex.InnerException, null, "InnerException");
             Assert.AreEqual(ex.Message, "The message");
         }
 

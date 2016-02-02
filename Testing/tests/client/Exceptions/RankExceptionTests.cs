@@ -27,7 +27,7 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new RankException();
             Assert.True((object)ex is RankException, "is ArgumentException");
-            Assert.AreEqual(ex.InnerException, Script.Undefined, "InnerException");
+            Assert.AreEqual(ex.InnerException, null, "InnerException");
             Assert.AreEqual(ex.Message, DefaultMessage);
         }
 
@@ -36,7 +36,7 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new RankException("The message");
             Assert.True((object)ex is RankException, "is RankException");
-            Assert.AreEqual(ex.InnerException, Script.Undefined, "InnerException");
+            Assert.AreEqual(ex.InnerException, null, "InnerException");
             Assert.AreEqual(ex.Message, "The message");
         }
     }
