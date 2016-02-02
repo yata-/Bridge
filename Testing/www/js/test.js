@@ -8682,6 +8682,139 @@
         }
     });
     
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests', {
+        statics: {
+            instance: null,
+            getInstance: function () {
+                if (!Bridge.hasValue(Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).instance)) {
+                    Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).instance = new Bridge.ClientTest.Threading.CancellationTokenTests();
+                }
+                return Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).instance;
+            },
+            setInstance: function (value) {
+                Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).instance = value;
+            },
+            beforeTest: function (isStatic, assert) {
+                Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).setInstance(null);
+                Bridge.get(Bridge.Test.Assert).assert = assert;
+                var r = isStatic ? null : Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).getInstance();
+                return r;
+            },
+            typePropertiesForCancellationTokenSourceAreCorrect: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.typePropertiesForCancellationTokenSourceAreCorrect();
+            },
+            typePropertiesForCancellationTokenAreCorrect: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.typePropertiesForCancellationTokenAreCorrect();
+            },
+            typePropertiesForCancellationTokenRegistrationAreCorrect: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.typePropertiesForCancellationTokenRegistrationAreCorrect();
+            },
+            cancellationTokenCreatedWithDefaultConstructorIsNotCanceledAndCannotBe: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.cancellationTokenCreatedWithDefaultConstructorIsNotCanceledAndCannotBe();
+            },
+            cancellationTokenCreatedWithFalseArgumentToConstructorIsNotCanceledAndCannotBe: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.cancellationTokenCreatedWithFalseArgumentToConstructorIsNotCanceledAndCannotBe();
+            },
+            cancellationTokenCreatedWithTrueArgumentToConstructorIsCanceled: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.cancellationTokenCreatedWithTrueArgumentToConstructorIsCanceled();
+            },
+            cancellationTokenNoneIsNotCancelledAndCannotBe: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.cancellationTokenNoneIsNotCancelledAndCannotBe();
+            },
+            creatingADefaultCancellationTokenReturnsACancellationTokenThatIsNotCancelled: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.creatingADefaultCancellationTokenReturnsACancellationTokenThatIsNotCancelled();
+            },
+            activatorCreateForCancellationTokenReturnsACancellationTokenThatIsNotCancelled: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.activatorCreateForCancellationTokenReturnsACancellationTokenThatIsNotCancelled();
+            },
+            canBeCanceledIsTrueForTokenCreatedForCancellationTokenSource: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.canBeCanceledIsTrueForTokenCreatedForCancellationTokenSource();
+            },
+            isCancellationRequestedForTokenCreatedForCancellationTokenSourceIsSetByTheCancelMethod: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.isCancellationRequestedForTokenCreatedForCancellationTokenSourceIsSetByTheCancelMethod();
+            },
+            throwIfCancellationRequestedForTokenCreatedForCancellationTokenSourceThrowsAfterTheCancelMethodIsCalled: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.throwIfCancellationRequestedForTokenCreatedForCancellationTokenSourceThrowsAfterTheCancelMethodIsCalled();
+            },
+            cancelWithoutArgumentsWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.cancelWithoutArgumentsWorks();
+            },
+            cancelWorksWhenThrowOnFirstExceptionIsFalse: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.cancelWorksWhenThrowOnFirstExceptionIsFalse();
+            },
+            cancelWorksWhenThrowOnFirstExceptionIsTrue: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.cancelWorksWhenThrowOnFirstExceptionIsTrue();
+            },
+            registerOnACancelledSourceWithoutContextInvokesTheCallback: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.registerOnACancelledSourceWithoutContextInvokesTheCallback();
+            },
+            registerWithArgumentOnACancelledSourceInvokesTheCallback: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.registerWithArgumentOnACancelledSourceInvokesTheCallback();
+            },
+            registerOnACancelledSourceWithoutContextRethrowsAThrownException: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.registerOnACancelledSourceWithoutContextRethrowsAThrownException();
+            },
+            registerOnACancelledSourceWithContextRethrowsAThrownException: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.registerOnACancelledSourceWithContextRethrowsAThrownException();
+            },
+            registerOverloadsWithUseSynchronizationContextWork: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.registerOverloadsWithUseSynchronizationContextWork();
+            },
+            registerOnCancellationTokenCreatedNonCancelledDoesNothing: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.registerOnCancellationTokenCreatedNonCancelledDoesNothing();
+            },
+            registerOnCancellationTokenCreatedCancelledInvokesTheActionImmediately: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.registerOnCancellationTokenCreatedCancelledInvokesTheActionImmediately();
+            },
+            duplicateCancelDoesNotCauseCallbacksToBeCalledTwice: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.duplicateCancelDoesNotCauseCallbacksToBeCalledTwice();
+            },
+            registrationsCanBeCompared: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.registrationsCanBeCompared();
+            },
+            registrationsCanBeUnregistered: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.registrationsCanBeUnregistered();
+            },
+            creatingADefaultCancellationTokenRegistrationReturnsARegistrationThatCanBeDisposedWithoutHarm: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.creatingADefaultCancellationTokenRegistrationReturnsARegistrationThatCanBeDisposedWithoutHarm();
+            },
+            linkedSourceWithTwoTokensWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.linkedSourceWithTwoTokensWorks();
+            },
+            linkedSourceWithThreeTokensWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.linkedSourceWithThreeTokensWorks();
+            }
+        }
+    });
+    
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTestEnvironmentTests', {
         statics: {
             instance: null,
@@ -9908,6 +10041,35 @@
                 QUnit.test("StringBuilder - ToStringWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_TextStringBuilderTests).toStringWorks);
                 QUnit.test("StringBuilder - LengthPropertyWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_TextStringBuilderTests).lengthPropertyWorks);
                 QUnit.test("StringBuilder - StringBuilders", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_TextStringBuilderTests).stringBuilders);
+                QUnit.module("Threading");
+                QUnit.test("CancellationToken - TypePropertiesForCancellationTokenSourceAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).typePropertiesForCancellationTokenSourceAreCorrect);
+                QUnit.test("CancellationToken - TypePropertiesForCancellationTokenAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).typePropertiesForCancellationTokenAreCorrect);
+                QUnit.test("CancellationToken - TypePropertiesForCancellationTokenRegistrationAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).typePropertiesForCancellationTokenRegistrationAreCorrect);
+                QUnit.test("CancellationToken - CancellationTokenCreatedWithDefaultConstructorIsNotCanceledAndCannotBe", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).cancellationTokenCreatedWithDefaultConstructorIsNotCanceledAndCannotBe);
+                QUnit.test("CancellationToken - CancellationTokenCreatedWithFalseArgumentToConstructorIsNotCanceledAndCannotBe", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).cancellationTokenCreatedWithFalseArgumentToConstructorIsNotCanceledAndCannotBe);
+                QUnit.test("CancellationToken - CancellationTokenCreatedWithTrueArgumentToConstructorIsCanceled", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).cancellationTokenCreatedWithTrueArgumentToConstructorIsCanceled);
+                QUnit.test("CancellationToken - CancellationTokenNoneIsNotCancelledAndCannotBe", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).cancellationTokenNoneIsNotCancelledAndCannotBe);
+                QUnit.test("CancellationToken - CreatingADefaultCancellationTokenReturnsACancellationTokenThatIsNotCancelled", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).creatingADefaultCancellationTokenReturnsACancellationTokenThatIsNotCancelled);
+                QUnit.test("CancellationToken - ActivatorCreateForCancellationTokenReturnsACancellationTokenThatIsNotCancelled", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).activatorCreateForCancellationTokenReturnsACancellationTokenThatIsNotCancelled);
+                QUnit.test("CancellationToken - CanBeCanceledIsTrueForTokenCreatedForCancellationTokenSource", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).canBeCanceledIsTrueForTokenCreatedForCancellationTokenSource);
+                QUnit.test("CancellationToken - IsCancellationRequestedForTokenCreatedForCancellationTokenSourceIsSetByTheCancelMethod", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).isCancellationRequestedForTokenCreatedForCancellationTokenSourceIsSetByTheCancelMethod);
+                QUnit.test("CancellationToken - ThrowIfCancellationRequestedForTokenCreatedForCancellationTokenSourceThrowsAfterTheCancelMethodIsCalled", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).throwIfCancellationRequestedForTokenCreatedForCancellationTokenSourceThrowsAfterTheCancelMethodIsCalled);
+                QUnit.test("CancellationToken - CancelWithoutArgumentsWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).cancelWithoutArgumentsWorks);
+                QUnit.test("CancellationToken - CancelWorksWhenThrowOnFirstExceptionIsFalse", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).cancelWorksWhenThrowOnFirstExceptionIsFalse);
+                QUnit.test("CancellationToken - CancelWorksWhenThrowOnFirstExceptionIsTrue", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).cancelWorksWhenThrowOnFirstExceptionIsTrue);
+                QUnit.test("CancellationToken - RegisterOnACancelledSourceWithoutContextInvokesTheCallback", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).registerOnACancelledSourceWithoutContextInvokesTheCallback);
+                QUnit.test("CancellationToken - RegisterWithArgumentOnACancelledSourceInvokesTheCallback", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).registerWithArgumentOnACancelledSourceInvokesTheCallback);
+                QUnit.test("CancellationToken - RegisterOnACancelledSourceWithoutContextRethrowsAThrownException", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).registerOnACancelledSourceWithoutContextRethrowsAThrownException);
+                QUnit.test("CancellationToken - RegisterOnACancelledSourceWithContextRethrowsAThrownException", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).registerOnACancelledSourceWithContextRethrowsAThrownException);
+                QUnit.test("CancellationToken - RegisterOverloadsWithUseSynchronizationContextWork", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).registerOverloadsWithUseSynchronizationContextWork);
+                QUnit.test("CancellationToken - RegisterOnCancellationTokenCreatedNonCancelledDoesNothing", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).registerOnCancellationTokenCreatedNonCancelledDoesNothing);
+                QUnit.test("CancellationToken - RegisterOnCancellationTokenCreatedCancelledInvokesTheActionImmediately", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).registerOnCancellationTokenCreatedCancelledInvokesTheActionImmediately);
+                QUnit.test("CancellationToken - DuplicateCancelDoesNotCauseCallbacksToBeCalledTwice", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).duplicateCancelDoesNotCauseCallbacksToBeCalledTwice);
+                QUnit.test("CancellationToken - RegistrationsCanBeCompared", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).registrationsCanBeCompared);
+                QUnit.test("CancellationToken - RegistrationsCanBeUnregistered", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).registrationsCanBeUnregistered);
+                QUnit.test("CancellationToken - CreatingADefaultCancellationTokenRegistrationReturnsARegistrationThatCanBeDisposedWithoutHarm", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).creatingADefaultCancellationTokenRegistrationReturnsARegistrationThatCanBeDisposedWithoutHarm);
+                QUnit.test("CancellationToken - LinkedSourceWithTwoTokensWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).linkedSourceWithTwoTokensWorks);
+                QUnit.test("CancellationToken - LinkedSourceWithThreeTokensWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).linkedSourceWithThreeTokensWorks);
                 QUnit.module("Utilities");
                 QUnit.test("Environment - NewLineIsAStringContainingOnlyTheNewLineChar", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTestEnvironmentTests).newLineIsAStringContainingOnlyTheNewLineChar);
                 QUnit.module("СultureInfo");

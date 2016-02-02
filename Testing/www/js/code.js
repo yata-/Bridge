@@ -25,6 +25,7 @@
             MODULE_NUMBERFORMATINFO: "NumberFormatInfo",
             MODULE_CULTUREINFO: "СultureInfo",
             MODULE_PROPERTYACCESSOR: "Property accessor",
+            MODULE_THREADING: "Threading",
             IGNORE_DATE: null,
             config: {
                 init: function () {
@@ -16548,6 +16549,424 @@
             // Yes, this is tested by every other test as well. Included for completeness only
             var sb = new Bridge.Text.StringBuilder("some text");
             Bridge.get(Bridge.Test.Assert).areEqual(sb.getLength(), 9);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Threading.CancellationTokenTests', {
+        typePropertiesForCancellationTokenSourceAreCorrect: function () {
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(Bridge.CancellationTokenSource), "Bridge.CancellationTokenSource", "FullName");
+            var cts = new Bridge.CancellationTokenSource();
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.is(cts, Bridge.CancellationTokenSource));
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.is(cts, Bridge.IDisposable));
+        },
+        typePropertiesForCancellationTokenAreCorrect: function () {
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(Bridge.CancellationToken), "Bridge.CancellationToken", "FullName");
+    
+            Bridge.get(Bridge.Test.Assert).$true(true);
+            Bridge.get(Bridge.Test.Assert).$true(true);
+            Bridge.get(Bridge.Test.Assert).$true(true);
+        },
+        typePropertiesForCancellationTokenRegistrationAreCorrect: function () {
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(Bridge.CancellationTokenRegistration), "Bridge.CancellationTokenRegistration", "FullName");
+    
+            var ctr = new Bridge.CancellationTokenRegistration();
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ctr, Bridge.CancellationTokenRegistration), "CancellationTokenRegistration");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ctr, Bridge.IDisposable), "IDisposable");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ctr, Bridge.IEquatable$1(Bridge.CancellationTokenRegistration)), "IEquatable<CancellationTokenRegistration>");
+        },
+        cancellationTokenCreatedWithDefaultConstructorIsNotCanceledAndCannotBe: function () {
+            var ct = new Bridge.CancellationToken();
+            Bridge.get(Bridge.Test.Assert).false$1(ct.getCanBeCanceled(), "CanBeCanceled");
+            Bridge.get(Bridge.Test.Assert).false$1(ct.getIsCancellationRequested(), "IsCancellationRequested");
+            ct.throwIfCancellationRequested();
+        },
+        cancellationTokenCreatedWithFalseArgumentToConstructorIsNotCanceledAndCannotBe: function () {
+            var ct = new Bridge.CancellationToken(false);
+            Bridge.get(Bridge.Test.Assert).false$1(ct.getCanBeCanceled(), "CanBeCanceled");
+            Bridge.get(Bridge.Test.Assert).false$1(ct.getIsCancellationRequested(), "IsCancellationRequested");
+            ct.throwIfCancellationRequested();
+        },
+        cancellationTokenCreatedWithTrueArgumentToConstructorIsCanceled: function () {
+            var ct = new Bridge.CancellationToken(true);
+            Bridge.get(Bridge.Test.Assert).true$1(ct.getCanBeCanceled(), "CanBeCanceled");
+            Bridge.get(Bridge.Test.Assert).true$1(ct.getIsCancellationRequested(), "IsCancellationRequested");
+            Bridge.get(Bridge.Test.Assert).$throws(function () {
+                ct.throwIfCancellationRequested();
+            });
+        },
+        cancellationTokenNoneIsNotCancelledAndCannotBe: function () {
+            Bridge.get(Bridge.Test.Assert).false$1(Bridge.CancellationToken.none.getCanBeCanceled(), "CanBeCanceled");
+            Bridge.get(Bridge.Test.Assert).false$1(Bridge.CancellationToken.none.getIsCancellationRequested(), "IsCancellationRequested");
+            Bridge.CancellationToken.none.throwIfCancellationRequested();
+        },
+        creatingADefaultCancellationTokenReturnsACancellationTokenThatIsNotCancelled: function () {
+            var ct = Bridge.getDefaultValue(Bridge.CancellationToken);
+            Bridge.get(Bridge.Test.Assert).false$1(ct.getCanBeCanceled(), "CanBeCanceled");
+            Bridge.get(Bridge.Test.Assert).false$1(ct.getIsCancellationRequested(), "IsCancellationRequested");
+            ct.throwIfCancellationRequested();
+        },
+        activatorCreateForCancellationTokenReturnsACancellationTokenThatIsNotCancelled: function () {
+            var ct = new Bridge.CancellationToken();
+            Bridge.get(Bridge.Test.Assert).false$1(ct.getCanBeCanceled(), "CanBeCanceled");
+            Bridge.get(Bridge.Test.Assert).false$1(ct.getIsCancellationRequested(), "IsCancellationRequested");
+            ct.throwIfCancellationRequested();
+        },
+        canBeCanceledIsTrueForTokenCreatedForCancellationTokenSource: function () {
+            var cts = new Bridge.CancellationTokenSource();
+            Bridge.get(Bridge.Test.Assert).true$1(cts.token.getCanBeCanceled(), "cts.Token");
+        },
+        isCancellationRequestedForTokenCreatedForCancellationTokenSourceIsSetByTheCancelMethod: function () {
+            var cts = new Bridge.CancellationTokenSource();
+            Bridge.get(Bridge.Test.Assert).false$1(cts.isCancellationRequested, "cts.IsCancellationRequested false");
+            Bridge.get(Bridge.Test.Assert).false$1(cts.token.getIsCancellationRequested(), "cts.Token.IsCancellationRequested false");
+            cts.cancel();
+            Bridge.get(Bridge.Test.Assert).true$1(cts.isCancellationRequested, "cts.IsCancellationRequested true");
+            Bridge.get(Bridge.Test.Assert).true$1(cts.token.getIsCancellationRequested(), "cts.Token.IsCancellationRequested true");
+        },
+        throwIfCancellationRequestedForTokenCreatedForCancellationTokenSourceThrowsAfterTheCancelMethodIsCalled: function () {
+            var cts = new Bridge.CancellationTokenSource();
+            cts.token.throwIfCancellationRequested();
+            cts.cancel();
+            Bridge.get(Bridge.Test.Assert).throws$5(function () {
+                cts.token.throwIfCancellationRequested();
+            }, "cts.Token.ThrowIfCancellationRequested");
+        },
+        cancelWithoutArgumentsWorks: function () {
+            var ex1 = new Bridge.Exception();
+            var ex2 = new Bridge.Exception();
+            var cts = new Bridge.CancellationTokenSource();
+            var calledHandlers = new Bridge.List$1(Bridge.Int)();
+            cts.token.register(function () {
+                calledHandlers.add(0);
+            });
+            cts.token.register(function () {
+                calledHandlers.add(1);
+                throw ex1;
+            });
+            cts.token.register(function () {
+                calledHandlers.add(2);
+            });
+            cts.token.register(function () {
+                calledHandlers.add(3);
+                throw ex2;
+            });
+            cts.token.register(function () {
+                calledHandlers.add(4);
+            });
+    
+            try {
+                cts.cancel();
+                Bridge.get(Bridge.Test.Assert).fail$1("Should have thrown");
+            }
+            catch ($e) {
+                $e = Bridge.Exception.create($e);
+                var ex;
+                if (Bridge.is($e, Bridge.AggregateException)) {
+                    ex = $e;
+                    Bridge.get(Bridge.Test.Assert).areEqual$1(ex.innerExceptions.getCount(), 2, "count");
+                    Bridge.get(Bridge.Test.Assert).true$1(ex.innerExceptions.contains(ex1), "ex1");
+                    Bridge.get(Bridge.Test.Assert).true$1(ex.innerExceptions.contains(ex2), "ex2");
+                }
+                else {
+                    throw $e;
+                }
+            }
+    
+            Bridge.get(Bridge.Test.Assert).$true(calledHandlers.contains(0) && calledHandlers.contains(1) && calledHandlers.contains(2) && calledHandlers.contains(3) && calledHandlers.contains(4));
+        },
+        cancelWorksWhenThrowOnFirstExceptionIsFalse: function () {
+            var ex1 = new Bridge.Exception();
+            var ex2 = new Bridge.Exception();
+            var cts = new Bridge.CancellationTokenSource();
+            var calledHandlers = new Bridge.List$1(Bridge.Int)();
+            cts.token.register(function () {
+                calledHandlers.add(0);
+            });
+            cts.token.register(function () {
+                calledHandlers.add(1);
+                throw ex1;
+            });
+            cts.token.register(function () {
+                calledHandlers.add(2);
+            });
+            cts.token.register(function () {
+                calledHandlers.add(3);
+                throw ex2;
+            });
+            cts.token.register(function () {
+                calledHandlers.add(4);
+            });
+    
+            try {
+                cts.cancel(false);
+                Bridge.get(Bridge.Test.Assert).fail$1("Should have thrown");
+            }
+            catch ($e) {
+                $e = Bridge.Exception.create($e);
+                var ex;
+                if (Bridge.is($e, Bridge.AggregateException)) {
+                    ex = $e;
+                    Bridge.get(Bridge.Test.Assert).areEqual$1(ex.innerExceptions.getCount(), 2, "ex count");
+                    Bridge.get(Bridge.Test.Assert).true$1(ex.innerExceptions.contains(ex1), "ex1");
+                    Bridge.get(Bridge.Test.Assert).true$1(ex.innerExceptions.contains(ex2), "ex2");
+                }
+                else {
+                    throw $e;
+                }
+            }
+    
+            Bridge.get(Bridge.Test.Assert).areEqual$1(calledHandlers.getCount(), 5, "called handler count");
+            Bridge.get(Bridge.Test.Assert).$true(calledHandlers.contains(0) && calledHandlers.contains(1) && calledHandlers.contains(2) && calledHandlers.contains(3) && calledHandlers.contains(4));
+        },
+        cancelWorksWhenThrowOnFirstExceptionIsTrue: function () {
+            var ex1 = new Bridge.Exception();
+            var ex2 = new Bridge.Exception();
+            var cts = new Bridge.CancellationTokenSource();
+            var calledHandlers = new Bridge.List$1(Bridge.Int)();
+            cts.token.register(function () {
+                calledHandlers.add(0);
+            });
+            cts.token.register(function () {
+                calledHandlers.add(1);
+                throw ex1;
+            });
+            cts.token.register(function () {
+                calledHandlers.add(2);
+            });
+            cts.token.register(function () {
+                calledHandlers.add(3);
+                throw ex2;
+            });
+            cts.token.register(function () {
+                calledHandlers.add(4);
+            });
+    
+            try {
+                cts.cancel(true);
+                Bridge.get(Bridge.Test.Assert).fail$1("Should have thrown");
+            }
+            catch (ex) {
+                ex = Bridge.Exception.create(ex);
+                Bridge.get(Bridge.Test.Assert).true$1(ex === ex1, "ex");
+            }
+    
+            Bridge.get(Bridge.Test.Assert).areEqual$1(calledHandlers.getCount(), 2, "called handler count");
+            Bridge.get(Bridge.Test.Assert).$true(calledHandlers.contains(0) && calledHandlers.contains(1));
+        },
+        registerOnACancelledSourceWithoutContextInvokesTheCallback: function () {
+            var cts = new Bridge.CancellationTokenSource();
+            cts.cancel();
+            var state = 0;
+            cts.token.register(function () {
+                state = 1;
+            });
+            Bridge.get(Bridge.Test.Assert).areEqual(state, 1);
+        },
+        registerWithArgumentOnACancelledSourceInvokesTheCallback: function () {
+            var cts = new Bridge.CancellationTokenSource();
+            var context = { };
+            cts.cancel();
+            var state = 0;
+            cts.token.register(function (c) {
+                Bridge.get(Bridge.Test.Assert).true$1(context === c, "context");
+                state = 1;
+            }, context);
+            Bridge.get(Bridge.Test.Assert).areEqual(state, 1);
+        },
+        registerOnACancelledSourceWithoutContextRethrowsAThrownException: function () {
+            var ex1 = new Bridge.Exception();
+            var cts = new Bridge.CancellationTokenSource();
+            cts.cancel();
+            try {
+                cts.token.register(function () {
+                    throw ex1;
+                });
+                Bridge.get(Bridge.Test.Assert).fail$1("Should have thrown");
+            }
+            catch (ex) {
+                ex = Bridge.Exception.create(ex);
+                Bridge.get(Bridge.Test.Assert).true$1(ex === ex1, "Exception");
+            }
+        },
+        registerOnACancelledSourceWithContextRethrowsAThrownException: function () {
+            var ex1 = new Bridge.Exception();
+            var context = { };
+            var cts = new Bridge.CancellationTokenSource();
+            cts.cancel();
+            try {
+                cts.token.register(function (c) {
+                    Bridge.get(Bridge.Test.Assert).true$1(context === c, "context");
+                    throw ex1;
+                }, context);
+                Bridge.get(Bridge.Test.Assert).fail$1("Should have thrown");
+            }
+            catch (ex) {
+                ex = Bridge.Exception.create(ex);
+                Bridge.get(Bridge.Test.Assert).true$1(ex === ex1, "Exception");
+            }
+        },
+        registerOverloadsWithUseSynchronizationContextWork: function () {
+            var cts = new Bridge.CancellationTokenSource();
+            var context = { };
+            cts.cancel();
+            var numCalled = 0;
+            cts.token.register(function (c) {
+                numCalled++;
+            }, true);
+            cts.token.register(function (c) {
+                numCalled++;
+            }, false);
+            cts.token.register(function (c) {
+                Bridge.get(Bridge.Test.Assert).true$1(context === c, "context");
+                numCalled++;
+            }, context);
+            cts.token.register(function (c) {
+                Bridge.get(Bridge.Test.Assert).true$1(context === c, "context");
+                numCalled++;
+            }, context);
+            Bridge.get(Bridge.Test.Assert).areEqual(numCalled, 4);
+        },
+        cancellationTokenSourceCanBeDisposed: function () {
+            var cts = new Bridge.CancellationTokenSource();
+            cts.dispose();
+    
+            Bridge.get(Bridge.Test.Assert).$true(true);
+        },
+        registerOnCancellationTokenCreatedNonCancelledDoesNothing: function () {
+            var ct = new Bridge.CancellationToken(false);
+    
+            var state = 0;
+            ct.register(function () {
+                state = 1;
+            });
+    
+            Bridge.get(Bridge.Test.Assert).areEqual(state, 0);
+        },
+        registerOnCancellationTokenCreatedCancelledInvokesTheActionImmediately: function () {
+            var ct = new Bridge.CancellationToken(true);
+    
+            var state = 0;
+            var context = { };
+            ct.register(function () {
+                state = 1;
+            });
+            Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "state 1");
+            ct.register(function (c) {
+                Bridge.get(Bridge.Test.Assert).true$1(context === c, "context");
+                state = 2;
+            }, context);
+            Bridge.get(Bridge.Test.Assert).areEqual$1(state, 2, "state 2");
+        },
+        duplicateCancelDoesNotCauseCallbacksToBeCalledTwice: function () {
+            var cts = new Bridge.CancellationTokenSource();
+            var calls = 0;
+            cts.token.register(function () {
+                calls = 1;
+            });
+            cts.cancel();
+            cts.cancel();
+    
+            Bridge.get(Bridge.Test.Assert).areEqual(calls, 1);
+        },
+        registrationsCanBeCompared: function () {
+            var cts = new Bridge.CancellationTokenSource();
+            var ctr1 = cts.token.register(function () {
+            });
+            var ctr2 = cts.token.register(function () {
+            });
+    
+            Bridge.get(Bridge.Test.Assert).true$1(ctr1.equalsT(ctr1), "#1");
+            Bridge.get(Bridge.Test.Assert).false$1(ctr1.equalsT(ctr2), "#2");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.equals(ctr1, ctr1), "#3");
+            Bridge.get(Bridge.Test.Assert).false$1(Bridge.equals(ctr1, ctr2), "#4");
+    
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.equals(ctr1, ctr1), "#5");
+            Bridge.get(Bridge.Test.Assert).false$1(Bridge.equals(ctr1, ctr2), "#6");
+            Bridge.get(Bridge.Test.Assert).false$1(!Bridge.equals(ctr1, ctr1), "#7");
+            Bridge.get(Bridge.Test.Assert).true$1(!Bridge.equals(ctr1, ctr2), "#8");
+        },
+        registrationsCanBeUnregistered: function () {
+            var cts = new Bridge.CancellationTokenSource();
+            var calledHandlers = new Bridge.List$1(Bridge.Int)();
+            cts.token.register(function () {
+                calledHandlers.add(0);
+            });
+            var reg = cts.token.register(function () {
+                calledHandlers.add(1);
+            });
+            Bridge.get(Bridge.Test.Assert).$true(true);
+    
+            cts.token.register(function () {
+                calledHandlers.add(2);
+            });
+    
+            reg.dispose();
+    
+            cts.cancel();
+    
+            Bridge.get(Bridge.Test.Assert).areEqual(calledHandlers.getCount(), 2);
+            Bridge.get(Bridge.Test.Assert).$true(calledHandlers.contains(0) && calledHandlers.contains(2));
+        },
+        creatingADefaultCancellationTokenRegistrationReturnsARegistrationThatCanBeDisposedWithoutHarm: function () {
+            var ct = Bridge.getDefaultValue(Bridge.CancellationTokenRegistration);
+            Bridge.get(Bridge.Test.Assert).notNull$1(ct, "not null");
+            Bridge.get(Bridge.Test.Assert).true$1(true, "is CancellationTokenRegistration");
+            ct.dispose();
+        },
+        linkedSourceWithTwoTokensWorks: function () {
+            {
+                var cts1 = new Bridge.CancellationTokenSource();
+                var cts2 = new Bridge.CancellationTokenSource();
+                var linked = Bridge.CancellationTokenSource.createLinked(cts1.token, cts2.token);
+    
+                Bridge.get(Bridge.Test.Assert).false$1(linked.isCancellationRequested, "#1");
+                cts1.cancel();
+                Bridge.get(Bridge.Test.Assert).true$1(linked.isCancellationRequested, "#2");
+            }
+    
+            {
+                var cts11 = new Bridge.CancellationTokenSource();
+                var cts21 = new Bridge.CancellationTokenSource();
+                var linked1 = Bridge.CancellationTokenSource.createLinked(cts11.token, cts21.token);
+    
+                Bridge.get(Bridge.Test.Assert).false$1(linked1.isCancellationRequested, "#1");
+                cts21.cancel();
+                Bridge.get(Bridge.Test.Assert).true$1(linked1.isCancellationRequested, "#2");
+            }
+        },
+        linkedSourceWithThreeTokensWorks: function () {
+            {
+                var cts1 = new Bridge.CancellationTokenSource();
+                var cts2 = new Bridge.CancellationTokenSource();
+                var cts3 = new Bridge.CancellationTokenSource();
+                var linked = Bridge.CancellationTokenSource.createLinkedTokenSource(cts1.token, cts2.token, cts3.token);
+    
+                Bridge.get(Bridge.Test.Assert).false$1(linked.isCancellationRequested, "#1 1");
+                cts1.cancel();
+                Bridge.get(Bridge.Test.Assert).true$1(linked.isCancellationRequested, "#1 2");
+            }
+    
+            {
+                var cts11 = new Bridge.CancellationTokenSource();
+                var cts21 = new Bridge.CancellationTokenSource();
+                var cts31 = new Bridge.CancellationTokenSource();
+                var linked1 = Bridge.CancellationTokenSource.createLinkedTokenSource(cts11.token, cts21.token, cts31.token);
+    
+                Bridge.get(Bridge.Test.Assert).false$1(linked1.isCancellationRequested, "#2 1");
+                cts21.cancel();
+                Bridge.get(Bridge.Test.Assert).true$1(linked1.isCancellationRequested, "#2 2");
+            }
+    
+            {
+                var cts12 = new Bridge.CancellationTokenSource();
+                var cts22 = new Bridge.CancellationTokenSource();
+                var cts32 = new Bridge.CancellationTokenSource();
+                var linked2 = Bridge.CancellationTokenSource.createLinkedTokenSource(cts12.token, cts22.token, cts32.token);
+    
+                Bridge.get(Bridge.Test.Assert).false$1(linked2.isCancellationRequested, "#3 1");
+                cts32.cancel();
+                Bridge.get(Bridge.Test.Assert).true$1(linked2.isCancellationRequested, "#3 2");
+            }
         }
     });
     
