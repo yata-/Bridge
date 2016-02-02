@@ -2238,6 +2238,8 @@
     }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge883_IInterface');
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.CI1');
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.CI2');
@@ -7595,6 +7597,10 @@
             }
         }
     }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge883_2', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge883_IInterface]
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge889', {
@@ -16710,6 +16716,10 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge883_1', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge883_2]
+    });
+    
     Bridge.define('Bridge.ClientTest.BasicCSharp.TestAbstractClass', {
         statics: {
             testB: function () {
@@ -16797,6 +16807,14 @@
             testUseCase: function () {
                 var c = new Bridge.ClientTest.BridgeIssues.Bridge693B();
                 Bridge.get(Bridge.Test.Assert).areNotEqual$1(c, null, "Bridge693 not null");
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge883', {
+        statics: {
+            testUseCase: function () {
+                Bridge.get(Bridge.Test.Assert).notNull$1(new Bridge.ClientTest.BridgeIssues.Bridge883_1(), "Bridge883_1 created");
             }
         }
     });
