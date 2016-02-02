@@ -2508,6 +2508,29 @@
         $enum: true
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge882_Static.Bridge882_A_Static', {
+        statics: {
+            constructor: function () {
+                var $t;
+                var a = [5, 6, 7];
+    
+                var s = 0;
+                $t = Bridge.getEnumerator(a);
+                while ($t.moveNext()) {
+                    var v = $t.getCurrent();
+                    s += v;
+                }
+    
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge882_Static.Bridge882_A_Static).setSum(s);
+        },
+        config: {
+            properties: {
+                Sum: 0
+            }
+        }
+    }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.CI1');
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.CI2');
@@ -7909,6 +7932,29 @@
                 Bridge.get(Bridge.Test.Assert).areEqual(i, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge881A).$name);
             }
         }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge882_Static', {
+        statics: {
+            constructor: function () {
+                var $t;
+                var a = [1, 2, 3];
+    
+                var s = 0;
+                $t = Bridge.getEnumerator(a);
+                while ($t.moveNext()) {
+                    var v = $t.getCurrent();
+                    s += v;
+                }
+    
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge882_Static).setSum(s);
+        },
+        config: {
+            properties: {
+                Sum: 0
+            }
+        }
+    }
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge889', {
@@ -16646,6 +16692,15 @@
         statics: {
             testUseCase: function () {
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge660MessageStore)._initialEditState.getContent().getText(), "Message", "Bridge660 Initialize static members before first access to the class");
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge882', {
+        statics: {
+            testUseCase: function () {
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge882_Static).getSum(), 6, "Bridge882_Static.Sum");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge882_Static.Bridge882_A_Static).getSum(), 18, "Bridge882_A_Static.Sum");
             }
         }
     });
