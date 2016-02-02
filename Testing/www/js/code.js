@@ -7872,6 +7872,29 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge874', {
+        statics: {
+            testUseCase: function () {
+                var myValue = 1;
+    
+                switch (myValue) {
+                    case 0: 
+                        
+                        myValue = 2;
+                        
+                        break;
+                    case 1: 
+                        
+                        myValue = 3;
+                        
+                        break;
+                }
+    
+                Bridge.get(Bridge.Test.Assert).areEqual(myValue, 3);
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge889', {
         statics: {
             count: function (arr) {
