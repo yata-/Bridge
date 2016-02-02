@@ -2501,6 +2501,13 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge881A', {
+        statics: {
+            $name: 0
+        },
+        $enum: true
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.CI1');
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.CI2');
@@ -7891,6 +7898,15 @@
                 }
     
                 Bridge.get(Bridge.Test.Assert).areEqual(myValue, 3);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge881', {
+        statics: {
+            testUseCase: function () {
+                var i = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge881A).$name;
+                Bridge.get(Bridge.Test.Assert).areEqual(i, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge881A).$name);
             }
         }
     });
