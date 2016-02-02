@@ -392,7 +392,7 @@
     });
 
     Bridge.define("Bridge.CancellationToken", {
-        constructor: function (source) {
+         constructor: function (source) {
             if (!Bridge.is(source, Bridge.CancellationTokenSource)) {
                 source = source ? Bridge.CancellationToken.sourceTrue : Bridge.CancellationToken.sourceFalse;
             }
@@ -404,7 +404,7 @@
             return !this.source.uncancellable;
         },
 
-        get_isCancellationRequested: function () {
+        getIsCancellationRequested: function () {
             return this.source.isCancellationRequested;
         },
 
@@ -432,6 +432,9 @@
                 register: function() {
                      return new Bridge.CancellationTokenRegistration();
                 }
+            },
+            getDefaultValue: function () {
+                return new Bridge.CancellationToken();
             }
         }
     });
