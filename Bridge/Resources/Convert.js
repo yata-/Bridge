@@ -1,21 +1,25 @@
 ﻿// @source Convert.js
 
 var convert = {
-    typeNames: {
-        Bool: "Boolean",
-        Char: "Char",
-        SByte: "SByte",
-        Byte: "Byte",
-        Int16: "Int16",
-        UInt16: "UInt16",
-        Int32: "Int32",
-        UInt32: "UInt32",
-        Int64: "Int64",
-        UInt64: "UInt64",
-        Single: "Single",
-        Double: "Double",
-        Decimal: "Decimal",
-        DateTime: "DateTime"
+    typeCodes: {
+        Empty: 0,
+        Object: 1,
+        DBNull: 2,
+        Boolean: 3,
+        Char: 4,
+        SByte: 5,
+        Byte: 6,
+        Int16: 7,
+        UInt16: 8,
+        Int32: 9,
+        UInt32: 10,
+        Int64: 11,
+        UInt64: 12,
+        Single: 13,
+        Double: 14,
+        Decimal: 15,
+        DateTime: 16,
+        String: 18
     },
 
     toBoolean: function (value, formatProvider) {
@@ -47,26 +51,29 @@ var convert = {
         }
 
         // try converting using IConvertible
-        return this.convertToType(this.typeNames.Bool, value, formatProvider);
+        return this.convertToType(this.typeCodes.Boolean, value, formatProvider);
     },
 
-    toChar: function (value, formatProvider, treatNullAsString, isFloatingType) {
+    toChar: function (value, formatProvider, valueTypeCode) {
+        // valueTypeCode must be defined for String/Single/Double/Decimal
+
         var type = typeof (value);
-        if (treatNullAsString && value == null) {
+        if (value == null && valueTypeCode === this.typeCodes.String) {
             type = "string";
         }
 
         switch (type) {
             case "boolean":
-                this.throwInvalidCastEx(this.typeNames.Bool, this.typeNames.Char);
+                this.internal.throwInvalidCastEx(this, this.typeCodes.Boolean, this.typeCodes.Char);
 
             case "number":
+                valueTypeCode = valueTypeCode || this.internal.suggestTypeCode(this, value);
+                var isFloatingType = this.internal.isFloatingType(this, valueTypeCode);
                 if (isFloatingType || value % 1 !== 0) {
-                    this.throwInvalidCastEx("floating point type", this.typeNames.Char);
+                    this.internal.throwInvalidCastEx(this, valueTypeCode, this.typeCodes.Char);
                 }
-                if (value < 0 || value > 65535) {
-                    throw new Bridge.OverflowException("Value was either too large or too small for a character.");
-                }
+
+                this.internal.validateNumberRange(this, value, this.typeCodes.Char);
                 return value;
 
             case "string":
@@ -83,126 +90,67 @@ var convert = {
                     return 0;
                 }
                 if (Bridge.isDate(value)) {
-                    this.throwInvalidCastEx(this.typeNames.DateTime, this.typeNames.Char);
+                    this.internal.throwInvalidCastEx(this, this.typeCodes.DateTime, this.typeCodes.Char);
                 }
                 break;
         }
 
         // try converting using IConvertible
-        return this.convertToType(this.typeNames.Char, value, formatProvider);
-    },
-
-    toNumber: function (value, formatProvider, minValue, maxValue, typeName) {
-        var type = typeof (value);
-        var isFloating = typeName === this.typeNames.Single || typeName === this.typeNames.Double || typeName === this.typeNames.Decimal;
-
-        switch (type) {
-            case "boolean":
-                return value ? 1 : 0;
-
-            case "number":
-                if (!isFloating && (value % 1 !== 0)) {
-                    value = this.roundToInt(value, minValue, maxValue, typeName);
-                }
-                if (value < minValue || value > maxValue) {
-                    throw new Bridge.OverflowException("Value was either too large or too small for '" + typeName + "'.");
-                }
-                return value;
-
-            case "string":
-                if (isFloating) {
-                    if (typeName !== this.typeNames.Decimal) {
-                        // TODO: implement infinity
-                        // TODO: implement exponential notation
-                    }
-                    // TODO: implement culture-specific params: decimal symbol, digit grouping symbol
-                    if (!/^[+-]?[0-9]+[.,]?[0-9]$/.test(value)) {
-                        throw new Bridge.FormatException("Input string was not in a correct format.");
-                    }
-                    value = parseFloat(value);
-
-                } else {
-                    if (!/^[+-]?[0-9]+$/.test(value)) {
-                        throw new Bridge.FormatException("Input string was not in a correct format.");
-                    }
-                    value = parseInt(value, 10);
-                }
-
-                if (isNaN(result)) {
-                    throw new Bridge.FormatException("Input string was not in a correct format.");
-                }
-
-                if (value < minValue || value > maxValue) {
-                    throw new Bridge.OverflowException("Value was either too large or too small for '" + typeName + "'.");
-                }
-                return value;
-
-            case "object":
-                if (value == null) {
-                    return 0;
-                }
-                if (Bridge.isDate(value)) {
-                    this.throwInvalidCastEx(this.typeNames.DateTime, typeName);
-                }
-                break;
-        }
-
-        // try converting using IConvertible
-        return this.convertToType(typeName, value, formatProvider);
+        return this.convertToType(this.typeCodes.Char, value, formatProvider);
     },
 
     toSByte: function (value, formatProvider) {
-        var result = this.toNumber(value, formatProvider, -128, 127, this.typeNames.SByte);
+        var result = this.internal.toNumber(this, value, formatProvider, this.typeCodes.SByte);
         return result;
     },
 
     toByte: function (value, formatProvider) {
-        var result = this.toNumber(value, formatProvider, 0, 255, this.typeNames.Byte);
+        var result = this.internal.toNumber(this, value, formatProvider, this.typeCodes.Byte);
         return result;
     },
 
     toInt16: function (value, formatProvider) {
-        var result = this.toNumber(value, formatProvider, -32768, 32767, this.typeNames.Int16);
+        var result = this.internal.toNumber(this, value, formatProvider, this.typeCodes.Int16);
         return result;
     },
 
     toUInt16: function (value, formatProvider) {
-        var result = this.toNumber(value, formatProvider, 0, 65535, this.typeNames.UInt16);
+        var result = this.internal.toNumber(this, value, formatProvider, this.typeCodes.UInt16);
         return result;
     },
 
     toInt32: function (value, formatProvider) {
-        var result = this.toNumber(value, formatProvider, -2147483648, 2147483647, this.typeNames.Int32);
+        var result = this.internal.toNumber(this, value, formatProvider, this.typeCodes.Int32);
         return result;
     },
 
     toUInt32: function (value, formatProvider) {
-        var result = this.toNumber(value, formatProvider, 0, 4294967295, this.typeNames.UInt32);
+        var result = this.internal.toNumber(this, value, formatProvider, this.typeCodes.UInt32);
         return result;
     },
 
     toInt64: function (value, formatProvider) {
-        var result = this.toNumber(value, formatProvider, Number.MIN_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, this.typeNames.Int64);
+        var result = this.internal.toNumber(this, value, formatProvider, this.typeCodes.Int64);
         return result;
     },
 
     toUInt64: function (value, formatProvider) {
-        var result = this.toNumber(value, formatProvider, 0, Number.MAX_SAFE_INTEGER, this.typeNames.UInt64);
+        var result = this.internal.toNumber(this, value, formatProvider, this.typeCodes.UInt64);
         return result;
     },
 
     toSingle: function (value, formatProvider) {
-        var result = this.toNumber(value, formatProvider, -3.402823e+38, 3.402823e+38, this.typeNames.Single);
+        var result = this.internal.toNumber(this, value, formatProvider, this.typeCodes.Single);
         return result;
     },
 
     toDouble: function (value, formatProvider) {
-        var result = this.toNumber(value, formatProvider, -1.7976931348623157e+308, 1.7976931348623157e+308, this.typeNames.Double);
+        var result = this.internal.toNumber(this, value, formatProvider, this.typeCodes.Double);
         return result;
     },
 
     toDecimal: function (value, formatProvider) {
-        var result = this.toNumber(value, formatProvider, -79228162514264337593543950335, 79228162514264337593543950335, this.typeNames.Decimal);
+        var result = this.internal.toNumber(this, value, formatProvider, this.typeCodes.Decimal);
         return result;
     },
 
@@ -211,13 +159,11 @@ var convert = {
 
         switch (type) {
             case "boolean":
-                throwInvalidCastEx(this.typeNames.Bool, this.typeNames.DateTime);
+                this.internal.throwInvalidCastEx(this, this.typeCodes.Boolean, this.typeCodes.DateTime);
 
             case "number":
-                if ((value % 1) === 0) {
-                    throwInvalidCastEx(this.typeNames.Int32, this.typeNames.DateTime);
-                }
-                throwInvalidCastEx(this.typeNames.Double, this.typeNames.DateTime);
+                var fromType = this.internal.suggestTypeCode(this, value);
+                this.internal.throwInvalidCastEx(this, fromType, this.typeCodes.DateTime);
 
             case "string":
                 value = Date.parse(value); // TODO: check this
@@ -225,7 +171,7 @@ var convert = {
 
             case "object":
                 if (value == null) {
-                    return this.getDateTimeMinValue();
+                    return this.internal.getMinValue(this, this.typeCodes.DateTime);
                 }
                 if (Bridge.isDate(value)) {
                     return value;
@@ -234,10 +180,10 @@ var convert = {
         }
 
         // try converting using IConvertible
-        return this.convertToType(this.typeNames.DateTime, value, formatProvider);
+        return this.convertToType(this.typeCodes.DateTime, value, formatProvider);
     },
 
-    toString: function(value, formatProvider) {
+    toString: function (value, formatProvider) {
         var type = typeof (value);
 
         switch (type) {
@@ -254,20 +200,23 @@ var convert = {
                 if (value == null) {
                     return "";
                 }
+                if (Bridge.isDate(value)) {
+                    return Bridge.Date.format(value, null, formatProvider);
+                }
                 return value.toString();
         }
 
         // try converting using IConvertible
-        return this.convertToType(this.typeNames.DateTime, value, formatProvider);
+        return this.convertToType(this.typeCodes.String, value, formatProvider);
     },
 
-    toNumberInBase: function (value, fromBase, minValue, maxValue) {
-        var str = this.internal.stringToLong(value, fromBase, minValue, maxValue);
+    toNumberInBase: function (value, fromBase, typeCode) {
+        var str = this.internal.stringToNumber(this, value, fromBase, typeCode);
         return str;
     },
 
-    toStringInBase: function(value, toBase, minValue, maxValue) {
-        var str = this.internal.numberToString(value, toBase, minValue, maxValue);
+    toStringInBase: function (value, toBase, typeCode) {
+        var str = this.internal.numberToString(this, value, toBase, typeCode);
         return str;
     },
 
@@ -347,14 +296,11 @@ var convert = {
             throw new Bridge.ArgumentOutOfRangeException("offsetOut", "Either offset did not refer to a position in the string, or there is an insufficient length of destination character array.");
         }
 
-        var strArray = [];
-        var strArrayLength = this.internal.convertToBase64Array(strArray, inArray, offsetIn, length, insertLineBreaks);
+        var charsArr = [];
+        var charsArrLength = this.internal.convertToBase64Array(charsArr, inArray, offsetIn, length, insertLineBreaks);
 
-        for (var i = 0; i < strArrayLength; i++) {
-            outArray[i] = strArray[i].charCodeAt(0);
-        }
-
-        return strArrayLength;
+        this.internal.charsToCodes(charsArr, outArray);
+        return charsArrLength;
     },
 
     fromBase64String: function(s) {
@@ -383,14 +329,14 @@ var convert = {
             throw new Bridge.ArgumentOutOfRangeException("offset", "Offset and length must refer to a position in the string.");
         }
 
-        var chars = [];
-        for (var i = 0; i < inArray.length; i++) {
-            var code = inArray[i];
-            chars[i] = String.fromCharCode(code);
-        }
-
+        var chars = this.internal.codesToChars(inArray);
         var bytes = this.internal.fromBase64CharPtr(chars, offset, length);
         return bytes;
+    },
+
+    convertToType: function (typeCode, value, formatProvider) {
+        //TODO: IConvertible 
+        throw new Bridge.NotSupportedException("IConvertible interface is not supported.");
     },
 
     internal: {
@@ -402,7 +348,264 @@ var convert = {
             "8", "9", "+", "/", "="
         ],
 
-        base64LineBreakPosition : 76,
+        typeRanges: {
+            Char_MinValue: 0,
+            Char_MaxValue: 65535,
+
+            Byte_MinValue: 0,
+            Byte_MaxValue: 255,
+            
+            SByte_MinValue: -128,
+            SByte_MaxValue: 127,
+
+            Int16_MinValue: -32768,
+            Int16_MaxValue: 32767,
+
+            UInt16_MinValue: 0,
+            UInt16_MaxValue: 65535,
+
+            Int32_MinValue: -2147483648,
+            Int32_MaxValue: 2147483647,
+
+            UInt32_MinValue: 0,
+            UInt32_MaxValue: 4294967295,
+
+            Int64_MinValue_Safe: Number.MIN_SAFE_INTEGER,
+            Int64_MaxValue_Safe: Number.MAX_SAFE_INTEGER,
+
+            UInt64_MinValue_Safe: 0,
+            UInt64_MaxValue_Safe: Number.MAX_SAFE_INTEGER,
+
+            Single_MinValue: -3.402823e+38,
+            Single_MaxValue: 3.402823e+38,
+
+            Double_MinValue: -1.7976931348623157e+308,
+            Double_MaxValue: 1.7976931348623157e+308,
+
+            Decimal_MinValue: -79228162514264337593543950335,
+            Decimal_MaxValue: 79228162514264337593543950335
+        },
+
+        base64LineBreakPosition: 76,
+
+        getTypeCodeName: function(convert, typeCode) {
+            if (this.typeCodeNames == null) {
+                var names = {};
+                for (var codeName in convert.typeCodes) {
+                    if (!convert.typeCodes.hasOwnProperty(codeName))
+                        continue;
+
+                    var codeValue = convert.typeCodes[codeName];
+                    names[codeValue] = codeName;
+                }
+                this.typeCodeNames = names;
+            }
+
+            var name = this.typeCodeNames[typeCode];
+            if (name == null) {
+                throw Bridge.ArgumentOutOfRangeException("typeCode", "The specified typeCode is undefined.");
+            }
+            return name;
+        },
+
+        suggestTypeCode: function (convert, value) {
+            var type = typeof (value);
+
+            switch (type) {
+                case "boolean":
+                    return convert.typeCodes.Boolean;
+
+                case "number":
+                    if (value % 1 !== 0)
+                        return convert.typeCodes.Double;
+
+                    return convert.typeCodes.Int32;
+
+                case "string":
+                    return convert.typeCodes.String;
+
+                case "object":
+                    if (Bridge.isDate(value)) {
+                        return convert.typeCodes.DateTime;
+                    }
+                    if (value != null) {
+                        return convert.typeCodes.Object;
+                    }
+                    break;
+            }
+            return null;
+        },
+
+        getMinValue: function(convert, typeCode) {
+            switch (typeCode) {
+                case convert.typeCodes.Char:
+                    return this.typeRanges.Char_MinValue;
+                case convert.typeCodes.SByte:
+                    return this.typeRanges.SByte_MinValue;
+                case convert.typeCodes.Byte:
+                    return this.typeRanges.Byte_MinValue;
+                case convert.typeCodes.Int16:
+                    return this.typeRanges.Int16_MinValue;
+                case convert.typeCodes.UInt16:
+                    return this.typeRanges.UInt16_MinValue;
+                case convert.typeCodes.Int32:
+                    return this.typeRanges.Int32_MinValue;
+                case convert.typeCodes.UInt32:
+                    return this.typeRanges.UInt32_MinValue;
+                case convert.typeCodes.Int64:
+                    return this.typeRanges.Int64_MinValue_Safe;
+                case convert.typeCodes.UInt64:
+                    return this.typeRanges.UInt64_MinValue_Safe;
+                case convert.typeCodes.Single:
+                    return this.typeRanges.Single_MinValue;
+                case convert.typeCodes.Double:
+                    return this.typeRanges.Double_MinValue;
+                case convert.typeCodes.Decimal:
+                    return this.typeRanges.Decimal_MinValue;
+                case convert.typeCodes.DateTime:
+                    var date = new Date(0);
+                    date.setFullYear(1);
+                    return date;
+
+                default:
+                    return null;
+            }
+        },
+
+        getMaxValue: function (convert, typeCode) {
+            switch (typeCode) {
+                case convert.typeCodes.Char:
+                    return this.typeRanges.Char_MaxValue;
+                case convert.typeCodes.SByte:
+                    return this.typeRanges.SByte_MaxValue;
+                case convert.typeCodes.Byte:
+                    return this.typeRanges.Byte_MaxValue;
+                case convert.typeCodes.Int16:
+                    return this.typeRanges.Int16_MaxValue;
+                case convert.typeCodes.UInt16:
+                    return this.typeRanges.UInt16_MaxValue;
+                case convert.typeCodes.Int32:
+                    return this.typeRanges.Int32_MaxValue;
+                case convert.typeCodes.UInt32:
+                    return this.typeRanges.UInt32_MaxValue;
+                case convert.typeCodes.Int64:
+                    return this.typeRanges.Int64_MaxValue_Safe;
+                case convert.typeCodes.UInt64:
+                    return this.typeRanges.UInt64_MaxValue_Safe;
+                case convert.typeCodes.Single:
+                    return this.typeRanges.Single_MaxValue;
+                case convert.typeCodes.Double:
+                    return this.typeRanges.Double_MaxValue;
+                case convert.typeCodes.Decimal:
+                    return this.typeRanges.Decimal_MaxValue;
+                default:
+                    throw new Bridge.ArgumentOutOfRangeException("typeCode", "The specified typeCode is undefined.");
+            }
+        },
+
+        isFloatingType: function(convert, typeCode) {
+            var isFloatingType =
+                typeCode === convert.typeCodes.Single ||
+                typeCode === convert.typeCodes.Double ||
+                typeCode === convert.typeCodes.Decimal;
+            return isFloatingType;
+        },
+
+        toNumber: function (convert, value, formatProvider, typeCode) {
+            var type = typeof (value);
+            var isFloating = this.isFloatingType(convert, typeCode);
+
+            switch (type) {
+                case "boolean":
+                    return value ? 1 : 0;
+
+                case "number":
+                    if (!isFloating && (value % 1 !== 0)) {
+                        value = this.roundToInt(convert, value, typeCode);
+                    }
+
+                    this.validateNumberRange(convert, value, typeCode);
+                    return value;
+
+                case "string":
+                    if (isFloating) {
+                        if (typeCode !== convert.typeCodes.Decimal) {
+                            // TODO: implement infinity
+                            // TODO: implement exponential notation
+                        }
+                        // TODO: implement culture-specific params: decimal symbol, digit grouping symbol
+                        if (!/^[+-]?[0-9]+[.,]?[0-9]$/.test(value)) {
+                            throw new Bridge.FormatException("Input string was not in a correct format.");
+                        }
+                        value = parseFloat(value);
+
+                    } else {
+                        if (!/^[+-]?[0-9]+$/.test(value)) {
+                            throw new Bridge.FormatException("Input string was not in a correct format.");
+                        }
+                        value = parseInt(value, 10);
+                    }
+
+                    if (isNaN(value)) {
+                        throw new Bridge.FormatException("Input string was not in a correct format.");
+                    }
+
+                    this.validateNumberRange(convert, value, typeCode);
+                    return value;
+
+                case "object":
+                    if (value == null) {
+                        return 0;
+                    }
+                    if (Bridge.isDate(value)) {
+                        this.throwInvalidCastEx(convert, this.typeCodes.DateTime, typeCode);
+                    }
+                    break;
+            }
+
+            // try converting using IConvertible
+            return convert.convertToType(typeCode, value, formatProvider);
+        },
+
+        validateNumberRange: function (convert, value, typeCode) {
+            var minValue = this.getMinValue(convert, typeCode);
+            var maxValue = this.getMaxValue(convert, typeCode);
+            var typeName = this.getTypeCodeName(convert, typeCode);
+
+            if (value < minValue || value > maxValue) {
+                throw new Bridge.OverflowException("Value was either too large or too small for '" + typeName + "'.");
+            }
+        },
+
+        roundToInt: function (convert, value, typeCode) {
+            if (value % 1 === 0) {
+                return value;
+            }
+
+            var intPart = value | 0;
+            var floatPart = value - intPart;
+
+            var minValue = this.getMinValue(convert, typeCode);
+            var maxValue = this.getMaxValue(convert, typeCode);
+
+            if (value >= 0.0) {
+                if (value < (maxValue + 0.5)) {
+                    if (floatPart > 0.5 || floatPart === 0.5 && (intPart & 1) !== 0) {
+                        ++intPart;
+                    }
+                    return intPart;
+                }
+            }
+            else if (value >= (minValue - 0.5)) {
+                if (floatPart < -0.5 || floatPart === -0.5 && (intPart & 1) !== 0) {
+                    --intPart;
+                }
+                return intPart;
+            }
+
+            var typeName = this.getTypeCodeName(convert, typeCode);
+            throw new Bridge.OverflowException("Value was either too large or too small for an '" + typeName + "'.");
+        },
 
         toBase64_CalculateAndValidateOutputLength: function(inputLength, insertLineBreaks) {
             var outlen = ~~(inputLength / 3) * 4;               // the base length - we want integer division here. 
@@ -768,7 +971,7 @@ var convert = {
             return ~~(usefulInputLength / 4) * 3 + padding;
         },
 
-        stringToLong: function (str, fromBase, minValue, maxValue) {
+        stringToNumber: function (convert, str, fromBase, typeCode) {
             if (fromBase !== 2 && fromBase !== 8 && fromBase !== 10 && fromBase !== 16) {
                 throw new Bridge.ArgumentException("Invalid Base.");
             }
@@ -781,6 +984,9 @@ var convert = {
 
             // Let's process the string in lower case.
             str = str.toLowerCase();
+
+            var minValue = this.getMinValue(convert, typeCode);
+            var maxValue = this.getMaxValue(convert, typeCode);
 
             // Calculate offset (start index)
             var isNegative = false;
@@ -859,10 +1065,13 @@ var convert = {
             return res;
         },
 
-        numberToString: function (value, toBase, minValue, maxValue) {
+        numberToString: function (convert, value, toBase, typeCode) {
             if (toBase !== 2 && toBase !== 8 && toBase !== 10 && toBase !== 16) {
                 throw new Bridge.ArgumentException("Invalid Base.");
             }
+
+            var minValue = this.getMinValue(convert, typeCode);
+            var maxValue = this.getMaxValue(convert, typeCode);
             if (value < minValue || value > maxValue) {
                 throw new Bridge.OverflowException("Value was either too large or too small for an unsigned byte.");
             }
@@ -918,60 +1127,40 @@ var convert = {
             return res;
         },
 
-        charsToCodes: function(chars) {
+        charsToCodes: function(chars, codes) {
             if (chars == null) {
                 return null;
             }
 
-            var codes = [];
+            codes = codes || [];
             codes.length = chars.length;
             for (var i = 0; i < chars.length; i++) {
                 codes[i] = chars[i].charCodeAt(0);
             }
 
             return codes;
-        }
-    },
+        },
 
-    convertToType: function (typeName, value, formatProvider) {
-        //TODO: IConvertible 
-        throw new Bridge.NotSupportedException("IConvertible interface is not supported.");
-    },
-
-    roundToInt: function (value, minValue, maxValue, typeName) {
-        if (value % 1 === 0) {
-            return value;
-        }
-
-        var intPart = value | 0;
-        var floatPart = value - intPart;
-
-        if (value >= 0.0) {
-            if (value < (maxValue + 0.5)) {
-                if (floatPart > 0.5 || floatPart === 0.5 && (intPart & 1) !== 0) {
-                    ++intPart;
-                }
-                return intPart;
+        codesToChars: function (codes, chars) {
+            if (codes == null) {
+                return null;
             }
-        }
-        else if (value >= (minValue - 0.5)) {
-            if (floatPart < -0.5 || floatPart === -0.5 && (intPart & 1) !== 0) {
-                --intPart;
+
+            chars = chars || [];
+            for (var i = 0; i < codes.length; i++) {
+                var code = codes[i];
+                chars[i] = String.fromCharCode(code);
             }
-            return intPart;
+
+            return chars;
+        },
+
+        throwInvalidCastEx: function (convert, fromTypeCode, toTypeCode) {
+            var fromType = this.getTypeCodeName(convert, fromTypeCode);
+            var toType = this.getTypeCodeName(convert, toTypeCode);
+
+            throw new Bridge.InvalidCastException("Invalid cast from '" + fromType + "' to '" + toType + "'.");
         }
-
-        throw new Bridge.OverflowException("Value was either too large or too small for an '" + typeName + "'.");
-    },
-
-    getDateTimeMinValue: function() {
-        var date = new Date(0);
-        date.setFullYear(1);
-        return date;
-    },
-
-    throwInvalidCastEx: function (fromType, toType) {
-        throw new Bridge.InvalidCastException("Invalid cast from '" + fromType + "' to '" + toType + "'.");
     }
 };
 

@@ -24,44 +24,44 @@ namespace System
         /// Converts the value of the specified object to a Unicode character.
         /// Note: Calling this method for <see cref="bool"/>, <see cref="float"/>, <see cref="double"/>, <see cref="decimal"/> and <see cref="DateTime"/> values always throws <see cref="T:System.InvalidCastException"/>.
         /// </summary>
-        [Template("Bridge.Convert.toChar({value}, null, false, false)")]
+        [Template("Bridge.Convert.toChar({value}, null, null)")]
         public static extern char ToChar(object value);
 
         /// <summary>
         /// Converts the value of the specified object to its equivalent Unicode character, using the specified culture-specific formatting information.
         /// Note: Calling this method for <see cref="bool"/>, <see cref="float"/>, <see cref="double"/>, <see cref="decimal"/> and <see cref="DateTime"/> values always throws <see cref="T:System.InvalidCastException"/>.
         /// </summary>
-        [Template("Bridge.Convert.toChar({value}, {provider}, false, false)")]
+        [Template("Bridge.Convert.toChar({value}, {provider}, null)")]
         public static extern char ToChar(object value, IFormatProvider provider);
 
         /// <summary>
         /// Calling this method always throws <see cref="T:System.InvalidCastException"/>.
         /// </summary>
-        [Template("Bridge.Convert.toChar({value}, null, false, true)")]
+        [Template("Bridge.Convert.toChar({value}, null, " + TypeCodeValues.Single + ")")]
         public static extern char ToChar(float value);
 
         /// <summary>
         /// Calling this method always throws <see cref="T:System.InvalidCastException"/>.
         /// </summary>
-        [Template("Bridge.Convert.toChar({value}, null, false, true)")]
+        [Template("Bridge.Convert.toChar({value}, null, " + TypeCodeValues.Double + ")")]
         public static extern char ToChar(double value);
 
         /// <summary>
         /// Calling this method always throws <see cref="T:System.InvalidCastException"/>.
         /// </summary>
-        [Template("Bridge.Convert.toChar({value}, null, false, true)")]
+        [Template("Bridge.Convert.toChar({value}, null, " + TypeCodeValues.Decimal + ")")]
         public static extern char ToChar(decimal value);
 
         /// <summary>
         /// Converts the value of the specified object to a Unicode character.
         /// </summary>
-        [Template("Bridge.Convert.toChar({value}, null, true, false)")]
+        [Template("Bridge.Convert.toChar({value}, null, " + TypeCodeValues.String + ")")]
         public static extern char ToChar(string value);
 
         /// <summary>
         /// Converts the value of the specified object to its equivalent Unicode character, using the specified culture-specific formatting information.
         /// </summary>
-        [Template("Bridge.Convert.toChar({value}, {provider}, true, false)")]
+        [Template("Bridge.Convert.toChar({value}, {provider}, " + TypeCodeValues.String + ")")]
         public static extern char ToChar(string value, IFormatProvider provider);
 
         /// <summary>
@@ -247,37 +247,37 @@ namespace System
         /// <summary>
         /// Converts the string representation of a number in a specified base to an equivalent 8-bit unsigned integer.
         /// </summary>
-        [Template("Bridge.Convert.toNumberInBase({value}, {toBase}, 0, 255)")]
+        [Template("Bridge.Convert.toNumberInBase({value}, {toBase}, " + TypeCodeValues.Byte + ")")]
         public static extern byte ToByte(string value, int fromBase);
 
         /// <summary>
         /// Converts the string representation of a number in a specified base to an equivalent 8-bit signed integer.
         /// </summary>
-        [Template("Bridge.Convert.toNumberInBase({value}, {toBase}, -128, 127)")]
+        [Template("Bridge.Convert.toNumberInBase({value}, {toBase}, " + TypeCodeValues.SByte + ")")]
         public static extern sbyte ToSByte(string value, int fromBase);
 
         /// <summary>
         /// Converts the string representation of a number in a specified base to an equivalent 16-bit signed integer.
         /// </summary>
-        [Template("Bridge.Convert.toNumberInBase({value}, {toBase}, -32768, 32767)")]
+        [Template("Bridge.Convert.toNumberInBase({value}, {toBase}, " + TypeCodeValues.Int16 + ")")]
         public static extern short ToInt16(string value, int fromBase);
 
         /// <summary>
         /// Converts the string representation of a number in a specified base to an equivalent 16-bit unsigned integer.
         /// </summary>
-        [Template("Bridge.Convert.toNumberInBase({value}, {toBase}, 0, 65535)")]
+        [Template("Bridge.Convert.toNumberInBase({value}, {toBase}, " + TypeCodeValues.UInt16 + ")")]
         public static extern ushort ToUInt16(string value, int fromBase);
 
         /// <summary>
         /// Converts the string representation of a number in a specified base to an equivalent 32-bit signed integer.
         /// </summary>
-        [Template("Bridge.Convert.toNumberInBase({value}, {toBase}, -2147483648, 2147483647)")]
+        [Template("Bridge.Convert.toNumberInBase({value}, {toBase}, " + TypeCodeValues.Int32 + ")")]
         public static extern int ToInt32(string value, int fromBase);
 
         /// <summary>
         /// Converts the string representation of a number in a specified base to an equivalent 32-bit unsigned integer.
         /// </summary>
-        [Template("Bridge.Convert.toNumberInBase({value}, {toBase}, 0, 4294967295)")]
+        [Template("Bridge.Convert.toNumberInBase({value}, {toBase}, " + TypeCodeValues.UInt32 + ")")]
         public static extern uint ToUInt32(string value, int fromBase);
 
         // TODO: Long values more than Number.MAX_SAFE_INTEGER can't be supported (?)
@@ -285,30 +285,31 @@ namespace System
         ///// <summary>
         ///// Converts the string representation of a number in a specified base to an equivalent 64-bit signed integer.
         ///// </summary>
-        //[Template("Bridge.Convert.toNumberInBase({value}, {toBase}, 0, 4294967295)")]
+        //[Template("Bridge.Convert.toNumberInBase({value}, {toBase}, " + TypeCodeValues.Int64 + ")")]
         //public static extern long ToInt64(string value, int fromBase);
 
         ///// <summary>
         ///// Converts the string representation of a number in a specified base to an equivalent 64-bit unsigned integer.
         ///// </summary>
+        //[Template("Bridge.Convert.toNumberInBase({value}, {toBase}, " + TypeCodeValues.UInt64 + ")")]
         //public static extern ulong ToUInt64(string value, int fromBase);
 
         /// <summary>
         /// Converts the value of an 8-bit unsigned integer to its equivalent string representation in a specified base.
         /// </summary>
-        [Template("Bridge.Convert.toStringInBase({value}, {toBase}, 0, 255)")]
+        [Template("Bridge.Convert.toStringInBase({value}, {toBase}, " + TypeCodeValues.Byte + ")")]
         public static extern string ToString(byte value, int toBase);
 
         /// <summary>
         /// Converts the value of a 16-bit signed integer to its equivalent string representation in a specified base.
         /// </summary>
-        [Template("Bridge.Convert.toStringInBase({value}, {toBase}, -32768, 32767)")]
+        [Template("Bridge.Convert.toStringInBase({value}, {toBase}, " + TypeCodeValues.Int16 + ")")]
         public static extern string ToString(short value, int toBase);
 
         /// <summary>
         /// Converts the value of a 32-bit signed integer to its equivalent string representation in a specified base.
         /// </summary>
-        [Template("Bridge.Convert.toStringInBase({value}, {toBase}, -2147483648, 2147483647)")]
+        [Template("Bridge.Convert.toStringInBase({value}, {toBase}, " + TypeCodeValues.Int32 + ")")]
         public static extern string ToString(int value, int toBase);
 
         // TODO: Long values more than Number.MAX_SAFE_INTEGER can't be supported (?)
@@ -316,7 +317,7 @@ namespace System
         ///// <summary>
         ///// Converts the value of a 64-bit signed integer to its equivalent string representation in a specified base.
         ///// </summary>
-        //[Template("Bridge.Convert.toStringInBase({value}, {toBase}, -9223372036854775808, 9223372036854775807)")]
+        //[Template("Bridge.Convert.toStringInBase({value}, {toBase}, " + TypeCodeValues.Int64 + ")")]
         //public static extern string ToString(long value, int toBase);
 
         /// <summary>
