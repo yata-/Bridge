@@ -1,15 +1,17 @@
 ﻿/* global Bridge */
 
-"use strict";
+(function (globals) {
+    "use strict";
 
-Bridge.define('TestProject1.TestClassA', {
-    config: {
-        properties: {
-            Value1: 0
+    Bridge.define('TestProject1.TestClassA', {
+        config: {
+            properties: {
+                Value1: 0
+            }
         }
-    }
-});
-
-
-
-Bridge.init();
+    });
+    
+    
+    
+    Bridge.init();
+})(this);

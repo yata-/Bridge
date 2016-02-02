@@ -214,6 +214,11 @@ namespace Bridge.Translator
                                     this.Write("; }");
                                     this.WriteNewLine();
                                 }
+                                else if (prm.IsParams)
+                                {
+                                    this.Write(string.Format("if ({0} === void 0) {{ {0} = []; }}", prm.Name));
+                                    this.WriteNewLine();
+                                }
                             }
                         }
                     }

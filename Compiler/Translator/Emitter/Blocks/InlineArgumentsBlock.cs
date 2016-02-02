@@ -169,7 +169,7 @@ namespace Bridge.Translator
                     {
                         if (exprs.Count > 1 || paramsName == key)
                         {
-                            if (exprs.Count == 1 && exprs[0].Parent != null)
+                            if (exprs.Count == 1 && exprs[0] != null && exprs[0].Parent != null)
                             {
                                 var exprrr = this.Emitter.Resolver.ResolveNode(exprs[0], this.Emitter);
                                 if (exprrr.Type.Kind == TypeKind.Array)
@@ -183,7 +183,14 @@ namespace Bridge.Translator
                                 this.Write("[");
                             }
 
-                            new ExpressionListBlock(this.Emitter, exprs, null).Emit();
+                            if (exprs.Count == 1 && exprs[0] == null)
+                            {
+                                this.Write("null");
+                            }
+                            else
+                            {
+                                new ExpressionListBlock(this.Emitter, exprs, null).Emit();    
+                            }
 
                             if (!ignoreArray)
                             {
