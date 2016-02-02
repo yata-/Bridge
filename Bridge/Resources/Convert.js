@@ -438,6 +438,8 @@ var convert = {
 
         getMinValue: function(convert, typeCode) {
             switch (typeCode) {
+                case convert.typeCodes.Char:
+                    return this.typeRanges.Char_MinValue;
                 case convert.typeCodes.SByte:
                     return this.typeRanges.SByte_MinValue;
                 case convert.typeCodes.Byte:
@@ -472,6 +474,8 @@ var convert = {
 
         getMaxValue: function (convert, typeCode) {
             switch (typeCode) {
+                case convert.typeCodes.Char:
+                    return this.typeRanges.Char_MaxValue;
                 case convert.typeCodes.SByte:
                     return this.typeRanges.SByte_MaxValue;
                 case convert.typeCodes.Byte:
@@ -542,7 +546,7 @@ var convert = {
                         value = parseInt(value, 10);
                     }
 
-                    if (isNaN(result)) {
+                    if (isNaN(value)) {
                         throw new Bridge.FormatException("Input string was not in a correct format.");
                     }
 
