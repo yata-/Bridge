@@ -13,25 +13,13 @@
         }
     }; });
     
-    Bridge.define('Generics.GenericINamedEntity$1', function (T) { return {
-        instance: null,
-        constructor: function (instance) {
-            this.instance = instance;
-        },
-        getSomething: function (input) {
-            return input;
+    Bridge.define('Generics.INamedEntity', {
+        config: {
+            properties: {
+                Name: null
+            }
         }
-    }; });
-    
-    Bridge.define('Generics.GenericNamedEntity$1', function (T) { return {
-        instance: null,
-        constructor: function (instance) {
-            this.instance = instance;
-        },
-        getSomething: function (input) {
-            return input;
-        }
-    }; });
+    });
     
     Bridge.define('Generics.GenericNew$1', function (T) { return {
         instance: null,
@@ -90,20 +78,41 @@
         }
     }; });
     
-    Bridge.define('Generics.INamedEntity', {
-        config: {
-            properties: {
-                Name: null
-            }
-        }
-    });
-    
     Bridge.define('Generics.NewClass', {
         data: 0,
         constructor: function () {
             this.data = 30;
         }
     });
+    
+    Bridge.define('Generics.GenericINamedEntity$1', function (T) { return {
+        instance: null,
+        constructor: function (instance) {
+            this.instance = instance;
+        },
+        getSomething: function (input) {
+            return input;
+        }
+    }; });
+    
+    Bridge.define('Generics.NamedEntity', {
+        inherits: [Generics.INamedEntity],
+        config: {
+            properties: {
+                Name$1: null
+            }
+        }
+    });
+    
+    Bridge.define('Generics.GenericNamedEntity$1', function (T) { return {
+        instance: null,
+        constructor: function (instance) {
+            this.instance = instance;
+        },
+        getSomething: function (input) {
+            return input;
+        }
+    }; });
     
     Bridge.define('Generics.implementation', {
         statics: {
@@ -118,15 +127,6 @@
                     this.genericNew = new Generics.GenericNew$1(Generics.NewClass)(new Generics.NewClass());
                     this.genericNewAndClass = new Generics.GenericNewAndClass$1(Generics.NewClass)(new Generics.NewClass());
                 }
-            }
-        }
-    });
-    
-    Bridge.define('Generics.NamedEntity', {
-        inherits: [Generics.INamedEntity],
-        config: {
-            properties: {
-                Name$1: null
             }
         }
     });
