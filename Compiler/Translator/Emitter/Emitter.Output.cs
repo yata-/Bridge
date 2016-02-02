@@ -44,20 +44,25 @@ namespace Bridge.Translator
 
                 if (output.TopOutput.Length > 0)
                 {
-                    tmp.AppendLine(output.TopOutput.ToString());
+                    tmp.Append(output.TopOutput.ToString());
+                    tmp.Append("\n");
                 }
 
                 if (isJs)
                 {
-                    tmp.AppendLine(this.GetOutputHeader(true, false));
+                    tmp.Append(this.GetOutputHeader(true, false));
+                    tmp.Append("\n");
                 }
 
                 if (output.NonModuletOutput.Length > 0)
                 {
                     if (isJs)
                     {
-                        tmp.AppendLine("(function (globals) {");
-                        tmp.AppendLine("    " + this.GetOutputHeader(false, true)); 
+                        tmp.Append("(function (globals) {");
+                        tmp.Append("\n");
+                        tmp.Append("    ");
+                        tmp.Append(this.GetOutputHeader(false, true));
+                        tmp.Append("\n");
                     }
 
                     var code = output.NonModuletOutput.ToString() + (isJs ? "\n\nBridge.init();" : "");
@@ -71,14 +76,15 @@ namespace Bridge.Translator
 
                     if (isJs)
                     {
-                        tmp.AppendLine();
-                        tmp.AppendLine("})(this);");
+                        tmp.Append("\n");
+                        tmp.Append("})(this);");
+                        tmp.Append("\n");
                     }
                 }
 
                 if (output.BottomOutput.Length > 0)
                 {
-                    tmp.AppendLine();
+                    tmp.Append("\n");
                     tmp.Append(output.BottomOutput.ToString());
                 }
 

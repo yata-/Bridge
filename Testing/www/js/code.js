@@ -126,6 +126,7 @@
                 } );
             },
             staticMethod2: function (p) {
+                if (p === void 0) { p = []; }
                 var i = Bridge.cast(p[0], Bridge.Int) + 1000;
                 var s = Bridge.cast(p[1], String);
                 var d = Bridge.cast(p[2], Number);
@@ -173,6 +174,7 @@
         constructor$2: function (p) {
             Bridge.ClientTest.BasicCSharp.ClassA.prototype.$constructor.call(this);
     
+            if (p === void 0) { p = []; }
             if (!Bridge.hasValue(p) || p.length < 6) {
                 throw new Bridge.Exception("Should pass six parameters");
             }
@@ -1839,6 +1841,7 @@
                 $asyncBody = Bridge.fn.bind(this, function () {
                     try {
                         for (;;) {
+                            $step = Bridge.Array.min([0,1], $step);
                             switch ($step) {
                                 case 0: {
                                     $task1 = Bridge.Task.delay(100);
@@ -1876,6 +1879,7 @@
                 $asyncBody = Bridge.fn.bind(this, function () {
                     try {
                         for (;;) {
+                            $step = Bridge.Array.min([0,1], $step);
                             switch ($step) {
                                 case 0: {
                                     $task1 = this.asyncSum(2, 3);
@@ -1917,6 +1921,7 @@
                     $asyncBody = Bridge.fn.bind(this, function () {
                         try {
                             for (;;) {
+                                $step = Bridge.Array.min([0,1], $step);
                                 switch ($step) {
                                     case 0: {
                                         $task1 = Bridge.Task.delay(100);
@@ -1954,6 +1959,7 @@
                     $asyncBody = Bridge.fn.bind(this, function () {
                         try {
                             for (;;) {
+                                $step = Bridge.Array.min([0,1], $step);
                                 switch ($step) {
                                     case 0: {
                                         $task1 = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge690B).asyncSum(19, 23);
@@ -2495,6 +2501,13 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge881A', {
+        statics: {
+            $name: 0
+        },
+        $enum: true
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.CI1');
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.CI2');
@@ -2962,6 +2975,7 @@
     Bridge.define('Bridge.ClientTest.DecimalMathTests.Logger', {
         statics: {
             convertParameters: function (parameters) {
+                if (parameters === void 0) { parameters = []; }
                 var result = Bridge.Array.init(parameters.length + 1, null);
     
                 for (var i = 0; i < parameters.length; i++) {
@@ -3027,6 +3041,7 @@
             this.getText().append("{");
         },
         onLog: function (parameters) {
+            if (parameters === void 0) { parameters = []; }
             if (!Bridge.get(Bridge.ClientTest.DecimalMathTests).useLogging) {
                 return;
             }
@@ -3983,6 +3998,7 @@
                 return i;
             },
             methodParams: function (n) {
+                if (n === void 0) { n = []; }
                 var sum = 0;
                 for (var i = 0; i < n.length; i++) {
                     sum += n[i];
@@ -4867,6 +4883,7 @@
                     result, 
                     $asyncBody = Bridge.fn.bind(this, function () {
                         for (;;) {
+                            $step = Bridge.Array.min([0,1], $step);
                             switch ($step) {
                                 case 0: {
                                     Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge508).setQUnitAsyncDone(Bridge.get(Bridge.Test.Assert).async());
@@ -4912,6 +4929,7 @@
                     $asyncBody = Bridge.fn.bind(this, function () {
                         try {
                             for (;;) {
+                                $step = Bridge.Array.min([0,1,2,3,4,5,6,7,8,9,10,11], $step);
                                 switch ($step) {
                                     case 0: {
                                         result = "";
@@ -5011,6 +5029,7 @@
                     $asyncBody = Bridge.fn.bind(this, function () {
                         try {
                             for (;;) {
+                                $step = Bridge.Array.min([0,1], $step);
                                 switch ($step) {
                                     case 0: {
                                         $task1 = Bridge.Task.delay(0);
@@ -5048,6 +5067,7 @@
                     $asyncBody = Bridge.fn.bind(this, function () {
                         try {
                             for (;;) {
+                                $step = Bridge.Array.min([0,1], $step);
                                 switch ($step) {
                                     case 0: {
                                         $task1 = Bridge.Task.delay(0);
@@ -6729,6 +6749,7 @@
                     r, 
                     $asyncBody = Bridge.fn.bind(this, function () {
                         for (;;) {
+                            $step = Bridge.Array.min([0,1], $step);
                             switch ($step) {
                                 case 0: {
                                     done = Bridge.get(Bridge.Test.Assert).async();
@@ -6764,6 +6785,7 @@
                     r, 
                     $asyncBody = Bridge.fn.bind(this, function () {
                         for (;;) {
+                            $step = Bridge.Array.min([0,1], $step);
                             switch ($step) {
                                 case 0: {
                                     done = Bridge.get(Bridge.Test.Assert).async();
@@ -7594,6 +7616,143 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge830', {
+        statics: {
+            testMethod: function (method, throwException) {
+                var $step = 0,
+                    $task1, 
+                    $taskResult1, 
+                    $jumpFromFinally, 
+                    $returnTask = new Bridge.Task(), 
+                    $returnValue, 
+                    task, 
+                    exception, 
+                    $e, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        try {
+                            for (;;) {
+                                $step = Bridge.Array.min([0,1,3,4,5,6,7,8], $step);
+                                switch ($step) {
+                                    case 0: {
+                                        if (!Bridge.hasValue(method)) {
+                                            $step = 1;
+                                            continue;
+                                        } 
+                                        $step = 2;
+                                        continue;
+                                    }
+                                    case 1: {
+                                        throw new Bridge.ArgumentNullException("method");
+                                        $step = 2;
+                                        continue;
+                                    }
+    
+                                    case 3: {
+                                        task = Bridge.Task.fromResult(new Bridge.Exception("Success"));
+                                        if (throwException) {
+                                            $step = 4;
+                                            continue;
+                                        } 
+                                        $step = 5;
+                                        continue;
+                                    }
+                                    case 4: {
+                                        throw new Bridge.Exception("test");
+                                        $step = 5;
+                                        continue;
+                                    }
+                                    case 5: {
+                                        
+                                        $task1 = task;
+                                        $step = 6;
+                                        $task1.continueWith($asyncBody);
+                                        return;
+                                    }
+                                    case 6: {
+                                        $taskResult1 = $task1.getResult();
+                                        $returnTask.setResult($taskResult1);
+                                        return;
+                                    }
+                                    case 7: {
+                                        $returnTask.setResult(new Bridge.Exception("Fail: " + exception.getMessage()));
+                                        return;
+                                    }
+                                    case 8: {
+                                        $returnTask.setResult(null);
+                                        return;
+                                    }
+                                    default: {
+                                        $returnTask.setResult(null);
+                                        return;
+                                    }
+                                }
+                            }
+                        } catch($e1) {
+                            $e1 = Bridge.Exception.create($e1);
+                            if ( $step >= 3 && $step <= 6 ){
+                                exception = $e1;
+                                $step = 7;
+                                setTimeout($asyncBody, 0);
+                                return;
+                            }
+                            $returnTask.setError($e1);
+                        }
+                    }, arguments);
+    
+                $asyncBody();
+                return $returnTask;
+            },
+            testUseCase: function () {
+                var $step = 0,
+                    $task1, 
+                    $taskResult1, 
+                    $task2, 
+                    $taskResult2, 
+                    $jumpFromFinally, 
+                    done, 
+                    res, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        for (;;) {
+                            $step = Bridge.Array.min([0,1,2], $step);
+                            switch ($step) {
+                                case 0: {
+                                    done = Bridge.get(Bridge.Test.Assert).async();
+                                    
+                                    $task2 = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge830).testMethod("", false);
+                                    $step = 1;
+                                    $task2.continueWith($asyncBody, true);
+                                    return;
+                                }
+                                case 1: {
+                                    $taskResult2 = $task2.getResult();
+                                    res = $taskResult2;
+                                    Bridge.get(Bridge.Test.Assert).areEqual(res.getMessage(), "Success");
+                                    
+                                    $task1 = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge830).testMethod("", true);
+                                    $step = 2;
+                                    $task1.continueWith($asyncBody, true);
+                                    return;
+                                }
+                                case 2: {
+                                    $taskResult1 = $task1.getResult();
+                                    res = $taskResult1;
+                                    Bridge.get(Bridge.Test.Assert).areEqual(res.getMessage(), "Fail: test");
+                                    
+                                    done();
+                                    return;
+                                }
+                                default: {
+                                    return;
+                                }
+                            }
+                        }
+                    }, arguments);
+    
+                $asyncBody();
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge835', {
         statics: {
             testUseCase: function () {
@@ -7716,6 +7875,76 @@
                 test1 = false;
                 test1 = Bridge.Nullable.and(test1, true);
                 Bridge.get(Bridge.Test.Assert).areStrictEqual(test1, false);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge874', {
+        statics: {
+            testUseCase: function () {
+                var myValue = 1;
+    
+                switch (myValue) {
+                    case 0: 
+                        
+                        myValue = 2;
+                        
+                        break;
+                    case 1: 
+                        
+                        myValue = 3;
+                        
+                        break;
+                }
+    
+                Bridge.get(Bridge.Test.Assert).areEqual(myValue, 3);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge881', {
+        statics: {
+            testUseCase: function () {
+                var i = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge881A).$name;
+                Bridge.get(Bridge.Test.Assert).areEqual(i, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge881A).$name);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge889', {
+        statics: {
+            count: function (arr) {
+                if (arr === void 0) { arr = []; }
+                return arr.length;
+            },
+            testUseCase: function () {
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge889).count(), 0);
+            },
+            makeEnumerable: function (T) {
+                return Bridge.fn.bind(this, function (arr) {
+                    var $t;
+                    if (arr === void 0) { arr = []; }
+                    var $yield = [];
+                    $t = Bridge.getEnumerator(arr);
+                    while ($t.moveNext()) {
+                        var x = $t.getCurrent();
+                        $yield.push(x);
+                    }
+                    return Bridge.Array.toEnumerable($yield);
+                });
+            },
+            testMakeEnumerable: function () {
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge889).makeEnumerable(Object)()).count(), 0, "MakeEnumerable object 0");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge889).makeEnumerable(Object)([1, 2.0])).count(), 2, "MakeEnumerable object 2");
+    
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge889).makeEnumerable(String)()).count(), 0, "MakeEnumerable string 0");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge889).makeEnumerable(String)(["a", "b", "c"])).count(), 3, "MakeEnumerable string 3");
+    
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge889).makeEnumerable(Bridge.IEnumerable$1(Object))()).count(), 0, "MakeEnumerable IEnumerable<object> 0");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge889).makeEnumerable(Bridge.IEnumerable$1(Object))([[1, 2]])).count(), 1, "MakeEnumerable IEnumerable<object> 1");
+    
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge889).makeEnumerable(Bridge.List$1(Bridge.List$1(Object)))()).count(), 0, "MakeEnumerable List<List<object>> 0");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge889).makeEnumerable(Bridge.List$1(Bridge.List$1(Bridge.Int)))([new Bridge.List$1(Bridge.List$1(Bridge.Int))(), new Bridge.List$1(Bridge.List$1(Bridge.Int))()])).count(), 2, "MakeEnumerable List<List<object>> 2");
             }
         }
     });
@@ -11705,6 +11934,7 @@
             Bridge.get(Bridge.Test.Assert).areEqual(arr.get([2, 1]), "f");
         },
         setUpArray: function (values) {
+            if (values === void 0) { values = []; }
             var arr = Bridge.Array.create(0, null, values.length, 2);
     
             for (var i = 0; i < values.length; i++) {

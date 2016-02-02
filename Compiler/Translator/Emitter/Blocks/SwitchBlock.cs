@@ -294,7 +294,9 @@ namespace Bridge.Translator
 
             switchSection.CaseLabels.ToList().ForEach(l => l.AcceptVisitor(this.Emitter));
             this.Indent();
-            switchSection.Statements.ToList().ForEach(s => s.AcceptVisitor(this.Emitter));
+
+            var children = switchSection.Children.Where(c => c.Role == Roles.EmbeddedStatement || c.Role == Roles.Comment);
+            children.ToList().ForEach(s => s.AcceptVisitor(this.Emitter));
             this.Outdent();
         }
 

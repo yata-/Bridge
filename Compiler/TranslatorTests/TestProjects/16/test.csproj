@@ -43,8 +43,9 @@
     <Compile Include="BridgeIssues\N524.cs" />
     <Compile Include="BridgeIssues\N477.cs" />
     <Compile Include="BridgeIssues\N411.cs" />
-    <Compile Include="BridgeIssues\TestIssue475A.cs" />
-    <Compile Include="BridgeIssues\TestIssue475B.cs" />
+    <Compile Include="BridgeIssues\N475A.cs" />
+    <Compile Include="BridgeIssues\N475B.cs" />
+    <Compile Include="BridgeIssues\N856.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BridgeIssues\N384.cs" />
   </ItemGroup>
