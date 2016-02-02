@@ -170,7 +170,7 @@
                 throw new Bridge.InvalidOperationException("HashCode cannot be calculated for empty value");
             }
 
-            if (Bridge.isFunction(value.getHashCode) && !value.__insideHashCode && value.getHashCode.length === 0) {
+            if (value.getHashCode && Bridge.isFunction(value.getHashCode) && !value.__insideHashCode && value.getHashCode.length === 0) {
                 value.__insideHashCode = true;
                 var r = value.getHashCode();
                 delete value.__insideHashCode;
@@ -2562,22 +2562,45 @@
         inherits: [Bridge.Exception],
 
         constructor: function (message, innerExceptions) {
-            this.innerExceptions = Bridge.hasValue(innerExceptions) ? Bridge.toArray(innerExceptions) : [];
-            Bridge.Exception.prototype.$constructor.call(this, message || 'One or more errors occurred.', this.innerExceptions.length ? this.innerExceptions[0] : null);
+            this.innerExceptions = new Bridge.ReadOnlyCollection$1(Bridge.Exception)(Bridge.hasValue(innerExceptions) ? Bridge.toArray(innerExceptions) : []);
+            Bridge.Exception.prototype.$constructor.call(this, message || 'One or more errors occurred.', this.innerExceptions.items.length ? this.innerExceptions.items[0] : null);
         },
 
         flatten: function () {
-            var inner = [];
-            for (var i = 0; i < this.innerExceptions.length; i++) {
-                var e = this.innerExceptions[i];
-                if (Bridge.is(e, Bridge.AggregateException)) {
-                    inner.push.apply(inner, e.flatten().innerExceptions);
-                }
-                else {
-                    inner.push(e);
+            // Initialize a collection to contain the flattened exceptions.
+            var flattenedExceptions = new Bridge.List$1(Bridge.Exception)();
+
+            // Create a list to remember all aggregates to be flattened, this will be accessed like a FIFO queue
+            var exceptionsToFlatten = new Bridge.List$1(Bridge.AggregateException)();
+            exceptionsToFlatten.add(this);
+            var nDequeueIndex = 0;
+
+            // Continue removing and recursively flattening exceptions, until there are no more.
+            while (exceptionsToFlatten.getCount() > nDequeueIndex) {
+                // dequeue one from exceptionsToFlatten
+                var currentInnerExceptions = exceptionsToFlatten.getItem(nDequeueIndex++).innerExceptions;
+
+                for (var i = 0; i < currentInnerExceptions.getCount() ; i++) {
+                    var currentInnerException = currentInnerExceptions.get(i);
+
+                    if (!Bridge.hasValue(currentInnerException)) {
+                        continue;
+                    }
+
+                    var currentInnerAsAggregate = Bridge.as(currentInnerException, Bridge.AggregateException);
+
+                    // If this exception is an aggregate, keep it around for later.  Otherwise,
+                    // simply add it to the list of flattened exceptions to be returned.
+                    if (Bridge.hasValue(currentInnerAsAggregate)) {
+                        exceptionsToFlatten.add(currentInnerAsAggregate);
+                    }
+                    else {
+                        flattenedExceptions.add(currentInnerException);
+                    }
                 }
             }
-            return new Bridge.AggregateException(this.message, inner);
+
+            return new Bridge.AggregateException(this.getMessage(), flattenedExceptions);
         }
     });
     // @source Interfaces.js
@@ -6988,7 +7011,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
     });
 
     Bridge.define("Bridge.CancellationToken", {
-        constructor: function (source) {
+         constructor: function (source) {
             if (!Bridge.is(source, Bridge.CancellationTokenSource)) {
                 source = source ? Bridge.CancellationToken.sourceTrue : Bridge.CancellationToken.sourceFalse;
             }
@@ -7000,7 +7023,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
             return !this.source.uncancellable;
         },
 
-        get_isCancellationRequested: function () {
+        getIsCancellationRequested: function () {
             return this.source.isCancellationRequested;
         },
 
@@ -7028,6 +7051,9 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
                 register: function() {
                      return new Bridge.CancellationTokenRegistration();
                 }
+            },
+            getDefaultValue: function () {
+                return new Bridge.CancellationToken();
             }
         }
     });

@@ -160,6 +160,10 @@
     <Compile Include="BridgeIssues\N889.cs" />
     <Compile Include="BridgeIssues\N863.cs" />
     <Compile Include="BridgeIssues\TestBridgeIssues.cs" />
+    <Compile Include="Exceptions\AggregateExceptionTests.cs" />
+    <Compile Include="Exceptions\TaskCanceledExceptionTests.cs" />
+    <Compile Include="Exceptions\PromiseExceptionTests.cs" />
+    <Compile Include="Exceptions\OperationCanceledExceptionTests.cs" />
     <Compile Include="Linq\TestLinqGroupingOperators.cs" />
     <Compile Include="Linq\TestLinqConversionOperators.cs" />
     <Compile Include="Linq\TestLinqAggregateOperators.cs" />
