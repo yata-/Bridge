@@ -42,8 +42,7 @@ namespace System.Threading
 		[Name("createLinked")]
 		public static extern CancellationTokenSource CreateLinkedTokenSource(CancellationToken token1, CancellationToken token2);
 
-		[Name("createLinked")]
-        [Template("Bridge.CancellationTokenSource.createLinkedTokenSource({*tokens})")]
+        [Template("Bridge.CancellationTokenSource.createLinked({*tokens})")]
 		public static extern CancellationTokenSource CreateLinkedTokenSource(params CancellationToken[] tokens);
 	}
 }

@@ -3107,7 +3107,13 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTest.Globals');
+    Bridge.define('Bridge.ClientTest.Globals', {
+        statics: {
+            setTimeout: function (action, milliseconds) {
+                return 0;
+            }
+        }
+    });
     
     Bridge.define('Bridge.ClientTest.IComparableTests.MyComparable', {
         inherits: function () { return [Bridge.IComparable$1(Bridge.ClientTest.IComparableTests.MyComparable)]; },
@@ -8502,7 +8508,7 @@
                 sb.appendLine("got " + enm.getCurrent$1());
             }
     
-            this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\ngot -1\r\n");
+            this.assertEqual(sb.toString(), "yielding 0\nyielding 1\nyielding -1\nin finally\ngot 0\ngot 1\ngot -1\n");
         },
         prematureDisposalOfIEnumeratorIteratorExecutesFinallyBlocks: function () {
             //TODO expected for v1: yield iterator works with no state machine
@@ -8516,7 +8522,7 @@
             }
             enm.dispose();
     
-            this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding 2\r\nyielding 3\r\nyielding 4\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\n");
+            this.assertEqual(sb.toString(), "yielding 0\nyielding 1\nyielding 2\nyielding 3\nyielding 4\nyielding -1\nin finally\ngot 0\ngot 1\n");
         },
         exceptionInIEnumeratorIteratorBodyExecutesFinallyBlocks: function () {
             //TODO expected for v1: yield iterator works with no state machine
@@ -8536,7 +8542,7 @@
                 sb.appendLine("caught exception");
             }
     
-            this.assertEqual(sb.toString(), "yielding 1\r\nyielding 2\r\nthrowing\r\nin finally\r\ncaught exception\r\n");
+            this.assertEqual(sb.toString(), "yielding 1\nyielding 2\nthrowing\nin finally\ncaught exception\n");
         },
         typeReturnedByIteratorBlockReturningIEnumerableImplementsThatInterface: function () {
             var enm = new Bridge.ClientTest.Collections.Generic.IteratorBlockTests.C(new Bridge.Text.StringBuilder()).getEnumerable(0);
@@ -8561,7 +8567,7 @@
                 sb.appendLine("got " + i1);
             }
     
-            this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\ngot -1\r\n-\r\ngot 0\r\ngot 1\r\ngot -1\r\n");
+            this.assertEqual(sb.toString(), "yielding 0\nyielding 1\nyielding -1\nin finally\ngot 0\ngot 1\ngot -1\n-\ngot 0\ngot 1\ngot -1\n");
         },
         prematureDisposalOfIEnumerableIteratorExecutesFinallyBlocks: function () {
             var $t;
@@ -8578,7 +8584,7 @@
                 }
             }
     
-            this.assertEqual(sb.toString(), "yielding 0\r\nyielding 1\r\nyielding 2\r\nyielding 3\r\nyielding 4\r\nyielding -1\r\nin finally\r\ngot 0\r\ngot 1\r\n");
+            this.assertEqual(sb.toString(), "yielding 0\nyielding 1\nyielding 2\nyielding 3\nyielding 4\nyielding -1\nin finally\ngot 0\ngot 1\n");
         },
         exceptionInIEnumerableIteratorBodyExecutesFinallyBlocks: function () {
             //TODO expected for v1: yield iterator works with no state machine
@@ -8600,7 +8606,7 @@
                 sb.appendLine("caught exception");
             }
     
-            this.assertEqual(sb.toString(), "yielding 1\r\nyielding 2\r\nthrowing\r\nin finally\r\ncaught exception\r\n");
+            this.assertEqual(sb.toString(), "yielding 1\nyielding 2\nthrowing\nin finally\ncaught exception\n");
         },
         enumeratingAnIteratorBlockReturningIEnumerableMultipleTimesUsesTheInitialValuesForParameters: function () {
             var $t, $t1;
@@ -8618,7 +8624,7 @@
                 sb.appendLine(i1.toString());
             }
     
-            this.assertEqual(sb.toString(), "3\r\n2\r\n1\r\n3\r\n2\r\n1\r\n");
+            this.assertEqual(sb.toString(), "3\n2\n1\n3\n2\n1\n");
         },
         differentGetEnumeratorCallsOnIteratorBlockReturningIEnumerableGetOwnCopiesOfLocals: function () {
             var sb = new Bridge.Text.StringBuilder();
@@ -8633,7 +8639,7 @@
                 sb.appendLine(enm2.getCurrent$1().toString());
             }
     
-            this.assertEqual(sb.toString(), "0\r\n0\r\n1\r\n1\r\n2\r\n2\r\n-1\r\n-1\r\n");
+            this.assertEqual(sb.toString(), "0\n0\n1\n1\n2\n2\n-1\n-1\n");
         }
     });
     
@@ -16939,7 +16945,7 @@
                 var cts1 = new Bridge.CancellationTokenSource();
                 var cts2 = new Bridge.CancellationTokenSource();
                 var cts3 = new Bridge.CancellationTokenSource();
-                var linked = Bridge.CancellationTokenSource.createLinkedTokenSource(cts1.token, cts2.token, cts3.token);
+                var linked = Bridge.CancellationTokenSource.createLinked(cts1.token, cts2.token, cts3.token);
     
                 Bridge.get(Bridge.Test.Assert).false$1(linked.isCancellationRequested, "#1 1");
                 cts1.cancel();
@@ -16950,7 +16956,7 @@
                 var cts11 = new Bridge.CancellationTokenSource();
                 var cts21 = new Bridge.CancellationTokenSource();
                 var cts31 = new Bridge.CancellationTokenSource();
-                var linked1 = Bridge.CancellationTokenSource.createLinkedTokenSource(cts11.token, cts21.token, cts31.token);
+                var linked1 = Bridge.CancellationTokenSource.createLinked(cts11.token, cts21.token, cts31.token);
     
                 Bridge.get(Bridge.Test.Assert).false$1(linked1.isCancellationRequested, "#2 1");
                 cts21.cancel();
@@ -16961,7 +16967,7 @@
                 var cts12 = new Bridge.CancellationTokenSource();
                 var cts22 = new Bridge.CancellationTokenSource();
                 var cts32 = new Bridge.CancellationTokenSource();
-                var linked2 = Bridge.CancellationTokenSource.createLinkedTokenSource(cts12.token, cts22.token, cts32.token);
+                var linked2 = Bridge.CancellationTokenSource.createLinked(cts12.token, cts22.token, cts32.token);
     
                 Bridge.get(Bridge.Test.Assert).false$1(linked2.isCancellationRequested, "#3 1");
                 cts32.cancel();

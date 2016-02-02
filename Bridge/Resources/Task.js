@@ -459,6 +459,12 @@
 
         equalsT: function (o) {
             return this === o;
+        },
+
+        statics: {
+            getDefaultValue: function () {
+                return new Bridge.CancellationTokenRegistration();
+            }
         }
     });
 
@@ -557,7 +563,7 @@
             createLinked: function () {
                 var cts = new Bridge.CancellationTokenSource();
                 cts.links = [];
-                var d = Bridge.fn.bind(this, this.cancel);
+                var d = Bridge.fn.bind(cts, cts.cancel);
                 for (var i = 0; i < arguments.length; i++) {
                     cts.links.push(arguments[i].register(d));
                 }

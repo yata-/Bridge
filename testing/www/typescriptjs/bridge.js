@@ -462,7 +462,7 @@
 	    },
 
 	    isEmpty: function (value, allowEmpty) {
-	        return (value === null) || (!allowEmpty ? value === "" : false) || ((!allowEmpty && Bridge.isArray(value)) ? value.length === 0 : false);
+	        return (typeof value === "undefined" || value === null) || (!allowEmpty ? value === "" : false) || ((!allowEmpty && Bridge.isArray(value)) ? value.length === 0 : false);
 	    },
 
 	    toArray: function (ienumerable) {
@@ -552,11 +552,12 @@
                 return false;
             }
 
-            if (typeof a === "object" && typeof b === "object") {
+            var eq = a === b;
+            if (!eq && typeof a === "object" && typeof b === "object") {
                 return (Bridge.getHashCode(a) === Bridge.getHashCode(b)) && Bridge.objectEquals(a, b);
             }
 
-            return a === b;
+            return eq;
         },
 
         objectEquals: function (a, b) {
@@ -2056,6 +2057,8 @@
                 Bridge.Class.cache[cacheName] = Class;
             }
 
+            Class.$$name = className;
+
             if (extend && Bridge.isFunction(extend)) {
                 extend = extend();
             }
@@ -2165,8 +2168,6 @@
 
             // Enforce the constructor to be what we expect
             Class.prototype.constructor = Class;
-
-            Class.$$name = className;
 
             if (statics) {
                 for (name in statics) {
@@ -7078,6 +7079,12 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
 
         equalsT: function (o) {
             return this === o;
+        },
+
+        statics: {
+            getDefaultValue: function () {
+                return new Bridge.CancellationTokenRegistration();
+            }
         }
     });
 
@@ -7176,7 +7183,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
             createLinked: function () {
                 var cts = new Bridge.CancellationTokenSource();
                 cts.links = [];
-                var d = Bridge.fn.bind(this, this.cancel);
+                var d = Bridge.fn.bind(cts, cts.cancel);
                 for (var i = 0; i < arguments.length; i++) {
                     cts.links.push(arguments[i].register(d));
                 }
