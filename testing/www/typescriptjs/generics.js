@@ -90,13 +90,6 @@
         }
     }; });
     
-    Bridge.define('Generics.NewClass', {
-        data: 0,
-        constructor: function () {
-            this.data = 30;
-        }
-    });
-    
     Bridge.define('Generics.INamedEntity', {
         config: {
             properties: {
@@ -105,12 +98,10 @@
         }
     });
     
-    Bridge.define('Generics.NamedEntity', {
-        inherits: [Generics.INamedEntity],
-        config: {
-            properties: {
-                Name$1: null
-            }
+    Bridge.define('Generics.NewClass', {
+        data: 0,
+        constructor: function () {
+            this.data = 30;
         }
     });
     
@@ -127,6 +118,15 @@
                     this.genericNew = new Generics.GenericNew$1(Generics.NewClass)(new Generics.NewClass());
                     this.genericNewAndClass = new Generics.GenericNewAndClass$1(Generics.NewClass)(new Generics.NewClass());
                 }
+            }
+        }
+    });
+    
+    Bridge.define('Generics.NamedEntity', {
+        inherits: [Generics.INamedEntity],
+        config: {
+            properties: {
+                Name$1: null
             }
         }
     });

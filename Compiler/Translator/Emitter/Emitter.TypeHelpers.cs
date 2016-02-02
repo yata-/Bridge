@@ -95,6 +95,7 @@ namespace Bridge.Translator
         public virtual void SortTypesByInheritance()
         {
             this.TopologicalSort();
+            this.TopologicalSortByInheritance();
 
             //this.Types.Sort has strange effects for items with 0 priority
             ITypeInfo temp;
@@ -110,21 +111,72 @@ namespace Bridge.Translator
                     }
                 }
             }
+        }
 
-            var clonedTypes = new List<ITypeInfo>(this.Types);
+        public virtual void TopologicalSortByInheritance()
+        {
+            var graph = new TopologicalSorting.DependencyGraph();
 
-            foreach (var t in clonedTypes)
+            foreach (var t in this.Types)
             {
                 for (int i = this.Types.Count - 1; i > -1; i--)
                 {
                     var x = this.Types[i];
 
+                    var tProcess = graph.Processes.FirstOrDefault(p => p.Name == t.Type.ReflectionName);
+                    if (tProcess == null)
+                    {
+                        tProcess = new TopologicalSorting.OrderedProcess(graph, t.Type.ReflectionName);
+                    }
+
                     if (this.IsInheritedFrom(t, x))
                     {
-                        this.Types.Remove(x);
-                        this.Types.Insert(this.Types.IndexOf(t), x);
-                        break;
+                        if (tProcess.Predecessors.All(p => p.Name != x.Type.ReflectionName))
+                        {
+                            var dProcess = graph.Processes.FirstOrDefault(p => p.Name == x.Type.ReflectionName);
+                            if (dProcess == null)
+                            {
+                                dProcess = new TopologicalSorting.OrderedProcess(graph, x.Type.ReflectionName);
+                            }
+                            //var dProcess = new TopologicalSorting.OrderedProcess(graph, dependency.Type.FullName);
+
+                            if (dProcess.Predecessors.All(p => p.Name != tProcess.Name))
+                            {
+                                tProcess.After(dProcess);
+                            }
+                        }
                     }
+                }
+            }
+
+            if (graph.ProcessCount > 0)
+            {
+                ITypeInfo tInfo = null;
+
+                try
+                {
+                    IEnumerable<IEnumerable<OrderedProcess>> sorted = graph.CalculateSort();
+
+                    var list = new List<ITypeInfo>(this.Types.Count);
+                    foreach (var processes in sorted)
+                    {
+                        foreach (var process in processes)
+                        {
+                            tInfo = this.Types.First(ti => ti.Type.ReflectionName == process.Name);
+
+                            if (list.All(t => t.Type.ReflectionName != tInfo.Type.ReflectionName))
+                            {
+                                list.Add(tInfo);
+                            }
+                        }
+                    }
+
+                    this.Types.Clear();
+                    this.Types.AddRange(list);
+                }
+                catch (System.Exception ex)
+                {
+                    this.LogWarning(string.Format("Topological sort by inheritance failed {0} with error {1}", tInfo != null ? "at type " + tInfo.Type.ReflectionName : string.Empty, ex));
                 }
             }
         }
