@@ -39,27 +39,25 @@ namespace Bridge.ClientTest.BridgeIssues
     [TestFixture(TestNameFormat = "#690 - {0}")]
     public class Bridge690
     {
-        //TODO Async
-        //[Test(ExpectedCount = 1)]
-        //public static async void TestUseCaseForInstance()
-        //{
-            //var done = assert.Async();
-            //var c = new Bridge690A();
-            //var r = await c.Start();
+        [Test(ExpectedCount = 1)]
+        public static async void TestUseCaseForInstance()
+        {
+            var done = Assert.Async();
+            var c = new Bridge690A();
+            var r = await c.Start();
 
-            //Assert.AreEqual(r, 8, "Bridge690 TestUseCaseForInstance");
-            //done();
-        //}
+            Assert.AreEqual(r, 8, "Bridge690 TestUseCaseForInstance");
+            done();
+        }
 
-        //TODO Async
-        //[Test(ExpectedCount = 1)]
-        //public static async void TestUseCaseForStatic()
-        //{
-        //    var done = assert.Async();
-        //    var r = await Bridge690B.Start();
+        [Test(ExpectedCount = 1)]
+        public static async void TestUseCaseForStatic()
+        {
+            var done = Assert.Async();
+            var r = await Bridge690B.Start();
 
-        //    Assert.AreEqual(r, 59, "Bridge690 TestUseCaseForStatic");
-        //    done();
-        //}
+            Assert.AreEqual(r, 59, "Bridge690 TestUseCaseForStatic");
+            done();
+        }
     }
 }

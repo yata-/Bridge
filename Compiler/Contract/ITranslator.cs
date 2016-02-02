@@ -142,5 +142,14 @@ namespace Bridge.Contract
         }
 
         void Flush(string outputPath, string fileName);
+
+        /// <summary>
+        /// Indicates whether strict mode and global header will be added to generated script files
+        /// </summary>
+        bool NoStrictModeAndGlobal
+        {
+            get;
+            set;
+        }
     }
 }

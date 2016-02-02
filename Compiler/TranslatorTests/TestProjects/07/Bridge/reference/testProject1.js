@@ -1,19 +1,21 @@
 ﻿/* global Bridge */
 
-"use strict";
+(function (globals) {
+    "use strict";
 
-define("MyModule", ["bridge"], function (_) {
-    var exports = { };
-    Bridge.define('TestProject1.TestClassA', {
-        config: {
-            properties: {
-                Value1: 0
+    define("MyModule", ["bridge"], function (_) {
+        var exports = { };
+        Bridge.define('TestProject1.TestClassA', {
+            config: {
+                properties: {
+                    Value1: 0
+                }
             }
-        }
+        });
+        return exports;
     });
-    return exports;
-});
-
-
-
-Bridge.init();
+    
+    
+    
+    Bridge.init();
+})(this);

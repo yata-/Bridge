@@ -327,8 +327,6 @@ namespace Bridge.Translator
 
         protected void EmitAsyncBody()
         {
-            var isLambda = this.LambdaExpression != null || this.AnonymousMethodExpression != null;
-
             this.BeginBlock();
 
             var asyncTryVisitor = new AsyncTryVisitor();
@@ -352,6 +350,9 @@ namespace Bridge.Translator
 
             this.Write("for (;;) ");
             this.BeginBlock();
+            this.WriteIndent();
+            int checkerPos = this.Emitter.Output.Length;
+            this.WriteNewLine();
             this.Write("switch ($step) ");
 
             this.BeginBlock();
@@ -369,6 +370,7 @@ namespace Bridge.Translator
             this.WriteNewLine();
             this.EndBlock();
 
+            this.InjectStepsChecker(checkerPos);
             this.WriteNewLine();
             this.EndBlock();
 
@@ -388,6 +390,22 @@ namespace Bridge.Translator
 
             this.WriteNewLine();
             this.EndBlock();
+        }
+
+        protected void InjectStepsChecker(int pos)
+        {
+            var list = new List<int>();
+            for (int i = 0; i < this.Steps.Count; i++)
+            {
+                var step = this.Steps[i];
+                if (string.IsNullOrWhiteSpace(step.Output.ToString()) && step.JumpToStep == (i + 1))
+                {
+                    continue;
+                }
+                list.Add(i);
+            }
+
+            this.Emitter.Output.Insert(pos, "$step = Bridge.Array.min(" + this.Emitter.ToJavaScript(list.ToArray()) + ", $step);");
         }
 
         protected void InjectCatchHandlers()
@@ -542,13 +560,15 @@ namespace Bridge.Translator
                     this.WriteNewLine();
                 }
 
-                this.Write("case " + i + ": ");
                 var output = step.Output.ToString();
 
                 if (string.IsNullOrWhiteSpace(output) && step.JumpToStep == (i + 1))
                 {
                     continue;
                 }
+
+                this.Write("case " + i + ": ");
+                
 
                 this.BeginBlock();
 

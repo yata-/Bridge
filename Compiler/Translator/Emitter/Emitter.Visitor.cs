@@ -316,7 +316,8 @@ namespace Bridge.Translator
         public override void VisitLockStatement(LockStatement lockStatement)
         {
             lockStatement.Expression.AcceptVisitor(this);
-            this.Output.AppendLine(";");
+            this.Output.Append(";");
+            this.Output.Append("\n");
             this.IsNewLine = true;
             lockStatement.EmbeddedStatement.AcceptVisitor(this);
         }

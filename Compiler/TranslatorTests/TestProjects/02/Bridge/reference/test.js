@@ -5681,6 +5681,28 @@ Bridge.define("Bridge.Text.StringBuilder", {
                     array[i] = newarray[i-index];
                 }
             }
+        },
+
+        min: function(arr, minValue) {
+            var min = arr[0],
+                len = arr.length;
+            for (var i = 0; i < len; i++) {
+                if ((arr[i] < min || min < minValue) && !(arr[i] < minValue)) {
+                    min = arr[i];
+                }
+            }
+            return min;
+        },
+
+        max: function (arr, maxValue) {
+            var max =  arr[0],
+                len = arr.length;
+            for (var i = 0; i < len; i++) {
+                if ((arr[i] > max || max > maxValue) && !(arr[i] > maxValue)) {
+                    max = arr[i];
+                }
+            }
+            return max;
         }
     };
 
@@ -10464,33 +10486,36 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
 
 /* global Bridge */
 
-"use strict";
+(function (globals) {
+    "use strict";
 
-Bridge.define('Test.BridgeIssues.N770.IBase');
-
-Bridge.define('Test.BridgeIssues.N770.Impl', {
-    inherits: [Test.BridgeIssues.N770.IBase],
-    config: {
-        properties: {
-            Prop: 0
+    Bridge.define('Test.BridgeIssues.N770.IBase');
+    
+    Bridge.define('Test.BridgeIssues.N770.Impl', {
+        inherits: [Test.BridgeIssues.N770.IBase],
+        config: {
+            properties: {
+                Prop: 0
+            }
         }
-    }
-});
-
-Bridge.define('TestProject1.TestClassA', {
-    config: {
-        properties: {
-            value1: 0
+    });
+    
+    Bridge.define('TestProject1.TestClassA', {
+        config: {
+            properties: {
+                value1: 0
+            }
         }
-    }
-});
-
-Bridge.define('TestProject2.TestClassB', {
-    config: {
-        properties: {
-            value1: 0
+    });
+    
+    Bridge.define('TestProject2.TestClassB', {
+        config: {
+            properties: {
+                value1: 0
+            }
         }
-    }
-});
+    });
+    
+    Bridge.init();
+})(this);
 
-Bridge.init();

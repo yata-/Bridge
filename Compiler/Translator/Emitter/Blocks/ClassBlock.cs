@@ -64,6 +64,19 @@ namespace Bridge.Translator
                 this.WriteNewLine();
             }
 
+            var topDefineMethods = this.GetTopDefineMethods();
+
+            if (topDefineMethods.Any())
+            {
+                foreach (var method in topDefineMethods)
+                {
+                    //this.Emitter.EmitterOutput.TopOutput.Append('\n');
+                    this.Emitter.EmitterOutput.TopOutput.Append(method);
+                }
+
+                //this.Emitter.EmitterOutput.TopOutput.Append('\n');
+            }
+
             var typeDef = this.Emitter.GetTypeDefinition();
             string name = this.Emitter.Validator.GetCustomTypeName(typeDef, this.Emitter);
             this.IsGeneric = typeDef.GenericParameters.Count > 0;
@@ -230,6 +243,18 @@ namespace Bridge.Translator
                 this.Write(method);
             }
 
+            var bottomDefineMethods = this.GetBottomDefineMethods();
+
+            if (bottomDefineMethods.Any())
+            {
+                //this.Emitter.EmitterOutput.BottomOutput.Append('\n');
+                foreach (var method in bottomDefineMethods)
+                {
+                    //this.Emitter.EmitterOutput.BottomOutput.Append('\n');
+                    this.Emitter.EmitterOutput.BottomOutput.Append(method);
+                }
+            }
+
             this.WriteNewLine();
             this.WriteNewLine();
         }
@@ -238,7 +263,23 @@ namespace Bridge.Translator
         {
             var methods = this.TypeInfo.InstanceMethods;
             var attrName = "Bridge.InitAttribute";
-            int value = prefix == "After" ? 0 : 1;
+            int value = 0;
+
+            switch (prefix)
+            {
+                case "After":
+                    value = 0;
+                    break;
+                case "Before":
+                    value = 1;
+                    break;
+                case "Top":
+                    value = 2;
+                    break;
+                case "Bottom":
+                    value = 3;
+                    break;
+            }
 
             foreach (var methodGroup in methods)
             {
@@ -343,6 +384,42 @@ namespace Bridge.Translator
                     var prevMap = this.BuildLocalsMap();
                     var prevNamesMap = this.BuildLocalsNamesMap();
 
+                    method.Body.AcceptVisitor(this.Emitter);
+
+                    this.ClearLocalsMap(prevMap);
+                    this.ClearLocalsNamesMap(prevNamesMap);
+                    return this.PopWriter(true);
+                });
+        }
+
+        protected virtual IEnumerable<string> GetTopDefineMethods()
+        {
+            return this.GetDefineMethods("Top",
+                (method, rrMethod) =>
+                {
+                    this.PushWriter("{0}");
+                    this.ResetLocals();
+                    var prevMap = this.BuildLocalsMap();
+                    var prevNamesMap = this.BuildLocalsNamesMap();
+                    this.Emitter.NoBraceBlock = method.Body;
+                    method.Body.AcceptVisitor(this.Emitter);
+
+                    this.ClearLocalsMap(prevMap);
+                    this.ClearLocalsNamesMap(prevNamesMap);
+                    return this.PopWriter(true);
+                });
+        }
+
+        protected virtual IEnumerable<string> GetBottomDefineMethods()
+        {
+            return this.GetDefineMethods("Bottom",
+                (method, rrMethod) =>
+                {
+                    this.PushWriter("{0}");
+                    this.ResetLocals();
+                    var prevMap = this.BuildLocalsMap();
+                    var prevNamesMap = this.BuildLocalsNamesMap();
+                    this.Emitter.NoBraceBlock = method.Body;
                     method.Body.AcceptVisitor(this.Emitter);
 
                     this.ClearLocalsMap(prevMap);

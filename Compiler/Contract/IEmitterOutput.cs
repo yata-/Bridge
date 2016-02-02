@@ -30,5 +30,17 @@ namespace Bridge.Contract
             get;
             set;
         }
+
+        System.Text.StringBuilder TopOutput
+        {
+            get;
+            set;
+        }
+
+        System.Text.StringBuilder BottomOutput
+        {
+            get;
+            set;
+        }
     }
 }

@@ -52,7 +52,7 @@ namespace Bridge.Translator
                             }
                         }
 
-                        if (initPosition == 1) // Before
+                        if (initPosition > 0)
                         {
                             return;
                         }
