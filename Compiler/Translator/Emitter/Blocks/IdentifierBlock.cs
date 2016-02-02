@@ -156,7 +156,12 @@ namespace Bridge.Translator
                     appendAdditionalCode = ")";
                 }
             }
-            
+
+            if (memberResult != null && memberResult.Member.SymbolKind == SymbolKind.Field && this.Emitter.IsMemberConst(memberResult.Member) && this.Emitter.IsInlineConst(memberResult.Member))
+            {
+                this.WriteScript(memberResult.ConstantValue);
+                return;
+            }
             
             if (memberResult != null && memberResult.Member.SymbolKind == SymbolKind.Property && memberResult.TargetResult.Type.Kind != TypeKind.Anonymous)
             {
