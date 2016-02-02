@@ -67,7 +67,7 @@ namespace Bridge.Translator
 
                 if (!this.Emitter.IsAsync)
                 {
-                    this.EmitTempVars(beginPosition);
+                    this.EmitTempVars(beginPosition, true);
                 }
 
                 this.EndBlock();
@@ -307,7 +307,7 @@ namespace Bridge.Translator
 
                         if (!this.Emitter.IsAsync)
                         {
-                            this.EmitTempVars(beginPosition);
+                            this.EmitTempVars(beginPosition, true);
                         }
                     }
                 }
