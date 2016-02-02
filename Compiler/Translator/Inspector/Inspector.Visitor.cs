@@ -47,15 +47,26 @@ namespace Bridge.Translator
 
             ValidateNamespace(typeDeclaration);
 
-            if (this.HasIgnore(typeDeclaration) && !this.IsObjectLiteral(typeDeclaration))
-            {
-                return;
-            }
-
             var rr = this.Resolver.ResolveNode(typeDeclaration, null);
             var fullName = rr.Type.ReflectionName;
             var partialType = this.Types.FirstOrDefault(t => t.Key == fullName);
             var add = true;
+            var ignored = this.IgnoredTypes.Contains(fullName);
+
+            if (ignored || this.HasIgnore(typeDeclaration) && !this.IsObjectLiteral(typeDeclaration))
+            {
+                if (partialType != null)
+                {
+                    this.Types.Remove(partialType);
+                }
+
+                if (!ignored)
+                {
+                    this.IgnoredTypes.Add(fullName);    
+                }
+                
+                return;
+            }
 
             if (partialType == null)
             {
