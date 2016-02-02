@@ -2263,6 +2263,63 @@
         }
     });
     
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsCultureNotFoundExceptionTests', {
+        statics: {
+            instance: null,
+            getInstance: function () {
+                if (!Bridge.hasValue(Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsCultureNotFoundExceptionTests).instance)) {
+                    Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsCultureNotFoundExceptionTests).instance = new Bridge.ClientTest.Exceptions.CultureNotFoundExceptionTests();
+                }
+                return Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsCultureNotFoundExceptionTests).instance;
+            },
+            setInstance: function (value) {
+                Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsCultureNotFoundExceptionTests).instance = value;
+            },
+            beforeTest: function (isStatic, assert) {
+                Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsCultureNotFoundExceptionTests).setInstance(null);
+                Bridge.get(Bridge.Test.Assert).assert = assert;
+                var r = isStatic ? null : Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsCultureNotFoundExceptionTests).getInstance();
+                return r;
+            },
+            typePropertiesAreCorrect: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsCultureNotFoundExceptionTests).beforeTest(false, assert);
+                t.typePropertiesAreCorrect();
+            },
+            defaultConstructorWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsCultureNotFoundExceptionTests).beforeTest(false, assert);
+                t.defaultConstructorWorks();
+            },
+            constructorWithMessageWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsCultureNotFoundExceptionTests).beforeTest(false, assert);
+                t.constructorWithMessageWorks();
+            },
+            constructorWithMessageAndInnerExceptionWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsCultureNotFoundExceptionTests).beforeTest(false, assert);
+                t.constructorWithMessageAndInnerExceptionWorks();
+            },
+            constructorWithMessageAndParamNameWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsCultureNotFoundExceptionTests).beforeTest(false, assert);
+                t.constructorWithMessageAndParamNameWorks();
+            },
+            constructorWithMessageAndCultureNameAndInnerExceptionWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsCultureNotFoundExceptionTests).beforeTest(false, assert);
+                t.constructorWithMessageAndCultureNameAndInnerExceptionWorks();
+            },
+            constructorWithParamNameAndCultureNameAndMessage: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsCultureNotFoundExceptionTests).beforeTest(false, assert);
+                t.constructorWithParamNameAndCultureNameAndMessage();
+            },
+            constructorWithMessageAndCultureIdAndInnerExceptionWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsCultureNotFoundExceptionTests).beforeTest(false, assert);
+                t.constructorWithMessageAndCultureIdAndInnerExceptionWorks();
+            },
+            constructorWithParamNameAndCultureIdAndMessage: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsCultureNotFoundExceptionTests).beforeTest(false, assert);
+                t.constructorWithParamNameAndCultureIdAndMessage();
+            }
+        }
+    });
+    
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsDivideByZeroExceptionTests', {
         statics: {
             instance: null,
@@ -9086,6 +9143,15 @@
                 QUnit.test("ArithmeticException - DefaultConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsArithmeticExceptionTests).defaultConstructorWorks);
                 QUnit.test("ArithmeticException - ConstructorWithMessageWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsArithmeticExceptionTests).constructorWithMessageWorks);
                 QUnit.test("ArithmeticException - ConstructorWithMessageAndInnerExceptionWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsArithmeticExceptionTests).constructorWithMessageAndInnerExceptionWorks);
+                QUnit.test("CultureNotFoundException - TypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsCultureNotFoundExceptionTests).typePropertiesAreCorrect);
+                QUnit.test("CultureNotFoundException - DefaultConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsCultureNotFoundExceptionTests).defaultConstructorWorks);
+                QUnit.test("CultureNotFoundException - ConstructorWithMessageWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsCultureNotFoundExceptionTests).constructorWithMessageWorks);
+                QUnit.test("CultureNotFoundException - ConstructorWithMessageAndInnerExceptionWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsCultureNotFoundExceptionTests).constructorWithMessageAndInnerExceptionWorks);
+                QUnit.test("CultureNotFoundException - ConstructorWithMessageAndParamNameWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsCultureNotFoundExceptionTests).constructorWithMessageAndParamNameWorks);
+                QUnit.test("CultureNotFoundException - ConstructorWithMessageAndCultureNameAndInnerExceptionWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsCultureNotFoundExceptionTests).constructorWithMessageAndCultureNameAndInnerExceptionWorks);
+                QUnit.test("CultureNotFoundException - ConstructorWithParamNameAndCultureNameAndMessage", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsCultureNotFoundExceptionTests).constructorWithParamNameAndCultureNameAndMessage);
+                QUnit.test("CultureNotFoundException - ConstructorWithMessageAndCultureIdAndInnerExceptionWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsCultureNotFoundExceptionTests).constructorWithMessageAndCultureIdAndInnerExceptionWorks);
+                QUnit.test("CultureNotFoundException - ConstructorWithParamNameAndCultureIdAndMessage", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsCultureNotFoundExceptionTests).constructorWithParamNameAndCultureIdAndMessage);
                 QUnit.test("DivideByZeroException - TypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsDivideByZeroExceptionTests).typePropertiesAreCorrect);
                 QUnit.test("DivideByZeroException - DefaultConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsDivideByZeroExceptionTests).defaultConstructorWorks);
                 QUnit.test("DivideByZeroException - ConstructorWithMessageWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsDivideByZeroExceptionTests).constructorWithMessageWorks);

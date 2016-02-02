@@ -9663,15 +9663,15 @@
         defaultConstructorWorks: function () {
             var ex = new Bridge.ArgumentException();
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.ArgumentException), "is ArgumentException");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getParamName(), undefined, "ParamName");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getParamName(), null, "ParamName");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), Bridge.get(Bridge.ClientTest.Exceptions.ArgumentExceptionTests).DefaultMessage);
         },
         constructorWithMessageWorks: function () {
             var ex = new Bridge.ArgumentException("The message");
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.ArgumentException), "is ArgumentException");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getParamName(), undefined, "ParamName");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getParamName(), null, "ParamName");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "The message");
         },
         constructorWithMessageAndInnerExceptionWorks: function () {
@@ -9686,7 +9686,7 @@
             var ex = new Bridge.ArgumentException("The message", "someParam");
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.ArgumentException), "is ArgumentException");
             Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getParamName(), "someParam", "ParamName");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "The message");
         },
         constructorWithMessageAndParamNameAndInnerExceptionWorks: function () {
@@ -9711,22 +9711,22 @@
         defaultConstructorWorks: function () {
             var ex = new Bridge.ArgumentNullException();
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.ArgumentNullException), "is ArgumentNullException");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getParamName(), undefined, "ParamName");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getParamName(), null, "ParamName");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "Value cannot be null.");
         },
         constructorWithParamNameWorks: function () {
             var ex = new Bridge.ArgumentNullException("someParam");
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.ArgumentNullException), "is ArgumentNullException");
             Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getParamName(), "someParam", "ParamName");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "Value cannot be null.\nParameter name: someParam");
         },
         constructorWithParamNameAndMessageWorks: function () {
             var ex = new Bridge.ArgumentNullException("someParam", "The message");
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.ArgumentNullException), "is ArgumentNullException");
             Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getParamName(), "someParam", "ParamName");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "The message");
         },
         constructorWithMessageAndInnerExceptionWorks: function () {
@@ -9750,25 +9750,25 @@
         defaultConstructorWorks: function () {
             var ex = new Bridge.ArgumentOutOfRangeException();
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.ArgumentOutOfRangeException), "is ArgumentOutOfRangeException");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getParamName(), undefined, "ParamName");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getActualValue(), undefined, "ActualValue");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getParamName(), null, "ParamName");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getActualValue(), null, "ActualValue");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "Value is out of range.");
         },
         constructorWithParamNameWorks: function () {
             var ex = new Bridge.ArgumentOutOfRangeException("someParam");
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.ArgumentOutOfRangeException), "is ArgumentOutOfRangeException");
             Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getParamName(), "someParam", "ParamName");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getActualValue(), undefined, "ActualValue");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getActualValue(), null, "ActualValue");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "Value is out of range.\nParameter name: someParam");
         },
         constructorWithParamNameAndMessageWorks: function () {
             var ex = new Bridge.ArgumentOutOfRangeException("someParam", "The message");
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.ArgumentOutOfRangeException), "is ArgumentOutOfRangeException");
             Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getParamName(), "someParam", "ParamName");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getActualValue(), undefined, "ActualValue");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getActualValue(), null, "ActualValue");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "The message");
         },
         constructorWithMessageAndInnerExceptionWorks: function () {
@@ -9777,7 +9777,7 @@
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.ArgumentOutOfRangeException), "is ArgumentOutOfRangeException");
             Bridge.get(Bridge.Test.Assert).null$1(ex.getParamName(), "ParamName");
             Bridge.get(Bridge.Test.Assert).true$1(ex.getInnerException() === inner, "InnerException");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getActualValue(), undefined, "ActualValue");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getActualValue(), null, "ActualValue");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "The message");
         },
         constructorWithParamNameAndActualValueAndMessageWorks: function () {
@@ -9820,13 +9820,13 @@
         defaultConstructorWorks: function () {
             var ex = new Bridge.ArithmeticException();
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.ArithmeticException), "is ArithmeticException");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "Overflow or underflow in the arithmetic operation.");
         },
         constructorWithMessageWorks: function () {
             var ex = new Bridge.ArithmeticException("The message");
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.ArithmeticException), "is OverflowException");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "The message");
         },
         constructorWithMessageAndInnerExceptionWorks: function () {
@@ -9835,6 +9835,93 @@
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.ArithmeticException), "is OverflowException");
             Bridge.get(Bridge.Test.Assert).true$1(ex.getInnerException() === inner, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "The message");
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Exceptions.CultureNotFoundExceptionTests', {
+        statics: {
+            DefaultMessage: "Culture is not supported."
+        },
+        typePropertiesAreCorrect: function () {
+            Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(Bridge.CultureNotFoundException), "Bridge.CultureNotFoundException", "Name");
+            var d = new Bridge.CultureNotFoundException();
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.is(d, Bridge.CultureNotFoundException));
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.is(d, Bridge.Exception));
+        },
+        defaultConstructorWorks: function () {
+            var ex = new Bridge.CultureNotFoundException();
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.CultureNotFoundException), "is CultureNotFoundException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getParamName(), null, "ParamName");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), Bridge.get(Bridge.ClientTest.Exceptions.CultureNotFoundExceptionTests).DefaultMessage);
+        },
+        constructorWithMessageWorks: function () {
+            var ex = new Bridge.CultureNotFoundException(null, null, "The message");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.CultureNotFoundException), "is CultureNotFoundException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getParamName(), null, "ParamName");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "The message");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInvalidCultureName(), null, "InvalidCultureName");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInvalidCultureId(), null, "InvalidCultureId");
+        },
+        constructorWithMessageAndInnerExceptionWorks: function () {
+            var inner = new Bridge.Exception("a");
+            var ex = new Bridge.CultureNotFoundException(null, null, "The message", inner);
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.CultureNotFoundException), "is CultureNotFoundException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getParamName(), null, "ParamName");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), inner, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "The message");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInvalidCultureName(), null, "InvalidCultureName");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInvalidCultureId(), null, "InvalidCultureId");
+        },
+        constructorWithMessageAndParamNameWorks: function () {
+            var ex = new Bridge.CultureNotFoundException("someParam", null, "The message");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.CultureNotFoundException), "is CultureNotFoundException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getParamName(), "someParam", "ParamName");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "The message");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInvalidCultureName(), null, "InvalidCultureName");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInvalidCultureId(), null, "InvalidCultureId");
+        },
+        constructorWithMessageAndCultureNameAndInnerExceptionWorks: function () {
+            var inner = new Bridge.Exception("a");
+            var ex = new Bridge.CultureNotFoundException(null, "fru", "The message", inner);
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.CultureNotFoundException), "is CultureNotFoundException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getParamName(), null, "ParamName");
+            Bridge.get(Bridge.Test.Assert).true$1(ex.getInnerException() === inner, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), inner, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "The message");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInvalidCultureName(), "fru", "InvalidCultureName");
+            Bridge.get(Bridge.Test.Assert).null$1(ex.getInvalidCultureId(), "InvalidCultureId");
+        },
+        constructorWithParamNameAndCultureNameAndMessage: function () {
+            var ex = new Bridge.CultureNotFoundException("SomeParam", "fru", "The message");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.CultureNotFoundException), "is CultureNotFoundException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getParamName(), "SomeParam", "ParamName");
+            Bridge.get(Bridge.Test.Assert).null$1(ex.getInnerException(), "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "The message");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInvalidCultureName(), "fru", "InvalidCultureName");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInvalidCultureId(), null, "InvalidCultureId");
+        },
+        constructorWithMessageAndCultureIdAndInnerExceptionWorks: function () {
+            var inner = new Bridge.Exception("a");
+            var ex = new Bridge.CultureNotFoundException(null, null, "The message", inner, 1);
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.CultureNotFoundException), "is CultureNotFoundException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getParamName(), null, "ParamName");
+            Bridge.get(Bridge.Test.Assert).true$1(ex.getInnerException() === inner, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), inner, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "The message");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInvalidCultureName(), null, "InvalidCultureName");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInvalidCultureId(), 1, "InvalidCultureId");
+        },
+        constructorWithParamNameAndCultureIdAndMessage: function () {
+            var ex = new Bridge.CultureNotFoundException("SomeParam", null, "The message", null, 2);
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.CultureNotFoundException), "is CultureNotFoundException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getParamName(), "SomeParam", "ParamName");
+            Bridge.get(Bridge.Test.Assert).null$1(ex.getInnerException(), "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "The message");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInvalidCultureName(), null, "InvalidCultureName");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInvalidCultureId(), 2, "InvalidCultureId");
         }
     });
     
@@ -9848,13 +9935,13 @@
         defaultConstructorWorks: function () {
             var ex = new Bridge.DivideByZeroException();
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.DivideByZeroException), "is DivideByZeroException");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "Division by 0.");
         },
         constructorWithMessageWorks: function () {
             var ex = new Bridge.DivideByZeroException("The message");
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.DivideByZeroException), "is DivideByZeroException");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "The message");
         },
         constructorWithMessageAndInnerExceptionWorks: function () {
@@ -9875,13 +9962,13 @@
         defaultConstructorWorks: function () {
             var ex = new Bridge.Exception();
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.Exception), "is Exception");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
-            Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), undefined);
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), null);
         },
         constructorWithMessageWorks: function () {
             var ex = new Bridge.Exception("The message");
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.Exception), "is Exception");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "The message");
         },
         constructorWithMessageAndInnerExceptionWorks: function () {
@@ -9912,13 +9999,13 @@
         defaultConstructorWorks: function () {
             var ex = new Bridge.FormatException();
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.FormatException), "is FormatException");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "Invalid format.");
         },
         constructorWithMessageWorks: function () {
             var ex = new Bridge.FormatException("The message");
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.FormatException), "is FormatException");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "The message");
         },
         constructorWithMessageAndInnerExceptionWorks: function () {
@@ -9940,13 +10027,13 @@
         defaultConstructorWorks: function () {
             var ex = new Bridge.InvalidCastException();
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.InvalidCastException), "is InvalidCastException");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "The cast is not valid.");
         },
         constructorWithMessageWorks: function () {
             var ex = new Bridge.InvalidCastException("The message");
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.InvalidCastException), "is InvalidCastException");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "The message");
         },
         constructorWithMessageAndInnerExceptionWorks: function () {
@@ -9968,13 +10055,13 @@
         defaultConstructorWorks: function () {
             var ex = new Bridge.InvalidOperationException();
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.InvalidOperationException), "is InvalidOperationException");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "Operation is not valid due to the current state of the object.");
         },
         constructorWithMessageWorks: function () {
             var ex = new Bridge.InvalidOperationException("The message");
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.InvalidOperationException), "is InvalidOperationException");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "The message");
         },
         constructorWithMessageAndInnerExceptionWorks: function () {
@@ -9996,13 +10083,13 @@
         defaultConstructorWorks: function () {
             var ex = new Bridge.KeyNotFoundException();
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.KeyNotFoundException), "is KeyNotFoundException");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "Key not found.");
         },
         constructorWithMessageWorks: function () {
             var ex = new Bridge.KeyNotFoundException("The message");
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.KeyNotFoundException), "is KeyNotFoundException");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "The message");
         },
         constructorWithMessageAndInnerExceptionWorks: function () {
@@ -10024,13 +10111,13 @@
         defaultConstructorWorks: function () {
             var ex = new Bridge.NotImplementedException();
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.NotImplementedException), "is NotImplementedException");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "The method or operation is not implemented.");
         },
         constructorWithMessageWorks: function () {
             var ex = new Bridge.NotImplementedException("The message");
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.NotImplementedException), "is NotImplementedException");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "The message");
         },
         constructorWithMessageAndInnerExceptionWorks: function () {
@@ -10052,13 +10139,13 @@
         defaultConstructorWorks: function () {
             var ex = new Bridge.NotSupportedException();
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.NotSupportedException), "is NotSupportedException");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "Specified method is not supported.");
         },
         constructorWithMessageWorks: function () {
             var ex = new Bridge.NotSupportedException("The message");
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.NotSupportedException), "is NotSupportedException");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "The message");
         },
         constructorWithMessageAndInnerExceptionWorks: function () {
@@ -10080,13 +10167,13 @@
         defaultConstructorWorks: function () {
             var ex = new Bridge.NullReferenceException();
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.NullReferenceException), "is NullReferenceException");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "Object is null.");
         },
         constructorWithMessageWorks: function () {
             var ex = new Bridge.NullReferenceException("The message");
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.NullReferenceException), "is NullReferenceException");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "The message");
         },
         constructorWithMessageAndInnerExceptionWorks: function () {
@@ -10128,13 +10215,13 @@
         defaultConstructorWorks: function () {
             var ex = new Bridge.OverflowException();
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.OverflowException), "is OverflowException");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "Arithmetic operation resulted in an overflow.");
         },
         constructorWithMessageWorks: function () {
             var ex = new Bridge.OverflowException("The message");
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.OverflowException), "is OverflowException");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "The message");
         },
         constructorWithMessageAndInnerExceptionWorks: function () {
@@ -10159,13 +10246,13 @@
         defaultConstructorWorks: function () {
             var ex = new Bridge.RankException();
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.RankException), "is ArgumentException");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), Bridge.get(Bridge.ClientTest.Exceptions.RankExceptionTests).DefaultMessage);
         },
         constructorWithMessageWorks: function () {
             var ex = new Bridge.RankException("The message");
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.RankException), "is RankException");
-            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), undefined, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(ex.getInnerException(), null, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual(ex.getMessage(), "The message");
         }
     });
