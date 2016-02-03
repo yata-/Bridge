@@ -3,77 +3,6 @@
 (function (globals) {
     "use strict";
 
-    Bridge.define('Bridge.ClientTest.Constants', {
-        statics: {
-            PREFIX_SYSTEM_CLASSES: "Simple types",
-            PREFIX_SYSTEM_INTERFACES: "System interface",
-            PREFIX_COLLECTIONS: "Collections",
-            PREFIX_UTILITIES: "Utilities",
-            PREFIX_EXCEPTIONS: "Exceptions",
-            MODULE_BASIC_CSHARP: "C#",
-            MODULE_ISSUES: "Issues",
-            MODULE_LINQ: "LINQ",
-            MODULE_DATETIME: "Date and time",
-            MODULE_NULLABLE: "Nullable",
-            MODULE_STRING: "String",
-            MODULE_REGEX: "Regex",
-            MODULE_ENUM: "Enum",
-            MODULE_MATH: "Math",
-            MODULE_DECIMAL_MATH: "Decimal Math",
-            MODULE_COMPARER: "Comparer",
-            MODULE_EQUALITYCOMPARER: "EqualityComparer",
-            MODULE_NUMBERFORMATINFO: "NumberFormatInfo",
-            MODULE_CULTUREINFO: "СultureInfo",
-            MODULE_PROPERTYACCESSOR: "Property accessor",
-            IGNORE_DATE: null,
-            config: {
-                init: function () {
-                    this.MODULE_DECIMAL = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
-                    this.MODULE_DOUBLE = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
-                    this.MODULE_INT16 = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
-                    this.MODULE_INT64 = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
-                    this.MODULE_SBYTE = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
-                    this.MODULE_FLOAT = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
-                    this.MODULE_UINT64 = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
-                    this.MODULE_UINT32 = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
-                    this.MODULE_OBJECT = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
-                    this.MODULE_CHAR = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
-                    this.MODULE_INT32 = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
-                    this.MODULE_UINT16 = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
-                    this.MODULE_BYTE = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
-                    this.MODULE_TUPLE = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
-                    this.MODULE_VERSION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
-                    this.MODULE_ICOLLECTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
-                    this.MODULE_IDICTIONARY = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
-                    this.MODULE_LIST = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
-                    this.MODULE_ILIST = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
-                    this.MODULE_ITERATORBLOCK = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
-                    this.MODULE_ARRAY = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
-                    this.MODULE_IENUMERABLE = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
-                    this.MODULE_GENERICDICTIONARY = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
-                    this.MODULE_ICOMPARABLE = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_INTERFACES;
-                    this.MODULE_IEQUATABLE = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_INTERFACES;
-                    this.MODULE_RUNTIMEHELPERS = Bridge.get(Bridge.ClientTest.Constants).PREFIX_UTILITIES;
-                    this.MODULE_ENVIRONMENT = Bridge.get(Bridge.ClientTest.Constants).PREFIX_UTILITIES;
-                    this.MODULE_NOTSUPPORTEDEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
-                    this.MODULE_KEYNOTFOUNDEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
-                    this.MODULE_EXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
-                    this.MODULE_ARGUMENTNULLEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
-                    this.MODULE_DIVIDEBYZEROEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
-                    this.MODULE_NOTIMPLEMENTEDEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
-                    this.MODULE_OVERFLOWEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
-                    this.MODULE_ARITHMETICEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
-                    this.MODULE_FORMATEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
-                    this.MODULE_INVALIDOPERATIONEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
-                    this.MODULE_INVALIDCASTEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
-                    this.MODULE_ARGUMENTEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
-                    this.MODULE_NULLREFERENCEEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
-                    this.MODULE_ARGUMENTOUTOFRANGEEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
-                }
-            }
-        }
-    });
-    
     Bridge.define('Bridge.ClientTest.ArrayTests.C', {
         i: 0,
         constructor: function (i) {
@@ -366,6 +295,15 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BasicCSharp.TestEnum.Abc', {
+        statics: {
+            a: -1,
+            b: 0,
+            c: 1
+        },
+        $enum: true
+    });
+    
     Bridge.define('Bridge.ClientTest.BasicCSharp.TestEnum.Digits', {
         statics: {
             zero: 0,
@@ -386,15 +324,6 @@
         },
         $enum: true,
         $flags: true
-    });
-    
-    Bridge.define('Bridge.ClientTest.BasicCSharp.TestEnum.Abc', {
-        statics: {
-            a: -1,
-            b: 0,
-            c: 1
-        },
-        $enum: true
     });
     
     Bridge.define('Bridge.ClientTest.BasicCSharp.TestEnum.Pets1', {
@@ -729,14 +658,6 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Person383', {
-        config: {
-            properties: {
-                Name: null
-            }
-        }
-    });
-    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge395', {
         config: {
             properties: {
@@ -863,13 +784,13 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge501B', {
-        inherits: [Bridge.List$1(Bridge.Int)]
-    });
-    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge501A', {
         inherits: [Bridge.List$1(Bridge.Int)],
         items$1: "12"
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge501B', {
+        inherits: [Bridge.List$1(Bridge.Int)]
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge520.Source', {
@@ -913,65 +834,12 @@
         id: 0
     });
     
-    Bridge.define('Bridge.ClientTest.Utilities.DecimalHelper', {
-        statics: {
-            assertIsDecimalAndEqualTo$1: function (v, d, message) {
-                if (message === void 0) { message = null; }
-                Bridge.get(Bridge.Test.Assert).areStrictEqual$1(Bridge.is(v, Bridge.Decimal), true, message);
-                Bridge.get(Bridge.Test.Assert).areStrictEqual$1(v.toString(), Bridge.Int.format(d, 'G'), message);
-            },
-            assertIsDecimalAndEqualTo: function (v, d, message) {
-                if (message === void 0) { message = null; }
-                Bridge.get(Bridge.Test.Assert).areStrictEqual$1(Bridge.is(v, Bridge.Decimal), true, message);
-                Bridge.get(Bridge.Test.Assert).areStrictEqual$1(v.toString(), Bridge.Int.format(d, 'G'), message);
-            }
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.Utilities.BrowserHelper', {
-        statics: {
-            isPhantomJs: function () {
-                return Bridge.String.contains(navigator.userAgent,"PhantomJS");
-            },
-            isFirefox: function () {
-                return Bridge.String.contains(navigator.userAgent,"Firefox");
-            },
-            isChrome: function () {
-                return Bridge.String.contains(navigator.userAgent,"Chrome");
-            },
-            getBrowserInfo: function () {
-                var userAgent = navigator.userAgent;
-                var appVersion = navigator.appVersion;
-                var product = navigator.product;
-                var appName = navigator.appName;
-                var appCodeName = navigator.appCodeName;
-    
-                return Bridge.String.format("userAgent:{0} appVersion:{1} product:{2} appName:{3} appCodeName:{4}", userAgent, appVersion, product, appName, appCodeName);
-            }
-        }
-    });
-    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge558A', {
         zz: function (a) {
             return 1;
         },
         zz$1: function (a) {
             return 2;
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge559A3', {
-        config: {
-            properties: {
-                Data: null
-            }
-        },
-        constructor$1: function (value) {
-            this.setData(value);
-        },
-        constructor: function (value) {
-            Bridge.ClientTest.BridgeIssues.Bridge559A3.prototype.constructor$1.call(this, value.toString());
-    
         }
     });
     
@@ -996,6 +864,21 @@
             Bridge.ClientTest.BridgeIssues.Bridge559A2.prototype.$constructor.call(this);
     
             this.result += " ClassA$1";
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge559A3', {
+        config: {
+            properties: {
+                Data: null
+            }
+        },
+        constructor$1: function (value) {
+            this.setData(value);
+        },
+        constructor: function (value) {
+            Bridge.ClientTest.BridgeIssues.Bridge559A3.prototype.constructor$1.call(this, value.toString());
+    
         }
     });
     
@@ -1053,6 +936,13 @@
     
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge588B', {
+        statics: {
+            Valeur1: 1,
+            Valeur2: 2
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge588C.C2', {
         statics: {
             config: {
@@ -1071,13 +961,6 @@
         },
         constructor: function (name) {
             this.setName(name);
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge588B', {
-        statics: {
-            Valeur1: 1,
-            Valeur2: 2
         }
     });
     
@@ -1170,16 +1053,11 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge606C', {
-        config: {
-            properties: {
-                X: null,
-                Y: null
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge606A', {
+        statics: {
+            example2: function (source, x, y) {
+                return source + " - " + x + " - " + y;
             }
-        },
-        example1: function (x, y) {
-            this.setX(x);
-            this.setY(y);
         }
     });
     
@@ -1196,11 +1074,16 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge606A', {
-        statics: {
-            example2: function (source, x, y) {
-                return source + " - " + x + " - " + y;
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge606C', {
+        config: {
+            properties: {
+                X: null,
+                Y: null
             }
+        },
+        example1: function (x, y) {
+            this.setX(x);
+            this.setY(y);
         }
     });
     
@@ -1296,28 +1179,6 @@
     
     }; });
     
-    Bridge.define('ClientTestLibraryCustom.Bridge634B$1', function (T) { return {
-    
-    }; });
-    
-    Bridge.define('ClientTestLibraryCustom.Bridge634B$1.Nested', function (T) { return {
-    
-    }; });
-    
-    Bridge.define('ClientTestLibraryCustom.Bridge634B$1.Nested.SubNested', function (T) { return {
-    
-    }; });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge634C');
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge634C.Nested');
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge634C.Nested.SubNested');
-    
-    Bridge.define('Bridge634D');
-    
-    Bridge.define('Bridge634D.Nested');
-    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge634A$1.Nested.SubNested$1', function (T, T1) { return {
     
     }; });
@@ -1331,6 +1192,18 @@
     }; });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge634A$1.Nested$1.SubNested$1', function (T, T1, T2) { return {
+    
+    }; });
+    
+    Bridge.define('ClientTestLibraryCustom.Bridge634B$1', function (T) { return {
+    
+    }; });
+    
+    Bridge.define('ClientTestLibraryCustom.Bridge634B$1.Nested', function (T) { return {
+    
+    }; });
+    
+    Bridge.define('ClientTestLibraryCustom.Bridge634B$1.Nested.SubNested', function (T) { return {
     
     }; });
     
@@ -1350,6 +1223,12 @@
     
     }; });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge634C');
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge634C.Nested');
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge634C.Nested.SubNested');
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge634C.Nested.SubNested$1', function (T1) { return {
     
     }; });
@@ -1365,6 +1244,10 @@
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge634C.Nested$1.SubNested$1', function (T1, T2) { return {
     
     }; });
+    
+    Bridge.define('Bridge634D');
+    
+    Bridge.define('Bridge634D.Nested');
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge635A', {
         internalFunc1: function () {
@@ -1436,21 +1319,6 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge660TextInputState', {
-        config: {
-            properties: {
-                Text: null
-            }
-        },
-        constructor: function (text) {
-            Bridge.ClientTest.BridgeIssues.Bridge660TextInputState.prototype.constructor$1.call(this, text, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge660Optional$1(String)).getMissing());
-    
-        },
-        constructor$1: function (text, validationError) {
-            this.setText(text);
-        }
-    });
-    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge660MessageEditState', {
         config: {
             properties: {
@@ -1508,6 +1376,21 @@
             return s;
         }
     }; });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge660TextInputState', {
+        config: {
+            properties: {
+                Text: null
+            }
+        },
+        constructor: function (text) {
+            Bridge.ClientTest.BridgeIssues.Bridge660TextInputState.prototype.constructor$1.call(this, text, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge660Optional$1(String)).getMissing());
+    
+        },
+        constructor$1: function (text, validationError) {
+            this.setText(text);
+        }
+    });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge671A', {
         func: null,
@@ -1730,6 +1613,37 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge692.B2', {
+        statics: {
+            getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge692.B2(); }
+        },
+        field1: 0,
+        constructor$1: function (f) {
+            this.field1 = f;
+        },
+        constructor: function () {
+        },
+        getProp1: function () {
+            return this.field1;
+        },
+        getHashCode: function () {
+            var hash = 17;
+            hash = hash * 23 + (this.field1 == null ? 0 : Bridge.getHashCode(this.field1));
+            return hash;
+        },
+        equals: function (o) {
+            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge692.B2)) {
+                return false;
+            }
+            return Bridge.equals(this.field1, o.field1);
+        },
+        $clone: function (to) {
+            var s = to || new Bridge.ClientTest.BridgeIssues.Bridge692.B2();
+            s.field1 = this.field1;
+            return s;
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge692.B3', {
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge692.B3(); }
@@ -1832,37 +1746,6 @@
         $clone: function (to) {
             var s = to || new Bridge.ClientTest.BridgeIssues.Bridge692.C3();
             s.Prop1 = this.Prop1;
-            return s;
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge692.B2', {
-        statics: {
-            getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge692.B2(); }
-        },
-        field1: 0,
-        constructor$1: function (f) {
-            this.field1 = f;
-        },
-        constructor: function () {
-        },
-        getProp1: function () {
-            return this.field1;
-        },
-        getHashCode: function () {
-            var hash = 17;
-            hash = hash * 23 + (this.field1 == null ? 0 : Bridge.getHashCode(this.field1));
-            return hash;
-        },
-        equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge692.B2)) {
-                return false;
-            }
-            return Bridge.equals(this.field1, o.field1);
-        },
-        $clone: function (to) {
-            var s = to || new Bridge.ClientTest.BridgeIssues.Bridge692.B2();
-            s.field1 = this.field1;
             return s;
         }
     });
@@ -2240,6 +2123,15 @@
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge883_IInterface');
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge883_3', {
+        statics: {
+            main: function () {
+                var f = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge883_4).field1;
+                return f;
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.CI1');
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.CI2');
@@ -2309,6 +2201,14 @@
             }
             catch ($e) {
                 $e = Bridge.Exception.create($e);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Person383', {
+        config: {
+            properties: {
+                Name: null
             }
         }
     });
@@ -2669,6 +2569,77 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Constants', {
+        statics: {
+            PREFIX_SYSTEM_CLASSES: "Simple types",
+            PREFIX_SYSTEM_INTERFACES: "System interface",
+            PREFIX_COLLECTIONS: "Collections",
+            PREFIX_UTILITIES: "Utilities",
+            PREFIX_EXCEPTIONS: "Exceptions",
+            MODULE_BASIC_CSHARP: "C#",
+            MODULE_ISSUES: "Issues",
+            MODULE_LINQ: "LINQ",
+            MODULE_DATETIME: "Date and time",
+            MODULE_NULLABLE: "Nullable",
+            MODULE_STRING: "String",
+            MODULE_REGEX: "Regex",
+            MODULE_ENUM: "Enum",
+            MODULE_MATH: "Math",
+            MODULE_DECIMAL_MATH: "Decimal Math",
+            MODULE_COMPARER: "Comparer",
+            MODULE_EQUALITYCOMPARER: "EqualityComparer",
+            MODULE_NUMBERFORMATINFO: "NumberFormatInfo",
+            MODULE_CULTUREINFO: "СultureInfo",
+            MODULE_PROPERTYACCESSOR: "Property accessor",
+            IGNORE_DATE: null,
+            config: {
+                init: function () {
+                    this.MODULE_DECIMAL = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
+                    this.MODULE_DOUBLE = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
+                    this.MODULE_INT16 = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
+                    this.MODULE_INT64 = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
+                    this.MODULE_SBYTE = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
+                    this.MODULE_FLOAT = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
+                    this.MODULE_UINT64 = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
+                    this.MODULE_UINT32 = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
+                    this.MODULE_OBJECT = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
+                    this.MODULE_CHAR = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
+                    this.MODULE_INT32 = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
+                    this.MODULE_UINT16 = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
+                    this.MODULE_BYTE = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
+                    this.MODULE_TUPLE = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
+                    this.MODULE_VERSION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
+                    this.MODULE_ICOLLECTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
+                    this.MODULE_IDICTIONARY = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
+                    this.MODULE_LIST = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
+                    this.MODULE_ILIST = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
+                    this.MODULE_ITERATORBLOCK = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
+                    this.MODULE_ARRAY = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
+                    this.MODULE_IENUMERABLE = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
+                    this.MODULE_GENERICDICTIONARY = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
+                    this.MODULE_ICOMPARABLE = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_INTERFACES;
+                    this.MODULE_IEQUATABLE = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_INTERFACES;
+                    this.MODULE_RUNTIMEHELPERS = Bridge.get(Bridge.ClientTest.Constants).PREFIX_UTILITIES;
+                    this.MODULE_ENVIRONMENT = Bridge.get(Bridge.ClientTest.Constants).PREFIX_UTILITIES;
+                    this.MODULE_NOTSUPPORTEDEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                    this.MODULE_KEYNOTFOUNDEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                    this.MODULE_EXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                    this.MODULE_ARGUMENTNULLEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                    this.MODULE_DIVIDEBYZEROEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                    this.MODULE_NOTIMPLEMENTEDEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                    this.MODULE_OVERFLOWEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                    this.MODULE_ARITHMETICEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                    this.MODULE_FORMATEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                    this.MODULE_INVALIDOPERATIONEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                    this.MODULE_INVALIDCASTEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                    this.MODULE_ARGUMENTEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                    this.MODULE_NULLREFERENCEEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                    this.MODULE_ARGUMENTOUTOFRANGEEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                }
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.DecimalMathTests.Logger', {
         statics: {
             convertParameters: function (parameters) {
@@ -2854,123 +2825,6 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTest.Utilities.Group', {
-        statics: {
-            getGroups: function () {
-                var groups = new Bridge.List$1(Bridge.ClientTest.Utilities.Group)();
-                groups.add(Bridge.merge(new Bridge.ClientTest.Utilities.Group(), {
-                    setName: "A",
-                    setLimit: 1000
-                } ));
-                groups.add(Bridge.merge(new Bridge.ClientTest.Utilities.Group(), {
-                    setName: "B",
-                    setLimit: 400
-                } ));
-                groups.add(Bridge.merge(new Bridge.ClientTest.Utilities.Group(), {
-                    setName: "C",
-                    setLimit: 800
-                } ));
-                groups.add(Bridge.merge(new Bridge.ClientTest.Utilities.Group(), {
-                    setName: "D",
-                    setLimit: 200
-                } ));
-    
-                return groups;
-            }
-        },
-        config: {
-            properties: {
-                Name: null,
-                Limit: 0
-            }
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.Utilities.Person', {
-        statics: {
-            getPersons: function () {
-                var persons = new Bridge.List$1(Bridge.ClientTest.Utilities.Person)();
-    
-                persons.add(Bridge.merge(new Bridge.ClientTest.Utilities.Person(), {
-                    setID: 1,
-                    setName: "Frank",
-                    setCity: "Edmonton",
-                    setCount: 300,
-                    setGroup: "A"
-                } ));
-                persons.add(Bridge.merge(new Bridge.ClientTest.Utilities.Person(), {
-                    setID: 2,
-                    setName: "Zeppa",
-                    setCity: "Tokyo",
-                    setCount: 100,
-                    setGroup: "C"
-                } ));
-                persons.add(Bridge.merge(new Bridge.ClientTest.Utilities.Person(), {
-                    setID: 3,
-                    setName: "John",
-                    setCity: "Lisbon",
-                    setCount: 700,
-                    setGroup: "B"
-                } ));
-                persons.add(Bridge.merge(new Bridge.ClientTest.Utilities.Person(), {
-                    setID: 4,
-                    setName: "Billy",
-                    setCity: "Paris",
-                    setCount: 500,
-                    setGroup: "C"
-                } ));
-                persons.add(Bridge.merge(new Bridge.ClientTest.Utilities.Person(), {
-                    setID: 5,
-                    setName: "Dora",
-                    setCity: "Budapest",
-                    setCount: 50,
-                    setGroup: "B"
-                } ));
-                persons.add(Bridge.merge(new Bridge.ClientTest.Utilities.Person(), {
-                    setID: 6,
-                    setName: "Ian",
-                    setCity: "Rome",
-                    setCount: 550,
-                    setGroup: "B"
-                } ));
-                persons.add(Bridge.merge(new Bridge.ClientTest.Utilities.Person(), {
-                    setID: 7,
-                    setName: "Mary",
-                    setCity: "Dortmund",
-                    setCount: 700,
-                    setGroup: "B"
-                } ));
-                persons.add(Bridge.merge(new Bridge.ClientTest.Utilities.Person(), {
-                    setID: 8,
-                    setName: "Nemo",
-                    setCity: "Ocean",
-                    setCount: 3000,
-                    setGroup: null
-                } ));
-    
-                return persons;
-            }
-        },
-        config: {
-            properties: {
-                ID: 0,
-                Name: null,
-                City: null,
-                Count: 0,
-                Group: null
-            }
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.Utilities.TypeHelper', {
-        statics: {
-            getTypeName: function (o) {
-                return Bridge.getTypeName(o);
-                // return Script.Get<string>("o.__proto__.$$name");
-            }
-        }
-    });
-    
     Bridge.define('Bridge.ClientTest.Linq.TestLinqConversionOperatorsIEqualityComparer', {
         inherits: [Bridge.EqualityComparer$1(String)],
         equals: function (x, y) {
@@ -3148,6 +3002,161 @@
     Bridge.define('Bridge.ClientTest.Text.StringBuilderTests.SomeClass', {
         toString: function () {
             return "some text";
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Utilities.BrowserHelper', {
+        statics: {
+            isPhantomJs: function () {
+                return Bridge.String.contains(navigator.userAgent,"PhantomJS");
+            },
+            isFirefox: function () {
+                return Bridge.String.contains(navigator.userAgent,"Firefox");
+            },
+            isChrome: function () {
+                return Bridge.String.contains(navigator.userAgent,"Chrome");
+            },
+            getBrowserInfo: function () {
+                var userAgent = navigator.userAgent;
+                var appVersion = navigator.appVersion;
+                var product = navigator.product;
+                var appName = navigator.appName;
+                var appCodeName = navigator.appCodeName;
+    
+                return Bridge.String.format("userAgent:{0} appVersion:{1} product:{2} appName:{3} appCodeName:{4}", userAgent, appVersion, product, appName, appCodeName);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Utilities.DecimalHelper', {
+        statics: {
+            assertIsDecimalAndEqualTo$1: function (v, d, message) {
+                if (message === void 0) { message = null; }
+                Bridge.get(Bridge.Test.Assert).areStrictEqual$1(Bridge.is(v, Bridge.Decimal), true, message);
+                Bridge.get(Bridge.Test.Assert).areStrictEqual$1(v.toString(), Bridge.Int.format(d, 'G'), message);
+            },
+            assertIsDecimalAndEqualTo: function (v, d, message) {
+                if (message === void 0) { message = null; }
+                Bridge.get(Bridge.Test.Assert).areStrictEqual$1(Bridge.is(v, Bridge.Decimal), true, message);
+                Bridge.get(Bridge.Test.Assert).areStrictEqual$1(v.toString(), Bridge.Int.format(d, 'G'), message);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Utilities.Group', {
+        statics: {
+            getGroups: function () {
+                var groups = new Bridge.List$1(Bridge.ClientTest.Utilities.Group)();
+                groups.add(Bridge.merge(new Bridge.ClientTest.Utilities.Group(), {
+                    setName: "A",
+                    setLimit: 1000
+                } ));
+                groups.add(Bridge.merge(new Bridge.ClientTest.Utilities.Group(), {
+                    setName: "B",
+                    setLimit: 400
+                } ));
+                groups.add(Bridge.merge(new Bridge.ClientTest.Utilities.Group(), {
+                    setName: "C",
+                    setLimit: 800
+                } ));
+                groups.add(Bridge.merge(new Bridge.ClientTest.Utilities.Group(), {
+                    setName: "D",
+                    setLimit: 200
+                } ));
+    
+                return groups;
+            }
+        },
+        config: {
+            properties: {
+                Name: null,
+                Limit: 0
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Utilities.Person', {
+        statics: {
+            getPersons: function () {
+                var persons = new Bridge.List$1(Bridge.ClientTest.Utilities.Person)();
+    
+                persons.add(Bridge.merge(new Bridge.ClientTest.Utilities.Person(), {
+                    setID: 1,
+                    setName: "Frank",
+                    setCity: "Edmonton",
+                    setCount: 300,
+                    setGroup: "A"
+                } ));
+                persons.add(Bridge.merge(new Bridge.ClientTest.Utilities.Person(), {
+                    setID: 2,
+                    setName: "Zeppa",
+                    setCity: "Tokyo",
+                    setCount: 100,
+                    setGroup: "C"
+                } ));
+                persons.add(Bridge.merge(new Bridge.ClientTest.Utilities.Person(), {
+                    setID: 3,
+                    setName: "John",
+                    setCity: "Lisbon",
+                    setCount: 700,
+                    setGroup: "B"
+                } ));
+                persons.add(Bridge.merge(new Bridge.ClientTest.Utilities.Person(), {
+                    setID: 4,
+                    setName: "Billy",
+                    setCity: "Paris",
+                    setCount: 500,
+                    setGroup: "C"
+                } ));
+                persons.add(Bridge.merge(new Bridge.ClientTest.Utilities.Person(), {
+                    setID: 5,
+                    setName: "Dora",
+                    setCity: "Budapest",
+                    setCount: 50,
+                    setGroup: "B"
+                } ));
+                persons.add(Bridge.merge(new Bridge.ClientTest.Utilities.Person(), {
+                    setID: 6,
+                    setName: "Ian",
+                    setCity: "Rome",
+                    setCount: 550,
+                    setGroup: "B"
+                } ));
+                persons.add(Bridge.merge(new Bridge.ClientTest.Utilities.Person(), {
+                    setID: 7,
+                    setName: "Mary",
+                    setCity: "Dortmund",
+                    setCount: 700,
+                    setGroup: "B"
+                } ));
+                persons.add(Bridge.merge(new Bridge.ClientTest.Utilities.Person(), {
+                    setID: 8,
+                    setName: "Nemo",
+                    setCity: "Ocean",
+                    setCount: 3000,
+                    setGroup: null
+                } ));
+    
+                return persons;
+            }
+        },
+        config: {
+            properties: {
+                ID: 0,
+                Name: null,
+                City: null,
+                Count: 0,
+                Group: null
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Utilities.TypeHelper', {
+        statics: {
+            getTypeName: function (o) {
+                return Bridge.getTypeName(o);
+                // return Script.Get<string>("o.__proto__.$$name");
+            }
         }
     });
     
@@ -7628,6 +7637,13 @@
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge883_2', {
         inherits: [Bridge.ClientTest.BridgeIssues.Bridge883_IInterface]
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge883_4', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge883_3],
+        statics: {
+            field1: 1
+        }
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge889', {
@@ -16876,6 +16892,7 @@
         statics: {
             testUseCase: function () {
                 Bridge.get(Bridge.Test.Assert).notNull$1(new Bridge.ClientTest.BridgeIssues.Bridge883_1(), "Bridge883_1 created");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge883_3).main(), 1, "Bridge883_3.Main");
             }
         }
     });
