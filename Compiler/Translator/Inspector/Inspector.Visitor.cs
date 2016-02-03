@@ -140,6 +140,12 @@ namespace Bridge.Translator
 
             foreach (var item in fieldDeclaration.Variables)
             {
+                var rr = this.Resolver.ResolveNode(item, null) as MemberResolveResult;
+                if (fieldDeclaration.HasModifier(Modifiers.Const) && rr != null && rr.Member.Attributes.Any(a => a.AttributeType.FullName == Bridge.Translator.Translator.Bridge_ASSEMBLY + ".InlineConstAttribute"))
+                {
+                    continue;
+                }
+
                 Expression initializer = item.Initializer;
 
                 if (initializer.IsNull)
@@ -168,12 +174,12 @@ namespace Bridge.Translator
                 else
                 {
                     this.CurrentType.InstanceConfig.Fields.Add(new TypeConfigItem
-                {
-                    Name = item.Name,
-                    Entity = fieldDeclaration,
-                    VarInitializer = item,
-                    Initializer = initializer
-                });
+                    {
+                        Name = item.Name,
+                        Entity = fieldDeclaration,
+                        VarInitializer = item,
+                        Initializer = initializer
+                    });
                 }
             }
         }

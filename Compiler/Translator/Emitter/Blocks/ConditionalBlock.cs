@@ -3,7 +3,7 @@ using ICSharpCode.NRefactory.CSharp;
 
 namespace Bridge.Translator
 {
-    public class ConditionalBlock : AbstractEmitterBlock
+    public class ConditionalBlock : ConversionBlock
     {
         public ConditionalBlock(IEmitter emitter, ConditionalExpression conditionalExpression)
             : base(emitter, conditionalExpression)
@@ -18,7 +18,12 @@ namespace Bridge.Translator
             set;
         }
 
-        protected override void DoEmit()
+        protected override Expression GetExpression()
+        {
+            return this.ConditionalExpression;
+        }
+
+        protected override void EmitConversionExpression()
         {
             var conditionalExpression = this.ConditionalExpression;
 
