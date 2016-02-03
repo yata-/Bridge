@@ -10496,15 +10496,6 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
 
     Bridge.define('Test.BridgeIssues.N770.IBase');
     
-    Bridge.define('Test.BridgeIssues.N770.Impl', {
-        inherits: [Test.BridgeIssues.N770.IBase],
-        config: {
-            properties: {
-                Prop: 0
-            }
-        }
-    });
-    
     Bridge.define('TestProject1.TestClassA', {
         config: {
             properties: {
@@ -10517,6 +10508,15 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         config: {
             properties: {
                 value1: 0
+            }
+        }
+    });
+    
+    Bridge.define('Test.BridgeIssues.N770.Impl', {
+        inherits: [Test.BridgeIssues.N770.IBase],
+        config: {
+            properties: {
+                Prop: 0
             }
         }
     });

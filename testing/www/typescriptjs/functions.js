@@ -9,8 +9,6 @@
         methodStringDelegateIntResult: null
     });
     
-    Bridge.define('Functions.DelegateInterface');
-    
     Bridge.define('Functions.Delegates');
     
     Bridge.define('Functions.Parameters', {
@@ -28,6 +26,8 @@
             return s;
         }
     });
+    
+    Bridge.define('Functions.DelegateInterface');
     
     
     

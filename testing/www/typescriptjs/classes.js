@@ -19,40 +19,6 @@
         }
     });
     
-    Bridge.define('Classes.Snake', {
-        inherits: [Classes.Animal],
-        constructor: function (name) {
-            Classes.Animal.prototype.constructor$1.call(this, name);
-    
-        },
-        move: function () {
-            return 5;
-        }
-    });
-    
-    Bridge.define('Classes.Employee', {
-        inherits: [Classes.Animal],
-        name$1: null,
-        id: 0,
-        constructor: function (name, id) {
-            Classes.Animal.prototype.constructor$1.call(this, name);
-    
-            this.name$1 = name;
-            this.id = id;
-        }
-    });
-    
-    Bridge.define('Classes.Dog', {
-        inherits: [Classes.Animal],
-        constructor: function (name) {
-            Classes.Animal.prototype.constructor$1.call(this, name);
-    
-        },
-        move$1: function () {
-            return 20;
-        }
-    });
-    
     Bridge.define('Classes.Point', {
         statics: {
             getDefaultValue: function () { return new Classes.Point(); }
@@ -85,11 +51,45 @@
         }
     });
     
+    Bridge.define('Classes.Dog', {
+        inherits: [Classes.Animal],
+        constructor: function (name) {
+            Classes.Animal.prototype.constructor$1.call(this, name);
+    
+        },
+        move$1: function () {
+            return 20;
+        }
+    });
+    
+    Bridge.define('Classes.Employee', {
+        inherits: [Classes.Animal],
+        name$1: null,
+        id: 0,
+        constructor: function (name, id) {
+            Classes.Animal.prototype.constructor$1.call(this, name);
+    
+            this.name$1 = name;
+            this.id = id;
+        }
+    });
+    
     Bridge.define('Classes.StaticClass', {
         statics: {
             move: function (p, dx, dy) {
                 return new Classes.Point("constructor$1", p.x + dx, p.y + dy);
             }
+        }
+    });
+    
+    Bridge.define('Classes.Snake', {
+        inherits: [Classes.Animal],
+        constructor: function (name) {
+            Classes.Animal.prototype.constructor$1.call(this, name);
+    
+        },
+        move: function () {
+            return 5;
         }
     });
     
@@ -108,6 +108,8 @@
             this.setPoint(Bridge.get(Classes.MovePoint).move(this.getPoint().$clone(), dx, dy).$clone());
         }
     });
+    
+    
     
     Bridge.init();
 })(this);

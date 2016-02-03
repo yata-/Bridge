@@ -11,10 +11,6 @@ declare module Functions {
     }
     var Parameters: ParametersFunc;
 
-    export interface DelegateInterface {
-    }
-    var DelegateInterface: Function;
-
     export interface DelegateClass {
         methodVoidDelegate: {(): void};
         methodStringDelegate: {(s: string): void};
@@ -33,5 +29,9 @@ declare module Functions {
         new (): Delegates;
     }
     var Delegates: DelegatesFunc;
+
+    export interface DelegateInterface {
+    }
+    var DelegateInterface: Function;
 
 }
