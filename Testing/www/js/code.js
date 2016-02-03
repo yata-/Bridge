@@ -7684,6 +7684,19 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge892', {
+        statics: {
+            test: function (format, p) {
+                if (p === void 0) { p = []; }
+                var message = Bridge.String.format.apply(Bridge.String, [format].concat(p));
+                return message;
+            },
+            testUseCase: function () {
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge892).test("Test {0} {1}", ["One", "Two"]), "Test One Two");
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge898', {
         statics: {
             testDecimalConversion: function () {
@@ -14653,7 +14666,7 @@
             var arr2 = ["a", "b"];
             var arr3 = ["a", "b", "c"];
             var arr4 = ["a", "b", "c", "d"];
-            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.format("x{0}", arr1), "xa");
+            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.format.apply(Bridge.String, ["x{0}"].concat(arr1)), "xa");
             Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.format("x{0}{1}", arr2[0], arr2[1]), "xab");
             Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.format("x{0}{1}{2}", arr3[0], arr3[1], arr3[2]), "xabc");
             Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.format("x{0}{1}{2}{3}", arr4[0], arr4[1], arr4[2], arr4[3]), "xabcd");
@@ -14663,9 +14676,9 @@
             var arr3 = ["a", "b", "c"];
             var arr4 = ["a", "b", "c", "d"];
     
-            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.format("x{0}{1}", arr2), "xab");
-            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.format("x{0}{1}{2}", arr3), "xabc");
-            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.format("x{0}{1}{2}{3}", arr4), "xabcd");
+            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.format.apply(Bridge.String, ["x{0}{1}"].concat(arr2)), "xab");
+            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.format.apply(Bridge.String, ["x{0}{1}{2}"].concat(arr3)), "xabc");
+            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.format.apply(Bridge.String, ["x{0}{1}{2}{3}"].concat(arr4)), "xabcd");
         },
         formatWorksWithIFormattable: function () {
             Bridge.get(Bridge.Test.Assert).areEqual(Bridge.String.format("{0:F2}", 3.1428571428571428), "3.14");
