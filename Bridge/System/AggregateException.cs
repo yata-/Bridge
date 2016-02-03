@@ -33,5 +33,7 @@ namespace System
 	    }
 
 		public extern AggregateException Flatten();
-	}
+
+        public extern void Handle(Func<Exception, bool> predicate);
+    }
 }

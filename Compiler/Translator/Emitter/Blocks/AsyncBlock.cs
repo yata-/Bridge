@@ -330,7 +330,7 @@ namespace Bridge.Translator
             this.BeginBlock();
 
             var asyncTryVisitor = new AsyncTryVisitor();
-            this.Node.AcceptVisitor(asyncTryVisitor);
+            this.Node.AcceptChildren(asyncTryVisitor);
             var needTry = asyncTryVisitor.Found || this.IsTaskReturn;
 
             this.Emitter.AsyncVariables.Add("$jumpFromFinally");
@@ -535,7 +535,7 @@ namespace Bridge.Translator
 
             if (this.IsTaskReturn)
             {
-                this.Write("$tcs.setError($e1);");
+                this.Write("$tcs.setException($e1);");
             }
             else
             {
@@ -580,11 +580,11 @@ namespace Bridge.Translator
 
                     if (this.IsTaskResult(expression))
                     {
-                        this.Write(string.Format("$taskResult{0} = $task{0}.getResult();", step.FromTaskNumber));
+                        this.Write(string.Format("$taskResult{0} = $task{0}.getAwaitedResult();", step.FromTaskNumber));
                     }
                     else
                     {
-                        this.Write(string.Format("$task{0}.getResult();", step.FromTaskNumber));
+                        this.Write(string.Format("$task{0}.getAwaitedResult();", step.FromTaskNumber));
                     }
 
                     addNewLine = true;

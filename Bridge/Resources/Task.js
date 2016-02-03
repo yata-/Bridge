@@ -1,6 +1,7 @@
     // @source Task.js
 
     Bridge.define("Bridge.Task", {
+        inherits: [Bridge.IDisposable],
         constructor: function (action, state) {
             this.action = action;
             this.state = state;
@@ -313,7 +314,7 @@
                     var ex = new Bridge.TaskCanceledException(null, this);
                     throw await ? ex : new Bridge.AggregateException(null, [ex]);
                 case Bridge.TaskStatus.faulted:
-                    throw await ? this.exception.innerExceptions[0] : this.exception;
+                    throw await ? (this.exception.innerExceptions.getCount() > 0 ? this.exception.innerExceptions.get(0) : null) : this.exception;
                 default:
                     throw new Bridge.InvalidOperationException("Task is not yet completed.");
             }

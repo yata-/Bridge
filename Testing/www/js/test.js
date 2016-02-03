@@ -8292,7 +8292,7 @@
             },
             cancelledTaskThrowsTaskCanceledExceptionWhenAwaited: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
-                assert.expect(3);
+                assert.expect(2);
                 t.cancelledTaskThrowsTaskCanceledExceptionWhenAwaited();
             },
             cancelledTaskThrowsAggregateExceptionWithTaskCanceledExceptionWhenResultIsAccessed: function (assert) {
@@ -8432,7 +8432,7 @@
             },
             whenAnyParamArrayWithResultWorks: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
-                assert.expect(11);
+                assert.expect(10);
                 t.whenAnyParamArrayWithResultWorks();
             },
             whenAnyEnumerableWithResultWorks: function (assert) {
@@ -8457,7 +8457,7 @@
             },
             whenAnyIsCancelledIfTheFirstTaskWasCancelled: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
-                assert.expect(9);
+                assert.expect(8);
                 t.whenAnyIsCancelledIfTheFirstTaskWasCancelled();
             },
             constructorWithOnlyActionWorks: function (assert) {
@@ -8467,7 +8467,7 @@
             },
             constructorWithActionAndStateWorks: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
-                assert.expect(10);
+                assert.expect(8);
                 t.constructorWithActionAndStateWorks();
             },
             exceptionInManuallyCreatedTaskIsStoredOnTheTask: function (assert) {

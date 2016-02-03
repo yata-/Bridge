@@ -126,7 +126,7 @@ namespace Bridge.Translator
                 this.WriteCloseParentheses();
                 this.WriteSpace();
                 this.BeginBlock();
-                this.Write("$tcs.setError($e);");
+                this.Write("$tcs.setException($e);");
                 this.WriteNewLine();
                 this.WriteReturn(false);
                 this.WriteSemiColon();

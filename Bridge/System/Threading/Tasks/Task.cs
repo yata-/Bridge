@@ -61,12 +61,6 @@ namespace System.Threading.Tasks
 
         public extern void Dispose();
 
-        public extern void SetCanceled();
-
-        public extern void SetError(IEnumerable<Exception> exceptions);
-
-        public extern void SetError(Exception exception);
-
         public extern void Complete(object result = null);
 
         public static extern Task Delay(int millisecondDelay);

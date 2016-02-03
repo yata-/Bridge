@@ -2572,6 +2572,25 @@
             Bridge.Exception.prototype.$constructor.call(this, message || 'One or more errors occurred.', this.innerExceptions.items.length ? this.innerExceptions.items[0] : null);
         },
 
+        handle: function (predicate) {
+            if (!Bridge.hasValue(predicate)) {
+                throw new Bridge.ArgumentNullException("predicate");
+            }
+
+            var count = this.innerExceptions.getCount(),
+                unhandledExceptions = [];
+
+            for (var i = 0; i < count; i++) {
+                if (!predicate(this.innerExceptions.get(i))) {
+                    unhandledExceptions.push(this.innerExceptions.get(i));
+                }
+            }
+
+            if (unhandledExceptions.length > 0) {
+                throw new Bridge.AggregateException(this.getMessage(), unhandledExceptions);
+            }
+        },
+
         flatten: function () {
             // Initialize a collection to contain the flattened exceptions.
             var flattenedExceptions = new Bridge.List$1(Bridge.Exception)();
@@ -5786,6 +5805,25 @@ Bridge.define("Bridge.Text.StringBuilder", {
                 }
             }
             return max;
+        },
+
+        addRange: function (arr, items) {
+            if (Bridge.isArray(items)) {
+                arr.push.apply(arr, items);
+            }
+            else {
+                var e = Bridge.getEnumerator(items);
+                try {
+                    while (e.moveNext()) {
+                        arr.push(e.getCurrent());
+                    }
+                }
+                finally {
+                    if (Bridge.is(e, Bridge.IDisposable)) {
+                        e.dispose();
+                    }
+                }
+            }
         }
     };
 
@@ -6630,6 +6668,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
     // @source Task.js
 
     Bridge.define("Bridge.Task", {
+        inherits: [Bridge.IDisposable],
         constructor: function (action, state) {
             this.action = action;
             this.state = state;
@@ -6942,7 +6981,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
                     var ex = new Bridge.TaskCanceledException(null, this);
                     throw await ? ex : new Bridge.AggregateException(null, [ex]);
                 case Bridge.TaskStatus.faulted:
-                    throw await ? this.exception.innerExceptions[0] : this.exception;
+                    throw await ? (this.exception.innerExceptions.getCount() > 0 ? this.exception.innerExceptions.get(0) : null) : this.exception;
                 default:
                     throw new Bridge.InvalidOperationException("Task is not yet completed.");
             }

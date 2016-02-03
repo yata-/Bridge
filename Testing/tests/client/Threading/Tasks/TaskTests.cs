@@ -190,7 +190,7 @@ namespace Bridge.ClientTest.Threading
             }, 100);
         }
 
-        [Test(ExpectedCount = 3)]
+        [Test(ExpectedCount = 2)]
         public void CancelledTaskThrowsTaskCanceledExceptionWhenAwaited()
         {
             var completeAsync = Assert.Async();
@@ -995,7 +995,7 @@ namespace Bridge.ClientTest.Threading
             }, 100);
         }
 
-        [Test(ExpectedCount = 11)]
+        [Test(ExpectedCount = 10)]
         public void WhenAnyParamArrayWithResultWorks()
         {
             var completeAsync = Assert.Async();
@@ -1213,7 +1213,7 @@ namespace Bridge.ClientTest.Threading
             }, 200);
         }
 
-        [Test(ExpectedCount = 9)]
+        [Test(ExpectedCount = 8)]
         public void WhenAnyIsCancelledIfTheFirstTaskWasCancelled()
         {
             var completeAsync = Assert.Async();
@@ -1289,7 +1289,7 @@ namespace Bridge.ClientTest.Threading
             }, 200);
         }
 
-        [Test(ExpectedCount = 10)]
+        [Test(ExpectedCount = 8)]
         public void ConstructorWithActionAndStateWorks()
         {
             var completeAsync = Assert.Async();

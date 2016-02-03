@@ -1438,7 +1438,7 @@
                                     return;
                                 }
                                 case 1: {
-                                    $task1.getResult();
+                                    $task1.getAwaitedResult();
                                     $tcs.setResult(i1 + i2 + this.i3);
                                     return;
                                 }
@@ -1450,7 +1450,7 @@
                         }
                     } catch($e1) {
                         $e1 = Bridge.Exception.create($e1);
-                        $tcs.setError($e1);
+                        $tcs.setException($e1);
                     }
                 }, arguments);
     
@@ -1476,7 +1476,7 @@
                                     return;
                                 }
                                 case 1: {
-                                    $taskResult1 = $task1.getResult();
+                                    $taskResult1 = $task1.getAwaitedResult();
                                     $tcs.setResult($taskResult1);
                                     return;
                                 }
@@ -1488,7 +1488,7 @@
                         }
                     } catch($e1) {
                         $e1 = Bridge.Exception.create($e1);
-                        $tcs.setError($e1);
+                        $tcs.setException($e1);
                     }
                 }, arguments);
     
@@ -1518,7 +1518,7 @@
                                         return;
                                     }
                                     case 1: {
-                                        $task1.getResult();
+                                        $task1.getAwaitedResult();
                                         $tcs.setResult(i1 + i2 + Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge690B).i3);
                                         return;
                                     }
@@ -1530,7 +1530,7 @@
                             }
                         } catch($e1) {
                             $e1 = Bridge.Exception.create($e1);
-                            $tcs.setError($e1);
+                            $tcs.setException($e1);
                         }
                     }, arguments);
     
@@ -1556,7 +1556,7 @@
                                         return;
                                     }
                                     case 1: {
-                                        $taskResult1 = $task1.getResult();
+                                        $taskResult1 = $task1.getAwaitedResult();
                                         $tcs.setResult($taskResult1);
                                         return;
                                     }
@@ -1568,7 +1568,7 @@
                             }
                         } catch($e1) {
                             $e1 = Bridge.Exception.create($e1);
-                            $tcs.setError($e1);
+                            $tcs.setException($e1);
                         }
                     }, arguments);
     
@@ -4596,7 +4596,7 @@
                                     return;
                                 }
                                 case 1: {
-                                    $taskResult1 = $task1.getResult();
+                                    $taskResult1 = $task1.getAwaitedResult();
                                     result = $taskResult1;
                                     
                                     Bridge.get(Bridge.Test.Assert).areEqual$1(result, "A(0)A(1)B(0)B(1)B(2)", "#508 DoSomethingAsync");
@@ -4643,7 +4643,7 @@
                                         return;
                                     }
                                     case 1: {
-                                        $taskResult3 = $task3.getResult();
+                                        $taskResult3 = $task3.getAwaitedResult();
                                         np = $taskResult3;
                                         $step = 2;
                                         continue;
@@ -4666,7 +4666,7 @@
                                         return;
                                     }
                                     case 5: {
-                                        $taskResult2 = $task2.getResult();
+                                        $taskResult2 = $task2.getAwaitedResult();
                                         np = $taskResult2;
                                         $step = 2;
                                         continue;
@@ -4681,7 +4681,7 @@
                                         return;
                                     }
                                     case 7: {
-                                        $taskResult1 = $task1.getResult();
+                                        $taskResult1 = $task1.getAwaitedResult();
                                         np1 = $taskResult1;
                                         $step = 8;
                                         continue;
@@ -4715,7 +4715,7 @@
                             }
                         } catch($e1) {
                             $e1 = Bridge.Exception.create($e1);
-                            $tcs.setError($e1);
+                            $tcs.setException($e1);
                         }
                     }, arguments);
     
@@ -4740,7 +4740,7 @@
                                         return;
                                     }
                                     case 1: {
-                                        $task1.getResult();
+                                        $task1.getAwaitedResult();
                                         Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge508).count++;
                                         $tcs.setResult(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge508).count < 2 ? { } : null);
                                         return;
@@ -4753,7 +4753,7 @@
                             }
                         } catch($e1) {
                             $e1 = Bridge.Exception.create($e1);
-                            $tcs.setError($e1);
+                            $tcs.setException($e1);
                         }
                     }, arguments);
     
@@ -4778,7 +4778,7 @@
                                         return;
                                     }
                                     case 1: {
-                                        $task1.getResult();
+                                        $task1.getAwaitedResult();
                                         Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge508).count++;
                                         $tcs.setResult(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge508).count < 3 ? { } : null);
                                         return;
@@ -4791,7 +4791,7 @@
                             }
                         } catch($e1) {
                             $e1 = Bridge.Exception.create($e1);
-                            $tcs.setError($e1);
+                            $tcs.setException($e1);
                         }
                     }, arguments);
     
@@ -6459,7 +6459,7 @@
                                     return;
                                 }
                                 case 1: {
-                                    $taskResult1 = $task1.getResult();
+                                    $taskResult1 = $task1.getAwaitedResult();
                                     r = $taskResult1;
                                     
                                     Bridge.get(Bridge.Test.Assert).areEqual$1(r, 8, "Bridge690 TestUseCaseForInstance");
@@ -6494,7 +6494,7 @@
                                     return;
                                 }
                                 case 1: {
-                                    $taskResult1 = $task1.getResult();
+                                    $taskResult1 = $task1.getAwaitedResult();
                                     r = $taskResult1;
                                     
                                     Bridge.get(Bridge.Test.Assert).areEqual$1(r, 59, "Bridge690 TestUseCaseForStatic");
@@ -7363,7 +7363,7 @@
                                         return;
                                     }
                                     case 6: {
-                                        $taskResult1 = $task1.getResult();
+                                        $taskResult1 = $task1.getAwaitedResult();
                                         $tcs.setResult($taskResult1);
                                         return;
                                     }
@@ -7389,7 +7389,7 @@
                                 setTimeout($asyncBody, 0);
                                 return;
                             }
-                            $tcs.setError($e1);
+                            $tcs.setException($e1);
                         }
                     }, arguments);
     
@@ -7418,7 +7418,7 @@
                                     return;
                                 }
                                 case 1: {
-                                    $taskResult2 = $task2.getResult();
+                                    $taskResult2 = $task2.getAwaitedResult();
                                     res = $taskResult2;
                                     Bridge.get(Bridge.Test.Assert).areEqual(res.getMessage(), "Success");
                                     
@@ -7428,7 +7428,7 @@
                                     return;
                                 }
                                 case 2: {
-                                    $taskResult1 = $task1.getResult();
+                                    $taskResult1 = $task1.getAwaitedResult();
                                     res = $taskResult1;
                                     Bridge.get(Bridge.Test.Assert).areEqual(res.getMessage(), "Fail: test");
                                     
@@ -16651,7 +16651,7 @@
                                     return;
                                 }
                                 case 1: {
-                                    $task1.getResult();
+                                    $task1.getAwaitedResult();
                                     state = 2;
                                     return;
                                 }
@@ -16707,7 +16707,7 @@
                                         return;
                                     }
                                     case 1: {
-                                        $task1.getResult();
+                                        $task1.getAwaitedResult();
                                         state = 2;
                                         $tcs.setResult(null);
                                         return;
@@ -16720,7 +16720,7 @@
                             }
                         } catch($e1) {
                             $e1 = Bridge.Exception.create($e1);
-                            $tcs.setError($e1);
+                            $tcs.setException($e1);
                         }
                     }, arguments);
     
@@ -16775,7 +16775,7 @@
                                         return;
                                     }
                                     case 1: {
-                                        $task1.getResult();
+                                        $task1.getAwaitedResult();
                                         state = 2;
                                         throw ex;
                                         $tcs.setResult(null);
@@ -16789,7 +16789,7 @@
                             }
                         } catch($e1) {
                             $e1 = Bridge.Exception.create($e1);
-                            $tcs.setError($e1);
+                            $tcs.setException($e1);
                         }
                     }, arguments);
     
@@ -16845,7 +16845,7 @@
                                         return;
                                     }
                                     case 1: {
-                                        $task1.getResult();
+                                        $task1.getAwaitedResult();
                                         state = 2;
                                         $tcs.setResult(null);
                                         return;
@@ -16858,7 +16858,7 @@
                             }
                         } catch($e1) {
                             $e1 = Bridge.Exception.create($e1);
-                            $tcs.setError($e1);
+                            $tcs.setException($e1);
                         }
                     }, arguments);
     
@@ -16917,7 +16917,7 @@
                                         return;
                                     }
                                     case 2: {
-                                        $task1.getResult();
+                                        $task1.getAwaitedResult();
                                         Bridge.get(Bridge.Test.Assert).fail$1("Await should have thrown");
                                         $step = 4;
                                         continue;
@@ -16946,7 +16946,7 @@
                                 setTimeout($asyncBody, 0);
                                 return;
                             }
-                            $tcs.setError($e1);
+                            $tcs.setException($e1);
                         }
                     }, arguments);
     
@@ -16987,7 +16987,7 @@
                                         return;
                                     }
                                     case 1: {
-                                        $task1.getResult();
+                                        $task1.getAwaitedResult();
                                         state = 2;
                                         $tcs.setResult(42);
                                         return;
@@ -17000,7 +17000,7 @@
                             }
                         } catch($e1) {
                             $e1 = Bridge.Exception.create($e1);
-                            $tcs.setError($e1);
+                            $tcs.setException($e1);
                         }
                     }, arguments);
     
@@ -17617,37 +17617,51 @@
                     $task1, 
                     $taskResult1, 
                     $jumpFromFinally, 
+                    $returnValue, 
                     ex, 
                     $e, 
                     $asyncBody = Bridge.fn.bind(this, function () {
-                        for (;;) {
-                            $step = Bridge.Array.min([1,2,3,4], $step);
-                            switch ($step) {
+                        try {
+                            for (;;) {
+                                $step = Bridge.Array.min([1,2,3,4], $step);
+                                switch ($step) {
     
-                                case 1: {
-                                    $task1 = tcs.task;
-                                    $step = 2;
-                                    $task1.continueWith($asyncBody, true);
-                                    return;
+                                    case 1: {
+                                        $task1 = tcs.task;
+                                        $step = 2;
+                                        $task1.continueWith($asyncBody, true);
+                                        return;
+                                    }
+                                    case 2: {
+                                        $taskResult1 = $task1.getAwaitedResult();
+                                        Bridge.get(Bridge.Test.Assert).fail$1("Await should throw");
+                                        $step = 4;
+                                        continue;
+                                    }
+                                    case 3: {
+                                        caughtException = ex;
+                                        $step = 4;
+                                        continue;
+                                    }
+                                    case 4: {
+                                        return;
+                                    }
+                                    default: {
+                                        return;
+                                    }
                                 }
-                                case 2: {
-                                    $taskResult1 = $task1.getResult();
-                                    Bridge.get(Bridge.Test.Assert).fail$1("Await should throw");
-                                    $step = 4;
-                                    continue;
-                                }
-                                case 3: {
-                                    caughtException = ex;
-                                    $step = 4;
-                                    continue;
-                                }
-                                case 4: {
-                                    return;
-                                }
-                                default: {
+                            }
+                        } catch($e1) {
+                            $e1 = Bridge.Exception.create($e1);
+                            if ( $step >= 1 && $step <= 2 ){
+                                if (Bridge.is($e1, Bridge.TaskCanceledException)) {
+                                    ex = $e1;
+                                    $step = 3;
+                                    setTimeout($asyncBody, 0);
                                     return;
                                 }
                             }
+                            throw $e1;
                         }
                     }, arguments);
     
