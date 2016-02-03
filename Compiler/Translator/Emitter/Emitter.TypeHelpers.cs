@@ -118,6 +118,38 @@ namespace Bridge.Translator
 
             foreach (var t in this.Types)
             {
+                for (int i = this.Types.Count - 1; i > -1; i--)
+                {
+                    var x = this.Types[i];
+
+                    var tProcess = graph.Processes.FirstOrDefault(p => p.Name == t.Type.ReflectionName);
+                    if (tProcess == null)
+                    {
+                        tProcess = new TopologicalSorting.OrderedProcess(graph, t.Type.ReflectionName);
+                    }
+
+                    if (this.IsInheritedFrom(t, x))
+                    {
+                        if (tProcess.Predecessors.All(p => p.Name != x.Type.ReflectionName))
+                        {
+                            var dProcess = graph.Processes.FirstOrDefault(p => p.Name == x.Type.ReflectionName);
+                            if (dProcess == null)
+                            {
+                                dProcess = new TopologicalSorting.OrderedProcess(graph, x.Type.ReflectionName);
+                            }
+                            //var dProcess = new TopologicalSorting.OrderedProcess(graph, dependency.Type.FullName);
+
+                            if (dProcess.Predecessors.All(p => p.Name != tProcess.Name))
+                            {
+                                tProcess.After(dProcess);
+                            }
+                        }
+                    }
+                }
+            }
+
+            foreach (var t in this.Types)
+            {
                 var finder = new DependencyFinderVisitor(this, t);
                 t.TypeDeclaration.AcceptVisitor(finder);
 
@@ -137,38 +169,6 @@ namespace Bridge.Translator
                             if (dProcess == null)
                             {
                                 dProcess = new TopologicalSorting.OrderedProcess(graph, dependency.Type.ReflectionName);
-                            }
-                            //var dProcess = new TopologicalSorting.OrderedProcess(graph, dependency.Type.FullName);
-
-                            if (dProcess.Predecessors.All(p => p.Name != tProcess.Name))
-                            {
-                                tProcess.After(dProcess);
-                            }
-                        }
-                    }
-                }
-            }
-
-            foreach (var t in this.Types)
-            {
-                for (int i = this.Types.Count - 1; i > -1; i--)
-                {
-                    var x = this.Types[i];
-
-                    var tProcess = graph.Processes.FirstOrDefault(p => p.Name == t.Type.ReflectionName);
-                    if (tProcess == null)
-                    {
-                        tProcess = new TopologicalSorting.OrderedProcess(graph, t.Type.ReflectionName);
-                    }
-
-                    if (this.IsInheritedFrom(t, x))
-                    {
-                        if (tProcess.Predecessors.All(p => p.Name != x.Type.ReflectionName))
-                        {
-                            var dProcess = graph.Processes.FirstOrDefault(p => p.Name == x.Type.ReflectionName);
-                            if (dProcess == null)
-                            {
-                                dProcess = new TopologicalSorting.OrderedProcess(graph, x.Type.ReflectionName);
                             }
                             //var dProcess = new TopologicalSorting.OrderedProcess(graph, dependency.Type.FullName);
 

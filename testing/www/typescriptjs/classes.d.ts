@@ -1,14 +1,14 @@
 ﻿/// <reference path="./bridge.d.ts" />
 
 declare module Classes {
-    export interface Snake extends Classes.Animal {
-        move(): number;
+    export interface StaticClass {
     }
-    export interface SnakeFunc extends Function {
-        prototype: Snake;
-        new (name: string): Snake;
+    export interface StaticClassFunc extends Function {
+        prototype: StaticClass;
+        new (): StaticClass;
+        move(p: Classes.Point, dx: number, dy: number): Classes.Point;
     }
-    var Snake: SnakeFunc;
+    var StaticClass: StaticClassFunc;
 
     export interface MovePoint {
         getPoint(): Classes.Point;
@@ -30,14 +30,14 @@ declare module Classes {
     }
     var Employee: EmployeeFunc;
 
-    export interface StaticClass {
+    export interface Snake extends Classes.Animal {
+        move(): number;
     }
-    export interface StaticClassFunc extends Function {
-        prototype: StaticClass;
-        new (): StaticClass;
-        move(p: Classes.Point, dx: number, dy: number): Classes.Point;
+    export interface SnakeFunc extends Function {
+        prototype: Snake;
+        new (name: string): Snake;
     }
-    var StaticClass: StaticClassFunc;
+    var Snake: SnakeFunc;
 
     export interface Dog extends Classes.Animal {
         move$1(): number;

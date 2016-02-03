@@ -74,14 +74,6 @@
         }
     });
     
-    Bridge.define('Classes.StaticClass', {
-        statics: {
-            move: function (p, dx, dy) {
-                return new Classes.Point("constructor$1", p.x + dx, p.y + dy);
-            }
-        }
-    });
-    
     Bridge.define('Classes.Snake', {
         inherits: [Classes.Animal],
         constructor: function (name) {
@@ -90,6 +82,14 @@
         },
         move: function () {
             return 5;
+        }
+    });
+    
+    Bridge.define('Classes.StaticClass', {
+        statics: {
+            move: function (p, dx, dy) {
+                return new Classes.Point("constructor$1", p.x + dx, p.y + dy);
+            }
         }
     });
     
