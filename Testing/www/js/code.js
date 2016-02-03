@@ -8441,7 +8441,9 @@
                 var i = $t.getCurrent();
                 sb.appendLine("got " + i);
             }
+    
             sb.appendLine("-");
+    
             $t1 = Bridge.getEnumerator(enm);
             while ($t1.moveNext()) {
                 var i1 = $t1.getCurrent();
