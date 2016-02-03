@@ -11,6 +11,7 @@ namespace Bridge.Translator
         public Inspector()
         {
             this.Types = new List<ITypeInfo>();
+            this.IgnoredTypes = new List<string>();
             this.AssemblyInfo = new AssemblyInfo();
         }
 
