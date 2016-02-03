@@ -7670,10 +7670,19 @@
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge898', {
         statics: {
-            testMakeEnumerable: function () {
+            testDecimalConversion: function () {
                 var check = true;
                 var test = Bridge.Decimal(check ? 1 : 2);
-                Bridge.get(Bridge.Test.Assert).$true(test.equalsT(Bridge.Decimal(1)));
+    
+                Bridge.get(Bridge.Test.Assert).true$1(test.equalsT(Bridge.Decimal(1)), "One True");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(test), "Bridge.Decimal", "Is decimal");
+            },
+            testDoubleConversion: function () {
+                var check = true;
+                var test = check ? 1 : 2;
+    
+                Bridge.get(Bridge.Test.Assert).true$1(test === 1, "One True");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(test), "Number", "Is number");
             }
         }
     });

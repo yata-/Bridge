@@ -1,8 +1,5 @@
 using Bridge.Test;
 
-using System.Collections.Generic;
-using System.Linq;
-
 namespace Bridge.ClientTest.BridgeIssues
 {
     // Bridge[#898]
@@ -10,12 +7,24 @@ namespace Bridge.ClientTest.BridgeIssues
     [TestFixture(TestNameFormat = "#898 - {0}")]
     public class Bridge898
     {
-        [Test(ExpectedCount = 1)]
-        public static void TestMakeEnumerable()
+        [Test(ExpectedCount = 2)]
+        public static void TestDecimalConversion()
         {
             bool check = true;
             decimal test = check ? 1 : 2;
-            Assert.True(test == 1);
+
+            Assert.True(test == 1, "One True");
+            Assert.AreEqual(test.GetClassName(), "Bridge.Decimal", "Is decimal");
+        }
+
+        [Test(ExpectedCount = 2)]
+        public static void TestDoubleConversion()
+        {
+            bool check = true;
+            double test = check ? 1 : 2;
+
+            Assert.True(test == 1, "One True");
+            Assert.AreEqual(test.GetClassName(), "Number", "Is number");
         }
     }
 }
