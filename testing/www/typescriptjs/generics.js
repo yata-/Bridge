@@ -13,14 +13,6 @@
         }
     }; });
     
-    Bridge.define('Generics.INamedEntity', {
-        config: {
-            properties: {
-                Name: null
-            }
-        }
-    });
-    
     Bridge.define('Generics.GenericNew$1', function (T) { return {
         instance: null,
         constructor: function (instance) {
@@ -51,15 +43,20 @@
         }
     }; });
     
-    Bridge.define('Generics.SimpleGeneric$1', function (T) { return {
-        instance: null,
-        constructor: function (instance) {
-            this.instance = instance;
-        },
-        getSomething: function (input) {
-            return input;
+    Bridge.define('Generics.INamedEntity', {
+        config: {
+            properties: {
+                Name: null
+            }
         }
-    }; });
+    });
+    
+    Bridge.define('Generics.NewClass', {
+        data: 0,
+        constructor: function () {
+            this.data = 30;
+        }
+    });
     
     Bridge.define('Generics.SimpleDoubleGeneric$2', function (T, K) { return {
         instanceT: null,
@@ -78,12 +75,15 @@
         }
     }; });
     
-    Bridge.define('Generics.NewClass', {
-        data: 0,
-        constructor: function () {
-            this.data = 30;
+    Bridge.define('Generics.SimpleGeneric$1', function (T) { return {
+        instance: null,
+        constructor: function (instance) {
+            this.instance = instance;
+        },
+        getSomething: function (input) {
+            return input;
         }
-    });
+    }; });
     
     Bridge.define('Generics.GenericINamedEntity$1', function (T) { return {
         instance: null,
