@@ -171,7 +171,8 @@
     <Compile Include="Exceptions\TaskCanceledExceptionTests.cs" />
     <Compile Include="Exceptions\PromiseExceptionTests.cs" />
     <Compile Include="Exceptions\OperationCanceledExceptionTests.cs" />
-    <Compile Include="Exceptions\CultureNotFoundExceptionTests.cs" />    <Compile Include="Linq\TestLinqGroupingOperators.cs" />
+    <Compile Include="Exceptions\CultureNotFoundExceptionTests.cs" />
+    <Compile Include="Linq\TestLinqGroupingOperators.cs" />
     <Compile Include="Linq\TestLinqConversionOperators.cs" />
     <Compile Include="Linq\TestLinqAggregateOperators.cs" />
     <Compile Include="Linq\TestLinqElementOperators.cs" />
@@ -189,6 +190,8 @@
     <Compile Include="Tests\MarkupCheckRequired.cs" />
     <Compile Include="Tests\NotCompiling.cs" />
     <Compile Include="Threading\CancellationTokenTests.cs" />
+    <Compile Include="Threading\Tasks\AsyncTests.cs" />
+    <Compile Include="Threading\Tasks\TaskTests.cs" />
     <Compile Include="Utilities\BrowserHelper.cs" />
     <Compile Include="Utilities\DecimalHelper.cs" />
     <Compile Include="Utilities\TypeHelper.cs" />
@@ -224,7 +227,6 @@
     <Compile Include="Collections\Generic\IListTests.cs" />
     <Compile Include="Collections\Generic\ICollectionTests.cs" />
     <Compile Include="Collections\Generic\IEnumerableTests.cs" />
-    <Compile Include="Globals.cs" />
     <Compile Include="ExceptionTests.cs" />
     <Compile Include="IEquatableTests.cs" />
     <Compile Include="Collections\Generic\EqualityComparerTests.cs" />

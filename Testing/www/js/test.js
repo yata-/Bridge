@@ -4478,6 +4478,59 @@
         }
     });
     
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsAggregateExceptionTests', {
+        statics: {
+            instance: null,
+            getInstance: function () {
+                if (!Bridge.hasValue(Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsAggregateExceptionTests).instance)) {
+                    Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsAggregateExceptionTests).instance = new Bridge.ClientTest.Exceptions.AggregateExceptionTests();
+                }
+                return Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsAggregateExceptionTests).instance;
+            },
+            setInstance: function (value) {
+                Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsAggregateExceptionTests).instance = value;
+            },
+            beforeTest: function (isStatic, assert) {
+                Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsAggregateExceptionTests).setInstance(null);
+                Bridge.get(Bridge.Test.Assert).assert = assert;
+                var r = isStatic ? null : Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsAggregateExceptionTests).getInstance();
+                return r;
+            },
+            typePropertiesAreCorrect: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsAggregateExceptionTests).beforeTest(false, assert);
+                t.typePropertiesAreCorrect();
+            },
+            defaultConstructorWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsAggregateExceptionTests).beforeTest(false, assert);
+                t.defaultConstructorWorks();
+            },
+            constructorWithIEnumerableInnerExceptionsWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsAggregateExceptionTests).beforeTest(false, assert);
+                t.constructorWithIEnumerableInnerExceptionsWorks();
+            },
+            constructorWithInnerExceptionArrayWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsAggregateExceptionTests).beforeTest(false, assert);
+                t.constructorWithInnerExceptionArrayWorks();
+            },
+            constructorWithMessageWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsAggregateExceptionTests).beforeTest(false, assert);
+                t.constructorWithMessageWorks();
+            },
+            constructorWithMessageAndIEnumerableInnerExceptionsWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsAggregateExceptionTests).beforeTest(false, assert);
+                t.constructorWithMessageAndIEnumerableInnerExceptionsWorks();
+            },
+            constructorWithMessageAndInnerExceptionArrayWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsAggregateExceptionTests).beforeTest(false, assert);
+                t.constructorWithMessageAndInnerExceptionArrayWorks();
+            },
+            flattenWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsAggregateExceptionTests).beforeTest(false, assert);
+                t.flattenWorks();
+            }
+        }
+    });
+    
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsArgumentExceptionTests', {
         statics: {
             instance: null,
@@ -5054,6 +5107,55 @@
         }
     });
     
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsOperationCanceledExceptionTests', {
+        statics: {
+            instance: null,
+            getInstance: function () {
+                if (!Bridge.hasValue(Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsOperationCanceledExceptionTests).instance)) {
+                    Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsOperationCanceledExceptionTests).instance = new Bridge.ClientTest.Exceptions.OperationCanceledExceptionTests();
+                }
+                return Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsOperationCanceledExceptionTests).instance;
+            },
+            setInstance: function (value) {
+                Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsOperationCanceledExceptionTests).instance = value;
+            },
+            beforeTest: function (isStatic, assert) {
+                Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsOperationCanceledExceptionTests).setInstance(null);
+                Bridge.get(Bridge.Test.Assert).assert = assert;
+                var r = isStatic ? null : Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsOperationCanceledExceptionTests).getInstance();
+                return r;
+            },
+            typePropertiesAreCorrect: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsOperationCanceledExceptionTests).beforeTest(false, assert);
+                t.typePropertiesAreCorrect();
+            },
+            defaultConstructorWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsOperationCanceledExceptionTests).beforeTest(false, assert);
+                t.defaultConstructorWorks();
+            },
+            cancellationTokenOnlyConstructorWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsOperationCanceledExceptionTests).beforeTest(false, assert);
+                t.cancellationTokenOnlyConstructorWorks();
+            },
+            messageOnlyConstructorWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsOperationCanceledExceptionTests).beforeTest(false, assert);
+                t.messageOnlyConstructorWorks();
+            },
+            messageAndInnerExceptionConstructorWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsOperationCanceledExceptionTests).beforeTest(false, assert);
+                t.messageAndInnerExceptionConstructorWorks();
+            },
+            messageAndCancellationTokenConstructorWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsOperationCanceledExceptionTests).beforeTest(false, assert);
+                t.messageAndCancellationTokenConstructorWorks();
+            },
+            messageAndInnerExceptionAndCancellationTokenConstructorWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsOperationCanceledExceptionTests).beforeTest(false, assert);
+                t.messageAndInnerExceptionAndCancellationTokenConstructorWorks();
+            }
+        }
+    });
+    
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsOverflowExceptionTests', {
         statics: {
             instance: null,
@@ -5091,6 +5193,43 @@
         }
     });
     
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsPromiseExceptionTests', {
+        statics: {
+            instance: null,
+            getInstance: function () {
+                if (!Bridge.hasValue(Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsPromiseExceptionTests).instance)) {
+                    Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsPromiseExceptionTests).instance = new Bridge.ClientTest.Exceptions.PromiseExceptionTests();
+                }
+                return Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsPromiseExceptionTests).instance;
+            },
+            setInstance: function (value) {
+                Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsPromiseExceptionTests).instance = value;
+            },
+            beforeTest: function (isStatic, assert) {
+                Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsPromiseExceptionTests).setInstance(null);
+                Bridge.get(Bridge.Test.Assert).assert = assert;
+                var r = isStatic ? null : Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsPromiseExceptionTests).getInstance();
+                return r;
+            },
+            typePropertiesAreCorrect: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsPromiseExceptionTests).beforeTest(false, assert);
+                t.typePropertiesAreCorrect();
+            },
+            argumentsOnlyConstructorWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsPromiseExceptionTests).beforeTest(false, assert);
+                t.argumentsOnlyConstructorWorks();
+            },
+            argumentsAndMessageConstructorWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsPromiseExceptionTests).beforeTest(false, assert);
+                t.argumentsAndMessageConstructorWorks();
+            },
+            argumentsAndMessageAndInnerExceptionConstructorWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsPromiseExceptionTests).beforeTest(false, assert);
+                t.argumentsAndMessageAndInnerExceptionConstructorWorks();
+            }
+        }
+    });
+    
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsRankExceptionTests', {
         statics: {
             instance: null,
@@ -5120,6 +5259,47 @@
             constructorWithMessageWorks: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsRankExceptionTests).beforeTest(false, assert);
                 t.constructorWithMessageWorks();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsTaskCanceledExceptionTests', {
+        statics: {
+            instance: null,
+            getInstance: function () {
+                if (!Bridge.hasValue(Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsTaskCanceledExceptionTests).instance)) {
+                    Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsTaskCanceledExceptionTests).instance = new Bridge.ClientTest.Exceptions.TaskCanceledExceptionTests();
+                }
+                return Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsTaskCanceledExceptionTests).instance;
+            },
+            setInstance: function (value) {
+                Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsTaskCanceledExceptionTests).instance = value;
+            },
+            beforeTest: function (isStatic, assert) {
+                Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsTaskCanceledExceptionTests).setInstance(null);
+                Bridge.get(Bridge.Test.Assert).assert = assert;
+                var r = isStatic ? null : Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsTaskCanceledExceptionTests).getInstance();
+                return r;
+            },
+            typePropertiesAreCorrect: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsTaskCanceledExceptionTests).beforeTest(false, assert);
+                t.typePropertiesAreCorrect();
+            },
+            defaultConstructorWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsTaskCanceledExceptionTests).beforeTest(false, assert);
+                t.defaultConstructorWorks();
+            },
+            messageOnlyConstructorWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsTaskCanceledExceptionTests).beforeTest(false, assert);
+                t.messageOnlyConstructorWorks();
+            },
+            taskOnlyConstructorWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsTaskCanceledExceptionTests).beforeTest(false, assert);
+                t.taskOnlyConstructorWorks();
+            },
+            messageAndInnerExceptionConstructorWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsTaskCanceledExceptionTests).beforeTest(false, assert);
+                t.messageAndInnerExceptionConstructorWorks();
             }
         }
     });
@@ -7878,6 +8058,436 @@
         }
     });
     
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingAsyncTests', {
+        statics: {
+            instance: null,
+            getInstance: function () {
+                if (!Bridge.hasValue(Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingAsyncTests).instance)) {
+                    Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingAsyncTests).instance = new Bridge.ClientTest.Threading.AsyncTests();
+                }
+                return Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingAsyncTests).instance;
+            },
+            setInstance: function (value) {
+                Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingAsyncTests).instance = value;
+            },
+            beforeTest: function (isStatic, assert) {
+                Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingAsyncTests).setInstance(null);
+                Bridge.get(Bridge.Test.Assert).assert = assert;
+                var r = isStatic ? null : Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingAsyncTests).getInstance();
+                return r;
+            },
+            asyncVoid: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingAsyncTests).beforeTest(false, assert);
+                assert.expect(3);
+                t.asyncVoid();
+            },
+            asyncTask: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingAsyncTests).beforeTest(false, assert);
+                assert.expect(7);
+                t.asyncTask();
+            },
+            asyncTaskBodyThrowsException: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingAsyncTests).beforeTest(false, assert);
+                assert.expect(8);
+                t.asyncTaskBodyThrowsException();
+            },
+            awaitTaskThatFaults: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingAsyncTests).beforeTest(false, assert);
+                assert.expect(8);
+                t.awaitTaskThatFaults();
+            },
+            aggregateExceptionsAreUnwrappedWhenAwaitingTask: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingAsyncTests).beforeTest(false, assert);
+                assert.expect(2);
+                t.aggregateExceptionsAreUnwrappedWhenAwaitingTask();
+            },
+            asyncTaskThatReturnsValue: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingAsyncTests).beforeTest(false, assert);
+                assert.expect(8);
+                t.asyncTaskThatReturnsValue();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests', {
+        statics: {
+            instance: null,
+            getInstance: function () {
+                if (!Bridge.hasValue(Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).instance)) {
+                    Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).instance = new Bridge.ClientTest.Threading.CancellationTokenTests();
+                }
+                return Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).instance;
+            },
+            setInstance: function (value) {
+                Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).instance = value;
+            },
+            beforeTest: function (isStatic, assert) {
+                Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).setInstance(null);
+                Bridge.get(Bridge.Test.Assert).assert = assert;
+                var r = isStatic ? null : Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).getInstance();
+                return r;
+            },
+            typePropertiesForCancellationTokenSourceAreCorrect: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.typePropertiesForCancellationTokenSourceAreCorrect();
+            },
+            typePropertiesForCancellationTokenAreCorrect: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.typePropertiesForCancellationTokenAreCorrect();
+            },
+            typePropertiesForCancellationTokenRegistrationAreCorrect: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.typePropertiesForCancellationTokenRegistrationAreCorrect();
+            },
+            cancellationTokenCreatedWithDefaultConstructorIsNotCanceledAndCannotBe: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.cancellationTokenCreatedWithDefaultConstructorIsNotCanceledAndCannotBe();
+            },
+            cancellationTokenCreatedWithFalseArgumentToConstructorIsNotCanceledAndCannotBe: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.cancellationTokenCreatedWithFalseArgumentToConstructorIsNotCanceledAndCannotBe();
+            },
+            cancellationTokenCreatedWithTrueArgumentToConstructorIsCanceled: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.cancellationTokenCreatedWithTrueArgumentToConstructorIsCanceled();
+            },
+            cancellationTokenNoneIsNotCancelledAndCannotBe: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.cancellationTokenNoneIsNotCancelledAndCannotBe();
+            },
+            creatingADefaultCancellationTokenReturnsACancellationTokenThatIsNotCancelled: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.creatingADefaultCancellationTokenReturnsACancellationTokenThatIsNotCancelled();
+            },
+            activatorCreateForCancellationTokenReturnsACancellationTokenThatIsNotCancelled: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.activatorCreateForCancellationTokenReturnsACancellationTokenThatIsNotCancelled();
+            },
+            canBeCanceledIsTrueForTokenCreatedForCancellationTokenSource: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.canBeCanceledIsTrueForTokenCreatedForCancellationTokenSource();
+            },
+            isCancellationRequestedForTokenCreatedForCancellationTokenSourceIsSetByTheCancelMethod: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.isCancellationRequestedForTokenCreatedForCancellationTokenSourceIsSetByTheCancelMethod();
+            },
+            throwIfCancellationRequestedForTokenCreatedForCancellationTokenSourceThrowsAfterTheCancelMethodIsCalled: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.throwIfCancellationRequestedForTokenCreatedForCancellationTokenSourceThrowsAfterTheCancelMethodIsCalled();
+            },
+            cancelWithoutArgumentsWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.cancelWithoutArgumentsWorks();
+            },
+            cancelWorksWhenThrowOnFirstExceptionIsFalse: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.cancelWorksWhenThrowOnFirstExceptionIsFalse();
+            },
+            cancelWorksWhenThrowOnFirstExceptionIsTrue: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.cancelWorksWhenThrowOnFirstExceptionIsTrue();
+            },
+            registerOnACancelledSourceWithoutContextInvokesTheCallback: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.registerOnACancelledSourceWithoutContextInvokesTheCallback();
+            },
+            registerWithArgumentOnACancelledSourceInvokesTheCallback: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.registerWithArgumentOnACancelledSourceInvokesTheCallback();
+            },
+            registerOnACancelledSourceWithoutContextRethrowsAThrownException: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.registerOnACancelledSourceWithoutContextRethrowsAThrownException();
+            },
+            registerOnACancelledSourceWithContextRethrowsAThrownException: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.registerOnACancelledSourceWithContextRethrowsAThrownException();
+            },
+            registerOverloadsWithUseSynchronizationContextWork: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.registerOverloadsWithUseSynchronizationContextWork();
+            },
+            registerOnCancellationTokenCreatedNonCancelledDoesNothing: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.registerOnCancellationTokenCreatedNonCancelledDoesNothing();
+            },
+            registerOnCancellationTokenCreatedCancelledInvokesTheActionImmediately: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.registerOnCancellationTokenCreatedCancelledInvokesTheActionImmediately();
+            },
+            duplicateCancelDoesNotCauseCallbacksToBeCalledTwice: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.duplicateCancelDoesNotCauseCallbacksToBeCalledTwice();
+            },
+            registrationsCanBeCompared: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.registrationsCanBeCompared();
+            },
+            registrationsCanBeUnregistered: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.registrationsCanBeUnregistered();
+            },
+            creatingADefaultCancellationTokenRegistrationReturnsARegistrationThatCanBeDisposedWithoutHarm: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.creatingADefaultCancellationTokenRegistrationReturnsARegistrationThatCanBeDisposedWithoutHarm();
+            },
+            linkedSourceWithTwoTokensWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.linkedSourceWithTwoTokensWorks();
+            },
+            linkedSourceWithThreeTokensWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).beforeTest(false, assert);
+                t.linkedSourceWithThreeTokensWorks();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests', {
+        statics: {
+            instance: null,
+            getInstance: function () {
+                if (!Bridge.hasValue(Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).instance)) {
+                    Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).instance = new Bridge.ClientTest.Threading.TaskTests();
+                }
+                return Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).instance;
+            },
+            setInstance: function (value) {
+                Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).instance = value;
+            },
+            beforeTest: function (isStatic, assert) {
+                Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).setInstance(null);
+                Bridge.get(Bridge.Test.Assert).assert = assert;
+                var r = isStatic ? null : Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).getInstance();
+                return r;
+            },
+            taskCompletionSourceTypePropertiesAreCorrect: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(2);
+                t.taskCompletionSourceTypePropertiesAreCorrect();
+            },
+            taskTypePropertiesAreCorrect: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(5);
+                t.taskTypePropertiesAreCorrect();
+            },
+            taskCompletionSourceWorksWhenSettingResult: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(10);
+                t.taskCompletionSourceWorksWhenSettingResult();
+            },
+            taskCompletionSourceWorksWhenSettingASingleException: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(12);
+                t.taskCompletionSourceWorksWhenSettingASingleException();
+            },
+            taskCompletionSourceWorksWhenSettingTwoExceptions: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(14);
+                t.taskCompletionSourceWorksWhenSettingTwoExceptions();
+            },
+            taskCompletionSourceWorksWhenCancelling: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(10);
+                t.taskCompletionSourceWorksWhenCancelling();
+            },
+            cancelledTaskThrowsTaskCanceledExceptionWhenAwaited: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(3);
+                t.cancelledTaskThrowsTaskCanceledExceptionWhenAwaited();
+            },
+            cancelledTaskThrowsAggregateExceptionWithTaskCanceledExceptionWhenResultIsAccessed: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(3);
+                t.cancelledTaskThrowsAggregateExceptionWithTaskCanceledExceptionWhenResultIsAccessed();
+            },
+            setResultFailsWhenTheTaskIsCompleted: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(1);
+                t.setResultFailsWhenTheTaskIsCompleted();
+            },
+            setCanceledFailsWhenTheTaskIsCompleted: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(1);
+                t.setCanceledFailsWhenTheTaskIsCompleted();
+            },
+            setExceptionFailsWhenTheTaskIsCompleted: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(1);
+                t.setExceptionFailsWhenTheTaskIsCompleted();
+            },
+            completedTaskHasCorrectIsXProperties: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(3);
+                t.completedTaskHasCorrectIsXProperties();
+            },
+            cancelledTaskHasCorrectIsXProperties: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(3);
+                t.cancelledTaskHasCorrectIsXProperties();
+            },
+            faultedTaskHasCorrectIsXProperties: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(3);
+                t.faultedTaskHasCorrectIsXProperties();
+            },
+            trySetResultReturnsFalseWhenTheTaskIsCompleted: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(2);
+                t.trySetResultReturnsFalseWhenTheTaskIsCompleted();
+            },
+            trySetCanceledReturnsFalseWhenTheTaskIsCompleted: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(2);
+                t.trySetCanceledReturnsFalseWhenTheTaskIsCompleted();
+            },
+            trySetExceptionReturnsFalseWhenTheTaskIsCompleted: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(2);
+                t.trySetExceptionReturnsFalseWhenTheTaskIsCompleted();
+            },
+            continueWithForNonGenericTaskWorkWithNoResultAndNoException: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(10);
+                t.continueWithForNonGenericTaskWorkWithNoResultAndNoException();
+            },
+            continueWithWhenCallbackThrowsAnException: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(6);
+                t.continueWithWhenCallbackThrowsAnException();
+            },
+            exceptionInTaskBodyAppearsInTheExceptionMemberForNonGenericTask: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(8);
+                t.exceptionInTaskBodyAppearsInTheExceptionMemberForNonGenericTask();
+            },
+            continueWithForNonGenericTaskCanReturnAValue: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(11);
+                t.continueWithForNonGenericTaskCanReturnAValue();
+            },
+            continueWithWithNoReturnValueForGenericTaskWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(10);
+                t.continueWithWithNoReturnValueForGenericTaskWorks();
+            },
+            continueWithForGenericTaskCanReturnAValue: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(11);
+                t.continueWithForGenericTaskCanReturnAValue();
+            },
+            delayWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(6);
+                t.delayWorks();
+            },
+            fromResultWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(3);
+                t.fromResultWorks();
+            },
+            runWithoutResultWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(6);
+                t.runWithoutResultWorks();
+            },
+            runWithResultWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(7);
+                t.runWithResultWorks();
+            },
+            runWorksWhenBodyThrows: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(7);
+                t.runWorksWhenBodyThrows();
+            },
+            whenAllParamArrayWithResultWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(13);
+                t.whenAllParamArrayWithResultWorks();
+            },
+            whenAllEnumerableWithResultWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(13);
+                t.whenAllEnumerableWithResultWorks();
+            },
+            whenAllParamArrayWithoutResultWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(12);
+                t.whenAllParamArrayWithoutResultWorks();
+            },
+            whenAllEnumerableWithoutResultWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(12);
+                t.whenAllEnumerableWithoutResultWorks();
+            },
+            whenAllShouldHaveAnErrorIfAnyIncludedTaskFaulted: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(17);
+                t.whenAllShouldHaveAnErrorIfAnyIncludedTaskFaulted();
+            },
+            whenAllShouldBeCancelledIfNoTaskWasFaultedButSomeWasCancelled: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(12);
+                t.whenAllShouldBeCancelledIfNoTaskWasFaultedButSomeWasCancelled();
+            },
+            whenAnyParamArrayWithResultWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(11);
+                t.whenAnyParamArrayWithResultWorks();
+            },
+            whenAnyEnumerableWithResultWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(10);
+                t.whenAnyEnumerableWithResultWorks();
+            },
+            whenAnyParamArrayWithoutResultWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(9);
+                t.whenAnyParamArrayWithoutResultWorks();
+            },
+            whenAnyEnumerableWithoutResultWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(9);
+                t.whenAnyEnumerableWithoutResultWorks();
+            },
+            whenAnyFaultsIfTheFirstTaskFaulted: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(9);
+                t.whenAnyFaultsIfTheFirstTaskFaulted();
+            },
+            whenAnyIsCancelledIfTheFirstTaskWasCancelled: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(9);
+                t.whenAnyIsCancelledIfTheFirstTaskWasCancelled();
+            },
+            constructorWithOnlyActionWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(7);
+                t.constructorWithOnlyActionWorks();
+            },
+            constructorWithActionAndStateWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(10);
+                t.constructorWithActionAndStateWorks();
+            },
+            exceptionInManuallyCreatedTaskIsStoredOnTheTask: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(8);
+                t.exceptionInManuallyCreatedTaskIsStoredOnTheTask();
+            },
+            constructorWithOnlyFunctionWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(8);
+                t.constructorWithOnlyFunctionWorks();
+            },
+            constructorWithFunctionAndStateWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).beforeTest(false, assert);
+                assert.expect(9);
+                t.constructorWithFunctionAndStateWorks();
+            }
+        }
+    });
+    
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTestArrayTests', {
         statics: {
             instance: null,
@@ -9209,6 +9819,14 @@
                 QUnit.test("DefaultComparerInvokesOverriddenGetHashCode", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_GenericEqualityComparerTests).defaultComparerInvokesOverriddenGetHashCode);
                 QUnit.test("DefaultComparerInvokesOverriddenEquals", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_GenericEqualityComparerTests).defaultComparerInvokesOverriddenEquals);
                 QUnit.module("Exceptions");
+                QUnit.test("AggregateException - TypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsAggregateExceptionTests).typePropertiesAreCorrect);
+                QUnit.test("AggregateException - DefaultConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsAggregateExceptionTests).defaultConstructorWorks);
+                QUnit.test("AggregateException - ConstructorWithIEnumerableInnerExceptionsWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsAggregateExceptionTests).constructorWithIEnumerableInnerExceptionsWorks);
+                QUnit.test("AggregateException - ConstructorWithInnerExceptionArrayWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsAggregateExceptionTests).constructorWithInnerExceptionArrayWorks);
+                QUnit.test("AggregateException - ConstructorWithMessageWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsAggregateExceptionTests).constructorWithMessageWorks);
+                QUnit.test("AggregateException - ConstructorWithMessageAndIEnumerableInnerExceptionsWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsAggregateExceptionTests).constructorWithMessageAndIEnumerableInnerExceptionsWorks);
+                QUnit.test("AggregateException - ConstructorWithMessageAndInnerExceptionArrayWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsAggregateExceptionTests).constructorWithMessageAndInnerExceptionArrayWorks);
+                QUnit.test("AggregateException - FlattenWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsAggregateExceptionTests).flattenWorks);
                 QUnit.test("ArgumentException - TypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsArgumentExceptionTests).typePropertiesAreCorrect);
                 QUnit.test("ArgumentException - DefaultConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsArgumentExceptionTests).defaultConstructorWorks);
                 QUnit.test("ArgumentException - ConstructorWithMessageWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsArgumentExceptionTests).constructorWithMessageWorks);
@@ -9279,13 +9897,29 @@
                 QUnit.test("NullReferenceException - ConstructorWithMessageWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsNullReferenceExceptionTests).constructorWithMessageWorks);
                 QUnit.test("NullReferenceException - ConstructorWithMessageAndInnerExceptionWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsNullReferenceExceptionTests).constructorWithMessageAndInnerExceptionWorks);
                 QUnit.test("NullReferenceException - AccessingAFieldOnANullObjectCausesANullReferenceException", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsNullReferenceExceptionTests).accessingAFieldOnANullObjectCausesANullReferenceException);
+                QUnit.test("OperationCanceledException - TypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsOperationCanceledExceptionTests).typePropertiesAreCorrect);
+                QUnit.test("OperationCanceledException - DefaultConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsOperationCanceledExceptionTests).defaultConstructorWorks);
+                QUnit.test("OperationCanceledException - CancellationTokenOnlyConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsOperationCanceledExceptionTests).cancellationTokenOnlyConstructorWorks);
+                QUnit.test("OperationCanceledException - MessageOnlyConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsOperationCanceledExceptionTests).messageOnlyConstructorWorks);
+                QUnit.test("OperationCanceledException - MessageAndInnerExceptionConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsOperationCanceledExceptionTests).messageAndInnerExceptionConstructorWorks);
+                QUnit.test("OperationCanceledException - MessageAndCancellationTokenConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsOperationCanceledExceptionTests).messageAndCancellationTokenConstructorWorks);
+                QUnit.test("OperationCanceledException - MessageAndInnerExceptionAndCancellationTokenConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsOperationCanceledExceptionTests).messageAndInnerExceptionAndCancellationTokenConstructorWorks);
                 QUnit.test("OverflowException - TypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsOverflowExceptionTests).typePropertiesAreCorrect);
                 QUnit.test("OverflowException - DefaultConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsOverflowExceptionTests).defaultConstructorWorks);
                 QUnit.test("OverflowException - ConstructorWithMessageWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsOverflowExceptionTests).constructorWithMessageWorks);
                 QUnit.test("OverflowException - ConstructorWithMessageAndInnerExceptionWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsOverflowExceptionTests).constructorWithMessageAndInnerExceptionWorks);
+                QUnit.test("PromiseException - TypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsPromiseExceptionTests).typePropertiesAreCorrect);
+                QUnit.test("PromiseException - ArgumentsOnlyConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsPromiseExceptionTests).argumentsOnlyConstructorWorks);
+                QUnit.test("PromiseException - ArgumentsAndMessageConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsPromiseExceptionTests).argumentsAndMessageConstructorWorks);
+                QUnit.test("PromiseException - ArgumentsAndMessageAndInnerExceptionConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsPromiseExceptionTests).argumentsAndMessageAndInnerExceptionConstructorWorks);
                 QUnit.test("RankException - TypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsRankExceptionTests).typePropertiesAreCorrect);
                 QUnit.test("RankException - DefaultConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsRankExceptionTests).defaultConstructorWorks);
                 QUnit.test("RankException - ConstructorWithMessageWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsRankExceptionTests).constructorWithMessageWorks);
+                QUnit.test("TaskCanceledException - TypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsTaskCanceledExceptionTests).typePropertiesAreCorrect);
+                QUnit.test("TaskCanceledException - DefaultConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsTaskCanceledExceptionTests).defaultConstructorWorks);
+                QUnit.test("TaskCanceledException - MessageOnlyConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsTaskCanceledExceptionTests).messageOnlyConstructorWorks);
+                QUnit.test("TaskCanceledException - TaskOnlyConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsTaskCanceledExceptionTests).taskOnlyConstructorWorks);
+                QUnit.test("TaskCanceledException - MessageAndInnerExceptionConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ExceptionsTaskCanceledExceptionTests).messageAndInnerExceptionConstructorWorks);
                 QUnit.test("Try/Catch/Finally - ThrowingAndCatchingExceptionsWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTestExceptionTests).throwingAndCatchingExceptionsWorks);
                 QUnit.test("Try/Catch/Finally - ExceptionOfWrongTypeIsNotCaught", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTestExceptionTests).exceptionOfWrongTypeIsNotCaught);
                 QUnit.test("Try/Catch/Finally - CanCatchExceptionAsBaseType", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTestExceptionTests).canCatchExceptionAsBaseType);
@@ -9971,6 +10605,86 @@
                 QUnit.test("StringBuilder - ToStringWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_TextStringBuilderTests).toStringWorks);
                 QUnit.test("StringBuilder - LengthPropertyWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_TextStringBuilderTests).lengthPropertyWorks);
                 QUnit.test("StringBuilder - StringBuilders", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_TextStringBuilderTests).stringBuilders);
+                QUnit.module("Threading");
+                QUnit.test("Async - AsyncVoid", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingAsyncTests).asyncVoid);
+                QUnit.test("Async - AsyncTask", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingAsyncTests).asyncTask);
+                QUnit.test("Async - AsyncTaskBodyThrowsException", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingAsyncTests).asyncTaskBodyThrowsException);
+                QUnit.test("Async - AwaitTaskThatFaults", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingAsyncTests).awaitTaskThatFaults);
+                QUnit.test("Async - AggregateExceptionsAreUnwrappedWhenAwaitingTask", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingAsyncTests).aggregateExceptionsAreUnwrappedWhenAwaitingTask);
+                QUnit.test("Async - AsyncTaskThatReturnsValue", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingAsyncTests).asyncTaskThatReturnsValue);
+                QUnit.test("CancellationToken - TypePropertiesForCancellationTokenSourceAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).typePropertiesForCancellationTokenSourceAreCorrect);
+                QUnit.test("CancellationToken - TypePropertiesForCancellationTokenAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).typePropertiesForCancellationTokenAreCorrect);
+                QUnit.test("CancellationToken - TypePropertiesForCancellationTokenRegistrationAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).typePropertiesForCancellationTokenRegistrationAreCorrect);
+                QUnit.test("CancellationToken - CancellationTokenCreatedWithDefaultConstructorIsNotCanceledAndCannotBe", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).cancellationTokenCreatedWithDefaultConstructorIsNotCanceledAndCannotBe);
+                QUnit.test("CancellationToken - CancellationTokenCreatedWithFalseArgumentToConstructorIsNotCanceledAndCannotBe", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).cancellationTokenCreatedWithFalseArgumentToConstructorIsNotCanceledAndCannotBe);
+                QUnit.test("CancellationToken - CancellationTokenCreatedWithTrueArgumentToConstructorIsCanceled", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).cancellationTokenCreatedWithTrueArgumentToConstructorIsCanceled);
+                QUnit.test("CancellationToken - CancellationTokenNoneIsNotCancelledAndCannotBe", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).cancellationTokenNoneIsNotCancelledAndCannotBe);
+                QUnit.test("CancellationToken - CreatingADefaultCancellationTokenReturnsACancellationTokenThatIsNotCancelled", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).creatingADefaultCancellationTokenReturnsACancellationTokenThatIsNotCancelled);
+                QUnit.test("CancellationToken - ActivatorCreateForCancellationTokenReturnsACancellationTokenThatIsNotCancelled", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).activatorCreateForCancellationTokenReturnsACancellationTokenThatIsNotCancelled);
+                QUnit.test("CancellationToken - CanBeCanceledIsTrueForTokenCreatedForCancellationTokenSource", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).canBeCanceledIsTrueForTokenCreatedForCancellationTokenSource);
+                QUnit.test("CancellationToken - IsCancellationRequestedForTokenCreatedForCancellationTokenSourceIsSetByTheCancelMethod", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).isCancellationRequestedForTokenCreatedForCancellationTokenSourceIsSetByTheCancelMethod);
+                QUnit.test("CancellationToken - ThrowIfCancellationRequestedForTokenCreatedForCancellationTokenSourceThrowsAfterTheCancelMethodIsCalled", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).throwIfCancellationRequestedForTokenCreatedForCancellationTokenSourceThrowsAfterTheCancelMethodIsCalled);
+                QUnit.test("CancellationToken - CancelWithoutArgumentsWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).cancelWithoutArgumentsWorks);
+                QUnit.test("CancellationToken - CancelWorksWhenThrowOnFirstExceptionIsFalse", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).cancelWorksWhenThrowOnFirstExceptionIsFalse);
+                QUnit.test("CancellationToken - CancelWorksWhenThrowOnFirstExceptionIsTrue", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).cancelWorksWhenThrowOnFirstExceptionIsTrue);
+                QUnit.test("CancellationToken - RegisterOnACancelledSourceWithoutContextInvokesTheCallback", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).registerOnACancelledSourceWithoutContextInvokesTheCallback);
+                QUnit.test("CancellationToken - RegisterWithArgumentOnACancelledSourceInvokesTheCallback", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).registerWithArgumentOnACancelledSourceInvokesTheCallback);
+                QUnit.test("CancellationToken - RegisterOnACancelledSourceWithoutContextRethrowsAThrownException", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).registerOnACancelledSourceWithoutContextRethrowsAThrownException);
+                QUnit.test("CancellationToken - RegisterOnACancelledSourceWithContextRethrowsAThrownException", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).registerOnACancelledSourceWithContextRethrowsAThrownException);
+                QUnit.test("CancellationToken - RegisterOverloadsWithUseSynchronizationContextWork", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).registerOverloadsWithUseSynchronizationContextWork);
+                QUnit.test("CancellationToken - RegisterOnCancellationTokenCreatedNonCancelledDoesNothing", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).registerOnCancellationTokenCreatedNonCancelledDoesNothing);
+                QUnit.test("CancellationToken - RegisterOnCancellationTokenCreatedCancelledInvokesTheActionImmediately", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).registerOnCancellationTokenCreatedCancelledInvokesTheActionImmediately);
+                QUnit.test("CancellationToken - DuplicateCancelDoesNotCauseCallbacksToBeCalledTwice", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).duplicateCancelDoesNotCauseCallbacksToBeCalledTwice);
+                QUnit.test("CancellationToken - RegistrationsCanBeCompared", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).registrationsCanBeCompared);
+                QUnit.test("CancellationToken - RegistrationsCanBeUnregistered", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).registrationsCanBeUnregistered);
+                QUnit.test("CancellationToken - CreatingADefaultCancellationTokenRegistrationReturnsARegistrationThatCanBeDisposedWithoutHarm", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).creatingADefaultCancellationTokenRegistrationReturnsARegistrationThatCanBeDisposedWithoutHarm);
+                QUnit.test("CancellationToken - LinkedSourceWithTwoTokensWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).linkedSourceWithTwoTokensWorks);
+                QUnit.test("CancellationToken - LinkedSourceWithThreeTokensWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).linkedSourceWithThreeTokensWorks);
+                QUnit.test("Tasks - TaskCompletionSourceTypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).taskCompletionSourceTypePropertiesAreCorrect);
+                QUnit.test("Tasks - TaskTypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).taskTypePropertiesAreCorrect);
+                QUnit.test("Tasks - TaskCompletionSourceWorksWhenSettingResult", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).taskCompletionSourceWorksWhenSettingResult);
+                QUnit.test("Tasks - TaskCompletionSourceWorksWhenSettingASingleException", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).taskCompletionSourceWorksWhenSettingASingleException);
+                QUnit.test("Tasks - TaskCompletionSourceWorksWhenSettingTwoExceptions", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).taskCompletionSourceWorksWhenSettingTwoExceptions);
+                QUnit.test("Tasks - TaskCompletionSourceWorksWhenCancelling", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).taskCompletionSourceWorksWhenCancelling);
+                QUnit.test("Tasks - CancelledTaskThrowsTaskCanceledExceptionWhenAwaited", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).cancelledTaskThrowsTaskCanceledExceptionWhenAwaited);
+                QUnit.test("Tasks - CancelledTaskThrowsAggregateExceptionWithTaskCanceledExceptionWhenResultIsAccessed", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).cancelledTaskThrowsAggregateExceptionWithTaskCanceledExceptionWhenResultIsAccessed);
+                QUnit.test("Tasks - SetResultFailsWhenTheTaskIsCompleted", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).setResultFailsWhenTheTaskIsCompleted);
+                QUnit.test("Tasks - SetCanceledFailsWhenTheTaskIsCompleted", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).setCanceledFailsWhenTheTaskIsCompleted);
+                QUnit.test("Tasks - SetExceptionFailsWhenTheTaskIsCompleted", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).setExceptionFailsWhenTheTaskIsCompleted);
+                QUnit.test("Tasks - CompletedTaskHasCorrectIsXProperties", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).completedTaskHasCorrectIsXProperties);
+                QUnit.test("Tasks - CancelledTaskHasCorrectIsXProperties", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).cancelledTaskHasCorrectIsXProperties);
+                QUnit.test("Tasks - FaultedTaskHasCorrectIsXProperties", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).faultedTaskHasCorrectIsXProperties);
+                QUnit.test("Tasks - TrySetResultReturnsFalseWhenTheTaskIsCompleted", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).trySetResultReturnsFalseWhenTheTaskIsCompleted);
+                QUnit.test("Tasks - TrySetCanceledReturnsFalseWhenTheTaskIsCompleted", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).trySetCanceledReturnsFalseWhenTheTaskIsCompleted);
+                QUnit.test("Tasks - TrySetExceptionReturnsFalseWhenTheTaskIsCompleted", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).trySetExceptionReturnsFalseWhenTheTaskIsCompleted);
+                QUnit.test("Tasks - ContinueWithForNonGenericTaskWorkWithNoResultAndNoException", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).continueWithForNonGenericTaskWorkWithNoResultAndNoException);
+                QUnit.test("Tasks - ContinueWithWhenCallbackThrowsAnException", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).continueWithWhenCallbackThrowsAnException);
+                QUnit.test("Tasks - ExceptionInTaskBodyAppearsInTheExceptionMemberForNonGenericTask", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).exceptionInTaskBodyAppearsInTheExceptionMemberForNonGenericTask);
+                QUnit.test("Tasks - ContinueWithForNonGenericTaskCanReturnAValue", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).continueWithForNonGenericTaskCanReturnAValue);
+                QUnit.test("Tasks - ContinueWithWithNoReturnValueForGenericTaskWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).continueWithWithNoReturnValueForGenericTaskWorks);
+                QUnit.test("Tasks - ContinueWithForGenericTaskCanReturnAValue", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).continueWithForGenericTaskCanReturnAValue);
+                QUnit.test("Tasks - DelayWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).delayWorks);
+                QUnit.test("Tasks - FromResultWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).fromResultWorks);
+                QUnit.test("Tasks - RunWithoutResultWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).runWithoutResultWorks);
+                QUnit.test("Tasks - RunWithResultWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).runWithResultWorks);
+                QUnit.test("Tasks - RunWorksWhenBodyThrows", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).runWorksWhenBodyThrows);
+                QUnit.test("Tasks - WhenAllParamArrayWithResultWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).whenAllParamArrayWithResultWorks);
+                QUnit.test("Tasks - WhenAllEnumerableWithResultWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).whenAllEnumerableWithResultWorks);
+                QUnit.test("Tasks - WhenAllParamArrayWithoutResultWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).whenAllParamArrayWithoutResultWorks);
+                QUnit.test("Tasks - WhenAllEnumerableWithoutResultWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).whenAllEnumerableWithoutResultWorks);
+                QUnit.test("Tasks - WhenAllShouldHaveAnErrorIfAnyIncludedTaskFaulted", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).whenAllShouldHaveAnErrorIfAnyIncludedTaskFaulted);
+                QUnit.test("Tasks - WhenAllShouldBeCancelledIfNoTaskWasFaultedButSomeWasCancelled", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).whenAllShouldBeCancelledIfNoTaskWasFaultedButSomeWasCancelled);
+                QUnit.test("Tasks - WhenAnyParamArrayWithResultWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).whenAnyParamArrayWithResultWorks);
+                QUnit.test("Tasks - WhenAnyEnumerableWithResultWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).whenAnyEnumerableWithResultWorks);
+                QUnit.test("Tasks - WhenAnyParamArrayWithoutResultWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).whenAnyParamArrayWithoutResultWorks);
+                QUnit.test("Tasks - WhenAnyEnumerableWithoutResultWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).whenAnyEnumerableWithoutResultWorks);
+                QUnit.test("Tasks - WhenAnyFaultsIfTheFirstTaskFaulted", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).whenAnyFaultsIfTheFirstTaskFaulted);
+                QUnit.test("Tasks - WhenAnyIsCancelledIfTheFirstTaskWasCancelled", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).whenAnyIsCancelledIfTheFirstTaskWasCancelled);
+                QUnit.test("Tasks - ConstructorWithOnlyActionWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).constructorWithOnlyActionWorks);
+                QUnit.test("Tasks - ConstructorWithActionAndStateWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).constructorWithActionAndStateWorks);
+                QUnit.test("Tasks - ExceptionInManuallyCreatedTaskIsStoredOnTheTask", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).exceptionInManuallyCreatedTaskIsStoredOnTheTask);
+                QUnit.test("Tasks - ConstructorWithOnlyFunctionWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).constructorWithOnlyFunctionWorks);
+                QUnit.test("Tasks - ConstructorWithFunctionAndStateWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).constructorWithFunctionAndStateWorks);
                 QUnit.module("Utilities");
                 QUnit.test("Environment - NewLineIsAStringContainingOnlyTheNewLineChar", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTestEnvironmentTests).newLineIsAStringContainingOnlyTheNewLineChar);
                 QUnit.module("СultureInfo");
