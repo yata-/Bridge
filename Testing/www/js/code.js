@@ -4340,6 +4340,33 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge447', {
+        statics: {
+            Five: 5,
+            Another: "Another",
+            Ten: Bridge.Decimal(10.0),
+            checkInlineExpression: function () {
+                Bridge.get(Bridge.Test.Assert).areEqual$1("AnotherSome", "AnotherSome", "AnotherSome");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(20, 20, "20");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Decimal(10.5), Bridge.Decimal(10.5), "10.5m");
+            },
+            checkInlineCalls: function () {
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge447).getSum$2(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge447).Another, "Some"), "AnotherSome", "AnotherSome");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge447).getSum$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge447).Five, 15), 20, "20");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge447).getSum(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge447).Ten, Bridge.Decimal(0.5)), Bridge.Decimal(10.5), "10.5m");
+            },
+            getSum$1: function (a, b) {
+                return a + b;
+            },
+            getSum$2: function (a, b) {
+                return a + b;
+            },
+            getSum: function (a, b) {
+                return a.add(b);
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge472', {
         statics: {
             test: function () {
@@ -8451,7 +8478,9 @@
                 var i = $t.getCurrent();
                 sb.appendLine("got " + i);
             }
+    
             sb.appendLine("-");
+    
             $t1 = Bridge.getEnumerator(enm);
             while ($t1.moveNext()) {
                 var i1 = $t1.getCurrent();
