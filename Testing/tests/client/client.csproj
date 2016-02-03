@@ -55,6 +55,7 @@
     <Compile Include="BasicCSharp\TestTryCatchBlocks.cs" />
     <Compile Include="BasicCSharp\TestReferenceTypes.cs" />
     <Compile Include="BasicCSharp\TestValueTypes.cs" />
+    <Compile Include="BridgeIssues\N447.cs" />
     <Compile Include="BridgeIssues\N495.cs" />
     <Compile Include="BridgeIssues\N502.cs" />
     <Compile Include="BridgeIssues\N508.cs" />
