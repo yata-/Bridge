@@ -55,6 +55,7 @@
     <Compile Include="BasicCSharp\TestTryCatchBlocks.cs" />
     <Compile Include="BasicCSharp\TestReferenceTypes.cs" />
     <Compile Include="BasicCSharp\TestValueTypes.cs" />
+    <Compile Include="BridgeIssues\N447.cs" />
     <Compile Include="BridgeIssues\N495.cs" />
     <Compile Include="BridgeIssues\N502.cs" />
     <Compile Include="BridgeIssues\N508.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="BridgeIssues\N830.cs" />
     <Compile Include="BridgeIssues\N883.cs" />
     <Compile Include="BridgeIssues\N882.cs" />
+    <Compile Include="BridgeIssues\N898.cs" />
     <Compile Include="BridgeIssues\N889.cs" />
     <Compile Include="BridgeIssues\N881.cs" />
     <Compile Include="BridgeIssues\N863.cs" />

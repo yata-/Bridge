@@ -47,15 +47,26 @@ namespace Bridge.Translator
 
             ValidateNamespace(typeDeclaration);
 
-            if (this.HasIgnore(typeDeclaration) && !this.IsObjectLiteral(typeDeclaration))
-            {
-                return;
-            }
-
             var rr = this.Resolver.ResolveNode(typeDeclaration, null);
             var fullName = rr.Type.ReflectionName;
             var partialType = this.Types.FirstOrDefault(t => t.Key == fullName);
             var add = true;
+            var ignored = this.IgnoredTypes.Contains(fullName);
+
+            if (ignored || this.HasIgnore(typeDeclaration) && !this.IsObjectLiteral(typeDeclaration))
+            {
+                if (partialType != null)
+                {
+                    this.Types.Remove(partialType);
+                }
+
+                if (!ignored)
+                {
+                    this.IgnoredTypes.Add(fullName);    
+                }
+                
+                return;
+            }
 
             if (partialType == null)
             {
@@ -129,6 +140,12 @@ namespace Bridge.Translator
 
             foreach (var item in fieldDeclaration.Variables)
             {
+                var rr = this.Resolver.ResolveNode(item, null) as MemberResolveResult;
+                if (fieldDeclaration.HasModifier(Modifiers.Const) && rr != null && rr.Member.Attributes.Any(a => a.AttributeType.FullName == Bridge.Translator.Translator.Bridge_ASSEMBLY + ".InlineConstAttribute"))
+                {
+                    continue;
+                }
+
                 Expression initializer = item.Initializer;
 
                 if (initializer.IsNull)
@@ -157,12 +174,12 @@ namespace Bridge.Translator
                 else
                 {
                     this.CurrentType.InstanceConfig.Fields.Add(new TypeConfigItem
-                {
-                    Name = item.Name,
-                    Entity = fieldDeclaration,
-                    VarInitializer = item,
-                    Initializer = initializer
-                });
+                    {
+                        Name = item.Name,
+                        Entity = fieldDeclaration,
+                        VarInitializer = item,
+                        Initializer = initializer
+                    });
                 }
             }
         }

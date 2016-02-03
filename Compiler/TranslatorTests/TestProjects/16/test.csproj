@@ -34,7 +34,10 @@
     <NoStdLib>True</NoStdLib>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BridgeIssues\N447.cs" />
     <Compile Include="BridgeIssues\N527.cs" />
+    <Compile Include="BridgeIssues\N644B.cs" />
+    <Compile Include="BridgeIssues\N644A.cs" />
     <Compile Include="BridgeIssues\N694.cs" />
     <Compile Include="BridgeIssues\N557.cs" />
     <Compile Include="BridgeIssues\N542.cs" />
