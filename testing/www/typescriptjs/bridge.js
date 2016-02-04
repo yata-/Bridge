@@ -6866,7 +6866,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
                     tcs.setException(errorHandler ? errorHandler.apply(null, arguments) : new Bridge.PromiseException(Array.prototype.slice.call(arguments, 0)));
                 });
 
-                return task;
+                return tcs.task;
             }
         },
 
