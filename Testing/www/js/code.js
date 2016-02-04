@@ -2998,6 +2998,89 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Threading.PromiseTests.SimplePromise', {
+        inherits: [Bridge.IPromise],
+        doThen: null,
+        config: {
+            properties: {
+                Thens: null
+            }
+        },
+        constructor: function () {
+            this.setThens(new Bridge.List$1(Bridge.ClientTest.Threading.PromiseTests.SimplePromise.A)());
+    
+            this.doThen = Bridge.fn.bind(this, function (f, e, p) {
+                this.getThens().add(Bridge.merge(new Bridge.ClientTest.Threading.PromiseTests.SimplePromise.A(), {
+                    setFilled: f,
+                    setError: e,
+                    setProgress: p
+                } ));
+            });
+        },
+        then: function (fulfilledHandler, errorHandler, progressHandler) {
+            if (errorHandler === void 0) { errorHandler = null; }
+            if (progressHandler === void 0) { progressHandler = null; }
+            this.doThen(fulfilledHandler, errorHandler, progressHandler);
+        },
+        resolve: function (args) {
+            if (args === void 0) { args = []; }
+            this.complete(Bridge.get(Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which).resolve, args);
+        },
+        reject: function (args) {
+            if (args === void 0) { args = []; }
+            this.complete(Bridge.get(Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which).reject, args);
+        },
+        complete: function (which, args) {
+            if (args === void 0) { args = []; }
+            if (which === Bridge.get(Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which).resolve) {
+                this.doThen = Bridge.fn.bind(this, function (f, e, p) {
+                    this.resolve(args);
+                });
+            }
+            else  {
+                this.doThen = Bridge.fn.bind(this, function (f, e, p) {
+                    this.reject(args);
+                });
+            }
+    
+            var i = 0;
+            while (i < this.getThens().getCount()) {
+                var aThen = this.getThens().getItem(i);
+    
+                if (which === Bridge.get(Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which).resolve) {
+                    if (Bridge.hasValue(aThen.getFilled())) {
+                        aThen.Filled(args);
+                    }
+                }
+                else  {
+                    if (Bridge.hasValue(aThen.getError())) {
+                        aThen.Error(args);
+                    }
+                }
+                i++;
+            }
+            this.getThens().clear();
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Threading.PromiseTests.SimplePromise.A', {
+        config: {
+            properties: {
+                Filled: null,
+                Error: null,
+                Progress: null
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which', {
+        statics: {
+            resolve: 0,
+            reject: 1
+        },
+        $enum: true
+    });
+    
     Bridge.define('Bridge.ClientTest.Utilities.BrowserHelper', {
         statics: {
             isPhantomJs: function () {
@@ -17459,6 +17542,199 @@
                 cts32.cancel();
                 Bridge.get(Bridge.Test.Assert).true$1(linked2.isCancellationRequested, "#3 2");
             }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Threading.PromiseTests', {
+        createPromise: function () {
+            return new Bridge.ClientTest.Threading.PromiseTests.SimplePromise();
+        },
+        taskFromPromiseWithoutResultFactoryWorksWhenPromiseCompletes: function () {
+            var completeAsync = Bridge.get(Bridge.Test.Assert).async();
+    
+            var promise = this.createPromise();
+            var task = Bridge.Task.fromPromise(promise);
+            Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "Task should be running after being created");
+            var continuationRun = false;
+            task.continueWith(function (t) {
+                Bridge.get(Bridge.Test.Assert).true$1(t === task, "ContinueWith parameter should be correct");
+                continuationRun = true;
+            });
+    
+            Bridge.global.setTimeout(function () {
+                Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "Task should be running before promise is completed.");
+                promise.resolve([42, "result 123", 101]);
+            }, 100);
+    
+            Bridge.global.setTimeout(function () {
+                Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.ranToCompletion, "Task should be completed after promise");
+                Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "Continuation should have been run after promise was completed.");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(task.getResult(), [42, "result 123", 101], "The result should be correct");
+    
+                completeAsync();
+            }, 200);
+        },
+        taskFromPromiseWorksWhenPromiseFails: function () {
+            var completeAsync = Bridge.get(Bridge.Test.Assert).async();
+    
+            var promise = this.createPromise();
+            var task = Bridge.Task.fromPromise(promise);
+            Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "Task should be running after being created");
+            var continuationRun = false;
+            task.continueWith(function (t) {
+                Bridge.get(Bridge.Test.Assert).true$1(t === task, "ContinueWith parameter should be correct");
+                continuationRun = true;
+            });
+    
+            Bridge.global.setTimeout(function () {
+                Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "Task should be running before promise is completed.");
+                promise.reject([42, "result 123", 101]);
+            }, 100);
+    
+            Bridge.global.setTimeout(function () {
+                Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.faulted, "Task should have faulted after the promise was rejected.");
+                Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "Continuation should have been run after promise was rejected.");
+                Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(task.exception, Bridge.AggregateException), "Exception should be an AggregateException");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(task.exception.innerExceptions.getCount(), 1, "Exception should have one inner exception");
+                Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(task.exception.innerExceptions.get(0), Bridge.PromiseException), "Inner exception should be a PromiseException");
+                Bridge.get(Bridge.Test.Assert).areEqual$1((Bridge.cast(task.exception.innerExceptions.get(0), Bridge.PromiseException)).arguments, [42, "result 123", 101], "The PromiseException arguments should be correct");
+    
+                completeAsync();
+            }, 200);
+        },
+        completingPromiseCanBeAwaited: function () {
+            var $step = 0,
+                $task1, 
+                $jumpFromFinally, 
+                completeAsync, 
+                promise, 
+                result, 
+                $asyncBody = Bridge.fn.bind(this, function () {
+                    for (;;) {
+                        $step = Bridge.Array.min([0,1], $step);
+                        switch ($step) {
+                            case 0: {
+                                completeAsync = Bridge.get(Bridge.Test.Assert).async();
+                                
+                                promise = this.createPromise();
+                                result = null;
+                                
+                                Bridge.global.setTimeout(function () {
+                                    Bridge.get(Bridge.Test.Assert).true$1(!Bridge.hasValue(result), "Await should not finish too early.");
+                                    promise.resolve([42, "result 123", 101]);
+                                }, 100);
+                                
+                                Bridge.global.setTimeout(function () {
+                                    Bridge.get(Bridge.Test.Assert).areEqual$1(result, [42, "result 123", 101], "The result should be correct");
+                                    completeAsync();
+                                }, 200);
+                                
+                                $task1 = promise;
+                                $step = 1;
+                                $task1.continueWith($asyncBody, true);
+                                return;
+                            }
+                            case 1: {
+                                $task1.getAwaitedResult();
+                                result = $taskResult1;
+                                return;
+                            }
+                            default: {
+                                return;
+                            }
+                        }
+                    }
+                }, arguments);
+    
+            $asyncBody();
+        },
+        failingPromiseCanBeAwaited: function () {
+            var $step = 0,
+                $task1, 
+                $jumpFromFinally, 
+                $returnValue, 
+                completeAsync, 
+                promise, 
+                continuationRun, 
+                ex, 
+                ex1, 
+                $e, 
+                $asyncBody = Bridge.fn.bind(this, function () {
+                    try {
+                        for (;;) {
+                            $step = Bridge.Array.min([0,1,2,3,4,5], $step);
+                            switch ($step) {
+                                case 0: {
+                                    completeAsync = Bridge.get(Bridge.Test.Assert).async();
+                                    
+                                    promise = this.createPromise();
+                                    continuationRun = false;
+                                    
+                                    Bridge.global.setTimeout(function () {
+                                        Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
+                                        promise.reject([42, "result 123", 101]);
+                                    }, 100);
+                                    
+                                    Bridge.global.setTimeout(function () {
+                                        Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "Continuation should have been run after promise was rejected.");
+                                        completeAsync();
+                                    }, 200);
+                                    $step = 1;
+                                    continue;
+                                }
+                                case 1: {
+                                    $task1 = promise;
+                                    $step = 2;
+                                    $task1.continueWith($asyncBody, true);
+                                    return;
+                                }
+                                case 2: {
+                                    $task1.getAwaitedResult();
+                                    Bridge.get(Bridge.Test.Assert).fail$1("Await should throw");
+                                    $step = 5;
+                                    continue;
+                                }
+                                case 3: {
+                                    Bridge.get(Bridge.Test.Assert).areEqual$1(ex.arguments, [42, "result 123", 101], "The PromiseException arguments should be correct");
+                                    $step = 5;
+                                    continue;
+                                }
+                                case 4: {
+                                    Bridge.get(Bridge.Test.Assert).fail$1("Thrown exception should have been an AggregateException, was " + Bridge.getTypeName(ex1));
+                                    $step = 5;
+                                    continue;
+                                }
+                                case 5: {
+                                    continuationRun = true;
+                                    return;
+                                }
+                                default: {
+                                    return;
+                                }
+                            }
+                        }
+                    } catch($e1) {
+                        $e1 = Bridge.Exception.create($e1);
+                        if ( $step >= 1 && $step <= 2 ){
+                            if (Bridge.is($e1, Bridge.PromiseException)) {
+                                ex = $e1;
+                                $step = 3;
+                                setTimeout($asyncBody, 0);
+                                return;
+                            } else {
+                                ex1 = $e1;
+                                $step = 4;
+                                setTimeout($asyncBody, 0);
+                                return;
+                            }
+                        }
+                        throw $e1;
+                    }
+                }, arguments);
+    
+            $asyncBody();
         }
     });
     

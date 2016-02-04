@@ -8268,6 +8268,47 @@
         }
     });
     
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingPromiseTests', {
+        statics: {
+            instance: null,
+            getInstance: function () {
+                if (!Bridge.hasValue(Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingPromiseTests).instance)) {
+                    Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingPromiseTests).instance = new Bridge.ClientTest.Threading.PromiseTests();
+                }
+                return Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingPromiseTests).instance;
+            },
+            setInstance: function (value) {
+                Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingPromiseTests).instance = value;
+            },
+            beforeTest: function (isStatic, assert) {
+                Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingPromiseTests).setInstance(null);
+                Bridge.get(Bridge.Test.Assert).assert = assert;
+                var r = isStatic ? null : Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingPromiseTests).getInstance();
+                return r;
+            },
+            taskFromPromiseWithoutResultFactoryWorksWhenPromiseCompletes: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingPromiseTests).beforeTest(false, assert);
+                assert.expect(7);
+                t.taskFromPromiseWithoutResultFactoryWorksWhenPromiseCompletes();
+            },
+            taskFromPromiseWorksWhenPromiseFails: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingPromiseTests).beforeTest(false, assert);
+                assert.expect(10);
+                t.taskFromPromiseWorksWhenPromiseFails();
+            },
+            completingPromiseCanBeAwaited: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingPromiseTests).beforeTest(false, assert);
+                assert.expect(2);
+                t.completingPromiseCanBeAwaited();
+            },
+            failingPromiseCanBeAwaited: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingPromiseTests).beforeTest(false, assert);
+                assert.expect(3);
+                t.failingPromiseCanBeAwaited();
+            }
+        }
+    });
+    
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests', {
         statics: {
             instance: null,
@@ -10667,6 +10708,10 @@
                 QUnit.test("CancellationToken - CreatingADefaultCancellationTokenRegistrationReturnsARegistrationThatCanBeDisposedWithoutHarm", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).creatingADefaultCancellationTokenRegistrationReturnsARegistrationThatCanBeDisposedWithoutHarm);
                 QUnit.test("CancellationToken - LinkedSourceWithTwoTokensWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).linkedSourceWithTwoTokensWorks);
                 QUnit.test("CancellationToken - LinkedSourceWithThreeTokensWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).linkedSourceWithThreeTokensWorks);
+                QUnit.test("Promise - TaskFromPromiseWithoutResultFactoryWorksWhenPromiseCompletes", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingPromiseTests).taskFromPromiseWithoutResultFactoryWorksWhenPromiseCompletes);
+                QUnit.test("Promise - TaskFromPromiseWorksWhenPromiseFails", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingPromiseTests).taskFromPromiseWorksWhenPromiseFails);
+                QUnit.test("Promise - CompletingPromiseCanBeAwaited", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingPromiseTests).completingPromiseCanBeAwaited);
+                QUnit.test("Promise - FailingPromiseCanBeAwaited", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingPromiseTests).failingPromiseCanBeAwaited);
                 QUnit.test("Tasks - TaskCompletionSourceTypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).taskCompletionSourceTypePropertiesAreCorrect);
                 QUnit.test("Tasks - TaskTypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).taskTypePropertiesAreCorrect);
                 QUnit.test("Tasks - TaskCompletionSourceWorksWhenSettingResult", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingTaskTests).taskCompletionSourceWorksWhenSettingResult);
