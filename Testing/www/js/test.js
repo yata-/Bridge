@@ -3512,6 +3512,27 @@
         }
     });
     
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge906', {
+        statics: {
+            instance: null,
+            getInstance: function () {
+                if (!Bridge.hasValue(Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge906).instance)) {
+                    Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge906).instance = new Bridge.ClientTest.BridgeIssues.Bridge906();
+                }
+                return Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge906).instance;
+            },
+            setInstance: function (value) {
+                Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge906).instance = value;
+            },
+            beforeTest: function (isStatic, assert) {
+                Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge906).setInstance(null);
+                Bridge.get(Bridge.Test.Assert).assert = assert;
+                var r = isStatic ? null : Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge906).getInstance();
+                return r;
+            }
+        }
+    });
+    
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesTestBridgeIssues', {
         statics: {
             instance: null,
