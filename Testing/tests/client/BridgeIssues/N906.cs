@@ -14,10 +14,11 @@ namespace Bridge.ClientTest.BridgeIssues
             await Task.Delay(1);
         }
         
-        //TODO: Async
-        // [Test(ExpectedCount = 2)]
-        public static async void TestDecimalConversion()
+        [Test(ExpectedCount = 1)]
+        public static async void TestIfAsyncMethod()
         {
+            var asyncComplete = Assert.Async();
+
             var myvar = new [] {new {Value = 1}, new {Value = 2}};
             int sum = 0;
             await myfunc();
@@ -33,6 +34,36 @@ namespace Bridge.ClientTest.BridgeIssues
             await myfunc();
 
             Assert.AreEqual(sum, 3);
+
+            asyncComplete();
+        }
+
+        [Test(ExpectedCount = 1)]
+        public static async void TestIfElseAsyncMethod()
+        {
+            var asyncComplete = Assert.Async();
+
+            var myvar = new[] { new { Value = -3 }, new { Value = 2 } };
+            int sum = 0;
+            await myfunc();
+
+            foreach (var d in myvar)
+            {
+                if (d.Value > 0)
+                {
+                    sum += d.Value;
+                }
+                else
+                {
+                    sum -= d.Value;
+                }
+            }
+
+            await myfunc();
+
+            Assert.AreEqual(sum, 5);
+
+            asyncComplete();
         }
     }
 }

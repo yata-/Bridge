@@ -7738,11 +7738,12 @@
                 $asyncBody();
                 return $returnTask;
             },
-            testDecimalConversion: function () {
+            testIfAsyncMethod: function () {
                 var $step = 0,
                     $task1, 
                     $task2, 
                     $jumpFromFinally, 
+                    asyncComplete, 
                     myvar, 
                     sum, 
                     $t, 
@@ -7752,6 +7753,8 @@
                             $step = Bridge.Array.min([0,1,2], $step);
                             switch ($step) {
                                 case 0: {
+                                    asyncComplete = Bridge.get(Bridge.Test.Assert).async();
+                                    
                                     myvar = [{ value: 1 }, { value: 2 }];
                                     sum = 0;
                                     $task2 = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge906).myfunc();
@@ -7779,6 +7782,68 @@
                                     $task1.getResult();
                                     
                                     Bridge.get(Bridge.Test.Assert).areEqual(sum, 3);
+                                    
+                                    asyncComplete();
+                                    return;
+                                }
+                                default: {
+                                    return;
+                                }
+                            }
+                        }
+                    }, arguments);
+    
+                $asyncBody();
+            },
+            testIfElseAsyncMethod: function () {
+                var $step = 0,
+                    $task1, 
+                    $task2, 
+                    $jumpFromFinally, 
+                    asyncComplete, 
+                    myvar, 
+                    sum, 
+                    $t, 
+                    d, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        for (;;) {
+                            $step = Bridge.Array.min([0,1,2], $step);
+                            switch ($step) {
+                                case 0: {
+                                    asyncComplete = Bridge.get(Bridge.Test.Assert).async();
+                                    
+                                    myvar = [{ value: -3 }, { value: 2 }];
+                                    sum = 0;
+                                    $task2 = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge906).myfunc();
+                                    $step = 1;
+                                    $task2.continueWith($asyncBody, true);
+                                    return;
+                                }
+                                case 1: {
+                                    $task2.getResult();
+                                    
+                                    $t = Bridge.getEnumerator(myvar);
+                                    while ($t.moveNext()) {
+                                        d = $t.getCurrent();
+                                        if (d.value > 0) {
+                                            sum += d.value;
+                                        }
+                                        else  {
+                                            sum -= d.value;
+                                        }
+                                    }
+                                    
+                                    $task1 = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge906).myfunc();
+                                    $step = 2;
+                                    $task1.continueWith($asyncBody, true);
+                                    return;
+                                }
+                                case 2: {
+                                    $task1.getResult();
+                                    
+                                    Bridge.get(Bridge.Test.Assert).areEqual(sum, 5);
+                                    
+                                    asyncComplete();
                                     return;
                                 }
                                 default: {
