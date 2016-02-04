@@ -6,6 +6,7 @@ using ICSharpCode.NRefactory.TypeSystem;
 using System;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Bridge.Translator
 {
@@ -148,6 +149,8 @@ namespace Bridge.Translator
                 }
             }
 
+            var targetResolve = this.Emitter.Resolver.ResolveNode(invocationExpression, this.Emitter);
+            var csharpInvocation = targetResolve as CSharpInvocationResolveResult;
             MemberReferenceExpression targetMember = invocationExpression.Target as MemberReferenceExpression;
 
             ResolveResult targetMemberResolveResult = null;
@@ -161,12 +164,9 @@ namespace Bridge.Translator
                 var member = this.Emitter.Resolver.ResolveNode(targetMember.Target, this.Emitter);
 
                 //var targetResolve = this.Emitter.Resolver.ResolveNode(targetMember, this.Emitter);
-                var targetResolve = this.Emitter.Resolver.ResolveNode(invocationExpression, this.Emitter);
 
                 if (targetResolve != null)
                 {
-                    var csharpInvocation = targetResolve as CSharpInvocationResolveResult;
-
                     InvocationResolveResult invocationResult;
                     bool isExtensionMethodInvocation = false;
                     if (csharpInvocation != null)
@@ -448,6 +448,28 @@ namespace Bridge.Translator
                     return;
                 }
 
+                bool isIgnore = method != null && method.DeclaringTypeDefinition != null && this.Emitter.Validator.IsIgnoreType(method.DeclaringTypeDefinition);
+
+                bool needExpand = false;
+                if (method != null)
+                {
+                    string paramsName = null;
+
+                    var paramsParam = method.Parameters.FirstOrDefault(p => p.IsParams);
+                    if (paramsParam != null)
+                    {
+                        paramsName = paramsParam.Name;
+                    }
+
+                    if (paramsName != null)
+                    {
+                        if (csharpInvocation != null && !csharpInvocation.IsExpandedForm)
+                        {
+                            needExpand = true;
+                        }
+                    }
+                }
+
                 int count = this.Emitter.Writers.Count;
                 invocationExpression.Target.AcceptVisitor(this.Emitter);
 
@@ -472,13 +494,6 @@ namespace Bridge.Translator
                 }
                 else
                 {
-                    var isIgnore = false;
-
-                    if (method != null && method.DeclaringTypeDefinition != null && this.Emitter.Validator.IsIgnoreType(method.DeclaringTypeDefinition))
-                    {
-                        isIgnore = true;
-                    }
-
                     if (!isIgnore && argsInfo.HasTypeArguments)
                     {
                         this.WriteOpenParentheses();
@@ -486,8 +501,43 @@ namespace Bridge.Translator
                         this.WriteCloseParentheses();
                     }
 
+                    if (needExpand && isIgnore)
+                    {
+                        this.Write(".apply");
+                    }
+
                     this.WriteOpenParentheses();
-                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, invocationExpression).Emit();
+
+                    if (needExpand && isIgnore)
+                    {
+                        StringBuilder savedBuilder = this.Emitter.Output;
+                        this.Emitter.Output = new StringBuilder();
+                        this.WriteThisExtension(invocationExpression.Target);
+                        var thisArg = this.Emitter.Output.ToString();
+                        this.Emitter.Output = savedBuilder;
+
+                        this.Write(thisArg);
+                        this.WriteComma();
+
+                        if (argsExpressions.Length > 1)
+                        {
+                            this.WriteOpenBracket();
+                            new ExpressionListBlock(this.Emitter, argsExpressions.Take(argsExpressions.Length - 1).ToArray(), paramsArg, invocationExpression).Emit();  
+                            this.WriteCloseBracket();
+                            this.Write(".concat(");
+                            new ExpressionListBlock(this.Emitter, new Expression[]{argsExpressions[argsExpressions.Length - 1]}, paramsArg, invocationExpression).Emit();  
+                            this.Write(")");
+                        }
+                        else
+                        {
+                            new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, invocationExpression).Emit();
+                        }
+                    }
+                    else
+                    {
+                        new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, invocationExpression).Emit();    
+                    }
+                    
                     this.WriteCloseParentheses();
                 }
             }

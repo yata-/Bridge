@@ -864,10 +864,10 @@ namespace System
         [Template("Bridge.String.insert({startIndex}, {this}, {value})")]
         public extern string Insert(int startIndex, string value);
 
-        [Template("{args}.join({separator})")]
+        [Template("{args:array}.join({separator})")]
         public static extern string Join(string separator, params string[] args);
 
-        [Template("{args}.join({separator})")]
+        [Template("{args:array}.join({separator})")]
         public static extern string Join(string separator, params object[] args);
 
         [Template("Bridge.toArray({args}).join({separator})")]
