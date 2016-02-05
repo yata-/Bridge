@@ -120,6 +120,20 @@ namespace Bridge.Translator
             }
         }
 
+        public ArgumentsInfo(IEmitter emitter, Expression expression, InvocationResolveResult rr)
+        {
+            this.Emitter = emitter;
+            this.Expression = expression;
+            this.ResolveResult = rr;
+            
+            this.ArgumentsExpressions = new Expression[] { expression };
+            this.ArgumentsNames = new string[] { rr.Member.Parameters.Count > 0 ? rr.Member.Parameters.First().Name : "{this}" };
+            this.ThisArgument = expression;
+            this.NamedExpressions = this.CreateNamedExpressions(this.ArgumentsNames, this.ArgumentsExpressions);
+
+            this.BuildTypedArguments(rr);
+        }
+
         public ArgumentsInfo(IEmitter emitter, Expression expression, ResolveResult rr = null)
         {
             this.Emitter = emitter;
@@ -128,7 +142,7 @@ namespace Bridge.Translator
             this.ArgumentsExpressions = new Expression[] { expression };
             this.ArgumentsNames = new string[] { "{this}" };
             this.ThisArgument = expression;
-            this.CreateNamedExpressions(this.ArgumentsNames, this.ArgumentsExpressions);
+            this.NamedExpressions = this.CreateNamedExpressions(this.ArgumentsNames, this.ArgumentsExpressions);
 
             if (rr is MemberResolveResult)
             {
@@ -388,7 +402,7 @@ namespace Bridge.Translator
                         {
                             t = p.ConstantValue;
                         }
-                        if (named)
+                        if (named && !p.IsParams)
                         {
                             result[i] = new PrimitiveExpression(t);
                         }

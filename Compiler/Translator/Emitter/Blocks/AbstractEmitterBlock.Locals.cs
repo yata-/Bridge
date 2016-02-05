@@ -214,6 +214,11 @@ namespace Bridge.Translator
                                     this.Write("; }");
                                     this.WriteNewLine();
                                 }
+                                else if (prm.IsParams)
+                                {
+                                    this.Write(string.Format("if ({0} === void 0) {{ {0} = []; }}", prm.Name));
+                                    this.WriteNewLine();
+                                }
                             }
                         }
                     }
@@ -273,7 +278,7 @@ namespace Bridge.Translator
             return name;
         }
 
-        protected virtual void EmitTempVars(int pos)
+        protected virtual void EmitTempVars(int pos, bool skipIndent = false)
         {
             if (this.Emitter.TempVariables.Count > 0)
             {
@@ -282,8 +287,12 @@ namespace Bridge.Translator
                 this.Emitter.Output.Length = pos;
 
                 this.Emitter.IsNewLine = true;
-                this.Indent();
-                this.WriteIndent();
+
+                if (!skipIndent)
+                {
+                    this.Indent();
+                    this.WriteIndent();
+                }
                 this.WriteVar(true);
 
                 foreach (var localVar in this.Emitter.TempVariables)

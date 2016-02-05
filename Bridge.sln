@@ -73,7 +73,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "www", "www", "{F8D2127F-704
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{00CA952C-4292-47FC-8D03-B525B294B846}"
 	ProjectSection(SolutionItems) = preProject
-		.common\CommonAssemblyInfo.cs = .common\CommonAssemblyInfo.cs
+		.build\CommonAssemblyInfo.cs = .build\CommonAssemblyInfo.cs
 		.build\NuGet.Build.Package.targets = .build\NuGet.Build.Package.targets
 	EndProjectSection
 EndProject

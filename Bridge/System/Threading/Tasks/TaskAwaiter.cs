@@ -23,6 +23,7 @@ namespace System.Threading.Tasks
         [Name("continueWith")]
         public extern void OnCompleted(Action continuation);
 
+        [Name("getAwaitedResult")]
         public extern void GetResult();
     }
 
@@ -46,6 +47,7 @@ namespace System.Threading.Tasks
         [Name("continueWith")]
         public extern void OnCompleted(Action continuation);
 
+        [Name("getAwaitedResult")]
         public TResult GetResult()
         {
             return default(TResult);

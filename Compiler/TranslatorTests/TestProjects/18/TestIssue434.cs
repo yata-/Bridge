@@ -65,4 +65,19 @@ namespace TestIssue434
             Bridge.Html5.Console.Log(i);
         }
     }
+	
+	public class Issue434C
+    {
+        [Init(InitPosition.Top)]
+        public static void Top()
+        {
+            Script.Write("// Top");
+        }
+
+        [Init(InitPosition.Bottom)]
+        public static void Bottom()
+        {
+            Script.Write("// Bottom");
+        }
+    }
 }

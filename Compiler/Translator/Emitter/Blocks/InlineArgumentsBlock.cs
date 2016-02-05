@@ -1,3 +1,4 @@
+using System;
 using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.TypeSystem;
@@ -5,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using ICSharpCode.NRefactory.CSharp.Resolver;
+using Object.Net.Utilities;
 
 namespace Bridge.Translator
 {
@@ -38,6 +41,7 @@ namespace Bridge.Translator
         }
 
         private static Regex _formatArg = new Regex(@"\{(\*?)(\w+)(\:(\w+))?\}");
+        private static Regex _inlineMethod = new Regex(@"([$\w\.]+)\(\s*(.*)\)");
 
         protected virtual IList<Expression> GetExpressionsByKey(IEnumerable<NamedParamExpression> expressions, string key)
         {
@@ -128,6 +132,96 @@ namespace Bridge.Translator
 
             this.Write("");
 
+            bool needExpand = false;
+
+            string paramsName = null;
+            if (argsInfo.ResolveResult != null)
+            {
+                var paramsParam = argsInfo.ResolveResult.Member.Parameters.FirstOrDefault(p => p.IsParams);
+                if (paramsParam != null)
+                {
+                    paramsName = paramsParam.Name;
+                }
+            }
+
+            if (paramsName != null)
+            {
+                var matches = _formatArg.Matches(inline);
+                bool ignoreArray = false;
+                foreach (Match m in matches)
+                {
+                    if (m.Groups[2].Value == paramsName)
+                    {
+                        bool isRaw = m.Groups[1].Success && m.Groups[1].Value == "*";
+                        ignoreArray = isRaw || argsInfo.ParamsExpression == null;
+                        string modifier = m.Groups[1].Success ? m.Groups[4].Value : null;
+
+                        if (modifier == "array")
+                        {
+                            ignoreArray = false;
+                        }
+
+                        break;
+                    }
+                }
+
+                if (argsInfo.ResolveResult is CSharpInvocationResolveResult)
+                {
+                    needExpand = !((CSharpInvocationResolveResult) argsInfo.ResolveResult).IsExpandedForm;
+                }
+
+                if (needExpand && ignoreArray)
+                {
+                    IList<Expression> exprs = this.GetExpressionsByKey(expressions, paramsName);
+
+                    if (exprs.Count == 1 && exprs[0] != null && exprs[0].Parent != null)
+                    {
+                        var exprrr = this.Emitter.Resolver.ResolveNode(exprs[0], this.Emitter);
+                        if (exprrr.Type.Kind == TypeKind.Array)
+                        {
+                            var match = _inlineMethod.Match(inline);
+
+                            if (match.Success)
+                            {
+                                string target = null;
+                                var methodName = match.Groups[1].Value;
+
+                                if (methodName.Contains("."))
+                                {
+                                    target = methodName.LeftOfRightmostOf('.');
+                                }
+
+                                string args = match.Groups[2].Value;
+
+                                StringBuilder sb = new StringBuilder();
+                                sb.Append(methodName);
+                                sb.Append(".apply(");
+                                sb.Append(target ?? "null");
+
+                                if (args.Contains(","))
+                                {
+                                    sb.Append(", [");
+                                    sb.Append(args.LeftOfRightmostOf(',').Trim());
+                                    sb.Append("].concat(");
+                                    sb.Append(args.RightOfRightmostOf(',').Trim());
+                                    sb.Append(")");
+                                }
+                                else
+                                {
+                                    sb.Append(",");
+                                    sb.Append(args);
+                                }
+                                
+                                sb.Append(")");
+
+                                inline = inline.Remove(match.Index, match.Length);
+                                inline = inline.Insert(match.Index, sb.ToString());
+                            }
+                        }
+                    }
+                }
+            }
+
             inline = _formatArg.Replace(inline, delegate(Match m)
             {
                 int count = this.Emitter.Writers.Count;
@@ -135,15 +229,7 @@ namespace Bridge.Translator
                 bool isRaw = m.Groups[1].Success && m.Groups[1].Value == "*";
                 bool ignoreArray = isRaw || argsInfo.ParamsExpression == null;
                 string modifier = m.Groups[1].Success ? m.Groups[4].Value : null;
-                string paramsName = null;
-                if (argsInfo.ResolveResult != null)
-                {
-                    var paramsParam = argsInfo.ResolveResult.Member.Parameters.FirstOrDefault(p => p.IsParams);
-                    if (paramsParam != null)
-                    {
-                        paramsName = paramsParam.Name;
-                    }
-                }
+                
 
                 if (modifier == "array")
                 {
@@ -169,13 +255,9 @@ namespace Bridge.Translator
                     {
                         if (exprs.Count > 1 || paramsName == key)
                         {
-                            if (exprs.Count == 1 && exprs[0].Parent != null)
+                            if (needExpand)
                             {
-                                var exprrr = this.Emitter.Resolver.ResolveNode(exprs[0], this.Emitter);
-                                if (exprrr.Type.Kind == TypeKind.Array)
-                                {
-                                    ignoreArray = true;
-                                }
+                                ignoreArray = true;
                             }
 
                             if (!ignoreArray)
@@ -183,12 +265,19 @@ namespace Bridge.Translator
                                 this.Write("[");
                             }
 
-                            new ExpressionListBlock(this.Emitter, exprs, null).Emit();
+                            if (exprs.Count == 1 && exprs[0] == null)
+                            {
+                                this.Write("null");
+                            }
+                            else
+                            {
+                                new ExpressionListBlock(this.Emitter, exprs, null).Emit();
+                            }
 
                             if (!ignoreArray)
                             {
                                 this.Write("]");
-                            }
+                            }   
                         }
                         else
                         {

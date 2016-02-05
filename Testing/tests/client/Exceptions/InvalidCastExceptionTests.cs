@@ -25,7 +25,7 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new InvalidCastException();
             Assert.True((object)ex is InvalidCastException, "is InvalidCastException");
-            Assert.AreEqual(ex.InnerException, Script.Undefined, "InnerException");
+            Assert.AreEqual(ex.InnerException, null, "InnerException");
             Assert.AreEqual(ex.Message, "The cast is not valid.");
         }
 
@@ -34,7 +34,7 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new InvalidCastException("The message");
             Assert.True((object)ex is InvalidCastException, "is InvalidCastException");
-            Assert.AreEqual(ex.InnerException, Script.Undefined, "InnerException");
+            Assert.AreEqual(ex.InnerException, null, "InnerException");
             Assert.AreEqual(ex.Message, "The message");
         }
 

@@ -110,28 +110,43 @@ namespace Bridge.Translator
                     }
                 }
             }
-
-            var clonedTypes = new List<ITypeInfo>(this.Types);
-
-            foreach (var t in clonedTypes)
-            {
-                for (int i = this.Types.Count - 1; i > -1; i--)
-                {
-                    var x = this.Types[i];
-
-                    if (this.IsInheritedFrom(t, x))
-                    {
-                        this.Types.Remove(t);
-                        this.Types.Insert(this.Types.IndexOf(x) + 1, t);
-                        break;
-                    }
-                }
-            }
         }
 
         public virtual void TopologicalSort()
         {
             var graph = new TopologicalSorting.DependencyGraph();
+
+            foreach (var t in this.Types)
+            {
+                for (int i = this.Types.Count - 1; i > -1; i--)
+                {
+                    var x = this.Types[i];
+
+                    var tProcess = graph.Processes.FirstOrDefault(p => p.Name == t.Type.ReflectionName);
+                    if (tProcess == null)
+                    {
+                        tProcess = new TopologicalSorting.OrderedProcess(graph, t.Type.ReflectionName);
+                    }
+
+                    if (this.IsInheritedFrom(t, x))
+                    {
+                        if (tProcess.Predecessors.All(p => p.Name != x.Type.ReflectionName))
+                        {
+                            var dProcess = graph.Processes.FirstOrDefault(p => p.Name == x.Type.ReflectionName);
+                            if (dProcess == null)
+                            {
+                                dProcess = new TopologicalSorting.OrderedProcess(graph, x.Type.ReflectionName);
+                            }
+                            //var dProcess = new TopologicalSorting.OrderedProcess(graph, dependency.Type.FullName);
+
+                            if (dProcess.Predecessors.All(p => p.Name != tProcess.Name))
+                            {
+                                tProcess.After(dProcess);
+                            }
+                        }
+                    }
+                }
+            }
 
             foreach (var t in this.Types)
             {
