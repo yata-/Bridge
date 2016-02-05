@@ -2134,9 +2134,20 @@
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge893A', {
         statics: {
-            test: 0
+            testA1: 0,
+            testA2: 1
         },
         $enum: true
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge893B', {
+        statics: {
+            testB1: 1,
+            testB2: 2,
+            testB3: 4
+        },
+        $enum: true,
+        $flags: true
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.CI1');
@@ -7775,8 +7786,19 @@
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge893', {
         statics: {
-            testDecimalConversion: function () {
-                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Enum.toString(Bridge.ClientTest.BridgeIssues.Bridge893A, Bridge.ClientTest.BridgeIssues.Bridge893A.test), "Test");
+            enumToStringWorks: function () {
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Enum.toString(Bridge.ClientTest.BridgeIssues.Bridge893A, Bridge.ClientTest.BridgeIssues.Bridge893A.testA1), "TestA1");
+    
+                var a = 100;
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Enum.toString(Bridge.ClientTest.BridgeIssues.Bridge893A, a), "100");
+    
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Enum.toString(Bridge.ClientTest.BridgeIssues.Bridge893B, Bridge.ClientTest.BridgeIssues.Bridge893B.testB3), "TestB3");
+    
+                var t = 3;
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Enum.toString(Bridge.ClientTest.BridgeIssues.Bridge893B, t), "TestB1, TestB2");
+    
+                var t1 = 6;
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Enum.toString(Bridge.ClientTest.BridgeIssues.Bridge893B, t1), "TestB2, TestB3");
             }
         }
     });
