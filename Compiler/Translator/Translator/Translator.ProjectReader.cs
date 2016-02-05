@@ -138,11 +138,31 @@ namespace Bridge.Translator
             return path;
         }
 
+        public static bool IsRunningOnMono()
+        {
+            return System.Type.GetType("Mono.Runtime") != null;
+        }
+
         protected virtual IList<string> GetSourceFiles(XDocument doc)
         {
-            // Using XmlReader here addresses a Mono issue logged as #38224 at Mono's official BugZilla.
-            // Bridge issue #860
-            var project = new Project(XmlReader.Create(this.Location), null, null, new ProjectCollection());
+            Project project;
+
+            var isOnMono = Translator.IsRunningOnMono();
+            if (isOnMono)
+            {
+                // Using XmlReader here addresses a Mono issue logged as #38224 at Mono's official BugZilla.
+                // Bridge issue #860
+                // This constructor below works on Linux and DOES break #531
+                project = new Project(XmlReader.Create(this.Location), null, null, new ProjectCollection());
+            }
+            else
+            {
+                // Using XmlReader above breaks feature #531 - referencing linked files in csproj (Compiler test 18 fails)
+                // To avoid it at least on Windows, use different Project constructors
+                // This constructor below works on Windows and does NOT break #531
+                project = new Project(this.Location, null, null, new ProjectCollection());
+            }
+
             var sourceFiles = new List<string>();
 
             foreach (var projectItem in project.GetItems("Compile"))
@@ -150,9 +170,18 @@ namespace Bridge.Translator
                 sourceFiles.Add(projectItem.EvaluatedInclude);
             }
 
-            // Using XmlReader requires using this overload UnloadProject(project.Xml)
-            // Otherwise it does not work either on Windows or Linux
-            project.ProjectCollection.UnloadProject(project.Xml);
+            if (isOnMono)
+            {
+                // This UnloadProject overload should be used if the project created by new Project(XmlReader.Create(this.Location)...)
+                // Otherwise it does NOT work either on Windows or Linux
+                project.ProjectCollection.UnloadProject(project.Xml);
+            }
+            else
+            {
+                // This UnloadProject overload should be used if the project created by new Project(this.Location...)
+                // Otherwise it does NOT work either on Windows or Linux
+                project.ProjectCollection.UnloadProject(project);
+            }
 
             if (sourceFiles.Count() == 0)
             {
