@@ -7944,6 +7944,19 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge907', {
+        statics: {
+            testIfElseAsyncMethod: function () {
+                var s = "Hello World!";
+                var res = Bridge.String.split(s, Bridge.cast(null, Array), null, 1);
+    
+                Bridge.get(Bridge.Test.Assert).areEqual$1(res.length, 2, "Bridge907 Length");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(res[0], "Hello", "Bridge907 [0]");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(res[1], "World!", "Bridge907 [1]");
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Class65_2', {
         inherits: [Bridge.ClientTest.BridgeIssues.Class65_1.Nested]
     });
