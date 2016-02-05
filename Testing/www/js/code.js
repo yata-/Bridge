@@ -3049,12 +3049,12 @@
     
                 if (which === Bridge.get(Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which).resolve) {
                     if (Bridge.hasValue(aThen.getFilled())) {
-                        aThen.Filled(args);
+                        aThen.getFilled().apply(null, args);
                     }
                 }
                 else  {
                     if (Bridge.hasValue(aThen.getError())) {
-                        aThen.Error(args);
+                        aThen.getError().apply(null, args);
                     }
                 }
                 i++;
@@ -17570,7 +17570,7 @@
             Bridge.global.setTimeout(function () {
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.ranToCompletion, "Task should be completed after promise");
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "Continuation should have been run after promise was completed.");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(task.getResult(), [42, "result 123", 101], "The result should be correct");
+                Bridge.get(Bridge.Test.Assert).areDeepEqual$1(task.getResult(), [42, "result 123", 101], "The result should be correct");
     
                 completeAsync();
             }, 200);
@@ -17599,7 +17599,7 @@
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(task.exception, Bridge.AggregateException), "Exception should be an AggregateException");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.exception.innerExceptions.getCount(), 1, "Exception should have one inner exception");
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(task.exception.innerExceptions.get(0), Bridge.PromiseException), "Inner exception should be a PromiseException");
-                Bridge.get(Bridge.Test.Assert).areEqual$1((Bridge.cast(task.exception.innerExceptions.get(0), Bridge.PromiseException)).arguments, [42, "result 123", 101], "The PromiseException arguments should be correct");
+                Bridge.get(Bridge.Test.Assert).areDeepEqual$1((Bridge.cast(task.exception.innerExceptions.get(0), Bridge.PromiseException)).arguments, [42, "result 123", 101], "The PromiseException arguments should be correct");
     
                 completeAsync();
             }, 200);
@@ -17607,6 +17607,7 @@
         completingPromiseCanBeAwaited: function () {
             var $step = 0,
                 $task1, 
+                $taskResult1, 
                 $jumpFromFinally, 
                 completeAsync, 
                 promise, 
@@ -17631,13 +17632,13 @@
                                     completeAsync();
                                 }, 200);
                                 
-                                $task1 = promise;
+                                $task1 = Bridge.Task.fromPromise(promise);
                                 $step = 1;
                                 $task1.continueWith($asyncBody, true);
                                 return;
                             }
                             case 1: {
-                                $task1.getAwaitedResult();
+                                $taskResult1 = $task1.getAwaitedResult();
                                 result = $taskResult1;
                                 return;
                             }
@@ -17653,6 +17654,7 @@
         failingPromiseCanBeAwaited: function () {
             var $step = 0,
                 $task1, 
+                $taskResult1, 
                 $jumpFromFinally, 
                 $returnValue, 
                 completeAsync, 
@@ -17685,13 +17687,13 @@
                                     continue;
                                 }
                                 case 1: {
-                                    $task1 = promise;
+                                    $task1 = Bridge.Task.fromPromise(promise);
                                     $step = 2;
                                     $task1.continueWith($asyncBody, true);
                                     return;
                                 }
                                 case 2: {
-                                    $task1.getAwaitedResult();
+                                    $taskResult1 = $task1.getAwaitedResult();
                                     Bridge.get(Bridge.Test.Assert).fail$1("Await should throw");
                                     $step = 5;
                                     continue;

@@ -248,9 +248,30 @@ namespace Bridge.Translator
                 type = resolveResult.Type;
             }
 
-            if (type.Name == "Task" && type.Namespace == "System.Threading.Tasks" && type.TypeParameterCount > 0)
+            if ((type.FullName == "System.Threading.Tasks.TaskAwaiter" || type.FullName == "System.Threading.Tasks.Task") && type.TypeParameterCount > 0)
             {
                 return true;
+            }
+
+            var unaryExpr = expression.Parent as UnaryOperatorExpression;
+            if (unaryExpr != null && unaryExpr.Operator == UnaryOperatorType.Await)
+            {
+                var rr = this.Emitter.Resolver.ResolveNode(unaryExpr, this.Emitter) as AwaitResolveResult;
+
+                if (rr != null)
+                {
+                    var awaiterMethod = rr.GetAwaiterInvocation as InvocationResolveResult;
+
+                    if (awaiterMethod != null)
+                    {
+                        type = awaiterMethod.Type;
+
+                        if ((type.FullName == "System.Threading.Tasks.TaskAwaiter" || type.FullName == "System.Threading.Tasks.Task") && type.TypeParameterCount > 0)
+                        {
+                            return true;
+                        }
+                    }
+                }
             }
 
             return false;

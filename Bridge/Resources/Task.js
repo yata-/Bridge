@@ -193,8 +193,15 @@
                     promise = promise.promise();
                 }
 
+                if (typeof (handler) === 'number') {
+                    handler = (function (i) { return function () { return arguments[i >= 0 ? i : (arguments.length + i)]; }; })(handler);
+                }
+                else if (typeof (handler) !== 'function') {
+                    handler = function () { return Array.prototype.slice.call(arguments, 0); };
+                }
+
                 promise.then(function () {
-                    tcs.setResult(handler ? handler.apply(null, arguments) : arguments);
+                    tcs.setResult(handler ? handler.apply(null, arguments) : Array.prototype.slice.call(arguments, 0));
                 }, function () {
                     tcs.setException(errorHandler ? errorHandler.apply(null, arguments) : new Bridge.PromiseException(Array.prototype.slice.call(arguments, 0)));
                 });

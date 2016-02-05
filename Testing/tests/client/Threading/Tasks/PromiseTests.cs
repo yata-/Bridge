@@ -79,14 +79,14 @@ namespace Bridge.ClientTest.Threading
                     {
                         if (aThen.Filled != null)
                         {
-                            aThen.Filled(args);
+                            aThen.Filled.Apply(null, args);
                         }
                     }
                     else
                     {
                         if (aThen.Error != null)
                         {
-                            aThen.Error(args);
+                            aThen.Error.Apply(null, args);
                         }
                     }
                     i++;
@@ -126,7 +126,7 @@ namespace Bridge.ClientTest.Threading
             {
                 Assert.AreEqual(task.Status, TaskStatus.RanToCompletion, "Task should be completed after promise");
                 Assert.True(continuationRun, "Continuation should have been run after promise was completed.");
-                Assert.AreEqual(task.Result, new object[] { 42, "result 123", 101 }, "The result should be correct");
+                Assert.AreDeepEqual(task.Result, new object[] { 42, "result 123", 101 }, "The result should be correct");
 
                 completeAsync();
             }, 200);
@@ -241,7 +241,7 @@ namespace Bridge.ClientTest.Threading
                 Assert.True((object)task.Exception is AggregateException, "Exception should be an AggregateException");
                 Assert.AreEqual(task.Exception.InnerExceptions.Count, 1, "Exception should have one inner exception");
                 Assert.True(task.Exception.InnerExceptions[0] is PromiseException, "Inner exception should be a PromiseException");
-                Assert.AreEqual(((PromiseException)task.Exception.InnerExceptions[0]).Arguments, new object[] { 42, "result 123", 101 }, "The PromiseException arguments should be correct");
+                Assert.AreDeepEqual(((PromiseException)task.Exception.InnerExceptions[0]).Arguments, new object[] { 42, "result 123", 101 }, "The PromiseException arguments should be correct");
 
                 completeAsync();
             }, 200);
