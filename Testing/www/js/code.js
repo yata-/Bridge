@@ -7825,11 +7825,11 @@
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge905', {
         statics: {
             dayOfWeekFixed: function () {
-                var dictionary = new Bridge.Dictionary$2(Number,Bridge.Int)();
+                var dictionary = new Bridge.Dictionary$2(Bridge.DayOfWeek,Bridge.Int)();
                 dictionary.add(0, 1);
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1(dictionary.get(0), 1, "1");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.toString(Number, (6)), "Saturday", "Saturday");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.toString(Bridge.DayOfWeek, (6)), "Saturday", "Saturday");
             }
         }
     });

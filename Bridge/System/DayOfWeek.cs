@@ -7,7 +7,7 @@ namespace System
     /// </summary>
     [External]
     [Enum(Emit.Value)]
-    [Name("Number")]
+    [Name("Bridge.DayOfWeek")]
     public enum DayOfWeek
     {
         /// <summary>
