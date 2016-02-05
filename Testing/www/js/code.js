@@ -7993,6 +7993,26 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge907', {
+        statics: {
+            testStringSpitWithNullParameterFixed: function () {
+                var s = "Hello World!";
+                var res = Bridge.String.split(s, Bridge.cast(null, Array), null, 1);
+    
+                Bridge.get(Bridge.Test.Assert).areEqual$1(res.length, 2, "Bridge907 instance Length");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(res[0], "Hello", "Bridge907 instance [0]");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(res[1], "World!", "Bridge907 instance [1]");
+    
+                var s1 = "Hi Man!";
+                var res1 = Bridge.String.split(s1, Bridge.cast(null, Array), null, 1);
+    
+                Bridge.get(Bridge.Test.Assert).areEqual$1(res1.length, 2, "Bridge907 static Length");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(res1[0], "Hi", "Bridge907 static [0]");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(res1[1], "Man!", "Bridge907 static [1]");
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Class65_2', {
         inherits: [Bridge.ClientTest.BridgeIssues.Class65_1.Nested]
     });
