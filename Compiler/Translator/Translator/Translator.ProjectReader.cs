@@ -141,7 +141,7 @@ namespace Bridge.Translator
         protected virtual IList<string> GetSourceFiles(XDocument doc)
         {
             // Using XmlReader here addresses a Mono issue logged as #38224 at Mono's official BugZilla.
-            // The approach works on both Windows and Linux. Bridge issue #860.
+            // Bridge issue #860
             var project = new Project(XmlReader.Create(this.Location), null, null, new ProjectCollection());
             var sourceFiles = new List<string>();
 
@@ -149,7 +149,10 @@ namespace Bridge.Translator
             {
                 sourceFiles.Add(projectItem.EvaluatedInclude);
             }
-            project.ProjectCollection.UnloadProject(project);
+
+            // Using XmlReader requires using this overload UnloadProject(project.Xml)
+            // Otherwise it does not work either on Windows or Linux
+            project.ProjectCollection.UnloadProject(project.Xml);
 
             if (sourceFiles.Count() == 0)
             {
