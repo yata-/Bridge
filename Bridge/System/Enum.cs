@@ -33,5 +33,8 @@ namespace System
 
         [Template("Bridge.Enum.tryParse({TEnum}, {value}, {result}, {ignoreCase})")]
         public static extern bool TryParse<TEnum>(string value, bool ignoreCase, out TEnum result) where TEnum : struct;
+
+        [Template("Bridge.Enum.toString({this:type}, {this})")]
+        public override extern string ToString();
     }
 }
