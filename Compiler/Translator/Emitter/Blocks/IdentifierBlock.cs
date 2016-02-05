@@ -67,7 +67,7 @@ namespace Bridge.Translator
 
             if (resolveResult is TypeResolveResult)
             {
-                if (this.Emitter.Validator.IsIgnoreType(resolveResult.Type.GetDefinition()))
+                if (this.Emitter.Validator.IsIgnoreType(resolveResult.Type.GetDefinition()) || resolveResult.Type.Kind == TypeKind.Enum)
                 {
                     this.Write(BridgeTypes.ToJsName(resolveResult.Type, this.Emitter));
                 }
@@ -91,7 +91,7 @@ namespace Bridge.Translator
 
                 if (memberResult.Member.IsStatic)
                 {
-                    if (!this.Emitter.Validator.IsIgnoreType(memberResult.Member.DeclaringTypeDefinition))
+                    if (!this.Emitter.Validator.IsIgnoreType(memberResult.Member.DeclaringTypeDefinition) && memberResult.Member.DeclaringTypeDefinition.Kind != TypeKind.Enum)
                     {
                         this.Write("(Bridge.get(" + BridgeTypes.ToJsName(memberResult.Member.DeclaringType, this.Emitter) + "))");
                     }
@@ -498,7 +498,7 @@ namespace Bridge.Translator
         {            
             if (memberResult.Member.IsStatic)
             {
-                if (!this.Emitter.Validator.IsIgnoreType(memberResult.Member.DeclaringTypeDefinition))
+                if (!this.Emitter.Validator.IsIgnoreType(memberResult.Member.DeclaringTypeDefinition) && memberResult.Member.DeclaringTypeDefinition.Kind != TypeKind.Enum)
                 {
                     this.Write("Bridge.get(" + BridgeTypes.ToJsName(memberResult.Member.DeclaringType, this.Emitter) + ")");
                 }

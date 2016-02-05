@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using ICSharpCode.NRefactory.CSharp.Resolver;
+using ICSharpCode.NRefactory.Semantics;
 using Object.Net.Utilities;
 
 namespace Bridge.Translator
@@ -135,12 +136,14 @@ namespace Bridge.Translator
             bool needExpand = false;
 
             string paramsName = null;
+            IType paramsType = null;
             if (argsInfo.ResolveResult != null)
             {
                 var paramsParam = argsInfo.ResolveResult.Member.Parameters.FirstOrDefault(p => p.IsParams);
                 if (paramsParam != null)
                 {
                     paramsName = paramsParam.Name;
+                    paramsType = paramsParam.Type;
                 }
             }
 
@@ -241,19 +244,59 @@ namespace Bridge.Translator
 
                 if (key == "this" || key == argsInfo.ThisName || (key == "0" && argsInfo.IsExtensionMethod))
                 {
-                    string thisValue = argsInfo.GetThisValue();
-
-                    if (thisValue != null)
+                    if (modifier == "type")
                     {
-                        this.Write(thisValue);
+                        AstNode node = null;
+                        if (argsInfo.ThisArgument is AstNode)
+                        {
+                            node = (AstNode) argsInfo.ThisArgument;
+                        }
+                        else
+                        {
+                            node = argsInfo.Expression;
+                        }
+
+                        if (node != null)
+                        {
+                            var rr = this.Emitter.Resolver.ResolveNode(node, this.Emitter);
+                            var type = rr.Type;
+                            if (rr is MemberResolveResult)
+                            {
+                                type = ((MemberResolveResult) rr).TargetResult.Type;
+                            }
+
+                            this.Write(BridgeTypes.ToJsName(type, this.Emitter));
+                        }
+                    }
+                    else
+                    {
+                        string thisValue = argsInfo.GetThisValue();
+
+                        if (thisValue != null)
+                        {
+                            this.Write(thisValue);
+                        }    
                     }
                 }
                 else
                 {
                     IList<Expression> exprs = this.GetExpressionsByKey(expressions, key);
+                    
                     if (exprs.Count > 0)
                     {
-                        if (exprs.Count > 1 || paramsName == key)
+                        if (modifier == "type")
+                        {
+                            if (paramsName == key && paramsType != null)
+                            {
+                                this.Write(BridgeTypes.ToJsName(paramsType, this.Emitter));
+                            }
+                            else
+                            {
+                                var rr = this.Emitter.Resolver.ResolveNode(exprs[0], this.Emitter);
+                                this.Write(BridgeTypes.ToJsName(rr.Type, this.Emitter));
+                            }
+                        }
+                        else if (exprs.Count > 1 || paramsName == key)
                         {
                             if (needExpand)
                             {
