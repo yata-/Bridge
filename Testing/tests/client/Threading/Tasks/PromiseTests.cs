@@ -38,7 +38,7 @@ namespace Bridge.ClientTest.Threading
             {
                 Thens = new List<A>();
 
-                DoThen = (f, e, p) => 
+                DoThen = (f, e, p) =>
                 {
                     this.Thens.Add(new A() { Filled = f, Error = e, Progress = p });
                 };
@@ -100,6 +100,15 @@ namespace Bridge.ClientTest.Threading
             return new SimplePromise();
         }
 
+        private class TaskResult
+        {
+            public int I { get; set; }
+            public string S { get; set; }
+            public int J { get; set; }
+
+            public delegate TaskResult TaskResultHandler(int i, string s, int j);
+        }
+
         [Test(ExpectedCount = 7)]
         public void TaskFromPromiseWithoutResultFactoryWorksWhenPromiseCompletes()
         {
@@ -132,85 +141,44 @@ namespace Bridge.ClientTest.Threading
             }, 200);
         }
 
-        //[Test(ExpectedCount = )]
-        //public void TaskFromPromiseWithResultIndexWorksWhenPromiseCompletes()
-        //{
-        //    var promise = CreatePromise();
-        //    var tasks = new Task<int>[] {
-        //        Task.FromPromise<int>(promise),//,  0),
-        //        Task.FromPromise<int>(promise),//,  1),
-        //        Task.FromPromise<int>(promise),//,  2),
-        //        Task.FromPromise<int>(promise),//, -3),
-        //        Task.FromPromise<int>(promise),//, -2),
-        //        Task.FromPromise<int>(promise),//, -1),
-        //    };
-        //    var continuationsRun = new bool[6];
-        //    Assert.True(tasks.Every(t => t.Status == TaskStatus.Running), "Tasks should be running after being created");
-        //    tasks.ForEach((x, i, _) => x.ContinueWith(t =>
-        //    {
-        //        Assert.True(t == x, "ContinueWith parameter should be correct");
-        //        continuationsRun[i] = true;
-        //    }));
+        [Test(ExpectedCount = 7)]
+        public void TaskFromPromiseWithResultFactoryWorksWhenPromiseCompletes()
+        {
+            var completeAsync = Assert.Async();
 
-        //    Global.SetTimeout(() =>
-        //    {
-        //        Assert.False(continuationsRun.Some(x => x), "Continuations should not be run too early.");
-        //        Assert.True(tasks.Every(t => t.Status == TaskStatus.Running), "Tasks should be running before promise is completed.");
-        //        promise.Resolve(10, 42, 38);
-        //    }, 100);
+            TaskResult.TaskResultHandler trh = (int i, string s, int j) => { return new TaskResult() { I = i, S = s, J = j }; };
 
-        //    Global.SetTimeout(() =>
-        //    {
-        //        Assert.True(tasks.Every(t => t.Status == TaskStatus.RanToCompletion), "Task should be completed after promise");
-        //        Assert.True(continuationsRun.Every(x => x), "Continuations should have been run after promise was completed.");
-        //        Assert.AreEqual(tasks[0].Result, 10, "Task 0 result should be correct");
-        //        Assert.AreEqual(tasks[1].Result, 42, "Task 1 result should be correct");
-        //        Assert.AreEqual(tasks[2].Result, 38, "Task 2 result should be correct");
-        //        Assert.AreEqual(tasks[3].Result, 10, "Task 3 result should be correct");
-        //        Assert.AreEqual(tasks[4].Result, 42, "Task 4 result should be correct");
-        //        Assert.AreEqual(tasks[5].Result, 38, "Task 5 result should be correct");
-        //        completeAsync();
-        //    }, 200);
-        //}
+            var promise = CreatePromise();
+            var task = Task.FromPromise<TaskResult>(promise, trh);
+            Assert.AreEqual(task.Status, TaskStatus.Running, "Task should be running after being created");
+            bool continuationRun = false;
+            task.ContinueWith(t =>
+            {
+                Assert.True(t == task, "ContinueWith parameter should be correct");
+                continuationRun = true;
+            });
 
-        //[Test(ExpectedCount = )]
-        //public void TaskFromPromiseWithResultFactoryWorksWhenPromiseCompletes()
-        //{
-        //    var promise = CreatePromise();
-        //    var task = Task.FromPromise(promise, (int i, string s, int j) => new
-        //    {
-        //        i,
-        //        s,
-        //        j
-        //    });
-        //    Assert.AreEqual(task.Status, TaskStatus.Running, "Task should be running after being created");
-        //    bool continuationRun = false;
-        //    task.ContinueWith(t =>
-        //    {
-        //        Assert.True(t == task, "ContinueWith parameter should be correct");
-        //        continuationRun = true;
-        //    });
+            Global.SetTimeout(() =>
+            {
+                Assert.False(continuationRun, "Continuation should not be run too early.");
+                Assert.AreEqual(task.Status, TaskStatus.Running, "Task should be running before promise is completed.");
+                promise.Resolve(42, "result 123", 101);
+            }, 100);
 
-        //    Global.SetTimeout(() =>
-        //    {
-        //        Assert.False(continuationRun, "Continuation should not be run too early.");
-        //        Assert.AreEqual(task.Status, TaskStatus.Running, "Task should be running before promise is completed.");
-        //        promise.Resolve(42, "result 123", 101);
-        //    }, 100);
+            Global.SetTimeout(() =>
+            {
+                Assert.AreEqual(task.Status, TaskStatus.RanToCompletion, "Task should be completed after promise");
+                Assert.True(continuationRun, "Continuation should have been run after promise was completed.");
+                Assert.AreDeepEqual(task.Result, new TaskResult()
+                {
+                    I = 42,
+                    S = "result 123",
+                    J = 101
+                });
 
-        //    Global.SetTimeout(() =>
-        //    {
-        //        Assert.AreEqual(task.Status, TaskStatus.RanToCompletion, "Task should be completed after promise");
-        //        Assert.True(continuationRun, "Continuation should have been run after promise was completed.");
-        //        Assert.AreEqual(task.Result, new
-        //        {
-        //            i = 42,
-        //            s = "result 123",
-        //            j = 101
-        //        });
-        //        completeAsync();
-        //    }, 200);
-        //}
+                completeAsync();
+            }, 200);
+        }
 
         [Test(ExpectedCount = 10)]
         public void TaskFromPromiseWorksWhenPromiseFails()

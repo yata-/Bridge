@@ -8322,6 +8322,11 @@
                 assert.expect(7);
                 t.taskFromPromiseWithoutResultFactoryWorksWhenPromiseCompletes();
             },
+            taskFromPromiseWithResultFactoryWorksWhenPromiseCompletes: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingPromiseTests).beforeTest(false, assert);
+                assert.expect(7);
+                t.taskFromPromiseWithResultFactoryWorksWhenPromiseCompletes();
+            },
             taskFromPromiseWorksWhenPromiseFails: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingPromiseTests).beforeTest(false, assert);
                 assert.expect(10);
@@ -10742,6 +10747,7 @@
                 QUnit.test("CancellationToken - LinkedSourceWithTwoTokensWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).linkedSourceWithTwoTokensWorks);
                 QUnit.test("CancellationToken - LinkedSourceWithThreeTokensWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingCancellationTokenTests).linkedSourceWithThreeTokensWorks);
                 QUnit.test("Promise - TaskFromPromiseWithoutResultFactoryWorksWhenPromiseCompletes", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingPromiseTests).taskFromPromiseWithoutResultFactoryWorksWhenPromiseCompletes);
+                QUnit.test("Promise - TaskFromPromiseWithResultFactoryWorksWhenPromiseCompletes", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingPromiseTests).taskFromPromiseWithResultFactoryWorksWhenPromiseCompletes);
                 QUnit.test("Promise - TaskFromPromiseWorksWhenPromiseFails", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingPromiseTests).taskFromPromiseWorksWhenPromiseFails);
                 QUnit.test("Promise - CompletingPromiseCanBeAwaited", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingPromiseTests).completingPromiseCanBeAwaited);
                 QUnit.test("Promise - FailingPromiseCanBeAwaited", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingPromiseTests).failingPromiseCanBeAwaited);

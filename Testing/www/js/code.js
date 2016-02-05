@@ -3081,6 +3081,16 @@
         $enum: true
     });
     
+    Bridge.define('Bridge.ClientTest.Threading.PromiseTests.TaskResult', {
+        config: {
+            properties: {
+                I: 0,
+                S: null,
+                J: 0
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Utilities.BrowserHelper', {
         statics: {
             isPhantomJs: function () {
@@ -17713,6 +17723,44 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.ranToCompletion, "Task should be completed after promise");
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "Continuation should have been run after promise was completed.");
                 Bridge.get(Bridge.Test.Assert).areDeepEqual$1(task.getResult(), [42, "result 123", 101], "The result should be correct");
+    
+                completeAsync();
+            }, 200);
+        },
+        taskFromPromiseWithResultFactoryWorksWhenPromiseCompletes: function () {
+            var completeAsync = Bridge.get(Bridge.Test.Assert).async();
+    
+            var trh = function (i, s, j) {
+                return Bridge.merge(new Bridge.ClientTest.Threading.PromiseTests.TaskResult(), {
+                    setI: i,
+                    setS: s,
+                    setJ: j
+                } );
+            };
+    
+            var promise = this.createPromise();
+            var task = Bridge.Task.fromPromise(promise, trh);
+            Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "Task should be running after being created");
+            var continuationRun = false;
+            task.continueWith(function (t) {
+                Bridge.get(Bridge.Test.Assert).true$1(t === task, "ContinueWith parameter should be correct");
+                continuationRun = true;
+            });
+    
+            Bridge.global.setTimeout(function () {
+                Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "Task should be running before promise is completed.");
+                promise.resolve([42, "result 123", 101]);
+            }, 100);
+    
+            Bridge.global.setTimeout(function () {
+                Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.ranToCompletion, "Task should be completed after promise");
+                Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "Continuation should have been run after promise was completed.");
+                Bridge.get(Bridge.Test.Assert).areDeepEqual(task.getResult(), Bridge.merge(new Bridge.ClientTest.Threading.PromiseTests.TaskResult(), {
+                    setI: 42,
+                    setS: "result 123",
+                    setJ: 101
+                } ));
     
                 completeAsync();
             }, 200);
