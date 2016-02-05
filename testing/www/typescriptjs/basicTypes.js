@@ -15,9 +15,9 @@
             init: function () {
                 this.integerArray = [1, 2, 3];
                 this.stringArray = ["1", "2", "3"];
-                this.colorArray = [Bridge.get(BasicTypes.Color).blue, Bridge.get(BasicTypes.Color).green, Bridge.get(BasicTypes.Color).red];
+                this.colorArray = [BasicTypes.Color.blue, BasicTypes.Color.green, BasicTypes.Color.red];
                 this.twoDimensionalArray = [[1, 2, 3], [5, 8]];
-                this.colorValue = Bridge.get(BasicTypes.Color).green;
+                this.colorValue = BasicTypes.Color.green;
                 this.undefinedValue = undefined;
             }
         },
