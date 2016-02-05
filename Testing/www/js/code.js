@@ -7408,53 +7408,36 @@
                     $asyncBody = Bridge.fn.bind(this, function () {
                         try {
                             for (;;) {
-                                $step = Bridge.Array.min([0,1,3,4,5,6,7,8], $step);
+                                $step = Bridge.Array.min([0,1,2,3,4], $step);
                                 switch ($step) {
                                     case 0: {
                                         if (!Bridge.hasValue(method)) {
-                                            $step = 1;
-                                            continue;
-                                        } 
-                                        $step = 2;
+                                            throw new Bridge.ArgumentNullException("method");
+                                        }
+                                        $step = 1;
                                         continue;
                                     }
                                     case 1: {
-                                        throw new Bridge.ArgumentNullException("method");
-                                        $step = 2;
-                                        continue;
-                                    }
-    
-                                    case 3: {
                                         task = Bridge.Task.fromResult(new Bridge.Exception("Success"));
                                         if (throwException) {
-                                            $step = 4;
-                                            continue;
-                                        } 
-                                        $step = 5;
-                                        continue;
-                                    }
-                                    case 4: {
-                                        throw new Bridge.Exception("test");
-                                        $step = 5;
-                                        continue;
-                                    }
-                                    case 5: {
+                                            throw new Bridge.Exception("test");
+                                        }
                                         
                                         $task1 = task;
-                                        $step = 6;
+                                        $step = 2;
                                         $task1.continueWith($asyncBody);
                                         return;
                                     }
-                                    case 6: {
+                                    case 2: {
                                         $taskResult1 = $task1.getAwaitedResult();
                                         $tcs.setResult($taskResult1);
                                         return;
                                     }
-                                    case 7: {
+                                    case 3: {
                                         $tcs.setResult(new Bridge.Exception("Fail: " + exception.getMessage()));
                                         return;
                                     }
-                                    case 8: {
+                                    case 4: {
                                         $tcs.setResult(null);
                                         return;
                                     }
@@ -7466,9 +7449,9 @@
                             }
                         } catch($e1) {
                             $e1 = Bridge.Exception.create($e1);
-                            if ( $step >= 3 && $step <= 6 ){
+                            if ( $step >= 1 && $step <= 2 ){
                                 exception = $e1;
-                                $step = 7;
+                                $step = 3;
                                 setTimeout($asyncBody, 0);
                                 return;
                             }
@@ -7788,6 +7771,165 @@
     
                 Bridge.get(Bridge.Test.Assert).true$1(test === 1, "One True");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(test), "Number", "Is number");
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge906', {
+        statics: {
+            myfunc: function () {
+                var $step = 0,
+                    $task1, 
+                    $jumpFromFinally, 
+                    $tcs = new Bridge.TaskCompletionSource(), 
+                    $returnValue, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        try {
+                            for (;;) {
+                                $step = Bridge.Array.min([0,1], $step);
+                                switch ($step) {
+                                    case 0: {
+                                        $task1 = Bridge.Task.delay(1);
+                                        $step = 1;
+                                        $task1.continueWith($asyncBody);
+                                        return;
+                                    }
+                                    case 1: {
+                                        $task1.getAwaitedResult();
+                                        $tcs.setResult(null);
+                                        return;
+                                    }
+                                    default: {
+                                        $tcs.setResult(null);
+                                        return;
+                                    }
+                                }
+                            }
+                        } catch($e1) {
+                            $e1 = Bridge.Exception.create($e1);
+                            $tcs.setException($e1);
+                        }
+                    }, arguments);
+    
+                $asyncBody();
+                return $tcs.task;
+            },
+            testIfAsyncMethod: function () {
+                var $step = 0,
+                    $task1, 
+                    $task2, 
+                    $jumpFromFinally, 
+                    asyncComplete, 
+                    myvar, 
+                    sum, 
+                    $t, 
+                    d, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        for (;;) {
+                            $step = Bridge.Array.min([0,1,2], $step);
+                            switch ($step) {
+                                case 0: {
+                                    asyncComplete = Bridge.get(Bridge.Test.Assert).async();
+                                    
+                                    myvar = [{ value: 1 }, { value: 2 }];
+                                    sum = 0;
+                                    $task2 = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge906).myfunc();
+                                    $step = 1;
+                                    $task2.continueWith($asyncBody, true);
+                                    return;
+                                }
+                                case 1: {
+                                    $task2.getAwaitedResult();
+                                    
+                                    $t = Bridge.getEnumerator(myvar);
+                                    while ($t.moveNext()) {
+                                        d = $t.getCurrent();
+                                        if (d.value > 0) {
+                                            sum += d.value;
+                                        }
+                                    }
+                                    
+                                    $task1 = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge906).myfunc();
+                                    $step = 2;
+                                    $task1.continueWith($asyncBody, true);
+                                    return;
+                                }
+                                case 2: {
+                                    $task1.getAwaitedResult();
+                                    
+                                    Bridge.get(Bridge.Test.Assert).areEqual(sum, 3);
+                                    
+                                    asyncComplete();
+                                    return;
+                                }
+                                default: {
+                                    return;
+                                }
+                            }
+                        }
+                    }, arguments);
+    
+                $asyncBody();
+            },
+            testIfElseAsyncMethod: function () {
+                var $step = 0,
+                    $task1, 
+                    $task2, 
+                    $jumpFromFinally, 
+                    asyncComplete, 
+                    myvar, 
+                    sum, 
+                    $t, 
+                    d, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        for (;;) {
+                            $step = Bridge.Array.min([0,1,2], $step);
+                            switch ($step) {
+                                case 0: {
+                                    asyncComplete = Bridge.get(Bridge.Test.Assert).async();
+                                    
+                                    myvar = [{ value: -3 }, { value: 2 }];
+                                    sum = 0;
+                                    $task2 = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge906).myfunc();
+                                    $step = 1;
+                                    $task2.continueWith($asyncBody, true);
+                                    return;
+                                }
+                                case 1: {
+                                    $task2.getAwaitedResult();
+                                    
+                                    $t = Bridge.getEnumerator(myvar);
+                                    while ($t.moveNext()) {
+                                        d = $t.getCurrent();
+                                        if (d.value > 0) {
+                                            sum += d.value;
+                                        }
+                                        else  {
+                                            sum -= d.value;
+                                        }
+                                    }
+                                    
+                                    $task1 = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge906).myfunc();
+                                    $step = 2;
+                                    $task1.continueWith($asyncBody, true);
+                                    return;
+                                }
+                                case 2: {
+                                    $task1.getAwaitedResult();
+                                    
+                                    Bridge.get(Bridge.Test.Assert).areEqual(sum, 5);
+                                    
+                                    asyncComplete();
+                                    return;
+                                }
+                                default: {
+                                    return;
+                                }
+                            }
+                        }
+                    }, arguments);
+    
+                $asyncBody();
             }
         }
     });
