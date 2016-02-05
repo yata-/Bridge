@@ -248,9 +248,30 @@ namespace Bridge.Translator
                 type = resolveResult.Type;
             }
 
-            if (type.Name == "Task" && type.Namespace == "System.Threading.Tasks" && type.TypeParameterCount > 0)
+            if ((type.FullName == "System.Threading.Tasks.TaskAwaiter" || type.FullName == "System.Threading.Tasks.Task") && type.TypeParameterCount > 0)
             {
                 return true;
+            }
+
+            var unaryExpr = expression.Parent as UnaryOperatorExpression;
+            if (unaryExpr != null && unaryExpr.Operator == UnaryOperatorType.Await)
+            {
+                var rr = this.Emitter.Resolver.ResolveNode(unaryExpr, this.Emitter) as AwaitResolveResult;
+
+                if (rr != null)
+                {
+                    var awaiterMethod = rr.GetAwaiterInvocation as InvocationResolveResult;
+
+                    if (awaiterMethod != null)
+                    {
+                        type = awaiterMethod.Type;
+
+                        if ((type.FullName == "System.Threading.Tasks.TaskAwaiter" || type.FullName == "System.Threading.Tasks.Task") && type.TypeParameterCount > 0)
+                        {
+                            return true;
+                        }
+                    }
+                }
             }
 
             return false;
@@ -317,7 +338,7 @@ namespace Bridge.Translator
             if (this.IsTaskReturn)
             {
                 this.WriteNewLine();
-                this.Write("return $returnTask;");
+                this.Write("return $tcs.task;");
             }
 
             this.WriteNewLine();
@@ -330,7 +351,7 @@ namespace Bridge.Translator
             this.BeginBlock();
 
             var asyncTryVisitor = new AsyncTryVisitor();
-            this.Node.AcceptVisitor(asyncTryVisitor);
+            this.Node.AcceptChildren(asyncTryVisitor);
             var needTry = asyncTryVisitor.Found || this.IsTaskReturn;
 
             this.Emitter.AsyncVariables.Add("$jumpFromFinally");
@@ -338,7 +359,7 @@ namespace Bridge.Translator
             {
                 if (this.IsTaskReturn)
                 {
-                    this.Emitter.AsyncVariables.Add("$returnTask = new Bridge.Task()");
+                    this.Emitter.AsyncVariables.Add("$tcs = new Bridge.TaskCompletionSource()");
                 }
 
                 this.Emitter.AsyncVariables.Add("$returnValue");
@@ -535,7 +556,7 @@ namespace Bridge.Translator
 
             if (this.IsTaskReturn)
             {
-                this.Write("$returnTask.setError($e1);");
+                this.Write("$tcs.setException($e1);");
             }
             else
             {
@@ -580,11 +601,11 @@ namespace Bridge.Translator
 
                     if (this.IsTaskResult(expression))
                     {
-                        this.Write(string.Format("$taskResult{0} = $task{0}.getResult();", step.FromTaskNumber));
+                        this.Write(string.Format("$taskResult{0} = $task{0}.getAwaitedResult();", step.FromTaskNumber));
                     }
                     else
                     {
-                        this.Write(string.Format("$task{0}.getResult();", step.FromTaskNumber));
+                        this.Write(string.Format("$task{0}.getAwaitedResult();", step.FromTaskNumber));
                     }
 
                     addNewLine = true;
@@ -638,7 +659,7 @@ namespace Bridge.Translator
 
                     if (this.IsTaskReturn)
                     {
-                        this.Write("$returnTask.setResult(null);");
+                        this.Write("$tcs.setResult(null);");
                         this.WriteNewLine();
                     }
 
@@ -655,7 +676,7 @@ namespace Bridge.Translator
 
             if (this.IsTaskReturn)
             {
-                this.Write("$returnTask.setResult(null);");
+                this.Write("$tcs.setResult(null);");
                 this.WriteNewLine();
             }
 

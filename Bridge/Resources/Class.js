@@ -178,6 +178,8 @@
                 Bridge.Class.cache[cacheName] = Class;
             }
 
+            Class.$$name = className;
+
             if (extend && Bridge.isFunction(extend)) {
                 extend = extend();
             }
@@ -287,8 +289,6 @@
 
             // Enforce the constructor to be what we expect
             Class.prototype.constructor = Class;
-
-            Class.$$name = className;
 
             if (statics) {
                 for (name in statics) {

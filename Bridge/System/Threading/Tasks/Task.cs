@@ -15,8 +15,8 @@ namespace System.Threading.Tasks
         {
         }
 
-        [Name("error")]
-        public readonly Exception Exception;
+        [FieldProperty]
+        public extern AggregateException Exception { get; }
 
         public bool IsCanceled
         {
@@ -45,7 +45,11 @@ namespace System.Threading.Tasks
             }
         }
 
-        public readonly TaskStatus Status;
+        [FieldProperty]
+        public extern TaskStatus Status
+        {
+            get;
+        }
 
         public extern Task ContinueWith(Action<Task> continuationAction);
 
@@ -56,12 +60,6 @@ namespace System.Threading.Tasks
         public extern TaskAwaiter GetAwaiter();
 
         public extern void Dispose();
-
-        public extern void SetCanceled();
-
-        public extern void SetError(IEnumerable<Exception> exceptions);
-
-        public extern void SetError(Exception exception);
 
         public extern void Complete(object result = null);
 

@@ -171,9 +171,9 @@ namespace Bridge.Translator
                     bool isExtensionMethodInvocation = false;
                     if (csharpInvocation != null)
                     {
-                        if (member != null && member.Type.Kind == TypeKind.Delegate && !csharpInvocation.IsExtensionMethodInvocation)
+                        if (member != null && member.Type.Kind == TypeKind.Delegate && (csharpInvocation.Member.Name == "Invoke" || csharpInvocation.Member.Name == "BeginInvoke" || csharpInvocation.Member.Name == "EndInvoke") && !csharpInvocation.IsExtensionMethodInvocation)
                         {
-                            throw new EmitterException(invocationExpression, "Delegate's methods are not supported. Please use direct delegate invoke.");
+                            throw new EmitterException(invocationExpression, "Delegate's 'Invoke' methods are not supported. Please use direct delegate invoke.");
                         }
 
                         if (csharpInvocation.IsExtensionMethodInvocation)

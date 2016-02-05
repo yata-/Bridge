@@ -1,5 +1,7 @@
 using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
+using ICSharpCode.NRefactory.CSharp.Resolver;
+using ICSharpCode.NRefactory.Semantics;
 
 namespace Bridge.Translator
 {
@@ -111,10 +113,32 @@ namespace Bridge.Translator
         {
             var index = System.Array.IndexOf(this.Emitter.AsyncBlock.AwaitExpressions, node) + 1;
             this.Write("$task" + index + " = ");
-
+            bool customAwaiter = false;
             var oldValue = this.Emitter.ReplaceAwaiterByVar;
             this.Emitter.ReplaceAwaiterByVar = true;
-            node.AcceptVisitor(this.Emitter);
+
+            var unaryExpr = node.Parent as UnaryOperatorExpression;
+            if (unaryExpr != null && unaryExpr.Operator == UnaryOperatorType.Await)
+            {
+                var rr = this.Emitter.Resolver.ResolveNode(unaryExpr, this.Emitter) as AwaitResolveResult;
+
+                if (rr != null)
+                {
+                    var awaiterMethod = rr.GetAwaiterInvocation as InvocationResolveResult;
+
+                    if (awaiterMethod != null && awaiterMethod.Member.FullName != "System.Threading.Tasks.Task.GetAwaiter")
+                    {
+                        this.WriteCustomAwaiter(node, awaiterMethod);
+                        customAwaiter = true;
+                    }
+                }
+            }
+
+            if (!customAwaiter)
+            {
+                node.AcceptVisitor(this.Emitter);
+            }
+            
             this.Emitter.ReplaceAwaiterByVar = oldValue;
 
             this.WriteSemiColon();
@@ -142,6 +166,39 @@ namespace Bridge.Translator
             }
 
             return asyncStep;
+        }
+
+        private void WriteCustomAwaiter(AstNode node, InvocationResolveResult awaiterMethod)
+        {
+            var method = awaiterMethod.Member;
+            var inline = this.Emitter.GetInline(method);
+            
+            if (!string.IsNullOrWhiteSpace(inline))
+            {
+                var argsInfo = new ArgumentsInfo(this.Emitter, node as Expression, awaiterMethod);
+                new InlineArgumentsBlock(this.Emitter, argsInfo, inline).Emit();
+            }
+            else
+            {
+                if (method.IsStatic)
+                {
+                    this.Write(BridgeTypes.ToJsName(method.DeclaringType, this.Emitter));
+                    this.WriteDot();
+                    this.Write(OverloadsCollection.Create(this.Emitter, method).GetOverloadName());
+                    this.WriteOpenParentheses();
+                    new ExpressionListBlock(this.Emitter, new Expression[] {(Expression)node}, null).Emit();
+                    this.WriteCloseParentheses();
+                }
+                else
+                {
+                    node.AcceptVisitor(this.Emitter);
+                    this.WriteDot();
+                    var name = OverloadsCollection.Create(this.Emitter, method).GetOverloadName();
+                    this.Write(name);
+                    this.WriteOpenParentheses();
+                    this.WriteCloseParentheses();
+                }
+            }
         }
 
         protected void WriteAwaiters(AstNode node)

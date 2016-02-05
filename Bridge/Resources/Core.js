@@ -159,7 +159,7 @@
                 throw new Bridge.InvalidOperationException("HashCode cannot be calculated for empty value");
             }
 
-            if (Bridge.isFunction(value.getHashCode) && !value.__insideHashCode && value.getHashCode.length === 0) {
+            if (value.getHashCode && Bridge.isFunction(value.getHashCode) && !value.__insideHashCode && value.getHashCode.length === 0) {
                 value.__insideHashCode = true;
                 var r = value.getHashCode();
                 delete value.__insideHashCode;
@@ -451,7 +451,7 @@
 	    },
 
 	    isEmpty: function (value, allowEmpty) {
-	        return (value === null) || (!allowEmpty ? value === "" : false) || ((!allowEmpty && Bridge.isArray(value)) ? value.length === 0 : false);
+	        return (typeof value === "undefined" || value === null) || (!allowEmpty ? value === "" : false) || ((!allowEmpty && Bridge.isArray(value)) ? value.length === 0 : false);
 	    },
 
 	    toArray: function (ienumerable) {
@@ -541,11 +541,12 @@
                 return false;
             }
 
-            if (typeof a === "object" && typeof b === "object") {
+            var eq = a === b;
+            if (!eq && typeof a === "object" && typeof b === "object") {
                 return (Bridge.getHashCode(a) === Bridge.getHashCode(b)) && Bridge.objectEquals(a, b);
             }
 
-            return a === b;
+            return eq;
         },
 
         objectEquals: function (a, b) {

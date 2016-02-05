@@ -469,6 +469,25 @@
                 }
             }
             return max;
+        },
+
+        addRange: function (arr, items) {
+            if (Bridge.isArray(items)) {
+                arr.push.apply(arr, items);
+            }
+            else {
+                var e = Bridge.getEnumerator(items);
+                try {
+                    while (e.moveNext()) {
+                        arr.push(e.getCurrent());
+                    }
+                }
+                finally {
+                    if (Bridge.is(e, Bridge.IDisposable)) {
+                        e.dispose();
+                    }
+                }
+            }
         }
     };
 
