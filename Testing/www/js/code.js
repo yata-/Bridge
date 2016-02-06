@@ -18112,26 +18112,27 @@
     
             var promise = this.createPromise();
             var task = Bridge.Task.fromPromise(promise);
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "Task should be running after being created");
+    
             var continuationRun = false;
-            task.continueWith(function (t) {
+    
+            var task1 = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(t === task, "ContinueWith parameter should be correct");
                 continuationRun = true;
             });
     
-            Bridge.global.setTimeout(function () {
-                Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "Task should be running before promise is completed.");
-                promise.resolve([42, "result 123", 101]);
-            }, 100);
+            Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "Task should be running before promise is completed.");
+            promise.resolve([42, "result 123", 101]);
     
-            Bridge.global.setTimeout(function () {
+            task1.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.ranToCompletion, "Task should be completed after promise");
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "Continuation should have been run after promise was completed.");
                 Bridge.get(Bridge.Test.Assert).areDeepEqual$1(task.getResult(), [42, "result 123", 101], "The result should be correct");
     
                 completeAsync();
-            }, 200);
+            });
         },
         taskFromPromiseWithResultFactoryWorksWhenPromiseCompletes: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
@@ -18146,20 +18147,21 @@
     
             var promise = this.createPromise();
             var task = Bridge.Task.fromPromise(promise, trh);
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "Task should be running after being created");
+    
             var continuationRun = false;
-            task.continueWith(function (t) {
+    
+            var task1 = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(t === task, "ContinueWith parameter should be correct");
                 continuationRun = true;
             });
     
-            Bridge.global.setTimeout(function () {
-                Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "Task should be running before promise is completed.");
-                promise.resolve([42, "result 123", 101]);
-            }, 100);
+            Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "Task should be running before promise is completed.");
+            promise.resolve([42, "result 123", 101]);
     
-            Bridge.global.setTimeout(function () {
+            task1.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.ranToCompletion, "Task should be completed after promise");
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "Continuation should have been run after promise was completed.");
                 Bridge.get(Bridge.Test.Assert).areDeepEqual(task.getResult(), Bridge.merge(new Bridge.ClientTest.Threading.PromiseTests.TaskResult(), {
@@ -18169,27 +18171,29 @@
                 } ));
     
                 completeAsync();
-            }, 200);
+            });
         },
         taskFromPromiseWorksWhenPromiseFails: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
     
             var promise = this.createPromise();
             var task = Bridge.Task.fromPromise(promise);
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "Task should be running after being created");
+    
             var continuationRun = false;
-            task.continueWith(function (t) {
+    
+            var task1 = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(t === task, "ContinueWith parameter should be correct");
                 continuationRun = true;
             });
     
-            Bridge.global.setTimeout(function () {
-                Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "Task should be running before promise is completed.");
-                promise.reject([42, "result 123", 101]);
-            }, 100);
+            Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "Task should be running before promise is completed.");
+            promise.reject([42, "result 123", 101]);
     
-            Bridge.global.setTimeout(function () {
+    
+            task1.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.faulted, "Task should have faulted after the promise was rejected.");
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "Continuation should have been run after promise was rejected.");
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(task.exception, Bridge.AggregateException), "Exception should be an AggregateException");
@@ -18198,7 +18202,7 @@
                 Bridge.get(Bridge.Test.Assert).areDeepEqual$1((Bridge.cast(task.exception.innerExceptions.get(0), Bridge.PromiseException)).arguments, [42, "result 123", 101], "The PromiseException arguments should be correct");
     
                 completeAsync();
-            }, 200);
+            });
         },
         completingPromiseCanBeAwaited: function () {
             var $step = 0,
@@ -18208,6 +18212,7 @@
                 completeAsync, 
                 promise, 
                 result, 
+                task, 
                 $asyncBody = Bridge.fn.bind(this, function () {
                     for (;;) {
                         $step = Bridge.Array.min([0,1], $step);
@@ -18218,15 +18223,12 @@
                                 promise = this.createPromise();
                                 result = null;
                                 
-                                Bridge.global.setTimeout(function () {
-                                    Bridge.get(Bridge.Test.Assert).true$1(!Bridge.hasValue(result), "Await should not finish too early.");
+                                task = Bridge.Task.run(function () {
+                                    Bridge.get(Bridge.Test.Assert).true$1(!Bridge.hasValue(result), "Await should not finish too early (a).");
                                     promise.resolve([42, "result 123", 101]);
-                                }, 100);
+                                });
                                 
-                                Bridge.global.setTimeout(function () {
-                                    Bridge.get(Bridge.Test.Assert).areEqual$1(result, [42, "result 123", 101], "The result should be correct");
-                                    completeAsync();
-                                }, 200);
+                                Bridge.get(Bridge.Test.Assert).true$1(!Bridge.hasValue(result), "Await should not finish too early (b).");
                                 
                                 $task1 = Bridge.Task.fromPromise(promise);
                                 $step = 1;
@@ -18236,6 +18238,9 @@
                             case 1: {
                                 $taskResult1 = $task1.getAwaitedResult();
                                 result = $taskResult1;
+                                
+                                Bridge.get(Bridge.Test.Assert).areEqual$1(result, [42, "result 123", 101], "The result should be correct");
+                                completeAsync();
                                 return;
                             }
                             default: {
@@ -18256,6 +18261,7 @@
                 completeAsync, 
                 promise, 
                 continuationRun, 
+                task, 
                 ex, 
                 ex1, 
                 $e, 
@@ -18268,21 +18274,18 @@
                                     completeAsync = Bridge.get(Bridge.Test.Assert).async();
                                     
                                     promise = this.createPromise();
+                                    
                                     continuationRun = false;
                                     
-                                    Bridge.global.setTimeout(function () {
-                                        Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
+                                    task = Bridge.Task.run(function () {
+                                        Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early (a).");
                                         promise.reject([42, "result 123", 101]);
-                                    }, 100);
-                                    
-                                    Bridge.global.setTimeout(function () {
-                                        Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "Continuation should have been run after promise was rejected.");
-                                        completeAsync();
-                                    }, 200);
+                                    });
                                     $step = 1;
                                     continue;
                                 }
                                 case 1: {
+                                    Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early (b).");
                                     $task1 = Bridge.Task.fromPromise(promise);
                                     $step = 2;
                                     $task1.continueWith($asyncBody, true);
@@ -18290,11 +18293,13 @@
                                 }
                                 case 2: {
                                     $taskResult1 = $task1.getAwaitedResult();
+                                    
                                     Bridge.get(Bridge.Test.Assert).fail$1("Await should throw");
                                     $step = 5;
                                     continue;
                                 }
                                 case 3: {
+                                    continuationRun = true;
                                     Bridge.get(Bridge.Test.Assert).areEqual$1(ex.arguments, [42, "result 123", 101], "The PromiseException arguments should be correct");
                                     $step = 5;
                                     continue;
@@ -18305,7 +18310,10 @@
                                     continue;
                                 }
                                 case 5: {
-                                    continuationRun = true;
+                                    
+                                    Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "Continuation should have been run after promise was rejected.");
+                                    
+                                    completeAsync();
                                     return;
                                 }
                                 default: {
