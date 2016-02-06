@@ -11,6 +11,8 @@ namespace Bridge.Translator
     {
         protected virtual void ReadProjectFile()
         {
+            this.Log.Info("Reading project file at " + ( Location ?? "") + " ...");
+
             var doc = XDocument.Load(Location, LoadOptions.SetLineInfo);
 
             this.ValidateProject(doc);
@@ -23,12 +25,18 @@ namespace Bridge.Translator
             {
                 this.ReadDefineConstants(doc);
             }
+
+            this.Log.Info("Reading project file done");
         }
 
         protected virtual void ReadFolderFiles()
         {
+            this.Log.Info("Reading folder files...");
+
             this.SourceFiles = this.GetSourceFiles();
             this.ParsedSourceFiles = new List<ParsedSourceFile>();
+
+            this.Log.Info("Reading folder files done");
         }
 
         /// <summary>
@@ -156,6 +164,8 @@ namespace Bridge.Translator
 
         protected virtual void ReadDefineConstants(XDocument doc)
         {
+            this.Log.Info("Reading define constants...");
+
             var result = new List<string>();
 
             var nodeList = doc.Descendants().Where(n =>
@@ -184,6 +194,8 @@ namespace Bridge.Translator
             }
 
             this.DefineConstants = this.DefineConstants.Distinct().ToList();
+
+            this.Log.Info("Reading define constants done");
         }
 
         protected virtual string GetAssemblyName(XDocument doc)

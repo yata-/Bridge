@@ -2610,6 +2610,7 @@
             MODULE_CULTUREINFO: "СultureInfo",
             MODULE_PROPERTYACCESSOR: "Property accessor",
             MODULE_THREADING: "Threading",
+            MODULE_DIAGNOSTICS: "Diagnostics",
             IGNORE_DATE: null,
             config: {
                 init: function () {
@@ -9744,6 +9745,272 @@
             runOperation$1: function (a, operation) {
                 return operation(a);
             }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Diagnostics.Contracts.ContractTests', {
+        assertNoExceptions: function (block) {
+            try {
+                block();
+                Bridge.get(Bridge.Test.Assert).true$1(true, "No Exception thrown.");
+            }
+            catch (ex) {
+                ex = Bridge.Exception.create(ex);
+                Bridge.get(Bridge.Test.Assert).fail$1("Unexpected Exception " + ex);
+            }
+        },
+        assertException: function (block, expectedKind, expectedMessage, expectedUserMessage, expectedInnerException) {
+            try {
+                block();
+            }
+            catch (ex) {
+                ex = Bridge.Exception.create(ex);
+                var cex = Bridge.as(ex, Bridge.ContractException);
+                if (!Bridge.hasValue(cex)) {
+                    Bridge.get(Bridge.Test.Assert).fail$1("Unexpected Exception");
+                }
+    
+                Bridge.get(Bridge.Test.Assert).true$1(cex.getKind() === expectedKind, "Kind");
+                Bridge.get(Bridge.Test.Assert).true$1(cex.getMessage() === expectedMessage, "Message");
+                Bridge.get(Bridge.Test.Assert).true$1(cex.getUserMessage() === expectedUserMessage, "UserMessage");
+                if (Bridge.hasValue(cex.getInnerException())) {
+                    Bridge.get(Bridge.Test.Assert).true$1(Bridge.equals(cex.getInnerException(), expectedInnerException), "InnerException");
+                }
+                else  {
+                    if (!Bridge.hasValue(cex.getInnerException()) && Bridge.hasValue(expectedInnerException)) {
+                        Bridge.get(Bridge.Test.Assert).fail$1("InnerException");
+                    }
+                }
+            }
+        },
+        assume: function () {
+            var a = 0;
+            Bridge.get(Bridge.Test.Assert).throws$2(function () {
+                Bridge.Contract.assert(5, function () { return a !== 0; });
+            }, function (error) {
+                return Bridge.is(error, Bridge.ContractException);
+            }, "ContractException");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.assert(5, function () { return a === 0; });
+            });
+            this.assertException(function () {
+                Bridge.Contract.assert(5, function () { return a === 99; });
+            }, Bridge.ContractFailureKind.assume, "Contract 'a === 99' failed", null, null);
+        },
+        assumeWithUserMessage: function () {
+            var a = 0;
+            Bridge.get(Bridge.Test.Assert).throws$2(function () {
+                Bridge.Contract.assert(5, function () { return a !== 0; }, "is not zero");
+            }, function (error) {
+                return Bridge.is(error, Bridge.ContractException);
+            }, "ContractException");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.assert(5, function () { return a === 0; }, "is zero");
+            });
+            this.assertException(function () {
+                Bridge.Contract.assert(5, function () { return a === 99; }, "is 99");
+            }, Bridge.ContractFailureKind.assume, "Contract 'a === 99' failed: is 99", "is 99", null);
+        },
+        _Assert: function () {
+            var a = 0;
+            Bridge.get(Bridge.Test.Assert).throws$2(function () {
+                Bridge.Contract.assert(4, function () { return a !== 0; });
+            }, function (error) {
+                return Bridge.is(error, Bridge.ContractException);
+            }, "ContractException");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.assert(4, function () { return a === 0; });
+            });
+            this.assertException(function () {
+                Bridge.Contract.assert(4, function () { return a === 99; });
+            }, Bridge.ContractFailureKind.assert, "Contract 'a === 99' failed", null, null);
+        },
+        assertWithUserMessage: function () {
+            var a = 0;
+            Bridge.get(Bridge.Test.Assert).throws$2(function () {
+                Bridge.Contract.assert(4, function () { return a !== 0; }, "is not zero");
+            }, function (error) {
+                return Bridge.is(error, Bridge.ContractException);
+            }, "ContractException");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.assert(4, function () { return a === 0; }, "is zero");
+            });
+            this.assertException(function () {
+                Bridge.Contract.assert(4, function () { return a === 99; }, "is 99");
+            }, Bridge.ContractFailureKind.assert, "Contract 'a === 99' failed: is 99", "is 99", null);
+        },
+        requires: function () {
+            var a = 0;
+            Bridge.get(Bridge.Test.Assert).throws$2(function () {
+                Bridge.Contract.assert(0, function () { return a !== 0; });
+            }, function (error) {
+                return Bridge.is(error, Bridge.ContractException);
+            }, "ContractException");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.assert(0, function () { return a === 0; });
+            });
+            this.assertException(function () {
+                Bridge.Contract.assert(0, function () { return a === 99; });
+            }, Bridge.ContractFailureKind.precondition, "Contract 'a === 99' failed", null, null);
+        },
+        requiresWithUserMessage: function () {
+            var a = 0;
+            Bridge.get(Bridge.Test.Assert).throws$2(function () {
+                Bridge.Contract.assert(0, function () { return a !== 0; }, "must not be zero");
+            }, function (error) {
+                return Bridge.is(error, Bridge.ContractException);
+            }, "ContractException");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.assert(0, function () { return a === 0; }, "can only be zero");
+            });
+            this.assertException(function () {
+                Bridge.Contract.assert(0, function () { return a === 99; }, "can only be 99");
+            }, Bridge.ContractFailureKind.precondition, "Contract 'a === 99' failed: can only be 99", "can only be 99", null);
+        },
+        requiresWithTypeException: function () {
+            var a = 0;
+            Bridge.get(Bridge.Test.Assert).throws$5(function () {
+                Bridge.Contract.requires(Bridge.Exception, function () { return a !== 0; });
+            }, "Exception");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.requires(Bridge.Exception, function () { return a === 0; });
+            });
+        },
+        requiredWithTypeExceptionAndUserMessage: function () {
+            var a = 0;
+            Bridge.get(Bridge.Test.Assert).throws$5(function () {
+                Bridge.Contract.requires(Bridge.Exception, function () { return a !== 0; }, "must not be zero");
+            }, "Exception");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.requires(Bridge.Exception, function () { return a === 0; }, "can only be zero");
+            });
+        },
+        forAll: function () {
+            Bridge.get(Bridge.Test.Assert).throws$2(function () {
+                Bridge.Contract.forAll(2, 5, null);
+            }, function (error) {
+                return Bridge.is(error, Bridge.ArgumentNullException);
+            }, "ArgumentNullException");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.forAll(2, 5, function (s) {
+                    return s !== 3;
+                });
+            });
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.Contract.forAll(2, 5, function (s) {
+                return s !== 3;
+            }));
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Contract.forAll(2, 5, function (s) {
+                return s !== 6;
+            }));
+        },
+        forAllWithCollection: function () {
+            Bridge.get(Bridge.Test.Assert).throws$2(function () {
+                Bridge.Contract.forAll$1([1, 2, 3], null);
+            }, function (error) {
+                return Bridge.is(error, Bridge.ArgumentNullException);
+            }, "ArgumentNullException");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.forAll$1([1, 2, 3], function (s) {
+                    return s !== 3;
+                });
+            });
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.Contract.forAll$1([1, 2, 3], function (s) {
+                return s !== 3;
+            }));
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Contract.forAll$1([1, 2, 3], function (s) {
+                return s !== 6;
+            }));
+        },
+        exists: function () {
+            Bridge.get(Bridge.Test.Assert).throws$2(function () {
+                Bridge.Contract.exists(1, 5, null);
+            }, function (error) {
+                return Bridge.is(error, Bridge.ArgumentNullException);
+            }, "ArgumentNullException");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.exists(1, 5, function (s) {
+                    return s === 3;
+                });
+            });
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Contract.exists(1, 5, function (s) {
+                return s === 3;
+            }));
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.Contract.exists(1, 5, function (s) {
+                return s === 6;
+            }));
+        },
+        existsWithCollection: function () {
+            Bridge.get(Bridge.Test.Assert).throws$2(function () {
+                Bridge.Contract.exists$1([1, 2, 3], null);
+            }, function (error) {
+                return Bridge.is(error, Bridge.ArgumentNullException);
+            }, "ArgumentNullException");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.exists$1([1, 2, 3], function (s) {
+                    return s === 3;
+                });
+            });
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Contract.exists$1([1, 2, 3], function (s) {
+                return s === 3;
+            }));
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.Contract.exists$1([1, 2, 3], function (s) {
+                return s === 6;
+            }));
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Diagnostics.StopwatchTests', {
+        defaultConstructorWorks: function () {
+            var watch = new Bridge.Stopwatch();
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(watch, Bridge.Stopwatch), "is Stopwatch");
+            Bridge.get(Bridge.Test.Assert).false$1(watch.isRunning, "IsRunning");
+        },
+        constantsWorks: function () {
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.Stopwatch.frequency > 1000, "Frequency");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(typeof Bridge.Stopwatch.isHighResolution, "boolean", "IsHighResolution");
+        },
+        startNewWorks: function () {
+            var watch = Bridge.Stopwatch.startNew();
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(watch, Bridge.Stopwatch), "is Stopwatch");
+            Bridge.get(Bridge.Test.Assert).true$1(watch.isRunning, "IsRunning");
+        },
+        startAndStopWork: function () {
+            var watch = new Bridge.Stopwatch();
+            Bridge.get(Bridge.Test.Assert).$false(watch.isRunning);
+            watch.start();
+            Bridge.get(Bridge.Test.Assert).$true(watch.isRunning);
+            watch.stop();
+            Bridge.get(Bridge.Test.Assert).$false(watch.isRunning);
+        },
+        elapsedWorks: function () {
+            var watch = new Bridge.Stopwatch();
+            Bridge.get(Bridge.Test.Assert).areEqual(watch.ticks(), 0);
+            Bridge.get(Bridge.Test.Assert).areEqual(watch.milliseconds(), 0);
+            Bridge.get(Bridge.Test.Assert).areEqual(watch.timeSpan(), new Bridge.TimeSpan());
+            watch.start();
+            var before = new Date();
+            var hasIncreased = false;
+            while ((new Bridge.TimeSpan((new Date() - before) * 10000)).ticks < Bridge.TimeSpan.fromMilliseconds(200).ticks) {
+                if (watch.ticks() > 0) {
+                    hasIncreased = true;
+                }
+            }
+            watch.stop();
+            Bridge.get(Bridge.Test.Assert).true$1(hasIncreased, "Times should increase inside the loop");
+            Bridge.get(Bridge.Test.Assert).true$1(watch.milliseconds() > 150, "ElapsedMilliseconds");
+            Bridge.get(Bridge.Test.Assert).true$1(watch.timeSpan().ticks === new Bridge.TimeSpan(0, 0, 0, 0, Bridge.cast(watch.milliseconds(), Bridge.Int)).ticks, "Elapsed");
+            var value = Bridge.cast(watch.ticks(), Number) / Bridge.Stopwatch.frequency;
+            Bridge.get(Bridge.Test.Assert).true$1(value > 0.15 && value < 0.25, "Ticks");
+        },
+        getTimestampWorks: function () {
+            var t1 = Bridge.Stopwatch.getTimestamp();
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(t1, Bridge.Int), "is long");
+    
+            var before = new Date();
+            while ((new Bridge.TimeSpan((new Date() - before) * 10000)).ticks < Bridge.TimeSpan.fromMilliseconds(50).ticks) {
+            }
+            var t2 = Bridge.Stopwatch.getTimestamp();
+            Bridge.get(Bridge.Test.Assert).true$1(t2 > t1, "Should increase");
         }
     });
     
