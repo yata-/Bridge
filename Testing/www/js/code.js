@@ -17329,20 +17329,17 @@
             };
     
             someMethod();
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should start running after being invoked");
     
-            Bridge.global.setTimeout(function () {
-                Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should not continue past point 1 until task is finished");
-            }, 100);
-    
-            Bridge.global.setTimeout(function () {
-                tcs.setResult(0);
-            }, 200);
-    
-            Bridge.global.setTimeout(function () {
+            task.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).areEqual$1(state, 2, "Async method should finish after the task is finished");
                 done();
-            }, 300);
+            });
+    
+            Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should not continue past point 1 until task is finished");
+    
+            tcs.setResult(0);
         },
         asyncTask: function () {
             var done = Bridge.get(Bridge.Test.Assert).async();
@@ -17390,26 +17387,24 @@
                 $asyncBody();
                 return $tcs.task;
             };
+    
             var asyncTask = someMethod();
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.running, "asyncTask should be running immediately");
             Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should start running after being invoked");
     
-            Bridge.global.setTimeout(function () {
-                Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.running, "asyncTask should be running before awaited task is finished");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should not continue past point 1 until task is finished");
-            }, 100);
-    
-            Bridge.global.setTimeout(function () {
-                tcs.setResult(0);
-            }, 200);
-    
-            Bridge.global.setTimeout(function () {
+            asyncTask.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.ranToCompletion, "asyncTask should run to completion");
                 Bridge.get(Bridge.Test.Assert).true$1(!Bridge.hasValue(asyncTask.exception), "asyncTask should not throw an exception");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(state, 2, "Async method should finish after the task is finished");
     
                 done();
-            }, 300);
+            });
+    
+            Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.running, "asyncTask should be running before awaited task is finished");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should not continue past point 1 until task is finished");
+    
+            tcs.setResult(0);
         },
         asyncTaskBodyThrowsException: function () {
             var done = Bridge.get(Bridge.Test.Assert).async();
@@ -17459,27 +17454,25 @@
                 $asyncBody();
                 return $tcs.task;
             };
+    
             var asyncTask = someMethod();
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.running, "asyncTask should be running immediately");
             Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should start running after being invoked");
     
-            Bridge.global.setTimeout(function () {
-                Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.running, "asyncTask should be running before awaited task is finished");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should not continue past point 1 until task is finished");
-            }, 100);
-    
-            Bridge.global.setTimeout(function () {
-                tcs.setResult(0);
-            }, 200);
-    
-            Bridge.global.setTimeout(function () {
+            asyncTask.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.faulted, "asyncTask should fault");
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.hasValue(asyncTask.exception), "asyncTask should have an exception");
                 Bridge.get(Bridge.Test.Assert).true$1(asyncTask.exception.innerExceptions.get(0) === ex, "asyncTask should throw the correct exception");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(state, 2, "Async method should finish after the task is finished");
     
                 done();
-            }, 300);
+            });
+    
+            Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.running, "asyncTask should be running before awaited task is finished");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should not continue past point 1 until task is finished");
+    
+            tcs.setResult(0);
         },
         awaitTaskThatFaults: function () {
             var done = Bridge.get(Bridge.Test.Assert).async();
@@ -17528,27 +17521,25 @@
                 $asyncBody();
                 return $tcs.task;
             };
+    
             var asyncTask = someMethod();
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.running, "asyncTask should be running immediately");
             Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should start running after being invoked");
     
-            Bridge.global.setTimeout(function () {
-                Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.running, "asyncTask should be running before awaited task is finished");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should not continue past point 1 until task is finished");
-            }, 100);
-    
-            Bridge.global.setTimeout(function () {
-                tcs.setException(ex);
-            }, 200);
-    
-            Bridge.global.setTimeout(function () {
+            asyncTask.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.faulted, "asyncTask should fault");
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.hasValue(asyncTask.exception), "asyncTask should have an exception");
                 Bridge.get(Bridge.Test.Assert).true$1(asyncTask.exception.innerExceptions.get(0) === ex, "asyncTask should throw the correct exception");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should not have reach anything after the faulting await");
     
                 done();
-            }, 300);
+            });
+    
+            Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.running, "asyncTask should be running before awaited task is finished");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should not continue past point 1 until task is finished");
+    
+            tcs.setException(ex);
         },
         aggregateExceptionsAreUnwrappedWhenAwaitingTask: function () {
             var done = Bridge.get(Bridge.Test.Assert).async();
@@ -17556,6 +17547,7 @@
             var state = 0;
             var tcs = new Bridge.TaskCompletionSource();
             var task = tcs.task;
+    
             var ex = new Bridge.Exception("Some text");
             tcs.setException(ex);
     
@@ -17616,13 +17608,14 @@
                 $asyncBody();
                 return $tcs.task;
             };
+    
             someMethod();
     
-            Bridge.global.setTimeout(function () {
+            task.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Should have reached the termination state");
     
                 done();
-            }, 100);
+            });
         },
         asyncTaskThatReturnsValue: function () {
             var done = Bridge.get(Bridge.Test.Assert).async();
@@ -17670,27 +17663,25 @@
                 $asyncBody();
                 return $tcs.task;
             };
+    
             var asyncTask = someMethod();
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.running, "asyncTask should be running immediately");
             Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should start running after being invoked");
     
-            Bridge.global.setTimeout(function () {
-                Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.running, "asyncTask should be running before awaited task is finished");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should not continue past point 1 until task is finished");
-            }, 100);
-    
-            Bridge.global.setTimeout(function () {
-                tcs.setResult(0);
-            }, 200);
-    
-            Bridge.global.setTimeout(function () {
+            asyncTask.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.ranToCompletion, "asyncTask should run to completion");
                 Bridge.get(Bridge.Test.Assert).true$1(!Bridge.hasValue(asyncTask.exception), "asyncTask should not throw an exception");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(state, 2, "Async method should finish after the task is finished");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.getResult(), 42, "Result should be correct");
     
                 done();
-            }, 300);
+            });
+    
+            Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.running, "asyncTask should be running before awaited task is finished");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should not continue past point 1 until task is finished");
+    
+            tcs.setResult(0);
         }
     });
     
