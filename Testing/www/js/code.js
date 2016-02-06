@@ -8013,6 +8013,85 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge912', {
+        statics: {
+            myfunc: function () {
+                var $step = 0,
+                    $task1, 
+                    $jumpFromFinally, 
+                    $tcs = new Bridge.TaskCompletionSource(), 
+                    $returnValue, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        try {
+                            for (;;) {
+                                $step = Bridge.Array.min([0,1], $step);
+                                switch ($step) {
+                                    case 0: {
+                                        $task1 = Bridge.Task.delay(1);
+                                        $step = 1;
+                                        $task1.continueWith($asyncBody);
+                                        return;
+                                    }
+                                    case 1: {
+                                        $task1.getAwaitedResult();
+                                        $tcs.setResult(1);
+                                        return;
+                                    }
+                                    default: {
+                                        $tcs.setResult(null);
+                                        return;
+                                    }
+                                }
+                            }
+                        } catch($e1) {
+                            $e1 = Bridge.Exception.create($e1);
+                            $tcs.setException($e1);
+                        }
+                    }, arguments);
+    
+                $asyncBody();
+                return $tcs.task;
+            },
+            testIfAsyncMethod: function () {
+                var $step = 0,
+                    $task1, 
+                    $taskResult1, 
+                    $jumpFromFinally, 
+                    asyncComplete, 
+                    result, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        for (;;) {
+                            $step = Bridge.Array.min([0,1], $step);
+                            switch ($step) {
+                                case 0: {
+                                    asyncComplete = Bridge.get(Bridge.Test.Assert).async();
+                                    result = 0;
+                                    $task1 = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge912).myfunc();
+                                    $step = 1;
+                                    $task1.continueWith($asyncBody, true);
+                                    return;
+                                }
+                                case 1: {
+                                    $taskResult1 = $task1.getAwaitedResult();
+                                    result = $taskResult1;
+                                    
+                                    Bridge.get(Bridge.Test.Assert).areEqual(result, 1);
+                                    
+                                    asyncComplete();
+                                    return;
+                                }
+                                default: {
+                                    return;
+                                }
+                            }
+                        }
+                    }, arguments);
+    
+                $asyncBody();
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Class65_2', {
         inherits: [Bridge.ClientTest.BridgeIssues.Class65_1.Nested]
     });
