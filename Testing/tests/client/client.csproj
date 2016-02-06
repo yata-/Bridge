@@ -169,6 +169,8 @@
     <Compile Include="BridgeIssues\N881.cs" />
     <Compile Include="BridgeIssues\N863.cs" />
     <Compile Include="BridgeIssues\TestBridgeIssues.cs" />
+    <Compile Include="Diagnostics\Contracts\ContractTests.cs" />
+    <Compile Include="Diagnostics\StopwatchTests.cs" />
     <Compile Include="Exceptions\AggregateExceptionTests.cs" />
     <Compile Include="Exceptions\TaskCanceledExceptionTests.cs" />
     <Compile Include="Exceptions\PromiseExceptionTests.cs" />
