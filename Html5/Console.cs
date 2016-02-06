@@ -1,6 +1,8 @@
 // Console WebAPI by Mozilla Contributors is licensed under CC-BY-SA 2.5.
 // https://developer.mozilla.org/en-US/docs/Web/API/Console
 
+using System;
+
 namespace Bridge.Html5
 {
     /// <summary>
@@ -21,6 +23,9 @@ namespace Bridge.Html5
 
         [Template("console.log({value})")]
         public static extern void WriteLine(bool value);
+
+        [Template("console.log(Bridge.Enum.toString({value:type}, {value}))")]
+        public static extern void WriteLine(Enum value);
 
         [Template("console.log(String.fromCharCode({value}))")]
         public static extern void WriteLine(char value);
@@ -104,6 +109,32 @@ namespace Bridge.Html5
         /// <param name="expression">If false then message is shown</param>
         public static extern void Assert(bool expression);
 
+        [Template("console.log(Bridge.Enum.toString({value:type}, {value}))")]
+        public static extern void Log(Enum value);
+
+        [Template("console.log(String.fromCharCode({value}))")]
+        public static extern void Log(char value);
+
+        [Template("console.log({value}.toString())")]
+        public static extern void Log(decimal value);
+
+        [Template("console.log({value} && {value}.toString())")]
+        public static extern void Log(decimal? value);
+
+        public static extern void Log(bool value);
+
+        public static extern void Log(double value);
+
+        public static extern void Log(float value);
+
+        public static extern void Log(int value);
+
+        public static extern void Log(long value);
+
+        public static extern void Log(uint value);
+
+        public static extern void Log(ulong value);
+
         /// <summary>
         /// Outputs a message to the Web Console.
         /// </summary>
@@ -116,6 +147,32 @@ namespace Bridge.Html5
         /// <param name="message">A JavaScript string containing zero or more substitution strings.</param>
         /// <param name="args">JavaScript objects with which to replace substitution strings within msg. This gives you additional control over the format of the output.</param>
         public static extern void Log(object message, params object[] args);
+
+        [Template("console.debug(Bridge.Enum.toString({value:type}, {value}))")]
+        public static extern void Debug(Enum value);
+
+        [Template("console.debug(String.fromCharCode({value}))")]
+        public static extern void Debug(char value);
+
+        [Template("console.debug({value}.toString())")]
+        public static extern void Debug(decimal value);
+
+        [Template("console.debug({value} && {value}.toString())")]
+        public static extern void Debug(decimal? value);
+
+        public static extern void Debug(bool value);
+
+        public static extern void Debug(double value);
+
+        public static extern void Debug(float value);
+
+        public static extern void Debug(int value);
+
+        public static extern void Debug(long value);
+
+        public static extern void Debug(uint value);
+
+        public static extern void Debug(ulong value);
 
         /// <summary>
         /// An alias for log(); this was added to improve compatibility with existing sites already using debug(). However, you should use console.log() instead.
@@ -130,6 +187,32 @@ namespace Bridge.Html5
         /// <param name="args"></param>
         public static extern void Debug(object message, params object[] args);
 
+        [Template("console.info(Bridge.Enum.toString({value:type}, {value}))")]
+        public static extern void Info(Enum value);
+
+        [Template("console.info(String.fromCharCode({value}))")]
+        public static extern void Info(char value);
+
+        [Template("console.info({value}.toString())")]
+        public static extern void Info(decimal value);
+
+        [Template("console.info({value} && {value}.toString())")]
+        public static extern void Info(decimal? value);
+
+        public static extern void Info(bool value);
+
+        public static extern void Info(double value);
+
+        public static extern void Info(float value);
+
+        public static extern void Info(int value);
+
+        public static extern void Info(long value);
+
+        public static extern void Info(uint value);
+
+        public static extern void Info(ulong value);
+
         /// <summary>
         /// Outputs an informational message to the Web Console. In Firefox, a small "i" icon is displayed next to these items in the Web Console's log.
         /// </summary>
@@ -143,6 +226,32 @@ namespace Bridge.Html5
         /// <param name="args">JavaScript objects with which to replace substitution strings within msg. This gives you additional control over the format of the output.</param>
         public static extern void Info(object message, params object[] args);
 
+        [Template("console.warn(Bridge.Enum.toString({value:type}, {value}))")]
+        public static extern void Warn(Enum value);
+
+        [Template("console.warn(String.fromCharCode({value}))")]
+        public static extern void Warn(char value);
+
+        [Template("console.warn({value}.toString())")]
+        public static extern void Warn(decimal value);
+
+        [Template("console.warn({value} && {value}.toString())")]
+        public static extern void Warn(decimal? value);
+
+        public static extern void Warn(bool value);
+
+        public static extern void Warn(double value);
+
+        public static extern void Warn(float value);
+
+        public static extern void Warn(int value);
+
+        public static extern void Warn(long value);
+
+        public static extern void Warn(uint value);
+
+        public static extern void Warn(ulong value);
+
         /// <summary>
         /// Outputs a warning message to the Web Console.
         /// </summary>
@@ -155,6 +264,32 @@ namespace Bridge.Html5
         /// <param name="message">A JavaScript string containing zero or more substitution strings.</param>
         /// <param name="args">JavaScript objects with which to replace substitution strings within msg. This gives you additional control over the format of the output.</param>
         public static extern void Warn(object message, params object[] args);
+
+        [Template("console.error(Bridge.Enum.toString({value:type}, {value}))")]
+        public static extern void Error(Enum value);
+
+        [Template("console.error(String.fromCharCode({value}))")]
+        public static extern void Error(char value);
+
+        [Template("console.error({value}.toString())")]
+        public static extern void Error(decimal value);
+
+        [Template("console.error({value} && {value}.toString())")]
+        public static extern void Error(decimal? value);
+
+        public static extern void Error(bool value);
+
+        public static extern void Error(double value);
+
+        public static extern void Error(float value);
+
+        public static extern void Error(int value);
+
+        public static extern void Error(long value);
+
+        public static extern void Error(uint value);
+
+        public static extern void Error(ulong value);
 
         /// <summary>
         /// Outputs an error message to the Web Console.
@@ -179,6 +314,32 @@ namespace Bridge.Html5
         /// </summary>
         public static extern void Trace();
 
+        [Template("console.group(Bridge.Enum.toString({value:type}, {value}))")]
+        public static extern void Group(Enum value);
+
+        [Template("console.group(String.fromCharCode({value}))")]
+        public static extern void Group(char value);
+
+        [Template("console.group({value}.toString())")]
+        public static extern void Group(decimal value);
+
+        [Template("console.group({value} && {value}.toString())")]
+        public static extern void Group(decimal? value);
+
+        public static extern void Group(bool value);
+
+        public static extern void Group(double value);
+
+        public static extern void Group(float value);
+
+        public static extern void Group(int value);
+
+        public static extern void Group(long value);
+
+        public static extern void Group(uint value);
+
+        public static extern void Group(ulong value);
+
         /// <summary>
         /// Creates a new inline group, indenting all following output by another level. To move back out a level, call groupEnd().
         /// </summary>
@@ -191,6 +352,33 @@ namespace Bridge.Html5
         /// <param name="message">A JavaScript string containing zero or more substitution strings.</param>
         /// <param name="args">JavaScript objects with which to replace substitution strings within msg.</param>
         public static extern void Group(object message, params object[] args);
+
+
+        [Template("console.groupCollapsed(Bridge.Enum.toString({value:type}, {value}))")]
+        public static extern void GroupCollapsed(Enum value);
+
+        [Template("console.groupCollapsed(String.fromCharCode({value}))")]
+        public static extern void GroupCollapsed(char value);
+
+        [Template("console.groupCollapsed({value}.toString())")]
+        public static extern void GroupCollapsed(decimal value);
+
+        [Template("console.groupCollapsed({value} && {value}.toString())")]
+        public static extern void GroupCollapsed(decimal? value);
+
+        public static extern void GroupCollapsed(bool value);
+
+        public static extern void GroupCollapsed(double value);
+
+        public static extern void GroupCollapsed(float value);
+
+        public static extern void GroupCollapsed(int value);
+
+        public static extern void GroupCollapsed(long value);
+
+        public static extern void GroupCollapsed(uint value);
+
+        public static extern void GroupCollapsed(ulong value);
 
         /// <summary>
         /// Creates a new inline group, indenting all following output by another level; unlike group(), this starts with the inline group collapsed, requiring the use of a disclosure button to expand it. To move back out a level, call groupEnd(). See Using groups in the console.

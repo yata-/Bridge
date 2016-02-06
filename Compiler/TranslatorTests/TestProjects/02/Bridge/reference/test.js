@@ -1525,7 +1525,7 @@
         },
 
         split: function (s, strings, limit, options) {
-            var re = new RegExp(strings.map(Bridge.String.escape).join('|'), 'g'),
+            var re = (!Bridge.hasValue(strings) || strings.length === 0) ? new RegExp("\\s", "g") : new RegExp(strings.map(Bridge.String.escape).join('|'), 'g'),
                 res = [],
                 m,
                 i;
@@ -4133,6 +4133,19 @@
     Bridge.Decimal.MaxValue = Bridge.Decimal("79228162514264337593543950335");
 
     // @source Date.js
+
+Bridge.define("Bridge.DayOfWeek", {
+    $enum: true,
+    $statics: {
+        sunday: 0,
+        monday: 1,
+        tuesday: 2,
+        wednesday: 3,
+        thursday: 4,
+        friday: 5,
+        saturday: 6
+    }
+});
 
 var date = {
         getDefaultValue: function() {
