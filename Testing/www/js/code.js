@@ -2132,6 +2132,24 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge893A', {
+        statics: {
+            testA1: 0,
+            testA2: 1
+        },
+        $enum: true
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge893B', {
+        statics: {
+            testB1: 1,
+            testB2: 2,
+            testB3: 4
+        },
+        $enum: true,
+        $flags: true
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.CI1');
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.CI2');
@@ -2592,6 +2610,7 @@
             MODULE_CULTUREINFO: "СultureInfo",
             MODULE_PROPERTYACCESSOR: "Property accessor",
             MODULE_THREADING: "Threading",
+            MODULE_DIAGNOSTICS: "Diagnostics",
             IGNORE_DATE: null,
             config: {
                 init: function () {
@@ -3024,15 +3043,15 @@
         },
         resolve: function (args) {
             if (args === void 0) { args = []; }
-            this.complete(Bridge.get(Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which).resolve, args);
+            this.complete(Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which.resolve, args);
         },
         reject: function (args) {
             if (args === void 0) { args = []; }
-            this.complete(Bridge.get(Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which).reject, args);
+            this.complete(Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which.reject, args);
         },
         complete: function (which, args) {
             if (args === void 0) { args = []; }
-            if (which === Bridge.get(Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which).resolve) {
+            if (which === Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which.resolve) {
                 this.doThen = Bridge.fn.bind(this, function (f, e, p) {
                     this.resolve(args);
                 });
@@ -3047,7 +3066,7 @@
             while (i < this.getThens().getCount()) {
                 var aThen = this.getThens().getItem(i);
     
-                if (which === Bridge.get(Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which).resolve) {
+                if (which === Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which.resolve) {
                     if (Bridge.hasValue(aThen.getFilled())) {
                         aThen.getFilled().apply(null, args);
                     }
@@ -3540,9 +3559,9 @@
     Bridge.define('Bridge.ClientTest.BasicCSharp.TestEnum', {
         statics: {
             testParse: function () {
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.parse(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, "Zero"), Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).zero, "Parse Digits.Zero");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.parse(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, "One"), Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).one, "Parse Digits.One");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.parse(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, "Two"), Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).two, "Parse Digits.Two");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.parse(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, "Zero"), Bridge.ClientTest.BasicCSharp.TestEnum.Digits.zero, "Parse Digits.Zero");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.parse(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, "One"), Bridge.ClientTest.BasicCSharp.TestEnum.Digits.one, "Parse Digits.One");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.parse(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, "Two"), Bridge.ClientTest.BasicCSharp.TestEnum.Digits.two, "Parse Digits.Two");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.parse(Bridge.ClientTest.BasicCSharp.TestEnum.Pets, "Dog, Cat"), 3, "Parse Dog, Cat");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.parse(Bridge.ClientTest.BasicCSharp.TestEnum.Pets, "Bird, Cat, Rabbit"), 14, "Parse Bird, Cat, Rabbit");
     
@@ -3551,33 +3570,33 @@
                 }, "Parse ONE");
             },
             testParseIgnoreCase: function () {
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.parse(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, "zero", true), Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).zero, "Parse Digits.Zero");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.parse(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, "oNe", true), Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).one, "Parse Digits.One");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.parse(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, "TWO", true), Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).two, "Parse Digits.Two");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.parse(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, "zero", true), Bridge.ClientTest.BasicCSharp.TestEnum.Digits.zero, "Parse Digits.Zero");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.parse(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, "oNe", true), Bridge.ClientTest.BasicCSharp.TestEnum.Digits.one, "Parse Digits.One");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.parse(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, "TWO", true), Bridge.ClientTest.BasicCSharp.TestEnum.Digits.two, "Parse Digits.Two");
     
                 Bridge.get(Bridge.Test.Assert).throws$5(function () {
                     var d = Bridge.Enum.parse(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, "ONN", true);
                 }, "Parse ONN");
             },
             testToString: function () {
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.toString(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).zero), "Zero", "ToString Digits.Zero");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.toString(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).one), "One", "ToString Digits.One");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.toString(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).two), "Two", "ToString Digits.Two");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.toString(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, Bridge.ClientTest.BasicCSharp.TestEnum.Digits.zero), "Zero", "ToString Digits.Zero");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.toString(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, Bridge.ClientTest.BasicCSharp.TestEnum.Digits.one), "One", "ToString Digits.One");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.toString(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, Bridge.ClientTest.BasicCSharp.TestEnum.Digits.two), "Two", "ToString Digits.Two");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.toString(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, 150), "150", "ToString (Digits)150");
             },
             testGetValues: function () {
-                Bridge.get(Bridge.Test.Assert).areDeepEqual$1(Bridge.Enum.getValues(Bridge.ClientTest.BasicCSharp.TestEnum.Abc), [Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Abc).a, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Abc).b, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Abc).c], "Abc values");
+                Bridge.get(Bridge.Test.Assert).areDeepEqual$1(Bridge.Enum.getValues(Bridge.ClientTest.BasicCSharp.TestEnum.Abc), [Bridge.ClientTest.BasicCSharp.TestEnum.Abc.a, Bridge.ClientTest.BasicCSharp.TestEnum.Abc.b, Bridge.ClientTest.BasicCSharp.TestEnum.Abc.c], "Abc values");
     
-                Bridge.get(Bridge.Test.Assert).areDeepEqual$1(Bridge.Enum.getValues(Bridge.ClientTest.BasicCSharp.TestEnum.Digits), [Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).zero, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).one, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).two], "Digits values");
+                Bridge.get(Bridge.Test.Assert).areDeepEqual$1(Bridge.Enum.getValues(Bridge.ClientTest.BasicCSharp.TestEnum.Digits), [Bridge.ClientTest.BasicCSharp.TestEnum.Digits.zero, Bridge.ClientTest.BasicCSharp.TestEnum.Digits.one, Bridge.ClientTest.BasicCSharp.TestEnum.Digits.two], "Digits values");
             },
             testCompareTo: function () {
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.compare(Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).two, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).two), 0, "CompareTo Digits.Two with Digits.Two");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.compare(Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).one, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).two), -1, "CompareTo Digits.One with Digits.Two");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.compare(Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).two, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).zero), 1, "CompareTo Digits.Two with Digits.Zero");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.compare(Bridge.ClientTest.BasicCSharp.TestEnum.Digits.two, Bridge.ClientTest.BasicCSharp.TestEnum.Digits.two), 0, "CompareTo Digits.Two with Digits.Two");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.compare(Bridge.ClientTest.BasicCSharp.TestEnum.Digits.one, Bridge.ClientTest.BasicCSharp.TestEnum.Digits.two), -1, "CompareTo Digits.One with Digits.Two");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.compare(Bridge.ClientTest.BasicCSharp.TestEnum.Digits.two, Bridge.ClientTest.BasicCSharp.TestEnum.Digits.zero), 1, "CompareTo Digits.Two with Digits.Zero");
             },
             testFormat: function () {
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).two, "G"), "Two", "Format Digits.Two G");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).two, "g"), "Two", "Format Digits.Two g");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, Bridge.ClientTest.BasicCSharp.TestEnum.Digits.two, "G"), "Two", "Format Digits.Two G");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, Bridge.ClientTest.BasicCSharp.TestEnum.Digits.two, "g"), "Two", "Format Digits.Two g");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, 150, "G"), "150", "Format (Digits)150 G");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, 150, "g"), "150", "Format (Digits)150 g");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Pets, 3, "G"), "Dog, Cat", "Format Pets.Dog | Pets.Cat G");
@@ -3585,19 +3604,19 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Pets1, 3, "G"), "3", "Format Pets1.Cat | Pets1.Dog G");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Pets1, 3, "g"), "3", "Format Pets1.Cat | Pets1.Dog g");
     
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).two, "X"), "2", "Format Digits.Two X");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).one, "x"), "1", "Format Digits.One x");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, Bridge.ClientTest.BasicCSharp.TestEnum.Digits.two, "X"), "2", "Format Digits.Two X");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, Bridge.ClientTest.BasicCSharp.TestEnum.Digits.one, "x"), "1", "Format Digits.One x");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, 255, "X"), "ff", "Format (Digits)255 X");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, 255, "x"), "ff", "Format (Digits)255 x");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Pets, 24, "X"), "18", "Format Pets.Rabbit | Pets.Other X");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Pets, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Pets).other, "x"), "10", "Format Pets.Other x");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Pets, Bridge.ClientTest.BasicCSharp.TestEnum.Pets.other, "x"), "10", "Format Pets.Other x");
     
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).two, "D"), "2", "Format Digits.Two D");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).one, "d"), "1", "Format Digits.One d");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, Bridge.ClientTest.BasicCSharp.TestEnum.Digits.two, "D"), "2", "Format Digits.Two D");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, Bridge.ClientTest.BasicCSharp.TestEnum.Digits.one, "d"), "1", "Format Digits.One d");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, 255, "D"), "255", "Format (Digits)255 D");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, 255, "d"), "255", "Format (Digits)255 d");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Pets, 24, "D"), "24", "Format Pets.Rabbit | Pets.Other D");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Pets, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Pets).other, "d"), "16", "Format Pets.Other d");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Pets, Bridge.ClientTest.BasicCSharp.TestEnum.Pets.other, "d"), "16", "Format Pets.Other d");
     
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Pets1, 3, "F"), "Dog, Cat", "Format Pets1.Cat | Pets1.Dog F");
@@ -3614,11 +3633,11 @@
                 Bridge.get(Bridge.Test.Assert).areDeepEqual$1(Bridge.Enum.getNames(Bridge.ClientTest.BasicCSharp.TestEnum.Digits), ["Zero", "One", "Two"], "Digits names");
             },
             testHasFlag: function () {
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.hasFlag(((3)), Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Pets).cat), true, "(Pets.Dog | Pets.Cat).HasFlag(Pets.Cat)");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.hasFlag(((3)), Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Pets).dog), true, "(Pets.Dog | Pets.Cat).HasFlag(Pets.Dog)");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.hasFlag(((3)), Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Pets).bird), false, "(Pets.Dog | Pets.Cat).HasFlag(Pets.Bird)");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.hasFlag(Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Pets).dog, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Pets).dog), true, "Pets.Dog.HasFlag(Pets.Dog)");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.hasFlag(Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Pets).dog, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Pets).cat), false, "Pets.Dog.HasFlag(Pets.Cat)");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.hasFlag(((3)), Bridge.ClientTest.BasicCSharp.TestEnum.Pets.cat), true, "(Pets.Dog | Pets.Cat).HasFlag(Pets.Cat)");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.hasFlag(((3)), Bridge.ClientTest.BasicCSharp.TestEnum.Pets.dog), true, "(Pets.Dog | Pets.Cat).HasFlag(Pets.Dog)");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.hasFlag(((3)), Bridge.ClientTest.BasicCSharp.TestEnum.Pets.bird), false, "(Pets.Dog | Pets.Cat).HasFlag(Pets.Bird)");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.hasFlag(Bridge.ClientTest.BasicCSharp.TestEnum.Pets.dog, Bridge.ClientTest.BasicCSharp.TestEnum.Pets.dog), true, "Pets.Dog.HasFlag(Pets.Dog)");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.hasFlag(Bridge.ClientTest.BasicCSharp.TestEnum.Pets.dog, Bridge.ClientTest.BasicCSharp.TestEnum.Pets.cat), false, "Pets.Dog.HasFlag(Pets.Cat)");
             },
             testIsDefined: function () {
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.isDefined(Bridge.ClientTest.BasicCSharp.TestEnum.Pets, 1), true, "Enum.IsDefined(typeof(Pets), 1)");
@@ -3632,11 +3651,11 @@
                 var outVar = { v : new Bridge.ClientTest.BasicCSharp.TestEnum.Digits() };
                 var outPets = { v : new Bridge.ClientTest.BasicCSharp.TestEnum.Pets() };
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.tryParse(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, "Zero", outVar), true, "TryParse Digits.Zero");
-                Bridge.get(Bridge.Test.Assert).areEqual(outVar.v, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).zero);
+                Bridge.get(Bridge.Test.Assert).areEqual(outVar.v, Bridge.ClientTest.BasicCSharp.TestEnum.Digits.zero);
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.tryParse(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, "One", outVar), true, "TryParse Digits.One");
-                Bridge.get(Bridge.Test.Assert).areEqual(outVar.v, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).one);
+                Bridge.get(Bridge.Test.Assert).areEqual(outVar.v, Bridge.ClientTest.BasicCSharp.TestEnum.Digits.one);
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.tryParse(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, "Two", outVar), true, "TryParse Digits.Two");
-                Bridge.get(Bridge.Test.Assert).areEqual(outVar.v, Bridge.get(Bridge.ClientTest.BasicCSharp.TestEnum.Digits).two);
+                Bridge.get(Bridge.Test.Assert).areEqual(outVar.v, Bridge.ClientTest.BasicCSharp.TestEnum.Digits.two);
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.tryParse(Bridge.ClientTest.BasicCSharp.TestEnum.Pets, "Dog, Cat", outPets), true, "TryParse Dog, Cat");
                 Bridge.get(Bridge.Test.Assert).areEqual(outPets.v, 3);
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.tryParse(Bridge.ClientTest.BasicCSharp.TestEnum.Pets, "Bird, Cat, Rabbit", outPets), true, "TryParse Bird, Cat, Rabbit");
@@ -7588,14 +7607,14 @@
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge857', {
         statics: {
             testUseCase: function () {
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857A).all, 4294967295, "Bridge857 Bridge857A");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857B).all, 4294967295, "Bridge857 Bridge857B");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857C).all, 4294967295, "Bridge857 Bridge857C All");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857C).all1, 0, "Bridge857 Bridge857C All1");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857C).all2, 1, "Bridge857 Bridge857C All2");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857D).all, 4294967295, "Bridge857 Bridge857D All");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857D).all1, 1, "Bridge857 Bridge857D All1");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge857D).all2, 2, "Bridge857 Bridge857D All2");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge857A.all, 4294967295, "Bridge857 Bridge857A");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge857B.all, 4294967295, "Bridge857 Bridge857B");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge857C.all, 4294967295, "Bridge857 Bridge857C All");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge857C.all1, 0, "Bridge857 Bridge857C All1");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge857C.all2, 1, "Bridge857 Bridge857C All2");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge857D.all, 4294967295, "Bridge857 Bridge857D All");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge857D.all1, 1, "Bridge857 Bridge857D All1");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge857D.all2, 2, "Bridge857 Bridge857D All2");
             }
         }
     });
@@ -7675,8 +7694,8 @@
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge881', {
         statics: {
             testUseCase: function () {
-                var i = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge881A).$name;
-                Bridge.get(Bridge.Test.Assert).areEqual(i, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge881A).$name);
+                var i = Bridge.ClientTest.BridgeIssues.Bridge881A.$name;
+                Bridge.get(Bridge.Test.Assert).areEqual(i, Bridge.ClientTest.BridgeIssues.Bridge881A.$name);
             }
         }
     });
@@ -7766,6 +7785,25 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge893', {
+        statics: {
+            enumToStringWorks: function () {
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Enum.toString(Bridge.ClientTest.BridgeIssues.Bridge893A, Bridge.ClientTest.BridgeIssues.Bridge893A.testA1), "TestA1");
+    
+                var a = 100;
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Enum.toString(Bridge.ClientTest.BridgeIssues.Bridge893A, a), "100");
+    
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Enum.toString(Bridge.ClientTest.BridgeIssues.Bridge893B, Bridge.ClientTest.BridgeIssues.Bridge893B.testB3), "TestB3");
+    
+                var t = 3;
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Enum.toString(Bridge.ClientTest.BridgeIssues.Bridge893B, t), "TestB1, TestB2");
+    
+                var t1 = 6;
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Enum.toString(Bridge.ClientTest.BridgeIssues.Bridge893B, t1), "TestB2, TestB3");
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge898', {
         statics: {
             testDecimalConversion: function () {
@@ -7781,6 +7819,18 @@
     
                 Bridge.get(Bridge.Test.Assert).true$1(test === 1, "One True");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.getTypeName(test), "Number", "Is number");
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge905', {
+        statics: {
+            dayOfWeekFixed: function () {
+                var dictionary = new Bridge.Dictionary$2(Bridge.DayOfWeek,Bridge.Int)();
+                dictionary.add(0, 1);
+    
+                Bridge.get(Bridge.Test.Assert).areEqual$1(dictionary.get(0), 1, "1");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.toString(Bridge.DayOfWeek, (6)), "Saturday", "Saturday");
             }
         }
     });
@@ -7928,6 +7978,105 @@
                                     $task1.getAwaitedResult();
                                     
                                     Bridge.get(Bridge.Test.Assert).areEqual(sum, 5);
+                                    
+                                    asyncComplete();
+                                    return;
+                                }
+                                default: {
+                                    return;
+                                }
+                            }
+                        }
+                    }, arguments);
+    
+                $asyncBody();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge907', {
+        statics: {
+            testStringSpitWithNullParameterFixed: function () {
+                var s = "Hello World!";
+                var res = Bridge.String.split(s, Bridge.cast(null, Array), null, 1);
+    
+                Bridge.get(Bridge.Test.Assert).areEqual$1(res.length, 2, "Bridge907 instance Length");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(res[0], "Hello", "Bridge907 instance [0]");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(res[1], "World!", "Bridge907 instance [1]");
+    
+                var s1 = "Hi Man!";
+                var res1 = Bridge.String.split(s1, Bridge.cast(null, Array), null, 1);
+    
+                Bridge.get(Bridge.Test.Assert).areEqual$1(res1.length, 2, "Bridge907 static Length");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(res1[0], "Hi", "Bridge907 static [0]");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(res1[1], "Man!", "Bridge907 static [1]");
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge912', {
+        statics: {
+            myfunc: function () {
+                var $step = 0,
+                    $task1, 
+                    $jumpFromFinally, 
+                    $tcs = new Bridge.TaskCompletionSource(), 
+                    $returnValue, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        try {
+                            for (;;) {
+                                $step = Bridge.Array.min([0,1], $step);
+                                switch ($step) {
+                                    case 0: {
+                                        $task1 = Bridge.Task.delay(1);
+                                        $step = 1;
+                                        $task1.continueWith($asyncBody);
+                                        return;
+                                    }
+                                    case 1: {
+                                        $task1.getAwaitedResult();
+                                        $tcs.setResult(1);
+                                        return;
+                                    }
+                                    default: {
+                                        $tcs.setResult(null);
+                                        return;
+                                    }
+                                }
+                            }
+                        } catch($e1) {
+                            $e1 = Bridge.Exception.create($e1);
+                            $tcs.setException($e1);
+                        }
+                    }, arguments);
+    
+                $asyncBody();
+                return $tcs.task;
+            },
+            testAsyncMethodInBlock: function () {
+                var $step = 0,
+                    $task1, 
+                    $taskResult1, 
+                    $jumpFromFinally, 
+                    asyncComplete, 
+                    result, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        for (;;) {
+                            $step = Bridge.Array.min([0,1], $step);
+                            switch ($step) {
+                                case 0: {
+                                    asyncComplete = Bridge.get(Bridge.Test.Assert).async();
+                                    result = 0;
+                                    $task1 = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge912).myfunc();
+                                    $step = 1;
+                                    $task1.continueWith($asyncBody, true);
+                                    return;
+                                }
+                                case 1: {
+                                    $taskResult1 = $task1.getAwaitedResult();
+                                    result = $taskResult1;
+                                    
+                                    Bridge.get(Bridge.Test.Assert).areEqual(result, 1);
                                     
                                     asyncComplete();
                                     return;
@@ -9596,6 +9745,272 @@
             runOperation$1: function (a, operation) {
                 return operation(a);
             }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Diagnostics.Contracts.ContractTests', {
+        assertNoExceptions: function (block) {
+            try {
+                block();
+                Bridge.get(Bridge.Test.Assert).true$1(true, "No Exception thrown.");
+            }
+            catch (ex) {
+                ex = Bridge.Exception.create(ex);
+                Bridge.get(Bridge.Test.Assert).fail$1("Unexpected Exception " + ex);
+            }
+        },
+        assertException: function (block, expectedKind, expectedMessage, expectedUserMessage, expectedInnerException) {
+            try {
+                block();
+            }
+            catch (ex) {
+                ex = Bridge.Exception.create(ex);
+                var cex = Bridge.as(ex, Bridge.ContractException);
+                if (!Bridge.hasValue(cex)) {
+                    Bridge.get(Bridge.Test.Assert).fail$1("Unexpected Exception");
+                }
+    
+                Bridge.get(Bridge.Test.Assert).true$1(cex.getKind() === expectedKind, "Kind");
+                Bridge.get(Bridge.Test.Assert).true$1(cex.getMessage() === expectedMessage, "Message");
+                Bridge.get(Bridge.Test.Assert).true$1(cex.getUserMessage() === expectedUserMessage, "UserMessage");
+                if (Bridge.hasValue(cex.getInnerException())) {
+                    Bridge.get(Bridge.Test.Assert).true$1(Bridge.equals(cex.getInnerException(), expectedInnerException), "InnerException");
+                }
+                else  {
+                    if (!Bridge.hasValue(cex.getInnerException()) && Bridge.hasValue(expectedInnerException)) {
+                        Bridge.get(Bridge.Test.Assert).fail$1("InnerException");
+                    }
+                }
+            }
+        },
+        assume: function () {
+            var a = 0;
+            Bridge.get(Bridge.Test.Assert).throws$2(function () {
+                Bridge.Contract.assert(5, function () { return a !== 0; });
+            }, function (error) {
+                return Bridge.is(error, Bridge.ContractException);
+            }, "ContractException");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.assert(5, function () { return a === 0; });
+            });
+            this.assertException(function () {
+                Bridge.Contract.assert(5, function () { return a === 99; });
+            }, Bridge.ContractFailureKind.assume, "Contract 'a === 99' failed", null, null);
+        },
+        assumeWithUserMessage: function () {
+            var a = 0;
+            Bridge.get(Bridge.Test.Assert).throws$2(function () {
+                Bridge.Contract.assert(5, function () { return a !== 0; }, "is not zero");
+            }, function (error) {
+                return Bridge.is(error, Bridge.ContractException);
+            }, "ContractException");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.assert(5, function () { return a === 0; }, "is zero");
+            });
+            this.assertException(function () {
+                Bridge.Contract.assert(5, function () { return a === 99; }, "is 99");
+            }, Bridge.ContractFailureKind.assume, "Contract 'a === 99' failed: is 99", "is 99", null);
+        },
+        _Assert: function () {
+            var a = 0;
+            Bridge.get(Bridge.Test.Assert).throws$2(function () {
+                Bridge.Contract.assert(4, function () { return a !== 0; });
+            }, function (error) {
+                return Bridge.is(error, Bridge.ContractException);
+            }, "ContractException");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.assert(4, function () { return a === 0; });
+            });
+            this.assertException(function () {
+                Bridge.Contract.assert(4, function () { return a === 99; });
+            }, Bridge.ContractFailureKind.assert, "Contract 'a === 99' failed", null, null);
+        },
+        assertWithUserMessage: function () {
+            var a = 0;
+            Bridge.get(Bridge.Test.Assert).throws$2(function () {
+                Bridge.Contract.assert(4, function () { return a !== 0; }, "is not zero");
+            }, function (error) {
+                return Bridge.is(error, Bridge.ContractException);
+            }, "ContractException");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.assert(4, function () { return a === 0; }, "is zero");
+            });
+            this.assertException(function () {
+                Bridge.Contract.assert(4, function () { return a === 99; }, "is 99");
+            }, Bridge.ContractFailureKind.assert, "Contract 'a === 99' failed: is 99", "is 99", null);
+        },
+        requires: function () {
+            var a = 0;
+            Bridge.get(Bridge.Test.Assert).throws$2(function () {
+                Bridge.Contract.assert(0, function () { return a !== 0; });
+            }, function (error) {
+                return Bridge.is(error, Bridge.ContractException);
+            }, "ContractException");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.assert(0, function () { return a === 0; });
+            });
+            this.assertException(function () {
+                Bridge.Contract.assert(0, function () { return a === 99; });
+            }, Bridge.ContractFailureKind.precondition, "Contract 'a === 99' failed", null, null);
+        },
+        requiresWithUserMessage: function () {
+            var a = 0;
+            Bridge.get(Bridge.Test.Assert).throws$2(function () {
+                Bridge.Contract.assert(0, function () { return a !== 0; }, "must not be zero");
+            }, function (error) {
+                return Bridge.is(error, Bridge.ContractException);
+            }, "ContractException");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.assert(0, function () { return a === 0; }, "can only be zero");
+            });
+            this.assertException(function () {
+                Bridge.Contract.assert(0, function () { return a === 99; }, "can only be 99");
+            }, Bridge.ContractFailureKind.precondition, "Contract 'a === 99' failed: can only be 99", "can only be 99", null);
+        },
+        requiresWithTypeException: function () {
+            var a = 0;
+            Bridge.get(Bridge.Test.Assert).throws$5(function () {
+                Bridge.Contract.requires(Bridge.Exception, function () { return a !== 0; });
+            }, "Exception");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.requires(Bridge.Exception, function () { return a === 0; });
+            });
+        },
+        requiredWithTypeExceptionAndUserMessage: function () {
+            var a = 0;
+            Bridge.get(Bridge.Test.Assert).throws$5(function () {
+                Bridge.Contract.requires(Bridge.Exception, function () { return a !== 0; }, "must not be zero");
+            }, "Exception");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.requires(Bridge.Exception, function () { return a === 0; }, "can only be zero");
+            });
+        },
+        forAll: function () {
+            Bridge.get(Bridge.Test.Assert).throws$2(function () {
+                Bridge.Contract.forAll(2, 5, null);
+            }, function (error) {
+                return Bridge.is(error, Bridge.ArgumentNullException);
+            }, "ArgumentNullException");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.forAll(2, 5, function (s) {
+                    return s !== 3;
+                });
+            });
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.Contract.forAll(2, 5, function (s) {
+                return s !== 3;
+            }));
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Contract.forAll(2, 5, function (s) {
+                return s !== 6;
+            }));
+        },
+        forAllWithCollection: function () {
+            Bridge.get(Bridge.Test.Assert).throws$2(function () {
+                Bridge.Contract.forAll$1([1, 2, 3], null);
+            }, function (error) {
+                return Bridge.is(error, Bridge.ArgumentNullException);
+            }, "ArgumentNullException");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.forAll$1([1, 2, 3], function (s) {
+                    return s !== 3;
+                });
+            });
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.Contract.forAll$1([1, 2, 3], function (s) {
+                return s !== 3;
+            }));
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Contract.forAll$1([1, 2, 3], function (s) {
+                return s !== 6;
+            }));
+        },
+        exists: function () {
+            Bridge.get(Bridge.Test.Assert).throws$2(function () {
+                Bridge.Contract.exists(1, 5, null);
+            }, function (error) {
+                return Bridge.is(error, Bridge.ArgumentNullException);
+            }, "ArgumentNullException");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.exists(1, 5, function (s) {
+                    return s === 3;
+                });
+            });
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Contract.exists(1, 5, function (s) {
+                return s === 3;
+            }));
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.Contract.exists(1, 5, function (s) {
+                return s === 6;
+            }));
+        },
+        existsWithCollection: function () {
+            Bridge.get(Bridge.Test.Assert).throws$2(function () {
+                Bridge.Contract.exists$1([1, 2, 3], null);
+            }, function (error) {
+                return Bridge.is(error, Bridge.ArgumentNullException);
+            }, "ArgumentNullException");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.exists$1([1, 2, 3], function (s) {
+                    return s === 3;
+                });
+            });
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Contract.exists$1([1, 2, 3], function (s) {
+                return s === 3;
+            }));
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.Contract.exists$1([1, 2, 3], function (s) {
+                return s === 6;
+            }));
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Diagnostics.StopwatchTests', {
+        defaultConstructorWorks: function () {
+            var watch = new Bridge.Stopwatch();
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(watch, Bridge.Stopwatch), "is Stopwatch");
+            Bridge.get(Bridge.Test.Assert).false$1(watch.isRunning, "IsRunning");
+        },
+        constantsWorks: function () {
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.Stopwatch.frequency > 1000, "Frequency");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(typeof Bridge.Stopwatch.isHighResolution, "boolean", "IsHighResolution");
+        },
+        startNewWorks: function () {
+            var watch = Bridge.Stopwatch.startNew();
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(watch, Bridge.Stopwatch), "is Stopwatch");
+            Bridge.get(Bridge.Test.Assert).true$1(watch.isRunning, "IsRunning");
+        },
+        startAndStopWork: function () {
+            var watch = new Bridge.Stopwatch();
+            Bridge.get(Bridge.Test.Assert).$false(watch.isRunning);
+            watch.start();
+            Bridge.get(Bridge.Test.Assert).$true(watch.isRunning);
+            watch.stop();
+            Bridge.get(Bridge.Test.Assert).$false(watch.isRunning);
+        },
+        elapsedWorks: function () {
+            var watch = new Bridge.Stopwatch();
+            Bridge.get(Bridge.Test.Assert).areEqual(watch.ticks(), 0);
+            Bridge.get(Bridge.Test.Assert).areEqual(watch.milliseconds(), 0);
+            Bridge.get(Bridge.Test.Assert).areEqual(watch.timeSpan(), new Bridge.TimeSpan());
+            watch.start();
+            var before = new Date();
+            var hasIncreased = false;
+            while ((new Bridge.TimeSpan((new Date() - before) * 10000)).ticks < Bridge.TimeSpan.fromMilliseconds(200).ticks) {
+                if (watch.ticks() > 0) {
+                    hasIncreased = true;
+                }
+            }
+            watch.stop();
+            Bridge.get(Bridge.Test.Assert).true$1(hasIncreased, "Times should increase inside the loop");
+            Bridge.get(Bridge.Test.Assert).true$1(watch.milliseconds() > 150, "ElapsedMilliseconds");
+            Bridge.get(Bridge.Test.Assert).true$1(watch.timeSpan().ticks === new Bridge.TimeSpan(0, 0, 0, 0, Bridge.cast(watch.milliseconds(), Bridge.Int)).ticks, "Elapsed");
+            var value = Bridge.cast(watch.ticks(), Number) / Bridge.Stopwatch.frequency;
+            Bridge.get(Bridge.Test.Assert).true$1(value > 0.15 && value < 0.25, "Ticks");
+        },
+        getTimestampWorks: function () {
+            var t1 = Bridge.Stopwatch.getTimestamp();
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(t1, Bridge.Int), "is long");
+    
+            var before = new Date();
+            while ((new Bridge.TimeSpan((new Date() - before) * 10000)).ticks < Bridge.TimeSpan.fromMilliseconds(50).ticks) {
+            }
+            var t2 = Bridge.Stopwatch.getTimestamp();
+            Bridge.get(Bridge.Test.Assert).true$1(t2 > t1, "Should increase");
         }
     });
     
@@ -13673,7 +14088,7 @@
         typePropertiesAreCorrect: function () {
             //Assert.AreEqual(typeof(Enum).GetClassName(), "Bridge.Enum");
             Bridge.get(Bridge.Test.Assert).areEqual(Bridge.getTypeName(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum), "Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum");
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.hasValue(Bridge.get(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum).firstValue));
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.hasValue(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.firstValue));
         },
         getDefaultValue: function (T) {
             return Bridge.fn.bind(this, function () {
@@ -13690,7 +14105,7 @@
             Bridge.get(Bridge.Test.Assert).areStrictEqual(new Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum().valueOf(), 0);
         },
         firstValueOfEnumIsZero: function () {
-            Bridge.get(Bridge.Test.Assert).areStrictEqual(Bridge.get(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum).firstValue, 0);
+            Bridge.get(Bridge.Test.Assert).areStrictEqual(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.firstValue, 0);
         },
         creatingInstanceOfEnumTypeReturnsZero: function () {
             Bridge.get(Bridge.Test.Assert).areStrictEqual(new Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum(), 0);
@@ -13699,12 +14114,12 @@
             Bridge.get(Bridge.Test.Assert).areStrictEqual(Bridge.getDefaultValue(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum), 0);
         },
         getHashCodeWorks: function () {
-            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.getHashCode(Bridge.get(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum).firstValue), Bridge.getHashCode(Bridge.get(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum).firstValue));
-            Bridge.get(Bridge.Test.Assert).areNotEqual(Bridge.getHashCode(Bridge.get(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum).firstValue), Bridge.getHashCode(Bridge.get(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum).secondValue));
+            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.getHashCode(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.firstValue), Bridge.getHashCode(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.firstValue));
+            Bridge.get(Bridge.Test.Assert).areNotEqual(Bridge.getHashCode(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.firstValue), Bridge.getHashCode(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.secondValue));
         },
         equalsWorks: function () {
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.equals(Bridge.get(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum).firstValue, Bridge.get(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum).firstValue));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.equals(Bridge.get(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum).firstValue, Bridge.get(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum).secondValue));
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.equals(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.firstValue, Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.firstValue));
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.equals(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.firstValue, Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.secondValue));
         }
     });
     
@@ -19757,8 +20172,8 @@
             },
             n272: function () {
                 // TEST
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge272).test(1), Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge272.MyEnum).abc, "Casted MyEnum.Abc");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge272).test(3), Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge272.MyEnum).ghi, "Casted MyEnum.Ghi");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge272).test(1), Bridge.ClientTest.BridgeIssues.Bridge272.MyEnum.abc, "Casted MyEnum.Abc");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge272).test(3), Bridge.ClientTest.BridgeIssues.Bridge272.MyEnum.ghi, "Casted MyEnum.Ghi");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge272).test(4), 4, "Casted MyEnum.Abc");
             },
             n273: function () {
@@ -19784,7 +20199,7 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1(r, [1, 2], "Slices start = 1, end = 2");
             },
             n277: function () {
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge277).$int, 0, "Enum member with reserved name initialized");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.ClientTest.BridgeIssues.Bridge277.$int, 0, "Enum member with reserved name initialized");
             },
             n294: function () {
                 var c = new Bridge.ClientTest.BridgeIssues.Bridge294("Vlad");
@@ -20215,9 +20630,9 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1(r, 20, "Delegate added and called var r = t.CallDelegate(10);");
             },
             n422: function () {
-                var v0 = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge422).first;
-                var v100 = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge422).next;
-                var v101 = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge422).afterNext;
+                var v0 = Bridge.ClientTest.BridgeIssues.Bridge422.first;
+                var v100 = Bridge.ClientTest.BridgeIssues.Bridge422.next;
+                var v101 = Bridge.ClientTest.BridgeIssues.Bridge422.afterNext;
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1(v0, 0, "Bridge422.first");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(v100, 100, "Bridge422.next");
