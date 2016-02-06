@@ -8053,7 +8053,7 @@
                 $asyncBody();
                 return $tcs.task;
             },
-            testIfAsyncMethod: function () {
+            testAsyncMethodInBlock: function () {
                 var $step = 0,
                     $task1, 
                     $taskResult1, 

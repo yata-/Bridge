@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Bridge.Test;
 
@@ -16,7 +15,7 @@ namespace Bridge.ClientTest.BridgeIssues
         }
         
         [Test(ExpectedCount = 1)]
-        public static async void TestIfAsyncMethod()
+        public static async void TestAsyncMethodInBlock()
         {
             var asyncComplete = Assert.Async();
             var result = 0;
