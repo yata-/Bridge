@@ -7481,7 +7481,7 @@
                             if ( $step >= 1 && $step <= 2 ){
                                 exception = $e1;
                                 $step = 3;
-                                setTimeout($asyncBody, 0);
+                                $asyncBody();
                                 return;
                             }
                             $tcs.setException($e1);
@@ -17598,7 +17598,7 @@
                             if ( $step >= 1 && $step <= 2 ){
                                 ex2 = $e1;
                                 $step = 3;
-                                setTimeout($asyncBody, 0);
+                                $asyncBody();
                                 return;
                             }
                             $tcs.setException($e1);
@@ -18319,12 +18319,12 @@
                             if (Bridge.is($e1, Bridge.PromiseException)) {
                                 ex = $e1;
                                 $step = 3;
-                                setTimeout($asyncBody, 0);
+                                $asyncBody();
                                 return;
                             } else {
                                 ex1 = $e1;
                                 $step = 4;
-                                setTimeout($asyncBody, 0);
+                                $asyncBody();
                                 return;
                             }
                         }
@@ -18544,7 +18544,7 @@
                                 if (Bridge.is($e1, Bridge.TaskCanceledException)) {
                                     ex = $e1;
                                     $step = 3;
-                                    setTimeout($asyncBody, 0);
+                                    $asyncBody();
                                     return;
                                 }
                             }

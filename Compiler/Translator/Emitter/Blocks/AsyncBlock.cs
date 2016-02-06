@@ -471,7 +471,7 @@ namespace Bridge.Translator
                             this.Write("$step = " + step + ";");
 
                             this.WriteNewLine();
-                            this.Write("setTimeout($asyncBody, 0);");
+                            this.Write("$asyncBody();");
                             this.WriteNewLine();
                             this.Write("return;");
                         }
@@ -513,7 +513,7 @@ namespace Bridge.Translator
                             this.Write("$step = " + step + ";");
 
                             this.WriteNewLine();
-                            this.Write("setTimeout($asyncBody, 0);");
+                            this.Write("$asyncBody();");
                             this.WriteNewLine();
                             this.Write("return;");
                             this.WriteNewLine();
@@ -544,7 +544,7 @@ namespace Bridge.Translator
                     this.Write("$step = " + info.FinallyStep + ";");
 
                     this.WriteNewLine();
-                    this.Write("setTimeout($asyncBody, 0);");
+                    this.Write("$asyncBody();");
                     this.WriteNewLine();
                     this.Write("return;");
 
