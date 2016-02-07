@@ -9,7 +9,7 @@ namespace Bridge.ClientTest.BridgeIssues
     public class Bridge913
     {
         [Test(ExpectedCount = 2)]
-        public static void TestStringSpitWithNullParameterFixed()
+        public static void TestNullableDateTimeGreaterThanWorks()
         {
             DateTime? a = DateTime.Now;
             DateTime? b = null;

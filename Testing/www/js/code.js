@@ -2610,6 +2610,7 @@
             MODULE_CULTUREINFO: "СultureInfo",
             MODULE_PROPERTYACCESSOR: "Property accessor",
             MODULE_THREADING: "Threading",
+            MODULE_DIAGNOSTICS: "Diagnostics",
             IGNORE_DATE: null,
             config: {
                 init: function () {
@@ -7480,7 +7481,7 @@
                             if ( $step >= 1 && $step <= 2 ){
                                 exception = $e1;
                                 $step = 3;
-                                setTimeout($asyncBody, 0);
+                                $asyncBody();
                                 return;
                             }
                             $tcs.setException($e1);
@@ -8013,9 +8014,88 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge912', {
+        statics: {
+            myfunc: function () {
+                var $step = 0,
+                    $task1, 
+                    $jumpFromFinally, 
+                    $tcs = new Bridge.TaskCompletionSource(), 
+                    $returnValue, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        try {
+                            for (;;) {
+                                $step = Bridge.Array.min([0,1], $step);
+                                switch ($step) {
+                                    case 0: {
+                                        $task1 = Bridge.Task.delay(1);
+                                        $step = 1;
+                                        $task1.continueWith($asyncBody);
+                                        return;
+                                    }
+                                    case 1: {
+                                        $task1.getAwaitedResult();
+                                        $tcs.setResult(1);
+                                        return;
+                                    }
+                                    default: {
+                                        $tcs.setResult(null);
+                                        return;
+                                    }
+                                }
+                            }
+                        } catch($e1) {
+                            $e1 = Bridge.Exception.create($e1);
+                            $tcs.setException($e1);
+                        }
+                    }, arguments);
+    
+                $asyncBody();
+                return $tcs.task;
+            },
+            testAsyncMethodInBlock: function () {
+                var $step = 0,
+                    $task1, 
+                    $taskResult1, 
+                    $jumpFromFinally, 
+                    asyncComplete, 
+                    result, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        for (;;) {
+                            $step = Bridge.Array.min([0,1], $step);
+                            switch ($step) {
+                                case 0: {
+                                    asyncComplete = Bridge.get(Bridge.Test.Assert).async();
+                                    result = 0;
+                                    $task1 = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge912).myfunc();
+                                    $step = 1;
+                                    $task1.continueWith($asyncBody, true);
+                                    return;
+                                }
+                                case 1: {
+                                    $taskResult1 = $task1.getAwaitedResult();
+                                    result = $taskResult1;
+                                    
+                                    Bridge.get(Bridge.Test.Assert).areEqual(result, 1);
+                                    
+                                    asyncComplete();
+                                    return;
+                                }
+                                default: {
+                                    return;
+                                }
+                            }
+                        }
+                    }, arguments);
+    
+                $asyncBody();
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge913', {
         statics: {
-            testStringSpitWithNullParameterFixed: function () {
+            testNullableDateTimeGreaterThanWorks: function () {
                 var a = new Date();
                 var b = null;
     
@@ -9677,6 +9757,272 @@
             runOperation$1: function (a, operation) {
                 return operation(a);
             }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Diagnostics.Contracts.ContractTests', {
+        assertNoExceptions: function (block) {
+            try {
+                block();
+                Bridge.get(Bridge.Test.Assert).true$1(true, "No Exception thrown.");
+            }
+            catch (ex) {
+                ex = Bridge.Exception.create(ex);
+                Bridge.get(Bridge.Test.Assert).fail$1("Unexpected Exception " + ex);
+            }
+        },
+        assertException: function (block, expectedKind, expectedMessage, expectedUserMessage, expectedInnerException) {
+            try {
+                block();
+            }
+            catch (ex) {
+                ex = Bridge.Exception.create(ex);
+                var cex = Bridge.as(ex, Bridge.ContractException);
+                if (!Bridge.hasValue(cex)) {
+                    Bridge.get(Bridge.Test.Assert).fail$1("Unexpected Exception");
+                }
+    
+                Bridge.get(Bridge.Test.Assert).true$1(cex.getKind() === expectedKind, "Kind");
+                Bridge.get(Bridge.Test.Assert).true$1(cex.getMessage() === expectedMessage, "Message");
+                Bridge.get(Bridge.Test.Assert).true$1(cex.getUserMessage() === expectedUserMessage, "UserMessage");
+                if (Bridge.hasValue(cex.getInnerException())) {
+                    Bridge.get(Bridge.Test.Assert).true$1(Bridge.equals(cex.getInnerException(), expectedInnerException), "InnerException");
+                }
+                else  {
+                    if (!Bridge.hasValue(cex.getInnerException()) && Bridge.hasValue(expectedInnerException)) {
+                        Bridge.get(Bridge.Test.Assert).fail$1("InnerException");
+                    }
+                }
+            }
+        },
+        assume: function () {
+            var a = 0;
+            Bridge.get(Bridge.Test.Assert).throws$2(function () {
+                Bridge.Contract.assert(5, function () { return a !== 0; });
+            }, function (error) {
+                return Bridge.is(error, Bridge.ContractException);
+            }, "ContractException");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.assert(5, function () { return a === 0; });
+            });
+            this.assertException(function () {
+                Bridge.Contract.assert(5, function () { return a === 99; });
+            }, Bridge.ContractFailureKind.assume, "Contract 'a === 99' failed", null, null);
+        },
+        assumeWithUserMessage: function () {
+            var a = 0;
+            Bridge.get(Bridge.Test.Assert).throws$2(function () {
+                Bridge.Contract.assert(5, function () { return a !== 0; }, "is not zero");
+            }, function (error) {
+                return Bridge.is(error, Bridge.ContractException);
+            }, "ContractException");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.assert(5, function () { return a === 0; }, "is zero");
+            });
+            this.assertException(function () {
+                Bridge.Contract.assert(5, function () { return a === 99; }, "is 99");
+            }, Bridge.ContractFailureKind.assume, "Contract 'a === 99' failed: is 99", "is 99", null);
+        },
+        _Assert: function () {
+            var a = 0;
+            Bridge.get(Bridge.Test.Assert).throws$2(function () {
+                Bridge.Contract.assert(4, function () { return a !== 0; });
+            }, function (error) {
+                return Bridge.is(error, Bridge.ContractException);
+            }, "ContractException");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.assert(4, function () { return a === 0; });
+            });
+            this.assertException(function () {
+                Bridge.Contract.assert(4, function () { return a === 99; });
+            }, Bridge.ContractFailureKind.assert, "Contract 'a === 99' failed", null, null);
+        },
+        assertWithUserMessage: function () {
+            var a = 0;
+            Bridge.get(Bridge.Test.Assert).throws$2(function () {
+                Bridge.Contract.assert(4, function () { return a !== 0; }, "is not zero");
+            }, function (error) {
+                return Bridge.is(error, Bridge.ContractException);
+            }, "ContractException");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.assert(4, function () { return a === 0; }, "is zero");
+            });
+            this.assertException(function () {
+                Bridge.Contract.assert(4, function () { return a === 99; }, "is 99");
+            }, Bridge.ContractFailureKind.assert, "Contract 'a === 99' failed: is 99", "is 99", null);
+        },
+        requires: function () {
+            var a = 0;
+            Bridge.get(Bridge.Test.Assert).throws$2(function () {
+                Bridge.Contract.assert(0, function () { return a !== 0; });
+            }, function (error) {
+                return Bridge.is(error, Bridge.ContractException);
+            }, "ContractException");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.assert(0, function () { return a === 0; });
+            });
+            this.assertException(function () {
+                Bridge.Contract.assert(0, function () { return a === 99; });
+            }, Bridge.ContractFailureKind.precondition, "Contract 'a === 99' failed", null, null);
+        },
+        requiresWithUserMessage: function () {
+            var a = 0;
+            Bridge.get(Bridge.Test.Assert).throws$2(function () {
+                Bridge.Contract.assert(0, function () { return a !== 0; }, "must not be zero");
+            }, function (error) {
+                return Bridge.is(error, Bridge.ContractException);
+            }, "ContractException");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.assert(0, function () { return a === 0; }, "can only be zero");
+            });
+            this.assertException(function () {
+                Bridge.Contract.assert(0, function () { return a === 99; }, "can only be 99");
+            }, Bridge.ContractFailureKind.precondition, "Contract 'a === 99' failed: can only be 99", "can only be 99", null);
+        },
+        requiresWithTypeException: function () {
+            var a = 0;
+            Bridge.get(Bridge.Test.Assert).throws$5(function () {
+                Bridge.Contract.requires(Bridge.Exception, function () { return a !== 0; });
+            }, "Exception");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.requires(Bridge.Exception, function () { return a === 0; });
+            });
+        },
+        requiredWithTypeExceptionAndUserMessage: function () {
+            var a = 0;
+            Bridge.get(Bridge.Test.Assert).throws$5(function () {
+                Bridge.Contract.requires(Bridge.Exception, function () { return a !== 0; }, "must not be zero");
+            }, "Exception");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.requires(Bridge.Exception, function () { return a === 0; }, "can only be zero");
+            });
+        },
+        forAll: function () {
+            Bridge.get(Bridge.Test.Assert).throws$2(function () {
+                Bridge.Contract.forAll(2, 5, null);
+            }, function (error) {
+                return Bridge.is(error, Bridge.ArgumentNullException);
+            }, "ArgumentNullException");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.forAll(2, 5, function (s) {
+                    return s !== 3;
+                });
+            });
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.Contract.forAll(2, 5, function (s) {
+                return s !== 3;
+            }));
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Contract.forAll(2, 5, function (s) {
+                return s !== 6;
+            }));
+        },
+        forAllWithCollection: function () {
+            Bridge.get(Bridge.Test.Assert).throws$2(function () {
+                Bridge.Contract.forAll$1([1, 2, 3], null);
+            }, function (error) {
+                return Bridge.is(error, Bridge.ArgumentNullException);
+            }, "ArgumentNullException");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.forAll$1([1, 2, 3], function (s) {
+                    return s !== 3;
+                });
+            });
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.Contract.forAll$1([1, 2, 3], function (s) {
+                return s !== 3;
+            }));
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Contract.forAll$1([1, 2, 3], function (s) {
+                return s !== 6;
+            }));
+        },
+        exists: function () {
+            Bridge.get(Bridge.Test.Assert).throws$2(function () {
+                Bridge.Contract.exists(1, 5, null);
+            }, function (error) {
+                return Bridge.is(error, Bridge.ArgumentNullException);
+            }, "ArgumentNullException");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.exists(1, 5, function (s) {
+                    return s === 3;
+                });
+            });
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Contract.exists(1, 5, function (s) {
+                return s === 3;
+            }));
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.Contract.exists(1, 5, function (s) {
+                return s === 6;
+            }));
+        },
+        existsWithCollection: function () {
+            Bridge.get(Bridge.Test.Assert).throws$2(function () {
+                Bridge.Contract.exists$1([1, 2, 3], null);
+            }, function (error) {
+                return Bridge.is(error, Bridge.ArgumentNullException);
+            }, "ArgumentNullException");
+            this.assertNoExceptions(function () {
+                Bridge.Contract.exists$1([1, 2, 3], function (s) {
+                    return s === 3;
+                });
+            });
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Contract.exists$1([1, 2, 3], function (s) {
+                return s === 3;
+            }));
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.Contract.exists$1([1, 2, 3], function (s) {
+                return s === 6;
+            }));
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Diagnostics.StopwatchTests', {
+        defaultConstructorWorks: function () {
+            var watch = new Bridge.Stopwatch();
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(watch, Bridge.Stopwatch), "is Stopwatch");
+            Bridge.get(Bridge.Test.Assert).false$1(watch.isRunning, "IsRunning");
+        },
+        constantsWorks: function () {
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.Stopwatch.frequency > 1000, "Frequency");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(typeof Bridge.Stopwatch.isHighResolution, "boolean", "IsHighResolution");
+        },
+        startNewWorks: function () {
+            var watch = Bridge.Stopwatch.startNew();
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(watch, Bridge.Stopwatch), "is Stopwatch");
+            Bridge.get(Bridge.Test.Assert).true$1(watch.isRunning, "IsRunning");
+        },
+        startAndStopWork: function () {
+            var watch = new Bridge.Stopwatch();
+            Bridge.get(Bridge.Test.Assert).$false(watch.isRunning);
+            watch.start();
+            Bridge.get(Bridge.Test.Assert).$true(watch.isRunning);
+            watch.stop();
+            Bridge.get(Bridge.Test.Assert).$false(watch.isRunning);
+        },
+        elapsedWorks: function () {
+            var watch = new Bridge.Stopwatch();
+            Bridge.get(Bridge.Test.Assert).areEqual(watch.ticks(), 0);
+            Bridge.get(Bridge.Test.Assert).areEqual(watch.milliseconds(), 0);
+            Bridge.get(Bridge.Test.Assert).areEqual(watch.timeSpan(), new Bridge.TimeSpan());
+            watch.start();
+            var before = new Date();
+            var hasIncreased = false;
+            while (Bridge.TimeSpan.lt((Bridge.Date.subdd(new Date(), before)), Bridge.TimeSpan.fromMilliseconds(200))) {
+                if (watch.ticks() > 0) {
+                    hasIncreased = true;
+                }
+            }
+            watch.stop();
+            Bridge.get(Bridge.Test.Assert).true$1(hasIncreased, "Times should increase inside the loop");
+            Bridge.get(Bridge.Test.Assert).true$1(watch.milliseconds() > 150, "ElapsedMilliseconds");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.TimeSpan.eq(watch.timeSpan(), new Bridge.TimeSpan(0, 0, 0, 0, Bridge.cast(watch.milliseconds(), Bridge.Int))), "Elapsed");
+            var value = Bridge.cast(watch.ticks(), Number) / Bridge.Stopwatch.frequency;
+            Bridge.get(Bridge.Test.Assert).true$1(value > 0.15 && value < 0.25, "Ticks");
+        },
+        getTimestampWorks: function () {
+            var t1 = Bridge.Stopwatch.getTimestamp();
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(t1, Bridge.Int), "is long");
+    
+            var before = new Date();
+            while (Bridge.TimeSpan.lt((Bridge.Date.subdd(new Date(), before)), Bridge.TimeSpan.fromMilliseconds(50))) {
+            }
+            var t2 = Bridge.Stopwatch.getTimestamp();
+            Bridge.get(Bridge.Test.Assert).true$1(t2 > t1, "Should increase");
         }
     });
     
@@ -16995,20 +17341,17 @@
             };
     
             someMethod();
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should start running after being invoked");
     
-            Bridge.global.setTimeout(function () {
-                Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should not continue past point 1 until task is finished");
-            }, 100);
-    
-            Bridge.global.setTimeout(function () {
-                tcs.setResult(0);
-            }, 200);
-    
-            Bridge.global.setTimeout(function () {
+            task.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).areEqual$1(state, 2, "Async method should finish after the task is finished");
                 done();
-            }, 300);
+            });
+    
+            Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should not continue past point 1 until task is finished");
+    
+            tcs.setResult(0);
         },
         asyncTask: function () {
             var done = Bridge.get(Bridge.Test.Assert).async();
@@ -17056,26 +17399,24 @@
                 $asyncBody();
                 return $tcs.task;
             };
+    
             var asyncTask = someMethod();
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.running, "asyncTask should be running immediately");
             Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should start running after being invoked");
     
-            Bridge.global.setTimeout(function () {
-                Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.running, "asyncTask should be running before awaited task is finished");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should not continue past point 1 until task is finished");
-            }, 100);
-    
-            Bridge.global.setTimeout(function () {
-                tcs.setResult(0);
-            }, 200);
-    
-            Bridge.global.setTimeout(function () {
+            asyncTask.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.ranToCompletion, "asyncTask should run to completion");
                 Bridge.get(Bridge.Test.Assert).true$1(!Bridge.hasValue(asyncTask.exception), "asyncTask should not throw an exception");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(state, 2, "Async method should finish after the task is finished");
     
                 done();
-            }, 300);
+            });
+    
+            Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.running, "asyncTask should be running before awaited task is finished");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should not continue past point 1 until task is finished");
+    
+            tcs.setResult(0);
         },
         asyncTaskBodyThrowsException: function () {
             var done = Bridge.get(Bridge.Test.Assert).async();
@@ -17125,27 +17466,25 @@
                 $asyncBody();
                 return $tcs.task;
             };
+    
             var asyncTask = someMethod();
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.running, "asyncTask should be running immediately");
             Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should start running after being invoked");
     
-            Bridge.global.setTimeout(function () {
-                Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.running, "asyncTask should be running before awaited task is finished");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should not continue past point 1 until task is finished");
-            }, 100);
-    
-            Bridge.global.setTimeout(function () {
-                tcs.setResult(0);
-            }, 200);
-    
-            Bridge.global.setTimeout(function () {
+            asyncTask.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.faulted, "asyncTask should fault");
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.hasValue(asyncTask.exception), "asyncTask should have an exception");
                 Bridge.get(Bridge.Test.Assert).true$1(asyncTask.exception.innerExceptions.get(0) === ex, "asyncTask should throw the correct exception");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(state, 2, "Async method should finish after the task is finished");
     
                 done();
-            }, 300);
+            });
+    
+            Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.running, "asyncTask should be running before awaited task is finished");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should not continue past point 1 until task is finished");
+    
+            tcs.setResult(0);
         },
         awaitTaskThatFaults: function () {
             var done = Bridge.get(Bridge.Test.Assert).async();
@@ -17194,27 +17533,25 @@
                 $asyncBody();
                 return $tcs.task;
             };
+    
             var asyncTask = someMethod();
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.running, "asyncTask should be running immediately");
             Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should start running after being invoked");
     
-            Bridge.global.setTimeout(function () {
-                Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.running, "asyncTask should be running before awaited task is finished");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should not continue past point 1 until task is finished");
-            }, 100);
-    
-            Bridge.global.setTimeout(function () {
-                tcs.setException(ex);
-            }, 200);
-    
-            Bridge.global.setTimeout(function () {
+            asyncTask.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.faulted, "asyncTask should fault");
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.hasValue(asyncTask.exception), "asyncTask should have an exception");
                 Bridge.get(Bridge.Test.Assert).true$1(asyncTask.exception.innerExceptions.get(0) === ex, "asyncTask should throw the correct exception");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should not have reach anything after the faulting await");
     
                 done();
-            }, 300);
+            });
+    
+            Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.running, "asyncTask should be running before awaited task is finished");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should not continue past point 1 until task is finished");
+    
+            tcs.setException(ex);
         },
         aggregateExceptionsAreUnwrappedWhenAwaitingTask: function () {
             var done = Bridge.get(Bridge.Test.Assert).async();
@@ -17222,6 +17559,7 @@
             var state = 0;
             var tcs = new Bridge.TaskCompletionSource();
             var task = tcs.task;
+    
             var ex = new Bridge.Exception("Some text");
             tcs.setException(ex);
     
@@ -17272,7 +17610,7 @@
                             if ( $step >= 1 && $step <= 2 ){
                                 ex2 = $e1;
                                 $step = 3;
-                                setTimeout($asyncBody, 0);
+                                $asyncBody();
                                 return;
                             }
                             $tcs.setException($e1);
@@ -17282,13 +17620,14 @@
                 $asyncBody();
                 return $tcs.task;
             };
+    
             someMethod();
     
-            Bridge.global.setTimeout(function () {
+            task.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Should have reached the termination state");
     
                 done();
-            }, 100);
+            });
         },
         asyncTaskThatReturnsValue: function () {
             var done = Bridge.get(Bridge.Test.Assert).async();
@@ -17336,27 +17675,25 @@
                 $asyncBody();
                 return $tcs.task;
             };
+    
             var asyncTask = someMethod();
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.running, "asyncTask should be running immediately");
             Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should start running after being invoked");
     
-            Bridge.global.setTimeout(function () {
-                Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.running, "asyncTask should be running before awaited task is finished");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should not continue past point 1 until task is finished");
-            }, 100);
-    
-            Bridge.global.setTimeout(function () {
-                tcs.setResult(0);
-            }, 200);
-    
-            Bridge.global.setTimeout(function () {
+            asyncTask.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.ranToCompletion, "asyncTask should run to completion");
                 Bridge.get(Bridge.Test.Assert).true$1(!Bridge.hasValue(asyncTask.exception), "asyncTask should not throw an exception");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(state, 2, "Async method should finish after the task is finished");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.getResult(), 42, "Result should be correct");
     
                 done();
-            }, 300);
+            });
+    
+            Bridge.get(Bridge.Test.Assert).areEqual$1(asyncTask.status, Bridge.TaskStatus.running, "asyncTask should be running before awaited task is finished");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(state, 1, "Async method should not continue past point 1 until task is finished");
+    
+            tcs.setResult(0);
         }
     });
     
@@ -17787,26 +18124,27 @@
     
             var promise = this.createPromise();
             var task = Bridge.Task.fromPromise(promise);
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "Task should be running after being created");
+    
             var continuationRun = false;
-            task.continueWith(function (t) {
+    
+            var task1 = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(t === task, "ContinueWith parameter should be correct");
                 continuationRun = true;
             });
     
-            Bridge.global.setTimeout(function () {
-                Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "Task should be running before promise is completed.");
-                promise.resolve([42, "result 123", 101]);
-            }, 100);
+            Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "Task should be running before promise is completed.");
+            promise.resolve([42, "result 123", 101]);
     
-            Bridge.global.setTimeout(function () {
+            task1.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.ranToCompletion, "Task should be completed after promise");
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "Continuation should have been run after promise was completed.");
                 Bridge.get(Bridge.Test.Assert).areDeepEqual$1(task.getResult(), [42, "result 123", 101], "The result should be correct");
     
                 completeAsync();
-            }, 200);
+            });
         },
         taskFromPromiseWithResultFactoryWorksWhenPromiseCompletes: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
@@ -17821,20 +18159,21 @@
     
             var promise = this.createPromise();
             var task = Bridge.Task.fromPromise(promise, trh);
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "Task should be running after being created");
+    
             var continuationRun = false;
-            task.continueWith(function (t) {
+    
+            var task1 = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(t === task, "ContinueWith parameter should be correct");
                 continuationRun = true;
             });
     
-            Bridge.global.setTimeout(function () {
-                Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "Task should be running before promise is completed.");
-                promise.resolve([42, "result 123", 101]);
-            }, 100);
+            Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "Task should be running before promise is completed.");
+            promise.resolve([42, "result 123", 101]);
     
-            Bridge.global.setTimeout(function () {
+            task1.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.ranToCompletion, "Task should be completed after promise");
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "Continuation should have been run after promise was completed.");
                 Bridge.get(Bridge.Test.Assert).areDeepEqual(task.getResult(), Bridge.merge(new Bridge.ClientTest.Threading.PromiseTests.TaskResult(), {
@@ -17844,27 +18183,29 @@
                 } ));
     
                 completeAsync();
-            }, 200);
+            });
         },
         taskFromPromiseWorksWhenPromiseFails: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
     
             var promise = this.createPromise();
             var task = Bridge.Task.fromPromise(promise);
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "Task should be running after being created");
+    
             var continuationRun = false;
-            task.continueWith(function (t) {
+    
+            var task1 = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(t === task, "ContinueWith parameter should be correct");
                 continuationRun = true;
             });
     
-            Bridge.global.setTimeout(function () {
-                Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "Task should be running before promise is completed.");
-                promise.reject([42, "result 123", 101]);
-            }, 100);
+            Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "Task should be running before promise is completed.");
+            promise.reject([42, "result 123", 101]);
     
-            Bridge.global.setTimeout(function () {
+    
+            task1.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.faulted, "Task should have faulted after the promise was rejected.");
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "Continuation should have been run after promise was rejected.");
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(task.exception, Bridge.AggregateException), "Exception should be an AggregateException");
@@ -17873,7 +18214,7 @@
                 Bridge.get(Bridge.Test.Assert).areDeepEqual$1((Bridge.cast(task.exception.innerExceptions.get(0), Bridge.PromiseException)).arguments, [42, "result 123", 101], "The PromiseException arguments should be correct");
     
                 completeAsync();
-            }, 200);
+            });
         },
         completingPromiseCanBeAwaited: function () {
             var $step = 0,
@@ -17883,6 +18224,7 @@
                 completeAsync, 
                 promise, 
                 result, 
+                task, 
                 $asyncBody = Bridge.fn.bind(this, function () {
                     for (;;) {
                         $step = Bridge.Array.min([0,1], $step);
@@ -17893,15 +18235,12 @@
                                 promise = this.createPromise();
                                 result = null;
                                 
-                                Bridge.global.setTimeout(function () {
-                                    Bridge.get(Bridge.Test.Assert).true$1(!Bridge.hasValue(result), "Await should not finish too early.");
+                                task = Bridge.Task.run(function () {
+                                    Bridge.get(Bridge.Test.Assert).true$1(!Bridge.hasValue(result), "Await should not finish too early (a).");
                                     promise.resolve([42, "result 123", 101]);
-                                }, 100);
+                                });
                                 
-                                Bridge.global.setTimeout(function () {
-                                    Bridge.get(Bridge.Test.Assert).areEqual$1(result, [42, "result 123", 101], "The result should be correct");
-                                    completeAsync();
-                                }, 200);
+                                Bridge.get(Bridge.Test.Assert).true$1(!Bridge.hasValue(result), "Await should not finish too early (b).");
                                 
                                 $task1 = Bridge.Task.fromPromise(promise);
                                 $step = 1;
@@ -17911,6 +18250,9 @@
                             case 1: {
                                 $taskResult1 = $task1.getAwaitedResult();
                                 result = $taskResult1;
+                                
+                                Bridge.get(Bridge.Test.Assert).areEqual$1(result, [42, "result 123", 101], "The result should be correct");
+                                completeAsync();
                                 return;
                             }
                             default: {
@@ -17931,6 +18273,7 @@
                 completeAsync, 
                 promise, 
                 continuationRun, 
+                task, 
                 ex, 
                 ex1, 
                 $e, 
@@ -17943,21 +18286,18 @@
                                     completeAsync = Bridge.get(Bridge.Test.Assert).async();
                                     
                                     promise = this.createPromise();
+                                    
                                     continuationRun = false;
                                     
-                                    Bridge.global.setTimeout(function () {
-                                        Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
+                                    task = Bridge.Task.run(function () {
+                                        Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early (a).");
                                         promise.reject([42, "result 123", 101]);
-                                    }, 100);
-                                    
-                                    Bridge.global.setTimeout(function () {
-                                        Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "Continuation should have been run after promise was rejected.");
-                                        completeAsync();
-                                    }, 200);
+                                    });
                                     $step = 1;
                                     continue;
                                 }
                                 case 1: {
+                                    Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early (b).");
                                     $task1 = Bridge.Task.fromPromise(promise);
                                     $step = 2;
                                     $task1.continueWith($asyncBody, true);
@@ -17965,11 +18305,13 @@
                                 }
                                 case 2: {
                                     $taskResult1 = $task1.getAwaitedResult();
+                                    
                                     Bridge.get(Bridge.Test.Assert).fail$1("Await should throw");
                                     $step = 5;
                                     continue;
                                 }
                                 case 3: {
+                                    continuationRun = true;
                                     Bridge.get(Bridge.Test.Assert).areEqual$1(ex.arguments, [42, "result 123", 101], "The PromiseException arguments should be correct");
                                     $step = 5;
                                     continue;
@@ -17980,7 +18322,10 @@
                                     continue;
                                 }
                                 case 5: {
-                                    continuationRun = true;
+                                    
+                                    Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "Continuation should have been run after promise was rejected.");
+                                    
+                                    completeAsync();
                                     return;
                                 }
                                 default: {
@@ -17994,12 +18339,12 @@
                             if (Bridge.is($e1, Bridge.PromiseException)) {
                                 ex = $e1;
                                 $step = 3;
-                                setTimeout($asyncBody, 0);
+                                $asyncBody();
                                 return;
                             } else {
                                 ex1 = $e1;
                                 $step = 4;
-                                setTimeout($asyncBody, 0);
+                                $asyncBody();
                                 return;
                             }
                         }
@@ -18046,26 +18391,32 @@
     
             var callbackRun = false;
             var tcs = new Bridge.TaskCompletionSource();
+    
             var task = tcs.task;
+    
             task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(t === task, "Callback parameter should be correct");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.ranToCompletion, "Task should be completed when in the callback");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.getResult(), 1, "Result should be 1 after the callback");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.exception, null, "Exception should be null in the callback");
+    
                 callbackRun = true;
             });
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "The task should be running before SetResult is called");
             Bridge.get(Bridge.Test.Assert).false$1(callbackRun, "Callback should not be run before SetResult() is called");
     
             tcs.setResult(1);
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.ranToCompletion, "Task should be completed directly after SetResult() is called");
             Bridge.get(Bridge.Test.Assert).areEqual$1(task.getResult(), 1, "Result should be set immediately");
             Bridge.get(Bridge.Test.Assert).areEqual$1(task.exception, null, "Exception should be null after SetResult()");
     
-            Bridge.global.setTimeout(function () {
+            Bridge.Task.run(function () {
                 Bridge.get(Bridge.Test.Assert).true$1(callbackRun, "Callback should be run");
+    
                 completeAsync();
-            }, 100);
+            });
         },
         taskCompletionSourceWorksWhenSettingASingleException: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
@@ -18073,7 +18424,9 @@
             var callbackRun = false;
             var tcs = new Bridge.TaskCompletionSource();
             var task = tcs.task;
+    
             var ex = new Bridge.Exception("Some text");
+    
             task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(t === task, "Callback parameter should be correct");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.faulted, "Task should be faulted in the callback");
@@ -18082,12 +18435,15 @@
                 Bridge.get(Bridge.Test.Assert).throws$5(function () {
                     var x = task.getResult();
                 }, "Getting the result property in the callback should throw");
+    
                 callbackRun = true;
             });
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "The task should be running before the SetException() call");
             Bridge.get(Bridge.Test.Assert).false$1(callbackRun, "Callback should not be run before SetException() is called");
     
             tcs.setException(ex);
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.faulted, "The task should be faulted immediately after the SetException() call");
             Bridge.get(Bridge.Test.Assert).$true(Bridge.is(task.exception, Bridge.AggregateException));
             Bridge.get(Bridge.Test.Assert).true$1(task.exception.innerExceptions.get(0) === ex, "The exception should be correct immediately after SetException()");
@@ -18095,10 +18451,11 @@
                 var x = task.getResult();
             }, "Getting the result property after SetException() should throw");
     
-            Bridge.global.setTimeout(function () {
+            Bridge.Task.run(function () {
                 Bridge.get(Bridge.Test.Assert).true$1(callbackRun, "Callback should be run");
+    
                 completeAsync();
-            }, 100);
+            });
         },
         taskCompletionSourceWorksWhenSettingTwoExceptions: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
@@ -18108,6 +18465,7 @@
             var task = tcs.task;
             var ex1 = new Bridge.Exception("Some text");
             var ex2 = new Bridge.Exception("Some other text");
+    
             task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(t === task, "Callback parameter should be correct");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.faulted, "Task should be faulted in the callback");
@@ -18117,12 +18475,15 @@
                 Bridge.get(Bridge.Test.Assert).throws$5(function () {
                     var x = task.getResult();
                 }, "Getting the result property in the callback should throw");
+    
                 callbackRun = true;
             });
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "The task should be running before the SetException() call");
             Bridge.get(Bridge.Test.Assert).false$1(callbackRun, "Callback should not be run before SetException() is called");
     
             tcs.setException(this.makeEnumerable(Bridge.Exception)([ex1, ex2]));
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.faulted, "The task should be faulted immediately after the SetException() call");
             Bridge.get(Bridge.Test.Assert).$true(Bridge.is(task.exception, Bridge.AggregateException));
             Bridge.get(Bridge.Test.Assert).true$1(task.exception.innerExceptions.get(0) === ex1, "InnerExceptions[0] should be correct immediately after SetException");
@@ -18131,10 +18492,11 @@
                 var x = task.getResult();
             }, "Getting the result property after SetException() should throw");
     
-            Bridge.global.setTimeout(function () {
+            Bridge.Task.run(function () {
                 Bridge.get(Bridge.Test.Assert).true$1(callbackRun, "Callback should be run");
+    
                 completeAsync();
-            }, 100);
+            });
         },
         taskCompletionSourceWorksWhenCancelling: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
@@ -18142,29 +18504,34 @@
             var callbackRun = false;
             var tcs = new Bridge.TaskCompletionSource();
             var task = tcs.task;
-            task.continueWith(function (t) {
+    
+            var task1 = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(t === task, "Callback parameter should be correct");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.canceled, "Task should be cancelled in the callback");
                 Bridge.get(Bridge.Test.Assert).true$1(!Bridge.hasValue(task.exception), "Exception should be null in the callback");
                 Bridge.get(Bridge.Test.Assert).throws$5(function () {
                     var x = task.getResult();
                 }, "Getting the result property in the callback should throw");
+    
                 callbackRun = true;
             });
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "The task should be running before the SetCanceled() call");
             Bridge.get(Bridge.Test.Assert).false$1(callbackRun, "Callback should not be run before SetCanceled() is called");
     
             tcs.setCanceled();
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.canceled, "The task should be cancelled immediately after the SetCanceled() call");
             Bridge.get(Bridge.Test.Assert).true$1(!Bridge.hasValue(task.exception), "The exception should be correct immediately after SetCanceled()");
             Bridge.get(Bridge.Test.Assert).throws$5(function () {
                 var x = task.getResult();
             }, "Getting the result property after SetCanceled() should throw");
     
-            Bridge.global.setTimeout(function () {
+            task1.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(callbackRun, "The callback should be run");
+    
                 completeAsync();
-            }, 100);
+            });
         },
         cancelledTaskThrowsTaskCanceledExceptionWhenAwaited: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
@@ -18196,6 +18563,7 @@
                                     }
                                     case 2: {
                                         $taskResult1 = $task1.getAwaitedResult();
+                                        
                                         Bridge.get(Bridge.Test.Assert).fail$1("Await should throw");
                                         $step = 4;
                                         continue;
@@ -18219,7 +18587,7 @@
                                 if (Bridge.is($e1, Bridge.TaskCanceledException)) {
                                     ex = $e1;
                                     $step = 3;
-                                    setTimeout($asyncBody, 0);
+                                    $asyncBody();
                                     return;
                                 }
                             }
@@ -18229,13 +18597,15 @@
     
                 $asyncBody();
             };
+    
             someMethod();
     
-            Bridge.global.setTimeout(function () {
+            Bridge.Task.run(function () {
                 Bridge.get(Bridge.Test.Assert).notNull$1(caughtException, "Should catch");
                 Bridge.get(Bridge.Test.Assert).$true(tcs.task === caughtException.task);
+    
                 completeAsync();
-            }, 300);
+            });
         },
         cancelledTaskThrowsAggregateExceptionWithTaskCanceledExceptionWhenResultIsAccessed: function () {
             var tcs = new Bridge.TaskCompletionSource();
@@ -18243,6 +18613,7 @@
     
             try {
                 var r = tcs.task.getResult();
+    
                 Bridge.get(Bridge.Test.Assert).fail$1("Should throw");
             }
             catch ($e) {
@@ -18325,17 +18696,21 @@
             var complete = false;
             var tcs = new Bridge.TaskCompletionSource();
             var task = tcs.task;
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "task should be running at point 1");
+    
             var continuedTask = null;
+    
             continuedTask = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(t === task, "argument to task.ContinueWith callback should be correct");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.ranToCompletion, "task should have run to completion at point 2");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.exception, null, "task should not have an exception");
-    
                 Bridge.get(Bridge.Test.Assert).areEqual$1(continuedTask.status, Bridge.TaskStatus.running, "continuedTask should be running at point 2");
             });
+    
             Bridge.get(Bridge.Test.Assert).false$1(task === continuedTask, "task and continuedTask should not be the same");
-            continuedTask.continueWith(function (t) {
+    
+            var continuedTask1 = continuedTask.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(t === continuedTask, "argument to continuedTask.ContinueWith callback should be correct");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(continuedTask.status, Bridge.TaskStatus.ranToCompletion, "continuedTask should have run to completion at point 3");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(continuedTask.exception, null, "continuedTask should not have an exception");
@@ -18345,10 +18720,11 @@
     
             tcs.setResult(0);
     
-            Bridge.global.setTimeout(function () {
+            continuedTask1.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(complete, "We should not time out");
+    
                 completeAsync();
-            }, 100);
+            });
         },
         continueWithWhenCallbackThrowsAnException: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
@@ -18356,6 +18732,7 @@
             var cb1Invoked = false, cb2Invoked = false;
             var tcs = new Bridge.TaskCompletionSource();
             var task = tcs.task;
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "task should be running at point 1");
     
             var t1 = task.continueWith(function (t) {
@@ -18369,7 +18746,7 @@
     
             tcs.setResult(0);
     
-            Bridge.global.setTimeout(function () {
+            Bridge.Task.run(function () {
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.ranToCompletion, "task status should be RanToCompletion");
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1(t1.status, Bridge.TaskStatus.faulted, "t1 status should be Faulted");
@@ -18377,8 +18754,9 @@
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1(t2.status, Bridge.TaskStatus.ranToCompletion, "t2 status should be RanToCompletion");
                 Bridge.get(Bridge.Test.Assert).true$1(cb2Invoked, "Callback 2 should have been invoked");
+    
                 completeAsync();
-            }, 100);
+            });
         },
         exceptionInTaskBodyAppearsInTheExceptionMemberForNonGenericTask: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
@@ -18386,13 +18764,18 @@
             var complete = false;
             var tcs = new Bridge.TaskCompletionSource();
             var task = tcs.task;
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "task should be running at point 1");
+    
             var continuedTask = null;
+    
             continuedTask = task.continueWith(function (t) {
                 eval("throw 'This is a test message'");
             });
+    
             Bridge.get(Bridge.Test.Assert).false$1(task === continuedTask, "task and continuedTask should not be the same");
-            continuedTask.continueWith(function (t) {
+    
+            var continuedTask1 = continuedTask.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(t === continuedTask, "argument to continuedTask.ContinueWith callback should be correct");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(continuedTask.status, Bridge.TaskStatus.faulted, "continuedTask should have run to completion at point 3");
                 Bridge.get(Bridge.Test.Assert).areNotEqual$1(continuedTask.exception, null, "continuedTask should have an exception");
@@ -18404,10 +18787,11 @@
     
             tcs.setResult(0);
     
-            Bridge.global.setTimeout(function () {
+            continuedTask1.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(complete, "We should not time out");
+    
                 completeAsync();
-            }, 100);
+            });
         },
         continueWithForNonGenericTaskCanReturnAValue: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
@@ -18415,7 +18799,9 @@
             var done = false;
             var tcs = new Bridge.TaskCompletionSource();
             var task = tcs.task;
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "task should be running at point 1");
+    
             var continuedTask = null;
             continuedTask = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(t === task, "argument to task.ContinueWith callback should be correct");
@@ -18426,8 +18812,10 @@
     
                 return 42;
             });
+    
             Bridge.get(Bridge.Test.Assert).false$1(task === continuedTask, "task and continuedTask should not be the same");
-            continuedTask.continueWith(function (t) {
+    
+            var continuedTask1 = continuedTask.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(t === continuedTask, "argument to continuedTask.ContinueWith callback should be correct");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(continuedTask.status, Bridge.TaskStatus.ranToCompletion, "continuedTask should have run to completion at point 3");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(continuedTask.exception, null, "continuedTask should not have an exception");
@@ -18438,10 +18826,11 @@
     
             tcs.setResult(0);
     
-            Bridge.global.setTimeout(function () {
+            continuedTask1.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(done, "We should not time out");
+    
                 completeAsync();
-            }, 100);
+            });
         },
         continueWithWithNoReturnValueForGenericTaskWorks: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
@@ -18449,17 +18838,21 @@
             var done = false;
             var tcs = new Bridge.TaskCompletionSource();
             var task = tcs.task;
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "task should be running at point 1");
+    
             var continuedTask = null;
+    
             continuedTask = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(t === task, "argument to task.ContinueWith callback should be correct");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.ranToCompletion, "task should have run to completion at point 2");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.exception, null, "task should not have an exception");
-    
                 Bridge.get(Bridge.Test.Assert).areEqual$1(continuedTask.status, Bridge.TaskStatus.running, "continuedTask should be running at point 2");
             });
+    
             Bridge.get(Bridge.Test.Assert).false$1(task === continuedTask, "task and continuedTask should not be the same");
-            continuedTask.continueWith(function (t) {
+    
+            var continuedTask1 = continuedTask.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(t === continuedTask, "argument to continuedTask.ContinueWith callback should be correct");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(continuedTask.status, Bridge.TaskStatus.ranToCompletion, "continuedTask should have run to completion at point 3");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(continuedTask.exception, null, "continuedTask should not have an exception");
@@ -18469,10 +18862,11 @@
     
             tcs.setResult(0);
     
-            Bridge.global.setTimeout(function () {
+            continuedTask1.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(done, "We should not time out");
+    
                 completeAsync();
-            }, 100);
+            });
         },
         continueWithForGenericTaskCanReturnAValue: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
@@ -18480,19 +18874,23 @@
             var done = false;
             var tcs = new Bridge.TaskCompletionSource();
             var task = tcs.task;
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "task should be running at point 1");
+    
             var continuedTask = null;
+    
             continuedTask = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(t === task, "argument to task.ContinueWith callback should be correct");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.ranToCompletion, "task should have run to completion at point 2");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.exception, null, "task should not have an exception");
-    
                 Bridge.get(Bridge.Test.Assert).areEqual$1(continuedTask.status, Bridge.TaskStatus.running, "continuedTask should be running at point 2");
     
                 return t.getResult() + "_";
             });
+    
             Bridge.get(Bridge.Test.Assert).false$1(task === continuedTask, "task and continuedTask should not be the same");
-            continuedTask.continueWith(function (t) {
+    
+            var doneTask = continuedTask.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(t === continuedTask, "argument to continuedTask.ContinueWith callback should be correct");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(continuedTask.status, Bridge.TaskStatus.ranToCompletion, "continuedTask should have run to completion at point 3");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(continuedTask.exception, null, "continuedTask should not have an exception");
@@ -18503,34 +18901,38 @@
     
             tcs.setResult(42);
     
-            Bridge.global.setTimeout(function () {
+            doneTask.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(done, "We should not time out");
+    
                 completeAsync();
-            }, 100);
+            });
         },
         delayWorks: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
     
             var done = false;
     
-            Bridge.global.setTimeout(function () {
+            Bridge.Task.run(function () {
                 Bridge.get(Bridge.Test.Assert).false$1(done, "Done should not be set too early");
-            }, 50);
+            });
     
             var delay = Bridge.Task.delay(100);
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(delay.status, Bridge.TaskStatus.running, "delay should be running at point 1");
     
-            delay.continueWith(function (t) {
+            var afterDelay = delay.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(t === delay, "argument to delay.ContinueWith callback should be correct");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(delay.status, Bridge.TaskStatus.ranToCompletion, "delay should have run to completion at point 2");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(delay.exception, null, "delay should not have an exception");
+    
                 done = true;
             });
     
-            Bridge.global.setTimeout(function () {
+            afterDelay.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(done, "We should not time out");
+    
                 completeAsync();
-            }, 200);
+            });
         },
         fromResultWorks: function () {
             var t = Bridge.Task.fromResult(3);
@@ -18545,20 +18947,23 @@
             var task = Bridge.Task.run(function () {
                 bodyRun = true;
             });
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "task should be running at point 1");
     
-            task.continueWith(function (t) {
+            var doneTask = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(t === task, "argument to task.ContinueWith callback should be correct");
                 Bridge.get(Bridge.Test.Assert).true$1(bodyRun, "Body should be run before continuation");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.ranToCompletion, "task should have run to completion at point 2");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.exception, null, "task should not have an exception");
+    
                 continuationRun = true;
             });
     
-            Bridge.global.setTimeout(function () {
+            doneTask.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "We should not time out");
+    
                 completeAsync();
-            }, 100);
+            });
         },
         runWithResultWorks: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
@@ -18568,21 +18973,24 @@
                 bodyRun = true;
                 return 42;
             });
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "task should be running at point 1");
     
-            task.continueWith(function (t) {
+            var doneTask = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(t === task, "argument to task.ContinueWith callback should be correct");
                 Bridge.get(Bridge.Test.Assert).true$1(bodyRun, "Body should be run before continuation");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.ranToCompletion, "task should have run to completion at point 2");
                 Bridge.get(Bridge.Test.Assert).areEqual(task.getResult(), 42);
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.exception, null, "task should not have an exception");
+    
                 continuationRun = true;
             });
     
-            Bridge.global.setTimeout(function () {
+            doneTask.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "We should not time out");
+    
                 completeAsync();
-            }, 100);
+            });
         },
         runWorksWhenBodyThrows: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
@@ -18592,21 +19000,24 @@
                 bodyRun = true;
                 eval("throw 'This is a test message'");
             });
+    
             Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.running, "task should be running at point 1");
     
-            task.continueWith(function (t) {
+            var doneTask = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(t === task, "argument to task.ContinueWith callback should be correct");
                 Bridge.get(Bridge.Test.Assert).true$1(bodyRun, "Body should be run before continuation");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.faulted, "task should have faulted at point 2");
                 Bridge.get(Bridge.Test.Assert).$true(Bridge.is(task.exception, Bridge.AggregateException));
                 Bridge.get(Bridge.Test.Assert).areEqual(task.exception.innerExceptions.get(0).getMessage(), "This is a test message");
+    
                 continuationRun = true;
             });
     
-            Bridge.global.setTimeout(function () {
+            doneTask.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "We should not time out");
+    
                 completeAsync();
-            }, 100);
+            });
         },
         whenAllParamArrayWithResultWorks: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
@@ -18615,18 +19026,22 @@
             var tcs1 = new Bridge.TaskCompletionSource();
             var tcs2 = new Bridge.TaskCompletionSource();
             var tcs3 = new Bridge.TaskCompletionSource();
+    
             tcs1.task.continueWith(function (_) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
             });
+    
             tcs2.task.continueWith(function (_) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
             });
+    
             tcs3.task.continueWith(function (_) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
             });
     
             var task = Bridge.Task.whenAll(tcs1.task, tcs2.task, tcs3.task);
-            task.continueWith(function (t) {
+    
+            var doneTask = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should only be run once.");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(tcs1.task.status, Bridge.TaskStatus.ranToCompletion, "Task1 should have run to completion");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(tcs2.task.status, Bridge.TaskStatus.ranToCompletion, "Task2 should have run to completion");
@@ -18647,10 +19062,11 @@
             tcs1.setResult(101);
             tcs3.setResult(42);
     
-            Bridge.global.setTimeout(function () {
+            doneTask.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "We should not time out");
+    
                 completeAsync();
-            }, 100);
+            });
         },
         whenAllEnumerableWithResultWorks: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
@@ -18659,18 +19075,22 @@
             var tcs1 = new Bridge.TaskCompletionSource();
             var tcs2 = new Bridge.TaskCompletionSource();
             var tcs3 = new Bridge.TaskCompletionSource();
+    
             tcs1.task.continueWith(function (_) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
             });
+    
             tcs2.task.continueWith(function (_) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
             });
+    
             tcs3.task.continueWith(function (_) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
             });
     
             var task = Bridge.Task.whenAll(this.makeEnumerable(Bridge.Task)([tcs1.task, tcs2.task, tcs3.task]));
-            task.continueWith(function (t) {
+    
+            var doneTask = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should only be run once.");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(tcs1.task.status, Bridge.TaskStatus.ranToCompletion, "Task1 should have run to completion");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(tcs2.task.status, Bridge.TaskStatus.ranToCompletion, "Task2 should have run to completion");
@@ -18691,10 +19111,11 @@
             tcs1.setResult(101);
             tcs3.setResult(42);
     
-            Bridge.global.setTimeout(function () {
+            doneTask.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "We should not time out");
+    
                 completeAsync();
-            }, 100);
+            });
         },
         whenAllParamArrayWithoutResultWorks: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
@@ -18703,18 +19124,22 @@
             var tcs1 = new Bridge.TaskCompletionSource();
             var tcs2 = new Bridge.TaskCompletionSource();
             var tcs3 = new Bridge.TaskCompletionSource();
+    
             tcs1.task.continueWith(function (_) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
             });
+    
             tcs2.task.continueWith(function (_) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
             });
+    
             tcs3.task.continueWith(function (_) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
             });
     
             var task = Bridge.Task.whenAll(Bridge.cast(tcs1.task, Bridge.Task), Bridge.cast(tcs2.task, Bridge.Task), Bridge.cast(tcs3.task, Bridge.Task));
-            task.continueWith(function (t) {
+    
+            var doneTask = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should only be run once.");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(tcs1.task.status, Bridge.TaskStatus.ranToCompletion, "Task1 should have run to completion");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(tcs2.task.status, Bridge.TaskStatus.ranToCompletion, "Task2 should have run to completion");
@@ -18734,10 +19159,11 @@
             tcs1.setResult(101);
             tcs3.setResult(42);
     
-            Bridge.global.setTimeout(function () {
+            doneTask.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "We should not time out");
+    
                 completeAsync();
-            }, 100);
+            });
         },
         whenAllEnumerableWithoutResultWorks: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
@@ -18746,18 +19172,22 @@
             var tcs1 = new Bridge.TaskCompletionSource();
             var tcs2 = new Bridge.TaskCompletionSource();
             var tcs3 = new Bridge.TaskCompletionSource();
+    
             tcs1.task.continueWith(function (_) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
             });
+    
             tcs2.task.continueWith(function (_) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
             });
+    
             tcs3.task.continueWith(function (_) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
             });
     
             var task = Bridge.Task.whenAll(this.makeEnumerable(Bridge.Task)([Bridge.cast(tcs1.task, Bridge.Task), Bridge.cast(tcs2.task, Bridge.Task), Bridge.cast(tcs3.task, Bridge.Task)]));
-            task.continueWith(function (t) {
+    
+            var doneTask = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should only be run once.");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(tcs1.task.status, Bridge.TaskStatus.ranToCompletion, "Task1 should have run to completion");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(tcs2.task.status, Bridge.TaskStatus.ranToCompletion, "Task2 should have run to completion");
@@ -18777,10 +19207,11 @@
             tcs1.setResult(101);
             tcs3.setResult(42);
     
-            Bridge.global.setTimeout(function () {
+            doneTask.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "We should not time out");
+    
                 completeAsync();
-            }, 100);
+            });
         },
         whenAllShouldHaveAnErrorIfAnyIncludedTaskFaulted: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
@@ -18790,15 +19221,19 @@
             var tcs2 = new Bridge.TaskCompletionSource();
             var tcs3 = new Bridge.TaskCompletionSource();
             var tcs4 = new Bridge.TaskCompletionSource();
+    
             tcs1.task.continueWith(function (_) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
             });
+    
             tcs2.task.continueWith(function (_) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
             });
+    
             tcs3.task.continueWith(function (_) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
             });
+    
             tcs4.task.continueWith(function (_) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
             });
@@ -18807,7 +19242,8 @@
             var ex2 = new Bridge.Exception("exception 1");
     
             var task = Bridge.Task.whenAll(this.makeEnumerable(Bridge.Task)([Bridge.cast(tcs1.task, Bridge.Task), Bridge.cast(tcs2.task, Bridge.Task), Bridge.cast(tcs3.task, Bridge.Task), Bridge.cast(tcs4.task, Bridge.Task)]));
-            task.continueWith(function (t) {
+    
+            var doneTask = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should only be run once.");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(tcs1.task.status, Bridge.TaskStatus.ranToCompletion, "Task1 should have run to completion");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(tcs2.task.status, Bridge.TaskStatus.faulted, "Task2 should be faulted");
@@ -18832,10 +19268,11 @@
             tcs3.setException(ex2);
             tcs4.setCanceled();
     
-            Bridge.global.setTimeout(function () {
+            doneTask.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "We should not time out");
+    
                 completeAsync();
-            }, 100);
+            });
         },
         whenAllShouldBeCancelledIfNoTaskWasFaultedButSomeWasCancelled: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
@@ -18847,15 +19284,18 @@
             tcs1.task.continueWith(function (_) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
             });
+    
             tcs2.task.continueWith(function (_) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
             });
+    
             tcs3.task.continueWith(function (_) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
             });
     
             var task = Bridge.Task.whenAll(tcs1.task, tcs2.task, tcs3.task);
-            task.continueWith(function (t) {
+    
+            var doneTask = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should only be run once.");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(tcs1.task.status, Bridge.TaskStatus.canceled, "Task1 should be cancelled");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(tcs2.task.status, Bridge.TaskStatus.ranToCompletion, "Task2 should have run to completion");
@@ -18875,21 +19315,24 @@
             tcs1.setCanceled();
             tcs3.setResult(42);
     
-            Bridge.global.setTimeout(function () {
+            doneTask.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "We should not time out");
+    
                 completeAsync();
-            }, 100);
+            });
         },
         whenAnyParamArrayWithResultWorks: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
     
             var continuationRun = false;
+    
             var tcs1 = new Bridge.TaskCompletionSource();
             var tcs2 = new Bridge.TaskCompletionSource();
             var tcs3 = new Bridge.TaskCompletionSource();
     
             var task = Bridge.Task.whenAny(tcs1.task, tcs2.task, tcs3.task);
-            task.continueWith(function (t) {
+    
+            var task1 = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should only be run once.");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(tcs2.task.status, Bridge.TaskStatus.ranToCompletion, "Task2 should have run to completion");
     
@@ -18907,16 +19350,18 @@
     
             tcs2.setResult(3);
     
-            Bridge.global.setTimeout(function () {
+            var doneTask = task1.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "Continuation should be run immediately");
+    
                 tcs1.setResult(101);
                 tcs3.setResult(42);
-            }, 100);
+            });
     
-            Bridge.global.setTimeout(function () {
+            doneTask.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "We should not time out");
+    
                 completeAsync();
-            }, 200);
+            });
         },
         whenAnyEnumerableWithResultWorks: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
@@ -18927,7 +19372,8 @@
             var tcs3 = new Bridge.TaskCompletionSource();
     
             var task = Bridge.Task.whenAny(this.makeEnumerable(Bridge.Task)([tcs1.task, tcs2.task, tcs3.task]));
-            task.continueWith(function (t) {
+    
+            var task1 = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should only be run once.");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(tcs2.task.status, Bridge.TaskStatus.ranToCompletion, "Task2 should have run to completion");
     
@@ -18945,27 +19391,31 @@
     
             tcs2.setResult(3);
     
-            Bridge.global.setTimeout(function () {
+            var doneTask = task1.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "Continuation should be run immediately");
+    
                 tcs1.setResult(101);
                 tcs3.setResult(42);
-            }, 100);
+            });
     
-            Bridge.global.setTimeout(function () {
+            doneTask.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "We should not time out");
+    
                 completeAsync();
-            }, 200);
+            });
         },
         whenAnyParamArrayWithoutResultWorks: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
     
             var continuationRun = false;
+    
             var tcs1 = new Bridge.TaskCompletionSource();
             var tcs2 = new Bridge.TaskCompletionSource();
             var tcs3 = new Bridge.TaskCompletionSource();
     
             var task = Bridge.Task.whenAny(Bridge.cast(tcs1.task, Bridge.Task), Bridge.cast(tcs2.task, Bridge.Task), Bridge.cast(tcs3.task, Bridge.Task));
-            task.continueWith(function (t) {
+    
+            var task1 = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should only be run once.");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(tcs2.task.status, Bridge.TaskStatus.ranToCompletion, "Task2 should have run to completion");
     
@@ -18982,27 +19432,31 @@
     
             tcs2.setResult(3);
     
-            Bridge.global.setTimeout(function () {
+            var doneTask = task1.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "Continuation should be run immediately");
+    
                 tcs1.setResult(101);
                 tcs3.setResult(42);
-            }, 100);
+            });
     
-            Bridge.global.setTimeout(function () {
+            doneTask.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "We should not time out");
+    
                 completeAsync();
-            }, 200);
+            });
         },
         whenAnyEnumerableWithoutResultWorks: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
     
             var continuationRun = false;
+    
             var tcs1 = new Bridge.TaskCompletionSource();
             var tcs2 = new Bridge.TaskCompletionSource();
             var tcs3 = new Bridge.TaskCompletionSource();
     
             var task = Bridge.Task.whenAny(this.makeEnumerable(Bridge.Task)([Bridge.cast(tcs1.task, Bridge.Task), Bridge.cast(tcs2.task, Bridge.Task), Bridge.cast(tcs3.task, Bridge.Task)]));
-            task.continueWith(function (t) {
+    
+            var task1 = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should only be run once.");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(tcs2.task.status, Bridge.TaskStatus.ranToCompletion, "Task2 should have run to completion");
     
@@ -19019,28 +19473,32 @@
     
             tcs2.setResult(3);
     
-            Bridge.global.setTimeout(function () {
+            var doneTask = task1.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "Continuation should be run immediately");
+    
                 tcs1.setResult(101);
                 tcs3.setResult(42);
-            }, 100);
+            });
     
-            Bridge.global.setTimeout(function () {
+            doneTask.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "We should not time out");
+    
                 completeAsync();
-            }, 200);
+            });
         },
         whenAnyFaultsIfTheFirstTaskFaulted: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
     
             var continuationRun = false;
+    
             var tcs1 = new Bridge.TaskCompletionSource();
             var tcs2 = new Bridge.TaskCompletionSource();
             var tcs3 = new Bridge.TaskCompletionSource();
             var ex = new Bridge.Exception("Some text");
     
             var task = Bridge.Task.whenAny(this.makeEnumerable(Bridge.Task)([tcs1.task, tcs2.task, tcs3.task]));
-            task.continueWith(function (t) {
+    
+            var task1 = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should only be run once.");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(tcs2.task.status, Bridge.TaskStatus.faulted, "Task2 should have faulted");
     
@@ -19057,16 +19515,18 @@
     
             tcs2.setException(ex);
     
-            Bridge.global.setTimeout(function () {
+            var doneTask = task1.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "Continuation should be run immediately");
+    
                 tcs1.setResult(101);
                 tcs3.setResult(42);
-            }, 100);
+            });
     
-            Bridge.global.setTimeout(function () {
+            doneTask.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "We should not time out");
+    
                 completeAsync();
-            }, 200);
+            });
         },
         whenAnyIsCancelledIfTheFirstTaskWasCancelled: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
@@ -19077,7 +19537,8 @@
             var tcs3 = new Bridge.TaskCompletionSource();
     
             var task = Bridge.Task.whenAny(this.makeEnumerable(Bridge.Task)([tcs1.task, tcs2.task, tcs3.task]));
-            task.continueWith(function (t) {
+    
+            var task1 = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should only be run once.");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(tcs2.task.status, Bridge.TaskStatus.canceled, "Task2 should be cancelled");
     
@@ -19093,162 +19554,192 @@
     
             tcs2.setCanceled();
     
-            Bridge.global.setTimeout(function () {
+            var doneTask = task1.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "Continuation should be run immediately");
+    
                 tcs1.setResult(101);
                 tcs3.setResult(42);
-            }, 100);
+            });
     
-            Bridge.global.setTimeout(function () {
+            doneTask.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "We should not time out");
+    
                 completeAsync();
-            }, 200);
+            });
         },
         constructorWithOnlyActionWorks: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
     
             var taskRun = false, continuationRun = false;
+    
             var task = new Bridge.Task(function () {
                 taskRun = true;
             });
-            task.continueWith(function (t) {
+    
+            var task1 = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(taskRun, "Task should be run before continuation");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.ranToCompletion, "Task should have run to completion");
                 Bridge.get(Bridge.Test.Assert).true$1(!Bridge.hasValue(task.exception), "Exception should be null");
+    
                 continuationRun = true;
             });
     
             Bridge.get(Bridge.Test.Assert).areEqual(task.status, Bridge.TaskStatus.created);
     
-            Bridge.global.setTimeout(function () {
+            Bridge.Task.run(function () {
                 Bridge.get(Bridge.Test.Assert).false$1(taskRun, "Task should not be run before being started");
-                task.start();
-                Bridge.get(Bridge.Test.Assert).areEqual(task.status, Bridge.TaskStatus.running);
-            }, 100);
     
-            Bridge.global.setTimeout(function () {
+                task.start();
+    
+                Bridge.get(Bridge.Test.Assert).areEqual(task.status, Bridge.TaskStatus.running);
+            });
+    
+            task1.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "The continuation should be run");
                 completeAsync();
-            }, 200);
+            });
         },
         constructorWithActionAndStateWorks: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
     
             var taskRun = false, continuationRun = false;
             var state = { };
+    
             var task = new Bridge.Task(function (s) {
                 Bridge.get(Bridge.Test.Assert).true$1(state === s, "The state should be correct.");
                 taskRun = true;
             }, state);
-            task.continueWith(function (t) {
+    
+            var task1 = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(taskRun, "Task should be run before continuation");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.ranToCompletion, "Task should have run to completion");
                 Bridge.get(Bridge.Test.Assert).true$1(!Bridge.hasValue(task.exception), "Exception should be null");
+    
                 continuationRun = true;
             });
     
             Bridge.get(Bridge.Test.Assert).areEqual(task.status, Bridge.TaskStatus.created);
     
-            Bridge.global.setTimeout(function () {
+            Bridge.Task.run(function () {
                 Bridge.get(Bridge.Test.Assert).false$1(taskRun, "Task should not be run before being started");
-                task.start();
-                Bridge.get(Bridge.Test.Assert).areEqual(task.status, Bridge.TaskStatus.running);
-            }, 100);
     
-            Bridge.global.setTimeout(function () {
+                task.start();
+    
+                Bridge.get(Bridge.Test.Assert).areEqual(task.status, Bridge.TaskStatus.running);
+            });
+    
+            task1.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "The continuation should be run");
+    
                 completeAsync();
-            }, 200);
+            });
         },
         exceptionInManuallyCreatedTaskIsStoredOnTheTask: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
     
             var taskRun = false, continuationRun = false;
             var ex = new Bridge.Exception();
+    
             var task = new Bridge.Task(function () {
                 taskRun = true;
                 throw ex;
             });
-            task.continueWith(function (t) {
+    
+            var task1 = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(taskRun, "Task should be run before continuation");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.faulted, "Task should be faulted");
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(task.exception, Bridge.AggregateException), "Exception should be correct");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.exception.innerExceptions.getCount(), 1, "There should be one inner exception");
                 Bridge.get(Bridge.Test.Assert).true$1(task.exception.innerExceptions.get(0) === ex, "InnerException should be correct");
+    
                 continuationRun = true;
             });
     
             Bridge.get(Bridge.Test.Assert).areEqual(task.status, Bridge.TaskStatus.created);
     
-            Bridge.global.setTimeout(function () {
+            Bridge.Task.run(function () {
                 Bridge.get(Bridge.Test.Assert).false$1(taskRun, "Task should not be run before being started");
-                task.start();
-            }, 100);
     
-            Bridge.global.setTimeout(function () {
+                task.start();
+            });
+    
+            task1.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "The continuation should be run");
+    
                 completeAsync();
-            }, 200);
+            });
         },
         constructorWithOnlyFunctionWorks: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
     
             var taskRun = false, continuationRun = false;
+    
             var task = new Bridge.Task(function () {
                 taskRun = true;
                 return 42;
             });
-            task.continueWith(function (t) {
+    
+            var doneTask = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(taskRun, "Task should be run before continuation");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.ranToCompletion, "Task should have run to completion");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.getResult(), 42, "Result should be correct");
                 Bridge.get(Bridge.Test.Assert).true$1(!Bridge.hasValue(task.exception), "Exception should be null");
+    
                 continuationRun = true;
             });
     
             Bridge.get(Bridge.Test.Assert).areEqual(task.status, Bridge.TaskStatus.created);
     
-            Bridge.global.setTimeout(function () {
+            Bridge.Task.run(function () {
                 Bridge.get(Bridge.Test.Assert).false$1(taskRun, "Task should not be run before being started");
-                task.start();
-                Bridge.get(Bridge.Test.Assert).areEqual(task.status, Bridge.TaskStatus.running);
-            }, 100);
     
-            Bridge.global.setTimeout(function () {
+                task.start();
+    
+                Bridge.get(Bridge.Test.Assert).areEqual(task.status, Bridge.TaskStatus.running);
+            });
+    
+            doneTask.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "The continuation should be run");
+    
                 completeAsync();
-            }, 200);
+            });
         },
         constructorWithFunctionAndStateWorks: function () {
             var completeAsync = Bridge.get(Bridge.Test.Assert).async();
     
             var taskRun = false, continuationRun = false;
             var state = { };
+    
             var task = new Bridge.Task(function (s) {
                 Bridge.get(Bridge.Test.Assert).true$1(state === s, "The state should be correct.");
                 taskRun = true;
                 return 42;
             }, state);
-            task.continueWith(function (t) {
+    
+            var doneTask = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(taskRun, "Task should be run before continuation");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.status, Bridge.TaskStatus.ranToCompletion, "Task should have run to completion");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(task.getResult(), 42, "Result should be correct");
                 Bridge.get(Bridge.Test.Assert).true$1(!Bridge.hasValue(task.exception), "Exception should be null");
+    
                 continuationRun = true;
             });
     
             Bridge.get(Bridge.Test.Assert).areEqual(task.status, Bridge.TaskStatus.created);
     
-            Bridge.global.setTimeout(function () {
+            Bridge.Task.run(function () {
                 Bridge.get(Bridge.Test.Assert).false$1(taskRun, "Task should not be run before being started");
-                task.start();
-                Bridge.get(Bridge.Test.Assert).areEqual(task.status, Bridge.TaskStatus.running);
-            }, 100);
     
-            Bridge.global.setTimeout(function () {
+                task.start();
+    
+                Bridge.get(Bridge.Test.Assert).areEqual(task.status, Bridge.TaskStatus.running);
+            });
+    
+            doneTask.continueWith(function (x) {
                 Bridge.get(Bridge.Test.Assert).true$1(continuationRun, "The continuation should be run");
+    
                 completeAsync();
-            }, 200);
+            });
         }
     });
     
