@@ -35,6 +35,23 @@ namespace Bridge.Translator
         {
             IfElseStatement ifElseStatement = this.IfElseStatement;
 
+            var awaiters = this.GetAwaiters(ifElseStatement);
+
+            if (awaiters == null || awaiters.Length == 0)
+            {
+                this.WriteIf();
+                this.WriteOpenParentheses();
+                ifElseStatement.Condition.AcceptVisitor(this.Emitter);
+                this.WriteCloseParentheses();
+                this.EmitBlockOrIndentedLine(ifElseStatement.TrueStatement);
+                if (ifElseStatement.FalseStatement != null && !ifElseStatement.FalseStatement.IsNull)
+                {
+                    this.WriteElse();
+                    this.EmitBlockOrIndentedLine(ifElseStatement.FalseStatement);
+                }
+                return;
+            }
+
             this.WriteAwaiters(ifElseStatement.Condition);
 
             this.WriteIf();

@@ -25,7 +25,7 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new NotImplementedException();
             Assert.True((object)ex is NotImplementedException, "is NotImplementedException");
-            Assert.AreEqual(ex.InnerException, Script.Undefined, "InnerException");
+            Assert.AreEqual(ex.InnerException, null, "InnerException");
             Assert.AreEqual(ex.Message, "The method or operation is not implemented.");
         }
 
@@ -34,7 +34,7 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new NotImplementedException("The message");
             Assert.True((object)ex is NotImplementedException, "is NotImplementedException");
-            Assert.AreEqual(ex.InnerException, Script.Undefined, "InnerException");
+            Assert.AreEqual(ex.InnerException, null, "InnerException");
             Assert.AreEqual(ex.Message, "The message");
         }
 

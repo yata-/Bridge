@@ -447,6 +447,47 @@
                     array[i] = newarray[i-index];
                 }
             }
+        },
+
+        min: function(arr, minValue) {
+            var min = arr[0],
+                len = arr.length;
+            for (var i = 0; i < len; i++) {
+                if ((arr[i] < min || min < minValue) && !(arr[i] < minValue)) {
+                    min = arr[i];
+                }
+            }
+            return min;
+        },
+
+        max: function (arr, maxValue) {
+            var max =  arr[0],
+                len = arr.length;
+            for (var i = 0; i < len; i++) {
+                if ((arr[i] > max || max > maxValue) && !(arr[i] > maxValue)) {
+                    max = arr[i];
+                }
+            }
+            return max;
+        },
+
+        addRange: function (arr, items) {
+            if (Bridge.isArray(items)) {
+                arr.push.apply(arr, items);
+            }
+            else {
+                var e = Bridge.getEnumerator(items);
+                try {
+                    while (e.moveNext()) {
+                        arr.push(e.getCurrent());
+                    }
+                }
+                finally {
+                    if (Bridge.is(e, Bridge.IDisposable)) {
+                        e.dispose();
+                    }
+                }
+            }
         }
     };
 

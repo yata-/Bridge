@@ -41,7 +41,7 @@ namespace Bridge.Translator
                     }
                     else
                     {
-                        this.Write("$returnTask.setResult(");
+                        this.Write("$tcs.setResult(");
                     }
 
                     if (!returnStatement.Expression.IsNull)

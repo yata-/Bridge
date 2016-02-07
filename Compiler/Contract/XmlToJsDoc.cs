@@ -134,7 +134,15 @@ namespace Bridge.Contract
                 xml.Append("</comment>");
 
                 var doc = new System.Xml.XmlDocument();
-                doc.LoadXml(xml.ToString());
+
+                try
+                {
+                    doc.LoadXml(xml.ToString());    
+                }
+                catch (XmlException)
+                {
+                    return "";
+                }
 
                 foreach (XmlNode node in doc.GetElementsByTagName("summary"))
                 {

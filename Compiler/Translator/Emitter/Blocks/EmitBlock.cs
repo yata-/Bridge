@@ -156,6 +156,8 @@ namespace Bridge.Translator
                 this.Emitter.Outputs.Add(fileName, output);
             }
 
+            this.Emitter.EmitterOutput = output;
+
             if (module == null)
             {
                 return output.NonModuletOutput;

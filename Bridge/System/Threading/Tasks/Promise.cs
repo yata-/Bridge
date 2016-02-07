@@ -15,6 +15,22 @@ namespace System.Threading.Tasks
         /// </summary>
         /// <param name="fulfilledHandler">The fulfilledHandler is called when the promise is fulfilled</param>
         /// <param name="errorHandler">The errorHandler is called when a promise fails.</param>
-        void Then(Delegate fulfilledHandler, Delegate errorHandler);
+        /// <param name="progressHandler"></param>
+        void Then(Delegate fulfilledHandler, Delegate errorHandler = null, Delegate progressHandler = null);
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [External]
+    public static class PromiseExtensions 
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="promise"></param>
+        /// <returns></returns>
+        [Template("Bridge.Task.fromPromise({promise})")]
+		public static extern TaskAwaiter<object[]> GetAwaiter(this IPromise promise);
+	}
 }

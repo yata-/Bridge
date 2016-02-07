@@ -180,6 +180,9 @@ namespace Bridge.Translator
             set;
         }
 
+        /// <summary>
+        /// Indicates whether strict mode and global header will be added to generated script files
+        /// </summary>
         public bool NoStrictModeAndGlobal
         {
             get;

@@ -1,11 +1,13 @@
 ﻿/* global Bridge */
 
-"use strict";
+(function (globals) {
+    "use strict";
 
-Bridge.define('Test1.A1');
-
-Bridge.define('Test1.B1');
-
-
-
-Bridge.init();
+    Bridge.define('Test1.A1');
+    
+    Bridge.define('Test1.B1');
+    
+    
+    
+    Bridge.init();
+})(this);

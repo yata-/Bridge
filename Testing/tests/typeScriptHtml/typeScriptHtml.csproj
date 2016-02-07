@@ -85,7 +85,7 @@
     <NoWarn>2008</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
+    <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
     <TypeScriptSourceMap>false</TypeScriptSourceMap>
     <TypeScriptOutDir>..\..\www\typescript</TypeScriptOutDir>
     <NoWarn>2008</NoWarn>

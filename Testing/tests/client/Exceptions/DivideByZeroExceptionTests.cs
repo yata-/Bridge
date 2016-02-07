@@ -25,7 +25,7 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new DivideByZeroException();
             Assert.True((object)ex is DivideByZeroException, "is DivideByZeroException");
-            Assert.AreEqual(ex.InnerException, Script.Undefined, "InnerException");
+            Assert.AreEqual(ex.InnerException, null, "InnerException");
             Assert.AreEqual(ex.Message, "Division by 0.");
         }
 
@@ -34,7 +34,7 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new DivideByZeroException("The message");
             Assert.True((object)ex is DivideByZeroException, "is DivideByZeroException");
-            Assert.AreEqual(ex.InnerException, Script.Undefined, "InnerException");
+            Assert.AreEqual(ex.InnerException, null, "InnerException");
             Assert.AreEqual(ex.Message, "The message");
         }
 
