@@ -5080,10 +5080,10 @@
                 var span2 = new Bridge.TimeSpan(0, 7, 0);
                 var i = 1;
     
-                var d1 = new Date(new Date(date - new Date((span1).ticks / 10000)) - new Date((span2).ticks / 10000));
+                var d1 = Bridge.Date.subdt(Bridge.Date.subdt(date, span1), span2);
                 Bridge.get(Bridge.Test.Assert).areEqual$1(d1.getMinutes(), 38, "Bridge546 d1");
     
-                var d2 = new Date(new Date(date.getTime() + ((span1).ticks / 10000)).getTime() + ((span2).ticks / 10000));
+                var d2 = Bridge.Date.adddt(Bridge.Date.adddt(date, span1), span2);
                 Bridge.get(Bridge.Test.Assert).areEqual$1(d2.getMinutes(), 22, "Bridge546 d2");
     
                 var d3 = new Date(date.valueOf() + Math.round((10 + 20 * i) * 864e5));
@@ -5851,16 +5851,16 @@
                 var date2 = new Date(Date.UTC(1996, 12 - 1, 6, 13, 2, 0));
                 var date3 = new Date(Date.UTC(1996, 10 - 1, 12, 8, 42, 0));
     
-                var diff1 = new Bridge.TimeSpan((date2 - date1) * 10000);
+                var diff1 = Bridge.Date.subdd(date2, date1);
                 Bridge.get(Bridge.Test.Assert).true$1(diff1.equalsT(new Bridge.TimeSpan(185, 14, 47, 0)), "Bridge582 TestSubtractTimeSpan diff1");
     
                 var date4 = new Date(date3 - new Date((diff1).ticks / 10000));
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.equalsT(date4, new Date(Date.UTC(1996, 4 - 1, 9, 17, 55, 0))), "Bridge582 TestSubtractTimeSpan date4");
     
-                var diff2 = new Bridge.TimeSpan((date2 - date3) * 10000);
+                var diff2 = Bridge.Date.subdd(date2, date3);
                 Bridge.get(Bridge.Test.Assert).true$1(diff2.equalsT(new Bridge.TimeSpan(55, 4, 20, 0)), "Bridge582 TestSubtractTimeSpan diff2");
     
-                var date5 = new Date(date1 - new Date((diff2).ticks / 10000));
+                var date5 = Bridge.Date.subdt(date1, diff2);
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.equalsT(date5, new Date(Date.UTC(1996, 4 - 1, 9, 17, 55, 0))), "Bridge582 TestSubtractTimeSpan date5");
             },
             testTimeOfDay: function () {
@@ -8093,6 +8093,18 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge913', {
+        statics: {
+            testNullableDateTimeGreaterThanWorks: function () {
+                var a = new Date();
+                var b = null;
+    
+                Bridge.get(Bridge.Test.Assert).false$1(Bridge.Date.gt(a, b), "Bridge913 gt");
+                Bridge.get(Bridge.Test.Assert).false$1(Bridge.Date.lt(a, b), "Bridge913 lt");
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Class65_2', {
         inherits: [Bridge.ClientTest.BridgeIssues.Class65_1.Nested]
     });
@@ -9990,7 +10002,7 @@
             watch.start();
             var before = new Date();
             var hasIncreased = false;
-            while ((new Bridge.TimeSpan((new Date() - before) * 10000)).ticks < Bridge.TimeSpan.fromMilliseconds(200).ticks) {
+            while (Bridge.TimeSpan.lt((Bridge.Date.subdd(new Date(), before)), Bridge.TimeSpan.fromMilliseconds(200))) {
                 if (watch.ticks() > 0) {
                     hasIncreased = true;
                 }
@@ -9998,7 +10010,7 @@
             watch.stop();
             Bridge.get(Bridge.Test.Assert).true$1(hasIncreased, "Times should increase inside the loop");
             Bridge.get(Bridge.Test.Assert).true$1(watch.milliseconds() > 150, "ElapsedMilliseconds");
-            Bridge.get(Bridge.Test.Assert).true$1(watch.timeSpan().ticks === new Bridge.TimeSpan(0, 0, 0, 0, Bridge.cast(watch.milliseconds(), Bridge.Int)).ticks, "Elapsed");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.TimeSpan.eq(watch.timeSpan(), new Bridge.TimeSpan(0, 0, 0, 0, Bridge.cast(watch.milliseconds(), Bridge.Int))), "Elapsed");
             var value = Bridge.cast(watch.ticks(), Number) / Bridge.Stopwatch.frequency;
             Bridge.get(Bridge.Test.Assert).true$1(value > 0.15 && value < 0.25, "Ticks");
         },
@@ -10007,7 +10019,7 @@
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(t1, Bridge.Int), "is long");
     
             var before = new Date();
-            while ((new Bridge.TimeSpan((new Date() - before) * 10000)).ticks < Bridge.TimeSpan.fromMilliseconds(50).ticks) {
+            while (Bridge.TimeSpan.lt((Bridge.Date.subdd(new Date(), before)), Bridge.TimeSpan.fromMilliseconds(50))) {
             }
             var t2 = Bridge.Stopwatch.getTimestamp();
             Bridge.get(Bridge.Test.Assert).true$1(t2 > t1, "Should increase");
@@ -14765,7 +14777,7 @@
         uTCNowWorks: function () {
             var UTC = Bridge.Date.utcNow();
             var local = new Date();
-            Bridge.get(Bridge.Test.Assert).$true(Math.abs((new Bridge.TimeSpan((new Date(local.getUTCFullYear(), (local.getUTCMonth() + 1) - 1, local.getUTCDate(), local.getUTCHours(), local.getUTCMinutes(), local.getUTCSeconds(), local.getUTCMilliseconds()) - UTC) * 10000)).getTotalMinutes()) < 1000);
+            Bridge.get(Bridge.Test.Assert).$true(Math.abs((Bridge.Date.subdd(new Date(local.getUTCFullYear(), (local.getUTCMonth() + 1) - 1, local.getUTCDate(), local.getUTCHours(), local.getUTCMinutes(), local.getUTCSeconds(), local.getUTCMilliseconds()), UTC)).getTotalMinutes()) < 1000);
         },
         toUniversalWorks: function () {
             var dt = new Date(2011, 7 - 1, 12, 13, 42, 56, 345);
@@ -14948,12 +14960,12 @@
             Bridge.get(Bridge.Test.Assert).areEqual(dt.getUTCMilliseconds(), milliseconds);
         },
         subtractingDatesWorks: function () {
-            var ts = new Bridge.TimeSpan((new Date(2011, 7 - 1, 12) - new Date(2011, 7 - 1, 11)) * 10000);
+            var ts = Bridge.Date.subdd(new Date(2011, 7 - 1, 12), new Date(2011, 7 - 1, 11));
             Bridge.get(Bridge.Test.Assert).areEqual(ts.getTotalMilliseconds(), 86400000);
         },
         subtractMethodReturningTimeSpanWorks: function () {
-            Bridge.get(Bridge.Test.Assert).areDeepEqual(new Bridge.TimeSpan((new Date(2011, 6 - 1, 12) - new Date(2011, 6 - 1, 11)) * 10000), new Bridge.TimeSpan(1, 0, 0, 0));
-            Bridge.get(Bridge.Test.Assert).areDeepEqual(new Bridge.TimeSpan((new Date(2011, 6 - 1, 12, 15, 0, 0) - new Date(2011, 6 - 1, 11, 13, 0, 0)) * 10000), new Bridge.TimeSpan(1, 2, 0, 0));
+            Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.Date.subdd(new Date(2011, 6 - 1, 12), new Date(2011, 6 - 1, 11)), new Bridge.TimeSpan(1, 0, 0, 0));
+            Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.Date.subdd(new Date(2011, 6 - 1, 12, 15, 0, 0), new Date(2011, 6 - 1, 11, 13, 0, 0)), new Bridge.TimeSpan(1, 2, 0, 0));
         },
         dateEqualityWorks: function () {
             Bridge.get(Bridge.Test.Assert).$true(Bridge.equals(new Date(2011, 7 - 1, 12), new Date(2011, 7 - 1, 12)));
@@ -14970,24 +14982,24 @@
             Bridge.get(Bridge.Test.Assert).areStrictEqual(!Bridge.equals(null, null), false);
         },
         dateLessThanWorks: function () {
-            Bridge.get(Bridge.Test.Assert).$true(new Date(2011, 7 - 1, 11) < new Date(2011, 7 - 1, 12));
-            Bridge.get(Bridge.Test.Assert).$false(new Date(2011, 7 - 1, 12) < new Date(2011, 7 - 1, 12));
-            Bridge.get(Bridge.Test.Assert).$false(new Date(2011, 7 - 1, 13) < new Date(2011, 7 - 1, 12));
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Date.lt(new Date(2011, 7 - 1, 11), new Date(2011, 7 - 1, 12)));
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.Date.lt(new Date(2011, 7 - 1, 12), new Date(2011, 7 - 1, 12)));
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.Date.lt(new Date(2011, 7 - 1, 13), new Date(2011, 7 - 1, 12)));
         },
         dateLessEqualWorks: function () {
-            Bridge.get(Bridge.Test.Assert).$true(new Date(2011, 7 - 1, 11) <= new Date(2011, 7 - 1, 12));
-            Bridge.get(Bridge.Test.Assert).$true(new Date(2011, 7 - 1, 12) <= new Date(2011, 7 - 1, 12));
-            Bridge.get(Bridge.Test.Assert).$false(new Date(2011, 7 - 1, 13) <= new Date(2011, 7 - 1, 12));
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Date.lte(new Date(2011, 7 - 1, 11), new Date(2011, 7 - 1, 12)));
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Date.lte(new Date(2011, 7 - 1, 12), new Date(2011, 7 - 1, 12)));
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.Date.lte(new Date(2011, 7 - 1, 13), new Date(2011, 7 - 1, 12)));
         },
         dateGreaterThanWorks: function () {
-            Bridge.get(Bridge.Test.Assert).$false(new Date(2011, 7 - 1, 11) > new Date(2011, 7 - 1, 12));
-            Bridge.get(Bridge.Test.Assert).$false(new Date(2011, 7 - 1, 12) > new Date(2011, 7 - 1, 12));
-            Bridge.get(Bridge.Test.Assert).$true(new Date(2011, 7 - 1, 13) > new Date(2011, 7 - 1, 12));
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.Date.gt(new Date(2011, 7 - 1, 11), new Date(2011, 7 - 1, 12)));
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.Date.gt(new Date(2011, 7 - 1, 12), new Date(2011, 7 - 1, 12)));
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Date.gt(new Date(2011, 7 - 1, 13), new Date(2011, 7 - 1, 12)));
         },
         dateGreaterEqualWorks: function () {
-            Bridge.get(Bridge.Test.Assert).$false(new Date(2011, 7 - 1, 11) >= new Date(2011, 7 - 1, 12));
-            Bridge.get(Bridge.Test.Assert).$true(new Date(2011, 7 - 1, 12) >= new Date(2011, 7 - 1, 12));
-            Bridge.get(Bridge.Test.Assert).$true(new Date(2011, 7 - 1, 13) >= new Date(2011, 7 - 1, 12));
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.Date.gte(new Date(2011, 7 - 1, 11), new Date(2011, 7 - 1, 12)));
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Date.gte(new Date(2011, 7 - 1, 12), new Date(2011, 7 - 1, 12)));
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Date.gte(new Date(2011, 7 - 1, 13), new Date(2011, 7 - 1, 12)));
         },
         getHashCodeWorks: function () {
             Bridge.get(Bridge.Test.Assert).areEqual(Bridge.getHashCode(new Date(0)), Bridge.getHashCode(new Date(0)));
@@ -16447,55 +16459,55 @@
             var time3 = new Bridge.TimeSpan(14, 10, 20, 5, 14);
             var time4 = new Bridge.TimeSpan(15, 11, 20, 5, 14);
     
-            Bridge.get(Bridge.Test.Assert).false$1(time1.ticks > time2.ticks, "> 1");
-            Bridge.get(Bridge.Test.Assert).true$1(time1.ticks > time3.ticks, "> 2");
-            Bridge.get(Bridge.Test.Assert).false$1(time1.ticks > time4.ticks, "> 3");
+            Bridge.get(Bridge.Test.Assert).false$1(Bridge.TimeSpan.gt(time1, time2), "> 1");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.TimeSpan.gt(time1, time3), "> 2");
+            Bridge.get(Bridge.Test.Assert).false$1(Bridge.TimeSpan.gt(time1, time4), "> 3");
     
-            Bridge.get(Bridge.Test.Assert).true$1(time1.ticks >= time2.ticks, ">= 1");
-            Bridge.get(Bridge.Test.Assert).true$1(time1.ticks >= time3.ticks, ">= 2");
-            Bridge.get(Bridge.Test.Assert).false$1(time1.ticks >= time4.ticks, ">= 3");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.TimeSpan.gte(time1, time2), ">= 1");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.TimeSpan.gte(time1, time3), ">= 2");
+            Bridge.get(Bridge.Test.Assert).false$1(Bridge.TimeSpan.gte(time1, time4), ">= 3");
     
-            Bridge.get(Bridge.Test.Assert).false$1(time1.ticks < time2.ticks, "< 1");
-            Bridge.get(Bridge.Test.Assert).false$1(time1.ticks < time3.ticks, "< 2");
-            Bridge.get(Bridge.Test.Assert).true$1(time1.ticks < time4.ticks, "< 3");
+            Bridge.get(Bridge.Test.Assert).false$1(Bridge.TimeSpan.lt(time1, time2), "< 1");
+            Bridge.get(Bridge.Test.Assert).false$1(Bridge.TimeSpan.lt(time1, time3), "< 2");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.TimeSpan.lt(time1, time4), "< 3");
     
-            Bridge.get(Bridge.Test.Assert).true$1(time1.ticks <= time2.ticks, "<= 1");
-            Bridge.get(Bridge.Test.Assert).false$1(time1.ticks <= time3.ticks, "<= 2");
-            Bridge.get(Bridge.Test.Assert).true$1(time1.ticks <= time4.ticks, "<= 3");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.TimeSpan.lte(time1, time2), "<= 1");
+            Bridge.get(Bridge.Test.Assert).false$1(Bridge.TimeSpan.lte(time1, time3), "<= 2");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.TimeSpan.lte(time1, time4), "<= 3");
     
-            Bridge.get(Bridge.Test.Assert).true$1(time1.ticks === time1.ticks, "== 1");
-            Bridge.get(Bridge.Test.Assert).true$1(time1.ticks === time2.ticks, "== 2");
-            Bridge.get(Bridge.Test.Assert).false$1(time1.ticks === time3.ticks, "== 3");
-            Bridge.get(Bridge.Test.Assert).false$1(time1.ticks === time4.ticks, "== 4");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.TimeSpan.eq(time1, time1), "== 1");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.TimeSpan.eq(time1, time2), "== 2");
+            Bridge.get(Bridge.Test.Assert).false$1(Bridge.TimeSpan.eq(time1, time3), "== 3");
+            Bridge.get(Bridge.Test.Assert).false$1(Bridge.TimeSpan.eq(time1, time4), "== 4");
     
-            Bridge.get(Bridge.Test.Assert).false$1(time1.ticks !== time1.ticks, "!= 1");
-            Bridge.get(Bridge.Test.Assert).false$1(time1.ticks !== time2.ticks, "!= 2");
-            Bridge.get(Bridge.Test.Assert).true$1(time1.ticks !== time3.ticks, "!= 3");
-            Bridge.get(Bridge.Test.Assert).true$1(time1.ticks !== time4.ticks, "!= 4");
+            Bridge.get(Bridge.Test.Assert).false$1(Bridge.TimeSpan.neq(time1, time1), "!= 1");
+            Bridge.get(Bridge.Test.Assert).false$1(Bridge.TimeSpan.neq(time1, time2), "!= 2");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.TimeSpan.neq(time1, time3), "!= 3");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.TimeSpan.neq(time1, time4), "!= 4");
         },
         additionOperatorWorks: function () {
             var time1 = new Bridge.TimeSpan(2, 3, 4, 5, 6);
             var time2 = new Bridge.TimeSpan(3, 4, 5, 6, 7);
-            var actual = new Bridge.TimeSpan(time1.ticks + time2.ticks);
+            var actual = Bridge.TimeSpan.add(time1, time2);
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(actual, Bridge.TimeSpan), "Should be TimeSpan");
             Bridge.get(Bridge.Test.Assert).areEqual$1(actual.getTotalMilliseconds(), 457751013, "TotalMilliseconds should be correct");
         },
         subtractionOperatorWorks: function () {
             var time1 = new Bridge.TimeSpan(4, 3, 7, 2, 6);
             var time2 = new Bridge.TimeSpan(3, 4, 5, 6, 7);
-            var actual = new Bridge.TimeSpan(time1.ticks - time2.ticks);
+            var actual = Bridge.TimeSpan.sub(time1, time2);
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(actual, Bridge.TimeSpan), "Should be TimeSpan");
             Bridge.get(Bridge.Test.Assert).areEqual$1(actual.getTotalMilliseconds(), 82915999, "TotalMilliseconds should be correct");
         },
         unaryPlusWorks: function () {
             var time = new Bridge.TimeSpan(-3, 2, -1, 5, -4);
-            var actual = new Bridge.TimeSpan(time.ticks);
+            var actual = Bridge.TimeSpan.plus(time);
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(actual, Bridge.TimeSpan), "Should be TimeSpan");
             Bridge.get(Bridge.Test.Assert).areEqual$1(actual.getTotalMilliseconds(), -252055004, "Ticks should be correct");
         },
         unaryMinusWorks: function () {
             var time = new Bridge.TimeSpan(-3, 2, -1, 5, -4);
-            var actual = new Bridge.TimeSpan(-time.ticks);
+            var actual = Bridge.TimeSpan.neg(time);
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(actual, Bridge.TimeSpan), "Should be TimeSpan");
             Bridge.get(Bridge.Test.Assert).areEqual$1(actual.getTotalMilliseconds(), 252055004, "Ticks should be correct");
         }

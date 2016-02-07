@@ -3647,6 +3647,32 @@
         }
     });
     
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge913', {
+        statics: {
+            instance: null,
+            getInstance: function () {
+                if (!Bridge.hasValue(Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge913).instance)) {
+                    Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge913).instance = new Bridge.ClientTest.BridgeIssues.Bridge913();
+                }
+                return Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge913).instance;
+            },
+            setInstance: function (value) {
+                Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge913).instance = value;
+            },
+            beforeTest: function (isStatic, assert) {
+                Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge913).setInstance(null);
+                Bridge.get(Bridge.Test.Assert).assert = assert;
+                var r = isStatic ? null : Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge913).getInstance();
+                return r;
+            },
+            testNullableDateTimeGreaterThanWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge913).beforeTest(true, assert);
+                assert.expect(2);
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge913).testNullableDateTimeGreaterThanWorks();
+            }
+        }
+    });
+    
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesTestBridgeIssues', {
         statics: {
             instance: null,
@@ -10381,6 +10407,7 @@
                 QUnit.test("#906 - TestIfElseAsyncMethod", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge906).testIfElseAsyncMethod);
                 QUnit.test("#907 - TestStringSpitWithNullParameterFixed", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge907).testStringSpitWithNullParameterFixed);
                 QUnit.test("#912 - TestAsyncMethodInBlock", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge912).testAsyncMethodInBlock);
+                QUnit.test("#913 - TestNullableDateTimeGreaterThanWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge913).testNullableDateTimeGreaterThanWorks);
                 QUnit.test("#522 - TestUseCase1", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge522).testUseCase1);
                 QUnit.test("#522 - TestUseCase2", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge522).testUseCase2);
                 QUnit.test("#537 - TestUseCase", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssuesBridge537).testUseCase);
