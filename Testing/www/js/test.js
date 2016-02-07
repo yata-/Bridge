@@ -8552,12 +8552,12 @@
             },
             completingPromiseCanBeAwaited: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingPromiseTests).beforeTest(false, assert);
-                assert.expect(2);
+                assert.expect(3);
                 t.completingPromiseCanBeAwaited();
             },
             failingPromiseCanBeAwaited: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ThreadingPromiseTests).beforeTest(false, assert);
-                assert.expect(3);
+                assert.expect(4);
                 t.failingPromiseCanBeAwaited();
             }
         }
