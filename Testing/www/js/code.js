@@ -8105,6 +8105,17 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge922', {
+        statics: {
+            testLinqDecimal: function () {
+                var a = [Bridge.Decimal(1.0), Bridge.Decimal(2.0), Bridge.Decimal(3.0)];
+    
+                Bridge.get(Bridge.Test.Assert).$true(Bridge.Linq.Enumerable.from(a).average().equalsT(Bridge.Decimal(2)));
+                Bridge.get(Bridge.Test.Assert).$true(Bridge.Linq.Enumerable.from(a).sum().equalsT(Bridge.Decimal(6)));
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Class65_2', {
         inherits: [Bridge.ClientTest.BridgeIssues.Class65_1.Nested]
     });
