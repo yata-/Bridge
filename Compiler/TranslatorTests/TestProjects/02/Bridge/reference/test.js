@@ -544,6 +544,9 @@
         equals: function (a, b) {
             if (a && Bridge.isFunction(a.equals) && a.equals.length === 1) {
                 return a.equals(b);
+            }
+            if (b && Bridge.isFunction(b.equals) && b.equals.length === 1) {
+                return a.equals(b);
             } else if (Bridge.isDate(a) && Bridge.isDate(b)) {
                 return a.valueOf() === b.valueOf();
             } else if (Bridge.isNull(a) && Bridge.isNull(b)) {
@@ -634,11 +637,19 @@
                 return Bridge.compare(a.valueOf(), b.valueOf());
             }
 
-            if (safe && !a.compareTo) {
+            if (Bridge.isFunction(a.compareTo)) {
+                return a.compareTo(b);
+            }
+
+            if (Bridge.isFunction(b.compareTo)) {
+                return -b.compareTo(a);
+            }
+
+            if (safe) {
                 return 0;
             }
 
-            return a.compareTo(b);
+            throw new Bridge.Exception("Cannot compare items");
         },
 
         equalsT: function (a, b) {
@@ -650,7 +661,7 @@
                 return a.valueOf() === b.valueOf();
             }
 
-            return a.equalsT(b);
+            return a.equalsT ? a.equalsT(b) : b.equalsT(a);
         },
 
         format: function (obj, formatString) {
@@ -10000,11 +10011,21 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         var sum = 0;
         var count = 0;
         this.forEach(function (x) {
-            sum += selector(x);
+            x = selector(x);
+
+            if (x instanceof Bridge.Decimal) {
+                sum = x.add(sum);
+            }
+            else if (sum instanceof Bridge.Decimal) {
+                sum = sum.add(x);
+            } else {
+                sum += x;
+            }
+            
             ++count;
         });
 
-        return sum / count;
+        return sum instanceof Bridge.Decimal ? sum.div(count) : (sum / count);
     };
 
     Enumerable.prototype.nullableAverage = function (selector) {
@@ -10079,7 +10100,15 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
     // Overload:function (selector)
     Enumerable.prototype.sum = function (selector) {
         if (selector == null) selector = Functions.Identity;
-        return this.select(selector).aggregate(0, function (a, b) { return a + b; });
+        return this.select(selector).aggregate(0, function(a, b) {
+             if (a instanceof Bridge.Decimal) {
+                 return a.add(b);
+             }
+             if (b instanceof Bridge.Decimal) {
+                 return b.add(a);
+             }
+             return a + b;
+        });
     };
 
     Enumerable.prototype.nullableSum = function (selector) {
