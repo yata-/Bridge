@@ -7023,7 +7023,7 @@
     
                 //These arrays do not depend on "useTypedArray" bridge.json option
                 var stringArray = Bridge.Array.init(9, null);
-                var decimalArray = Bridge.Array.init(10, 0);
+                var decimalArray = Bridge.Array.init(10, Bridge.Decimal(0.0));
     
                 byteArray[0] = 1;
                 sbyteArray[0] = 2;
@@ -8192,6 +8192,19 @@
     
                 Bridge.get(Bridge.Test.Assert).$true(Bridge.Linq.Enumerable.from(a).average().equalsT(Bridge.Decimal(2)));
                 Bridge.get(Bridge.Test.Assert).$true(Bridge.Linq.Enumerable.from(a).sum().equalsT(Bridge.Decimal(6)));
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge933', {
+        statics: {
+            isRunning: false,
+            testLinqDecimal: function () {
+                if (Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge933).isRunning) {
+                    Bridge.get(Bridge.Test.Assert).fail$1("IsRunning must be false");
+                }
+    
+                Bridge.get(Bridge.Test.Assert).$false(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge933).isRunning);
             }
         }
     });
