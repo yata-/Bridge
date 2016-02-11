@@ -390,5 +390,11 @@ namespace Bridge.Contract
             get;
             set;
         }
+
+        string CatchBlockVariable
+        {
+            get; 
+            set;
+        }
     }
 }

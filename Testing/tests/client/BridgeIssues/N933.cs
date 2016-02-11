@@ -1,6 +1,4 @@
 using System;
-using System.Linq;
-using Bridge.Html5;
 using Bridge.Test;
 #pragma warning disable 649
 
@@ -14,7 +12,7 @@ namespace Bridge.ClientTest.BridgeIssues
         private static Boolean IsRunning;
 
         [Test(ExpectedCount = 1)]
-        public static void TestLinqDecimal()
+        public static void TestBooleanInIfStatement()
         {
             if (Bridge933.IsRunning)
             {
