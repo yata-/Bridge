@@ -3,6 +3,334 @@
 (function (globals) {
     "use strict";
 
+    Bridge.define('Bridge.ClientTest.BasicCSharp.TestAbstractClass.A', {
+        config: {
+            properties: {
+                Data: 0
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BasicCSharp.TestInheritance.A', {
+        config: {
+            properties: {
+                X: 0
+            }
+        },
+        constructor: function (x) {
+            this.setX(x);
+        },
+        handleNumber: function (i) {
+            return i;
+        },
+        handleString: function (s) {
+            return s;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BasicCSharp.TestInterfaces.ISimple');
+    
+    Bridge.define('Bridge.ClientTest.BasicCSharp.TestInterfaces.ISimpleAsWell');
+    
+    Bridge.define('Bridge.ClientTest.BasicCSharp.TestVirtualMethods.A', {
+        test: function () {
+            return "A";
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge240A', {
+        config: {
+            properties: {
+                Data: 0
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.IBridge304');
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge306A.Props', {
+        name: null,
+        toString: function () {
+            return this.name;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge306Component$1', function (TProps) { return {
+        statics: {
+            $new: function (TComponent) {
+                return Bridge.fn.bind(this, function (props) {
+                    return Bridge.getTypeName(props) + ":" + props;
+                });
+            }
+        }
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge306B.Props', {
+        name: null,
+        toString: function () {
+            return this.name;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge436First', {
+        toObject: function () {
+            return "1";
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge522.BaseClass', {
+        config: {
+            init: function () {
+                this.values = new Bridge.List$1(Bridge.Int)();
+            }
+        },
+        addValue: function (a) {
+            this.values.add(a);
+        },
+        getValues: function () {
+            return this.values;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge537A', {
+        id: 0
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge558A', {
+        zz: function (a) {
+            return 1;
+        },
+        zz$1: function (a) {
+            return 2;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge559A1', {
+        result: "",
+        constructor: function () {
+            this.result += " -> Bridge559A1";
+        },
+        constructor$1: function (a) {
+            Bridge.ClientTest.BridgeIssues.Bridge559A1.prototype.$constructor.call(this);
+    
+            this.result += " -> Bridge559A1$1";
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge559A2', {
+        result: "",
+        constructor: function () {
+            this.result += " ClassA";
+        },
+        constructor$1: function (a) {
+            Bridge.ClientTest.BridgeIssues.Bridge559A2.prototype.$constructor.call(this);
+    
+            this.result += " ClassA$1";
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge566A', {
+        config: {
+            properties: {
+                Data: null
+            }
+        },
+        constructor: function () {
+            this.setData(this.getName());
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge623A', {
+        foo: 0,
+        func: null,
+        constructor: function (foo, func) {
+            this.foo = foo;
+            this.func = func;
+        },
+        call: function () {
+            return this.func();
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge635A', {
+        internalFunc1: function () {
+            return "A.Test1";
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge652.Bridge652B1', {
+        constructor: function () {
+            Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge652).log = "Bridge652B1";
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge652.Bridge652C$1', function (T) { return {
+        bar: null,
+        constructor: function () {
+            this.bar = new T();
+        }
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge652.Bridge652B2', {
+        inherits: [Bridge.IComparable],
+        constructor: function () {
+            Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge652).log = "Bridge652B2";
+        },
+        compareTo: function (obj) {
+            return 0;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge652.Bridge652D$1', function (T) { return {
+        bar: null,
+        constructor: function () {
+            this.bar = new T();
+        }
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.IBridge693D');
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge693A$1', function (T) { return {
+        constructor: function (props) {
+        }
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge883_IInterface');
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge883_3', {
+        statics: {
+            main: function () {
+                var f = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge883_4).field1;
+                return f;
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Class65_1.Nested');
+    
+    Bridge.define('Bridge.ClientTest.ExceptionTests.E1', {
+        inherits: [Bridge.Exception],
+        constructor: function (message) {
+            Bridge.Exception.prototype.$constructor.call(this, message);
+    
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.PropertyAccessorTests.B3', {
+        f1: 0,
+        f2: 0,
+        f3: 0,
+        getP1: function () {
+            return this.f1;
+        },
+        setP1: function (value) {
+            this.f1 = value;
+        },
+        getP2: function () {
+            return this.f2;
+        },
+        setP3: function (value) {
+            this.f3 = value;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.PropertyAccessorTests.B4$1', function (T) { return {
+        f1: null,
+        f2: null,
+        f3: null,
+        getP1: function () {
+            return this.f1;
+        },
+        setP1: function (value) {
+            this.f1 = value;
+        },
+        getP2: function () {
+            return this.f2;
+        },
+        setP3: function (value) {
+            this.f3 = value;
+        }
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.SimpleTypes.ObjectTests.C1', {
+        toString: function () {
+            return "test";
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Constants', {
+        statics: {
+            PREFIX_SYSTEM_CLASSES: "Simple types",
+            PREFIX_SYSTEM_INTERFACES: "System interface",
+            PREFIX_COLLECTIONS: "Collections",
+            PREFIX_UTILITIES: "Utilities",
+            PREFIX_EXCEPTIONS: "Exceptions",
+            MODULE_BASIC_CSHARP: "C#",
+            MODULE_ISSUES: "Issues",
+            MODULE_LINQ: "LINQ",
+            MODULE_DATETIME: "Date and time",
+            MODULE_NULLABLE: "Nullable",
+            MODULE_STRING: "String",
+            MODULE_REGEX: "Regex",
+            MODULE_ENUM: "Enum",
+            MODULE_MATH: "Math",
+            MODULE_DECIMAL_MATH: "Decimal Math",
+            MODULE_COMPARER: "Comparer",
+            MODULE_EQUALITYCOMPARER: "EqualityComparer",
+            MODULE_NUMBERFORMATINFO: "NumberFormatInfo",
+            MODULE_CULTUREINFO: "СultureInfo",
+            MODULE_PROPERTYACCESSOR: "Property accessor",
+            MODULE_THREADING: "Threading",
+            MODULE_DIAGNOSTICS: "Diagnostics",
+            IGNORE_DATE: null,
+            config: {
+                init: function () {
+                    this.MODULE_DECIMAL = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
+                    this.MODULE_DOUBLE = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
+                    this.MODULE_INT16 = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
+                    this.MODULE_INT64 = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
+                    this.MODULE_SBYTE = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
+                    this.MODULE_FLOAT = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
+                    this.MODULE_UINT64 = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
+                    this.MODULE_UINT32 = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
+                    this.MODULE_OBJECT = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
+                    this.MODULE_CHAR = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
+                    this.MODULE_INT32 = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
+                    this.MODULE_UINT16 = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
+                    this.MODULE_BYTE = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
+                    this.MODULE_TUPLE = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
+                    this.MODULE_VERSION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
+                    this.MODULE_ICOLLECTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
+                    this.MODULE_IDICTIONARY = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
+                    this.MODULE_LIST = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
+                    this.MODULE_ILIST = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
+                    this.MODULE_ITERATORBLOCK = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
+                    this.MODULE_ARRAY = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
+                    this.MODULE_IENUMERABLE = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
+                    this.MODULE_GENERICDICTIONARY = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
+                    this.MODULE_ICOMPARABLE = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_INTERFACES;
+                    this.MODULE_IEQUATABLE = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_INTERFACES;
+                    this.MODULE_RUNTIMEHELPERS = Bridge.get(Bridge.ClientTest.Constants).PREFIX_UTILITIES;
+                    this.MODULE_ENVIRONMENT = Bridge.get(Bridge.ClientTest.Constants).PREFIX_UTILITIES;
+                    this.MODULE_NOTSUPPORTEDEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                    this.MODULE_KEYNOTFOUNDEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                    this.MODULE_EXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                    this.MODULE_ARGUMENTNULLEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                    this.MODULE_DIVIDEBYZEROEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                    this.MODULE_NOTIMPLEMENTEDEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                    this.MODULE_OVERFLOWEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                    this.MODULE_ARITHMETICEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                    this.MODULE_FORMATEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                    this.MODULE_INVALIDOPERATIONEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                    this.MODULE_INVALIDCASTEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                    this.MODULE_ARGUMENTEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                    this.MODULE_NULLREFERENCEEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                    this.MODULE_ARGUMENTOUTOFRANGEEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                }
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.ArrayTests.C', {
         i: 0,
         constructor: function (i) {
@@ -287,23 +615,6 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BasicCSharp.TestAbstractClass.A', {
-        config: {
-            properties: {
-                Data: 0
-            }
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BasicCSharp.TestEnum.Abc', {
-        statics: {
-            a: -1,
-            b: 0,
-            c: 1
-        },
-        $enum: true
-    });
-    
     Bridge.define('Bridge.ClientTest.BasicCSharp.TestEnum.Digits', {
         statics: {
             zero: 0,
@@ -326,6 +637,15 @@
         $flags: true
     });
     
+    Bridge.define('Bridge.ClientTest.BasicCSharp.TestEnum.Abc', {
+        statics: {
+            a: -1,
+            b: 0,
+            c: 1
+        },
+        $enum: true
+    });
+    
     Bridge.define('Bridge.ClientTest.BasicCSharp.TestEnum.Pets1', {
         statics: {
             none: 0,
@@ -337,27 +657,6 @@
         },
         $enum: true
     });
-    
-    Bridge.define('Bridge.ClientTest.BasicCSharp.TestInheritance.A', {
-        config: {
-            properties: {
-                X: 0
-            }
-        },
-        constructor: function (x) {
-            this.setX(x);
-        },
-        handleNumber: function (i) {
-            return i;
-        },
-        handleString: function (s) {
-            return s;
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BasicCSharp.TestInterfaces.ISimple');
-    
-    Bridge.define('Bridge.ClientTest.BasicCSharp.TestInterfaces.ISimpleAsWell');
     
     Bridge.define('Bridge.ClientTest.BasicCSharp.TestOverloadInstanceMethods.Instance', {
         foo$2: function (x) {
@@ -459,12 +758,6 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BasicCSharp.TestVirtualMethods.A', {
-        test: function () {
-            return "A";
-        }
-    });
-    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
@@ -477,14 +770,6 @@
                 (function () {
                     Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge169).number = 2;
                 })();
-            }
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge240A', {
-        config: {
-            properties: {
-                Data: 0
             }
         }
     });
@@ -528,8 +813,6 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.IBridge304');
-    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge305', {
         inherits: [Bridge.IEnumerable$1(String)],
         config: {
@@ -545,30 +828,6 @@
         },
         getEnumerator$1: function () {
             return this.getItems().getEnumerator();
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge306Component$1', function (TProps) { return {
-        statics: {
-            $new: function (TComponent) {
-                return Bridge.fn.bind(this, function (props) {
-                    return Bridge.getTypeName(props) + ":" + props;
-                });
-            }
-        }
-    }; });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge306A.Props', {
-        name: null,
-        toString: function () {
-            return this.name;
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge306B.Props', {
-        name: null,
-        toString: function () {
-            return this.name;
         }
     });
     
@@ -658,6 +917,14 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Person383', {
+        config: {
+            properties: {
+                Name: null
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge395', {
         config: {
             properties: {
@@ -721,12 +988,6 @@
         $enum: true
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge436First', {
-        toObject: function () {
-            return "1";
-        }
-    });
-    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge439', {
         config: {
             events: {
@@ -784,13 +1045,13 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge501B', {
+        inherits: [Bridge.List$1(Bridge.Int)]
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge501A', {
         inherits: [Bridge.List$1(Bridge.Int)],
         items$1: "12"
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge501B', {
-        inherits: [Bridge.List$1(Bridge.Int)]
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge520.Source', {
@@ -816,54 +1077,41 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge522.BaseClass', {
-        config: {
-            init: function () {
-                this.values = new Bridge.List$1(Bridge.Int)();
+    Bridge.define('Bridge.ClientTest.Utilities.DecimalHelper', {
+        statics: {
+            assertIsDecimalAndEqualTo$1: function (v, d, message) {
+                if (message === void 0) { message = null; }
+                Bridge.get(Bridge.Test.Assert).areStrictEqual$1(Bridge.is(v, Bridge.Decimal), true, message);
+                Bridge.get(Bridge.Test.Assert).areStrictEqual$1(v.toString(), Bridge.Int.format(d, 'G'), message);
+            },
+            assertIsDecimalAndEqualTo: function (v, d, message) {
+                if (message === void 0) { message = null; }
+                Bridge.get(Bridge.Test.Assert).areStrictEqual$1(Bridge.is(v, Bridge.Decimal), true, message);
+                Bridge.get(Bridge.Test.Assert).areStrictEqual$1(v.toString(), Bridge.Int.format(d, 'G'), message);
             }
-        },
-        addValue: function (a) {
-            this.values.add(a);
-        },
-        getValues: function () {
-            return this.values;
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge537A', {
-        id: 0
-    });
+    Bridge.define('Bridge.ClientTest.Utilities.BrowserHelper', {
+        statics: {
+            isPhantomJs: function () {
+                return Bridge.String.contains(navigator.userAgent,"PhantomJS");
+            },
+            isFirefox: function () {
+                return Bridge.String.contains(navigator.userAgent,"Firefox");
+            },
+            isChrome: function () {
+                return Bridge.String.contains(navigator.userAgent,"Chrome");
+            },
+            getBrowserInfo: function () {
+                var userAgent = navigator.userAgent;
+                var appVersion = navigator.appVersion;
+                var product = navigator.product;
+                var appName = navigator.appName;
+                var appCodeName = navigator.appCodeName;
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge558A', {
-        zz: function (a) {
-            return 1;
-        },
-        zz$1: function (a) {
-            return 2;
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge559A1', {
-        result: "",
-        constructor: function () {
-            this.result += " -> Bridge559A1";
-        },
-        constructor$1: function (a) {
-            Bridge.ClientTest.BridgeIssues.Bridge559A1.prototype.$constructor.call(this);
-    
-            this.result += " -> Bridge559A1$1";
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge559A2', {
-        result: "",
-        constructor: function () {
-            this.result += " ClassA";
-        },
-        constructor$1: function (a) {
-            Bridge.ClientTest.BridgeIssues.Bridge559A2.prototype.$constructor.call(this);
-    
-            this.result += " ClassA$1";
+                return Bridge.String.format("userAgent:{0} appVersion:{1} product:{2} appName:{3} appCodeName:{4}", userAgent, appVersion, product, appName, appCodeName);
+            }
         }
     });
     
@@ -879,17 +1127,6 @@
         constructor: function (value) {
             Bridge.ClientTest.BridgeIssues.Bridge559A3.prototype.constructor$1.call(this, value.toString());
     
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge566A', {
-        config: {
-            properties: {
-                Data: null
-            }
-        },
-        constructor: function () {
-            this.setData(this.getName());
         }
     });
     
@@ -936,13 +1173,6 @@
     
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge588B', {
-        statics: {
-            Valeur1: 1,
-            Valeur2: 2
-        }
-    });
-    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge588C.C2', {
         statics: {
             config: {
@@ -961,6 +1191,13 @@
         },
         constructor: function (name) {
             this.setName(name);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge588B', {
+        statics: {
+            Valeur1: 1,
+            Valeur2: 2
         }
     });
     
@@ -1053,11 +1290,16 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge606A', {
-        statics: {
-            example2: function (source, x, y) {
-                return source + " - " + x + " - " + y;
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge606C', {
+        config: {
+            properties: {
+                X: null,
+                Y: null
             }
+        },
+        example1: function (x, y) {
+            this.setX(x);
+            this.setY(y);
         }
     });
     
@@ -1074,16 +1316,11 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge606C', {
-        config: {
-            properties: {
-                X: null,
-                Y: null
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge606A', {
+        statics: {
+            example2: function (source, x, y) {
+                return source + " - " + x + " - " + y;
             }
-        },
-        example1: function (x, y) {
-            this.setX(x);
-            this.setY(y);
         }
     });
     
@@ -1145,18 +1382,6 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge623A', {
-        foo: 0,
-        func: null,
-        constructor: function (foo, func) {
-            this.foo = foo;
-            this.func = func;
-        },
-        call: function () {
-            return this.func();
-        }
-    });
-    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge625A', {
         inherits: [Bridge.IEqualityComparer$1(Bridge.Int)],
         equals: function (x, y) {
@@ -1179,6 +1404,28 @@
     
     }; });
     
+    Bridge.define('ClientTestLibraryCustom.Bridge634B$1', function (T) { return {
+    
+    }; });
+    
+    Bridge.define('ClientTestLibraryCustom.Bridge634B$1.Nested', function (T) { return {
+    
+    }; });
+    
+    Bridge.define('ClientTestLibraryCustom.Bridge634B$1.Nested.SubNested', function (T) { return {
+    
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge634C');
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge634C.Nested');
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge634C.Nested.SubNested');
+    
+    Bridge.define('Bridge634D');
+    
+    Bridge.define('Bridge634D.Nested');
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge634A$1.Nested.SubNested$1', function (T, T1) { return {
     
     }; });
@@ -1192,18 +1439,6 @@
     }; });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge634A$1.Nested$1.SubNested$1', function (T, T1, T2) { return {
-    
-    }; });
-    
-    Bridge.define('ClientTestLibraryCustom.Bridge634B$1', function (T) { return {
-    
-    }; });
-    
-    Bridge.define('ClientTestLibraryCustom.Bridge634B$1.Nested', function (T) { return {
-    
-    }; });
-    
-    Bridge.define('ClientTestLibraryCustom.Bridge634B$1.Nested.SubNested', function (T) { return {
     
     }; });
     
@@ -1223,12 +1458,6 @@
     
     }; });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge634C');
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge634C.Nested');
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge634C.Nested.SubNested');
-    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge634C.Nested.SubNested$1', function (T1) { return {
     
     }; });
@@ -1245,16 +1474,6 @@
     
     }; });
     
-    Bridge.define('Bridge634D');
-    
-    Bridge.define('Bridge634D.Nested');
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge635A', {
-        internalFunc1: function () {
-            return "A.Test1";
-        }
-    });
-    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge648A', {
         statics: {
             op_Implicit: function (value) {
@@ -1268,36 +1487,6 @@
         },
         constructor: function (value) {
             this.setValue(value);
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge652.Bridge652C$1', function (T) { return {
-        bar: null,
-        constructor: function () {
-            this.bar = new T();
-        }
-    }; });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge652.Bridge652B1', {
-        constructor: function () {
-            Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge652).log = "Bridge652B1";
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge652.Bridge652D$1', function (T) { return {
-        bar: null,
-        constructor: function () {
-            this.bar = new T();
-        }
-    }; });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge652.Bridge652B2', {
-        inherits: [Bridge.IComparable],
-        constructor: function () {
-            Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge652).log = "Bridge652B2";
-        },
-        compareTo: function (obj) {
-            return 0;
         }
     });
     
@@ -1316,6 +1505,21 @@
     
                 return "false";
             }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge660TextInputState', {
+        config: {
+            properties: {
+                Text: null
+            }
+        },
+        constructor: function (text) {
+            Bridge.ClientTest.BridgeIssues.Bridge660TextInputState.prototype.constructor$1.call(this, text, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge660Optional$1(String)).getMissing());
+    
+        },
+        constructor$1: function (text, validationError) {
+            this.setText(text);
         }
     });
     
@@ -1376,21 +1580,6 @@
             return s;
         }
     }; });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge660TextInputState', {
-        config: {
-            properties: {
-                Text: null
-            }
-        },
-        constructor: function (text) {
-            Bridge.ClientTest.BridgeIssues.Bridge660TextInputState.prototype.constructor$1.call(this, text, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge660Optional$1(String)).getMissing());
-    
-        },
-        constructor$1: function (text, validationError) {
-            this.setText(text);
-        }
-    });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge671A', {
         func: null,
@@ -1617,37 +1806,6 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge692.B2', {
-        statics: {
-            getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge692.B2(); }
-        },
-        field1: 0,
-        constructor$1: function (f) {
-            this.field1 = f;
-        },
-        constructor: function () {
-        },
-        getProp1: function () {
-            return this.field1;
-        },
-        getHashCode: function () {
-            var hash = 17;
-            hash = hash * 23 + (this.field1 == null ? 0 : Bridge.getHashCode(this.field1));
-            return hash;
-        },
-        equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge692.B2)) {
-                return false;
-            }
-            return Bridge.equals(this.field1, o.field1);
-        },
-        $clone: function (to) {
-            var s = to || new Bridge.ClientTest.BridgeIssues.Bridge692.B2();
-            s.field1 = this.field1;
-            return s;
-        }
-    });
-    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge692.B3', {
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge692.B3(); }
@@ -1754,12 +1912,36 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge693A$1', function (T) { return {
-        constructor: function (props) {
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge692.B2', {
+        statics: {
+            getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge692.B2(); }
+        },
+        field1: 0,
+        constructor$1: function (f) {
+            this.field1 = f;
+        },
+        constructor: function () {
+        },
+        getProp1: function () {
+            return this.field1;
+        },
+        getHashCode: function () {
+            var hash = 17;
+            hash = hash * 23 + (this.field1 == null ? 0 : Bridge.getHashCode(this.field1));
+            return hash;
+        },
+        equals: function (o) {
+            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge692.B2)) {
+                return false;
+            }
+            return Bridge.equals(this.field1, o.field1);
+        },
+        $clone: function (to) {
+            var s = to || new Bridge.ClientTest.BridgeIssues.Bridge692.B2();
+            s.field1 = this.field1;
+            return s;
         }
-    }; });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.IBridge693D');
+    });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge762A', {
         statics: {
@@ -2125,17 +2307,6 @@
     }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge883_IInterface');
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge883_3', {
-        statics: {
-            main: function () {
-                var f = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge883_4).field1;
-                return f;
-            }
-        }
-    });
-    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge893A', {
         statics: {
             testA1: 0,
@@ -2215,22 +2386,12 @@
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Class65_1');
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Class65_1.Nested');
-    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Class84', {
         test1: function () {
             try {
             }
             catch ($e1) {
                 $e1 = Bridge.Exception.create($e1);
-            }
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Person383', {
-        config: {
-            properties: {
-                Name: null
             }
         }
     });
@@ -2591,79 +2752,6 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTest.Constants', {
-        statics: {
-            PREFIX_SYSTEM_CLASSES: "Simple types",
-            PREFIX_SYSTEM_INTERFACES: "System interface",
-            PREFIX_COLLECTIONS: "Collections",
-            PREFIX_UTILITIES: "Utilities",
-            PREFIX_EXCEPTIONS: "Exceptions",
-            MODULE_BASIC_CSHARP: "C#",
-            MODULE_ISSUES: "Issues",
-            MODULE_LINQ: "LINQ",
-            MODULE_DATETIME: "Date and time",
-            MODULE_NULLABLE: "Nullable",
-            MODULE_STRING: "String",
-            MODULE_REGEX: "Regex",
-            MODULE_ENUM: "Enum",
-            MODULE_MATH: "Math",
-            MODULE_DECIMAL_MATH: "Decimal Math",
-            MODULE_COMPARER: "Comparer",
-            MODULE_EQUALITYCOMPARER: "EqualityComparer",
-            MODULE_NUMBERFORMATINFO: "NumberFormatInfo",
-            MODULE_CULTUREINFO: "СultureInfo",
-            MODULE_PROPERTYACCESSOR: "Property accessor",
-            MODULE_THREADING: "Threading",
-            MODULE_DIAGNOSTICS: "Diagnostics",
-            IGNORE_DATE: null,
-            config: {
-                init: function () {
-                    this.MODULE_DECIMAL = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
-                    this.MODULE_DOUBLE = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
-                    this.MODULE_INT16 = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
-                    this.MODULE_INT64 = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
-                    this.MODULE_SBYTE = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
-                    this.MODULE_FLOAT = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
-                    this.MODULE_UINT64 = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
-                    this.MODULE_UINT32 = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
-                    this.MODULE_OBJECT = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
-                    this.MODULE_CHAR = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
-                    this.MODULE_INT32 = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
-                    this.MODULE_UINT16 = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
-                    this.MODULE_BYTE = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
-                    this.MODULE_TUPLE = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
-                    this.MODULE_VERSION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_CLASSES;
-                    this.MODULE_ICOLLECTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
-                    this.MODULE_IDICTIONARY = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
-                    this.MODULE_LIST = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
-                    this.MODULE_ILIST = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
-                    this.MODULE_ITERATORBLOCK = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
-                    this.MODULE_ARRAY = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
-                    this.MODULE_IENUMERABLE = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
-                    this.MODULE_GENERICDICTIONARY = Bridge.get(Bridge.ClientTest.Constants).PREFIX_COLLECTIONS;
-                    this.MODULE_ICOMPARABLE = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_INTERFACES;
-                    this.MODULE_IEQUATABLE = Bridge.get(Bridge.ClientTest.Constants).PREFIX_SYSTEM_INTERFACES;
-                    this.MODULE_RUNTIMEHELPERS = Bridge.get(Bridge.ClientTest.Constants).PREFIX_UTILITIES;
-                    this.MODULE_ENVIRONMENT = Bridge.get(Bridge.ClientTest.Constants).PREFIX_UTILITIES;
-                    this.MODULE_NOTSUPPORTEDEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
-                    this.MODULE_KEYNOTFOUNDEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
-                    this.MODULE_EXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
-                    this.MODULE_ARGUMENTNULLEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
-                    this.MODULE_DIVIDEBYZEROEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
-                    this.MODULE_NOTIMPLEMENTEDEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
-                    this.MODULE_OVERFLOWEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
-                    this.MODULE_ARITHMETICEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
-                    this.MODULE_FORMATEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
-                    this.MODULE_INVALIDOPERATIONEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
-                    this.MODULE_INVALIDCASTEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
-                    this.MODULE_ARGUMENTEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
-                    this.MODULE_NULLREFERENCEEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
-                    this.MODULE_ARGUMENTOUTOFRANGEEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
-                }
-            }
-        }
-    });
-    
     Bridge.define('Bridge.ClientTest.DecimalMathTests.Logger', {
         statics: {
             convertParameters: function (parameters) {
@@ -2793,14 +2881,6 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTest.ExceptionTests.E1', {
-        inherits: [Bridge.Exception],
-        constructor: function (message) {
-            Bridge.Exception.prototype.$constructor.call(this, message);
-    
-        }
-    });
-    
     Bridge.define('Bridge.ClientTest.IComparableTests.MyComparable', {
         inherits: function () { return [Bridge.IComparable$1(Bridge.ClientTest.IComparableTests.MyComparable)]; },
         result: 0,
@@ -2838,317 +2918,6 @@
             wordChars.sort();
     
             return String.fromCharCode.apply(null, wordChars);
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.Linq.TestLinqConversionOperatorsIEqualityComparer', {
-        inherits: [Bridge.EqualityComparer$1(String)],
-        equals: function (x, y) {
-            return Bridge.String.equals(x, y);
-        },
-        getHashCode: function (obj) {
-            if (!Bridge.hasValue(obj)) {
-                return 0;
-            }
-    
-            return Bridge.getHashCode(obj);
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.PropertyAccessorTests.B3', {
-        f1: 0,
-        f2: 0,
-        f3: 0,
-        getP1: function () {
-            return this.f1;
-        },
-        setP1: function (value) {
-            this.f1 = value;
-        },
-        getP2: function () {
-            return this.f2;
-        },
-        setP3: function (value) {
-            this.f3 = value;
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.PropertyAccessorTests.B4$1', function (T) { return {
-        f1: null,
-        f2: null,
-        f3: null,
-        getP1: function () {
-            return this.f1;
-        },
-        setP1: function (value) {
-            this.f1 = value;
-        },
-        getP2: function () {
-            return this.f2;
-        },
-        setP3: function (value) {
-            this.f3 = value;
-        }
-    }; });
-    
-    Bridge.define('Bridge.ClientTest.PropertyAccessorTests.C1', {
-        statics: {
-            fS1: 0,
-            fS2: 0,
-            fS3: 0,
-            getPS1: function () {
-                return Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C1).fS1 + 1;
-            },
-            setPS1: function (value) {
-                Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C1).fS1 = value - 1;
-            },
-            getPS2: function () {
-                return Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C1).fS2 + 1;
-            },
-            setPS3: function (value) {
-                Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C1).fS3 = value - 1;
-            }
-        },
-        f1: 0,
-        f2: 0,
-        f3: 0,
-        getP1: function () {
-            return this.f1 + 1;
-        },
-        setP1: function (value) {
-            this.f1 = value - 1;
-        },
-        getP2: function () {
-            return this.f2 + 1;
-        },
-        setP3: function (value) {
-            this.f3 = value - 1;
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.PropertyAccessorTests.C2$1', function (T) { return {
-        statics: {
-            fS1: null,
-            fS2: null,
-            fS3: null,
-            getPS1: function () {
-                return Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C2$1(T)).fS1 + 1;
-            },
-            setPS1: function (value) {
-                Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C2$1(T)).fS1 = value - 1;
-            },
-            getPS2: function () {
-                return Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C2$1(T)).fS2 + 1;
-            },
-            setPS3: function (value) {
-                Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C2$1(T)).fS3 = value - 1;
-            }
-        },
-        f1: null,
-        f2: null,
-        f3: null,
-        getP1: function () {
-            return this.f1 + 1;
-        },
-        setP1: function (value) {
-            this.f1 = value - 1;
-        },
-        getP2: function () {
-            return this.f2 + 1;
-        },
-        setP3: function (value) {
-            this.f3 = value - 1;
-        }
-    }; });
-    
-    Bridge.define('Bridge.ClientTest.SimpleTypes.BooleanTests.Counter', {
-        config: {
-            properties: {
-                Count: 0
-            }
-        },
-        increment: function (r) {
-            if (r === void 0) { r = true; }
-            this.setCount(this.getCount()+1);
-    
-            return r;
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.SimpleTypes.EnumTests.FlagsEnum', {
-        statics: {
-            none: 0,
-            firstValue: 1,
-            secondValue: 2,
-            thirdValue: 4
-        },
-        $enum: true,
-        $flags: true
-    });
-    
-    Bridge.define('Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum', {
-        statics: {
-            firstValue: 0,
-            secondValue: 1,
-            thirdValue: 2
-        },
-        $enum: true
-    });
-    
-    Bridge.define('Bridge.ClientTest.SimpleTypes.ObjectTests.C1', {
-        toString: function () {
-            return "test";
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.SimpleTypes.StringTests.MyEnumerable$1', function (T) { return {
-        inherits: [Bridge.IEnumerable$1(T)],
-        _items: null,
-        constructor: function (items) {
-            this._items = items;
-        },
-        getEnumerator: function () {
-            return this.getEnumerator$1();
-        },
-        getEnumerator$1: function () {
-            return Bridge.cast(Bridge.getEnumerator(this._items), Bridge.IEnumerator$1(T));
-        }
-    }; });
-    
-    Bridge.define('Bridge.ClientTest.Text.StringBuilderTests.SomeClass', {
-        toString: function () {
-            return "some text";
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.Threading.PromiseTests.SimplePromise', {
-        inherits: [Bridge.IPromise],
-        doThen: null,
-        config: {
-            properties: {
-                Thens: null
-            }
-        },
-        constructor: function () {
-            this.setThens(new Bridge.List$1(Bridge.ClientTest.Threading.PromiseTests.SimplePromise.A)());
-    
-            this.doThen = Bridge.fn.bind(this, function (f, e, p) {
-                this.getThens().add(Bridge.merge(new Bridge.ClientTest.Threading.PromiseTests.SimplePromise.A(), {
-                    setFilled: f,
-                    setError: e,
-                    setProgress: p
-                } ));
-            });
-        },
-        then: function (fulfilledHandler, errorHandler, progressHandler) {
-            if (errorHandler === void 0) { errorHandler = null; }
-            if (progressHandler === void 0) { progressHandler = null; }
-            this.doThen(fulfilledHandler, errorHandler, progressHandler);
-        },
-        resolve: function (args) {
-            if (args === void 0) { args = []; }
-            this.complete(Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which.resolve, args);
-        },
-        reject: function (args) {
-            if (args === void 0) { args = []; }
-            this.complete(Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which.reject, args);
-        },
-        complete: function (which, args) {
-            if (args === void 0) { args = []; }
-            if (which === Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which.resolve) {
-                this.doThen = Bridge.fn.bind(this, function (f, e, p) {
-                    this.resolve(args);
-                });
-            }
-            else  {
-                this.doThen = Bridge.fn.bind(this, function (f, e, p) {
-                    this.reject(args);
-                });
-            }
-    
-            var i = 0;
-            while (i < this.getThens().getCount()) {
-                var aThen = this.getThens().getItem(i);
-    
-                if (which === Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which.resolve) {
-                    if (Bridge.hasValue(aThen.getFilled())) {
-                        aThen.getFilled().apply(null, args);
-                    }
-                }
-                else  {
-                    if (Bridge.hasValue(aThen.getError())) {
-                        aThen.getError().apply(null, args);
-                    }
-                }
-                i++;
-            }
-            this.getThens().clear();
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.Threading.PromiseTests.SimplePromise.A', {
-        config: {
-            properties: {
-                Filled: null,
-                Error: null,
-                Progress: null
-            }
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which', {
-        statics: {
-            resolve: 0,
-            reject: 1
-        },
-        $enum: true
-    });
-    
-    Bridge.define('Bridge.ClientTest.Threading.PromiseTests.TaskResult', {
-        config: {
-            properties: {
-                I: 0,
-                S: null,
-                J: 0
-            }
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.Utilities.BrowserHelper', {
-        statics: {
-            isPhantomJs: function () {
-                return Bridge.String.contains(navigator.userAgent,"PhantomJS");
-            },
-            isFirefox: function () {
-                return Bridge.String.contains(navigator.userAgent,"Firefox");
-            },
-            isChrome: function () {
-                return Bridge.String.contains(navigator.userAgent,"Chrome");
-            },
-            getBrowserInfo: function () {
-                var userAgent = navigator.userAgent;
-                var appVersion = navigator.appVersion;
-                var product = navigator.product;
-                var appName = navigator.appName;
-                var appCodeName = navigator.appCodeName;
-    
-                return Bridge.String.format("userAgent:{0} appVersion:{1} product:{2} appName:{3} appCodeName:{4}", userAgent, appVersion, product, appName, appCodeName);
-            }
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.Utilities.DecimalHelper', {
-        statics: {
-            assertIsDecimalAndEqualTo$1: function (v, d, message) {
-                if (message === void 0) { message = null; }
-                Bridge.get(Bridge.Test.Assert).areStrictEqual$1(Bridge.is(v, Bridge.Decimal), true, message);
-                Bridge.get(Bridge.Test.Assert).areStrictEqual$1(v.toString(), Bridge.Int.format(d, 'G'), message);
-            },
-            assertIsDecimalAndEqualTo: function (v, d, message) {
-                if (message === void 0) { message = null; }
-                Bridge.get(Bridge.Test.Assert).areStrictEqual$1(Bridge.is(v, Bridge.Decimal), true, message);
-                Bridge.get(Bridge.Test.Assert).areStrictEqual$1(v.toString(), Bridge.Int.format(d, 'G'), message);
-            }
         }
     });
     
@@ -3267,6 +3036,583 @@
                 // return Script.Get<string>("o.__proto__.$$name");
             }
         }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Linq.TestLinqConversionOperatorsIEqualityComparer', {
+        inherits: [Bridge.EqualityComparer$1(String)],
+        equals: function (x, y) {
+            return Bridge.String.equals(x, y);
+        },
+        getHashCode: function (obj) {
+            if (!Bridge.hasValue(obj)) {
+                return 0;
+            }
+    
+            return Bridge.getHashCode(obj);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.PropertyAccessorTests.C1', {
+        statics: {
+            fS1: 0,
+            fS2: 0,
+            fS3: 0,
+            getPS1: function () {
+                return Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C1).fS1 + 1;
+            },
+            setPS1: function (value) {
+                Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C1).fS1 = value - 1;
+            },
+            getPS2: function () {
+                return Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C1).fS2 + 1;
+            },
+            setPS3: function (value) {
+                Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C1).fS3 = value - 1;
+            }
+        },
+        f1: 0,
+        f2: 0,
+        f3: 0,
+        getP1: function () {
+            return this.f1 + 1;
+        },
+        setP1: function (value) {
+            this.f1 = value - 1;
+        },
+        getP2: function () {
+            return this.f2 + 1;
+        },
+        setP3: function (value) {
+            this.f3 = value - 1;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.PropertyAccessorTests.C2$1', function (T) { return {
+        statics: {
+            fS1: null,
+            fS2: null,
+            fS3: null,
+            getPS1: function () {
+                return Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C2$1(T)).fS1 + 1;
+            },
+            setPS1: function (value) {
+                Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C2$1(T)).fS1 = value - 1;
+            },
+            getPS2: function () {
+                return Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C2$1(T)).fS2 + 1;
+            },
+            setPS3: function (value) {
+                Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C2$1(T)).fS3 = value - 1;
+            }
+        },
+        f1: null,
+        f2: null,
+        f3: null,
+        getP1: function () {
+            return this.f1 + 1;
+        },
+        setP1: function (value) {
+            this.f1 = value - 1;
+        },
+        getP2: function () {
+            return this.f2 + 1;
+        },
+        setP3: function (value) {
+            this.f3 = value - 1;
+        }
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.SimpleTypes.BooleanTests.Counter', {
+        config: {
+            properties: {
+                Count: 0
+            }
+        },
+        increment: function (r) {
+            if (r === void 0) { r = true; }
+            this.setCount(this.getCount()+1);
+    
+            return r;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.SimpleTypes.EnumTests.FlagsEnum', {
+        statics: {
+            none: 0,
+            firstValue: 1,
+            secondValue: 2,
+            thirdValue: 4
+        },
+        $enum: true,
+        $flags: true
+    });
+    
+    Bridge.define('Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum', {
+        statics: {
+            firstValue: 0,
+            secondValue: 1,
+            thirdValue: 2
+        },
+        $enum: true
+    });
+    
+    Bridge.define('Bridge.ClientTest.SimpleTypes.StringTests.MyEnumerable$1', function (T) { return {
+        inherits: [Bridge.IEnumerable$1(T)],
+        _items: null,
+        constructor: function (items) {
+            this._items = items;
+        },
+        getEnumerator: function () {
+            return this.getEnumerator$1();
+        },
+        getEnumerator$1: function () {
+            return Bridge.cast(Bridge.getEnumerator(this._items), Bridge.IEnumerator$1(T));
+        }
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Text.StringBuilderTests.SomeClass', {
+        toString: function () {
+            return "some text";
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Threading.PromiseTests.TaskResult', {
+        config: {
+            properties: {
+                I: 0,
+                S: null,
+                J: 0
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Threading.PromiseTests.SimplePromise', {
+        inherits: [Bridge.IPromise],
+        doThen: null,
+        config: {
+            properties: {
+                Thens: null
+            }
+        },
+        constructor: function () {
+            this.setThens(new Bridge.List$1(Bridge.ClientTest.Threading.PromiseTests.SimplePromise.A)());
+    
+            this.doThen = Bridge.fn.bind(this, function (f, e, p) {
+                this.getThens().add(Bridge.merge(new Bridge.ClientTest.Threading.PromiseTests.SimplePromise.A(), {
+                    setFilled: f,
+                    setError: e,
+                    setProgress: p
+                } ));
+            });
+        },
+        then: function (fulfilledHandler, errorHandler, progressHandler) {
+            if (errorHandler === void 0) { errorHandler = null; }
+            if (progressHandler === void 0) { progressHandler = null; }
+            this.doThen(fulfilledHandler, errorHandler, progressHandler);
+        },
+        resolve: function (args) {
+            if (args === void 0) { args = []; }
+            this.complete(Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which.resolve, args);
+        },
+        reject: function (args) {
+            if (args === void 0) { args = []; }
+            this.complete(Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which.reject, args);
+        },
+        complete: function (which, args) {
+            if (args === void 0) { args = []; }
+            if (which === Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which.resolve) {
+                this.doThen = Bridge.fn.bind(this, function (f, e, p) {
+                    this.resolve(args);
+                });
+            }
+            else  {
+                this.doThen = Bridge.fn.bind(this, function (f, e, p) {
+                    this.reject(args);
+                });
+            }
+    
+            var i = 0;
+            while (i < this.getThens().getCount()) {
+                var aThen = this.getThens().getItem(i);
+    
+                if (which === Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which.resolve) {
+                    if (Bridge.hasValue(aThen.getFilled())) {
+                        aThen.getFilled().apply(null, args);
+                    }
+                }
+                else  {
+                    if (Bridge.hasValue(aThen.getError())) {
+                        aThen.getError().apply(null, args);
+                    }
+                }
+                i++;
+            }
+            this.getThens().clear();
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Threading.PromiseTests.SimplePromise.A', {
+        config: {
+            properties: {
+                Filled: null,
+                Error: null,
+                Progress: null
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which', {
+        statics: {
+            resolve: 0,
+            reject: 1
+        },
+        $enum: true
+    });
+    
+    Bridge.define('Bridge.ClientTest.BasicCSharp.TestAbstractClass.B', {
+        inherits: [Bridge.ClientTest.BasicCSharp.TestAbstractClass.A],
+        getString: function () {
+            this.setData(this.getData()+1);
+            return "B";
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BasicCSharp.TestInheritance.B', {
+        inherits: [Bridge.ClientTest.BasicCSharp.TestInheritance.A],
+        config: {
+            properties: {
+                Y: 0
+            }
+        },
+        constructor: function (x, y) {
+            Bridge.ClientTest.BasicCSharp.TestInheritance.A.prototype.$constructor.call(this, x);
+    
+            this.setY(y);
+        },
+        handleNumber$1: function (i) {
+            return i * 100;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BasicCSharp.TestInterfaces.A', {
+        inherits: [Bridge.ClientTest.BasicCSharp.TestInterfaces.ISimple],
+        config: {
+            properties: {
+                Data: 0
+            }
+        },
+        constructor: function () {
+            this.setData(1);
+        },
+        getString: function () {
+            return "A.ISimple";
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BasicCSharp.TestInterfaces.B', {
+        inherits: [Bridge.ClientTest.BasicCSharp.TestInterfaces.ISimple],
+        data: 0,
+        constructor: function () {
+            this.data = 2;
+        },
+        getData: function () {
+            return this.data;
+        },
+        setData: function (value) {
+            this.data = value;
+        },
+        getString: function () {
+            return "explicit B.ISimple";
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BasicCSharp.TestInterfaces.C', {
+        inherits: [Bridge.ClientTest.BasicCSharp.TestInterfaces.ISimple,Bridge.ClientTest.BasicCSharp.TestInterfaces.ISimpleAsWell],
+        data: 0,
+        dataAsWell: 0,
+        constructor: function () {
+            this.data = 3;
+            this.dataAsWell = 4;
+        },
+        getData: function () {
+            return this.data;
+        },
+        setData: function (value) {
+            this.data = value;
+        },
+        getDataAsWell: function () {
+            return this.dataAsWell;
+        },
+        setDataAsWell: function (value) {
+            this.dataAsWell = value;
+        },
+        getString: function () {
+            return "C.ISimple";
+        },
+        getStringAsWell: function () {
+            return "C.ISimpleAsWell";
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BasicCSharp.TestVirtualMethods.B', {
+        inherits: [Bridge.ClientTest.BasicCSharp.TestVirtualMethods.A],
+        testA: function () {
+            return Bridge.ClientTest.BasicCSharp.TestVirtualMethods.A.prototype.test.call(this);
+        },
+        test: function () {
+            return "B";
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge240B', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge240A],
+        getString: function () {
+            this.setData(this.getData()+1);
+            return "B";
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge304', {
+        inherits: [Bridge.ClientTest.BridgeIssues.IBridge304],
+        config: {
+            properties: {
+                X: null
+            }
+        },
+        f: function (x) {
+            this.setX(x);
+        },
+        f$1: function () {
+            this.setX("void F()");
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge306A', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge306Component$1(Bridge.ClientTest.BridgeIssues.Bridge306A.Props)],
+        statics: {
+            $new: function (props) {
+                return Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge306Component$1(Bridge.ClientTest.BridgeIssues.Bridge306A.Props)).$new(Bridge.ClientTest.BridgeIssues.Bridge306A)(props);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge306B', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge306Component$1(Bridge.ClientTest.BridgeIssues.Bridge306B.Props)],
+        statics: {
+            $new: function (props) {
+                return Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge306Component$1(Bridge.ClientTest.BridgeIssues.Bridge306B.Props)).$new(Bridge.ClientTest.BridgeIssues.Bridge306B)(props);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge436Second', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge436First],
+        toObject: function () {
+            return Bridge.ClientTest.BridgeIssues.Bridge436First.prototype.toObject.call(this) + "2";
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge522.DerivedClass1', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge522.BaseClass],
+        constructor: function () {
+            Bridge.ClientTest.BridgeIssues.Bridge522.BaseClass.prototype.$constructor.call(this);
+    
+    
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge522.DerivedClass2', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge522.BaseClass],
+        config: {
+            properties: {
+                B: 0
+            }
+        },
+        constructor: function () {
+            Bridge.ClientTest.BridgeIssues.Bridge522.BaseClass.prototype.$constructor.call(this);
+    
+    
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge537B', {
+        inherits: [Bridge.IEnumerable$1(Bridge.ClientTest.BridgeIssues.Bridge537A)],
+        statics: {
+            getCount: function (l) {
+                return l.list.getCount();
+            },
+            testB1: function () {
+                var l = new Bridge.ClientTest.BridgeIssues.Bridge537B();
+    
+                l.add(Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge537A(), {
+                    id: 101
+                } ));
+                l.add(Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge537A(), {
+                    id: 102
+                } ));
+    
+                return l.getCount();
+            },
+            testB2: function () {
+                var l = new Bridge.ClientTest.BridgeIssues.Bridge537B();
+    
+                l.add(Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge537A(), {
+                    id: 103
+                } ));
+    
+                return Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge537B).getCount(l);
+            }
+        },
+        list: null,
+        constructor: function () {
+            this.list = new Bridge.List$1(Bridge.ClientTest.BridgeIssues.Bridge537A)();
+        },
+        add: function (value) {
+            this.list.add(value);
+        },
+        getEnumerator$1: function () {
+            return this.list.getEnumerator();
+        },
+        getEnumerator: function () {
+            return this.list.getEnumerator();
+        },
+        getCount: function () {
+            return this.list.getCount();
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge558B', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge558A],
+        zz: function (a) {
+            return Bridge.ClientTest.BridgeIssues.Bridge558A.prototype.zz.call(this, a);
+        },
+        zz$1: function (a) {
+            return Bridge.ClientTest.BridgeIssues.Bridge558A.prototype.zz$1.call(this, a);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge559B1', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge559A1],
+        constructor: function () {
+            Bridge.ClientTest.BridgeIssues.Bridge559A1.prototype.$constructor.call(this);
+    
+            this.result += " -> Bridge559B1 -- unexpected!";
+        },
+        constructor$1: function (a) {
+            Bridge.ClientTest.BridgeIssues.Bridge559A1.prototype.constructor$1.call(this, a);
+    
+            this.result += " -> Bridge559B1$1";
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge559B2', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge559A2],
+        constructor: function () {
+            Bridge.ClientTest.BridgeIssues.Bridge559A2.prototype.$constructor.call(this);
+    
+            this.result += " ClassB -- unexpected!";
+        },
+        constructor$1: function (a) {
+            Bridge.ClientTest.BridgeIssues.Bridge559A2.prototype.constructor$1.call(this, a);
+    
+            this.result += " ClassB$1";
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge566B', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge566A],
+        getName: function () {
+            return "Ted";
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge623B1', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge623A],
+        constructor: function (foo, func) {
+            Bridge.ClientTest.BridgeIssues.Bridge623A.prototype.$constructor.call(this, foo, func);
+    
+        },
+        getFoo: function () {
+            return 2 * this.foo;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge635B', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge635A],
+        internalFunc1: function () {
+            return "B.Test1";
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge652.Bridge652A1', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge652.Bridge652C$1(Bridge.ClientTest.BridgeIssues.Bridge652.Bridge652B1)]
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge652.Bridge652A2', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge652.Bridge652D$1(Bridge.ClientTest.BridgeIssues.Bridge652.Bridge652B2)]
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge693B.Bridge693C', {
+        inherits: [Bridge.ClientTest.BridgeIssues.IBridge693D]
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge883_2', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge883_IInterface]
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge883_4', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge883_3],
+        statics: {
+            field1: 1
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Class65_2', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Class65_1.Nested]
+    });
+    
+    Bridge.define('Bridge.ClientTest.ExceptionTests.E2', {
+        inherits: [Bridge.ClientTest.ExceptionTests.E1],
+        constructor: function (message) {
+            Bridge.ClientTest.ExceptionTests.E1.prototype.$constructor.call(this, message);
+    
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.PropertyAccessorTests.D3', {
+        inherits: [Bridge.ClientTest.PropertyAccessorTests.B3],
+        getP1: function () {
+            return Bridge.ClientTest.PropertyAccessorTests.B3.prototype.getP1.call(this) + 1;
+        },
+        setP1: function (value) {
+            Bridge.ClientTest.PropertyAccessorTests.B3.prototype.setP1.call(this, value - 1);
+        },
+        getP2: function () {
+            return Bridge.ClientTest.PropertyAccessorTests.B3.prototype.getP2.call(this) + 1;
+        },
+        setP3: function (value) {
+            Bridge.ClientTest.PropertyAccessorTests.B3.prototype.setP3.call(this, value - 1);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.PropertyAccessorTests.D4$1', function (T) { return {
+        inherits: [Bridge.ClientTest.PropertyAccessorTests.B4$1(T)],
+        getP1: function () {
+            return Bridge.ClientTest.PropertyAccessorTests.B4$1(T).prototype.getP1.call(this) + 1;
+        },
+        setP1: function (value) {
+            Bridge.ClientTest.PropertyAccessorTests.B4$1(T).prototype.setP1.call(this, value - 1);
+        },
+        getP2: function () {
+            return Bridge.ClientTest.PropertyAccessorTests.B4$1(T).prototype.getP2.call(this) + 1;
+        },
+        setP3: function (value) {
+            Bridge.ClientTest.PropertyAccessorTests.B4$1(T).prototype.setP3.call(this, value - 1);
+        }
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.SimpleTypes.ObjectTests.C2', {
+        inherits: [Bridge.ClientTest.SimpleTypes.ObjectTests.C1]
     });
     
     Bridge.define('Bridge.ClientTest.ArrayTests', {
@@ -3552,14 +3898,6 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BasicCSharp.TestAbstractClass.B', {
-        inherits: [Bridge.ClientTest.BasicCSharp.TestAbstractClass.A],
-        getString: function () {
-            this.setData(this.getData()+1);
-            return "B";
-        }
-    });
-    
     Bridge.define('Bridge.ClientTest.BasicCSharp.TestEnum', {
         statics: {
             testParse: function () {
@@ -3666,83 +4004,6 @@
                 Bridge.get(Bridge.Test.Assert).areEqual(outPets.v, 14);
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Enum.tryParse(Bridge.ClientTest.BasicCSharp.TestEnum.Digits, "ONE", outVar), false, "TryParse ONE");
             }
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BasicCSharp.TestInheritance.B', {
-        inherits: [Bridge.ClientTest.BasicCSharp.TestInheritance.A],
-        config: {
-            properties: {
-                Y: 0
-            }
-        },
-        constructor: function (x, y) {
-            Bridge.ClientTest.BasicCSharp.TestInheritance.A.prototype.$constructor.call(this, x);
-    
-            this.setY(y);
-        },
-        handleNumber$1: function (i) {
-            return i * 100;
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BasicCSharp.TestInterfaces.A', {
-        inherits: [Bridge.ClientTest.BasicCSharp.TestInterfaces.ISimple],
-        config: {
-            properties: {
-                Data: 0
-            }
-        },
-        constructor: function () {
-            this.setData(1);
-        },
-        getString: function () {
-            return "A.ISimple";
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BasicCSharp.TestInterfaces.B', {
-        inherits: [Bridge.ClientTest.BasicCSharp.TestInterfaces.ISimple],
-        data: 0,
-        constructor: function () {
-            this.data = 2;
-        },
-        getData: function () {
-            return this.data;
-        },
-        setData: function (value) {
-            this.data = value;
-        },
-        getString: function () {
-            return "explicit B.ISimple";
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BasicCSharp.TestInterfaces.C', {
-        inherits: [Bridge.ClientTest.BasicCSharp.TestInterfaces.ISimple,Bridge.ClientTest.BasicCSharp.TestInterfaces.ISimpleAsWell],
-        data: 0,
-        dataAsWell: 0,
-        constructor: function () {
-            this.data = 3;
-            this.dataAsWell = 4;
-        },
-        getData: function () {
-            return this.data;
-        },
-        setData: function (value) {
-            this.data = value;
-        },
-        getDataAsWell: function () {
-            return this.dataAsWell;
-        },
-        setDataAsWell: function (value) {
-            this.dataAsWell = value;
-        },
-        getString: function () {
-            return "C.ISimple";
-        },
-        getStringAsWell: function () {
-            return "C.ISimpleAsWell";
         }
     });
     
@@ -4335,24 +4596,6 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BasicCSharp.TestVirtualMethods.B', {
-        inherits: [Bridge.ClientTest.BasicCSharp.TestVirtualMethods.A],
-        testA: function () {
-            return Bridge.ClientTest.BasicCSharp.TestVirtualMethods.A.prototype.test.call(this);
-        },
-        test: function () {
-            return "B";
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge240B', {
-        inherits: [Bridge.ClientTest.BridgeIssues.Bridge240A],
-        getString: function () {
-            this.setData(this.getData()+1);
-            return "B";
-        }
-    });
-    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge266A', {
         statics: {
             test: function () {
@@ -4368,39 +4611,6 @@
         statics: {
             test: function (i) {
                 return i;
-            }
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge304', {
-        inherits: [Bridge.ClientTest.BridgeIssues.IBridge304],
-        config: {
-            properties: {
-                X: null
-            }
-        },
-        f: function (x) {
-            this.setX(x);
-        },
-        f$1: function () {
-            this.setX("void F()");
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge306A', {
-        inherits: [Bridge.ClientTest.BridgeIssues.Bridge306Component$1(Bridge.ClientTest.BridgeIssues.Bridge306A.Props)],
-        statics: {
-            $new: function (props) {
-                return Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge306Component$1(Bridge.ClientTest.BridgeIssues.Bridge306A.Props)).$new(Bridge.ClientTest.BridgeIssues.Bridge306A)(props);
-            }
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge306B', {
-        inherits: [Bridge.ClientTest.BridgeIssues.Bridge306Component$1(Bridge.ClientTest.BridgeIssues.Bridge306B.Props)],
-        statics: {
-            $new: function (props) {
-                return Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge306Component$1(Bridge.ClientTest.BridgeIssues.Bridge306B.Props)).$new(Bridge.ClientTest.BridgeIssues.Bridge306B)(props);
             }
         }
     });
@@ -4448,13 +4658,6 @@
             doSomething: function (person) {
                 return person.getName();
             }
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge436Second', {
-        inherits: [Bridge.ClientTest.BridgeIssues.Bridge436First],
-        toObject: function () {
-            return Bridge.ClientTest.BridgeIssues.Bridge436First.prototype.toObject.call(this) + "2";
         }
     });
     
@@ -4954,29 +5157,6 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge522.DerivedClass1', {
-        inherits: [Bridge.ClientTest.BridgeIssues.Bridge522.BaseClass],
-        constructor: function () {
-            Bridge.ClientTest.BridgeIssues.Bridge522.BaseClass.prototype.$constructor.call(this);
-    
-    
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge522.DerivedClass2', {
-        inherits: [Bridge.ClientTest.BridgeIssues.Bridge522.BaseClass],
-        config: {
-            properties: {
-                B: 0
-            }
-        },
-        constructor: function () {
-            Bridge.ClientTest.BridgeIssues.Bridge522.BaseClass.prototype.$constructor.call(this);
-    
-    
-        }
-    });
-    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge532', {
         statics: {
             testUseCase: function () {
@@ -4987,52 +5167,6 @@
                 Bridge.get(Bridge.Test.Assert).areDeepEqual$1(list.getRange(6, 3).toArray(), [7, 8, 9], "Bridge532 (6, 3)");
     
             }
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge537B', {
-        inherits: [Bridge.IEnumerable$1(Bridge.ClientTest.BridgeIssues.Bridge537A)],
-        statics: {
-            getCount: function (l) {
-                return l.list.getCount();
-            },
-            testB1: function () {
-                var l = new Bridge.ClientTest.BridgeIssues.Bridge537B();
-    
-                l.add(Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge537A(), {
-                    id: 101
-                } ));
-                l.add(Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge537A(), {
-                    id: 102
-                } ));
-    
-                return l.getCount();
-            },
-            testB2: function () {
-                var l = new Bridge.ClientTest.BridgeIssues.Bridge537B();
-    
-                l.add(Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge537A(), {
-                    id: 103
-                } ));
-    
-                return Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge537B).getCount(l);
-            }
-        },
-        list: null,
-        constructor: function () {
-            this.list = new Bridge.List$1(Bridge.ClientTest.BridgeIssues.Bridge537A)();
-        },
-        add: function (value) {
-            this.list.add(value);
-        },
-        getEnumerator$1: function () {
-            return this.list.getEnumerator();
-        },
-        getEnumerator: function () {
-            return this.list.getEnumerator();
-        },
-        getCount: function () {
-            return this.list.getCount();
         }
     });
     
@@ -5569,44 +5703,6 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge558B', {
-        inherits: [Bridge.ClientTest.BridgeIssues.Bridge558A],
-        zz: function (a) {
-            return Bridge.ClientTest.BridgeIssues.Bridge558A.prototype.zz.call(this, a);
-        },
-        zz$1: function (a) {
-            return Bridge.ClientTest.BridgeIssues.Bridge558A.prototype.zz$1.call(this, a);
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge559B1', {
-        inherits: [Bridge.ClientTest.BridgeIssues.Bridge559A1],
-        constructor: function () {
-            Bridge.ClientTest.BridgeIssues.Bridge559A1.prototype.$constructor.call(this);
-    
-            this.result += " -> Bridge559B1 -- unexpected!";
-        },
-        constructor$1: function (a) {
-            Bridge.ClientTest.BridgeIssues.Bridge559A1.prototype.constructor$1.call(this, a);
-    
-            this.result += " -> Bridge559B1$1";
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge559B2', {
-        inherits: [Bridge.ClientTest.BridgeIssues.Bridge559A2],
-        constructor: function () {
-            Bridge.ClientTest.BridgeIssues.Bridge559A2.prototype.$constructor.call(this);
-    
-            this.result += " ClassB -- unexpected!";
-        },
-        constructor$1: function (a) {
-            Bridge.ClientTest.BridgeIssues.Bridge559A2.prototype.constructor$1.call(this, a);
-    
-            this.result += " ClassB$1";
-        }
-    });
-    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge563', {
         statics: {
             tesForeach: function () {
@@ -5706,13 +5802,6 @@
                 var t7 = new Object();
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.getType(t7) === Object, "#565 t7");
             }
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge566B', {
-        inherits: [Bridge.ClientTest.BridgeIssues.Bridge566A],
-        getName: function () {
-            return "Ted";
         }
     });
     
@@ -6183,17 +6272,6 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge623B1', {
-        inherits: [Bridge.ClientTest.BridgeIssues.Bridge623A],
-        constructor: function (foo, func) {
-            Bridge.ClientTest.BridgeIssues.Bridge623A.prototype.$constructor.call(this, foo, func);
-    
-        },
-        getFoo: function () {
-            return 2 * this.foo;
-        }
-    });
-    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge625', {
         statics: {
             testUseCase: function () {
@@ -6306,13 +6384,6 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge635B', {
-        inherits: [Bridge.ClientTest.BridgeIssues.Bridge635A],
-        internalFunc1: function () {
-            return "B.Test1";
-        }
-    });
-    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge647', {
         statics: {
             testUseCase: function () {
@@ -6336,14 +6407,6 @@
                 Bridge.get(Bridge.Test.Assert).areEqual(stringArray[0], "test");
             }
         }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge652.Bridge652A1', {
-        inherits: [Bridge.ClientTest.BridgeIssues.Bridge652.Bridge652C$1(Bridge.ClientTest.BridgeIssues.Bridge652.Bridge652B1)]
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge652.Bridge652A2', {
-        inherits: [Bridge.ClientTest.BridgeIssues.Bridge652.Bridge652D$1(Bridge.ClientTest.BridgeIssues.Bridge652.Bridge652B2)]
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge655', {
@@ -6691,10 +6754,6 @@
                 Bridge.get(Bridge.Test.Assert).areNotStrictEqual$1(Bridge.Nullable.lift1("$clone", c3_1), Bridge.Nullable.lift1("$clone", c3_1), "Bridge692 C3_1");
             }
         }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge693B.Bridge693C', {
-        inherits: [Bridge.ClientTest.BridgeIssues.IBridge693D]
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge694', {
@@ -7731,17 +7790,6 @@
     }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge883_2', {
-        inherits: [Bridge.ClientTest.BridgeIssues.Bridge883_IInterface]
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge883_4', {
-        inherits: [Bridge.ClientTest.BridgeIssues.Bridge883_3],
-        statics: {
-            field1: 1
-        }
-    });
-    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge889', {
         statics: {
             count: function (arr) {
@@ -8606,10 +8654,6 @@
                 Bridge.get(Bridge.Test.Assert).$false(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge933).isRunning);
             }
         }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Class65_2', {
-        inherits: [Bridge.ClientTest.BridgeIssues.Class65_1.Nested]
     });
     
     Bridge.define('Bridge.ClientTest.Collections.Generic.ComparerTests', {
@@ -11545,14 +11589,6 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTest.ExceptionTests.E2', {
-        inherits: [Bridge.ClientTest.ExceptionTests.E1],
-        constructor: function (message) {
-            Bridge.ClientTest.ExceptionTests.E1.prototype.$constructor.call(this, message);
-    
-        }
-    });
-    
     Bridge.define('Bridge.ClientTest.IComparableTests', {
         callingMethodThroughIComparableInterfaceInvokesImplementingMethod: function () {
             var a = new Bridge.ClientTest.IComparableTests.MyComparable(), b = new Bridge.ClientTest.IComparableTests.MyComparable();
@@ -13712,38 +13748,6 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTest.PropertyAccessorTests.D3', {
-        inherits: [Bridge.ClientTest.PropertyAccessorTests.B3],
-        getP1: function () {
-            return Bridge.ClientTest.PropertyAccessorTests.B3.prototype.getP1.call(this) + 1;
-        },
-        setP1: function (value) {
-            Bridge.ClientTest.PropertyAccessorTests.B3.prototype.setP1.call(this, value - 1);
-        },
-        getP2: function () {
-            return Bridge.ClientTest.PropertyAccessorTests.B3.prototype.getP2.call(this) + 1;
-        },
-        setP3: function (value) {
-            Bridge.ClientTest.PropertyAccessorTests.B3.prototype.setP3.call(this, value - 1);
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.PropertyAccessorTests.D4$1', function (T) { return {
-        inherits: [Bridge.ClientTest.PropertyAccessorTests.B4$1(T)],
-        getP1: function () {
-            return Bridge.ClientTest.PropertyAccessorTests.B4$1(T).prototype.getP1.call(this) + 1;
-        },
-        setP1: function (value) {
-            Bridge.ClientTest.PropertyAccessorTests.B4$1(T).prototype.setP1.call(this, value - 1);
-        },
-        getP2: function () {
-            return Bridge.ClientTest.PropertyAccessorTests.B4$1(T).prototype.getP2.call(this) + 1;
-        },
-        setP3: function (value) {
-            Bridge.ClientTest.PropertyAccessorTests.B4$1(T).prototype.setP3.call(this, value - 1);
-        }
-    }; });
-    
     Bridge.define('Bridge.ClientTest.SimpleTypes.BooleanTests', {
         typePropertiesAreCorrect: function () {
             Bridge.get(Bridge.Test.Assert).$true(Bridge.is(true, Boolean));
@@ -15583,10 +15587,6 @@
             Bridge.get(Bridge.Test.Assert).areEqual$1(c1.toString(), "test", "#1");
             Bridge.get(Bridge.Test.Assert).areEqual$1(c2.toString(), "test", "#1");
         }
-    });
-    
-    Bridge.define('Bridge.ClientTest.SimpleTypes.ObjectTests.C2', {
-        inherits: [Bridge.ClientTest.SimpleTypes.ObjectTests.C1]
     });
     
     Bridge.define('Bridge.ClientTest.SimpleTypes.SByteTests', {
@@ -20261,6 +20261,39 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge436Third', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge436Second],
+        toObject: function () {
+            return Bridge.ClientTest.BridgeIssues.Bridge436Second.prototype.toObject.call(this) + "3";
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge623B2', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge623B1],
+        constructor: function (foo, func) {
+            Bridge.ClientTest.BridgeIssues.Bridge623B1.prototype.$constructor.call(this, foo, func);
+    
+        },
+        getFoo: function () {
+            return 3 * this.foo;
+        },
+        call: function () {
+            return this.func() + 1000;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge693B', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge693A$1(Bridge.ClientTest.BridgeIssues.Bridge693B.Bridge693C)],
+        constructor: function () {
+            Bridge.ClientTest.BridgeIssues.Bridge693A$1(Bridge.ClientTest.BridgeIssues.Bridge693B.Bridge693C).prototype.$constructor.call(this, new Bridge.ClientTest.BridgeIssues.Bridge693B.Bridge693C());
+    
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge883_1', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge883_2]
+    });
+    
     Bridge.define('Bridge.ClientTest.BasicCSharp.TestInheritance', {
         statics: {
             testA: function () {
@@ -20496,13 +20529,6 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge436Third', {
-        inherits: [Bridge.ClientTest.BridgeIssues.Bridge436Second],
-        toObject: function () {
-            return Bridge.ClientTest.BridgeIssues.Bridge436Second.prototype.toObject.call(this) + "3";
-        }
-    });
-    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge522', {
         statics: {
             testUseCase1: function () {
@@ -20633,20 +20659,6 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge623B2', {
-        inherits: [Bridge.ClientTest.BridgeIssues.Bridge623B1],
-        constructor: function (foo, func) {
-            Bridge.ClientTest.BridgeIssues.Bridge623B1.prototype.$constructor.call(this, foo, func);
-    
-        },
-        getFoo: function () {
-            return 3 * this.foo;
-        },
-        call: function () {
-            return this.func() + 1000;
-        }
-    });
-    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge635', {
         statics: {
             testUseCase: function () {
@@ -20687,14 +20699,6 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge693B', {
-        inherits: [Bridge.ClientTest.BridgeIssues.Bridge693A$1(Bridge.ClientTest.BridgeIssues.Bridge693B.Bridge693C)],
-        constructor: function () {
-            Bridge.ClientTest.BridgeIssues.Bridge693A$1(Bridge.ClientTest.BridgeIssues.Bridge693B.Bridge693C).prototype.$constructor.call(this, new Bridge.ClientTest.BridgeIssues.Bridge693B.Bridge693C());
-    
-        }
-    });
-    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge882', {
         statics: {
             testUseCase: function () {
@@ -20702,10 +20706,6 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge882_Static.Bridge882_A_Static).getSum(), 18, "Bridge882_A_Static.Sum");
             }
         }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge883_1', {
-        inherits: [Bridge.ClientTest.BridgeIssues.Bridge883_2]
     });
     
     Bridge.define('Bridge.ClientTest.BasicCSharp.TestAbstractClass', {

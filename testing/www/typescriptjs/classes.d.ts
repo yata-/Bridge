@@ -1,26 +1,14 @@
 ﻿/// <reference path="./bridge.d.ts" />
 
 declare module Classes {
-    export interface StaticClass {
+    export interface Dog extends Classes.Animal {
+        move$1(): number;
     }
-    export interface StaticClassFunc extends Function {
-        prototype: StaticClass;
-        new (): StaticClass;
-        move(p: Classes.Point, dx: number, dy: number): Classes.Point;
+    export interface DogFunc extends Function {
+        prototype: Dog;
+        new (name: string): Dog;
     }
-    var StaticClass: StaticClassFunc;
-
-    export interface MovePoint {
-        getPoint(): Classes.Point;
-        setPoint(value: Classes.Point): void;
-        move(dx: number, dy: number): void;
-    }
-    export interface MovePointFunc extends Function {
-        prototype: MovePoint;
-        new (): MovePoint;
-        move(p: Classes.Point, dx: number, dy: number): Classes.Point;
-    }
-    var MovePoint: MovePointFunc;
+    var Dog: DogFunc;
 
     export interface Employee extends Classes.Animal {
     }
@@ -38,15 +26,6 @@ declare module Classes {
         new (name: string): Snake;
     }
     var Snake: SnakeFunc;
-
-    export interface Dog extends Classes.Animal {
-        move$1(): number;
-    }
-    export interface DogFunc extends Function {
-        prototype: Dog;
-        new (name: string): Dog;
-    }
-    var Dog: DogFunc;
 
     export interface Point {
         x: number;
@@ -80,5 +59,26 @@ declare module Classes {
         };
     }
     var Animal: AnimalFunc;
+
+    export interface StaticClass {
+    }
+    export interface StaticClassFunc extends Function {
+        prototype: StaticClass;
+        new (): StaticClass;
+        move(p: Classes.Point, dx: number, dy: number): Classes.Point;
+    }
+    var StaticClass: StaticClassFunc;
+
+    export interface MovePoint {
+        getPoint(): Classes.Point;
+        setPoint(value: Classes.Point): void;
+        move(dx: number, dy: number): void;
+    }
+    export interface MovePointFunc extends Function {
+        prototype: MovePoint;
+        new (): MovePoint;
+        move(p: Classes.Point, dx: number, dy: number): Classes.Point;
+    }
+    var MovePoint: MovePointFunc;
 
 }
