@@ -239,7 +239,11 @@ namespace Bridge.Translator
 
             IType type;
 
-            if (resolveResult is InvocationResolveResult)
+            if (resolveResult is DynamicInvocationResolveResult)
+            {
+                return expression.Parent is UnaryOperatorExpression && !(expression.Parent.Parent is Statement);
+            }
+            else if (resolveResult is InvocationResolveResult)
             {
                 type = ((InvocationResolveResult)resolveResult).Member.ReturnType;
             }
