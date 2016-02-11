@@ -135,6 +135,47 @@ namespace Bridge.Translator
             this.Log.Trace("Sorting types by inheritance done");
         }
 
+        private Stack<IType> activeTypes;
+        public IList<ITypeInfo> GetParents(IType type, IList<ITypeInfo> list = null, bool includeSelf = false)
+        {
+            if (list == null)
+            {
+                activeTypes = new Stack<IType>();
+                list = new List<ITypeInfo>();
+            }
+
+            var typeDef = type.GetDefinition() ?? type;
+
+            if (activeTypes.Contains(typeDef))
+            {
+                return list;
+            }
+
+            activeTypes.Push(typeDef);
+
+            var types = type.GetAllBaseTypes();
+            foreach (var t in types)
+            {
+                var bType = BridgeTypes.Get(t, true);
+
+                if (bType != null && bType.TypeInfo != null && (includeSelf || bType.Type != typeDef))
+                {
+                    list.Add(bType.TypeInfo);
+                }
+
+                if (t.TypeArguments.Count > 0)
+                {
+                    foreach (var typeArgument in t.TypeArguments)
+                    {
+                        this.GetParents(typeArgument, list, true);
+                    }
+                }
+            }
+
+            activeTypes.Pop();
+            return includeSelf ? list : list.Distinct().ToList();
+        }
+
         public virtual void TopologicalSort()
         {
             this.Log.Trace("Topological sorting...");
@@ -148,40 +189,39 @@ namespace Bridge.Translator
             foreach (var t in this.Types)
             {
                 hitCounters[0]++;
+                var parents = this.GetParents(t.Type);
 
-                for (int i = this.Types.Count - 1; i > -1; i--)
+                for (int i = parents.Count - 1; i > -1; i--)
                 {
                     hitCounters[1]++;
-                    var x = this.Types[i];
+                    var x = parents[i];
 
-                    var tProcess = graph.Processes.FirstOrDefault(p => p.Name == t.Type.ReflectionName);
+                    var t1 = t;
+                    var tProcess = graph.Processes.FirstOrDefault(p => p.Name == t1.Type.ReflectionName);
                     if (tProcess == null)
                     {
                         hitCounters[2]++;
                         tProcess = new TopologicalSorting.OrderedProcess(graph, t.Type.ReflectionName);
                     }
 
-                    if (this.IsInheritedFrom(t, x))
+                    hitCounters[3]++;
+
+                    if (tProcess.Predecessors.All(p => p.Name != x.Type.ReflectionName))
                     {
-                        hitCounters[3]++;
+                        hitCounters[4]++;
 
-                        if (tProcess.Predecessors.All(p => p.Name != x.Type.ReflectionName))
+                        var dProcess = graph.Processes.FirstOrDefault(p => p.Name == x.Type.ReflectionName);
+                        if (dProcess == null)
                         {
-                            hitCounters[4]++;
+                            hitCounters[5]++;
+                            dProcess = new TopologicalSorting.OrderedProcess(graph, x.Type.ReflectionName);
+                        }
+                        //var dProcess = new TopologicalSorting.OrderedProcess(graph, dependency.Type.FullName);
 
-                            var dProcess = graph.Processes.FirstOrDefault(p => p.Name == x.Type.ReflectionName);
-                            if (dProcess == null)
-                            {
-                                hitCounters[5]++;
-                                dProcess = new TopologicalSorting.OrderedProcess(graph, x.Type.ReflectionName);
-                            }
-                            //var dProcess = new TopologicalSorting.OrderedProcess(graph, dependency.Type.FullName);
-
-                            if (dProcess.Predecessors.All(p => p.Name != tProcess.Name))
-                            {
-                                hitCounters[6]++;
-                                tProcess.After(dProcess);
-                            }
+                        if (dProcess.Predecessors.All(p => p.Name != tProcess.Name))
+                        {
+                            hitCounters[6]++;
+                            tProcess.After(dProcess);
                         }
                     }
                 }

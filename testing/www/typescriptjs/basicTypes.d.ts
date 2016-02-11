@@ -1,6 +1,12 @@
 ﻿/// <reference path="./bridge.d.ts" />
 
 declare module BasicTypes {
+    export enum Color {
+        red = 0,
+        green = 1,
+        blue = 2
+    }
+
     export interface Keywords {
         $break: string;
         $case: string;
@@ -69,12 +75,6 @@ declare module BasicTypes {
         new (): Keywords;
     }
     var Keywords: KeywordsFunc;
-
-    export enum Color {
-        red = 0,
-        green = 1,
-        blue = 2
-    }
 
     export interface BasicTypes {
         boolValue: boolean;
