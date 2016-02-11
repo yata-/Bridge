@@ -1426,6 +1426,7 @@
                 $jumpFromFinally, 
                 $tcs = new Bridge.TaskCompletionSource(), 
                 $returnValue, 
+                $async_e, 
                 $asyncBody = Bridge.fn.bind(this, function () {
                     try {
                         for (;;) {
@@ -1448,9 +1449,9 @@
                                 }
                             }
                         }
-                    } catch($e1) {
-                        $e1 = Bridge.Exception.create($e1);
-                        $tcs.setException($e1);
+                    } catch($async_e1) {
+                        $async_e = Bridge.Exception.create($async_e1);
+                        $tcs.setException($async_e);
                     }
                 }, arguments);
     
@@ -1464,6 +1465,7 @@
                 $jumpFromFinally, 
                 $tcs = new Bridge.TaskCompletionSource(), 
                 $returnValue, 
+                $async_e, 
                 $asyncBody = Bridge.fn.bind(this, function () {
                     try {
                         for (;;) {
@@ -1486,9 +1488,9 @@
                                 }
                             }
                         }
-                    } catch($e1) {
-                        $e1 = Bridge.Exception.create($e1);
-                        $tcs.setException($e1);
+                    } catch($async_e1) {
+                        $async_e = Bridge.Exception.create($async_e1);
+                        $tcs.setException($async_e);
                     }
                 }, arguments);
     
@@ -1506,6 +1508,7 @@
                     $jumpFromFinally, 
                     $tcs = new Bridge.TaskCompletionSource(), 
                     $returnValue, 
+                    $async_e, 
                     $asyncBody = Bridge.fn.bind(this, function () {
                         try {
                             for (;;) {
@@ -1528,9 +1531,9 @@
                                     }
                                 }
                             }
-                        } catch($e1) {
-                            $e1 = Bridge.Exception.create($e1);
-                            $tcs.setException($e1);
+                        } catch($async_e1) {
+                            $async_e = Bridge.Exception.create($async_e1);
+                            $tcs.setException($async_e);
                         }
                     }, arguments);
     
@@ -1544,6 +1547,7 @@
                     $jumpFromFinally, 
                     $tcs = new Bridge.TaskCompletionSource(), 
                     $returnValue, 
+                    $async_e, 
                     $asyncBody = Bridge.fn.bind(this, function () {
                         try {
                             for (;;) {
@@ -1566,9 +1570,9 @@
                                     }
                                 }
                             }
-                        } catch($e1) {
-                            $e1 = Bridge.Exception.create($e1);
-                            $tcs.setException($e1);
+                        } catch($async_e1) {
+                            $async_e = Bridge.Exception.create($async_e1);
+                            $tcs.setException($async_e);
                         }
                     }, arguments);
     
@@ -2217,8 +2221,8 @@
         test1: function () {
             try {
             }
-            catch ($e) {
-                $e = Bridge.Exception.create($e);
+            catch ($e1) {
+                $e1 = Bridge.Exception.create($e1);
             }
         }
     });
@@ -3913,13 +3917,13 @@
                 try {
                     var r = Bridge.Int.div(10, i);
                 }
-                catch ($e) {
-                    $e = Bridge.Exception.create($e);
+                catch ($e1) {
+                    $e1 = Bridge.Exception.create($e1);
                     var ex;
-                    if (Bridge.is($e, Bridge.ArgumentException)) {
+                    if (Bridge.is($e1, Bridge.ArgumentException)) {
                     }
                     else {
-                        ex = $e;
+                        ex = $e1;
                         exceptionMessage = ex.getMessage();
                     }
                 }
@@ -3930,8 +3934,8 @@
                 try {
                     return s;
                 }
-                catch ($e) {
-                    $e = Bridge.Exception.create($e);
+                catch ($e1) {
+                    $e1 = Bridge.Exception.create($e1);
                     return "";
                 }
             },
@@ -3939,31 +3943,31 @@
                 try {
                     throw new Bridge.Exception();
                 }
-                catch ($e) {
-                    $e = Bridge.Exception.create($e);
+                catch ($e1) {
+                    $e1 = Bridge.Exception.create($e1);
                 }
             },
             tryCatchWithCaughtTypedException: function () {
                 try {
                     throw new Bridge.Exception();
                 }
-                catch ($e) {
-                    $e = Bridge.Exception.create($e);
+                catch ($e1) {
+                    $e1 = Bridge.Exception.create($e1);
                 }
             },
             tryCatchWithCaughtArgumentException: function () {
                 try {
                     throw new Bridge.ArgumentException("catch me");
                 }
-                catch ($e) {
-                    $e = Bridge.Exception.create($e);
+                catch ($e1) {
+                    $e1 = Bridge.Exception.create($e1);
                     var ex;
-                    if (Bridge.is($e, Bridge.ArgumentException)) {
-                        ex = $e;
+                    if (Bridge.is($e1, Bridge.ArgumentException)) {
+                        ex = $e1;
                         return ex.getMessage();
                     }
                     else {
-                        throw $e;
+                        throw $e1;
                     }
                 }
             },
@@ -3975,13 +3979,13 @@
                     Bridge.get(Bridge.ClientTest.BasicCSharp.TestTryCatchBlocks).setIsATry(true);
                     throw new Bridge.Exception("catch me");
                 }
-                catch ($e) {
-                    $e = Bridge.Exception.create($e);
-                    if (Bridge.is($e, Bridge.ArgumentException)) {
+                catch ($e1) {
+                    $e1 = Bridge.Exception.create($e1);
+                    if (Bridge.is($e1, Bridge.ArgumentException)) {
                         Bridge.get(Bridge.ClientTest.BasicCSharp.TestTryCatchBlocks).setIsATry(true);
                     }
                     else {
-                        throw $e;
+                        throw $e1;
                     }
                 }
     
@@ -3996,16 +4000,16 @@
                     throw new Bridge.Exception("catch me");
                     Bridge.get(Bridge.ClientTest.BasicCSharp.TestTryCatchBlocks).setIsBTry(false);
                 }
-                catch ($e) {
-                    $e = Bridge.Exception.create($e);
+                catch ($e1) {
+                    $e1 = Bridge.Exception.create($e1);
                     var ex;
-                    if (Bridge.is($e, Bridge.InvalidCastException)) {
-                        ex = $e;
+                    if (Bridge.is($e1, Bridge.InvalidCastException)) {
+                        ex = $e1;
                         Bridge.get(Bridge.ClientTest.BasicCSharp.TestTryCatchBlocks).setIsBCatch(true);
                         var s = ex.getMessage();
                     }
                     else {
-                        throw $e;
+                        throw $e1;
                     }
                 }
     
@@ -4020,10 +4024,10 @@
                     throw new Bridge.InvalidOperationException("catch me");
                     Bridge.get(Bridge.ClientTest.BasicCSharp.TestTryCatchBlocks).setIsCTry(false);
                 }
-                catch ($e) {
-                    $e = Bridge.Exception.create($e);
+                catch ($e1) {
+                    $e1 = Bridge.Exception.create($e1);
                     Bridge.get(Bridge.ClientTest.BasicCSharp.TestTryCatchBlocks).setIsCCatch(true);
-                    throw $e;
+                    throw $e1;
                 }
     
                 Bridge.get(Bridge.ClientTest.BasicCSharp.TestTryCatchBlocks).setIsCTry(false);
@@ -4119,8 +4123,8 @@
                 try {
                     data.setCount(data.getCount()+1);
                 }
-                catch ($e) {
-                    $e = Bridge.Exception.create($e);
+                catch ($e1) {
+                    $e1 = Bridge.Exception.create($e1);
                 }
                 finally {
                     data.setCount(data.getCount()+1);
@@ -4132,8 +4136,8 @@
                     throw new Bridge.Exception();
                     data.setCount(data.getCount() - 1);
                 }
-                catch ($e) {
-                    $e = Bridge.Exception.create($e);
+                catch ($e1) {
+                    $e1 = Bridge.Exception.create($e1);
                     data.setCount(data.getCount() + 2);
                 }
                 finally {
@@ -4146,8 +4150,8 @@
                     throw new Bridge.Exception("catch me");
                     data.setCount(data.getCount() - 1);
                 }
-                catch ($e) {
-                    $e = Bridge.Exception.create($e);
+                catch ($e1) {
+                    $e1 = Bridge.Exception.create($e1);
                     data.setCount(data.getCount() + 2);
                 }
                 finally {
@@ -4160,17 +4164,17 @@
                     throw new Bridge.ArgumentException("catch me");
                     data.setCount(data.getCount() - 1);
                 }
-                catch ($e) {
-                    $e = Bridge.Exception.create($e);
+                catch ($e1) {
+                    $e1 = Bridge.Exception.create($e1);
                     var ex;
-                    if (Bridge.is($e, Bridge.ArgumentException)) {
-                        ex = $e;
+                    if (Bridge.is($e1, Bridge.ArgumentException)) {
+                        ex = $e1;
                         data.setCount(data.getCount() + 2);
     
                         return ex.getMessage();
                     }
                     else {
-                        throw $e;
+                        throw $e1;
                     }
                 }
                 finally {
@@ -4187,13 +4191,13 @@
                     throw new Bridge.Exception("catch me");
                     Bridge.get(Bridge.ClientTest.BasicCSharp.TestTryCatchFinallyBlocks).setIsATry(false);
                 }
-                catch ($e) {
-                    $e = Bridge.Exception.create($e);
-                    if (Bridge.is($e, Bridge.ArgumentException)) {
+                catch ($e1) {
+                    $e1 = Bridge.Exception.create($e1);
+                    if (Bridge.is($e1, Bridge.ArgumentException)) {
                         Bridge.get(Bridge.ClientTest.BasicCSharp.TestTryCatchFinallyBlocks).setIsACatch(true);
                     }
                     else {
-                        throw $e;
+                        throw $e1;
                     }
                 }
                 finally {
@@ -4210,16 +4214,16 @@
                     throw new Bridge.Exception("catch me");
                     Bridge.get(Bridge.ClientTest.BasicCSharp.TestTryCatchFinallyBlocks).setIsBTry(false);
                 }
-                catch ($e) {
-                    $e = Bridge.Exception.create($e);
+                catch ($e1) {
+                    $e1 = Bridge.Exception.create($e1);
                     var ex;
-                    if (Bridge.is($e, Bridge.InvalidCastException)) {
-                        ex = $e;
+                    if (Bridge.is($e1, Bridge.InvalidCastException)) {
+                        ex = $e1;
                         var s = ex.getMessage();
                         Bridge.get(Bridge.ClientTest.BasicCSharp.TestTryCatchFinallyBlocks).setIsBCatch(true);
                     }
                     else {
-                        throw $e;
+                        throw $e1;
                     }
                 }
                 finally {
@@ -4236,10 +4240,10 @@
                     throw new Bridge.InvalidOperationException("catch me");
                     Bridge.get(Bridge.ClientTest.BasicCSharp.TestTryCatchFinallyBlocks).setIsCTry(false);
                 }
-                catch ($e) {
-                    $e = Bridge.Exception.create($e);
+                catch ($e1) {
+                    $e1 = Bridge.Exception.create($e1);
                     Bridge.get(Bridge.ClientTest.BasicCSharp.TestTryCatchFinallyBlocks).setIsCCatch(true);
-                    throw $e;
+                    throw $e1;
                 }
                 finally {
                     Bridge.get(Bridge.ClientTest.BasicCSharp.TestTryCatchFinallyBlocks).setIsCFinally(true);
@@ -4740,6 +4744,7 @@
                     i, 
                     np, 
                     np1, 
+                    $async_e, 
                     $asyncBody = Bridge.fn.bind(this, function () {
                         try {
                             for (;;) {
@@ -4825,9 +4830,9 @@
                                     }
                                 }
                             }
-                        } catch($e1) {
-                            $e1 = Bridge.Exception.create($e1);
-                            $tcs.setException($e1);
+                        } catch($async_e1) {
+                            $async_e = Bridge.Exception.create($async_e1);
+                            $tcs.setException($async_e);
                         }
                     }, arguments);
     
@@ -4840,6 +4845,7 @@
                     $jumpFromFinally, 
                     $tcs = new Bridge.TaskCompletionSource(), 
                     $returnValue, 
+                    $async_e, 
                     $asyncBody = Bridge.fn.bind(this, function () {
                         try {
                             for (;;) {
@@ -4863,9 +4869,9 @@
                                     }
                                 }
                             }
-                        } catch($e1) {
-                            $e1 = Bridge.Exception.create($e1);
-                            $tcs.setException($e1);
+                        } catch($async_e1) {
+                            $async_e = Bridge.Exception.create($async_e1);
+                            $tcs.setException($async_e);
                         }
                     }, arguments);
     
@@ -4878,6 +4884,7 @@
                     $jumpFromFinally, 
                     $tcs = new Bridge.TaskCompletionSource(), 
                     $returnValue, 
+                    $async_e, 
                     $asyncBody = Bridge.fn.bind(this, function () {
                         try {
                             for (;;) {
@@ -4901,9 +4908,9 @@
                                     }
                                 }
                             }
-                        } catch($e1) {
-                            $e1 = Bridge.Exception.create($e1);
-                            $tcs.setException($e1);
+                        } catch($async_e1) {
+                            $async_e = Bridge.Exception.create($async_e1);
+                            $tcs.setException($async_e);
                         }
                     }, arguments);
     
@@ -7433,7 +7440,8 @@
                     $returnValue, 
                     task, 
                     exception, 
-                    $e, 
+                    $async_e, 
+                    $async_e1, 
                     $asyncBody = Bridge.fn.bind(this, function () {
                         try {
                             for (;;) {
@@ -7476,15 +7484,15 @@
                                     }
                                 }
                             }
-                        } catch($e1) {
-                            $e1 = Bridge.Exception.create($e1);
+                        } catch($async_e1) {
+                            $async_e = Bridge.Exception.create($async_e1);
                             if ( $step >= 1 && $step <= 2 ){
-                                exception = $e1;
+                                exception = $async_e;
                                 $step = 3;
                                 $asyncBody();
                                 return;
                             }
-                            $tcs.setException($e1);
+                            $tcs.setException($async_e);
                         }
                     }, arguments);
     
@@ -7843,6 +7851,7 @@
                     $jumpFromFinally, 
                     $tcs = new Bridge.TaskCompletionSource(), 
                     $returnValue, 
+                    $async_e, 
                     $asyncBody = Bridge.fn.bind(this, function () {
                         try {
                             for (;;) {
@@ -7865,9 +7874,9 @@
                                     }
                                 }
                             }
-                        } catch($e1) {
-                            $e1 = Bridge.Exception.create($e1);
-                            $tcs.setException($e1);
+                        } catch($async_e1) {
+                            $async_e = Bridge.Exception.create($async_e1);
+                            $tcs.setException($async_e);
                         }
                     }, arguments);
     
@@ -8022,6 +8031,7 @@
                     $jumpFromFinally, 
                     $tcs = new Bridge.TaskCompletionSource(), 
                     $returnValue, 
+                    $async_e, 
                     $asyncBody = Bridge.fn.bind(this, function () {
                         try {
                             for (;;) {
@@ -8044,9 +8054,9 @@
                                     }
                                 }
                             }
-                        } catch($e1) {
-                            $e1 = Bridge.Exception.create($e1);
-                            $tcs.setException($e1);
+                        } catch($async_e1) {
+                            $async_e = Bridge.Exception.create($async_e1);
+                            $tcs.setException($async_e);
                         }
                     }, arguments);
     
@@ -8152,6 +8162,7 @@
                 $jumpFromFinally, 
                 $tcs = new Bridge.TaskCompletionSource(), 
                 $returnValue, 
+                $async_e, 
                 $asyncBody = Bridge.fn.bind(this, function () {
                     try {
                         for (;;) {
@@ -8174,9 +8185,9 @@
                                 }
                             }
                         }
-                    } catch($e1) {
-                        $e1 = Bridge.Exception.create($e1);
-                        $tcs.setException($e1);
+                    } catch($async_e1) {
+                        $async_e = Bridge.Exception.create($async_e1);
+                        $tcs.setException($async_e);
                     }
                 }, arguments);
     
@@ -8192,6 +8203,394 @@
     
                 Bridge.get(Bridge.Test.Assert).$true(Bridge.Linq.Enumerable.from(a).average().equalsT(Bridge.Decimal(2)));
                 Bridge.get(Bridge.Test.Assert).$true(Bridge.Linq.Enumerable.from(a).sum().equalsT(Bridge.Decimal(6)));
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge928', {
+        statics: {
+            testAsyncMethod: function () {
+                var $step = 0,
+                    $task1, 
+                    $jumpFromFinally, 
+                    $returnValue, 
+                    done, 
+                    result, 
+                    $async_e, 
+                    $e1, 
+                    $async_e1, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        try {
+                            for (;;) {
+                                $step = Bridge.Array.min([0,1,2,3,4], $step);
+                                switch ($step) {
+                                    case 0: {
+                                        done = Bridge.get(Bridge.Test.Assert).async();
+                                        result = false;
+                                        $step = 1;
+                                        continue;
+                                    }
+                                    case 1: {
+                                        $task1 = Bridge.Task.delay(1);
+                                        $step = 2;
+                                        $task1.continueWith($asyncBody, true);
+                                        return;
+                                    }
+                                    case 2: {
+                                        $task1.getAwaitedResult();
+                                        $step = 3;
+                                        continue;
+                                    }
+                                    case 3: {
+                                        try {
+                                            throw new Bridge.Exception("test");
+                                        }
+                                        catch ($e1) {
+                                            $e1 = Bridge.Exception.create($e1);
+                                        }
+                                        
+                                        result = true;
+                                        
+                                        if ($jumpFromFinally > -1) {
+                                            $step = $jumpFromFinally;
+                                            $jumpFromFinally = null;
+                                        } else if ($async_e) {
+                                            $tcs.setException($async_e);
+                                            return;
+                                        } else if (Bridge.isDefined($returnValue)) {
+                                            $tcs.setResult($returnValue);
+                                            return;
+                                        }
+                                        $step = 4;
+                                        continue;
+                                    }
+                                    case 4: {
+                                        
+                                        Bridge.get(Bridge.Test.Assert).$true(result);
+                                        
+                                        done();
+                                        return;
+                                    }
+                                    default: {
+                                        return;
+                                    }
+                                }
+                            }
+                        } catch($async_e1) {
+                            $async_e = Bridge.Exception.create($async_e1);
+                            if ($step >= 1 && $step <= 2){
+    
+                                $step = 3;
+                                $asyncBody();
+                                return;
+                            }
+                            throw $async_e;
+                        }
+                    }, arguments);
+    
+                $asyncBody();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge929', {
+        statics: {
+            testAsyncException: function () {
+                var $step = 0,
+                    $task1, 
+                    $jumpFromFinally, 
+                    $returnValue, 
+                    done, 
+                    e, 
+                    $async_e, 
+                    $async_e1, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        try {
+                            for (;;) {
+                                $step = Bridge.Array.min([0,1,2,3,4], $step);
+                                switch ($step) {
+                                    case 0: {
+                                        done = Bridge.get(Bridge.Test.Assert).async();
+                                        $step = 1;
+                                        continue;
+                                    }
+                                    case 1: {
+                                        $task1 = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge929).test();
+                                        $step = 2;
+                                        $task1.continueWith($asyncBody, true);
+                                        return;
+                                    }
+                                    case 2: {
+                                        $task1.getAwaitedResult();
+                                        Bridge.get(Bridge.Test.Assert).fail$1("Exception should be rethrowed in catch block");
+                                        $step = 4;
+                                        continue;
+                                    }
+                                    case 3: {
+                                        Bridge.get(Bridge.Test.Assert).areEqual(e.getMessage(), "test");
+                                        $step = 4;
+                                        continue;
+                                    }
+                                    case 4: {
+                                        
+                                        done();
+                                        return;
+                                    }
+                                    default: {
+                                        return;
+                                    }
+                                }
+                            }
+                        } catch($async_e1) {
+                            $async_e = Bridge.Exception.create($async_e1);
+                            if ( $step >= 1 && $step <= 2 ){
+                                e = $async_e;
+                                $step = 3;
+                                $asyncBody();
+                                return;
+                            }
+                            throw $async_e;
+                        }
+                    }, arguments);
+    
+                $asyncBody();
+            },
+            test: function () {
+                var $step = 0,
+                    $task1, 
+                    $jumpFromFinally, 
+                    $tcs = new Bridge.TaskCompletionSource(), 
+                    $returnValue, 
+                    $e1, 
+                    $async_e, 
+                    $async_e1, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        try {
+                            for (;;) {
+                                $step = Bridge.Array.min([1,2,3,4], $step);
+                                switch ($step) {
+    
+                                    case 1: {
+                                        $task1 = Bridge.Task.delay(1);
+                                        $step = 2;
+                                        $task1.continueWith($asyncBody);
+                                        return;
+                                    }
+                                    case 2: {
+                                        $task1.getAwaitedResult();
+                                        throw new Bridge.Exception("test");
+                                        $step = 4;
+                                        continue;
+                                    }
+                                    case 3: {
+                                        try {
+                                            throw new Bridge.Exception("catch");
+                                        }
+                                        catch ($e1) {
+                                            $e1 = Bridge.Exception.create($e1);
+                                        }
+                                        throw $async_e;
+                                        $step = 4;
+                                        continue;
+                                    }
+                                    case 4: {
+                                        $tcs.setResult(null);
+                                        return;
+                                    }
+                                    default: {
+                                        $tcs.setResult(null);
+                                        return;
+                                    }
+                                }
+                            }
+                        } catch($async_e1) {
+                            $async_e = Bridge.Exception.create($async_e1);
+                            if ( $step >= 1 && $step <= 2 ){
+                                $step = 3;
+                                $asyncBody();
+                                return;
+                            }
+                            $tcs.setException($async_e);
+                        }
+                    }, arguments);
+    
+                $asyncBody();
+                return $tcs.task;
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge930', {
+        statics: {
+            test: function () {
+                var $step = 0,
+                    $task1, 
+                    $taskResult1, 
+                    $jumpFromFinally, 
+                    $tcs = new Bridge.TaskCompletionSource(), 
+                    $returnValue, 
+                    $async_e, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        try {
+                            for (;;) {
+                                $step = Bridge.Array.min([0,1], $step);
+                                switch ($step) {
+                                    case 0: {
+                                        $task1 = Bridge.Task.fromResult(1);
+                                        $step = 1;
+                                        $task1.continueWith($asyncBody);
+                                        return;
+                                    }
+                                    case 1: {
+                                        $taskResult1 = $task1.getAwaitedResult();
+                                        throw new Bridge.Exception("test");
+                                        $tcs.setResult(null);
+                                        return;
+                                    }
+                                    default: {
+                                        $tcs.setResult(null);
+                                        return;
+                                    }
+                                }
+                            }
+                        } catch($async_e1) {
+                            $async_e = Bridge.Exception.create($async_e1);
+                            $tcs.setException($async_e);
+                        }
+                    }, arguments);
+    
+                $asyncBody();
+                return $tcs.task;
+            },
+            test1: function () {
+                var $step = 0,
+                    $task1, 
+                    $task2, 
+                    $task3, 
+                    $jumpFromFinally, 
+                    $tcs = new Bridge.TaskCompletionSource(), 
+                    $returnValue, 
+                    res, 
+                    $async_e, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        try {
+                            for (;;) {
+                                $step = Bridge.Array.min([0,1,2,3,4,5], $step);
+                                switch ($step) {
+                                    case 0: {
+                                        res = true;
+                                        $task3 = Bridge.Task.delay(1);
+                                        $step = 1;
+                                        $task3.continueWith($asyncBody);
+                                        return;
+                                    }
+                                    case 1: {
+                                        $task3.getAwaitedResult();
+                                        
+                                        if (res) {
+                                            $step = 2;
+                                            continue;
+                                        } 
+                                        $step = 4;
+                                        continue;
+                                    }
+                                    case 2: {
+                                        $task2 = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge930).test();
+                                        $step = 3;
+                                        $task2.continueWith($asyncBody);
+                                        return;
+                                    }
+                                    case 3: {
+                                        $task2.getAwaitedResult();
+                                        $step = 4;
+                                        continue;
+                                    }
+                                    case 4: {
+                                        
+                                        $task1 = Bridge.Task.delay(1);
+                                        $step = 5;
+                                        $task1.continueWith($asyncBody);
+                                        return;
+                                    }
+                                    case 5: {
+                                        $task1.getAwaitedResult();
+                                        $tcs.setResult(null);
+                                        return;
+                                    }
+                                    default: {
+                                        $tcs.setResult(null);
+                                        return;
+                                    }
+                                }
+                            }
+                        } catch($async_e1) {
+                            $async_e = Bridge.Exception.create($async_e1);
+                            $tcs.setException($async_e);
+                        }
+                    }, arguments);
+    
+                $asyncBody();
+                return $tcs.task;
+            },
+            testAsyncException: function () {
+                var $step = 0,
+                    $task1, 
+                    $jumpFromFinally, 
+                    $returnValue, 
+                    done, 
+                    e, 
+                    $async_e, 
+                    $async_e1, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        try {
+                            for (;;) {
+                                $step = Bridge.Array.min([0,1,2,3,4], $step);
+                                switch ($step) {
+                                    case 0: {
+                                        done = Bridge.get(Bridge.Test.Assert).async();
+                                        $step = 1;
+                                        continue;
+                                    }
+                                    case 1: {
+                                        $task1 = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge930).test1();
+                                        $step = 2;
+                                        $task1.continueWith($asyncBody, true);
+                                        return;
+                                    }
+                                    case 2: {
+                                        $task1.getAwaitedResult();
+                                        Bridge.get(Bridge.Test.Assert).fail$1("await should throw an exception");
+                                        $step = 4;
+                                        continue;
+                                    }
+                                    case 3: {
+                                        Bridge.get(Bridge.Test.Assert).areEqual(e.getMessage(), "test");
+                                        $step = 4;
+                                        continue;
+                                    }
+                                    case 4: {
+                                        
+                                        done();
+                                        return;
+                                    }
+                                    default: {
+                                        return;
+                                    }
+                                }
+                            }
+                        } catch($async_e1) {
+                            $async_e = Bridge.Exception.create($async_e1);
+                            if ( $step >= 1 && $step <= 2 ){
+                                e = $async_e;
+                                $step = 3;
+                                $asyncBody();
+                                return;
+                            }
+                            throw $async_e;
+                        }
+                    }, arguments);
+    
+                $asyncBody();
             }
         }
     });
@@ -8402,12 +8801,12 @@
                 var x = d.get(10);
                 Bridge.get(Bridge.Test.Assert).$true(false);
             }
-            catch ($e) {
-                $e = Bridge.Exception.create($e);
-                if (Bridge.is($e, Bridge.KeyNotFoundException)) {
+            catch ($e1) {
+                $e1 = Bridge.Exception.create($e1);
+                if (Bridge.is($e1, Bridge.KeyNotFoundException)) {
                 }
                 else {
-                    throw $e;
+                    throw $e1;
                 }
             }
         },
@@ -8431,12 +8830,12 @@
                 d.add(2, "b");
                 Bridge.get(Bridge.Test.Assert).$true(false);
             }
-            catch ($e) {
-                $e = Bridge.Exception.create($e);
-                if (Bridge.is($e, Bridge.ArgumentException)) {
+            catch ($e1) {
+                $e1 = Bridge.Exception.create($e1);
+                if (Bridge.is($e1, Bridge.ArgumentException)) {
                 }
                 else {
-                    throw $e;
+                    throw $e1;
                 }
             }
         },
@@ -8651,16 +9050,16 @@
                 var x = d.getItem(1);
                 Bridge.get(Bridge.Test.Assert).fail$1("Should throw");
             }
-            catch ($e) {
-                $e = Bridge.Exception.create($e);
+            catch ($e1) {
+                $e1 = Bridge.Exception.create($e1);
             }
     
             try {
                 var x1 = di2.getItem(1);
                 Bridge.get(Bridge.Test.Assert).fail$1("Should throw");
             }
-            catch ($e1) {
-                $e1 = Bridge.Exception.create($e1);
+            catch ($e2) {
+                $e2 = Bridge.Exception.create($e2);
             }
         },
         valuesWorks: function () {
@@ -8742,8 +9141,8 @@
                 d.add(5, "zz");
                 Bridge.get(Bridge.Test.Assert).fail$1("Should throw");
             }
-            catch ($e) {
-                $e = Bridge.Exception.create($e);
+            catch ($e1) {
+                $e1 = Bridge.Exception.create($e1);
             }
         },
         clearWorks: function () {
@@ -8973,8 +9372,8 @@
                 }
                 Bridge.get(Bridge.Test.Assert).fail$1("Should have thrown an exception in the loop");
             }
-            catch ($e) {
-                $e = Bridge.Exception.create($e);
+            catch ($e1) {
+                $e1 = Bridge.Exception.create($e1);
                 sb.appendLine("caught exception");
             }
     
@@ -9039,8 +9438,8 @@
                 }
                 Bridge.get(Bridge.Test.Assert).fail$1("Should have thrown");
             }
-            catch ($e) {
-                $e = Bridge.Exception.create($e);
+            catch ($e1) {
+                $e1 = Bridge.Exception.create($e1);
                 sb.appendLine("caught exception");
             }
     
@@ -10438,16 +10837,16 @@
                 var arr = Bridge.Array.init(size, 0);
                 Bridge.get(Bridge.Test.Assert).fail$1("Should throw");
             }
-            catch ($e) {
-                $e = Bridge.Exception.create($e);
+            catch ($e1) {
+                $e1 = Bridge.Exception.create($e1);
                 var ex;
-                if (Bridge.is($e, Bridge.ArgumentOutOfRangeException)) {
-                    ex = $e;
+                if (Bridge.is($e1, Bridge.ArgumentOutOfRangeException)) {
+                    ex = $e1;
                     var inner = ex.getInnerException();
                     Bridge.get(Bridge.Test.Assert).notNull$1(inner, "Inner Exception");
                 }
                 else {
-                    ex = $e;
+                    ex = $e1;
                     Bridge.get(Bridge.Test.Assert).fail$1("Expected ArgumentOutOfRangeException, got " + Bridge.getType(ex));
                 }
             }
@@ -10833,16 +11232,16 @@
                 var x = d.someField;
                 Bridge.get(Bridge.Test.Assert).fail$1("A NullReferenceException should have been thrown");
             }
-            catch ($e) {
-                $e = Bridge.Exception.create($e);
+            catch ($e1) {
+                $e1 = Bridge.Exception.create($e1);
                 var ex;
-                if (Bridge.is($e, Bridge.NullReferenceException)) {
-                    ex = $e;
+                if (Bridge.is($e1, Bridge.NullReferenceException)) {
+                    ex = $e1;
                     var inner = ex.getInnerException();
                     Bridge.get(Bridge.Test.Assert).notNull$1(inner, "Inner Exception");
                 }
                 else {
-                    ex = $e;
+                    ex = $e1;
                     Bridge.get(Bridge.Test.Assert).fail$1("Expected NullReferenceException, got type " + Bridge.getType(ex));
                 }
             }
@@ -11041,16 +11440,16 @@
                 throw new Bridge.ClientTest.ExceptionTests.E2("The message");
                 Bridge.get(Bridge.Test.Assert).fail$1("Should not get to statement after throw");
             }
-            catch ($e) {
-                $e = Bridge.Exception.create($e);
+            catch ($e1) {
+                $e1 = Bridge.Exception.create($e1);
                 var e;
-                if (Bridge.is($e, Bridge.ClientTest.ExceptionTests.E2)) {
-                    e = $e;
+                if (Bridge.is($e1, Bridge.ClientTest.ExceptionTests.E2)) {
+                    e = $e1;
                     Bridge.get(Bridge.Test.Assert).areEqual(e.getMessage(), "The message");
                     return;
                 }
                 else {
-                    throw $e;
+                    throw $e1;
                 }
             }
             Bridge.get(Bridge.Test.Assert).fail$1("Should not get to statement after catch");
@@ -11060,19 +11459,19 @@
                 throw new Bridge.ClientTest.ExceptionTests.E1("The message");
                 Bridge.get(Bridge.Test.Assert).fail$1("Should not get to statement after throw");
             }
-            catch ($e) {
-                $e = Bridge.Exception.create($e);
+            catch ($e1) {
+                $e1 = Bridge.Exception.create($e1);
                 var e;
-                if (Bridge.is($e, Bridge.ClientTest.ExceptionTests.E2)) {
+                if (Bridge.is($e1, Bridge.ClientTest.ExceptionTests.E2)) {
                     Bridge.get(Bridge.Test.Assert).fail$1("Should not catch E2");
                 }
-                else if (Bridge.is($e, Bridge.ClientTest.ExceptionTests.E1)) {
-                    e = $e;
+                else if (Bridge.is($e1, Bridge.ClientTest.ExceptionTests.E1)) {
+                    e = $e1;
                     Bridge.get(Bridge.Test.Assert).areEqual(e.getMessage(), "The message");
                     return;
                 }
                 else {
-                    throw $e;
+                    throw $e1;
                 }
             }
             Bridge.get(Bridge.Test.Assert).fail$1("Should not get to statement after catch");
@@ -11082,16 +11481,16 @@
                 throw new Bridge.ClientTest.ExceptionTests.E2("The message");
                 Bridge.get(Bridge.Test.Assert).fail$1("Should not get to statement after throw");
             }
-            catch ($e) {
-                $e = Bridge.Exception.create($e);
+            catch ($e1) {
+                $e1 = Bridge.Exception.create($e1);
                 var e;
-                if (Bridge.is($e, Bridge.ClientTest.ExceptionTests.E1)) {
-                    e = $e;
+                if (Bridge.is($e1, Bridge.ClientTest.ExceptionTests.E1)) {
+                    e = $e1;
                     Bridge.get(Bridge.Test.Assert).areEqual(e.getMessage(), "The message");
                     return;
                 }
                 else {
-                    throw $e;
+                    throw $e1;
                 }
             }
             Bridge.get(Bridge.Test.Assert).fail$1("Should not get to statement after catch");
@@ -11101,14 +11500,14 @@
                 (function() {{ throw 'The message'; }})();
                 Bridge.get(Bridge.Test.Assert).fail$1("Should not get to statement after throw");
             }
-            catch ($e) {
-                $e = Bridge.Exception.create($e);
+            catch ($e1) {
+                $e1 = Bridge.Exception.create($e1);
                 var e;
-                if (Bridge.is($e, Bridge.ClientTest.ExceptionTests.E1)) {
+                if (Bridge.is($e1, Bridge.ClientTest.ExceptionTests.E1)) {
                     Bridge.get(Bridge.Test.Assert).fail$1("Should not catch E1");
                 }
                 else {
-                    e = $e;
+                    e = $e1;
                     Bridge.get(Bridge.Test.Assert).areEqual(e.getMessage(), "The message");
                     return;
                 }
@@ -11120,9 +11519,9 @@
                 (function() {{ throw 'The message'; }})();
                 Bridge.get(Bridge.Test.Assert).fail$1("Should not get to statement after throw");
             }
-            catch ($e) {
-                $e = Bridge.Exception.create($e);
-                if (Bridge.is($e, Bridge.ClientTest.ExceptionTests.E1)) {
+            catch ($e1) {
+                $e1 = Bridge.Exception.create($e1);
+                if (Bridge.is($e1, Bridge.ClientTest.ExceptionTests.E1)) {
                     Bridge.get(Bridge.Test.Assert).fail$1("Should not catch E1");
                 }
                 else {
@@ -12974,12 +13373,12 @@
                 var x = Bridge.Nullable.getValue(b);
                 Bridge.get(Bridge.Test.Assert).fail$1("Unboxing null should have thrown an exception");
             }
-            catch ($e) {
-                $e = Bridge.Exception.create($e);
-                if (Bridge.is($e, Bridge.InvalidOperationException)) {
+            catch ($e1) {
+                $e1 = Bridge.Exception.create($e1);
+                if (Bridge.is($e1, Bridge.InvalidOperationException)) {
                 }
                 else {
-                    throw $e;
+                    throw $e1;
                 }
             }
         },
@@ -12990,12 +13389,12 @@
                 var x = Bridge.Nullable.getValue(b);
                 Bridge.get(Bridge.Test.Assert).fail$1("null.Value should have thrown an exception");
             }
-            catch ($e) {
-                $e = Bridge.Exception.create($e);
-                if (Bridge.is($e, Bridge.InvalidOperationException)) {
+            catch ($e1) {
+                $e1 = Bridge.Exception.create($e1);
+                if (Bridge.is($e1, Bridge.InvalidOperationException)) {
                 }
                 else {
-                    throw $e;
+                    throw $e1;
                 }
             }
         },
@@ -17457,6 +17856,7 @@
                     $jumpFromFinally, 
                     $tcs = new Bridge.TaskCompletionSource(), 
                     $returnValue, 
+                    $async_e, 
                     $asyncBody = Bridge.fn.bind(this, function () {
                         try {
                             for (;;) {
@@ -17481,9 +17881,9 @@
                                     }
                                 }
                             }
-                        } catch($e1) {
-                            $e1 = Bridge.Exception.create($e1);
-                            $tcs.setException($e1);
+                        } catch($async_e1) {
+                            $async_e = Bridge.Exception.create($async_e1);
+                            $tcs.setException($async_e);
                         }
                     }, arguments);
     
@@ -17523,6 +17923,7 @@
                     $jumpFromFinally, 
                     $tcs = new Bridge.TaskCompletionSource(), 
                     $returnValue, 
+                    $async_e, 
                     $asyncBody = Bridge.fn.bind(this, function () {
                         try {
                             for (;;) {
@@ -17548,9 +17949,9 @@
                                     }
                                 }
                             }
-                        } catch($e1) {
-                            $e1 = Bridge.Exception.create($e1);
-                            $tcs.setException($e1);
+                        } catch($async_e1) {
+                            $async_e = Bridge.Exception.create($async_e1);
+                            $tcs.setException($async_e);
                         }
                     }, arguments);
     
@@ -17591,6 +17992,7 @@
                     $jumpFromFinally, 
                     $tcs = new Bridge.TaskCompletionSource(), 
                     $returnValue, 
+                    $async_e, 
                     $asyncBody = Bridge.fn.bind(this, function () {
                         try {
                             for (;;) {
@@ -17615,9 +18017,9 @@
                                     }
                                 }
                             }
-                        } catch($e1) {
-                            $e1 = Bridge.Exception.create($e1);
-                            $tcs.setException($e1);
+                        } catch($async_e1) {
+                            $async_e = Bridge.Exception.create($async_e1);
+                            $tcs.setException($async_e);
                         }
                     }, arguments);
     
@@ -17661,7 +18063,8 @@
                     $tcs = new Bridge.TaskCompletionSource(), 
                     $returnValue, 
                     ex2, 
-                    $e, 
+                    $async_e, 
+                    $async_e1, 
                     $asyncBody = Bridge.fn.bind(this, function () {
                         try {
                             for (;;) {
@@ -17696,15 +18099,15 @@
                                     }
                                 }
                             }
-                        } catch($e1) {
-                            $e1 = Bridge.Exception.create($e1);
+                        } catch($async_e1) {
+                            $async_e = Bridge.Exception.create($async_e1);
                             if ( $step >= 1 && $step <= 2 ){
-                                ex2 = $e1;
+                                ex2 = $async_e;
                                 $step = 3;
                                 $asyncBody();
                                 return;
                             }
-                            $tcs.setException($e1);
+                            $tcs.setException($async_e);
                         }
                     }, arguments);
     
@@ -17733,6 +18136,7 @@
                     $jumpFromFinally, 
                     $tcs = new Bridge.TaskCompletionSource(), 
                     $returnValue, 
+                    $async_e, 
                     $asyncBody = Bridge.fn.bind(this, function () {
                         try {
                             for (;;) {
@@ -17757,9 +18161,9 @@
                                     }
                                 }
                             }
-                        } catch($e1) {
-                            $e1 = Bridge.Exception.create($e1);
-                            $tcs.setException($e1);
+                        } catch($async_e1) {
+                            $async_e = Bridge.Exception.create($async_e1);
+                            $tcs.setException($async_e);
                         }
                     }, arguments);
     
@@ -17894,17 +18298,17 @@
                 cts.cancel();
                 Bridge.get(Bridge.Test.Assert).fail$1("Should have thrown");
             }
-            catch ($e) {
-                $e = Bridge.Exception.create($e);
+            catch ($e1) {
+                $e1 = Bridge.Exception.create($e1);
                 var ex;
-                if (Bridge.is($e, Bridge.AggregateException)) {
-                    ex = $e;
+                if (Bridge.is($e1, Bridge.AggregateException)) {
+                    ex = $e1;
                     Bridge.get(Bridge.Test.Assert).areEqual$1(ex.innerExceptions.getCount(), 2, "count");
                     Bridge.get(Bridge.Test.Assert).true$1(ex.innerExceptions.contains(ex1), "ex1");
                     Bridge.get(Bridge.Test.Assert).true$1(ex.innerExceptions.contains(ex2), "ex2");
                 }
                 else {
-                    throw $e;
+                    throw $e1;
                 }
             }
     
@@ -17937,17 +18341,17 @@
                 cts.cancel(false);
                 Bridge.get(Bridge.Test.Assert).fail$1("Should have thrown");
             }
-            catch ($e) {
-                $e = Bridge.Exception.create($e);
+            catch ($e1) {
+                $e1 = Bridge.Exception.create($e1);
                 var ex;
-                if (Bridge.is($e, Bridge.AggregateException)) {
-                    ex = $e;
+                if (Bridge.is($e1, Bridge.AggregateException)) {
+                    ex = $e1;
                     Bridge.get(Bridge.Test.Assert).areEqual$1(ex.innerExceptions.getCount(), 2, "ex count");
                     Bridge.get(Bridge.Test.Assert).true$1(ex.innerExceptions.contains(ex1), "ex1");
                     Bridge.get(Bridge.Test.Assert).true$1(ex.innerExceptions.contains(ex2), "ex2");
                 }
                 else {
-                    throw $e;
+                    throw $e1;
                 }
             }
     
@@ -18367,7 +18771,8 @@
                 task, 
                 ex, 
                 ex1, 
-                $e, 
+                $async_e, 
+                $async_e1, 
                 $asyncBody = Bridge.fn.bind(this, function () {
                     try {
                         for (;;) {
@@ -18424,22 +18829,22 @@
                                 }
                             }
                         }
-                    } catch($e1) {
-                        $e1 = Bridge.Exception.create($e1);
+                    } catch($async_e1) {
+                        $async_e = Bridge.Exception.create($async_e1);
                         if ( $step >= 1 && $step <= 2 ){
-                            if (Bridge.is($e1, Bridge.PromiseException)) {
-                                ex = $e1;
+                            if (Bridge.is($async_e, Bridge.PromiseException)) {
+                                ex = $async_e;
                                 $step = 3;
                                 $asyncBody();
                                 return;
                             } else {
-                                ex1 = $e1;
+                                ex1 = $async_e;
                                 $step = 4;
                                 $asyncBody();
                                 return;
                             }
                         }
-                        throw $e1;
+                        throw $async_e;
                     }
                 }, arguments);
     
@@ -18639,7 +19044,8 @@
                     $jumpFromFinally, 
                     $returnValue, 
                     ex, 
-                    $e, 
+                    $async_e, 
+                    $async_e1, 
                     $asyncBody = Bridge.fn.bind(this, function () {
                         try {
                             for (;;) {
@@ -18672,17 +19078,17 @@
                                     }
                                 }
                             }
-                        } catch($e1) {
-                            $e1 = Bridge.Exception.create($e1);
+                        } catch($async_e1) {
+                            $async_e = Bridge.Exception.create($async_e1);
                             if ( $step >= 1 && $step <= 2 ){
-                                if (Bridge.is($e1, Bridge.TaskCanceledException)) {
-                                    ex = $e1;
+                                if (Bridge.is($async_e, Bridge.TaskCanceledException)) {
+                                    ex = $async_e;
                                     $step = 3;
                                     $asyncBody();
                                     return;
                                 }
                             }
-                            throw $e1;
+                            throw $async_e;
                         }
                     }, arguments);
     
@@ -18707,18 +19113,18 @@
     
                 Bridge.get(Bridge.Test.Assert).fail$1("Should throw");
             }
-            catch ($e) {
-                $e = Bridge.Exception.create($e);
+            catch ($e1) {
+                $e1 = Bridge.Exception.create($e1);
                 var ex;
-                if (Bridge.is($e, Bridge.AggregateException)) {
-                    ex = $e;
+                if (Bridge.is($e1, Bridge.AggregateException)) {
+                    ex = $e1;
                     Bridge.get(Bridge.Test.Assert).areEqual$1(ex.innerExceptions.getCount(), 1, "InnerExceptions.Count");
                     var tce = Bridge.as(ex.innerExceptions.get(0), Bridge.TaskCanceledException);
                     Bridge.get(Bridge.Test.Assert).notNull$1(tce, "is TaskCanceledException");
                     Bridge.get(Bridge.Test.Assert).true$1(tcs.task === tce.task, "Task");
                 }
                 else {
-                    throw $e;
+                    throw $e1;
                 }
             }
         },
