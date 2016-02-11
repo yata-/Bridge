@@ -289,7 +289,7 @@ namespace Bridge.Translator
 
             this.Log.Trace("\t\tgraph.ProcessCount = " + graph.ProcessCount);
 
-            this.Log.Trace("\tTopological sorting second iteration...");
+            this.Log.Trace("\tTopological sorting second iteration done");
 
             if (graph.ProcessCount > 0)
             {

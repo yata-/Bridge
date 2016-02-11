@@ -399,5 +399,11 @@ namespace Bridge.Translator
             get;
             set;
         }
+
+        public string CatchBlockVariable
+        {
+            get;
+            set;
+        }
     }
 }
