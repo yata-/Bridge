@@ -8162,6 +8162,7 @@
                 $jumpFromFinally, 
                 $tcs = new Bridge.TaskCompletionSource(), 
                 $returnValue, 
+                $async_e, 
                 $asyncBody = Bridge.fn.bind(this, function () {
                     try {
                         for (;;) {
@@ -8184,9 +8185,9 @@
                                 }
                             }
                         }
-                    } catch($e1) {
-                        $e1 = Bridge.Exception.create($e1);
-                        $tcs.setException($e1);
+                    } catch($async_e1) {
+                        $async_e = Bridge.Exception.create($async_e1);
+                        $tcs.setException($async_e);
                     }
                 }, arguments);
     
