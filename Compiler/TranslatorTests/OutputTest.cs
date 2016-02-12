@@ -65,7 +65,7 @@ namespace Bridge.Translator.Tests
             ReferenceFolder = Path.Combine(ProjectFolder, @"Bridge\Reference");
         }
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void TestFixtureSetUp()
         {
             var logFiles = Directory.GetFiles(Directory.GetCurrentDirectory(), LogFileNameWithoutExtention + ".*", SearchOption.AllDirectories);
