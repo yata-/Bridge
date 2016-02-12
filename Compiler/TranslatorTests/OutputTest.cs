@@ -68,7 +68,9 @@ namespace Bridge.Translator.Tests
         [OneTimeSetUp]
         public void TestFixtureSetUp()
         {
-            var logFiles = Directory.GetFiles(Directory.GetCurrentDirectory(), LogFileNameWithoutExtention + ".*", SearchOption.AllDirectories);
+            var currentFolder = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+
+            var logFiles = Directory.GetFiles(currentFolder, LogFileNameWithoutExtention + ".*", SearchOption.AllDirectories);
 
             foreach (var logFile in logFiles)
             {
