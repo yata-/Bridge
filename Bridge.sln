@@ -72,10 +72,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "www", "www", "{F8D2127F-704
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{00CA952C-4292-47FC-8D03-B525B294B846}"
-	ProjectSection(SolutionItems) = preProject
-		.build\CommonAssemblyInfo.cs = .build\CommonAssemblyInfo.cs
-		.build\NuGet.Build.Package.targets = .build\NuGet.Build.Package.targets
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clientOne", "Testing\tests\clientOne\clientOne.csproj", "{AE48EC97-AFCB-49ED-82F6-8863F9860C9C}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -113,6 +109,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "targets", "targets", "{169F
 		.build\targets\Bridge.targets = .build\targets\Bridge.targets
 		.build\targets\BridgeNoTask.targets = .build\targets\BridgeNoTask.targets
 		.build\targets\BridgeProjectRefs.targets = .build\targets\BridgeProjectRefs.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{3E6E252D-69D8-4B9A-8E6C-E994697F8090}"
+	ProjectSection(SolutionItems) = preProject
+		.build\common\CommonAssemblyInfo.cs = .build\common\CommonAssemblyInfo.cs
+		.build\common\NuGet.Build.Package.targets = .build\common\NuGet.Build.Package.targets
 	EndProjectSection
 EndProject
 Global
@@ -186,5 +188,6 @@ Global
 		{B83954AB-3E5F-4778-8BC0-F1CEEDE6F187} = {00CA952C-4292-47FC-8D03-B525B294B846}
 		{0A8F2D26-ED54-4A8C-A323-A8018F6DD742} = {00CA952C-4292-47FC-8D03-B525B294B846}
 		{169F0BA9-3B0A-43DD-98E2-C9DB1A89CAB0} = {00CA952C-4292-47FC-8D03-B525B294B846}
+		{3E6E252D-69D8-4B9A-8E6C-E994697F8090} = {00CA952C-4292-47FC-8D03-B525B294B846}
 	EndGlobalSection
 EndGlobal

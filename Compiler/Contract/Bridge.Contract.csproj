@@ -115,7 +115,7 @@
     <Compile Include="IWriterInfo.cs" />
     <Compile Include="OverloadsCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="..\..\.build\CommonAssemblyInfo.cs">
+    <Compile Include="..\..\.build\common\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ITypeInfo.cs" />
@@ -142,7 +142,7 @@
       <Path>$(SolutionDir).build\specs\Bridge.Contract.nuspec</Path>
     </NuGetPackageSourcePath>
   </ItemGroup>
-  <Import Project="$(SolutionDir)\.build\NuGet.Build.Package.targets" />
+  <Import Project="$(SolutionDir)\.build\common\NuGet.Build.Package.targets" />
   <Target Name="CleanProjectNuGetOutput" BeforeTargets="Clean">
     <ItemGroup>
       <FilesToDelete Include="$(ProjectDir)$(OutDir)Bridge.*.nupkg" />
