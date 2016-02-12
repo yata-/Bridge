@@ -22,7 +22,7 @@
   </metadata>
   <files>
     <!--content-->
-    <file src="..\..\..\Bridge\Bridge\build\package\LICENSE.txt" target="content\App_Readme\Bridge.NET\LICENSE.txt"/>
+    <file src="..\..\LICENSE" target="content\App_Readme\Bridge.NET\LICENSE"/>
 
     <!--NET40-->
     <file src="..\..\..\Bridge\Html5\bin\Release\Bridge.Html5.dll" target="lib\net40\Bridge.Html5.dll"/>
