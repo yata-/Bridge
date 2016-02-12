@@ -1,13 +1,10 @@
 using Bridge.Contract;
 using Bridge.Translator.Logging;
-
+using Microsoft.Build.Framework;
+using Microsoft.Build.Utilities;
 using System;
 using System.IO;
 using System.Linq;
-
-using Microsoft.Build.Framework;
-using Microsoft.Build.Utilities;
-
 
 namespace Bridge.Build
 {
@@ -114,7 +111,6 @@ namespace Bridge.Build
                 string outputPath = !string.IsNullOrWhiteSpace(translator.AssemblyInfo.Output)
                     ? Path.Combine(Path.GetDirectoryName(this.ProjectPath), translator.AssemblyInfo.Output)
                     : this.OutputPath;
-
 
                 translator.CleanOutputFolderIfRequired(outputPath);
 

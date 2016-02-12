@@ -161,7 +161,7 @@ namespace Bridge.Builder
                 translator.Log.Info("\tBridgeLocation:" + translator.BridgeLocation ?? "");
                 translator.Log.Info("\tBuildArguments:" + translator.BuildArguments ?? "");
                 translator.Log.Info("\tConfiguration:" + translator.Configuration ?? "");
-                translator.Log.Info("\tDefineConstants:" + (translator.DefineConstants != null  ? string.Join(" ", translator.DefineConstants) :  ""));
+                translator.Log.Info("\tDefineConstants:" + (translator.DefineConstants != null ? string.Join(" ", translator.DefineConstants) : ""));
                 translator.Log.Info("\tRebuild:" + translator.Rebuild);
 
                 translator.Translate();

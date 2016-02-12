@@ -50,8 +50,8 @@ namespace Bridge.Translator.Tests
 
         private static Dictionary<string, CompareMode> SpecialFiles = new Dictionary<string, CompareMode>
         {
-            { "bridge.js", CompareMode.Presence},
-            { "bridge.min.js", CompareMode.Presence}
+            { "bridge.js", CompareMode.Presence },
+            { "bridge.min.js", CompareMode.Presence }
         };
 
         private void GetPaths(string folder)
@@ -69,6 +69,7 @@ namespace Bridge.Translator.Tests
         public void TestFixtureSetUp()
         {
             var logFiles = Directory.GetFiles(Directory.GetCurrentDirectory(), LogFileNameWithoutExtention + ".*", SearchOption.AllDirectories);
+
             foreach (var logFile in logFiles)
             {
                 File.Delete(logFile);

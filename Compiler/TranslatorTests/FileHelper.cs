@@ -16,6 +16,7 @@ namespace Bridge.Translator.Tests
         public static string GetRelativeToCurrentDirPath(string relativePath)
         {
             var location = System.Reflection.Assembly.GetExecutingAssembly().Location;
+
             location = Path.GetDirectoryName(location);
 
             return FileHelper.CombineRelativePath(location, relativePath);
@@ -33,6 +34,7 @@ namespace Bridge.Translator.Tests
             var opnodes = from n in doc.Descendants()
                           where n.Name.LocalName == "OutputPath"
                           select n;
+
             var nodes = from n in doc.Descendants()
                         where n.Name.LocalName == "OutputPath" &&
                               n.Parent.Attribute("Condition").Value.Contains(configurationName)
@@ -44,6 +46,7 @@ namespace Bridge.Translator.Tests
             }
 
             var path = nodes.First().Value;
+
             return path;
         }
     }
