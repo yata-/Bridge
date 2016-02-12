@@ -10,11 +10,58 @@ namespace Bridge.Translator
 {
     public partial class Translator
     {
+        private class CecilAssemblyResolver : IAssemblyResolver
+        {
+            public ILogger Logger { get; set; }
+
+            public CecilAssemblyResolver(ILogger logger)
+            {
+                this.Logger = logger;
+            }
+
+            public AssemblyDefinition Resolve(string fullName)
+            {
+                this.Logger.Trace("CecilAssemblyResolver: Resolve(string) " + (fullName ?? ""));
+                return null;
+            }
+
+            public AssemblyDefinition Resolve(AssemblyNameReference name)
+            {
+                string fullName = name != null ? name.FullName : "";
+
+                this.Logger.Trace("CecilAssemblyResolver: Resolve(AssemblyNameReference) " + (fullName ?? ""));
+
+                return null;
+            }
+
+            public AssemblyDefinition Resolve(string fullName, ReaderParameters parameters)
+            {
+                this.Logger.Trace("CecilAssemblyResolver: Resolve(string, ReaderParameters) " + (fullName ?? "") + ", " + (parameters != null ? parameters.ReadingMode.ToString() : ""));
+                return null;
+            }
+
+            public AssemblyDefinition Resolve(AssemblyNameReference name, ReaderParameters parameters)
+            {
+                string fullName = name != null ? name.FullName : "";
+
+                this.Logger.Trace("CecilAssemblyResolver: Resolve(AssemblyNameReference, ReaderParameters) " + (fullName ?? "") + ", " + (parameters != null ? parameters.ReadingMode.ToString() : ""));
+                return null;
+            }
+        }
+
         protected virtual AssemblyDefinition LoadAssembly(string location, List<AssemblyDefinition> references)
         {
             this.Log.Trace("Assembly definition loading " + (location ?? "") + " ...");
 
-            var assemblyDefinition = AssemblyDefinition.ReadAssembly(location);
+            var assemblyDefinition = AssemblyDefinition.ReadAssembly(
+                    location,
+                    new ReaderParameters()
+                    {
+                        ReadingMode = ReadingMode.Deferred,
+                        AssemblyResolver = new CecilAssemblyResolver(this.Log)
+                    }
+                );
+
             string name;
             string path;
             AssemblyDefinition reference;
