@@ -20,11 +20,19 @@
     </frameworkAssemblies>
   </metadata>
   <files>
+    <!--content-->
+    <file src="..\..\README.md" target="content\App_Readme\Bridge.NET\README.md"/>
+    <file src="..\..\LICENSE" target="content\App_Readme\Bridge.NET\LICENSE"/>
+    
+    <file src="..\..\.build\files\bridge.json" target="content\Bridge\bridge.json"/>
+    <file src="..\..\.build\files\output_readme.txt" target="content\Bridge\output\readme.txt"/>
+    <file src="..\..\.build\files\demo.html.pp" target="content\Bridge\www\demo.html.pp"/>
+
     <!--build-->
-    <file src="..\..\Bridge\build\package\Bridge.targets" target="build\Bridge.targets"/>
+    <file src="..\..\.build\files\Bridge.targets" target="build\Bridge.targets"/>
 
     <!--tools-->
-    <file src="..\..\Bridge\build\package\install.ps1" target="tools\install.ps1"/>
+    <file src="..\..\.build\files\install.ps1" target="tools\install.ps1"/>
     <file src="..\..\Compiler\Build\bin\Release\Bridge.Build.dll" target="tools\Bridge.Builder.dll"/>
     <file src="..\..\Compiler\Build\bin\Release\AjaxMin.dll" target="tools\AjaxMin.dll"/>
     <file src="..\..\Compiler\Build\bin\Release\Bridge.Contract.dll" target="tools\Bridge.Contract.dll"/>
@@ -36,13 +44,6 @@
     <file src="..\..\Compiler\Build\bin\Release\Newtonsoft.Json.dll" target="tools\Newtonsoft.Json.dll"/>
     <file src="..\..\Compiler\Build\bin\Release\Object.Net.Utilities.dll" target="tools\Object.Net.Utilities.dll"/>
     <file src="..\..\Compiler\Build\bin\Release\TopologicalSorting.dll" target="tools\TopologicalSorting.dll"/>
-
-    <!--content-->
-    <file src="..\..\README.md" target="content\App_Readme\Bridge.NET\README.md"/>
-    <file src="..\..\LICENSE" target="content\App_Readme\Bridge.NET\LICENSE"/>
-    <file src="..\..\Bridge\build\package\bridge.json" target="content\Bridge\bridge.json"/>
-    <file src="..\..\Bridge\build\package\output_readme.txt" target="content\Bridge\output\readme.txt"/>
-    <file src="..\..\Bridge\build\package\demo.html.pp" target="content\Bridge\www\demo.html.pp"/>
 
     <!--NET40-->
     <file src="..\..\Bridge\bin\Release\Bridge.dll" target="lib\net40\Bridge.dll"/>
