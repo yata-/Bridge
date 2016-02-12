@@ -80,10 +80,10 @@
 
     <Message Condition="$(NuGetUseExplicitVersion) == 'false'" Text="Applying $(NuGetPackageVersion) for NuGet package %(NuGetPackageSourcePath.Path)" Importance="high" />
 
-    <Exec Command="$(NuGetCommand) pack  &quot;%(NuGetPackageSourcePath.Path)&quot;$(NuGetPackageVersion) -Properties &quot;Configuration=$(Configuration);Platform=$(Platform)&quot; $(NonInteractiveSwitch) -OutputDirectory &quot;$(NuGetPackageOutputDir)&quot;"
+    <Exec Command="$(NuGetCommand) pack  &quot;%(NuGetPackageSourcePath.Path)&quot;$(NuGetPackageVersion) -Properties &quot;Configuration=$(Configuration);Platform=$(Platform)&quot; $(NonInteractiveSwitch) -OutputDirectory &quot;$(NuGetPackageOutputDir)&quot; -NoDefaultExcludes"
           Condition=" '$(OS)' != 'Windows_NT' " />
 
-    <Exec Command="$(NuGetCommand) pack  &quot;%(NuGetPackageSourcePath.Path)&quot;$(NuGetPackageVersion) -Properties &quot;Configuration=$(Configuration);Platform=$(Platform)&quot; $(NonInteractiveSwitch) -OutputDirectory &quot;$(NuGetPackageOutputDir)&quot;"
+    <Exec Command="$(NuGetCommand) pack  &quot;%(NuGetPackageSourcePath.Path)&quot;$(NuGetPackageVersion) -Properties &quot;Configuration=$(Configuration);Platform=$(Platform)&quot; $(NonInteractiveSwitch) -OutputDirectory &quot;$(NuGetPackageOutputDir)&quot; -NoDefaultExcludes"
           LogStandardErrorAsError="true"
           Condition=" '$(OS)' == 'Windows_NT' " />
 
