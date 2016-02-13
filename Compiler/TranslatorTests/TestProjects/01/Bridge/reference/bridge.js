@@ -1,8 +1,8 @@
 ﻿/*
- * @version   : 1.10.4 - Bridge.NET
+ * @version   : 1.11.0 - Bridge.NET
  * @author    : Object.NET, Inc. http://bridge.net/
- * @date      : 2015-12-31
- * @copyright : Copyright (c) 2008-2015, Object.NET, Inc. (http://object.net/). All rights reserved.
+ * @date      : 2016-02-15
+ * @copyright : Copyright (c) 2008-2016, Object.NET, Inc. (http://object.net/). All rights reserved.
  * @license   : See license.txt and https://github.com/bridgedotnet/Bridge.NET/blob/master/LICENSE.
  */
 
@@ -6443,15 +6443,18 @@ Bridge.Class.generic('Bridge.KeyValuePair$2', function (TKey, TValue) {
         toString: function() {
             var s = "[";
             
-            if( this.key != null) {
+            if (this.key != null) {
                 s += this.key.toString();
             }
 
             s += ", ";
-            if(this.value != null) {
+
+            if (this.value != null) {
                 s += this.value.toString();
             }
+
             s += "]";
+
             return s;
         }
     }));
