@@ -337,9 +337,6 @@
       <Path>$(SolutionDir).build\specs\Bridge.Html5.Dev.nuspec</Path>
     </NuGetPackageSourcePath>
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-  </ItemGroup>
   <Import Project="$(SolutionDir)\.build\common\NuGet.Build.Package.targets" />
   <Target Name="CleanProjectNuGetOutput" BeforeTargets="Clean">
     <ItemGroup>
