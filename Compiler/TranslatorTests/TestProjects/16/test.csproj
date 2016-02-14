@@ -40,6 +40,7 @@
     <Compile Include="BridgeIssues\N065.cs" />
     <Compile Include="BridgeIssues\N064.cs" />
     <Compile Include="BridgeIssues\N062.cs" />
+    <Compile Include="BridgeIssues\N391.cs" />
     <Compile Include="BridgeIssues\N447.cs" />
     <Compile Include="BridgeIssues\N527.cs" />
     <Compile Include="BridgeIssues\N644B.cs" />
