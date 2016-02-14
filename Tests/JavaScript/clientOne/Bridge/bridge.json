@@ -1,5 +1,5 @@
 ﻿{
-  "output": "..\\..\\www\\jsOne",
+  "output": "..\\..\\Runner\\jsOne",
   "cleanOutputFolderBeforeBuild": true,
   "outputFormatting": "Formatted",
   "fileName": "code.js",

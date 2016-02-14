@@ -81,13 +81,13 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
     <TypeScriptSourceMap>False</TypeScriptSourceMap>
-    <TypeScriptOutDir>..\..\www\typescript</TypeScriptOutDir>
+    <TypeScriptOutDir>..\..\Runner\TypeScriptBatch1</TypeScriptOutDir>
     <NoWarn>2008</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
     <TypeScriptSourceMap>false</TypeScriptSourceMap>
-    <TypeScriptOutDir>..\..\www\typescript</TypeScriptOutDir>
+    <TypeScriptOutDir>..\..\Runner\TypeScriptBatch1</TypeScriptOutDir>
     <NoWarn>2008</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="$(OS) != Unix">
@@ -97,7 +97,7 @@
     <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
     <TypeScriptModuleKind>None</TypeScriptModuleKind>
     <TypeScriptOutFile />
-    <TypeScriptOutDir>..\..\www\typescript</TypeScriptOutDir>
+    <TypeScriptOutDir>..\..\Runner\TypeScriptBatch1</TypeScriptOutDir>
     <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
     <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
     <TypeScriptMapRoot />

@@ -1,6 +1,7 @@
-﻿/// <reference path="..\..\www\qunit\qunit.d.ts" />
-/// <reference path="..\..\www\typescriptjs\bridge.d.ts" />
-/// <reference path="..\..\www\typescriptjs\functions.d.ts" />
+﻿/// <reference path="..\..\Runner\qunit\qunit.d.ts" />
+/// <reference path="..\..\Runner\TypeScriptApp1\bridge.d.ts" />
+/// <reference path="..\..\Runner\TypeScriptApp1\functions.d.ts" />
+
 QUnit.module("TypeScript - Functions");
 QUnit.test("Parameters", function (assert) {
     var func = new Functions.Parameters();
@@ -13,6 +14,7 @@ QUnit.test("Parameters", function (assert) {
     //    return firstName + " " + lastName;
     //}
     //var result1 = buildName("Bob");
+
     // #293
     QUnit.deepEqual(func.join([1, 2, 3]), "123", "params argument becomes Array #293");
 });
@@ -20,23 +22,17 @@ QUnit.test("Parameters", function (assert) {
 QUnit.test("Function types", function (assert) {
     var d = new Functions.DelegateClass();
 
-    var ds;
-    var di;
+    var ds: string;
+    var di: number;
 
-    d.methodVoidDelegate = function () {
-        return di = 7;
-    };
+    d.methodVoidDelegate = () => di = 7;
     d.methodVoidDelegate();
     QUnit.deepEqual(di, 7, "methodVoidDelegate");
 
-    d.methodStringDelegate = function (s) {
-        return ds = s;
-    };
+    d.methodStringDelegate = (s: string) => ds = s;
     d.methodStringDelegate("Privet");
     QUnit.deepEqual(ds, "Privet", "methodStringDelegate");
 
-    d.methodStringDelegateIntResult = function (s) {
-        return s.length;
-    };
+    d.methodStringDelegateIntResult = (s: string) => s.length;
     QUnit.deepEqual(d.methodStringDelegateIntResult("Privet"), 6, "methodStringDelegateIntResult");
 });

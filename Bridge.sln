@@ -65,10 +65,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Translator.Tests", "
 		{DE78B8B7-C0F5-415B-A70B-02194433F450} = {DE78B8B7-C0F5-415B-A70B-02194433F450}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "www", "www", "{F8D2127F-7042-40D2-8ABC-0E3F58D09C42}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Runner", "Runner", "{F8D2127F-7042-40D2-8ABC-0E3F58D09C42}"
 	ProjectSection(SolutionItems) = preProject
-		Tests\www\index.html = Tests\www\index.html
-		Tests\www\testTypeScript.html = Tests\www\testTypeScript.html
+		Tests\Runner\index.html = Tests\Runner\index.html
+		Tests\Runner\testTypeScript.html = Tests\Runner\testTypeScript.html
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{00CA952C-4292-47FC-8D03-B525B294B846}"

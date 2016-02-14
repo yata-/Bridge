@@ -1,8 +1,10 @@
-﻿/// <reference path="..\..\www\qunit\qunit.d.ts" />
-/// <reference path="..\..\www\typescriptjs\bridge.d.ts" />
-/// <reference path="..\..\www\typescriptjs\generics.d.ts" />
+﻿/// <reference path="..\..\Runner\qunit\qunit.d.ts" />
+/// <reference path="..\..\Runner\TypeScriptApp1\bridge.d.ts" />
+/// <reference path="..\..\Runner\TypeScriptApp1\generics.d.ts" />
+
 QUnit.module("TypeScript - Generics");
 QUnit.test("Check predefined generic instances", function (assert) {
+
     var g1 = Generics.implementation.simpleGenericInt;
     QUnit.deepEqual(g1.getSomething(5), 5, "simpleGenericInt");
 
@@ -27,12 +29,12 @@ QUnit.test("Check predefined generic instances", function (assert) {
     QUnit.deepEqual(r4 instanceof Generics.NamedEntity, true, "genericNamedEntity instance of NameEntity");
 
     var g5 = Generics.implementation.genericClassObject;
-    var i5 = "class object";
+    var i5: any = "class object";
     var r5 = g5.getSomething(i5);
     QUnit.deepEqual(r5, i5, "genericClassObject");
-
     // TODO #296
     //QUnit.deepEqual(r5 instanceof Object, true, "genericClassObject instance of Object");
+
     var g6 = Generics.implementation.genericClassNamedEntity;
     var i6 = new Generics.NamedEntity();
     i6.setName$1("Penguin");
@@ -57,6 +59,7 @@ QUnit.test("Check predefined generic instances", function (assert) {
 });
 
 QUnit.test("Create generic instances", function (assert) {
+
     var name = "My name is Named Entity";
     var namedEntity = new Generics.NamedEntity();
     namedEntity.setName$1(name);

@@ -1,7 +1,8 @@
-﻿/// <reference path="..\..\www\qunit\qunit.d.ts" />
-/// <reference path="..\..\www\typescriptjs\bridge.d.ts" />
-/// <reference path="..\..\www\typescriptjs\misc.a.d.ts" />
-/// <reference path="..\..\www\typescriptjs\misc.b.d.ts" />
+﻿/// <reference path="..\..\Runner\qunit\qunit.d.ts" />
+/// <reference path="..\..\Runner\TypeScriptApp1\bridge.d.ts" />
+/// <reference path="..\..\Runner\TypeScriptApp1\misc.a.d.ts" />
+/// <reference path="..\..\Runner\TypeScriptApp1\misc.b.d.ts" />
+
 QUnit.module("TypeScript - Issues");
 QUnit.test("#290", function (assert) {
     var c1 = new Misc.A.Class1();
@@ -27,7 +28,7 @@ QUnit.test("#336", function (assert) {
 
 QUnit.test("#338", function (assert) {
     var list = new (Bridge.List$1(String))(["4"]);
-    var interfacedList = list;
+    var interfacedList: Bridge.IList$1<String> = list;
 
     assert.deepEqual(interfacedList.get(0), "4", "Bridge.List$1(String) is Bridge.IList$1<String>");
 });

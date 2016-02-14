@@ -330,25 +330,11 @@
 REM Run Bridge Compiler for the project
 ECHO "$(ProjectDir)..\..\..\Compiler\Builder\$(OutDir)Bridge.Builder.exe" -p "$(ProjectPath)" -b "$(ProjectDir)$(OutDir)Bridge.dll" -cfg "$(Configuration)"
 "$(ProjectDir)..\..\..\Compiler\Builder\$(OutDir)Bridge.Builder.exe" -p "$(ProjectPath)" -b "$(ProjectDir)$(OutDir)Bridge.dll" -cfg "$(Configuration)"
-REM Copy locales
-IF EXIST "$(ProjectDir)..\..\www\js\locales" GOTO NOLOCALESFOLDER
-  md "$(ProjectDir)..\..\www\js\locales"
-:NOLOCALESFOLDER
-del /F /Q "$(ProjectDir)..\..\www\js\locales\*.js"
-xcopy "$(ProjectDir)..\..\..\Bridge\Resources\Locales\*.js" "$(ProjectDir)..\..\www\js\locales" /c /q /y
     </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition="'$(OS)' == 'Unix'">
     <PostBuildEvent>
 mono "$(ProjectDir)../../../Compiler/Builder/$(OutDir)Bridge.Builder.exe" -p "$(ProjectDir)/$(MSBuildProjectFile)" -b "$(ProjectDir)$(OutDir)Bridge.dll" -cfg "$(Configuration)"
-if [ -d "$(ProjectDir)../../www/js/locales" ]
-then
-  rm -f "$(ProjectDir)../../www/js/locales/*.js"
-else
-  mkdir -p "$(ProjectDir)../../www/js/locales"
-fi
-
-cp -p "$(ProjectDir)../../../Bridge/Resources/Locales/*.js" "$(ProjectDir)../../www/js/locales"
     </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
