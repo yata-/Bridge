@@ -2325,10 +2325,6 @@
         $flags: true
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.CI1');
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.CI2');
-    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Class391', {
         statics: {
             main: function () {

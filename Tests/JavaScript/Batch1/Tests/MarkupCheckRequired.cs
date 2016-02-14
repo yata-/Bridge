@@ -2,14 +2,6 @@ using Bridge;
 
 namespace Bridge.ClientTest.BridgeIssues
 {
-    // [#62] - check file name outputs
-    public class CI1
-    {
-    }
-    public class CI2
-    {
-    }
-
     // [#69]
     public struct Point69
     {
