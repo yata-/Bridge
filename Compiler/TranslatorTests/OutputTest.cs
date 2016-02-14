@@ -100,6 +100,8 @@ namespace Bridge.Translator.Tests
         {
             var logDir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
+            Directory.SetCurrentDirectory(logDir);
+
             var logger = new Logger("Bridge.Test.Runner", true, new SimpleFileLoggerWriter(logDir), new ConsoleLoggerWriter());
 
             GetPaths(folder);
