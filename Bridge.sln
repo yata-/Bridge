@@ -28,7 +28,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Translator", "Compil
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{4466FE4E-78E3-46A8-BAA4-C304D7FFABD9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Tests\tests\client\client.csproj", "{306AD788-87E9-4DF9-A216-95948E024BC8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Tests\JavaScript\client\client.csproj", "{306AD788-87E9-4DF9-A216-95948E024BC8}"
 	ProjectSection(ProjectDependencies) = postProject
 		{243BB709-3912-4C65-82D4-787A5E2201D7} = {243BB709-3912-4C65-82D4-787A5E2201D7}
 		{28703D12-116A-4968-BD85-F26D7F7E7DA4} = {28703D12-116A-4968-BD85-F26D7F7E7DA4}
@@ -43,7 +43,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{42D82A
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "typeScriptBridge", "Tests\tests\typeScriptBridge\typeScriptBridge.csproj", "{518C57D4-62CC-47F7-A310-23405F5ED3AD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "typeScriptBridge", "Tests\JavaScript\typeScriptBridge\typeScriptBridge.csproj", "{518C57D4-62CC-47F7-A310-23405F5ED3AD}"
 	ProjectSection(ProjectDependencies) = postProject
 		{243BB709-3912-4C65-82D4-787A5E2201D7} = {243BB709-3912-4C65-82D4-787A5E2201D7}
 		{28703D12-116A-4968-BD85-F26D7F7E7DA4} = {28703D12-116A-4968-BD85-F26D7F7E7DA4}
@@ -52,7 +52,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "typeScriptBridge", "Tests\t
 		{306AD788-87E9-4DF9-A216-95948E024BC8} = {306AD788-87E9-4DF9-A216-95948E024BC8}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "typeScriptHtml", "Tests\tests\typeScriptHtml\typeScriptHtml.csproj", "{411D4BE8-B1F0-4F61-9AD1-00250D9CC4FA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "typeScriptHtml", "Tests\JavaScript\typeScriptHtml\typeScriptHtml.csproj", "{411D4BE8-B1F0-4F61-9AD1-00250D9CC4FA}"
 	ProjectSection(ProjectDependencies) = postProject
 		{518C57D4-62CC-47F7-A310-23405F5ED3AD} = {518C57D4-62CC-47F7-A310-23405F5ED3AD}
 	EndProjectSection
@@ -73,7 +73,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "www", "www", "{F8D2127F-704
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{00CA952C-4292-47FC-8D03-B525B294B846}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clientOne", "Tests\tests\clientOne\clientOne.csproj", "{AE48EC97-AFCB-49ED-82F6-8863F9860C9C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clientOne", "Tests\JavaScript\clientOne\clientOne.csproj", "{AE48EC97-AFCB-49ED-82F6-8863F9860C9C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{243BB709-3912-4C65-82D4-787A5E2201D7} = {243BB709-3912-4C65-82D4-787A5E2201D7}
 		{28703D12-116A-4968-BD85-F26D7F7E7DA4} = {28703D12-116A-4968-BD85-F26D7F7E7DA4}
