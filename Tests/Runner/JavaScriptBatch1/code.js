@@ -758,6 +758,38 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge069.Point69', {
+        statics: {
+            getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge069.Point69(); }
+        },
+        x: 0,
+        y: 0,
+        constructor$1: function (y1) {
+            (new Bridge.ClientTest.BridgeIssues.Bridge069.Point69("constructor")).$clone(this);
+            this.y = y1;
+        },
+        constructor: function () {
+        },
+        getHashCode: function () {
+            var hash = 17;
+            hash = hash * 23 + (this.x == null ? 0 : Bridge.getHashCode(this.x));
+            hash = hash * 23 + (this.y == null ? 0 : Bridge.getHashCode(this.y));
+            return hash;
+        },
+        equals: function (o) {
+            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge069.Point69)) {
+                return false;
+            }
+            return Bridge.equals(this.x, o.x) && Bridge.equals(this.y, o.y);
+        },
+        $clone: function (to) {
+            var s = to || new Bridge.ClientTest.BridgeIssues.Bridge069.Point69();
+            s.x = this.x;
+            s.y = this.y;
+            return s;
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
@@ -2389,38 +2421,6 @@
             catch ($e1) {
                 $e1 = Bridge.Exception.create($e1);
             }
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Point69', {
-        statics: {
-            getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Point69(); }
-        },
-        x: 0,
-        y: 0,
-        constructor$1: function (y1) {
-            (new Bridge.ClientTest.BridgeIssues.Point69("constructor")).$clone(this);
-            this.y = y1;
-        },
-        constructor: function () {
-        },
-        getHashCode: function () {
-            var hash = 17;
-            hash = hash * 23 + (this.x == null ? 0 : Bridge.getHashCode(this.x));
-            hash = hash * 23 + (this.y == null ? 0 : Bridge.getHashCode(this.y));
-            return hash;
-        },
-        equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Point69)) {
-                return false;
-            }
-            return Bridge.equals(this.x, o.x) && Bridge.equals(this.y, o.y);
-        },
-        $clone: function (to) {
-            var s = to || new Bridge.ClientTest.BridgeIssues.Point69();
-            s.x = this.x;
-            s.y = this.y;
-            return s;
         }
     });
     
@@ -4588,6 +4588,15 @@
     
                 var i = Bridge.get(Bridge.ClientTest.BasicCSharp.Point).test3();
                 Bridge.get(Bridge.Test.Assert).areEqual$1(i, 499, "i 499");
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge069', {
+        statics: {
+            thisKeywordInStructConstructorWorks: function () {
+                var p = new Bridge.ClientTest.BridgeIssues.Bridge069.Point69("constructor$1", 10);
+                Bridge.get(Bridge.Test.Assert).areEqual(p.y, 10);
             }
         }
     });

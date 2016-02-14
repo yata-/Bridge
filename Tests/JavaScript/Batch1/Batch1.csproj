@@ -57,6 +57,7 @@
     <Compile Include="BasicCSharp\TestTryCatchBlocks.cs" />
     <Compile Include="BasicCSharp\TestReferenceTypes.cs" />
     <Compile Include="BasicCSharp\TestValueTypes.cs" />
+    <Compile Include="BridgeIssues\N069.cs" />
     <Compile Include="BridgeIssues\N447.cs" />
     <Compile Include="BridgeIssues\N495.cs" />
     <Compile Include="BridgeIssues\N502.cs" />
@@ -204,7 +205,6 @@
     <Compile Include="Linq\TestLinqRestrictionOperators.cs" />
     <Compile Include="Linq\TestLinqSetOperators.cs" />
     <Compile Include="SimpleTypes\TestVersion.cs" />
-    <Compile Include="Tests\MarkupCheckRequired.cs" />
     <Compile Include="Tests\NotCompiling.cs" />
     <Compile Include="Threading\CancellationTokenTests.cs" />
     <Compile Include="Threading\Tasks\AsyncTests.cs" />
