@@ -1,6 +1,6 @@
-﻿/// <reference path="..\..\Runner\qunit\qunit.d.ts" />
-/// <reference path="..\..\Runner\TypeScriptApp1\bridge.d.ts" />
-/// <reference path="..\..\Runner\TypeScriptApp1\functions.d.ts" />
+﻿/// <reference path="..\..\Runner\resources\qunit\qunit.d.ts" />
+/// <reference path="..\..\Runner\TypeScript\App1\bridge.d.ts" />
+/// <reference path="..\..\Runner\TypeScript\App1\functions.d.ts" />
 
 QUnit.module("TypeScript - Functions");
 QUnit.test("Parameters", function (assert) {

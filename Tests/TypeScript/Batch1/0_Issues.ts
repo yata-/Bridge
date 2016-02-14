@@ -1,7 +1,7 @@
-﻿/// <reference path="..\..\Runner\qunit\qunit.d.ts" />
-/// <reference path="..\..\Runner\TypeScriptApp1\bridge.d.ts" />
-/// <reference path="..\..\Runner\TypeScriptApp1\misc.a.d.ts" />
-/// <reference path="..\..\Runner\TypeScriptApp1\misc.b.d.ts" />
+﻿/// <reference path="..\..\Runner\resources\qunit\qunit.d.ts" />
+/// <reference path="..\..\Runner\TypeScript\App1\bridge.d.ts" />
+/// <reference path="..\..\Runner\TypeScript\App1\misc.a.d.ts" />
+/// <reference path="..\..\Runner\TypeScript\App1\misc.b.d.ts" />
 
 QUnit.module("TypeScript - Issues");
 QUnit.test("#290", function (assert) {

@@ -192,3 +192,4 @@ FakesAssemblies/
 Bridge/build/package/nuget-package-source/*.nupkg
 *.nupkg
 /Testing/www/jsOne/bridge.js
+Tests/**/App_Readme/
