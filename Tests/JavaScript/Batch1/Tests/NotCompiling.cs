@@ -24,18 +24,7 @@ namespace Bridge.ClientTest.BridgeIssues
     //     }
     // }
 
-    // [#66]
-    public struct Rectangle66
-    {
-        public Rectangle66(int x1)
-        {
-            this = new Rectangle66();
-        }
 
-        public Rectangle66(int x1, int x2)
-        {
-        }
-    }
     // [#84] Does not compile
     internal class Class84
     {
