@@ -25,20 +25,6 @@ namespace Bridge.ClientTest.BridgeIssues
     // }
 
 
-    // [#84] Does not compile
-    internal class Class84
-    {
-        public void Test1()
-        {
-            try
-            {
-            }
-            catch
-            {
-            }
-        }
-    }
-
     // [#89]
     //
     // public class Class89

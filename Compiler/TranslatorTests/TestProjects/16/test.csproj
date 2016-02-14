@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BridgeIssues\N059.cs" />
+    <Compile Include="BridgeIssues\N084.cs" />
     <Compile Include="BridgeIssues\N066.cs" />
     <Compile Include="BridgeIssues\N065.cs" />
     <Compile Include="BridgeIssues\N064.cs" />
