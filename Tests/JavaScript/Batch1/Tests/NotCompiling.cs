@@ -24,17 +24,6 @@ namespace Bridge.ClientTest.BridgeIssues
     //     }
     // }
 
-    // [#65]
-    internal class Class65_1
-    {
-        public class Nested
-        {
-        }
-    }
-    internal class Class65_2 : Class65_1.Nested
-    {
-    }
-
     // [#66]
     public struct Rectangle66
     {
