@@ -25,16 +25,6 @@ namespace Bridge.ClientTest.BridgeIssues
     // }
 
 
-    // [#89]
-    //
-    // public class Class89
-    // {
-    //     void Test(params object[] p)
-    //     {
-    //         var i = p[0];
-    //     }
-    // }
-
     // [#391]
     internal class Class391
     {
