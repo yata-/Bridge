@@ -2,21 +2,7 @@ using Bridge;
 
 namespace Bridge.ClientTest.BridgeIssues
 {
-    // Does not compile issue [#59]
-    internal class Class59
-    {
-        public static void Method1()
-        {
-        }
 
-        public void Method1(Aux1 d)
-        {
-        }
-
-        public class Aux1
-        {
-        }
-    }
 
     // Does not compile issue [#61]
     // TODO It shows a correct error description now. How to check that in tests?

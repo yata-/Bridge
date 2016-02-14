@@ -2388,17 +2388,6 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Class59', {
-        statics: {
-            method1: function () {
-            }
-        },
-        method1: function (d) {
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Class59.Aux1');
-    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Class64', {
         constructor: function () {
         },
