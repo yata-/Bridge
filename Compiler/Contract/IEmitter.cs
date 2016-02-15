@@ -396,5 +396,15 @@ namespace Bridge.Contract
             get;
             set;
         }
+        Dictionary<string, string> NamedFunctions
+        {
+            get; set;
+        }
+
+        bool StaticBlock
+        {
+            get;
+            set;
+        }
     }
 }

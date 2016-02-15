@@ -205,6 +205,22 @@ namespace Bridge.Contract
             return emitter.Validator.HasAttribute(type.GetDefinition().Attributes, "Bridge.IgnoreGenericAttribute");
         }
 
+        public static bool IsIgnoreGeneric(IEntity member, IEmitter emitter)
+        {
+            return emitter.Validator.HasAttribute(member.Attributes, "Bridge.IgnoreGenericAttribute");
+        }
+
+        public static bool IsIgnoreGeneric(MethodDeclaration method, IEmitter emitter)
+        {
+            MemberResolveResult resolveResult = emitter.Resolver.ResolveNode(method, emitter) as MemberResolveResult;
+            if (resolveResult != null && resolveResult.Member != null)
+            {
+                return IsIgnoreGeneric(resolveResult.Member, emitter);
+            }
+
+            return false;
+        }
+
         public static bool IsIgnoreCast(AstType astType, IEmitter emitter)
         {
             if (emitter.AssemblyInfo.IgnoreCast)
