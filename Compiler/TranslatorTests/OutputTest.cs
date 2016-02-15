@@ -70,6 +70,8 @@ namespace Bridge.Translator.Tests
         {
             var currentFolder = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
+            Directory.SetCurrentDirectory(currentFolder);
+
             var logFiles = Directory.GetFiles(currentFolder, LogFileNameWithoutExtention + ".*", SearchOption.AllDirectories);
 
             foreach (var logFile in logFiles)
@@ -99,6 +101,8 @@ namespace Bridge.Translator.Tests
         public void Test(string folder, bool isToTranslate, bool useSpecialFileCompare)
         {
             var logDir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+
+            Directory.SetCurrentDirectory(logDir);
 
             var logger = new Logger("Bridge.Test.Runner", true, new SimpleFileLoggerWriter(logDir), new ConsoleLoggerWriter());
 
