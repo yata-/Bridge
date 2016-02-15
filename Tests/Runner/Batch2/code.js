@@ -132,12 +132,8 @@
             Bridge.get(Bridge.Test.Assert).$false(Bridge.Linq.Enumerable.from(arr).contains(new Bridge.ClientTestOne.BridgeIssues.N772.C(4)));
         },
         allWithArrayItemFilterCallbackWorks: function () {
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.Linq.Enumerable.from([1, 2, 3]).all(function (x) {
-                return x > 0;
-            }));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.Linq.Enumerable.from([1, 2, 3]).all(function (x) {
-                return x > 1;
-            }));
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Linq.Enumerable.from([1, 2, 3]).all($_.Bridge.ClientTestOne.BridgeIssues.N772.f1));
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.Linq.Enumerable.from([1, 2, 3]).all($_.Bridge.ClientTestOne.BridgeIssues.N772.f2));
         },
         sliceWithoutEndWorks: function () {
             Bridge.get(Bridge.Test.Assert).areDeepEqual(["c", "d"], ["a", "b", "c", "d"].slice(2));
@@ -179,12 +175,8 @@
             Bridge.get(Bridge.Test.Assert).areDeepEqual([2, 3, 1, 4, 3, 1], arr);
         },
         anyWithArrayItemFilterCallbackWorks: function () {
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.Linq.Enumerable.from([1, 2, 3, 4]).any(function (i) {
-                return i > 1;
-            }));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.Linq.Enumerable.from([1, 2, 3, 4]).any(function (i) {
-                return i > 5;
-            }));
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Linq.Enumerable.from([1, 2, 3, 4]).any($_.Bridge.ClientTestOne.BridgeIssues.N772.f3));
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.Linq.Enumerable.from([1, 2, 3, 4]).any($_.Bridge.ClientTestOne.BridgeIssues.N772.f4));
         },
         binarySearch1Works: function () {
             var arr = [1, 2, 3, 3, 4, 5];
@@ -327,6 +319,25 @@
             var l = ["x", "y", "z"];
             Bridge.Array.removeAt(l, 1);
             Bridge.get(Bridge.Test.Assert).areDeepEqual(["x", "z"], l);
+        }
+    });
+    
+    var $_ = {};
+    
+    Bridge.ns("Bridge.ClientTestOne.BridgeIssues.N772", $_)
+    
+    Bridge.apply($_.Bridge.ClientTestOne.BridgeIssues.N772, {
+        f1: function (x) {
+            return x > 0;
+        },
+        f2: function (x) {
+            return x > 1;
+        },
+        f3: function (i) {
+            return i > 1;
+        },
+        f4: function (i) {
+            return i > 5;
         }
     });
     
