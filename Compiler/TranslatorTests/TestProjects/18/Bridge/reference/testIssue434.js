@@ -3,10 +3,10 @@
 (function (globals) {
     "use strict";
 
-    
     Bridge.init(function(){
         Bridge.get(TestIssue434.Issue434A).doSomething(2);
     });
+    
     Bridge.define('TestIssue434.Issue434A', {
         statics: {
             method1: function () {
@@ -27,10 +27,10 @@
     Bridge.init(TestIssue434.Issue434A.method3);
     Bridge.init(TestIssue434.Issue434A.method4);
     
-    
     Bridge.init(function(){
         Bridge.get(TestIssue434.Issue434B).doSomething(2);
     });
+    
     Bridge.define('TestIssue434.Issue434B', {
         statics: {
             method1: function () {
