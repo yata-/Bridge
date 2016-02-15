@@ -35,13 +35,16 @@ namespace Bridge.ClientTest
             Assert.AreEqual(format.DateSeparator, "/");
             Assert.AreEqual(format.TimeSeparator, ":");
 
+            Assert.AreEqual(format.FullDateTimePattern, "dddd, dd MMMM yyyy HH:mm:ss");
+            Assert.AreEqual(format.YearMonthPattern, "yyyy MMMM");
+
             Assert.AreEqual(format.SortableDateTimePattern, "yyyy'-'MM'-'dd'T'HH':'mm':'ss");
 
-            Assert.AreEqual(format.LongDatePattern, "dddd, MMMM dd, yyyy");
-            Assert.AreEqual(format.ShortDatePattern, "M/d/yyyy");
+            Assert.AreEqual(format.LongDatePattern, "dddd, dd MMMM yyyy");
+            Assert.AreEqual(format.ShortDatePattern, "MM/dd/yyyy");
 
-            Assert.AreEqual(format.LongTimePattern, "h:mm:ss tt");
-            Assert.AreEqual(format.ShortTimePattern, "h:mm tt");
+            Assert.AreEqual(format.LongTimePattern, "HH:mm:ss");
+            Assert.AreEqual(format.ShortTimePattern, "HH:mm");
 
             Assert.AreEqual(format.FirstDayOfWeek, 0);
             Assert.AreDeepEqual(format.DayNames, new[] { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" });
