@@ -11169,8 +11169,6 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
 })(this);
 
 
-/* global Bridge */
-
 (function (globals) {
     "use strict";
 

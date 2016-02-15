@@ -1,6 +1,4 @@
-﻿/* global Bridge */
-
-(function (globals) {
+﻿(function (globals) {
     "use strict";
 
     Bridge.define('Test.BridgeIssues.N065.Class65_1.Nested');
