@@ -46,8 +46,8 @@ namespace Bridge.ClientTest.BridgeIssues
         [Test(ExpectedCount = 2)]
         public static void TestUseCase()
         {
-            Assert.AreEqual(Bridge882_Static.Sum, 6, "Bridge882_Static.Sum");
-            Assert.AreEqual(Bridge882_Static.Bridge882_A_Static.Sum, 18, "Bridge882_A_Static.Sum");
+            Assert.AreEqual(6, Bridge882_Static.Sum, "Bridge882_Static.Sum");
+            Assert.AreEqual(18, Bridge882_Static.Bridge882_A_Static.Sum, "Bridge882_A_Static.Sum");
         }
     }
 }

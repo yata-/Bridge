@@ -19,7 +19,7 @@ namespace Bridge.ClientTest.BridgeIssues
 
             var result = await DoSomethingAsync();
 
-            Assert.AreEqual(result, "A(0)A(1)B(0)B(1)B(2)", "#508 DoSomethingAsync");
+            Assert.AreEqual("A(0)A(1)B(0)B(1)B(2)", result, "#508 DoSomethingAsync");
 
             QUnitAsyncDone();
         }

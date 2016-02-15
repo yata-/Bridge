@@ -14,10 +14,10 @@ namespace Bridge.ClientTest.BridgeIssues
         public static void TestUseCase()
         {
             Func<string, int> fn1 = Global.ParseInt;
-            Assert.AreEqual(fn1("5"), 5, "Bridge689 should equals 5");
+            Assert.AreEqual(5, fn1("5"), "Bridge689 should equals 5");
 
             Func<string, int> fn2 = Bridge689.ParseInt;
-            Assert.AreEqual(fn2("6"), 6, "Bridge689 should equals 6");
+            Assert.AreEqual(6, fn2("6"), "Bridge689 should equals 6");
 
             //object a = 7;
             //Func<object, bool> fn3 = a.BridgeEquals;

@@ -83,26 +83,26 @@ namespace Bridge.ClientTest.BasicCSharp
         [Test(ExpectedCount = 16)]
         public static void TestStatic()
         {
-            Assert.AreEqual(Static.Foo(1), "Foo(int x)", "Static Foo(int x)");
-            Assert.AreEqual(Static.Foo("string"), "Foo(string s)", "Static Foo(string s)");
-            Assert.AreEqual(Static.Foo(1.1), "Foo(double d)", "Static Foo(double d)");
-            Assert.AreEqual(Static.Foo(1, 2), "Foo(int x, int y)", "Static Foo(int x, int y)");
-            Assert.AreEqual(Static.Foo(1, 1.1), "Foo(int x, double y)", "Static Foo(int x, double y)");
-            Assert.AreEqual(Static.Foo(1.1, 1), "Foo(double x, int y)", "Static Foo(double x, int y)");
+            Assert.AreEqual("Foo(int x)", Static.Foo(1), "Static Foo(int x)");
+            Assert.AreEqual("Foo(string s)", Static.Foo("string"), "Static Foo(string s)");
+            Assert.AreEqual("Foo(double d)", Static.Foo(1.1), "Static Foo(double d)");
+            Assert.AreEqual("Foo(int x, int y)", Static.Foo(1, 2), "Static Foo(int x, int y)");
+            Assert.AreEqual("Foo(int x, double y)", Static.Foo(1, 1.1), "Static Foo(int x, double y)");
+            Assert.AreEqual("Foo(double x, int y)", Static.Foo(1.1, 1), "Static Foo(double x, int y)");
 
-            Assert.AreEqual(Static.FooReturnType(1), 'C', "Static char FooReturnType(int y)");
-            Assert.AreEqual(Static.FooReturnType(1.1), "string FooReturnType(double d)", "Static string FooReturnType(double d)");
+            Assert.AreEqual('C', Static.FooReturnType(1), "Static char FooReturnType(int y)");
+            Assert.AreEqual("string FooReturnType(double d)", Static.FooReturnType(1.1), "Static string FooReturnType(double d)");
 
-            Assert.AreEqual(Static.FooOptionalParameters(1), "FooOptionalParameters(int x)", "Static FooOptionalParameters(int x)");
-            Assert.AreEqual(Static.FooOptionalParameters(1, 2), "FooOptionalParameters(int x, int y = 5)", "Static FooOptionalParameters(int x, int y = 5)");
+            Assert.AreEqual("FooOptionalParameters(int x)", Static.FooOptionalParameters(1), "Static FooOptionalParameters(int x)");
+            Assert.AreEqual("FooOptionalParameters(int x, int y = 5)", Static.FooOptionalParameters(1, 2), "Static FooOptionalParameters(int x, int y = 5)");
 
-            Assert.AreEqual(Static.FooMultipleOptionalParameters(1, 2), "FooMultipleOptionalParameters(int x, int y = 5)", "Static FooMultipleOptionalParameters(int x, int y = 5)");
-            Assert.AreEqual(Static.FooMultipleOptionalParameters(1, z: 2), "FooMultipleOptionalParameters(int x, int y = 5, int z = 10)", "Static FooMultipleOptionalParameters(int x, int y = 5, int z = 10)");
-            Assert.AreEqual(Static.FooMultipleOptionalParameters(1, 2, 3), "FooMultipleOptionalParameters(int x, int y = 5, int z = 10)", "Static FooMultipleOptionalParameters(int x, int y = 5, int z = 10)");
-            Assert.AreEqual(Static.FooMultipleOptionalParameters(1, z: 2, y: 3), "FooMultipleOptionalParameters(int x, int y = 5, int z = 10)", "Static FooMultipleOptionalParameters(int x, int y = 5, int z = 10)");
+            Assert.AreEqual("FooMultipleOptionalParameters(int x, int y = 5)", Static.FooMultipleOptionalParameters(1, 2), "Static FooMultipleOptionalParameters(int x, int y = 5)");
+            Assert.AreEqual("FooMultipleOptionalParameters(int x, int y = 5, int z = 10)", Static.FooMultipleOptionalParameters(1, z: 2), "Static FooMultipleOptionalParameters(int x, int y = 5, int z = 10)");
+            Assert.AreEqual("FooMultipleOptionalParameters(int x, int y = 5, int z = 10)", Static.FooMultipleOptionalParameters(1, 2, 3), "Static FooMultipleOptionalParameters(int x, int y = 5, int z = 10)");
+            Assert.AreEqual("FooMultipleOptionalParameters(int x, int y = 5, int z = 10)", Static.FooMultipleOptionalParameters(1, z: 2, y: 3), "Static FooMultipleOptionalParameters(int x, int y = 5, int z = 10)");
 
-            Assert.AreEqual(Static.FooNamedArgument(x: 1), "FooNamedArgument(int x)", "Static FooNamedArgument(int x)");
-            Assert.AreEqual(Static.FooNamedArgument(d: 1), "FooNamedArgument(double d)", "Static FooNamedArgument(double d)");
+            Assert.AreEqual("FooNamedArgument(int x)", Static.FooNamedArgument(x: 1), "Static FooNamedArgument(int x)");
+            Assert.AreEqual("FooNamedArgument(double d)", Static.FooNamedArgument(d: 1), "Static FooNamedArgument(double d)");
         }
     }
 }

@@ -19,23 +19,23 @@ namespace Bridge.ClientTest.BridgeIssues
         public static void TestUseCase()
         {
             var o = JSON.Parse<bool>("true");
-            Assert.AreEqual(o, true, "Bridge544 bool");
+            Assert.AreEqual(true, o, "Bridge544 bool");
         }
 
         [Test(ExpectedCount = 5)]
         public static void TestRelated()
         {
             var i = JSON.Parse<int>("25");
-            Assert.AreEqual(i, 25, "Bridge544 int");
+            Assert.AreEqual(25, i, "Bridge544 int");
 
             var dbl = JSON.Parse<double>("26.1");
-            Assert.AreEqual(dbl, 26.1d, "Bridge544 double");
+            Assert.AreEqual(26.1d, dbl, "Bridge544 double");
 
             var d = JSON.Parse<decimal>("27.2");
             DecimalHelper.AssertIsDecimalAndEqualTo(d, 27.2, "Bridge544 decimal");
 
             var s = JSON.Parse<string>("\"Some string\"");
-            Assert.AreEqual(s, "Some string", "Bridge544 string");
+            Assert.AreEqual("Some string", s, "Bridge544 string");
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Bridge.ClientTest
             }
             catch (E2 e)
             {
-                Assert.AreEqual(e.Message, "The message");
+                Assert.AreEqual("The message", e.Message);
                 return;
             }
             Assert.Fail("Should not get to statement after catch");
@@ -50,7 +50,7 @@ namespace Bridge.ClientTest
             }
             catch (E1 e)
             {
-                Assert.AreEqual(e.Message, "The message");
+                Assert.AreEqual("The message", e.Message);
                 return;
             }
             Assert.Fail("Should not get to statement after catch");
@@ -66,7 +66,7 @@ namespace Bridge.ClientTest
             }
             catch (E1 e)
             {
-                Assert.AreEqual(e.Message, "The message");
+                Assert.AreEqual("The message", e.Message);
                 return;
             }
             Assert.Fail("Should not get to statement after catch");
@@ -91,7 +91,7 @@ namespace Bridge.ClientTest
             }
             catch (Exception e)
             {
-                Assert.AreEqual(e.Message, "The message");
+                Assert.AreEqual("The message", e.Message);
                 return;
             }
             Assert.Fail("Should not get to statement after catch");

@@ -117,7 +117,7 @@ namespace Bridge.ClientTest.Collections.Generic
 
         private void AssertEqual(string actual, string expected, string message = null)
         {
-            Assert.AreEqual(actual.Replace("\r\n", "\n"), expected.Replace("\r\n", "\n"), message);
+            Assert.AreEqual(expected.Replace("\r\n", "\n"), actual.Replace("\r\n", "\n"), message);
         }
 
         [Test]

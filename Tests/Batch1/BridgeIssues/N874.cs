@@ -26,7 +26,7 @@ namespace Bridge.ClientTest.BridgeIssues
                     break;
             }
 
-            Assert.AreEqual(myValue, 3);
+            Assert.AreEqual(3, myValue);
         }
     }
 }

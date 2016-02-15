@@ -72,29 +72,29 @@ namespace Bridge.ClientTest.BridgeIssues
         public static void TestUseCase()
         {
             Bridge603A c = null;
-            Assert.AreEqual(c.value, "[Null]", "Bridge603A TestUseCase Null");
+            Assert.AreEqual("[Null]", c.value, "Bridge603A TestUseCase Null");
 
             c = "Test";
-            Assert.AreEqual(c.value, "Test", "Bridge603A TestUseCase String");
+            Assert.AreEqual("Test", c.value, "Bridge603A TestUseCase String");
         }
 
         [Test(ExpectedCount = 5)]
         public static void TestRelated()
         {
             Bridge603B b = 12345;
-            Assert.AreEqual(b.intValue, 12345, "Bridge603B TestRelated Int");
+            Assert.AreEqual(12345, b.intValue, "Bridge603B TestRelated Int");
 
             Bridge603B c = (string)null;
-            Assert.AreEqual(c.value, "[Null]", "Bridge603B TestRelated String Null");
+            Assert.AreEqual("[Null]", c.value, "Bridge603B TestRelated String Null");
 
             c = "Test";
-            Assert.AreEqual(c.value, "Test", "Bridge603B TestRelated String");
+            Assert.AreEqual("Test", c.value, "Bridge603B TestRelated String");
 
             Bridge603B d = (Bridge603Class)null;
-            Assert.AreEqual(d.value, "[Null]", "Bridge603B TestRelated Bridge603Class Null");
+            Assert.AreEqual("[Null]", d.value, "Bridge603B TestRelated Bridge603Class Null");
 
             d = new Bridge603Class() { Data = "Test 603B" };
-            Assert.AreEqual(d.value, "Test 603B", "Bridge603B TestRelated Bridge603Class");
+            Assert.AreEqual("Test 603B", d.value, "Bridge603B TestRelated Bridge603Class");
         }
     }
 }

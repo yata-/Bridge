@@ -11,15 +11,15 @@ namespace Bridge.ClientTest.SimpleTypes
     {
         private void AssertIsDecimalAndEqualTo(object v, double d, string message = null)
         {
-            Assert.AreStrictEqual(v is decimal, true, message);
-            Assert.AreStrictEqual(v.ToString(), d.ToString(), message);
+            Assert.AreStrictEqual(true, v is decimal, message);
+            Assert.AreStrictEqual(d.ToString(), v.ToString(), message);
         }
 
         [Test]
         public void TypePropertiesAreCorrect()
         {
             Assert.True((object)(decimal)0.5 is decimal);
-            Assert.AreEqual(typeof(decimal).GetClassName(), "Bridge.Decimal");
+            Assert.AreEqual("Bridge.Decimal", typeof(decimal).GetClassName());
             object d = (decimal)0;
             Assert.True(d is decimal);
             Assert.True(d is IFormattable);
@@ -72,19 +72,19 @@ namespace Bridge.ClientTest.SimpleTypes
         [Test]
         public void FormatWorks()
         {
-            Assert.AreEqual(291m.Format("x"), "123");
+            Assert.AreEqual("123", 291m.Format("x"));
         }
 
         [Test]
         public void IFormattableToStringWorks()
         {
-            Assert.AreEqual(291m.ToString("x"), "123");
+            Assert.AreEqual("123", 291m.ToString("x"));
         }
 
         [Test]
         public void ToStringWithoutRadixWorks()
         {
-            Assert.AreEqual(123m.ToString(), "123");
+            Assert.AreEqual("123", 123m.ToString());
         }
 
         //[Test]
@@ -136,46 +136,46 @@ namespace Bridge.ClientTest.SimpleTypes
             decimal? d1 = 1m;
             var s1 = d1 + "#";
 
-            Assert.AreEqual(s1, "1#", "decimal?");
+            Assert.AreEqual("1#", s1, "decimal?");
 
             decimal d2 = 2m;
             var s2 = d2 + "!";
 
-            Assert.AreEqual(s2, "2!", "decimal");
+            Assert.AreEqual("2!", s2, "decimal");
         }
 
         [Test]
         public void ConversionsToDecimalWork()
         {
             int x = 0;
-            Assert.AreDeepEqual((decimal)(byte)(x + 1), 1m);
-            Assert.AreDeepEqual((decimal)(sbyte)(x + 2), 2m);
-            Assert.AreDeepEqual((decimal)(short)(x + 3), 3m);
-            Assert.AreDeepEqual((decimal)(ushort)(x + 4), 4m);
-            Assert.AreDeepEqual((decimal)(char)(x + '\x5'), 5m);
-            Assert.AreDeepEqual((decimal)(int)(x + 6), 6m);
-            Assert.AreDeepEqual((decimal)(uint)(x + 7), 7m);
-            Assert.AreDeepEqual((decimal)(long)(x + 8), 8m);
-            Assert.AreDeepEqual((decimal)(ulong)(x + 9), 9m);
-            Assert.AreDeepEqual((decimal)(float)(x + 10.5), 10.5m);
-            Assert.AreDeepEqual((decimal)(double)(x + 11.5), 11.5m);
+            Assert.AreDeepEqual(1m, (decimal)(byte)(x + 1));
+            Assert.AreDeepEqual(2m, (decimal)(sbyte)(x + 2));
+            Assert.AreDeepEqual(3m, (decimal)(short)(x + 3));
+            Assert.AreDeepEqual(4m, (decimal)(ushort)(x + 4));
+            Assert.AreDeepEqual(5m, (decimal)(char)(x + '\x5'));
+            Assert.AreDeepEqual(6m, (decimal)(int)(x + 6));
+            Assert.AreDeepEqual(7m, (decimal)(uint)(x + 7));
+            Assert.AreDeepEqual(8m, (decimal)(long)(x + 8));
+            Assert.AreDeepEqual(9m, (decimal)(ulong)(x + 9));
+            Assert.AreDeepEqual(10.5m, (decimal)(float)(x + 10.5));
+            Assert.AreDeepEqual(11.5m, (decimal)(double)(x + 11.5));
         }
 
         [Test]
         public void ConversionsFromDecimalWork()
         {
             int x = 0;
-            Assert.AreEqual((byte)(decimal)(x + 1), 1);
-            Assert.AreEqual((sbyte)(decimal)(x + 2), 2);
-            Assert.AreEqual((short)(decimal)(x + 3), 3);
-            Assert.AreEqual((ushort)(decimal)(x + 4), 4);
-            Assert.AreEqual((int)(char)(decimal)(x + '\x5'), 5);
-            Assert.AreEqual((int)(decimal)(x + 6), 6);
-            Assert.AreEqual((uint)(decimal)(x + 7), 7);
-            Assert.AreEqual((long)(decimal)(x + 8), 8);
-            Assert.AreEqual((ulong)(decimal)(x + 9), 9);
-            Assert.AreEqual((float)(decimal)(x + 10.5), 10.5);
-            Assert.AreEqual((double)(decimal)(x + 11.5), 11.5);
+            Assert.AreEqual(1, (byte)(decimal)(x + 1));
+            Assert.AreEqual(2, (sbyte)(decimal)(x + 2));
+            Assert.AreEqual(3, (short)(decimal)(x + 3));
+            Assert.AreEqual(4, (ushort)(decimal)(x + 4));
+            Assert.AreEqual(5, (int)(char)(decimal)(x + '\x5'));
+            Assert.AreEqual(6, (int)(decimal)(x + 6));
+            Assert.AreEqual(7, (uint)(decimal)(x + 7));
+            Assert.AreEqual(8, (long)(decimal)(x + 8));
+            Assert.AreEqual(9, (ulong)(decimal)(x + 9));
+            Assert.AreEqual(10.5, (float)(decimal)(x + 10.5));
+            Assert.AreEqual(11.5, (double)(decimal)(x + 11.5));
         }
 
         [Test]
@@ -210,7 +210,7 @@ namespace Bridge.ClientTest.SimpleTypes
         [Test]
         public void AddWorks()
         {
-            Assert.AreDeepEqual(decimal.Add(3m, 4m), 7m);
+            Assert.AreDeepEqual(7m, decimal.Add(3m, 4m));
         }
 
         [Test]
@@ -333,8 +333,8 @@ namespace Bridge.ClientTest.SimpleTypes
         {
             Assert.AreDeepEqual(((decimal)0).GetHashCode(), ((decimal)0).GetHashCode());
             Assert.AreDeepEqual(((decimal)1).GetHashCode(), ((decimal)1).GetHashCode());
-            Assert.AreNotEqual(((decimal)0).GetHashCode(), ((decimal)1).GetHashCode());
-            Assert.AreNotEqual(((decimal)0).GetHashCode(), ((decimal)0.5).GetHashCode());
+            Assert.AreNotEqual(((decimal)1).GetHashCode(), ((decimal)0).GetHashCode());
+            Assert.AreNotEqual(((decimal)0.5).GetHashCode(), ((decimal)0).GetHashCode());
         }
 
         [Test]

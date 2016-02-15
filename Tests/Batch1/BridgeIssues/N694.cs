@@ -21,9 +21,9 @@ namespace Bridge.ClientTest.BridgeIssues
             fruits[2] = "lemon";
 
             var list = fruits.Cast<string>().OrderBy(fruit => fruit).Select(fruit => fruit).ToList();
-            Assert.AreEqual(list[0], "apple", "Bridge694 apple");
-            Assert.AreEqual(list[1], "lemon", "Bridge694 lemon");
-            Assert.AreEqual(list[2], "mango", "Bridge694 mango");
+            Assert.AreEqual("apple", list[0], "Bridge694 apple");
+            Assert.AreEqual("lemon", list[1], "Bridge694 lemon");
+            Assert.AreEqual("mango", list[2], "Bridge694 mango");
         }
     }
 }

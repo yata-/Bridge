@@ -28,7 +28,7 @@ namespace Bridge.ClientTest.BasicCSharp
             var data = new Data();
             TryCatchFinally(data);
 
-            Assert.AreEqual(data.Count, 2, "TryCatchFinally() executes");
+            Assert.AreEqual(2, data.Count, "TryCatchFinally() executes");
         }
 
         [Test(ExpectedCount = 4)]
@@ -37,18 +37,18 @@ namespace Bridge.ClientTest.BasicCSharp
             var data = new Data();
             TryCatchFinallyWithCaughtException(data);
 
-            Assert.AreEqual(data.Count, 7, "Exception catch, Finally works");
+            Assert.AreEqual(7, data.Count, "Exception catch, Finally works");
 
             data = new Data();
             TryCatchFinallyWithCaughtTypedException(data);
 
-            Assert.AreEqual(data.Count, 7, "Typed exception catch, Finally works");
+            Assert.AreEqual(7, data.Count, "Typed exception catch, Finally works");
 
             data = new Data();
             var exceptionMessage = TryCatchFinallyWithCaughtArgumentException(data);
 
-            Assert.AreEqual(exceptionMessage, "catch me", "Typed exception catch with exception message");
-            Assert.AreEqual(data.Count, 7, "Typed exception catch with exception message, Finally works");
+            Assert.AreEqual("catch me", exceptionMessage, "Typed exception catch with exception message");
+            Assert.AreEqual(7, data.Count, "Typed exception catch with exception message, Finally works");
         }
 
         [Test(ExpectedCount = 16)]

@@ -28,8 +28,8 @@ namespace Bridge.ClientTest.BridgeIssues
             int i = 0;
             object o = null;
 
-            Assert.AreEqual(o.Method1(), "object", "Bridge615 object");
-            Assert.AreEqual(i.Method1(), "int", "Bridge615 int");
+            Assert.AreEqual("object", o.Method1(), "Bridge615 object");
+            Assert.AreEqual("int", i.Method1(), "Bridge615 int");
         }
     }
 }

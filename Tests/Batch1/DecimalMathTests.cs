@@ -323,7 +323,7 @@ namespace Bridge.ClientTest
         private static void AssertIsDecimalAndEqualTo(object actual, object expected, string message)
         {
             Assert.True(actual is decimal, "isDecimal " + message);
-            Assert.AreStrictEqual(actual.ToString(), expected.ToString(), "StrictEqual " + message);
+            Assert.AreStrictEqual(expected.ToString(), actual.ToString(), "StrictEqual " + message);
         }
 
         private static string GetDifferenceReport(decimal difference)

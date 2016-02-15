@@ -81,7 +81,7 @@ namespace Bridge.ClientTest.BridgeIssues
         {
             var b = new Bridge559B1(1);
 
-            Assert.AreEqual(b.result, " -> Bridge559A1 -> Bridge559A1$1 -> Bridge559B1$1", "Bridge559 TestUseCase1");
+            Assert.AreEqual(" -> Bridge559A1 -> Bridge559A1$1 -> Bridge559B1$1", b.result, "Bridge559 TestUseCase1");
         }
 
         [Test(ExpectedCount = 1)]
@@ -89,7 +89,7 @@ namespace Bridge.ClientTest.BridgeIssues
         {
             var b = new Bridge559B2(1);
 
-            Assert.AreEqual(b.result, " ClassA ClassA$1 ClassB$1", "Bridge559 TestUseCase2");
+            Assert.AreEqual(" ClassA ClassA$1 ClassB$1", b.result, "Bridge559 TestUseCase2");
         }
 
         [Test(ExpectedCount = 1)]
@@ -99,7 +99,7 @@ namespace Bridge.ClientTest.BridgeIssues
             var b = new Bridge559A3(2);
 
             var r = a.Data + "|" + b.Data;
-            Assert.AreEqual(r, "1|2", "Bridge559 TestUseCase3");
+            Assert.AreEqual("1|2", r, "Bridge559 TestUseCase3");
         }
     }
 }

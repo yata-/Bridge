@@ -12,7 +12,7 @@ namespace Bridge.ClientTest.BridgeIssues
         [Test(ExpectedCount = 1)]
         public static void TestUseCase()
         {
-            Assert.AreEqual(TestIssue(), 12, "Bridge708 TestIssue");
+            Assert.AreEqual(12, TestIssue(), "Bridge708 TestIssue");
         }
 
         private static int TestIssue()

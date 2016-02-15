@@ -259,13 +259,13 @@ namespace Bridge.ClientTest.BasicCSharp
             var a = new ClassA();
 
             // TEST
-            Assert.AreEqual(a.NumberA, 10, "NumberA 10");
-            Assert.AreEqual(a.StringA, "Str", "StringA Str");
-            Assert.AreEqual(a.BoolA, true, "BoolA true");
+            Assert.AreEqual(10, a.NumberA, "NumberA 10");
+            Assert.AreEqual("Str", a.StringA, "StringA Str");
+            Assert.AreEqual(true, a.BoolA, "BoolA true");
             Assert.True(a.DoubleA == Double.PositiveInfinity, "DoubleA Double.PositiveInfinity");
-            Assert.AreDeepEqual(a.DecimalA, -1m, "DecimalA Decimal.MinusOne");
+            Assert.AreDeepEqual(-1m, a.DecimalA, "DecimalA Decimal.MinusOne");
             Assert.True(a.Data != null, "Data not null");
-            Assert.AreEqual(a.Data.Number, 700, "Data.Number 700");
+            Assert.AreEqual(700, a.Data.Number, "Data.Number 700");
 
             // TEST
             // Check constructor with parameter
@@ -280,41 +280,41 @@ namespace Bridge.ClientTest.BasicCSharp
                 Number = 155
             });
 
-            Assert.AreEqual(a.NumberA, 150, "NumberA 150");
-            Assert.AreEqual(a.StringA, "151", "StringA 151");
-            Assert.AreEqual(a.BoolA, true, "BoolA true");
-            Assert.AreEqual(a.DoubleA, 1.53, "DoubleA Double.PositiveInfinity");
-            Assert.AreDeepEqual(a.DecimalA, 1.54m, "DecimalA 154");
+            Assert.AreEqual(150, a.NumberA, "NumberA 150");
+            Assert.AreEqual("151", a.StringA, "StringA 151");
+            Assert.AreEqual(true, a.BoolA, "BoolA true");
+            Assert.AreEqual(1.53, a.DoubleA, "DoubleA Double.PositiveInfinity");
+            Assert.AreDeepEqual(1.54m, a.DecimalA, "DecimalA 154");
             Assert.True(a.Data != null, "Data not null");
-            Assert.AreEqual(a.Data.Number, 155, "Data.Number 155");
+            Assert.AreEqual(155, a.Data.Number, "Data.Number 155");
 
             // TEST
             // Check instance methods
             var b = a.Method1();
 
             Assert.True(b != null, "b not null");
-            Assert.AreEqual(b.Number, 2, "b Number 2");
+            Assert.AreEqual(2, b.Number, "b Number 2");
             Assert.True(b.Related != null, "b.Related not null");
-            Assert.AreEqual(b.Related.Number, 1, "b.Related Number 1");
+            Assert.AreEqual(1, b.Related.Number, "b.Related Number 1");
 
             a.Data = b;
-            Assert.AreEqual(a.Method3(), "2 Has related 1", "Method3 2 Has related 1");
+            Assert.AreEqual("2 Has related 1", a.Method3(), "Method3 2 Has related 1");
             a.Data = null;
-            Assert.AreEqual(a.Method3(), "no data", "Method3 no data");
+            Assert.AreEqual("no data", a.Method3(), "Method3 no data");
 
             // TEST
             // Check [#68]
             var c68 = new Class68();
 
-            Assert.AreEqual(c68.x, 0, "c68.x 0");
-            Assert.AreEqual(c68.y, 1, "c68.y 1");
+            Assert.AreEqual(0, c68.x, "c68.x 0");
+            Assert.AreEqual(1, c68.y, "c68.y 1");
 
             // TEST
             // Check local vars do not get overridden by fields
             c68.Test();
 
-            Assert.AreEqual(c68.x, 0, "c68.x 0");
-            Assert.AreEqual(c68.y, 1, "c68.y 1");
+            Assert.AreEqual(0, c68.x, "c68.x 0");
+            Assert.AreEqual(1, c68.y, "c68.y 1");
         }
 
         // Check static methods and constructor
@@ -323,28 +323,28 @@ namespace Bridge.ClientTest.BasicCSharp
         {
             // TEST
             // Check static fields initialization
-            Assert.AreEqual(ClassA.StatitIntNotInitialized, 0, "#74 StatitInt not initialized");
-            Assert.AreEqual(ClassA.StatitStringNotInitialized, null, "#74 StatitString not initialized");
-            Assert.AreEqual(ClassA.CONST_CHAR, 81, "#74 CONST_CHAR Q");
-            Assert.AreEqual(ClassA.CONST_DECIMAL == 3.123456789324324324m, true, "#74 CONST_DECIMAL 3.123456789324324324m");
+            Assert.AreEqual(0, ClassA.StatitIntNotInitialized, "#74 StatitInt not initialized");
+            Assert.AreEqual(null, ClassA.StatitStringNotInitialized, "#74 StatitString not initialized");
+            Assert.AreEqual(81, ClassA.CONST_CHAR, "#74 CONST_CHAR Q");
+            Assert.AreEqual(true, ClassA.CONST_DECIMAL == 3.123456789324324324m, "#74 CONST_DECIMAL 3.123456789324324324m");
 
             // TEST
             // Check static constructor
-            Assert.AreEqual(ClassA.StaticInt, -340, "StatitInt initialized");
-            Assert.AreEqual(ClassA.StaticString, "Defined string", "StatitString initialized");
+            Assert.AreEqual(-340, ClassA.StaticInt, "StatitInt initialized");
+            Assert.AreEqual("Defined string", ClassA.StaticString, "StatitString initialized");
 
             // TEST
             // Check static methods
             var a = ClassA.StaticMethod1(678, "ASD", double.NaN);
 
-            Assert.AreEqual(ClassA.StatitIntNotInitialized, 678, "StatitIntNotInitialized 678");
-            Assert.AreEqual(ClassA.StatitStringNotInitialized, "ASD", "ClassA.StatitStringNotInitialized ASD");
-            Assert.AreDeepEqual(a.DoubleA, double.NaN, "DoubleA double.NaN");
+            Assert.AreEqual(678, ClassA.StatitIntNotInitialized, "StatitIntNotInitialized 678");
+            Assert.AreEqual("ASD", ClassA.StatitStringNotInitialized, "ClassA.StatitStringNotInitialized ASD");
+            Assert.AreDeepEqual(double.NaN, a.DoubleA, "DoubleA double.NaN");
 
             a = ClassA.StaticMethod2((object)678, "QWE", 234);
-            Assert.AreEqual(ClassA.StatitIntNotInitialized, 1678, "StatitIntNotInitialized 1678");
-            Assert.AreEqual(ClassA.StatitStringNotInitialized, "QWE", "ClassA.StatitStringNotInitialized QWE");
-            Assert.AreEqual(a.DoubleA, 234, "DoubleA 234");
+            Assert.AreEqual(1678, ClassA.StatitIntNotInitialized, "StatitIntNotInitialized 1678");
+            Assert.AreEqual("QWE", ClassA.StatitStringNotInitialized, "ClassA.StatitStringNotInitialized QWE");
+            Assert.AreEqual(234, a.DoubleA, "DoubleA 234");
 
             Assert.Throws(TestSet1FailureHelper.StaticMethod2Failure, "Unable to cast type String to type Bridge.Int", "Cast exception should occur");
         }
@@ -357,13 +357,13 @@ namespace Bridge.ClientTest.BasicCSharp
             var ra = new ClassA();
             int r = ra.Method5(5);
 
-            Assert.AreEqual(r, 5, "r 5");
+            Assert.AreEqual(5, r, "r 5");
             r = ra.Method5(i: 15);
-            Assert.AreEqual(r, 15, "r 15");
+            Assert.AreEqual(15, r, "r 15");
             r = ra.Method5(5, 6);
-            Assert.AreEqual(r, 11, "r 11");
+            Assert.AreEqual(11, r, "r 11");
             r = ra.Method5(k: 6);
-            Assert.AreEqual(r, -44, "r -44");
+            Assert.AreEqual(-44, r, "r -44");
 
             // Check referencing did not change data
             var a = new ClassA();
@@ -372,25 +372,25 @@ namespace Bridge.ClientTest.BasicCSharp
 
             a.Method2(b);
             Assert.True(b != null, "b not null");
-            Assert.AreEqual(b.Number, 2, "b Number 2");
+            Assert.AreEqual(2, b.Number, "b Number 2");
             Assert.True(b.Related != null, "b.Related not null");
-            Assert.AreEqual(b.Related.Number, 2, "b.Related Number 2");
+            Assert.AreEqual(2, b.Related.Number, "b.Related Number 2");
 
             Assert.True(c != null, "c not null");
-            Assert.AreEqual(c.Number, 1, "c Number 1");
+            Assert.AreEqual(1, c.Number, "c Number 1");
             Assert.True(c.Related == null, "c.Related null");
 
             // Check value local parameter
             var input = 1;
             var result = a.Method4(input, 4);
 
-            Assert.AreEqual(input, 1, "input 1");
-            Assert.AreEqual(result, 5, "result 5");
+            Assert.AreEqual(1, input, "input 1");
+            Assert.AreEqual(5, result, "result 5");
 
             // TEST
             // [#86]
             var di = ClassA.GetDefaultInt();
-            Assert.AreEqual(di, 0, "di 0");
+            Assert.AreEqual(0, di, "di 0");
 
             // TEST
             // Check  "out parameter"
@@ -399,7 +399,7 @@ namespace Bridge.ClientTest.BasicCSharp
             var tryResult = ClassA.TryParse("", out i);
 
             Assert.True(tryResult, "tryResult");
-            Assert.AreEqual(i, 3, "i 3");
+            Assert.AreEqual(3, i, "i 3");
         }
     }
 

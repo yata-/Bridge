@@ -20,7 +20,7 @@ namespace Bridge.ClientTest.Threading
         [Test(ExpectedCount = 2)]
         public void TaskCompletionSourceTypePropertiesAreCorrect()
         {
-            Assert.AreEqual(typeof(TaskCompletionSource<int>).GetClassName(), "Bridge.TaskCompletionSource", "FullName should be correct");
+            Assert.AreEqual("Bridge.TaskCompletionSource", typeof(TaskCompletionSource<int>).GetClassName(), "FullName should be correct");
             var tcs = new TaskCompletionSource<int>();
             Assert.True(tcs is TaskCompletionSource<int>);
         }
@@ -28,8 +28,8 @@ namespace Bridge.ClientTest.Threading
         [Test(ExpectedCount = 5)]
         public void TaskTypePropertiesAreCorrect()
         {
-            Assert.AreEqual(typeof(Task).GetClassName(), "Bridge.Task", "FullName for non-generic task should be correct");
-            Assert.AreEqual(typeof(Task<int>).GetClassName(), "Bridge.Task", "FullName for generic task should be correct");
+            Assert.AreEqual("Bridge.Task", typeof(Task).GetClassName(), "FullName for non-generic task should be correct");
+            Assert.AreEqual("Bridge.Task", typeof(Task<int>).GetClassName(), "FullName for generic task should be correct");
 
             var task = new TaskCompletionSource<int>().Task;
             Assert.True(task is Task<int>);
@@ -52,21 +52,21 @@ namespace Bridge.ClientTest.Threading
             task.ContinueWith(t =>
                 {
                     Assert.True(t == task, "Callback parameter should be correct");
-                    Assert.AreEqual(task.Status, TaskStatus.RanToCompletion, "Task should be completed when in the callback");
-                    Assert.AreEqual(task.Result, 1, "Result should be 1 after the callback");
-                    Assert.AreEqual(task.Exception, null, "Exception should be null in the callback");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, task.Status, "Task should be completed when in the callback");
+                    Assert.AreEqual(1, task.Result, "Result should be 1 after the callback");
+                    Assert.AreEqual(null, task.Exception, "Exception should be null in the callback");
 
                     callbackRun = true;
                 });
 
-            Assert.AreEqual(task.Status, TaskStatus.Running, "The task should be running before SetResult is called");
+            Assert.AreEqual(TaskStatus.Running, task.Status, "The task should be running before SetResult is called");
             Assert.False(callbackRun, "Callback should not be run before SetResult() is called");
 
             tcs.SetResult(1);
 
-            Assert.AreEqual(task.Status, TaskStatus.RanToCompletion, "Task should be completed directly after SetResult() is called");
-            Assert.AreEqual(task.Result, 1, "Result should be set immediately");
-            Assert.AreEqual(task.Exception, null, "Exception should be null after SetResult()");
+            Assert.AreEqual(TaskStatus.RanToCompletion, task.Status, "Task should be completed directly after SetResult() is called");
+            Assert.AreEqual(1, task.Result, "Result should be set immediately");
+            Assert.AreEqual(null, task.Exception, "Exception should be null after SetResult()");
 
             Task.Run(() =>
                 {
@@ -90,7 +90,7 @@ namespace Bridge.ClientTest.Threading
             task.ContinueWith(t =>
                 {
                     Assert.True(t == task, "Callback parameter should be correct");
-                    Assert.AreEqual(task.Status, TaskStatus.Faulted, "Task should be faulted in the callback");
+                    Assert.AreEqual(TaskStatus.Faulted, task.Status, "Task should be faulted in the callback");
                     Assert.True((object)task.Exception is AggregateException);
                     Assert.True(task.Exception.InnerExceptions[0] == ex, "The exception should be correct");
                     Assert.Throws(() =>
@@ -101,12 +101,12 @@ namespace Bridge.ClientTest.Threading
                     callbackRun = true;
                 });
 
-            Assert.AreEqual(task.Status, TaskStatus.Running, "The task should be running before the SetException() call");
+            Assert.AreEqual(TaskStatus.Running, task.Status, "The task should be running before the SetException() call");
             Assert.False(callbackRun, "Callback should not be run before SetException() is called");
 
             tcs.SetException(ex);
 
-            Assert.AreEqual(task.Status, TaskStatus.Faulted, "The task should be faulted immediately after the SetException() call");
+            Assert.AreEqual(TaskStatus.Faulted, task.Status, "The task should be faulted immediately after the SetException() call");
             Assert.True((object)task.Exception is AggregateException);
             Assert.True(task.Exception.InnerExceptions[0] == ex, "The exception should be correct immediately after SetException()");
             Assert.Throws(() =>
@@ -137,7 +137,7 @@ namespace Bridge.ClientTest.Threading
             task.ContinueWith(t =>
                 {
                     Assert.True(t == task, "Callback parameter should be correct");
-                    Assert.AreEqual(task.Status, TaskStatus.Faulted, "Task should be faulted in the callback");
+                    Assert.AreEqual(TaskStatus.Faulted, task.Status, "Task should be faulted in the callback");
                     Assert.True((object)task.Exception is AggregateException);
                     Assert.True(task.Exception.InnerExceptions[0] == ex1, "InnerExceptions[0] should be correct in callback");
                     Assert.True(task.Exception.InnerExceptions[1] == ex2, "InnerExceptions[1] should be correct in callback");
@@ -149,12 +149,12 @@ namespace Bridge.ClientTest.Threading
                     callbackRun = true;
                 });
 
-            Assert.AreEqual(task.Status, TaskStatus.Running, "The task should be running before the SetException() call");
+            Assert.AreEqual(TaskStatus.Running, task.Status, "The task should be running before the SetException() call");
             Assert.False(callbackRun, "Callback should not be run before SetException() is called");
 
             tcs.SetException(MakeEnumerable(new[] { ex1, ex2 }));
 
-            Assert.AreEqual(task.Status, TaskStatus.Faulted, "The task should be faulted immediately after the SetException() call");
+            Assert.AreEqual(TaskStatus.Faulted, task.Status, "The task should be faulted immediately after the SetException() call");
             Assert.True((object)task.Exception is AggregateException);
             Assert.True(task.Exception.InnerExceptions[0] == ex1, "InnerExceptions[0] should be correct immediately after SetException");
             Assert.True(task.Exception.InnerExceptions[1] == ex2, "InnerExceptions[1] should be correct immediately after SetException");
@@ -183,7 +183,7 @@ namespace Bridge.ClientTest.Threading
             var task1 = task.ContinueWith(t =>
                 {
                     Assert.True(t == task, "Callback parameter should be correct");
-                    Assert.AreEqual(task.Status, TaskStatus.Canceled, "Task should be cancelled in the callback");
+                    Assert.AreEqual(TaskStatus.Canceled, task.Status, "Task should be cancelled in the callback");
                     Assert.True(task.Exception == null, "Exception should be null in the callback");
                     Assert.Throws(() =>
                     {
@@ -193,12 +193,12 @@ namespace Bridge.ClientTest.Threading
                     callbackRun = true;
                 });
 
-            Assert.AreEqual(task.Status, TaskStatus.Running, "The task should be running before the SetCanceled() call");
+            Assert.AreEqual(TaskStatus.Running, task.Status, "The task should be running before the SetCanceled() call");
             Assert.False(callbackRun, "Callback should not be run before SetCanceled() is called");
 
             tcs.SetCanceled();
 
-            Assert.AreEqual(task.Status, TaskStatus.Canceled, "The task should be cancelled immediately after the SetCanceled() call");
+            Assert.AreEqual(TaskStatus.Canceled, task.Status, "The task should be cancelled immediately after the SetCanceled() call");
             Assert.True(task.Exception == null, "The exception should be correct immediately after SetCanceled()");
             Assert.Throws(() =>
             {
@@ -262,7 +262,7 @@ namespace Bridge.ClientTest.Threading
             }
             catch (AggregateException ex)
             {
-                Assert.AreEqual(ex.InnerExceptions.Count, 1, "InnerExceptions.Count");
+                Assert.AreEqual(1, ex.InnerExceptions.Count, "InnerExceptions.Count");
                 var tce = ex.InnerExceptions[0] as TaskCanceledException;
                 Assert.NotNull(tce, "is TaskCanceledException");
                 Assert.True(ReferenceEquals(tcs.Task, tce.Task), "Task");
@@ -358,16 +358,16 @@ namespace Bridge.ClientTest.Threading
             var tcs = new TaskCompletionSource<int>();
             Task task = tcs.Task;
 
-            Assert.AreEqual(task.Status, TaskStatus.Running, "task should be running at point 1");
+            Assert.AreEqual(TaskStatus.Running, task.Status, "task should be running at point 1");
 
             Task continuedTask = null;
 
             continuedTask = task.ContinueWith(t =>
                 {
                     Assert.True(t == task, "argument to task.ContinueWith callback should be correct");
-                    Assert.AreEqual(task.Status, TaskStatus.RanToCompletion, "task should have run to completion at point 2");
-                    Assert.AreEqual(task.Exception, null, "task should not have an exception");
-                    Assert.AreEqual(continuedTask.Status, TaskStatus.Running, "continuedTask should be running at point 2");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, task.Status, "task should have run to completion at point 2");
+                    Assert.AreEqual(null, task.Exception, "task should not have an exception");
+                    Assert.AreEqual(TaskStatus.Running, continuedTask.Status, "continuedTask should be running at point 2");
                 });
 
             Assert.False(task == continuedTask, "task and continuedTask should not be the same");
@@ -375,8 +375,8 @@ namespace Bridge.ClientTest.Threading
             var continuedTask1 = continuedTask.ContinueWith(t =>
                 {
                     Assert.True(t == continuedTask, "argument to continuedTask.ContinueWith callback should be correct");
-                    Assert.AreEqual(continuedTask.Status, TaskStatus.RanToCompletion, "continuedTask should have run to completion at point 3");
-                    Assert.AreEqual(continuedTask.Exception, null, "continuedTask should not have an exception");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, continuedTask.Status, "continuedTask should have run to completion at point 3");
+                    Assert.AreEqual(null, continuedTask.Exception, "continuedTask should not have an exception");
 
                     complete = true;
                 });
@@ -400,7 +400,7 @@ namespace Bridge.ClientTest.Threading
             var tcs = new TaskCompletionSource<int>();
             Task task = tcs.Task;
 
-            Assert.AreEqual(task.Status, TaskStatus.Running, "task should be running at point 1");
+            Assert.AreEqual(TaskStatus.Running, task.Status, "task should be running at point 1");
 
             var t1 = task.ContinueWith(t =>
                 {
@@ -417,12 +417,12 @@ namespace Bridge.ClientTest.Threading
 
             Task.Run(() =>
                 {
-                    Assert.AreEqual(task.Status, TaskStatus.RanToCompletion, "task status should be RanToCompletion");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, task.Status, "task status should be RanToCompletion");
 
-                    Assert.AreEqual(t1.Status, TaskStatus.Faulted, "t1 status should be Faulted");
+                    Assert.AreEqual(TaskStatus.Faulted, t1.Status, "t1 status should be Faulted");
                     Assert.True(cb1Invoked, "Callback 1 should have been invoked");
 
-                    Assert.AreEqual(t2.Status, TaskStatus.RanToCompletion, "t2 status should be RanToCompletion");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, t2.Status, "t2 status should be RanToCompletion");
                     Assert.True(cb2Invoked, "Callback 2 should have been invoked");
 
                     completeAsync();
@@ -438,7 +438,7 @@ namespace Bridge.ClientTest.Threading
             var tcs = new TaskCompletionSource<int>();
             Task task = tcs.Task;
 
-            Assert.AreEqual(task.Status, TaskStatus.Running, "task should be running at point 1");
+            Assert.AreEqual(TaskStatus.Running, task.Status, "task should be running at point 1");
 
             Task continuedTask = null;
 
@@ -452,10 +452,10 @@ namespace Bridge.ClientTest.Threading
             var continuedTask1 = continuedTask.ContinueWith(t =>
                 {
                     Assert.True(t == continuedTask, "argument to continuedTask.ContinueWith callback should be correct");
-                    Assert.AreEqual(continuedTask.Status, TaskStatus.Faulted, "continuedTask should have run to completion at point 3");
-                    Assert.AreNotEqual(continuedTask.Exception, null, "continuedTask should have an exception");
+                    Assert.AreEqual(TaskStatus.Faulted, continuedTask.Status, "continuedTask should have run to completion at point 3");
+                    Assert.AreNotEqual(null, continuedTask.Exception, "continuedTask should have an exception");
                     Assert.True((object)continuedTask.Exception is AggregateException);
-                    Assert.AreEqual(continuedTask.Exception.InnerExceptions[0].Message, "This is a test message");
+                    Assert.AreEqual("This is a test message", continuedTask.Exception.InnerExceptions[0].Message);
 
                     complete = true;
                 });
@@ -479,16 +479,16 @@ namespace Bridge.ClientTest.Threading
             var tcs = new TaskCompletionSource<int>();
             Task task = tcs.Task;
 
-            Assert.AreEqual(task.Status, TaskStatus.Running, "task should be running at point 1");
+            Assert.AreEqual(TaskStatus.Running, task.Status, "task should be running at point 1");
 
             Task<int> continuedTask = null;
             continuedTask = task.ContinueWith(t =>
                 {
                     Assert.True(t == task, "argument to task.ContinueWith callback should be correct");
-                    Assert.AreEqual(task.Status, TaskStatus.RanToCompletion, "task should have run to completion at point 2");
-                    Assert.AreEqual(task.Exception, null, "task should not have an exception");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, task.Status, "task should have run to completion at point 2");
+                    Assert.AreEqual(null, task.Exception, "task should not have an exception");
 
-                    Assert.AreEqual(continuedTask.Status, TaskStatus.Running, "continuedTask should be running at point 2");
+                    Assert.AreEqual(TaskStatus.Running, continuedTask.Status, "continuedTask should be running at point 2");
 
                     return 42;
                 });
@@ -498,9 +498,9 @@ namespace Bridge.ClientTest.Threading
             var continuedTask1 = continuedTask.ContinueWith(t =>
                 {
                     Assert.True(t == continuedTask, "argument to continuedTask.ContinueWith callback should be correct");
-                    Assert.AreEqual(continuedTask.Status, TaskStatus.RanToCompletion, "continuedTask should have run to completion at point 3");
-                    Assert.AreEqual(continuedTask.Exception, null, "continuedTask should not have an exception");
-                    Assert.AreEqual(t.Result, 42);
+                    Assert.AreEqual(TaskStatus.RanToCompletion, continuedTask.Status, "continuedTask should have run to completion at point 3");
+                    Assert.AreEqual(null, continuedTask.Exception, "continuedTask should not have an exception");
+                    Assert.AreEqual(42, t.Result);
 
                     done = true;
                 });
@@ -524,16 +524,16 @@ namespace Bridge.ClientTest.Threading
             var tcs = new TaskCompletionSource<int>();
             Task<int> task = tcs.Task;
 
-            Assert.AreEqual(task.Status, TaskStatus.Running, "task should be running at point 1");
+            Assert.AreEqual(TaskStatus.Running, task.Status, "task should be running at point 1");
 
             Task continuedTask = null;
 
             continuedTask = task.ContinueWith(t =>
                 {
                     Assert.True(t == task, "argument to task.ContinueWith callback should be correct");
-                    Assert.AreEqual(task.Status, TaskStatus.RanToCompletion, "task should have run to completion at point 2");
-                    Assert.AreEqual(task.Exception, null, "task should not have an exception");
-                    Assert.AreEqual(continuedTask.Status, TaskStatus.Running, "continuedTask should be running at point 2");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, task.Status, "task should have run to completion at point 2");
+                    Assert.AreEqual(null, task.Exception, "task should not have an exception");
+                    Assert.AreEqual(TaskStatus.Running, continuedTask.Status, "continuedTask should be running at point 2");
                 });
 
             Assert.False(task == continuedTask, "task and continuedTask should not be the same");
@@ -541,8 +541,8 @@ namespace Bridge.ClientTest.Threading
             var continuedTask1 = continuedTask.ContinueWith(t =>
                 {
                     Assert.True(t == continuedTask, "argument to continuedTask.ContinueWith callback should be correct");
-                    Assert.AreEqual(continuedTask.Status, TaskStatus.RanToCompletion, "continuedTask should have run to completion at point 3");
-                    Assert.AreEqual(continuedTask.Exception, null, "continuedTask should not have an exception");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, continuedTask.Status, "continuedTask should have run to completion at point 3");
+                    Assert.AreEqual(null, continuedTask.Exception, "continuedTask should not have an exception");
 
                     done = true;
                 });
@@ -566,16 +566,16 @@ namespace Bridge.ClientTest.Threading
             var tcs = new TaskCompletionSource<int>();
             Task<int> task = tcs.Task;
 
-            Assert.AreEqual(task.Status, TaskStatus.Running, "task should be running at point 1");
+            Assert.AreEqual(TaskStatus.Running, task.Status, "task should be running at point 1");
 
             Task<string> continuedTask = null;
 
             continuedTask = task.ContinueWith(t =>
                 {
                     Assert.True(t == task, "argument to task.ContinueWith callback should be correct");
-                    Assert.AreEqual(task.Status, TaskStatus.RanToCompletion, "task should have run to completion at point 2");
-                    Assert.AreEqual(task.Exception, null, "task should not have an exception");
-                    Assert.AreEqual(continuedTask.Status, TaskStatus.Running, "continuedTask should be running at point 2");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, task.Status, "task should have run to completion at point 2");
+                    Assert.AreEqual(null, task.Exception, "task should not have an exception");
+                    Assert.AreEqual(TaskStatus.Running, continuedTask.Status, "continuedTask should be running at point 2");
 
                     return t.Result + "_";
                 });
@@ -585,9 +585,9 @@ namespace Bridge.ClientTest.Threading
             var doneTask = continuedTask.ContinueWith(t =>
             {
                 Assert.True(t == continuedTask, "argument to continuedTask.ContinueWith callback should be correct");
-                Assert.AreEqual(continuedTask.Status, TaskStatus.RanToCompletion, "continuedTask should have run to completion at point 3");
-                Assert.AreEqual(continuedTask.Exception, null, "continuedTask should not have an exception");
-                Assert.AreEqual(t.Result, "42_");
+                Assert.AreEqual(TaskStatus.RanToCompletion, continuedTask.Status, "continuedTask should have run to completion at point 3");
+                Assert.AreEqual(null, continuedTask.Exception, "continuedTask should not have an exception");
+                Assert.AreEqual("42_", t.Result);
 
                 done = true;
             });
@@ -616,13 +616,13 @@ namespace Bridge.ClientTest.Threading
 
             var delay = Task.Delay(100);
 
-            Assert.AreEqual(delay.Status, TaskStatus.Running, "delay should be running at point 1");
+            Assert.AreEqual(TaskStatus.Running, delay.Status, "delay should be running at point 1");
 
             var afterDelay = delay.ContinueWith(t =>
                 {
                     Assert.True(t == delay, "argument to delay.ContinueWith callback should be correct");
-                    Assert.AreEqual(delay.Status, TaskStatus.RanToCompletion, "delay should have run to completion at point 2");
-                    Assert.AreEqual(delay.Exception, null, "delay should not have an exception");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, delay.Status, "delay should have run to completion at point 2");
+                    Assert.AreEqual(null, delay.Exception, "delay should not have an exception");
 
                     done = true;
                 });
@@ -639,9 +639,9 @@ namespace Bridge.ClientTest.Threading
         public void FromResultWorks()
         {
             var t = Task.FromResult(3);
-            Assert.AreEqual(t.Status, TaskStatus.RanToCompletion, "Task should be finished");
-            Assert.AreEqual(t.Result, 3, "Result should be correct");
-            Assert.AreEqual(t.Exception, null, "Exception should be null");
+            Assert.AreEqual(TaskStatus.RanToCompletion, t.Status, "Task should be finished");
+            Assert.AreEqual(3, t.Result, "Result should be correct");
+            Assert.AreEqual(null, t.Exception, "Exception should be null");
         }
 
         [Test(ExpectedCount = 6)]
@@ -655,14 +655,14 @@ namespace Bridge.ClientTest.Threading
                     bodyRun = true;
                 });
 
-            Assert.AreEqual(task.Status, TaskStatus.Running, "task should be running at point 1");
+            Assert.AreEqual(TaskStatus.Running, task.Status, "task should be running at point 1");
 
             var doneTask = task.ContinueWith(t =>
                 {
                     Assert.True(t == task, "argument to task.ContinueWith callback should be correct");
                     Assert.True(bodyRun, "Body should be run before continuation");
-                    Assert.AreEqual(task.Status, TaskStatus.RanToCompletion, "task should have run to completion at point 2");
-                    Assert.AreEqual(task.Exception, null, "task should not have an exception");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, task.Status, "task should have run to completion at point 2");
+                    Assert.AreEqual(null, task.Exception, "task should not have an exception");
 
                     continuationRun = true;
                 });
@@ -687,15 +687,15 @@ namespace Bridge.ClientTest.Threading
                     return 42;
                 });
 
-            Assert.AreEqual(task.Status, TaskStatus.Running, "task should be running at point 1");
+            Assert.AreEqual(TaskStatus.Running, task.Status, "task should be running at point 1");
 
             var doneTask = task.ContinueWith(t =>
                 {
                     Assert.True(t == task, "argument to task.ContinueWith callback should be correct");
                     Assert.True(bodyRun, "Body should be run before continuation");
-                    Assert.AreEqual(task.Status, TaskStatus.RanToCompletion, "task should have run to completion at point 2");
-                    Assert.AreEqual(task.Result, 42);
-                    Assert.AreEqual(task.Exception, null, "task should not have an exception");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, task.Status, "task should have run to completion at point 2");
+                    Assert.AreEqual(42, task.Result);
+                    Assert.AreEqual(null, task.Exception, "task should not have an exception");
 
                     continuationRun = true;
                 });
@@ -720,15 +720,15 @@ namespace Bridge.ClientTest.Threading
                     Script.Eval("throw 'This is a test message'");
                 });
 
-            Assert.AreEqual(task.Status, TaskStatus.Running, "task should be running at point 1");
+            Assert.AreEqual(TaskStatus.Running, task.Status, "task should be running at point 1");
 
             var doneTask = task.ContinueWith(t =>
                 {
                     Assert.True(t == task, "argument to task.ContinueWith callback should be correct");
                     Assert.True(bodyRun, "Body should be run before continuation");
-                    Assert.AreEqual(task.Status, TaskStatus.Faulted, "task should have faulted at point 2");
+                    Assert.AreEqual(TaskStatus.Faulted, task.Status, "task should have faulted at point 2");
                     Assert.True((object)task.Exception is AggregateException);
-                    Assert.AreEqual(task.Exception.InnerExceptions[0].Message, "This is a test message");
+                    Assert.AreEqual("This is a test message", task.Exception.InnerExceptions[0].Message);
 
                     continuationRun = true;
                 });
@@ -771,20 +771,20 @@ namespace Bridge.ClientTest.Threading
             var doneTask = task.ContinueWith(t =>
                 {
                     Assert.False(continuationRun, "Continuation should only be run once.");
-                    Assert.AreEqual(tcs1.Task.Status, TaskStatus.RanToCompletion, "Task1 should have run to completion");
-                    Assert.AreEqual(tcs2.Task.Status, TaskStatus.RanToCompletion, "Task2 should have run to completion");
-                    Assert.AreEqual(tcs3.Task.Status, TaskStatus.RanToCompletion, "Task3 should have run to completion");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, tcs1.Task.Status, "Task1 should have run to completion");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, tcs2.Task.Status, "Task2 should have run to completion");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, tcs3.Task.Status, "Task3 should have run to completion");
 
                     Assert.True(task == t, "Callback parameter should be correct");
 
-                    Assert.AreEqual(t.Result, new[] { 101, 3, 42 }, "Result should be correct");
-                    Assert.AreEqual(t.Exception, null, "Exception for the aggregate task should be null");
-                    Assert.AreEqual(t.Status, TaskStatus.RanToCompletion, "Aggregate task should have run to completion");
+                    Assert.AreEqual(new[] { 101, 3, 42 }, t.Result, "Result should be correct");
+                    Assert.AreEqual(null, t.Exception, "Exception for the aggregate task should be null");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, t.Status, "Aggregate task should have run to completion");
 
                     continuationRun = true;
                 });
 
-            Assert.AreEqual(task.Status, TaskStatus.Running, "task should be running after creation.");
+            Assert.AreEqual(TaskStatus.Running, task.Status, "task should be running after creation.");
 
             tcs2.SetResult(3);
             tcs1.SetResult(101);
@@ -828,20 +828,20 @@ namespace Bridge.ClientTest.Threading
             var doneTask = task.ContinueWith(t =>
                 {
                     Assert.False(continuationRun, "Continuation should only be run once.");
-                    Assert.AreEqual(tcs1.Task.Status, TaskStatus.RanToCompletion, "Task1 should have run to completion");
-                    Assert.AreEqual(tcs2.Task.Status, TaskStatus.RanToCompletion, "Task2 should have run to completion");
-                    Assert.AreEqual(tcs3.Task.Status, TaskStatus.RanToCompletion, "Task3 should have run to completion");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, tcs1.Task.Status, "Task1 should have run to completion");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, tcs2.Task.Status, "Task2 should have run to completion");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, tcs3.Task.Status, "Task3 should have run to completion");
 
                     Assert.True(task == t, "Callback parameter should be correct");
 
-                    Assert.AreEqual(t.Result, new[] { 101, 3, 42 }, "Result should be correct");
-                    Assert.AreEqual(t.Exception, null, "Exception for the aggregate task should be null");
-                    Assert.AreEqual(t.Status, TaskStatus.RanToCompletion, "Aggregate task should have run to completion");
+                    Assert.AreEqual(new[] { 101, 3, 42 }, t.Result, "Result should be correct");
+                    Assert.AreEqual(null, t.Exception, "Exception for the aggregate task should be null");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, t.Status, "Aggregate task should have run to completion");
 
                     continuationRun = true;
                 });
 
-            Assert.AreEqual(task.Status, TaskStatus.Running, "task should be running after creation.");
+            Assert.AreEqual(TaskStatus.Running, task.Status, "task should be running after creation.");
 
             tcs2.SetResult(3);
             tcs1.SetResult(101);
@@ -885,19 +885,19 @@ namespace Bridge.ClientTest.Threading
             var doneTask = task.ContinueWith(t =>
                 {
                     Assert.False(continuationRun, "Continuation should only be run once.");
-                    Assert.AreEqual(tcs1.Task.Status, TaskStatus.RanToCompletion, "Task1 should have run to completion");
-                    Assert.AreEqual(tcs2.Task.Status, TaskStatus.RanToCompletion, "Task2 should have run to completion");
-                    Assert.AreEqual(tcs3.Task.Status, TaskStatus.RanToCompletion, "Task3 should have run to completion");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, tcs1.Task.Status, "Task1 should have run to completion");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, tcs2.Task.Status, "Task2 should have run to completion");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, tcs3.Task.Status, "Task3 should have run to completion");
 
                     Assert.True(task == t, "Callback parameter should be correct");
 
-                    Assert.AreEqual(t.Exception, null, "Exception for the aggregate task should be null");
-                    Assert.AreEqual(t.Status, TaskStatus.RanToCompletion, "Aggregate task should have run to completion");
+                    Assert.AreEqual(null, t.Exception, "Exception for the aggregate task should be null");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, t.Status, "Aggregate task should have run to completion");
 
                     continuationRun = true;
                 });
 
-            Assert.AreEqual(task.Status, TaskStatus.Running, "task should be running after creation.");
+            Assert.AreEqual(TaskStatus.Running, task.Status, "task should be running after creation.");
 
             tcs2.SetResult(3);
             tcs1.SetResult(101);
@@ -941,19 +941,19 @@ namespace Bridge.ClientTest.Threading
             var doneTask = task.ContinueWith(t =>
             {
                 Assert.False(continuationRun, "Continuation should only be run once.");
-                Assert.AreEqual(tcs1.Task.Status, TaskStatus.RanToCompletion, "Task1 should have run to completion");
-                Assert.AreEqual(tcs2.Task.Status, TaskStatus.RanToCompletion, "Task2 should have run to completion");
-                Assert.AreEqual(tcs3.Task.Status, TaskStatus.RanToCompletion, "Task3 should have run to completion");
+                Assert.AreEqual(TaskStatus.RanToCompletion, tcs1.Task.Status, "Task1 should have run to completion");
+                Assert.AreEqual(TaskStatus.RanToCompletion, tcs2.Task.Status, "Task2 should have run to completion");
+                Assert.AreEqual(TaskStatus.RanToCompletion, tcs3.Task.Status, "Task3 should have run to completion");
 
                 Assert.True(task == t, "Callback parameter should be correct");
 
-                Assert.AreEqual(t.Exception, null, "Exception for the aggregate task should be null");
-                Assert.AreEqual(t.Status, TaskStatus.RanToCompletion, "Aggregate task should have run to completion");
+                Assert.AreEqual(null, t.Exception, "Exception for the aggregate task should be null");
+                Assert.AreEqual(TaskStatus.RanToCompletion, t.Status, "Aggregate task should have run to completion");
 
                 continuationRun = true;
             });
 
-            Assert.AreEqual(task.Status, TaskStatus.Running, "task should be running after creation.");
+            Assert.AreEqual(TaskStatus.Running, task.Status, "task should be running after creation.");
 
             tcs2.SetResult(3);
             tcs1.SetResult(101);
@@ -1006,23 +1006,23 @@ namespace Bridge.ClientTest.Threading
             var doneTask = task.ContinueWith(t =>
                 {
                     Assert.False(continuationRun, "Continuation should only be run once.");
-                    Assert.AreEqual(tcs1.Task.Status, TaskStatus.RanToCompletion, "Task1 should have run to completion");
-                    Assert.AreEqual(tcs2.Task.Status, TaskStatus.Faulted, "Task2 should be faulted");
-                    Assert.AreEqual(tcs3.Task.Status, TaskStatus.Faulted, "Task3 should be faulted");
-                    Assert.AreEqual(tcs4.Task.Status, TaskStatus.Canceled, "Task4 should be cancelled");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, tcs1.Task.Status, "Task1 should have run to completion");
+                    Assert.AreEqual(TaskStatus.Faulted, tcs2.Task.Status, "Task2 should be faulted");
+                    Assert.AreEqual(TaskStatus.Faulted, tcs3.Task.Status, "Task3 should be faulted");
+                    Assert.AreEqual(TaskStatus.Canceled, tcs4.Task.Status, "Task4 should be cancelled");
 
                     Assert.True(task == t, "Callback parameter should be correct");
 
                     Assert.True(t.Exception is AggregateException, "Exception for the aggregate task should be null");
-                    Assert.AreEqual(t.Exception.InnerExceptions.Count, 2, "Should be 2 inner exceptions");
+                    Assert.AreEqual(2, t.Exception.InnerExceptions.Count, "Should be 2 inner exceptions");
                     Assert.True(t.Exception.InnerExceptions.Contains(ex1), "ex1 should be propagated");
                     Assert.True(t.Exception.InnerExceptions.Contains(ex2), "ex2 should be propagated");
-                    Assert.AreEqual(t.Status, TaskStatus.Faulted, "Aggregate task should be faulted");
+                    Assert.AreEqual(TaskStatus.Faulted, t.Status, "Aggregate task should be faulted");
 
                     continuationRun = true;
                 });
 
-            Assert.AreEqual(task.Status, TaskStatus.Running, "task should be running after creation.");
+            Assert.AreEqual(TaskStatus.Running, task.Status, "task should be running after creation.");
 
             tcs2.SetException(ex1);
             tcs1.SetResult(101);
@@ -1066,19 +1066,19 @@ namespace Bridge.ClientTest.Threading
             var doneTask = task.ContinueWith(t =>
                 {
                     Assert.False(continuationRun, "Continuation should only be run once.");
-                    Assert.AreEqual(tcs1.Task.Status, TaskStatus.Canceled, "Task1 should be cancelled");
-                    Assert.AreEqual(tcs2.Task.Status, TaskStatus.RanToCompletion, "Task2 should have run to completion");
-                    Assert.AreEqual(tcs3.Task.Status, TaskStatus.RanToCompletion, "Task3 should have run to completion");
+                    Assert.AreEqual(TaskStatus.Canceled, tcs1.Task.Status, "Task1 should be cancelled");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, tcs2.Task.Status, "Task2 should have run to completion");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, tcs3.Task.Status, "Task3 should have run to completion");
 
                     Assert.True(task == t, "Callback parameter should be correct");
 
-                    Assert.AreEqual(t.Exception, null, "Exception for the aggregate task should be null");
-                    Assert.AreEqual(t.Status, TaskStatus.Canceled, "Aggregate task should have run to completion");
+                    Assert.AreEqual(null, t.Exception, "Exception for the aggregate task should be null");
+                    Assert.AreEqual(TaskStatus.Canceled, t.Status, "Aggregate task should have run to completion");
 
                     continuationRun = true;
                 });
 
-            Assert.AreEqual(task.Status, TaskStatus.Running, "task should be running after creation.");
+            Assert.AreEqual(TaskStatus.Running, task.Status, "task should be running after creation.");
 
             tcs2.SetResult(3);
             tcs1.SetCanceled();
@@ -1108,19 +1108,19 @@ namespace Bridge.ClientTest.Threading
             var task1 = task.ContinueWith(t =>
                 {
                     Assert.False(continuationRun, "Continuation should only be run once.");
-                    Assert.AreEqual(tcs2.Task.Status, TaskStatus.RanToCompletion, "Task2 should have run to completion");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, tcs2.Task.Status, "Task2 should have run to completion");
 
                     Assert.True(task == t, "Callback parameter should be correct");
 
                     Assert.True(t.Result == tcs2.Task, "Result should be correct");
-                    Assert.AreEqual(t.Result.Result, 3, "Result should be correct");
-                    Assert.AreEqual(t.Exception, null, "Exception for the aggregate task should be null");
-                    Assert.AreEqual(t.Status, TaskStatus.RanToCompletion, "Aggregate task should have run to completion");
+                    Assert.AreEqual(3, t.Result.Result, "Result should be correct");
+                    Assert.AreEqual(null, t.Exception, "Exception for the aggregate task should be null");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, t.Status, "Aggregate task should have run to completion");
 
                     continuationRun = true;
                 });
 
-            Assert.AreEqual(task.Status, TaskStatus.Running, "task should be running after creation.");
+            Assert.AreEqual(TaskStatus.Running, task.Status, "task should be running after creation.");
 
             tcs2.SetResult(3);
 
@@ -1155,19 +1155,19 @@ namespace Bridge.ClientTest.Threading
             var task1 = task.ContinueWith(t =>
                 {
                     Assert.False(continuationRun, "Continuation should only be run once.");
-                    Assert.AreEqual(tcs2.Task.Status, TaskStatus.RanToCompletion, "Task2 should have run to completion");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, tcs2.Task.Status, "Task2 should have run to completion");
 
                     Assert.True(task == t, "Callback parameter should be correct");
 
                     Assert.True(t.Result == tcs2.Task, "Result should be correct");
-                    Assert.AreEqual(t.Result.Result, 3, "Result should be correct");
-                    Assert.AreEqual(t.Exception, null, "Exception for the aggregate task should be null");
-                    Assert.AreEqual(t.Status, TaskStatus.RanToCompletion, "Aggregate task should have run to completion");
+                    Assert.AreEqual(3, t.Result.Result, "Result should be correct");
+                    Assert.AreEqual(null, t.Exception, "Exception for the aggregate task should be null");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, t.Status, "Aggregate task should have run to completion");
 
                     continuationRun = true;
                 });
 
-            Assert.AreEqual(task.Status, TaskStatus.Running, "task should be running after creation.");
+            Assert.AreEqual(TaskStatus.Running, task.Status, "task should be running after creation.");
 
             tcs2.SetResult(3);
 
@@ -1203,18 +1203,18 @@ namespace Bridge.ClientTest.Threading
             var task1 = task.ContinueWith(t =>
                 {
                     Assert.False(continuationRun, "Continuation should only be run once.");
-                    Assert.AreEqual(tcs2.Task.Status, TaskStatus.RanToCompletion, "Task2 should have run to completion");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, tcs2.Task.Status, "Task2 should have run to completion");
 
                     Assert.True(task == t, "Callback parameter should be correct");
 
                     Assert.True(t.Result == tcs2.Task, "Result should be correct");
-                    Assert.AreEqual(t.Exception, null, "Exception for the aggregate task should be null");
-                    Assert.AreEqual(t.Status, TaskStatus.RanToCompletion, "Aggregate task should have run to completion");
+                    Assert.AreEqual(null, t.Exception, "Exception for the aggregate task should be null");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, t.Status, "Aggregate task should have run to completion");
 
                     continuationRun = true;
                 });
 
-            Assert.AreEqual(task.Status, TaskStatus.Running, "task should be running after creation.");
+            Assert.AreEqual(TaskStatus.Running, task.Status, "task should be running after creation.");
 
             tcs2.SetResult(3);
 
@@ -1250,18 +1250,18 @@ namespace Bridge.ClientTest.Threading
             var task1 = task.ContinueWith(t =>
                 {
                     Assert.False(continuationRun, "Continuation should only be run once.");
-                    Assert.AreEqual(tcs2.Task.Status, TaskStatus.RanToCompletion, "Task2 should have run to completion");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, tcs2.Task.Status, "Task2 should have run to completion");
 
                     Assert.True(task == t, "Callback parameter should be correct");
 
                     Assert.True(t.Result == tcs2.Task, "Result should be correct");
-                    Assert.AreEqual(t.Exception, null, "Exception for the aggregate task should be null");
-                    Assert.AreEqual(task.Status, TaskStatus.RanToCompletion, "Aggregate task should have run to completion");
+                    Assert.AreEqual(null, t.Exception, "Exception for the aggregate task should be null");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, task.Status, "Aggregate task should have run to completion");
 
                     continuationRun = true;
                 });
 
-            Assert.AreEqual(task.Status, TaskStatus.Running, "task should be running after creation.");
+            Assert.AreEqual(TaskStatus.Running, task.Status, "task should be running after creation.");
 
             tcs2.SetResult(3);
 
@@ -1298,18 +1298,18 @@ namespace Bridge.ClientTest.Threading
             var task1 = task.ContinueWith(t =>
                 {
                     Assert.False(continuationRun, "Continuation should only be run once.");
-                    Assert.AreEqual(tcs2.Task.Status, TaskStatus.Faulted, "Task2 should have faulted");
+                    Assert.AreEqual(TaskStatus.Faulted, tcs2.Task.Status, "Task2 should have faulted");
 
                     Assert.True(task == t, "Callback parameter should be correct");
 
-                    Assert.AreEqual(t.Exception.InnerExceptions.Count, 1, "There should be one inner exception");
+                    Assert.AreEqual(1, t.Exception.InnerExceptions.Count, "There should be one inner exception");
                     Assert.True(t.Exception.InnerExceptions[0] == ex, "Exception for the aggregate task should be correct");
-                    Assert.AreEqual(task.Status, TaskStatus.Faulted, "Aggregate task should have faulted");
+                    Assert.AreEqual(TaskStatus.Faulted, task.Status, "Aggregate task should have faulted");
 
                     continuationRun = true;
                 });
 
-            Assert.AreEqual(task.Status, TaskStatus.Running, "task should be running after creation.");
+            Assert.AreEqual(TaskStatus.Running, task.Status, "task should be running after creation.");
 
             tcs2.SetException(ex);
 
@@ -1344,17 +1344,17 @@ namespace Bridge.ClientTest.Threading
             var task1 = task.ContinueWith(t =>
                 {
                     Assert.False(continuationRun, "Continuation should only be run once.");
-                    Assert.AreEqual(tcs2.Task.Status, TaskStatus.Canceled, "Task2 should be cancelled");
+                    Assert.AreEqual(TaskStatus.Canceled, tcs2.Task.Status, "Task2 should be cancelled");
 
                     Assert.True(task == t, "Callback parameter should be correct");
 
-                    Assert.AreEqual(t.Exception, null, "Aggregate task should not have exception");
-                    Assert.AreEqual(task.Status, TaskStatus.Canceled, "Aggregate task should be cancelled");
+                    Assert.AreEqual(null, t.Exception, "Aggregate task should not have exception");
+                    Assert.AreEqual(TaskStatus.Canceled, task.Status, "Aggregate task should be cancelled");
 
                     continuationRun = true;
                 });
 
-            Assert.AreEqual(task.Status, TaskStatus.Running, "task should be running after creation.");
+            Assert.AreEqual(TaskStatus.Running, task.Status, "task should be running after creation.");
 
             tcs2.SetCanceled();
 
@@ -1389,13 +1389,13 @@ namespace Bridge.ClientTest.Threading
             var task1 = task.ContinueWith(t =>
                 {
                     Assert.True(taskRun, "Task should be run before continuation");
-                    Assert.AreEqual(task.Status, TaskStatus.RanToCompletion, "Task should have run to completion");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, task.Status, "Task should have run to completion");
                     Assert.True(task.Exception == null, "Exception should be null");
 
                     continuationRun = true;
                 });
 
-            Assert.AreEqual(task.Status, TaskStatus.Created);
+            Assert.AreEqual(TaskStatus.Created, task.Status);
 
             Task.Run(() =>
                 {
@@ -1403,7 +1403,7 @@ namespace Bridge.ClientTest.Threading
 
                     task.Start();
 
-                    Assert.AreEqual(task.Status, TaskStatus.Running);
+                    Assert.AreEqual(TaskStatus.Running, task.Status);
                 });
 
             task1.ContinueWith(x =>
@@ -1430,13 +1430,13 @@ namespace Bridge.ClientTest.Threading
             var task1 = task.ContinueWith(t =>
                 {
                     Assert.True(taskRun, "Task should be run before continuation");
-                    Assert.AreEqual(task.Status, TaskStatus.RanToCompletion, "Task should have run to completion");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, task.Status, "Task should have run to completion");
                     Assert.True(task.Exception == null, "Exception should be null");
 
                     continuationRun = true;
                 });
 
-            Assert.AreEqual(task.Status, TaskStatus.Created);
+            Assert.AreEqual(TaskStatus.Created, task.Status);
 
             Task.Run(() =>
                 {
@@ -1444,7 +1444,7 @@ namespace Bridge.ClientTest.Threading
 
                     task.Start();
 
-                    Assert.AreEqual(task.Status, TaskStatus.Running);
+                    Assert.AreEqual(TaskStatus.Running, task.Status);
                 });
 
             task1.ContinueWith(x =>
@@ -1472,15 +1472,15 @@ namespace Bridge.ClientTest.Threading
             var task1 = task.ContinueWith(t =>
                 {
                     Assert.True(taskRun, "Task should be run before continuation");
-                    Assert.AreEqual(task.Status, TaskStatus.Faulted, "Task should be faulted");
+                    Assert.AreEqual(TaskStatus.Faulted, task.Status, "Task should be faulted");
                     Assert.True((object)task.Exception is AggregateException, "Exception should be correct");
-                    Assert.AreEqual(task.Exception.InnerExceptions.Count, 1, "There should be one inner exception");
+                    Assert.AreEqual(1, task.Exception.InnerExceptions.Count, "There should be one inner exception");
                     Assert.True(task.Exception.InnerExceptions[0] == ex, "InnerException should be correct");
 
                     continuationRun = true;
                 });
 
-            Assert.AreEqual(task.Status, TaskStatus.Created);
+            Assert.AreEqual(TaskStatus.Created, task.Status);
 
             Task.Run(() =>
                 {
@@ -1513,14 +1513,14 @@ namespace Bridge.ClientTest.Threading
             var doneTask = task.ContinueWith(t =>
                 {
                     Assert.True(taskRun, "Task should be run before continuation");
-                    Assert.AreEqual(task.Status, TaskStatus.RanToCompletion, "Task should have run to completion");
-                    Assert.AreEqual(task.Result, 42, "Result should be correct");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, task.Status, "Task should have run to completion");
+                    Assert.AreEqual(42, task.Result, "Result should be correct");
                     Assert.True(task.Exception == null, "Exception should be null");
 
                     continuationRun = true;
                 });
 
-            Assert.AreEqual(task.Status, TaskStatus.Created);
+            Assert.AreEqual(TaskStatus.Created, task.Status);
 
             Task.Run(() =>
                 {
@@ -1528,7 +1528,7 @@ namespace Bridge.ClientTest.Threading
 
                     task.Start();
 
-                    Assert.AreEqual(task.Status, TaskStatus.Running);
+                    Assert.AreEqual(TaskStatus.Running, task.Status);
                 });
 
             doneTask.ContinueWith(x =>
@@ -1557,14 +1557,14 @@ namespace Bridge.ClientTest.Threading
             var doneTask = task.ContinueWith(t =>
                 {
                     Assert.True(taskRun, "Task should be run before continuation");
-                    Assert.AreEqual(task.Status, TaskStatus.RanToCompletion, "Task should have run to completion");
-                    Assert.AreEqual(task.Result, 42, "Result should be correct");
+                    Assert.AreEqual(TaskStatus.RanToCompletion, task.Status, "Task should have run to completion");
+                    Assert.AreEqual(42, task.Result, "Result should be correct");
                     Assert.True(task.Exception == null, "Exception should be null");
 
                     continuationRun = true;
                 });
 
-            Assert.AreEqual(task.Status, TaskStatus.Created);
+            Assert.AreEqual(TaskStatus.Created, task.Status);
 
             Task.Run(() =>
                 {
@@ -1572,7 +1572,7 @@ namespace Bridge.ClientTest.Threading
 
                     task.Start();
 
-                    Assert.AreEqual(task.Status, TaskStatus.Running);
+                    Assert.AreEqual(TaskStatus.Running, task.Status);
                 });
 
             doneTask.ContinueWith(x =>

@@ -81,7 +81,7 @@ namespace Bridge.ClientTest.Collections.Generic
         [Test]
         public void TypePropertiesAreCorrect()
         {
-            Assert.AreEqual(typeof(IDictionary<object, object>).GetClassName(), "Bridge.IDictionary$2$Object$Object", "FullName should be correct");
+            Assert.AreEqual("Bridge.IDictionary$2$Object$Object", typeof(IDictionary<object, object>).GetClassName(), "FullName should be correct");
         }
 
         [Test]
@@ -94,13 +94,13 @@ namespace Bridge.ClientTest.Collections.Generic
         public void CountWorks()
         {
             var d = new MyDictionary();
-            Assert.AreEqual(d.Count, 0);
+            Assert.AreEqual(0, d.Count);
 
             var d2 = new MyDictionary(new Dictionary<int, string> { { 3, "c" } });
-            Assert.AreEqual(d2.Count, 1);
+            Assert.AreEqual(1, d2.Count);
 
             var d3 = new MyDictionary();
-            Assert.AreEqual(d3.Count, 0);
+            Assert.AreEqual(0, d3.Count);
         }
 
         [Test]
@@ -115,10 +115,10 @@ namespace Bridge.ClientTest.Collections.Generic
             int i = 0;
             foreach (var key in keys)
             {
-                Assert.AreEqual(key, actualKeys[i]);
+                Assert.AreEqual(actualKeys[i], key);
                 i++;
             }
-            Assert.AreEqual(i, actualKeys.Length);
+            Assert.AreEqual(actualKeys.Length, i);
         }
 
         [Test]
@@ -128,8 +128,8 @@ namespace Bridge.ClientTest.Collections.Generic
 
             var di2 = (IDictionary<int, string>)d;
 
-            Assert.AreEqual(d[9], "x");
-            Assert.AreEqual(di2[6], "z");
+            Assert.AreEqual("x", d[9]);
+            Assert.AreEqual("z", di2[6]);
 
             try
             {
@@ -162,10 +162,10 @@ namespace Bridge.ClientTest.Collections.Generic
 
             foreach (var val in values)
             {
-                Assert.AreEqual(val, actualValues[i]);
+                Assert.AreEqual(actualValues[i], val);
                 i++;
             }
-            Assert.AreEqual(i, actualValues.Length);
+            Assert.AreEqual(actualValues.Length, i);
         }
 
         [Test]
@@ -190,18 +190,18 @@ namespace Bridge.ClientTest.Collections.Generic
             string outVal;
 
             Assert.True(d.TryGetValue(9, out outVal));
-            Assert.AreEqual(outVal, "x");
+            Assert.AreEqual("x", outVal);
 
             Assert.True(di2.TryGetValue(3, out outVal));
-            Assert.AreEqual(outVal, "b");
+            Assert.AreEqual("b", outVal);
 
             outVal = "!!!";
             Assert.False(d.TryGetValue(923, out outVal));
-            Assert.AreEqual(outVal, null);
+            Assert.AreEqual(null, outVal);
 
             outVal = "!!!";
             Assert.False(di2.TryGetValue(353, out outVal));
-            Assert.AreEqual(outVal, null);
+            Assert.AreEqual(null, outVal);
         }
 
         [Test]
@@ -211,16 +211,16 @@ namespace Bridge.ClientTest.Collections.Generic
             var di = (IDictionary<int, string>)d;
 
             d.Add(5, "aa");
-            Assert.AreEqual(d[5], "aa");
-            Assert.AreEqual(d.Count, 1);
+            Assert.AreEqual("aa", d[5]);
+            Assert.AreEqual(1, d.Count);
 
             di.Add(3, "bb");
             // TODO Bug
             // Assert.AreEqual(di[3], "bb");
             string s;
             di.TryGetValue(3, out s);
-            Assert.AreEqual(s, "bb");
-            Assert.AreEqual(di.Count, 2);
+            Assert.AreEqual("bb", s);
+            Assert.AreEqual(2, di.Count);
 
             try
             {
@@ -237,9 +237,9 @@ namespace Bridge.ClientTest.Collections.Generic
         {
             var d = new MyDictionary(new Dictionary<int, string> { { 3, "b" }, { 6, "z" }, { 9, "x" } });
 
-            Assert.AreEqual(d.Count, 3);
+            Assert.AreEqual(3, d.Count);
             d.Clear();
-            Assert.AreEqual(d.Count, 0);
+            Assert.AreEqual(0, d.Count);
         }
 
         [Test]
@@ -248,12 +248,12 @@ namespace Bridge.ClientTest.Collections.Generic
             var d = new MyDictionary(new Dictionary<int, string> { { 3, "b" }, { 6, "z" }, { 9, "x" }, { 13, "y" } });
             var di = (IDictionary<int, string>)d;
 
-            Assert.AreStrictEqual(d.Remove(6), true);
-            Assert.AreEqual(d.Count, 3);
+            Assert.AreStrictEqual(true, d.Remove(6));
+            Assert.AreEqual(3, d.Count);
             Assert.False(d.ContainsKey(6));
 
-            Assert.AreStrictEqual(di.Remove(3), true);
-            Assert.AreEqual(di.Count, 2);
+            Assert.AreStrictEqual(true, di.Remove(3));
+            Assert.AreEqual(2, di.Count);
             Assert.False(di.ContainsKey(3));
 
             Assert.True(di.ContainsKey(13));
@@ -266,11 +266,11 @@ namespace Bridge.ClientTest.Collections.Generic
             var di = (IDictionary<int, string>)d;
 
             d[3] = "check";
-            Assert.AreEqual(d[3], "check");
+            Assert.AreEqual("check", d[3]);
             Assert.False(d.ContainsKey(10));
 
             di[10] = "stuff";
-            Assert.AreEqual(di[10], "stuff");
+            Assert.AreEqual("stuff", di[10]);
             Assert.True(di.ContainsKey(10));
         }
     }

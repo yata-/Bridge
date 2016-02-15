@@ -20,20 +20,20 @@ namespace Bridge.ClientTest.Linq
             var numbers = new[] { 1, 3, 5, 7 };
             var numberPlusOne = (from n in numbers
                                  select n + 1).ToArray();
-            Assert.AreDeepEqual(numberPlusOne, new[] { 2, 4, 6, 8 }, "A sequence of ints one higher than the numbers[]");
+            Assert.AreDeepEqual(new[] { 2, 4, 6, 8 }, numberPlusOne, "A sequence of ints one higher than the numbers[]");
 
             // TEST
             var persons = Person.GetPersons();
             var names = (from p in persons
                          select p.Name).ToArray();
-            Assert.AreDeepEqual(names, new[] { "Frank", "Zeppa", "John", "Billy", "Dora", "Ian", "Mary", "Nemo" }, "Selects names as instance field");
+            Assert.AreDeepEqual(new[] { "Frank", "Zeppa", "John", "Billy", "Dora", "Ian", "Mary", "Nemo" }, names, "Selects names as instance field");
 
             // TEST
             string[] strings = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
 
             var textNumbers = (from n in numbers
                                select strings[n]).ToArray();
-            Assert.AreDeepEqual(textNumbers, new[] { "one", "three", "five", "seven" }, "Selects names as items of another array");
+            Assert.AreDeepEqual(new[] { "one", "three", "five", "seven" }, textNumbers, "Selects names as items of another array");
 
             // TEST
             var anonimNames = (from p in persons
@@ -47,7 +47,7 @@ namespace Bridge.ClientTest.Linq
                                                 new { Name = "Billy" }, new { Name = "Dora" }, new { Name = "Ian" },
                                                 new { Name = "Mary" }, new { Name = "Nemo" } };
 
-            Assert.AreDeepEqual(anonimNames, anonimNamesToCompare, "Selects names as an anonymous type");
+            Assert.AreDeepEqual(anonimNamesToCompare, anonimNames, "Selects names as an anonymous type");
 
             // TEST
             numbers = new[] { 0, 1, 3, 3 };
@@ -66,7 +66,7 @@ namespace Bridge.ClientTest.Linq
                                                   new { Number = 3, IsIndex = true }
                                               };
 
-            Assert.AreDeepEqual(numberssInPlace, anonimNumbersToCompare, "Selects numbers as an anonymous type");
+            Assert.AreDeepEqual(anonimNumbersToCompare, numberssInPlace, "Selects numbers as an anonymous type");
 
             // TEST
             var numbersA = new[] { 1, 5, 2 };
@@ -84,7 +84,7 @@ namespace Bridge.ClientTest.Linq
 
             object[] expectedSimplePairs = { new { A = 1, B = 3 }, new { A = 1, B = 4 }, new { A = 1, B = 2 }, new { A = 2, B = 3 }, new { A = 2, B = 4 } };
 
-            Assert.AreDeepEqual(simplePairs, expectedSimplePairs, "Join two numeric arrays with one where clause");
+            Assert.AreDeepEqual(expectedSimplePairs, simplePairs, "Join two numeric arrays with one where clause");
 
             // TEST
             numbersA = new[] { 1, 5, 2, 4, 3 };
@@ -105,7 +105,7 @@ namespace Bridge.ClientTest.Linq
                                      new { Sum = 7}, new { Sum = 6}, new { Sum = 5},
                                      new { Sum = 5}, new { Sum = 4},};
 
-            Assert.AreDeepEqual(pairs, expectedPairs, "Join two numeric arrays with two where clauses");
+            Assert.AreDeepEqual(expectedPairs, pairs, "Join two numeric arrays with two where clauses");
 
             // TEST
             numbersA = new[] { 1, 5, 2, 4, 3 };
@@ -124,7 +124,7 @@ namespace Bridge.ClientTest.Linq
                                            new { A = 5, B = 5, I = 1 },
                                            new { A = 4, B = 4, I = 3 }};
 
-            Assert.AreDeepEqual(manyNumbers, expectedManyNumbers, "SelectMany() two number arrays");
+            Assert.AreDeepEqual(expectedManyNumbers, manyNumbers, "SelectMany() two number arrays");
         }
     }
 }

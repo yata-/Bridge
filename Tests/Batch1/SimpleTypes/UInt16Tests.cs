@@ -16,7 +16,7 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.False((object)0.5 is ushort);
             Assert.True((object)-1 is ushort);
             Assert.True((object)65536 is ushort);
-            Assert.AreEqual(typeof(ushort).GetClassName(), "Bridge.Int");
+            Assert.AreEqual("Bridge.Int", typeof(ushort).GetClassName());
 
             object s = (ushort)0;
             Assert.True(s is ushort);
@@ -33,30 +33,30 @@ namespace Bridge.ClientTest.SimpleTypes
 
             // TODO unchecked
             {
-                Assert.AreStrictEqual((ushort)i1, -1, "-1 unchecked");
-                Assert.AreStrictEqual((ushort)i2, 0, "0 unchecked");
-                Assert.AreStrictEqual((ushort)i3, 234, "234 unchecked");
-                Assert.AreStrictEqual((ushort)i4, 65535, "65535 unchecked");
-                Assert.AreStrictEqual((ushort)i5, 65536, "65536 unchecked");
+                Assert.AreStrictEqual(-1, (ushort)i1, "-1 unchecked");
+                Assert.AreStrictEqual(0, (ushort)i2, "0 unchecked");
+                Assert.AreStrictEqual(234, (ushort)i3, "234 unchecked");
+                Assert.AreStrictEqual(65535, (ushort)i4, "65535 unchecked");
+                Assert.AreStrictEqual(65536, (ushort)i5, "65536 unchecked");
 
-                Assert.AreStrictEqual((ushort?)ni1, -1, "nullable -1 unchecked");
-                Assert.AreStrictEqual((ushort?)ni2, 0, "nullable 0 unchecked");
-                Assert.AreStrictEqual((ushort?)ni3, 234, "nullable 234 unchecked");
-                Assert.AreStrictEqual((ushort?)ni4, 65535, "nullable 65535 unchecked");
-                Assert.AreStrictEqual((ushort?)ni5, 65536, "nullable 65536 unchecked");
-                Assert.AreStrictEqual((ushort?)ni6, null, "null unchecked");
+                Assert.AreStrictEqual(-1, (ushort?)ni1, "nullable -1 unchecked");
+                Assert.AreStrictEqual(0, (ushort?)ni2, "nullable 0 unchecked");
+                Assert.AreStrictEqual(234, (ushort?)ni3, "nullable 234 unchecked");
+                Assert.AreStrictEqual(65535, (ushort?)ni4, "nullable 65535 unchecked");
+                Assert.AreStrictEqual(65536, (ushort?)ni5, "nullable 65536 unchecked");
+                Assert.AreStrictEqual(null, (ushort?)ni6, "null unchecked");
             }
 
             //checked
             {
-                Assert.AreStrictEqual((ushort)i2, 0, "0 checked");
-                Assert.AreStrictEqual((ushort)i3, 234, "234 checked");
-                Assert.AreStrictEqual((ushort)i4, 65535, "65535 checked");
+                Assert.AreStrictEqual(0, (ushort)i2, "0 checked");
+                Assert.AreStrictEqual(234, (ushort)i3, "234 checked");
+                Assert.AreStrictEqual(65535, (ushort)i4, "65535 checked");
 
-                Assert.AreStrictEqual((ushort?)ni2, 0, "nullable 0 checked");
-                Assert.AreStrictEqual((ushort?)ni3, 234, "nullable 234 checked");
-                Assert.AreStrictEqual((ushort?)ni4, 65535, "nullable 65535 checked");
-                Assert.AreStrictEqual((ushort?)ni6, null, "null checked");
+                Assert.AreStrictEqual(0, (ushort?)ni2, "nullable 0 checked");
+                Assert.AreStrictEqual(234, (ushort?)ni3, "nullable 234 checked");
+                Assert.AreStrictEqual(65535, (ushort?)ni4, "nullable 65535 checked");
+                Assert.AreStrictEqual(null, (ushort?)ni6, "null checked");
             }
         }
 
@@ -68,39 +68,39 @@ namespace Bridge.ClientTest.SimpleTypes
         [Test]
         public void DefaultValueIs0()
         {
-            Assert.AreStrictEqual(GetDefaultValue<ushort>(), 0);
+            Assert.AreStrictEqual(0, GetDefaultValue<ushort>());
         }
 
         [Test]
         public void DefaultConstructorReturnsZero()
         {
-            Assert.AreStrictEqual(new ushort(), 0);
+            Assert.AreStrictEqual(0, new ushort());
         }
 
         [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void CreatingInstanceReturnsZero()
         {
-            Assert.AreStrictEqual(Activator.CreateInstance<ushort>(), 0);
+            Assert.AreStrictEqual(0, Activator.CreateInstance<ushort>());
         }
 
         [Test]
         public void ConstantsWork()
         {
-            Assert.AreEqual(ushort.MinValue, 0);
-            Assert.AreEqual(ushort.MaxValue, 65535);
+            Assert.AreEqual(0, ushort.MinValue);
+            Assert.AreEqual(65535, ushort.MaxValue);
         }
 
         [Test]
         public void FormatWorks()
         {
-            Assert.AreEqual(((ushort)0x123).Format("x"), "123");
+            Assert.AreEqual("123", ((ushort)0x123).Format("x"));
         }
 
         [Test]
         public void IFormattableToStringWorks()
         {
-            Assert.AreEqual(((ushort)0x123).ToString("x"), "123");
+            Assert.AreEqual("123", ((ushort)0x123).ToString("x"));
         }
 
         [Test]
@@ -109,37 +109,37 @@ namespace Bridge.ClientTest.SimpleTypes
             ushort numberResult;
             bool result = ushort.TryParse("23445", out numberResult);
             Assert.True(result);
-            Assert.AreEqual(numberResult, 23445);
+            Assert.AreEqual(23445, numberResult);
 
             result = ushort.TryParse("", out numberResult);
             Assert.False(result);
-            Assert.AreEqual(numberResult, 0);
+            Assert.AreEqual(0, numberResult);
 
             result = ushort.TryParse(null, out numberResult);
             Assert.False(result);
-            Assert.AreEqual(numberResult, 0);
+            Assert.AreEqual(0, numberResult);
 
             result = ushort.TryParse("notanumber", out numberResult);
             Assert.False(result);
-            Assert.AreEqual(numberResult, 0);
+            Assert.AreEqual(0, numberResult);
 
             result = ushort.TryParse("32768", out numberResult);
             Assert.True(result);
-            Assert.AreEqual(numberResult, 32768);
+            Assert.AreEqual(32768, numberResult);
 
             result = ushort.TryParse("-1", out numberResult);
             Assert.False(result);
-            Assert.AreEqual(numberResult, -1);
+            Assert.AreEqual(-1, numberResult);
 
             result = ushort.TryParse("2.5", out numberResult);
             Assert.False(result);
-            Assert.AreEqual(numberResult, 0);
+            Assert.AreEqual(0, numberResult);
         }
 
         [Test]
         public void ParseWorks()
         {
-            Assert.AreEqual(ushort.Parse("23445"), 23445);
+            Assert.AreEqual(23445, ushort.Parse("23445"));
             Assert.Throws(() => ushort.Parse(""));
             Assert.Throws(() => ushort.Parse(null));
             Assert.Throws(() => ushort.Parse("notanumber"));
@@ -151,14 +151,14 @@ namespace Bridge.ClientTest.SimpleTypes
         [Test]
         public void ToStringWithoutRadixWorks()
         {
-            Assert.AreEqual(((ushort)123).ToString(), "123");
+            Assert.AreEqual("123", ((ushort)123).ToString());
         }
 
         [Test]
         public void ToStringWithRadixWorks()
         {
-            Assert.AreEqual(((ushort)123).ToString(10), "123");
-            Assert.AreEqual(((ushort)0x123).ToString(16), "123");
+            Assert.AreEqual("123", ((ushort)123).ToString(10));
+            Assert.AreEqual("123", ((ushort)0x123).ToString(16));
         }
 
         [Test]
@@ -166,7 +166,7 @@ namespace Bridge.ClientTest.SimpleTypes
         {
             Assert.AreEqual(((ushort)0).GetHashCode(), ((ushort)0).GetHashCode());
             Assert.AreEqual(((ushort)1).GetHashCode(), ((ushort)1).GetHashCode());
-            Assert.AreNotEqual(((ushort)0).GetHashCode(), ((ushort)1).GetHashCode());
+            Assert.AreNotEqual(((ushort)1).GetHashCode(), ((ushort)0).GetHashCode());
         }
 
         [Test]

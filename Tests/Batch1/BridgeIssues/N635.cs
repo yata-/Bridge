@@ -31,11 +31,11 @@ namespace Bridge.ClientTest.BridgeIssues
             var a = new Bridge635A();
             var b = new Bridge635B();
 
-            Assert.AreEqual(Script.TypeOf(a["internalFunc1"]), "function", "Bridge635 A.internalFunc1");
-            Assert.AreEqual(Script.Get<Func<string>>(a, "internalFunc1")(), "A.Test1", "Bridge635 A.internalFunc1 Invoke");
+            Assert.AreEqual("function", Script.TypeOf(a["internalFunc1"]), "Bridge635 A.internalFunc1");
+            Assert.AreEqual("A.Test1", Script.Get<Func<string>>(a, "internalFunc1")(), "Bridge635 A.internalFunc1 Invoke");
 
-            Assert.AreEqual(Script.TypeOf(b["internalFunc1"]), "function", "Bridge635 B.internalFunc1");
-            Assert.AreEqual(Script.Get<Func<string>>(b, "internalFunc1")(), "B.Test1", "Bridge635 B.internalFunc1 Invoke");
+            Assert.AreEqual("function", Script.TypeOf(b["internalFunc1"]), "Bridge635 B.internalFunc1");
+            Assert.AreEqual("B.Test1", Script.Get<Func<string>>(b, "internalFunc1")(), "Bridge635 B.internalFunc1 Invoke");
         }
     }
 }

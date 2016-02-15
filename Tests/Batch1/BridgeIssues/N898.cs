@@ -14,7 +14,7 @@ namespace Bridge.ClientTest.BridgeIssues
             decimal test = check ? 1 : 2;
 
             Assert.True(test == 1, "One True");
-            Assert.AreEqual(test.GetClassName(), "Bridge.Decimal", "Is decimal");
+            Assert.AreEqual("Bridge.Decimal", test.GetClassName(), "Is decimal");
         }
 
         [Test(ExpectedCount = 2)]
@@ -24,7 +24,7 @@ namespace Bridge.ClientTest.BridgeIssues
             double test = check ? 1 : 2;
 
             Assert.True(test == 1, "One True");
-            Assert.AreEqual(test.GetClassName(), "Number", "Is number");
+            Assert.AreEqual("Number", test.GetClassName(), "Is number");
         }
     }
 }

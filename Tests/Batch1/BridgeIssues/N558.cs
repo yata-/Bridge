@@ -37,11 +37,11 @@ namespace Bridge.ClientTest.BridgeIssues
             var a = new Bridge558A();
             var b = new Bridge558B();
 
-            Assert.AreEqual(a.zz(1), 1, "Bridge558 a.zz int");
-            Assert.AreEqual(a.zz(""), 2, "Bridge558 a.zz string");
+            Assert.AreEqual(1, a.zz(1), "Bridge558 a.zz int");
+            Assert.AreEqual(2, a.zz(""), "Bridge558 a.zz string");
 
-            Assert.AreEqual(b.zz(1), 1, "Bridge558 b.zz int");
-            Assert.AreEqual(b.zz(""), 2, "Bridge558 b.zz string");
+            Assert.AreEqual(1, b.zz(1), "Bridge558 b.zz int");
+            Assert.AreEqual(2, b.zz(""), "Bridge558 b.zz string");
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Bridge.ClientTest.BridgeIssues
                 z++;
                 if (z == 10) break;
             }
-            Assert.AreEqual(z, 10, "Bridge818 z");
+            Assert.AreEqual(10, z, "Bridge818 z");
 
             int i;
             int j;
@@ -28,8 +28,8 @@ namespace Bridge.ClientTest.BridgeIssues
             {
 
             }
-            Assert.AreEqual(i, 10, "Bridge818 i");
-            Assert.AreEqual(j, 11, "Bridge818 j");
+            Assert.AreEqual(10, i, "Bridge818 i");
+            Assert.AreEqual(11, j, "Bridge818 j");
         }
     }
 }

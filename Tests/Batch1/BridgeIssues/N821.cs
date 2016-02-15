@@ -17,26 +17,26 @@ namespace Bridge.ClientTest.BridgeIssues
             try
             {
                 var d = 443534569034876.12345678901235m;
-                Assert.AreEqual(d.ToString(), "443534569034876.12345678901235");
-                Assert.AreEqual(d.ToString(CultureInfo.GetCultureInfo("ru-RU")), "443534569034876,12345678901235");
+                Assert.AreEqual("443534569034876.12345678901235", d.ToString());
+                Assert.AreEqual("443534569034876,12345678901235", d.ToString(CultureInfo.GetCultureInfo("ru-RU")));
                 CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("ru-RU");
-                Assert.AreEqual(d.ToString(), "443534569034876,12345678901235");
+                Assert.AreEqual("443534569034876,12345678901235", d.ToString());
 
                 CultureInfo.CurrentCulture = defaultCulture;
 
                 double d1 = 1.25;
-                Assert.AreEqual(d1.ToString(), "1.25");
-                Assert.AreEqual(d1.ToString(CultureInfo.GetCultureInfo("ru-RU")), "1,25");
+                Assert.AreEqual("1.25", d1.ToString());
+                Assert.AreEqual("1,25", d1.ToString(CultureInfo.GetCultureInfo("ru-RU")));
                 CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("ru-RU");
-                Assert.AreEqual(d1.ToString(), "1,25");
+                Assert.AreEqual("1,25", d1.ToString());
 
                 CultureInfo.CurrentCulture = defaultCulture;
 
                 float f = 1.25f;
-                Assert.AreEqual(f.ToString(), "1.25");
-                Assert.AreEqual(f.ToString(CultureInfo.GetCultureInfo("ru-RU")), "1,25");
+                Assert.AreEqual("1.25", f.ToString());
+                Assert.AreEqual("1,25", f.ToString(CultureInfo.GetCultureInfo("ru-RU")));
                 CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("ru-RU");
-                Assert.AreEqual(f.ToString(), "1,25");
+                Assert.AreEqual("1,25", f.ToString());
             }
             finally
             {

@@ -61,19 +61,19 @@ namespace Bridge.ClientTest.Collections.Generic
         [Test]
         public void ArrayCastToICollectionCountWorks()
         {
-            Assert.AreEqual(((ICollection<string>)new[] { "x", "y", "z" }).Count, 3);
+            Assert.AreEqual(3, ((ICollection<string>)new[] { "x", "y", "z" }).Count);
         }
 
         [Test]
         public void ClassImplementingICollectionCountWorks()
         {
-            Assert.AreEqual(new MyCollection(new[] { "x", "y" }).Count, 2);
+            Assert.AreEqual(2, new MyCollection(new[] { "x", "y" }).Count);
         }
 
         [Test]
         public void ClassImplementingICollectionCastToICollectionCountWorks()
         {
-            Assert.AreEqual(((ICollection<string>)new MyCollection(new[] { "x", "y", "z" })).Count, 3);
+            Assert.AreEqual(3, ((ICollection<string>)new MyCollection(new[] { "x", "y", "z" })).Count);
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace Bridge.ClientTest.Collections.Generic
         {
             MyCollection c = new MyCollection(new[] { "x", "y" });
             c.Add("z");
-            Assert.AreEqual(c.Count, 3);
+            Assert.AreEqual(3, c.Count);
             Assert.True(c.Contains("z"));
         }
 
@@ -90,7 +90,7 @@ namespace Bridge.ClientTest.Collections.Generic
         {
             ICollection<string> c = new MyCollection(new[] { "x", "y" });
             c.Add("z");
-            Assert.AreEqual(c.Count, 3);
+            Assert.AreEqual(3, c.Count);
             Assert.True(c.Contains("z"));
         }
 
@@ -99,7 +99,7 @@ namespace Bridge.ClientTest.Collections.Generic
         {
             MyCollection c = new MyCollection(new[] { "x", "y" });
             c.Clear();
-            Assert.AreEqual(c.Count, 0);
+            Assert.AreEqual(0, c.Count);
         }
 
         [Test]
@@ -107,7 +107,7 @@ namespace Bridge.ClientTest.Collections.Generic
         {
             ICollection<string> c = new MyCollection(new[] { "x", "y" });
             c.Clear();
-            Assert.AreEqual(c.Count, 0);
+            Assert.AreEqual(0, c.Count);
         }
 
         // TODO Bug
@@ -140,9 +140,9 @@ namespace Bridge.ClientTest.Collections.Generic
         {
             MyCollection c = new MyCollection(new[] { "x", "y" });
             c.Remove("x");
-            Assert.AreEqual(c.Count, 1);
+            Assert.AreEqual(1, c.Count);
             c.Remove("y");
-            Assert.AreEqual(c.Count, 0);
+            Assert.AreEqual(0, c.Count);
         }
 
         [Test]
@@ -150,9 +150,9 @@ namespace Bridge.ClientTest.Collections.Generic
         {
             ICollection<string> c = new MyCollection(new[] { "x", "y" });
             c.Remove("x");
-            Assert.AreEqual(c.Count, 1);
+            Assert.AreEqual(1, c.Count);
             c.Remove("y");
-            Assert.AreEqual(c.Count, 0);
+            Assert.AreEqual(0, c.Count);
         }
     }
 }

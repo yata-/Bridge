@@ -14,8 +14,8 @@ namespace Bridge.ClientTest.BridgeIssues
         [Test(ExpectedCount = 2)]
         public static void TestUseCase()
         {
-            Assert.AreEqual(Get(true), "true", "Bridge786 true");
-            Assert.AreEqual(Get(false), "false", "Bridge786 false");
+            Assert.AreEqual("true", Get(true), "Bridge786 true");
+            Assert.AreEqual("false", Get(false), "Bridge786 false");
         }
 
         private static string Get(bool throws)

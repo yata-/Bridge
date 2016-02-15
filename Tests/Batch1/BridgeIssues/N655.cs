@@ -36,26 +36,26 @@ namespace Bridge.ClientTest.BridgeIssues
         public static void TestUseCase()
         {
             Func<object> item11 = () => 11;
-            Assert.AreEqual(item11.IsNullOrUndefined(), false, "Bridge655 IsNullOrUndefined11");
-            Assert.AreEqual(item11(), 11, "Bridge655 item11");
+            Assert.AreEqual(false, item11.IsNullOrUndefined(), "Bridge655 IsNullOrUndefined11");
+            Assert.AreEqual(11, item11(), "Bridge655 item11");
 
             Func<int, int> item12 = (i) => i;
-            Assert.AreEqual(item12.IsNullOrUndefined(), false, "Bridge655 IsNullOrUndefined12");
-            Assert.AreEqual(item12(12), 12, "Bridge655 item12");
+            Assert.AreEqual(false, item12.IsNullOrUndefined(), "Bridge655 IsNullOrUndefined12");
+            Assert.AreEqual(12, item12(12), "Bridge655 item12");
 
             Func<object> item21 = () => 21;
-            Assert.AreEqual(item21.IsNullOrUndefined(21), false, "Bridge655 IsNullOrUndefined21 false");
-            Assert.AreEqual(item21.IsNullOrUndefined(0), true, "Bridge655 IsNullOrUndefined21 true");
-            Assert.AreEqual(item21(), 21, "Bridge655 item21");
+            Assert.AreEqual(false, item21.IsNullOrUndefined(21), "Bridge655 IsNullOrUndefined21 false");
+            Assert.AreEqual(true, item21.IsNullOrUndefined(0), "Bridge655 IsNullOrUndefined21 true");
+            Assert.AreEqual(21, item21(), "Bridge655 item21");
 
             Func<int, string, int> item22 = (i, s) => i + s.Length;
-            Assert.AreEqual(item22.IsNullOrUndefined("22"), "false", "Bridge655 IsNullOrUndefined22 false");
-            Assert.AreEqual(item22.IsNullOrUndefined(string.Empty), "true", "Bridge655 IsNullOrUndefined22 true");
-            Assert.AreEqual(item22(19, "two"), 22, "Bridge655 item22");
+            Assert.AreEqual("false", item22.IsNullOrUndefined("22"), "Bridge655 IsNullOrUndefined22 false");
+            Assert.AreEqual("true", item22.IsNullOrUndefined(string.Empty), "Bridge655 IsNullOrUndefined22 true");
+            Assert.AreEqual(22, item22(19, "two"), "Bridge655 item22");
 
             Action<int, string> item32 = (i, s) => { var b = i == s.Length; };
-            Assert.AreEqual(item32.IsNullOrUndefined("32"), "false", "Bridge655 IsNullOrUndefined32 false");
-            Assert.AreEqual(item32.IsNullOrUndefined(string.Empty), "true", "Bridge655 IsNullOrUndefined32 true");
+            Assert.AreEqual("false", item32.IsNullOrUndefined("32"), "Bridge655 IsNullOrUndefined32 false");
+            Assert.AreEqual("true", item32.IsNullOrUndefined(string.Empty), "Bridge655 IsNullOrUndefined32 true");
         }
     }
 }

@@ -22,13 +22,13 @@ namespace Bridge.ClientTest.BridgeIssues
         [Test(ExpectedCount = 6)]
         public static void TestUseCase()
         {
-            Assert.AreEqual(Example1(), true, "Bridge661 Example1 true default");
-            Assert.AreEqual(Example1('\0'), true, "Bridge661 Example1 true");
-            Assert.AreEqual(Example1('A'), false, "Bridge661 Example1 false");
+            Assert.AreEqual(true, Example1(), "Bridge661 Example1 true default");
+            Assert.AreEqual(true, Example1('\0'), "Bridge661 Example1 true");
+            Assert.AreEqual(false, Example1('A'), "Bridge661 Example1 false");
 
-            Assert.AreEqual(Example2(), true, "Bridge661 Example2 true default");
-            Assert.AreEqual(Example2('1'), true, "Bridge661 Example2 true");
-            Assert.AreEqual(Example2('\0'), false, "Bridge661 Example2 false");
+            Assert.AreEqual(true, Example2(), "Bridge661 Example2 true default");
+            Assert.AreEqual(true, Example2('1'), "Bridge661 Example2 true");
+            Assert.AreEqual(false, Example2('\0'), "Bridge661 Example2 false");
         }
     }
 }

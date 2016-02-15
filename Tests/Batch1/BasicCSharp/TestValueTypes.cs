@@ -79,36 +79,36 @@ namespace Bridge.ClientTest.BasicCSharp
             // Check parameterless constructor
             var a = new Point();
 
-            Assert.AreEqual(a.x, 0, "x 0");
-            Assert.AreEqual(a.y, 0, "y 0");
+            Assert.AreEqual(0, a.x, "x 0");
+            Assert.AreEqual(0, a.y, "y 0");
 
             var r = new Rectangle();
 
-            Assert.AreEqual(r.l.x, 0, "r.l.x 0");
-            Assert.AreEqual(r.l.y, 0, "r.l.y 0");
-            Assert.AreEqual(r.t.x, 0, "r.t.x 0");
-            Assert.AreEqual(r.t.y, 0, "r.t.y 0");
+            Assert.AreEqual(0, r.l.x, "r.l.x 0");
+            Assert.AreEqual(0, r.l.y, "r.l.y 0");
+            Assert.AreEqual(0, r.t.x, "r.t.x 0");
+            Assert.AreEqual(0, r.t.y, "r.t.y 0");
 
             r = new Rectangle(10, 20);
 
-            Assert.AreEqual(r.l.x, 10, "r.l.x 10");
-            Assert.AreEqual(r.l.y, 20, "r.l.y 20");
-            Assert.AreEqual(r.t.x, 0, "r.t.x 0");
-            Assert.AreEqual(r.t.y, 0, "r.t.y 0");
+            Assert.AreEqual(10, r.l.x, "r.l.x 10");
+            Assert.AreEqual(20, r.l.y, "r.l.y 20");
+            Assert.AreEqual(0, r.t.x, "r.t.x 0");
+            Assert.AreEqual(0, r.t.y, "r.t.y 0");
 
             r = new Rectangle(30, 40, 50, 60);
 
-            Assert.AreEqual(r.l.x, 30, "r.l.x 30");
-            Assert.AreEqual(r.l.y, 40, "r.l.y 40");
-            Assert.AreEqual(r.t.x, 50, "r.t.x 50");
-            Assert.AreEqual(r.t.y, 60, "r.t.y 60");
+            Assert.AreEqual(30, r.l.x, "r.l.x 30");
+            Assert.AreEqual(40, r.l.y, "r.l.y 40");
+            Assert.AreEqual(50, r.t.x, "r.t.x 50");
+            Assert.AreEqual(60, r.t.y, "r.t.y 60");
 
             var i = a.Test1();
 
-            Assert.AreEqual(i, 500, "i 500");
+            Assert.AreEqual(500, i, "i 500");
             a.x = 300;
             i = a.Test1();
-            Assert.AreEqual(i, 800, "i 800");
+            Assert.AreEqual(800, i, "i 800");
 
             a.y = 400;
 
@@ -119,25 +119,25 @@ namespace Bridge.ClientTest.BasicCSharp
             };
             var c = b.Test2(a);
 
-            Assert.AreEqual(c.x, 305, "c.x 305");
-            Assert.AreEqual(c.y, 407, "c.y 407");
+            Assert.AreEqual(305, c.x, "c.x 305");
+            Assert.AreEqual(407, c.y, "c.y 407");
         }
 
         // Check static methods and constructor
         [Test(ExpectedCount = 7)]
         public static void TestStaticConstructorsAndMethods()
         {
-            Assert.AreEqual(Point.StaticInt, 500, "Point.StaticInt 500");
-            Assert.AreEqual(Point.StaticString, "Initialized", "Point.StaticString Initialized");
-            Assert.AreEqual(Point.StatitIntNotInitialized, 0, "Point.StatitIntNotInitialized 0");
-            Assert.AreEqual(Point.StatitStringNotInitialized, null, "Point.StatitStringNotInitialized null");
-            Assert.AreEqual(Point.CONST_CHAR, (int)'W', "Point.CONST_CHAR W");
+            Assert.AreEqual(500, Point.StaticInt, "Point.StaticInt 500");
+            Assert.AreEqual("Initialized", Point.StaticString, "Point.StaticString Initialized");
+            Assert.AreEqual(0, Point.StatitIntNotInitialized, "Point.StatitIntNotInitialized 0");
+            Assert.AreEqual(null, Point.StatitStringNotInitialized, "Point.StatitStringNotInitialized null");
+            Assert.AreEqual((int)'W', Point.CONST_CHAR, "Point.CONST_CHAR W");
 
             Point.StatitIntNotInitialized = -1;
-            Assert.AreEqual(Point.StatitIntNotInitialized, -1, "Point.StatitIntNotInitialized -1");
+            Assert.AreEqual(-1, Point.StatitIntNotInitialized, "Point.StatitIntNotInitialized -1");
 
             var i = Point.Test3();
-            Assert.AreEqual(i, 499, "i 499");
+            Assert.AreEqual(499, i, "i 499");
         }
     }
 }

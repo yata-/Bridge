@@ -470,11 +470,11 @@ namespace Bridge.ClientTest.BridgeIssues
         {
             // TEST
             Bridge169.M1();
-            Assert.AreEqual(Bridge169.Number, 1, "M1()");
+            Assert.AreEqual(1, Bridge169.Number, "M1()");
 
             // TEST
             Bridge169.M2();
-            Assert.AreEqual(Bridge169.Number, 2, "M2()");
+            Assert.AreEqual(2, Bridge169.Number, "M2()");
         }
 
         // Bridge[#240]
@@ -484,8 +484,8 @@ namespace Bridge.ClientTest.BridgeIssues
             // TEST
             var b = new Bridge240B();
             Assert.True(b != null, "Instance of B created");
-            Assert.AreEqual(b.GetString(), "B", "b.GetString() = 'B'");
-            Assert.AreEqual(b.Data, 1, "b.Data = 1");
+            Assert.AreEqual("B", b.GetString(), "b.GetString() = 'B'");
+            Assert.AreEqual(1, b.Data, "b.Data = 1");
         }
 
         // Bridge[#264]
@@ -495,7 +495,7 @@ namespace Bridge.ClientTest.BridgeIssues
             // TEST
             string oldHash = Global.Location.Hash;
             Global.Location.Hash = "#new-hash";
-            Assert.AreEqual(Global.Location.Hash, "#new-hash", "Setting Location.Hash works");
+            Assert.AreEqual("#new-hash", Global.Location.Hash, "Setting Location.Hash works");
             Global.Location.Hash = oldHash; // to clean up the url
         }
 
@@ -512,9 +512,9 @@ namespace Bridge.ClientTest.BridgeIssues
         public static void N272()
         {
             // TEST
-            Assert.AreEqual(Bridge272.Test(1), Bridge272.MyEnum.Abc, "Casted MyEnum.Abc");
-            Assert.AreEqual(Bridge272.Test(3), Bridge272.MyEnum.Ghi, "Casted MyEnum.Ghi");
-            Assert.AreEqual(Bridge272.Test(4), 4, "Casted MyEnum.Abc");
+            Assert.AreEqual(Bridge272.MyEnum.Abc, Bridge272.Test(1), "Casted MyEnum.Abc");
+            Assert.AreEqual(Bridge272.MyEnum.Ghi, Bridge272.Test(3), "Casted MyEnum.Ghi");
+            Assert.AreEqual(4, Bridge272.Test(4), "Casted MyEnum.Abc");
         }
 
         // Bridge[#273]
@@ -525,23 +525,23 @@ namespace Bridge.ClientTest.BridgeIssues
             var items = new List<int>() { 0, 1, 2, 3, 4 };
 
             var r = items.Slice(-1).ToArray();
-            Assert.AreEqual(r, new[] { 4 }, "Slices start = -1");
+            Assert.AreEqual(new[] { 4 }, r, "Slices start = -1");
 
             r = items.Slice(1).ToArray();
-            Assert.AreEqual(r, new[] { 1, 2, 3, 4 }, "Slices start = 1");
+            Assert.AreEqual(new[] { 1, 2, 3, 4 }, r, "Slices start = 1");
 
             r = items.Slice(-3, 4).ToArray();
-            Assert.AreEqual(r, new[] { 2, 3 }, "Slices start = -3, end = 3");
+            Assert.AreEqual(new[] { 2, 3 }, r, "Slices start = -3, end = 3");
 
             r = items.Slice(1, 3).ToArray();
-            Assert.AreEqual(r, new[] { 1, 2 }, "Slices start = 1, end = 2");
+            Assert.AreEqual(new[] { 1, 2 }, r, "Slices start = 1, end = 2");
         }
 
         // Bridge[#277]
         [Test(Name = "#277", ExpectedCount = 1)]
         public static void N277()
         {
-            Assert.AreEqual(Bridge277.Int, 0, "Enum member with reserved name initialized");
+            Assert.AreEqual(0, Bridge277.Int, "Enum member with reserved name initialized");
         }
 
         // Bridge[#294]
@@ -550,8 +550,8 @@ namespace Bridge.ClientTest.BridgeIssues
         {
             var c = new Bridge294("Vlad");
 
-            Assert.AreEqual(c.GetName(), "Vlad", "Class method works");
-            Assert.AreEqual(c.GetNameThroughGeneric<int>(), "Vlad", "Generic class method works");
+            Assert.AreEqual("Vlad", c.GetName(), "Class method works");
+            Assert.AreEqual("Vlad", c.GetNameThroughGeneric<int>(), "Generic class method works");
         }
 
         // Bridge[#304]
@@ -562,10 +562,10 @@ namespace Bridge.ClientTest.BridgeIssues
             IBridge304 i = c;
 
             i.F("1");
-            Assert.AreEqual(c.X, "1", "Interface method works");
+            Assert.AreEqual("1", c.X, "Interface method works");
 
             c.F();
-            Assert.AreEqual(c.X, "void F()", "Class method works");
+            Assert.AreEqual("void F()", c.X, "Class method works");
         }
 
         // Bridge[#305]
@@ -580,7 +580,7 @@ namespace Bridge.ClientTest.BridgeIssues
                 result = result + item;
             }
 
-            Assert.AreEqual(result, "123", "IEnumerator works");
+            Assert.AreEqual("123", result, "IEnumerator works");
         }
 
         // Bridge[#306]
@@ -591,13 +591,13 @@ namespace Bridge.ClientTest.BridgeIssues
             {
                 Name = "B"
             });
-            Assert.AreEqual(b, "Bridge.ClientTest.BridgeIssues.Bridge306B.Props:B", "Bridge306B.New() works");
+            Assert.AreEqual("Bridge.ClientTest.BridgeIssues.Bridge306B.Props:B", b, "Bridge306B.New() works");
 
             var a = Bridge306A.New(new Bridge306A.Props()
             {
                 Name = "A"
             });
-            Assert.AreEqual(a, "Bridge.ClientTest.BridgeIssues.Bridge306A.Props:A", "Bridge306A.New() works");
+            Assert.AreEqual("Bridge.ClientTest.BridgeIssues.Bridge306A.Props:A", a, "Bridge306A.New() works");
         }
 
         [Test(Name = "#329", ExpectedCount = 5)]
@@ -606,12 +606,12 @@ namespace Bridge.ClientTest.BridgeIssues
             DateTime d1;
             var b1 = DateTime.TryParse("2001-01-01", out d1, true);
             Assert.True(b1, "TryParse parsed '2001 - 01 - 01'");
-            Assert.AreEqual(d1.GetUtcFullYear(), 2001, "TryParse works Year");
-            Assert.AreEqual(d1.GetUtcMonth(), 1, "TryParse works Month");
-            Assert.AreEqual(d1.GetUtcDay(), 1, "TryParse works Day");
+            Assert.AreEqual(2001, d1.GetUtcFullYear(), "TryParse works Year");
+            Assert.AreEqual(1, d1.GetUtcMonth(), "TryParse works Month");
+            Assert.AreEqual(1, d1.GetUtcDay(), "TryParse works Day");
 
             var d2 = DateTime.Parse("2001-01-01", true);
-            Assert.AreEqual(d2.ToString(), d1.ToString(), "TryParse And Parse give the same result");
+            Assert.AreEqual(d1.ToString(), d2.ToString(), "TryParse And Parse give the same result");
         }
 
         // Bridge[#335]
@@ -619,7 +619,7 @@ namespace Bridge.ClientTest.BridgeIssues
         public static void N335()
         {
             var l = new List<string>(new[] { "1", "2", "3", "1" });
-            Assert.AreEqual(l.IndexOf("1", 2), 3, "IndexOf with startIndex used");
+            Assert.AreEqual(3, l.IndexOf("1", 2), "IndexOf with startIndex used");
         }
 
         // Bridge[#336]
@@ -629,10 +629,10 @@ namespace Bridge.ClientTest.BridgeIssues
             var l = new List<string>(new[] { "4" });
 
             l.InsertRange(0, new[] { "1", "2" });
-            Assert.AreEqual(l.ToArray(), new[] { "1", "2", "4" }, "InsertRange works (1)");
+            Assert.AreEqual(new[] { "1", "2", "4" }, l.ToArray(), "InsertRange works (1)");
 
             l.InsertRange(2, new[] { "3" });
-            Assert.AreEqual(l.ToArray(), new[] { "1", "2", "3", "4" }, "InsertRange works (2)");
+            Assert.AreEqual(new[] { "1", "2", "3", "4" }, l.ToArray(), "InsertRange works (2)");
         }
 
         // Bridge[#337]
@@ -643,11 +643,11 @@ namespace Bridge.ClientTest.BridgeIssues
 
             var b = l.Remove("7");
             Assert.False(b, "Remove() not existing element returns false");
-            Assert.AreEqual(l.ToArray(), new[] { "1", "2" }, "Remove() not existing does not change the List");
+            Assert.AreEqual(new[] { "1", "2" }, l.ToArray(), "Remove() not existing does not change the List");
 
             b = l.Remove("2");
             Assert.True(b, "Remove() existing element returns true");
-            Assert.AreEqual(l.ToArray(), new[] { "1" }, "Remove() not existing changes the List");
+            Assert.AreEqual(new[] { "1" }, l.ToArray(), "Remove() not existing changes the List");
         }
 
         // Bridge[#338]
@@ -738,7 +738,7 @@ namespace Bridge.ClientTest.BridgeIssues
 
             var interfacedDictionary = (IDictionary<int, string>)dictionary;
 
-            Assert.AreEqual(interfacedDictionary[6], "z", "IDictionary getter works");
+            Assert.AreEqual("z", interfacedDictionary[6], "IDictionary getter works");
             Assert.Throws(() =>
             {
                 var r = interfacedDictionary[1];
@@ -756,9 +756,9 @@ namespace Bridge.ClientTest.BridgeIssues
 
             var parsed = DateTime.TryParse("22.08.2015", culture, out date);
             Assert.True(parsed, "Parsed \"22.08.2015\"");
-            Assert.AreEqual(date.Year, 2015, "TryParse works Year");
-            Assert.AreEqual(date.Month, 8, "TryParse works Month");
-            Assert.AreEqual(date.Day, 22, "TryParse works Day");
+            Assert.AreEqual(2015, date.Year, "TryParse works Year");
+            Assert.AreEqual(8, date.Month, "TryParse works Month");
+            Assert.AreEqual(22, date.Day, "TryParse works Day");
         }
 
         // Bridge[#377]
@@ -771,14 +771,14 @@ namespace Bridge.ClientTest.BridgeIssues
                 field3 = 7
             };
 
-            Assert.AreEqual(objectLiteralInstance.HasOwnProperty("field1"), true, "ObjectLiteral's field with an explicit value is emitted");
-            Assert.AreEqual(objectLiteralInstance.field1, "field1 value", "ObjectLiteral's field with an explicit value is emitted correctly");
+            Assert.AreEqual(true, objectLiteralInstance.HasOwnProperty("field1"), "ObjectLiteral's field with an explicit value is emitted");
+            Assert.AreEqual("field1 value", objectLiteralInstance.field1, "ObjectLiteral's field with an explicit value is emitted correctly");
 
-            Assert.AreEqual(objectLiteralInstance.HasOwnProperty("field3"), true, "ObjectLiteral's field with an explicit value is emitted");
-            Assert.AreEqual(objectLiteralInstance.field3, 7, "ObjectLiteral's field with an explicit value is emitted correctly");
+            Assert.AreEqual(true, objectLiteralInstance.HasOwnProperty("field3"), "ObjectLiteral's field with an explicit value is emitted");
+            Assert.AreEqual(7, objectLiteralInstance.field3, "ObjectLiteral's field with an explicit value is emitted correctly");
 
-            Assert.AreEqual(objectLiteralInstance.HasOwnProperty("field2"), false, "ObjectLiteral's field without an explicit value is not emitted");
-            Assert.AreEqual(objectLiteralInstance.HasOwnProperty("field4"), false, "ObjectLiteral's field without an explicit value is not emitted");
+            Assert.AreEqual(false, objectLiteralInstance.HasOwnProperty("field2"), "ObjectLiteral's field without an explicit value is not emitted");
+            Assert.AreEqual(false, objectLiteralInstance.HasOwnProperty("field4"), "ObjectLiteral's field without an explicit value is not emitted");
         }
 
         // Bridge[#383]
@@ -791,7 +791,7 @@ namespace Bridge.ClientTest.BridgeIssues
             };
             var msg1 = person1.DoSomething();
 
-            Assert.AreEqual(msg1, "Johnny", "Instance extention Johnny");
+            Assert.AreEqual("Johnny", msg1, "Instance extention Johnny");
 
             var person2 = new Person383()
             {
@@ -799,7 +799,7 @@ namespace Bridge.ClientTest.BridgeIssues
             };
             var msg2 = Bridge383.DoSomething(person2);
 
-            Assert.AreEqual(msg2, "Madison", "Static extention Madison");
+            Assert.AreEqual("Madison", msg2, "Static extention Madison");
         }
 
         // Bridge[#393]
@@ -841,9 +841,9 @@ namespace Bridge.ClientTest.BridgeIssues
                 }
             }
 
-            Assert.AreEqual(_dictOfTests.Count, 2, "All items added");
-            Assert.AreEqual(_dictOfTests["a"].Id, "a", "First element is a");
-            Assert.AreEqual(_dictOfTests["b"].Id, "b", "Second element is b");
+            Assert.AreEqual(2, _dictOfTests.Count, "All items added");
+            Assert.AreEqual("a", _dictOfTests["a"].Id, "First element is a");
+            Assert.AreEqual("b", _dictOfTests["b"].Id, "Second element is b");
         }
 
         // Bridge[#406]
@@ -891,7 +891,7 @@ namespace Bridge.ClientTest.BridgeIssues
                     break;
             }
 
-            Assert.AreEqual(result, "TESTD", "TESTD");
+            Assert.AreEqual("TESTD", result, "TESTD");
         }
 
         // Bridge[#407]
@@ -907,11 +907,11 @@ namespace Bridge.ClientTest.BridgeIssues
                 A = 2
             };
 
-            Assert.AreEqual(vec.A, 3, "Vec.A = 3");
+            Assert.AreEqual(3, vec.A, "Vec.A = 3");
 
             int a = 2;
             a += 5;
-            Assert.AreEqual(a, 7, "a = 7");
+            Assert.AreEqual(7, a, "a = 7");
         }
 
         // Bridge[#409]
@@ -927,7 +927,7 @@ namespace Bridge.ClientTest.BridgeIssues
 
         private static void EnsureNumber(object actual, string expected, string message)
         {
-            Assert.AreEqual(actual.ToString(), expected, message);
+            Assert.AreEqual(expected, actual.ToString(), message);
         }
 
         private static void AssertAlmostEqual(double actual, double expected, string message)
@@ -1084,7 +1084,7 @@ namespace Bridge.ClientTest.BridgeIssues
             t.Delegate += (i) => i * 2;
             var r = t.CallDelegate(10);
 
-            Assert.AreEqual(r, 20, "Delegate added and called var r = t.CallDelegate(10);");
+            Assert.AreEqual(20, r, "Delegate added and called var r = t.CallDelegate(10);");
         }
 
         // Bridge[#422]
@@ -1095,9 +1095,9 @@ namespace Bridge.ClientTest.BridgeIssues
             var v100 = Bridge422.next;
             var v101 = Bridge422.afterNext;
 
-            Assert.AreEqual(v0, 0, "Bridge422.first");
-            Assert.AreEqual(v100, 100, "Bridge422.next");
-            Assert.AreEqual(v101, 101, "Bridge422.afterNext");
+            Assert.AreEqual(0, v0, "Bridge422.first");
+            Assert.AreEqual(100, v100, "Bridge422.next");
+            Assert.AreEqual(101, v101, "Bridge422.afterNext");
         }
 
         // Bridge[#422]
@@ -1107,7 +1107,7 @@ namespace Bridge.ClientTest.BridgeIssues
             var number2 = 11.37m;
             var sum = "0.13 + " + number2;
 
-            Assert.AreEqual(sum, "0.13 + 11.37", "0.13 + 11.37");
+            Assert.AreEqual("0.13 + 11.37", sum, "0.13 + 11.37");
         }
 
         // Bridge[#435]
@@ -1115,8 +1115,8 @@ namespace Bridge.ClientTest.BridgeIssues
         public static void N435()
         {
             int i = 0;
-            Assert.AreEqual(i.Format("E"), "0E+000", "i.Format(\"E\")");
-            Assert.AreEqual(i.Format("a"), "a", "Test custom formatting in \"use strict\" mode");
+            Assert.AreEqual("0E+000", i.Format("E"), "i.Format(\"E\")");
+            Assert.AreEqual("a", i.Format("a"), "Test custom formatting in \"use strict\" mode");
         }
 
         // Bridge[#436]
@@ -1124,13 +1124,13 @@ namespace Bridge.ClientTest.BridgeIssues
         public static void N436()
         {
             var b1 = new Bridge436First();
-            Assert.AreEqual(b1.ToObject(), "1", "Bridge436First.ToObject()");
+            Assert.AreEqual("1", b1.ToObject(), "Bridge436First.ToObject()");
 
             var b2 = new Bridge436Second();
-            Assert.AreEqual(b2.ToObject(), "12", "Bridge436Second.ToObject()");
+            Assert.AreEqual("12", b2.ToObject(), "Bridge436Second.ToObject()");
 
             var b3 = new Bridge436Third();
-            Assert.AreEqual(b3.ToObject(), "123", "Bridge436Third.ToObject()");
+            Assert.AreEqual("123", b3.ToObject(), "Bridge436Third.ToObject()");
         }
 
         // Bridge[#438]
@@ -1139,7 +1139,7 @@ namespace Bridge.ClientTest.BridgeIssues
         {
             List<int> magic = new List<int>() { 0, 1, 2, 3, 4 };
             List<int> epic = magic.GetRange(0, 3);
-            Assert.AreEqual(epic.GetType().GetClassName(), "Bridge.List$1$Bridge.Int", "epic.GetType().GetClassName()");
+            Assert.AreEqual("Bridge.List$1$Bridge.Int", epic.GetType().GetClassName(), "epic.GetType().GetClassName()");
         }
 
         // Bridge[#439]
@@ -1154,10 +1154,10 @@ namespace Bridge.ClientTest.BridgeIssues
             });
 
             b.CallDispatcher("1");
-            Assert.AreEqual(accumulator, "1", "accumulator 1");
+            Assert.AreEqual("1", accumulator, "accumulator 1");
 
             b.CallDispatcher("2");
-            Assert.AreEqual(accumulator, "12", "accumulator 12");
+            Assert.AreEqual("12", accumulator, "accumulator 12");
         }
 
         // Bridge[#442]
@@ -1178,7 +1178,7 @@ namespace Bridge.ClientTest.BridgeIssues
             double number;
 
             number = -12345.6789;
-            Assert.AreEqual(number.ToString("G", System.Globalization.CultureInfo.InvariantCulture), "-12345.6789", "ToString(\"G\") for negative numbers in InvariantCulture");
+            Assert.AreEqual("-12345.6789", number.ToString("G", System.Globalization.CultureInfo.InvariantCulture), "ToString(\"G\") for negative numbers in InvariantCulture");
         }
 
         // Bridge[#467]
@@ -1195,7 +1195,7 @@ namespace Bridge.ClientTest.BridgeIssues
                 MyProperty = -1
             };
 
-            Assert.AreEqual(a.GetHashCode(), b.GetHashCode(), "Call to base.GetHashCode() causes compilation to fail");
+            Assert.AreEqual(b.GetHashCode(), a.GetHashCode(), "Call to base.GetHashCode() causes compilation to fail");
         }
 
         // Bridge[#469]
@@ -1215,7 +1215,7 @@ namespace Bridge.ClientTest.BridgeIssues
                 count++;
             }
 
-            Assert.AreEqual(count, 1, "\"continue\" generated correctly");
+            Assert.AreEqual(1, count, "\"continue\" generated correctly");
         }
 
         // Bridge[#470]
@@ -1235,35 +1235,35 @@ namespace Bridge.ClientTest.BridgeIssues
                 Data = 3
             };
 
-            Assert.AreEqual(a.Equals(b), false, "a.Equals(b)");
-            Assert.AreEqual(a.Equals(new Bridge470
+            Assert.AreEqual(false, a.Equals(b), "a.Equals(b)");
+            Assert.AreEqual(true, a.Equals(new Bridge470
             {
                 Data = 1
-            }), true, "a.Equals(new Bridge470 { Data = 1 })");
-            Assert.AreEqual(a.Equals(null), false, "a.Equals(null)");
+            }), "a.Equals(new Bridge470 { Data = 1 })");
+            Assert.AreEqual(false, a.Equals(null), "a.Equals(null)");
 
-            Assert.AreEqual(a.Equals(b, b), true, "a.Equals(b, b)");
-            Assert.AreEqual(a.Equals(a, new Bridge470
+            Assert.AreEqual(true, a.Equals(b, b), "a.Equals(b, b)");
+            Assert.AreEqual(true, a.Equals(a, new Bridge470
             {
                 Data = 1
-            }), true, "a.Equals(a, new Bridge470 { Data = 1 })");
-            Assert.AreEqual(a.Equals(a, new Bridge470
+            }), "a.Equals(a, new Bridge470 { Data = 1 })");
+            Assert.AreEqual(false, a.Equals(a, new Bridge470
             {
                 Data = 2
-            }), false, "a.Equals(a, new Bridge470 { Data = 2 })");
-            Assert.AreEqual(a.Equals(new Bridge470
+            }), "a.Equals(a, new Bridge470 { Data = 2 })");
+            Assert.AreEqual(true, a.Equals(new Bridge470
             {
                 Data = 5
             }, new Bridge470
             {
                 Data = 5
-            }), true, "new Bridge470 { Data = 5 }, new Bridge470 { Data = 5 }");
+            }), "new Bridge470 { Data = 5 }, new Bridge470 { Data = 5 }");
 
-            Assert.AreEqual(a.GetHashCode(), 1, "a.GetHashCode()");
-            Assert.AreEqual(c.GetHashCode(), 3, "c.GetHashCode()");
+            Assert.AreEqual(1, a.GetHashCode(), "a.GetHashCode()");
+            Assert.AreEqual(3, c.GetHashCode(), "c.GetHashCode()");
 
-            Assert.AreEqual(a.GetHashCode(b), 2, "a.GetHashCode(b)");
-            Assert.AreEqual(c.GetHashCode(c), 3, "c.GetHashCode(c)");
+            Assert.AreEqual(2, a.GetHashCode(b), "a.GetHashCode(b)");
+            Assert.AreEqual(3, c.GetHashCode(c), "c.GetHashCode(c)");
 
             var test1 = new List<Bridge470>();
             test1.Add(a);
@@ -1273,24 +1273,24 @@ namespace Bridge.ClientTest.BridgeIssues
             var comparer = new Bridge470();
 
             // EqualityComparer's methods do not handle null values intentionally
-            Assert.AreEqual(test1.Contains(a, comparer), true, "test1 Contains a");
-            Assert.AreEqual(test1.Contains(b, comparer), true, "test1 Contains b");
-            Assert.AreEqual(test1.Contains(c, comparer), true, "test1 Contains c");
-            Assert.AreEqual(test1.Contains(new Bridge470
+            Assert.AreEqual(true, test1.Contains(a, comparer), "test1 Contains a");
+            Assert.AreEqual(true, test1.Contains(b, comparer), "test1 Contains b");
+            Assert.AreEqual(true, test1.Contains(c, comparer), "test1 Contains c");
+            Assert.AreEqual(false, test1.Contains(new Bridge470
             {
                 Data = 4
-            }, comparer), false, "test1 Contains 4");
-            Assert.AreEqual(test1.Contains(new Bridge470
+            }, comparer), "test1 Contains 4");
+            Assert.AreEqual(false, test1.Contains(new Bridge470
             {
                 Data = 5
-            }, comparer), false, "test1 Contains 5");
+            }, comparer), "test1 Contains 5");
         }
 
         [Test(Name = "#499", ExpectedCount = 1)]
         public static void N499()
         {
             var v1 = new Version();
-            Assert.AreEqual(v1.GetClassName(), "Bridge.Version", "#499 Version type name");
+            Assert.AreEqual("Bridge.Version", v1.GetClassName(), "#499 Version type name");
         }
     }
 }

@@ -30,10 +30,10 @@ namespace Bridge.ClientTest.BridgeIssues
             Bridge762A value2 = test2.GetValueOrDefault();
             var value3 = test3.GetValueOrDefault();
 
-            Assert.AreEqual(value1, 0, "Bridge762 int");
-            Assert.AreNotEqual(value2, null, "Bridge762A struct");
-            Assert.AreNotEqual(value3, null, "Bridge762B struct");
-            Assert.AreEqual(value3.Data, 0, "Bridge762B.Data struct");
+            Assert.AreEqual(0, value1, "Bridge762 int");
+            Assert.AreNotEqual(null, value2, "Bridge762A struct");
+            Assert.AreNotEqual(null, value3, "Bridge762B struct");
+            Assert.AreEqual(0, value3.Data, "Bridge762B.Data struct");
         }
     }
 }

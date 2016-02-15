@@ -15,16 +15,16 @@ namespace Bridge.ClientTest.BridgeIssues
         public static void TestUseCase()
         {
             List<int> testList = new List<int> { 3 };
-            Assert.AreEqual(Check(testList), "ThirdLoop", "Bridge721 ThirdLoop");
+            Assert.AreEqual("ThirdLoop", Check(testList), "Bridge721 ThirdLoop");
 
             testList = new List<int> { 5 };
-            Assert.AreEqual(Check(testList), "SecondLoop", "Bridge721 SecondLoop");
+            Assert.AreEqual("SecondLoop", Check(testList), "Bridge721 SecondLoop");
 
             testList = new List<int> { 15 };
-            Assert.AreEqual(Check(testList), "FirstLoop", "Bridge721 FirstLoop");
+            Assert.AreEqual("FirstLoop", Check(testList), "Bridge721 FirstLoop");
 
             testList = new List<int> { 25 };
-            Assert.AreEqual(Check(testList), "NoLoops", "Bridge721 NoLoops");
+            Assert.AreEqual("NoLoops", Check(testList), "Bridge721 NoLoops");
         }
 
         public static string Check(List<int> testList)

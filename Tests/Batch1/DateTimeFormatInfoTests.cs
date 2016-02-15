@@ -13,7 +13,7 @@ namespace Bridge.ClientTest
         public void TypePropertiesAreCorrect()
         {
             var format = DateTimeFormatInfo.InvariantInfo;
-            Assert.AreEqual(typeof(DateTimeFormatInfo).GetClassName(), "Bridge.DateTimeFormatInfo");
+            Assert.AreEqual("Bridge.DateTimeFormatInfo", typeof(DateTimeFormatInfo).GetClassName());
             Assert.True(format is DateTimeFormatInfo);
         }
 
@@ -21,35 +21,35 @@ namespace Bridge.ClientTest
         public void GetFormatWorks()
         {
             var format = DateTimeFormatInfo.InvariantInfo;
-            Assert.AreEqual(format.GetFormat(typeof(int)), null);
-            Assert.AreEqual(format.GetFormat(typeof(DateTimeFormatInfo)), format);
+            Assert.AreEqual(null, format.GetFormat(typeof(int)));
+            Assert.AreEqual(format, format.GetFormat(typeof(DateTimeFormatInfo)));
         }
 
         [Test]
         public void InvariantWorks()
         {
             var format = DateTimeFormatInfo.InvariantInfo;
-            Assert.AreEqual(format.AMDesignator, "AM");
-            Assert.AreEqual(format.PMDesignator, "PM");
+            Assert.AreEqual("AM", format.AMDesignator);
+            Assert.AreEqual("PM", format.PMDesignator);
 
-            Assert.AreEqual(format.DateSeparator, "/");
-            Assert.AreEqual(format.TimeSeparator, ":");
+            Assert.AreEqual("/", format.DateSeparator);
+            Assert.AreEqual(":", format.TimeSeparator);
 
-            Assert.AreEqual(format.SortableDateTimePattern, "yyyy'-'MM'-'dd'T'HH':'mm':'ss");
+            Assert.AreEqual("yyyy'-'MM'-'dd'T'HH':'mm':'ss", format.SortableDateTimePattern);
 
-            Assert.AreEqual(format.LongDatePattern, "dddd, MMMM dd, yyyy");
-            Assert.AreEqual(format.ShortDatePattern, "M/d/yyyy");
+            Assert.AreEqual("dddd, MMMM dd, yyyy", format.LongDatePattern);
+            Assert.AreEqual("M/d/yyyy", format.ShortDatePattern);
 
-            Assert.AreEqual(format.LongTimePattern, "h:mm:ss tt");
-            Assert.AreEqual(format.ShortTimePattern, "h:mm tt");
+            Assert.AreEqual("h:mm:ss tt", format.LongTimePattern);
+            Assert.AreEqual("h:mm tt", format.ShortTimePattern);
 
-            Assert.AreEqual(format.FirstDayOfWeek, 0);
-            Assert.AreDeepEqual(format.DayNames, new[] { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" });
+            Assert.AreEqual(0, format.FirstDayOfWeek);
+            Assert.AreDeepEqual(new[] { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" }, format.DayNames);
 
-            Assert.AreDeepEqual(format.MonthNames, new[] {
-			  "January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
-			  "November", "December", ""
-			});
+            Assert.AreDeepEqual(new[] {
+              "January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
+              "November", "December", ""
+            }, format.MonthNames);
         }
     }
 }

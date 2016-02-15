@@ -13,7 +13,7 @@ namespace Bridge.ClientTest.Exceptions
         [Test]
         public void TypePropertiesAreCorrect()
         {
-            Assert.AreEqual(typeof(TaskCanceledException).GetClassName(), "Bridge.TaskCanceledException", "Name");
+            Assert.AreEqual("Bridge.TaskCanceledException", typeof(TaskCanceledException).GetClassName(), "Name");
             object d = new TaskCanceledException();
             Assert.True(d is TaskCanceledException, "is TaskCanceledException");
             Assert.True(d is OperationCanceledException, "is OperationCanceledException");
@@ -25,7 +25,7 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new TaskCanceledException();
             Assert.True((object)ex is TaskCanceledException, "is TaskCanceledException");
-            Assert.AreEqual(ex.Message, "A task was canceled.", "Message");
+            Assert.AreEqual("A task was canceled.", ex.Message, "Message");
             Assert.Null(ex.Task, "Task");
             Assert.True(ReferenceEquals(ex.CancellationToken, CancellationToken.None), "CancellationToken");
             Assert.Null(ex.InnerException, "InnerException");
@@ -36,7 +36,7 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new TaskCanceledException("Some message");
             Assert.True((object)ex is TaskCanceledException, "is TaskCanceledException");
-            Assert.AreEqual(ex.Message, "Some message", "Message");
+            Assert.AreEqual("Some message", ex.Message, "Message");
             Assert.Null(ex.Task, "Task");
             Assert.True(ReferenceEquals(ex.CancellationToken, CancellationToken.None), "CancellationToken");
             Assert.Null(ex.InnerException, "InnerException");
@@ -48,7 +48,7 @@ namespace Bridge.ClientTest.Exceptions
             var task = new TaskCompletionSource<int>().Task;
             var ex = new TaskCanceledException(task);
             Assert.True((object)ex is TaskCanceledException, "is TaskCanceledException");
-            Assert.AreEqual(ex.Message, "A task was canceled.", "Message");
+            Assert.AreEqual("A task was canceled.", ex.Message, "Message");
             Assert.True(ReferenceEquals(ex.Task, task), "Task");
             Assert.True(ReferenceEquals(ex.CancellationToken, CancellationToken.None), "CancellationToken");
             Assert.Null(ex.InnerException, "InnerException");
@@ -60,7 +60,7 @@ namespace Bridge.ClientTest.Exceptions
             var innerException = new Exception();
             var ex = new TaskCanceledException("Some message", innerException);
             Assert.True((object)ex is TaskCanceledException, "is TaskCanceledException");
-            Assert.AreEqual(ex.Message, "Some message", "Message");
+            Assert.AreEqual("Some message", ex.Message, "Message");
             Assert.Null(ex.Task, "Task");
             Assert.True(ReferenceEquals(ex.CancellationToken, CancellationToken.None), "CancellationToken");
             Assert.True(ReferenceEquals(ex.InnerException, innerException), "InnerException");

@@ -58,12 +58,12 @@ namespace Bridge.ClientTest.BridgeIssues
             StringBuilder buffer = new StringBuilder();
             var a = new Bridge595A(buffer);
             a.Render();
-            Assert.AreEqual(buffer.ToString(), "Render0Render1", "Bridge595 A");
+            Assert.AreEqual("Render0Render1", buffer.ToString(), "Bridge595 A");
 
             buffer.Clear();
             var b = new Bridge595B(buffer);
             b.Render();
-            Assert.AreEqual(buffer.ToString(), "Render0Render1", "Bridge595 B");
+            Assert.AreEqual("Render0Render1", buffer.ToString(), "Bridge595 B");
         }
     }
 }

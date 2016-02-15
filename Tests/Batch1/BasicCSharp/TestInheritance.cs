@@ -57,9 +57,9 @@ namespace Bridge.ClientTest.BasicCSharp
             var a = new A(10);
 
             Assert.True(a != null, "Instance of A created");
-            Assert.AreEqual(a.X, 10, "a.X = 10");
-            Assert.AreEqual(a.HandleNumber(100), 100, "a.HandleNumber(100) = 100");
-            Assert.AreEqual(a.HandleString("Hundred"), "Hundred", "a.HandleString('Hundred') = 'Hundred'");
+            Assert.AreEqual(10, a.X, "a.X = 10");
+            Assert.AreEqual(100, a.HandleNumber(100), "a.HandleNumber(100) = 100");
+            Assert.AreEqual("Hundred", a.HandleString("Hundred"), "a.HandleString('Hundred') = 'Hundred'");
         }
 
         [Test(ExpectedCount = 5)]
@@ -68,10 +68,10 @@ namespace Bridge.ClientTest.BasicCSharp
             var b = new B(10, 20);
 
             Assert.True(b != null, "Instance of B created");
-            Assert.AreEqual(b.X, 10, "b.X = 10");
-            Assert.AreEqual(b.Y, 20, "b.Y = 20");
-            Assert.AreEqual(b.HandleNumber(1), 100, "b.HandleNumber(1) = 100");
-            Assert.AreEqual(b.HandleString("Hundred"), "Hundred", "b.HandleString('Hundred') = 'Hundred'");
+            Assert.AreEqual(10, b.X, "b.X = 10");
+            Assert.AreEqual(20, b.Y, "b.Y = 20");
+            Assert.AreEqual(100, b.HandleNumber(1), "b.HandleNumber(1) = 100");
+            Assert.AreEqual("Hundred", b.HandleString("Hundred"), "b.HandleString('Hundred') = 'Hundred'");
         }
 
         [Test(ExpectedCount = 4)]
@@ -80,9 +80,9 @@ namespace Bridge.ClientTest.BasicCSharp
             A b = new B(10, 20);
 
             Assert.True(b != null, "Instance of B created as A type");
-            Assert.AreEqual(b.X, 10, "b.X = 10");
-            Assert.AreEqual(b.HandleNumber(10), 10, "b.HandleNumber(10) = 10");
-            Assert.AreEqual(b.HandleString("Hundred"), "Hundred", "b.HandleString('Hundred') = 'Hundred'");
+            Assert.AreEqual(10, b.X, "b.X = 10");
+            Assert.AreEqual(10, b.HandleNumber(10), "b.HandleNumber(10) = 10");
+            Assert.AreEqual("Hundred", b.HandleString("Hundred"), "b.HandleString('Hundred') = 'Hundred'");
         }
     }
 }

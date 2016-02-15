@@ -12,7 +12,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions
         public void TypePropertiesAreCorrect()
         {
             var re = new Regex("");
-            Assert.AreEqual(typeof(Regex).GetClassName(), "RegExp");
+            Assert.AreEqual("RegExp", typeof(Regex).GetClassName());
             Assert.True(re is Regex);
         }
 
@@ -20,7 +20,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions
         public void StringOnlyConstructorWorks()
         {
             var re = new Regex("test123");
-            Assert.AreEqual(re.Source, "test123");
+            Assert.AreEqual("test123", re.Source);
             Assert.False(re.Global);
         }
 
@@ -28,7 +28,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions
         public void ConstructorWithFlagsWorks()
         {
             var re = new Regex("test123", "g");
-            Assert.AreEqual(re.Source, "test123");
+            Assert.AreEqual("test123", re.Source);
             Assert.True(re.Global);
         }
 
@@ -56,13 +56,13 @@ namespace Bridge.ClientTest.Text.RegularExpressions
         [Test]
         public void PatternPropertyWorks()
         {
-            Assert.AreEqual(new Regex("test123", "").Pattern, "test123");
+            Assert.AreEqual("test123", new Regex("test123", "").Pattern);
         }
 
         [Test]
         public void SourcePropertyWorks()
         {
-            Assert.AreEqual(new Regex("test123", "").Source, "test123");
+            Assert.AreEqual("test123", new Regex("test123", "").Source);
         }
 
         [Test]
@@ -71,8 +71,8 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             var re = new Regex("a|b", "g");
             var m = re.Exec("xaybz");
             //Assert.AreEqual(m.Index, 1);
-            Assert.AreEqual(m.Length, 1);
-            Assert.AreEqual(m[0], "a");
+            Assert.AreEqual(1, m.Length);
+            Assert.AreEqual("a", m[0]);
         }
 
         [Test]
@@ -80,7 +80,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions
         {
             var re = new Regex("a|b", "g");
             re.Exec("xaybz");
-            Assert.AreEqual(re.LastIndex, 2);
+            Assert.AreEqual(2, re.LastIndex);
         }
 
         [Test]
@@ -94,7 +94,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions
         public static void EscapeWorks()
         {
             var escaped = Regex.Escape(@"[-/\^$*+?.()|[]{}]");
-            Assert.AreEqual(escaped, @"\[\-\/\\\^\$\*\+\?\.\(\)\|\[\]\{\}\]");
+            Assert.AreEqual(@"\[\-\/\\\^\$\*\+\?\.\(\)\|\[\]\{\}\]", escaped);
         }
     }
 }

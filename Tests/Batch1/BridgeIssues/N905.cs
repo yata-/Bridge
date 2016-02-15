@@ -16,8 +16,8 @@ namespace Bridge.ClientTest.BridgeIssues
             var dictionary = new Dictionary<DayOfWeek, int>();
             dictionary.Add(DayOfWeek.Sunday, 1);
 
-            Assert.AreEqual(dictionary[DayOfWeek.Sunday], 1, "1");
-            Assert.AreEqual(DayOfWeek.Saturday.ToString(), "Saturday", "Saturday");
+            Assert.AreEqual(1, dictionary[DayOfWeek.Sunday], "1");
+            Assert.AreEqual("Saturday", DayOfWeek.Saturday.ToString(), "Saturday");
         }
     }
 }

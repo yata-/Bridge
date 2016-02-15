@@ -18,7 +18,7 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.False((object)0.5 is int);
             Assert.True((object)-2147483649 is int);
             Assert.True((object)2147483648 is int);
-            Assert.AreEqual(typeof(int).GetClassName(), "Bridge.Int");
+            Assert.AreEqual("Bridge.Int", typeof(int).GetClassName());
 
             object i = (int)0;
             Assert.True(i is int);
@@ -35,30 +35,30 @@ namespace Bridge.ClientTest.SimpleTypes
 
             //unchecked
             {
-                Assert.AreStrictEqual((int)i1, -2147483649, "-2147483649 unchecked");
-                Assert.AreStrictEqual((int)i2, -2147483648, "-2147483648 unchecked");
-                Assert.AreStrictEqual((int)i3, 5754, "5754 unchecked");
-                Assert.AreStrictEqual((int)i4, 2147483647, "2147483647 unchecked");
-                Assert.AreStrictEqual((int)i5, 2147483648, "2147483648 unchecked");
+                Assert.AreStrictEqual(-2147483649, (int)i1, "-2147483649 unchecked");
+                Assert.AreStrictEqual(-2147483648, (int)i2, "-2147483648 unchecked");
+                Assert.AreStrictEqual(5754, (int)i3, "5754 unchecked");
+                Assert.AreStrictEqual(2147483647, (int)i4, "2147483647 unchecked");
+                Assert.AreStrictEqual(2147483648, (int)i5, "2147483648 unchecked");
 
-                Assert.AreStrictEqual((int?)ni1, -2147483649, "nullable -2147483649 unchecked");
-                Assert.AreStrictEqual((int?)ni2, -2147483648, "nullable -2147483648 unchecked");
-                Assert.AreStrictEqual((int?)ni3, 5754, "nullable 5754 unchecked");
-                Assert.AreStrictEqual((int?)ni4, 2147483647, "nullable 2147483647 unchecked");
-                Assert.AreStrictEqual((int?)ni5, 2147483648, "nullable 2147483648 unchecked");
-                Assert.AreStrictEqual((int?)ni6, null, "null unchecked");
+                Assert.AreStrictEqual(-2147483649, (int?)ni1, "nullable -2147483649 unchecked");
+                Assert.AreStrictEqual(-2147483648, (int?)ni2, "nullable -2147483648 unchecked");
+                Assert.AreStrictEqual(5754, (int?)ni3, "nullable 5754 unchecked");
+                Assert.AreStrictEqual(2147483647, (int?)ni4, "nullable 2147483647 unchecked");
+                Assert.AreStrictEqual(2147483648, (int?)ni5, "nullable 2147483648 unchecked");
+                Assert.AreStrictEqual(null, (int?)ni6, "null unchecked");
             }
 
             //checked
             {
-                Assert.AreStrictEqual((int)i2, -2147483648, "-2147483648 checked");
-                Assert.AreStrictEqual((int)i3, 5754, "5754 checked");
-                Assert.AreStrictEqual((int)i4, 2147483647, "2147483647 checked");
+                Assert.AreStrictEqual(-2147483648, (int)i2, "-2147483648 checked");
+                Assert.AreStrictEqual(5754, (int)i3, "5754 checked");
+                Assert.AreStrictEqual(2147483647, (int)i4, "2147483647 checked");
 
-                Assert.AreStrictEqual((int?)ni2, -2147483648, "nullable -2147483648 checked");
-                Assert.AreStrictEqual((int?)ni3, 5754, "nullable 5754 checked");
-                Assert.AreStrictEqual((int?)ni4, 2147483647, "nullable 2147483647 checked");
-                Assert.AreStrictEqual((int?)ni6, null, "null checked");
+                Assert.AreStrictEqual(-2147483648, (int?)ni2, "nullable -2147483648 checked");
+                Assert.AreStrictEqual(5754, (int?)ni3, "nullable 5754 checked");
+                Assert.AreStrictEqual(2147483647, (int?)ni4, "nullable 2147483647 checked");
+                Assert.AreStrictEqual(null, (int?)ni6, "null checked");
             }
         }
 
@@ -87,10 +87,10 @@ namespace Bridge.ClientTest.SimpleTypes
             object o = new object();
             object d = 1.5;
             object i = 1;
-            Assert.AreEqual((int?)_null, null);
+            Assert.AreEqual(null, (int?)_null);
             Assert.Throws(() => { var _ = (int?)o; }, "Cannot cast object to int?");
             Assert.Throws(() => { var _ = (int?)d; }, "Cannot cast decimal to int?");
-            Assert.AreEqual((int?)i, 1);
+            Assert.AreEqual(1, (int?)i);
         }
 
         private T GetDefaultValue<T>()
@@ -101,39 +101,39 @@ namespace Bridge.ClientTest.SimpleTypes
         [Test]
         public void DefaultValueIs0()
         {
-            Assert.AreStrictEqual(GetDefaultValue<int>(), 0);
+            Assert.AreStrictEqual(0, GetDefaultValue<int>());
         }
 
         [Test]
         public void DefaultConstructorReturnsZero()
         {
-            Assert.AreStrictEqual(new int(), 0);
+            Assert.AreStrictEqual(0, new int());
         }
 
         [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void CreatingInstanceReturnsZero()
         {
-            Assert.AreStrictEqual(Activator.CreateInstance<int>(), 0);
+            Assert.AreStrictEqual(0, Activator.CreateInstance<int>());
         }
 
         [Test]
         public void ConstantsWork()
         {
-            Assert.AreEqual(int.MinValue, -2147483648);
-            Assert.AreEqual(int.MaxValue, 2147483647);
+            Assert.AreEqual(-2147483648, int.MinValue);
+            Assert.AreEqual(2147483647, int.MaxValue);
         }
 
         [Test]
         public void FormatWorks()
         {
-            Assert.AreEqual(((int)0x123).Format("x"), "123");
+            Assert.AreEqual("123", ((int)0x123).Format("x"));
         }
 
         [Test]
         public void IFormattableToStringWorks()
         {
-            Assert.AreEqual(((int)0x123).ToString("x"), "123");
+            Assert.AreEqual("123", ((int)0x123).ToString("x"));
         }
 
         [Test]
@@ -142,34 +142,34 @@ namespace Bridge.ClientTest.SimpleTypes
             int numberResult;
             bool result = int.TryParse("57574", out numberResult);
             Assert.True(result);
-            Assert.AreEqual(numberResult, 57574);
+            Assert.AreEqual(57574, numberResult);
 
             result = int.TryParse("-14", out numberResult);
             Assert.True(result);
-            Assert.AreEqual(numberResult, -14);
+            Assert.AreEqual(-14, numberResult);
 
             result = int.TryParse("", out numberResult);
             Assert.False(result);
-            Assert.AreEqual(numberResult, 0);
+            Assert.AreEqual(0, numberResult);
 
             result = int.TryParse(null, out numberResult);
             Assert.False(result);
-            Assert.AreEqual(numberResult, 0);
+            Assert.AreEqual(0, numberResult);
 
             result = int.TryParse("notanumber", out numberResult);
             Assert.False(result);
-            Assert.AreEqual(numberResult, 0);
+            Assert.AreEqual(0, numberResult);
 
             result = int.TryParse("2.5", out numberResult);
             Assert.False(result);
-            Assert.AreEqual(numberResult, 0);
+            Assert.AreEqual(0, numberResult);
         }
 
         [Test]
         public void ParseWorks()
         {
-            Assert.AreEqual(int.Parse("57574"), 57574);
-            Assert.AreEqual(int.Parse("-14"), -14);
+            Assert.AreEqual(57574, int.Parse("57574"));
+            Assert.AreEqual(-14, int.Parse("-14"));
 
             Assert.Throws(() => int.Parse(""));
             Assert.Throws(() => int.Parse(null));
@@ -182,14 +182,14 @@ namespace Bridge.ClientTest.SimpleTypes
         [Test]
         public void ToStringWithoutRadixWorks()
         {
-            Assert.AreEqual(((int)123).ToString(), "123");
+            Assert.AreEqual("123", ((int)123).ToString());
         }
 
         [Test]
         public void ToStringWithRadixWorks()
         {
-            Assert.AreEqual(((int)123).ToString(10), "123");
-            Assert.AreEqual(((int)0x123).ToString(16), "123");
+            Assert.AreEqual("123", ((int)123).ToString(10));
+            Assert.AreEqual("123", ((int)0x123).ToString(16));
         }
 
         [Test]
@@ -197,7 +197,7 @@ namespace Bridge.ClientTest.SimpleTypes
         {
             Assert.AreEqual(((int)0).GetHashCode(), ((int)0).GetHashCode());
             Assert.AreEqual(((int)1).GetHashCode(), ((int)1).GetHashCode());
-            Assert.AreNotEqual(((int)0).GetHashCode(), ((int)1).GetHashCode());
+            Assert.AreNotEqual(((int)1).GetHashCode(), ((int)0).GetHashCode());
         }
 
         [Test]
@@ -243,10 +243,10 @@ namespace Bridge.ClientTest.SimpleTypes
         public void IntegerDivisionWorks()
         {
             int a = 17, b = 4, c = 0;
-            Assert.AreEqual(a / b, 4);
-            Assert.AreEqual(-a / b, -4);
-            Assert.AreEqual(a / -b, -4);
-            Assert.AreEqual(-a / -b, 4);
+            Assert.AreEqual(4, a / b);
+            Assert.AreEqual(-4, -a / b);
+            Assert.AreEqual(-4, a / -b);
+            Assert.AreEqual(4, -a / -b);
             Assert.Throws(() => { var x = a / c; });
         }
 
@@ -254,10 +254,10 @@ namespace Bridge.ClientTest.SimpleTypes
         public void IntegerModuloWorks()
         {
             int a = 17, b = 4, c = 0;
-            Assert.AreEqual(a % b, 1);
-            Assert.AreEqual(-a % b, -1);
-            Assert.AreEqual(a % -b, 1);
-            Assert.AreEqual(-a % -b, -1);
+            Assert.AreEqual(1, a % b);
+            Assert.AreEqual(-1, -a % b);
+            Assert.AreEqual(1, a % -b);
+            Assert.AreEqual(-1, -a % -b);
             //Assert.Throws(() => { var x = a % c; });
         }
 
@@ -274,13 +274,13 @@ namespace Bridge.ClientTest.SimpleTypes
             double d1 = 4.5;
             double? d2 = null;
             double? d3 = 8.5;
-            Assert.AreEqual((int)d1, 4);
-            Assert.AreEqual((int)-d1, -4);
-            Assert.AreEqual((int?)d2, null);
-            Assert.AreEqual((int)d3, 8);
-            Assert.AreEqual((int)-d3, -8);
-            Assert.AreEqual((int?)d3, 8);
-            Assert.AreEqual((int?)-d3, -8);
+            Assert.AreEqual(4, (int)d1);
+            Assert.AreEqual(-4, (int)-d1);
+            Assert.AreEqual(null, (int?)d2);
+            Assert.AreEqual(8, (int)d3);
+            Assert.AreEqual(-8, (int)-d3);
+            Assert.AreEqual(8, (int?)d3);
+            Assert.AreEqual(-8, (int?)-d3);
         }
     }
 }

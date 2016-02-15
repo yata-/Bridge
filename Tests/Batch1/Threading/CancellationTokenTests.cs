@@ -15,7 +15,7 @@ namespace Bridge.ClientTest.Threading
         [Test]
         public void TypePropertiesForCancellationTokenSourceAreCorrect()
         {
-            Assert.AreEqual(typeof(CancellationTokenSource).GetClassName(), "Bridge.CancellationTokenSource", "FullName");
+            Assert.AreEqual("Bridge.CancellationTokenSource", typeof(CancellationTokenSource).GetClassName(), "FullName");
             object cts = new CancellationTokenSource();
             Assert.True(cts is CancellationTokenSource);
             Assert.True(cts is IDisposable);
@@ -24,7 +24,7 @@ namespace Bridge.ClientTest.Threading
         [Test]
         public void TypePropertiesForCancellationTokenAreCorrect()
         {
-            Assert.AreEqual(typeof(CancellationToken).GetClassName(), "Bridge.CancellationToken", "FullName");
+            Assert.AreEqual("Bridge.CancellationToken", typeof(CancellationToken).GetClassName(), "FullName");
 
             Assert.True(new CancellationToken() is CancellationToken);
             Assert.True(CancellationToken.None is CancellationToken);
@@ -34,7 +34,7 @@ namespace Bridge.ClientTest.Threading
         [Test]
         public void TypePropertiesForCancellationTokenRegistrationAreCorrect()
         {
-            Assert.AreEqual(typeof(CancellationTokenRegistration).GetClassName(), "Bridge.CancellationTokenRegistration", "FullName");
+            Assert.AreEqual("Bridge.CancellationTokenRegistration", typeof(CancellationTokenRegistration).GetClassName(), "FullName");
 
             object ctr = new CancellationTokenRegistration();
             Assert.True(ctr is CancellationTokenRegistration, "CancellationTokenRegistration");
@@ -159,7 +159,7 @@ namespace Bridge.ClientTest.Threading
             }
             catch (AggregateException ex)
             {
-                Assert.AreEqual(ex.InnerExceptions.Count, 2, "count");
+                Assert.AreEqual(2, ex.InnerExceptions.Count, "count");
                 Assert.True(ex.InnerExceptions.Contains(ex1), "ex1");
                 Assert.True(ex.InnerExceptions.Contains(ex2), "ex2");
             }
@@ -204,12 +204,12 @@ namespace Bridge.ClientTest.Threading
             }
             catch (AggregateException ex)
             {
-                Assert.AreEqual(ex.InnerExceptions.Count, 2, "ex count");
+                Assert.AreEqual(2, ex.InnerExceptions.Count, "ex count");
                 Assert.True(ex.InnerExceptions.Contains(ex1), "ex1");
                 Assert.True(ex.InnerExceptions.Contains(ex2), "ex2");
             }
 
-            Assert.AreEqual(calledHandlers.Count, 5, "called handler count");
+            Assert.AreEqual(5, calledHandlers.Count, "called handler count");
             Assert.True(calledHandlers.Contains(0) && calledHandlers.Contains(1) && calledHandlers.Contains(2) && calledHandlers.Contains(3) && calledHandlers.Contains(4));
         }
 
@@ -253,7 +253,7 @@ namespace Bridge.ClientTest.Threading
                 Assert.True(object.ReferenceEquals(ex, ex1), "ex");
             }
 
-            Assert.AreEqual(calledHandlers.Count, 2, "called handler count");
+            Assert.AreEqual(2, calledHandlers.Count, "called handler count");
             Assert.True(calledHandlers.Contains(0) && calledHandlers.Contains(1));
         }
 
@@ -264,7 +264,7 @@ namespace Bridge.ClientTest.Threading
             cts.Cancel();
             int state = 0;
             cts.Token.Register(() => state = 1);
-            Assert.AreEqual(state, 1);
+            Assert.AreEqual(1, state);
         }
 
         [Test]
@@ -279,7 +279,7 @@ namespace Bridge.ClientTest.Threading
                 Assert.True(ReferenceEquals(context, c), "context");
                 state = 1;
             }, context);
-            Assert.AreEqual(state, 1);
+            Assert.AreEqual(1, state);
         }
 
         [Test]
@@ -343,7 +343,7 @@ namespace Bridge.ClientTest.Threading
                 Assert.True(ReferenceEquals(context, c), "context");
                 numCalled++;
             }, context, false);
-            Assert.AreEqual(numCalled, 4);
+            Assert.AreEqual(4, numCalled);
         }
 
         public void CancellationTokenSourceCanBeDisposed()
@@ -362,7 +362,7 @@ namespace Bridge.ClientTest.Threading
             int state = 0;
             ct.Register(() => state = 1);
 
-            Assert.AreEqual(state, 0);
+            Assert.AreEqual(0, state);
         }
 
         [Test]
@@ -373,13 +373,13 @@ namespace Bridge.ClientTest.Threading
             int state = 0;
             var context = new object();
             ct.Register(() => state = 1);
-            Assert.AreEqual(state, 1, "state 1");
+            Assert.AreEqual(1, state, "state 1");
             ct.Register(c =>
             {
                 Assert.True(ReferenceEquals(context, c), "context");
                 state = 2;
             }, context);
-            Assert.AreEqual(state, 2, "state 2");
+            Assert.AreEqual(2, state, "state 2");
         }
 
         [Test]
@@ -391,7 +391,7 @@ namespace Bridge.ClientTest.Threading
             cts.Cancel();
             cts.Cancel();
 
-            Assert.AreEqual(calls, 1);
+            Assert.AreEqual(1, calls);
         }
 
         [Test]
@@ -440,7 +440,7 @@ namespace Bridge.ClientTest.Threading
 
             cts.Cancel();
 
-            Assert.AreEqual(calledHandlers.Count, 2);
+            Assert.AreEqual(2, calledHandlers.Count);
             Assert.True(calledHandlers.Contains(0) && calledHandlers.Contains(2));
         }
 

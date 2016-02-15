@@ -107,7 +107,7 @@ namespace Bridge.ClientTest.BridgeIssues
                 text += s;
             }
 
-            Assert.AreEqual(text, "abc", "Bridge634: foreach works for HashSet");
+            Assert.AreEqual("abc", text, "Bridge634: foreach works for HashSet");
         }
 
         [Test(ExpectedCount = 21)]
@@ -121,13 +121,13 @@ namespace Bridge.ClientTest.BridgeIssues
             var a5 = new Bridge634A<string>.Nested<int>.SubNested();
             var a6 = new Bridge634A<string>.Nested<int>.SubNested<int>();
 
-            Assert.AreEqual(a.GetClassName(), "Bridge.ClientTest.BridgeIssues.Bridge634A$1$String", "Bridge634 A a");
-            Assert.AreEqual(a1.GetClassName(), "Bridge.ClientTest.BridgeIssues.Bridge634A$1.Nested$String", "Bridge634 A a1");
-            Assert.AreEqual(a2.GetClassName(), "Bridge.ClientTest.BridgeIssues.Bridge634A$1.Nested$1$String$Bridge.Int", "Bridge634 A a2");
-            Assert.AreEqual(a3.GetClassName(), "Bridge.ClientTest.BridgeIssues.Bridge634A$1.Nested.SubNested$String", "Bridge634 A a3");
-            Assert.AreEqual(a4.GetClassName(), "Bridge.ClientTest.BridgeIssues.Bridge634A$1.Nested.SubNested$1$String$Bridge.Int", "Bridge634 A a4");
-            Assert.AreEqual(a5.GetClassName(), "Bridge.ClientTest.BridgeIssues.Bridge634A$1.Nested$1.SubNested$String$Bridge.Int", "Bridge634 A a5");
-            Assert.AreEqual(a6.GetClassName(), "Bridge.ClientTest.BridgeIssues.Bridge634A$1.Nested$1.SubNested$1$String$Bridge.Int$Bridge.Int", "Bridge634 A a6");
+            Assert.AreEqual("Bridge.ClientTest.BridgeIssues.Bridge634A$1$String", a.GetClassName(), "Bridge634 A a");
+            Assert.AreEqual("Bridge.ClientTest.BridgeIssues.Bridge634A$1.Nested$String", a1.GetClassName(), "Bridge634 A a1");
+            Assert.AreEqual("Bridge.ClientTest.BridgeIssues.Bridge634A$1.Nested$1$String$Bridge.Int", a2.GetClassName(), "Bridge634 A a2");
+            Assert.AreEqual("Bridge.ClientTest.BridgeIssues.Bridge634A$1.Nested.SubNested$String", a3.GetClassName(), "Bridge634 A a3");
+            Assert.AreEqual("Bridge.ClientTest.BridgeIssues.Bridge634A$1.Nested.SubNested$1$String$Bridge.Int", a4.GetClassName(), "Bridge634 A a4");
+            Assert.AreEqual("Bridge.ClientTest.BridgeIssues.Bridge634A$1.Nested$1.SubNested$String$Bridge.Int", a5.GetClassName(), "Bridge634 A a5");
+            Assert.AreEqual("Bridge.ClientTest.BridgeIssues.Bridge634A$1.Nested$1.SubNested$1$String$Bridge.Int$Bridge.Int", a6.GetClassName(), "Bridge634 A a6");
 
             var b = new Bridge634B<string>();
             var b1 = new Bridge634B<string>.Nested();
@@ -137,13 +137,13 @@ namespace Bridge.ClientTest.BridgeIssues
             var b5 = new Bridge634B<string>.Nested<int>.SubNested();
             var b6 = new Bridge634B<string>.Nested<int>.SubNested<int>();
 
-            Assert.AreEqual(b.GetClassName(), "ClientTestLibraryCustom.Bridge634B$1$String", "Bridge634 B b");
-            Assert.AreEqual(b1.GetClassName(), "ClientTestLibraryCustom.Bridge634B$1.Nested$String", "Bridge634 B b1");
-            Assert.AreEqual(b2.GetClassName(), "ClientTestLibraryCustom.Bridge634B$1.Nested$1$String$Bridge.Int", "Bridge634 B b2");
-            Assert.AreEqual(b3.GetClassName(), "ClientTestLibraryCustom.Bridge634B$1.Nested.SubNested$String", "Bridge634 B b3");
-            Assert.AreEqual(b4.GetClassName(), "ClientTestLibraryCustom.Bridge634B$1.Nested.SubNested$1$String$Bridge.Int", "Bridge634 B b4");
-            Assert.AreEqual(b5.GetClassName(), "ClientTestLibraryCustom.Bridge634B$1.Nested$1.SubNested$String$Bridge.Int", "Bridge634 B b5");
-            Assert.AreEqual(b6.GetClassName(), "ClientTestLibraryCustom.Bridge634B$1.Nested$1.SubNested$1$String$Bridge.Int$Bridge.Int", "Bridge634 B b6");
+            Assert.AreEqual("ClientTestLibraryCustom.Bridge634B$1$String", b.GetClassName(), "Bridge634 B b");
+            Assert.AreEqual("ClientTestLibraryCustom.Bridge634B$1.Nested$String", b1.GetClassName(), "Bridge634 B b1");
+            Assert.AreEqual("ClientTestLibraryCustom.Bridge634B$1.Nested$1$String$Bridge.Int", b2.GetClassName(), "Bridge634 B b2");
+            Assert.AreEqual("ClientTestLibraryCustom.Bridge634B$1.Nested.SubNested$String", b3.GetClassName(), "Bridge634 B b3");
+            Assert.AreEqual("ClientTestLibraryCustom.Bridge634B$1.Nested.SubNested$1$String$Bridge.Int", b4.GetClassName(), "Bridge634 B b4");
+            Assert.AreEqual("ClientTestLibraryCustom.Bridge634B$1.Nested$1.SubNested$String$Bridge.Int", b5.GetClassName(), "Bridge634 B b5");
+            Assert.AreEqual("ClientTestLibraryCustom.Bridge634B$1.Nested$1.SubNested$1$String$Bridge.Int$Bridge.Int", b6.GetClassName(), "Bridge634 B b6");
 
             var c = new Bridge634C();
             var c1 = new Bridge634C.Nested();
@@ -153,13 +153,13 @@ namespace Bridge.ClientTest.BridgeIssues
             var c5 = new Bridge634C.Nested<int>.SubNested();
             var c6 = new Bridge634C.Nested<int>.SubNested<int>();
 
-            Assert.AreEqual(c.GetClassName(), "Bridge.ClientTest.BridgeIssues.Bridge634C", "Bridge634 C c");
-            Assert.AreEqual(c1.GetClassName(), "Bridge.ClientTest.BridgeIssues.Bridge634C.Nested", "Bridge634 C c1");
-            Assert.AreEqual(c2.GetClassName(), "Bridge.ClientTest.BridgeIssues.Bridge634C.Nested$1$Bridge.Int", "Bridge634 C c2");
-            Assert.AreEqual(c3.GetClassName(), "Bridge.ClientTest.BridgeIssues.Bridge634C.Nested.SubNested", "Bridge634 C c3");
-            Assert.AreEqual(c4.GetClassName(), "Bridge.ClientTest.BridgeIssues.Bridge634C.Nested.SubNested$1$Bridge.Int", "Bridge634 C c4");
-            Assert.AreEqual(c5.GetClassName(), "Bridge.ClientTest.BridgeIssues.Bridge634C.Nested$1.SubNested$Bridge.Int", "Bridge634 C c5");
-            Assert.AreEqual(c6.GetClassName(), "Bridge.ClientTest.BridgeIssues.Bridge634C.Nested$1.SubNested$1$Bridge.Int$Bridge.Int", "Bridge634 C c6");
+            Assert.AreEqual("Bridge.ClientTest.BridgeIssues.Bridge634C", c.GetClassName(), "Bridge634 C c");
+            Assert.AreEqual("Bridge.ClientTest.BridgeIssues.Bridge634C.Nested", c1.GetClassName(), "Bridge634 C c1");
+            Assert.AreEqual("Bridge.ClientTest.BridgeIssues.Bridge634C.Nested$1$Bridge.Int", c2.GetClassName(), "Bridge634 C c2");
+            Assert.AreEqual("Bridge.ClientTest.BridgeIssues.Bridge634C.Nested.SubNested", c3.GetClassName(), "Bridge634 C c3");
+            Assert.AreEqual("Bridge.ClientTest.BridgeIssues.Bridge634C.Nested.SubNested$1$Bridge.Int", c4.GetClassName(), "Bridge634 C c4");
+            Assert.AreEqual("Bridge.ClientTest.BridgeIssues.Bridge634C.Nested$1.SubNested$Bridge.Int", c5.GetClassName(), "Bridge634 C c5");
+            Assert.AreEqual("Bridge.ClientTest.BridgeIssues.Bridge634C.Nested$1.SubNested$1$Bridge.Int$Bridge.Int", c6.GetClassName(), "Bridge634 C c6");
         }
 
         [Test(ExpectedCount = 2)]
@@ -168,8 +168,8 @@ namespace Bridge.ClientTest.BridgeIssues
             var d = new Bridge634D();
             var d1 = new Bridge634D.Nested();
 
-            Assert.AreEqual(d.GetClassName(), "Bridge634D", "Bridge634 D d");
-            Assert.AreEqual(d1.GetClassName(), "Bridge634D.Nested", "Bridge634 D d1");
+            Assert.AreEqual("Bridge634D", d.GetClassName(), "Bridge634 D d");
+            Assert.AreEqual("Bridge634D.Nested", d1.GetClassName(), "Bridge634 D d1");
         }
     }
 }

@@ -38,10 +38,10 @@ namespace Bridge.ClientTest.BridgeIssues
             var done = Assert.Async();
 
             var res = await TestMethod("", false);
-            Assert.AreEqual(res.Message, "Success");
+            Assert.AreEqual("Success", res.Message);
 
             res = await TestMethod("", true);
-            Assert.AreEqual(res.Message, "Fail: test");
+            Assert.AreEqual("Fail: test", res.Message);
 
             done();
         }

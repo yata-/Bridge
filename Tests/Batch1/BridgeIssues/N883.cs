@@ -37,7 +37,7 @@ namespace Bridge.ClientTest.BridgeIssues
         public static void TestUseCase()
         {
             Assert.NotNull(new Bridge883_1(), "Bridge883_1 created");
-            Assert.AreEqual(Bridge883_3.Main(), 1, "Bridge883_3.Main");
+            Assert.AreEqual(1, Bridge883_3.Main(), "Bridge883_3.Main");
         }
     }
 }

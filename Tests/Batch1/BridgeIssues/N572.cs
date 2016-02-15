@@ -21,14 +21,14 @@ namespace Bridge.ClientTest.BridgeIssues
             d.Add(1, "One");
             d.Add(2, "Two");
 
-            Assert.AreEqual(d[1], "One", "#572 getItem One");
-            Assert.AreEqual(d[2], "Two", "#572 getItem Two");
+            Assert.AreEqual("One", d[1], "#572 getItem One");
+            Assert.AreEqual("Two", d[2], "#572 getItem Two");
 
             d[1] = "New one";
             d[2] = "New two";
 
-            Assert.AreEqual(d[1], "New one", "#572 setItem New one");
-            Assert.AreEqual(d[2], "New two", "#572 setItem New two");
+            Assert.AreEqual("New one", d[1], "#572 setItem New one");
+            Assert.AreEqual("New two", d[2], "#572 setItem New two");
         }
     }
 }

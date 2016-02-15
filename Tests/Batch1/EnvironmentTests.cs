@@ -12,7 +12,7 @@ namespace Bridge.ClientTest
         [Test]
         public void NewLineIsAStringContainingOnlyTheNewLineChar()
         {
-            Assert.AreEqual(Environment.NewLine, "\n");
+            Assert.AreEqual("\n", Environment.NewLine);
         }
     }
 }

@@ -34,18 +34,18 @@ namespace Bridge.ClientTest.BasicCSharp
             var a = new A();
 
             Assert.True(a != null, "Instance of A created");
-            Assert.AreEqual(a.Test(), "A", "a.Test() = 'A'");
+            Assert.AreEqual("A", a.Test(), "a.Test() = 'A'");
 
             var b = new B();
 
             Assert.True(b != null, "Instance of B created");
-            Assert.AreEqual(b.Test(), "B", "b.Test() = 'B'");
-            Assert.AreEqual(b.TestA(), "A", "b.TestA() = 'A'");
+            Assert.AreEqual("B", b.Test(), "b.Test() = 'B'");
+            Assert.AreEqual("A", b.TestA(), "b.TestA() = 'A'");
 
             A c = new B();
 
             Assert.True(c != null, "Instance of C created");
-            Assert.AreEqual(c.Test(), "B", "c.Test() = 'B'");
+            Assert.AreEqual("B", c.Test(), "c.Test() = 'B'");
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Bridge.ClientTest.BridgeIssues
         public static void TestUseCase()
         {
             var s1 = string.Join(",", new[] { "a", "b" });
-            Assert.AreEqual(s1, "a,b", "Join1");
+            Assert.AreEqual("a,b", s1, "Join1");
 
             var animals = new List<Animal>();
             animals.Add(new Animal("Squirrel", "Rodent"));
@@ -40,15 +40,15 @@ namespace Bridge.ClientTest.BridgeIssues
             animals.Add(new Animal("Capybara", "Rodent"));
 
             string s2 = String.Join(" ", animals);
-            Assert.AreEqual(s2, "Squirrel Gray Wolf Capybara", "Join2");
+            Assert.AreEqual("Squirrel Gray Wolf Capybara", s2, "Join2");
 
             object[] values = { null, "Cobb", 4189, 11434, .366 };
             string s31 = String.Join("|", values);
-            Assert.AreEqual(s31, "|Cobb|4189|11434|0.366", "Join31");
+            Assert.AreEqual("|Cobb|4189|11434|0.366", s31, "Join31");
 
             values[0] = String.Empty;
             string s32 = String.Join("|", values);
-            Assert.AreEqual(s32, "|Cobb|4189|11434|0.366", "Join32");
+            Assert.AreEqual("|Cobb|4189|11434|0.366", s32, "Join32");
 
 
             string[] sArr = new string[10];
@@ -56,11 +56,11 @@ namespace Bridge.ClientTest.BridgeIssues
                 sArr[i] = String.Format("{0,-3}", i * 5);
 
             string s4 = String.Join(":", sArr);
-            Assert.AreEqual(s4, "0  :5  :10 :15 :20 :25 :30 :35 :40 :45 ", "Join4");
+            Assert.AreEqual("0  :5  :10 :15 :20 :25 :30 :35 :40 :45 ", s4, "Join4");
 
             var val = new string[] { "apple", "orange", "grape", "pear" };
             var s5 = string.Join(", ", val, 1, 2);
-            Assert.AreEqual(s5, "orange, grape", "Join5");
+            Assert.AreEqual("orange, grape", s5, "Join5");
         }
     }
 }

@@ -18,9 +18,9 @@ namespace Bridge.ClientTest.BridgeIssues
         {
             var list = new List<int>(new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 });
 
-            Assert.AreDeepEqual(list.GetRange(0, 2).ToArray(), new[] { 1, 2 }, "Bridge532 (0, 2)");
-            Assert.AreDeepEqual(list.GetRange(1, 2).ToArray(), new[] { 2, 3 }, "Bridge532 (1, 2)");
-            Assert.AreDeepEqual(list.GetRange(6, 3).ToArray(), new[] { 7, 8, 9 }, "Bridge532 (6, 3)");
+            Assert.AreDeepEqual(new[] { 1, 2 }, list.GetRange(0, 2).ToArray(), "Bridge532 (0, 2)");
+            Assert.AreDeepEqual(new[] { 2, 3 }, list.GetRange(1, 2).ToArray(), "Bridge532 (1, 2)");
+            Assert.AreDeepEqual(new[] { 7, 8, 9 }, list.GetRange(6, 3).ToArray(), "Bridge532 (6, 3)");
 
         }
     }

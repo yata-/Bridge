@@ -26,7 +26,7 @@ namespace Bridge.ClientTest.BridgeIssues
                 handler();
             }
 
-            Assert.AreEqual(result, "123", "Bridge563 No block foreach loop");
+            Assert.AreEqual("123", result, "Bridge563 No block foreach loop");
 
             i = 0;
             result = "";
@@ -41,7 +41,7 @@ namespace Bridge.ClientTest.BridgeIssues
                 handler();
             }
 
-            Assert.AreEqual(result, "123", "Bridge563 block foreach loop");
+            Assert.AreEqual("123", result, "Bridge563 block foreach loop");
         }
 
         [Test(ExpectedCount = 1)]
@@ -63,7 +63,7 @@ namespace Bridge.ClientTest.BridgeIssues
                 handler();
             }
 
-            Assert.AreEqual(result, "123", "Bridge563 For loop");
+            Assert.AreEqual("123", result, "Bridge563 For loop");
         }
     }
 }

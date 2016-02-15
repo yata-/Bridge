@@ -14,7 +14,7 @@ namespace Bridge.ClientTest.Exceptions
         [Test]
         public void TypePropertiesAreCorrect()
         {
-            Assert.AreEqual(typeof(CultureNotFoundException).GetClassName(), "Bridge.CultureNotFoundException", "Name");
+            Assert.AreEqual("Bridge.CultureNotFoundException", typeof(CultureNotFoundException).GetClassName(), "Name");
             object d = new CultureNotFoundException();
             Assert.True(d is CultureNotFoundException);
             Assert.True(d is Exception);
@@ -25,9 +25,9 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new CultureNotFoundException();
             Assert.True((object)ex is CultureNotFoundException, "is CultureNotFoundException");
-            Assert.AreEqual(ex.ParamName, null, "ParamName");
-            Assert.AreEqual(ex.InnerException, null, "InnerException");
-            Assert.AreEqual(ex.Message, DefaultMessage);
+            Assert.AreEqual(null, ex.ParamName, "ParamName");
+            Assert.AreEqual(null, ex.InnerException, "InnerException");
+            Assert.AreEqual(DefaultMessage, ex.Message);
         }
 
         [Test]
@@ -35,11 +35,11 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new CultureNotFoundException("The message");
             Assert.True((object)ex is CultureNotFoundException, "is CultureNotFoundException");
-            Assert.AreEqual(ex.ParamName, null, "ParamName");
-            Assert.AreEqual(ex.InnerException, null, "InnerException");
-            Assert.AreEqual(ex.Message, "The message");
-            Assert.AreEqual(ex.InvalidCultureName, null, "InvalidCultureName");
-            Assert.AreEqual(ex.InvalidCultureId, null, "InvalidCultureId");
+            Assert.AreEqual(null, ex.ParamName, "ParamName");
+            Assert.AreEqual(null, ex.InnerException, "InnerException");
+            Assert.AreEqual("The message", ex.Message);
+            Assert.AreEqual(null, ex.InvalidCultureName, "InvalidCultureName");
+            Assert.AreEqual(null, ex.InvalidCultureId, "InvalidCultureId");
         }
 
         [Test]
@@ -48,11 +48,11 @@ namespace Bridge.ClientTest.Exceptions
             var inner = new Exception("a");
             var ex = new CultureNotFoundException("The message", inner);
             Assert.True((object)ex is CultureNotFoundException, "is CultureNotFoundException");
-            Assert.AreEqual(ex.ParamName, null, "ParamName");
-            Assert.AreEqual(ex.InnerException, inner, "InnerException");
-            Assert.AreEqual(ex.Message, "The message");
-            Assert.AreEqual(ex.InvalidCultureName, null, "InvalidCultureName");
-            Assert.AreEqual(ex.InvalidCultureId, null, "InvalidCultureId");
+            Assert.AreEqual(null, ex.ParamName, "ParamName");
+            Assert.AreEqual(inner, ex.InnerException, "InnerException");
+            Assert.AreEqual("The message", ex.Message);
+            Assert.AreEqual(null, ex.InvalidCultureName, "InvalidCultureName");
+            Assert.AreEqual(null, ex.InvalidCultureId, "InvalidCultureId");
         }
 
         [Test]
@@ -60,11 +60,11 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new CultureNotFoundException("someParam", "The message");
             Assert.True((object)ex is CultureNotFoundException, "is CultureNotFoundException");
-            Assert.AreEqual(ex.ParamName, "someParam", "ParamName");
-            Assert.AreEqual(ex.InnerException, null, "InnerException");
-            Assert.AreEqual(ex.Message, "The message");
-            Assert.AreEqual(ex.InvalidCultureName, null, "InvalidCultureName");
-            Assert.AreEqual(ex.InvalidCultureId, null, "InvalidCultureId");
+            Assert.AreEqual("someParam", ex.ParamName, "ParamName");
+            Assert.AreEqual(null, ex.InnerException, "InnerException");
+            Assert.AreEqual("The message", ex.Message);
+            Assert.AreEqual(null, ex.InvalidCultureName, "InvalidCultureName");
+            Assert.AreEqual(null, ex.InvalidCultureId, "InvalidCultureId");
         }
 
         [Test]
@@ -73,11 +73,11 @@ namespace Bridge.ClientTest.Exceptions
             var inner = new Exception("a");
             var ex = new CultureNotFoundException("The message", "fru", inner);
             Assert.True((object)ex is CultureNotFoundException, "is CultureNotFoundException");
-            Assert.AreEqual(ex.ParamName, null, "ParamName");
+            Assert.AreEqual(null, ex.ParamName, "ParamName");
             Assert.True(ReferenceEquals(ex.InnerException, inner), "InnerException");
-            Assert.AreEqual(ex.InnerException, inner, "InnerException");
-            Assert.AreEqual(ex.Message, "The message");
-            Assert.AreEqual(ex.InvalidCultureName, "fru", "InvalidCultureName");
+            Assert.AreEqual(inner, ex.InnerException, "InnerException");
+            Assert.AreEqual("The message", ex.Message);
+            Assert.AreEqual("fru", ex.InvalidCultureName, "InvalidCultureName");
             Assert.Null(ex.InvalidCultureId, "InvalidCultureId");
         }
 
@@ -86,11 +86,11 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new CultureNotFoundException("SomeParam", "fru", "The message");
             Assert.True((object)ex is CultureNotFoundException, "is CultureNotFoundException");
-            Assert.AreEqual(ex.ParamName, "SomeParam", "ParamName");
+            Assert.AreEqual("SomeParam", ex.ParamName, "ParamName");
             Assert.Null(ex.InnerException, "InnerException");
-            Assert.AreEqual(ex.Message, "The message");
-            Assert.AreEqual(ex.InvalidCultureName, "fru", "InvalidCultureName");
-            Assert.AreEqual(ex.InvalidCultureId, null, "InvalidCultureId");
+            Assert.AreEqual("The message", ex.Message);
+            Assert.AreEqual("fru", ex.InvalidCultureName, "InvalidCultureName");
+            Assert.AreEqual(null, ex.InvalidCultureId, "InvalidCultureId");
         }
 
         [Test]
@@ -99,12 +99,12 @@ namespace Bridge.ClientTest.Exceptions
             var inner = new Exception("a");
             var ex = new CultureNotFoundException("The message", 1, inner);
             Assert.True((object)ex is CultureNotFoundException, "is CultureNotFoundException");
-            Assert.AreEqual(ex.ParamName, null, "ParamName");
+            Assert.AreEqual(null, ex.ParamName, "ParamName");
             Assert.True(ReferenceEquals(ex.InnerException, inner), "InnerException");
-            Assert.AreEqual(ex.InnerException, inner, "InnerException");
-            Assert.AreEqual(ex.Message, "The message");
-            Assert.AreEqual(ex.InvalidCultureName, null, "InvalidCultureName");
-            Assert.AreEqual(ex.InvalidCultureId, 1, "InvalidCultureId");
+            Assert.AreEqual(inner, ex.InnerException, "InnerException");
+            Assert.AreEqual("The message", ex.Message);
+            Assert.AreEqual(null, ex.InvalidCultureName, "InvalidCultureName");
+            Assert.AreEqual(1, ex.InvalidCultureId, "InvalidCultureId");
         }
 
         [Test]
@@ -112,11 +112,11 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new CultureNotFoundException("SomeParam", 2, "The message");
             Assert.True((object)ex is CultureNotFoundException, "is CultureNotFoundException");
-            Assert.AreEqual(ex.ParamName, "SomeParam", "ParamName");
+            Assert.AreEqual("SomeParam", ex.ParamName, "ParamName");
             Assert.Null(ex.InnerException, "InnerException");
-            Assert.AreEqual(ex.Message, "The message");
-            Assert.AreEqual(ex.InvalidCultureName, null, "InvalidCultureName");
-            Assert.AreEqual(ex.InvalidCultureId, 2, "InvalidCultureId");
+            Assert.AreEqual("The message", ex.Message);
+            Assert.AreEqual(null, ex.InvalidCultureName, "InvalidCultureName");
+            Assert.AreEqual(2, ex.InvalidCultureId, "InvalidCultureId");
         }
     }
 }

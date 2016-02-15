@@ -11,7 +11,7 @@ namespace Bridge.ClientTest.BridgeIssues
         public static void TestUseCase()
         {
             var arr = new Dot[10, 10];
-            Assert.AreNotEqual(arr, null, "Bridge835");
+            Assert.AreNotEqual(null, arr, "Bridge835");
         }
 
         public struct Dot

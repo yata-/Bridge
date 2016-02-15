@@ -14,7 +14,7 @@ namespace Bridge.ClientTest.Exceptions
         [Test]
         public void TypePropertiesAreCorrect()
         {
-            Assert.AreEqual(typeof(ArithmeticException).GetClassName(), "Bridge.ArithmeticException", "Name");
+            Assert.AreEqual("Bridge.ArithmeticException", typeof(ArithmeticException).GetClassName(), "Name");
             object d = new ArithmeticException();
             Assert.True(d is ArithmeticException, "is DivideByZeroException");
             Assert.True(d is Exception, "is Exception");
@@ -25,8 +25,8 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new ArithmeticException();
             Assert.True((object)ex is ArithmeticException, "is ArithmeticException");
-            Assert.AreEqual(ex.InnerException, null, "InnerException");
-            Assert.AreEqual(ex.Message, "Overflow or underflow in the arithmetic operation.");
+            Assert.AreEqual(null, ex.InnerException, "InnerException");
+            Assert.AreEqual("Overflow or underflow in the arithmetic operation.", ex.Message);
         }
 
         [Test]
@@ -34,8 +34,8 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new ArithmeticException("The message");
             Assert.True((object)ex is ArithmeticException, "is OverflowException");
-            Assert.AreEqual(ex.InnerException, null, "InnerException");
-            Assert.AreEqual(ex.Message, "The message");
+            Assert.AreEqual(null, ex.InnerException, "InnerException");
+            Assert.AreEqual("The message", ex.Message);
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace Bridge.ClientTest.Exceptions
             var ex = new ArithmeticException("The message", inner);
             Assert.True((object)ex is ArithmeticException, "is OverflowException");
             Assert.True(ReferenceEquals(ex.InnerException, inner), "InnerException");
-            Assert.AreEqual(ex.Message, "The message");
+            Assert.AreEqual("The message", ex.Message);
         }
     }
 }

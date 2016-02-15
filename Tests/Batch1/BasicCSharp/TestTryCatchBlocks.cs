@@ -19,7 +19,7 @@ namespace Bridge.ClientTest.BasicCSharp
         {
             var result = TryCatch("Good");
 
-            Assert.AreEqual(result, "Good", "TryCatch() executes");
+            Assert.AreEqual("Good", result, "TryCatch() executes");
         }
 
         [Test(ExpectedCount = 3)]
@@ -32,7 +32,7 @@ namespace Bridge.ClientTest.BasicCSharp
             Assert.True(true, "Typed exception catch");
 
             var exceptionMessage = TryCatchWithCaughtArgumentException();
-            Assert.AreEqual(exceptionMessage, "catch me", "Typed exception catch with exception message");
+            Assert.AreEqual("catch me", exceptionMessage, "Typed exception catch with exception message");
         }
 
         [Test(ExpectedCount = 12)]

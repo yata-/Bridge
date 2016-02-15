@@ -59,13 +59,13 @@ namespace Bridge.ClientTest.BridgeIssues
         {
             log = null;
             var c = new Bridge652A1();
-            Assert.AreNotEqual(c.Bar, null, "Bridge652A1 Bar NotNull");
-            Assert.AreEqual(log, "Bridge652B1", "Bridge652A1 log");
+            Assert.AreNotEqual(null, c.Bar, "Bridge652A1 Bar NotNull");
+            Assert.AreEqual("Bridge652B1", log, "Bridge652A1 log");
 
             log = null;
             var d = new Bridge652A2();
-            Assert.AreNotEqual(d.Bar, null, "Bridge652A2 Bar NotNull");
-            Assert.AreEqual(log, "Bridge652B2", "Bridge652A2 log");
+            Assert.AreNotEqual(null, d.Bar, "Bridge652A2 Bar NotNull");
+            Assert.AreEqual("Bridge652B2", log, "Bridge652A2 log");
         }
     }
 }

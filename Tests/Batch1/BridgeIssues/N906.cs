@@ -33,7 +33,7 @@ namespace Bridge.ClientTest.BridgeIssues
 
             await myfunc();
 
-            Assert.AreEqual(sum, 3);
+            Assert.AreEqual(3, sum);
 
             asyncComplete();
         }
@@ -61,7 +61,7 @@ namespace Bridge.ClientTest.BridgeIssues
 
             await myfunc();
 
-            Assert.AreEqual(sum, 5);
+            Assert.AreEqual(5, sum);
 
             asyncComplete();
         }

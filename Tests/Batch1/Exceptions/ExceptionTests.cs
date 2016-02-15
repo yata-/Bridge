@@ -29,7 +29,7 @@ namespace Bridge.ClientTest.Exceptions
         [Test]
         public void TypePropertiesAreCorrect()
         {
-            Assert.AreEqual(typeof(Exception).GetClassName(), "Bridge.Exception", "Name");
+            Assert.AreEqual("Bridge.Exception", typeof(Exception).GetClassName(), "Name");
             object d = new Exception();
             Assert.True(d is Exception);
         }
@@ -39,8 +39,8 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new Exception();
             Assert.True((object)ex is Exception, "is Exception");
-            Assert.AreEqual(ex.InnerException, null, "InnerException");
-            Assert.AreEqual(ex.Message, null);
+            Assert.AreEqual(null, ex.InnerException, "InnerException");
+            Assert.AreEqual(null, ex.Message);
         }
 
         [Test]
@@ -48,8 +48,8 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new Exception("The message");
             Assert.True((object)ex is Exception, "is Exception");
-            Assert.AreEqual(ex.InnerException, null, "InnerException");
-            Assert.AreEqual(ex.Message, "The message");
+            Assert.AreEqual(null, ex.InnerException, "InnerException");
+            Assert.AreEqual("The message", ex.Message);
         }
 
         [Test]
@@ -59,14 +59,14 @@ namespace Bridge.ClientTest.Exceptions
             var ex = new Exception("The message", inner);
             Assert.True((object)ex is Exception, "is Exception");
             Assert.True(ReferenceEquals(ex.InnerException, inner), "InnerException");
-            Assert.AreEqual(ex.Message, "The message");
+            Assert.AreEqual("The message", ex.Message);
         }
 
         [Test]
         public void MessagePropertyCanBeOverridden()
         {
             var ex = (Exception)new MyException("Test message", null);
-            Assert.AreEqual(ex.Message, "Test message");
+            Assert.AreEqual("Test message", ex.Message);
         }
 
         [Test]

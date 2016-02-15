@@ -17,7 +17,7 @@ namespace Bridge.ClientTest.BridgeIssues
         [Test(ExpectedCount = 1)]
         public static void TestUseCase()
         {
-           Assert.AreEqual(Test("Test {0} {1}", "One", "Two"), "Test One Two");
+           Assert.AreEqual("Test One Two", Test("Test {0} {1}", "One", "Two"));
         }
     }
 }
