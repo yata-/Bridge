@@ -10,11 +10,83 @@ namespace Bridge.Translator
 {
     public partial class Translator
     {
+        private class CecilAssemblyResolver : DefaultAssemblyResolver
+        {
+            public ILogger Logger { get; set; }
+
+            public CecilAssemblyResolver(ILogger logger, string location)
+            {
+                this.Logger = logger;
+
+                this.ResolveFailure += CecilAssemblyResolver_ResolveFailure;
+
+                this.AddSearchDirectory(Path.GetDirectoryName(location));
+            }
+
+            private AssemblyDefinition CecilAssemblyResolver_ResolveFailure(object sender, AssemblyNameReference reference)
+            {
+                string fullName = reference != null ? reference.FullName : "";
+                this.Logger.Trace("CecilAssemblyResolver: ResolveFailure " + (fullName ?? ""));
+
+                return null;
+            }
+
+            public override AssemblyDefinition Resolve(string fullName)
+            {
+                this.Logger.Trace("CecilAssemblyResolver: Resolve(string) " + (fullName ?? ""));
+
+                return base.Resolve(fullName);
+            }
+
+            public override AssemblyDefinition Resolve(AssemblyNameReference name)
+            {
+                string fullName = name != null ? name.FullName : "";
+
+                this.Logger.Trace("CecilAssemblyResolver: Resolve(AssemblyNameReference) " + (fullName ?? ""));
+
+                return base.Resolve(name);
+            }
+
+            public override AssemblyDefinition Resolve(string fullName, ReaderParameters parameters)
+            {
+                this.Logger.Trace(
+                    "CecilAssemblyResolver: Resolve(string, ReaderParameters) "
+                    + (fullName ?? "")
+                    + ", "
+                    + (parameters != null ? parameters.ReadingMode.ToString() : "")
+                    );
+
+                return base.Resolve(fullName, parameters);
+            }
+
+            public override AssemblyDefinition Resolve(AssemblyNameReference name, ReaderParameters parameters)
+            {
+                string fullName = name != null ? name.FullName : "";
+
+                this.Logger.Trace(
+                    "CecilAssemblyResolver: Resolve(AssemblyNameReference, ReaderParameters) "
+                    + (fullName ?? "")
+                    + ", "
+                    + (parameters != null ? parameters.ReadingMode.ToString() : "")
+                    );
+
+                return base.Resolve(name, parameters);
+            }
+        }
+
         protected virtual AssemblyDefinition LoadAssembly(string location, List<AssemblyDefinition> references)
         {
             this.Log.Trace("Assembly definition loading " + (location ?? "") + " ...");
 
-            var assemblyDefinition = AssemblyDefinition.ReadAssembly(location);
+            var assemblyDefinition = AssemblyDefinition.ReadAssembly(
+                    location,
+                    new ReaderParameters()
+                    {
+                        ReadingMode = ReadingMode.Deferred,
+                        AssemblyResolver = new CecilAssemblyResolver(this.Log, this.AssemblyLocation)
+                    }
+                );
+
             string name;
             string path;
             AssemblyDefinition reference;
