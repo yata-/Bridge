@@ -44,18 +44,18 @@ namespace Bridge.ClientTest.ConvertTests
         {
             string[] testValues = { "1999/12/31 11:59:59 PM", "2005/01/01 12:00:00 AM", "1492/02/29 12:00:00 AM", "1930/01/01 12:00:00 AM" };
             DateTime[] expectedValues = { new DateTime(1999, 12, 31, 23, 59, 59), new DateTime(2005, 1, 1, 0, 0, 0), new DateTime(1492, 2, 29, 0, 0, 0), new DateTime(1930, 1, 1, 0, 0, 0) };
-            Assert.AreEqual(testValues.Length, expectedValues.Length);
+            Assert.AreEqual(expectedValues.Length, testValues.Length);
 
             for (int i = 0; i < testValues.Length; i++)
             {
                 DateTime result = Convert.ToDateTime(testValues[i], s_dateTimeFormatInfo);
-                Assert.AreEqual(result, expectedValues[i]);
+                Assert.AreEqual(expectedValues[i], result);
                 result = Convert.ToDateTime((object)testValues[i], s_dateTimeFormatInfo);
-                Assert.AreEqual(result, expectedValues[i]);
+                Assert.AreEqual(expectedValues[i], result);
             }
 
             var minDate = Convert.ToDateTime(null);
-            Assert.AreEqual(minDate.ToDateString(), "Mon Jan 01 1");
+            Assert.AreEqual("Mon Jan 01 1", minDate.ToDateString());
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace Bridge.ClientTest.ConvertTests
             for (int i = 0; i < expectedValues.Length; i++)
             {
                 DateTime result = Convert.ToDateTime(expectedValues[i]);
-                Assert.AreEqual(result, expectedValues[i]);
+                Assert.AreEqual(expectedValues[i], result);
             }
         }
 

@@ -15,12 +15,12 @@ namespace Bridge.ClientTest.ConvertTests
         /// </summary>
         protected void Verify<TInput>(Func<TInput, TOutput> convert, TInput[] testValues, TOutput[] expectedValues)
         {
-            Assert.AreEqual(testValues.Length, expectedValues.Length);
+            Assert.AreEqual(expectedValues.Length, testValues.Length);
 
             for (int i = 0; i < testValues.Length; i++)
             {
                 TOutput result = convert(testValues[i]);
-                Assert.AreEqual(result, expectedValues[i]);
+                Assert.AreEqual(expectedValues[i], result);
             }
         }
 
@@ -30,12 +30,12 @@ namespace Bridge.ClientTest.ConvertTests
         /// </summary>
         protected void VerifyViaObj<TInput>(Func<object, TOutput> convert, TInput[] testValues, TOutput[] expectedValues)
         {
-            Assert.AreEqual(testValues.Length, expectedValues.Length);
+            Assert.AreEqual(expectedValues.Length, testValues.Length);
 
             for (int i = 0; i < testValues.Length; i++)
             {
                 TOutput result = convert(testValues[i]);
-                Assert.AreEqual(result, expectedValues[i]);
+                Assert.AreEqual(expectedValues[i], result);
             }
         }
 
@@ -62,13 +62,13 @@ namespace Bridge.ClientTest.ConvertTests
         /// </summary>
         protected void VerifyFromStringWithBase(Func<string, int, TOutput> convert, string[] testValues, int[] testBases, TOutput[] expectedValues)
         {
-            Assert.AreEqual(testBases.Length, testValues.Length);
-            Assert.AreEqual(expectedValues.Length, testValues.Length);
+            Assert.AreEqual(testValues.Length, testBases.Length);
+            Assert.AreEqual(testValues.Length, expectedValues.Length);
 
             for (int i = 0; i < testValues.Length; i++)
             {
                 TOutput result = convert(testValues[i], testBases[i]);
-                Assert.AreEqual(result, expectedValues[i]);
+                Assert.AreEqual(expectedValues[i], result);
             }
         }
 
@@ -78,7 +78,7 @@ namespace Bridge.ClientTest.ConvertTests
         protected void VerifyFromStringWithBaseThrows<TException>(Func<string, int, TOutput> convert, string[] testValues, int[] testBases)
             where TException : Exception
         {
-            Assert.AreEqual(testBases.Length, testValues.Length);
+            Assert.AreEqual(testValues.Length, testBases.Length);
 
             for (int i = 0; i < testValues.Length; i++)
             {

@@ -18,7 +18,7 @@ namespace Bridge.ClientTest.ConvertTests
             byte[] inputBytes = Convert.FromBase64String(input);
             char[] resultChars = new char[4];
             int fillCharCount = Convert.ToBase64CharArray(inputBytes, 0, inputBytes.Length - 1, resultChars, 0);
-            Assert.AreEqual(fillCharCount, input.Length);
+            Assert.AreEqual(input.Length, fillCharCount);
         }
 
         [Test]
@@ -28,10 +28,10 @@ namespace Bridge.ClientTest.ConvertTests
             byte[] inputBuffer = new byte[] { (byte)'a', (byte)'b', (byte)'c' };
             char[] ouputBuffer = new char[4];
             var c1 = Convert.ToBase64CharArray(inputBuffer, 0, 3, ouputBuffer, 0);
-            Assert.AreEqual(c1, 4);
+            Assert.AreEqual(4, c1);
 
             var c2 = Convert.ToBase64CharArray(inputBuffer, 0, 2, ouputBuffer, 0);
-            Assert.AreEqual(c2, 4);
+            Assert.AreEqual(4, c2);
 
         }
 
@@ -45,13 +45,13 @@ namespace Bridge.ClientTest.ConvertTests
 
             // Convert the first half of the byte array, write to the first half of the char array
             int c = Convert.ToBase64CharArray(inputBuffer, 0, 3, outputBuffer, 0);
-            Assert.AreEqual(c, 4);
-            Assert.AreEqual(new string(outputBuffer), "AAEC....");
+            Assert.AreEqual(4, c);
+            Assert.AreEqual("AAEC....", new string(outputBuffer));
 
             // Convert the second half of the byte array, write to the second half of the char array
             c = Convert.ToBase64CharArray(inputBuffer, 3, 3, outputBuffer, 4);
-            Assert.AreEqual(c, 4);
-            Assert.AreEqual(new string(outputBuffer), "AAECAwQF");
+            Assert.AreEqual(4, c);
+            Assert.AreEqual("AAECAwQF", new string(outputBuffer));
         }
 
         [Test]

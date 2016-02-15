@@ -27,14 +27,14 @@ namespace Bridge.ClientTest.ConvertTests
             // 000001 010000 011000 000111 000010 000000 000000 000000
             // B      Q      Y      H      C      A      =      =
 
-            Assert.AreEqual(Convert.ToBase64String(inputBytes), "BQYHCA==");
+            Assert.AreEqual("BQYHCA==", Convert.ToBase64String(inputBytes));
         }
 
         [Test]
         public static void ZeroLength()
         {
             byte[] inputBytes = Convert.FromBase64String("test");
-            Assert.AreEqual(Convert.ToBase64String(inputBytes, 0, 0), string.Empty);
+            Assert.AreEqual(string.Empty, Convert.ToBase64String(inputBytes, 0, 0));
         }
 
         [Test]

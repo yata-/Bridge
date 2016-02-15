@@ -18,15 +18,15 @@ namespace Bridge.ClientTest.ConvertTests
             Verify(input, result =>
             {
                 // See Freed, N. and N. Borenstein, RFC2045, Section 6.8 for a description of why this check is necessary.
-                Assert.AreEqual(3, result.Length);
+                Assert.AreEqual(result.Length, 3);
 
                 uint triplet = (uint)((result[0] << 16) | (result[1] << 8) | result[2]);
-                Assert.AreEqual(45, triplet >> 18); // 't'
-                Assert.AreEqual(30, (triplet << 14) >> 26); // 'e'
-                Assert.AreEqual(44, (triplet << 20) >> 26); // 's'
-                Assert.AreEqual(45, (triplet << 26) >> 26); // 't'
+                Assert.AreEqual(triplet >> 18, 45); // 't'
+                Assert.AreEqual((triplet << 14) >> 26, 30); // 'e'
+                Assert.AreEqual((triplet << 20) >> 26, 44); // 's'
+                Assert.AreEqual((triplet << 26) >> 26, 45); // 't'
 
-                Assert.AreEqual(input, Convert.ToBase64String(result));
+                Assert.AreEqual(Convert.ToBase64String(result), input);
             });
         }
 
@@ -49,7 +49,7 @@ namespace Bridge.ClientTest.ConvertTests
             Verify(input, result =>
             {
                 Assert.NotNull(result);
-                Assert.AreEqual(result.Length, 0);
+                Assert.AreEqual(0, result.Length);
             });
         }
 
@@ -61,7 +61,7 @@ namespace Bridge.ClientTest.ConvertTests
             byte[] result = Convert.FromBase64CharArray(inputChars, 0, 0);
 
             Assert.NotNull(result);
-            Assert.AreEqual(result.Length, 0);
+            Assert.AreEqual(0, result.Length);
         }
 
         [Test]
@@ -82,11 +82,11 @@ namespace Bridge.ClientTest.ConvertTests
             string input = "ab==";
             Verify(input, result =>
             {
-                Assert.AreEqual(result.Length, 1);
+                Assert.AreEqual(1, result.Length);
 
                 string roundtrippedString = Convert.ToBase64String(result);
                 Assert.AreNotEqual(roundtrippedString, input);
-                Assert.AreEqual(roundtrippedString[0], input[0]);
+                Assert.AreEqual(input[0], roundtrippedString[0]);
             });
         }
 
@@ -96,12 +96,12 @@ namespace Bridge.ClientTest.ConvertTests
             string input = "789=";
             Verify(input, result =>
             {
-                Assert.AreEqual(result.Length, 2);
+                Assert.AreEqual(2, result.Length);
 
                 string roundtrippedString = Convert.ToBase64String(result);
                 Assert.AreNotEqual(roundtrippedString, input);
-                Assert.AreEqual(roundtrippedString[0], input[0]);
-                Assert.AreEqual(roundtrippedString[1], input[1]);
+                Assert.AreEqual(input[0], roundtrippedString[0]);
+                Assert.AreEqual(input[1], roundtrippedString[1]);
             });
         }
 
@@ -239,10 +239,10 @@ namespace Bridge.ClientTest.ConvertTests
             {
                 if (expectedLengthBytes.HasValue)
                 {
-                    Assert.AreEqual(result.Length, expectedLengthBytes.Value);
+                    Assert.AreEqual(expectedLengthBytes.Value, result.Length);
                 }
-                Assert.AreEqual(Convert.ToBase64String(result), expected);
-                Assert.AreEqual(Convert.ToBase64String(result, 0, result.Length), expected);
+                Assert.AreEqual(expected, Convert.ToBase64String(result));
+                Assert.AreEqual(expected, Convert.ToBase64String(result, 0, result.Length));
             });
         }
 

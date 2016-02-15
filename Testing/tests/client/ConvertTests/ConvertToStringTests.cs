@@ -189,14 +189,14 @@ namespace Bridge.ClientTest.ConvertTests
 
             for (int i = 0; i < testValues.Length; i++)
             {
-                Assert.AreEqual(Convert.ToString(testValues[i], NumberFormatInfo.InvariantInfo).ToLower(), expectedValues[i].ToLower());
+                Assert.AreEqual(expectedValues[i].ToLower(), Convert.ToString(testValues[i], NumberFormatInfo.InvariantInfo).ToLower());
             }
         }
 
         [Test]
         public static void FromObject()
         {
-            Assert.AreEqual(Convert.ToString(new ConvertToStringTests()), "Bridge.ClientTest.ConvertTests.ConvertToStringTests");
+            Assert.AreEqual("Bridge.ClientTest.ConvertTests.ConvertToStringTests", Convert.ToString(new ConvertToStringTests()));
         }
 
         [Test]
@@ -207,8 +207,8 @@ namespace Bridge.ClientTest.ConvertTests
 
             for (int i = 0; i < testValues.Length; i++)
             {
-                Assert.AreEqual(Convert.ToString(testValues[i]), testValues[i].ToString());
-                Assert.AreEqual(Convert.ToString(testValues[i], DateTimeFormatInfo.InvariantInfo), expectedValues[i]);
+                Assert.AreEqual(testValues[i].ToString(), Convert.ToString(testValues[i]));
+                Assert.AreEqual(expectedValues[i], Convert.ToString(testValues[i], DateTimeFormatInfo.InvariantInfo));
             }
         }
 
@@ -220,8 +220,8 @@ namespace Bridge.ClientTest.ConvertTests
 
             for (int i = 0; i < testValues.Length; i++)
             {
-                Assert.AreEqual(Convert.ToString(testValues[i]), expectedValues[i]);
-                Assert.AreEqual(Convert.ToString(testValues[i], CultureInfo.InvariantCulture), expectedValues[i]);
+                Assert.AreEqual(expectedValues[i], Convert.ToString(testValues[i]));
+                Assert.AreEqual(expectedValues[i], Convert.ToString(testValues[i], CultureInfo.InvariantCulture));
             }
         }
 
@@ -233,7 +233,7 @@ namespace Bridge.ClientTest.ConvertTests
 
             for (int i = 0; i < testValues.Length; i++)
             {
-                Assert.AreEqual(Convert.ToString(testValues[i], 2), expectedValues[i]);
+                Assert.AreEqual(expectedValues[i], Convert.ToString(testValues[i], 2));
             }
         }
 
@@ -245,7 +245,7 @@ namespace Bridge.ClientTest.ConvertTests
 
             for (int i = 0; i < testValues.Length; i++)
             {
-                Assert.AreEqual(Convert.ToString(testValues[i], 8), expectedValues[i]);
+                Assert.AreEqual(expectedValues[i], Convert.ToString(testValues[i], 8));
             }
         }
 
@@ -257,7 +257,7 @@ namespace Bridge.ClientTest.ConvertTests
 
             for (int i = 0; i < testValues.Length; i++)
             {
-                Assert.AreEqual(Convert.ToString(testValues[i], 10), expectedValues[i]);
+                Assert.AreEqual(expectedValues[i], Convert.ToString(testValues[i], 10));
             }
         }
 
@@ -269,7 +269,7 @@ namespace Bridge.ClientTest.ConvertTests
 
             for (int i = 0; i < testValues.Length; i++)
             {
-                Assert.AreEqual(Convert.ToString(testValues[i], 16), expectedValues[i]);
+                Assert.AreEqual(expectedValues[i], Convert.ToString(testValues[i], 16));
             }
         }
 
@@ -287,7 +287,7 @@ namespace Bridge.ClientTest.ConvertTests
 
             for (int i = 0; i < testValues.Length; i++)
             {
-                Assert.AreEqual(Convert.ToString(testValues[i], 2), expectedValues[i]);
+                Assert.AreEqual(expectedValues[i], Convert.ToString(testValues[i], 2));
             }
         }
 
@@ -299,7 +299,7 @@ namespace Bridge.ClientTest.ConvertTests
 
             for (int i = 0; i < testValues.Length; i++)
             {
-                Assert.AreEqual(Convert.ToString(testValues[i], 8), expectedValues[i]);
+                Assert.AreEqual(expectedValues[i], Convert.ToString(testValues[i], 8));
             }
         }
 
@@ -311,7 +311,7 @@ namespace Bridge.ClientTest.ConvertTests
 
             for (int i = 0; i < testValues.Length; i++)
             {
-                Assert.AreEqual(Convert.ToString(testValues[i], 10), expectedValues[i]);
+                Assert.AreEqual(expectedValues[i], Convert.ToString(testValues[i], 10));
             }
         }
 
@@ -323,7 +323,7 @@ namespace Bridge.ClientTest.ConvertTests
 
             for (int i = 0; i < testValues.Length; i++)
             {
-                Assert.AreEqual(Convert.ToString(testValues[i], 16), expectedValues[i]);
+                Assert.AreEqual(expectedValues[i], Convert.ToString(testValues[i], 16));
             }
         }
 
@@ -341,7 +341,7 @@ namespace Bridge.ClientTest.ConvertTests
 
             for (int i = 0; i < testValues.Length; i++)
             {
-                Assert.AreEqual(Convert.ToString(testValues[i], 2), expectedValues[i]);
+                Assert.AreEqual(expectedValues[i], Convert.ToString(testValues[i], 2));
             }
         }
 
@@ -353,7 +353,7 @@ namespace Bridge.ClientTest.ConvertTests
 
             for (int i = 0; i < testValues.Length; i++)
             {
-                Assert.AreEqual(Convert.ToString(testValues[i], 8), expectedValues[i]);
+                Assert.AreEqual(expectedValues[i], Convert.ToString(testValues[i], 8));
             }
         }
 
@@ -365,7 +365,7 @@ namespace Bridge.ClientTest.ConvertTests
 
             for (int i = 0; i < testValues.Length; i++)
             {
-                Assert.AreEqual(Convert.ToString(testValues[i], 10), expectedValues[i]);
+                Assert.AreEqual(expectedValues[i], Convert.ToString(testValues[i], 10));
             }
         }
 
@@ -377,7 +377,7 @@ namespace Bridge.ClientTest.ConvertTests
 
             for (int i = 0; i < testValues.Length; i++)
             {
-                Assert.AreEqual(Convert.ToString(testValues[i], 16), expectedValues[i]);
+                Assert.AreEqual(expectedValues[i], Convert.ToString(testValues[i], 16));
             }
         }
 
@@ -395,7 +395,7 @@ namespace Bridge.ClientTest.ConvertTests
 
             for (int i = 0; i < testValues.Length; i++)
             {
-                Assert.AreEqual(Convert.ToString(testValues[i], 2), expectedValues[i]);
+                Assert.AreEqual(expectedValues[i], Convert.ToString(testValues[i], 2));
             }
         }
 
@@ -407,7 +407,7 @@ namespace Bridge.ClientTest.ConvertTests
 
             for (int i = 0; i < testValues.Length; i++)
             {
-                Assert.AreEqual(Convert.ToString(testValues[i], 8), expectedValues[i]);
+                Assert.AreEqual(expectedValues[i], Convert.ToString(testValues[i], 8));
             }
         }
 
@@ -421,7 +421,7 @@ namespace Bridge.ClientTest.ConvertTests
 
             for (int i = 0; i < testValues.Length; i++)
             {
-                Assert.AreEqual(Convert.ToString(testValues[i], 10), expectedValues[i]);
+                Assert.AreEqual(expectedValues[i], Convert.ToString(testValues[i], 10));
             }
         }
 
@@ -433,7 +433,7 @@ namespace Bridge.ClientTest.ConvertTests
 
             for (int i = 0; i < testValues.Length; i++)
             {
-                Assert.AreEqual(Convert.ToString(testValues[i], 16), expectedValues[i]);
+                Assert.AreEqual(expectedValues[i], Convert.ToString(testValues[i], 16));
             }
         }
 
@@ -453,9 +453,9 @@ namespace Bridge.ClientTest.ConvertTests
             {
                 string expected = expectedValues[i];
                 string actual = Convert.ToString(testValues[i]);
-                Assert.AreEqual(actual, expected);
+                Assert.AreEqual(expected, actual);
                 actual = Convert.ToString(testValues[i], NumberFormatInfo.CurrentInfo);
-                Assert.AreEqual(actual, expected);
+                Assert.AreEqual(expected, actual);
             }
         }
 
@@ -467,9 +467,9 @@ namespace Bridge.ClientTest.ConvertTests
             for (int i = 0; i < testValues.Length; i++)
             {
                 string result = Convert.ToString(testValues[i]);
-                Assert.AreEqual(result, testValues[i].ToString());
+                Assert.AreEqual(testValues[i].ToString(), result);
                 result = Convert.ToString(testValues[i], NumberFormatInfo.CurrentInfo);
-                Assert.AreEqual(result, testValues[i].ToString(null, NumberFormatInfo.CurrentInfo));
+                Assert.AreEqual(testValues[i].ToString(null, NumberFormatInfo.CurrentInfo), result);
             }
         }
 
@@ -481,9 +481,9 @@ namespace Bridge.ClientTest.ConvertTests
             for (int i = 0; i < testValues.Length; i++)
             {
                 string result = Convert.ToString(testValues[i]);
-                Assert.AreEqual(result, testValues[i].ToString());
+                Assert.AreEqual(testValues[i].ToString(), result);
                 result = Convert.ToString(testValues[i], NumberFormatInfo.CurrentInfo);
-                Assert.AreEqual(result, testValues[i].ToString(null, NumberFormatInfo.CurrentInfo));
+                Assert.AreEqual(testValues[i].ToString(null, NumberFormatInfo.CurrentInfo), result);
             }
         }
 
@@ -495,9 +495,9 @@ namespace Bridge.ClientTest.ConvertTests
             for (int i = 0; i < testValues.Length; i++)
             {
                 string result = Convert.ToString(testValues[i]);
-                Assert.AreEqual(result, testValues[i].ToString());
+                Assert.AreEqual(testValues[i].ToString(), result);
                 result = Convert.ToString(testValues[i], NumberFormatInfo.CurrentInfo);
-                Assert.AreEqual(result, testValues[i].ToString(null, NumberFormatInfo.CurrentInfo));
+                Assert.AreEqual(testValues[i].ToString(null, NumberFormatInfo.CurrentInfo), result);
             }
         }
 
@@ -509,9 +509,9 @@ namespace Bridge.ClientTest.ConvertTests
             for (int i = 0; i < testValues.Length; i++)
             {
                 string result = Convert.ToString(testValues[i]);
-                Assert.AreEqual(result, testValues[i].ToString());
+                Assert.AreEqual(testValues[i].ToString(), result);
                 result = Convert.ToString(testValues[i], NumberFormatInfo.CurrentInfo);
-                Assert.AreEqual(result, testValues[i].ToString(null, NumberFormatInfo.CurrentInfo));
+                Assert.AreEqual(testValues[i].ToString(null, NumberFormatInfo.CurrentInfo), result);
             }
         }
 
@@ -523,9 +523,9 @@ namespace Bridge.ClientTest.ConvertTests
             for (int i = 0; i < testValues.Length; i++)
             {
                 string result = Convert.ToString(testValues[i]);
-                Assert.AreEqual(result, testValues[i].ToString());
+                Assert.AreEqual(testValues[i].ToString(), result);
                 result = Convert.ToString(testValues[i], NumberFormatInfo.CurrentInfo);
-                Assert.AreEqual(result, testValues[i].ToString(null, NumberFormatInfo.CurrentInfo));
+                Assert.AreEqual(testValues[i].ToString(null, NumberFormatInfo.CurrentInfo), result);
             }
         }
 
@@ -537,9 +537,9 @@ namespace Bridge.ClientTest.ConvertTests
             for (int i = 0; i < testValues.Length; i++)
             {
                 string result = Convert.ToString(testValues[i]);
-                Assert.AreEqual(result, testValues[i].ToString());
+                Assert.AreEqual(testValues[i].ToString(), result);
                 result = Convert.ToString(testValues[i], NumberFormatInfo.CurrentInfo);
-                Assert.AreEqual(result, testValues[i].ToString(null, NumberFormatInfo.CurrentInfo));
+                Assert.AreEqual(testValues[i].ToString(null, NumberFormatInfo.CurrentInfo), result);
             }
         }
 
@@ -551,9 +551,9 @@ namespace Bridge.ClientTest.ConvertTests
             for (int i = 0; i < testValues.Length; i++)
             {
                 string result = Convert.ToString(testValues[i]);
-                Assert.AreEqual(result, testValues[i].ToString());
+                Assert.AreEqual(testValues[i].ToString(), result);
                 result = Convert.ToString(testValues[i], NumberFormatInfo.CurrentInfo);
-                Assert.AreEqual(result, testValues[i].ToString(null, NumberFormatInfo.CurrentInfo));
+                Assert.AreEqual(testValues[i].ToString(null, NumberFormatInfo.CurrentInfo), result);
             }
         }
 
@@ -565,9 +565,9 @@ namespace Bridge.ClientTest.ConvertTests
             for (int i = 0; i < testValues.Length; i++)
             {
                 string result = Convert.ToString(testValues[i]);
-                Assert.AreEqual(result, testValues[i].ToString());
+                Assert.AreEqual(testValues[i].ToString(), result);
                 result = Convert.ToString(testValues[i], NumberFormatInfo.CurrentInfo);
-                Assert.AreEqual(result, testValues[i].ToString(null, NumberFormatInfo.CurrentInfo));
+                Assert.AreEqual(testValues[i].ToString(null, NumberFormatInfo.CurrentInfo), result);
             }
         }
 
@@ -581,10 +581,10 @@ namespace Bridge.ClientTest.ConvertTests
             for (int i = 0; i < testValues.Length; i++)
             {
                 string result = Convert.ToString(testValues[i]);
-                Assert.AreEqual(result, expectedValues1[i]);
+                Assert.AreEqual(expectedValues1[i], result);
 
                 result = Convert.ToString(testValues[i], NumberFormatInfo.CurrentInfo);
-                Assert.AreEqual(result, expectedValues2[i]);
+                Assert.AreEqual(expectedValues2[i], result);
             }
         }
 
@@ -598,7 +598,7 @@ namespace Bridge.ClientTest.ConvertTests
             for (int i = 0; i < testValues.Length; i++)
             {
                 string result = Convert.ToString(testValues[i], NumberFormatInfo.CurrentInfo);
-                Assert.AreEqual(result, expectedValues[i]);
+                Assert.AreEqual(expectedValues[i], result);
             }
         }
 
@@ -611,7 +611,7 @@ namespace Bridge.ClientTest.ConvertTests
             for (int i = 0; i < testValues.Length; i++)
             {
                 string result = Convert.ToString(testValues[i]);
-                Assert.AreEqual(result, expectedValues[i]);
+                Assert.AreEqual(expectedValues[i], result);
             }
         }
 
@@ -627,10 +627,10 @@ namespace Bridge.ClientTest.ConvertTests
             for (int i = 0; i < testValues.Length; i++)
             {
                 string result = Convert.ToString(testValues[i]);
-                Assert.AreEqual(result, testValues[i].ToString());
+                Assert.AreEqual(testValues[i].ToString(), result);
                 result = Convert.ToString(testValues[i], formatProvider);
                 string expected = testValues[i].ToString(null, formatProvider);
-                Assert.AreEqual(result, expected);
+                Assert.AreEqual(expected, result);
             }
         }
 
@@ -642,9 +642,9 @@ namespace Bridge.ClientTest.ConvertTests
             for (int i = 0; i < testValues.Length; i++)
             {
                 string result = Convert.ToString(testValues[i]);
-                Assert.AreEqual(result, testValues[i].ToString());
+                Assert.AreEqual(testValues[i].ToString(), result);
                 result = Convert.ToString(testValues[i], NumberFormatInfo.CurrentInfo);
-                Assert.AreEqual(result, testValues[i].ToString());
+                Assert.AreEqual(testValues[i].ToString(), result);
             }
         }
 
@@ -653,13 +653,13 @@ namespace Bridge.ClientTest.ConvertTests
         {
             FooFormattable foo = new FooFormattable(3);
             string result = Convert.ToString(foo);
-            Assert.AreEqual(result, "FooFormattable: 3");
+            Assert.AreEqual("FooFormattable: 3", result);
             result = Convert.ToString(foo, NumberFormatInfo.CurrentInfo);
-            Assert.AreEqual(result, "Bridge.NumberFormatInfo: 3");
+            Assert.AreEqual("Bridge.NumberFormatInfo: 3", result);
 
             foo = null;
             result = Convert.ToString(foo, NumberFormatInfo.CurrentInfo);
-            Assert.AreEqual(result, "");
+            Assert.AreEqual("", result);
         }
 
         [Test]
@@ -667,13 +667,13 @@ namespace Bridge.ClientTest.ConvertTests
         {
             Foo foo = new Foo(3);
             string result = Convert.ToString(foo);
-            Assert.AreEqual(result, "Bridge.ClientTest.ConvertTests.ConvertToStringTests.Foo");
+            Assert.AreEqual("Bridge.ClientTest.ConvertTests.ConvertToStringTests.Foo", result);
             result = Convert.ToString(foo, NumberFormatInfo.CurrentInfo);
-            Assert.AreEqual(result, "Bridge.ClientTest.ConvertTests.ConvertToStringTests.Foo");
+            Assert.AreEqual("Bridge.ClientTest.ConvertTests.ConvertToStringTests.Foo", result);
 
             foo = null;
             result = Convert.ToString(foo, NumberFormatInfo.CurrentInfo);
-            Assert.AreEqual(result, "");
+            Assert.AreEqual("", result);
         }
 
         private class FooFormattable : IFormattable
