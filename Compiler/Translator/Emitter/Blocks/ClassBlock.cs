@@ -57,10 +57,15 @@ namespace Bridge.Translator
             {
                 foreach (var method in beforeDefineMethods)
                 {
-                    this.WriteNewLine();
+                    if (!this.Emitter.IsNewLine)
+                    {
+                        this.WriteNewLine();    
+                    }
+                    
                     this.Write(method);
                 }
 
+                this.WriteNewLine();
                 this.WriteNewLine();
             }
 
