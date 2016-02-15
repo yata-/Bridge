@@ -1,4 +1,4 @@
-﻿// Top;
+﻿// Top
 
 (function (globals) {
     "use strict";
@@ -62,4 +62,4 @@
     Bridge.init();
 })(this);
 
-// Bottom;
+// Bottom
