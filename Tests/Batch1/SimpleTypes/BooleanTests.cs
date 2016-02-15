@@ -25,7 +25,7 @@ namespace Bridge.ClientTest.SimpleTypes
         public void TypePropertiesAreCorrect()
         {
             Assert.True((object)true is bool);
-            Assert.AreEqual(typeof(bool).GetClassName(), "Boolean");
+            Assert.AreEqual("Boolean", typeof(bool).GetClassName());
         }
 
         private T GetDefaultValue<T>()
@@ -36,19 +36,19 @@ namespace Bridge.ClientTest.SimpleTypes
         [Test]
         public void DefaultValueIsFalse()
         {
-            Assert.AreEqual(GetDefaultValue<bool>(), false);
+            Assert.AreEqual(false, GetDefaultValue<bool>());
         }
 
         [Test]
         public void CreatingInstanceReturnsFalse()
         {
-            Assert.AreEqual(Activator.CreateInstance<bool>(), false);
+            Assert.AreEqual(false, Activator.CreateInstance<bool>());
         }
 
         [Test]
         public void DefaultConstructorReturnsFalse()
         {
-            Assert.AreEqual(new bool(), false);
+            Assert.AreEqual(false, new bool());
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace Bridge.ClientTest.SimpleTypes
         {
             Assert.AreEqual(true.GetHashCode(), true.GetHashCode());
             Assert.AreEqual(false.GetHashCode(), false.GetHashCode());
-            Assert.AreNotEqual(false.GetHashCode(), true.GetHashCode());
+            Assert.AreNotEqual(true.GetHashCode(), false.GetHashCode());
         }
 
         [Test]
@@ -129,27 +129,27 @@ namespace Bridge.ClientTest.SimpleTypes
             var counterAnd = new Counter();
 
             Assert.True(counterAnd.Increment() && counterAnd.Increment());
-            Assert.AreEqual(counterAnd.Count, 2, "1. Counter 2");
+            Assert.AreEqual(2, counterAnd.Count, "1. Counter 2");
             Assert.False(counterAnd.Increment() && counterAnd.Increment(false));
-            Assert.AreEqual(counterAnd.Count, 4, "2. Counter 4");
+            Assert.AreEqual(4, counterAnd.Count, "2. Counter 4");
 
             Assert.False(counterAnd.Increment(false) && counterAnd.Increment());
-            Assert.AreEqual(counterAnd.Count, 5, "3. Counter 5");
+            Assert.AreEqual(5, counterAnd.Count, "3. Counter 5");
             Assert.False(counterAnd.Increment(false) && counterAnd.Increment(false));
-            Assert.AreEqual(counterAnd.Count, 6, "4. Counter 6");
+            Assert.AreEqual(6, counterAnd.Count, "4. Counter 6");
 
             var t = true;
             var f = false;
 
             Assert.True(t && counterAnd.Increment());
-            Assert.AreEqual(counterAnd.Count, 7, "5. Counter 7");
+            Assert.AreEqual(7, counterAnd.Count, "5. Counter 7");
             Assert.False(t && counterAnd.Increment(false));
-            Assert.AreEqual(counterAnd.Count, 8, "6. Counter 8");
+            Assert.AreEqual(8, counterAnd.Count, "6. Counter 8");
 
             Assert.False(f && counterAnd.Increment());
-            Assert.AreEqual(counterAnd.Count, 8, "7. Counter 8");
+            Assert.AreEqual(8, counterAnd.Count, "7. Counter 8");
             Assert.False(f && counterAnd.Increment(false));
-            Assert.AreEqual(counterAnd.Count, 8, "8. Counter 8");
+            Assert.AreEqual(8, counterAnd.Count, "8. Counter 8");
         }
 
         [Test]
@@ -158,27 +158,27 @@ namespace Bridge.ClientTest.SimpleTypes
             var counterOr = new Counter();
 
             Assert.True(counterOr.Increment() || counterOr.Increment());
-            Assert.AreEqual(counterOr.Count, 1, "1. Counter 1");
+            Assert.AreEqual(1, counterOr.Count, "1. Counter 1");
             Assert.True(counterOr.Increment() || counterOr.Increment(false));
-            Assert.AreEqual(counterOr.Count, 2, "2. Counter 2");
+            Assert.AreEqual(2, counterOr.Count, "2. Counter 2");
 
             Assert.True(counterOr.Increment(false) || counterOr.Increment());
-            Assert.AreEqual(counterOr.Count, 4, "3. Counter 4");
+            Assert.AreEqual(4, counterOr.Count, "3. Counter 4");
             Assert.False(counterOr.Increment(false) || counterOr.Increment(false));
-            Assert.AreEqual(counterOr.Count, 6, "4. Counter 6");
+            Assert.AreEqual(6, counterOr.Count, "4. Counter 6");
 
             var t = true;
             var f = false;
 
             Assert.True(t || counterOr.Increment());
-            Assert.AreEqual(counterOr.Count, 6, "5. Counter 6");
+            Assert.AreEqual(6, counterOr.Count, "5. Counter 6");
             Assert.True(t || counterOr.Increment(false));
-            Assert.AreEqual(counterOr.Count, 6, "6. Counter 6");
+            Assert.AreEqual(6, counterOr.Count, "6. Counter 6");
 
             Assert.True(f || counterOr.Increment());
-            Assert.AreEqual(counterOr.Count, 7, "7. Counter 7");
+            Assert.AreEqual(7, counterOr.Count, "7. Counter 7");
             Assert.False(f || counterOr.Increment(false));
-            Assert.AreEqual(counterOr.Count, 8, "8. Counter 8");
+            Assert.AreEqual(8, counterOr.Count, "8. Counter 8");
         }
 
         [Test]

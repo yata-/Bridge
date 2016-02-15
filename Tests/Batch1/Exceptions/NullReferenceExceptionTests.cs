@@ -14,7 +14,7 @@ namespace Bridge.ClientTest.Exceptions
         [Test]
         public void TypePropertiesAreCorrect()
         {
-            Assert.AreEqual(typeof(NullReferenceException).GetClassName(), "Bridge.NullReferenceException", "Name");
+            Assert.AreEqual("Bridge.NullReferenceException", typeof(NullReferenceException).GetClassName(), "Name");
             object d = new NullReferenceException();
             Assert.True(d is NullReferenceException, "is NullReferenceException");
             Assert.True(d is Exception, "is Exception");
@@ -25,8 +25,8 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new NullReferenceException();
             Assert.True((object)ex is NullReferenceException, "is NullReferenceException");
-            Assert.AreEqual(ex.InnerException, null, "InnerException");
-            Assert.AreEqual(ex.Message, "Object is null.");
+            Assert.AreEqual(null, ex.InnerException, "InnerException");
+            Assert.AreEqual("Object is null.", ex.Message);
         }
 
         [Test]
@@ -34,8 +34,8 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new NullReferenceException("The message");
             Assert.True((object)ex is NullReferenceException, "is NullReferenceException");
-            Assert.AreEqual(ex.InnerException, null, "InnerException");
-            Assert.AreEqual(ex.Message, "The message");
+            Assert.AreEqual(null, ex.InnerException, "InnerException");
+            Assert.AreEqual("The message", ex.Message);
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace Bridge.ClientTest.Exceptions
             var ex = new NullReferenceException("The message", inner);
             Assert.True((object)ex is NullReferenceException, "is NullReferenceException");
             Assert.True(ReferenceEquals(ex.InnerException, inner), "InnerException");
-            Assert.AreEqual(ex.Message, "The message");
+            Assert.AreEqual("The message", ex.Message);
         }
 
         [Test(Name = "NullReferenceException - {0}", ExpectedCount = 1)]

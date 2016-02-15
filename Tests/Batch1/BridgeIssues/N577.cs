@@ -39,7 +39,7 @@ namespace Bridge.ClientTest.BridgeIssues
             Assert.NotNull(a, "#577 Bridge577UnitA created");
 
             var b = SomeMethodB(7);
-            Assert.AreEqual(b.Number, 7, "#577 Bridge577UnitB created");
+            Assert.AreEqual(7, b.Number, "#577 Bridge577UnitB created");
         }
     }
 }

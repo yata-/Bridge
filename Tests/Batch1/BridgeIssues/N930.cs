@@ -42,7 +42,7 @@ namespace Bridge.ClientTest.BridgeIssues
             }
             catch (Exception e)
             {
-                Assert.AreEqual(e.Message, "test");
+                Assert.AreEqual("test", e.Message);
             }
 
             done();

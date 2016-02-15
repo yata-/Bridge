@@ -52,10 +52,10 @@ namespace Bridge.ClientTest.BridgeIssues
             var dc1 = new DerivedClass1();
             dc1.AddValue(5);
 
-            Assert.AreEqual(dc1.GetValues().Count, 1, "Bridge522 dc1.Count = 1");
+            Assert.AreEqual(1, dc1.GetValues().Count, "Bridge522 dc1.Count = 1");
 
             var dc2 = new DerivedClass1();
-            Assert.AreEqual(dc2.GetValues().Count, 0, "Bridge522 dc2.Count = 0");
+            Assert.AreEqual(0, dc2.GetValues().Count, "Bridge522 dc2.Count = 0");
         }
 
         [Test(ExpectedCount = 2)]
@@ -64,10 +64,10 @@ namespace Bridge.ClientTest.BridgeIssues
             var dc1 = new DerivedClass2();
             dc1.AddValue(5);
 
-            Assert.AreEqual(dc1.GetValues().Count, 1, "Bridge522 dc1.Count = 1");
+            Assert.AreEqual(1, dc1.GetValues().Count, "Bridge522 dc1.Count = 1");
 
             var dc2 = new DerivedClass2();
-            Assert.AreEqual(dc2.GetValues().Count, 0, "Bridge522 dc2.Count = 0");
+            Assert.AreEqual(0, dc2.GetValues().Count, "Bridge522 dc2.Count = 0");
         }
     }
 }

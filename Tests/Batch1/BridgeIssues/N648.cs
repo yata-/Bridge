@@ -29,7 +29,7 @@ namespace Bridge.ClientTest.BridgeIssues
             var stringArray = new string[0];
             stringArray.Push(wrappedString);
 
-            Assert.AreEqual(stringArray[0], "test");
+            Assert.AreEqual("test", stringArray[0]);
         }
     }
 }

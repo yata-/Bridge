@@ -18,7 +18,7 @@ namespace Bridge.ClientTest.BridgeIssues
             int? b = 10;
 
             var c = b ?? DoSomething(a);
-            Assert.AreEqual(c, 10, "Bridge760");
+            Assert.AreEqual(10, c, "Bridge760");
         }
 
         public static int DoSomething(int? test)

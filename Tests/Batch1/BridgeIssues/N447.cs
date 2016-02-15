@@ -21,17 +21,17 @@ namespace Bridge.ClientTest.BridgeIssues
         [Test(ExpectedCount = 3)]
         public static void CheckInlineExpression()
         {
-            Assert.AreEqual(Another + InlineSome, "AnotherSome", "AnotherSome");
-            Assert.AreEqual(Five + InlineFifteen, 20, "20");
-            Assert.AreEqual(Ten + InlineHalf, 10.5m, "10.5m");
+            Assert.AreEqual("AnotherSome", Another + InlineSome, "AnotherSome");
+            Assert.AreEqual(20, Five + InlineFifteen, "20");
+            Assert.AreEqual(10.5m, Ten + InlineHalf, "10.5m");
         }
 
         [Test(ExpectedCount = 3)]
         public static void CheckInlineCalls()
         {
-            Assert.AreEqual(GetSum(Another, InlineSome), "AnotherSome", "AnotherSome");
-            Assert.AreEqual(GetSum(Five, InlineFifteen), 20, "20");
-            Assert.AreEqual(GetSum(Ten, InlineHalf), 10.5m, "10.5m");
+            Assert.AreEqual("AnotherSome", GetSum(Another, InlineSome), "AnotherSome");
+            Assert.AreEqual(20, GetSum(Five, InlineFifteen), "20");
+            Assert.AreEqual(10.5m, GetSum(Ten, InlineHalf), "10.5m");
         }
 
         private static int GetSum(int a, int b)

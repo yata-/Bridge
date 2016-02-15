@@ -17,17 +17,17 @@ namespace Bridge.ClientTest.BridgeIssues
             magic1.Insert(magic1.Count, "first");
             magic1.Insert(magic1.Count, "second");
 
-            Assert.AreEqual(magic1[0], "first", "magic1[0]");
-            Assert.AreEqual(magic1[1], "second", "magic1[1]");
+            Assert.AreEqual("first", magic1[0], "magic1[0]");
+            Assert.AreEqual("second", magic1[1], "magic1[1]");
 
             List<string> magic2 = new List<string>();
             magic2.InsertRange(magic2.Count, new[] { "first", "second" });
             magic2.InsertRange(magic2.Count, new[] { "third", "fourth" });
 
-            Assert.AreEqual(magic2[0], "first", "magic1[0]");
-            Assert.AreEqual(magic2[1], "second", "magic1[1]");
-            Assert.AreEqual(magic2[2], "third", "magic1[2]");
-            Assert.AreEqual(magic2[3], "fourth", "magic1[3]");
+            Assert.AreEqual("first", magic2[0], "magic1[0]");
+            Assert.AreEqual("second", magic2[1], "magic1[1]");
+            Assert.AreEqual("third", magic2[2], "magic1[2]");
+            Assert.AreEqual("fourth", magic2[3], "magic1[3]");
 
             Assert.Throws(() =>
             {

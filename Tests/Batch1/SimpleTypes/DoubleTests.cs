@@ -13,7 +13,7 @@ namespace Bridge.ClientTest.SimpleTypes
         public void TypePropertiesAreCorrect()
         {
             Assert.True((object)(double)0.5 is double);
-            Assert.AreEqual(typeof(double).GetClassName(), "Number");
+            Assert.AreEqual("Number", typeof(double).GetClassName());
             object d = (double)0;
             Assert.True((object)d is double);
             Assert.True((object)d is IFormattable);
@@ -27,14 +27,14 @@ namespace Bridge.ClientTest.SimpleTypes
         [Test]
         public void DefaultValueIs0()
         {
-            Assert.AreStrictEqual(GetDefaultValue<double>(), 0);
+            Assert.AreStrictEqual(0, GetDefaultValue<double>());
         }
 
         [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void CreatingInstanceReturnsZero()
         {
-            Assert.AreStrictEqual(Activator.CreateInstance<double>(), 0);
+            Assert.AreStrictEqual(0, Activator.CreateInstance<double>());
         }
 
         [Test]
@@ -42,70 +42,70 @@ namespace Bridge.ClientTest.SimpleTypes
         {
             double zero = 0;
             Assert.True(double.MaxValue > (double)(object)1.7e+308, "MaxValue should be correct");
-            Assert.AreEqual(double.Epsilon, 4.94065645841247E-324, "MinValue should be correct");
+            Assert.AreEqual(4.94065645841247E-324, double.Epsilon, "MinValue should be correct");
             Assert.True(double.IsNaN(double.NaN), "NaN should be correct");
-            Assert.AreStrictEqual(double.PositiveInfinity, 1 / zero, "PositiveInfinity should be correct");
-            Assert.AreStrictEqual(double.NegativeInfinity, -1 / zero, "NegativeInfinity should be correct");
+            Assert.AreStrictEqual(1 / zero, double.PositiveInfinity, "PositiveInfinity should be correct");
+            Assert.AreStrictEqual(-1 / zero, double.NegativeInfinity, "NegativeInfinity should be correct");
         }
 
         [Test]
         public void DefaultConstructorReturnsZero()
         {
-            Assert.AreStrictEqual(new double(), 0);
+            Assert.AreStrictEqual(0, new double());
         }
 
         [Test]
         public void FormatWorks()
         {
-            Assert.AreEqual((291.0).Format("x"), "123");
+            Assert.AreEqual("123", (291.0).Format("x"));
         }
 
         [Test]
         public void IFormattableToStringWorks()
         {
-            Assert.AreEqual(291.0.ToString("x"), "123");
+            Assert.AreEqual("123", 291.0.ToString("x"));
         }
 
         [Test]
         public void ToStringWorks()
         {
-            Assert.AreEqual((123.0).ToString(), "123");
+            Assert.AreEqual("123", (123.0).ToString());
         }
 
         [Test]
         public void ToExponentialWorks()
         {
-            Assert.AreEqual((123.0).ToExponential(), "1.23e+2");
+            Assert.AreEqual("1.23e+2", (123.0).ToExponential());
         }
 
         [Test]
         public void ToExponentialWithFractionalDigitsWorks()
         {
-            Assert.AreEqual((123.0).ToExponential(1), "1.2e+2");
+            Assert.AreEqual("1.2e+2", (123.0).ToExponential(1));
         }
 
         [Test]
         public void ToFixed()
         {
-            Assert.AreEqual((123.0).ToFixed(), "123");
+            Assert.AreEqual("123", (123.0).ToFixed());
         }
 
         [Test]
         public void ToFixedWithFractionalDigitsWorks()
         {
-            Assert.AreEqual((123.0).ToFixed(1), "123.0");
+            Assert.AreEqual("123.0", (123.0).ToFixed(1));
         }
 
         [Test]
         public void ToPrecisionWorks()
         {
-            Assert.AreEqual((12345.0).ToPrecision(), "12345");
+            Assert.AreEqual("12345", (12345.0).ToPrecision());
         }
 
         [Test]
         public void ToPrecisionWithPrecisionWorks()
         {
-            Assert.AreEqual((12345.0).ToPrecision(2), "1.2e+4");
+            Assert.AreEqual("1.2e+4", (12345.0).ToPrecision(2));
         }
 
         [Test]
@@ -160,8 +160,8 @@ namespace Bridge.ClientTest.SimpleTypes
         {
             Assert.AreEqual(((double)0).GetHashCode(), ((double)0).GetHashCode());
             Assert.AreEqual(((double)1).GetHashCode(), ((double)1).GetHashCode());
-            Assert.AreNotEqual(((double)0).GetHashCode(), ((double)1).GetHashCode());
-            Assert.AreNotEqual(((double)0).GetHashCode(), ((double)0.5).GetHashCode());
+            Assert.AreNotEqual(((double)1).GetHashCode(), ((double)0).GetHashCode());
+            Assert.AreNotEqual(((double)0.5).GetHashCode(), ((double)0).GetHashCode());
         }
 
         [Test]

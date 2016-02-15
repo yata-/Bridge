@@ -23,7 +23,7 @@ namespace Bridge.ClientTest.BridgeIssues
                 result = await myfunc();
             }
 
-            Assert.AreEqual(result, 1);
+            Assert.AreEqual(1, result);
 
             asyncComplete();
         }

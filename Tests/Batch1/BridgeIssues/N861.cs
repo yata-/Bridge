@@ -43,7 +43,7 @@ namespace Bridge.ClientTest.BridgeIssues
             testB.Delegates += new Bridge861A.MyDelegate(data => data.MyId = 0);
             testB.InvokeDelegates();
 
-            Assert.AreEqual(testB.MyId, 0);
+            Assert.AreEqual(0, testB.MyId);
         }
     }
 }

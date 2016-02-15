@@ -42,8 +42,8 @@ namespace Bridge.ClientTest.BasicCSharp
             var b = new B();
 
             Assert.True(b != null, "Instance of B created");
-            Assert.AreEqual(b.GetString(), "B", "b.GetString() = 'B'");
-            Assert.AreEqual(b.Data, 1, "b.Data = 1");
+            Assert.AreEqual("B", b.GetString(), "b.GetString() = 'B'");
+            Assert.AreEqual(1, b.Data, "b.Data = 1");
         }
 
         [Test(ExpectedCount = 3)]
@@ -52,8 +52,8 @@ namespace Bridge.ClientTest.BasicCSharp
             var c = new C();
 
             Assert.True(c != null, "Instance of C created");
-            Assert.AreEqual(c.GetString(), "C", "c.GetString() = 'C'");
-            Assert.AreEqual(c.Data, -1, "c.Data = -1");
+            Assert.AreEqual("C", c.GetString(), "c.GetString() = 'C'");
+            Assert.AreEqual(-1, c.Data, "c.Data = -1");
         }
 
         [Test(ExpectedCount = 6)]
@@ -62,13 +62,13 @@ namespace Bridge.ClientTest.BasicCSharp
             A b = new B();
 
             Assert.True(b != null, "Instance of B created as instance of A");
-            Assert.AreEqual(b.GetString(), "B", "b.GetString() = 'B'");
-            Assert.AreEqual(b.Data, 1, "b.Data = 1");
+            Assert.AreEqual("B", b.GetString(), "b.GetString() = 'B'");
+            Assert.AreEqual(1, b.Data, "b.Data = 1");
 
             A c = new C();
             Assert.True(c != null, "Instance of C created as instance of A");
-            Assert.AreEqual(c.GetString(), "C", "c.GetString() = 'C'");
-            Assert.AreEqual(c.Data, -1, "c.Data = -1");
+            Assert.AreEqual("C", c.GetString(), "c.GetString() = 'C'");
+            Assert.AreEqual(-1, c.Data, "c.Data = -1");
         }
     }
 }

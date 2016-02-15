@@ -14,7 +14,7 @@ namespace Bridge.ClientTest.Exceptions
         [Test]
         public void TypePropertiesAreCorrect()
         {
-            Assert.AreEqual(typeof(InvalidCastException).GetClassName(), "Bridge.InvalidCastException", "Name");
+            Assert.AreEqual("Bridge.InvalidCastException", typeof(InvalidCastException).GetClassName(), "Name");
             object d = new InvalidCastException();
             Assert.True(d is InvalidCastException, "is InvalidCastException");
             Assert.True(d is Exception, "is Exception");
@@ -25,8 +25,8 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new InvalidCastException();
             Assert.True((object)ex is InvalidCastException, "is InvalidCastException");
-            Assert.AreEqual(ex.InnerException, null, "InnerException");
-            Assert.AreEqual(ex.Message, "The cast is not valid.");
+            Assert.AreEqual(null, ex.InnerException, "InnerException");
+            Assert.AreEqual("The cast is not valid.", ex.Message);
         }
 
         [Test]
@@ -34,8 +34,8 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new InvalidCastException("The message");
             Assert.True((object)ex is InvalidCastException, "is InvalidCastException");
-            Assert.AreEqual(ex.InnerException, null, "InnerException");
-            Assert.AreEqual(ex.Message, "The message");
+            Assert.AreEqual(null, ex.InnerException, "InnerException");
+            Assert.AreEqual("The message", ex.Message);
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace Bridge.ClientTest.Exceptions
             var ex = new InvalidCastException("The message", inner);
             Assert.True((object)ex is InvalidCastException, "is InvalidCastException");
             Assert.True(ReferenceEquals(ex.InnerException, inner), "InnerException");
-            Assert.AreEqual(ex.Message, "The message");
+            Assert.AreEqual("The message", ex.Message);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Bridge.ClientTest.BridgeIssues
             {
                 case1 = true;
             }
-            Assert.AreEqual(case1, false, "Bridge687 case1");
+            Assert.AreEqual(false, case1, "Bridge687 case1");
 
             c = new Bridge687A("test");
             bool case2 = false;
@@ -26,7 +26,7 @@ namespace Bridge.ClientTest.BridgeIssues
             {
                 case2 = true;
             }
-            Assert.AreEqual(case2, true, "Bridge687 case2");
+            Assert.AreEqual(true, case2, "Bridge687 case2");
         }
     }
     internal class Bridge687A

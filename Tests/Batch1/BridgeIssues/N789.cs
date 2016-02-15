@@ -14,9 +14,9 @@ namespace Bridge.ClientTest.BridgeIssues
         [Test(ExpectedCount = 3)]
         public static void TestUseCase()
         {
-            Assert.AreNotEqual(Method1(), null);
-            Assert.AreNotEqual(Method2(), null);
-            Assert.AreEqual(Method2().field1, 0);
+            Assert.AreNotEqual(null, Method1());
+            Assert.AreNotEqual(null, Method2());
+            Assert.AreEqual(0, Method2().field1);
         }
 
         private static DateTime Method1(DateTime dt = default(DateTime))

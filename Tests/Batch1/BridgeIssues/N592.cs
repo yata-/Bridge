@@ -29,12 +29,12 @@ namespace Bridge.ClientTest.BridgeIssues
             UInt32 u32_1 = 0xFFFFFFFE;
             UInt32 u32_2 = u32_1 >> 16;
 
-            Assert.AreEqual(i8_2, -1, "Bridge592 i8_2");
-            Assert.AreEqual(u8_2, 0xF, "Bridge592 u8_2");
-            Assert.AreEqual(i16_2, -1, "Bridge592 i16_2");
-            Assert.AreEqual(u16_2, 0xFF, "Bridge592 u16_2");
-            Assert.AreEqual(i32_2, -1, "Bridge592 i32_2");
-            Assert.AreEqual(u32_2, 0xFFFF, "Bridge592 u32_2");
+            Assert.AreEqual(-1, i8_2, "Bridge592 i8_2");
+            Assert.AreEqual(0xF, u8_2, "Bridge592 u8_2");
+            Assert.AreEqual(-1, i16_2, "Bridge592 i16_2");
+            Assert.AreEqual(0xFF, u16_2, "Bridge592 u16_2");
+            Assert.AreEqual(-1, i32_2, "Bridge592 i32_2");
+            Assert.AreEqual(0xFFFF, u32_2, "Bridge592 u32_2");
         }
     }
 }

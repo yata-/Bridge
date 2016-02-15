@@ -46,7 +46,7 @@ namespace Bridge.ClientTest.BridgeIssues
             var c = new Bridge690A();
             var r = await c.Start();
 
-            Assert.AreEqual(r, 8, "Bridge690 TestUseCaseForInstance");
+            Assert.AreEqual(8, r, "Bridge690 TestUseCaseForInstance");
             done();
         }
 
@@ -56,7 +56,7 @@ namespace Bridge.ClientTest.BridgeIssues
             var done = Assert.Async();
             var r = await Bridge690B.Start();
 
-            Assert.AreEqual(r, 59, "Bridge690 TestUseCaseForStatic");
+            Assert.AreEqual(59, r, "Bridge690 TestUseCaseForStatic");
             done();
         }
     }

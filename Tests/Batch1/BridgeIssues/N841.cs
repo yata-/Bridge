@@ -32,7 +32,7 @@ namespace Bridge.ClientTest.BridgeIssues
                 }
             }
 
-            Assert.AreEqual(result, 3, "Bridge841");
+            Assert.AreEqual(3, result, "Bridge841");
         }
     }
 }

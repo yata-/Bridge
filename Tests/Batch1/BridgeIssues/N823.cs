@@ -19,9 +19,9 @@ namespace Bridge.ClientTest.BridgeIssues
             var ticksPlusOne = new DateTime(val).Ticks + 1;
             var ticksString = new DateTime(val).Ticks.ToString();
 
-            Assert.AreDeepEqual(ticks, result, "Ticks returning correct int value");
-            Assert.AreDeepEqual(ticksPlusOne, result + 1, "Adding to a Tick value is correct");
-            Assert.AreDeepEqual(ticksString, result.ToString(), "Ticks returning correct value if .ToString() called on int");
+            Assert.AreDeepEqual(result, ticks, "Ticks returning correct int value");
+            Assert.AreDeepEqual(result + 1, ticksPlusOne, "Adding to a Tick value is correct");
+            Assert.AreDeepEqual(result.ToString(), ticksString, "Ticks returning correct value if .ToString() called on int");
         }
     }
 }

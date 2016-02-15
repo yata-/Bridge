@@ -16,7 +16,7 @@ namespace Bridge.ClientTest.Exceptions
         [Test]
         public void TypePropertiesAreCorrect()
         {
-            Assert.AreEqual(typeof(ArgumentException).GetClassName(), "Bridge.ArgumentException", "Name");
+            Assert.AreEqual("Bridge.ArgumentException", typeof(ArgumentException).GetClassName(), "Name");
             object d = new ArgumentException();
             Assert.True(d is ArgumentException);
             Assert.True(d is Exception);
@@ -27,9 +27,9 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new ArgumentException();
             Assert.True((object)ex is ArgumentException, "is ArgumentException");
-            Assert.AreEqual(ex.ParamName, null, "ParamName");
-            Assert.AreEqual(ex.InnerException, null, "InnerException");
-            Assert.AreEqual(ex.Message, DefaultMessage);
+            Assert.AreEqual(null, ex.ParamName, "ParamName");
+            Assert.AreEqual(null, ex.InnerException, "InnerException");
+            Assert.AreEqual(DefaultMessage, ex.Message);
         }
 
         [Test]
@@ -37,9 +37,9 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new ArgumentException("The message");
             Assert.True((object)ex is ArgumentException, "is ArgumentException");
-            Assert.AreEqual(ex.ParamName, null, "ParamName");
-            Assert.AreEqual(ex.InnerException, null, "InnerException");
-            Assert.AreEqual(ex.Message, "The message");
+            Assert.AreEqual(null, ex.ParamName, "ParamName");
+            Assert.AreEqual(null, ex.InnerException, "InnerException");
+            Assert.AreEqual("The message", ex.Message);
         }
 
         [Test]
@@ -48,9 +48,9 @@ namespace Bridge.ClientTest.Exceptions
             var inner = new Exception("a");
             var ex = new ArgumentException("The message", inner);
             Assert.True((object)ex is ArgumentException, "is ArgumentException");
-            Assert.AreEqual(ex.ParamName, null, "ParamName");
-            Assert.AreEqual(ex.InnerException, inner, "InnerException");
-            Assert.AreEqual(ex.Message, "The message");
+            Assert.AreEqual(null, ex.ParamName, "ParamName");
+            Assert.AreEqual(inner, ex.InnerException, "InnerException");
+            Assert.AreEqual("The message", ex.Message);
         }
 
         [Test]
@@ -58,9 +58,9 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new ArgumentException("The message", "someParam");
             Assert.True((object)ex is ArgumentException, "is ArgumentException");
-            Assert.AreEqual(ex.ParamName, "someParam", "ParamName");
-            Assert.AreEqual(ex.InnerException, null, "InnerException");
-            Assert.AreEqual(ex.Message, "The message");
+            Assert.AreEqual("someParam", ex.ParamName, "ParamName");
+            Assert.AreEqual(null, ex.InnerException, "InnerException");
+            Assert.AreEqual("The message", ex.Message);
         }
 
         [Test]
@@ -69,10 +69,10 @@ namespace Bridge.ClientTest.Exceptions
             var inner = new Exception("a");
             var ex = new ArgumentException("The message", "someParam", inner);
             Assert.True((object)ex is ArgumentException, "is ArgumentException");
-            Assert.AreEqual(ex.ParamName, "someParam", "ParamName");
+            Assert.AreEqual("someParam", ex.ParamName, "ParamName");
             Assert.True(ReferenceEquals(ex.InnerException, inner), "InnerException");
-            Assert.AreEqual(ex.InnerException, inner, "InnerException");
-            Assert.AreEqual(ex.Message, "The message");
+            Assert.AreEqual(inner, ex.InnerException, "InnerException");
+            Assert.AreEqual("The message", ex.Message);
         }
     }
 }

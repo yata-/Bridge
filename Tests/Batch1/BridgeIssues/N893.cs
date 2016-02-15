@@ -24,18 +24,18 @@ namespace Bridge.ClientTest.BridgeIssues
         [Test(ExpectedCount = 5)]
         public static void EnumToStringWorks()
         {
-            Assert.AreEqual(Bridge893A.TestA1.ToString(), "TestA1");
+            Assert.AreEqual("TestA1", Bridge893A.TestA1.ToString());
 
             var a = (Bridge893A)100;
-            Assert.AreEqual(a.ToString(), "100");
+            Assert.AreEqual("100", a.ToString());
 
-            Assert.AreEqual(Bridge893B.TestB3.ToString(), "TestB3");
+            Assert.AreEqual("TestB3", Bridge893B.TestB3.ToString());
 
             var t = Bridge893B.TestB1 | Bridge893B.TestB2;
-            Assert.AreEqual(t.ToString(), "TestB1, TestB2");
+            Assert.AreEqual("TestB1, TestB2", t.ToString());
 
             var t1 = Bridge893B.TestB3 | Bridge893B.TestB2;
-            Assert.AreEqual(t1.ToString(), "TestB2, TestB3");
+            Assert.AreEqual("TestB2, TestB3", t1.ToString());
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Bridge.ClientTest.SimpleTypes
         public void TypePropertiesAreCorrect()
         {
             //Assert.AreEqual(typeof(Enum).GetClassName(), "Bridge.Enum");
-            Assert.AreEqual(typeof(TestEnum).GetClassName(), "Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum");
+            Assert.AreEqual("Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum", typeof(TestEnum).GetClassName());
             Assert.True((object)TestEnum.FirstValue is TestEnum);
         }
 
@@ -44,48 +44,48 @@ namespace Bridge.ClientTest.SimpleTypes
         [Test]
         public void DefaultValueOfEnumClassIsNull()
         {
-            Assert.AreStrictEqual(GetDefaultValue<Enum>(), null);
+            Assert.AreStrictEqual(null, GetDefaultValue<Enum>());
         }
 
         [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void DefaultValueOfEnumTypeIsZero()
         {
-            Assert.AreStrictEqual(GetDefaultValue<TestEnum>(), 0);
+            Assert.AreStrictEqual(0, GetDefaultValue<TestEnum>());
         }
 
         [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void DefaultConstructorOfEnumTypeReturnsZero()
         {
-            Assert.AreStrictEqual(new TestEnum().ValueOf(), 0);
+            Assert.AreStrictEqual(0, new TestEnum().ValueOf());
         }
 
         [Test]
         public void FirstValueOfEnumIsZero()
         {
-            Assert.AreStrictEqual(TestEnum.FirstValue, 0);
+            Assert.AreStrictEqual(0, TestEnum.FirstValue);
         }
 
         [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void CreatingInstanceOfEnumTypeReturnsZero()
         {
-            Assert.AreStrictEqual(Activator.CreateInstance<TestEnum>(), 0);
+            Assert.AreStrictEqual(0, Activator.CreateInstance<TestEnum>());
         }
 
         [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void DefaultExpressionWithEnumReturnsZero()
         {
-            Assert.AreStrictEqual(default(TestEnum), 0);
+            Assert.AreStrictEqual(0, default(TestEnum));
         }
 
         [Test]
         public void GetHashCodeWorks()
         {
             Assert.AreEqual(TestEnum.FirstValue.GetHashCode(), TestEnum.FirstValue.GetHashCode());
-            Assert.AreNotEqual(TestEnum.FirstValue.GetHashCode(), TestEnum.SecondValue.GetHashCode());
+            Assert.AreNotEqual(TestEnum.SecondValue.GetHashCode(), TestEnum.FirstValue.GetHashCode());
         }
 
         [Test]

@@ -44,15 +44,15 @@ namespace Bridge.ClientTest.BridgeIssues
         {
             var c = new Bridge606C();
             c.Example1(y: "a", x: "b");
-            Assert.AreEqual(c.X, "b", "Bridge606 C X");
-            Assert.AreEqual(c.Y, "a", "Bridge606 C Y");
+            Assert.AreEqual("b", c.X, "Bridge606 C X");
+            Assert.AreEqual("a", c.Y, "Bridge606 C Y");
 
             var b = new Bridge606B(y: "a", x: "b");
-            Assert.AreEqual(b.X, "b", "Bridge606 B X");
-            Assert.AreEqual(b.Y, "a", "Bridge606 B Y");
+            Assert.AreEqual("b", b.X, "Bridge606 B X");
+            Assert.AreEqual("a", b.Y, "Bridge606 B Y");
 
             var s = "123".Example2(y: "a", x: "b");
-            Assert.AreEqual(s, "123 - b - a", "Bridge606 123");
+            Assert.AreEqual("123 - b - a", s, "Bridge606 123");
         }
     }
 }

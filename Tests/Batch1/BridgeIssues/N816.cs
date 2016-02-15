@@ -20,7 +20,7 @@ namespace Bridge.ClientTest.BridgeIssues
             root.AppendChild(textArea);
             
             var ta = Document.GetElementById("textArea1");
-            Assert.AreEqual(ta["value"], "Test", "Bridge816 textArea1.value");
+            Assert.AreEqual("Test", ta["value"], "Bridge816 textArea1.value");
         }
     }
 }

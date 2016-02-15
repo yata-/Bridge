@@ -21,7 +21,7 @@ namespace Bridge.ClientTest.BridgeIssues
             dynamic a = new Bridge918();
             var result = (int)await a.test();
 
-            Assert.AreEqual(result, 1);
+            Assert.AreEqual(1, result);
 
             asyncComplete();
         }

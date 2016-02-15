@@ -32,11 +32,11 @@ namespace Bridge.ClientTest.BridgeIssues
         public static void TestUseCase()
         {
             var a = new Bridge647A { foo = 1 };
-            Assert.AreEqual(a["bar"], 1, "Bridge647 A");
+            Assert.AreEqual(1, a["bar"], "Bridge647 A");
 
             var b = new Bridge647B { foo = 1 };
-            Assert.AreEqual(b["bar"], 1, "Bridge647 B bar");
-            Assert.AreEqual(b["bar1"], 12, "Bridge647 B bar1");
+            Assert.AreEqual(1, b["bar"], "Bridge647 B bar");
+            Assert.AreEqual(12, b["bar1"], "Bridge647 B bar1");
         }
     }
 }

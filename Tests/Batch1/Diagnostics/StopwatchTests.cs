@@ -21,7 +21,7 @@ namespace Bridge.ClientTest.Diagnostics
         public void ConstantsWorks()
         {
             Assert.True(Stopwatch.Frequency > 1000, "Frequency");
-            Assert.AreEqual(Script.TypeOf(Stopwatch.IsHighResolution), "boolean", "IsHighResolution");
+            Assert.AreEqual("boolean", Script.TypeOf(Stopwatch.IsHighResolution), "IsHighResolution");
         }
 
         [Test]
@@ -47,9 +47,9 @@ namespace Bridge.ClientTest.Diagnostics
         public void ElapsedWorks()
         {
             var watch = new Stopwatch();
-            Assert.AreEqual(watch.ElapsedTicks, 0);
-            Assert.AreEqual(watch.ElapsedMilliseconds, 0);
-            Assert.AreEqual(watch.Elapsed, new TimeSpan());
+            Assert.AreEqual(0, watch.ElapsedTicks);
+            Assert.AreEqual(0, watch.ElapsedMilliseconds);
+            Assert.AreEqual(new TimeSpan(), watch.Elapsed);
             watch.Start();
             DateTime before = DateTime.Now;
             bool hasIncreased = false;

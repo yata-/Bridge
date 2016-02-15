@@ -24,7 +24,7 @@ namespace Bridge.ClientTest.BridgeIssues
             root.AppendChild(button1);
 
             var b1 = Document.GetElementById("button1");
-            Assert.AreEqual(b1.Style.Color, "green", "b1.Style.Color green");
+            Assert.AreEqual("green", b1.Style.Color, "b1.Style.Color green");
 
             var button2 = new ButtonElement();
             button2.InnerHTML = "Button 2";
@@ -34,7 +34,7 @@ namespace Bridge.ClientTest.BridgeIssues
             root.AppendChild(button2);
 
             var b2 = Document.GetElementById("button2");
-            Assert.AreEqual(b2.Style.BackgroundColor, HTMLColor.Yellow, "b2.Style.BackgroundColor HTMLColor.Yellow");
+            Assert.AreEqual(HTMLColor.Yellow, b2.Style.BackgroundColor, "b2.Style.BackgroundColor HTMLColor.Yellow");
 
             var hexColor = "#FFEEAA";
             var divElement1 = new DivElement();
@@ -45,7 +45,7 @@ namespace Bridge.ClientTest.BridgeIssues
             root.AppendChild(divElement1);
 
             var div1 = Document.GetElementById("div1");
-            Assert.AreEqual(div1.Style.Color, "rgb(255, 238, 170)", "div1.Style.Color " + hexColor);
+            Assert.AreEqual("rgb(255, 238, 170)", div1.Style.Color, "div1.Style.Color " + hexColor);
 
         }
     }

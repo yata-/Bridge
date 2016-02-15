@@ -23,16 +23,16 @@ namespace Bridge.ClientTest.BridgeIssues
             intIndex = 0;
             arrs.CopyTo(dst, intIndex);
 
-            Assert.AreEqual(dst.Length, 2, "Bridge580 Length Int");
-            Assert.AreEqual(dst[0], arrs[0], "Bridge580 0 Int");
-            Assert.AreEqual(dst[1], arrs[1], "Bridge580 1 Int");
+            Assert.AreEqual(2, dst.Length, "Bridge580 Length Int");
+            Assert.AreEqual(arrs[0], dst[0], "Bridge580 0 Int");
+            Assert.AreEqual(arrs[1], dst[1], "Bridge580 1 Int");
 
             dst = new string[1];
             intIndex = 1;
             arrs.CopyTo(dst, intIndex);
 
-            Assert.AreEqual(dst.Length, 1, "Bridge580 Length 1 Int");
-            Assert.AreEqual(dst[0], arrs[1], "Bridge580 1_1 Int");
+            Assert.AreEqual(1, dst.Length, "Bridge580 Length 1 Int");
+            Assert.AreEqual(arrs[1], dst[0], "Bridge580 1_1 Int");
 
             long longIndex;
 
@@ -40,16 +40,16 @@ namespace Bridge.ClientTest.BridgeIssues
             longIndex = 0;
             arrs.CopyTo(dst, longIndex);
 
-            Assert.AreEqual(dst.Length, 2, "Bridge580 Length Long");
-            Assert.AreEqual(dst[0], arrs[0], "Bridge580 0 Long");
-            Assert.AreEqual(dst[1], arrs[1], "Bridge580 1 Long");
+            Assert.AreEqual(2, dst.Length, "Bridge580 Length Long");
+            Assert.AreEqual(arrs[0], dst[0], "Bridge580 0 Long");
+            Assert.AreEqual(arrs[1], dst[1], "Bridge580 1 Long");
 
             dst = new string[1];
             longIndex = 1;
             arrs.CopyTo(dst, longIndex);
 
-            Assert.AreEqual(dst.Length, 1, "Bridge580 Length 1 Long");
-            Assert.AreEqual(dst[0], arrs[1], "Bridge580 1_1 Long");
+            Assert.AreEqual(1, dst.Length, "Bridge580 Length 1 Long");
+            Assert.AreEqual(arrs[1], dst[0], "Bridge580 1_1 Long");
         }
     }
 }

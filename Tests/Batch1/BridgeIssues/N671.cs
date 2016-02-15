@@ -40,7 +40,7 @@ namespace Bridge.ClientTest.BridgeIssues
         [Test(ExpectedCount = 1)]
         public static void TestUseCase()
         {
-            Assert.AreEqual(new Bridge671().Invoke(), 1);
+            Assert.AreEqual(1, new Bridge671().Invoke());
         }
     }
 }

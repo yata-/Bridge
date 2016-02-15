@@ -16,7 +16,7 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.False((object)0.5 is byte);
             Assert.True((object)-1 is byte);
             Assert.True((object)256 is byte);
-            Assert.AreEqual(typeof(byte).GetClassName(), "Bridge.Int");
+            Assert.AreEqual("Bridge.Int", typeof(byte).GetClassName());
             object b = (byte)0;
             Assert.True(b is byte);
             Assert.True(b is IComparable<byte>);
@@ -32,30 +32,30 @@ namespace Bridge.ClientTest.SimpleTypes
 
             // TODO unchecked
             {
-                Assert.AreStrictEqual((byte)i1, -1, "-1 unchecked");
-                Assert.AreStrictEqual((byte)i2, 0, "0 unchecked");
-                Assert.AreStrictEqual((byte)i3, 234, "234 unchecked");
-                Assert.AreStrictEqual((byte)i4, 255, "255 unchecked");
-                Assert.AreStrictEqual((byte)i5, 256, "256 unchecked");
+                Assert.AreStrictEqual(-1, (byte)i1, "-1 unchecked");
+                Assert.AreStrictEqual(0, (byte)i2, "0 unchecked");
+                Assert.AreStrictEqual(234, (byte)i3, "234 unchecked");
+                Assert.AreStrictEqual(255, (byte)i4, "255 unchecked");
+                Assert.AreStrictEqual(256, (byte)i5, "256 unchecked");
 
-                Assert.AreStrictEqual((byte?)ni1, -1, "nullable -1 unchecked");
-                Assert.AreStrictEqual((byte?)ni2, 0, "nullable 0 unchecked");
-                Assert.AreStrictEqual((byte?)ni3, 234, "nullable 234 unchecked");
-                Assert.AreStrictEqual((byte?)ni4, 255, "nullable 255 unchecked");
-                Assert.AreStrictEqual((byte?)ni5, 256, "nullable 256 unchecked");
-                Assert.AreStrictEqual((byte?)ni6, null, "null unchecked");
+                Assert.AreStrictEqual(-1, (byte?)ni1, "nullable -1 unchecked");
+                Assert.AreStrictEqual(0, (byte?)ni2, "nullable 0 unchecked");
+                Assert.AreStrictEqual(234, (byte?)ni3, "nullable 234 unchecked");
+                Assert.AreStrictEqual(255, (byte?)ni4, "nullable 255 unchecked");
+                Assert.AreStrictEqual(256, (byte?)ni5, "nullable 256 unchecked");
+                Assert.AreStrictEqual(null, (byte?)ni6, "null unchecked");
             }
 
             //checked
             {
-                Assert.AreStrictEqual((byte)i2, 0, "0 checked");
-                Assert.AreStrictEqual((byte)i3, 234, "234 checked");
-                Assert.AreStrictEqual((byte)i4, 255, "256 checked");
+                Assert.AreStrictEqual(0, (byte)i2, "0 checked");
+                Assert.AreStrictEqual(234, (byte)i3, "234 checked");
+                Assert.AreStrictEqual(255, (byte)i4, "256 checked");
 
-                Assert.AreStrictEqual((byte?)ni2, 0, "nullable 0 checked");
-                Assert.AreStrictEqual((byte?)ni3, 234, "nullable 234 checked");
-                Assert.AreStrictEqual((byte?)ni4, 255, "nullable 255 checked");
-                Assert.AreStrictEqual((byte?)ni6, null, "null checked");
+                Assert.AreStrictEqual(0, (byte?)ni2, "nullable 0 checked");
+                Assert.AreStrictEqual(234, (byte?)ni3, "nullable 234 checked");
+                Assert.AreStrictEqual(255, (byte?)ni4, "nullable 255 checked");
+                Assert.AreStrictEqual(null, (byte?)ni6, "null checked");
             }
         }
 
@@ -67,39 +67,39 @@ namespace Bridge.ClientTest.SimpleTypes
         [Test]
         public void DefaultValueIs0()
         {
-            Assert.AreStrictEqual(GetDefaultValue<byte>(), 0);
+            Assert.AreStrictEqual(0, GetDefaultValue<byte>());
         }
 
         [Test]
         public void DefaultConstructorReturnsZero()
         {
-            Assert.AreStrictEqual(new byte(), 0);
+            Assert.AreStrictEqual(0, new byte());
         }
 
         [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void CreatingInstanceReturnsZero()
         {
-            Assert.AreEqual(Activator.CreateInstance<byte>(), 0);
+            Assert.AreEqual(0, Activator.CreateInstance<byte>());
         }
 
         [Test]
         public void ConstantsWork()
         {
-            Assert.AreEqual(byte.MinValue, 0);
-            Assert.AreEqual(byte.MaxValue, 255);
+            Assert.AreEqual(0, byte.MinValue);
+            Assert.AreEqual(255, byte.MaxValue);
         }
 
         [Test]
         public void FormatWorks()
         {
-            Assert.AreEqual(((byte)0x12).Format("x"), "12");
+            Assert.AreEqual("12", ((byte)0x12).Format("x"));
         }
 
         [Test]
         public void IFormattableToStringWorks()
         {
-            Assert.AreEqual(((byte)0x12).ToString("x"), "12");
+            Assert.AreEqual("12", ((byte)0x12).ToString("x"));
         }
 
         [Test]
@@ -108,37 +108,37 @@ namespace Bridge.ClientTest.SimpleTypes
             byte numberResult;
             bool result = byte.TryParse("234", out numberResult);
             Assert.True(result);
-            Assert.AreEqual(numberResult, 234);
+            Assert.AreEqual(234, numberResult);
 
             result = byte.TryParse("", out numberResult);
             Assert.False(result);
-            Assert.AreEqual(numberResult, 0);
+            Assert.AreEqual(0, numberResult);
 
             result = byte.TryParse(null, out numberResult);
             Assert.False(result);
-            Assert.AreEqual(numberResult, 0);
+            Assert.AreEqual(0, numberResult);
 
             result = byte.TryParse("notanumber", out numberResult);
             Assert.False(result);
-            Assert.AreEqual(numberResult, 0);
+            Assert.AreEqual(0, numberResult);
 
             result = byte.TryParse("54768", out numberResult);
             Assert.False(result);
-            Assert.AreEqual(numberResult, 54768);
+            Assert.AreEqual(54768, numberResult);
 
             result = byte.TryParse("-1", out numberResult);
             Assert.False(result);
-            Assert.AreEqual(numberResult, -1);
+            Assert.AreEqual(-1, numberResult);
 
             result = byte.TryParse("2.5", out numberResult);
             Assert.False(result);
-            Assert.AreEqual(numberResult, 0);
+            Assert.AreEqual(0, numberResult);
         }
 
         [Test]
         public void ParseWorks()
         {
-            Assert.AreEqual(byte.Parse("234"), 234);
+            Assert.AreEqual(234, byte.Parse("234"));
             Assert.Throws(() => byte.Parse(""));
             Assert.Throws(() => byte.Parse(null));
             Assert.Throws(() => byte.Parse("notanumber"));
@@ -150,14 +150,14 @@ namespace Bridge.ClientTest.SimpleTypes
         [Test]
         public void ToStringWithoutRadixWorks()
         {
-            Assert.AreEqual(((byte)123).ToString(), "123");
+            Assert.AreEqual("123", ((byte)123).ToString());
         }
 
         [Test]
         public void ToStringWithRadixWorks()
         {
-            Assert.AreEqual(((byte)123).ToString(10), "123");
-            Assert.AreEqual(((byte)0x12).ToString(16), "12");
+            Assert.AreEqual("123", ((byte)123).ToString(10));
+            Assert.AreEqual("12", ((byte)0x12).ToString(16));
         }
 
         [Test]
@@ -165,7 +165,7 @@ namespace Bridge.ClientTest.SimpleTypes
         {
             Assert.AreEqual(((byte)0).GetHashCode(), ((byte)0).GetHashCode());
             Assert.AreEqual(((byte)1).GetHashCode(), ((byte)1).GetHashCode());
-            Assert.AreNotEqual(((byte)0).GetHashCode(), ((byte)1).GetHashCode());
+            Assert.AreNotEqual(((byte)1).GetHashCode(), ((byte)0).GetHashCode());
         }
 
         [Test]

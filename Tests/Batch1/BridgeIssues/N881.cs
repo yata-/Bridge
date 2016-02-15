@@ -16,7 +16,7 @@ namespace Bridge.ClientTest.BridgeIssues
         public static void TestUseCase()
         {
             var i = Bridge881A.Name;
-            Assert.AreEqual(i, Bridge881A.Name);
+            Assert.AreEqual(Bridge881A.Name, i);
         }
     }
 }

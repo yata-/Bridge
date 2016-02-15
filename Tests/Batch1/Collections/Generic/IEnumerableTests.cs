@@ -43,11 +43,11 @@ namespace Bridge.ClientTest.Collections.Generic
         {
             var e = new[] { "x", "y", "z" }.GetEnumerator();
             Assert.True(e.MoveNext());
-            Assert.AreEqual(e.Current, "x");
+            Assert.AreEqual("x", e.Current);
             Assert.True(e.MoveNext());
-            Assert.AreEqual(e.Current, "y");
+            Assert.AreEqual("y", e.Current);
             Assert.True(e.MoveNext());
-            Assert.AreEqual(e.Current, "z");
+            Assert.AreEqual("z", e.Current);
             Assert.False(e.MoveNext());
         }
 
@@ -57,11 +57,11 @@ namespace Bridge.ClientTest.Collections.Generic
             IEnumerable<string> enm = new[] { "x", "y", "z" };
             var e = enm.GetEnumerator();
             Assert.True(e.MoveNext());
-            Assert.AreEqual(e.Current, "x");
+            Assert.AreEqual("x", e.Current);
             Assert.True(e.MoveNext());
-            Assert.AreEqual(e.Current, "y");
+            Assert.AreEqual("y", e.Current);
             Assert.True(e.MoveNext());
-            Assert.AreEqual(e.Current, "z");
+            Assert.AreEqual("z", e.Current);
             Assert.False(e.MoveNext());
         }
 
@@ -71,11 +71,11 @@ namespace Bridge.ClientTest.Collections.Generic
             MyEnumerable enm = new MyEnumerable();
             var e = enm.GetEnumerator();
             Assert.True(e.MoveNext());
-            Assert.AreEqual(e.Current, "x");
+            Assert.AreEqual("x", e.Current);
             Assert.True(e.MoveNext());
-            Assert.AreEqual(e.Current, "y");
+            Assert.AreEqual("y", e.Current);
             Assert.True(e.MoveNext());
-            Assert.AreEqual(e.Current, "z");
+            Assert.AreEqual("z", e.Current);
             Assert.False(e.MoveNext());
         }
 
@@ -85,11 +85,11 @@ namespace Bridge.ClientTest.Collections.Generic
             IEnumerable<string> enm = new MyEnumerable();
             var e = enm.GetEnumerator();
             Assert.True(e.MoveNext());
-            Assert.AreEqual(e.Current, "x");
+            Assert.AreEqual("x", e.Current);
             Assert.True(e.MoveNext());
-            Assert.AreEqual(e.Current, "y");
+            Assert.AreEqual("y", e.Current);
             Assert.True(e.MoveNext());
-            Assert.AreEqual(e.Current, "z");
+            Assert.AreEqual("z", e.Current);
             Assert.False(e.MoveNext());
         }
     }

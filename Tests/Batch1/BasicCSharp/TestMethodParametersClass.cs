@@ -26,10 +26,10 @@ namespace Bridge.ClientTest.BasicCSharp
         [Test(ExpectedCount = 3)]
         public static void Test()
         {
-            Assert.AreEqual(TestMethodParametersClass.MethodDefault(), 5, "Default parameter - 5");
-            Assert.AreEqual(TestMethodParametersClass.MethodDefault(10), 10, "Default parameter - 10");
+            Assert.AreEqual(5, TestMethodParametersClass.MethodDefault(), "Default parameter - 5");
+            Assert.AreEqual(10, TestMethodParametersClass.MethodDefault(10), "Default parameter - 10");
 
-            Assert.AreEqual(TestMethodParametersClass.MethodParams(new[] { 1, 2, 3 }), 6, "params int[]");
+            Assert.AreEqual(6, TestMethodParametersClass.MethodParams(new[] { 1, 2, 3 }), "params int[]");
         }
     }
 }

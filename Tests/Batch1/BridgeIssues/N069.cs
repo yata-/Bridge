@@ -23,7 +23,7 @@ namespace Bridge.ClientTest.BridgeIssues
         public static void ThisKeywordInStructConstructorWorks()
         {
             var p = new Point69(10);
-            Assert.AreEqual(p.y, 10);
+            Assert.AreEqual(10, p.y);
         }
     }
 }

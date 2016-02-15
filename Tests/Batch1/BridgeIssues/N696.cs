@@ -21,8 +21,8 @@ namespace Bridge.ClientTest.BridgeIssues
             namedCallbacks.Add("Shout", message => message.Length);
             namedCallbacks.Add("Whisper", message => message.Length);
 
-            Assert.AreEqual(namedCallbacks["Shout"]("HELLO!"), 6, "Bridge696 HELLO!");
-            Assert.AreEqual(namedCallbacks["Whisper"]("HELLO"), 5, "Bridge696 HELLO");
+            Assert.AreEqual(6, namedCallbacks["Shout"]("HELLO!"), "Bridge696 HELLO!");
+            Assert.AreEqual(5, namedCallbacks["Whisper"]("HELLO"), "Bridge696 HELLO");
         }
     }
 }

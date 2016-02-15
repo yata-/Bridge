@@ -55,15 +55,15 @@ namespace Bridge.ClientTest.BridgeIssues
         {
             var c2 = new C2("C2 value");
             Assert.True(c2 != null, "Bridge588 C2");
-            Assert.AreEqual(c2.Name, "C2 value", "Bridge588 C2.Name");
+            Assert.AreEqual("C2 value", c2.Name, "Bridge588 C2.Name");
 
             var c1 = new C1(c2);
             Assert.True(c1 != null, "Bridge588 C1");
-            Assert.AreEqual(c1.Value.Name, "C2 value", "Bridge588 C1.Value.Name");
+            Assert.AreEqual("C2 value", c1.Value.Name, "Bridge588 C1.Value.Name");
 
             Assert.True(C1.Default != null, "Bridge588 C1.Default");
             Assert.True(C1.Default.Value != null, "Bridge588 C1.Default.Value");
-            Assert.AreEqual(C1.Default.Value.Name, "default", "Bridge588 C1.Default.Value.Name");
+            Assert.AreEqual("default", C1.Default.Value.Name, "Bridge588 C1.Default.Value.Name");
             Assert.True(C2.Default != null, "Bridge588 C2.Default");
             Assert.True(C2.Default.Name != null, "Bridge588 C2.Default.Name");
 
@@ -78,8 +78,8 @@ namespace Bridge.ClientTest.BridgeIssues
         [Test(ExpectedCount = 2)]
         public static void TestUseCase1()
         {
-            Assert.AreEqual(Bridge588A.Valeur3, 3, "Bridge588 TestUseCase");
-            Assert.AreEqual(Bridge588C.C1.Default.Value.Name, "default", "Bridge588_2 TestUseCase");
+            Assert.AreEqual(3, Bridge588A.Valeur3, "Bridge588 TestUseCase");
+            Assert.AreEqual("default", Bridge588C.C1.Default.Value.Name, "Bridge588_2 TestUseCase");
         }
     }
 }

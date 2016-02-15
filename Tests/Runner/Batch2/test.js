@@ -6,40 +6,40 @@
             async: function () {
                 return Bridge.get(Bridge.Test.Assert).assert.async();
             },
-            areEqual: function (actual, expected) {
+            areEqual: function (expected, actual) {
                 Bridge.get(Bridge.Test.Assert).assert.deepEqual(actual, expected);
             },
-            areEqual$1: function (actual, expected, description) {
+            areEqual$1: function (expected, actual, description) {
                 Bridge.get(Bridge.Test.Assert).assert.deepEqual(actual, expected, description);
             },
-            areDeepEqual: function (actual, expected) {
+            areDeepEqual: function (expected, actual) {
                 Bridge.get(Bridge.Test.Assert).assert.deepEqual(actual, expected);
             },
-            areDeepEqual$1: function (actual, expected, description) {
+            areDeepEqual$1: function (expected, actual, description) {
                 Bridge.get(Bridge.Test.Assert).assert.deepEqual(actual, expected, description);
             },
-            areStrictEqual: function (actual, expected) {
+            areStrictEqual: function (expected, actual) {
                 Bridge.get(Bridge.Test.Assert).assert.strictEqual(actual, expected);
             },
-            areStrictEqual$1: function (actual, expected, description) {
+            areStrictEqual$1: function (expected, actual, description) {
                 Bridge.get(Bridge.Test.Assert).assert.strictEqual(actual, expected, description);
             },
-            areNotEqual: function (actual, expected) {
+            areNotEqual: function (expected, actual) {
                 Bridge.get(Bridge.Test.Assert).assert.notDeepEqual(actual, expected);
             },
-            areNotEqual$1: function (actual, expected, description) {
+            areNotEqual$1: function (expected, actual, description) {
                 Bridge.get(Bridge.Test.Assert).assert.notDeepEqual(actual, expected, description);
             },
-            areNotDeepEqual: function (actual, expected) {
+            areNotDeepEqual: function (expected, actual) {
                 Bridge.get(Bridge.Test.Assert).assert.notDeepEqual(actual, expected);
             },
-            areNotDeepEqual$1: function (actual, expected, description) {
+            areNotDeepEqual$1: function (expected, actual, description) {
                 Bridge.get(Bridge.Test.Assert).assert.notDeepEqual(actual, expected, description);
             },
-            areNotStrictEqual: function (actual, expected) {
+            areNotStrictEqual: function (expected, actual) {
                 Bridge.get(Bridge.Test.Assert).assert.notStrictEqual(actual, expected);
             },
-            areNotStrictEqual$1: function (actual, expected, description) {
+            areNotStrictEqual$1: function (expected, actual, description) {
                 Bridge.get(Bridge.Test.Assert).assert.notStrictEqual(actual, expected, description);
             },
             $true: function (condition) {

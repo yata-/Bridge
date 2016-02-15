@@ -40,7 +40,7 @@ namespace Bridge.ClientTest.BridgeIssues
         {
             Func<string, Bridge664A> f = s => (Bridge664A)s;
             // if cast will be emitted then exception will be thrown because Bridge664A is not emitted
-            Assert.AreEqual(f("test"), "test", "Bridge664");
+            Assert.AreEqual("test", f("test"), "Bridge664");
 
             Assert.Throws(() => { Bridge664C b = Script.Write<Bridge664C>("{ }"); var s = (Bridge664B)b; }, "Bridge664 Should throw exception");
 

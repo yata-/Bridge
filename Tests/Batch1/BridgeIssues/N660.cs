@@ -59,7 +59,7 @@ namespace Bridge.ClientTest.BridgeIssues
         [Test(ExpectedCount = 1)]
         public static void TestUseCase()
         {
-            Assert.AreEqual(Bridge660MessageStore._initialEditState.Content.Text, "Message", "Bridge660 Initialize static members before first access to the class");
+            Assert.AreEqual("Message", Bridge660MessageStore._initialEditState.Content.Text, "Bridge660 Initialize static members before first access to the class");
         }
     }
 }

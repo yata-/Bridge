@@ -12,7 +12,7 @@ namespace Bridge.ClientTest.Exceptions
         [Test]
         public void TypePropertiesAreCorrect()
         {
-            Assert.AreEqual(typeof(OperationCanceledException).GetClassName(), "Bridge.OperationCanceledException", "Name");
+            Assert.AreEqual("Bridge.OperationCanceledException", typeof(OperationCanceledException).GetClassName(), "Name");
             object d = new OperationCanceledException();
             Assert.True(d is OperationCanceledException, "is OperationCanceledException");
             Assert.True(d is Exception, "is Exception");
@@ -23,7 +23,7 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new OperationCanceledException();
             Assert.True((object)ex is OperationCanceledException, "is OperationCanceledException");
-            Assert.AreEqual(ex.Message, "Operation was canceled.", "Message");
+            Assert.AreEqual("Operation was canceled.", ex.Message, "Message");
             Assert.True(ReferenceEquals(ex.CancellationToken, CancellationToken.None), "CancellationToken");
             Assert.Null(ex.InnerException, "InnerException");
         }
@@ -34,7 +34,7 @@ namespace Bridge.ClientTest.Exceptions
             var ct = new CancellationToken();
             var ex = new OperationCanceledException(ct);
             Assert.True((object)ex is OperationCanceledException, "is OperationCanceledException");
-            Assert.AreEqual(ex.Message, "Operation was canceled.", "Message");
+            Assert.AreEqual("Operation was canceled.", ex.Message, "Message");
             Assert.True(ReferenceEquals(ex.CancellationToken, ct), "CancellationToken");
             Assert.Null(ex.InnerException, "InnerException");
         }
@@ -44,7 +44,7 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new OperationCanceledException("Some message");
             Assert.True((object)ex is OperationCanceledException, "is OperationCanceledException");
-            Assert.AreEqual(ex.Message, "Some message", "Message");
+            Assert.AreEqual("Some message", ex.Message, "Message");
             Assert.True(ReferenceEquals(ex.CancellationToken, CancellationToken.None), "CancellationToken");
             Assert.Null(ex.InnerException, "InnerException");
         }
@@ -55,7 +55,7 @@ namespace Bridge.ClientTest.Exceptions
             var innerException = new Exception();
             var ex = new OperationCanceledException("Some message", innerException);
             Assert.True((object)ex is OperationCanceledException, "is OperationCanceledException");
-            Assert.AreEqual(ex.Message, "Some message", "Message");
+            Assert.AreEqual("Some message", ex.Message, "Message");
             Assert.True(ReferenceEquals(ex.CancellationToken, CancellationToken.None), "CancellationToken");
             Assert.True(ReferenceEquals(ex.InnerException, innerException), "InnerException");
         }
@@ -66,7 +66,7 @@ namespace Bridge.ClientTest.Exceptions
             var ct = new CancellationToken();
             var ex = new OperationCanceledException("Some message", ct);
             Assert.True((object)ex is OperationCanceledException, "is OperationCanceledException");
-            Assert.AreEqual(ex.Message, "Some message", "Message");
+            Assert.AreEqual("Some message", ex.Message, "Message");
             Assert.True(ReferenceEquals(ex.CancellationToken, ct), "CancellationToken");
             Assert.Null(ex.InnerException, "InnerException");
         }
@@ -78,7 +78,7 @@ namespace Bridge.ClientTest.Exceptions
             var innerException = new Exception();
             var ex = new OperationCanceledException("Some message", innerException, ct);
             Assert.True((object)ex is OperationCanceledException, "is OperationCanceledException");
-            Assert.AreEqual(ex.Message, "Some message", "Message");
+            Assert.AreEqual("Some message", ex.Message, "Message");
             Assert.True(ReferenceEquals(ex.CancellationToken, ct), "CancellationToken");
             Assert.True(ReferenceEquals(ex.InnerException, innerException), "InnerException");
         }

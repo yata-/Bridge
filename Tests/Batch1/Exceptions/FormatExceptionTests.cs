@@ -14,7 +14,7 @@ namespace Bridge.ClientTest.Exceptions
         [Test]
         public void TypePropertiesAreCorrect()
         {
-            Assert.AreEqual(typeof(FormatException).GetClassName(), "Bridge.FormatException", "Name");
+            Assert.AreEqual("Bridge.FormatException", typeof(FormatException).GetClassName(), "Name");
             object d = new FormatException();
             Assert.True(d is FormatException, "is FormatException");
             Assert.True(d is Exception, "is Exception");
@@ -25,8 +25,8 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new FormatException();
             Assert.True((object)ex is FormatException, "is FormatException");
-            Assert.AreEqual(ex.InnerException, null, "InnerException");
-            Assert.AreEqual(ex.Message, "Invalid format.");
+            Assert.AreEqual(null, ex.InnerException, "InnerException");
+            Assert.AreEqual("Invalid format.", ex.Message);
         }
 
         [Test]
@@ -34,8 +34,8 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new FormatException("The message");
             Assert.True((object)ex is FormatException, "is FormatException");
-            Assert.AreEqual(ex.InnerException, null, "InnerException");
-            Assert.AreEqual(ex.Message, "The message");
+            Assert.AreEqual(null, ex.InnerException, "InnerException");
+            Assert.AreEqual("The message", ex.Message);
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace Bridge.ClientTest.Exceptions
             var ex = new FormatException("The message", inner);
             Assert.True((object)ex is FormatException, "is FormatException");
             Assert.True(ReferenceEquals(ex.InnerException, inner), "InnerException");
-            Assert.AreEqual(ex.Message, "The message");
+            Assert.AreEqual("The message", ex.Message);
         }
     }
 }

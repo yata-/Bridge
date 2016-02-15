@@ -21,7 +21,7 @@ namespace Bridge.ClientTest.BridgeIssues
 
             destString += srcString[2];
 
-            Assert.AreEqual(destString, "43", "Bridge538 '43'");
+            Assert.AreEqual("43", destString, "Bridge538 '43'");
         }
     }
 }

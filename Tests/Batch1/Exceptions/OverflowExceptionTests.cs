@@ -14,7 +14,7 @@ namespace Bridge.ClientTest.Exceptions
         [Test]
         public void TypePropertiesAreCorrect()
         {
-            Assert.AreEqual(typeof(OverflowException).GetClassName(), "Bridge.OverflowException", "Name");
+            Assert.AreEqual("Bridge.OverflowException", typeof(OverflowException).GetClassName(), "Name");
             object d = new OverflowException();
             Assert.True(d is OverflowException, "is OverflowException");
             Assert.True(d is Exception, "is Exception");
@@ -25,8 +25,8 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new OverflowException();
             Assert.True((object)ex is OverflowException, "is OverflowException");
-            Assert.AreEqual(ex.InnerException, null, "InnerException");
-            Assert.AreEqual(ex.Message, "Arithmetic operation resulted in an overflow.");
+            Assert.AreEqual(null, ex.InnerException, "InnerException");
+            Assert.AreEqual("Arithmetic operation resulted in an overflow.", ex.Message);
         }
 
         [Test]
@@ -34,8 +34,8 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new OverflowException("The message");
             Assert.True((object)ex is OverflowException, "is OverflowException");
-            Assert.AreEqual(ex.InnerException, null, "InnerException");
-            Assert.AreEqual(ex.Message, "The message");
+            Assert.AreEqual(null, ex.InnerException, "InnerException");
+            Assert.AreEqual("The message", ex.Message);
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace Bridge.ClientTest.Exceptions
             var ex = new OverflowException("The message", inner);
             Assert.True((object)ex is OverflowException, "is OverflowException");
             Assert.True(ReferenceEquals(ex.InnerException, inner), "InnerException");
-            Assert.AreEqual(ex.Message, "The message");
+            Assert.AreEqual("The message", ex.Message);
         }
     }
 }

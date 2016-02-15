@@ -16,7 +16,7 @@ namespace Bridge.ClientTest.Exceptions
         [Test]
         public void TypePropertiesAreCorrect()
         {
-            Assert.AreEqual(typeof(RankException).GetClassName(), "Bridge.RankException", "Name");
+            Assert.AreEqual("Bridge.RankException", typeof(RankException).GetClassName(), "Name");
             object d = new RankException();
             Assert.True(d is RankException);
             Assert.True(d is Exception);
@@ -27,8 +27,8 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new RankException();
             Assert.True((object)ex is RankException, "is ArgumentException");
-            Assert.AreEqual(ex.InnerException, null, "InnerException");
-            Assert.AreEqual(ex.Message, DefaultMessage);
+            Assert.AreEqual(null, ex.InnerException, "InnerException");
+            Assert.AreEqual(DefaultMessage, ex.Message);
         }
 
         [Test]
@@ -36,8 +36,8 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new RankException("The message");
             Assert.True((object)ex is RankException, "is RankException");
-            Assert.AreEqual(ex.InnerException, null, "InnerException");
-            Assert.AreEqual(ex.Message, "The message");
+            Assert.AreEqual(null, ex.InnerException, "InnerException");
+            Assert.AreEqual("The message", ex.Message);
         }
     }
 }
