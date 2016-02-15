@@ -92,6 +92,51 @@ namespace Bridge.Translator
             return inherits;
         }
 
+        private void QuickSort(IList<ITypeInfo> list, int l, int r)
+        {
+            ITypeInfo temp;
+            ITypeInfo x = list[l + (r - l) / 2];
+            int i = l;
+            int j = r;
+            while (i <= j)
+            {
+
+                while (this.CompareTypeInfosByPriority(list[i], x) == -1)
+                {
+                    i++;
+                }
+
+                while (this.CompareTypeInfosByPriority(list[j], x) == 1)
+                {
+                    j--;
+                }
+
+                if (i <= j)
+                {
+                    if (this.CompareTypeInfosByPriority(list[i], list[j]) != 0)
+                    {
+                        temp = list[i];
+                        list[i] = list[j];
+                        list[j] = temp;
+                    }
+                    
+                    i++;
+                    j--;
+                }
+            }
+
+            if (i < r)
+            {
+                this.QuickSort(list, i, r);
+            }
+
+
+            if (l < j)
+            {
+                this.QuickSort(list, l, j);
+            }
+        }
+
         public virtual void SortTypesByInheritance()
         {
             this.Log.Trace("Sorting types by inheritance...");
@@ -101,34 +146,7 @@ namespace Bridge.Translator
             //this.Types.Sort has strange effects for items with 0 priority
 
             this.Log.Trace("Priority sorting...");
-
-            long hitCounter1 = 0;
-            long hitCounter2 = 0;
-            long hitCounter3 = 0;
-
-            ITypeInfo temp;
-            for (int write = 0; write < this.Types.Count; write++)
-            {
-                hitCounter1++;
-
-                for (int sort = 0; sort < this.Types.Count - 1; sort++)
-                {
-                    hitCounter2++;
-
-                    if (this.CompareTypeInfosByPriority(this.Types[sort], this.Types[sort + 1]) == 1)
-                    {
-                        hitCounter3++;
-
-                        temp = this.Types[sort + 1];
-                        this.Types[sort + 1] = this.Types[sort];
-                        this.Types[sort] = temp;
-                    }
-                }
-            }
-
-            this.Log.Trace("\thitCounter1 = " + hitCounter1);
-            this.Log.Trace("\thitCounter2 = " + hitCounter2);
-            this.Log.Trace("\thitCounter3 = " + hitCounter3);
+            this.QuickSort(this.Types, 0, this.Types.Count - 1);
 
             this.Log.Trace("Priority sorting done");
 
