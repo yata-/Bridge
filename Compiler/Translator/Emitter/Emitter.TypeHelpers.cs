@@ -146,6 +146,7 @@ namespace Bridge.Translator
             //this.Types.Sort has strange effects for items with 0 priority
 
             this.Log.Trace("Priority sorting...");
+
             this.QuickSort(this.Types, 0, this.Types.Count - 1);
 
             this.Log.Trace("Priority sorting done");
