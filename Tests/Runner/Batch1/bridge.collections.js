@@ -1,4 +1,6 @@
-﻿(function (globals) {
+﻿/* global Bridge */
+
+(function (globals) {
     "use strict";
 
     Bridge.define('Bridge.Collections.BitArray', {
@@ -1717,8 +1719,8 @@
                 Bridge.Array.copy(this._array, 0, array, arrayIndex, this._size);
                 Bridge.Array.reverse(array, arrayIndex, this._size);
             }
-            catch ($e1) {
-                $e1 = Bridge.Exception.create($e1);
+            catch ($e) {
+                $e = Bridge.Exception.create($e);
                 throw new Bridge.ArgumentException("Target array type is not compatible with the type of items in the collection.");
             }
         },

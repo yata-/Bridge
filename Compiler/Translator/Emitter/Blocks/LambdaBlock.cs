@@ -232,11 +232,6 @@ namespace Bridge.Translator
                 this.WriteCloseParentheses();
             }
 
-            if (!block && !this.IsAsync)
-            {
-                this.EmitTempVars(pos);
-            }
-
             this.PopLocals();
             this.ClearLocalsMap(prevMap);
             this.ClearLocalsNamesMap(prevNamesMap);
