@@ -1,5 +1,4 @@
-﻿
-(function (globals) {
+﻿(function (globals) {
     
     Bridge.define('Bridge.Test.Assert', {
         statics: {
