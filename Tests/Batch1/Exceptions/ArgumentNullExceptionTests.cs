@@ -14,7 +14,7 @@ namespace Bridge.ClientTest.Exceptions
         [Test]
         public void TypePropertiesAreCorrect()
         {
-            Assert.AreEqual(typeof(ArgumentNullException).GetClassName(), "Bridge.ArgumentNullException", "Name");
+            Assert.AreEqual("Bridge.ArgumentNullException", typeof(ArgumentNullException).GetClassName(), "Name");
             object d = new ArgumentNullException();
             Assert.True(d is ArgumentNullException, "is ArgumentNullException");
             Assert.True(d is ArgumentException, "is ArgumentException");
@@ -26,9 +26,9 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new ArgumentNullException();
             Assert.True((object)ex is ArgumentNullException, "is ArgumentNullException");
-            Assert.AreEqual(ex.ParamName, null, "ParamName");
-            Assert.AreEqual(ex.InnerException, null, "InnerException");
-            Assert.AreEqual(ex.Message, "Value cannot be null.");
+            Assert.AreEqual(null, ex.ParamName, "ParamName");
+            Assert.AreEqual(null, ex.InnerException, "InnerException");
+            Assert.AreEqual("Value cannot be null.", ex.Message);
         }
 
         [Test]
@@ -36,9 +36,9 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new ArgumentNullException("someParam");
             Assert.True((object)ex is ArgumentNullException, "is ArgumentNullException");
-            Assert.AreEqual(ex.ParamName, "someParam", "ParamName");
-            Assert.AreEqual(ex.InnerException, null, "InnerException");
-            Assert.AreEqual(ex.Message, "Value cannot be null.\nParameter name: someParam");
+            Assert.AreEqual("someParam", ex.ParamName, "ParamName");
+            Assert.AreEqual(null, ex.InnerException, "InnerException");
+            Assert.AreEqual("Value cannot be null.\nParameter name: someParam", ex.Message);
         }
 
         [Test]
@@ -46,9 +46,9 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new ArgumentNullException("someParam", "The message");
             Assert.True((object)ex is ArgumentNullException, "is ArgumentNullException");
-            Assert.AreEqual(ex.ParamName, "someParam", "ParamName");
-            Assert.AreEqual(ex.InnerException, null, "InnerException");
-            Assert.AreEqual(ex.Message, "The message");
+            Assert.AreEqual("someParam", ex.ParamName, "ParamName");
+            Assert.AreEqual(null, ex.InnerException, "InnerException");
+            Assert.AreEqual("The message", ex.Message);
         }
 
         [Test]
@@ -57,9 +57,9 @@ namespace Bridge.ClientTest.Exceptions
             var inner = new Exception("a");
             var ex = new ArgumentNullException("The message", inner);
             Assert.True((object)ex is ArgumentNullException, "is ArgumentException");
-            Assert.AreEqual(ex.ParamName, null, "ParamName");
-            Assert.AreEqual(ex.InnerException, inner, "InnerException");
-            Assert.AreEqual(ex.Message, "The message");
+            Assert.AreEqual(null, ex.ParamName, "ParamName");
+            Assert.AreEqual(inner, ex.InnerException, "InnerException");
+            Assert.AreEqual("The message", ex.Message);
         }
     }
 }

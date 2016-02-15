@@ -18,7 +18,7 @@ namespace Bridge.ClientTest.BridgeIssues
         [Test(ExpectedCount = 1)]
         public static void TestUseCase()
         {
-            Assert.AreEqual(Count(), 0);
+            Assert.AreEqual(0, Count());
         }
 
         private static IEnumerable<T> MakeEnumerable<T>(params T[] arr)
@@ -30,17 +30,17 @@ namespace Bridge.ClientTest.BridgeIssues
         [Test(ExpectedCount = 8)]
         public static void TestMakeEnumerable()
         {
-            Assert.AreEqual(MakeEnumerable<object>().Count(), 0, "MakeEnumerable object 0");
-            Assert.AreEqual(MakeEnumerable<object>(1, 2.0).Count(), 2, "MakeEnumerable object 2");
+            Assert.AreEqual(0, MakeEnumerable<object>().Count(), "MakeEnumerable object 0");
+            Assert.AreEqual(2, MakeEnumerable<object>(1, 2.0).Count(), "MakeEnumerable object 2");
 
-            Assert.AreEqual(MakeEnumerable<string>().Count(), 0, "MakeEnumerable string 0");
-            Assert.AreEqual(MakeEnumerable<string>("a", "b", "c").Count(), 3, "MakeEnumerable string 3");
+            Assert.AreEqual(0, MakeEnumerable<string>().Count(), "MakeEnumerable string 0");
+            Assert.AreEqual(3, MakeEnumerable<string>("a", "b", "c").Count(), "MakeEnumerable string 3");
 
-            Assert.AreEqual(MakeEnumerable<IEnumerable<object>>().Count(), 0, "MakeEnumerable IEnumerable<object> 0");
-            Assert.AreEqual(MakeEnumerable<IEnumerable<object>>(new object[] { 1, 2 }).Count(), 1, "MakeEnumerable IEnumerable<object> 1");
+            Assert.AreEqual(0, MakeEnumerable<IEnumerable<object>>().Count(), "MakeEnumerable IEnumerable<object> 0");
+            Assert.AreEqual(1, MakeEnumerable<IEnumerable<object>>(new object[] { 1, 2 }).Count(), "MakeEnumerable IEnumerable<object> 1");
 
-            Assert.AreEqual(MakeEnumerable<List<List<object>>>().Count(), 0, "MakeEnumerable List<List<object>> 0");
-            Assert.AreEqual(MakeEnumerable<List<List<int>>>(new List<List<int>>( ), new List<List<int>>()).Count(), 2, "MakeEnumerable List<List<object>> 2");
+            Assert.AreEqual(0, MakeEnumerable<List<List<object>>>().Count(), "MakeEnumerable List<List<object>> 0");
+            Assert.AreEqual(2, MakeEnumerable<List<List<int>>>(new List<List<int>>(), new List<List<int>>()).Count(), "MakeEnumerable List<List<object>> 2");
         }
     }
 }

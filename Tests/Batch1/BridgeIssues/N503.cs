@@ -17,13 +17,13 @@ namespace Bridge.ClientTest.BridgeIssues
 
             list.AddRange(a);
 
-            Assert.AreEqual(a.Length, 3, "Bridge503: array.Length is correct");
-            Assert.AreEqual(list.Count, 6, "Bridge503: list.Count is correct");
+            Assert.AreEqual(3, a.Length, "Bridge503: array.Length is correct");
+            Assert.AreEqual(6, list.Count, "Bridge503: list.Count is correct");
 
             list.Clear();
 
-            Assert.AreEqual(a.Length, 3, "Bridge503: array.Length is correct");
-            Assert.AreEqual(list.Count, 0, "Bridge503: list.Count is correct");
+            Assert.AreEqual(3, a.Length, "Bridge503: array.Length is correct");
+            Assert.AreEqual(0, list.Count, "Bridge503: list.Count is correct");
         }
     }
 }

@@ -18,9 +18,9 @@ namespace Bridge.ClientTest.BridgeIssues
             me.i1 = 1;
             me.i2 = 2;
 
-            Assert.AreEqual(me.dynMethod(me.id), "str1", "Bridge675 DynMethod");
-            Assert.AreEqual(Method1(me.id), "str1", "Bridge675 Method1 id");
-            Assert.AreEqual(Method1(me.i1, me.i2), 3, "Bridge675 Method1 i1 i2");
+            Assert.AreEqual("str1", me.dynMethod(me.id), "Bridge675 DynMethod");
+            Assert.AreEqual("str1", Method1(me.id), "Bridge675 Method1 id");
+            Assert.AreEqual(3, Method1(me.i1, me.i2), "Bridge675 Method1 i1 i2");
         }
 
         public static string DynMethod(string s)

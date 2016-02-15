@@ -36,17 +36,17 @@ namespace Bridge.ClientTest.BridgeIssues
             stringArray[0] = "9";
             decimalArray[0] = 10m;
 
-            Assert.AreEqual(byteArray[0], 1, "get byteArray[0]");
-            Assert.AreEqual(sbyteArray[0], 2, "get sbyteArray[0]");
-            Assert.AreEqual(shortArray[0], 3, "get shortArray[0]");
-            Assert.AreEqual(ushortArray[0], 4, "get ushortArray[0]");
-            Assert.AreEqual(intArray[0], 5, "get intArray[0]");
-            Assert.AreEqual(uintArray[0], 6, "get uintArray[0]");
-            Assert.AreEqual(floatArray[0], 7, "get floatArray[0]");
-            Assert.AreEqual(doubleArray[0], 8, "get doubleArray[0]");
+            Assert.AreEqual(1, byteArray[0], "get byteArray[0]");
+            Assert.AreEqual(2, sbyteArray[0], "get sbyteArray[0]");
+            Assert.AreEqual(3, shortArray[0], "get shortArray[0]");
+            Assert.AreEqual(4, ushortArray[0], "get ushortArray[0]");
+            Assert.AreEqual(5, intArray[0], "get intArray[0]");
+            Assert.AreEqual(6, uintArray[0], "get uintArray[0]");
+            Assert.AreEqual(7, floatArray[0], "get floatArray[0]");
+            Assert.AreEqual(8, doubleArray[0], "get doubleArray[0]");
 
-            Assert.AreEqual(stringArray[0], "9", "get stringArray[0]");
-            Assert.AreEqual(decimalArray[0], 10m, "get decimalArray[0]");
+            Assert.AreEqual("9", stringArray[0], "get stringArray[0]");
+            Assert.AreEqual(10m, decimalArray[0], "get decimalArray[0]");
         }
     }
 }

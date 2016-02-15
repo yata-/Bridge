@@ -27,7 +27,7 @@ namespace Bridge.ClientTest.Collections.Generic
         [Test]
         public void TypePropertiesAreCorrect()
         {
-            Assert.AreEqual(typeof(Comparer<object>).GetClassName(), "Bridge.Comparer$1$Object", "GetClassName()");
+            Assert.AreEqual("Bridge.Comparer$1$Object", typeof(Comparer<object>).GetClassName(), "GetClassName()");
 
             var comparer = Comparer<object>.Default;
             Assert.True(comparer is Comparer<object>, "is Comparer<object> should be true");
@@ -41,25 +41,25 @@ namespace Bridge.ClientTest.Collections.Generic
         [Test]
         public void DefaultComparerCanOrderNumbers()
         {
-            Assert.AreEqual(Comparer<int>.Default.Compare(3, 8), -1, "Compare(3, 8) should be -1");
-            Assert.AreEqual(Comparer<int>.Default.Compare(3, 3), 0, "Compare(3, 3) should be 0");
-            Assert.AreEqual(Comparer<int>.Default.Compare(8, 3), 1, "Compare(8, 3) should be 1");
+            Assert.AreEqual(-1, Comparer<int>.Default.Compare(3, 8), "Compare(3, 8) should be -1");
+            Assert.AreEqual(0, Comparer<int>.Default.Compare(3, 3), "Compare(3, 3) should be 0");
+            Assert.AreEqual(1, Comparer<int>.Default.Compare(8, 3), "Compare(8, 3) should be 1");
         }
 
         [Test]
         public void DefaultComparerCanOrderNullValues()
         {
-            Assert.AreEqual(Comparer<int?>.Default.Compare(0, null), 1, "Compare(0, null) should be 1");
-            Assert.AreEqual(Comparer<int?>.Default.Compare(null, 0), -1, "Compare(null, 0) should be -1");
-            Assert.AreEqual(Comparer<int?>.Default.Compare(null, null), 0, "Compare(null, null) should be 0");
+            Assert.AreEqual(1, Comparer<int?>.Default.Compare(0, null), "Compare(0, null) should be 1");
+            Assert.AreEqual(-1, Comparer<int?>.Default.Compare(null, 0), "Compare(null, 0) should be -1");
+            Assert.AreEqual(0, Comparer<int?>.Default.Compare(null, null), "Compare(null, null) should be 0");
         }
 
         [Test]
         public void DefaultComparerUsesCompareMethodIfClassImplementsIComparable()
         {
-            Assert.AreEqual(Comparer<C>.Default.Compare(new C(3), new C(8)), -1, "Compare(3, 8) should be -1");
-            Assert.AreEqual(Comparer<C>.Default.Compare(new C(3), new C(3)), 0, "Compare(3, 3) should be 0");
-            Assert.AreEqual(Comparer<C>.Default.Compare(new C(8), new C(3)), 1, "Compare(8, 3) should be 1");
+            Assert.AreEqual(-1, Comparer<C>.Default.Compare(new C(3), new C(8)), "Compare(3, 8) should be -1");
+            Assert.AreEqual(0, Comparer<C>.Default.Compare(new C(3), new C(3)), "Compare(3, 3) should be 0");
+            Assert.AreEqual(1, Comparer<C>.Default.Compare(new C(8), new C(3)), "Compare(8, 3) should be 1");
         }
 
         [Test]
@@ -67,11 +67,11 @@ namespace Bridge.ClientTest.Collections.Generic
         {
             var comparer = Comparer<int>.Create((x, y) =>
             {
-                Assert.AreEqual(x, 8, "x should be 8");
-                Assert.AreEqual(y, 3, "y should be 3");
+                Assert.AreEqual(8, x, "x should be 8");
+                Assert.AreEqual(3, y, "y should be 3");
                 return 42;
             });
-            Assert.AreEqual(comparer.Compare(8, 3), 42, "The result should be 42");
+            Assert.AreEqual(42, comparer.Compare(8, 3), "The result should be 42");
         }
     }
 }

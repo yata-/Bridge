@@ -21,7 +21,7 @@ namespace Bridge.ClientTest.BridgeIssues
                 foreach (int i in t)
                     sum += i;
 
-            Assert.AreEqual(sum, 6, "Bridge726");
+            Assert.AreEqual(6, sum, "Bridge726");
         }
     }
 }

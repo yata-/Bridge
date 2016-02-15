@@ -17,19 +17,19 @@ namespace Bridge.ClientTest.BridgeIssues
             var a = new A();
             
             a.Method();
-            Assert.AreEqual(a.Property, null, "Bridge815 null");
+            Assert.AreEqual(null, a.Property, "Bridge815 null");
 
             a.Method(new B(1));
             Assert.True(a.Property.HasValue, "Bridge815 Property.HasValue");
-            Assert.AreEqual(a.Property.Value.field, 1, "Bridge815 Property.Value.field == 1");
+            Assert.AreEqual(1, a.Property.Value.field, "Bridge815 Property.Value.field == 1");
 
             a.Method2();
             Assert.True(a.Property.HasValue, "Bridge815 Method2 Property.HasValue");
-            Assert.AreEqual(a.Property.Value.field, 0, "Bridge815 Method2 Property.Value.field == 0");
+            Assert.AreEqual(0, a.Property.Value.field, "Bridge815 Method2 Property.Value.field == 0");
 
             a.Method2(new B(2));
             Assert.True(a.Property.HasValue, "Bridge815 Method2 Property.HasValue 2");
-            Assert.AreEqual(a.Property.Value.field, 2, "Bridge815 Method2 Property.Value.field == 2");
+            Assert.AreEqual(2, a.Property.Value.field, "Bridge815 Method2 Property.Value.field == 2");
         }
 
         struct B

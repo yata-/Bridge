@@ -26,20 +26,20 @@ namespace Bridge.ClientTest
         {
             MyComparable a = new MyComparable(), b = new MyComparable();
             a.result = 534;
-            Assert.AreEqual(((IComparable<MyComparable>)a).CompareTo(b), 534);
-            Assert.AreStrictEqual(a.other, b);
+            Assert.AreEqual(534, ((IComparable<MyComparable>)a).CompareTo(b));
+            Assert.AreStrictEqual(b, a.other);
 
             a.result = -42;
-            Assert.AreEqual(((IComparable<MyComparable>)a).CompareTo(null), -42);
-            Assert.AreStrictEqual(a.other, null);
+            Assert.AreEqual(-42, ((IComparable<MyComparable>)a).CompareTo(null));
+            Assert.AreStrictEqual(null, a.other);
 
             a.result = -534;
-            Assert.AreEqual(a.CompareTo(b), -534);
-            Assert.AreStrictEqual(a.other, b);
+            Assert.AreEqual(-534, a.CompareTo(b));
+            Assert.AreStrictEqual(b, a.other);
 
             a.result = 42;
-            Assert.AreEqual(a.CompareTo(null), 42);
-            Assert.AreStrictEqual(a.other, null);
+            Assert.AreEqual(42, a.CompareTo(null));
+            Assert.AreStrictEqual(null, a.other);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Bridge.ClientTest.Linq
             int[] numbersB = { 2, 3, 5 };
 
             var concatNumbers = numbersA.Concat(numbersB);
-            Assert.AreDeepEqual(concatNumbers, new[] { 4, 1, 3, 2, 3, 5 }, "Concat() numbers");
+            Assert.AreDeepEqual(new[] { 4, 1, 3, 2, 3, 5 }, concatNumbers, "Concat() numbers");
 
             // TEST
             var names = from p in Person.GetPersons()
@@ -25,10 +25,10 @@ namespace Bridge.ClientTest.Linq
                          select p.City;
             var concatNames = names.Concat(cities).ToArray();
 
-            Assert.AreDeepEqual(concatNames,
-                            new[] { "Frank", "Zeppa", "John", "Billy", "Dora", "Ian", "Mary", "Nemo",
+            Assert.AreDeepEqual(new[] { "Frank", "Zeppa", "John", "Billy", "Dora", "Ian", "Mary", "Nemo",
                                     "Edmonton", "Tokyo", "Lisbon", "Paris", "Budapest", "Rome", "Dortmund", "Ocean"},
-                            "Concat() two sequences");
+                concatNames,
+                "Concat() two sequences");
 
             // TEST
             var a = new[] { "a", "b", "z" };

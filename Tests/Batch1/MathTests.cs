@@ -18,14 +18,14 @@ namespace Bridge.ClientTest
 
         private void AssertIsDecimalAndEqualTo(object v, object d, string message = null)
         {
-            Assert.AreStrictEqual(v is decimal, true, message);
-            Assert.AreStrictEqual(v.ToString(), d.ToString(), message);
+            Assert.AreStrictEqual(true, v is decimal, message);
+            Assert.AreStrictEqual(d.ToString(), v.ToString(), message);
         }
 
         private void AssertIsDoubleAndEqualTo(object v, object d, string message = null)
         {
-            Assert.AreStrictEqual(v is double, true, message);
-            Assert.AreStrictEqual(v.ToString(), d.ToString(), message);
+            Assert.AreStrictEqual(true, v is double, message);
+            Assert.AreStrictEqual(d.ToString(), v.ToString(), message);
         }
 
 
@@ -45,37 +45,37 @@ namespace Bridge.ClientTest
         [Test]
         public void AbsOfDoubleWorks()
         {
-            Assert.AreEqual(Math.Abs(-12.5), 12.5);
+            Assert.AreEqual(12.5, Math.Abs(-12.5));
         }
 
         [Test]
         public void AbsOfIntWorks()
         {
-            Assert.AreEqual(Math.Abs(-12), 12);
+            Assert.AreEqual(12, Math.Abs(-12));
         }
 
         [Test]
         public void AbsOfLongWorks()
         {
-            Assert.AreEqual(Math.Abs(-12L), 12L);
+            Assert.AreEqual(12L, Math.Abs(-12L));
         }
 
         [Test]
         public void AbsOfSbyteWorks()
         {
-            Assert.AreEqual(Math.Abs((sbyte)-15), (sbyte)15);
+            Assert.AreEqual((sbyte)15, Math.Abs((sbyte)-15));
         }
 
         [Test]
         public void AbsOfShortWorks()
         {
-            Assert.AreEqual(Math.Abs((short)-15), (short)15);
+            Assert.AreEqual((short)15, Math.Abs((short)-15));
         }
 
         [Test]
         public void AbsOfFloatWorks()
         {
-            Assert.AreEqual(Math.Abs(-17.5f), 17.5f);
+            Assert.AreEqual(17.5f, Math.Abs(-17.5f));
         }
 
         [Test]
@@ -120,21 +120,21 @@ namespace Bridge.ClientTest
             int resultInt;
 
             Math.DivRem(1, 2, out resultInt);
-            Assert.AreEqual(resultInt, 1);
+            Assert.AreEqual(1, resultInt);
 
             Math.DivRem(234, 157, out resultInt);
-            Assert.AreEqual(resultInt, 77);
+            Assert.AreEqual(77, resultInt);
 
             Math.DivRem(0, 20, out resultInt);
-            Assert.AreEqual(resultInt, 0);
+            Assert.AreEqual(0, resultInt);
 
             long resultLong;
 
             Math.DivRem(2, 4, out resultLong);
-            Assert.AreEqual(resultLong, 2);
+            Assert.AreEqual(2, resultLong);
 
             Math.DivRem(2341, 157, out resultLong);
-            Assert.AreEqual(resultLong, 143);
+            Assert.AreEqual(143, resultLong);
         }
 
         [Test]
@@ -146,8 +146,8 @@ namespace Bridge.ClientTest
         [Test]
         public void FloorOfDoubleWorks()
         {
-            Assert.AreEqual(Math.Floor(3.6), 3.0);
-            Assert.AreEqual(Math.Floor(-3.6), -4.0);
+            Assert.AreEqual(3.0, Math.Floor(3.6));
+            Assert.AreEqual(-4.0, Math.Floor(-3.6));
         }
 
         [Test]
@@ -166,8 +166,8 @@ namespace Bridge.ClientTest
         [Test]
         public void MaxOfByteWorks()
         {
-            Assert.AreEqual(Math.Max((byte)1, (byte)3), 3.0);
-            Assert.AreEqual(Math.Max((byte)5, (byte)3), 5.0);
+            Assert.AreEqual(3.0, Math.Max((byte)1, (byte)3));
+            Assert.AreEqual(5.0, Math.Max((byte)5, (byte)3));
         }
 
         [Test]
@@ -180,71 +180,71 @@ namespace Bridge.ClientTest
         [Test]
         public void MaxOfDoubleWorks()
         {
-            Assert.AreEqual(Math.Max(1.0, 3.0), 3.0);
-            Assert.AreEqual(Math.Max(4.0, 3.0), 4.0);
+            Assert.AreEqual(3.0, Math.Max(1.0, 3.0));
+            Assert.AreEqual(4.0, Math.Max(4.0, 3.0));
         }
 
         [Test]
         public void MaxOfShortWorks()
         {
-            Assert.AreEqual(Math.Max((short)1, (short)3), (short)3);
-            Assert.AreEqual(Math.Max((short)4, (short)3), (short)4);
+            Assert.AreEqual((short)3, Math.Max((short)1, (short)3));
+            Assert.AreEqual((short)4, Math.Max((short)4, (short)3));
         }
 
         [Test]
         public void MaxOfIntWorks()
         {
-            Assert.AreEqual(Math.Max(1, 3), 3);
-            Assert.AreEqual(Math.Max(4, 3), 4);
+            Assert.AreEqual(3, Math.Max(1, 3));
+            Assert.AreEqual(4, Math.Max(4, 3));
         }
 
         [Test]
         public void MaxOfLongWorks()
         {
-            Assert.AreEqual(Math.Max(1L, 3L), 3L);
-            Assert.AreEqual(Math.Max(4L, 3L), 4L);
+            Assert.AreEqual(3L, Math.Max(1L, 3L));
+            Assert.AreEqual(4L, Math.Max(4L, 3L));
         }
 
         [Test]
         public void MaxOfSByteWorks()
         {
-            Assert.AreEqual(Math.Max((sbyte)-1, (sbyte)3), (sbyte)3);
-            Assert.AreEqual(Math.Max((sbyte)5, (sbyte)3), (sbyte)5);
+            Assert.AreEqual((sbyte)3, Math.Max((sbyte)-1, (sbyte)3));
+            Assert.AreEqual((sbyte)5, Math.Max((sbyte)5, (sbyte)3));
         }
 
         [Test]
         public void MaxOfFloatWorks()
         {
-            Assert.AreEqual(Math.Max(-14.5f, 3.0f), 3.0f);
-            Assert.AreEqual(Math.Max(5.4f, 3.0f), 5.4f);
+            Assert.AreEqual(3.0f, Math.Max(-14.5f, 3.0f));
+            Assert.AreEqual(5.4f, Math.Max(5.4f, 3.0f));
         }
 
         [Test]
         public void MaxOfUShortWorks()
         {
-            Assert.AreEqual(Math.Max((ushort)1, (ushort)3), (ushort)3);
-            Assert.AreEqual(Math.Max((ushort)5, (ushort)3), (ushort)5);
+            Assert.AreEqual((ushort)3, Math.Max((ushort)1, (ushort)3));
+            Assert.AreEqual((ushort)5, Math.Max((ushort)5, (ushort)3));
         }
 
         [Test]
         public void MaxOfUIntWorks()
         {
-            Assert.AreEqual(Math.Max((uint)1, (uint)3), (uint)3);
-            Assert.AreEqual(Math.Max((uint)5, (uint)3), (uint)5);
+            Assert.AreEqual((uint)3, Math.Max((uint)1, (uint)3));
+            Assert.AreEqual((uint)5, Math.Max((uint)5, (uint)3));
         }
 
         [Test]
         public void MaxOfULongWorks()
         {
-            Assert.AreEqual(Math.Max((ulong)100, (ulong)300), (ulong)300);
-            Assert.AreEqual(Math.Max((ulong)500, (ulong)300), (ulong)500);
+            Assert.AreEqual((ulong)300, Math.Max((ulong)100, (ulong)300));
+            Assert.AreEqual((ulong)500, Math.Max((ulong)500, (ulong)300));
         }
 
         [Test]
         public void MinOfByteWorks()
         {
-            Assert.AreEqual(Math.Min((byte)1, (byte)3), 1.0);
-            Assert.AreEqual(Math.Min((byte)5, (byte)3), 3.0);
+            Assert.AreEqual(1.0, Math.Min((byte)1, (byte)3));
+            Assert.AreEqual(3.0, Math.Min((byte)5, (byte)3));
         }
 
         [Test]
@@ -257,64 +257,64 @@ namespace Bridge.ClientTest
         [Test]
         public void MinOfDoubleWorks()
         {
-            Assert.AreEqual(Math.Min(1.0, 3.0), 1.0);
-            Assert.AreEqual(Math.Min(4.0, 3.0), 3.0);
+            Assert.AreEqual(1.0, Math.Min(1.0, 3.0));
+            Assert.AreEqual(3.0, Math.Min(4.0, 3.0));
         }
 
         [Test]
         public void MinOfShortWorks()
         {
-            Assert.AreEqual(Math.Min((short)1, (short)3), (short)1);
-            Assert.AreEqual(Math.Min((short)4, (short)3), (short)3);
+            Assert.AreEqual((short)1, Math.Min((short)1, (short)3));
+            Assert.AreEqual((short)3, Math.Min((short)4, (short)3));
         }
 
         [Test]
         public void MinOfIntWorks()
         {
-            Assert.AreEqual(Math.Min(1, 3), 1);
-            Assert.AreEqual(Math.Min(4, 3), 3);
+            Assert.AreEqual(1, Math.Min(1, 3));
+            Assert.AreEqual(3, Math.Min(4, 3));
         }
 
         [Test]
         public void MinOfLongWorks()
         {
-            Assert.AreEqual(Math.Min(1L, 3L), 1L);
-            Assert.AreEqual(Math.Min(4L, 3L), 3L);
+            Assert.AreEqual(1L, Math.Min(1L, 3L));
+            Assert.AreEqual(3L, Math.Min(4L, 3L));
         }
 
         [Test]
         public void MinOfSByteWorks()
         {
-            Assert.AreEqual(Math.Min((sbyte)-1, (sbyte)3), (sbyte)-1);
-            Assert.AreEqual(Math.Min((sbyte)5, (sbyte)3), (sbyte)3);
+            Assert.AreEqual((sbyte)-1, Math.Min((sbyte)-1, (sbyte)3));
+            Assert.AreEqual((sbyte)3, Math.Min((sbyte)5, (sbyte)3));
         }
 
         [Test]
         public void MinOfFloatWorks()
         {
-            Assert.AreEqual(Math.Min(-14.5f, 3.0f), -14.5f);
-            Assert.AreEqual(Math.Min(5.4f, 3.0f), 3.0f);
+            Assert.AreEqual(-14.5f, Math.Min(-14.5f, 3.0f));
+            Assert.AreEqual(3.0f, Math.Min(5.4f, 3.0f));
         }
 
         [Test]
         public void MinOfUShortWorks()
         {
-            Assert.AreEqual(Math.Min((ushort)1, (ushort)3), (ushort)1);
-            Assert.AreEqual(Math.Min((ushort)5, (ushort)3), (ushort)3);
+            Assert.AreEqual((ushort)1, Math.Min((ushort)1, (ushort)3));
+            Assert.AreEqual((ushort)3, Math.Min((ushort)5, (ushort)3));
         }
 
         [Test]
         public void MinOfUIntWorks()
         {
-            Assert.AreEqual(Math.Min((uint)1, (uint)3), (uint)1);
-            Assert.AreEqual(Math.Min((uint)5, (uint)3), (uint)3);
+            Assert.AreEqual((uint)1, Math.Min((uint)1, (uint)3));
+            Assert.AreEqual((uint)3, Math.Min((uint)5, (uint)3));
         }
 
         [Test]
         public void MinOfULongWorks()
         {
-            Assert.AreEqual(Math.Min((ulong)100, (ulong)300), (ulong)100);
-            Assert.AreEqual(Math.Min((ulong)500, (ulong)300), (ulong)300);
+            Assert.AreEqual((ulong)100, Math.Min((ulong)100, (ulong)300));
+            Assert.AreEqual((ulong)300, Math.Min((ulong)500, (ulong)300));
         }
 
         [Test]
@@ -340,12 +340,12 @@ namespace Bridge.ClientTest
         [Test]
         public void RoundOfDoubleWorks()
         {
-            Assert.AreEqual(Math.Round(3.432), 3.0);
-            Assert.AreEqual(Math.Round(3.6), 4.0);
-            Assert.AreEqual(Math.Round(3.5), 4.0);
-            Assert.AreEqual(Math.Round(4.5), 4.0);
-            Assert.AreEqual(Math.Round(-3.5), -4.0);
-            Assert.AreEqual(Math.Round(-4.5), -4.0);
+            Assert.AreEqual(3.0, Math.Round(3.432));
+            Assert.AreEqual(4.0, Math.Round(3.6));
+            Assert.AreEqual(4.0, Math.Round(3.5));
+            Assert.AreEqual(4.0, Math.Round(4.5));
+            Assert.AreEqual(-4.0, Math.Round(-3.5));
+            Assert.AreEqual(-4.0, Math.Round(-4.5));
         }
 
         [Test]
@@ -648,12 +648,12 @@ namespace Bridge.ClientTest
         [Test]
         public void JsRoundWorks()
         {
-            Assert.AreEqual(Math.JsRound(3.432), 3.0);
-            Assert.AreEqual(Math.JsRound(3.6), 4.0);
-            Assert.AreEqual(Math.JsRound(3.5), 4.0);
-            Assert.AreEqual(Math.JsRound(4.5), 5.0);
-            Assert.AreEqual(Math.JsRound(-3.5), -3.0);
-            Assert.AreEqual(Math.JsRound(-4.5), -4.0);
+            Assert.AreEqual(3.0, Math.JsRound(3.432));
+            Assert.AreEqual(4.0, Math.JsRound(3.6));
+            Assert.AreEqual(4.0, Math.JsRound(3.5));
+            Assert.AreEqual(5.0, Math.JsRound(4.5));
+            Assert.AreEqual(-3.0, Math.JsRound(-3.5));
+            Assert.AreEqual(-4.0, Math.JsRound(-4.5));
         }
 
         [Test]

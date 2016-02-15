@@ -27,19 +27,19 @@ namespace Bridge.ClientTest.BridgeIssues
         {
             var list = new List<int> { 7 };
             var z = JSON.Stringify(list); // this is ok
-            Assert.AreEqual(z, "{\"items\":[7]}", "List<int>");
+            Assert.AreEqual("{\"items\":[7]}", z, "List<int>");
 
             var b = new Bridge501B() { 1, 2 };
             var y = JSON.Stringify(b); // wrong, missing items
-            Assert.AreEqual(y, "{\"items\":[1,2]}", "Bridge501B");
+            Assert.AreEqual("{\"items\":[1,2]}", y, "Bridge501B");
 
             var a = new Bridge501A() { 7 }; // sine items is defined as member, push fails
             var x = JSON.Stringify(a);
-            Assert.AreEqual(x, "{\"items\":[7]}", "Bridge501A");
+            Assert.AreEqual("{\"items\":[7]}", x, "Bridge501A");
 
             var c = JSON.Parse<Bridge501A>(x);
-            Assert.AreEqual(c.Items, "12", "Bridge501A Parse c.Items");
-            Assert.AreEqual(c[0], 7, "Bridge501A Parse c[0]");
+            Assert.AreEqual("12", c.Items, "Bridge501A Parse c.Items");
+            Assert.AreEqual(7, c[0], "Bridge501A Parse c[0]");
         }
     }
 }

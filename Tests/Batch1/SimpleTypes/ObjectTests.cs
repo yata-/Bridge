@@ -23,7 +23,7 @@ namespace Bridge.ClientTest.SimpleTypes
         public void TypePropertiesAreCorrect()
         {
             Assert.True(new object() is object);
-            Assert.AreEqual(typeof(object).GetClassName(), "Object");
+            Assert.AreEqual("Object", typeof(object).GetClassName());
         }
 
         [Test]
@@ -81,8 +81,8 @@ namespace Bridge.ClientTest.SimpleTypes
         public void ToStringOverride()
         {
             object c1 = new C1(), c2 = new C2();
-            Assert.AreEqual(c1.ToString(), "test", "#1");
-            Assert.AreEqual(c2.ToString(), "test", "#1");
+            Assert.AreEqual("test", c1.ToString(), "#1");
+            Assert.AreEqual("test", c2.ToString(), "#1");
         }
     }
 }

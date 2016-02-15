@@ -22,7 +22,7 @@ namespace Bridge.ClientTest.BridgeIssues
             var values = new List<int>() { 1, 2 };
             var v1 = values.Count(el => el == 1);
 
-            Assert.AreEqual(v1, 1, "Bridge751");
+            Assert.AreEqual(1, v1, "Bridge751");
         }
     }
 }

@@ -60,7 +60,7 @@ namespace Bridge.ClientTest.Linq
                     new {Remainder = 1, Numbers = new[] { 1 } }
                 };
 
-            Assert.AreDeepEqual(numberGroups, numberGroupsExpected, "Group numbers by remainders");
+            Assert.AreDeepEqual(numberGroupsExpected, numberGroups, "Group numbers by remainders");
 
             // TEST
             var wordGroups =
@@ -79,7 +79,7 @@ namespace Bridge.ClientTest.Linq
                     new {FirstLetter = '2', Words = new[] { "2.two", "22.twentytwo" } }
                 };
 
-            Assert.AreDeepEqual(wordGroups, wordGroupsExpected, "Group words by first letters");
+            Assert.AreDeepEqual(wordGroupsExpected, wordGroups, "Group words by first letters");
 
             // TEST
             var personGroups =
@@ -100,7 +100,7 @@ namespace Bridge.ClientTest.Linq
                 new { Group = (string)null, Persons = new [] {"Nemo"} }
             };
 
-            Assert.AreDeepEqual(personGroups, personGroupsExpected, "Person group by Group field");
+            Assert.AreDeepEqual(personGroupsExpected, personGroups, "Person group by Group field");
         }
 
         [Test(ExpectedCount = 1)]
@@ -142,7 +142,7 @@ namespace Bridge.ClientTest.Linq
            ).ToArray();
 
             var complexGroupingExpected = GetComplexGroupingExpectedResult();
-            Assert.AreDeepEqual(complexGrouping, complexGroupingExpected, "Complex grouping for numbers and words");
+            Assert.AreDeepEqual(complexGroupingExpected, complexGrouping, "Complex grouping for numbers and words");
         }
 
         [Test(ExpectedCount = 2)]
@@ -173,7 +173,7 @@ namespace Bridge.ClientTest.Linq
                     new {Key = "earn",  Words = new []{ " earn ", " near "} }
                 };
 
-            Assert.AreDeepEqual(anagramsGroups, anagramsGroupsExpected, "Anagram grouping with equality comparer");
+            Assert.AreDeepEqual(anagramsGroupsExpected, anagramsGroups, "Anagram grouping with equality comparer");
 
             // TEST
             var anagramsGroups1 = anagrams.GroupBy(w => w.Trim(), a => a.ToUpper(), new AnagramEqualityComparer())
@@ -190,7 +190,7 @@ namespace Bridge.ClientTest.Linq
                     new {Key = "earn",  Words = new []{ " EARN ", " NEAR "} }
                 };
 
-            Assert.AreDeepEqual(anagramsGroups1, anagramsGroupsExpected1, "Anagram grouping with equality compare and upper case");
+            Assert.AreDeepEqual(anagramsGroupsExpected1, anagramsGroups1, "Anagram grouping with equality compare and upper case");
         }
 
         private static object GetComplexGroupingExpectedResult()

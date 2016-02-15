@@ -14,16 +14,16 @@ namespace Bridge.ClientTest.BridgeIssues
             var s = "Hello World!";
             var res = s.Split((string[])null, StringSplitOptions.RemoveEmptyEntries);
 
-            Assert.AreEqual(res.Length, 2, "Bridge907 instance Length");
-            Assert.AreEqual(res[0], "Hello", "Bridge907 instance [0]");
-            Assert.AreEqual(res[1], "World!", "Bridge907 instance [1]");
+            Assert.AreEqual(2, res.Length, "Bridge907 instance Length");
+            Assert.AreEqual("Hello", res[0], "Bridge907 instance [0]");
+            Assert.AreEqual("World!", res[1], "Bridge907 instance [1]");
 
             var s1 = "Hi Man!";
             var res1 = s1.Split((string[])null, StringSplitOptions.RemoveEmptyEntries);
 
-            Assert.AreEqual(res1.Length, 2, "Bridge907 static Length");
-            Assert.AreEqual(res1[0], "Hi", "Bridge907 static [0]");
-            Assert.AreEqual(res1[1], "Man!", "Bridge907 static [1]");
+            Assert.AreEqual(2, res1.Length, "Bridge907 static Length");
+            Assert.AreEqual("Hi", res1[0], "Bridge907 static [0]");
+            Assert.AreEqual("Man!", res1[1], "Bridge907 static [1]");
         }
     }
 }

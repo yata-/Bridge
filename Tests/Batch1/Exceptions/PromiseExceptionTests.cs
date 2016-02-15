@@ -11,7 +11,7 @@ namespace Bridge.ClientTest.Exceptions
         [Test]
         public void TypePropertiesAreCorrect()
         {
-            Assert.AreEqual(typeof(PromiseException).GetClassName(), "Bridge.PromiseException", "Name");
+            Assert.AreEqual("Bridge.PromiseException", typeof(PromiseException).GetClassName(), "Name");
             object d = new PromiseException(new object[0]);
             Assert.True(d is PromiseException, "is PromiseException");
             Assert.True(d is Exception, "is Exception");
@@ -23,9 +23,9 @@ namespace Bridge.ClientTest.Exceptions
             var args = new object[] { "a", 1 };
             var ex = new PromiseException(args);
             Assert.True((object)ex is PromiseException, "is PromiseException");
-            Assert.AreEqual(ex.Arguments, args, "Arguments");
+            Assert.AreEqual(args, ex.Arguments, "Arguments");
             Assert.True(ex.InnerException == null, "InnerException");
-            Assert.AreEqual(ex.Message, "a", "Message");
+            Assert.AreEqual("a", ex.Message, "Message");
         }
 
         [Test]
@@ -35,8 +35,8 @@ namespace Bridge.ClientTest.Exceptions
             var ex = new PromiseException(args, "Some message");
             Assert.True((object)ex is PromiseException, "is PromiseException");
             Assert.True(ex.InnerException == null, "InnerException");
-            Assert.AreEqual(ex.Arguments, args, "Arguments");
-            Assert.AreEqual(ex.Message, "Some message", "Message");
+            Assert.AreEqual(args, ex.Arguments, "Arguments");
+            Assert.AreEqual("Some message", ex.Message, "Message");
         }
 
         [Test]
@@ -47,8 +47,8 @@ namespace Bridge.ClientTest.Exceptions
             var ex = new PromiseException(args, "Some message", inner);
             Assert.True((object)ex is PromiseException, "is PromiseException");
             Assert.True(ReferenceEquals(ex.InnerException, inner), "InnerException");
-            Assert.AreEqual(ex.Arguments, args, "Arguments");
-            Assert.AreEqual(ex.Message, "Some message", "Message");
+            Assert.AreEqual(args, ex.Arguments, "Arguments");
+            Assert.AreEqual("Some message", ex.Message, "Message");
         }
     }
 }

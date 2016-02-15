@@ -12,7 +12,7 @@ namespace Bridge.ClientTest.BridgeIssues
         [Test(ExpectedCount = 1)]
         public static void TestUseCase()
         {
-            Assert.AreEqual(GetSum(), 360, "Bridge666 GetSum 360");
+            Assert.AreEqual(360, GetSum(), "Bridge666 GetSum 360");
         }
 
         private static int GetSum()

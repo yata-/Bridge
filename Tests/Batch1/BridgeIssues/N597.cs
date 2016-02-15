@@ -35,8 +35,8 @@ namespace Bridge.ClientTest.BridgeIssues
         public static void TestUseCase()
         {
             var inst = new Bridge597A();
-            Assert.AreEqual(inst.Get(), "0:a", "Bridge597 Without instance member access");
-            Assert.AreEqual(inst.GetWithMember(), "HI!:0:a", "Bridge597 With instance member access");
+            Assert.AreEqual("0:a", inst.Get(), "Bridge597 Without instance member access");
+            Assert.AreEqual("HI!:0:a", inst.GetWithMember(), "Bridge597 With instance member access");
         }
     }
 }

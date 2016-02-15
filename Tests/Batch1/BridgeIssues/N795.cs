@@ -103,7 +103,7 @@ namespace Bridge.ClientTest.BridgeIssues
             var wrappedValue = new Bridge795A(1);
             var wrappedValueIsNull = (wrappedValue == null);
 
-            Assert.AreEqual(wrappedValueIsNull, false, "Bridge795");
+            Assert.AreEqual(false, wrappedValueIsNull, "Bridge795");
         }
 
         [Test(ExpectedCount = 16)]
@@ -113,22 +113,22 @@ namespace Bridge.ClientTest.BridgeIssues
             var v2 = new Bridge795B(2);
             var v3 = new Bridge795B(1);
 
-            Assert.AreEqual(v1 == v2, false, "Bridge795 lift == 12");
-            Assert.AreEqual(v1 == v3, true, "Bridge795 lift == 13");
-            Assert.AreEqual(v1 != v2, true, "Bridge795 lift != 12");
-            Assert.AreEqual(v1 != v3, false, "Bridge795 lift != 13");
-            Assert.AreEqual(v1 >= v2, false, "Bridge795 lift >= 12");
-            Assert.AreEqual(v2 >= v1, true, "Bridge795 lift >= 21");
-            Assert.AreEqual(v1 >= v3, true, "Bridge795 lift >= 13");
-            Assert.AreEqual(v1 > v2, false, "Bridge795 lift > 12");
-            Assert.AreEqual(v2 > v1, true, "Bridge795 lift > 21");
-            Assert.AreEqual(v1 > v3, false, "Bridge795 lift > 13");
-            Assert.AreEqual(v1 <= v2, true, "Bridge795 lift <= 12");
-            Assert.AreEqual(v2 <= v1, false, "Bridge795 lift <= 21");
-            Assert.AreEqual(v1 <= v3, true, "Bridge795 lift <= 13");
-            Assert.AreEqual(v1 < v2, true, "Bridge795 lift < 12");
-            Assert.AreEqual(v2 < v1, false, "Bridge795 lift < 21");
-            Assert.AreEqual(v1 < v3, false, "Bridge795 lift < 13");
+            Assert.AreEqual(false, v1 == v2, "Bridge795 lift == 12");
+            Assert.AreEqual(true, v1 == v3, "Bridge795 lift == 13");
+            Assert.AreEqual(true, v1 != v2, "Bridge795 lift != 12");
+            Assert.AreEqual(false, v1 != v3, "Bridge795 lift != 13");
+            Assert.AreEqual(false, v1 >= v2, "Bridge795 lift >= 12");
+            Assert.AreEqual(true, v2 >= v1, "Bridge795 lift >= 21");
+            Assert.AreEqual(true, v1 >= v3, "Bridge795 lift >= 13");
+            Assert.AreEqual(false, v1 > v2, "Bridge795 lift > 12");
+            Assert.AreEqual(true, v2 > v1, "Bridge795 lift > 21");
+            Assert.AreEqual(false, v1 > v3, "Bridge795 lift > 13");
+            Assert.AreEqual(true, v1 <= v2, "Bridge795 lift <= 12");
+            Assert.AreEqual(false, v2 <= v1, "Bridge795 lift <= 21");
+            Assert.AreEqual(true, v1 <= v3, "Bridge795 lift <= 13");
+            Assert.AreEqual(true, v1 < v2, "Bridge795 lift < 12");
+            Assert.AreEqual(false, v2 < v1, "Bridge795 lift < 21");
+            Assert.AreEqual(false, v1 < v3, "Bridge795 lift < 13");
         }
     }
 }

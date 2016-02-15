@@ -20,8 +20,8 @@ namespace Bridge.ClientTest.BridgeIssues
         [Test(ExpectedCount = 2)]
         public static void TestUseCase()
         {
-            Assert.AreEqual("".SetToBlah(), true, "Bridge849 true");
-            Assert.AreEqual("".SetToBlah(false), false, "Bridge849 false");
+            Assert.AreEqual(true, "".SetToBlah(), "Bridge849 true");
+            Assert.AreEqual(false, "".SetToBlah(false), "Bridge849 false");
         }
     }
 }

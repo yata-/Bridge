@@ -13,7 +13,7 @@ namespace Bridge.ClientTest.SimpleTypes
         public void TypePropertiesAreCorrect()
         {
             Assert.True((object)(float)0.5 is float);
-            Assert.AreEqual(typeof(float).GetClassName(), "Number");
+            Assert.AreEqual("Number", typeof(float).GetClassName());
 
             object f = (float)0;
             Assert.True(f is float);
@@ -28,14 +28,14 @@ namespace Bridge.ClientTest.SimpleTypes
         [Test]
         public void DefaultValueIs0()
         {
-            Assert.AreStrictEqual(GetDefaultValue<float>(), 0);
+            Assert.AreStrictEqual(0, GetDefaultValue<float>());
         }
 
         [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void CreatingInstanceReturnsZero()
         {
-            Assert.AreStrictEqual(Activator.CreateInstance<float>(), 0);
+            Assert.AreStrictEqual(0, Activator.CreateInstance<float>());
         }
 
         [Test]
@@ -44,70 +44,70 @@ namespace Bridge.ClientTest.SimpleTypes
             double zero = 0;
             Assert.True((float)(object)float.MinValue < -3.4e38 && (float)(object)float.MinValue > -3.5e38, "MinValue should be correct");
             Assert.True((float)(object)float.MaxValue > 3.4e38 && (float)(object)float.MaxValue < 3.5e38, "MaxValue should be correct");
-            Assert.AreEqual(float.Epsilon, /*1.40129846432482E-45*/1.401298e-45, "Epsilon should be correct");
+            Assert.AreEqual(1.401298e-45, /*1.40129846432482E-45*/float.Epsilon, "Epsilon should be correct");
             Assert.True(float.IsNaN(float.NaN), "NaN should be correct");
-            Assert.AreStrictEqual(float.PositiveInfinity, 1 / zero, "PositiveInfinity should be correct");
-            Assert.AreStrictEqual(float.NegativeInfinity, -1 / zero, "NegativeInfinity should be correct");
+            Assert.AreStrictEqual(1 / zero, float.PositiveInfinity, "PositiveInfinity should be correct");
+            Assert.AreStrictEqual(-1 / zero, float.NegativeInfinity, "NegativeInfinity should be correct");
         }
 
         [Test]
         public void DefaultConstructorReturnsZero()
         {
-            Assert.AreStrictEqual(new float(), 0);
+            Assert.AreStrictEqual(0, new float());
         }
 
         [Test]
         public void FormatWorks()
         {
-            Assert.AreEqual(((float)291.0).Format("x"), "123");
+            Assert.AreEqual("123", ((float)291.0).Format("x"));
         }
 
         [Test]
         public void IFormattableToStringWorks()
         {
-            Assert.AreEqual(((float)291.0).ToString("x"), "123");
+            Assert.AreEqual("123", ((float)291.0).ToString("x"));
         }
 
         [Test]
         public void ToStringWorks()
         {
-            Assert.AreEqual(((float)123.0).ToString(), "123");
+            Assert.AreEqual("123", ((float)123.0).ToString());
         }
 
         [Test]
         public void ToExponentialWorks()
         {
-            Assert.AreEqual(((float)123.0).ToExponential(), "1.23e+2");
+            Assert.AreEqual("1.23e+2", ((float)123.0).ToExponential());
         }
 
         [Test]
         public void ToExponentialWithFractionalDigitsWorks()
         {
-            Assert.AreEqual(((float)123.0).ToExponential(1), "1.2e+2");
+            Assert.AreEqual("1.2e+2", ((float)123.0).ToExponential(1));
         }
 
         [Test]
         public void ToFixed()
         {
-            Assert.AreEqual(((float)123.0).ToFixed(), "123");
+            Assert.AreEqual("123", ((float)123.0).ToFixed());
         }
 
         [Test]
         public void ToFixedWithFractionalDigitsWorks()
         {
-            Assert.AreEqual(((float)123.0).ToFixed(1), "123.0");
+            Assert.AreEqual("123.0", ((float)123.0).ToFixed(1));
         }
 
         [Test]
         public void ToPrecisionWorks()
         {
-            Assert.AreEqual(((float)12345.0).ToPrecision(), "12345");
+            Assert.AreEqual("12345", ((float)12345.0).ToPrecision());
         }
 
         [Test]
         public void ToPrecisionWithPrecisionWorks()
         {
-            Assert.AreEqual(((float)12345.0).ToPrecision(2), "1.2e+4");
+            Assert.AreEqual("1.2e+4", ((float)12345.0).ToPrecision(2));
         }
 
         [Test]
@@ -164,8 +164,8 @@ namespace Bridge.ClientTest.SimpleTypes
         {
             Assert.AreEqual(((float)0).GetHashCode(), ((float)0).GetHashCode());
             Assert.AreEqual(((float)1).GetHashCode(), ((float)1).GetHashCode());
-            Assert.AreNotEqual(((float)0).GetHashCode(), ((float)1).GetHashCode());
-            Assert.AreNotEqual(((float)0).GetHashCode(), ((float)0.5).GetHashCode());
+            Assert.AreNotEqual(((float)1).GetHashCode(), ((float)0).GetHashCode());
+            Assert.AreNotEqual(((float)0.5).GetHashCode(), ((float)0).GetHashCode());
         }
 
         [Test]

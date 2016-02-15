@@ -16,12 +16,12 @@ namespace Bridge.ClientTest.BridgeIssues
             TimeSpan duration = new TimeSpan(36, 0, 0, 0);
             DateTime answer = today.Add(duration);
 
-            Assert.AreEqual(answer.Year, 2006, "Bridge582 TestAddTimeSpan Year");
-            Assert.AreEqual(answer.Month, 2, "Bridge582 TestAddTimeSpan Month");
-            Assert.AreEqual(answer.Day, 6, "Bridge582 TestAddTimeSpan Day");
-            Assert.AreEqual(answer.Hour, 0, "Bridge582 TestAddTimeSpan Hours");
-            Assert.AreEqual(answer.Minute, 0, "Bridge582 TestAddTimeSpan Minutes");
-            Assert.AreEqual(answer.Second, 0, "Bridge582 TestAddTimeSpan Seconds");
+            Assert.AreEqual(2006, answer.Year, "Bridge582 TestAddTimeSpan Year");
+            Assert.AreEqual(2, answer.Month, "Bridge582 TestAddTimeSpan Month");
+            Assert.AreEqual(6, answer.Day, "Bridge582 TestAddTimeSpan Day");
+            Assert.AreEqual(0, answer.Hour, "Bridge582 TestAddTimeSpan Hours");
+            Assert.AreEqual(0, answer.Minute, "Bridge582 TestAddTimeSpan Minutes");
+            Assert.AreEqual(0, answer.Second, "Bridge582 TestAddTimeSpan Seconds");
         }
 
         [Test(ExpectedCount = 6)]
@@ -30,12 +30,12 @@ namespace Bridge.ClientTest.BridgeIssues
             DateTime dt = new DateTime(2001, 1, 1);
             dt = dt.AddTicks(20000000);
 
-            Assert.AreEqual(dt.Year, 2001, "Bridge582 TestAddTicks Year");
-            Assert.AreEqual(dt.Month, 1, "Bridge582 TestAddTicks Month");
-            Assert.AreEqual(dt.Day, 1, "Bridge582 TestAddTicks Day");
-            Assert.AreEqual(dt.Hour, 0, "Bridge582 TestAddTicks Hour");
-            Assert.AreEqual(dt.Minute, 0, "Bridge582 TestAddTicks Minute");
-            Assert.AreEqual(dt.Second, 2, "Bridge582 TestAddTicks Second");
+            Assert.AreEqual(2001, dt.Year, "Bridge582 TestAddTicks Year");
+            Assert.AreEqual(1, dt.Month, "Bridge582 TestAddTicks Month");
+            Assert.AreEqual(1, dt.Day, "Bridge582 TestAddTicks Day");
+            Assert.AreEqual(0, dt.Hour, "Bridge582 TestAddTicks Hour");
+            Assert.AreEqual(0, dt.Minute, "Bridge582 TestAddTicks Minute");
+            Assert.AreEqual(2, dt.Second, "Bridge582 TestAddTicks Second");
         }
 
         [Test(ExpectedCount = 7)]
@@ -46,13 +46,13 @@ namespace Bridge.ClientTest.BridgeIssues
             long elapsedTicks = currentDate.Ticks - centuryBegin.Ticks;
             TimeSpan elapsedSpan = new TimeSpan(elapsedTicks);
 
-            Assert.AreEqual(elapsedTicks, 2193385800000000, "Bridge582 TestTicks ticks");
-            Assert.AreEqual(elapsedSpan.TotalSeconds, 219338580, "Bridge582 TestTicks seconds");
-            Assert.AreEqual(elapsedSpan.TotalMinutes, 3655643, "Bridge582 TestTicks minutes");
-            Assert.AreEqual(elapsedSpan.Days, 2538, "Bridge582 TestTicks days");
-            Assert.AreEqual(elapsedSpan.Hours, 15, "Bridge582 TestTicks hours");
-            Assert.AreEqual(elapsedSpan.Minutes, 23, "Bridge582 TestTicks minutes");
-            Assert.AreEqual(elapsedSpan.Seconds, 0, "Bridge582 TestTicks minutes");
+            Assert.AreEqual(2193385800000000, elapsedTicks, "Bridge582 TestTicks ticks");
+            Assert.AreEqual(219338580, elapsedSpan.TotalSeconds, "Bridge582 TestTicks seconds");
+            Assert.AreEqual(3655643, elapsedSpan.TotalMinutes, "Bridge582 TestTicks minutes");
+            Assert.AreEqual(2538, elapsedSpan.Days, "Bridge582 TestTicks days");
+            Assert.AreEqual(15, elapsedSpan.Hours, "Bridge582 TestTicks hours");
+            Assert.AreEqual(23, elapsedSpan.Minutes, "Bridge582 TestTicks minutes");
+            Assert.AreEqual(0, elapsedSpan.Seconds, "Bridge582 TestTicks minutes");
         }
 
         [Test(ExpectedCount = 4)]

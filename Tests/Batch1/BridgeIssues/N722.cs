@@ -36,25 +36,25 @@ namespace Bridge.ClientTest.BridgeIssues
             var asset1 = 1;
             asset1 = c1["path"] = 2;
 
-            Assert.AreEqual(asset1, 2, "Bridge722 asset1");
-            Assert.AreEqual(M1(c1["path"] = 3), 3, "Bridge722 M1 3");
-            Assert.AreEqual(M1(asset1 = c1["path"] = 4), 4, "Bridge722 M1 4");
+            Assert.AreEqual(2, asset1, "Bridge722 asset1");
+            Assert.AreEqual(3, M1(c1["path"] = 3), "Bridge722 M1 3");
+            Assert.AreEqual(4, M1(asset1 = c1["path"] = 4), "Bridge722 M1 4");
 
             var c2 = new { };
             var asset2 = c2["path"] = 5;
-            Assert.AreEqual(asset2, 5, "Bridge722 asset2");
-            Assert.AreEqual(c2["path"], 5, "Bridge722 c2");
+            Assert.AreEqual(5, asset2, "Bridge722 asset2");
+            Assert.AreEqual(5, c2["path"], "Bridge722 c2");
 
             var c3 = new Dictionary<string, int>();
             var asset3 = c3["path"] = 6;
-            Assert.AreEqual(asset3, 6, "Bridge722 asset3");
-            Assert.AreEqual(c3["path"], 6, "Bridge722 c3");
+            Assert.AreEqual(6, asset3, "Bridge722 asset3");
+            Assert.AreEqual(6, c3["path"], "Bridge722 c3");
 
             decimal[] data4 = { 1m, 2m, 3m, 4m, 7m };
             var c4 = new Dictionary<string, decimal>();
             var asset4 = c4["path"] = data4.Select(x => x).Last();
-            Assert.AreDeepEqual(asset4, 7m, "Bridge722 asset4");
-            Assert.AreDeepEqual(c4["path"], 7m, "Bridge722 c4");
+            Assert.AreDeepEqual(7m, asset4, "Bridge722 asset4");
+            Assert.AreDeepEqual(7m, c4["path"], "Bridge722 c4");
         }
     }
 }

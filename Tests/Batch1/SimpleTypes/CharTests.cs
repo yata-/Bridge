@@ -16,7 +16,7 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.False((object)0.5 is char);
             Assert.True((object)-1 is char);
             Assert.True((object)65536 is char);
-            Assert.AreEqual(typeof(char).GetClassName(), "Bridge.Int");
+            Assert.AreEqual("Bridge.Int", typeof(char).GetClassName());
         }
 
         [Test]
@@ -27,30 +27,30 @@ namespace Bridge.ClientTest.SimpleTypes
 
             //unchecked
             {
-                Assert.AreStrictEqual((int)(char)i1, -1, "-1 unchecked");
-                Assert.AreStrictEqual((int)(char)i2, 0, "0 unchecked");
-                Assert.AreStrictEqual((int)(char)i3, 234, "234 unchecked");
-                Assert.AreStrictEqual((int)(char)i4, 65535, "65535 unchecked");
-                Assert.AreStrictEqual((int)(char)i5, 65536, "65536 unchecked");
+                Assert.AreStrictEqual(-1, (int)(char)i1, "-1 unchecked");
+                Assert.AreStrictEqual(0, (int)(char)i2, "0 unchecked");
+                Assert.AreStrictEqual(234, (int)(char)i3, "234 unchecked");
+                Assert.AreStrictEqual(65535, (int)(char)i4, "65535 unchecked");
+                Assert.AreStrictEqual(65536, (int)(char)i5, "65536 unchecked");
 
-                Assert.AreStrictEqual((int?)(char?)ni1, -1, "nullable -1 unchecked");
-                Assert.AreStrictEqual((int?)(char?)ni2, 0, "nullable 0 unchecked");
-                Assert.AreStrictEqual((int?)(char?)ni3, 234, "nullable 234 unchecked");
-                Assert.AreStrictEqual((int?)(char?)ni4, 65535, "nullable 65535 unchecked");
-                Assert.AreStrictEqual((int?)(char?)ni5, 65536, "nullable 65536 unchecked");
-                Assert.AreStrictEqual((int?)(char?)ni6, null, "null unchecked");
+                Assert.AreStrictEqual(-1, (int?)(char?)ni1, "nullable -1 unchecked");
+                Assert.AreStrictEqual(0, (int?)(char?)ni2, "nullable 0 unchecked");
+                Assert.AreStrictEqual(234, (int?)(char?)ni3, "nullable 234 unchecked");
+                Assert.AreStrictEqual(65535, (int?)(char?)ni4, "nullable 65535 unchecked");
+                Assert.AreStrictEqual(65536, (int?)(char?)ni5, "nullable 65536 unchecked");
+                Assert.AreStrictEqual(null, (int?)(char?)ni6, "null unchecked");
             }
 
             //checked
             {
-                Assert.AreStrictEqual((int?)(char)i2, 0, "0 checked");
-                Assert.AreStrictEqual((int?)(char)i3, 234, "234 checked");
-                Assert.AreStrictEqual((int?)(char)i4, 65535, "65535 checked");
+                Assert.AreStrictEqual(0, (int?)(char)i2, "0 checked");
+                Assert.AreStrictEqual(234, (int?)(char)i3, "234 checked");
+                Assert.AreStrictEqual(65535, (int?)(char)i4, "65535 checked");
 
-                Assert.AreStrictEqual((int?)(char?)ni2, 0, "nullable 0 checked");
-                Assert.AreStrictEqual((int?)(char?)ni3, 234, "nullable 234 checked");
-                Assert.AreStrictEqual((int?)(char?)ni4, 65535, "nullable 65535 checked");
-                Assert.AreStrictEqual((int?)(char?)ni6, null, "null checked");
+                Assert.AreStrictEqual(0, (int?)(char?)ni2, "nullable 0 checked");
+                Assert.AreStrictEqual(234, (int?)(char?)ni3, "nullable 234 checked");
+                Assert.AreStrictEqual(65535, (int?)(char?)ni4, "nullable 65535 checked");
+                Assert.AreStrictEqual(null, (int?)(char?)ni6, "null checked");
             }
         }
 
@@ -62,27 +62,27 @@ namespace Bridge.ClientTest.SimpleTypes
         [Test]
         public void DefaultValueWorks()
         {
-            Assert.AreEqual((int)GetDefaultValue<char>(), 0);
+            Assert.AreEqual(0, (int)GetDefaultValue<char>());
         }
 
         [Test]
         public void DefaultConstructorReturnsZero()
         {
-            Assert.AreStrictEqual((int)new char(), 0);
+            Assert.AreStrictEqual(0, (int)new char());
         }
 
         [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void CreatingInstanceReturnsZero()
         {
-            Assert.AreStrictEqual(Activator.CreateInstance<char>(), 0);
+            Assert.AreStrictEqual(0, Activator.CreateInstance<char>());
         }
 
         [Test]
         public void ConstantsWork()
         {
-            Assert.AreEqual((int)char.MinValue, 0);
-            Assert.AreEqual((int)char.MaxValue, 65535);
+            Assert.AreEqual(0, (int)char.MinValue);
+            Assert.AreEqual(65535, (int)char.MaxValue);
         }
 
         [Test]
@@ -100,7 +100,7 @@ namespace Bridge.ClientTest.SimpleTypes
         [Test]
         public void ParseWorks()
         {
-            Assert.AreEqual(char.Parse("a"), 'a', "Parse 1");
+            Assert.AreEqual('a', char.Parse("a"), "Parse 1");
             Assert.Throws(() => char.Parse(null), "Parse 2");
             Assert.Throws(() => char.Parse(""), "Parse 3");
             Assert.Throws(() => char.Parse("ab"), "Parse 4");
@@ -109,19 +109,19 @@ namespace Bridge.ClientTest.SimpleTypes
         [Test]
         public void FormatWorks()
         {
-            Assert.AreEqual('\x23'.Format("x4"), "0023");
+            Assert.AreEqual("0023", '\x23'.Format("x4"));
         }
 
         [Test]
         public void IFormattableToStringWorks()
         {
-            Assert.AreEqual('\x23'.ToString("x4"), "0023");
+            Assert.AreEqual("0023", '\x23'.ToString("x4"));
         }
 
         [Test]
         public void ToStringWorks()
         {
-            Assert.AreEqual('A'.ToString(), "A");
+            Assert.AreEqual("A", 'A'.ToString());
         }
 
         [Test]
@@ -129,7 +129,7 @@ namespace Bridge.ClientTest.SimpleTypes
         {
             Assert.AreEqual('0'.GetHashCode(), '0'.GetHashCode());
             Assert.AreEqual('1'.GetHashCode(), '1'.GetHashCode());
-            Assert.AreNotEqual('0'.GetHashCode(), '1'.GetHashCode());
+            Assert.AreNotEqual('1'.GetHashCode(), '0'.GetHashCode());
         }
 
         [Test]
@@ -178,17 +178,17 @@ namespace Bridge.ClientTest.SimpleTypes
         [Test]
         public void ToLowerWorks()
         {
-            Assert.AreEqual((int)char.ToLower('A'), (int)'a');
-            Assert.AreEqual((int)char.ToLower('a'), (int)'a');
-            Assert.AreEqual((int)char.ToLower('3'), (int)'3');
+            Assert.AreEqual((int)'a', (int)char.ToLower('A'));
+            Assert.AreEqual((int)'a', (int)char.ToLower('a'));
+            Assert.AreEqual((int)'3', (int)char.ToLower('3'));
         }
 
         [Test]
         public void ToUpperWorks()
         {
-            Assert.AreEqual((int)char.ToUpper('A'), (int)'A');
-            Assert.AreEqual((int)char.ToUpper('a'), (int)'A');
-            Assert.AreEqual((int)char.ToUpper('3'), (int)'3');
+            Assert.AreEqual((int)'A', (int)char.ToUpper('A'));
+            Assert.AreEqual((int)'A', (int)char.ToUpper('a'));
+            Assert.AreEqual((int)'3', (int)char.ToUpper('3'));
         }
 
         [Test]

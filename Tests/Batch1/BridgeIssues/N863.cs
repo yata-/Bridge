@@ -12,19 +12,19 @@ namespace Bridge.ClientTest.BridgeIssues
         {
             var test = false;
             test |= true;
-            Assert.AreStrictEqual(test, true);
+            Assert.AreStrictEqual(true, test);
 
             test = false;
             test &= true;
-            Assert.AreStrictEqual(test, false);
+            Assert.AreStrictEqual(false, test);
 
             bool? test1 = false;
             test1 |= true;
-            Assert.AreStrictEqual(test1, true);
+            Assert.AreStrictEqual(true, test1);
 
             test1 = false;
             test1 &= true;
-            Assert.AreStrictEqual(test1, false);
+            Assert.AreStrictEqual(false, test1);
         }
     }
 }

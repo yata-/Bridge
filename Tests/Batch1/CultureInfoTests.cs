@@ -13,7 +13,7 @@ namespace Bridge.ClientTest
         public void TypePropertiesAreCorrect()
         {
             var culture = CultureInfo.InvariantCulture;
-            Assert.AreEqual(typeof(CultureInfo).GetClassName(), "Bridge.CultureInfo");
+            Assert.AreEqual("Bridge.CultureInfo", typeof(CultureInfo).GetClassName());
             Assert.True(culture is CultureInfo);
         }
 
@@ -21,18 +21,18 @@ namespace Bridge.ClientTest
         public void GetFormatWorks()
         {
             var culture = CultureInfo.InvariantCulture;
-            Assert.AreEqual(culture.GetFormat(typeof(int)), null);
-            Assert.AreEqual(culture.GetFormat(typeof(NumberFormatInfo)), culture.NumberFormat);
-            Assert.AreEqual(culture.GetFormat(typeof(DateTimeFormatInfo)), culture.DateTimeFormat);
+            Assert.AreEqual(null, culture.GetFormat(typeof(int)));
+            Assert.AreEqual(culture.NumberFormat, culture.GetFormat(typeof(NumberFormatInfo)));
+            Assert.AreEqual(culture.DateTimeFormat, culture.GetFormat(typeof(DateTimeFormatInfo)));
         }
 
         [Test]
         public void InvariantWorks()
         {
             var culture = CultureInfo.InvariantCulture;
-            Assert.AreEqual(culture.Name, "iv");
-            Assert.AreEqual(culture.DateTimeFormat, DateTimeFormatInfo.InvariantInfo);
-            Assert.AreEqual(culture.NumberFormat, NumberFormatInfo.InvariantInfo);
+            Assert.AreEqual("iv", culture.Name);
+            Assert.AreEqual(DateTimeFormatInfo.InvariantInfo, culture.DateTimeFormat);
+            Assert.AreEqual(NumberFormatInfo.InvariantInfo, culture.NumberFormat);
         }
     }
 }

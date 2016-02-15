@@ -40,7 +40,7 @@ namespace Bridge.ClientTest.BridgeIssues
             lock (o)
             {
                 int i = 555;
-                Assert.AreEqual(i, 555, "Bridge777 i");
+                Assert.AreEqual(555, i, "Bridge777 i");
             }
 
             lock (Method(SomeProperty = o))

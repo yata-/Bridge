@@ -16,9 +16,9 @@ namespace Bridge.ClientTest.BridgeIssues
         [Test(ExpectedCount = 2)]
         public static void TestUseCase()
         {
-            Assert.AreEqual(Bridge537B.TestB1(), 2, "Bridge537 TestB1");
+            Assert.AreEqual(2, Bridge537B.TestB1(), "Bridge537 TestB1");
 
-            Assert.AreEqual(Bridge537B.TestB2(), 1, "Bridge537 TestB2");
+            Assert.AreEqual(1, Bridge537B.TestB2(), "Bridge537 TestB2");
         }
     }
 }

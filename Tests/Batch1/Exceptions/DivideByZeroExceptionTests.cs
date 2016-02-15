@@ -14,7 +14,7 @@ namespace Bridge.ClientTest.Exceptions
         [Test]
         public void TypePropertiesAreCorrect()
         {
-            Assert.AreEqual(typeof(DivideByZeroException).GetClassName(), "Bridge.DivideByZeroException", "Name");
+            Assert.AreEqual("Bridge.DivideByZeroException", typeof(DivideByZeroException).GetClassName(), "Name");
             object d = new DivideByZeroException();
             Assert.True(d is DivideByZeroException, "is DivideByZeroException");
             Assert.True(d is Exception, "is Exception");
@@ -25,8 +25,8 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new DivideByZeroException();
             Assert.True((object)ex is DivideByZeroException, "is DivideByZeroException");
-            Assert.AreEqual(ex.InnerException, null, "InnerException");
-            Assert.AreEqual(ex.Message, "Division by 0.");
+            Assert.AreEqual(null, ex.InnerException, "InnerException");
+            Assert.AreEqual("Division by 0.", ex.Message);
         }
 
         [Test]
@@ -34,8 +34,8 @@ namespace Bridge.ClientTest.Exceptions
         {
             var ex = new DivideByZeroException("The message");
             Assert.True((object)ex is DivideByZeroException, "is DivideByZeroException");
-            Assert.AreEqual(ex.InnerException, null, "InnerException");
-            Assert.AreEqual(ex.Message, "The message");
+            Assert.AreEqual(null, ex.InnerException, "InnerException");
+            Assert.AreEqual("The message", ex.Message);
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace Bridge.ClientTest.Exceptions
             var ex = new DivideByZeroException("The message", inner);
             Assert.True((object)ex is DivideByZeroException, "is DivideByZeroException");
             Assert.True(ReferenceEquals(ex.InnerException, inner), "InnerException");
-            Assert.AreEqual(ex.Message, "The message");
+            Assert.AreEqual("The message", ex.Message);
         }
     }
 }

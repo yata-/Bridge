@@ -14,9 +14,9 @@ namespace Bridge.ClientTest.BridgeIssues
         public static void TestUseCase()
         {
             var pair = new KeyValuePair<int, string>(1, "value");
-            Assert.AreEqual(pair.Key, 1, "Bridge479 Key");
-            Assert.AreEqual(pair.Value, "value", "Bridge479 Value");
-            Assert.AreEqual(pair.ToString(), "[1, value]", "Bridge479 ToString");
+            Assert.AreEqual(1, pair.Key, "Bridge479 Key");
+            Assert.AreEqual("value", pair.Value, "Bridge479 Value");
+            Assert.AreEqual("[1, value]", pair.ToString(), "Bridge479 ToString");
         }
     }
 }

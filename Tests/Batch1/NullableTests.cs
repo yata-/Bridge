@@ -19,8 +19,8 @@ namespace Bridge.ClientTest
         public void TypePropertiesAreCorrect()
         {
             int? a = 3, b = null;
-            Assert.AreEqual(typeof(Nullable<bool>).GetClassName(), "Boolean", "Open FullName");
-            Assert.AreEqual(typeof(int?).GetClassName(), "Bridge.Int", "Instantiated FullName");
+            Assert.AreEqual("Boolean", typeof(Nullable<bool>).GetClassName(), "Open FullName");
+            Assert.AreEqual("Bridge.Int", typeof(int?).GetClassName(), "Instantiated FullName");
             Assert.True((object)a is int?, "is int? #1");
             Assert.False((object)b is int?, "is int? #2");
 
@@ -36,8 +36,8 @@ namespace Bridge.ClientTest
             int i = 3;
             int? i1 = new int?(i);
             int? i2 = i;
-            Assert.AreEqual(i1, 3);
-            Assert.AreEqual(i2, 3);
+            Assert.AreEqual(3, i1);
+            Assert.AreEqual(3, i2);
         }
 
         [Test]
@@ -60,7 +60,7 @@ namespace Bridge.ClientTest
         public void UnboxingWorks()
         {
             int? a = 3, b = null;
-            Assert.AreEqual((int)a, 3);
+            Assert.AreEqual(3, (int)a);
             try
             {
                 int x = (int)b;
@@ -75,7 +75,7 @@ namespace Bridge.ClientTest
         public void ValueWorks()
         {
             int? a = 3, b = null;
-            Assert.AreEqual(a.Value, 3);
+            Assert.AreEqual(3, a.Value);
             try
             {
                 int x = b.Value;
@@ -100,227 +100,227 @@ namespace Bridge.ClientTest
         public void GetValueOrDefaultWithArgWorks()
         {
             int? a = 3, b = null;
-            Assert.AreEqual(a.GetValueOrDefault(1), 3);
-            Assert.AreEqual(b.GetValueOrDefault(1), 1);
+            Assert.AreEqual(3, a.GetValueOrDefault(1));
+            Assert.AreEqual(1, b.GetValueOrDefault(1));
         }
 
         [Test]
         public void LiftedEqualityWorks()
         {
             int? a = 1, b = 1, c = 2, d = null, e = null;
-            Assert.AreStrictEqual(a == b, true);
-            Assert.AreStrictEqual(a == c, false);
-            Assert.AreStrictEqual(a == d, false);
-            Assert.AreStrictEqual(d == e, true);
+            Assert.AreStrictEqual(true, a == b);
+            Assert.AreStrictEqual(false, a == c);
+            Assert.AreStrictEqual(false, a == d);
+            Assert.AreStrictEqual(true, d == e);
         }
 
         [Test]
         public void LiftedInequalityWorks()
         {
             int? a = 1, b = 1, c = 2, d = null, e = null;
-            Assert.AreStrictEqual(a != b, false);
-            Assert.AreStrictEqual(a != c, true);
-            Assert.AreStrictEqual(a != d, true);
-            Assert.AreStrictEqual(d != e, false);
+            Assert.AreStrictEqual(false, a != b);
+            Assert.AreStrictEqual(true, a != c);
+            Assert.AreStrictEqual(true, a != d);
+            Assert.AreStrictEqual(false, d != e);
         }
 
         [Test]
         public void LiftedLessThanWorks()
         {
             int? a = 1, b = 1, c = 2, d = null, e = null;
-            Assert.AreStrictEqual(a < b, false);
-            Assert.AreStrictEqual(a < c, true);
-            Assert.AreStrictEqual(a < d, false);
-            Assert.AreStrictEqual(d < e, false);
+            Assert.AreStrictEqual(false, a < b);
+            Assert.AreStrictEqual(true, a < c);
+            Assert.AreStrictEqual(false, a < d);
+            Assert.AreStrictEqual(false, d < e);
         }
 
         [Test]
         public void LiftedGreaterThanWorks()
         {
             int? a = 1, b = 1, c = 2, d = null, e = null;
-            Assert.AreStrictEqual(a > b, false);
-            Assert.AreStrictEqual(c > a, true);
-            Assert.AreStrictEqual(a > d, false);
-            Assert.AreStrictEqual(d > e, false);
+            Assert.AreStrictEqual(false, a > b);
+            Assert.AreStrictEqual(true, c > a);
+            Assert.AreStrictEqual(false, a > d);
+            Assert.AreStrictEqual(false, d > e);
         }
 
         [Test]
         public void LiftedLessThanOrEqualWorks()
         {
             int? a = 1, b = 1, c = 2, d = null, e = null;
-            Assert.AreStrictEqual(a <= b, true);
-            Assert.AreStrictEqual(c <= a, false);
-            Assert.AreStrictEqual(a <= d, false);
-            Assert.AreStrictEqual(d <= e, false);
+            Assert.AreStrictEqual(true, a <= b);
+            Assert.AreStrictEqual(false, c <= a);
+            Assert.AreStrictEqual(false, a <= d);
+            Assert.AreStrictEqual(false, d <= e);
         }
 
         [Test]
         public void LiftedGreaterThanOrEqualWorks()
         {
             int? a = 1, b = 1, c = 2, d = null, e = null;
-            Assert.AreStrictEqual(a >= b, true);
-            Assert.AreStrictEqual(a >= c, false);
-            Assert.AreStrictEqual(a >= d, false);
-            Assert.AreStrictEqual(d >= e, false);
+            Assert.AreStrictEqual(true, a >= b);
+            Assert.AreStrictEqual(false, a >= c);
+            Assert.AreStrictEqual(false, a >= d);
+            Assert.AreStrictEqual(false, d >= e);
         }
 
         [Test]
         public void LiftedSubtractionWorks()
         {
             int? a = 2, b = 3, c = null;
-            Assert.AreStrictEqual(a - b, -1);
-            Assert.AreStrictEqual(a - c, null);
+            Assert.AreStrictEqual(-1, a - b);
+            Assert.AreStrictEqual(null, a - c);
         }
 
         [Test]
         public void LiftedAdditionWorks()
         {
             int? a = 2, b = 3, c = null;
-            Assert.AreStrictEqual(a + b, 5);
-            Assert.AreStrictEqual(a + c, null);
+            Assert.AreStrictEqual(5, a + b);
+            Assert.AreStrictEqual(null, a + c);
         }
 
         [Test]
         public void LiftedModWorks()
         {
             int? a = 14, b = 3, c = null;
-            Assert.AreStrictEqual(a % b, 2);
-            Assert.AreStrictEqual(a % c, null);
+            Assert.AreStrictEqual(2, a % b);
+            Assert.AreStrictEqual(null, a % c);
         }
 
         [Test]
         public void LiftedFloatingPointDivisionWorks()
         {
             double? a = 15, b = 3, c = null;
-            Assert.AreStrictEqual(a / b, 5);
-            Assert.AreStrictEqual(a / c, null);
+            Assert.AreStrictEqual(5, a / b);
+            Assert.AreStrictEqual(null, a / c);
         }
 
         [Test]
         public void LiftedIntegerDivisionWorks()
         {
             int? a = 16, b = 3, c = null;
-            Assert.AreStrictEqual(a / b, 5);
-            Assert.AreStrictEqual(a / c, null);
+            Assert.AreStrictEqual(5, a / b);
+            Assert.AreStrictEqual(null, a / c);
         }
 
         [Test]
         public void LiftedMultiplicationWorks()
         {
             int? a = 2, b = 3, c = null;
-            Assert.AreStrictEqual(a * b, 6);
-            Assert.AreStrictEqual(a * c, null);
+            Assert.AreStrictEqual(6, a * b);
+            Assert.AreStrictEqual(null, a * c);
         }
 
         [Test]
         public void LiftedBitwiseAndWorks()
         {
             int? a = 6, b = 3, c = null;
-            Assert.AreStrictEqual(a & b, 2);
-            Assert.AreStrictEqual(a & c, null);
+            Assert.AreStrictEqual(2, a & b);
+            Assert.AreStrictEqual(null, a & c);
         }
 
         [Test]
         public void LiftedBitwiseOrWorks()
         {
             int? a = 6, b = 3, c = null;
-            Assert.AreStrictEqual(a | b, 7);
-            Assert.AreStrictEqual(a | c, null);
+            Assert.AreStrictEqual(7, a | b);
+            Assert.AreStrictEqual(null, a | c);
         }
 
         [Test]
         public void LiftedBitwiseXorWorks()
         {
             int? a = 6, b = 3, c = null;
-            Assert.AreStrictEqual(a ^ b, 5);
-            Assert.AreStrictEqual(a ^ c, null);
+            Assert.AreStrictEqual(5, a ^ b);
+            Assert.AreStrictEqual(null, a ^ c);
         }
 
         [Test]
         public void LiftedLeftShiftWorks()
         {
             int? a = 6, b = 3, c = null;
-            Assert.AreStrictEqual(a << b, 48);
-            Assert.AreStrictEqual(a << c, null);
+            Assert.AreStrictEqual(48, a << b);
+            Assert.AreStrictEqual(null, a << c);
         }
 
         [Test]
         public void LiftedSignedRightShiftWorks()
         {
             int? a = 48, b = 3, c = null;
-            Assert.AreStrictEqual(a >> b, 6);
-            Assert.AreStrictEqual(a >> c, null);
+            Assert.AreStrictEqual(6, a >> b);
+            Assert.AreStrictEqual(null, a >> c);
         }
 
         [Test]
         public void LiftedUnsignedRightShiftWorks()
         {
             int? a = -48, b = 3, c = null;
-            Assert.AreStrictEqual(a >> b, -6);
-            Assert.AreStrictEqual(a >> c, null);
+            Assert.AreStrictEqual(-6, a >> b);
+            Assert.AreStrictEqual(null, a >> c);
         }
 
         [Test(Name = "{0} #314")]
         public void LiftedBooleanAndWorks()
         {
             bool? a = true, b = true, c = false, d = false, e = null, f = null;
-            Assert.AreStrictEqual(a & b, true);
-            Assert.AreStrictEqual(a & c, false);
-            Assert.AreStrictEqual(a & e, null);
-            Assert.AreStrictEqual(c & a, false);
-            Assert.AreStrictEqual(c & d, false);
-            Assert.AreStrictEqual(c & e, false);
-            Assert.AreStrictEqual(e & a, null);
-            Assert.AreStrictEqual(e & c, false);
-            Assert.AreStrictEqual(e & f, null);
+            Assert.AreStrictEqual(true, a & b);
+            Assert.AreStrictEqual(false, a & c);
+            Assert.AreStrictEqual(null, a & e);
+            Assert.AreStrictEqual(false, c & a);
+            Assert.AreStrictEqual(false, c & d);
+            Assert.AreStrictEqual(false, c & e);
+            Assert.AreStrictEqual(null, e & a);
+            Assert.AreStrictEqual(false, e & c);
+            Assert.AreStrictEqual(null, e & f);
         }
 
         [Test(Name = "{0} #314")]
         public void LiftedBooleanOrWorks()
         {
             bool? a = true, b = true, c = false, d = false, e = null, f = null;
-            Assert.AreStrictEqual(a | b, true);
-            Assert.AreStrictEqual(a | c, true);
-            Assert.AreStrictEqual(a | e, true);
-            Assert.AreStrictEqual(c | a, true);
-            Assert.AreStrictEqual(c | d, false);
-            Assert.AreStrictEqual(c | e, null);
-            Assert.AreStrictEqual(e | a, true);
-            Assert.AreStrictEqual(e | c, null);
-            Assert.AreStrictEqual(e | f, null);
+            Assert.AreStrictEqual(true, a | b);
+            Assert.AreStrictEqual(true, a | c);
+            Assert.AreStrictEqual(true, a | e);
+            Assert.AreStrictEqual(true, c | a);
+            Assert.AreStrictEqual(false, c | d);
+            Assert.AreStrictEqual(null, c | e);
+            Assert.AreStrictEqual(true, e | a);
+            Assert.AreStrictEqual(null, e | c);
+            Assert.AreStrictEqual(null, e | f);
         }
 
         [Test]
         public void LiftedBooleanNotWorks()
         {
             bool? a = true, b = false, c = null;
-            Assert.AreStrictEqual(!a, false);
-            Assert.AreStrictEqual(!b, true);
-            Assert.AreStrictEqual(!c, null);
+            Assert.AreStrictEqual(false, !a);
+            Assert.AreStrictEqual(true, !b);
+            Assert.AreStrictEqual(null, !c);
         }
 
         [Test]
         public void LiftedNegationWorks()
         {
             int? a = 3, b = null;
-            Assert.AreStrictEqual(-a, -3);
-            Assert.AreStrictEqual(-b, null);
+            Assert.AreStrictEqual(-3, -a);
+            Assert.AreStrictEqual(null, -b);
         }
 
         [Test]
         public void LiftedUnaryPlusWorks()
         {
             int? a = 3, b = null;
-            Assert.AreStrictEqual(+a, +3);
-            Assert.AreStrictEqual(+b, null);
+            Assert.AreStrictEqual(+3, +a);
+            Assert.AreStrictEqual(null, +b);
         }
 
         [Test]
         public void LiftedOnesComplementWorks()
         {
             int? a = 3, b = null;
-            Assert.AreStrictEqual(~a, -4);
-            Assert.AreStrictEqual(~b, null);
+            Assert.AreStrictEqual(-4, ~a);
+            Assert.AreStrictEqual(null, ~b);
         }
 
         [Test(Name = "{0} #314")]
@@ -328,11 +328,11 @@ namespace Bridge.ClientTest
         {
             int? v1 = null, v2 = 1, v3 = 0, v4 = 2;
             string s1 = null, s2 = "x";
-            Assert.AreStrictEqual(v1 ?? v1, null);
-            Assert.AreStrictEqual(v1 ?? v2, 1);
-            Assert.AreStrictEqual(v3 ?? v4, 0);
-            Assert.AreStrictEqual(s1 ?? s1, null);
-            Assert.AreStrictEqual(s1 ?? s2, "x");
+            Assert.AreStrictEqual(null, v1 ?? v1);
+            Assert.AreStrictEqual(1, v1 ?? v2);
+            Assert.AreStrictEqual(0, v3 ?? v4);
+            Assert.AreStrictEqual(null, s1 ?? s1);
+            Assert.AreStrictEqual("x", s1 ?? s2);
         }
     }
 }

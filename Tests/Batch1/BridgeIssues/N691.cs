@@ -34,7 +34,7 @@ namespace Bridge.ClientTest.BridgeIssues
                 }
             }
 
-            Assert.AreEqual(pos, 2, "Bridge691");
+            Assert.AreEqual(2, pos, "Bridge691");
         }
     }
 }

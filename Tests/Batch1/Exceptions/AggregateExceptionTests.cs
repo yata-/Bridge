@@ -21,7 +21,7 @@ namespace Bridge.ClientTest.Exceptions
         [Test]
         public void TypePropertiesAreCorrect()
         {
-            Assert.AreEqual(typeof(AggregateException).GetClassName(), "Bridge.AggregateException", "Name");
+            Assert.AreEqual("Bridge.AggregateException", typeof(AggregateException).GetClassName(), "Name");
             object d = new AggregateException();
             Assert.True(d is AggregateException);
             Assert.True(d is Exception);
@@ -33,9 +33,9 @@ namespace Bridge.ClientTest.Exceptions
             var ex = new AggregateException();
             Assert.True((object)ex is AggregateException, "is AggregateException");
             Assert.True((object)ex.InnerExceptions is ReadOnlyCollection<Exception>, "InnerExceptions is ReadOnlyCollection");
-            Assert.AreEqual(ex.InnerExceptions.Count, 0, "InnerExceptions.Length");
+            Assert.AreEqual(0, ex.InnerExceptions.Count, "InnerExceptions.Length");
             Assert.True(ex.InnerException == null, "InnerException");
-            Assert.AreEqual(ex.Message, DefaultMessage, "Message");
+            Assert.AreEqual(DefaultMessage, ex.Message, "Message");
         }
 
         [Test]
@@ -48,25 +48,25 @@ namespace Bridge.ClientTest.Exceptions
             Assert.True((object)ex1 is AggregateException, "ex1 is AggregateException");
             Assert.True(ex1.InnerException == null, "ex1 InnerException");
             Assert.True((object)ex1.InnerExceptions is ReadOnlyCollection<Exception>, "ex1 InnerExceptions is ReadOnlyCollection");
-            Assert.AreEqual(ex1.InnerExceptions.Count, 0, "ex1 InnerExceptions.Length");
-            Assert.AreEqual(ex1.Message, DefaultMessage, "ex1 Message");
+            Assert.AreEqual(0, ex1.InnerExceptions.Count, "ex1 InnerExceptions.Length");
+            Assert.AreEqual(DefaultMessage, ex1.Message, "ex1 Message");
 
             var ex2 = new AggregateException(MakeEnumerable(inner1));
             Assert.True((object)ex2 is AggregateException, "ex2 is AggregateException");
             Assert.True(ReferenceEquals(ex2.InnerException, inner1), "ex2 InnerException");
             Assert.True((object)ex2.InnerExceptions is ReadOnlyCollection<Exception>, "ex2 InnerExceptions is ReadOnlyCollection");
-            Assert.AreEqual(ex2.InnerExceptions.Count, 1, "ex2 InnerExceptions.Length");
+            Assert.AreEqual(1, ex2.InnerExceptions.Count, "ex2 InnerExceptions.Length");
             Assert.True(ReferenceEquals(ex2.InnerExceptions[0], inner1), "ex2 InnerExceptions[0]");
-            Assert.AreEqual(ex2.Message, DefaultMessage, "ex2 Message");
+            Assert.AreEqual(DefaultMessage, ex2.Message, "ex2 Message");
 
             var ex3 = new AggregateException(MakeEnumerable(inner1, inner2));
             Assert.True((object)ex3 is AggregateException, "ex3 is AggregateException");
             Assert.True(ReferenceEquals(ex3.InnerException, inner1), "ex3 InnerException");
             Assert.True((object)ex3.InnerExceptions is ReadOnlyCollection<Exception>, "ex3 InnerExceptions is ReadOnlyCollection");
-            Assert.AreEqual(ex3.InnerExceptions.Count, 2, "ex3 InnerExceptions.Length");
+            Assert.AreEqual(2, ex3.InnerExceptions.Count, "ex3 InnerExceptions.Length");
             Assert.True(ReferenceEquals(ex3.InnerExceptions[0], inner1), "ex3 InnerExceptions[0]");
             Assert.True(ReferenceEquals(ex3.InnerExceptions[1], inner2), "ex3 InnerExceptions[1]");
-            Assert.AreEqual(ex3.Message, DefaultMessage, "ex3 Message");
+            Assert.AreEqual(DefaultMessage, ex3.Message, "ex3 Message");
         }
 
         [Test]
@@ -79,25 +79,25 @@ namespace Bridge.ClientTest.Exceptions
             Assert.True((object)ex1 is AggregateException, "ex1 is AggregateException");
             Assert.True(ex1.InnerException == null, "ex1 InnerException");
             Assert.True((object)ex1.InnerExceptions is ReadOnlyCollection<Exception>, "ex1 InnerExceptions is ReadOnlyCollection");
-            Assert.AreEqual(ex1.InnerExceptions.Count, 0, "ex1 InnerExceptions.Length");
-            Assert.AreEqual(ex1.Message, DefaultMessage, "ex1 Message");
+            Assert.AreEqual(0, ex1.InnerExceptions.Count, "ex1 InnerExceptions.Length");
+            Assert.AreEqual(DefaultMessage, ex1.Message, "ex1 Message");
 
             var ex2 = new AggregateException(inner1);
             Assert.True((object)ex2 is AggregateException, "ex2 is AggregateException");
             Assert.True(ReferenceEquals(ex2.InnerException, inner1), "ex2 InnerException");
             Assert.True((object)ex2.InnerExceptions is ReadOnlyCollection<Exception>, "ex2 InnerExceptions is ReadOnlyCollection");
-            Assert.AreEqual(ex2.InnerExceptions.Count, 1, "ex2 InnerExceptions.Length");
+            Assert.AreEqual(1, ex2.InnerExceptions.Count, "ex2 InnerExceptions.Length");
             Assert.True(ReferenceEquals(ex2.InnerExceptions[0], inner1), "ex2 InnerExceptions[0]");
-            Assert.AreEqual(ex2.Message, DefaultMessage, "ex2 Message");
+            Assert.AreEqual(DefaultMessage, ex2.Message, "ex2 Message");
 
             var ex3 = new AggregateException(inner1, inner2);
             Assert.True((object)ex3 is AggregateException, "ex3 is AggregateException");
             Assert.True(ReferenceEquals(ex3.InnerException, inner1), "ex3 InnerException");
             Assert.True((object)ex3.InnerExceptions is ReadOnlyCollection<Exception>, "ex3 InnerExceptions is ReadOnlyCollection");
-            Assert.AreEqual(ex3.InnerExceptions.Count, 2, "ex3 InnerExceptions.Length");
+            Assert.AreEqual(2, ex3.InnerExceptions.Count, "ex3 InnerExceptions.Length");
             Assert.True(ReferenceEquals(ex3.InnerExceptions[0], inner1), "ex3 InnerExceptions[0]");
             Assert.True(ReferenceEquals(ex3.InnerExceptions[1], inner2), "ex3 InnerExceptions[1]");
-            Assert.AreEqual(ex3.Message, DefaultMessage, "ex3 Message");
+            Assert.AreEqual(DefaultMessage, ex3.Message, "ex3 Message");
         }
 
         [Test]
@@ -106,9 +106,9 @@ namespace Bridge.ClientTest.Exceptions
             var ex = new AggregateException("Some message");
             Assert.True((object)ex is AggregateException, "is AggregateException");
             Assert.True((object)ex.InnerExceptions is ReadOnlyCollection<Exception>, "ex1 InnerExceptions is ReadOnlyCollection");
-            Assert.AreEqual(ex.InnerExceptions.Count, 0, "InnerExceptions.Length");
+            Assert.AreEqual(0, ex.InnerExceptions.Count, "InnerExceptions.Length");
             Assert.True(ex.InnerException == null, "InnerException");
-            Assert.AreEqual(ex.Message, "Some message", "Message");
+            Assert.AreEqual("Some message", ex.Message, "Message");
         }
 
         [Test]
@@ -121,25 +121,25 @@ namespace Bridge.ClientTest.Exceptions
             Assert.True((object)ex1 is AggregateException, "ex1 is AggregateException");
             Assert.True(ex1.InnerException == null, "ex1 InnerException");
             Assert.True((object)ex1.InnerExceptions is ReadOnlyCollection<Exception>, "ex1 InnerExceptions is ReadOnlyCollection");
-            Assert.AreEqual(ex1.InnerExceptions.Count, 0, "ex1 InnerExceptions.Length");
-            Assert.AreEqual(ex1.Message, "Message #1", "ex1 Message");
+            Assert.AreEqual(0, ex1.InnerExceptions.Count, "ex1 InnerExceptions.Length");
+            Assert.AreEqual("Message #1", ex1.Message, "ex1 Message");
 
             var ex2 = new AggregateException("Message #2", MakeEnumerable(inner1));
             Assert.True((object)ex2 is AggregateException, "ex2 is AggregateException");
             Assert.True(ReferenceEquals(ex2.InnerException, inner1), "ex2 InnerException");
             Assert.True((object)ex2.InnerExceptions is ReadOnlyCollection<Exception>, "ex2 InnerExceptions is ReadOnlyCollection");
-            Assert.AreEqual(ex2.InnerExceptions.Count, 1, "ex2 InnerExceptions.Length");
+            Assert.AreEqual(1, ex2.InnerExceptions.Count, "ex2 InnerExceptions.Length");
             Assert.True(ReferenceEquals(ex2.InnerExceptions[0], inner1), "ex2 InnerExceptions[0]");
-            Assert.AreEqual(ex2.Message, "Message #2", "ex2 Message");
+            Assert.AreEqual("Message #2", ex2.Message, "ex2 Message");
 
             var ex3 = new AggregateException("Message #3", MakeEnumerable(inner1, inner2));
             Assert.True((object)ex3 is AggregateException, "ex3 is AggregateException");
             Assert.True(ReferenceEquals(ex3.InnerException, inner1), "ex3 InnerException");
             Assert.True((object)ex3.InnerExceptions is ReadOnlyCollection<Exception>, "ex3 InnerExceptions is ReadOnlyCollection");
-            Assert.AreEqual(ex3.InnerExceptions.Count, 2, "ex3 InnerExceptions.Length");
+            Assert.AreEqual(2, ex3.InnerExceptions.Count, "ex3 InnerExceptions.Length");
             Assert.True(ReferenceEquals(ex3.InnerExceptions[0], inner1), "ex3 InnerExceptions[0]");
             Assert.True(ReferenceEquals(ex3.InnerExceptions[1], inner2), "ex3 InnerExceptions[1]");
-            Assert.AreEqual(ex3.Message, "Message #3", "ex3 Message");
+            Assert.AreEqual("Message #3", ex3.Message, "ex3 Message");
         }
 
         [Test]
@@ -152,25 +152,25 @@ namespace Bridge.ClientTest.Exceptions
             Assert.True((object)ex1 is AggregateException, "ex1 is AggregateException");
             Assert.True(ex1.InnerException == null, "ex1 InnerException");
             Assert.True((object)ex1.InnerExceptions is ReadOnlyCollection<Exception>, "ex1 InnerExceptions is ReadOnlyCollection");
-            Assert.AreEqual(ex1.InnerExceptions.Count, 0, "ex1 InnerExceptions.Length");
-            Assert.AreEqual(ex1.Message, "Message #1", "ex1 Message");
+            Assert.AreEqual(0, ex1.InnerExceptions.Count, "ex1 InnerExceptions.Length");
+            Assert.AreEqual("Message #1", ex1.Message, "ex1 Message");
 
             var ex2 = new AggregateException("Message #2", inner1);
             Assert.True((object)ex2 is AggregateException, "ex2 is AggregateException");
             Assert.True(ReferenceEquals(ex2.InnerException, inner1), "ex2 InnerException");
-            Assert.AreEqual(ex2.InnerExceptions.Count, 1, "ex2 InnerExceptions.Length");
+            Assert.AreEqual(1, ex2.InnerExceptions.Count, "ex2 InnerExceptions.Length");
             Assert.True((object)ex2.InnerExceptions is ReadOnlyCollection<Exception>, "ex2 InnerExceptions is ReadOnlyCollection");
             Assert.True(ReferenceEquals(ex2.InnerExceptions[0], inner1), "ex2 InnerExceptions[0]");
-            Assert.AreEqual(ex2.Message, "Message #2", "ex2 Message");
+            Assert.AreEqual("Message #2", ex2.Message, "ex2 Message");
 
             var ex3 = new AggregateException("Message #3", inner1, inner2);
             Assert.True((object)ex3 is AggregateException, "ex3 is AggregateException");
             Assert.True(ReferenceEquals(ex3.InnerException, inner1), "ex3 InnerException");
             Assert.True((object)ex3.InnerExceptions is ReadOnlyCollection<Exception>, "ex3 InnerExceptions is ReadOnlyCollection");
-            Assert.AreEqual(ex3.InnerExceptions.Count, 2, "ex3 InnerExceptions.Length");
+            Assert.AreEqual(2, ex3.InnerExceptions.Count, "ex3 InnerExceptions.Length");
             Assert.True(ReferenceEquals(ex3.InnerExceptions[0], inner1), "ex3 InnerExceptions[0]");
             Assert.True(ReferenceEquals(ex3.InnerExceptions[1], inner2), "ex3 InnerExceptions[1]");
-            Assert.AreEqual(ex3.Message, "Message #3", "ex3 Message");
+            Assert.AreEqual("Message #3", ex3.Message, "ex3 Message");
         }
 
         [Test]
@@ -193,8 +193,8 @@ namespace Bridge.ClientTest.Exceptions
             var actual = ae.Flatten();
 
             Assert.True((object)actual is AggregateException, "is AggregateException");
-            Assert.AreEqual(actual.Message, "The message", "message");
-            Assert.AreEqual(actual.InnerExceptions.Count, 7, "Count");
+            Assert.AreEqual("The message", actual.Message, "message");
+            Assert.AreEqual(7, actual.InnerExceptions.Count, "Count");
             Assert.True(ReferenceEquals(actual.InnerExceptions[0], ex0), "0");
             Assert.True(ReferenceEquals(actual.InnerExceptions[1], ex1), "1");
             Assert.True(ReferenceEquals(actual.InnerExceptions[2], ex2), "2");

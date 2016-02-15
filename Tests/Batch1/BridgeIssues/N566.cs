@@ -30,7 +30,7 @@ namespace Bridge.ClientTest.BridgeIssues
         public static void TestUseCase()
         {
             var ted = new Bridge566B();
-            Assert.AreEqual(ted.Data, "Ted", "#566 Ted");
+            Assert.AreEqual("Ted", ted.Data, "#566 Ted");
         }
     }
 }

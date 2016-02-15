@@ -20,7 +20,7 @@ namespace Bridge.ClientTest.Text
         public void TypePropertiesAreCorrect()
         {
             var sb = new StringBuilder();
-            Assert.AreEqual(typeof(StringBuilder).GetClassName(), "Bridge.Text.StringBuilder");
+            Assert.AreEqual("Bridge.Text.StringBuilder", typeof(StringBuilder).GetClassName());
             Assert.True(sb is StringBuilder);
         }
 
@@ -28,40 +28,40 @@ namespace Bridge.ClientTest.Text
         public void DefaultConstructorWorks()
         {
             var sb = new StringBuilder();
-            Assert.AreEqual(sb.ToString(), "", "Text");
-            Assert.AreEqual(sb.Length, 0, "Length");
+            Assert.AreEqual("", sb.ToString(), "Text");
+            Assert.AreEqual(0, sb.Length, "Length");
         }
 
         [Test]
         public void ConstructorWithCapacityWorks()
         {
             var sb = new StringBuilder(55);
-            Assert.AreEqual(sb.ToString(), "", "Text");
-            Assert.AreEqual(sb.Length, 0, "Length");
+            Assert.AreEqual("", sb.ToString(), "Text");
+            Assert.AreEqual(0, sb.Length, "Length");
         }
 
         [Test]
         public void InitialTextConstructorWorks()
         {
             var sb = new StringBuilder("some text");
-            Assert.AreEqual(sb.ToString(), "some text", "Text");
-            Assert.AreEqual(sb.Length, 9, "Length");
+            Assert.AreEqual("some text", sb.ToString(), "Text");
+            Assert.AreEqual(9, sb.Length, "Length");
         }
 
         [Test]
         public void InitialTextConstructorWithCapacityWorks()
         {
             var sb = new StringBuilder("some text", 55);
-            Assert.AreEqual(sb.ToString(), "some text", "Text");
-            Assert.AreEqual(sb.Length, 9, "Length");
+            Assert.AreEqual("some text", sb.ToString(), "Text");
+            Assert.AreEqual(9, sb.Length, "Length");
         }
 
         [Test]
         public void SubstringConstructorWorks()
         {
             var sb = new StringBuilder("some text", 5, 3);
-            Assert.AreEqual(sb.ToString(), "tex", "Text");
-            Assert.AreEqual(sb.Length, 3, "Length");
+            Assert.AreEqual("tex", sb.ToString(), "Text");
+            Assert.AreEqual(3, sb.Length, "Length");
         }
 
         [Test]
@@ -69,8 +69,8 @@ namespace Bridge.ClientTest.Text
         {
             var sb = new StringBuilder("|");
             Assert.True(sb.Append(true) == sb);
-            Assert.AreEqual(sb.ToString(), "|true", "Text");
-            Assert.AreEqual(sb.Length, 5, "Length");
+            Assert.AreEqual("|true", sb.ToString(), "Text");
+            Assert.AreEqual(5, sb.Length, "Length");
         }
 
         [Test]
@@ -78,8 +78,8 @@ namespace Bridge.ClientTest.Text
         {
             var sb = new StringBuilder("|");
             Assert.True(sb.Append('c') == sb);
-            Assert.AreEqual(sb.ToString(), "|c", "Text");
-            Assert.AreEqual(sb.Length, 2, "Length");
+            Assert.AreEqual("|c", sb.ToString(), "Text");
+            Assert.AreEqual(2, sb.Length, "Length");
         }
 
         [Test]
@@ -87,8 +87,8 @@ namespace Bridge.ClientTest.Text
         {
             var sb = new StringBuilder("|");
             Assert.True(sb.Append(123) == sb);
-            Assert.AreEqual(sb.ToString(), "|123", "Text");
-            Assert.AreEqual(sb.Length, 4, "Length");
+            Assert.AreEqual("|123", sb.ToString(), "Text");
+            Assert.AreEqual(4, sb.Length, "Length");
         }
 
         [Test]
@@ -96,8 +96,8 @@ namespace Bridge.ClientTest.Text
         {
             var sb = new StringBuilder("|");
             Assert.True(sb.Append(123.0) == sb);
-            Assert.AreEqual(sb.ToString(), "|123", "Text");
-            Assert.AreEqual(sb.Length, 4, "Length");
+            Assert.AreEqual("|123", sb.ToString(), "Text");
+            Assert.AreEqual(4, sb.Length, "Length");
         }
 
         [Test]
@@ -105,8 +105,8 @@ namespace Bridge.ClientTest.Text
         {
             var sb = new StringBuilder("|");
             Assert.True(sb.Append(new SomeClass()) == sb);
-            Assert.AreEqual(sb.ToString(), "|some text", "Text");
-            Assert.AreEqual(sb.Length, 10, "Length");
+            Assert.AreEqual("|some text", sb.ToString(), "Text");
+            Assert.AreEqual(10, sb.Length, "Length");
         }
 
         [Test]
@@ -114,8 +114,8 @@ namespace Bridge.ClientTest.Text
         {
             var sb = new StringBuilder("|");
             Assert.True(sb.Append("some text") == sb);
-            Assert.AreEqual(sb.ToString(), "|some text", "Text");
-            Assert.AreEqual(sb.Length, 10, "Length");
+            Assert.AreEqual("|some text", sb.ToString(), "Text");
+            Assert.AreEqual(10, sb.Length, "Length");
         }
 
         [Test]
@@ -123,8 +123,8 @@ namespace Bridge.ClientTest.Text
         {
             var sb = new StringBuilder("|");
             Assert.True(sb.AppendLine() == sb);
-            Assert.AreEqual(sb.ToString(), "|\r\n", "Text");
-            Assert.AreEqual(sb.Length, 3, "Length");
+            Assert.AreEqual("|\r\n", sb.ToString(), "Text");
+            Assert.AreEqual(3, sb.Length, "Length");
         }
 
         [Test]
@@ -132,8 +132,8 @@ namespace Bridge.ClientTest.Text
         {
             var sb = new StringBuilder("|");
             Assert.True(sb.AppendLine("some text") == sb);
-            Assert.AreEqual(sb.ToString(), "|some text\r\n", "Text");
-            Assert.AreEqual(sb.Length, 12, "Length");
+            Assert.AreEqual("|some text\r\n", sb.ToString(), "Text");
+            Assert.AreEqual(12, sb.Length, "Length");
         }
 
         [Test]
@@ -141,8 +141,8 @@ namespace Bridge.ClientTest.Text
         {
             var sb = new StringBuilder("some text");
             sb.Clear();
-            Assert.AreEqual(sb.ToString(), "", "Text");
-            Assert.AreEqual(sb.Length, 0, "Length");
+            Assert.AreEqual("", sb.ToString(), "Text");
+            Assert.AreEqual(0, sb.Length, "Length");
         }
 
         [Test]
@@ -150,7 +150,7 @@ namespace Bridge.ClientTest.Text
         {
             // Yes, this is tested by every other test as well. Included for completeness only
             var sb = new StringBuilder("some text");
-            Assert.AreEqual(sb.ToString(), "some text");
+            Assert.AreEqual("some text", sb.ToString());
         }
 
         [Test]
@@ -158,7 +158,7 @@ namespace Bridge.ClientTest.Text
         {
             // Yes, this is tested by every other test as well. Included for completeness only
             var sb = new StringBuilder("some text");
-            Assert.AreEqual(sb.Length, 9);
+            Assert.AreEqual(9, sb.Length);
         }
 
         [Test(ExpectedCount = 21)]
@@ -167,36 +167,36 @@ namespace Bridge.ClientTest.Text
             // TEST constructors
             StringBuilder sb = new StringBuilder();
             var sb1 = new StringBuilder(128);
-            Assert.AreEqual(sb.ToString(), string.Empty, "StringBuilder() .ctor");
-            Assert.AreEqual(sb.ToString(), sb1.ToString(), "StringBuilder(capacity) .ctor");
+            Assert.AreEqual(string.Empty, sb.ToString(), "StringBuilder() .ctor");
+            Assert.AreEqual(sb1.ToString(), sb.ToString(), "StringBuilder(capacity) .ctor");
 
             sb = new StringBuilder("foo");
             sb1 = new StringBuilder("foo", 2);
-            Assert.AreEqual(sb.ToString(), "foo", "StringBuilder(string) .ctor");
-            Assert.AreEqual(sb.ToString(), sb1.ToString(), "StringBuilder(string, capacity) .ctor");
+            Assert.AreEqual("foo", sb.ToString(), "StringBuilder(string) .ctor");
+            Assert.AreEqual(sb1.ToString(), sb.ToString(), "StringBuilder(string, capacity) .ctor");
 
             sb = new StringBuilder("foo bar", 4, 3);
-            Assert.AreEqual(sb.ToString(), "bar", "StringBuilder(string) .ctor");
+            Assert.AreEqual("bar", sb.ToString(), "StringBuilder(string) .ctor");
 
             // TEST properties
 
             // Capacity
             sb = new StringBuilder(128);
-            Assert.AreEqual(sb.Capacity, 128, ".Capacity");
+            Assert.AreEqual(128, sb.Capacity, ".Capacity");
             sb = new StringBuilder("foo", 2);
-            Assert.AreEqual(sb.Capacity, 16, ".Capacity");
+            Assert.AreEqual(16, sb.Capacity, ".Capacity");
             sb.Capacity = 10;
-            Assert.AreEqual(sb.Capacity, 10, ".Capacity");
+            Assert.AreEqual(10, sb.Capacity, ".Capacity");
 
             // Length
-            Assert.AreEqual(sb.Length, "foo".Length, ".Length");
+            Assert.AreEqual("foo".Length, sb.Length, ".Length");
 
             // TEST methods
 
             // Clear
             sb.Clear();
-            Assert.AreEqual(sb.Length, 0, ".Clear()");
-            Assert.AreEqual(sb.ToString(), string.Empty, ".Clear()");
+            Assert.AreEqual(0, sb.Length, ".Clear()");
+            Assert.AreEqual(string.Empty, sb.ToString(), ".Clear()");
 
             // Append
             sb.Append("foo");
@@ -204,35 +204,35 @@ namespace Bridge.ClientTest.Text
             sb.Append(true);
             sb.Append('=');
             sb.Append(123);
-            Assert.AreEqual(sb.ToString(), "foo bartrue=123", ".Append()");
+            Assert.AreEqual("foo bartrue=123", sb.ToString(), ".Append()");
 
             // AppendLine
             sb.AppendLine();
-            Assert.AreEqual(sb.ToString(), "foo bartrue=123\r\n", ".AppendLine()");
+            Assert.AreEqual("foo bartrue=123\r\n", sb.ToString(), ".AppendLine()");
             sb.AppendLine("foo bar");
-            Assert.AreEqual(sb.ToString(), "foo bartrue=123\r\nfoo bar\r\n", ".AppendLine(string)");
+            Assert.AreEqual("foo bartrue=123\r\nfoo bar\r\n", sb.ToString(), ".AppendLine(string)");
 
             // AppendFormat
             sb.AppendFormat("({0}, {1})", "foo", false);
-            Assert.AreEqual(sb.ToString(), "foo bartrue=123\r\nfoo bar\r\n(foo, false)", ".AppendFormat(format, args)");
+            Assert.AreEqual("foo bartrue=123\r\nfoo bar\r\n(foo, false)", sb.ToString(), ".AppendFormat(format, args)");
 
             // Insert
             sb.Insert(0, 56.7);
-            Assert.AreEqual(sb.ToString(), "56.7foo bartrue=123\r\nfoo bar\r\n(foo, false)", ".Insert()");
+            Assert.AreEqual("56.7foo bartrue=123\r\nfoo bar\r\n(foo, false)", sb.ToString(), ".Insert()");
 
             // Remove
             sb.Remove(4, 7);
-            Assert.AreEqual(sb.ToString(), "56.7true=123\r\nfoo bar\r\n(foo, false)", ".Remove(start, length)");
+            Assert.AreEqual("56.7true=123\r\nfoo bar\r\n(foo, false)", sb.ToString(), ".Remove(start, length)");
 
             // Replace
             sb.Replace("foo bar", "bar foo");
-            Assert.AreEqual(sb.ToString(), "56.7true=123\r\nbar foo\r\n(foo, false)", ".Replace(string, string)");
+            Assert.AreEqual("56.7true=123\r\nbar foo\r\n(foo, false)", sb.ToString(), ".Replace(string, string)");
             sb.Replace('\r', '\n');
-            Assert.AreEqual(sb.ToString(), "56.7true=123\n\nbar foo\n\n(foo, false)", ".Replace(char, char)");
+            Assert.AreEqual("56.7true=123\n\nbar foo\n\n(foo, false)", sb.ToString(), ".Replace(char, char)");
             sb.Replace('f', 'F', 23, 6);
-            Assert.AreEqual(sb.ToString(), "56.7true=123\n\nbar foo\n\n(Foo, false)", ".Replace(char, char, start, length)");
+            Assert.AreEqual("56.7true=123\n\nbar foo\n\n(Foo, false)", sb.ToString(), ".Replace(char, char, start, length)");
             sb.Replace("Foo", "foo", 23, 6);
-            Assert.AreEqual(sb.ToString(), "56.7true=123\n\nbar foo\n\n(foo, false)", ".Replace(string, string, start, length)");
+            Assert.AreEqual("56.7true=123\n\nbar foo\n\n(foo, false)", sb.ToString(), ".Replace(string, string, start, length)");
         }
     }
 }

@@ -73,32 +73,32 @@ namespace Bridge.ClientTest
             var c = new C1();
 
             c.P1 = 42;
-            Assert.AreEqual(c.F1, 41, "F1 value");
+            Assert.AreEqual(41, c.F1, "F1 value");
 
             c.F1 = 15;
-            Assert.AreEqual(c.P1, 16, "P1 value");
+            Assert.AreEqual(16, c.P1, "P1 value");
 
             c.F2 = 17;
-            Assert.AreEqual(c.P2, 18, "P2 value");
+            Assert.AreEqual(18, c.P2, "P2 value");
 
             c.P3 = 12;
-            Assert.AreEqual(c.F3, 11, "F3 value");
+            Assert.AreEqual(11, c.F3, "F3 value");
         }
 
         [Test]
         public void AccessorsCanBeInvokedStatic()
         {
             C1.PS1 = 42;
-            Assert.AreEqual(C1.FS1, 41, "FS1 value");
+            Assert.AreEqual(41, C1.FS1, "FS1 value");
 
             C1.FS1 = 15;
-            Assert.AreEqual(C1.PS1, 16, "PS1 value");
+            Assert.AreEqual(16, C1.PS1, "PS1 value");
 
             C1.FS2 = 17;
-            Assert.AreEqual(C1.PS2, 18, "PS2 value");
+            Assert.AreEqual(18, C1.PS2, "PS2 value");
 
             C1.PS3 = 12;
-            Assert.AreEqual(C1.FS3, 11, "FS3 value");
+            Assert.AreEqual(11, C1.FS3, "FS3 value");
         }
 
         [Test]
@@ -107,32 +107,32 @@ namespace Bridge.ClientTest
             var c = new C2<int>();
 
             c.P1 = 42;
-            Assert.AreEqual(c.F1, 41, "F1 value");
+            Assert.AreEqual(41, c.F1, "F1 value");
 
             c.F1 = 15;
-            Assert.AreEqual(c.P1, 16, "P1 value");
+            Assert.AreEqual(16, c.P1, "P1 value");
 
             c.F2 = 17;
-            Assert.AreEqual(c.P2, 18, "P2 value");
+            Assert.AreEqual(18, c.P2, "P2 value");
 
             c.P3 = 12;
-            Assert.AreEqual(c.F3, 11, "F3 value");
+            Assert.AreEqual(11, c.F3, "F3 value");
         }
 
         [Test]
         public void AccessorsCanBeInvokedGenericStatic()
         {
             C2<int>.PS1 = 42;
-            Assert.AreEqual(C2<int>.FS1, 41, "FS1 value");
+            Assert.AreEqual(41, C2<int>.FS1, "FS1 value");
 
             C2<int>.FS1 = 15;
-            Assert.AreEqual(C2<int>.PS1, 16, "PS1 value");
+            Assert.AreEqual(16, C2<int>.PS1, "PS1 value");
 
             C2<int>.FS2 = 17;
-            Assert.AreEqual(C2<int>.PS2, 18, "PS2 value");
+            Assert.AreEqual(18, C2<int>.PS2, "PS2 value");
 
             C2<int>.PS3 = 12;
-            Assert.AreEqual(C2<int>.FS3, 11, "FS3 value");
+            Assert.AreEqual(11, C2<int>.FS3, "FS3 value");
         }
 
         [Test]
@@ -141,16 +141,16 @@ namespace Bridge.ClientTest
             var d = new D3();
 
             d.P1 = 42;
-            Assert.AreEqual(d.F1, 41, "F1 value");
+            Assert.AreEqual(41, d.F1, "F1 value");
 
             d.F1 = 15;
-            Assert.AreEqual(d.P1, 16, "P1 value");
+            Assert.AreEqual(16, d.P1, "P1 value");
 
             d.F2 = 17;
-            Assert.AreEqual(d.P2, 18, "P2 value");
+            Assert.AreEqual(18, d.P2, "P2 value");
 
             d.P3 = 12;
-            Assert.AreEqual(d.F3, 11, "F3 value");
+            Assert.AreEqual(11, d.F3, "F3 value");
         }
 
         [Test]
@@ -159,16 +159,16 @@ namespace Bridge.ClientTest
             var d = new D4<int>();
 
             d.P1 = 42;
-            Assert.AreEqual(d.F1, 41, "F1 value");
+            Assert.AreEqual(41, d.F1, "F1 value");
 
             d.F1 = 15;
-            Assert.AreEqual(d.P1, 16, "P1 value");
+            Assert.AreEqual(16, d.P1, "P1 value");
 
             d.F2 = 17;
-            Assert.AreEqual(d.P2, 18, "P2 value");
+            Assert.AreEqual(18, d.P2, "P2 value");
 
             d.P3 = 12;
-            Assert.AreEqual(d.F3, 11, "F3 value");
+            Assert.AreEqual(11, d.F3, "F3 value");
         }
     }
 }

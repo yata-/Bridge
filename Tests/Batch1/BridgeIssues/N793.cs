@@ -19,8 +19,8 @@ namespace Bridge.ClientTest.BridgeIssues
             js.Add("1");
             ReadOnlyCollection<string> test = new ReadOnlyCollection<string>(js);
 
-            Assert.AreEqual(test.Count, 1, "Bridge793 Count");
-            Assert.AreEqual(test[0], "1", "Bridge793 [0]");
+            Assert.AreEqual(1, test.Count, "Bridge793 Count");
+            Assert.AreEqual("1", test[0], "Bridge793 [0]");
 
             var ilist = (IList<string>)test;
 

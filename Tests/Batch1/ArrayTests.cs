@@ -52,53 +52,53 @@ namespace Bridge.ClientTest
         [Test]
         public void LengthWorks()
         {
-            Assert.AreEqual(new int[0].Length, 0);
-            Assert.AreEqual(new[] { "x" }.Length, 1);
-            Assert.AreEqual(new[] { "x", "y" }.Length, 2);
+            Assert.AreEqual(0, new int[0].Length);
+            Assert.AreEqual(1, new[] { "x" }.Length);
+            Assert.AreEqual(2, new[] { "x", "y" }.Length);
         }
 
         [Test]
         public void RankIsOne()
         {
-            Assert.AreEqual(new int[0].Rank, 1);
+            Assert.AreEqual(1, new int[0].Rank);
         }
 
         [Test]
         public void GetLengthWorks()
         {
-            Assert.AreEqual(new int[0].GetLength(0), 0);
-            Assert.AreEqual(new[] { "x" }.GetLength(0), 1);
-            Assert.AreEqual(new[] { "x", "y" }.GetLength(0), 2);
+            Assert.AreEqual(0, new int[0].GetLength(0));
+            Assert.AreEqual(1, new[] { "x" }.GetLength(0));
+            Assert.AreEqual(2, new[] { "x", "y" }.GetLength(0));
         }
 
         [Test]
         public void GetLowerBound()
         {
-            Assert.AreEqual(new int[0].GetLowerBound(0), 0);
-            Assert.AreEqual(new[] { "x" }.GetLowerBound(0), 0);
-            Assert.AreEqual(new[] { "x", "y" }.GetLowerBound(0), 0);
+            Assert.AreEqual(0, new int[0].GetLowerBound(0));
+            Assert.AreEqual(0, new[] { "x" }.GetLowerBound(0));
+            Assert.AreEqual(0, new[] { "x", "y" }.GetLowerBound(0));
         }
 
         [Test]
         public void GetUpperBoundWorks()
         {
-            Assert.AreEqual(new int[0].GetUpperBound(0), -1);
-            Assert.AreEqual(new[] { "x" }.GetUpperBound(0), 0);
-            Assert.AreEqual(new[] { "x", "y" }.GetUpperBound(0), 1);
+            Assert.AreEqual(-1, new int[0].GetUpperBound(0));
+            Assert.AreEqual(0, new[] { "x" }.GetUpperBound(0));
+            Assert.AreEqual(1, new[] { "x", "y" }.GetUpperBound(0));
         }
 
         [Test]
         public void GettingValueByIndexWorks()
         {
-            Assert.AreEqual(new[] { "x", "y" }[0], "x");
-            Assert.AreEqual(new[] { "x", "y" }[1], "y");
+            Assert.AreEqual("x", new[] { "x", "y" }[0]);
+            Assert.AreEqual("y", new[] { "x", "y" }[1]);
         }
 
         [Test]
         public void GetValueWorks()
         {
-            Assert.AreEqual(new[] { "x", "y" }.GetValue(0), "x");
-            Assert.AreEqual(new[] { "x", "y" }.GetValue(1), "y");
+            Assert.AreEqual("x", new[] { "x", "y" }.GetValue(0));
+            Assert.AreEqual("y", new[] { "x", "y" }.GetValue(1));
         }
 
         [Test]
@@ -107,8 +107,8 @@ namespace Bridge.ClientTest
             var arr = new string[2];
             arr[0] = "x";
             arr[1] = "y";
-            Assert.AreEqual(arr[0], "x");
-            Assert.AreEqual(arr[1], "y");
+            Assert.AreEqual("x", arr[0]);
+            Assert.AreEqual("y", arr[1]);
         }
 
         [Test]
@@ -117,8 +117,8 @@ namespace Bridge.ClientTest
             var arr = new string[2];
             arr.SetValue("x", 0);
             arr.SetValue("y", 1);
-            Assert.AreEqual(arr[0], "x");
-            Assert.AreEqual(arr[1], "y");
+            Assert.AreEqual("x", arr[0]);
+            Assert.AreEqual("y", arr[1]);
         }
 
         [Test]
@@ -129,7 +129,7 @@ namespace Bridge.ClientTest
             {
                 result += s;
             }
-            Assert.AreEqual(result, "xy");
+            Assert.AreEqual("xy", result);
         }
 
         [Test]
@@ -138,16 +138,16 @@ namespace Bridge.ClientTest
             var arr = new[] { "x", "y" };
             var arr2 = arr.Clone();
             Assert.False(arr == arr2);
-            Assert.AreDeepEqual(arr, arr2);
+            Assert.AreDeepEqual(arr2, arr);
         }
 
         [Test]
         public void ConcatWorks()
         {
             var arr = new[] { "a", "b" };
-            Assert.AreDeepEqual(arr.Concat("c"), new[] { "a", "b", "c" });
-            Assert.AreDeepEqual(arr.Concat("c", "d"), new[] { "a", "b", "c", "d" });
-            Assert.AreDeepEqual(arr, new[] { "a", "b" });
+            Assert.AreDeepEqual(new[] { "a", "b", "c" }, arr.Concat("c"));
+            Assert.AreDeepEqual(new[] { "a", "b", "c", "d" }, arr.Concat("c", "d"));
+            Assert.AreDeepEqual(new[] { "a", "b" }, arr);
         }
 
         [Test]
@@ -176,8 +176,8 @@ namespace Bridge.ClientTest
         [Test]
         public void SliceWithoutEndWorks()
         {
-            Assert.AreDeepEqual(new[] { "a", "b", "c", "d" }.Slice(2), new[] { "c", "d" });
-            Assert.AreDeepEqual(new[] { "a", "b", "c", "d" }.Slice(1, 3), new[] { "b", "c" });
+            Assert.AreDeepEqual(new[] { "c", "d" }, new[] { "a", "b", "c", "d" }.Slice(2));
+            Assert.AreDeepEqual(new[] { "b", "c" }, new[] { "a", "b", "c", "d" }.Slice(1, 3));
         }
 
         [Test]
@@ -185,7 +185,7 @@ namespace Bridge.ClientTest
         {
             string result = "";
             new[] { "a", "b", "c" }.ForEach(s => result += s);
-            Assert.AreEqual(result, "abc");
+            Assert.AreEqual("abc", result);
         }
 
         [Test]
@@ -193,35 +193,35 @@ namespace Bridge.ClientTest
         {
             string result = "";
             new[] { "a", "b", "c" }.ForEach((s, i) => result += s + i);
-            Assert.AreEqual(result, "a0b1c2");
+            Assert.AreEqual("a0b1c2", result);
         }
 
         [Test]
         public void IndexOfWithoutStartIndexWorks()
         {
-            Assert.AreEqual(new[] { "a", "b", "c", "b" }.IndexOf("b"), 1);
+            Assert.AreEqual(1, new[] { "a", "b", "c", "b" }.IndexOf("b"));
         }
 
         [Test]
         public void IndexOfWithoutStartIndexUsesEqualsMethod()
         {
             var arr = new[] { new C(1), new C(2), new C(3) };
-            Assert.AreEqual(arr.IndexOf(new C(2)), 1);
-            Assert.AreEqual(arr.IndexOf(new C(4)), -1);
+            Assert.AreEqual(1, arr.IndexOf(new C(2)));
+            Assert.AreEqual(-1, arr.IndexOf(new C(4)));
         }
 
         [Test]
         public void IndexOfWithStartIndexWorks()
         {
-            Assert.AreEqual(new[] { "a", "b", "c", "b" }.IndexOf("b", 2), 3);
+            Assert.AreEqual(3, new[] { "a", "b", "c", "b" }.IndexOf("b", 2));
         }
 
         [Test]
         public void JoinWithoutDelimiterWorks()
         {
-            Assert.AreEqual(new[] { "a", "b", "c", "b" }.Join(","), "a,b,c,b");
+            Assert.AreEqual("a,b,c,b", new[] { "a", "b", "c", "b" }.Join(","));
 
-            Assert.AreEqual(new[] { "a", "b", "c", "b" }.Join("|"), "a|b|c|b");
+            Assert.AreEqual("a|b|c|b", new[] { "a", "b", "c", "b" }.Join("|"));
         }
 
         [Test]
@@ -229,7 +229,7 @@ namespace Bridge.ClientTest
         {
             var arr = new[] { 1, 3, 4, 1, 3, 2 };
             arr.Reverse();
-            Assert.AreDeepEqual(arr, new[] { 2, 3, 1, 4, 3, 1 });
+            Assert.AreDeepEqual(new[] { 2, 3, 1, 4, 3, 1 }, arr);
         }
 
         [Test]
@@ -243,7 +243,7 @@ namespace Bridge.ClientTest
         {
             var arr = new[] { 1, 2, 3, 3, 4, 5 };
 
-            Assert.AreEqual(Array.BinarySearch(arr, 3), 2);
+            Assert.AreEqual(2, Array.BinarySearch(arr, 3));
             Assert.True(Array.BinarySearch(arr, 6) < 0);
         }
 
@@ -252,7 +252,7 @@ namespace Bridge.ClientTest
         {
             var arr = new[] { 1, 2, 3, 3, 4, 5 };
 
-            Assert.AreEqual(Array.BinarySearch(arr, 3, 2, 3), 3);
+            Assert.AreEqual(3, Array.BinarySearch(arr, 3, 2, 3));
             Assert.True(Array.BinarySearch(arr, 2, 2, 4) < 0);
         }
 
@@ -269,8 +269,8 @@ namespace Bridge.ClientTest
         {
             var arr = new[] { 1, 2, 3, 3, 4, 5 };
 
-            Assert.AreEqual(Array.BinarySearch(arr, 3, new TestReverseComparer()), 2);
-            Assert.AreEqual(Array.BinarySearch(arr, 6, new TestReverseComparer()), -1);
+            Assert.AreEqual(2, Array.BinarySearch(arr, 3, new TestReverseComparer()));
+            Assert.AreEqual(-1, Array.BinarySearch(arr, 6, new TestReverseComparer()));
         }
 
         [Test]
@@ -278,7 +278,7 @@ namespace Bridge.ClientTest
         {
             var arr = new[] { 1, 2, 3, 3, 4, 5 };
 
-            Assert.AreEqual(Array.BinarySearch(arr, 3, 2, 3, new TestReverseComparer()), 3);
+            Assert.AreEqual(3, Array.BinarySearch(arr, 3, 2, 3, new TestReverseComparer()));
             Assert.True(Array.BinarySearch(arr, 3, 2, 4, new TestReverseComparer()) < 0);
         }
 
@@ -298,7 +298,7 @@ namespace Bridge.ClientTest
         {
             var arr = new[] { 1, 6, 6, 4, 2 };
             arr.JsSort();
-            Assert.AreDeepEqual(arr, new[] { 1, 2, 4, 6, 6 });
+            Assert.AreDeepEqual(new[] { 1, 2, 4, 6, 6 }, arr);
         }
 
         [Test]
@@ -306,7 +306,7 @@ namespace Bridge.ClientTest
         {
             var arr = new[] { 1, 6, 6, 4, 2 };
             Array.Sort(arr);
-            Assert.AreDeepEqual(arr, new[] { 1, 2, 4, 6, 6 });
+            Assert.AreDeepEqual(new[] { 1, 2, 4, 6, 6 }, arr);
         }
 
         [Test]
@@ -314,7 +314,7 @@ namespace Bridge.ClientTest
         {
             var arr = new[] { 1, 6, 6, 4, 2 };
             Array.Sort(arr, 2, 3);
-            Assert.AreDeepEqual(arr, new[] { 1, 6, 2, 4, 6 });
+            Assert.AreDeepEqual(new[] { 1, 6, 2, 4, 6 }, arr);
         }
 
         [Test]
@@ -322,7 +322,7 @@ namespace Bridge.ClientTest
         {
             var arr = new[] { 1, 2, 6, 3, 6, 7 };
             Array.Sort(arr, 2, 3, new TestReverseComparer());
-            Assert.AreDeepEqual(arr, new[] { 1, 2, 6, 6, 3, 7 });
+            Assert.AreDeepEqual(new[] { 1, 2, 6, 6, 3, 7 }, arr);
         }
 
         [Test]
@@ -330,7 +330,7 @@ namespace Bridge.ClientTest
         {
             var arr = new[] { 1, 6, 6, 4, 2 };
             Array.Sort(arr, new TestReverseComparer());
-            Assert.AreDeepEqual(arr, new[] { 6, 6, 4, 2, 1 });
+            Assert.AreDeepEqual(new[] { 6, 6, 4, 2, 1 }, arr);
         }
 
         [Test]
@@ -350,14 +350,14 @@ namespace Bridge.ClientTest
             {
                 result += s;
             }
-            Assert.AreEqual(result, "xy");
+            Assert.AreEqual("xy", result);
         }
 
         [Test]
         public void ICollectionCountWorks()
         {
             IList<string> l = new[] { "x", "y", "z" };
-            Assert.AreEqual(l.Count, 3);
+            Assert.AreEqual(3, l.Count);
         }
 
         [Test]
@@ -365,7 +365,7 @@ namespace Bridge.ClientTest
         {
             IList<string> l = new[] { "x", "y", "z" };
             l.Add("a");
-            Assert.AreDeepEqual(l, new[] { "x", "y", "z", "a" });
+            Assert.AreDeepEqual(new[] { "x", "y", "z", "a" }, l);
         }
 
         [Test]
@@ -373,7 +373,7 @@ namespace Bridge.ClientTest
         {
             IList<string> l = new[] { "x", "y", "z" };
             l.Clear();
-            Assert.AreDeepEqual(l, new string[0]);
+            Assert.AreDeepEqual(new string[0], l);
         }
 
         [Test]
@@ -398,32 +398,32 @@ namespace Bridge.ClientTest
             IList<string> l = new[] { "x", "y", "z" };
             Assert.True(l.Remove("y"));
             Assert.False(l.Remove("a"));
-            Assert.AreDeepEqual(l, new[] { "x", "z" });
+            Assert.AreDeepEqual(new[] { "x", "z" }, l);
         }
 
         [Test]
         public void IListIndexingWorks()
         {
             IList<string> l = new[] { "x", "y", "z" };
-            Assert.AreEqual(l[1], "y");
+            Assert.AreEqual("y", l[1]);
             l[1] = "a";
-            Assert.AreDeepEqual(l, new[] { "x", "a", "z" });
+            Assert.AreDeepEqual(new[] { "x", "a", "z" }, l);
         }
 
         [Test]
         public void IListIndexOfWorks()
         {
             IList<string> l = new[] { "x", "y", "z" };
-            Assert.AreEqual(l.IndexOf("y"), 1);
-            Assert.AreEqual(l.IndexOf("a"), -1);
+            Assert.AreEqual(1, l.IndexOf("y"));
+            Assert.AreEqual(-1, l.IndexOf("a"));
         }
 
         [Test]
         public void IListIndexOfUsesEqualsMethod()
         {
             var arr = new[] { new C(1), new C(2), new C(3) };
-            Assert.AreEqual(arr.IndexOf(new C(2)), 1);
-            Assert.AreEqual(arr.IndexOf(new C(4)), -1);
+            Assert.AreEqual(1, arr.IndexOf(new C(2)));
+            Assert.AreEqual(-1, arr.IndexOf(new C(4)));
         }
 
         [Test]
@@ -431,7 +431,7 @@ namespace Bridge.ClientTest
         {
             IList<string> l = new[] { "x", "y", "z" };
             l.Insert(1, "a");
-            Assert.AreDeepEqual(l, new[] { "x", "a", "y", "z" });
+            Assert.AreDeepEqual(new[] { "x", "a", "y", "z" }, l);
         }
 
         [Test]
@@ -439,7 +439,7 @@ namespace Bridge.ClientTest
         {
             IList<string> l = new[] { "x", "y", "z" };
             l.RemoveAt(1);
-            Assert.AreDeepEqual(l, new[] { "x", "z" });
+            Assert.AreDeepEqual(new[] { "x", "z" }, l);
         }
     }
 }

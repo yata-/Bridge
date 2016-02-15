@@ -12,7 +12,7 @@ namespace Bridge.ClientTest
         [Test]
         public void TypePropertiesAreCorrect()
         {
-            Assert.AreEqual(typeof(int[,]).GetClassName(), "Array", "FullName should be Array");
+            Assert.AreEqual("Array", typeof(int[,]).GetClassName(), "FullName should be Array");
             object arr = new int[1, 1];
             Assert.True(arr is Array, "is Array should be true");
             Assert.True(arr is int[,], "is int[,] should be true");
@@ -22,21 +22,21 @@ namespace Bridge.ClientTest
         public void LengthWorks()
         {
             var arr = new int[3, 2];
-            Assert.AreEqual(6, arr.Length);
+            Assert.AreEqual(arr.Length, 6);
         }
 
         [Test]
         public void GetValueWorksForUninitializedElement()
         {
             var arr = new int[2, 2];
-            Assert.AreStrictEqual(arr.GetValue(0, 0), 0);
+            Assert.AreStrictEqual(0, arr.GetValue(0, 0));
         }
 
         [Test]
         public void GetValueByIndexWorksForUninitializedElement()
         {
             var arr = new int[2, 2];
-            Assert.AreStrictEqual(arr[0, 0], 0);
+            Assert.AreStrictEqual(0, arr[0, 0]);
         }
 
         [Test]
@@ -49,12 +49,12 @@ namespace Bridge.ClientTest
             arr[1, 1] = "d";
             arr[2, 0] = "e";
             arr[2, 1] = "f";
-            Assert.AreEqual(arr[0, 0], "a");
-            Assert.AreEqual(arr[0, 1], "b");
-            Assert.AreEqual(arr[1, 0], "c");
-            Assert.AreEqual(arr[1, 1], "d");
-            Assert.AreEqual(arr[2, 0], "e");
-            Assert.AreEqual(arr[2, 1], "f");
+            Assert.AreEqual("a", arr[0, 0]);
+            Assert.AreEqual("b", arr[0, 1]);
+            Assert.AreEqual("c", arr[1, 0]);
+            Assert.AreEqual("d", arr[1, 1]);
+            Assert.AreEqual("e", arr[2, 0]);
+            Assert.AreEqual("f", arr[2, 1]);
         }
 
         [Test]
@@ -67,12 +67,12 @@ namespace Bridge.ClientTest
             arr.SetValue("d", 1, 1);
             arr.SetValue("e", 2, 0);
             arr.SetValue("f", 2, 1);
-            Assert.AreEqual(arr[0, 0], "a");
-            Assert.AreEqual(arr[0, 1], "b");
-            Assert.AreEqual(arr[1, 0], "c");
-            Assert.AreEqual(arr[1, 1], "d");
-            Assert.AreEqual(arr[2, 0], "e");
-            Assert.AreEqual(arr[2, 1], "f");
+            Assert.AreEqual("a", arr[0, 0]);
+            Assert.AreEqual("b", arr[0, 1]);
+            Assert.AreEqual("c", arr[1, 0]);
+            Assert.AreEqual("d", arr[1, 1]);
+            Assert.AreEqual("e", arr[2, 0]);
+            Assert.AreEqual("f", arr[2, 1]);
         }
 
 
@@ -94,24 +94,24 @@ namespace Bridge.ClientTest
         public void GetValueWorks()
         {
             var arr = SetUpArray(new object[] { new int[] { 1, 2 }, new int[] { 3, 4 }, new int[] { 5, 6 } });
-            Assert.AreEqual(arr.GetValue(0, 0), 1);
-            Assert.AreEqual(arr.GetValue(0, 1), 2);
-            Assert.AreEqual(arr.GetValue(1, 0), 3);
-            Assert.AreEqual(arr.GetValue(1, 1), 4);
-            Assert.AreEqual(arr.GetValue(2, 0), 5);
-            Assert.AreEqual(arr.GetValue(2, 1), 6);
+            Assert.AreEqual(1, arr.GetValue(0, 0));
+            Assert.AreEqual(2, arr.GetValue(0, 1));
+            Assert.AreEqual(3, arr.GetValue(1, 0));
+            Assert.AreEqual(4, arr.GetValue(1, 1));
+            Assert.AreEqual(5, arr.GetValue(2, 0));
+            Assert.AreEqual(6, arr.GetValue(2, 1));
         }
 
         [Test]
         public void GettingValueByIndexWorks()
         {
             var arr = SetUpArray(new object[] { new int[] { 1, 2 }, new int[] { 3, 4 }, new int[] { 5, 6 } });
-            Assert.AreEqual(arr[0, 0], 1);
-            Assert.AreEqual(arr[0, 1], 2);
-            Assert.AreEqual(arr[1, 0], 3);
-            Assert.AreEqual(arr[1, 1], 4);
-            Assert.AreEqual(arr[2, 0], 5);
-            Assert.AreEqual(arr[2, 1], 6);
+            Assert.AreEqual(1, arr[0, 0]);
+            Assert.AreEqual(2, arr[0, 1]);
+            Assert.AreEqual(3, arr[1, 0]);
+            Assert.AreEqual(4, arr[1, 1]);
+            Assert.AreEqual(5, arr[2, 0]);
+            Assert.AreEqual(6, arr[2, 1]);
         }
 
         // TODO [Array] Multidimensional initializer does not compile #354 All the tests below
@@ -157,8 +157,8 @@ namespace Bridge.ClientTest
         [Test]
         public void RankWorks()
         {
-            Assert.AreEqual(new int[0, 0].Rank, 2);
-            Assert.AreEqual(new int[0, 0, 0].Rank, 3);
+            Assert.AreEqual(2, new int[0, 0].Rank);
+            Assert.AreEqual(3, new int[0, 0, 0].Rank);
         }
 
         [Test]

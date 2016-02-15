@@ -25,7 +25,7 @@ namespace Bridge.ClientTest.BridgeIssues
         public static void TestUseCase()
         {
             var c = new Bridge693B();
-            Assert.AreNotEqual(c, null, "Bridge693 not null");
+            Assert.AreNotEqual(null, c, "Bridge693 not null");
         }
     }
 }

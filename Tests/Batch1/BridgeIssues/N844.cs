@@ -14,7 +14,7 @@ namespace Bridge.ClientTest.BridgeIssues
             DateTime dt1 = DateTime.Now;
             DateTime? dt2 = dt1;
 
-            Assert.AreEqual(dt1.ToString(), dt2.ToString(), "Bridge844");
+            Assert.AreEqual(dt2.ToString(), dt1.ToString(), "Bridge844");
         }
     }
 }

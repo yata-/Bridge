@@ -36,14 +36,14 @@ namespace Bridge.ClientTest.BridgeIssues
         [Test(ExpectedCount = 8)]
         public static void TestUseCase()
         {
-            Assert.AreEqual(Bridge857A.All, 0xFFFFFFFF, "Bridge857 Bridge857A");
-            Assert.AreEqual(Bridge857B.All, 0xFFFFFFFF, "Bridge857 Bridge857B");
-            Assert.AreEqual(Bridge857C.All, 0xFFFFFFFF, "Bridge857 Bridge857C All");
-            Assert.AreEqual(Bridge857C.All1, 0, "Bridge857 Bridge857C All1");
-            Assert.AreEqual(Bridge857C.All2, 1, "Bridge857 Bridge857C All2");
-            Assert.AreEqual(Bridge857D.All, 0xFFFFFFFF, "Bridge857 Bridge857D All");
-            Assert.AreEqual(Bridge857D.All1, 1, "Bridge857 Bridge857D All1");
-            Assert.AreEqual(Bridge857D.All2, 2, "Bridge857 Bridge857D All2");
+            Assert.AreEqual(0xFFFFFFFF, Bridge857A.All, "Bridge857 Bridge857A");
+            Assert.AreEqual(0xFFFFFFFF, Bridge857B.All, "Bridge857 Bridge857B");
+            Assert.AreEqual(0xFFFFFFFF, Bridge857C.All, "Bridge857 Bridge857C All");
+            Assert.AreEqual(0, Bridge857C.All1, "Bridge857 Bridge857C All1");
+            Assert.AreEqual(1, Bridge857C.All2, "Bridge857 Bridge857C All2");
+            Assert.AreEqual(0xFFFFFFFF, Bridge857D.All, "Bridge857 Bridge857D All");
+            Assert.AreEqual(1, Bridge857D.All1, "Bridge857 Bridge857D All1");
+            Assert.AreEqual(2, Bridge857D.All2, "Bridge857 Bridge857D All2");
         }
     }
 }

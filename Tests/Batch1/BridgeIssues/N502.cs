@@ -40,7 +40,7 @@ namespace Bridge.ClientTest.BridgeIssues
                 sum = sum + a;
             }
 
-            Assert.AreEqual(sum, 24, "Bridge502 sum");
+            Assert.AreEqual(24, sum, "Bridge502 sum");
         }
     }
 }

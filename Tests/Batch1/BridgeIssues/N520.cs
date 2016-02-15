@@ -36,7 +36,7 @@ namespace Bridge.ClientTest.BridgeIssues
             var s = new Source();
             s.Fire();
 
-            Assert.AreEqual(s.Counter, 1, "Bridge520 Counter");
+            Assert.AreEqual(1, s.Counter, "Bridge520 Counter");
         }
     }
 }
