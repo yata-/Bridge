@@ -1,7 +1,5 @@
 ﻿// Top;
 
-/* global Bridge */
-
 (function (globals) {
     "use strict";
 

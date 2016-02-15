@@ -70,6 +70,8 @@ namespace Bridge.Translator.Tests
         {
             var currentFolder = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
+            Directory.SetCurrentDirectory(currentFolder);
+
             var logFiles = Directory.GetFiles(currentFolder, LogFileNameWithoutExtention + ".*", SearchOption.AllDirectories);
 
             foreach (var logFile in logFiles)
