@@ -84,7 +84,7 @@ namespace Bridge.ClientTest.ConvertTests
             {
                 try
                 {
-                    Assert.Throws(() => convert(testValues[i], testBases[i]), err => err is TException);
+                    Assert.Throws(() => convert(testValues[i], testBases[i]), err => err.GetClassName() == typeof(TException).GetClassName());
                 }
                 catch (Exception e)
                 {
@@ -104,7 +104,7 @@ namespace Bridge.ClientTest.ConvertTests
             {
                 try
                 {
-                    Assert.Throws(() => convert(testValues[i]), err => err is TException);
+                    Assert.Throws(() => convert(testValues[i]), err => err.GetClassName() == typeof(TException).GetClassName());
                 }
                 catch (Exception e)
                 {
@@ -125,7 +125,7 @@ namespace Bridge.ClientTest.ConvertTests
             {
                 try
                 {
-                    Assert.Throws(() => convert(testValues[i]), err => err is TException);
+                    Assert.Throws(() => convert(testValues[i]), err => err.GetClassName() == typeof(TException).GetClassName());
                 }
                 catch (Exception e)
                 {
