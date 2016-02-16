@@ -33,7 +33,7 @@ namespace Bridge.ClientTest.ConvertTests
             string[] formatExceptionValues =
             {
                 "null",
-                "20-5-14T00:00:00" // Regression test for case which was throwing IndexOutOfRangeException
+                "201-5-14T00:00:00" // Regression test for case which was throwing IndexOutOfRangeException
             };
 
             VerifyFromStringThrows<FormatException>(Convert.ToDateTime, Convert.ToDateTime, formatExceptionValues);
