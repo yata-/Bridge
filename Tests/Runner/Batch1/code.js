@@ -22176,17 +22176,19 @@
                 Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], result);
             }
     
+            //#348
+            //string minDateExpected;
+            //if (Utilities.BrowserHelper.IsFirefox())
+            //{
+            //    minDateExpected = "Mon Jan 01 0001";
+            //}
+            //else
+            //{
+            //    minDateExpected = "Mon Jan 01 1";
+            //}
     
-            var minDateExpected;
-            if (Bridge.get(Bridge.ClientTest.Utilities.BrowserHelper).isFirefox()) {
-                minDateExpected = "Mon Jan 01 0001";
-            }
-            else  {
-                minDateExpected = "Mon Jan 01 1";
-            }
-    
-            var minDate = Bridge.Convert.toDateTime(null, null);
-            Bridge.get(Bridge.Test.Assert).areEqual(minDateExpected, minDate.toDateString());
+            //var minDate = Convert.ToDateTime(null);
+            //Assert.AreEqual(minDateExpected, minDate.ToDateString());
         },
         fromDateTime: function () {
             var expectedValues = [new Date(1999, 12 - 1, 31, 23, 59, 59), new Date(100, 1 - 1, 1, 0, 0, 0), new Date(1492, 2 - 1, 29, 0, 0, 0), new Date(1, 1 - 1, 1, 0, 0, 0)];
