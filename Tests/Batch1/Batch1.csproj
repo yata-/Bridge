@@ -168,6 +168,7 @@
     <Compile Include="BridgeIssues\N892.cs" />
     <Compile Include="BridgeIssues\N918.cs" />
     <Compile Include="BridgeIssues\N912.cs" />
+    <Compile Include="BridgeIssues\N975.cs" />
     <Compile Include="BridgeIssues\N968.cs" />
     <Compile Include="BridgeIssues\N933.cs" />
     <Compile Include="BridgeIssues\N930.cs" />

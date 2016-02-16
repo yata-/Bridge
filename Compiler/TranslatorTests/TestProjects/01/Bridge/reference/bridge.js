@@ -3139,7 +3139,7 @@
         inherits: [Bridge.IComparable, Bridge.IFormattable],
         statics: {
             instanceOf: function (instance) {
-                return typeof(instance) === "number" && isFinite(instance) && Math.round(instance, 0) === instance;
+                return typeof(instance) === "number" && isFinite(instance) && Math.floor(instance, 0) === instance;
             },
 
             getDefaultValue: function () {
