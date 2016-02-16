@@ -3826,7 +3826,9 @@
                     try {
                         Bridge.get(Bridge.Test.Assert).throws$1(function () {
                             convert(testValues[i], testBases[i]);
-                        }, $_.Bridge.ClientTest.ConvertTests.ConvertTestBase$1.f1);
+                        }, function (err) {
+                            return Bridge.getTypeName(err) === Bridge.getTypeName(TException);
+                        });
                     }
                     catch (e) {
                         e = Bridge.Exception.create(e);
@@ -3855,7 +3857,9 @@
                     try {
                         Bridge.get(Bridge.Test.Assert).throws$1(function () {
                             convert(testValues[i]);
-                        }, $_.Bridge.ClientTest.ConvertTests.ConvertTestBase$1.f1);
+                        }, function (err) {
+                            return Bridge.getTypeName(err) === Bridge.getTypeName(TException);
+                        });
                     }
                     catch (e) {
                         e = Bridge.Exception.create(e);
@@ -3885,7 +3889,9 @@
                     try {
                         Bridge.get(Bridge.Test.Assert).throws$1(function () {
                             convert(testValues[i]);
-                        }, $_.Bridge.ClientTest.ConvertTests.ConvertTestBase$1.f1);
+                        }, function (err) {
+                            return Bridge.getTypeName(err) === Bridge.getTypeName(TException);
+                        });
                     }
                     catch (e) {
                         e = Bridge.Exception.create(e);
@@ -3934,14 +3940,6 @@
             }, testValues);
         }
     }; });
-    
-    Bridge.ns("Bridge.ClientTest.ConvertTests.ConvertTestBase$1", $_)
-    
-    Bridge.apply($_.Bridge.ClientTest.ConvertTests.ConvertTestBase$1, {
-        f1: function (err) {
-            return Bridge.is(err, TException);
-        }
-    });
     
     Bridge.define('Bridge.ClientTest.ExceptionTests.E2', {
         inherits: [Bridge.ClientTest.ExceptionTests.E1],
@@ -9133,6 +9131,27 @@
                 }
     
                 Bridge.get(Bridge.Test.Assert).$false(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge933).isRunning);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge968', {
+        statics: {
+            testDecimalDoesNotParseIncorrectValue: function () {
+                var d = { };
+                var b = Bridge.Decimal.tryParse("123e", null, d);
+    
+                Bridge.get(Bridge.Test.Assert).$false(b);
+            },
+            testDecimalParsesCorrectValues: function () {
+                var d1 = Bridge.Decimal("123e1");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Decimal(1230.0), d1, "123e1");
+    
+                var d2 = Bridge.Decimal("123e+1");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Decimal(1230.0), d2, "123e+1");
+    
+                var d3 = Bridge.Decimal("123e-1");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Decimal(12.3), d3, "123e-1");
             }
         }
     });
