@@ -15,7 +15,11 @@ namespace Bridge.ClientTest.ConvertTests
         /// </summary>
         protected void Verify<TInput>(Func<TInput, TOutput> convert, TInput[] testValues, TOutput[] expectedValues)
         {
-            Assert.AreEqual(expectedValues.Length, testValues.Length);
+            if (expectedValues == null || testValues == null || expectedValues.Length != testValues.Length)
+            {
+                Assert.Fail("Test data should have the same lenght");
+                return;
+            }
 
             for (int i = 0; i < testValues.Length; i++)
             {
@@ -30,7 +34,11 @@ namespace Bridge.ClientTest.ConvertTests
         /// </summary>
         protected void VerifyViaObj<TInput>(Func<object, TOutput> convert, TInput[] testValues, TOutput[] expectedValues)
         {
-            Assert.AreEqual(expectedValues.Length, testValues.Length);
+            if (expectedValues == null || testValues == null || expectedValues.Length != testValues.Length)
+            {
+                Assert.Fail("Test data should have the same lenght");
+                return;
+            }
 
             for (int i = 0; i < testValues.Length; i++)
             {
@@ -62,8 +70,13 @@ namespace Bridge.ClientTest.ConvertTests
         /// </summary>
         protected void VerifyFromStringWithBase(Func<string, int, TOutput> convert, string[] testValues, int[] testBases, TOutput[] expectedValues)
         {
-            Assert.AreEqual(testValues.Length, testBases.Length);
-            Assert.AreEqual(testValues.Length, expectedValues.Length);
+            if (expectedValues == null || testBases == null || testValues == null
+                || expectedValues.Length != testValues.Length
+                || testBases.Length != testValues.Length)
+            {
+                Assert.Fail("Test data should have the same lenghts");
+                return;
+            }
 
             for (int i = 0; i < testValues.Length; i++)
             {
@@ -78,13 +91,17 @@ namespace Bridge.ClientTest.ConvertTests
         protected void VerifyFromStringWithBaseThrows<TException>(Func<string, int, TOutput> convert, string[] testValues, int[] testBases)
             where TException : Exception
         {
-            Assert.AreEqual(testValues.Length, testBases.Length);
+            if (testBases == null || testValues == null || testBases.Length != testValues.Length)
+            {
+                Assert.Fail("Test data should have the same lenght");
+                return;
+            }
 
             for (int i = 0; i < testValues.Length; i++)
             {
                 try
                 {
-                    Assert.Throws(() => convert(testValues[i], testBases[i]), err => err.GetClassName() == typeof(TException).GetClassName());
+                    Assert.Throws(() => convert(testValues[i], testBases[i]), err => err.GetClassName() == typeof(TException).GetClassName(), "Value " + testValues[i] + " base " + testBases[i]);
                 }
                 catch (Exception e)
                 {
@@ -104,7 +121,7 @@ namespace Bridge.ClientTest.ConvertTests
             {
                 try
                 {
-                    Assert.Throws(() => convert(testValues[i]), err => err.GetClassName() == typeof(TException).GetClassName());
+                    Assert.Throws(() => convert(testValues[i]), err => err.GetClassName() == typeof(TException).GetClassName(), "Value " + testValues[i]);
                 }
                 catch (Exception e)
                 {
@@ -125,7 +142,7 @@ namespace Bridge.ClientTest.ConvertTests
             {
                 try
                 {
-                    Assert.Throws(() => convert(testValues[i]), err => err.GetClassName() == typeof(TException).GetClassName());
+                    Assert.Throws(() => convert(testValues[i]), err => err.GetClassName() == typeof(TException).GetClassName(), "Value " + testValues[i]);
                 }
                 catch (Exception e)
                 {

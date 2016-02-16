@@ -3718,7 +3718,10 @@
          * @return  {void}
          */
         verify: function (TInput, convert, testValues, expectedValues) {
-            Bridge.get(Bridge.Test.Assert).areEqual(expectedValues.length, testValues.length);
+            if (!Bridge.hasValue(expectedValues) || !Bridge.hasValue(testValues) || expectedValues.length !== testValues.length) {
+                Bridge.get(Bridge.Test.Assert).fail$1("Test data should have the same lenght");
+                return;
+            }
     
             for (var i = 0; i < testValues.length; i++) {
                 var result = convert(testValues[i]);
@@ -3740,7 +3743,10 @@
          * @return  {void}
          */
         verifyViaObj: function (TInput, convert, testValues, expectedValues) {
-            Bridge.get(Bridge.Test.Assert).areEqual(expectedValues.length, testValues.length);
+            if (!Bridge.hasValue(expectedValues) || !Bridge.hasValue(testValues) || expectedValues.length !== testValues.length) {
+                Bridge.get(Bridge.Test.Assert).fail$1("Test data should have the same lenght");
+                return;
+            }
     
             for (var i = 0; i < testValues.length; i++) {
                 var result = convert(testValues[i]);
@@ -3799,8 +3805,10 @@
          * @return  {void}
          */
         verifyFromStringWithBase: function (convert, testValues, testBases, expectedValues) {
-            Bridge.get(Bridge.Test.Assert).areEqual(testValues.length, testBases.length);
-            Bridge.get(Bridge.Test.Assert).areEqual(testValues.length, expectedValues.length);
+            if (!Bridge.hasValue(expectedValues) || !Bridge.hasValue(testBases) || !Bridge.hasValue(testValues) || expectedValues.length !== testValues.length || testBases.length !== testValues.length) {
+                Bridge.get(Bridge.Test.Assert).fail$1("Test data should have the same lenghts");
+                return;
+            }
     
             for (var i = 0; i < testValues.length; i++) {
                 var result = convert(testValues[i], testBases[i]);
@@ -3821,16 +3829,19 @@
          * @return  {void}
          */
         verifyFromStringWithBaseThrows: function (TException, convert, testValues, testBases) {
-            Bridge.get(Bridge.Test.Assert).areEqual(testValues.length, testBases.length);
+            if (!Bridge.hasValue(testBases) || !Bridge.hasValue(testValues) || testBases.length !== testValues.length) {
+                Bridge.get(Bridge.Test.Assert).fail$1("Test data should have the same lenght");
+                return;
+            }
     
             for (var i = 0; i < testValues.length; i++) {
                 (function () {
                     try {
-                        Bridge.get(Bridge.Test.Assert).throws$1(function () {
+                        Bridge.get(Bridge.Test.Assert).throws$2(function () {
                             convert(testValues[i], testBases[i]);
                         }, function (err) {
                             return Bridge.getTypeName(err) === Bridge.getTypeName(TException);
-                        });
+                        }, "Value " + testValues[i] + " base " + testBases[i]);
                     }
                     catch (e) {
                         e = Bridge.Exception.create(e);
@@ -3857,11 +3868,11 @@
             for (var i = 0; i < testValues.length; i++) {
                 (function () {
                     try {
-                        Bridge.get(Bridge.Test.Assert).throws$1(function () {
+                        Bridge.get(Bridge.Test.Assert).throws$2(function () {
                             convert(testValues[i]);
                         }, function (err) {
                             return Bridge.getTypeName(err) === Bridge.getTypeName(TException);
-                        });
+                        }, "Value " + testValues[i]);
                     }
                     catch (e) {
                         e = Bridge.Exception.create(e);
@@ -3889,11 +3900,11 @@
             for (var i = 0; i < testValues.length; i++) {
                 (function () {
                     try {
-                        Bridge.get(Bridge.Test.Assert).throws$1(function () {
+                        Bridge.get(Bridge.Test.Assert).throws$2(function () {
                             convert(testValues[i]);
                         }, function (err) {
                             return Bridge.getTypeName(err) === Bridge.getTypeName(TException);
-                        });
+                        }, "Value " + testValues[i]);
                     }
                     catch (e) {
                         e = Bridge.Exception.create(e);
@@ -22139,7 +22150,7 @@
             this.verifyFromString(Bridge.Convert.toDateTime, Bridge.Convert.toDateTime, testValues, expectedValues);
             this.verifyFromObject(Bridge.Convert.toDateTime, Bridge.Convert.toDateTime, testValues, expectedValues);
     
-            var formatExceptionValues = ["null", "20-5-14T00:00:00"];
+            var formatExceptionValues = ["null", "201-5-14T00:00:00"];
     
             this.verifyFromStringThrows(Bridge.FormatException, Bridge.Convert.toDateTime, Bridge.Convert.toDateTime, formatExceptionValues);
         },
