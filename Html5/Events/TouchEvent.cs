@@ -37,7 +37,7 @@ namespace Bridge.Html5.Events
         /// <summary>
         /// A <see cref="TouchList"/> of all the <see cref="Touch"/> objects that are both currently in contact with the touch surface and were also started on the same element that is the target of the event.
         /// </summary>
-        public readonly TouchList targetTouches;
+        public readonly TouchList TargetTouches;
 
         /// <summary>
         /// A <see cref="TouchList"/> of all the <see cref="Touch"/> objects representing all current points of contact with the surface, regardless of target or changed status.
