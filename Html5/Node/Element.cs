@@ -731,37 +731,37 @@ namespace Bridge.Html5
         /// <summary>
         /// Returns the event handling code for the touchstart event.
         /// </summary>
-        [Name("onTouchStart")]
+        [Name("ontouchstart")]
         public Action<TouchEvent> OnTouchStart;
 
         /// <summary>
         /// Returns the event handling code for the touchend event.
         /// </summary>
-        [Name("onTouchEnd")]
+        [Name("ontouchend")]
         public Action<TouchEvent> OnTouchEnd;
 
         /// <summary>
         /// Returns the event handling code for the touchmove event.
         /// </summary>
-        [Name("onTouchMove")]
+        [Name("ontouchmove")]
         public Action<TouchEvent> OnTouchMove;
 
         /// <summary>
         /// Returns the event handling code for the touchenter event.
         /// </summary>
-        [Name("onTouchEnter")]
+        [Name("ontouchenter")]
         public Action<TouchEvent> OnTouchEnter;
 
         /// <summary>
         /// Returns the event handling code for the touchleave event.
         /// </summary>
-        [Name("onTouchLeave")]
+        [Name("ontouchleave")]
         public Action<TouchEvent> OnTouchLeave;
 
         /// <summary>
         /// Returns the event handling code for the touchcancel event.
         /// </summary>
-        [Name("onTouchCancel")]
+        [Name("ontouchcancel")]
         public Action<TouchEvent> OnTouchCancel;
 
         /// <summary>
@@ -1137,37 +1137,37 @@ namespace Bridge.Html5
         /// <summary>
         /// Returns the event handling code for the touchstart event.
         /// </summary>
-        [Name("onTouchStart")]
+        [Name("ontouchstart")]
         public new Action<TouchEvent<TCurrentTarget>> OnTouchStart;
 
         /// <summary>
         /// Returns the event handling code for the touchend event.
         /// </summary>
-        [Name("onTouchEnd")]
+        [Name("ontouchend")]
         public new Action<TouchEvent<TCurrentTarget>> OnTouchEnd;
 
         /// <summary>
         /// Returns the event handling code for the touchmove event.
         /// </summary>
-        [Name("onTouchMove")]
+        [Name("ontouchmove")]
         public new Action<TouchEvent<TCurrentTarget>> OnTouchMove;
 
         /// <summary>
         /// Returns the event handling code for the touchenter event.
         /// </summary>
-        [Name("onTouchEnter")]
+        [Name("ontouchenter")]
         public new Action<TouchEvent<TCurrentTarget>> OnTouchEnter;
 
         /// <summary>
         /// Returns the event handling code for the touchleave event.
         /// </summary>
-        [Name("onTouchLeave")]
+        [Name("ontouchleave")]
         public new Action<TouchEvent<TCurrentTarget>> OnTouchLeave;
 
         /// <summary>
         /// Returns the event handling code for the touchcancel event.
         /// </summary>
-        [Name("onTouchCancel")]
+        [Name("ontouchcancel")]
         public new Action<TouchEvent<TCurrentTarget>> OnTouchCancel;
     }
 }
