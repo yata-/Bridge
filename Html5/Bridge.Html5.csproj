@@ -36,7 +36,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="$(OS) != Unix">
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-  </PropertyGroup>  
+  </PropertyGroup>
   <PropertyGroup>
     <NoStdLib>True</NoStdLib>
     <AddAdditionalExplicitAssemblyReferences>false</AddAdditionalExplicitAssemblyReferences>
@@ -56,6 +56,9 @@
     <Compile Include="CompatMode.cs" />
     <Compile Include="Console.cs" />
     <Compile Include="Elements\TemplateElement.cs" />
+    <Compile Include="Events\TouchEvent.cs" />
+    <Compile Include="Interfaces\Touch.cs" />
+    <Compile Include="Interfaces\TouchList.cs" />
     <Compile Include="String.cs" />
     <Compile Include="TypedArray\Float32Array.cs" />
     <Compile Include="TypedArray\Float64Array.cs" />

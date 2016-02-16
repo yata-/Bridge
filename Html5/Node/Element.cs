@@ -1,3 +1,4 @@
+using Bridge.Html5.Events;
 using System;
 
 namespace Bridge.Html5
@@ -732,37 +733,37 @@ namespace Bridge.Html5
         /// Returns the event handling code for the touchstart event.
         /// </summary>
         [Name("onTouchStart")]
-        public Action<Event> OnTouchStart;
+        public Action<TouchEvent> OnTouchStart;
 
         /// <summary>
         /// Returns the event handling code for the touchend event.
         /// </summary>
         [Name("onTouchEnd")]
-        public Action<Event> OnTouchEnd;
+        public Action<TouchEvent> OnTouchEnd;
 
         /// <summary>
         /// Returns the event handling code for the touchmove event.
         /// </summary>
         [Name("onTouchMove")]
-        public Action<Event> OnTouchMove;
+        public Action<TouchEvent> OnTouchMove;
 
         /// <summary>
         /// Returns the event handling code for the touchenter event.
         /// </summary>
         [Name("onTouchEnter")]
-        public Action<Event> OnTouchEnter;
+        public Action<TouchEvent> OnTouchEnter;
 
         /// <summary>
         /// Returns the event handling code for the touchleave event.
         /// </summary>
         [Name("onTouchLeave")]
-        public Action<Event> OnTouchLeave;
+        public Action<TouchEvent> OnTouchLeave;
 
         /// <summary>
         /// Returns the event handling code for the touchcancel event.
         /// </summary>
         [Name("onTouchCancel")]
-        public Action<Event> OnTouchCancel;
+        public Action<TouchEvent> OnTouchCancel;
 
         /// <summary>
         /// Removes keyboard focus from the currently focused element.
