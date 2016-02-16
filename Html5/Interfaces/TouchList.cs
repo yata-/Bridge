@@ -1,14 +1,13 @@
 ﻿// The documentation for this class (on <summary> tags) was extracted from:
 // https://developer.mozilla.org/en-US/docs/Web/API/TouchList
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Bridge.Html5.Interfaces
+namespace Bridge.Html5
 {
     [External]
-    [Name("TouchList")]
+    [Name("Bridge.TouchList")]
     public class TouchList : IEnumerable<Touch>
     {
         /// <summary>
@@ -21,56 +20,14 @@ namespace Bridge.Html5.Interfaces
         /// </summary>
         public virtual extern Touch Item(int index);
 
-        public IEnumerator<Touch> GetEnumerator()
-        {
-            return new TouchListEnumerator(this);
-        }
+        /// <summary>
+        /// Returns enumerator of <see cref="Touch"/> objects in the TouchList
+        /// </summary>
+        /// <returns></returns>
+        [Template("Bridge.getEnumerator({this})")]
+        public extern IEnumerator<Touch> GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return new TouchListEnumerator(this);
-        }
-    }
-
-    public class TouchListEnumerator : IEnumerator<Touch>
-    {
-        private TouchList touchList;
-
-        private int currentIndex;
-
-        private Touch currentTouch;
-
-        public TouchListEnumerator(TouchList touchList)
-        {
-            this.touchList = touchList;
-            currentIndex = -1;
-            currentTouch = default(Touch);
-        }
-
-        public Touch Current { get { return currentTouch; } }
-
-        Object IEnumerator.Current { get { return currentTouch; } }
-
-        public void Dispose() { /* nothing to dispose, but must be implemented */ }
-
-        public Boolean MoveNext()
-        {
-            if (++currentIndex >= touchList.Length)
-            {
-                return false;
-            }
-            else
-            {
-                // Set current box to next item in collection.
-                currentTouch = touchList.Item(currentIndex);
-            }
-            return true;
-        }
-
-        public void Reset()
-        {
-            currentIndex = -1;
-            currentTouch = default(Touch);
-        }
+        [Template("Bridge.getEnumerator({this})")]
+        extern IEnumerator IEnumerable.GetEnumerator();
     }
 }
