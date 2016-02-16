@@ -1,7 +1,7 @@
 ﻿// The documentation for this class (on <summary> tags) was extracted from:
 // https://developer.mozilla.org/en-US/docs/Web/API/Touch
 
-namespace Bridge.Html5.Interfaces
+namespace Bridge.Html5
 {
     [External]
     [Name("Touch")]

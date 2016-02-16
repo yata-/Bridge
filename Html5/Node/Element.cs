@@ -1,4 +1,3 @@
-using Bridge.Html5.Events;
 using System;
 
 namespace Bridge.Html5
@@ -1139,36 +1138,36 @@ namespace Bridge.Html5
         /// Returns the event handling code for the touchstart event.
         /// </summary>
         [Name("onTouchStart")]
-        public new Action<Event<TCurrentTarget>> OnTouchStart;
+        public new Action<TouchEvent<TCurrentTarget>> OnTouchStart;
 
         /// <summary>
         /// Returns the event handling code for the touchend event.
         /// </summary>
         [Name("onTouchEnd")]
-        public new Action<Event<TCurrentTarget>> OnTouchEnd;
+        public new Action<TouchEvent<TCurrentTarget>> OnTouchEnd;
 
         /// <summary>
         /// Returns the event handling code for the touchmove event.
         /// </summary>
         [Name("onTouchMove")]
-        public new Action<Event<TCurrentTarget>> OnTouchMove;
+        public new Action<TouchEvent<TCurrentTarget>> OnTouchMove;
 
         /// <summary>
         /// Returns the event handling code for the touchenter event.
         /// </summary>
         [Name("onTouchEnter")]
-        public new Action<Event<TCurrentTarget>> OnTouchEnter;
+        public new Action<TouchEvent<TCurrentTarget>> OnTouchEnter;
 
         /// <summary>
         /// Returns the event handling code for the touchleave event.
         /// </summary>
         [Name("onTouchLeave")]
-        public new Action<Event<TCurrentTarget>> OnTouchLeave;
+        public new Action<TouchEvent<TCurrentTarget>> OnTouchLeave;
 
         /// <summary>
         /// Returns the event handling code for the touchcancel event.
         /// </summary>
         [Name("onTouchCancel")]
-        public new Action<Event<TCurrentTarget>> OnTouchCancel;
+        public new Action<TouchEvent<TCurrentTarget>> OnTouchCancel;
     }
 }
