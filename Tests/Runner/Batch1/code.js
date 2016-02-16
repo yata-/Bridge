@@ -323,6 +323,8 @@
                     this.MODULE_DIVIDEBYZEROEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
                     this.MODULE_NOTIMPLEMENTEDEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
                     this.MODULE_OVERFLOWEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                    this.MODULE_OUTOFMEMORYEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                    this.MODULE_SYSTEMEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
                     this.MODULE_ARITHMETICEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
                     this.MODULE_FORMATEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
                     this.MODULE_INVALIDOPERATIONEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
@@ -12633,6 +12635,37 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Exceptions.OutOfMemoryExceptionTests', {
+        statics: {
+            DefaultMessage: "Insufficient memory to continue the execution of the program."
+        },
+        typePropertiesAreCorrect: function () {
+            Bridge.get(Bridge.Test.Assert).areEqual$1("Bridge.OutOfMemoryException", Bridge.getTypeName(Bridge.OutOfMemoryException), "Name");
+            var d = new Bridge.OutOfMemoryException();
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(d, Bridge.OutOfMemoryException), "is OutOfMemoryException");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(d, Bridge.Exception), "is Exception");
+        },
+        defaultConstructorWorks: function () {
+            var ex = new Bridge.OutOfMemoryException();
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.OutOfMemoryException), "is OutOfMemoryException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(null, ex.getInnerException(), "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Bridge.ClientTest.Exceptions.OutOfMemoryExceptionTests).DefaultMessage, ex.getMessage());
+        },
+        constructorWithMessageWorks: function () {
+            var ex = new Bridge.OutOfMemoryException("The message");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.OutOfMemoryException), "is OutOfMemoryException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(null, ex.getInnerException(), "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual("The message", ex.getMessage());
+        },
+        constructorWithMessageAndInnerExceptionWorks: function () {
+            var inner = new Bridge.Exception("a");
+            var ex = new Bridge.OutOfMemoryException("The message", inner);
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.OutOfMemoryException), "is OutOfMemoryException");
+            Bridge.get(Bridge.Test.Assert).true$1(ex.getInnerException() === inner, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual("The message", ex.getMessage());
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Exceptions.OverflowExceptionTests', {
         typePropertiesAreCorrect: function () {
             Bridge.get(Bridge.Test.Assert).areEqual$1("Bridge.OverflowException", Bridge.getTypeName(Bridge.OverflowException), "Name");
@@ -12715,6 +12748,37 @@
             var ex = new Bridge.RankException("The message");
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.RankException), "is RankException");
             Bridge.get(Bridge.Test.Assert).areEqual$1(null, ex.getInnerException(), "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual("The message", ex.getMessage());
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Exceptions.SystemExceptionTests', {
+        statics: {
+            DefaultMessage: "System error."
+        },
+        typePropertiesAreCorrect: function () {
+            Bridge.get(Bridge.Test.Assert).areEqual$1("Bridge.SystemException", Bridge.getTypeName(Bridge.SystemException), "Name");
+            var d = new Bridge.SystemException();
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(d, Bridge.SystemException), "is SystemException");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(d, Bridge.Exception), "is Exception");
+        },
+        defaultConstructorWorks: function () {
+            var ex = new Bridge.SystemException();
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.SystemException), "is SystemException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(null, ex.getInnerException(), "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Bridge.ClientTest.Exceptions.SystemExceptionTests).DefaultMessage, ex.getMessage());
+        },
+        constructorWithMessageWorks: function () {
+            var ex = new Bridge.SystemException("The message");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.SystemException), "is SystemException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(null, ex.getInnerException(), "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual("The message", ex.getMessage());
+        },
+        constructorWithMessageAndInnerExceptionWorks: function () {
+            var inner = new Bridge.Exception("a");
+            var ex = new Bridge.SystemException("The message", inner);
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.SystemException), "is SystemException");
+            Bridge.get(Bridge.Test.Assert).true$1(ex.getInnerException() === inner, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual("The message", ex.getMessage());
         }
     });

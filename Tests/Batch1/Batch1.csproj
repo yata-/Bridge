@@ -206,6 +206,8 @@
     <Compile Include="Diagnostics\Contracts\ContractTests.cs" />
     <Compile Include="Diagnostics\StopwatchTests.cs" />
     <Compile Include="Exceptions\AggregateExceptionTests.cs" />
+    <Compile Include="Exceptions\SystemExceptionTests.cs" />
+    <Compile Include="Exceptions\OutOfMemoryExceptionTests.cs" />
     <Compile Include="Exceptions\TaskCanceledExceptionTests.cs" />
     <Compile Include="Exceptions\PromiseExceptionTests.cs" />
     <Compile Include="Exceptions\OperationCanceledExceptionTests.cs" />
