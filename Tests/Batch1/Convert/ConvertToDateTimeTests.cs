@@ -54,8 +54,19 @@ namespace Bridge.ClientTest.ConvertTests
                 Assert.AreEqual(expectedValues[i], result);
             }
 
+
+            string minDateExpected;
+            if (Utilities.BrowserHelper.IsFirefox())
+            {
+                minDateExpected = "Mon Jan 01 0001";
+            }
+            else
+            {
+                minDateExpected = "Mon Jan 01 1";
+            }
+
             var minDate = Convert.ToDateTime(null);
-            Assert.AreEqual("Mon Jan 01 1", minDate.ToDateString());
+            Assert.AreEqual(minDateExpected, minDate.ToDateString());
         }
 
         [Test]
