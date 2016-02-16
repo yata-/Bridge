@@ -10171,13 +10171,16 @@
             Bridge.get(Bridge.Test.Assert).areEqual("/", format.dateSeparator);
             Bridge.get(Bridge.Test.Assert).areEqual(":", format.timeSeparator);
     
+            Bridge.get(Bridge.Test.Assert).areEqual("dddd, dd MMMM yyyy HH:mm:ss", format.fullDateTimePattern);
+            Bridge.get(Bridge.Test.Assert).areEqual("yyyy MMMM", format.yearMonthPattern);
+    
             Bridge.get(Bridge.Test.Assert).areEqual("yyyy'-'MM'-'dd'T'HH':'mm':'ss", format.sortableDateTimePattern);
     
-            Bridge.get(Bridge.Test.Assert).areEqual("dddd, MMMM dd, yyyy", format.longDatePattern);
-            Bridge.get(Bridge.Test.Assert).areEqual("M/d/yyyy", format.shortDatePattern);
+            Bridge.get(Bridge.Test.Assert).areEqual("dddd, dd MMMM yyyy", format.longDatePattern);
+            Bridge.get(Bridge.Test.Assert).areEqual("MM/dd/yyyy", format.shortDatePattern);
     
-            Bridge.get(Bridge.Test.Assert).areEqual("h:mm:ss tt", format.longTimePattern);
-            Bridge.get(Bridge.Test.Assert).areEqual("h:mm tt", format.shortTimePattern);
+            Bridge.get(Bridge.Test.Assert).areEqual("HH:mm:ss", format.longTimePattern);
+            Bridge.get(Bridge.Test.Assert).areEqual("HH:mm", format.shortTimePattern);
     
             Bridge.get(Bridge.Test.Assert).areEqual(0, format.firstDayOfWeek);
             Bridge.get(Bridge.Test.Assert).areDeepEqual(["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], format.dayNames);
