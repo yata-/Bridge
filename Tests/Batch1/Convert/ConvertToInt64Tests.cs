@@ -53,9 +53,8 @@ namespace Bridge.ClientTest.ConvertTests
             long[] expectedValues = { 100, -100, 0 };
             VerifyViaObj(Convert.ToInt64, testValues, expectedValues);
 
-            // IE Tests
-            //decimal[] overflowValues = { decimal.MaxValue, decimal.MinValue };
-            //VerifyThrowsViaObj<OverflowException, decimal>(Convert.ToInt64, overflowValues);
+            decimal[] overflowValues = { decimal.MaxValue, decimal.MinValue };
+            VerifyThrowsViaObj<OverflowException, decimal>(Convert.ToInt64, overflowValues);
         }
 
         [Test]
@@ -65,9 +64,8 @@ namespace Bridge.ClientTest.ConvertTests
             long[] expectedValues = { 100, -100, 0 };
             VerifyViaObj(Convert.ToInt64, testValues, expectedValues);
 
-            // IE Tests
-            //double[] overflowValues = { double.MaxValue, -double.MaxValue };
-            //VerifyThrowsViaObj<OverflowException, double>(Convert.ToInt64, overflowValues);
+            double[] overflowValues = { double.MaxValue, -double.MaxValue };
+            VerifyThrowsViaObj<OverflowException, double>(Convert.ToInt64, overflowValues);
         }
 
         [Test]
@@ -120,9 +118,8 @@ namespace Bridge.ClientTest.ConvertTests
             long[] expectedValues = { 100, -100, 0, };
             VerifyViaObj(Convert.ToInt64, testValues, expectedValues);
 
-            // IE Tests
-            //float[] overflowValues = { float.MaxValue, float.MinValue };
-            //VerifyThrowsViaObj<OverflowException, float>(Convert.ToInt64, overflowValues);
+            float[] overflowValues = { float.MaxValue, float.MinValue };
+            VerifyThrowsViaObj<OverflowException, float>(Convert.ToInt64, overflowValues);
         }
 
         [Test]
@@ -135,12 +132,11 @@ namespace Bridge.ClientTest.ConvertTests
             long[] expectedValues = { 100, -100, 0, longMinValue, longMaxValue, 0 };
             VerifyFromString(Convert.ToInt64, Convert.ToInt64, testValues, expectedValues);
 
-            // IE Tests
-            //string[] overflowValues = { "1" + longMaxValue.ToString(), longMinValue.ToString() + "1" };
-            //VerifyFromStringThrows<OverflowException>(Convert.ToInt64, Convert.ToInt64, overflowValues);
+            string[] overflowValues = { "1" + longMaxValue.ToString(), longMinValue.ToString() + "1" };
+            VerifyFromStringThrows<OverflowException>(Convert.ToInt64, Convert.ToInt64, overflowValues);
 
-            //string[] formatExceptionValues = { "abba" };
-            //VerifyFromStringThrows<FormatException>(Convert.ToInt64, Convert.ToInt64, formatExceptionValues);
+            string[] formatExceptionValues = { "abba" };
+            VerifyFromStringThrows<FormatException>(Convert.ToInt64, Convert.ToInt64, formatExceptionValues);
         }
 
         [Test]
@@ -155,18 +151,17 @@ namespace Bridge.ClientTest.ConvertTests
             long[] expectedValues = {0, 0, 0, 0, maxSafeValue, maxSafeValue, maxSafeValue, maxSafeValue, minSafeValue };
             VerifyFromStringWithBase(Wrappers.ConvertFromStrWithBase, testValues, testBases, expectedValues);
 
-            // IE Tests
-            //string[] overflowValues = { "FFE0000000000001", "1777400000000000000001", "1111111111100000000000000000000000000000000000000000000000000001", "9223372036854775808", "-9223372036854775809", "11111111111111111111111111111111111111111111111111111111111111111", "1FFFFffffFFFFffff", "7777777777777777777777777" };
-            //int[] overflowBases = { 16, 8, 2, 10, 10, 2, 16, 8 };
-            //VerifyFromStringWithBaseThrows<OverflowException>(Wrappers.ConvertFromStrWithBase, overflowValues, overflowBases);
+            string[] overflowValues = { "FFE0000000000001", "1777400000000000000001", "1111111111100000000000000000000000000000000000000000000000000001", "9223372036854775808", "-9223372036854775809", "11111111111111111111111111111111111111111111111111111111111111111", "1FFFFffffFFFFffff", "7777777777777777777777777" };
+            int[] overflowBases = { 16, 8, 2, 10, 10, 2, 16, 8 };
+            VerifyFromStringWithBaseThrows<OverflowException>(Wrappers.ConvertFromStrWithBase, overflowValues, overflowBases);
 
-            //string[] formatExceptionValues = { "12", "ffffffffffffffffffff" };
-            //int[] formatExceptionBases = { 2, 8 };
-            //VerifyFromStringWithBaseThrows<FormatException>(Wrappers.ConvertFromStrWithBase, formatExceptionValues, formatExceptionBases);
+            string[] formatExceptionValues = { "12", "ffffffffffffffffffff" };
+            int[] formatExceptionBases = { 2, 8 };
+            VerifyFromStringWithBaseThrows<FormatException>(Wrappers.ConvertFromStrWithBase, formatExceptionValues, formatExceptionBases);
 
-            //string[] argumentExceptionValues = { "10", "11", "abba", "-ab" };
-            //int[] argumentExceptionBases = { -1, 3, 0, 16 };
-            //VerifyFromStringWithBaseThrows<ArgumentException>(Wrappers.ConvertFromStrWithBase, argumentExceptionValues, argumentExceptionBases);
+            string[] argumentExceptionValues = { "10", "11", "abba", "-ab" };
+            int[] argumentExceptionBases = { -1, 3, 0, 16 };
+            VerifyFromStringWithBaseThrows<ArgumentException>(Wrappers.ConvertFromStrWithBase, argumentExceptionValues, argumentExceptionBases);
         }
 
         [Test]
@@ -192,9 +187,8 @@ namespace Bridge.ClientTest.ConvertTests
             long[] expectedValues = { 100, 0 };
             VerifyViaObj(Convert.ToInt64, testValues, expectedValues);
 
-            // IE Tests
-            //ulong[] overflowValues = { 9007199254740992 }; // Number.MAX_SAFE_INTEGER + 1
-            //VerifyThrowsViaObj<OverflowException, ulong>(Convert.ToInt64, overflowValues);
+            ulong[] overflowValues = { 9007199254740992 }; // Number.MAX_SAFE_INTEGER + 1
+            VerifyThrowsViaObj<OverflowException, ulong>(Convert.ToInt64, overflowValues);
         }
     }
 }
