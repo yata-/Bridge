@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Security.Policy;
 
 namespace Bridge.Contract
 {
@@ -206,6 +205,22 @@ namespace Bridge.Contract
             return emitter.Validator.HasAttribute(type.GetDefinition().Attributes, "Bridge.IgnoreGenericAttribute");
         }
 
+        public static bool IsIgnoreGeneric(IEntity member, IEmitter emitter)
+        {
+            return emitter.Validator.HasAttribute(member.Attributes, "Bridge.IgnoreGenericAttribute");
+        }
+
+        public static bool IsIgnoreGeneric(MethodDeclaration method, IEmitter emitter)
+        {
+            MemberResolveResult resolveResult = emitter.Resolver.ResolveNode(method, emitter) as MemberResolveResult;
+            if (resolveResult != null && resolveResult.Member != null)
+            {
+                return IsIgnoreGeneric(resolveResult.Member, emitter);
+            }
+
+            return false;
+        }
+
         public static bool IsIgnoreCast(AstType astType, IEmitter emitter)
         {
             if (emitter.AssemblyInfo.IgnoreCast)
@@ -331,9 +346,9 @@ namespace Bridge.Contract
                     }
                     else
                     {
-                        block.Write(".$clone()");    
+                        block.Write(".$clone()");
                     }
-                    
+
                     return;
                 }
 
@@ -933,23 +948,29 @@ namespace Bridge.Contract
             {
                 case "System.Byte":
                     return "Uint8Array";
+
                 case "System.SByte":
                     return "Int8Array";
+
                 case "System.Int16":
                     return "Int16Array";
+
                 case "System.UInt16":
                     return "Uint16Array";
+
                 case "System.Int32":
                     return "Int32Array";
+
                 case "System.UInt32":
                     return "Uint32Array";
+
                 case "System.Single":
                     return "Float32Array";
+
                 case "System.Double":
                     return "Float64Array";
             }
             return null;
         }
-
     }
 }

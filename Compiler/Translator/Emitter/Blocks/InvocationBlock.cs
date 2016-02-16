@@ -142,7 +142,8 @@ namespace Bridge.Translator
                             value = InlineArgumentsBlock.ReplaceInlineArgs(this, inlineExpression.Value.ToString(), invocationExpression.Arguments.Skip(1).ToArray());
                             this.Write(value);
 
-                            if (value[value.Length - 1] == ';')
+                            value = value.Trim();
+                            if (value[value.Length - 1] == ';' || value.EndsWith("*/", StringComparison.InvariantCulture) || value.StartsWith("//"))
                             {
                                 this.Emitter.EnableSemicolon = false;
                                 this.WriteNewLine();
@@ -289,15 +290,17 @@ namespace Bridge.Translator
                                     var isIgnoreClass = resolvedMethod.DeclaringTypeDefinition != null && this.Emitter.Validator.IsIgnoreType(resolvedMethod.DeclaringTypeDefinition);
 
                                     this.Write(name);
+                                    
+                                    this.WriteOpenParentheses();
 
-                                    if (!isIgnoreClass && argsInfo.HasTypeArguments)
+                                    this.Emitter.Comma = false;
+
+                                    if (!isIgnoreClass && !Helpers.IsIgnoreGeneric(resolvedMethod, this.Emitter) && argsInfo.HasTypeArguments)
                                     {
-                                        this.WriteOpenParentheses();
                                         new TypeExpressionListBlock(this.Emitter, argsInfo.TypeArguments).Emit();
-                                        this.WriteCloseParentheses();
                                     }
 
-                                    this.WriteOpenParentheses();
+                                    this.EnsureComma(false);
 
                                     this.WriteThisExtension(invocationExpression.Target);
 
@@ -381,7 +384,6 @@ namespace Bridge.Translator
             if (proto)
             {
                 var baseType = this.Emitter.GetBaseMethodOwnerTypeDefinition(targetMember.MemberName, targetMember.TypeArguments.Count);
-                var method = invocationExpression.GetParent<MethodDeclaration>();
 
                 bool isIgnore = this.Emitter.Validator.IsIgnoreType(baseType);
 
@@ -406,16 +408,18 @@ namespace Bridge.Translator
                 }
 
                 string baseMethod;
-
+                bool isIgnoreGeneric = false;
                 if (resolveResult is InvocationResolveResult)
                 {
                     InvocationResolveResult invocationResult = (InvocationResolveResult)resolveResult;
                     baseMethod = OverloadsCollection.Create(this.Emitter, invocationResult.Member).GetOverloadName();
+                    isIgnoreGeneric = Helpers.IsIgnoreGeneric(invocationResult.Member, this.Emitter);
                 }
                 else if (resolveResult is MemberResolveResult)
                 {
                     MemberResolveResult memberResult = (MemberResolveResult)resolveResult;
                     baseMethod = OverloadsCollection.Create(this.Emitter, memberResult.Member).GetOverloadName();
+                    isIgnoreGeneric = Helpers.IsIgnoreGeneric(memberResult.Member, this.Emitter);
                 }
                 else
                 {
@@ -425,23 +429,23 @@ namespace Bridge.Translator
 
                 this.Write(name, ".prototype.", baseMethod);
 
-                if (!isIgnore && argsInfo.HasTypeArguments)
-                {
-                    this.WriteOpenParentheses();
-                    new TypeExpressionListBlock(this.Emitter, argsInfo.TypeArguments).Emit();
-                    this.WriteCloseParentheses();
-                }
-
                 this.WriteDot();
 
                 this.Write("call");
                 this.WriteOpenParentheses();
-
                 this.WriteThis();
-                needComma = true;
+                this.Emitter.Comma = true;
+                if (!isIgnore && !isIgnoreGeneric && argsInfo.HasTypeArguments)
+                {
+                    new TypeExpressionListBlock(this.Emitter, argsInfo.TypeArguments).Emit();
+                }
+                
+                needComma = false;
 
                 foreach (var arg in argsExpressions)
                 {
+                    this.EnsureComma(false);
+
                     if (needComma)
                     {
                         this.WriteComma();
@@ -450,7 +454,7 @@ namespace Bridge.Translator
                     needComma = true;
                     arg.AcceptVisitor(this.Emitter);
                 }
-
+                this.Emitter.Comma = false;
                 this.WriteCloseParentheses();
             }
             else
@@ -530,19 +534,20 @@ namespace Bridge.Translator
                 }
                 else
                 {
-                    if (!isIgnore && argsInfo.HasTypeArguments)
-                    {
-                        this.WriteOpenParentheses();
-                        new TypeExpressionListBlock(this.Emitter, argsInfo.TypeArguments).Emit();
-                        this.WriteCloseParentheses();
-                    }
-
                     if (needExpand && isIgnore)
                     {
                         this.Write(".apply");
                     }
 
                     this.WriteOpenParentheses();
+
+                    bool isIgnoreGeneric = false;
+                    var invocationResult = targetResolve as InvocationResolveResult;
+
+                    if (invocationResult != null)
+                    {
+                        isIgnoreGeneric = Helpers.IsIgnoreGeneric(invocationResult.Member, this.Emitter);
+                    }
 
                     if (needExpand && isIgnore)
                     {
@@ -553,7 +558,15 @@ namespace Bridge.Translator
                         this.Emitter.Output = savedBuilder;
 
                         this.Write(thisArg);
-                        this.WriteComma();
+                        
+                        this.Emitter.Comma = true;
+
+                        if (!isIgnore && !isIgnoreGeneric && argsInfo.HasTypeArguments)
+                        {
+                            new TypeExpressionListBlock(this.Emitter, argsInfo.TypeArguments).Emit();
+                        }
+                        
+                        this.EnsureComma(false);
 
                         if (argsExpressions.Length > 1)
                         {
@@ -571,6 +584,17 @@ namespace Bridge.Translator
                     }
                     else
                     {
+                        this.Emitter.Comma = false;
+                        if (!isIgnore && !isIgnoreGeneric && argsInfo.HasTypeArguments)
+                        {
+                            new TypeExpressionListBlock(this.Emitter, argsInfo.TypeArguments).Emit();
+                        }
+
+                        if (invocationExpression.Arguments.Count > 0)
+                        {
+                            this.EnsureComma(false);    
+                        }
+
                         new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, invocationExpression).Emit();    
                     }
                     

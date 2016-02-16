@@ -1,6 +1,4 @@
-﻿/* global Bridge */
-
-(function (globals) {
+﻿(function (globals) {
     "use strict";
 
     Bridge.define('TestIssue599.Issue599', {
@@ -16,6 +14,8 @@
         },
         _something: "HI!"
     });
+    
+    
     
     Bridge.init();
 })(this);

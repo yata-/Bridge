@@ -1,8 +1,8 @@
 ﻿/*
- * @version   : 1.10.4 - Bridge.NET
+ * @version   : 1.11.0 - Bridge.NET
  * @author    : Object.NET, Inc. http://bridge.net/
- * @date      : 2015-12-31
- * @copyright : Copyright (c) 2008-2015, Object.NET, Inc. (http://object.net/). All rights reserved.
+ * @date      : 2016-02-15
+ * @copyright : Copyright (c) 2008-2016, Object.NET, Inc. (http://object.net/). All rights reserved.
  * @license   : See license.txt and https://github.com/bridgedotnet/Bridge.NET/blob/master/LICENSE.
  */
 
@@ -106,6 +106,8 @@
                 if (typeof scope[nsParts[i]] === "undefined") {
                     scope[nsParts[i]] = { };
                 }
+
+                scope = scope[nsParts[i]];
             }
 
             return scope;
@@ -352,7 +354,7 @@
         },
 
 	    apply: function (obj, values) {
-	        var names = Bridge.getPropertyNames(values, false),
+	        var names = Bridge.getPropertyNames(values, true),
 	            i;
 
 	        for (i = 0; i < names.length; i++) {
@@ -544,6 +546,9 @@
         equals: function (a, b) {
             if (a && Bridge.isFunction(a.equals) && a.equals.length === 1) {
                 return a.equals(b);
+            }
+            if (b && Bridge.isFunction(b.equals) && b.equals.length === 1) {
+                return a.equals(b);
             } else if (Bridge.isDate(a) && Bridge.isDate(b)) {
                 return a.valueOf() === b.valueOf();
             } else if (Bridge.isNull(a) && Bridge.isNull(b)) {
@@ -634,11 +639,19 @@
                 return Bridge.compare(a.valueOf(), b.valueOf());
             }
 
-            if (safe && !a.compareTo) {
+            if (Bridge.isFunction(a.compareTo)) {
+                return a.compareTo(b);
+            }
+
+            if (Bridge.isFunction(b.compareTo)) {
+                return -b.compareTo(a);
+            }
+
+            if (safe) {
                 return 0;
             }
 
-            return a.compareTo(b);
+            throw new Bridge.Exception("Cannot compare items");
         },
 
         equalsT: function (a, b) {
@@ -650,7 +663,7 @@
                 return a.valueOf() === b.valueOf();
             }
 
-            return a.equalsT(b);
+            return a.equalsT ? a.equalsT(b) : b.equalsT(a);
         },
 
         format: function (obj, formatString) {
@@ -2247,7 +2260,13 @@
 
             if (exists) {
                 for (key in exists) {
-                    if (typeof exists[key] === "function" && exists[key].$$name) {
+                    if (key.indexOf("$", key.length - 1) !== -1) {
+                        var key1 = key.slice(0, -1);
+                        if (typeof exists[key1] === "function" && exists[key1].$$name) {
+                            cls[key] = exists[key];
+                        }
+                    }
+                    else if (typeof exists[key] === "function" && exists[key].$$name) {
                         cls[key] = exists[key];
                     }
                 }
@@ -2707,22 +2726,22 @@
                     dateSeparator: "/",
                     dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
                     firstDayOfWeek: 0,
-                    fullDateTimePattern: "dddd, MMMM dd, yyyy h:mm:ss tt",
-                    longDatePattern: "dddd, MMMM dd, yyyy",
-                    longTimePattern: "h:mm:ss tt",
+                    fullDateTimePattern: "dddd, dd MMMM yyyy HH:mm:ss",
+                    longDatePattern: "dddd, dd MMMM yyyy",
+                    longTimePattern: "HH:mm:ss",
                     monthDayPattern: "MMMM dd",
                     monthGenitiveNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", ""],
                     monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", ""],
                     pmDesignator: "PM",
                     rfc1123: "ddd, dd MMM yyyy HH':'mm':'ss 'GMT'",
-                    shortDatePattern: "M/d/yyyy",
+                    shortDatePattern: "MM/dd/yyyy",
                     shortestDayNames: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-                    shortTimePattern: "h:mm tt",
+                    shortTimePattern: "HH:mm",
                     sortableDateTimePattern: "yyyy'-'MM'-'dd'T'HH':'mm':'ss",
                     sortableDateTimePattern1: "yyyy'-'MM'-'dd",
                     timeSeparator: ":",
                     universalSortableDateTimePattern: "yyyy'-'MM'-'dd HH':'mm':'ss'Z'",
-                    yearMonthPattern: "MMMM, yyyy",
+                    yearMonthPattern: "yyyy MMMM",
                     roundtripFormat: "yyyy'-'MM'-'dd'T'HH':'mm':'ss.uzzz"
                 });
             }
@@ -6432,15 +6451,18 @@ Bridge.Class.generic('Bridge.KeyValuePair$2', function (TKey, TValue) {
         toString: function() {
             var s = "[";
             
-            if( this.key != null) {
+            if (this.key != null) {
                 s += this.key.toString();
             }
 
             s += ", ";
-            if(this.value != null) {
+
+            if (this.value != null) {
                 s += this.value.toString();
             }
+
             s += "]";
+
             return s;
         }
     }));
@@ -7291,15 +7313,15 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
             return this.status === Bridge.TaskStatus.faulted;
         },
 
-        _getResult: function (await) {
+        _getResult: function (awaiting) {
             switch (this.status) {
                 case Bridge.TaskStatus.ranToCompletion:
                     return this.result;
                 case Bridge.TaskStatus.canceled:
                     var ex = new Bridge.TaskCanceledException(null, this);
-                    throw await ? ex : new Bridge.AggregateException(null, [ex]);
+                    throw awaiting ? ex : new Bridge.AggregateException(null, [ex]);
                 case Bridge.TaskStatus.faulted:
-                    throw await ? (this.exception.innerExceptions.getCount() > 0 ? this.exception.innerExceptions.get(0) : null) : this.exception;
+                    throw awaiting ? (this.exception.innerExceptions.getCount() > 0 ? this.exception.innerExceptions.get(0) : null) : this.exception;
                 default:
                     throw new Bridge.InvalidOperationException("Task is not yet completed.");
             }
@@ -10000,11 +10022,21 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         var sum = 0;
         var count = 0;
         this.forEach(function (x) {
-            sum += selector(x);
+            x = selector(x);
+
+            if (x instanceof Bridge.Decimal) {
+                sum = x.add(sum);
+            }
+            else if (sum instanceof Bridge.Decimal) {
+                sum = sum.add(x);
+            } else {
+                sum += x;
+            }
+            
             ++count;
         });
 
-        return sum / count;
+        return sum instanceof Bridge.Decimal ? sum.div(count) : (sum / count);
     };
 
     Enumerable.prototype.nullableAverage = function (selector) {
@@ -10079,7 +10111,15 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
     // Overload:function (selector)
     Enumerable.prototype.sum = function (selector) {
         if (selector == null) selector = Functions.Identity;
-        return this.select(selector).aggregate(0, function (a, b) { return a + b; });
+        return this.select(selector).aggregate(0, function(a, b) {
+             if (a instanceof Bridge.Decimal) {
+                 return a.add(b);
+             }
+             if (b instanceof Bridge.Decimal) {
+                 return b.add(a);
+             }
+             return a + b;
+        });
     };
 
     Enumerable.prototype.nullableSum = function (selector) {
@@ -11136,8 +11176,6 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
 
 })(this);
 
-
-/* global Bridge */
 
 (function (globals) {
     "use strict";

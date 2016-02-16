@@ -399,5 +399,23 @@ namespace Bridge.Translator
             get;
             set;
         }
+
+        public string CatchBlockVariable
+        {
+            get;
+            set;
+        }
+		
+		public bool StaticBlock
+        {
+            get;
+            set;
+        }
+
+        public Dictionary<string, string> NamedFunctions
+        {
+            get;
+            set;
+        }
     }
 }

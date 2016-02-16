@@ -40,6 +40,7 @@
     <Compile Include="TestIssue434.cs" />
     <Compile Include="Test2.cs" />
     <Compile Include="Test1.cs" />
+    <Compile Include="TestIssue948.cs" />
     <Compile Include="TestIssue599ReadyAttribute.cs" />
     <Compile Include="TestIssue461.cs" />
     <Compile Include="..\18LinkedFiles\**\*.cs">
