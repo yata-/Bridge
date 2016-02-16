@@ -8697,6 +8697,27 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge968', {
+        statics: {
+            testDecimalDoesNotParseIncorrectValue: function () {
+                var d = { };
+                var b = Bridge.Decimal.tryParse("123e", null, d);
+    
+                Bridge.get(Bridge.Test.Assert).$false(b);
+            },
+            testDecimalParsesCorrectValues: function () {
+                var d1 = Bridge.Decimal("123e1");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Decimal(1230.0), d1, "123e1");
+    
+                var d2 = Bridge.Decimal("123e+1");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Decimal(1230.0), d2, "123e+1");
+    
+                var d3 = Bridge.Decimal("123e-1");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Decimal(12.3), d3, "123e-1");
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Collections.Generic.ComparerTests', {
         typePropertiesAreCorrect: function () {
             Bridge.get(Bridge.Test.Assert).areEqual$1("Bridge.Comparer$1$Object", Bridge.getTypeName(Bridge.Comparer$1(Object)), "GetClassName()");
