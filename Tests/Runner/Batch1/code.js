@@ -1,6 +1,15 @@
 ﻿(function (globals) {
     "use strict";
 
+    /** @namespace System */
+    
+    /**
+     * @memberof System
+     * @callback System.Func
+     * @param   {TInput}     arg
+     * @return  {TOutput}
+     */
+    
     Bridge.define('Bridge.ClientTest.BasicCSharp.TestAbstractClass.A', {
         config: {
             properties: {
@@ -269,6 +278,7 @@
             MODULE_ENUM: "Enum",
             MODULE_MATH: "Math",
             MODULE_DECIMAL_MATH: "Decimal Math",
+            MODULE_CONVERT: "Convert",
             MODULE_COMPARER: "Comparer",
             MODULE_EQUALITYCOMPARER: "EqualityComparer",
             MODULE_NUMBERFORMATINFO: "NumberFormatInfo",
@@ -313,6 +323,8 @@
                     this.MODULE_DIVIDEBYZEROEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
                     this.MODULE_NOTIMPLEMENTEDEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
                     this.MODULE_OVERFLOWEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                    this.MODULE_OUTOFMEMORYEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
+                    this.MODULE_SYSTEMEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
                     this.MODULE_ARITHMETICEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
                     this.MODULE_FORMATEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
                     this.MODULE_INVALIDOPERATIONEXCEPTION = Bridge.get(Bridge.ClientTest.Constants).PREFIX_EXCEPTIONS;
@@ -2682,6 +2694,194 @@
         }
     });
     
+    /** @namespace Bridge.ClientTest.ConvertTests */
+    
+    /**
+     * Helper class to test that the IFormatProvider is being called.
+     *
+     * @protected
+     * @class Bridge.ClientTest.ConvertTests.ConvertTestBase$1.TestFormatProvider
+     * @implements  Bridge.IFormatProvider
+     */
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertTestBase$1.TestFormatProvider', function (TOutput) { return {
+        inherits: [Bridge.IFormatProvider],
+        statics: {
+            config: {
+                init: function () {
+                    this.s_instance = new Bridge.ClientTest.ConvertTests.ConvertTestBase$1.TestFormatProvider(TOutput)();
+                }
+            }
+        },
+        constructor: function () {
+        },
+        getFormat: function (formatType) {
+            return this;
+        },
+        format: function (format, arg, formatProvider) {
+            return arg.toString();
+        },
+        getAllDateTimePatterns: function (format, returnNull) {
+            return "G";
+        }
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToByteTests.Wrappers', {
+        statics: {
+            convertFromStrWithBase: function (value, fromBase) {
+                return Bridge.Convert.toNumberInBase(value, fromBase, 6);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers', {
+        statics: {
+            convertToCharWrapper$9: function (value) {
+                return Bridge.Convert.toChar(value, null, 1);
+            },
+            convertToCharWrapper: function (value) {
+                return Bridge.Convert.toChar(value, null, 3);
+            },
+            convertToCharWrapper$2: function (value) {
+                return Bridge.Convert.toChar(value, null, 4);
+            },
+            convertToCharWrapper$11: function (value) {
+                return Bridge.Convert.toChar(value, null, 5);
+            },
+            convertToCharWrapper$1: function (value) {
+                return Bridge.Convert.toChar(value, null, 6);
+            },
+            convertToCharWrapper$6: function (value) {
+                return Bridge.Convert.toChar(value, null, 7);
+            },
+            convertToCharWrapper$15: function (value) {
+                return Bridge.Convert.toChar(value, null, 8);
+            },
+            convertToCharWrapper$7: function (value) {
+                return Bridge.Convert.toChar(value, null, 9);
+            },
+            convertToCharWrapper$16: function (value) {
+                return Bridge.Convert.toChar(value, null, 10);
+            },
+            convertToCharWrapper$8: function (value) {
+                return Bridge.Convert.toChar(value, null, 11);
+            },
+            convertToCharWrapper$17: function (value) {
+                return Bridge.Convert.toChar(value, null, 12);
+            },
+            convertToCharWrapper$13: function (value) {
+                return Bridge.Convert.toChar(value, null, 18);
+            },
+            convertToCharWrapper$12: function (value) {
+                return Bridge.Convert.toChar(value, null, 13);
+            },
+            convertToCharWrapper$5: function (value) {
+                return Bridge.Convert.toChar(value, null, 14);
+            },
+            convertToCharWrapper$4: function (value) {
+                return Bridge.Convert.toChar(value, null, 15);
+            },
+            convertToCharWrapper$3: function (value) {
+                return Bridge.Convert.toChar(value, null, 16);
+            },
+            convertToCharWrapper$10: function (value, provider) {
+                return Bridge.Convert.toChar(value, provider, 1);
+            },
+            convertToCharWrapper$14: function (value, provider) {
+                return Bridge.Convert.toChar(value, provider, 18);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToInt16Tests.Wrappers', {
+        statics: {
+            convertFromStrWithBase: function (value, fromBase) {
+                return Bridge.Convert.toNumberInBase(value, fromBase, 7);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToInt32Tests.Wrappers', {
+        statics: {
+            convertFromStrWithBase: function (value, fromBase) {
+                return Bridge.Convert.toNumberInBase(value, fromBase, 9);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToInt64Tests.Wrappers', {
+        statics: {
+            convertFromStrWithBase: function (value, fromBase) {
+                return Bridge.Convert.toNumberInBase(value, fromBase, 11);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToSByteTests.Wrappers', {
+        statics: {
+            convertFromStrWithBase: function (value, fromBase) {
+                return Bridge.Convert.toNumberInBase(value, fromBase, 5);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToStringTests.FooFormattable', {
+        inherits: [Bridge.IFormattable],
+        _value: 0,
+        constructor: function (value) {
+            this._value = value;
+        },
+        toString$1: function (format, formatProvider) {
+            if (Bridge.hasValue(formatProvider)) {
+                return Bridge.String.format("{0}: {1}", Bridge.getTypeName(formatProvider), this._value);
+            }
+            else  {
+                return Bridge.String.format("FooFormattable: {0}", (this._value));
+            }
+        },
+        format: function (format, formatProvider) {
+            return this.toString$1(format, formatProvider);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToStringTests.Foo', {
+        _value: 0,
+        constructor: function (value) {
+            this._value = value;
+        },
+        toString$1: function (provider) {
+            if (Bridge.hasValue(provider)) {
+                return Bridge.String.format("{0}: {1}", provider, this._value);
+            }
+            else  {
+                return Bridge.String.format("Foo: {0}", this._value);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToUInt16Tests.Wrappers', {
+        statics: {
+            convertFromStrWithBase: function (value, fromBase) {
+                return Bridge.Convert.toNumberInBase(value, fromBase, 8);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToUInt32Tests.Wrappers', {
+        statics: {
+            convertFromStrWithBase: function (value, fromBase) {
+                return Bridge.Convert.toNumberInBase(value, fromBase, 10);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToUInt64Tests.Wrappers', {
+        statics: {
+            convertFromStrWithBase: function (value, fromBase) {
+                return Bridge.Convert.toNumberInBase(value, fromBase, 12);
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.DecimalMathTests.Logger', {
         statics: {
             convertParameters: function (parameters) {
@@ -3502,6 +3702,246 @@
             field1: 1
         }
     });
+    
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertTestBase$1', function (TOutput) { return {
+        /**
+         * Verify that the provided convert delegate produces expectedValues given testValues.
+         *
+         * @instance
+         * @protected
+         * @this Bridge.ClientTest.ConvertTests.ConvertTestBase$1
+         * @memberof Bridge.ClientTest.ConvertTests.ConvertTestBase$1
+         * @param   {Function}           TInput            
+         * @param   {System.Func}        convert           
+         * @param   {Array.<TInput>}     testValues        
+         * @param   {Array.<TOutput>}    expectedValues
+         * @return  {void}
+         */
+        verify: function (TInput, convert, testValues, expectedValues) {
+            Bridge.get(Bridge.Test.Assert).areEqual(expectedValues.length, testValues.length);
+    
+            for (var i = 0; i < testValues.length; i++) {
+                var result = convert(testValues[i]);
+                Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], result);
+            }
+        },
+        /**
+         * Verify that the provided convert delegate produces expectedValues given testValues.
+         The overloading should be used to test methods accepting objects.
+         *
+         * @instance
+         * @protected
+         * @this Bridge.ClientTest.ConvertTests.ConvertTestBase$1
+         * @memberof Bridge.ClientTest.ConvertTests.ConvertTestBase$1
+         * @param   {Function}           TInput            
+         * @param   {System.Func}        convert           
+         * @param   {Array.<TInput>}     testValues        
+         * @param   {Array.<TOutput>}    expectedValues
+         * @return  {void}
+         */
+        verifyViaObj: function (TInput, convert, testValues, expectedValues) {
+            Bridge.get(Bridge.Test.Assert).areEqual(expectedValues.length, testValues.length);
+    
+            for (var i = 0; i < testValues.length; i++) {
+                var result = convert(testValues[i]);
+                Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], result);
+            }
+        },
+        /**
+         * Verify that the provided convert delegates produce expectedValues given testValues
+         *
+         * @instance
+         * @protected
+         * @this Bridge.ClientTest.ConvertTests.ConvertTestBase$1
+         * @memberof Bridge.ClientTest.ConvertTests.ConvertTestBase$1
+         * @param   {System.Func}        convert                      
+         * @param   {System.Func}        convertWithFormatProvider    
+         * @param   {Array.<string>}     testValues                   
+         * @param   {Array.<TOutput>}    expectedValues
+         * @return  {void}
+         */
+        verifyFromString: function (convert, convertWithFormatProvider, testValues, expectedValues) {
+            this.verify(String, convert, testValues, expectedValues);
+            this.verify(String, function (input) {
+                return convertWithFormatProvider(input, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertTestBase$1.TestFormatProvider(TOutput)).s_instance);
+            }, testValues, expectedValues);
+        },
+        /**
+         * Verify that the provided convert delegates produce expectedValues given testValues
+         *
+         * @instance
+         * @protected
+         * @this Bridge.ClientTest.ConvertTests.ConvertTestBase$1
+         * @memberof Bridge.ClientTest.ConvertTests.ConvertTestBase$1
+         * @param   {System.Func}        convert                      
+         * @param   {System.Func}        convertWithFormatProvider    
+         * @param   {Array.<Object>}     testValues                   
+         * @param   {Array.<TOutput>}    expectedValues
+         * @return  {void}
+         */
+        verifyFromObject: function (convert, convertWithFormatProvider, testValues, expectedValues) {
+            this.verify(Object, convert, testValues, expectedValues);
+            this.verify(Object, function (input) {
+                return convertWithFormatProvider(input, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertTestBase$1.TestFormatProvider(TOutput)).s_instance);
+            }, testValues, expectedValues);
+        },
+        /**
+         * Verify that the provided convert delegate produces expectedValues given testValues and testBases
+         *
+         * @instance
+         * @protected
+         * @this Bridge.ClientTest.ConvertTests.ConvertTestBase$1
+         * @memberof Bridge.ClientTest.ConvertTests.ConvertTestBase$1
+         * @param   {System.Func}        convert           
+         * @param   {Array.<string>}     testValues        
+         * @param   {Array.<number>}     testBases         
+         * @param   {Array.<TOutput>}    expectedValues
+         * @return  {void}
+         */
+        verifyFromStringWithBase: function (convert, testValues, testBases, expectedValues) {
+            Bridge.get(Bridge.Test.Assert).areEqual(testValues.length, testBases.length);
+            Bridge.get(Bridge.Test.Assert).areEqual(testValues.length, expectedValues.length);
+    
+            for (var i = 0; i < testValues.length; i++) {
+                var result = convert(testValues[i], testBases[i]);
+                Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], result);
+            }
+        },
+        /**
+         * Verify that the provided convert delegate throws an exception of type TException given testValues and testBases
+         *
+         * @instance
+         * @protected
+         * @this Bridge.ClientTest.ConvertTests.ConvertTestBase$1
+         * @memberof Bridge.ClientTest.ConvertTests.ConvertTestBase$1
+         * @param   {Function}          TException    
+         * @param   {System.Func}       convert       
+         * @param   {Array.<string>}    testValues    
+         * @param   {Array.<number>}    testBases
+         * @return  {void}
+         */
+        verifyFromStringWithBaseThrows: function (TException, convert, testValues, testBases) {
+            Bridge.get(Bridge.Test.Assert).areEqual(testValues.length, testBases.length);
+    
+            for (var i = 0; i < testValues.length; i++) {
+                (function () {
+                    try {
+                        Bridge.get(Bridge.Test.Assert).throws$1(function () {
+                            convert(testValues[i], testBases[i]);
+                        }, function (err) {
+                            return Bridge.getTypeName(err) === Bridge.getTypeName(TException);
+                        });
+                    }
+                    catch (e) {
+                        e = Bridge.Exception.create(e);
+                        var message = Bridge.String.format("Expected {0} converting '{1}' (base {2}) to '{3}'", Bridge.getTypeName(TException), testValues[i], testBases[i], Bridge.getTypeName(TOutput));
+                        throw new Bridge.AggregateException(message, [e]);
+                    }
+                }).call(this);
+            }
+        },
+        /**
+         * Verify that the provided convert delegate throws an exception of type TException given testValues
+         *
+         * @instance
+         * @protected
+         * @this Bridge.ClientTest.ConvertTests.ConvertTestBase$1
+         * @memberof Bridge.ClientTest.ConvertTests.ConvertTestBase$1
+         * @param   {Function}          TException    
+         * @param   {Function}          TInput        
+         * @param   {System.Func}       convert       
+         * @param   {Array.<TInput>}    testValues
+         * @return  {void}
+         */
+        verifyThrows: function (TException, TInput, convert, testValues) {
+            for (var i = 0; i < testValues.length; i++) {
+                (function () {
+                    try {
+                        Bridge.get(Bridge.Test.Assert).throws$1(function () {
+                            convert(testValues[i]);
+                        }, function (err) {
+                            return Bridge.getTypeName(err) === Bridge.getTypeName(TException);
+                        });
+                    }
+                    catch (e) {
+                        e = Bridge.Exception.create(e);
+                        var message = Bridge.String.format("Expected {0} converting '{1}' ({2}) to {3}", Bridge.getTypeName(TException), testValues[i], Bridge.getTypeName(TInput), Bridge.getTypeName(TOutput));
+                        throw new Bridge.AggregateException(message, [e]);
+                    }
+                }).call(this);
+            }
+        },
+        /**
+         * Verify that the provided convert delegate throws an exception of type TException given testValues
+         The overloading should be used to test methods accepting objects.
+         *
+         * @instance
+         * @protected
+         * @this Bridge.ClientTest.ConvertTests.ConvertTestBase$1
+         * @memberof Bridge.ClientTest.ConvertTests.ConvertTestBase$1
+         * @param   {Function}          TException    
+         * @param   {Function}          TInput        
+         * @param   {System.Func}       convert       
+         * @param   {Array.<TInput>}    testValues
+         * @return  {void}
+         */
+        verifyThrowsViaObj: function (TException, TInput, convert, testValues) {
+            for (var i = 0; i < testValues.length; i++) {
+                (function () {
+                    try {
+                        Bridge.get(Bridge.Test.Assert).throws$1(function () {
+                            convert(testValues[i]);
+                        }, function (err) {
+                            return Bridge.getTypeName(err) === Bridge.getTypeName(TException);
+                        });
+                    }
+                    catch (e) {
+                        e = Bridge.Exception.create(e);
+                        var message = Bridge.String.format("Expected {0} converting '{1}' ({2}) to {3}", Bridge.getTypeName(TException), testValues[i], Bridge.getTypeName(TInput), Bridge.getTypeName(TOutput));
+                        throw new Bridge.AggregateException(message, [e]);
+                    }
+                }).call(this);
+            }
+        },
+        /**
+         * Verify that the provided convert delegates throws an exception of type TException given testValues
+         *
+         * @instance
+         * @protected
+         * @this Bridge.ClientTest.ConvertTests.ConvertTestBase$1
+         * @memberof Bridge.ClientTest.ConvertTests.ConvertTestBase$1
+         * @param   {Function}          TException                   
+         * @param   {System.Func}       convert                      
+         * @param   {System.Func}       convertWithFormatProvider    
+         * @param   {Array.<string>}    testValues
+         * @return  {void}
+         */
+        verifyFromStringThrows: function (TException, convert, convertWithFormatProvider, testValues) {
+            this.verifyThrows(TException, String, convert, testValues);
+            this.verifyThrows(TException, String, function (input) {
+                return convertWithFormatProvider(input, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertTestBase$1.TestFormatProvider(TOutput)).s_instance);
+            }, testValues);
+        },
+        /**
+         * Verify that the provided convert delegates throw exception of type TException given testValues
+         *
+         * @instance
+         * @protected
+         * @this Bridge.ClientTest.ConvertTests.ConvertTestBase$1
+         * @memberof Bridge.ClientTest.ConvertTests.ConvertTestBase$1
+         * @param   {Function}          TException                   
+         * @param   {System.Func}       convert                      
+         * @param   {System.Func}       convertWithFormatProvider    
+         * @param   {Array.<Object>}    testValues
+         * @return  {void}
+         */
+        verifyFromObjectThrows: function (TException, convert, convertWithFormatProvider, testValues) {
+            this.verifyThrows(TException, Object, convert, testValues);
+            this.verifyThrows(TException, Object, function (input) {
+                return convertWithFormatProvider(input, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertTestBase$1.TestFormatProvider(TOutput)).s_instance);
+            }, testValues);
+        }
+    }; });
     
     Bridge.define('Bridge.ClientTest.ExceptionTests.E2', {
         inherits: [Bridge.ClientTest.ExceptionTests.E1],
@@ -10153,6 +10593,776 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests', {
+        statics: {
+            roundtrip1: function () {
+                var input = "test";
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).verify(input, function (result) {
+                    // See Freed, N. and N. Borenstein, RFC2045, Section 6.8 for a description of why this check is necessary.
+                    Bridge.get(Bridge.Test.Assert).areEqual(result.length, 3);
+    
+                    var triplet = Bridge.cast(((result[0] << 16) | (result[1] << 8) | result[2]), Bridge.Int);
+                    Bridge.get(Bridge.Test.Assert).areEqual(triplet >>> 18, 45); // 't'
+                    Bridge.get(Bridge.Test.Assert).areEqual((triplet << 14) >>> 26, 30); // 'e'
+                    Bridge.get(Bridge.Test.Assert).areEqual((triplet << 20) >>> 26, 44); // 's'
+                    Bridge.get(Bridge.Test.Assert).areEqual((triplet << 26) >>> 26, 45); // 't'
+    
+                    Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Convert.toBase64String(result, null, null, null), input);
+                });
+            },
+            roundtrip2: function () {
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).verifyRoundtrip("AAAA");
+            },
+            roundtrip3: function () {
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).verifyRoundtrip("AAAAAAAA");
+            },
+            emptyString: function () {
+                var input = "";
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).verify(input, $_.Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests.f1);
+            },
+            zeroLengthArray: function () {
+                var input = "test";
+                var inputChars = Bridge.String.toCharArray(input, 0, input.length);
+                var result = Bridge.Convert.fromBase64CharArray(inputChars, 0, 0);
+    
+                Bridge.get(Bridge.Test.Assert).notNull(result);
+                Bridge.get(Bridge.Test.Assert).areEqual(0, result.length);
+            },
+            roundtripWithPadding1: function () {
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).verifyRoundtrip("abc=");
+            },
+            roundtripWithPadding2: function () {
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).verifyRoundtrip("BQYHCA==");
+            },
+            partialRoundtripWithPadding1: function () {
+                var input = "ab==";
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).verify(input, function (result) {
+                    Bridge.get(Bridge.Test.Assert).areEqual(1, result.length);
+    
+                    var roundtrippedString = Bridge.Convert.toBase64String(result, null, null, null);
+                    Bridge.get(Bridge.Test.Assert).areNotEqual(roundtrippedString, input);
+                    Bridge.get(Bridge.Test.Assert).areEqual(input.charCodeAt(0), roundtrippedString.charCodeAt(0));
+                });
+            },
+            partialRoundtripWithPadding2: function () {
+                var input = "789=";
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).verify(input, function (result) {
+                    Bridge.get(Bridge.Test.Assert).areEqual(2, result.length);
+    
+                    var roundtrippedString = Bridge.Convert.toBase64String(result, null, null, null);
+                    Bridge.get(Bridge.Test.Assert).areNotEqual(roundtrippedString, input);
+                    Bridge.get(Bridge.Test.Assert).areEqual(input.charCodeAt(0), roundtrippedString.charCodeAt(0));
+                    Bridge.get(Bridge.Test.Assert).areEqual(input.charCodeAt(1), roundtrippedString.charCodeAt(1));
+                });
+            },
+            parseWithWhitespace: function () {
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).verifyRoundtrip("abc= \t \r\n =", "bQ==");
+            },
+            roundtripWithWhitespace2: function () {
+                var input = "abc=  \t\n\t\r ";
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).verifyRoundtrip(input, input.trim());
+            },
+            roundtripWithWhitespace3: function () {
+                var input = "abc \r\n\t   =  \t\n\t\r ";
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).verifyRoundtrip(input, "abc=");
+            },
+            roundtripWithWhitespace4: function () {
+                var expected = "test";
+                var input = Bridge.String.alignString(Bridge.String.alignString(Bridge.String.insert(1, expected, Bridge.String.fromCharCount(32, 17)), 31, 32), -12, 32);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).verifyRoundtrip(input, expected, 3);
+            },
+            roundtripWithWhitespace5: function () {
+                var expected = "test";
+                var input = Bridge.String.alignString(Bridge.String.alignString(Bridge.String.insert(2, expected, Bridge.String.fromCharCount(9, 9)), 37, 9), -8, 9);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).verifyRoundtrip(input, expected, 3);
+            },
+            roundtripWithWhitespace6: function () {
+                var expected = "test";
+                var input = Bridge.String.alignString(Bridge.String.alignString(Bridge.String.insert(2, expected, Bridge.String.fromCharCount(13, 13)), 7, 13), -29, 13);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).verifyRoundtrip(input, expected, 3);
+            },
+            roundtripWithWhitespace7: function () {
+                var expected = "test";
+                var input = Bridge.String.alignString(Bridge.String.alignString(Bridge.String.insert(2, expected, Bridge.String.fromCharCount(10, 23)), 17, 10), -34, 10);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).verifyRoundtrip(input, expected, 3);
+            },
+            roundtripLargeString: function () {
+                var input = Bridge.String.fromCharCount(97, 10000);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).verifyRoundtrip(input, input);
+            },
+            invalidOffset: function () {
+                var input = "test";
+                var inputChars = Bridge.String.toCharArray(input, 0, input.length);
+    
+                Bridge.get(Bridge.Test.Assert).throws$1(function () {
+                    Bridge.Convert.fromBase64CharArray(inputChars, -1, inputChars.length);
+                }, $_.Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests.f2);
+                Bridge.get(Bridge.Test.Assert).throws$1(function () {
+                    Bridge.Convert.fromBase64CharArray(inputChars, inputChars.length, inputChars.length);
+                }, $_.Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests.f2);
+            },
+            invalidLength: function () {
+                var input = "test";
+                var inputChars = Bridge.String.toCharArray(input, 0, input.length);
+    
+                Bridge.get(Bridge.Test.Assert).throws$1(function () {
+                    Bridge.Convert.fromBase64CharArray(inputChars, 0, -1);
+                }, $_.Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests.f2);
+                Bridge.get(Bridge.Test.Assert).throws$1(function () {
+                    Bridge.Convert.fromBase64CharArray(inputChars, 0, inputChars.length + 1);
+                }, $_.Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests.f2);
+                Bridge.get(Bridge.Test.Assert).throws$1(function () {
+                    Bridge.Convert.fromBase64CharArray(inputChars, 1, inputChars.length);
+                }, $_.Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests.f2);
+    
+            },
+            invalidInput: function () {
+                Bridge.get(Bridge.Test.Assert).throws$1($_.Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests.f3, $_.Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests.f4);
+    
+    
+                // Input must be at least 4 characters long
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).verifyInvalidInput("No");
+    
+                // Length of input must be a multiple of 4
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).verifyInvalidInput("NoMore");
+    
+                // Input must not contain invalid characters
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).verifyInvalidInput("2-34");
+    
+                // Input must not contain 3 or more padding characters in a row
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).verifyInvalidInput("a===");
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).verifyInvalidInput("abc=====");
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).verifyInvalidInput("a===\r  \t  \n");
+    
+                // Input must not contain padding characters in the middle of the string
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).verifyInvalidInput("No=n");
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).verifyInvalidInput("abcdabc=abcd");
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).verifyInvalidInput("abcdab==abcd");
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).verifyInvalidInput("abcda===abcd");
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).verifyInvalidInput("abcd====abcd");
+            },
+            invalidCharactersInInput: function () {
+                var $t;
+                var invalidChars = [30122, 62608, 13917, 19498, 2473, 40845, 35988, 2281, 51246, 36372];
+    
+                $t = Bridge.getEnumerator(invalidChars);
+                while ($t.moveNext()) {
+                    var ch = $t.getCurrent();
+                    var builder = "abc";
+                    var addingStr = String.fromCharCode.apply(null, [ch]);
+                    Bridge.String.insert(1, builder, addingStr);
+                    Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).verifyInvalidInput(builder);
+                }
+            },
+            verifyRoundtrip: function (input, expected, expectedLengthBytes) {
+                if (expected === void 0) { expected = null; }
+                if (expectedLengthBytes === void 0) { expectedLengthBytes = null; }
+                if (!Bridge.hasValue(expected)) {
+                    expected = input;
+                }
+    
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).verify(input, function (result) {
+                    if (Bridge.Nullable.hasValue(expectedLengthBytes)) {
+                        Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Nullable.getValue(expectedLengthBytes), result.length);
+                    }
+                    Bridge.get(Bridge.Test.Assert).areEqual(expected, Bridge.Convert.toBase64String(result, null, null, null));
+                    Bridge.get(Bridge.Test.Assert).areEqual(expected, Bridge.Convert.toBase64String(result, 0, result.length, null));
+                });
+            },
+            verifyInvalidInput: function (input) {
+                var inputChars = Bridge.String.toCharArray(input, 0, input.length);
+    
+                Bridge.get(Bridge.Test.Assert).throws$1(function () {
+                    Bridge.Convert.fromBase64CharArray(inputChars, 0, inputChars.length);
+                }, $_.Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests.f5);
+                Bridge.get(Bridge.Test.Assert).throws$1(function () {
+                    Bridge.Convert.fromBase64String(input);
+                }, $_.Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests.f5);
+    
+            },
+            verify: function (input, action) {
+                if (action === void 0) { action = null; }
+                if (Bridge.hasValue(action)) {
+                    action(Bridge.Convert.fromBase64CharArray(Bridge.String.toCharArray(input, 0, input.length), 0, input.length));
+                    action(Bridge.Convert.fromBase64String(input));
+                }
+            }
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests", $_)
+    
+    Bridge.apply($_.Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests, {
+        f1: function (result) {
+            Bridge.get(Bridge.Test.Assert).notNull(result);
+            Bridge.get(Bridge.Test.Assert).areEqual(0, result.length);
+        },
+        f2: function (err) {
+            return Bridge.is(err, Bridge.ArgumentOutOfRangeException);
+        },
+        f3: function () {
+            Bridge.Convert.fromBase64CharArray(null, 0, 3);
+        },
+        f4: function (err) {
+            return Bridge.is(err, Bridge.ArgumentNullException);
+        },
+        f5: function (err) {
+            return Bridge.is(err, Bridge.FormatException);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests', {
+        statics: {
+            validOffsetIn: function () {
+                var input = "test";
+                var inputBytes = Bridge.Convert.fromBase64String(input);
+                var resultChars = Bridge.Array.init(4, function (){
+                    return new Bridge.Int();
+                });
+                var fillCharCount = Bridge.Convert.toBase64CharArray(inputBytes, 0, inputBytes.length - 1, resultChars, 0, null);
+                Bridge.get(Bridge.Test.Assert).areEqual(input.length, fillCharCount);
+            },
+            shortInputArray: function () {
+                // Regression test for bug where a short input array caused an exception to be thrown
+                var inputBuffer = [Bridge.cast(97, Bridge.Int), Bridge.cast(98, Bridge.Int), Bridge.cast(99, Bridge.Int)];
+                var ouputBuffer = Bridge.Array.init(4, function (){
+                    return new Bridge.Int();
+                });
+                var c1 = Bridge.Convert.toBase64CharArray(inputBuffer, 0, 3, ouputBuffer, 0, null);
+                Bridge.get(Bridge.Test.Assert).areEqual(4, c1);
+    
+                var c2 = Bridge.Convert.toBase64CharArray(inputBuffer, 0, 2, ouputBuffer, 0, null);
+                Bridge.get(Bridge.Test.Assert).areEqual(4, c2);
+    
+            },
+            validOffsetOut: function () {
+                // Regression test for bug where offsetOut parameter was ignored
+                var outputBuffer = Bridge.String.toCharArray(("........"), 0, ("........").length);
+                var inputBuffer = Bridge.Array.init(6, 0);
+                for (var i = 0; i < inputBuffer.length; inputBuffer[i] = Bridge.cast(i++, Bridge.Int)) {
+                    ;
+                }
+    
+                // Convert the first half of the byte array, write to the first half of the char array
+                var c = Bridge.Convert.toBase64CharArray(inputBuffer, 0, 3, outputBuffer, 0, null);
+                Bridge.get(Bridge.Test.Assert).areEqual(4, c);
+                Bridge.get(Bridge.Test.Assert).areEqual("AAEC....", String.fromCharCode.apply(null, outputBuffer));
+    
+                // Convert the second half of the byte array, write to the second half of the char array
+                c = Bridge.Convert.toBase64CharArray(inputBuffer, 3, 3, outputBuffer, 4, null);
+                Bridge.get(Bridge.Test.Assert).areEqual(4, c);
+                Bridge.get(Bridge.Test.Assert).areEqual("AAECAwQF", String.fromCharCode.apply(null, outputBuffer));
+            },
+            invalidInputBuffer: function () {
+                Bridge.get(Bridge.Test.Assert).throws$1($_.Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests.f1, $_.Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests.f2);
+            },
+            invalidOutputBuffer: function () {
+                var inputChars = Bridge.String.toCharArray(("test"), 0, ("test").length);
+                var inputBytes = Bridge.Convert.fromBase64CharArray(inputChars, 0, inputChars.length);
+                Bridge.get(Bridge.Test.Assert).throws$1(function () {
+                    Bridge.Convert.toBase64CharArray(inputBytes, 0, inputBytes.length, null, 0, null);
+                }, $_.Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests.f2);
+            },
+            invalidOffsetIn: function () {
+                var inputChars = Bridge.String.toCharArray(("test"), 0, ("test").length);
+                var inputBytes = Bridge.Convert.fromBase64CharArray(inputChars, 0, inputChars.length);
+                var outputBuffer = Bridge.Array.init(4, function (){
+                    return new Bridge.Int();
+                });
+    
+                Bridge.get(Bridge.Test.Assert).throws$1(function () {
+                    Bridge.Convert.toBase64CharArray(inputBytes, -1, inputBytes.length, outputBuffer, 0, null);
+                }, $_.Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests.f3);
+                Bridge.get(Bridge.Test.Assert).throws$1(function () {
+                    Bridge.Convert.toBase64CharArray(inputBytes, inputBytes.length, inputBytes.length, outputBuffer, 0, null);
+                }, $_.Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests.f3);
+            },
+            invalidOffsetOut: function () {
+                var inputChars = Bridge.String.toCharArray(("test"), 0, ("test").length);
+                var inputBytes = Bridge.Convert.fromBase64CharArray(inputChars, 0, inputChars.length);
+                var outputBuffer = Bridge.Array.init(4, function (){
+                    return new Bridge.Int();
+                });
+    
+                Bridge.get(Bridge.Test.Assert).throws$1(function () {
+                    Bridge.Convert.toBase64CharArray(inputBytes, 0, inputBytes.length, outputBuffer, -1, null);
+                }, $_.Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests.f3);
+                Bridge.get(Bridge.Test.Assert).throws$1(function () {
+                    Bridge.Convert.toBase64CharArray(inputBytes, 0, inputBytes.length, outputBuffer, 1, null);
+                }, $_.Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests.f3);
+            },
+            invalidInputLength: function () {
+                var inputChars = Bridge.String.toCharArray(("test"), 0, ("test").length);
+                var inputBytes = Bridge.Convert.fromBase64CharArray(inputChars, 0, inputChars.length);
+                var outputBuffer = Bridge.Array.init(4, function (){
+                    return new Bridge.Int();
+                });
+    
+                Bridge.get(Bridge.Test.Assert).throws$1(function () {
+                    Bridge.Convert.toBase64CharArray(inputBytes, 0, -1, outputBuffer, 0, null);
+                }, $_.Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests.f3);
+                Bridge.get(Bridge.Test.Assert).throws$1(function () {
+                    Bridge.Convert.toBase64CharArray(inputBytes, 0, inputBytes.length + 1, outputBuffer, 0, null);
+                }, $_.Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests.f3);
+                Bridge.get(Bridge.Test.Assert).throws$1(function () {
+                    Bridge.Convert.toBase64CharArray(inputBytes, 1, inputBytes.length, outputBuffer, 0, null);
+                }, $_.Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests.f3);
+            }
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests", $_)
+    
+    Bridge.apply($_.Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests, {
+        f1: function () {
+            Bridge.Convert.toBase64CharArray(null, 0, 1, Bridge.Array.init(1, function (){
+                return new Bridge.Int();
+            }), 0, null);
+        },
+        f2: function (err) {
+            return Bridge.is(err, Bridge.ArgumentNullException);
+        },
+        f3: function (err) {
+            return Bridge.is(err, Bridge.ArgumentOutOfRangeException);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToBase64StringTests', {
+        statics: {
+            knownByteSequence: function () {
+                var inputBytes = Bridge.Array.init(4, 0);
+                for (var i = 0; i < 4; i++) {
+                    inputBytes[i] = Bridge.cast((i + 5), Bridge.Int);
+                }
+    
+                // The sequence of bits for this byte array is
+                // 00000101000001100000011100001000
+                // Encoding adds 16 bits of trailing bits to make this a multiple of 24 bits.
+                // |        +         +         +         +    
+                // 000001010000011000000111000010000000000000000000
+                // which is, (Interesting, how do we distinguish between '=' and 'A'?)
+                // 000001 010000 011000 000111 000010 000000 000000 000000
+                // B      Q      Y      H      C      A      =      =
+    
+                Bridge.get(Bridge.Test.Assert).areEqual("BQYHCA==", Bridge.Convert.toBase64String(inputBytes, null, null, null));
+            },
+            zeroLength: function () {
+                var inputBytes = Bridge.Convert.fromBase64String("test");
+                Bridge.get(Bridge.Test.Assert).areEqual("", Bridge.Convert.toBase64String(inputBytes, 0, 0, null));
+            },
+            invalidInputBuffer: function () {
+                Bridge.get(Bridge.Test.Assert).throws$1($_.Bridge.ClientTest.ConvertTests.ConvertToBase64StringTests.f1, $_.Bridge.ClientTest.ConvertTests.ConvertToBase64StringTests.f2);
+                Bridge.get(Bridge.Test.Assert).throws$1($_.Bridge.ClientTest.ConvertTests.ConvertToBase64StringTests.f3, $_.Bridge.ClientTest.ConvertTests.ConvertToBase64StringTests.f2);
+            },
+            invalidOffset: function () {
+                var inputBytes = Bridge.Convert.fromBase64String("test");
+    
+                Bridge.get(Bridge.Test.Assert).throws$1(function () {
+                    Bridge.Convert.toBase64String(inputBytes, -1, inputBytes.length, null);
+                }, $_.Bridge.ClientTest.ConvertTests.ConvertToBase64StringTests.f4);
+                Bridge.get(Bridge.Test.Assert).throws$1(function () {
+                    Bridge.Convert.toBase64String(inputBytes, inputBytes.length, inputBytes.length, null);
+                }, $_.Bridge.ClientTest.ConvertTests.ConvertToBase64StringTests.f4);
+            },
+            invalidLength: function () {
+                var inputBytes = Bridge.Convert.fromBase64String("test");
+    
+                Bridge.get(Bridge.Test.Assert).throws$1(function () {
+                    Bridge.Convert.toBase64String(inputBytes, 0, -1, null);
+                }, $_.Bridge.ClientTest.ConvertTests.ConvertToBase64StringTests.f4);
+                Bridge.get(Bridge.Test.Assert).throws$1(function () {
+                    Bridge.Convert.toBase64String(inputBytes, 0, inputBytes.length + 1, null);
+                }, $_.Bridge.ClientTest.ConvertTests.ConvertToBase64StringTests.f4);
+                Bridge.get(Bridge.Test.Assert).throws$1(function () {
+                    Bridge.Convert.toBase64String(inputBytes, 1, inputBytes.length, null);
+                }, $_.Bridge.ClientTest.ConvertTests.ConvertToBase64StringTests.f4);
+            }
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.ConvertTests.ConvertToBase64StringTests", $_)
+    
+    Bridge.apply($_.Bridge.ClientTest.ConvertTests.ConvertToBase64StringTests, {
+        f1: function () {
+            Bridge.Convert.toBase64String(null, null, null, null);
+        },
+        f2: function (err) {
+            return Bridge.is(err, Bridge.ArgumentNullException);
+        },
+        f3: function () {
+            Bridge.Convert.toBase64String(null, 0, 0, null);
+        },
+        f4: function (err) {
+            return Bridge.is(err, Bridge.ArgumentOutOfRangeException);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToStringTests', {
+        statics: {
+            fromBoxedObject: function () {
+                var testValues = [true, false, 0, Bridge.cast(100, Bridge.Int), 255, Bridge.Decimal.Zero, Bridge.Decimal.One, Bridge.Decimal.MinusOne, Bridge.Decimal.MaxValue, Bridge.Decimal.MinValue, Bridge.Decimal("1.234567890123456789012345678", Bridge.NumberFormatInfo.invariantInfo), Bridge.Decimal("1234.56", Bridge.NumberFormatInfo.invariantInfo), Bridge.Decimal("-1234.56", Bridge.NumberFormatInfo.invariantInfo), -12.2364, -12.236465923406483, -1.7753E-83, 1.2345E+235, 120.0, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, Number.NaN, -32768, 0, 32767, -2147483648, 0, 2147483647, -9007199254740991, Bridge.cast(0, Bridge.Int), 9007199254740991, -128, Bridge.cast(0, Bridge.Int), 127, -12.2364, 0.0, 120.0, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, Number.NaN, 0, Bridge.cast(100, Bridge.Int), 65535, 0, Bridge.cast(100, Bridge.Int), 4294967295, 0, Bridge.cast(100, Bridge.Int), 9007199254740991];
+    
+                var expectedValues = ["True", "False", "0", "100", "255", "0", "1", "-1", "79228162514264337593543950335", "-79228162514264337593543950335", "1.234567890123456789012345678", "1234.56", "-1234.56", "-12.2364", "-12.2364659234065", "-1.7753e-83", "1.2345e+235", "120", "-Infinity", "Infinity", "NaN", "-32768", "0", "32767", "-2147483648", "0", "2147483647", "-9007199254740991", "0", "9007199254740991", "-128", "0", "127", "-12.2364", "0", "120", "-Infinity", "Infinity", "NaN", "0", "100", "65535", "0", "100", "4294967295", "0", "100", "9007199254740991"];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i].toLowerCase(), Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.invariantInfo).toLowerCase());
+                }
+            },
+            fromObject: function () {
+                Bridge.get(Bridge.Test.Assert).areEqual("Bridge.ClientTest.ConvertTests.ConvertToStringTests", Bridge.Convert.toString(new Bridge.ClientTest.ConvertTests.ConvertToStringTests(), null));
+            },
+            fromDateTime: function () {
+                var testValues = [new Date(2000, 8 - 1, 15, 16, 59, 59), new Date(1901, 1 - 1, 1, 1, 1, 1)];
+                var expectedValues = ["08/15/2000 16:59:59", "01/01/1901 01:01:01"];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Date.format(testValues[i]), Bridge.Convert.toString(testValues[i], null));
+                    Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], Bridge.Convert.toString(testValues[i], Bridge.DateTimeFormatInfo.invariantInfo));
+                }
+            },
+            fromChar: function () {
+                var testValues = [97, 65, 64, 10];
+                var expectedValues = ["a", "A", "@", "\n"];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], Bridge.Convert.toString(testValues[i], null, 4));
+                    Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], Bridge.Convert.toString(testValues[i], Bridge.get(Bridge.CultureInfo).invariantCulture, 4));
+                }
+            },
+            fromByteBase2: function () {
+                var testValues = [0, 100, 255];
+                var expectedValues = ["0", "1100100", "11111111"];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], Bridge.Convert.toStringInBase(testValues[i], 2, 6));
+                }
+            },
+            fromByteBase8: function () {
+                var testValues = [0, 100, 255];
+                var expectedValues = ["0", "144", "377"];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], Bridge.Convert.toStringInBase(testValues[i], 8, 6));
+                }
+            },
+            fromByteBase10: function () {
+                var testValues = [0, 100, 255];
+                var expectedValues = ["0", "100", "255"];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], Bridge.Convert.toStringInBase(testValues[i], 10, 6));
+                }
+            },
+            fromByteBase16: function () {
+                var testValues = [0, 100, 255];
+                var expectedValues = ["0", "64", "ff"];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], Bridge.Convert.toStringInBase(testValues[i], 16, 6));
+                }
+            },
+            fromByteInvalidBase: function () {
+                Bridge.get(Bridge.Test.Assert).throws$1($_.Bridge.ClientTest.ConvertTests.ConvertToStringTests.f1, $_.Bridge.ClientTest.ConvertTests.ConvertToStringTests.f2);
+            },
+            fromInt16Base2: function () {
+                var testValues = [-32768, 0, 32767];
+                var expectedValues = ["1000000000000000", "0", "111111111111111"];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], Bridge.Convert.toStringInBase(testValues[i], 2, 7));
+                }
+            },
+            fromInt16Base8: function () {
+                var testValues = [-32768, 0, 32767];
+                var expectedValues = ["100000", "0", "77777"];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], Bridge.Convert.toStringInBase(testValues[i], 8, 7));
+                }
+            },
+            fromInt16Base10: function () {
+                var testValues = [-32768, 0, 32767];
+                var expectedValues = ["-32768", "0", "32767"];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], Bridge.Convert.toStringInBase(testValues[i], 10, 7));
+                }
+            },
+            fromInt16Base16: function () {
+                var testValues = [-32768, 0, 32767];
+                var expectedValues = ["8000", "0", "7fff"];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], Bridge.Convert.toStringInBase(testValues[i], 16, 7));
+                }
+            },
+            fromInt16InvalidBase: function () {
+                Bridge.get(Bridge.Test.Assert).throws$1($_.Bridge.ClientTest.ConvertTests.ConvertToStringTests.f3, $_.Bridge.ClientTest.ConvertTests.ConvertToStringTests.f2);
+            },
+            fromInt32Base2: function () {
+                var testValues = [-2147483648, 0, 2147483647];
+                var expectedValues = ["10000000000000000000000000000000", "0", "1111111111111111111111111111111"];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], Bridge.Convert.toStringInBase(testValues[i], 2, 9));
+                }
+            },
+            fromInt32Base8: function () {
+                var testValues = [-2147483648, 0, 2147483647];
+                var expectedValues = ["20000000000", "0", "17777777777"];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], Bridge.Convert.toStringInBase(testValues[i], 8, 9));
+                }
+            },
+            fromInt32Base10: function () {
+                var testValues = [-2147483648, 0, 2147483647];
+                var expectedValues = ["-2147483648", "0", "2147483647"];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], Bridge.Convert.toStringInBase(testValues[i], 10, 9));
+                }
+            },
+            fromInt32Base16: function () {
+                var testValues = [-2147483648, 0, 2147483647];
+                var expectedValues = ["80000000", "0", "7fffffff"];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], Bridge.Convert.toStringInBase(testValues[i], 16, 9));
+                }
+            },
+            fromInt32InvalidBase: function () {
+                Bridge.get(Bridge.Test.Assert).throws$1($_.Bridge.ClientTest.ConvertTests.ConvertToStringTests.f4, $_.Bridge.ClientTest.ConvertTests.ConvertToStringTests.f2);
+            },
+            fromInt64Base2: function () {
+                var testValues = [-2147483648, 0, 2147483647];
+                var expectedValues = ["10000000000000000000000000000000", "0", "1111111111111111111111111111111"];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], Bridge.Convert.toStringInBase(testValues[i], 2, 11));
+                }
+            },
+            fromInt64Base8: function () {
+                var testValues = [-2147483648, 0, 2147483647];
+                var expectedValues = ["20000000000", "0", "17777777777"];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], Bridge.Convert.toStringInBase(testValues[i], 8, 11));
+                }
+            },
+            fromInt64Base10: function () {
+                var minSafeValue = -9007199254740991; // Number.MAX_SAFE_INTEGER
+                var maxSafeValue = 9007199254740991; // Number.MAX_SAFE_INTEGER
+                var testValues = [minSafeValue, 0, maxSafeValue];
+                var expectedValues = ["-9007199254740991", "0", "9007199254740991"];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], Bridge.Convert.toStringInBase(testValues[i], 10, 11));
+                }
+            },
+            fromInt64Base16: function () {
+                var testValues = [-2147483648, 0, 2147483647];
+                var expectedValues = ["80000000", "0", "7fffffff"];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], Bridge.Convert.toStringInBase(testValues[i], 16, 11));
+                }
+            },
+            fromInt64InvalidBase: function () {
+                Bridge.get(Bridge.Test.Assert).throws$1($_.Bridge.ClientTest.ConvertTests.ConvertToStringTests.f5, $_.Bridge.ClientTest.ConvertTests.ConvertToStringTests.f2);
+            },
+            fromBoolean: function () {
+                var testValues = [true, false];
+                var expectedValues = ["True", "False"];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    var expected = expectedValues[i];
+                    var actual = Bridge.Convert.toString(testValues[i], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(expected, actual);
+                    actual = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
+                    Bridge.get(Bridge.Test.Assert).areEqual(expected, actual);
+                }
+            },
+            fromSByte: function () {
+                var testValues = [-128, -1, 0, 1, 127];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    var result = Bridge.Convert.toString(testValues[i], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(testValues[i].toString(), result);
+                    result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
+                    Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
+                }
+            },
+            fromByte: function () {
+                var testValues = [0, 0, 1, 100, 255];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    var result = Bridge.Convert.toString(testValues[i], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(testValues[i].toString(), result);
+                    result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
+                    Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
+                }
+            },
+            fromInt16Array: function () {
+                var testValues = [-32768, -1000, -1, 0, 1, 1000, 32767];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    var result = Bridge.Convert.toString(testValues[i], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(testValues[i].toString(), result);
+                    result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
+                    Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
+                }
+            },
+            fromUInt16Array: function () {
+                var testValues = [0, 0, 1, 1000, 65535];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    var result = Bridge.Convert.toString(testValues[i], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(testValues[i].toString(), result);
+                    result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
+                    Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
+                }
+            },
+            fromInt32Array: function () {
+                var testValues = [-2147483648, -1000, -1, 0, 1, 1000, 2147483647];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    var result = Bridge.Convert.toString(testValues[i], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(testValues[i].toString(), result);
+                    result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
+                    Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
+                }
+            },
+            fromUInt32Array: function () {
+                var testValues = [0, 0, 1, 1000, 4294967295];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    var result = Bridge.Convert.toString(testValues[i], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(testValues[i].toString(), result);
+                    result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
+                    Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
+                }
+            },
+            fromInt64Array: function () {
+                var testValues = [-9007199254740991, -1000, -1, 0, 1, 1000, 9007199254740991];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    var result = Bridge.Convert.toString(testValues[i], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(testValues[i].toString(), result);
+                    result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
+                    Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
+                }
+            },
+            fromUInt64Array: function () {
+                var testValues = [0, 0, 1, 1000, 9007199254740991];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    var result = Bridge.Convert.toString(testValues[i], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(testValues[i].toString(), result);
+                    result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
+                    Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
+                }
+            },
+            fromSingleArray: function () {
+                var testValues = [-3.40282347E+38, 0.0, 1.0, 1000.0, 3.40282347E+38, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, 1.401298E-45, Number.NaN];
+                var expectedValues1 = ["-3.40282347e+38", "0", "1", "1000", "3.40282347e+38", "-Infinity", "Infinity", "1.401298e-45", "NaN"];
+                var expectedValues2 = ["-3.40282347e+38", "0", "1", "1000", "3.40282347e+38", "-Infinity", "Infinity", "1.401298e-45", "NaN"];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    var result = Bridge.Convert.toString(testValues[i], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(expectedValues1[i], result);
+    
+                    result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
+                    Bridge.get(Bridge.Test.Assert).areEqual(expectedValues2[i], result);
+                }
+            },
+            fromDoubleArray: function () {
+                var testValues = [-Number.MAX_VALUE, 0.0, 1.0, 1000.0, Number.MAX_VALUE, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, 4.94065645841247E-324, Number.NaN];
+                var expectedValues = ["-1.7976931348623157e+308", "0", "1", "1000", "1.7976931348623157e+308", "-Infinity", "Infinity", "5e-324", "NaN"];
+    
+                // Vanila Test Cases
+                for (var i = 0; i < testValues.length; i++) {
+                    var result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
+                    Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], result);
+                }
+            },
+            fromDecimalArray: function () {
+                var testValues = [Bridge.Decimal.MinValue, Bridge.Decimal("-1.234567890123456789012345678", Bridge.NumberFormatInfo.invariantInfo), Bridge.Decimal.lift(0.0), Bridge.Decimal.lift(1.0), Bridge.Decimal.lift(1000.0), Bridge.Decimal.MaxValue, Bridge.Decimal.One, Bridge.Decimal.Zero, Bridge.Decimal.MinusOne];
+                var expectedValues = ["-79228162514264337593543950335", "-1.234567890123456789012345678", "0", "1", "1000", "79228162514264337593543950335", "1", "0", "-1"];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    var result = Bridge.Convert.toString(testValues[i], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], result);
+                }
+            },
+            fromDateTimeArray: function () {
+                var testValues = [Bridge.Date.parse("08/15/2000 16:59:59", Bridge.DateTimeFormatInfo.invariantInfo), Bridge.Date.parse("01/01/0001 01:01:01", Bridge.DateTimeFormatInfo.invariantInfo)];
+    
+                var formatProvider = Bridge.DateTimeFormatInfo.invariantInfo;
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    var result = Bridge.Convert.toString(testValues[i], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Date.format(testValues[i]), result);
+                    result = Bridge.Convert.toString(testValues[i], formatProvider);
+                    var expected = Bridge.Date.format(testValues[i], null, formatProvider);
+                    Bridge.get(Bridge.Test.Assert).areEqual(expected, result);
+                }
+            },
+            fromString: function () {
+                var testValues = ["Hello", " ", "", "\u0000"];
+    
+                for (var i = 0; i < testValues.length; i++) {
+                    var result = Bridge.Convert.toString(testValues[i], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(testValues[i].toString(), result);
+                    result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
+                    Bridge.get(Bridge.Test.Assert).areEqual(testValues[i].toString(), result);
+                }
+            },
+            fromIFormattable: function () {
+                var foo = new Bridge.ClientTest.ConvertTests.ConvertToStringTests.FooFormattable(3);
+                var result = Bridge.Convert.toString(foo, null);
+                Bridge.get(Bridge.Test.Assert).areEqual("FooFormattable: 3", result);
+                result = Bridge.Convert.toString(foo, Bridge.NumberFormatInfo.currentInfo);
+                Bridge.get(Bridge.Test.Assert).areEqual("Bridge.NumberFormatInfo: 3", result);
+    
+                foo = null;
+                result = Bridge.Convert.toString(foo, Bridge.NumberFormatInfo.currentInfo);
+                Bridge.get(Bridge.Test.Assert).areEqual("", result);
+            },
+            fromNonIConvertible: function () {
+                var foo = new Bridge.ClientTest.ConvertTests.ConvertToStringTests.Foo(3);
+                var result = Bridge.Convert.toString(foo, null);
+                Bridge.get(Bridge.Test.Assert).areEqual("Bridge.ClientTest.ConvertTests.ConvertToStringTests.Foo", result);
+                result = Bridge.Convert.toString(foo, Bridge.NumberFormatInfo.currentInfo);
+                Bridge.get(Bridge.Test.Assert).areEqual("Bridge.ClientTest.ConvertTests.ConvertToStringTests.Foo", result);
+    
+                foo = null;
+                result = Bridge.Convert.toString(foo, Bridge.NumberFormatInfo.currentInfo);
+                Bridge.get(Bridge.Test.Assert).areEqual("", result);
+            }
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.ConvertTests.ConvertToStringTests", $_)
+    
+    Bridge.apply($_.Bridge.ClientTest.ConvertTests.ConvertToStringTests, {
+        f1: function () {
+            Bridge.Convert.toStringInBase(255, 13, 6);
+        },
+        f2: function (err) {
+            return Bridge.is(err, Bridge.ArgumentException);
+        },
+        f3: function () {
+            Bridge.Convert.toStringInBase(32767, 0, 7);
+        },
+        f4: function () {
+            Bridge.Convert.toStringInBase(2147483647, 9, 9);
+        },
+        f5: function () {
+            Bridge.Convert.toStringInBase(9007199254740991, 1, 11);
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.CultureInfoTests', {
         typePropertiesAreCorrect: function () {
             var culture = Bridge.get(Bridge.CultureInfo).invariantCulture;
@@ -11425,6 +12635,37 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Exceptions.OutOfMemoryExceptionTests', {
+        statics: {
+            DefaultMessage: "Insufficient memory to continue the execution of the program."
+        },
+        typePropertiesAreCorrect: function () {
+            Bridge.get(Bridge.Test.Assert).areEqual$1("Bridge.OutOfMemoryException", Bridge.getTypeName(Bridge.OutOfMemoryException), "Name");
+            var d = new Bridge.OutOfMemoryException();
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(d, Bridge.OutOfMemoryException), "is OutOfMemoryException");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(d, Bridge.Exception), "is Exception");
+        },
+        defaultConstructorWorks: function () {
+            var ex = new Bridge.OutOfMemoryException();
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.OutOfMemoryException), "is OutOfMemoryException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(null, ex.getInnerException(), "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Bridge.ClientTest.Exceptions.OutOfMemoryExceptionTests).DefaultMessage, ex.getMessage());
+        },
+        constructorWithMessageWorks: function () {
+            var ex = new Bridge.OutOfMemoryException("The message");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.OutOfMemoryException), "is OutOfMemoryException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(null, ex.getInnerException(), "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual("The message", ex.getMessage());
+        },
+        constructorWithMessageAndInnerExceptionWorks: function () {
+            var inner = new Bridge.Exception("a");
+            var ex = new Bridge.OutOfMemoryException("The message", inner);
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.OutOfMemoryException), "is OutOfMemoryException");
+            Bridge.get(Bridge.Test.Assert).true$1(ex.getInnerException() === inner, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual("The message", ex.getMessage());
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Exceptions.OverflowExceptionTests', {
         typePropertiesAreCorrect: function () {
             Bridge.get(Bridge.Test.Assert).areEqual$1("Bridge.OverflowException", Bridge.getTypeName(Bridge.OverflowException), "Name");
@@ -11507,6 +12748,37 @@
             var ex = new Bridge.RankException("The message");
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.RankException), "is RankException");
             Bridge.get(Bridge.Test.Assert).areEqual$1(null, ex.getInnerException(), "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual("The message", ex.getMessage());
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Exceptions.SystemExceptionTests', {
+        statics: {
+            DefaultMessage: "System error."
+        },
+        typePropertiesAreCorrect: function () {
+            Bridge.get(Bridge.Test.Assert).areEqual$1("Bridge.SystemException", Bridge.getTypeName(Bridge.SystemException), "Name");
+            var d = new Bridge.SystemException();
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(d, Bridge.SystemException), "is SystemException");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(d, Bridge.Exception), "is Exception");
+        },
+        defaultConstructorWorks: function () {
+            var ex = new Bridge.SystemException();
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.SystemException), "is SystemException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(null, ex.getInnerException(), "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Bridge.ClientTest.Exceptions.SystemExceptionTests).DefaultMessage, ex.getMessage());
+        },
+        constructorWithMessageWorks: function () {
+            var ex = new Bridge.SystemException("The message");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.SystemException), "is SystemException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(null, ex.getInnerException(), "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual("The message", ex.getMessage());
+        },
+        constructorWithMessageAndInnerExceptionWorks: function () {
+            var inner = new Bridge.Exception("a");
+            var ex = new Bridge.SystemException("The message", inner);
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.SystemException), "is SystemException");
+            Bridge.get(Bridge.Test.Assert).true$1(ex.getInnerException() === inner, "InnerException");
             Bridge.get(Bridge.Test.Assert).areEqual("The message", ex.getMessage());
         }
     });
@@ -20517,6 +21789,1671 @@
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge883_1', {
         inherits: [Bridge.ClientTest.BridgeIssues.Bridge883_2]
+    });
+    
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToBooleanTests', {
+        inherits: [Bridge.ClientTest.ConvertTests.ConvertTestBase$1(Boolean)],
+        fromBoolean: function () {
+            var testValues = [true, false];
+            this.verifyViaObj(Boolean, Bridge.Convert.toBoolean, testValues, testValues);
+        },
+        fromByte: function () {
+            var testValues = [0, 255];
+            var expectedValues = [false, true];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toBoolean, testValues, expectedValues);
+        },
+        fromDecimal: function () {
+            var testValues = [Bridge.Decimal.MaxValue, Bridge.Decimal.MinValue, Bridge.Decimal.One, Bridge.Decimal.Zero, Bridge.Decimal(0.0), Bridge.Decimal(0.0), Bridge.Decimal(1.5), Bridge.Decimal(-1.5), Bridge.Decimal(500.0)];
+            var expectedValues = [true, true, true, false, false, false, true, true, true];
+            this.verifyViaObj(Bridge.Decimal, Bridge.Convert.toBoolean, testValues, expectedValues);
+        },
+        fromDouble: function () {
+            var testValues = [4.94065645841247E-324, Number.MAX_VALUE, Number.MIN_VALUE, Number.NaN, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, 0.0, 0.0, 1.5, -1.5, 1.5E+300, 0.0, -1.7E+300, -1.69958582169389E-320];
+            var expectedValues = [true, true, true, true, true, true, false, false, true, true, true, false, true, true];
+            this.verifyViaObj(Number, Bridge.Convert.toBoolean, testValues, expectedValues);
+        },
+        fromInt16: function () {
+            var testValues = [-32768, 32767, 0];
+            var expectedValues = [true, true, false];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toBoolean, testValues, expectedValues);
+        },
+        fromInt32: function () {
+            var testValues = [-2147483648, 2147483647, 0];
+            var expectedValues = [true, true, false];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toBoolean, testValues, expectedValues);
+        },
+        fromInt64: function () {
+            var testValues = [-9007199254740991, 9007199254740991, 0];
+            var expectedValues = [true, true, false];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toBoolean, testValues, expectedValues);
+        },
+        fromString: function () {
+            var testValues = [null, "True", "true ", " true", " true ", " false ", " false", "false ", "False"];
+            var expectedValues = [false, true, true, true, true, false, false, false, false];
+            this.verifyFromString(Bridge.Convert.toBoolean, Bridge.Convert.toBoolean, testValues, expectedValues);
+    
+            var invalidValues = ["Hello"];
+            this.verifyFromStringThrows(Bridge.FormatException, Bridge.Convert.toBoolean, Bridge.Convert.toBoolean, invalidValues);
+        },
+        fromObject: function () {
+            var testValues = [null];
+            var expectedValues = [false];
+            this.verifyFromObject(Bridge.Convert.toBoolean, Bridge.Convert.toBoolean, testValues, expectedValues);
+    
+            var invalidValues = [{ }, new Date()];
+            this.verifyFromObjectThrows(Bridge.InvalidCastException, Bridge.Convert.toBoolean, Bridge.Convert.toBoolean, invalidValues);
+        },
+        fromSByte: function () {
+            var testValues = [0, 127, -128];
+            var expectedValues = [false, true, true];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toBoolean, testValues, expectedValues);
+        },
+        fromSingle: function () {
+            var testValues = [1.401298E-45, 3.40282347E+38, -3.40282347E+38, Number.NaN, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, 0.0, 0.0, 1.5, -1.5, 1.5E+30, 0.0, -1.7E+30, -1.699999E-40];
+            var expectedValues = [true, true, true, true, true, true, false, false, true, true, true, false, true, true];
+            this.verifyViaObj(Number, Bridge.Convert.toBoolean, testValues, expectedValues);
+        },
+        fromUInt16: function () {
+            var testValues = [0, 65535];
+            var expectedValues = [false, true];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toBoolean, testValues, expectedValues);
+        },
+        fromUInt32: function () {
+            var testValues = [0, 4294967295];
+            var expectedValues = [false, true];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toBoolean, testValues, expectedValues);
+        },
+        fromUInt64: function () {
+            var testValues = [0, 9007199254740991];
+            var expectedValues = [false, true];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toBoolean, testValues, expectedValues);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToByteTests', {
+        inherits: [Bridge.ClientTest.ConvertTests.ConvertTestBase$1(Bridge.Int)],
+        fromBoolean: function () {
+            var testValues = [true, false];
+            var expectedValues = [1, 0];
+            this.verifyViaObj(Boolean, Bridge.Convert.toByte, testValues, expectedValues);
+        },
+        fromChar: function () {
+            var testValues = [65, 0];
+            var expectedValues = [Bridge.cast(65, Bridge.Int), Bridge.cast(0, Bridge.Int)];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toByte, testValues, expectedValues);
+    
+            var overflowValues = [65535];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toByte, overflowValues);
+        },
+        fromDecimal: function () {
+            var testValues = [Bridge.Decimal(255), Bridge.Decimal(0), Bridge.Decimal(254.01), Bridge.Decimal(254.9)];
+            var expectedValues = [255, 0, 254, 255];
+            this.verifyViaObj(Bridge.Decimal, Bridge.Convert.toByte, testValues, expectedValues);
+    
+            var overflowValues = [Bridge.Decimal.MinValue, Bridge.Decimal.MaxValue];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Decimal, Bridge.Convert.toByte, overflowValues);
+        },
+        fromDouble: function () {
+            var testValues = [0, 255, 100.0, 254.9, 255.2];
+            var expectedValues = [0, 255, 100, 255, 255];
+            this.verifyViaObj(Number, Bridge.Convert.toByte, testValues, expectedValues);
+    
+            var overflowValues = [-Number.MAX_VALUE, Number.MAX_VALUE];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Number, Bridge.Convert.toByte, overflowValues);
+        },
+        fromInt16: function () {
+            var testValues = [0, 255, 10, 2];
+            var expectedValues = [0, 255, 10, 2];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toByte, testValues, expectedValues);
+    
+            var overflowValues = [-32768, 32767];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toByte, overflowValues);
+        },
+        fromInt32: function () {
+            var testValues = [0, 255, 10];
+            var expectedValues = [0, 255, 10];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toByte, testValues, expectedValues);
+    
+            var overflowValues = [-2147483648, 2147483647];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toByte, overflowValues);
+        },
+        fromInt64: function () {
+            var testValues = [0, 255, 10];
+            var expectedValues = [0, 255, 10];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toByte, testValues, expectedValues);
+    
+            var overflowValues = [-9007199254740991, 9007199254740991];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toByte, overflowValues);
+        },
+        fromObject: function () {
+            var testValues = [null];
+            var expectedValues = [0];
+            this.verifyFromObject(Bridge.Convert.toByte, Bridge.Convert.toByte, testValues, expectedValues);
+    
+            var invalidValues = [{ }, new Date()];
+            this.verifyFromObjectThrows(Bridge.InvalidCastException, Bridge.Convert.toByte, Bridge.Convert.toByte, invalidValues);
+        },
+        fromSByte: function () {
+            var testValues = [0, 10, 127];
+            var expectedValues = [0, 10, Bridge.cast(127, Bridge.Int)];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toByte, testValues, expectedValues);
+    
+            var overflowValues = [-128];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toByte, overflowValues);
+        },
+        fromSingle: function () {
+            var testValues = [255, 0, 254.01, 254.9];
+            var expectedValues = [255, 0, 254, 255];
+            this.verifyViaObj(Number, Bridge.Convert.toByte, testValues, expectedValues);
+    
+            var overflowValues = [-3.40282347E+38, 3.40282347E+38];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Number, Bridge.Convert.toByte, overflowValues);
+        },
+        fromString: function () {
+            var byteMinValue = 0;
+            var byteMaxValue = 255;
+            var intMinValue = -2147483648;
+            var intMaxValue = 2147483647;
+    
+            var testValues = [byteMaxValue.toString(), byteMinValue.toString(), "0", "100", null];
+            var expectedValues = [byteMaxValue, byteMinValue, 0, 100, 0];
+            this.verifyFromString(Bridge.Convert.toByte, Bridge.Convert.toByte, testValues, expectedValues);
+    
+            var overflowValues = [intMinValue.toString(), intMaxValue.toString()];
+            this.verifyFromStringThrows(Bridge.OverflowException, Bridge.Convert.toByte, Bridge.Convert.toByte, overflowValues);
+    
+            var formatExceptionValues = ["abba"];
+            this.verifyFromStringThrows(Bridge.FormatException, Bridge.Convert.toByte, Bridge.Convert.toByte, formatExceptionValues);
+        },
+        fromStringWithBase: function () {
+            var testValues = [null, null, null, null, "10", "100", "1011", "ff", "0xff", "77", "11", "11111111"];
+            var testBases = [10, 2, 8, 16, 10, 10, 2, 16, 16, 8, 2, 2];
+            var expectedValues = [0, 0, 0, 0, 10, 100, 11, 255, 255, 63, 3, 255];
+            this.verifyFromStringWithBase(Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToByteTests.Wrappers).convertFromStrWithBase, testValues, testBases, expectedValues);
+    
+            var overflowValues = ["256", "111111111", "ffffe", "7777777", "-1"];
+            var overflowBases = [10, 2, 16, 8, 10];
+            this.verifyFromStringWithBaseThrows(Bridge.OverflowException, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToByteTests.Wrappers).convertFromStrWithBase, overflowValues, overflowBases);
+    
+            var formatExceptionValues = ["fffg", "0xxfff", "8", "112", "!56"];
+            var formatExceptionBases = [16, 16, 8, 2, 10];
+            this.verifyFromStringWithBaseThrows(Bridge.FormatException, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToByteTests.Wrappers).convertFromStrWithBase, formatExceptionValues, formatExceptionBases);
+    
+            var argumentExceptionValues = [null];
+            var argumentExceptionBases = [11];
+            this.verifyFromStringWithBaseThrows(Bridge.ArgumentException, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToByteTests.Wrappers).convertFromStrWithBase, argumentExceptionValues, argumentExceptionBases);
+        },
+        fromUInt16: function () {
+            var testValues = [0, 255, 10, 100];
+            var expectedValues = [0, 255, 10, 100];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toByte, testValues, expectedValues);
+    
+            var overflowValues = [65535];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toByte, overflowValues);
+        },
+        fromUInt32: function () {
+            var testValues = [0, 255, 10, 100];
+            var expectedValues = [0, 255, 10, 100];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toByte, testValues, expectedValues);
+    
+            var overflowValues = [4294967295];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toByte, overflowValues);
+        },
+        fromUInt64: function () {
+            var testValues = [0, 255, 10, 100];
+            var expectedValues = [0, 255, 10, 100];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toByte, testValues, expectedValues);
+    
+            var overflowValues = [9007199254740991];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toByte, overflowValues);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToCharTests', {
+        inherits: [Bridge.ClientTest.ConvertTests.ConvertTestBase$1(Bridge.Int)],
+        fromByte: function () {
+            var testValues = [255, 0];
+            var expectedValues = [Bridge.cast(255, Bridge.Int), Bridge.cast(0, Bridge.Int)];
+            this.verify(Bridge.Int, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$1, testValues, expectedValues);
+        },
+        fromChar: function () {
+            var testValues = [65535, 0, 98];
+            var expectedValues = [65535, 0, 98];
+            this.verify(Bridge.Int, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$2, testValues, expectedValues);
+        },
+        fromDecimal: function () {
+            var invalidValues = [Bridge.Decimal(0.0), Bridge.Decimal.MinValue, Bridge.Decimal.MaxValue];
+            this.verifyThrows(Bridge.InvalidCastException, Bridge.Decimal, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$4, invalidValues);
+        },
+        fromDecimalViaObject: function () {
+            var invalidValues = [Bridge.Decimal(0.0), Bridge.Decimal.MinValue, Bridge.Decimal.MaxValue];
+            this.verifyFromObjectThrows(Bridge.InvalidCastException, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$9, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$10, invalidValues);
+        },
+        fromDouble: function () {
+            var invalidValues = [0.0, Number.MIN_VALUE, Number.MAX_VALUE];
+            this.verifyThrows(Bridge.InvalidCastException, Number, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$5, invalidValues);
+        },
+        fromDoubleViaObject: function () {
+            var invalidValues = [0.0, Number.MIN_VALUE, Number.MAX_VALUE];
+            this.verifyFromObjectThrows(Bridge.InvalidCastException, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$9, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$10, invalidValues);
+        },
+        fromInt16: function () {
+            var testValues = [32767, 0];
+            var expectedValues = [Bridge.cast(32767, Bridge.Int), 0];
+            this.verify(Bridge.Int, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$6, testValues, expectedValues);
+    
+            var overflowValues = [-32768, -1000];
+            this.verifyThrows(Bridge.OverflowException, Bridge.Int, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$6, overflowValues);
+        },
+        fromInt32: function () {
+            var testValues = [65535, 0];
+            var expectedValues = [65535, 0];
+            this.verify(Bridge.Int, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$7, testValues, expectedValues);
+    
+            var overflowValues = [-2147483648, 2147483647, 65536, -1000];
+            this.verifyThrows(Bridge.OverflowException, Bridge.Int, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$7, overflowValues);
+        },
+        fromInt64: function () {
+            var testValues = [0, 98, 65535];
+            var expectedValues = [0, 98, 65535];
+            this.verify(Bridge.Int, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$8, testValues, expectedValues);
+    
+            var overflowValues = [-9007199254740991, 9007199254740991, -1];
+            this.verifyThrows(Bridge.OverflowException, Bridge.Int, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$8, overflowValues);
+        },
+        fromObject: function () {
+            var testValues = [null];
+            var expectedValues = [0];
+            this.verify(Object, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$9, testValues, expectedValues);
+    
+            var invalidValues = [{ }, new Date()];
+            this.verifyThrows(Bridge.InvalidCastException, Object, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$9, invalidValues);
+        },
+        fromSByte: function () {
+            var testValues = [127, 0];
+            var expectedValues = [Bridge.cast(127, Bridge.Int), 0];
+            this.verify(Bridge.Int, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$11, testValues, expectedValues);
+    
+            var overflowValues = [-128, -100, -1];
+            this.verifyThrows(Bridge.OverflowException, Bridge.Int, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$11, overflowValues);
+        },
+        fromSingle: function () {
+            var invalidValues = [0.0, -3.40282347E+38, 3.40282347E+38];
+            this.verifyThrows(Bridge.InvalidCastException, Number, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$12, invalidValues);
+        },
+        fromSingleViaObject: function () {
+            var invalidValues = [0.0, -3.40282347E+38, 3.40282347E+38];
+            this.verifyFromObjectThrows(Bridge.InvalidCastException, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$9, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$10, invalidValues);
+        },
+        fromString: function () {
+            var testValues = ["a", "T", "z", "a"];
+            var expectedValues = [97, 84, 122, 97];
+            this.verifyFromString(Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$13, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$14, testValues, expectedValues);
+    
+            var formatExceptionValues = ["", "ab"];
+            this.verifyFromStringThrows(Bridge.FormatException, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$13, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$14, formatExceptionValues);
+            this.verifyFromStringThrows(Bridge.ArgumentNullException, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$13, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$14, [null]);
+        },
+        fromUInt16: function () {
+            var testValues = [0, 98, 65535];
+            var expectedValues = [0, 98, 65535];
+            this.verify(Bridge.Int, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$15, testValues, expectedValues);
+        },
+        fromUInt32: function () {
+            var testValues = [65535, 0];
+            var expectedValues = [Bridge.cast(65535, Bridge.Int), 0];
+            this.verify(Bridge.Int, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$16, testValues, expectedValues);
+    
+            var overflowValues = [4294967295];
+            this.verifyThrows(Bridge.OverflowException, Bridge.Int, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$16, overflowValues);
+        },
+        fromUInt64: function () {
+            var testValues = [0, 98, 65535];
+            var expectedValues = [0, 98, 65535];
+            this.verify(Bridge.Int, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$17, testValues, expectedValues);
+    
+            var overflowValues = [9007199254740991, 65536];
+            this.verifyThrows(Bridge.OverflowException, Bridge.Int, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToCharTests.Wrappers).convertToCharWrapper$17, overflowValues);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests', {
+        inherits: [Bridge.ClientTest.ConvertTests.ConvertTestBase$1(Date)],
+        statics: {
+            config: {
+                init: function () {
+                    this.s_dateTimeFormatInfo = new Bridge.DateTimeFormatInfo();
+                }
+            }
+        },
+        fromString: function () {
+            var expectedValues = [new Date(1999, 12 - 1, 31, 23, 59, 59), new Date(100, 1 - 1, 1, 0, 0, 0), new Date(2216, 2 - 1, 29, 0, 0, 0), new Date(1, 1 - 1, 1, 0, 0, 0)];
+    
+            var dateTimeFormat = Bridge.get(Bridge.CultureInfo).getCurrentCulture().dateTimeFormat;
+            var pattern = dateTimeFormat.longDatePattern + String.fromCharCode(32) + dateTimeFormat.longTimePattern;
+            var testValues = Bridge.Array.init(expectedValues.length, null);
+            for (var i = 0; i < expectedValues.length; i++) {
+                testValues[i] = Bridge.Date.format(expectedValues[i], pattern, dateTimeFormat);
+            }
+    
+            this.verifyFromString(Bridge.Convert.toDateTime, Bridge.Convert.toDateTime, testValues, expectedValues);
+            this.verifyFromObject(Bridge.Convert.toDateTime, Bridge.Convert.toDateTime, testValues, expectedValues);
+    
+            var formatExceptionValues = ["null", "20-5-14T00:00:00"];
+    
+            this.verifyFromStringThrows(Bridge.FormatException, Bridge.Convert.toDateTime, Bridge.Convert.toDateTime, formatExceptionValues);
+        },
+        fromStringWithCustomFormatProvider: function () {
+            var testValues = ["1999/12/31 11:59:59 PM", "2005/01/01 12:00:00 AM", "1492/02/29 12:00:00 AM", "1930/01/01 12:00:00 AM"];
+            var expectedValues = [new Date(1999, 12 - 1, 31, 23, 59, 59), new Date(2005, 1 - 1, 1, 0, 0, 0), new Date(1492, 2 - 1, 29, 0, 0, 0), new Date(1930, 1 - 1, 1, 0, 0, 0)];
+            Bridge.get(Bridge.Test.Assert).areEqual(expectedValues.length, testValues.length);
+    
+            for (var i = 0; i < testValues.length; i++) {
+                var result = Bridge.Convert.toDateTime(testValues[i], Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests).s_dateTimeFormatInfo);
+                Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], result);
+                result = Bridge.Convert.toDateTime(testValues[i], Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests).s_dateTimeFormatInfo);
+                Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], result);
+            }
+    
+            var minDate = Bridge.Convert.toDateTime(null, null);
+            Bridge.get(Bridge.Test.Assert).areEqual("Mon Jan 01 1", minDate.toDateString());
+        },
+        fromDateTime: function () {
+            var expectedValues = [new Date(1999, 12 - 1, 31, 23, 59, 59), new Date(100, 1 - 1, 1, 0, 0, 0), new Date(1492, 2 - 1, 29, 0, 0, 0), new Date(1, 1 - 1, 1, 0, 0, 0)];
+            for (var i = 0; i < expectedValues.length; i++) {
+                var result = Bridge.Convert.toDateTime(expectedValues[i], null);
+                Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], result);
+            }
+        },
+        fromObject: function () {
+            Bridge.get(Bridge.Test.Assert).throws$1($_.Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests.f1, $_.Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests.f2);
+            Bridge.get(Bridge.Test.Assert).throws$1($_.Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests.f3, $_.Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests.f2);
+        },
+        fromBoolean: function () {
+            Bridge.get(Bridge.Test.Assert).throws$1($_.Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests.f4, $_.Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests.f2);
+        },
+        fromChar: function () {
+            Bridge.get(Bridge.Test.Assert).throws$1($_.Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests.f5, $_.Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests.f2);
+        },
+        fromInt16: function () {
+            Bridge.get(Bridge.Test.Assert).throws$1($_.Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests.f6, $_.Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests.f2);
+        },
+        fromInt32: function () {
+            Bridge.get(Bridge.Test.Assert).throws$1($_.Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests.f7, $_.Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests.f2);
+        },
+        fromInt64: function () {
+            Bridge.get(Bridge.Test.Assert).throws$1($_.Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests.f6, $_.Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests.f2);
+        },
+        fromUInt16: function () {
+            Bridge.get(Bridge.Test.Assert).throws$1($_.Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests.f6, $_.Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests.f2);
+        },
+        fromUInt32: function () {
+            Bridge.get(Bridge.Test.Assert).throws$1($_.Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests.f6, $_.Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests.f2);
+        },
+        fromUInt64: function () {
+            Bridge.get(Bridge.Test.Assert).throws$1($_.Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests.f6, $_.Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests.f2);
+        },
+        fromSingle: function () {
+            Bridge.get(Bridge.Test.Assert).throws$1($_.Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests.f8, $_.Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests.f2);
+        },
+        fromDouble: function () {
+            Bridge.get(Bridge.Test.Assert).throws$1($_.Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests.f9, $_.Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests.f2);
+        },
+        fromDecimal: function () {
+            Bridge.get(Bridge.Test.Assert).throws$1($_.Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests.f10, $_.Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests.f2);
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests", $_)
+    
+    Bridge.apply($_.Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests, {
+        f1: function () {
+            Bridge.Convert.toDateTime({ }, null);
+        },
+        f2: function (err) {
+            return Bridge.is(err, Bridge.InvalidCastException);
+        },
+        f3: function () {
+            Bridge.Convert.toDateTime({ }, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests).s_dateTimeFormatInfo);
+        },
+        f4: function () {
+            Bridge.Convert.toDateTime(false, null);
+        },
+        f5: function () {
+            Bridge.Convert.toDateTime(97, null);
+        },
+        f6: function () {
+            Bridge.Convert.toDateTime(Bridge.cast(5, Bridge.Int), null);
+        },
+        f7: function () {
+            Bridge.Convert.toDateTime(5, null);
+        },
+        f8: function () {
+            Bridge.Convert.toDateTime(1.0, null);
+        },
+        f9: function () {
+            Bridge.Convert.toDateTime(1.1, null);
+        },
+        f10: function () {
+            Bridge.Convert.toDateTime(Bridge.Decimal(1.0), null);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToDecimalTests', {
+        inherits: [Bridge.ClientTest.ConvertTests.ConvertTestBase$1(Bridge.Decimal)],
+        fromBoolean: function () {
+            var testValues = [true, false];
+            var expectedValues = [Bridge.Decimal(1.0), Bridge.Decimal.Zero];
+            this.verifyViaObj(Boolean, Bridge.Convert.toDecimal, testValues, expectedValues);
+        },
+        fromByte: function () {
+            var testValues = [255, 0];
+            var expectedValues = [Bridge.Decimal(255), Bridge.Decimal(0)];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toDecimal, testValues, expectedValues);
+        },
+        fromDecimal: function () {
+            var testValues = [Bridge.Decimal.MaxValue, Bridge.Decimal.MinValue, Bridge.Decimal(0)];
+            var expectedValues = [Bridge.Decimal.MaxValue, Bridge.Decimal.MinValue, Bridge.Decimal(0)];
+            this.verifyViaObj(Bridge.Decimal, Bridge.Convert.toDecimal, testValues, expectedValues);
+        },
+        fromDouble: function () {
+            var testValues = [1000.0, 100.0, 0.0, 0.001, -1000.0, -100.0];
+            var expectedValues = [Bridge.Decimal(1000.0), Bridge.Decimal(100.0), Bridge.Decimal(0.0), Bridge.Decimal(0.001), Bridge.Decimal(-1000.0), Bridge.Decimal(-100.0)];
+            this.verifyViaObj(Number, Bridge.Convert.toDecimal, testValues, expectedValues);
+    
+            var overflowValues = [Number.MAX_VALUE, -Number.MAX_VALUE];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Number, Bridge.Convert.toDecimal, overflowValues);
+        },
+        fromInt16: function () {
+            var testValues = [32767, -32768, 0];
+            var expectedValues = [Bridge.Decimal(32767), Bridge.Decimal(-32768), Bridge.Decimal(0)];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toDecimal, testValues, expectedValues);
+        },
+        fromInt32: function () {
+            var testValues = [2147483647, -2147483648, 0];
+            var expectedValues = [Bridge.Decimal(2147483647), Bridge.Decimal(-2147483648), Bridge.Decimal(0)];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toDecimal, testValues, expectedValues);
+        },
+        fromInt64: function () {
+            var longMinValue = -9007199254740990; // Number.MIN_SAFE_INTEGER + 1 (15 significant digits)
+            var longMaxValue = 9007199254740990; // Number.MAX_SAFE_INTEGER - 1 (15 significant digits)
+    
+            var testValues = [longMaxValue, longMinValue, 0];
+            var expectedValues = [Bridge.Decimal(longMaxValue), Bridge.Decimal(longMinValue), Bridge.Decimal(0)];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toDecimal, testValues, expectedValues);
+        },
+        fromObject: function () {
+            var testValues = [null];
+            var expectedValues = [Bridge.Decimal(0)];
+            this.verifyFromObject(Bridge.Convert.toDecimal, Bridge.Convert.toDecimal, testValues, expectedValues);
+    
+            var invalidValues = [{ }, new Date()];
+            this.verifyFromObjectThrows(Bridge.InvalidCastException, Bridge.Convert.toDecimal, Bridge.Convert.toDecimal, invalidValues);
+        },
+        fromSByte: function () {
+            var testValues = [-128, 127, 0];
+            var expectedValues = [Bridge.Decimal(-128), Bridge.Decimal(127), Bridge.Decimal(0)];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toDecimal, testValues, expectedValues);
+        },
+        fromSingle: function () {
+            var testValues = [1000.0, 100.0, 0.0, -1.0, -100.0];
+            var expectedValues = [Bridge.Decimal(1000.0), Bridge.Decimal(100.0), Bridge.Decimal(0.0), Bridge.Decimal(-1.0), Bridge.Decimal(-100.0)];
+            this.verifyViaObj(Number, Bridge.Convert.toDecimal, testValues, expectedValues);
+    
+            var overflowValues = [3.40282347E+38, -3.40282347E+38];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Number, Bridge.Convert.toDecimal, overflowValues);
+        },
+        fromString: function () {
+            var longMaxValue = Bridge.cast(9007199254740990, Bridge.Int); // Number.MAX_SAFE_INTEGER - 1 (15 significant digits)
+            var intMaxValue = 2147483647;
+    
+            var decimalMaxValueStr = Bridge.Decimal.MaxValue.toFixed(0, 4);
+            var decimalMinValueStr = Bridge.Decimal.MinValue.toFixed(0, 4);
+    
+            var testValues = [intMaxValue.toString(), longMaxValue.toString(), decimalMaxValueStr, decimalMinValueStr, "0", null];
+            var expectedValues = [Bridge.Decimal(intMaxValue), Bridge.Decimal(longMaxValue), Bridge.Decimal.MaxValue, Bridge.Decimal.MinValue, Bridge.Decimal(0), Bridge.Decimal(0)];
+            this.verifyFromString(Bridge.Convert.toDecimal, Bridge.Convert.toDecimal, testValues, expectedValues);
+    
+            var overflowValues = ["792281625142643000000000000000"];
+            this.verifyFromStringThrows(Bridge.OverflowException, Bridge.Convert.toDecimal, Bridge.Convert.toDecimal, overflowValues);
+    
+            var formatExceptionValues = ["100E12"];
+            this.verifyFromStringThrows(Bridge.FormatException, Bridge.Convert.toDecimal, Bridge.Convert.toDecimal, formatExceptionValues);
+        },
+        fromUInt16: function () {
+            var testValues = [65535, 0];
+            var expectedValues = [Bridge.Decimal(65535), Bridge.Decimal(0)];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toDecimal, testValues, expectedValues);
+        },
+        fromUInt32: function () {
+            var testValues = [4294967295, 0];
+            var expectedValues = [Bridge.Decimal(4294967295), Bridge.Decimal(0)];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toDecimal, testValues, expectedValues);
+        },
+        fromUInt64: function () {
+            var ulongMaxValue = Bridge.cast(9007199254740990, Bridge.Int); // Number.MAX_SAFE_INTEGER - 1 (15 significant digits)
+    
+            var testValues = [ulongMaxValue, 0];
+            var expectedValues = [Bridge.Decimal(ulongMaxValue), Bridge.Decimal(0)];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toDecimal, testValues, expectedValues);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToDoubleTests', {
+        inherits: [Bridge.ClientTest.ConvertTests.ConvertTestBase$1(Number)],
+        fromBoolean: function () {
+            var testValues = [true, false];
+            var expectedValues = [1.0, 0.0];
+            this.verifyViaObj(Boolean, Bridge.Convert.toDouble, testValues, expectedValues);
+        },
+        fromByte: function () {
+            var testValues = [255, 0];
+            var expectedValues = [255, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toDouble, testValues, expectedValues);
+        },
+        fromDecimal: function () {
+            var testValues = [Bridge.Decimal.MaxValue, Bridge.Decimal.MinValue, Bridge.Decimal(0.0)];
+            var expectedValues = [Bridge.Decimal.toFloat(Bridge.Decimal.MaxValue), Bridge.Decimal.toFloat(Bridge.Decimal.MinValue), 0.0];
+            this.verifyViaObj(Bridge.Decimal, Bridge.Convert.toDouble, testValues, expectedValues);
+        },
+        fromDouble: function () {
+            var testValues = [Number.MAX_VALUE, Number.MIN_VALUE, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, 4.94065645841247E-324];
+            var expectedValues = [Number.MAX_VALUE, Number.MIN_VALUE, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, 4.94065645841247E-324];
+            this.verifyViaObj(Number, Bridge.Convert.toDouble, testValues, expectedValues);
+        },
+        fromInt16: function () {
+            var testValues = [32767, -32768, 0];
+            var expectedValues = [32767, -32768, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toDouble, testValues, expectedValues);
+        },
+        fromInt32: function () {
+            var testValues = [2147483647, -2147483648, 0];
+            var expectedValues = [2147483647, -2147483648, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toDouble, testValues, expectedValues);
+        },
+        fromInt64: function () {
+            var testValues = [9007199254740991, -9007199254740991, 0];
+            var expectedValues = [Bridge.cast(9007199254740991, Number), Bridge.cast(-9007199254740991, Number), 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toDouble, testValues, expectedValues);
+        },
+        fromObject: function () {
+            var testValues = [null];
+            var expectedValues = [0.0];
+            this.verifyFromObject(Bridge.Convert.toDouble, Bridge.Convert.toDouble, testValues, expectedValues);
+    
+            var invalidValues = [{ }, new Date()];
+            this.verifyFromObjectThrows(Bridge.InvalidCastException, Bridge.Convert.toDouble, Bridge.Convert.toDouble, invalidValues);
+        },
+        fromSByte: function () {
+            var testValues = [127, -128];
+            var expectedValues = [127, -128];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toDouble, testValues, expectedValues);
+        },
+        fromSingle: function () {
+            var testValues = [3.40282347E+38, -3.40282347E+38, 0.0];
+            var expectedValues = [3.40282347E+38, -3.40282347E+38, 0.0];
+            this.verifyViaObj(Number, Bridge.Convert.toDouble, testValues, expectedValues);
+        },
+        fromString: function () {
+            var doubleMaxValue = Number.MAX_VALUE;
+            var doubleMinValue = -Number.MAX_VALUE;
+    
+            var testValues = [Bridge.Int.format(doubleMinValue, "R"), Bridge.Int.format(doubleMaxValue, "R"), Bridge.Int.format(((0.0)), 'G'), Bridge.Int.format(((10.0)), 'G'), Bridge.Int.format(((-10.0)), 'G'), null];
+            var expectedValues = [-Number.MAX_VALUE, Number.MAX_VALUE, 0.0, 10.0, -10.0, 0.0];
+            this.verifyFromString(Bridge.Convert.toDouble, Bridge.Convert.toDouble, testValues, expectedValues);
+    
+            var overflowValues = ["1.79769313486232E+308", "-1.79769313486232E+308"];
+            this.verifyFromStringThrows(Bridge.OverflowException, Bridge.Convert.toDouble, Bridge.Convert.toDouble, overflowValues);
+    
+            var formatExceptionValues = ["123xyz"];
+            this.verifyFromStringThrows(Bridge.FormatException, Bridge.Convert.toDouble, Bridge.Convert.toDouble, formatExceptionValues);
+        },
+        fromUInt16: function () {
+            var testValues = [65535, 0];
+            var expectedValues = [65535, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toDouble, testValues, expectedValues);
+        },
+        fromUInt32: function () {
+            var testValues = [4294967295, 0];
+            var expectedValues = [4294967295, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toDouble, testValues, expectedValues);
+        },
+        fromUInt64: function () {
+            var testValues = [9007199254740991, 0];
+            var expectedValues = [Bridge.cast(9007199254740991, Number), Bridge.cast(0, Number)];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toDouble, testValues, expectedValues);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToInt16Tests', {
+        inherits: [Bridge.ClientTest.ConvertTests.ConvertTestBase$1(Bridge.Int)],
+        fromBoolean: function () {
+            var testValues = [true, false];
+            var expectedValues = [1, 0];
+            this.verifyViaObj(Boolean, Bridge.Convert.toInt16, testValues, expectedValues);
+        },
+        fromByte: function () {
+            var testValues = [255, 0];
+            var expectedValues = [255, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toInt16, testValues, expectedValues);
+        },
+        fromChar: function () {
+            var testValues = [65, 0];
+            var expectedValues = [65, Bridge.cast(0, Bridge.Int)];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toInt16, testValues, expectedValues);
+        },
+        fromDecimal: function () {
+            var testValues = [Bridge.Decimal(100.0), Bridge.Decimal(-100.0), Bridge.Decimal(0.0)];
+            var expectedValues = [100, -100, 0];
+            this.verifyViaObj(Bridge.Decimal, Bridge.Convert.toInt16, testValues, expectedValues);
+    
+            var overflowValues = [Bridge.Decimal.MaxValue, Bridge.Decimal.MinValue];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Decimal, Bridge.Convert.toInt16, overflowValues);
+        },
+        fromDouble: function () {
+            var testValues = [100.0, -100.0, 0];
+            var expectedValues = [100, -100, 0];
+            this.verifyViaObj(Number, Bridge.Convert.toInt16, testValues, expectedValues);
+    
+            var overflowValues = [Number.MAX_VALUE, -Number.MAX_VALUE];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Number, Bridge.Convert.toInt16, overflowValues);
+        },
+        fromInt16: function () {
+            var testValues = [32767, -32768, 0];
+            var expectedValues = [32767, -32768, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toInt16, testValues, expectedValues);
+        },
+        fromInt32: function () {
+            var testValues = [100, -100, 0];
+            var expectedValues = [100, -100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toInt16, testValues, expectedValues);
+    
+            var overflowValues = [2147483647, -2147483648];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toInt16, overflowValues);
+        },
+        fromInt64: function () {
+            var testValues = [100, -100, 0];
+            var expectedValues = [100, -100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toInt16, testValues, expectedValues);
+    
+            var overflowValues = [9007199254740991, -9007199254740991];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toInt16, overflowValues);
+        },
+        fromObject: function () {
+            var testValues = [null];
+            var expectedValues = [0];
+            this.verifyFromObject(Bridge.Convert.toInt16, Bridge.Convert.toInt16, testValues, expectedValues);
+    
+            var invalidValues = [{ }, new Date()];
+            this.verifyFromObjectThrows(Bridge.InvalidCastException, Bridge.Convert.toInt16, Bridge.Convert.toInt16, invalidValues);
+        },
+        fromSByte: function () {
+            var testValues = [100, -100, 0];
+            var expectedValues = [100, -100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toInt16, testValues, expectedValues);
+        },
+        fromSingle: function () {
+            var testValues = [100.0, -100.0, 0.0];
+            var expectedValues = [100, -100, 0];
+            this.verifyViaObj(Number, Bridge.Convert.toInt16, testValues, expectedValues);
+    
+            var overflowValues = [3.40282347E+38, -3.40282347E+38];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Number, Bridge.Convert.toInt16, overflowValues);
+        },
+        fromString: function () {
+            var shortMinValue = -32768;
+            var shortMaxValue = 32767;
+            var intMinValue = -2147483648;
+            var intMaxValue = 2147483647;
+    
+            var testValues = ["100", "-100", "0", shortMinValue.toString(), shortMaxValue.toString(), null];
+            var expectedValues = [100, -100, 0, shortMinValue, shortMaxValue, 0];
+            this.verifyFromString(Bridge.Convert.toInt16, Bridge.Convert.toInt16, testValues, expectedValues);
+    
+            var overflowValues = [intMinValue.toString(), intMaxValue.toString()];
+            this.verifyFromStringThrows(Bridge.OverflowException, Bridge.Convert.toInt16, Bridge.Convert.toInt16, overflowValues);
+    
+            var formatExceptionValues = ["abba"];
+            this.verifyFromStringThrows(Bridge.FormatException, Bridge.Convert.toInt16, Bridge.Convert.toInt16, formatExceptionValues);
+        },
+        fromStringWithBase: function () {
+            var testValues = [null, null, null, null, "7fff", "32767", "77777", "111111111111111", "8000", "-32768", "100000", "1000000000000000"];
+            var testBases = [10, 2, 8, 16, 16, 10, 8, 2, 16, 10, 8, 2];
+            var expectedValues = [0, 0, 0, 0, 32767, 32767, 32767, 32767, -32768, -32768, -32768, -32768];
+            this.verifyFromStringWithBase(Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToInt16Tests.Wrappers).convertFromStrWithBase, testValues, testBases, expectedValues);
+    
+            var overflowValues = ["32768", "-32769", "11111111111111111", "1FFFF", "777777"];
+            var overflowBases = [10, 10, 2, 16, 8];
+            this.verifyFromStringWithBaseThrows(Bridge.OverflowException, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToInt16Tests.Wrappers).convertFromStrWithBase, overflowValues, overflowBases);
+    
+            var formatExceptionValues = ["12", "ffffffffffffffffffff"];
+            var formatExceptionBases = [2, 8];
+            this.verifyFromStringWithBaseThrows(Bridge.FormatException, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToInt16Tests.Wrappers).convertFromStrWithBase, formatExceptionValues, formatExceptionBases);
+    
+            var argumentExceptionValues = ["10", "11", "abba", "-ab"];
+            var argumentExceptionBases = [-1, 3, 0, 16];
+            this.verifyFromStringWithBaseThrows(Bridge.ArgumentException, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToInt16Tests.Wrappers).convertFromStrWithBase, argumentExceptionValues, argumentExceptionBases);
+        },
+        fromUInt16: function () {
+            var testValues = [100, 0];
+            var expectedValues = [100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toInt16, testValues, expectedValues);
+    
+            var overflowValues = [65535];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toInt16, overflowValues);
+        },
+        fromUInt32: function () {
+            var testValues = [100, 0];
+            var expectedValues = [100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toInt16, testValues, expectedValues);
+    
+            var overflowValues = [4294967295];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toInt16, overflowValues);
+        },
+        fromUInt64: function () {
+            var testValues = [100, 0];
+            var expectedValues = [100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toInt16, testValues, expectedValues);
+    
+            var overflowValues = [9007199254740991];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toInt16, overflowValues);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToInt32Tests', {
+        inherits: [Bridge.ClientTest.ConvertTests.ConvertTestBase$1(Bridge.Int)],
+        fromBoolean: function () {
+            var testValues = [true, false];
+            var expectedValues = [1, 0];
+            this.verifyViaObj(Boolean, Bridge.Convert.toInt32, testValues, expectedValues);
+        },
+        fromByte: function () {
+            var testValues = [255, 0];
+            var expectedValues = [255, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toInt32, testValues, expectedValues);
+        },
+        fromChar: function () {
+            var testValues = [0, 65535, 98];
+            var expectedValues = [0, 65535, 98];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toInt32, testValues, expectedValues);
+        },
+        fromDecimal: function () {
+            var testValues = [Bridge.Decimal(100.0), Bridge.Decimal(-100.0), Bridge.Decimal(0.0)];
+            var expectedValues = [100, -100, 0];
+            this.verifyViaObj(Bridge.Decimal, Bridge.Convert.toInt32, testValues, expectedValues);
+    
+            var overflowValues = [Bridge.Decimal.MaxValue, Bridge.Decimal.MinValue];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Decimal, Bridge.Convert.toInt32, overflowValues);
+        },
+        fromDouble: function () {
+            var testValues = [100.0, -100.0, 0];
+            var expectedValues = [100, -100, 0];
+            this.verifyViaObj(Number, Bridge.Convert.toInt32, testValues, expectedValues);
+    
+            var overflowValues = [Number.MAX_VALUE, -Number.MAX_VALUE];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Number, Bridge.Convert.toInt32, overflowValues);
+        },
+        fromInt16: function () {
+            var testValues = [100, -100, 0];
+            var expectedValues = [100, -100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toInt32, testValues, expectedValues);
+        },
+        fromInt32: function () {
+            var testValues = [2147483647, -2147483648, 0];
+            var expectedValues = [2147483647, -2147483648, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toInt32, testValues, expectedValues);
+        },
+        fromInt64: function () {
+            var testValues = [100, -100, 0];
+            var expectedValues = [100, -100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toInt32, testValues, expectedValues);
+    
+            var overflowValues = [9007199254740991, -9007199254740991];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toInt32, overflowValues);
+        },
+        fromObject: function () {
+            var testValues = [null];
+            var expectedValues = [0];
+            this.verifyFromObject(Bridge.Convert.toInt32, Bridge.Convert.toInt32, testValues, expectedValues);
+    
+            var invalidValues = [{ }];
+            this.verifyFromObjectThrows(Bridge.InvalidCastException, Bridge.Convert.toInt32, Bridge.Convert.toInt32, invalidValues);
+        },
+        fromSByte: function () {
+            var testValues = [100, -100, 0];
+            var expectedValues = [100, -100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toInt32, testValues, expectedValues);
+        },
+        fromSingle: function () {
+            var testValues = [100.0, -100.0, 0.0];
+            var expectedValues = [100, -100, 0];
+            this.verifyViaObj(Number, Bridge.Convert.toInt32, testValues, expectedValues);
+    
+            var overflowValues = [3.40282347E+38, -3.40282347E+38];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Number, Bridge.Convert.toInt32, overflowValues);
+        },
+        fromString: function () {
+            var intMinValue = -2147483648;
+            var intMaxValue = 2147483647;
+            var longMinValue = -9007199254740991;
+            var longMaxValue = 9007199254740991;
+    
+            var testValues = ["100", "-100", "0", intMinValue.toString(), intMaxValue.toString(), null];
+            var expectedValues = [100, -100, 0, intMinValue, intMaxValue, 0];
+            this.verifyFromString(Bridge.Convert.toInt32, Bridge.Convert.toInt32, testValues, expectedValues);
+    
+            var overflowValues = [longMinValue.toString(), longMaxValue.toString()];
+            this.verifyFromStringThrows(Bridge.OverflowException, Bridge.Convert.toInt32, Bridge.Convert.toInt32, overflowValues);
+    
+            var formatExceptionValues = ["abba"];
+            this.verifyFromStringThrows(Bridge.FormatException, Bridge.Convert.toInt32, Bridge.Convert.toInt32, formatExceptionValues);
+        },
+        fromStringWithBase: function () {
+            var testValues = [null, null, null, null, "7FFFFFFF", "2147483647", "17777777777", "1111111111111111111111111111111", "80000000", "-2147483648", "20000000000", "10000000000000000000000000000000"];
+            var testBases = [10, 2, 8, 16, 16, 10, 8, 2, 16, 10, 8, 2];
+            var expectedValues = [0, 0, 0, 0, 2147483647, 2147483647, 2147483647, 2147483647, -2147483648, -2147483648, -2147483648, -2147483648];
+            this.verifyFromStringWithBase(Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToInt32Tests.Wrappers).convertFromStrWithBase, testValues, testBases, expectedValues);
+    
+            var overflowValues = ["2147483648", "-2147483649", "111111111111111111111111111111111", "1FFFFffff", "777777777777"];
+            var overflowBases = [10, 10, 2, 16, 8];
+            this.verifyFromStringWithBaseThrows(Bridge.OverflowException, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToInt32Tests.Wrappers).convertFromStrWithBase, overflowValues, overflowBases);
+    
+            var formatExceptionValues = ["12", "ffffffffffffffffffff"];
+            var formatExceptionBases = [2, 8];
+            this.verifyFromStringWithBaseThrows(Bridge.FormatException, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToInt32Tests.Wrappers).convertFromStrWithBase, formatExceptionValues, formatExceptionBases);
+    
+            var argumentExceptionValues = ["10", "11", "abba", "-ab"];
+            var argumentExceptionBases = [-1, 3, 0, 16];
+            this.verifyFromStringWithBaseThrows(Bridge.ArgumentException, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToInt32Tests.Wrappers).convertFromStrWithBase, argumentExceptionValues, argumentExceptionBases);
+        },
+        fromUInt16: function () {
+            var testValues = [100, 0];
+            var expectedValues = [100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toInt32, testValues, expectedValues);
+        },
+        fromUInt32: function () {
+            var testValues = [100, 0];
+            var expectedValues = [100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toInt32, testValues, expectedValues);
+    
+            var overflowValues = [4294967295];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toInt32, overflowValues);
+        },
+        fromUInt64: function () {
+            var testValues = [100, 0];
+            var expectedValues = [100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toInt32, testValues, expectedValues);
+    
+            var overflowValues = [9007199254740991];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toInt32, overflowValues);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToInt64Tests', {
+        inherits: [Bridge.ClientTest.ConvertTests.ConvertTestBase$1(Bridge.Int)],
+        fromBoolean: function () {
+            var testValues = [true, false];
+            var expectedValues = [1, 0];
+            this.verifyViaObj(Boolean, Bridge.Convert.toInt64, testValues, expectedValues);
+        },
+        fromByte: function () {
+            var testValues = [255, 0];
+            var expectedValues = [255, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toInt64, testValues, expectedValues);
+        },
+        fromChar: function () {
+            var testValues = [65535, 0, 98];
+            var expectedValues = [65535, 0, 98];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toInt64, testValues, expectedValues);
+        },
+        fromDecimal: function () {
+            var testValues = [Bridge.Decimal(100.0), Bridge.Decimal(-100.0), Bridge.Decimal(0.0)];
+            var expectedValues = [100, -100, 0];
+            this.verifyViaObj(Bridge.Decimal, Bridge.Convert.toInt64, testValues, expectedValues);
+    
+            var overflowValues = [Bridge.Decimal.MaxValue, Bridge.Decimal.MinValue];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Decimal, Bridge.Convert.toInt64, overflowValues);
+        },
+        fromDouble: function () {
+            var testValues = [100.0, -100.0, 0];
+            var expectedValues = [100, -100, 0];
+            this.verifyViaObj(Number, Bridge.Convert.toInt64, testValues, expectedValues);
+    
+            var overflowValues = [Number.MAX_VALUE, -Number.MAX_VALUE];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Number, Bridge.Convert.toInt64, overflowValues);
+        },
+        fromInt16: function () {
+            var testValues = [100, -100, 0];
+            var expectedValues = [100, -100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toInt64, testValues, expectedValues);
+        },
+        fromInt32: function () {
+            var testValues = [2147483647, -2147483648, 0];
+            var expectedValues = [2147483647, -2147483648, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toInt64, testValues, expectedValues);
+        },
+        fromInt64: function () {
+            var testValues = [9007199254740991, -9007199254740991, 0];
+            var expectedValues = [9007199254740991, -9007199254740991, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toInt64, testValues, expectedValues);
+        },
+        fromObject: function () {
+            var testValues = [null];
+            var expectedValues = [0];
+            this.verifyFromObject(Bridge.Convert.toInt64, Bridge.Convert.toInt64, testValues, expectedValues);
+    
+            var invalidValues = [{ }, new Date()];
+            this.verifyFromObjectThrows(Bridge.InvalidCastException, Bridge.Convert.toInt64, Bridge.Convert.toInt64, invalidValues);
+        },
+        fromSByte: function () {
+            var testValues = [100, -100, 0];
+            var expectedValues = [100, -100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toInt64, testValues, expectedValues);
+        },
+        fromSingle: function () {
+            var testValues = [100.0, -100.0, 0.0];
+            var expectedValues = [100, -100, 0];
+            this.verifyViaObj(Number, Bridge.Convert.toInt64, testValues, expectedValues);
+    
+            var overflowValues = [3.40282347E+38, -3.40282347E+38];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Number, Bridge.Convert.toInt64, overflowValues);
+        },
+        fromString: function () {
+            var longMinValue = -9007199254740991; // Number.MIN_SAFE_INTEGER
+            var longMaxValue = 9007199254740991; // Number.MAX_SAFE_INTEGER
+    
+            var testValues = ["100", "-100", "0", longMinValue.toString(), longMaxValue.toString(), null];
+            var expectedValues = [100, -100, 0, longMinValue, longMaxValue, 0];
+            this.verifyFromString(Bridge.Convert.toInt64, Bridge.Convert.toInt64, testValues, expectedValues);
+    
+            var overflowValues = ["1" + longMaxValue.toString(), longMinValue.toString() + "1"];
+            this.verifyFromStringThrows(Bridge.OverflowException, Bridge.Convert.toInt64, Bridge.Convert.toInt64, overflowValues);
+    
+            var formatExceptionValues = ["abba"];
+            this.verifyFromStringThrows(Bridge.FormatException, Bridge.Convert.toInt64, Bridge.Convert.toInt64, formatExceptionValues);
+        },
+        fromStringWithBase: function () {
+            // As there is a limitation on the range of Long values in JS. We'll test the method against Number.MIN/MAX_SAFE_INTEGER values
+            var minSafeValue = -9007199254740991; // Number.MIN_SAFE_INTEGER
+            var maxSafeValue = 9007199254740991; // Number.MAX_SAFE_INTEGER
+    
+            var testValues = [null, null, null, null, "1FFFFFFFFFFFFF", "9007199254740991", "377777777777777777", "11111111111111111111111111111111111111111111111111111", "-9007199254740991"];
+            var testBases = [10, 2, 8, 16, 16, 10, 8, 2, 10];
+            var expectedValues = [0, 0, 0, 0, maxSafeValue, maxSafeValue, maxSafeValue, maxSafeValue, minSafeValue];
+            this.verifyFromStringWithBase(Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToInt64Tests.Wrappers).convertFromStrWithBase, testValues, testBases, expectedValues);
+    
+            var overflowValues = ["FFE0000000000001", "1777400000000000000001", "1111111111100000000000000000000000000000000000000000000000000001", "9223372036854775808", "-9223372036854775809", "11111111111111111111111111111111111111111111111111111111111111111", "1FFFFffffFFFFffff", "7777777777777777777777777"];
+            var overflowBases = [16, 8, 2, 10, 10, 2, 16, 8];
+            this.verifyFromStringWithBaseThrows(Bridge.OverflowException, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToInt64Tests.Wrappers).convertFromStrWithBase, overflowValues, overflowBases);
+    
+            var formatExceptionValues = ["12", "ffffffffffffffffffff"];
+            var formatExceptionBases = [2, 8];
+            this.verifyFromStringWithBaseThrows(Bridge.FormatException, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToInt64Tests.Wrappers).convertFromStrWithBase, formatExceptionValues, formatExceptionBases);
+    
+            var argumentExceptionValues = ["10", "11", "abba", "-ab"];
+            var argumentExceptionBases = [-1, 3, 0, 16];
+            this.verifyFromStringWithBaseThrows(Bridge.ArgumentException, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToInt64Tests.Wrappers).convertFromStrWithBase, argumentExceptionValues, argumentExceptionBases);
+        },
+        fromUInt16: function () {
+            var testValues = [100, 0];
+            var expectedValues = [100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toInt64, testValues, expectedValues);
+        },
+        fromUInt32: function () {
+            var testValues = [100, 0];
+            var expectedValues = [100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toInt64, testValues, expectedValues);
+        },
+        fromUInt64: function () {
+            var testValues = [100, 0];
+            var expectedValues = [100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toInt64, testValues, expectedValues);
+    
+            var overflowValues = [9007199254740992]; // Number.MAX_SAFE_INTEGER + 1
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toInt64, overflowValues);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToSByteTests', {
+        inherits: [Bridge.ClientTest.ConvertTests.ConvertTestBase$1(Bridge.Int)],
+        fromBoolean: function () {
+            var testValues = [true, false];
+            var expectedValues = [1, 0];
+            this.verifyViaObj(Boolean, Bridge.Convert.toSByte, testValues, expectedValues);
+        },
+        fromByte: function () {
+            var testValues = [100, 0];
+            var expectedValues = [100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toSByte, testValues, expectedValues);
+    
+            var overflowValues = [255];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toSByte, overflowValues);
+        },
+        fromChar: function () {
+            var testValues = [65, 0];
+            var expectedValues = [65, Bridge.cast(0, Bridge.Int)];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toSByte, testValues, expectedValues);
+        },
+        fromDecimal: function () {
+            var testValues = [Bridge.Decimal(100.0), Bridge.Decimal(-100.0), Bridge.Decimal(0.0)];
+            var expectedValues = [100, -100, 0];
+            this.verifyViaObj(Bridge.Decimal, Bridge.Convert.toSByte, testValues, expectedValues);
+    
+            var overflowValues = [Bridge.Decimal.MaxValue, Bridge.Decimal.MinValue];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Decimal, Bridge.Convert.toSByte, overflowValues);
+        },
+        fromDouble: function () {
+            var testValues = [100.0, -100.0, 0];
+            var expectedValues = [100, -100, 0];
+            this.verifyViaObj(Number, Bridge.Convert.toSByte, testValues, expectedValues);
+    
+            var overflowValues = [Number.MAX_VALUE, -Number.MAX_VALUE];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Number, Bridge.Convert.toSByte, overflowValues);
+        },
+        fromInt16: function () {
+            var testValues = [100, -100, 0];
+            var expectedValues = [100, -100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toSByte, testValues, expectedValues);
+    
+            var overflowValues = [9007199254740991, -9007199254740991];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toSByte, overflowValues);
+        },
+        fromInt32: function () {
+            var testValues = [100, -100, 0];
+            var expectedValues = [100, -100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toSByte, testValues, expectedValues);
+    
+            var overflowValues = [2147483647, -2147483648];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toSByte, overflowValues);
+        },
+        fromInt64: function () {
+            var testValues = [100, -100, 0];
+            var expectedValues = [100, -100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toSByte, testValues, expectedValues);
+    
+            var overflowValues = [9007199254740991, -9007199254740991];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toSByte, overflowValues);
+        },
+        fromObject: function () {
+            var testValues = [null];
+            var expectedValues = [0];
+            this.verifyFromObject(Bridge.Convert.toSByte, Bridge.Convert.toSByte, testValues, expectedValues);
+    
+            var invalidValues = [{ }, new Date()];
+            this.verifyFromObjectThrows(Bridge.InvalidCastException, Bridge.Convert.toSByte, Bridge.Convert.toSByte, invalidValues);
+        },
+        fromSByte: function () {
+            var testValues = [127, -128];
+            var expectedValues = [127, -128];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toSByte, testValues, expectedValues);
+        },
+        fromSingle: function () {
+            var testValues = [100.0, -100.0, 0.0];
+            var expectedValues = [100, -100, 0];
+            this.verifyViaObj(Number, Bridge.Convert.toSByte, testValues, expectedValues);
+    
+            var overflowValues = [3.40282347E+38, -3.40282347E+38];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Number, Bridge.Convert.toSByte, overflowValues);
+        },
+        fromString: function () {
+            var sbyteMinValue = -128;
+            var sbyteMaxValue = 127;
+            var shortMinValue = -32768;
+            var shortMaxValue = 32767;
+    
+            var testValues = ["100", "-100", "0", sbyteMinValue.toString(), sbyteMaxValue.toString()];
+            var expectedValues = [100, -100, 0, sbyteMinValue, sbyteMaxValue];
+            this.verifyFromString(Bridge.Convert.toSByte, Bridge.Convert.toSByte, testValues, expectedValues);
+    
+            var overflowValues = [shortMinValue.toString(), shortMaxValue.toString()];
+            this.verifyFromStringThrows(Bridge.OverflowException, Bridge.Convert.toSByte, Bridge.Convert.toSByte, overflowValues);
+    
+            var formatExceptionValues = ["abba"];
+            this.verifyFromStringThrows(Bridge.FormatException, Bridge.Convert.toSByte, Bridge.Convert.toSByte, formatExceptionValues);
+    
+            // Note: Only the Convert.ToSByte(String, IFormatProvider) overload throws an ArgumentNullException.
+            // This is inconsistent with the other numeric conversions, but fixing this behavior is not worth making
+            // a breaking change which will affect the desktop CLR.
+            this.verifyThrows(Bridge.ArgumentNullException, String, $_.Bridge.ClientTest.ConvertTests.ConvertToSByteTests.f1, [null]);
+        },
+        fromStringWithBase: function () {
+            var testValues = [null, null, null, null, "7f", "127", "177", "1111111", "80", "-128", "200", "10000000"];
+            var testBases = [10, 2, 8, 16, 16, 10, 8, 2, 16, 10, 8, 2];
+            var expectedValues = [0, 0, 0, 0, 127, 127, 127, 127, -128, -128, -128, -128];
+            this.verifyFromStringWithBase(Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToSByteTests.Wrappers).convertFromStrWithBase, testValues, testBases, expectedValues);
+    
+            var overflowValues = ["128", "-129", "111111111", "1FF", "777"];
+            var overflowBases = [10, 10, 2, 16, 8];
+            this.verifyFromStringWithBaseThrows(Bridge.OverflowException, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToSByteTests.Wrappers).convertFromStrWithBase, overflowValues, overflowBases);
+    
+            var formatExceptionValues = ["12", "ffffffffffffffffffff"];
+            var formatExceptionBases = [2, 8];
+            this.verifyFromStringWithBaseThrows(Bridge.FormatException, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToSByteTests.Wrappers).convertFromStrWithBase, formatExceptionValues, formatExceptionBases);
+    
+            var argumentExceptionValues = ["10", "11", "abba", "-ab"];
+            var argumentExceptionBases = [-1, 3, 0, 16];
+            this.verifyFromStringWithBaseThrows(Bridge.ArgumentException, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToSByteTests.Wrappers).convertFromStrWithBase, argumentExceptionValues, argumentExceptionBases);
+        },
+        fromUInt16: function () {
+            var testValues = [100, 0];
+            var expectedValues = [100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toSByte, testValues, expectedValues);
+    
+            var overflowValues = [65535];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toSByte, overflowValues);
+        },
+        fromUInt32: function () {
+            var testValues = [100, 0];
+            var expectedValues = [100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toSByte, testValues, expectedValues);
+    
+            var overflowValues = [4294967295];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toSByte, overflowValues);
+        },
+        fromUInt64: function () {
+            var testValues = [100, 0];
+            var expectedValues = [100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toSByte, testValues, expectedValues);
+    
+            var overflowValues = [9007199254740991];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toSByte, overflowValues);
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.ConvertTests.ConvertToSByteTests", $_)
+    
+    Bridge.apply($_.Bridge.ClientTest.ConvertTests.ConvertToSByteTests, {
+        f1: function (input) {
+            return Bridge.Convert.toSByte(input, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertTestBase$1.TestFormatProvider(Bridge.Int)).s_instance, 18);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToSingleTests', {
+        inherits: [Bridge.ClientTest.ConvertTests.ConvertTestBase$1(Number)],
+        fromBoolean: function () {
+            var testValues = [false, true];
+            var expectedValues = [0.0, 1.0];
+            this.verifyViaObj(Boolean, Bridge.Convert.toSingle, testValues, expectedValues);
+        },
+        fromByte: function () {
+            var testValues = [255, 0];
+            var expectedValues = [255, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toSingle, testValues, expectedValues);
+        },
+        fromDecimal: function () {
+            var testValues = [Bridge.Decimal(1000.0), Bridge.Decimal(0.0), Bridge.Decimal(-1000.0), Bridge.Decimal.MaxValue, Bridge.Decimal.MinValue];
+            var expectedValues = [1000.0, 0.0, -1000.0, Bridge.Decimal.toFloat(Bridge.Decimal.MaxValue), Bridge.Decimal.toFloat(Bridge.Decimal.MinValue)];
+            this.verifyViaObj(Bridge.Decimal, Bridge.Convert.toSingle, testValues, expectedValues);
+        },
+        fromDouble: function () {
+            var testValues = [1000.0, 100.0, 0.0, -100.0, -1000.0, Number.MAX_VALUE, -Number.MAX_VALUE];
+            var expectedValues = [1000.0, 100.0, 0.0, -100.0, -1000.0, Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY];
+            this.verifyViaObj(Number, Bridge.Convert.toSingle, testValues, expectedValues);
+        },
+        fromInt16: function () {
+            var testValues = [32767, -32768, 0];
+            var expectedValues = [32767, -32768, 0.0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toSingle, testValues, expectedValues);
+        },
+        fromInt32: function () {
+            var testValues = [2147483647, -2147483648, 0];
+            var expectedValues = [2147483647, -2147483648, 0.0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toSingle, testValues, expectedValues);
+        },
+        fromInt64: function () {
+            var testValues = [9007199254740991, -9007199254740991, 0];
+            var expectedValues = [9007199254740991, -9007199254740991, 0.0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toSingle, testValues, expectedValues);
+        },
+        fromObject: function () {
+            var testValues = [null];
+            var expectedValues = [0.0];
+            this.verifyFromObject(Bridge.Convert.toSingle, Bridge.Convert.toSingle, testValues, expectedValues);
+    
+            var invalidValues = [{ }, new Date()];
+            this.verifyFromObjectThrows(Bridge.InvalidCastException, Bridge.Convert.toSingle, Bridge.Convert.toSingle, invalidValues);
+        },
+        fromSByte: function () {
+            var testValues = [100, -100, 0];
+            var expectedValues = [100.0, -100.0, 0.0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toSingle, testValues, expectedValues);
+        },
+        fromSingle: function () {
+            var testValues = [3.40282347E+38, -3.40282347E+38, Number(), Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, 1.401298E-45];
+            var expectedValues = [3.40282347E+38, -3.40282347E+38, Number(), Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, 1.401298E-45];
+            this.verifyViaObj(Number, Bridge.Convert.toSingle, testValues, expectedValues);
+        },
+        fromString: function () {
+            var testValues = [Bridge.Int.format(3.40282347E+38, "R"), Bridge.Int.format(((0.0)), 'G'), Bridge.Int.format(-3.40282347E+38, "R"), null];
+            var expectedValues = [3.40282347E+38, 0.0, -3.40282347E+38, 0.0];
+            this.verifyFromString(Bridge.Convert.toSingle, Bridge.Convert.toSingle, testValues, expectedValues);
+    
+            var doubleMaxValue = Number.MAX_VALUE;
+            var doubleMinValue = -Number.MAX_VALUE;
+            var overflowValues = [Bridge.Int.format(doubleMinValue, "R"), Bridge.Int.format(doubleMaxValue, "R")];
+            this.verifyFromStringThrows(Bridge.OverflowException, Bridge.Convert.toSingle, Bridge.Convert.toSingle, overflowValues);
+    
+            var formatExceptionValues = ["1f2d"];
+            this.verifyFromStringThrows(Bridge.FormatException, Bridge.Convert.toSingle, Bridge.Convert.toSingle, formatExceptionValues);
+        },
+        fromUInt16: function () {
+            var testValues = [65535, 0];
+            var expectedValues = [65535, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toSingle, testValues, expectedValues);
+        },
+        fromUInt32: function () {
+            var testValues = [4294967295, 0];
+            var expectedValues = [4294967295, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toSingle, testValues, expectedValues);
+        },
+        fromUInt64: function () {
+            var testValues = [9007199254740991, 0];
+            var expectedValues = [9007199254740991, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toSingle, testValues, expectedValues);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToUInt16Tests', {
+        inherits: [Bridge.ClientTest.ConvertTests.ConvertTestBase$1(Bridge.Int)],
+        fromBoolean: function () {
+            var testValues = [true, false];
+            var expectedValues = [1, 0];
+            this.verifyViaObj(Boolean, Bridge.Convert.toUInt16, testValues, expectedValues);
+        },
+        fromByte: function () {
+            var testValues = [255, 0];
+            var expectedValues = [255, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toUInt16, testValues, expectedValues);
+        },
+        fromChar: function () {
+            var testValues = [65535, 0, 98];
+            var expectedValues = [65535, 0, 98];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toUInt16, testValues, expectedValues);
+        },
+        fromDecimal: function () {
+            var testValues = [Bridge.Decimal(1000.0), Bridge.Decimal(0.0)];
+            var expectedValues = [1000, 0];
+            this.verifyViaObj(Bridge.Decimal, Bridge.Convert.toUInt16, testValues, expectedValues);
+    
+            var overflowValues = [Bridge.Decimal.MaxValue, Bridge.Decimal.MinValue];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Decimal, Bridge.Convert.toUInt16, overflowValues);
+        },
+        fromDouble: function () {
+            var testValues = [1000.0, 0.0];
+            var expectedValues = [1000, 0];
+            this.verifyViaObj(Number, Bridge.Convert.toUInt16, testValues, expectedValues);
+    
+            var overflowValues = [Number.MAX_VALUE, -100.0];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Number, Bridge.Convert.toUInt16, overflowValues);
+        },
+        fromInt16: function () {
+            var testValues = [1000, 0, 32767];
+            var expectedValues = [1000, 0, Bridge.cast(32767, Bridge.Int)];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toUInt16, testValues, expectedValues);
+    
+            var overflowValues = [-32768];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toUInt16, overflowValues);
+        },
+        fromInt32: function () {
+            var testValues = [1000, 0];
+            var expectedValues = [1000, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toUInt16, testValues, expectedValues);
+    
+            var overflowValues = [-2147483648, 2147483647];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toUInt16, overflowValues);
+        },
+        fromInt64: function () {
+            var testValues = [1000, 0];
+            var expectedValues = [1000, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toUInt16, testValues, expectedValues);
+    
+            var overflowValues = [-9007199254740991, 9007199254740991];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toUInt16, overflowValues);
+        },
+        fromObject: function () {
+            var testValues = [null];
+            var expectedValues = [0];
+            this.verifyFromObject(Bridge.Convert.toUInt16, Bridge.Convert.toUInt16, testValues, expectedValues);
+    
+            var invalidValues = [{ }, new Date()];
+            this.verifyFromObjectThrows(Bridge.InvalidCastException, Bridge.Convert.toUInt16, Bridge.Convert.toUInt16, invalidValues);
+        },
+        fromSByte: function () {
+            var testValues = [100, 0];
+            var expectedValues = [100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toUInt16, testValues, expectedValues);
+    
+            var values = [-128];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toUInt16, values);
+        },
+        fromSingle: function () {
+            var testValues = [1000.0, 0.0];
+            var expectedValues = [1000, 0];
+            this.verifyViaObj(Number, Bridge.Convert.toUInt16, testValues, expectedValues);
+    
+            var values = [3.40282347E+38, -100.0];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Number, Bridge.Convert.toUInt16, values);
+        },
+        fromString: function () {
+            var ushortMaxValue = 65535;
+    
+            var testValues = ["1000", "0", ushortMaxValue.toString(), null];
+            var expectedValues = [1000, 0, ushortMaxValue, 0];
+            this.verifyFromString(Bridge.Convert.toUInt16, Bridge.Convert.toUInt16, testValues, expectedValues);
+    
+            var overflowValues = ["-1", Bridge.Decimal.MaxValue.toFixed(0, 4)];
+            this.verifyFromStringThrows(Bridge.OverflowException, Bridge.Convert.toUInt16, Bridge.Convert.toUInt16, overflowValues);
+    
+            var formatExceptionValues = ["abba"];
+            this.verifyFromStringThrows(Bridge.FormatException, Bridge.Convert.toUInt16, Bridge.Convert.toUInt16, formatExceptionValues);
+        },
+        fromStringWithBase: function () {
+            var testValues = [null, null, null, null, "ffff", "65535", "177777", "1111111111111111", "0", "0", "0", "0"];
+            var testBases = [10, 2, 8, 16, 16, 10, 8, 2, 16, 10, 8, 2];
+            var expectedValues = [0, 0, 0, 0, 65535, 65535, 65535, 65535, 0, 0, 0, 0];
+            this.verifyFromStringWithBase(Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToUInt16Tests.Wrappers).convertFromStrWithBase, testValues, testBases, expectedValues);
+    
+            var overflowValues = ["65536", "-1", "11111111111111111", "1FFFF", "777777"];
+            var overflowBases = [10, 10, 2, 16, 8];
+            this.verifyFromStringWithBaseThrows(Bridge.OverflowException, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToUInt16Tests.Wrappers).convertFromStrWithBase, overflowValues, overflowBases);
+    
+            var formatExceptionValues = ["12", "ffffffffffffffffffff"];
+            var formatExceptionBases = [2, 8];
+            this.verifyFromStringWithBaseThrows(Bridge.FormatException, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToUInt16Tests.Wrappers).convertFromStrWithBase, formatExceptionValues, formatExceptionBases);
+    
+            var argumentExceptionValues = ["10", "11", "abba", "-ab"];
+            var argumentExceptionBases = [-1, 3, 0, 16];
+            this.verifyFromStringWithBaseThrows(Bridge.ArgumentException, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToUInt16Tests.Wrappers).convertFromStrWithBase, argumentExceptionValues, argumentExceptionBases);
+        },
+        fromUInt16: function () {
+            var testValues = [65535, 0];
+            var expectedValues = [65535, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toUInt16, testValues, expectedValues);
+        },
+        fromUInt32: function () {
+            var testValues = [100, 0];
+            var expectedValues = [100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toUInt16, testValues, expectedValues);
+    
+            var overflowValues = [4294967295];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toUInt16, overflowValues);
+        },
+        fromUInt64: function () {
+            var testValues = [100, 0];
+            var expectedValues = [100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toUInt16, testValues, expectedValues);
+    
+            var overflowValues = [9007199254740991];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toUInt16, overflowValues);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToUInt32Tests', {
+        inherits: [Bridge.ClientTest.ConvertTests.ConvertTestBase$1(Bridge.Int)],
+        fromBoolean: function () {
+            var testValues = [true, false];
+            var expectedValues = [1, 0];
+            this.verifyViaObj(Boolean, Bridge.Convert.toUInt32, testValues, expectedValues);
+        },
+        fromByte: function () {
+            var testValues = [255, 0];
+            var expectedValues = [255, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toUInt32, testValues, expectedValues);
+        },
+        fromChar: function () {
+            var testValues = [0, 65535, 98];
+            var expectedValues = [0, 65535, 98];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toUInt32, testValues, expectedValues);
+        },
+        fromDecimal: function () {
+            var testValues = [Bridge.Decimal(1000.0), Bridge.Decimal(0.0)];
+            var expectedValues = [1000, 0];
+            this.verifyViaObj(Bridge.Decimal, Bridge.Convert.toUInt32, testValues, expectedValues);
+    
+            var overflowValues = [Bridge.Decimal.MaxValue, Bridge.Decimal.MinValue];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Decimal, Bridge.Convert.toUInt32, overflowValues);
+        },
+        fromDouble: function () {
+            var testValues = [1000.0, 0.0, -0.5, 4294967295.49999, 472.2, 472.6, 472.5, 471.5];
+            var expectedValues = [1000, 0, 0, 4294967295, 472, 473, 472, 472];
+            this.verifyViaObj(Number, Bridge.Convert.toUInt32, testValues, expectedValues);
+    
+            var overflowValues = [Number.MAX_VALUE, -0.500000000001, -100.0, 4294967296, 4294967295.5];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Number, Bridge.Convert.toUInt32, overflowValues);
+        },
+        fromInt16: function () {
+            var testValues = [1000, 0, 32767];
+            var expectedValues = [1000, 0, Bridge.cast(32767, Bridge.Int)];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toUInt32, testValues, expectedValues);
+    
+            var overflowValues = [-32768];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toUInt32, overflowValues);
+        },
+        fromInt32: function () {
+            var testValues = [1000, 0, 2147483647];
+            var expectedValues = [1000, 0, 2147483647];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toUInt32, testValues, expectedValues);
+    
+            var overflowValues = [-2147483648];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toUInt32, overflowValues);
+        },
+        fromInt64: function () {
+            var testValues = [1000, 0];
+            var expectedValues = [1000, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toUInt32, testValues, expectedValues);
+    
+            var overflowValues = [9007199254740991, -9007199254740991];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toUInt32, overflowValues);
+        },
+        fromObject: function () {
+            var testValues = [null];
+            var expectedValues = [0];
+            this.verifyFromObject(Bridge.Convert.toUInt32, Bridge.Convert.toUInt32, testValues, expectedValues);
+    
+            var invalidValues = [{ }, new Date()];
+            this.verifyFromObjectThrows(Bridge.InvalidCastException, Bridge.Convert.toUInt32, Bridge.Convert.toUInt32, invalidValues);
+        },
+        fromSByte: function () {
+            var testValues = [100, 0];
+            var expectedValues = [100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toUInt32, testValues, expectedValues);
+    
+            var overflowValues = [-128];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toUInt32, overflowValues);
+        },
+        fromSingle: function () {
+            var testValues = [1000.0, 0.0];
+            var expectedValues = [1000, 0];
+            this.verifyViaObj(Number, Bridge.Convert.toUInt32, testValues, expectedValues);
+    
+            var overflowValues = [3.40282347E+38, -100.0];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Number, Bridge.Convert.toUInt32, overflowValues);
+        },
+        fromString: function () {
+            var ushortMaxValue = 65535;
+            var intMaxValue = 2147483647;
+            var uintMaxValue = 4294967295;
+    
+            var testValues = ["1000", "0", ushortMaxValue.toString(), uintMaxValue.toString(), intMaxValue.toString(), "2147483648", "2147483649", null];
+            var expectedValues = [1000, 0, 65535, 4294967295, 2147483647, 2147483648, 2147483649, 0];
+            this.verifyFromString(Bridge.Convert.toUInt32, Bridge.Convert.toUInt32, testValues, expectedValues);
+    
+            var overflowValues = ["-1", Bridge.Decimal.MaxValue.toFixed(0, 4)];
+            this.verifyFromStringThrows(Bridge.OverflowException, Bridge.Convert.toUInt32, Bridge.Convert.toUInt32, overflowValues);
+    
+            var formatExceptionValues = ["abba"];
+            this.verifyFromStringThrows(Bridge.FormatException, Bridge.Convert.toUInt32, Bridge.Convert.toUInt32, formatExceptionValues);
+        },
+        fromStringWithBase: function () {
+            var testValues = [null, null, null, null, "ffffffff", "4294967295", "37777777777", "11111111111111111111111111111111", "0", "0", "0", "0", "2147483647", "2147483648", "2147483649"];
+            var testBases = [10, 2, 8, 16, 16, 10, 8, 2, 16, 10, 8, 2, 10, 10, 10];
+            var expectedValues = [0, 0, 0, 0, 4294967295, 4294967295, 4294967295, 4294967295, 0, 0, 0, 0, Bridge.cast(2147483647, Bridge.Int), 2147483648, 2147483649];
+            this.verifyFromStringWithBase(Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToUInt32Tests.Wrappers).convertFromStrWithBase, testValues, testBases, expectedValues);
+    
+            var overflowValues = ["18446744073709551616", "18446744073709551617", "18446744073709551618", "18446744073709551619", "18446744073709551620", "-4294967297", "11111111111111111111111111111111111111111111111111111111111111111", "1FFFFffffFFFFffff", "7777777777777777777777777"];
+            var overflowBases = [10, 10, 10, 10, 10, 10, 2, 16, 8];
+            this.verifyFromStringWithBaseThrows(Bridge.OverflowException, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToUInt32Tests.Wrappers).convertFromStrWithBase, overflowValues, overflowBases);
+    
+            var formatExceptionValues = ["12", "ffffffffffffffffffff"];
+            var formatExceptionBases = [2, 8];
+            this.verifyFromStringWithBaseThrows(Bridge.FormatException, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToUInt32Tests.Wrappers).convertFromStrWithBase, formatExceptionValues, formatExceptionBases);
+    
+            var argumentExceptionValues = ["10", "11", "abba", "-ab"];
+            var argumentExceptionBases = [-1, 3, 0, 16];
+            this.verifyFromStringWithBaseThrows(Bridge.ArgumentException, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToUInt32Tests.Wrappers).convertFromStrWithBase, argumentExceptionValues, argumentExceptionBases);
+        },
+        fromUInt16: function () {
+            var testValues = [100, 0];
+            var expectedValues = [100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toUInt32, testValues, expectedValues);
+        },
+        fromUInt32: function () {
+            var testValues = [4294967295, 0];
+            var expectedValues = [4294967295, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toUInt32, testValues, expectedValues);
+        },
+        fromUInt64: function () {
+            var testValues = [100, 0];
+            var expectedValues = [100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toUInt32, testValues, expectedValues);
+    
+            var values = [9007199254740991];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toUInt32, values);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToUInt64Tests', {
+        inherits: [Bridge.ClientTest.ConvertTests.ConvertTestBase$1(Bridge.Int)],
+        fromBoolean: function () {
+            var testValues = [true, false];
+            var expectedValues = [1, 0];
+            this.verifyViaObj(Boolean, Bridge.Convert.toUInt64, testValues, expectedValues);
+        },
+        fromByte: function () {
+            var testValues = [255, 0];
+            var expectedValues = [255, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toUInt64, testValues, expectedValues);
+        },
+        fromChar: function () {
+            var testValues = [65535, 0, 98];
+            var expectedValues = [65535, 0, 98];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toUInt64, testValues, expectedValues);
+        },
+        fromDecimal: function () {
+            var testValues = [Bridge.Decimal(1000.0), Bridge.Decimal(0.0)];
+            var expectedValues = [1000, 0];
+            this.verifyViaObj(Bridge.Decimal, Bridge.Convert.toUInt64, testValues, expectedValues);
+    
+            var overflowValues = [Bridge.Decimal.MinValue, Bridge.Decimal.MaxValue];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Decimal, Bridge.Convert.toUInt64, overflowValues);
+        },
+        fromDouble: function () {
+            var testValues = [1000.0, 0.0];
+            var expectedValues = [Bridge.cast(1000, Bridge.Int), Bridge.cast(0, Bridge.Int)];
+            this.verifyViaObj(Number, Bridge.Convert.toUInt64, testValues, expectedValues);
+    
+            var overflowValues = [Number.MAX_VALUE, -100.0];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Number, Bridge.Convert.toUInt64, overflowValues);
+        },
+        fromInt16: function () {
+            var testValues = [1000, 0, 32767];
+            var expectedValues = [1000, 0, Bridge.cast(32767, Bridge.Int)];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toUInt64, testValues, expectedValues);
+    
+            var overflowValues = [-32768];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toUInt64, overflowValues);
+        },
+        fromInt32: function () {
+            var testValues = [1000, 0, 2147483647];
+            var expectedValues = [1000, 0, 2147483647];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toUInt64, testValues, expectedValues);
+    
+            var overflowValues = [-2147483648];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toUInt64, overflowValues);
+        },
+        fromInt64: function () {
+            var testValues = [1000, 0, 9007199254740991];
+            var expectedValues = [1000, 0, 9007199254740991];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toUInt64, testValues, expectedValues);
+    
+            var overflowValues = [-9007199254740991];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toUInt64, overflowValues);
+        },
+        fromObject: function () {
+            var testValues = [null];
+            var expectedValues = [0];
+            this.verifyFromObject(Bridge.Convert.toUInt64, Bridge.Convert.toUInt64, testValues, expectedValues);
+    
+            var invalidValues = [{ }, new Date()];
+            this.verifyFromObjectThrows(Bridge.InvalidCastException, Bridge.Convert.toUInt64, Bridge.Convert.toUInt64, invalidValues);
+        },
+        fromSByte: function () {
+            var testValues = [100, 0];
+            var expectedValues = [100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toUInt64, testValues, expectedValues);
+    
+            var overflowValues = [-128];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Int, Bridge.Convert.toUInt64, overflowValues);
+        },
+        fromSingle: function () {
+            var testValues = [1000.0, 0.0];
+            var expectedValues = [1000, 0];
+            this.verifyViaObj(Number, Bridge.Convert.toUInt64, testValues, expectedValues);
+    
+            var overflowValues = [3.40282347E+38, -100.0];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Number, Bridge.Convert.toUInt64, overflowValues);
+        },
+        fromString: function () {
+            var ushortMaxValue = 65535;
+            var uintMaxValue = 4294967295;
+            var longMaxValue = 9007199254740991; // Number.MAX_SAFE_INTEGER
+    
+            var testValues = ["1000", "0", ushortMaxValue.toString(), uintMaxValue.toString(), longMaxValue.toString(), "9007199254740990", null];
+            var expectedValues = [1000, 0, 65535, 4294967295, Bridge.cast(longMaxValue, Bridge.Int), Bridge.cast(longMaxValue, Bridge.Int) - 1, 0];
+            this.verifyFromString(Bridge.Convert.toUInt64, Bridge.Convert.toUInt64, testValues, expectedValues);
+    
+            var overflowValues = ["-1", Bridge.Decimal.MaxValue.toFixed(0, 4)];
+            this.verifyFromStringThrows(Bridge.OverflowException, Bridge.Convert.toUInt64, Bridge.Convert.toUInt64, overflowValues);
+    
+            var formatExceptionValues = ["abba"];
+            this.verifyFromStringThrows(Bridge.FormatException, Bridge.Convert.toUInt64, Bridge.Convert.toUInt64, formatExceptionValues);
+        },
+        fromStringWithBase: function () {
+            // As there is a limitation on the range of Long values in JS. We'll test the method agains Number.MIN/MAX_SAFE_INTEGER values
+            var maxSafeValue = Bridge.cast(9007199254740991, Bridge.Int); // Number.MAX_SAFE_INTEGER
+    
+            var testValues = [null, null, null, null, "1FFFFFFFFFFFFF", "9007199254740991", "377777777777777777", "11111111111111111111111111111111111111111111111111111"];
+            var testBases = [10, 2, 8, 16, 16, 10, 8, 2];
+            var expectedValues = [0, 0, 0, 0, maxSafeValue, maxSafeValue, maxSafeValue, maxSafeValue];
+            this.verifyFromStringWithBase(Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToUInt64Tests.Wrappers).convertFromStrWithBase, testValues, testBases, expectedValues);
+    
+            var overflowValues = ["FFE0000000000001", "-9007199254740991", "1777400000000000000001", "1111111111100000000000000000000000000000000000000000000000000001", "9223372036854775808", "-9223372036854775809", "11111111111111111111111111111111111111111111111111111111111111111", "1FFFFffffFFFFffff", "7777777777777777777777777"];
+            var overflowBases = [16, 10, 8, 2, 10, 10, 2, 16, 8];
+            this.verifyFromStringWithBaseThrows(Bridge.OverflowException, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToUInt64Tests.Wrappers).convertFromStrWithBase, overflowValues, overflowBases);
+    
+            var formatExceptionValues = ["12", "ffffffffffffffffffff"];
+            var formatExceptionBases = [2, 8];
+            this.verifyFromStringWithBaseThrows(Bridge.FormatException, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToUInt64Tests.Wrappers).convertFromStrWithBase, formatExceptionValues, formatExceptionBases);
+    
+            var argumentExceptionValues = ["10", "11", "abba", "-ab"];
+            var argumentExceptionBases = [-1, 3, 0, 16];
+            this.verifyFromStringWithBaseThrows(Bridge.ArgumentException, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToUInt64Tests.Wrappers).convertFromStrWithBase, argumentExceptionValues, argumentExceptionBases);
+        },
+        fromUInt16: function () {
+            var testValues = [100, 0];
+            var expectedValues = [100, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toUInt64, testValues, expectedValues);
+        },
+        fromUInt32: function () {
+            var testValues = [0, 4294967295];
+            var expectedValues = [0, 4294967295];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toUInt64, testValues, expectedValues);
+        },
+        fromUInt64: function () {
+            var testValues = [9007199254740991, 0];
+            var expectedValues = [9007199254740991, 0];
+            this.verifyViaObj(Bridge.Int, Bridge.Convert.toUInt64, testValues, expectedValues);
+        }
     });
     
     Bridge.define('Bridge.ClientTest.BasicCSharp.TestInheritance', {

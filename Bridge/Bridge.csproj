@@ -85,6 +85,7 @@
     <Compile Include="System\ArgumentNullException.cs" />
     <Compile Include="System\ArgumentException.cs" />
     <Compile Include="System\ArithmeticException.cs" />
+    <Compile Include="System\Base64FormattingOptions.cs" />
     <Compile Include="System\CharEnumerator.cs" />
     <Compile Include="System\Collections\Generic\Comparer.cs" />
     <Compile Include="System\Collections\Generic\IComparer.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="System\Diagnostics\Debugger.cs" />
     <Compile Include="System\Diagnostics\Stopwatch.cs" />
     <Compile Include="System\Diagnostics\SuppressMessageAttribute.cs" />
+    <Compile Include="System\Convert.cs" />
     <Compile Include="System\Enum.cs" />
     <Compile Include="System\Environment.cs" />
     <Compile Include="System\EventArgs.cs" />
@@ -119,6 +121,7 @@
     <Compile Include="System\IDisposable.cs" />
     <Compile Include="System\IAccessorsIndexer.cs" />
     <Compile Include="System\Predicate.cs" />
+    <Compile Include="System\OutOfMemoryException.cs" />
     <Compile Include="System\RankException.cs" />
     <Compile Include="System\Linq\Enumerable.cs" />
     <Compile Include="System\Linq\Grouping.cs" />
@@ -140,6 +143,8 @@
     <Compile Include="System\Threading\Tasks\TaskCanceledException.cs" />
     <Compile Include="System\Threading\Tasks\TaskCompletionSource.cs" />
     <Compile Include="System\Threading\Tasks\TaskStatus.cs" />
+    <Compile Include="System\SystemException.cs" />
+    <Compile Include="System\TypeCode.cs" />
     <Compile Include="System\Version.cs" />
     <Compile Include="This.cs" />
     <Compile Include="System\OverflowException.cs" />
@@ -637,6 +642,7 @@
     <EmbeddedResource Include="Resources\Locales\zu-ZA.js" />
     <EmbeddedResource Include="Resources\Locales\zu.js" />
     <Content Include="Resources\Diagnostics.js" />
+    <Content Include="Resources\Convert.js" />
     <Content Include="Resources\Enum.js" />
     <Content Include="Resources\Math.js" />
     <Content Include="Resources\Version.js" />

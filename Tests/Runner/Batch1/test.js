@@ -2687,6 +2687,1270 @@
         }
     });
     
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertFromBase64Tests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests)],
+        statics: {
+            roundtrip1: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).roundtrip1();
+            },
+            roundtrip2: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).roundtrip2();
+            },
+            roundtrip3: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).roundtrip3();
+            },
+            emptyString: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).emptyString();
+            },
+            zeroLengthArray: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).zeroLengthArray();
+            },
+            roundtripWithPadding1: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).roundtripWithPadding1();
+            },
+            roundtripWithPadding2: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).roundtripWithPadding2();
+            },
+            partialRoundtripWithPadding1: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).partialRoundtripWithPadding1();
+            },
+            partialRoundtripWithPadding2: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).partialRoundtripWithPadding2();
+            },
+            parseWithWhitespace: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).parseWithWhitespace();
+            },
+            roundtripWithWhitespace2: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).roundtripWithWhitespace2();
+            },
+            roundtripWithWhitespace3: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).roundtripWithWhitespace3();
+            },
+            roundtripWithWhitespace4: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).roundtripWithWhitespace4();
+            },
+            roundtripWithWhitespace5: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).roundtripWithWhitespace5();
+            },
+            roundtripWithWhitespace6: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).roundtripWithWhitespace6();
+            },
+            roundtripWithWhitespace7: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).roundtripWithWhitespace7();
+            },
+            roundtripLargeString: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).roundtripLargeString();
+            },
+            invalidOffset: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).invalidOffset();
+            },
+            invalidLength: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).invalidLength();
+            },
+            invalidInput: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).invalidInput();
+            },
+            invalidCharactersInInput: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).invalidCharactersInInput();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToBase64CharArrayTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests)],
+        statics: {
+            validOffsetIn: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests).validOffsetIn();
+            },
+            shortInputArray: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests).shortInputArray();
+            },
+            validOffsetOut: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests).validOffsetOut();
+            },
+            invalidInputBuffer: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests).invalidInputBuffer();
+            },
+            invalidOutputBuffer: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests).invalidOutputBuffer();
+            },
+            invalidOffsetIn: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests).invalidOffsetIn();
+            },
+            invalidOffsetOut: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests).invalidOffsetOut();
+            },
+            invalidInputLength: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests).invalidInputLength();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToBase64StringTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToBase64StringTests)],
+        statics: {
+            knownByteSequence: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToBase64StringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToBase64StringTests).knownByteSequence();
+            },
+            zeroLength: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToBase64StringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToBase64StringTests).zeroLength();
+            },
+            invalidInputBuffer: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToBase64StringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToBase64StringTests).invalidInputBuffer();
+            },
+            invalidOffset: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToBase64StringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToBase64StringTests).invalidOffset();
+            },
+            invalidLength: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToBase64StringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToBase64StringTests).invalidLength();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToBooleanTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToBooleanTests)],
+        statics: {
+            fromBoolean: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToBooleanTests))._BeforeTest(false, assert);
+                t.fromBoolean();
+            },
+            fromByte: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToBooleanTests))._BeforeTest(false, assert);
+                t.fromByte();
+            },
+            fromDecimal: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToBooleanTests))._BeforeTest(false, assert);
+                t.fromDecimal();
+            },
+            fromDouble: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToBooleanTests))._BeforeTest(false, assert);
+                t.fromDouble();
+            },
+            fromInt16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToBooleanTests))._BeforeTest(false, assert);
+                t.fromInt16();
+            },
+            fromInt32: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToBooleanTests))._BeforeTest(false, assert);
+                t.fromInt32();
+            },
+            fromInt64: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToBooleanTests))._BeforeTest(false, assert);
+                t.fromInt64();
+            },
+            fromString: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToBooleanTests))._BeforeTest(false, assert);
+                t.fromString();
+            },
+            fromObject: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToBooleanTests))._BeforeTest(false, assert);
+                t.fromObject();
+            },
+            fromSByte: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToBooleanTests))._BeforeTest(false, assert);
+                t.fromSByte();
+            },
+            fromSingle: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToBooleanTests))._BeforeTest(false, assert);
+                t.fromSingle();
+            },
+            fromUInt16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToBooleanTests))._BeforeTest(false, assert);
+                t.fromUInt16();
+            },
+            fromUInt32: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToBooleanTests))._BeforeTest(false, assert);
+                t.fromUInt32();
+            },
+            fromUInt64: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToBooleanTests))._BeforeTest(false, assert);
+                t.fromUInt64();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToByteTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToByteTests)],
+        statics: {
+            fromBoolean: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToByteTests))._BeforeTest(false, assert);
+                t.fromBoolean();
+            },
+            fromChar: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToByteTests))._BeforeTest(false, assert);
+                t.fromChar();
+            },
+            fromDecimal: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToByteTests))._BeforeTest(false, assert);
+                t.fromDecimal();
+            },
+            fromDouble: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToByteTests))._BeforeTest(false, assert);
+                t.fromDouble();
+            },
+            fromInt16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToByteTests))._BeforeTest(false, assert);
+                t.fromInt16();
+            },
+            fromInt32: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToByteTests))._BeforeTest(false, assert);
+                t.fromInt32();
+            },
+            fromInt64: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToByteTests))._BeforeTest(false, assert);
+                t.fromInt64();
+            },
+            fromObject: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToByteTests))._BeforeTest(false, assert);
+                t.fromObject();
+            },
+            fromSByte: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToByteTests))._BeforeTest(false, assert);
+                t.fromSByte();
+            },
+            fromSingle: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToByteTests))._BeforeTest(false, assert);
+                t.fromSingle();
+            },
+            fromString: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToByteTests))._BeforeTest(false, assert);
+                t.fromString();
+            },
+            fromStringWithBase: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToByteTests))._BeforeTest(false, assert);
+                t.fromStringWithBase();
+            },
+            fromUInt16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToByteTests))._BeforeTest(false, assert);
+                t.fromUInt16();
+            },
+            fromUInt32: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToByteTests))._BeforeTest(false, assert);
+                t.fromUInt32();
+            },
+            fromUInt64: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToByteTests))._BeforeTest(false, assert);
+                t.fromUInt64();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToCharTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToCharTests)],
+        statics: {
+            fromByte: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToCharTests))._BeforeTest(false, assert);
+                t.fromByte();
+            },
+            fromChar: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToCharTests))._BeforeTest(false, assert);
+                t.fromChar();
+            },
+            fromDecimal: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToCharTests))._BeforeTest(false, assert);
+                t.fromDecimal();
+            },
+            fromDecimalViaObject: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToCharTests))._BeforeTest(false, assert);
+                t.fromDecimalViaObject();
+            },
+            fromDouble: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToCharTests))._BeforeTest(false, assert);
+                t.fromDouble();
+            },
+            fromDoubleViaObject: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToCharTests))._BeforeTest(false, assert);
+                t.fromDoubleViaObject();
+            },
+            fromInt16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToCharTests))._BeforeTest(false, assert);
+                t.fromInt16();
+            },
+            fromInt32: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToCharTests))._BeforeTest(false, assert);
+                t.fromInt32();
+            },
+            fromInt64: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToCharTests))._BeforeTest(false, assert);
+                t.fromInt64();
+            },
+            fromObject: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToCharTests))._BeforeTest(false, assert);
+                t.fromObject();
+            },
+            fromSByte: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToCharTests))._BeforeTest(false, assert);
+                t.fromSByte();
+            },
+            fromSingle: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToCharTests))._BeforeTest(false, assert);
+                t.fromSingle();
+            },
+            fromSingleViaObject: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToCharTests))._BeforeTest(false, assert);
+                t.fromSingleViaObject();
+            },
+            fromString: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToCharTests))._BeforeTest(false, assert);
+                t.fromString();
+            },
+            fromUInt16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToCharTests))._BeforeTest(false, assert);
+                t.fromUInt16();
+            },
+            fromUInt32: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToCharTests))._BeforeTest(false, assert);
+                t.fromUInt32();
+            },
+            fromUInt64: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToCharTests))._BeforeTest(false, assert);
+                t.fromUInt64();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDateTimeTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests)],
+        statics: {
+            fromString: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests))._BeforeTest(false, assert);
+                t.fromString();
+            },
+            fromStringWithCustomFormatProvider: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests))._BeforeTest(false, assert);
+                t.fromStringWithCustomFormatProvider();
+            },
+            fromDateTime: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests))._BeforeTest(false, assert);
+                t.fromDateTime();
+            },
+            fromObject: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests))._BeforeTest(false, assert);
+                t.fromObject();
+            },
+            fromBoolean: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests))._BeforeTest(false, assert);
+                t.fromBoolean();
+            },
+            fromChar: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests))._BeforeTest(false, assert);
+                t.fromChar();
+            },
+            fromInt16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests))._BeforeTest(false, assert);
+                t.fromInt16();
+            },
+            fromInt32: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests))._BeforeTest(false, assert);
+                t.fromInt32();
+            },
+            fromInt64: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests))._BeforeTest(false, assert);
+                t.fromInt64();
+            },
+            fromUInt16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests))._BeforeTest(false, assert);
+                t.fromUInt16();
+            },
+            fromUInt32: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests))._BeforeTest(false, assert);
+                t.fromUInt32();
+            },
+            fromUInt64: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests))._BeforeTest(false, assert);
+                t.fromUInt64();
+            },
+            fromSingle: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests))._BeforeTest(false, assert);
+                t.fromSingle();
+            },
+            fromDouble: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests))._BeforeTest(false, assert);
+                t.fromDouble();
+            },
+            fromDecimal: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests))._BeforeTest(false, assert);
+                t.fromDecimal();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDecimalTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDecimalTests)],
+        statics: {
+            fromBoolean: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDecimalTests))._BeforeTest(false, assert);
+                t.fromBoolean();
+            },
+            fromByte: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDecimalTests))._BeforeTest(false, assert);
+                t.fromByte();
+            },
+            fromDecimal: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDecimalTests))._BeforeTest(false, assert);
+                t.fromDecimal();
+            },
+            fromDouble: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDecimalTests))._BeforeTest(false, assert);
+                t.fromDouble();
+            },
+            fromInt16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDecimalTests))._BeforeTest(false, assert);
+                t.fromInt16();
+            },
+            fromInt32: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDecimalTests))._BeforeTest(false, assert);
+                t.fromInt32();
+            },
+            fromInt64: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDecimalTests))._BeforeTest(false, assert);
+                t.fromInt64();
+            },
+            fromObject: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDecimalTests))._BeforeTest(false, assert);
+                t.fromObject();
+            },
+            fromSByte: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDecimalTests))._BeforeTest(false, assert);
+                t.fromSByte();
+            },
+            fromSingle: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDecimalTests))._BeforeTest(false, assert);
+                t.fromSingle();
+            },
+            fromString: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDecimalTests))._BeforeTest(false, assert);
+                t.fromString();
+            },
+            fromUInt16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDecimalTests))._BeforeTest(false, assert);
+                t.fromUInt16();
+            },
+            fromUInt32: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDecimalTests))._BeforeTest(false, assert);
+                t.fromUInt32();
+            },
+            fromUInt64: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDecimalTests))._BeforeTest(false, assert);
+                t.fromUInt64();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDoubleTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDoubleTests)],
+        statics: {
+            fromBoolean: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDoubleTests))._BeforeTest(false, assert);
+                t.fromBoolean();
+            },
+            fromByte: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDoubleTests))._BeforeTest(false, assert);
+                t.fromByte();
+            },
+            fromDecimal: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDoubleTests))._BeforeTest(false, assert);
+                t.fromDecimal();
+            },
+            fromDouble: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDoubleTests))._BeforeTest(false, assert);
+                t.fromDouble();
+            },
+            fromInt16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDoubleTests))._BeforeTest(false, assert);
+                t.fromInt16();
+            },
+            fromInt32: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDoubleTests))._BeforeTest(false, assert);
+                t.fromInt32();
+            },
+            fromInt64: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDoubleTests))._BeforeTest(false, assert);
+                t.fromInt64();
+            },
+            fromObject: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDoubleTests))._BeforeTest(false, assert);
+                t.fromObject();
+            },
+            fromSByte: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDoubleTests))._BeforeTest(false, assert);
+                t.fromSByte();
+            },
+            fromSingle: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDoubleTests))._BeforeTest(false, assert);
+                t.fromSingle();
+            },
+            fromString: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDoubleTests))._BeforeTest(false, assert);
+                t.fromString();
+            },
+            fromUInt16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDoubleTests))._BeforeTest(false, assert);
+                t.fromUInt16();
+            },
+            fromUInt32: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDoubleTests))._BeforeTest(false, assert);
+                t.fromUInt32();
+            },
+            fromUInt64: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToDoubleTests))._BeforeTest(false, assert);
+                t.fromUInt64();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt16Tests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt16Tests)],
+        statics: {
+            fromBoolean: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt16Tests))._BeforeTest(false, assert);
+                t.fromBoolean();
+            },
+            fromByte: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt16Tests))._BeforeTest(false, assert);
+                t.fromByte();
+            },
+            fromChar: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt16Tests))._BeforeTest(false, assert);
+                t.fromChar();
+            },
+            fromDecimal: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt16Tests))._BeforeTest(false, assert);
+                t.fromDecimal();
+            },
+            fromDouble: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt16Tests))._BeforeTest(false, assert);
+                t.fromDouble();
+            },
+            fromInt16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt16Tests))._BeforeTest(false, assert);
+                t.fromInt16();
+            },
+            fromInt32: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt16Tests))._BeforeTest(false, assert);
+                t.fromInt32();
+            },
+            fromInt64: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt16Tests))._BeforeTest(false, assert);
+                t.fromInt64();
+            },
+            fromObject: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt16Tests))._BeforeTest(false, assert);
+                t.fromObject();
+            },
+            fromSByte: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt16Tests))._BeforeTest(false, assert);
+                t.fromSByte();
+            },
+            fromSingle: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt16Tests))._BeforeTest(false, assert);
+                t.fromSingle();
+            },
+            fromString: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt16Tests))._BeforeTest(false, assert);
+                t.fromString();
+            },
+            fromStringWithBase: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt16Tests))._BeforeTest(false, assert);
+                t.fromStringWithBase();
+            },
+            fromUInt16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt16Tests))._BeforeTest(false, assert);
+                t.fromUInt16();
+            },
+            fromUInt32: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt16Tests))._BeforeTest(false, assert);
+                t.fromUInt32();
+            },
+            fromUInt64: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt16Tests))._BeforeTest(false, assert);
+                t.fromUInt64();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt32Tests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt32Tests)],
+        statics: {
+            fromBoolean: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt32Tests))._BeforeTest(false, assert);
+                t.fromBoolean();
+            },
+            fromByte: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt32Tests))._BeforeTest(false, assert);
+                t.fromByte();
+            },
+            fromChar: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt32Tests))._BeforeTest(false, assert);
+                t.fromChar();
+            },
+            fromDecimal: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt32Tests))._BeforeTest(false, assert);
+                t.fromDecimal();
+            },
+            fromDouble: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt32Tests))._BeforeTest(false, assert);
+                t.fromDouble();
+            },
+            fromInt16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt32Tests))._BeforeTest(false, assert);
+                t.fromInt16();
+            },
+            fromInt32: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt32Tests))._BeforeTest(false, assert);
+                t.fromInt32();
+            },
+            fromInt64: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt32Tests))._BeforeTest(false, assert);
+                t.fromInt64();
+            },
+            fromObject: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt32Tests))._BeforeTest(false, assert);
+                t.fromObject();
+            },
+            fromSByte: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt32Tests))._BeforeTest(false, assert);
+                t.fromSByte();
+            },
+            fromSingle: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt32Tests))._BeforeTest(false, assert);
+                t.fromSingle();
+            },
+            fromString: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt32Tests))._BeforeTest(false, assert);
+                t.fromString();
+            },
+            fromStringWithBase: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt32Tests))._BeforeTest(false, assert);
+                t.fromStringWithBase();
+            },
+            fromUInt16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt32Tests))._BeforeTest(false, assert);
+                t.fromUInt16();
+            },
+            fromUInt32: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt32Tests))._BeforeTest(false, assert);
+                t.fromUInt32();
+            },
+            fromUInt64: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt32Tests))._BeforeTest(false, assert);
+                t.fromUInt64();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt64Tests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt64Tests)],
+        statics: {
+            fromBoolean: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt64Tests))._BeforeTest(false, assert);
+                t.fromBoolean();
+            },
+            fromByte: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt64Tests))._BeforeTest(false, assert);
+                t.fromByte();
+            },
+            fromChar: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt64Tests))._BeforeTest(false, assert);
+                t.fromChar();
+            },
+            fromDecimal: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt64Tests))._BeforeTest(false, assert);
+                t.fromDecimal();
+            },
+            fromDouble: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt64Tests))._BeforeTest(false, assert);
+                t.fromDouble();
+            },
+            fromInt16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt64Tests))._BeforeTest(false, assert);
+                t.fromInt16();
+            },
+            fromInt32: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt64Tests))._BeforeTest(false, assert);
+                t.fromInt32();
+            },
+            fromInt64: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt64Tests))._BeforeTest(false, assert);
+                t.fromInt64();
+            },
+            fromObject: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt64Tests))._BeforeTest(false, assert);
+                t.fromObject();
+            },
+            fromSByte: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt64Tests))._BeforeTest(false, assert);
+                t.fromSByte();
+            },
+            fromSingle: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt64Tests))._BeforeTest(false, assert);
+                t.fromSingle();
+            },
+            fromString: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt64Tests))._BeforeTest(false, assert);
+                t.fromString();
+            },
+            fromStringWithBase: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt64Tests))._BeforeTest(false, assert);
+                t.fromStringWithBase();
+            },
+            fromUInt16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt64Tests))._BeforeTest(false, assert);
+                t.fromUInt16();
+            },
+            fromUInt32: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt64Tests))._BeforeTest(false, assert);
+                t.fromUInt32();
+            },
+            fromUInt64: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToInt64Tests))._BeforeTest(false, assert);
+                t.fromUInt64();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSByteTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSByteTests)],
+        statics: {
+            fromBoolean: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSByteTests))._BeforeTest(false, assert);
+                t.fromBoolean();
+            },
+            fromByte: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSByteTests))._BeforeTest(false, assert);
+                t.fromByte();
+            },
+            fromChar: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSByteTests))._BeforeTest(false, assert);
+                t.fromChar();
+            },
+            fromDecimal: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSByteTests))._BeforeTest(false, assert);
+                t.fromDecimal();
+            },
+            fromDouble: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSByteTests))._BeforeTest(false, assert);
+                t.fromDouble();
+            },
+            fromInt16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSByteTests))._BeforeTest(false, assert);
+                t.fromInt16();
+            },
+            fromInt32: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSByteTests))._BeforeTest(false, assert);
+                t.fromInt32();
+            },
+            fromInt64: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSByteTests))._BeforeTest(false, assert);
+                t.fromInt64();
+            },
+            fromObject: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSByteTests))._BeforeTest(false, assert);
+                t.fromObject();
+            },
+            fromSByte: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSByteTests))._BeforeTest(false, assert);
+                t.fromSByte();
+            },
+            fromSingle: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSByteTests))._BeforeTest(false, assert);
+                t.fromSingle();
+            },
+            fromString: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSByteTests))._BeforeTest(false, assert);
+                t.fromString();
+            },
+            fromStringWithBase: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSByteTests))._BeforeTest(false, assert);
+                t.fromStringWithBase();
+            },
+            fromUInt16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSByteTests))._BeforeTest(false, assert);
+                t.fromUInt16();
+            },
+            fromUInt32: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSByteTests))._BeforeTest(false, assert);
+                t.fromUInt32();
+            },
+            fromUInt64: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSByteTests))._BeforeTest(false, assert);
+                t.fromUInt64();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSingleTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSingleTests)],
+        statics: {
+            fromBoolean: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSingleTests))._BeforeTest(false, assert);
+                t.fromBoolean();
+            },
+            fromByte: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSingleTests))._BeforeTest(false, assert);
+                t.fromByte();
+            },
+            fromDecimal: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSingleTests))._BeforeTest(false, assert);
+                t.fromDecimal();
+            },
+            fromDouble: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSingleTests))._BeforeTest(false, assert);
+                t.fromDouble();
+            },
+            fromInt16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSingleTests))._BeforeTest(false, assert);
+                t.fromInt16();
+            },
+            fromInt32: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSingleTests))._BeforeTest(false, assert);
+                t.fromInt32();
+            },
+            fromInt64: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSingleTests))._BeforeTest(false, assert);
+                t.fromInt64();
+            },
+            fromObject: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSingleTests))._BeforeTest(false, assert);
+                t.fromObject();
+            },
+            fromSByte: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSingleTests))._BeforeTest(false, assert);
+                t.fromSByte();
+            },
+            fromSingle: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSingleTests))._BeforeTest(false, assert);
+                t.fromSingle();
+            },
+            fromString: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSingleTests))._BeforeTest(false, assert);
+                t.fromString();
+            },
+            fromUInt16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSingleTests))._BeforeTest(false, assert);
+                t.fromUInt16();
+            },
+            fromUInt32: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSingleTests))._BeforeTest(false, assert);
+                t.fromUInt32();
+            },
+            fromUInt64: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSingleTests))._BeforeTest(false, assert);
+                t.fromUInt64();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests)],
+        statics: {
+            fromBoxedObject: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromBoxedObject();
+            },
+            fromObject: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromObject();
+            },
+            fromDateTime: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromDateTime();
+            },
+            fromChar: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromChar();
+            },
+            fromByteBase2: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromByteBase2();
+            },
+            fromByteBase8: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromByteBase8();
+            },
+            fromByteBase10: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromByteBase10();
+            },
+            fromByteBase16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromByteBase16();
+            },
+            fromByteInvalidBase: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromByteInvalidBase();
+            },
+            fromInt16Base2: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromInt16Base2();
+            },
+            fromInt16Base8: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromInt16Base8();
+            },
+            fromInt16Base10: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromInt16Base10();
+            },
+            fromInt16Base16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromInt16Base16();
+            },
+            fromInt16InvalidBase: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromInt16InvalidBase();
+            },
+            fromInt32Base2: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromInt32Base2();
+            },
+            fromInt32Base8: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromInt32Base8();
+            },
+            fromInt32Base10: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromInt32Base10();
+            },
+            fromInt32Base16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromInt32Base16();
+            },
+            fromInt32InvalidBase: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromInt32InvalidBase();
+            },
+            fromInt64Base2: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromInt64Base2();
+            },
+            fromInt64Base8: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromInt64Base8();
+            },
+            fromInt64Base10: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromInt64Base10();
+            },
+            fromInt64Base16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromInt64Base16();
+            },
+            fromInt64InvalidBase: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromInt64InvalidBase();
+            },
+            fromBoolean: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromBoolean();
+            },
+            fromSByte: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromSByte();
+            },
+            fromByte: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromByte();
+            },
+            fromInt16Array: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromInt16Array();
+            },
+            fromUInt16Array: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromUInt16Array();
+            },
+            fromInt32Array: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromInt32Array();
+            },
+            fromUInt32Array: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromUInt32Array();
+            },
+            fromInt64Array: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromInt64Array();
+            },
+            fromUInt64Array: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromUInt64Array();
+            },
+            fromSingleArray: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromSingleArray();
+            },
+            fromDoubleArray: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromDoubleArray();
+            },
+            fromDecimalArray: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromDecimalArray();
+            },
+            fromDateTimeArray: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromDateTimeArray();
+            },
+            fromString: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromString();
+            },
+            fromIFormattable: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromIFormattable();
+            },
+            fromNonIConvertible: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToStringTests))._BeforeTest(true, assert);
+                Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToStringTests).fromNonIConvertible();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt16Tests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt16Tests)],
+        statics: {
+            fromBoolean: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt16Tests))._BeforeTest(false, assert);
+                t.fromBoolean();
+            },
+            fromByte: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt16Tests))._BeforeTest(false, assert);
+                t.fromByte();
+            },
+            fromChar: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt16Tests))._BeforeTest(false, assert);
+                t.fromChar();
+            },
+            fromDecimal: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt16Tests))._BeforeTest(false, assert);
+                t.fromDecimal();
+            },
+            fromDouble: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt16Tests))._BeforeTest(false, assert);
+                t.fromDouble();
+            },
+            fromInt16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt16Tests))._BeforeTest(false, assert);
+                t.fromInt16();
+            },
+            fromInt32: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt16Tests))._BeforeTest(false, assert);
+                t.fromInt32();
+            },
+            fromInt64: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt16Tests))._BeforeTest(false, assert);
+                t.fromInt64();
+            },
+            fromObject: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt16Tests))._BeforeTest(false, assert);
+                t.fromObject();
+            },
+            fromSByte: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt16Tests))._BeforeTest(false, assert);
+                t.fromSByte();
+            },
+            fromSingle: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt16Tests))._BeforeTest(false, assert);
+                t.fromSingle();
+            },
+            fromString: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt16Tests))._BeforeTest(false, assert);
+                t.fromString();
+            },
+            fromStringWithBase: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt16Tests))._BeforeTest(false, assert);
+                t.fromStringWithBase();
+            },
+            fromUInt16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt16Tests))._BeforeTest(false, assert);
+                t.fromUInt16();
+            },
+            fromUInt32: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt16Tests))._BeforeTest(false, assert);
+                t.fromUInt32();
+            },
+            fromUInt64: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt16Tests))._BeforeTest(false, assert);
+                t.fromUInt64();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt32Tests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt32Tests)],
+        statics: {
+            fromBoolean: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt32Tests))._BeforeTest(false, assert);
+                t.fromBoolean();
+            },
+            fromByte: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt32Tests))._BeforeTest(false, assert);
+                t.fromByte();
+            },
+            fromChar: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt32Tests))._BeforeTest(false, assert);
+                t.fromChar();
+            },
+            fromDecimal: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt32Tests))._BeforeTest(false, assert);
+                t.fromDecimal();
+            },
+            fromDouble: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt32Tests))._BeforeTest(false, assert);
+                t.fromDouble();
+            },
+            fromInt16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt32Tests))._BeforeTest(false, assert);
+                t.fromInt16();
+            },
+            fromInt32: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt32Tests))._BeforeTest(false, assert);
+                t.fromInt32();
+            },
+            fromInt64: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt32Tests))._BeforeTest(false, assert);
+                t.fromInt64();
+            },
+            fromObject: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt32Tests))._BeforeTest(false, assert);
+                t.fromObject();
+            },
+            fromSByte: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt32Tests))._BeforeTest(false, assert);
+                t.fromSByte();
+            },
+            fromSingle: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt32Tests))._BeforeTest(false, assert);
+                t.fromSingle();
+            },
+            fromString: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt32Tests))._BeforeTest(false, assert);
+                t.fromString();
+            },
+            fromStringWithBase: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt32Tests))._BeforeTest(false, assert);
+                t.fromStringWithBase();
+            },
+            fromUInt16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt32Tests))._BeforeTest(false, assert);
+                t.fromUInt16();
+            },
+            fromUInt32: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt32Tests))._BeforeTest(false, assert);
+                t.fromUInt32();
+            },
+            fromUInt64: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt32Tests))._BeforeTest(false, assert);
+                t.fromUInt64();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt64Tests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt64Tests)],
+        statics: {
+            fromBoolean: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt64Tests))._BeforeTest(false, assert);
+                t.fromBoolean();
+            },
+            fromByte: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt64Tests))._BeforeTest(false, assert);
+                t.fromByte();
+            },
+            fromChar: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt64Tests))._BeforeTest(false, assert);
+                t.fromChar();
+            },
+            fromDecimal: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt64Tests))._BeforeTest(false, assert);
+                t.fromDecimal();
+            },
+            fromDouble: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt64Tests))._BeforeTest(false, assert);
+                t.fromDouble();
+            },
+            fromInt16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt64Tests))._BeforeTest(false, assert);
+                t.fromInt16();
+            },
+            fromInt32: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt64Tests))._BeforeTest(false, assert);
+                t.fromInt32();
+            },
+            fromInt64: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt64Tests))._BeforeTest(false, assert);
+                t.fromInt64();
+            },
+            fromObject: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt64Tests))._BeforeTest(false, assert);
+                t.fromObject();
+            },
+            fromSByte: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt64Tests))._BeforeTest(false, assert);
+                t.fromSByte();
+            },
+            fromSingle: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt64Tests))._BeforeTest(false, assert);
+                t.fromSingle();
+            },
+            fromString: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt64Tests))._BeforeTest(false, assert);
+                t.fromString();
+            },
+            fromStringWithBase: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt64Tests))._BeforeTest(false, assert);
+                t.fromStringWithBase();
+            },
+            fromUInt16: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt64Tests))._BeforeTest(false, assert);
+                t.fromUInt16();
+            },
+            fromUInt32: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt64Tests))._BeforeTest(false, assert);
+                t.fromUInt32();
+            },
+            fromUInt64: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt64Tests))._BeforeTest(false, assert);
+                t.fromUInt64();
+            }
+        }
+    });
+    
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CultureInfoTests', {
         inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CultureInfoTests)],
         statics: {
@@ -3307,6 +4571,28 @@
         }
     });
     
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_OutOfMemoryExceptionTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Exceptions.OutOfMemoryExceptionTests)],
+        statics: {
+            typePropertiesAreCorrect: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Exceptions.OutOfMemoryExceptionTests))._BeforeTest(false, assert);
+                t.typePropertiesAreCorrect();
+            },
+            defaultConstructorWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Exceptions.OutOfMemoryExceptionTests))._BeforeTest(false, assert);
+                t.defaultConstructorWorks();
+            },
+            constructorWithMessageWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Exceptions.OutOfMemoryExceptionTests))._BeforeTest(false, assert);
+                t.constructorWithMessageWorks();
+            },
+            constructorWithMessageAndInnerExceptionWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Exceptions.OutOfMemoryExceptionTests))._BeforeTest(false, assert);
+                t.constructorWithMessageAndInnerExceptionWorks();
+            }
+        }
+    });
+    
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_OverflowExceptionTests', {
         inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Exceptions.OverflowExceptionTests)],
         statics: {
@@ -3365,6 +4651,28 @@
             constructorWithMessageWorks: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Exceptions.RankExceptionTests))._BeforeTest(false, assert);
                 t.constructorWithMessageWorks();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_SystemExceptionTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Exceptions.SystemExceptionTests)],
+        statics: {
+            typePropertiesAreCorrect: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Exceptions.SystemExceptionTests))._BeforeTest(false, assert);
+                t.typePropertiesAreCorrect();
+            },
+            defaultConstructorWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Exceptions.SystemExceptionTests))._BeforeTest(false, assert);
+                t.defaultConstructorWorks();
+            },
+            constructorWithMessageWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Exceptions.SystemExceptionTests))._BeforeTest(false, assert);
+                t.constructorWithMessageWorks();
+            },
+            constructorWithMessageAndInnerExceptionWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Exceptions.SystemExceptionTests))._BeforeTest(false, assert);
+                t.constructorWithMessageAndInnerExceptionWorks();
             }
         }
     });
@@ -6666,6 +7974,296 @@
                 QUnit.test("DefaultComparerCanOrderNullValues", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_ComparerTests).defaultComparerCanOrderNullValues);
                 QUnit.test("DefaultComparerUsesCompareMethodIfClassImplementsIComparable", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_ComparerTests).defaultComparerUsesCompareMethodIfClassImplementsIComparable);
                 QUnit.test("CreateWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_ComparerTests).createWorks);
+                QUnit.module("Convert");
+                QUnit.test("Convert.FromBase64 - Roundtrip1", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertFromBase64Tests).roundtrip1);
+                QUnit.test("Convert.FromBase64 - Roundtrip2", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertFromBase64Tests).roundtrip2);
+                QUnit.test("Convert.FromBase64 - Roundtrip3", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertFromBase64Tests).roundtrip3);
+                QUnit.test("Convert.FromBase64 - EmptyString", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertFromBase64Tests).emptyString);
+                QUnit.test("Convert.FromBase64 - ZeroLengthArray", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertFromBase64Tests).zeroLengthArray);
+                QUnit.test("Convert.FromBase64 - RoundtripWithPadding1", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertFromBase64Tests).roundtripWithPadding1);
+                QUnit.test("Convert.FromBase64 - RoundtripWithPadding2", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertFromBase64Tests).roundtripWithPadding2);
+                QUnit.test("Convert.FromBase64 - PartialRoundtripWithPadding1", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertFromBase64Tests).partialRoundtripWithPadding1);
+                QUnit.test("Convert.FromBase64 - PartialRoundtripWithPadding2", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertFromBase64Tests).partialRoundtripWithPadding2);
+                QUnit.test("Convert.FromBase64 - ParseWithWhitespace", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertFromBase64Tests).parseWithWhitespace);
+                QUnit.test("Convert.FromBase64 - RoundtripWithWhitespace2", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertFromBase64Tests).roundtripWithWhitespace2);
+                QUnit.test("Convert.FromBase64 - RoundtripWithWhitespace3", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertFromBase64Tests).roundtripWithWhitespace3);
+                QUnit.test("Convert.FromBase64 - RoundtripWithWhitespace4", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertFromBase64Tests).roundtripWithWhitespace4);
+                QUnit.test("Convert.FromBase64 - RoundtripWithWhitespace5", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertFromBase64Tests).roundtripWithWhitespace5);
+                QUnit.test("Convert.FromBase64 - RoundtripWithWhitespace6", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertFromBase64Tests).roundtripWithWhitespace6);
+                QUnit.test("Convert.FromBase64 - RoundtripWithWhitespace7", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertFromBase64Tests).roundtripWithWhitespace7);
+                QUnit.test("Convert.FromBase64 - RoundtripLargeString", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertFromBase64Tests).roundtripLargeString);
+                QUnit.test("Convert.FromBase64 - InvalidOffset", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertFromBase64Tests).invalidOffset);
+                QUnit.test("Convert.FromBase64 - InvalidLength", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertFromBase64Tests).invalidLength);
+                QUnit.test("Convert.FromBase64 - InvalidInput", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertFromBase64Tests).invalidInput);
+                QUnit.test("Convert.FromBase64 - InvalidCharactersInInput", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertFromBase64Tests).invalidCharactersInInput);
+                QUnit.test("Convert.ToBase64CharArray - ValidOffsetIn", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToBase64CharArrayTests).validOffsetIn);
+                QUnit.test("Convert.ToBase64CharArray - ShortInputArray", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToBase64CharArrayTests).shortInputArray);
+                QUnit.test("Convert.ToBase64CharArray - ValidOffsetOut", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToBase64CharArrayTests).validOffsetOut);
+                QUnit.test("Convert.ToBase64CharArray - InvalidInputBuffer", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToBase64CharArrayTests).invalidInputBuffer);
+                QUnit.test("Convert.ToBase64CharArray - InvalidOutputBuffer", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToBase64CharArrayTests).invalidOutputBuffer);
+                QUnit.test("Convert.ToBase64CharArray - InvalidOffsetIn", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToBase64CharArrayTests).invalidOffsetIn);
+                QUnit.test("Convert.ToBase64CharArray - InvalidOffsetOut", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToBase64CharArrayTests).invalidOffsetOut);
+                QUnit.test("Convert.ToBase64CharArray - InvalidInputLength", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToBase64CharArrayTests).invalidInputLength);
+                QUnit.test("Convert.ToBase64String - KnownByteSequence", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToBase64StringTests).knownByteSequence);
+                QUnit.test("Convert.ToBase64String - ZeroLength", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToBase64StringTests).zeroLength);
+                QUnit.test("Convert.ToBase64String - InvalidInputBuffer", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToBase64StringTests).invalidInputBuffer);
+                QUnit.test("Convert.ToBase64String - InvalidOffset", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToBase64StringTests).invalidOffset);
+                QUnit.test("Convert.ToBase64String - InvalidLength", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToBase64StringTests).invalidLength);
+                QUnit.test("Convert.ToString - FromBoxedObject", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromBoxedObject);
+                QUnit.test("Convert.ToString - FromObject", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromObject);
+                QUnit.test("Convert.ToString - FromDateTime", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromDateTime);
+                QUnit.test("Convert.ToString - FromChar", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromChar);
+                QUnit.test("Convert.ToString - FromByteBase2", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromByteBase2);
+                QUnit.test("Convert.ToString - FromByteBase8", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromByteBase8);
+                QUnit.test("Convert.ToString - FromByteBase10", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromByteBase10);
+                QUnit.test("Convert.ToString - FromByteBase16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromByteBase16);
+                QUnit.test("Convert.ToString - FromByteInvalidBase", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromByteInvalidBase);
+                QUnit.test("Convert.ToString - FromInt16Base2", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromInt16Base2);
+                QUnit.test("Convert.ToString - FromInt16Base8", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromInt16Base8);
+                QUnit.test("Convert.ToString - FromInt16Base10", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromInt16Base10);
+                QUnit.test("Convert.ToString - FromInt16Base16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromInt16Base16);
+                QUnit.test("Convert.ToString - FromInt16InvalidBase", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromInt16InvalidBase);
+                QUnit.test("Convert.ToString - FromInt32Base2", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromInt32Base2);
+                QUnit.test("Convert.ToString - FromInt32Base8", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromInt32Base8);
+                QUnit.test("Convert.ToString - FromInt32Base10", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromInt32Base10);
+                QUnit.test("Convert.ToString - FromInt32Base16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromInt32Base16);
+                QUnit.test("Convert.ToString - FromInt32InvalidBase", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromInt32InvalidBase);
+                QUnit.test("Convert.ToString - FromInt64Base2", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromInt64Base2);
+                QUnit.test("Convert.ToString - FromInt64Base8", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromInt64Base8);
+                QUnit.test("Convert.ToString - FromInt64Base10", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromInt64Base10);
+                QUnit.test("Convert.ToString - FromInt64Base16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromInt64Base16);
+                QUnit.test("Convert.ToString - FromInt64InvalidBase", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromInt64InvalidBase);
+                QUnit.test("Convert.ToString - FromBoolean", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromBoolean);
+                QUnit.test("Convert.ToString - FromSByte", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromSByte);
+                QUnit.test("Convert.ToString - FromByte", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromByte);
+                QUnit.test("Convert.ToString - FromInt16Array", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromInt16Array);
+                QUnit.test("Convert.ToString - FromUInt16Array", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromUInt16Array);
+                QUnit.test("Convert.ToString - FromInt32Array", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromInt32Array);
+                QUnit.test("Convert.ToString - FromUInt32Array", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromUInt32Array);
+                QUnit.test("Convert.ToString - FromInt64Array", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromInt64Array);
+                QUnit.test("Convert.ToString - FromUInt64Array", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromUInt64Array);
+                QUnit.test("Convert.ToString - FromSingleArray", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromSingleArray);
+                QUnit.test("Convert.ToString - FromDoubleArray", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromDoubleArray);
+                QUnit.test("Convert.ToString - FromDecimalArray", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromDecimalArray);
+                QUnit.test("Convert.ToString - FromDateTimeArray", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromDateTimeArray);
+                QUnit.test("Convert.ToString - FromString", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromString);
+                QUnit.test("Convert.ToString - FromIFormattable", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromIFormattable);
+                QUnit.test("Convert.ToString - FromNonIConvertible", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToStringTests).fromNonIConvertible);
+                QUnit.test("Convert.ToBoolean - FromBoolean", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToBooleanTests).fromBoolean);
+                QUnit.test("Convert.ToBoolean - FromByte", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToBooleanTests).fromByte);
+                QUnit.test("Convert.ToBoolean - FromDecimal", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToBooleanTests).fromDecimal);
+                QUnit.test("Convert.ToBoolean - FromDouble", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToBooleanTests).fromDouble);
+                QUnit.test("Convert.ToBoolean - FromInt16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToBooleanTests).fromInt16);
+                QUnit.test("Convert.ToBoolean - FromInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToBooleanTests).fromInt32);
+                QUnit.test("Convert.ToBoolean - FromInt64", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToBooleanTests).fromInt64);
+                QUnit.test("Convert.ToBoolean - FromString", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToBooleanTests).fromString);
+                QUnit.test("Convert.ToBoolean - FromObject", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToBooleanTests).fromObject);
+                QUnit.test("Convert.ToBoolean - FromSByte", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToBooleanTests).fromSByte);
+                QUnit.test("Convert.ToBoolean - FromSingle", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToBooleanTests).fromSingle);
+                QUnit.test("Convert.ToBoolean - FromUInt16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToBooleanTests).fromUInt16);
+                QUnit.test("Convert.ToBoolean - FromUInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToBooleanTests).fromUInt32);
+                QUnit.test("Convert.ToBoolean - FromUInt64", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToBooleanTests).fromUInt64);
+                QUnit.test("Convert.ToByte - FromBoolean", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToByteTests).fromBoolean);
+                QUnit.test("Convert.ToByte - FromChar", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToByteTests).fromChar);
+                QUnit.test("Convert.ToByte - FromDecimal", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToByteTests).fromDecimal);
+                QUnit.test("Convert.ToByte - FromDouble", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToByteTests).fromDouble);
+                QUnit.test("Convert.ToByte - FromInt16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToByteTests).fromInt16);
+                QUnit.test("Convert.ToByte - FromInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToByteTests).fromInt32);
+                QUnit.test("Convert.ToByte - FromInt64", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToByteTests).fromInt64);
+                QUnit.test("Convert.ToByte - FromObject", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToByteTests).fromObject);
+                QUnit.test("Convert.ToByte - FromSByte", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToByteTests).fromSByte);
+                QUnit.test("Convert.ToByte - FromSingle", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToByteTests).fromSingle);
+                QUnit.test("Convert.ToByte - FromString", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToByteTests).fromString);
+                QUnit.test("Convert.ToByte - FromStringWithBase", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToByteTests).fromStringWithBase);
+                QUnit.test("Convert.ToByte - FromUInt16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToByteTests).fromUInt16);
+                QUnit.test("Convert.ToByte - FromUInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToByteTests).fromUInt32);
+                QUnit.test("Convert.ToByte - FromUInt64", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToByteTests).fromUInt64);
+                QUnit.test("Convert.ToChar - FromByte", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToCharTests).fromByte);
+                QUnit.test("Convert.ToChar - FromChar", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToCharTests).fromChar);
+                QUnit.test("Convert.ToChar - FromDecimal", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToCharTests).fromDecimal);
+                QUnit.test("Convert.ToChar - FromDecimalViaObject", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToCharTests).fromDecimalViaObject);
+                QUnit.test("Convert.ToChar - FromDouble", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToCharTests).fromDouble);
+                QUnit.test("Convert.ToChar - FromDoubleViaObject", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToCharTests).fromDoubleViaObject);
+                QUnit.test("Convert.ToChar - FromInt16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToCharTests).fromInt16);
+                QUnit.test("Convert.ToChar - FromInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToCharTests).fromInt32);
+                QUnit.test("Convert.ToChar - FromInt64", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToCharTests).fromInt64);
+                QUnit.test("Convert.ToChar - FromObject", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToCharTests).fromObject);
+                QUnit.test("Convert.ToChar - FromSByte", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToCharTests).fromSByte);
+                QUnit.test("Convert.ToChar - FromSingle", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToCharTests).fromSingle);
+                QUnit.test("Convert.ToChar - FromSingleViaObject", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToCharTests).fromSingleViaObject);
+                QUnit.test("Convert.ToChar - FromString", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToCharTests).fromString);
+                QUnit.test("Convert.ToChar - FromUInt16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToCharTests).fromUInt16);
+                QUnit.test("Convert.ToChar - FromUInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToCharTests).fromUInt32);
+                QUnit.test("Convert.ToChar - FromUInt64", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToCharTests).fromUInt64);
+                QUnit.test("Convert.ToDateTime - FromString", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDateTimeTests).fromString);
+                QUnit.test("Convert.ToDateTime - FromStringWithCustomFormatProvider", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDateTimeTests).fromStringWithCustomFormatProvider);
+                QUnit.test("Convert.ToDateTime - FromDateTime", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDateTimeTests).fromDateTime);
+                QUnit.test("Convert.ToDateTime - FromObject", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDateTimeTests).fromObject);
+                QUnit.test("Convert.ToDateTime - FromBoolean", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDateTimeTests).fromBoolean);
+                QUnit.test("Convert.ToDateTime - FromChar", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDateTimeTests).fromChar);
+                QUnit.test("Convert.ToDateTime - FromInt16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDateTimeTests).fromInt16);
+                QUnit.test("Convert.ToDateTime - FromInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDateTimeTests).fromInt32);
+                QUnit.test("Convert.ToDateTime - FromInt64", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDateTimeTests).fromInt64);
+                QUnit.test("Convert.ToDateTime - FromUInt16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDateTimeTests).fromUInt16);
+                QUnit.test("Convert.ToDateTime - FromUInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDateTimeTests).fromUInt32);
+                QUnit.test("Convert.ToDateTime - FromUInt64", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDateTimeTests).fromUInt64);
+                QUnit.test("Convert.ToDateTime - FromSingle", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDateTimeTests).fromSingle);
+                QUnit.test("Convert.ToDateTime - FromDouble", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDateTimeTests).fromDouble);
+                QUnit.test("Convert.ToDateTime - FromDecimal", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDateTimeTests).fromDecimal);
+                QUnit.test("Convert.ToDecimal - FromBoolean", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDecimalTests).fromBoolean);
+                QUnit.test("Convert.ToDecimal - FromByte", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDecimalTests).fromByte);
+                QUnit.test("Convert.ToDecimal - FromDecimal", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDecimalTests).fromDecimal);
+                QUnit.test("Convert.ToDecimal - FromDouble", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDecimalTests).fromDouble);
+                QUnit.test("Convert.ToDecimal - FromInt16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDecimalTests).fromInt16);
+                QUnit.test("Convert.ToDecimal - FromInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDecimalTests).fromInt32);
+                QUnit.test("Convert.ToDecimal - FromInt64", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDecimalTests).fromInt64);
+                QUnit.test("Convert.ToDecimal - FromObject", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDecimalTests).fromObject);
+                QUnit.test("Convert.ToDecimal - FromSByte", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDecimalTests).fromSByte);
+                QUnit.test("Convert.ToDecimal - FromSingle", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDecimalTests).fromSingle);
+                QUnit.test("Convert.ToDecimal - FromString", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDecimalTests).fromString);
+                QUnit.test("Convert.ToDecimal - FromUInt16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDecimalTests).fromUInt16);
+                QUnit.test("Convert.ToDecimal - FromUInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDecimalTests).fromUInt32);
+                QUnit.test("Convert.ToDecimal - FromUInt64", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDecimalTests).fromUInt64);
+                QUnit.test("Convert.ToDouble - FromBoolean", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDoubleTests).fromBoolean);
+                QUnit.test("Convert.ToDouble - FromByte", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDoubleTests).fromByte);
+                QUnit.test("Convert.ToDouble - FromDecimal", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDoubleTests).fromDecimal);
+                QUnit.test("Convert.ToDouble - FromDouble", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDoubleTests).fromDouble);
+                QUnit.test("Convert.ToDouble - FromInt16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDoubleTests).fromInt16);
+                QUnit.test("Convert.ToDouble - FromInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDoubleTests).fromInt32);
+                QUnit.test("Convert.ToDouble - FromInt64", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDoubleTests).fromInt64);
+                QUnit.test("Convert.ToDouble - FromObject", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDoubleTests).fromObject);
+                QUnit.test("Convert.ToDouble - FromSByte", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDoubleTests).fromSByte);
+                QUnit.test("Convert.ToDouble - FromSingle", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDoubleTests).fromSingle);
+                QUnit.test("Convert.ToDouble - FromString", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDoubleTests).fromString);
+                QUnit.test("Convert.ToDouble - FromUInt16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDoubleTests).fromUInt16);
+                QUnit.test("Convert.ToDouble - FromUInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDoubleTests).fromUInt32);
+                QUnit.test("Convert.ToDouble - FromUInt64", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToDoubleTests).fromUInt64);
+                QUnit.test("Convert.ToInt16 - FromBoolean", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt16Tests).fromBoolean);
+                QUnit.test("Convert.ToInt16 - FromByte", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt16Tests).fromByte);
+                QUnit.test("Convert.ToInt16 - FromChar", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt16Tests).fromChar);
+                QUnit.test("Convert.ToInt16 - FromDecimal", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt16Tests).fromDecimal);
+                QUnit.test("Convert.ToInt16 - FromDouble", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt16Tests).fromDouble);
+                QUnit.test("Convert.ToInt16 - FromInt16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt16Tests).fromInt16);
+                QUnit.test("Convert.ToInt16 - FromInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt16Tests).fromInt32);
+                QUnit.test("Convert.ToInt16 - FromInt64", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt16Tests).fromInt64);
+                QUnit.test("Convert.ToInt16 - FromObject", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt16Tests).fromObject);
+                QUnit.test("Convert.ToInt16 - FromSByte", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt16Tests).fromSByte);
+                QUnit.test("Convert.ToInt16 - FromSingle", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt16Tests).fromSingle);
+                QUnit.test("Convert.ToInt16 - FromString", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt16Tests).fromString);
+                QUnit.test("Convert.ToInt16 - FromStringWithBase", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt16Tests).fromStringWithBase);
+                QUnit.test("Convert.ToInt16 - FromUInt16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt16Tests).fromUInt16);
+                QUnit.test("Convert.ToInt16 - FromUInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt16Tests).fromUInt32);
+                QUnit.test("Convert.ToInt16 - FromUInt64", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt16Tests).fromUInt64);
+                QUnit.test("Convert.ToInt32 - FromBoolean", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt32Tests).fromBoolean);
+                QUnit.test("Convert.ToInt32 - FromByte", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt32Tests).fromByte);
+                QUnit.test("Convert.ToInt32 - FromChar", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt32Tests).fromChar);
+                QUnit.test("Convert.ToInt32 - FromDecimal", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt32Tests).fromDecimal);
+                QUnit.test("Convert.ToInt32 - FromDouble", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt32Tests).fromDouble);
+                QUnit.test("Convert.ToInt32 - FromInt16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt32Tests).fromInt16);
+                QUnit.test("Convert.ToInt32 - FromInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt32Tests).fromInt32);
+                QUnit.test("Convert.ToInt32 - FromInt64", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt32Tests).fromInt64);
+                QUnit.test("Convert.ToInt32 - FromObject", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt32Tests).fromObject);
+                QUnit.test("Convert.ToInt32 - FromSByte", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt32Tests).fromSByte);
+                QUnit.test("Convert.ToInt32 - FromSingle", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt32Tests).fromSingle);
+                QUnit.test("Convert.ToInt32 - FromString", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt32Tests).fromString);
+                QUnit.test("Convert.ToInt32 - FromStringWithBase", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt32Tests).fromStringWithBase);
+                QUnit.test("Convert.ToInt32 - FromUInt16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt32Tests).fromUInt16);
+                QUnit.test("Convert.ToInt32 - FromUInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt32Tests).fromUInt32);
+                QUnit.test("Convert.ToInt32 - FromUInt64", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt32Tests).fromUInt64);
+                QUnit.test("Convert.ToInt64 - FromBoolean", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt64Tests).fromBoolean);
+                QUnit.test("Convert.ToInt64 - FromByte", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt64Tests).fromByte);
+                QUnit.test("Convert.ToInt64 - FromChar", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt64Tests).fromChar);
+                QUnit.test("Convert.ToInt64 - FromDecimal", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt64Tests).fromDecimal);
+                QUnit.test("Convert.ToInt64 - FromDouble", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt64Tests).fromDouble);
+                QUnit.test("Convert.ToInt64 - FromInt16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt64Tests).fromInt16);
+                QUnit.test("Convert.ToInt64 - FromInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt64Tests).fromInt32);
+                QUnit.test("Convert.ToInt64 - FromInt64", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt64Tests).fromInt64);
+                QUnit.test("Convert.ToInt64 - FromObject", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt64Tests).fromObject);
+                QUnit.test("Convert.ToInt64 - FromSByte", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt64Tests).fromSByte);
+                QUnit.test("Convert.ToInt64 - FromSingle", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt64Tests).fromSingle);
+                QUnit.test("Convert.ToInt64 - FromString", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt64Tests).fromString);
+                QUnit.test("Convert.ToInt64 - FromStringWithBase", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt64Tests).fromStringWithBase);
+                QUnit.test("Convert.ToInt64 - FromUInt16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt64Tests).fromUInt16);
+                QUnit.test("Convert.ToInt64 - FromUInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt64Tests).fromUInt32);
+                QUnit.test("Convert.ToInt64 - FromUInt64", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToInt64Tests).fromUInt64);
+                QUnit.test("Convert.ToSByte - FromBoolean", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSByteTests).fromBoolean);
+                QUnit.test("Convert.ToSByte - FromByte", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSByteTests).fromByte);
+                QUnit.test("Convert.ToSByte - FromChar", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSByteTests).fromChar);
+                QUnit.test("Convert.ToSByte - FromDecimal", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSByteTests).fromDecimal);
+                QUnit.test("Convert.ToSByte - FromDouble", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSByteTests).fromDouble);
+                QUnit.test("Convert.ToSByte - FromInt16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSByteTests).fromInt16);
+                QUnit.test("Convert.ToSByte - FromInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSByteTests).fromInt32);
+                QUnit.test("Convert.ToSByte - FromInt64", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSByteTests).fromInt64);
+                QUnit.test("Convert.ToSByte - FromObject", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSByteTests).fromObject);
+                QUnit.test("Convert.ToSByte - FromSByte", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSByteTests).fromSByte);
+                QUnit.test("Convert.ToSByte - FromSingle", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSByteTests).fromSingle);
+                QUnit.test("Convert.ToSByte - FromString", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSByteTests).fromString);
+                QUnit.test("Convert.ToSByte - FromStringWithBase", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSByteTests).fromStringWithBase);
+                QUnit.test("Convert.ToSByte - FromUInt16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSByteTests).fromUInt16);
+                QUnit.test("Convert.ToSByte - FromUInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSByteTests).fromUInt32);
+                QUnit.test("Convert.ToSByte - FromUInt64", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSByteTests).fromUInt64);
+                QUnit.test("Convert.ToSingle - FromBoolean", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSingleTests).fromBoolean);
+                QUnit.test("Convert.ToSingle - FromByte", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSingleTests).fromByte);
+                QUnit.test("Convert.ToSingle - FromDecimal", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSingleTests).fromDecimal);
+                QUnit.test("Convert.ToSingle - FromDouble", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSingleTests).fromDouble);
+                QUnit.test("Convert.ToSingle - FromInt16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSingleTests).fromInt16);
+                QUnit.test("Convert.ToSingle - FromInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSingleTests).fromInt32);
+                QUnit.test("Convert.ToSingle - FromInt64", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSingleTests).fromInt64);
+                QUnit.test("Convert.ToSingle - FromObject", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSingleTests).fromObject);
+                QUnit.test("Convert.ToSingle - FromSByte", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSingleTests).fromSByte);
+                QUnit.test("Convert.ToSingle - FromSingle", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSingleTests).fromSingle);
+                QUnit.test("Convert.ToSingle - FromString", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSingleTests).fromString);
+                QUnit.test("Convert.ToSingle - FromUInt16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSingleTests).fromUInt16);
+                QUnit.test("Convert.ToSingle - FromUInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSingleTests).fromUInt32);
+                QUnit.test("Convert.ToSingle - FromUInt64", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToSingleTests).fromUInt64);
+                QUnit.test("Convert.ToUInt16 - FromBoolean", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt16Tests).fromBoolean);
+                QUnit.test("Convert.ToUInt16 - FromByte", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt16Tests).fromByte);
+                QUnit.test("Convert.ToUInt16 - FromChar", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt16Tests).fromChar);
+                QUnit.test("Convert.ToUInt16 - FromDecimal", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt16Tests).fromDecimal);
+                QUnit.test("Convert.ToUInt16 - FromDouble", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt16Tests).fromDouble);
+                QUnit.test("Convert.ToUInt16 - FromInt16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt16Tests).fromInt16);
+                QUnit.test("Convert.ToUInt16 - FromInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt16Tests).fromInt32);
+                QUnit.test("Convert.ToUInt16 - FromInt64", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt16Tests).fromInt64);
+                QUnit.test("Convert.ToUInt16 - FromObject", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt16Tests).fromObject);
+                QUnit.test("Convert.ToUInt16 - FromSByte", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt16Tests).fromSByte);
+                QUnit.test("Convert.ToUInt16 - FromSingle", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt16Tests).fromSingle);
+                QUnit.test("Convert.ToUInt16 - FromString", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt16Tests).fromString);
+                QUnit.test("Convert.ToUInt16 - FromStringWithBase", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt16Tests).fromStringWithBase);
+                QUnit.test("Convert.ToUInt16 - FromUInt16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt16Tests).fromUInt16);
+                QUnit.test("Convert.ToUInt16 - FromUInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt16Tests).fromUInt32);
+                QUnit.test("Convert.ToUInt16 - FromUInt64", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt16Tests).fromUInt64);
+                QUnit.test("Convert.ToUInt32 - FromBoolean", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt32Tests).fromBoolean);
+                QUnit.test("Convert.ToUInt32 - FromByte", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt32Tests).fromByte);
+                QUnit.test("Convert.ToUInt32 - FromChar", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt32Tests).fromChar);
+                QUnit.test("Convert.ToUInt32 - FromDecimal", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt32Tests).fromDecimal);
+                QUnit.test("Convert.ToUInt32 - FromDouble", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt32Tests).fromDouble);
+                QUnit.test("Convert.ToUInt32 - FromInt16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt32Tests).fromInt16);
+                QUnit.test("Convert.ToUInt32 - FromInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt32Tests).fromInt32);
+                QUnit.test("Convert.ToUInt32 - FromInt64", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt32Tests).fromInt64);
+                QUnit.test("Convert.ToUInt32 - FromObject", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt32Tests).fromObject);
+                QUnit.test("Convert.ToUInt32 - FromSByte", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt32Tests).fromSByte);
+                QUnit.test("Convert.ToUInt32 - FromSingle", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt32Tests).fromSingle);
+                QUnit.test("Convert.ToUInt32 - FromString", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt32Tests).fromString);
+                QUnit.test("Convert.ToUInt32 - FromStringWithBase", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt32Tests).fromStringWithBase);
+                QUnit.test("Convert.ToUInt32 - FromUInt16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt32Tests).fromUInt16);
+                QUnit.test("Convert.ToUInt32 - FromUInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt32Tests).fromUInt32);
+                QUnit.test("Convert.ToUInt32 - FromUInt64", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt32Tests).fromUInt64);
+                QUnit.test("Convert.ToUInt64 - FromBoolean", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt64Tests).fromBoolean);
+                QUnit.test("Convert.ToUInt64 - FromByte", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt64Tests).fromByte);
+                QUnit.test("Convert.ToUInt64 - FromChar", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt64Tests).fromChar);
+                QUnit.test("Convert.ToUInt64 - FromDecimal", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt64Tests).fromDecimal);
+                QUnit.test("Convert.ToUInt64 - FromDouble", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt64Tests).fromDouble);
+                QUnit.test("Convert.ToUInt64 - FromInt16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt64Tests).fromInt16);
+                QUnit.test("Convert.ToUInt64 - FromInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt64Tests).fromInt32);
+                QUnit.test("Convert.ToUInt64 - FromInt64", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt64Tests).fromInt64);
+                QUnit.test("Convert.ToUInt64 - FromObject", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt64Tests).fromObject);
+                QUnit.test("Convert.ToUInt64 - FromSByte", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt64Tests).fromSByte);
+                QUnit.test("Convert.ToUInt64 - FromSingle", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt64Tests).fromSingle);
+                QUnit.test("Convert.ToUInt64 - FromString", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt64Tests).fromString);
+                QUnit.test("Convert.ToUInt64 - FromStringWithBase", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt64Tests).fromStringWithBase);
+                QUnit.test("Convert.ToUInt64 - FromUInt16", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt64Tests).fromUInt16);
+                QUnit.test("Convert.ToUInt64 - FromUInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt64Tests).fromUInt32);
+                QUnit.test("Convert.ToUInt64 - FromUInt64", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt64Tests).fromUInt64);
                 QUnit.module("Date and time");
                 QUnit.test("DateTimeFormatInfo - TypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_DateTimeFormatInfoTests).typePropertiesAreCorrect);
                 QUnit.test("DateTimeFormatInfo - GetFormatWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_DateTimeFormatInfoTests).getFormatWorks);
@@ -6881,6 +8479,10 @@
                 QUnit.test("OperationCanceledException - MessageAndInnerExceptionConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_OperationCanceledExceptionTests).messageAndInnerExceptionConstructorWorks);
                 QUnit.test("OperationCanceledException - MessageAndCancellationTokenConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_OperationCanceledExceptionTests).messageAndCancellationTokenConstructorWorks);
                 QUnit.test("OperationCanceledException - MessageAndInnerExceptionAndCancellationTokenConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_OperationCanceledExceptionTests).messageAndInnerExceptionAndCancellationTokenConstructorWorks);
+                QUnit.test("OutOfMemoryException - TypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_OutOfMemoryExceptionTests).typePropertiesAreCorrect);
+                QUnit.test("OutOfMemoryException - DefaultConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_OutOfMemoryExceptionTests).defaultConstructorWorks);
+                QUnit.test("OutOfMemoryException - ConstructorWithMessageWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_OutOfMemoryExceptionTests).constructorWithMessageWorks);
+                QUnit.test("OutOfMemoryException - ConstructorWithMessageAndInnerExceptionWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_OutOfMemoryExceptionTests).constructorWithMessageAndInnerExceptionWorks);
                 QUnit.test("OverflowException - TypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_OverflowExceptionTests).typePropertiesAreCorrect);
                 QUnit.test("OverflowException - DefaultConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_OverflowExceptionTests).defaultConstructorWorks);
                 QUnit.test("OverflowException - ConstructorWithMessageWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_OverflowExceptionTests).constructorWithMessageWorks);
@@ -6892,6 +8494,10 @@
                 QUnit.test("RankException - TypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_RankExceptionTests).typePropertiesAreCorrect);
                 QUnit.test("RankException - DefaultConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_RankExceptionTests).defaultConstructorWorks);
                 QUnit.test("RankException - ConstructorWithMessageWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_RankExceptionTests).constructorWithMessageWorks);
+                QUnit.test("SystemException - TypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_SystemExceptionTests).typePropertiesAreCorrect);
+                QUnit.test("SystemException - DefaultConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_SystemExceptionTests).defaultConstructorWorks);
+                QUnit.test("SystemException - ConstructorWithMessageWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_SystemExceptionTests).constructorWithMessageWorks);
+                QUnit.test("SystemException - ConstructorWithMessageAndInnerExceptionWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_SystemExceptionTests).constructorWithMessageAndInnerExceptionWorks);
                 QUnit.test("TaskCanceledException - TypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_TaskCanceledExceptionTests).typePropertiesAreCorrect);
                 QUnit.test("TaskCanceledException - DefaultConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_TaskCanceledExceptionTests).defaultConstructorWorks);
                 QUnit.test("TaskCanceledException - MessageOnlyConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_TaskCanceledExceptionTests).messageOnlyConstructorWorks);

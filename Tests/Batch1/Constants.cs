@@ -43,6 +43,8 @@ namespace Bridge.ClientTest
         public const string MODULE_MATH = "Math";
         public const string MODULE_DECIMAL_MATH = "Decimal Math";
 
+        public const string MODULE_CONVERT = "Convert";
+
         public const string MODULE_ICOLLECTION = PREFIX_COLLECTIONS; // + "ICollection";
         public const string MODULE_IDICTIONARY = PREFIX_COLLECTIONS; // + "IDictionary";
         public const string MODULE_LIST = PREFIX_COLLECTIONS; // + "List";
@@ -71,6 +73,8 @@ namespace Bridge.ClientTest
         public const string MODULE_DIVIDEBYZEROEXCEPTION = PREFIX_EXCEPTIONS; // + "DivideByZeroException";
         public const string MODULE_NOTIMPLEMENTEDEXCEPTION = PREFIX_EXCEPTIONS; // + "NotImplementedException";
         public const string MODULE_OVERFLOWEXCEPTION = PREFIX_EXCEPTIONS; // + "OverflowException";
+        public const string MODULE_OUTOFMEMORYEXCEPTION = PREFIX_EXCEPTIONS; // + "OutOfMemoryException";
+        public const string MODULE_SYSTEMEXCEPTION = PREFIX_EXCEPTIONS; // + "SystemException";
         public const string MODULE_ARITHMETICEXCEPTION = PREFIX_EXCEPTIONS; // + "ArithmeticException";
         public const string MODULE_FORMATEXCEPTION = PREFIX_EXCEPTIONS; // + "FormatException";
         public const string MODULE_INVALIDOPERATIONEXCEPTION = PREFIX_EXCEPTIONS; // + "InvalidOperationException";
