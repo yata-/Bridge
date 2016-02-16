@@ -8324,7 +8324,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
                     break;
             }
 
-            // TODO: When IConvertible is implemented, try it before throwing InvalidCastEx
+            // TODO: #822 When IConvertible is implemented, try it before throwing InvalidCastEx
             var typeCode = scope.internal.suggestTypeCode(value);
             scope.internal.throwInvalidCastEx(typeCode, scope.convert.typeCodes.Boolean);
 
@@ -8380,7 +8380,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
                 }
             }
 
-            // TODO: When IConvertible is implemented, try it before throwing InvalidCastEx
+            // TODO: #822 When IConvertible is implemented, try it before throwing InvalidCastEx
             scope.internal.throwInvalidCastEx(valueTypeCode, scope.convert.typeCodes.Char);
 
             // try converting using IConvertible
@@ -8476,11 +8476,10 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
                     break;
             }
 
-            // TODO: When IConvertible is implemented, try it before throwing InvalidCastEx
+            // TODO: #822 When IConvertible is implemented, try it before throwing InvalidCastEx
             var valueTypeCode = scope.internal.suggestTypeCode(value);
             scope.internal.throwInvalidCastEx(valueTypeCode, scope.convert.typeCodes.DateTime);
 
-            // try converting using IConvertible
             // try converting using IConvertible
             return scope.convert.convertToType(typeCodes.DateTime, value, formatProvider);
         },
@@ -8646,7 +8645,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
             var minValue = scope.internal.getMinValue(typeCode);
             var maxValue = scope.internal.getMaxValue(typeCode);
 
-            // TODO: Remove this temp solution when (U)Int64 is fully supported
+            // TODO: #778 Remove this temp solution when (U)Int64 is fully supported
             if (toBase !== 10) {
                 if (typeCode === typeCodes.Int64) {
                     minValue = scope.internal.getMinValue(typeCodes.Int32);
@@ -8834,7 +8833,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         },
 
         convertToType: function (typeCode, value, formatProvider) {
-            //TODO: IConvertible 
+            //TODO: #822 IConvertible 
             throw new Bridge.NotSupportedException("IConvertible interface is not supported.");
         }
     };
@@ -9110,7 +9109,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
                     break;
             }
 
-            // TODO: When IConvertible is implemented, try it before throwing InvalidCastEx
+            // TODO: #822 When IConvertible is implemented, try it before throwing InvalidCastEx
             valueTypeCode = valueTypeCode || scope.internal.suggestTypeCode(value);
             scope.internal.throwInvalidCastEx(valueTypeCode, typeCode);
 
