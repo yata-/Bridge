@@ -1,7 +1,5 @@
-﻿// @source Convert.js
+﻿    // @source Convert.js
 
-
-(function () {
     var scope = {};
 
     scope.convert = {
@@ -28,6 +26,7 @@
 
         toBoolean: function (value, formatProvider) {
             var type = typeof (value);
+
             switch (type) {
                 case "boolean":
                     return value;
@@ -37,13 +36,12 @@
 
                 case "string":
                     var lowCaseVal = value.toLowerCase().trim();
+
                     if (lowCaseVal === "true") {
                         return true;
-                    }
-                    else if (lowCaseVal === "false") {
+                    } else if (lowCaseVal === "false") {
                         return false;
-                    }
-                    else {
+                    } else {
                         throw new Bridge.FormatException("String was not recognized as a valid Boolean.");
                     }
 
@@ -51,6 +49,7 @@
                     if (value == null) {
                         return false;
                     }
+
                     if (value instanceof Bridge.Decimal) {
                         return !value.isZero();
                     }
@@ -87,20 +86,24 @@
 
                     case "number":
                         var isFloatingType = scope.internal.isFloatingType(valueTypeCode);
+
                         if (isFloatingType || value % 1 !== 0) {
                             scope.internal.throwInvalidCastEx(valueTypeCode, typeCodes.Char);
                         }
 
                         scope.internal.validateNumberRange(value, typeCodes.Char, true);
+
                         return value;
 
                     case "string":
                         if (value == null) {
                             throw new Bridge.ArgumentNullException("value");
                         }
+
                         if (value.length !== 1) {
                             throw new Bridge.FormatException("String must be exactly one character long.");
                         }
+
                         return value.charCodeAt(0);
                 }
             }
@@ -109,6 +112,7 @@
                 if (value == null) {
                     return 0;
                 }
+
                 if (Bridge.isDate(value)) {
                     scope.internal.throwInvalidCastEx(typeCodes.DateTime, typeCodes.Char);
                 }
@@ -123,51 +127,61 @@
 
         toSByte: function (value, formatProvider, valueTypeCode) {
             var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.SByte, valueTypeCode);
+
             return result;
         },
 
         toByte: function (value, formatProvider) {
             var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.Byte);
+
             return result;
         },
 
         toInt16: function (value, formatProvider) {
             var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.Int16);
+
             return result;
         },
 
         toUInt16: function (value, formatProvider) {
             var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.UInt16);
+
             return result;
         },
 
         toInt32: function (value, formatProvider) {
             var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.Int32);
+
             return result;
         },
 
         toUInt32: function (value, formatProvider) {
             var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.UInt32);
+
             return result;
         },
 
         toInt64: function (value, formatProvider) {
             var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.Int64);
+
             return result;
         },
 
         toUInt64: function (value, formatProvider) {
             var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.UInt64);
+
             return result;
         },
 
         toSingle: function (value, formatProvider) {
             var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.Single);
+
             return result;
         },
 
         toDouble: function (value, formatProvider) {
             var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.Double);
+
             return result;
         },
 
@@ -178,6 +192,7 @@
 
             var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.Decimal);
             result = new Bridge.Decimal(result);
+
             return result;
         },
 
@@ -195,18 +210,22 @@
 
                 case "string":
                     value = Bridge.Date.parse(value, formatProvider);
+
                     return value;
 
                 case "object":
                     if (value == null) {
                         return scope.internal.getMinValue(typeCodes.DateTime);
                     }
+
                     if (Bridge.isDate(value)) {
                         return value;
                     }
+
                     if (value instanceof Bridge.Decimal) {
                         scope.internal.throwInvalidCastEx(typeCodes.Decimal, typeCodes.DateTime);
                     }
+
                     break;
             }
 
@@ -248,9 +267,11 @@
                     if (value == null) {
                         return "";
                     }
+
                     if (Bridge.isDate(value)) {
                         return Bridge.Date.format(value, null, formatProvider);
                     }
+
                     if (value instanceof Bridge.Decimal) {
                         if (value.isInteger()) {
                             return value.toFixed(0, 4);
@@ -263,6 +284,7 @@
                     }
 
                     var typeName = Bridge.getTypeName(value);
+
                     return typeName;
             }
 
@@ -274,9 +296,11 @@
             if (fromBase !== 2 && fromBase !== 8 && fromBase !== 10 && fromBase !== 16) {
                 throw new Bridge.ArgumentException("Invalid Base.");
             }
+
             if (str == null) {
                 return 0;
             }
+
             if (str.length === 0) {
                 throw new Bridge.ArgumentOutOfRangeException("Index was out of range. Must be non-negative and less than the size of the collection.");
             }
@@ -290,10 +314,12 @@
             // Calculate offset (start index)
             var isNegative = false;
             var startIndex = 0;
+
             if (str[startIndex] === "-") {
                 if (fromBase !== 10) {
                     throw new Bridge.ArgumentException("String cannot contain a minus sign if the base is not 10.");
                 }
+
                 if (minValue >= 0) {
                     throw new Bridge.OverflowException("The string was being parsed as an unsigned number and could not have a negative sign.");
                 }
@@ -310,6 +336,7 @@
 
             // Fill allowed codes for the specified base:
             var allowedCodes;
+
             if (fromBase === 2) {
                 allowedCodes = scope.internal.charsToCodes("01");
             } else if (fromBase === 8) {
@@ -324,16 +351,19 @@
 
             // Create charCode-to-Value map
             var codeValues = {};
+
             for (var i = 0; i < allowedCodes.length; i++) {
                 var allowedCode = allowedCodes[i];
                 codeValues[allowedCode] = i;
             }
+
             var firstAllowed = allowedCodes[0];
             var lastAllowed = allowedCodes[allowedCodes.length - 1];
 
             // Parse the number:
             var res = 0;
             var totalMax = maxValue - minValue + 1;
+
             for (var j = startIndex; j < str.length; j++) {
                 var code = str[j].charCodeAt(0);
 
@@ -372,6 +402,7 @@
 
         toStringInBase: function (value, toBase, typeCode) {
             var typeCodes = scope.convert.typeCodes;
+
             if (toBase !== 2 && toBase !== 8 && toBase !== 10 && toBase !== 16) {
                 throw new Bridge.ArgumentException("Invalid Base.");
             }
@@ -397,6 +428,7 @@
 
             // Handle negative numbers:
             var isNegative = false;
+
             if (value < 0) {
                 if (toBase === 10) {
                     isNegative = true;
@@ -408,6 +440,7 @@
 
             // Fill allowed codes for the specified base:
             var allowedChars;
+
             if (toBase === 2) {
                 allowedChars = "01";
             } else if (toBase === 8) {
@@ -423,6 +456,7 @@
             // Fill Value-To-Char map:
             var charByValues = {};
             var allowedCharArr = allowedChars.split("");
+
             for (var i = 0; i < allowedCharArr.length; i++) {
                 var allowedChar = allowedCharArr[i];
                 charByValues[i] = allowedChar;
@@ -430,6 +464,7 @@
 
             // Parse the number:
             var res = "";
+
             if (value === 0) {
                 res = "0";
             } else {
@@ -447,6 +482,7 @@
             }
 
             res = res.split("").reverse().join("");
+
             return res;
         },
 
@@ -463,17 +499,21 @@
             if (length < 0) {
                 throw new Bridge.ArgumentOutOfRangeException("length", "Index was out of range. Must be non-negative and less than the size of the collection.");
             }
+
             if (offset < 0) {
                 throw new Bridge.ArgumentOutOfRangeException("offset", "Value must be positive.");
             }
+
             if (options < 0 || options > 1) {
                 throw new Bridge.ArgumentException("Illegal enum value.");
             }
 
             var inArrayLength = inArray.length;
+
             if (offset > (inArrayLength - length)) {
                 throw new Bridge.ArgumentOutOfRangeException("offset", "Offset and length must refer to a position in the string.");
             }
+
             if (inArrayLength === 0) {
                 return "";
             }
@@ -485,7 +525,9 @@
             strArray.length = strArrayLen;
 
             scope.internal.convertToBase64Array(strArray, inArray, offset, length, insertLineBreaks);
+
             var str = strArray.join("");
+
             return str;
         },
 
@@ -493,27 +535,34 @@
             if (inArray == null) {
                 throw new Bridge.ArgumentNullException("inArray");
             }
+
             if (outArray == null) {
                 throw new Bridge.ArgumentNullException("outArray");
             }
+
             if (length < 0) {
                 throw new Bridge.ArgumentOutOfRangeException("length", "Index was out of range. Must be non-negative and less than the size of the collection.");
             }
+
             if (offsetIn < 0) {
                 throw new Bridge.ArgumentOutOfRangeException("offsetIn", "Value must be positive.");
             }
+
             if (offsetOut < 0) {
                 throw new Bridge.ArgumentOutOfRangeException("offsetOut", "Value must be positive.");
             }
 
             options = options || 0;     // 0 - means "None", 1 - stands for "InsertLineBreaks"
+
             if (options < 0 || options > 1) {
                 throw new Bridge.ArgumentException("Illegal enum value.");
             }
             var inArrayLength = inArray.length;
+
             if (offsetIn > inArrayLength - length) {
                 throw new Bridge.ArgumentOutOfRangeException("offsetIn", "Offset and length must refer to a position in the string.");
             }
+
             if (inArrayLength === 0) {
                 return 0;
             }
@@ -532,6 +581,7 @@
             var charsArrLength = scope.internal.convertToBase64Array(charsArr, inArray, offsetIn, length, insertLineBreaks);
 
             scope.internal.charsToCodes(charsArr, outArray, offsetOut);
+
             return charsArrLength;
         },
 
@@ -544,6 +594,7 @@
 
             var sChars = s.split("");
             var bytes = scope.internal.fromBase64CharPtr(sChars, 0, sChars.length);
+
             return bytes;
         },
 
@@ -551,18 +602,22 @@
             if (inArray == null) {
                 throw new Bridge.ArgumentNullException("inArray");
             }
+
             if (length < 0) {
                 throw new Bridge.ArgumentOutOfRangeException("length", "Index was out of range. Must be non-negative and less than the size of the collection.");
             }
+
             if (offset < 0) {
                 throw new Bridge.ArgumentOutOfRangeException("offset", "Value must be positive.");
             }
+
             if (offset > (inArray.length - length)) {
                 throw new Bridge.ArgumentOutOfRangeException("offset", "Offset and length must refer to a position in the string.");
             }
 
             var chars = scope.internal.codesToChars(inArray);
             var bytes = scope.internal.fromBase64CharPtr(chars, offset, length);
+
             return bytes;
         },
 
@@ -626,20 +681,25 @@
 
             if (scope.internal.typeCodeNames == null) {
                 var names = {};
+
                 for (var codeName in typeCodes) {
-                    if (!typeCodes.hasOwnProperty(codeName))
+                    if (!typeCodes.hasOwnProperty(codeName)) {
                         continue;
+                    }
 
                     var codeValue = typeCodes[codeName];
+
                     names[codeValue] = codeName;
                 }
                 scope.internal.typeCodeNames = names;
             }
 
             var name = scope.internal.typeCodeNames[typeCode];
+
             if (name == null) {
                 throw Bridge.ArgumentOutOfRangeException("typeCode", "The specified typeCode is undefined.");
             }
+
             return name;
         },
 
@@ -664,9 +724,11 @@
                     if (Bridge.isDate(value)) {
                         return typeCodes.DateTime;
                     }
+
                     if (value != null) {
                         return typeCodes.Object;
                     }
+
                     break;
             }
             return null;
@@ -749,6 +811,7 @@
                 typeCode === typeCodes.Single ||
                 typeCode === typeCodes.Double ||
                 typeCode === typeCodes.Decimal;
+
             return isFloatingType;
         },
 
@@ -774,6 +837,7 @@
                 case "number":
                     if (typeCode === typeCodes.Decimal) {
                         scope.internal.validateNumberRange(value, typeCode, true);
+
                         return new Bridge.Decimal(value, formatProvider);
                     }
 
@@ -800,6 +864,7 @@
                         if (formatProvider != null) {
                             throw new Bridge.ArgumentNullException("String", "Value cannot be null.");
                         }
+
                         return 0;
                     }
 
@@ -823,6 +888,7 @@
                         if (!/^[+-]?[0-9]+$/.test(value)) {
                             throw new Bridge.FormatException("Input string was not in a correct format.");
                         }
+
                         value = parseInt(value, 10);
                     }
 
@@ -831,15 +897,18 @@
                     }
 
                     scope.internal.validateNumberRange(value, typeCode, true);
+
                     return value;
 
                 case "object":
                     if (value == null) {
                         return 0;
                     }
+
                     if (Bridge.isDate(value)) {
                         scope.internal.throwInvalidCastEx(scope.convert.typeCodes.DateTime, typeCode);
                     }
+
                     break;
             }
 
@@ -859,6 +928,7 @@
 
             if (typeCode === typeCodes.Single ||
                 typeCode === typeCodes.Double) {
+
                 if (!denyInfinity && (value === Infinity || value === -Infinity)) {
                     return;
                 }
@@ -875,6 +945,7 @@
             }
 
             var intPart;
+
             if (value >= 0) {
                 intPart = Math.floor(value);
             } else {
@@ -891,17 +962,19 @@
                     if (floatPart > 0.5 || floatPart === 0.5 && (intPart & 1) !== 0) {
                         ++intPart;
                     }
+
                     return intPart;
                 }
-            }
-            else if (value >= (minValue - 0.5)) {
+            } else if (value >= (minValue - 0.5)) {
                 if (floatPart < -0.5 || floatPart === -0.5 && (intPart & 1) !== 0) {
                     --intPart;
                 }
+
                 return intPart;
             }
 
             var typeName = scope.internal.getTypeCodeName(typeCode);
+
             throw new Bridge.OverflowException("Value was either too large or too small for an '" + typeName + "'.");
         },
 
@@ -917,9 +990,11 @@
 
             if (insertLineBreaks) {
                 var newLines = ~~(outlen / base64LineBreakPosition);
+
                 if ((outlen % base64LineBreakPosition) === 0) {
                     --newLines;
                 }
+
                 outlen += newLines * 2;                     // the number of line break chars we'll add, "\r\n"
             }
 
@@ -942,6 +1017,7 @@
 
             // Convert three bytes at a time to base64 notation.  This will consume 4 chars.
             var i;
+
             for (i = offset; i < calcLength; i += 3) {
                 if (insertLineBreaks) {
                     if (charCount === base64LineBreakPosition) {
@@ -949,8 +1025,10 @@
                         outChars[j++] = "\n";
                         charCount = 0;
                     }
+
                     charCount += 4;
                 }
+
                 outChars[j] = base64Table[(inData[i] & 0xfc) >> 2];
                 outChars[j + 1] = base64Table[((inData[i] & 0x03) << 4) | ((inData[i + 1] & 0xf0) >> 4)];
                 outChars[j + 2] = base64Table[((inData[i + 1] & 0x0f) << 2) | ((inData[i + 2] & 0xc0) >> 6)];
@@ -991,6 +1069,7 @@
             if (inputLength < 0) {
                 throw new Bridge.ArgumentOutOfRangeException("inputLength", "Index was out of range. Must be non-negative and less than the size of the collection.");
             }
+
             if (offset < 0) {
                 throw new Bridge.ArgumentOutOfRangeException("offset", "Value must be positive.");
             }
@@ -999,6 +1078,7 @@
             // Otherwise we would be rejecting input such as "abc= ":
             while (inputLength > 0) {
                 var lastChar = input[offset + inputLength - 1];
+
                 if (lastChar !== " " && lastChar !== "\n" && lastChar !== "\r" && lastChar !== "\t") {
                     break;
                 }
@@ -1008,6 +1088,7 @@
 
             // Compute the output length:
             var resultLength = scope.internal.fromBase64_ComputeResultLength(input, offset, inputLength);
+
             if (0 > resultLength) {
                 throw new Bridge.InvalidOperationException("Contract voilation: 0 <= resultLength.");
             }
@@ -1172,14 +1253,15 @@
                     // Otherwise we would be rejecting input such as "abc= =":
                     while (inputIndex < (endInputIndex - 1)) {
                         var lastChar = input[inputIndex];
+
                         if (lastChar !== " " && lastChar !== "\n" && lastChar !== "\r" && lastChar !== "\t") {
                             break;
                         }
+
                         inputIndex++;
                     }
 
                     if (inputIndex === (endInputIndex - 1) && input[inputIndex] === "=") {
-
                         // Code is zero for each of the two '=':
                         currBlockCodes <<= 12;
 
@@ -1249,6 +1331,7 @@
             if (0 > usefulInputLength) {
                 throw new Bridge.InvalidOperationException("Contract violation: 0 <= usefulInputLength.");
             }
+
             if (0 > padding) {
                 // For legal input, we can assume that 0 <= padding < 3. But it may be more for illegal input.
                 // We will notice it at decode when we see a '=' at the wrong place.
@@ -1258,7 +1341,6 @@
             // Perf: reuse the variable that stored the number of '=' to store the number of bytes encoded by the
             // last group that contains the '=':
             if (padding !== 0) {
-
                 if (padding === 1) {
                     padding = 2;
                 } else if (padding === 2) {
@@ -1278,6 +1360,7 @@
             }
 
             codesOffset = codesOffset || 0;
+
             if (codes == null) {
                 codes = [];
                 codes.length = chars.length;
@@ -1296,8 +1379,10 @@
             }
 
             chars = chars || [];
+
             for (var i = 0; i < codes.length; i++) {
                 var code = codes[i];
+
                 chars[i] = String.fromCharCode(code);
             }
 
@@ -1313,4 +1398,3 @@
     };
 
     Bridge.Convert = scope.convert;
-})();
