@@ -731,38 +731,38 @@ namespace Bridge.Html5
         /// <summary>
         /// Returns the event handling code for the touchstart event.
         /// </summary>
-        [Name("onTouchStart")]
-        public Action<Event> OnTouchStart;
+        [Name("ontouchstart")]
+        public Action<TouchEvent> OnTouchStart;
 
         /// <summary>
         /// Returns the event handling code for the touchend event.
         /// </summary>
-        [Name("onTouchEnd")]
-        public Action<Event> OnTouchEnd;
+        [Name("ontouchend")]
+        public Action<TouchEvent> OnTouchEnd;
 
         /// <summary>
         /// Returns the event handling code for the touchmove event.
         /// </summary>
-        [Name("onTouchMove")]
-        public Action<Event> OnTouchMove;
+        [Name("ontouchmove")]
+        public Action<TouchEvent> OnTouchMove;
 
         /// <summary>
         /// Returns the event handling code for the touchenter event.
         /// </summary>
-        [Name("onTouchEnter")]
-        public Action<Event> OnTouchEnter;
+        [Name("ontouchenter")]
+        public Action<TouchEvent> OnTouchEnter;
 
         /// <summary>
         /// Returns the event handling code for the touchleave event.
         /// </summary>
-        [Name("onTouchLeave")]
-        public Action<Event> OnTouchLeave;
+        [Name("ontouchleave")]
+        public Action<TouchEvent> OnTouchLeave;
 
         /// <summary>
         /// Returns the event handling code for the touchcancel event.
         /// </summary>
-        [Name("onTouchCancel")]
-        public Action<Event> OnTouchCancel;
+        [Name("ontouchcancel")]
+        public Action<TouchEvent> OnTouchCancel;
 
         /// <summary>
         /// Removes keyboard focus from the currently focused element.
@@ -1137,37 +1137,37 @@ namespace Bridge.Html5
         /// <summary>
         /// Returns the event handling code for the touchstart event.
         /// </summary>
-        [Name("onTouchStart")]
-        public new Action<Event<TCurrentTarget>> OnTouchStart;
+        [Name("ontouchstart")]
+        public new Action<TouchEvent<TCurrentTarget>> OnTouchStart;
 
         /// <summary>
         /// Returns the event handling code for the touchend event.
         /// </summary>
-        [Name("onTouchEnd")]
-        public new Action<Event<TCurrentTarget>> OnTouchEnd;
+        [Name("ontouchend")]
+        public new Action<TouchEvent<TCurrentTarget>> OnTouchEnd;
 
         /// <summary>
         /// Returns the event handling code for the touchmove event.
         /// </summary>
-        [Name("onTouchMove")]
-        public new Action<Event<TCurrentTarget>> OnTouchMove;
+        [Name("ontouchmove")]
+        public new Action<TouchEvent<TCurrentTarget>> OnTouchMove;
 
         /// <summary>
         /// Returns the event handling code for the touchenter event.
         /// </summary>
-        [Name("onTouchEnter")]
-        public new Action<Event<TCurrentTarget>> OnTouchEnter;
+        [Name("ontouchenter")]
+        public new Action<TouchEvent<TCurrentTarget>> OnTouchEnter;
 
         /// <summary>
         /// Returns the event handling code for the touchleave event.
         /// </summary>
-        [Name("onTouchLeave")]
-        public new Action<Event<TCurrentTarget>> OnTouchLeave;
+        [Name("ontouchleave")]
+        public new Action<TouchEvent<TCurrentTarget>> OnTouchLeave;
 
         /// <summary>
         /// Returns the event handling code for the touchcancel event.
         /// </summary>
-        [Name("onTouchCancel")]
-        public new Action<Event<TCurrentTarget>> OnTouchCancel;
+        [Name("ontouchcancel")]
+        public new Action<TouchEvent<TCurrentTarget>> OnTouchCancel;
     }
 }
