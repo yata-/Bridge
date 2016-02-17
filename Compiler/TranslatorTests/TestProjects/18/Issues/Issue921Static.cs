@@ -1,10 +1,8 @@
-﻿using Bridge;
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 //#921
-namespace TestIssue921
+namespace TestIssue921Static
 {
 
     public class Issue921Static
