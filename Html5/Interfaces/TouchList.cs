@@ -15,10 +15,15 @@ namespace Bridge.Html5
         /// </summary>
         public readonly int Length;
 
+
+        //public virtual extern Touch Item(int index);
+
         /// <summary>
         /// Returns the <see cref="Touch"/> object at the specified index in the list.
         /// </summary>
-        public virtual extern Touch Item(int index);
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public extern Touch this[int index] { get; set; }
 
         /// <summary>
         /// Returns enumerator of <see cref="Touch"/> objects in the TouchList
