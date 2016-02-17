@@ -36,11 +36,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Issues\TestIssue379.cs" />
-    <Compile Include="Issues\TestIssue434.cs" />
-    <Compile Include="Issues\TestIssue948.cs" />
-    <Compile Include="Issues\TestIssue599ReadyAttribute.cs" />
-    <Compile Include="Issues\TestIssue461.cs" />
+    <Compile Include="Issues\Issue379.cs" />
+    <Compile Include="Issues\Issue434.cs" />
+    <Compile Include="Issues\Issue948.cs" />
+    <Compile Include="Issues\Issue599ReadyAttribute.cs" />
+    <Compile Include="Issues\Issue461.cs" />
     <Compile Include="..\18LinkedFiles\**\*.cs">
       <Link>Issues\%(RecursiveDir)\%(Filename)%(Extension)</Link>
     </Compile>
@@ -61,7 +61,6 @@
   <ItemGroup>
     <Folder Include="Bridge\build\" />
     <Folder Include="Bridge\output\" />
-    <Folder Include="Issues\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
