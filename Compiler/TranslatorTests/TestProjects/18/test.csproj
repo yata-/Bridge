@@ -35,6 +35,8 @@
     <DefineConstants>TEST1;TEST2</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Issues\Issue921Instance.cs" />
+    <Compile Include="Issues\Issue921Static.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Issues\Issue379.cs" />
     <Compile Include="Issues\Issue434.cs" />
