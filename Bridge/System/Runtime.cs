@@ -311,6 +311,18 @@ namespace System.Reflection
         }
     }
 
+    [AttributeUsage(AttributeTargets.Assembly, Inherited = false)]
+    [External]
+    public sealed class AssemblyInformationalVersionAttribute : Attribute
+    {
+        public extern AssemblyInformationalVersionAttribute(string informationalVersion);
+
+        public extern string InformationalVersion
+        {
+            get;
+        }
+    }
+
     [External]
     public sealed class DefaultMemberAttribute : Attribute
     {
