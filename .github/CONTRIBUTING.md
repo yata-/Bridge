@@ -65,7 +65,7 @@ We are a fully distributed company with [team members](http://object.net/#team) 
 ## Additional Resources
 
 1. [Contributor License Agreement](http://bridge.net/cla)
-2. [Code of Conduct](https://github.com/bridgedotnet/Bridge/blob/master/CODE_OF_CONDUCT.md)
+2. [Code of Conduct](https://github.com/bridgedotnet/Bridge/blob/master/.github/CODE_OF_CONDUCT.md)
 3. [Issue tracker](https://github.com/bridgedotnet/Bridge/issues)
 4. [Community Forums](http://forums.bridge.net/)
 5. [Bridge.NET Blog](http://bridge.net/blog/)
