@@ -1,6 +1,6 @@
 ﻿namespace LinkedFiles
 {
-    public class Link2
+    public class Issue531Link1
     {
 
     }
