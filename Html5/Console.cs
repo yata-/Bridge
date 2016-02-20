@@ -12,81 +12,53 @@ namespace Bridge.Html5
     [Name("console")]
     public static class Console
     {
-        [Name("log")]
-        public static extern void WriteLine(string message);
+        /* Extensions on System.Console class */
 
         [Template("console.log(Bridge.String.format({message}, {args}))")]
-        public static extern void WriteLine(string message, params object[] args);
-
-        [Template("console.log()")]
-        public static extern void WriteLine();
-
-        [Template("console.log({value})")]
-        public static extern void WriteLine(bool value);
+        public static extern void WriteLine(this System.Console instance, string message, params object[] args);
 
         [Template("console.log(Bridge.Enum.toString({value:type}, {value}))")]
-        public static extern void WriteLine(Enum value);
-
-        [Template("console.log(String.fromCharCode({value}))")]
-        public static extern void WriteLine(char value);
-
-        [Template("console.log({value}.toString())")]
-        public static extern void WriteLine(decimal value);
+        public static extern void WriteLine(this System.Console instance, Enum value);
 
         [Template("console.log({value} && {value}.toString())")]
-        public static extern void WriteLine(decimal? value);
-
-        [Template("console.log({value})")]
-        public static extern void WriteLine(double value);
-
-        [Template("console.log({value})")]
-        public static extern void WriteLine(float value);
-
-        [Template("console.log({value})")]
-        public static extern void WriteLine(int value);
-
-        [Template("console.log({value})")]
-        public static extern void WriteLine(long value);
-
-        [Template("console.log({value})")]
-        public static extern void WriteLine(object value);
-
-        [Template("console.log({value})")]
-        public static extern void WriteLine(uint value);
-
-        [Template("console.log({value})")]
-        public static extern void WriteLine(ulong value);
+        public static extern void WriteLine(this System.Console instance, decimal? value);
 
         /// <summary>
         /// ReadLine uses the native JavaScript prompt() to dialog with an optional message prompting the user to input some text.
         /// </summary>
+        /// <param name="instance">The instance of the a System.Console object</param>
         /// <param name="text">text is a string of text to display to the user. This parameter is optional and can be omitted if there is nothing to show in the prompt window.</param>
         /// <param name="value">value is a string containing the default value displayed in the text input field. It is an optional parameter. Note that in Internet Explorer 7 and 8, if you do not provide this parameter, the string "undefined" is the default value.</param>
         /// <returns>result is a string containing the text entered by the user, or the value null.</returns>
         [Template("prompt({text},{value})")]
-        public static extern string ReadLine(string text, string value);
+        public static extern string ReadLine(this System.Console instance, string text, string value);
 
         /// <summary>
         /// ReadLine uses the native JavaScript prompt() to display a dialog with an optional message prompting the user to input some text.
         /// </summary>
+        /// <param name="instance">The instance of the a System.Console object</param>
         /// <param name="text">text is a string of text to display to the user. This parameter is optional and can be omitted if there is nothing to show in the prompt window.</param>
         /// <returns>result is a string containing the text entered by the user, or the value null.</returns>
         [Template("prompt({text})")]
-        public static extern string ReadLine(string text);
+        public static extern string ReadLine(this System.Console instance, string text);
 
         /// <summary>
         /// ReadLine uses the native JavaScript prompt() to display a dialog with an optional message prompting the user to input some text.
         /// </summary>
+        /// <param name="instance">The instance of the a System.Console object</param>
         /// <returns>result is a string containing the text entered by the user, or the value null.</returns>
         [Template("prompt()")]
-        public static extern string ReadLine();
+        public static extern string ReadLine(this System.Console instance);
 
         /// <summary>
         /// Read uses the native JavaScript prompt() to display a dialog with an optional message prompting the user to input some text.
         /// </summary>
+        /// <param name="instance">The instance of the a System.Console object</param>
         /// <returns>result is a string containing the text entered by the user, or the value null.</returns>
         [Template("prompt()")]
-        public static extern string Read();
+        public static extern string Read(this System.Console instance);
+
+        /* Native Browser Console implementation */
 
         /// <summary>
         /// Log a message and stack trace to console if first argument is false.
@@ -352,7 +324,6 @@ namespace Bridge.Html5
         /// <param name="message">A JavaScript string containing zero or more substitution strings.</param>
         /// <param name="args">JavaScript objects with which to replace substitution strings within msg.</param>
         public static extern void Group(object message, params object[] args);
-
 
         [Template("console.groupCollapsed(Bridge.Enum.toString({value:type}, {value}))")]
         public static extern void GroupCollapsed(Enum value);
