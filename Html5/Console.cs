@@ -6,22 +6,27 @@ using System;
 namespace Bridge.Html5
 {
     /// <summary>
-    /// The console object provides access to the browser's debugging console (e.g. the Web Console in Firefox). The specifics of how it works vary from browser to browser, but there is a de facto set of features that are typically provided.
+    /// The console object provides access to the browser's debugging console (e.g. the Web Console in Firefox).
+    /// The specifics of how it works vary from browser to browser, but there is a de facto set of features that are typically provided.
     /// </summary>
     [External]
     [Name("console")]
     public static class Console
     {
-        /* Extensions on System.Console class */
+        #region Extensions on System.Console class
 
-        [Template("console.log(Bridge.String.format({message}, {args}))")]
-        public static extern void WriteLine(this System.Console instance, string message, params object[] args);
+        [Template("console.log(Bridge.String.format({msg}, {args}))")]
+        public static extern void WriteLine(this System.Console instance, string msg, params object[] args);
 
         [Template("console.log(Bridge.Enum.toString({value:type}, {value}))")]
         public static extern void WriteLine(this System.Console instance, Enum value);
 
         [Template("console.log({value} && {value}.toString())")]
         public static extern void WriteLine(this System.Console instance, decimal? value);
+
+        #endregion Extensions on System.Console class
+
+        #region Read and ReadLine
 
         /// <summary>
         /// ReadLine uses the native JavaScript prompt() to dialog with an optional message prompting the user to input some text.
@@ -30,7 +35,7 @@ namespace Bridge.Html5
         /// <param name="text">text is a string of text to display to the user. This parameter is optional and can be omitted if there is nothing to show in the prompt window.</param>
         /// <param name="value">value is a string containing the default value displayed in the text input field. It is an optional parameter. Note that in Internet Explorer 7 and 8, if you do not provide this parameter, the string "undefined" is the default value.</param>
         /// <returns>result is a string containing the text entered by the user, or the value null.</returns>
-        [Template("prompt({text},{value})")]
+        [Template("prompt({text}, {value})")]
         public static extern string ReadLine(this System.Console instance, string text, string value);
 
         /// <summary>
@@ -58,223 +63,295 @@ namespace Bridge.Html5
         [Template("prompt()")]
         public static extern string Read(this System.Console instance);
 
-        /* Native Browser Console implementation */
+        #endregion Read and ReadLine
+
+        #region Log
 
         /// <summary>
-        /// Log a message and stack trace to console if first argument is false.
+        /// Outputs a message to the Web Console.
         /// </summary>
-        /// <param name="expression">If false then message is shown</param>
-        /// <param name="message">A JavaScript string containing zero or more substitution strings.</param>
-        /// <param name="args">JavaScript objects with which to replace substitution strings within msg. This gives you additional control over the format of the output.</param>
-        public static extern void Assert(bool expression, object message, params object[] args);
+        /// <param name="value">Object to output.</param>
+        public static extern void Log(string value);
 
         /// <summary>
-        /// Log a message and stack trace to console if first argument is false.
+        /// Outputs a message to the Web Console.
         /// </summary>
-        /// <param name="expression">If false then message is shown</param>
-        /// <param name="message">A JavaScript string containing zero or more substitution strings.</param>
-        public static extern void Assert(bool expression, object message);
-
-        /// <summary>
-        /// Log a message and stack trace to console if first argument is false.
-        /// </summary>
-        /// <param name="expression">If false then message is shown</param>
-        public static extern void Assert(bool expression);
-
+        /// <param name="value">Object to output.</param>
         [Template("console.log(Bridge.Enum.toString({value:type}, {value}))")]
         public static extern void Log(Enum value);
 
+        /// <summary>
+        /// Outputs a message to the Web Console.
+        /// </summary>
+        /// <param name="value">Object to output.</param>
         [Template("console.log(String.fromCharCode({value}))")]
         public static extern void Log(char value);
 
+        /// <summary>
+        /// Outputs a message to the Web Console.
+        /// </summary>
+        /// <param name="value">Object to output.</param>
         [Template("console.log({value}.toString())")]
         public static extern void Log(decimal value);
 
+        /// <summary>
+        /// Outputs a message to the Web Console.
+        /// </summary>
+        /// <param name="value">Object to output.</param>
         [Template("console.log({value} && {value}.toString())")]
         public static extern void Log(decimal? value);
 
-        public static extern void Log(bool value);
-
-        public static extern void Log(double value);
-
-        public static extern void Log(float value);
-
-        public static extern void Log(int value);
-
-        public static extern void Log(long value);
-
-        public static extern void Log(uint value);
-
-        public static extern void Log(ulong value);
-
         /// <summary>
         /// Outputs a message to the Web Console.
         /// </summary>
-        /// <param name="message">A JavaScript string containing zero or more substitution strings.</param>
-        public static extern void Log(object message);
-
-        /// <summary>
-        /// Outputs a message to the Web Console.
-        /// </summary>
-        /// <param name="message">A JavaScript string containing zero or more substitution strings.</param>
+        /// <param name="msg">A JavaScript string containing zero or more substitution strings.</param>
         /// <param name="args">JavaScript objects with which to replace substitution strings within msg. This gives you additional control over the format of the output.</param>
-        public static extern void Log(object message, params object[] args);
-
-        [Template("console.debug(Bridge.Enum.toString({value:type}, {value}))")]
-        public static extern void Debug(Enum value);
-
-        [Template("console.debug(String.fromCharCode({value}))")]
-        public static extern void Debug(char value);
-
-        [Template("console.debug({value}.toString())")]
-        public static extern void Debug(decimal value);
-
-        [Template("console.debug({value} && {value}.toString())")]
-        public static extern void Debug(decimal? value);
-
-        public static extern void Debug(bool value);
-
-        public static extern void Debug(double value);
-
-        public static extern void Debug(float value);
-
-        public static extern void Debug(int value);
-
-        public static extern void Debug(long value);
-
-        public static extern void Debug(uint value);
-
-        public static extern void Debug(ulong value);
+        public static extern void Log(string msg, params object[] args);
 
         /// <summary>
-        /// An alias for log(); this was added to improve compatibility with existing sites already using debug(). However, you should use console.log() instead.
+        /// Outputs a message to the Web Console.
         /// </summary>
-        /// <param name="message">A JavaScript string containing zero or more substitution strings.</param>
-        public static extern void Debug(object message);
+        /// <param name="args">JavaScript objects with which to replace substitution strings within msg. This gives you additional control over the format of the output.</param>
+        public static extern void Log(params object[] args);
+
+        #endregion Log
+
+        #region Info
 
         /// <summary>
-        /// An alias for log(); this was added to improve compatibility with existing sites already using debug(). However, you should use console.log() instead.
+        /// Outputs an informational message to the Web Console. In Firefox, a small "i" icon is displayed next to these items in the Web Console's log.
         /// </summary>
-        /// <param name="message">A JavaScript string containing zero or more substitution strings.</param>
-        /// <param name="args"></param>
-        public static extern void Debug(object message, params object[] args);
+        /// <param name="msg">A JavaScript string containing zero or more substitution strings.</param>
+        public static extern void Info(string msg);
 
+        /// <summary>
+        /// Outputs an informational message to the Web Console. In Firefox, a small "i" icon is displayed next to these items in the Web Console's log.
+        /// </summary>
+        /// <param name="value">Object to output.</param>
         [Template("console.info(Bridge.Enum.toString({value:type}, {value}))")]
         public static extern void Info(Enum value);
 
+        /// <summary>
+        /// Outputs an informational message to the Web Console. In Firefox, a small "i" icon is displayed next to these items in the Web Console's log.
+        /// </summary>
+        /// <param name="value">Object to output.</param>
         [Template("console.info(String.fromCharCode({value}))")]
         public static extern void Info(char value);
 
+        /// <summary>
+        /// Outputs an informational message to the Web Console. In Firefox, a small "i" icon is displayed next to these items in the Web Console's log.
+        /// </summary>
+        /// <param name="value">Object to output.</param>
         [Template("console.info({value}.toString())")]
         public static extern void Info(decimal value);
 
+        /// <summary>
+        /// Outputs an informational message to the Web Console. In Firefox, a small "i" icon is displayed next to these items in the Web Console's log.
+        /// </summary>
+        /// <param name="value">Object to output.</param>
         [Template("console.info({value} && {value}.toString())")]
         public static extern void Info(decimal? value);
 
-        public static extern void Info(bool value);
-
-        public static extern void Info(double value);
-
-        public static extern void Info(float value);
-
-        public static extern void Info(int value);
-
-        public static extern void Info(long value);
-
-        public static extern void Info(uint value);
-
-        public static extern void Info(ulong value);
-
         /// <summary>
         /// Outputs an informational message to the Web Console. In Firefox, a small "i" icon is displayed next to these items in the Web Console's log.
         /// </summary>
-        /// <param name="message">A JavaScript string containing zero or more substitution strings.</param>
-        public static extern void Info(object message);
-
-        /// <summary>
-        /// Outputs an informational message to the Web Console. In Firefox, a small "i" icon is displayed next to these items in the Web Console's log.
-        /// </summary>
-        /// <param name="message">A JavaScript string containing zero or more substitution strings.</param>
+        /// <param name="msg">A JavaScript string containing zero or more substitution strings.</param>
         /// <param name="args">JavaScript objects with which to replace substitution strings within msg. This gives you additional control over the format of the output.</param>
-        public static extern void Info(object message, params object[] args);
+        public static extern void Info(string msg, params object[] args);
 
+        /// <summary>
+        /// Outputs an informational message to the Web Console. In Firefox, a small "i" icon is displayed next to these items in the Web Console's log.
+        /// </summary>
+        /// <param name="args">JavaScript objects with which to replace substitution strings within msg. This gives you additional control over the format of the output.</param>
+        public static extern void Info(params object[] args);
+
+        #endregion Info
+
+        #region Warn
+
+        /// <summary>
+        /// Outputs a warning message to the Web Console.
+        /// </summary>
+        /// <param name="msg">A JavaScript string containing zero or more substitution strings.</param>
+        public static extern void Warn(string msg);
+
+        /// <summary>
+        /// Outputs a warning message to the Web Console.
+        /// </summary>
+        /// <param name="value">A JavaScript string containing zero or more substitution strings.</param>
         [Template("console.warn(Bridge.Enum.toString({value:type}, {value}))")]
         public static extern void Warn(Enum value);
 
+        /// <summary>
+        /// Outputs a warning message to the Web Console.
+        /// </summary>
+        /// <param name="value">A JavaScript string containing zero or more substitution strings.</param>
         [Template("console.warn(String.fromCharCode({value}))")]
         public static extern void Warn(char value);
 
+        /// <summary>
+        /// Outputs a warning message to the Web Console.
+        /// </summary>
+        /// <param name="value">A JavaScript string containing zero or more substitution strings.</param>
         [Template("console.warn({value}.toString())")]
         public static extern void Warn(decimal value);
 
+        /// <summary>
+        /// Outputs a warning message to the Web Console.
+        /// </summary>
+        /// <param name="value">A JavaScript string containing zero or more substitution strings.</param>
         [Template("console.warn({value} && {value}.toString())")]
         public static extern void Warn(decimal? value);
 
-        public static extern void Warn(bool value);
-
-        public static extern void Warn(double value);
-
-        public static extern void Warn(float value);
-
-        public static extern void Warn(int value);
-
-        public static extern void Warn(long value);
-
-        public static extern void Warn(uint value);
-
-        public static extern void Warn(ulong value);
-
         /// <summary>
         /// Outputs a warning message to the Web Console.
         /// </summary>
-        /// <param name="message">A JavaScript string containing zero or more substitution strings.</param>
-        public static extern void Warn(object message);
-
-        /// <summary>
-        /// Outputs a warning message to the Web Console.
-        /// </summary>
-        /// <param name="message">A JavaScript string containing zero or more substitution strings.</param>
+        /// <param name="msg">A JavaScript string containing zero or more substitution strings.</param>
         /// <param name="args">JavaScript objects with which to replace substitution strings within msg. This gives you additional control over the format of the output.</param>
-        public static extern void Warn(object message, params object[] args);
+        public static extern void Warn(string msg, params object[] args);
 
+        /// <summary>
+        /// Outputs a warning message to the Web Console.
+        /// </summary>
+        /// <param name="args">JavaScript objects with which to replace substitution strings within msg. This gives you additional control over the format of the output.</param>
+        public static extern void Warn(params object[] args);
+
+        #endregion Warn
+
+        #region Error
+
+        /// <summary>
+        /// Outputs an error message to the Web Console.
+        /// </summary>
+        /// <param name="msg">A JavaScript string containing zero or more substitution strings.</param>
+        public static extern void Error(string msg);
+
+        /// <summary>
+        /// Outputs an error message to the Web Console.
+        /// </summary>
+        /// <param name="value">A JavaScript string containing zero or more substitution strings.</param>
         [Template("console.error(Bridge.Enum.toString({value:type}, {value}))")]
         public static extern void Error(Enum value);
 
+        /// <summary>
+        /// Outputs an error message to the Web Console.
+        /// </summary>
+        /// <param name="value">A JavaScript string containing zero or more substitution strings.</param>
         [Template("console.error(String.fromCharCode({value}))")]
         public static extern void Error(char value);
 
+        /// <summary>
+        /// Outputs an error message to the Web Console.
+        /// </summary>
+        /// <param name="value">A JavaScript string containing zero or more substitution strings.</param>
         [Template("console.error({value}.toString())")]
         public static extern void Error(decimal value);
 
+        /// <summary>
+        /// Outputs an error message to the Web Console.
+        /// </summary>
+        /// <param name="value">A JavaScript string containing zero or more substitution strings.</param>
         [Template("console.error({value} && {value}.toString())")]
         public static extern void Error(decimal? value);
 
-        public static extern void Error(bool value);
-
-        public static extern void Error(double value);
-
-        public static extern void Error(float value);
-
-        public static extern void Error(int value);
-
-        public static extern void Error(long value);
-
-        public static extern void Error(uint value);
-
-        public static extern void Error(ulong value);
-
         /// <summary>
         /// Outputs an error message to the Web Console.
         /// </summary>
-        /// <param name="message">A JavaScript string containing zero or more substitution strings.</param>
-        public static extern void Error(object message);
-
-        /// <summary>
-        /// Outputs an error message to the Web Console.
-        /// </summary>
-        /// <param name="message">A JavaScript string containing zero or more substitution strings.</param>
+        /// <param name="msg">A JavaScript string containing zero or more substitution strings.</param>
         /// <param name="args">JavaScript objects with which to replace substitution strings within msg. This gives you additional control over the format of the output.</param>
-        public static extern void Error(object message, params object[] args);
+        public static extern void Error(string msg, params object[] args);
+
+        /// <summary>
+        /// Outputs an error message to the Web Console.
+        /// </summary>
+        /// <param name="args">JavaScript objects with which to replace substitution strings within msg. This gives you additional control over the format of the output.</param>
+        public static extern void Error(params object[] args);
+
+        #endregion Error
+
+        #region Grouping
+
+        /// <summary>
+        /// Creates a new inline group, indenting all following output by another level. To move back out a level, call groupEnd().
+        /// </summary>
+        public static extern void Group();
+
+        /// <summary>
+        /// Creates a new inline group, indenting all following output by another level. To move back out a level, call groupEnd().
+        /// </summary>
+        /// <param name="msg">A message.</param>
+        public static extern void Group(string msg);
+
+        /// <summary>
+        /// Creates a new inline group, indenting all following output by another level. To move back out a level, call groupEnd().
+        /// </summary>
+        /// <param name="msg">A message.</param>
+        /// <param name="args">JavaScript objects with which to replace substitution strings within msg.</param>
+        public static extern void Group(string msg, params object[] args);
+
+        /// <summary>
+        /// Creates a new inline group, indenting all following output by another level. To move back out a level, call groupEnd().
+        /// </summary>
+        /// <param name="args">JavaScript objects with which to replace substitution strings within msg.</param>
+        public static extern void Group(params object[] args);
+
+        /// <summary>
+        /// Creates a new inline group in the Web Console. Unlike console.group(), however, the new group is created collapsed. The user will need to use the disclosure button next to it to expand it, revealing the entries created in the group.
+        /// </summary>
+        public static extern void GroupCollapsed();
+
+        /// <summary>
+        /// Creates a new inline group in the Web Console. Unlike console.group(), however, the new group is created collapsed. The user will need to use the disclosure button next to it to expand it, revealing the entries created in the group.
+        /// </summary>
+        /// <param name="msg">A message.</param>
+        public static extern void GroupCollapsed(string msg);
+
+        /// <summary>
+        /// Creates a new inline group in the Web Console. Unlike console.group(), however, the new group is created collapsed. The user will need to use the disclosure button next to it to expand it, revealing the entries created in the group.
+        /// </summary>
+        /// <param name="msg">A message.</param>
+        /// <param name="args">An array of objects to write to the group.</param>
+        public static extern void GroupCollapsed(string msg, params object[] args);
+
+        /// <summary>
+        /// Creates a new inline group in the Web Console. Unlike console.group(), however, the new group is created collapsed. The user will need to use the disclosure button next to it to expand it, revealing the entries created in the group.
+        /// </summary>
+        /// <param name="args">An array of objects to write to the group.</param>
+        public static extern void GroupCollapsed(params object[] args);
+
+        /// <summary>
+        /// Exits the current inline group.
+        /// </summary>
+        public static extern void GroupEnd();
+
+        #endregion Grouping
+
+        #region Assert
+
+        /// <summary>
+        /// Log a message and stack trace to console if first argument is false.
+        /// </summary>
+        /// <param name="assertion">If false then message is shown</param>
+        public static extern void Assert(bool assertion);
+
+        /// <summary>
+        /// Log a message and stack trace to console if first argument is false.
+        /// </summary>
+        /// <param name="assertion">If false then message is shown</param>
+        /// <param name="msg">A JavaScript string containing zero or more substitution strings.</param>
+        public static extern void Assert(bool assertion, string msg);
+
+        /// <summary>
+        /// Log a message and stack trace to console if first argument is false.
+        /// </summary>
+        /// <param name="assertion">If false then message is shown</param>
+        /// <param name="msg">A JavaScript string containing zero or more substitution strings.</param>
+        /// <param name="args">JavaScript objects with which to replace substitution strings within msg. This gives you additional control over the format of the output.</param>
+        public static extern void Assert(bool assertion, string msg, params object[] args);
+
+        #endregion Assert
+
+        #region Utils
 
         /// <summary>
         /// Clears the console.
@@ -286,88 +363,9 @@ namespace Bridge.Html5
         /// </summary>
         public static extern void Trace();
 
-        [Template("console.group(Bridge.Enum.toString({value:type}, {value}))")]
-        public static extern void Group(Enum value);
+        #endregion Utils
 
-        [Template("console.group(String.fromCharCode({value}))")]
-        public static extern void Group(char value);
-
-        [Template("console.group({value}.toString())")]
-        public static extern void Group(decimal value);
-
-        [Template("console.group({value} && {value}.toString())")]
-        public static extern void Group(decimal? value);
-
-        public static extern void Group(bool value);
-
-        public static extern void Group(double value);
-
-        public static extern void Group(float value);
-
-        public static extern void Group(int value);
-
-        public static extern void Group(long value);
-
-        public static extern void Group(uint value);
-
-        public static extern void Group(ulong value);
-
-        /// <summary>
-        /// Creates a new inline group, indenting all following output by another level. To move back out a level, call groupEnd().
-        /// </summary>
-        /// <param name="message">A JavaScript string containing zero or more substitution strings.</param>
-        public static extern void Group(object message);
-
-        /// <summary>
-        /// Creates a new inline group, indenting all following output by another level. To move back out a level, call groupEnd().
-        /// </summary>
-        /// <param name="message">A JavaScript string containing zero or more substitution strings.</param>
-        /// <param name="args">JavaScript objects with which to replace substitution strings within msg.</param>
-        public static extern void Group(object message, params object[] args);
-
-        [Template("console.groupCollapsed(Bridge.Enum.toString({value:type}, {value}))")]
-        public static extern void GroupCollapsed(Enum value);
-
-        [Template("console.groupCollapsed(String.fromCharCode({value}))")]
-        public static extern void GroupCollapsed(char value);
-
-        [Template("console.groupCollapsed({value}.toString())")]
-        public static extern void GroupCollapsed(decimal value);
-
-        [Template("console.groupCollapsed({value} && {value}.toString())")]
-        public static extern void GroupCollapsed(decimal? value);
-
-        public static extern void GroupCollapsed(bool value);
-
-        public static extern void GroupCollapsed(double value);
-
-        public static extern void GroupCollapsed(float value);
-
-        public static extern void GroupCollapsed(int value);
-
-        public static extern void GroupCollapsed(long value);
-
-        public static extern void GroupCollapsed(uint value);
-
-        public static extern void GroupCollapsed(ulong value);
-
-        /// <summary>
-        /// Creates a new inline group, indenting all following output by another level; unlike group(), this starts with the inline group collapsed, requiring the use of a disclosure button to expand it. To move back out a level, call groupEnd(). See Using groups in the console.
-        /// </summary>
-        /// <param name="message">A JavaScript string containing zero or more substitution strings.</param>
-        public static extern void GroupCollapsed(object message);
-
-        /// <summary>
-        /// Creates a new inline group, indenting all following output by another level; unlike group(), this starts with the inline group collapsed, requiring the use of a disclosure button to expand it. To move back out a level, call groupEnd(). See Using groups in the console.
-        /// </summary>
-        /// <param name="message">A JavaScript string containing zero or more substitution strings.</param>
-        /// <param name="args">JavaScript objects with which to replace substitution strings within msg.</param>
-        public static extern void GroupCollapsed(object message, params object[] args);
-
-        /// <summary>
-        /// Exits the current inline group.
-        /// </summary>
-        public static extern void GroupEnd();
+        #region Timer
 
         /// <summary>
         /// Starts a timer with a name specified as an input parameter. Up to 10,000 simultaneous timers can run on a given page.
@@ -387,6 +385,10 @@ namespace Bridge.Html5
         /// <param name="name">Stamp name</param>
         public static extern void TimeStamp(object name);
 
+        #endregion Timer
+
+        #region Profile
+
         /// <summary>
         /// Starts the JavaScript profiler. You can specify an optional label for the profile.
         /// </summary>
@@ -403,6 +405,10 @@ namespace Bridge.Html5
         /// </summary>
         public static extern void ProfileEnd();
 
+        #endregion Profile
+
+        #region Count
+
         /// <summary>
         /// Logs the number of times that this particular call to count() has been called. This function takes an optional argument label.
         /// If label is supplied, this function logs the number of times count() has been called with that particular label.
@@ -418,6 +424,10 @@ namespace Bridge.Html5
         /// <param name="label">Label value</param>
         public static extern void Count(string label);
 
+        #endregion Count
+
+        #region Dir
+
         /// <summary>
         /// Displays an interactive listing of the properties of a specified JavaScript object. This listing lets you use disclosure triangles to examine the contents of child objects.
         /// </summary>
@@ -431,6 +441,10 @@ namespace Bridge.Html5
         [Template("console.dirxml({node})")]
         public static extern void DirXml(Node node);
 
+        #endregion Dir
+
+        #region Table
+
         /// <summary>
         /// Displays tabular data as a table.
         /// </summary>
@@ -443,5 +457,62 @@ namespace Bridge.Html5
         /// <param name="data">The data to display. This must be either an array or an object.</param>
         /// <param name="columns">An array containing the names of columns to include in the output.</param>
         public static extern void Table(object data, string[] columns);
+
+        #endregion Table
+
+        #region Obsolete
+
+        [Obsolete("Please use Bridge.Html5.Console.Log() or System.Console.WriteLine() instead")]
+        [Template("console.debug(Bridge.Enum.toString({value:type}, {value}))")]
+        public static extern void Debug(Enum value);
+
+        [Obsolete("Please use Bridge.Html5.Console.Log() or System.Console.WriteLine() instead")]
+        [Template("console.debug(String.fromCharCode({value}))")]
+        public static extern void Debug(char value);
+
+        [Obsolete("Please use Bridge.Html5.Console.Log() or System.Console.WriteLine() instead")]
+        [Template("console.debug({value}.toString())")]
+        public static extern void Debug(decimal value);
+
+        [Obsolete("Please use Bridge.Html5.Console.Log() or System.Console.WriteLine() instead")]
+        [Template("console.debug({value} && {value}.toString())")]
+        public static extern void Debug(decimal? value);
+
+        [Obsolete("Please use Bridge.Html5.Console.Log() or System.Console.WriteLine() instead")]
+        public static extern void Debug(bool value);
+
+        [Obsolete("Please use Bridge.Html5.Console.Log() or System.Console.WriteLine() instead")]
+        public static extern void Debug(double value);
+
+        [Obsolete("Please use Bridge.Html5.Console.Log() or System.Console.WriteLine() instead")]
+        public static extern void Debug(float value);
+
+        [Obsolete("Please use Bridge.Html5.Console.Log() or System.Console.WriteLine() instead")]
+        public static extern void Debug(int value);
+
+        [Obsolete("Please use Bridge.Html5.Console.Log() or System.Console.WriteLine() instead")]
+        public static extern void Debug(long value);
+
+        [Obsolete("Please use Bridge.Html5.Console.Log() or System.Console.WriteLine() instead")]
+        public static extern void Debug(uint value);
+
+        [Obsolete("Please use Bridge.Html5.Console.Log() or System.Console.WriteLine() instead")]
+        public static extern void Debug(ulong value);
+
+        /// <summary>
+        /// An alias for log(); this was added to improve compatibility with existing sites already using debug(). However, you should use console.log() instead.
+        /// </summary>
+        /// <param name="msg">A JavaScript string containing zero or more substitution strings.</param>
+        [Obsolete("Please use Bridge.Html5.Console.Log() or System.Console.WriteLine() instead")]
+        public static extern void Debug(string msg);
+
+        /// <summary>
+        /// An alias for log(); this was added to improve compatibility with existing sites already using debug(). However, you should use console.log() instead.
+        /// </summary>
+        /// <param name="msg">A JavaScript string containing zero or more substitution strings.</param>
+        /// <param name="args"></param>
+        public static extern void Debug(string msg, params object[] args);
+
+        #endregion Obsolete
     }
 }
