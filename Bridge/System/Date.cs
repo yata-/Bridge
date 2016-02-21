@@ -198,7 +198,12 @@ namespace System
         public virtual extern string ToLocaleDateString(string value);
 
         public virtual extern string ToLocaleTimeString();
-
+        
+        public virtual string ToISOString()
+        {
+            return null;
+        }
+        
         public virtual extern string ToUTCString();
 
         public virtual extern double GetTime();
