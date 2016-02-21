@@ -52,7 +52,7 @@ If we still have a bug lurking around we will do our best to fix it promptly.
 
 Bug fixes are much more likely to be accepted in a short term than entirely new features that might compromise other parts of Bridge.NET or developer experience.
 
-We've also created an `[up-for-grabs](https://github.com/bridgedotnet/Bridge/issues?q=is%3Aopen+is%3Aissue+label%3Aup-for-grabs) Label in the Issues. In general all the Issues could be considered up-for-grabs, but we've gone a head a labeled a few issues to help highlight a possible easy entry point into contributing to the Bridge project. 
+We've also created an [up-for-grabs](https://github.com/bridgedotnet/Bridge/issues?q=is%3Aopen+is%3Aissue+label%3Aup-for-grabs) Label in the Issues. In general all the Issues could be considered up-for-grabs, but we've gone a head a labeled a few issues to help highlight a possible easy entry point into contributing to the Bridge project. 
 
 ## Will I Get Paid For Bugs Or Features?
 
