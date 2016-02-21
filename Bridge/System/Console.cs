@@ -7,25 +7,44 @@ namespace System
     /// </summary>
     [External]
     [Name("console")]
-    public sealed class Console
+    public sealed partial class Console
     {
-        #region Read
+        #region Read and ReadLine
 
-        /// <summary>
-        /// Read uses the native JavaScript prompt() to display a dialog with an optional message prompting the user to input some text.
-        /// </summary>
-        /// <returns>result is a string containing the text entered by the user, or the value null.</returns>
-        [Template("prompt()")]
-        public static extern string Read();
-
-        /// <summary>
-        /// ReadLine uses the native JavaScript prompt() to display a dialog with an optional message prompting the user to input some text.
-        /// </summary>
         /// <returns>result is a string containing the text entered by the user, or the value null.</returns>
         [Template("prompt()")]
         public static extern string ReadLine();
 
-        #endregion Read
+        /// <summary>
+        /// ReadLine uses the native JavaScript prompt() to display a dialog with an optional message prompting the user to input some text.
+        /// </summary>
+        /// <param name="text">text is a string of text to display to the user. This parameter is optional and can be omitted if there is nothing to show in the prompt window.</param>
+        /// <returns>result is a string containing the text entered by the user, or the value null.</returns>
+        [Template("prompt({text})")]
+        public static extern string ReadLine(string text);
+
+        /// <summary>
+        /// ReadLine uses the native JavaScript prompt() to dialog with an optional message prompting the user to input some text.
+        /// </summary>
+        /// <param name="text">text is a string of text to display to the user. This parameter is optional and can be omitted if there is nothing to show in the prompt window.</param>
+        /// <param name="value">value is a string containing the default value displayed in the text input field. It is an optional parameter. Note that in Internet Explorer 7 and 8, if you do not provide this parameter, the string "undefined" is the default value.</param>
+        /// <returns>result is a string containing the text entered by the user, or the value null.</returns>
+        [Template("prompt({text}, {value})")]
+        public static extern string ReadLine(string text, string value);
+
+        /// <summary>
+        /// ReadLine uses the native JavaScript prompt() to display a dialog with an optional message prompting the user to input some text.
+        /// </summary>
+
+        /// <summary>
+        /// Read uses the native JavaScript prompt() to display a dialog with an optional message prompting the user to input some text.
+        /// </summary>
+
+        /// <returns>result is a string containing the text entered by the user, or the value null.</returns>
+        [Template("prompt()")]
+        public static extern string Read();
+
+        #endregion Read and ReadLine
 
         #region Write
 
@@ -160,7 +179,7 @@ namespace System
 
         #endregion Write
 
-        #region Write
+        #region WriteLine
 
         /// <summary>
         /// Writes the current line terminator to the standard output stream.
@@ -297,7 +316,21 @@ namespace System
         /// <param name="buffer">An array of Unicode characters.</param>
         public static extern void WriteLine(Char[] buffer);
 
-        #endregion Write
+        /// <summary>
+        /// Writes the text representation of the specified 64-bit unsigned integer value, followed by the current line terminator, to the standard output stream.
+        /// </summary>
+        /// <param name="value">The value to write.</param>
+        [Template("console.log(Bridge.Enum.toString({value:type}, {value}))")]
+        public static extern void WriteLine(Enum value);
+
+        /// <summary>
+        /// Writes the text representation of the specified 64-bit unsigned integer value, followed by the current line terminator, to the standard output stream.
+        /// </summary>
+        /// <param name="value">The value to write.</param>
+        [Template("console.log({value} && {value}.toString())")]
+        public static extern void WriteLine(decimal? value);
+
+        #endregion WriteLine
 
         #region Utils
 

@@ -10,61 +10,8 @@ namespace Bridge.Html5
     /// The specifics of how it works vary from browser to browser, but there is a de facto set of features that are typically provided.
     /// </summary>
     [External]
-    [Name("console")]
     public static class Console
     {
-        #region Extensions on System.Console class
-
-        [Template("console.log(Bridge.String.format({msg}, {args}))")]
-        public static extern void WriteLine(this System.Console instance, string msg, params object[] args);
-
-        [Template("console.log(Bridge.Enum.toString({value:type}, {value}))")]
-        public static extern void WriteLine(this System.Console instance, Enum value);
-
-        [Template("console.log({value} && {value}.toString())")]
-        public static extern void WriteLine(this System.Console instance, decimal? value);
-
-        #endregion Extensions on System.Console class
-
-        #region Read and ReadLine
-
-        /// <summary>
-        /// ReadLine uses the native JavaScript prompt() to dialog with an optional message prompting the user to input some text.
-        /// </summary>
-        /// <param name="instance">The instance of the a System.Console object</param>
-        /// <param name="text">text is a string of text to display to the user. This parameter is optional and can be omitted if there is nothing to show in the prompt window.</param>
-        /// <param name="value">value is a string containing the default value displayed in the text input field. It is an optional parameter. Note that in Internet Explorer 7 and 8, if you do not provide this parameter, the string "undefined" is the default value.</param>
-        /// <returns>result is a string containing the text entered by the user, or the value null.</returns>
-        [Template("prompt({text}, {value})")]
-        public static extern string ReadLine(this System.Console instance, string text, string value);
-
-        /// <summary>
-        /// ReadLine uses the native JavaScript prompt() to display a dialog with an optional message prompting the user to input some text.
-        /// </summary>
-        /// <param name="instance">The instance of the a System.Console object</param>
-        /// <param name="text">text is a string of text to display to the user. This parameter is optional and can be omitted if there is nothing to show in the prompt window.</param>
-        /// <returns>result is a string containing the text entered by the user, or the value null.</returns>
-        [Template("prompt({text})")]
-        public static extern string ReadLine(this System.Console instance, string text);
-
-        /// <summary>
-        /// ReadLine uses the native JavaScript prompt() to display a dialog with an optional message prompting the user to input some text.
-        /// </summary>
-        /// <param name="instance">The instance of the a System.Console object</param>
-        /// <returns>result is a string containing the text entered by the user, or the value null.</returns>
-        [Template("prompt()")]
-        public static extern string ReadLine(this System.Console instance);
-
-        /// <summary>
-        /// Read uses the native JavaScript prompt() to display a dialog with an optional message prompting the user to input some text.
-        /// </summary>
-        /// <param name="instance">The instance of the a System.Console object</param>
-        /// <returns>result is a string containing the text entered by the user, or the value null.</returns>
-        [Template("prompt()")]
-        public static extern string Read(this System.Console instance);
-
-        #endregion Read and ReadLine
-
         #region Log
 
         /// <summary>
@@ -292,6 +239,7 @@ namespace Bridge.Html5
         /// <summary>
         /// Creates a new inline group, indenting all following output by another level. To move back out a level, call groupEnd().
         /// </summary>
+
         /// <param name="args">JavaScript objects with which to replace substitution strings within msg.</param>
         public static extern void Group(params object[] args);
 
@@ -352,11 +300,6 @@ namespace Bridge.Html5
         #endregion Assert
 
         #region Utils
-
-        /// <summary>
-        /// Clears the console.
-        /// </summary>
-        public static extern void Clear();
 
         /// <summary>
         /// Outputs a stack trace.
@@ -502,6 +445,7 @@ namespace Bridge.Html5
         /// <summary>
         /// An alias for log(); this was added to improve compatibility with existing sites already using debug(). However, you should use console.log() instead.
         /// </summary>
+
         /// <param name="msg">A JavaScript string containing zero or more substitution strings.</param>
         [Obsolete("Please use Bridge.Html5.Console.Log() or System.Console.WriteLine() instead")]
         public static extern void Debug(string msg);
@@ -509,6 +453,7 @@ namespace Bridge.Html5
         /// <summary>
         /// An alias for log(); this was added to improve compatibility with existing sites already using debug(). However, you should use console.log() instead.
         /// </summary>
+
         /// <param name="msg">A JavaScript string containing zero or more substitution strings.</param>
         /// <param name="args"></param>
         public static extern void Debug(string msg, params object[] args);
