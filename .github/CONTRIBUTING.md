@@ -25,7 +25,7 @@ You can fork our project from GitHub, develop/merge your feature or bugfix, then
 
 1. Pull requests are actual commits with your modified code
 2. One pull request must contain all commits related to that feature or bug fix (full changeset)
-3. Each commit should [make us happy](http://bridge.net/kb/happy-commit/)
+3. Each commit is hopefully a [happy-commit](http://bridge.net/kb/happy-commit/)
 4. The pull request should be closest to the latest target branch (a pull request of a feature from version 1.0 would most likely be unusable for a feature on version 3.0, although you might be able to use git rebase to fix that
 
 ## Submitting Changes
@@ -58,7 +58,7 @@ We've also created an [up-for-grabs](https://github.com/bridgedotnet/Bridge/issu
 
 Your reward is sweet karma and that warm fuzzy feeling knowing you’ve helped the Bridge.NET community.
 
-If you turn out to be a **bug squashing** and **feature adding** wizard... we would like to get to know you better. There’s always an open seat at Object.NET for a talented engineer. Please check out our [Jobs](http://object.net/jobs/) section for more information about working with Object.NET.
+If you turn out to be a **bug squashing** and **feature adding** wizard... we would like to get to know you better. There’s always an open seat at Object.NET for a talented engineer.
 
 We are a fully distributed company with [team members](http://object.net/#team) spread across Earth. All positions are Remote.
 
