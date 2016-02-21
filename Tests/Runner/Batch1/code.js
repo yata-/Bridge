@@ -9179,6 +9179,28 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge989', {
+        statics: {
+            dateTimeToISOStringWorks: function () {
+                var d1 = new Date(2011, 10 - 1, 5, 14, 48);
+                var d2 = Bridge.Date.toUTC(d1);
+    
+                // This is required to change d1 to UTC without changing time
+                d1 = new Date(d1.getFullYear(), d1.getMonth() + (d1.getMonth() + 1) - (d2.getMonth() + 1), d1.getDate(), d1.getHours(), d1.getMinutes(), d1.getSeconds(), d1.getMilliseconds());
+                d1 = new Date(d1.valueOf() + Math.round((d1.getDate() - d2.getDate()) * 864e5));
+                d1 = new Date(d1.valueOf() + Math.round((d1.getHours() - d2.getHours()) * 36e5));
+                d1 = new Date(d1.valueOf() + Math.round((d1.getMinutes() - d2.getMinutes()) * 6e4));
+    
+                Bridge.get(Bridge.Test.Assert).areEqual("2011-10-05T14:48:00.000Z", d1.toISOString());
+            },
+            dateToISOStringWorks: function () {
+                var d1 = new Date("05 October 2011 14:48 UTC");
+    
+                Bridge.get(Bridge.Test.Assert).areEqual("2011-10-05T14:48:00.000Z", d1.toISOString());
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Collections.Generic.ComparerTests', {
         typePropertiesAreCorrect: function () {
             Bridge.get(Bridge.Test.Assert).areEqual$1("Bridge.Comparer$1$Object", Bridge.getTypeName(Bridge.Comparer$1(Object)), "GetClassName()");
