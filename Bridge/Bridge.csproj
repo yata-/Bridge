@@ -132,6 +132,15 @@
     <Compile Include="System\StringComparison.cs" />
     <Compile Include="System\StringSplitOptions.cs" />
     <Compile Include="System\AggregateException.cs" />
+    <Compile Include="System\Text\RegularExpressions\RegexCapture.cs" />
+    <Compile Include="System\Text\RegularExpressions\RegexCaptureCollection.cs" />
+    <Compile Include="System\Text\RegularExpressions\RegexGroup.cs" />
+    <Compile Include="System\Text\RegularExpressions\RegexGroupCollection.cs" />
+    <Compile Include="System\Text\RegularExpressions\RegexMatch.cs" />
+    <Compile Include="System\Text\RegularExpressions\RegexMatchCollection.cs" />
+    <Compile Include="System\Text\RegularExpressions\Regex.cs" />
+    <Compile Include="System\Text\RegularExpressions\RegexMatchEvaluator.cs" />
+    <Compile Include="System\Text\RegularExpressions\RegexOptions.cs" />
     <Compile Include="System\Threading\CancellationToken.cs" />
     <Compile Include="System\Threading\CancellationTokenRegistration.cs" />
     <Compile Include="System\Threading\CancellationTokenSource.cs" />
