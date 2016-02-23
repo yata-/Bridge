@@ -6,40 +6,40 @@
             async: function () {
                 return Bridge.get(Bridge.Test.Assert).assert.async();
             },
-            areEqual: function (expected, actual) {
+            areEqual: function (actual, expected) {
                 Bridge.get(Bridge.Test.Assert).assert.deepEqual(actual, expected);
             },
-            areEqual$1: function (expected, actual, description) {
+            areEqual$1: function (actual, expected, description) {
                 Bridge.get(Bridge.Test.Assert).assert.deepEqual(actual, expected, description);
             },
-            areDeepEqual: function (expected, actual) {
+            areDeepEqual: function (actual, expected) {
                 Bridge.get(Bridge.Test.Assert).assert.deepEqual(actual, expected);
             },
-            areDeepEqual$1: function (expected, actual, description) {
+            areDeepEqual$1: function (actual, expected, description) {
                 Bridge.get(Bridge.Test.Assert).assert.deepEqual(actual, expected, description);
             },
-            areStrictEqual: function (expected, actual) {
+            areStrictEqual: function (actual, expected) {
                 Bridge.get(Bridge.Test.Assert).assert.strictEqual(actual, expected);
             },
-            areStrictEqual$1: function (expected, actual, description) {
+            areStrictEqual$1: function (actual, expected, description) {
                 Bridge.get(Bridge.Test.Assert).assert.strictEqual(actual, expected, description);
             },
-            areNotEqual: function (expected, actual) {
+            areNotEqual: function (actual, expected) {
                 Bridge.get(Bridge.Test.Assert).assert.notDeepEqual(actual, expected);
             },
-            areNotEqual$1: function (expected, actual, description) {
+            areNotEqual$1: function (actual, expected, description) {
                 Bridge.get(Bridge.Test.Assert).assert.notDeepEqual(actual, expected, description);
             },
-            areNotDeepEqual: function (expected, actual) {
+            areNotDeepEqual: function (actual, expected) {
                 Bridge.get(Bridge.Test.Assert).assert.notDeepEqual(actual, expected);
             },
-            areNotDeepEqual$1: function (expected, actual, description) {
+            areNotDeepEqual$1: function (actual, expected, description) {
                 Bridge.get(Bridge.Test.Assert).assert.notDeepEqual(actual, expected, description);
             },
-            areNotStrictEqual: function (expected, actual) {
+            areNotStrictEqual: function (actual, expected) {
                 Bridge.get(Bridge.Test.Assert).assert.notStrictEqual(actual, expected);
             },
-            areNotStrictEqual$1: function (expected, actual, description) {
+            areNotStrictEqual$1: function (actual, expected, description) {
                 Bridge.get(Bridge.Test.Assert).assert.notStrictEqual(actual, expected, description);
             },
             $true: function (condition) {
@@ -98,19 +98,19 @@
             _testInstance: null,
             get_TestInstance: function () {
                 if (!Bridge.hasValue(Bridge.get(Bridge.Test.QUnit.TestFixture$1(T))._testInstance)) {
-                    Bridge.get(Bridge.Test.QUnit.TestFixture$1(T))._testInstance = new T();
+                    Bridge.get(Bridge.Test.QUnit.TestFixture$1(T))._testInstance  = new T();
                 }
     
                 return Bridge.get(Bridge.Test.QUnit.TestFixture$1(T))._testInstance;
             },
             set_TestInstance: function (value) {
-                Bridge.get(Bridge.Test.QUnit.TestFixture$1(T))._testInstance = value;
+                Bridge.get(Bridge.Test.QUnit.TestFixture$1(T))._testInstance  = value;
             },
             _BeforeTest: function (isStatic, assert, expectedCount) {
                 if (expectedCount === void 0) { expectedCount = null; }
                 Bridge.get(Bridge.Test.QUnit.TestFixture$1(T)).set_TestInstance(Bridge.getDefaultValue(T));
     
-                Bridge.get(Bridge.Test.Assert).assert = assert;
+                Bridge.get(Bridge.Test.Assert).assert  = assert;
     
                 if (Bridge.Nullable.hasValue(expectedCount)) {
                     assert.expect(Bridge.Nullable.getValue(expectedCount));
@@ -1881,6 +1881,16 @@
             testCastToLongWorksForBigNumberInIE: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge975))._BeforeTest(true, assert, 1);
                 Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge975).testCastToLongWorksForBigNumberInIE();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge991', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge991)],
+        statics: {
+            testMultiplyAssignment: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge991))._BeforeTest(true, assert, 14);
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).testMultiplyAssignment();
             }
         }
     });
@@ -8645,6 +8655,7 @@
                 QUnit.test("#968 - TestDecimalDoesNotParseIncorrectValue", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge968).testDecimalDoesNotParseIncorrectValue);
                 QUnit.test("#968 - TestDecimalParsesCorrectValues", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge968).testDecimalParsesCorrectValues);
                 QUnit.test("#975 - TestCastToLongWorksForBigNumberInIE", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge975).testCastToLongWorksForBigNumberInIE);
+                QUnit.test("#991 - TestMultiplyAssignment", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge991).testMultiplyAssignment);
                 QUnit.test("#522 - TestUseCase1", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge522).testUseCase1);
                 QUnit.test("#522 - TestUseCase2", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge522).testUseCase2);
                 QUnit.test("#537 - TestUseCase", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge537).testUseCase);

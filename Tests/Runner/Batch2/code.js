@@ -18,16 +18,16 @@
                 var stringArray = Bridge.Array.init(9, null);
                 var decimalArray = Bridge.Array.init(10, Bridge.Decimal(0.0));
     
-                byteArray[0] = 1;
-                sbyteArray[0] = 2;
-                shortArray[0] = 3;
-                ushortArray[0] = 4;
-                intArray[0] = 5;
-                uintArray[0] = 6;
-                floatArray[0] = 7;
-                doubleArray[0] = 8;
+                byteArray[0]  = 1;
+                sbyteArray[0]  = 2;
+                shortArray[0]  = 3;
+                ushortArray[0]  = 4;
+                intArray[0]  = 5;
+                uintArray[0]  = 6;
+                floatArray[0]  = 7;
+                doubleArray[0]  = 8;
     
-                stringArray[0] = "9";
+                stringArray[0]  = "9";
                 decimalArray[0]  = Bridge.Decimal(10.0);
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1(1, byteArray[0], "get byteArray[0]");
@@ -87,8 +87,8 @@
         },
         settingValueByIndexWorks: function () {
             var arr = Bridge.Array.init(2, null);
-            arr[0] = "x";
-            arr[1] = "y";
+            arr[0]  = "x";
+            arr[1]  = "y";
             Bridge.get(Bridge.Test.Assert).areEqual("x", arr[0]);
             Bridge.get(Bridge.Test.Assert).areEqual("y", arr[1]);
         },
@@ -344,7 +344,7 @@
     Bridge.define('Bridge.ClientTestOne.BridgeIssues.N772.C', {
         i: 0,
         constructor: function (i) {
-            this.i = i;
+            this.i  = i;
         },
         equals: function (o) {
             return Bridge.is(o, Bridge.ClientTestOne.BridgeIssues.N772.C) && this.i === (Bridge.cast(o, Bridge.ClientTestOne.BridgeIssues.N772.C)).i;

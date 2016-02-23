@@ -6,40 +6,40 @@
             async: function () {
                 return Bridge.get(Bridge.Test.Assert).assert.async();
             },
-            areEqual: function (expected, actual) {
+            areEqual: function (actual, expected) {
                 Bridge.get(Bridge.Test.Assert).assert.deepEqual(actual, expected);
             },
-            areEqual$1: function (expected, actual, description) {
+            areEqual$1: function (actual, expected, description) {
                 Bridge.get(Bridge.Test.Assert).assert.deepEqual(actual, expected, description);
             },
-            areDeepEqual: function (expected, actual) {
+            areDeepEqual: function (actual, expected) {
                 Bridge.get(Bridge.Test.Assert).assert.deepEqual(actual, expected);
             },
-            areDeepEqual$1: function (expected, actual, description) {
+            areDeepEqual$1: function (actual, expected, description) {
                 Bridge.get(Bridge.Test.Assert).assert.deepEqual(actual, expected, description);
             },
-            areStrictEqual: function (expected, actual) {
+            areStrictEqual: function (actual, expected) {
                 Bridge.get(Bridge.Test.Assert).assert.strictEqual(actual, expected);
             },
-            areStrictEqual$1: function (expected, actual, description) {
+            areStrictEqual$1: function (actual, expected, description) {
                 Bridge.get(Bridge.Test.Assert).assert.strictEqual(actual, expected, description);
             },
-            areNotEqual: function (expected, actual) {
+            areNotEqual: function (actual, expected) {
                 Bridge.get(Bridge.Test.Assert).assert.notDeepEqual(actual, expected);
             },
-            areNotEqual$1: function (expected, actual, description) {
+            areNotEqual$1: function (actual, expected, description) {
                 Bridge.get(Bridge.Test.Assert).assert.notDeepEqual(actual, expected, description);
             },
-            areNotDeepEqual: function (expected, actual) {
+            areNotDeepEqual: function (actual, expected) {
                 Bridge.get(Bridge.Test.Assert).assert.notDeepEqual(actual, expected);
             },
-            areNotDeepEqual$1: function (expected, actual, description) {
+            areNotDeepEqual$1: function (actual, expected, description) {
                 Bridge.get(Bridge.Test.Assert).assert.notDeepEqual(actual, expected, description);
             },
-            areNotStrictEqual: function (expected, actual) {
+            areNotStrictEqual: function (actual, expected) {
                 Bridge.get(Bridge.Test.Assert).assert.notStrictEqual(actual, expected);
             },
-            areNotStrictEqual$1: function (expected, actual, description) {
+            areNotStrictEqual$1: function (actual, expected, description) {
                 Bridge.get(Bridge.Test.Assert).assert.notStrictEqual(actual, expected, description);
             },
             $true: function (condition) {
@@ -98,19 +98,19 @@
             _testInstance: null,
             get_TestInstance: function () {
                 if (!Bridge.hasValue(Bridge.get(Bridge.Test.QUnit.TestFixture$1(T))._testInstance)) {
-                    Bridge.get(Bridge.Test.QUnit.TestFixture$1(T))._testInstance = new T();
+                    Bridge.get(Bridge.Test.QUnit.TestFixture$1(T))._testInstance  = new T();
                 }
     
                 return Bridge.get(Bridge.Test.QUnit.TestFixture$1(T))._testInstance;
             },
             set_TestInstance: function (value) {
-                Bridge.get(Bridge.Test.QUnit.TestFixture$1(T))._testInstance = value;
+                Bridge.get(Bridge.Test.QUnit.TestFixture$1(T))._testInstance  = value;
             },
             _BeforeTest: function (isStatic, assert, expectedCount) {
                 if (expectedCount === void 0) { expectedCount = null; }
                 Bridge.get(Bridge.Test.QUnit.TestFixture$1(T)).set_TestInstance(Bridge.getDefaultValue(T));
     
-                Bridge.get(Bridge.Test.Assert).assert = assert;
+                Bridge.get(Bridge.Test.Assert).assert  = assert;
     
                 if (Bridge.Nullable.hasValue(expectedCount)) {
                     assert.expect(Bridge.Nullable.getValue(expectedCount));
