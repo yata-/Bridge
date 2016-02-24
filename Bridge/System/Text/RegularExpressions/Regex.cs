@@ -2,9 +2,21 @@
 
 namespace System.Text.RegularExpressions.CoreFx
 {
-    [External]
-    public class Regex
+    [Name("Bridge.RegexCoreFx")]
+    public sealed class Regex
     {
+        public Regex(string pattern)
+        {
+        }
+
+        public Regex(string pattern, RegexOptions options)
+        {
+        }
+
+        public Regex(string pattern, RegexOptions options, TimeSpan matchTimeout)
+        {
+        }
+
         #region Instance members
 
 #if !SILVERLIGHT || FEATURE_NETCORE
