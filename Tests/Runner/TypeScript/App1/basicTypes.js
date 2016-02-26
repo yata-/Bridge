@@ -11,11 +11,11 @@
         dynamicValueInteger: 7,
         config: {
             init: function () {
-                this.integerArray = [1, 2, 3];
-                this.stringArray = ["1", "2", "3"];
-                this.colorArray = [BasicTypes.Color.blue, BasicTypes.Color.green, BasicTypes.Color.red];
-                this.twoDimensionalArray = [[1, 2, 3], [5, 8]];
-                this.colorValue = BasicTypes.Color.green;
+                this.integerArray = [1, 2, 3] || null;
+                this.stringArray = ["1", "2", "3"] || null;
+                this.colorArray = [BasicTypes.Color.blue, BasicTypes.Color.green, BasicTypes.Color.red] || null;
+                this.twoDimensionalArray = [[1, 2, 3], [5, 8]] || null;
+                this.colorValue = BasicTypes.Color.green || null;
                 this.undefinedValue = undefined;
             }
         },
