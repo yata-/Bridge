@@ -64,7 +64,7 @@
                     IntStatic: 0
                 },
                 init: function () {
-                    this.computeNumberStatic = $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f1;
+                    this.computeNumberStatic = $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f1 || null;
                 }
             }
         },
@@ -74,9 +74,9 @@
                 Name: null
             },
             init: function () {
-                this.computeNumber = $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f2;
-                this.computeTwoNumbers = $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f3;
-                this.doWithNumbers = $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f4;
+                this.computeNumber = $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f2 || null;
+                this.computeTwoNumbers = $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f3 || null;
+                this.doWithNumbers = $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f4 || null;
             }
         },
         constructor: function (offset) {
