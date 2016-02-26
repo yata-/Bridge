@@ -30,10 +30,10 @@ namespace Bridge.ClientTest.BridgeIssues
         [Test(ExpectedCount = 4)]
         public static void TestDefaultValues()
         {
-            Assert.AreEqual(Control.test, 2);
-            Assert.AreEqual(Globals.myVar, 2);
-            Assert.AreEqual(Globals.myVar1, 0);
-            Assert.AreEqual(Globals.myVar2, 0);
+            Assert.AreEqual(2, Control.test);
+            Assert.AreEqual(2, Globals.myVar);
+            Assert.AreEqual(0, Globals.myVar1);
+            Assert.AreEqual(0, Globals.myVar2);
         }
     }
 }

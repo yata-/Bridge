@@ -1793,10 +1793,10 @@
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1001', {
         statics: {
             testDefaultValues: function () {
-                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1001.Control).test, 2);
-                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1001.Globals).myVar, 2);
-                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1001.Globals).myVar1, 0);
-                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1001.Globals).myVar2, 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(2, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1001.Control).test);
+                Bridge.get(Bridge.Test.Assert).areEqual(2, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1001.Globals).myVar);
+                Bridge.get(Bridge.Test.Assert).areEqual(0, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1001.Globals).myVar1);
+                Bridge.get(Bridge.Test.Assert).areEqual(0, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1001.Globals).myVar2);
             }
         }
     });
