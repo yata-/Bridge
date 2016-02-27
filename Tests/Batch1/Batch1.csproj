@@ -169,6 +169,7 @@
     <Compile Include="BridgeIssues\0900\N918.cs" />
     <Compile Include="BridgeIssues\0900\N912.cs" />
     <Compile Include="BridgeIssues\1000\N1001.cs" />
+    <Compile Include="BridgeIssues\1000\N1003.cs" />
     <Compile Include="BridgeIssues\0900\N989.cs" />
     <Compile Include="BridgeIssues\0900\N975.cs" />
     <Compile Include="BridgeIssues\0900\N968.cs" />
@@ -186,6 +187,7 @@
     <Compile Include="BridgeIssues\0800\N889.cs" />
     <Compile Include="BridgeIssues\0800\N881.cs" />
     <Compile Include="BridgeIssues\0800\N863.cs" />
+    <Compile Include="BridgeIssues\0900\N999.cs" />
     <Compile Include="BridgeIssues\TestBridgeIssues.cs" />
     <Compile Include="Convert\ConvertFromBase64Tests.cs" />
     <Compile Include="Convert\ConvertTestBase.cs" />

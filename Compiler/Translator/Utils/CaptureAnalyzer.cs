@@ -119,6 +119,23 @@ namespace Bridge.Translator
             node.AcceptVisitor(this);
         }
 
+        public void Analyze(LambdaResolveResult rr, IEnumerable<string> parameters = null)
+        {
+            _usesThis = false;
+            _usedVariables.Clear();
+            _variables.Clear();
+
+            if (parameters != null)
+            {
+                foreach (var parameter in parameters)
+                {
+                    _variables.Add(parameter);
+                }
+            }
+
+            this.VisitChildResolveResults(rr, null);
+        }
+
         public override object VisitTypeOfResolveResult(TypeOfResolveResult rr, object data)
         {
             if (rr.ReferencedType.Kind == TypeKind.TypeParameter)
@@ -145,6 +162,47 @@ namespace Bridge.Translator
             }
 
             return base.VisitTypeResolveResult(rr, data);
+        }
+
+        public override object VisitInvocationResolveResult(InvocationResolveResult rr, object data)
+        {
+            var method = rr.Member as IMethod;
+            if (method != null)
+            {
+                foreach (var typeArgument in method.TypeArguments)
+                {
+                    if (typeArgument.Kind == TypeKind.TypeParameter)
+                    {
+                        var ivar = new TypeVariable(typeArgument);
+                        if (!_usedVariables.Contains(ivar))
+                        {
+                            _usedVariables.Add(ivar);
+                        }
+                    }
+                }
+            }
+            
+            return base.VisitInvocationResolveResult(rr, data);
+        }
+
+        public override object VisitCSharpInvocationResolveResult(CSharpInvocationResolveResult rr, object data)
+        {
+            var method = rr.Member as IMethod;
+            if (method != null)
+            {
+                foreach (var typeArgument in method.TypeArguments)
+                {
+                    if (typeArgument.Kind == TypeKind.TypeParameter)
+                    {
+                        var ivar = new TypeVariable(typeArgument);
+                        if (!_usedVariables.Contains(ivar))
+                        {
+                            _usedVariables.Add(ivar);
+                        }
+                    }
+                }
+            }
+            return base.VisitCSharpInvocationResolveResult(rr, data);
         }
 
         public override object VisitConstantResolveResult(ConstantResolveResult rr, object data)
@@ -179,6 +237,22 @@ namespace Bridge.Translator
 
         public override object VisitLambdaResolveResult(LambdaResolveResult rr, object data)
         {
+            var analyzer = new CaptureAnalyzer(this._resolver);
+            analyzer.Analyze(rr, rr.Parameters.Select(p => p.Name));
+
+            foreach (var usedVariable in analyzer.UsedVariables)
+            {
+                if (!_variables.Contains(usedVariable.Name) && !_usedVariables.Contains(usedVariable))
+                {
+                    _usedVariables.Add(usedVariable);
+                }
+            }
+
+            if (analyzer.UsesThis)
+            {
+                this._usesThis = true;
+            }
+
             return null;
             //return base.VisitLambdaResolveResult(rr, data);
         }
