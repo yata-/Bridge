@@ -8027,6 +8027,17 @@
                 Bridge.get(Bridge.Test.Assert).areEqual(f1(), "1, 2, 3");
                 Bridge.get(Bridge.Test.Assert).areEqual(f2(), "5, 6, 7");
                 Bridge.get(Bridge.Test.Assert).areEqual(f3(), "8, 9, 10");
+            },
+            testNestedLambdasToLiftingInForeach: function () {
+                var one = Bridge.Linq.Enumerable.from((Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+                    [1]
+                ] ))).select($_.Bridge.ClientTest.BridgeIssues.Bridge999.f3);
+    
+                var sum = 0;
+    
+                one.forEach($_.Bridge.ClientTest.BridgeIssues.Bridge999.f4);
+    
+                Bridge.get(Bridge.Test.Assert).areEqual(8, sum);
             }
         }
     });
@@ -8039,6 +8050,19 @@
         },
         f2: function () {
             return Bridge.toArray(Bridge.Linq.Enumerable.from([1, 2, 3]).select($_.Bridge.ClientTest.BridgeIssues.Bridge999.f1)).join(", ");
+        },
+        f3: function (x) {
+            return x;
+        },
+        f4: function (el) {
+            var list = Bridge.Linq.Enumerable.from((Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+                [3],
+                [5]
+            ] ))).select($_.Bridge.ClientTest.BridgeIssues.Bridge999.f3);
+    
+            list.forEach(function (el2) {
+                sum = sum + el2;
+            });
         }
     });
     

@@ -1,7 +1,9 @@
-using System;
-using System.Linq;
-using Bridge.Html5;
 using Bridge.Test;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 
 namespace Bridge.ClientTest.BridgeIssues
 {
@@ -45,6 +47,26 @@ namespace Bridge.ClientTest.BridgeIssues
             Assert.AreEqual(f1(), "1, 2, 3");
             Assert.AreEqual(f2(), "5, 6, 7");
             Assert.AreEqual(f3(), "8, 9, 10");
+        }
+
+        [Test(ExpectedCount = 1)]
+        public static void TestNestedLambdasToLiftingInForeach()
+        {
+            var one = (new List<int>() { 1 }).Select(x => x);
+
+            int sum = 0;
+
+            one.ForEach(el =>
+            {
+                var list = (new List<int>() { 3, 5 }).Select(x => x);
+
+                list.ForEach(el2 =>
+                {
+                    sum = sum + el2;
+                });
+            });
+
+            Assert.AreEqual(8, sum);
         }
     }
 }
