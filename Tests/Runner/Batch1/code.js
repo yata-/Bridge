@@ -7994,6 +7994,54 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge999', {
+        statics: {
+            testNestedLambdasToLifting: function () {
+                var offset = 1;
+                var f1 = $_.Bridge.ClientTest.BridgeIssues.Bridge999.f2;
+    
+                var f2 = function () {
+                    return Bridge.toArray(Bridge.Linq.Enumerable.from([4, 5, 6]).select(function (value) {
+                        return value + offset;
+                    })).join(", ");
+                };
+    
+                var f3 = function () {
+                    var f4 = function () {
+                        return Bridge.toArray(Bridge.Linq.Enumerable.from([7, 8, 9]).select(function (value) {
+                            return value + offset;
+                        })).join(", ");
+                    };
+    
+                    return f4();
+                };
+    
+                var scope = $_.Bridge.ClientTest.BridgeIssues.Bridge999;
+    
+                Bridge.get(Bridge.Test.Assert).notNull(scope.f1);
+                Bridge.get(Bridge.Test.Assert).notNull(scope.f2);
+                Bridge.get(Bridge.Test.Assert).$null(scope.f3);
+                Bridge.get(Bridge.Test.Assert).$null(scope.f4);
+                Bridge.get(Bridge.Test.Assert).areEqual(scope.f1(1), 1);
+                Bridge.get(Bridge.Test.Assert).areEqual(scope.f2(), "1, 2, 3");
+                Bridge.get(Bridge.Test.Assert).areEqual(f1(), "1, 2, 3");
+                Bridge.get(Bridge.Test.Assert).areEqual(f2(), "5, 6, 7");
+                Bridge.get(Bridge.Test.Assert).areEqual(f3(), "8, 9, 10");
+            }
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge999", $_)
+    
+    Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge999, {
+        f1: function (value) {
+            return value;
+        },
+        f2: function () {
+            return Bridge.toArray(Bridge.Linq.Enumerable.from([1, 2, 3]).select($_.Bridge.ClientTest.BridgeIssues.Bridge999.f1)).join(", ");
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Person383', {
         config: {
             properties: {

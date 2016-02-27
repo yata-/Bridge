@@ -5,7 +5,7 @@ using Bridge.Test;
 
 namespace Bridge.ClientTest.BridgeIssues
 {
-    // Bridge[#989]
+    // Bridge[#999]
     [Category(Constants.MODULE_ISSUES)]
     [TestFixture(TestNameFormat = "#999 - {0}")]
     public class Bridge999
@@ -35,6 +35,7 @@ namespace Bridge.ClientTest.BridgeIssues
             };
 
             dynamic scope = Script.Get("$_.Bridge.ClientTest.BridgeIssues.Bridge999");
+
             Assert.NotNull(scope.f1);
             Assert.NotNull(scope.f2);
             Assert.Null(scope.f3);
