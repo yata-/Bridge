@@ -1790,6 +1790,22 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1000', {
+        statics: {
+            testStaticViaChild: function () {
+                Bridge.get(Bridge.Test.Assert).areEqual("Test", Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1000.TestFixture$1(Object)).run());
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1000.TestFixture$1', function (T) { return {
+        statics: {
+            run: function () {
+                return "Test";
+            }
+        }
+    }; });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1001', {
         statics: {
             testDefaultValues: function () {
@@ -22983,6 +22999,10 @@
         test: function () {
             return "B";
         }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1000.ObjectTestFixture', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge1000.TestFixture$1(Object)]
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1001.Button', {
