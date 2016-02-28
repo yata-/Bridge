@@ -15,7 +15,7 @@ namespace Bridge.ClientTest.BridgeIssues
         [Template("{str1} + ' ' + {str2}")]
         public static extern string Concat(string str1, string str2);
 
-        public static List<T2> ConvertAll<T, T2>(this IEnumerable<T> value, Func<T, T2> function)
+        public static List<T2> ConvertAllItems<T, T2>(this IEnumerable<T> value, Func<T, T2> function)
         {
             List<T2> result = new List<T2>();
             foreach (T item in value)
@@ -48,7 +48,7 @@ namespace Bridge.ClientTest.BridgeIssues
             Assert.True(fn2(aaa, 7));
 
             List<string> list = new List<string> { "1", "2", "3" };
-            List<int> converted = list.ConvertAll(int.Parse);
+            List<int> converted = list.ConvertAllItems(int.Parse);
             Assert.AreEqual(converted[0], 1);
             Assert.AreEqual(converted[1], 2);
             Assert.AreEqual(converted[2], 3);
@@ -56,7 +56,7 @@ namespace Bridge.ClientTest.BridgeIssues
             Assert.Throws(() =>
             {
                 List<string> list1 = new List<string> { "2147483648" };
-                List<int> converted1 = list1.ConvertAll(int.Parse);
+                List<int> converted1 = list1.ConvertAllItems(int.Parse);
             }, e => e is OverflowException);
 
             Func<string, string, string> action1 = Bridge743ObjectExtention.Concat;

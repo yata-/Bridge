@@ -462,8 +462,7 @@ namespace Bridge.Translator
                     this.Write(", ");
                 }
 
-                int count = this.Emitter.Writers.Count;
-                if (count == 0 && !thisAssignment && !special)
+                if (this.Emitter.Writers.Count == initCount && !thisAssignment && !special)
                 {
                     this.Write("= ");
                 }

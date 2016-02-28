@@ -55,3 +55,6 @@ echo f | xcopy /f /y "%root%Frameworks\QUnit\bin\%build%\*.nupkg"               
 
 :: Bridge.WebGL
 echo f | xcopy /f /y "%root%Frameworks\WebGL\bin\%build%\*.nupkg"               %output%
+
+:: Bridge.QUnit.Sample
+echo f | xcopy /f /y "%root%Samples\QUnit\Bridge.QUnit.Sample\bin\%build%\*.nupkg"               %output%

@@ -59,23 +59,25 @@
       <NuGetUseExplicitVersion Condition=" '$(NuGetUseExplicitVersion)' == '' ">false</NuGetUseExplicitVersion>
       <!-- Set default NuGetPackageOutputDir if not defined-->
       <!-- NuGetPackageOutputDir == true means package version will be taken from nuspec-->
-      <!-- NuGetPackageOutputDir == false means package version will be taken from project's output assembly version-->
+      <!-- NuGetPackageOutputDir == false means package version will be taken from $(SolutionDir).build\common\CommonAssemblyInfo.cs or project's output assembly version-->
       <NuGetPackageOutputDir Condition="$(NuGetPackageOutputDir) == '' Or $(NuGetPackageOutputDir) == '*Undefined*'">$(ProjectDir)$(OutDir)</NuGetPackageOutputDir>
       <NuGetPackageOutputDir>$(NuGetPackageOutputDir.Trim('\\'))</NuGetPackageOutputDir>
     </PropertyGroup>
 
-    <GetAssemblyIdentity Condition="$(NuGetUseExplicitVersion) == 'false'" AssemblyFiles="$(ProjectDir)$(OutDir)$(AssemblyName).dll">
-      <Output TaskParameter="Assemblies" ItemName="AssemblyInfo"/>
-    </GetAssemblyIdentity>
+    <GetAssemblyVersionFromTextFile Condition="$(NuGetUseExplicitVersion) == 'false'" Filename="$(SolutionDir).build\common\CommonAssemblyInfo.cs">
+      <Output TaskParameter="Version" ItemName="AssemblyInformationalVersion"/>
+    </GetAssemblyVersionFromTextFile>
 
-    <Message Condition="$(NuGetUseExplicitVersion) == 'false'" Text="Retrieved assembly version from $(ProjectDir)$(OutDir)$(AssemblyName).dll %(AssemblyInfo.Version)" Importance="high" />
+    <GetAssemblyVersionFromDll Condition="$(NuGetUseExplicitVersion) == 'false' And (@(AssemblyInformationalVersion) == '' Or @(AssemblyInformationalVersion) == '*Undefined*') " Filename="$(ProjectDir)$(OutDir)$(AssemblyName).dll">
+      <Output TaskParameter="Version" ItemName="AssemblyInformationalVersion"/>
+    </GetAssemblyVersionFromDll>
+
     <Message Condition="$(NuGetUseExplicitVersion) == 'true'" Text="Will use package version from nuspec" Importance="high" />
 
     <PropertyGroup>
-      <!--For $(NuGetUseExplicitVersion) == 'false' scenario, define nuget.exe VErsion parameter into NuGetPackageVersion as "-Version " + major.minor.build-->
-      <TrimmedAssemblyVersion  Condition=" '%(AssemblyInfo.Version)' != '' And '%(AssemblyInfo.Version)' != '*Undefined*' ">$([System.Version]::Parse(%(AssemblyInfo.Version)).ToString(3))</TrimmedAssemblyVersion>
-      <NuGetPackageVersion Condition=" '%(AssemblyInfo.Version)' != '' And '%(AssemblyInfo.Version)' != '*Undefined*' "> -Version "$(TrimmedAssemblyVersion)"</NuGetPackageVersion>
-      <NuGetPackageVersion Condition=" '%(AssemblyInfo.Version)' == '' Or '%(AssemblyInfo.Version)' == '*Undefined*' "></NuGetPackageVersion>
+      <!--For $(NuGetUseExplicitVersion) == 'false' scenario, define nuget.exe Version parameter into NuGetPackageVersion as "-Version " + @(AssemblyInformationalVersion)-->
+      <NuGetPackageVersion Condition=" '@(AssemblyInformationalVersion)' != '*Undefined*' "> -Version "@(AssemblyInformationalVersion)"</NuGetPackageVersion>
+      <NuGetPackageVersion Condition=" '@(AssemblyInformationalVersion)' == '*Undefined*' "></NuGetPackageVersion>
     </PropertyGroup>
 
     <Message Condition="$(NuGetUseExplicitVersion) == 'false'" Text="Applying $(NuGetPackageVersion) for NuGet package %(NuGetPackageSourcePath.Path)" Importance="high" />
@@ -123,6 +125,111 @@
                 }
                 catch (Exception ex) {
                     Log.LogErrorFromException(ex);
+                    return false;
+                }
+            ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <UsingTask TaskName="GetAssemblyVersionFromTextFile" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+    <ParameterGroup>
+      <Filename ParameterType="System.String" Required="true" />
+      <Version ParameterType="System.String" Output="True" />
+    </ParameterGroup>
+    <Task>
+      <Reference Include="System.Core" />
+      <Using Namespace="System" />
+      <Using Namespace="System.IO" />
+      <Using Namespace="System.Text.RegularExpressions" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+                try
+                {
+                    Log.LogMessage(Microsoft.Build.Framework.MessageImportance.High, "Searching " + (Filename ?? string.Empty) + " for version...");
+                    Version = null;
+                    
+                    if (string.IsNullOrWhiteSpace(Filename))
+                    {
+                        Log.LogMessage(Microsoft.Build.Framework.MessageImportance.High, "Filename " + (Filename ?? string.Empty) + " is empty.");
+                        return true;
+                    }
+                    
+                    Filename = Path.GetFullPath(Filename);                   
+                    if (!File.Exists(Filename))
+                    {
+                        Log.LogMessage(Microsoft.Build.Framework.MessageImportance.High, "Filename " + (Filename ?? string.Empty) + " does not exist.");
+                        return true;
+                    }
+
+                    string fileContent = File.ReadAllText(Filename);
+                    Log.LogMessage(Microsoft.Build.Framework.MessageImportance.High, "Read " + fileContent.Length + " symbols");
+                    
+                    var attributeName = "AssemblyInformationalVersion";
+                    var options = RegexOptions.IgnoreCase | RegexOptions.Compiled;
+                    var regex = new Regex("\\[assembly: " + attributeName + "\\(\"(.*)\"\\)\\]", options);
+                    
+                    var match = regex.Match(fileContent);
+
+                    if (!match.Success)
+                    {
+                        Log.LogMessage(Microsoft.Build.Framework.MessageImportance.High, "Did not find " + attributeName + " in " + (Filename ?? string.Empty));
+                        return true;
+                    }                    
+               
+                    Version = match.Groups[1].Value;
+                    Log.LogMessage(Microsoft.Build.Framework.MessageImportance.High, "Found " + attributeName + " " + (Version ?? string.Empty) + " in " + (Filename ?? string.Empty));
+                    
+                    return true;
+                }
+                catch (Exception ex) {
+                    Log.LogWarningFromException(ex);
+                    return false;
+                }
+            ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <UsingTask TaskName="GetAssemblyVersionFromDll" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+    <ParameterGroup>
+      <Filename ParameterType="System.String" Required="true" />
+      <Version ParameterType="System.String" Output="True" />
+    </ParameterGroup>
+    <Task>
+      <Reference Include="System.Core" />
+      <Using Namespace="System" />
+      <Using Namespace="System.Diagnostics" />
+      <Using Namespace="System.Reflection" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+                try
+                {
+                    Log.LogMessage(Microsoft.Build.Framework.MessageImportance.High, "Searching " + (Filename ?? string.Empty) + " for version...");
+                    Version = null;
+                    
+                    if (string.IsNullOrWhiteSpace(Filename))
+                    {
+                        Log.LogMessage(Microsoft.Build.Framework.MessageImportance.High, "Filename " + (Filename ?? string.Empty) + " is empty.");
+                        return false;
+                    }
+                    
+                    Filename = Path.GetFullPath(Filename);                   
+                    if (!File.Exists(Filename))
+                    {
+                        Log.LogMessage(Microsoft.Build.Framework.MessageImportance.High, "Filename " + (Filename ?? string.Empty) + " does not exist.");
+                        return false;
+                    }
+                    
+                    var fileVersionInfo = FileVersionInfo.GetVersionInfo(Filename);
+                    Version = fileVersionInfo.ProductVersion;
+               
+                    Log.LogMessage(Microsoft.Build.Framework.MessageImportance.High, "Found ProductVersion " + (Version ?? string.Empty) + " in " + (Filename ?? string.Empty));
+                    
+                    return true;
+                }
+                catch (Exception ex) {
+                    Log.LogWarningFromException(ex);
                     return false;
                 }
             ]]>
