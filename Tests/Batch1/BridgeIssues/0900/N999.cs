@@ -61,7 +61,7 @@ namespace Bridge.ClientTest.BridgeIssues
 
     // Bridge[#999_1]
     [Category(Constants.MODULE_ISSUES)]
-    [TestFixture(TestNameFormat = "#999_1 - {0}")]
+    [TestFixture(TestNameFormat = "#999 - {0}")]
     public class Bridge999_1
     {
         [Test(ExpectedCount = 5)]
