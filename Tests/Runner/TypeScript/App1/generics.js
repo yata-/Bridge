@@ -1,14 +1,6 @@
 ﻿(function (globals) {
     "use strict";
 
-    Bridge.define('Generics.INamedEntity', {
-        config: {
-            properties: {
-                Name: null
-            }
-        }
-    });
-    
     Bridge.define('Generics.GenericClass$1', function (T) { return {
         instance: null,
         constructor: function (instance) {
@@ -18,6 +10,14 @@
             return input;
         }
     }; });
+    
+    Bridge.define('Generics.INamedEntity', {
+        config: {
+            properties: {
+                Name: null
+            }
+        }
+    });
     
     Bridge.define('Generics.GenericNew$1', function (T) { return {
         instance: null,
@@ -49,15 +49,29 @@
         }
     }; });
     
-    Bridge.define('Generics.SimpleGeneric$1', function (T) { return {
-        instance: null,
-        constructor: function (instance) {
-            this.instance  = instance;
-        },
-        getSomething: function (input) {
-            return input;
+    Bridge.define('Generics.implementation', {
+        statics: {
+            config: {
+                init: function () {
+                    this.simpleGenericInt = new Generics.SimpleGeneric$1(Bridge.Int)(1) || null;
+                    this.simpleDoubleGenericIntString = new Generics.SimpleDoubleGeneric$2(Bridge.Int,String)("constructor") || null;
+                    this.genericINamedEntity = new Generics.GenericINamedEntity$1(Generics.INamedEntity)(new Generics.NamedEntity()) || null;
+                    this.genericNamedEntity = new Generics.GenericNamedEntity$1(Generics.NamedEntity)(new Generics.NamedEntity()) || null;
+                    this.genericClassObject = new Generics.GenericClass$1(Object)(2) || null;
+                    this.genericClassNamedEntity = new Generics.GenericClass$1(Generics.NamedEntity)(new Generics.NamedEntity()) || null;
+                    this.genericNew = new Generics.GenericNew$1(Generics.NewClass)(new Generics.NewClass()) || null;
+                    this.genericNewAndClass = new Generics.GenericNewAndClass$1(Generics.NewClass)(new Generics.NewClass()) || null;
+                }
+            }
         }
-    }; });
+    });
+    
+    Bridge.define('Generics.NewClass', {
+        data: 0,
+        constructor: function () {
+            this.data  = 30;
+        }
+    });
     
     Bridge.define('Generics.SimpleDoubleGeneric$2', function (T, K) { return {
         instanceT: null,
@@ -76,12 +90,15 @@
         }
     }; });
     
-    Bridge.define('Generics.NewClass', {
-        data: 0,
-        constructor: function () {
-            this.data  = 30;
+    Bridge.define('Generics.SimpleGeneric$1', function (T) { return {
+        instance: null,
+        constructor: function (instance) {
+            this.instance  = instance;
+        },
+        getSomething: function (input) {
+            return input;
         }
-    });
+    }; });
     
     Bridge.define('Generics.GenericINamedEntity$1', function (T) { return {
         instance: null,
@@ -112,22 +129,7 @@
         }
     }; });
     
-    Bridge.define('Generics.implementation', {
-        statics: {
-            config: {
-                init: function () {
-                    this.simpleGenericInt = new Generics.SimpleGeneric$1(Bridge.Int)(1);
-                    this.simpleDoubleGenericIntString = new Generics.SimpleDoubleGeneric$2(Bridge.Int,String)("constructor");
-                    this.genericINamedEntity = new Generics.GenericINamedEntity$1(Generics.INamedEntity)(new Generics.NamedEntity());
-                    this.genericNamedEntity = new Generics.GenericNamedEntity$1(Generics.NamedEntity)(new Generics.NamedEntity());
-                    this.genericClassObject = new Generics.GenericClass$1(Object)(2);
-                    this.genericClassNamedEntity = new Generics.GenericClass$1(Generics.NamedEntity)(new Generics.NamedEntity());
-                    this.genericNew = new Generics.GenericNew$1(Generics.NewClass)(new Generics.NewClass());
-                    this.genericNewAndClass = new Generics.GenericNewAndClass$1(Generics.NewClass)(new Generics.NewClass());
-                }
-            }
-        }
-    });
+    
     
     Bridge.init();
 })(this);

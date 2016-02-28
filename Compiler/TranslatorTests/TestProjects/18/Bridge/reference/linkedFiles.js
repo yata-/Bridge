@@ -1,13 +1,13 @@
 ﻿(function (globals) {
     "use strict";
 
-    Bridge.define('LinkedFiles.Link1');
+    Bridge.define('LinkedFiles.Issue531Link1');
     
-    Bridge.define('LinkedFiles.Link2');
+    Bridge.define('LinkedFiles.Issue531Link2');
     
-    Bridge.define('LinkedFiles.Link3');
+    Bridge.define('LinkedFiles.Issue531Link3');
     
-    Bridge.define('LinkedFiles.Link4');
+    Bridge.define('LinkedFiles.Issue531Link4');
     
     
     

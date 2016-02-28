@@ -168,6 +168,35 @@ namespace Bridge.Translator
                         }
                     }
 
+                    var defValueObj = Inspector.GetDefaultFieldValue(member.Entity.ReturnType, this.Emitter.Resolver);
+                    string defValue;
+
+                    if (defValueObj == null)
+                    {
+                        defValue = "null";
+                    }
+                    else if (defValueObj is AstType)
+                    {
+                        var itype = this.Emitter.Resolver.ResolveNode((AstType)defValueObj, this.Emitter);
+                        if (NullableType.IsNullable(itype.Type))
+                        {
+                            defValue = "null";
+                        }
+                        else
+                        {
+                            defValue = Inspector.GetStructDefaultValue((AstType)defValueObj, this.Emitter);
+                        }
+                    }
+                    else
+                    {
+                        defValue = this.Emitter.ToJavaScript(defValueObj);
+                    }
+
+                    if (value != "undefined")
+                    {
+                        value = value + " || " + defValue;    
+                    }
+                    
                     this.Injectors.Add(string.Format(format, member.GetName(this.Emitter), value));
                     continue;
                 }

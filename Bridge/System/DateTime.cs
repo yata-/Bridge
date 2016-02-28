@@ -431,6 +431,11 @@ namespace System
         {
             return null;
         }
+        
+        public string ToISOString()
+        {
+            return null;
+        }
 
         [Template("Bridge.Date.subdt({d}, {t})")]
         public static DateTime operator -(DateTime d, TimeSpan t)
