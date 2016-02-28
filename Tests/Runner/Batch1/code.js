@@ -11417,14 +11417,14 @@
                 }
             },
             fromObject: function () {
-                Bridge.get(Bridge.Test.Assert).areEqual("Bridge.ClientTest.ConvertTests.ConvertToStringTests", Bridge.Convert.toString(new Bridge.ClientTest.ConvertTests.ConvertToStringTests(), null));
+                Bridge.get(Bridge.Test.Assert).areEqual("Bridge.ClientTest.ConvertTests.ConvertToStringTests", Bridge.Convert.toString(new Bridge.ClientTest.ConvertTests.ConvertToStringTests()));
             },
             fromDateTime: function () {
                 var testValues = [new Date(2000, 8 - 1, 15, 16, 59, 59), new Date(1901, 1 - 1, 1, 1, 1, 1)];
                 var expectedValues = ["08/15/2000 16:59:59", "01/01/1901 01:01:01"];
     
                 for (var i = 0; i < testValues.length; i++) {
-                    Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Date.format(testValues[i]), Bridge.Convert.toString(testValues[i], null));
+                    Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Date.format(testValues[i]), Bridge.Convert.toString(testValues[i]));
                     Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], Bridge.Convert.toString(testValues[i], Bridge.DateTimeFormatInfo.invariantInfo));
                 }
             },
@@ -11585,7 +11585,7 @@
     
                 for (var i = 0; i < testValues.length; i++) {
                     var expected = expectedValues[i];
-                    var actual = Bridge.Convert.toString(testValues[i], null);
+                    var actual = Bridge.Convert.toString(testValues[i]);
                     Bridge.get(Bridge.Test.Assert).areEqual(expected, actual);
                     actual = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
                     Bridge.get(Bridge.Test.Assert).areEqual(expected, actual);
@@ -11595,7 +11595,7 @@
                 var testValues = [-128, -1, 0, 1, 127];
     
                 for (var i = 0; i < testValues.length; i++) {
-                    var result = Bridge.Convert.toString(testValues[i], null);
+                    var result = Bridge.Convert.toString(testValues[i]);
                     Bridge.get(Bridge.Test.Assert).areEqual(testValues[i].toString(), result);
                     result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
                     Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
@@ -11605,7 +11605,7 @@
                 var testValues = [0, 0, 1, 100, 255];
     
                 for (var i = 0; i < testValues.length; i++) {
-                    var result = Bridge.Convert.toString(testValues[i], null);
+                    var result = Bridge.Convert.toString(testValues[i]);
                     Bridge.get(Bridge.Test.Assert).areEqual(testValues[i].toString(), result);
                     result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
                     Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
@@ -11615,7 +11615,7 @@
                 var testValues = [-32768, -1000, -1, 0, 1, 1000, 32767];
     
                 for (var i = 0; i < testValues.length; i++) {
-                    var result = Bridge.Convert.toString(testValues[i], null);
+                    var result = Bridge.Convert.toString(testValues[i]);
                     Bridge.get(Bridge.Test.Assert).areEqual(testValues[i].toString(), result);
                     result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
                     Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
@@ -11625,7 +11625,7 @@
                 var testValues = [0, 0, 1, 1000, 65535];
     
                 for (var i = 0; i < testValues.length; i++) {
-                    var result = Bridge.Convert.toString(testValues[i], null);
+                    var result = Bridge.Convert.toString(testValues[i]);
                     Bridge.get(Bridge.Test.Assert).areEqual(testValues[i].toString(), result);
                     result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
                     Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
@@ -11635,7 +11635,7 @@
                 var testValues = [-2147483648, -1000, -1, 0, 1, 1000, 2147483647];
     
                 for (var i = 0; i < testValues.length; i++) {
-                    var result = Bridge.Convert.toString(testValues[i], null);
+                    var result = Bridge.Convert.toString(testValues[i]);
                     Bridge.get(Bridge.Test.Assert).areEqual(testValues[i].toString(), result);
                     result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
                     Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
@@ -11645,7 +11645,7 @@
                 var testValues = [0, 0, 1, 1000, 4294967295];
     
                 for (var i = 0; i < testValues.length; i++) {
-                    var result = Bridge.Convert.toString(testValues[i], null);
+                    var result = Bridge.Convert.toString(testValues[i]);
                     Bridge.get(Bridge.Test.Assert).areEqual(testValues[i].toString(), result);
                     result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
                     Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
@@ -11655,7 +11655,7 @@
                 var testValues = [-9007199254740991, -1000, -1, 0, 1, 1000, 9007199254740991];
     
                 for (var i = 0; i < testValues.length; i++) {
-                    var result = Bridge.Convert.toString(testValues[i], null);
+                    var result = Bridge.Convert.toString(testValues[i]);
                     Bridge.get(Bridge.Test.Assert).areEqual(testValues[i].toString(), result);
                     result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
                     Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
@@ -11665,7 +11665,7 @@
                 var testValues = [0, 0, 1, 1000, 9007199254740991];
     
                 for (var i = 0; i < testValues.length; i++) {
-                    var result = Bridge.Convert.toString(testValues[i], null);
+                    var result = Bridge.Convert.toString(testValues[i]);
                     Bridge.get(Bridge.Test.Assert).areEqual(testValues[i].toString(), result);
                     result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
                     Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
@@ -11677,7 +11677,7 @@
                 var expectedValues2 = ["-3.40282347e+38", "0", "1", "1000", "3.40282347e+38", "-Infinity", "Infinity", "1.401298e-45", "NaN"];
     
                 for (var i = 0; i < testValues.length; i++) {
-                    var result = Bridge.Convert.toString(testValues[i], null);
+                    var result = Bridge.Convert.toString(testValues[i]);
                     Bridge.get(Bridge.Test.Assert).areEqual(expectedValues1[i], result);
     
                     result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
@@ -11699,7 +11699,7 @@
                 var expectedValues = ["-79228162514264337593543950335", "-1.234567890123456789012345678", "0", "1", "1000", "79228162514264337593543950335", "1", "0", "-1"];
     
                 for (var i = 0; i < testValues.length; i++) {
-                    var result = Bridge.Convert.toString(testValues[i], null);
+                    var result = Bridge.Convert.toString(testValues[i]);
                     Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], result);
                 }
             },
@@ -11709,7 +11709,7 @@
                 var formatProvider = Bridge.DateTimeFormatInfo.invariantInfo;
     
                 for (var i = 0; i < testValues.length; i++) {
-                    var result = Bridge.Convert.toString(testValues[i], null);
+                    var result = Bridge.Convert.toString(testValues[i]);
                     Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Date.format(testValues[i]), result);
                     result = Bridge.Convert.toString(testValues[i], formatProvider);
                     var expected = Bridge.Date.format(testValues[i], null, formatProvider);
@@ -11720,7 +11720,7 @@
                 var testValues = ["Hello", " ", "", "\u0000"];
     
                 for (var i = 0; i < testValues.length; i++) {
-                    var result = Bridge.Convert.toString(testValues[i], null);
+                    var result = Bridge.Convert.toString(testValues[i]);
                     Bridge.get(Bridge.Test.Assert).areEqual(testValues[i].toString(), result);
                     result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
                     Bridge.get(Bridge.Test.Assert).areEqual(testValues[i].toString(), result);
@@ -11728,7 +11728,7 @@
             },
             fromIFormattable: function () {
                 var foo = new Bridge.ClientTest.ConvertTests.ConvertToStringTests.FooFormattable(3);
-                var result = Bridge.Convert.toString(foo, null);
+                var result = Bridge.Convert.toString(foo);
                 Bridge.get(Bridge.Test.Assert).areEqual("FooFormattable: 3", result);
                 result = Bridge.Convert.toString(foo, Bridge.NumberFormatInfo.currentInfo);
                 Bridge.get(Bridge.Test.Assert).areEqual("Bridge.NumberFormatInfo: 3", result);
@@ -11739,7 +11739,7 @@
             },
             fromNonIConvertible: function () {
                 var foo = new Bridge.ClientTest.ConvertTests.ConvertToStringTests.Foo(3);
-                var result = Bridge.Convert.toString(foo, null);
+                var result = Bridge.Convert.toString(foo);
                 Bridge.get(Bridge.Test.Assert).areEqual("Bridge.ClientTest.ConvertTests.ConvertToStringTests.Foo", result);
                 result = Bridge.Convert.toString(foo, Bridge.NumberFormatInfo.currentInfo);
                 Bridge.get(Bridge.Test.Assert).areEqual("Bridge.ClientTest.ConvertTests.ConvertToStringTests.Foo", result);
@@ -23514,7 +23514,7 @@
         fromDateTime: function () {
             var expectedValues = [new Date(1999, 12 - 1, 31, 23, 59, 59), new Date(100, 1 - 1, 1, 0, 0, 0), new Date(1492, 2 - 1, 29, 0, 0, 0), new Date(1, 1 - 1, 1, 0, 0, 0)];
             for (var i = 0; i < expectedValues.length; i++) {
-                var result = Bridge.Convert.toDateTime(expectedValues[i], null);
+                var result = Bridge.Convert.toDateTime(expectedValues[i]);
                 Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], result);
             }
         },
@@ -23561,7 +23561,7 @@
     
     Bridge.apply($_.Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests, {
         f1: function () {
-            Bridge.Convert.toDateTime({ }, null);
+            Bridge.Convert.toDateTime({ });
         },
         f2: function (err) {
             return Bridge.is(err, Bridge.InvalidCastException);
@@ -23570,25 +23570,25 @@
             Bridge.Convert.toDateTime({ }, Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests).s_dateTimeFormatInfo);
         },
         f4: function () {
-            Bridge.Convert.toDateTime(false, null);
+            Bridge.Convert.toDateTime(false);
         },
         f5: function () {
-            Bridge.Convert.toDateTime(97, null);
+            Bridge.Convert.toDateTime(97);
         },
         f6: function () {
-            Bridge.Convert.toDateTime(Bridge.cast(5, Bridge.Int), null);
+            Bridge.Convert.toDateTime(Bridge.cast(5, Bridge.Int));
         },
         f7: function () {
-            Bridge.Convert.toDateTime(5, null);
+            Bridge.Convert.toDateTime(5);
         },
         f8: function () {
-            Bridge.Convert.toDateTime(1.0, null);
+            Bridge.Convert.toDateTime(1.0);
         },
         f9: function () {
-            Bridge.Convert.toDateTime(1.1, null);
+            Bridge.Convert.toDateTime(1.1);
         },
         f10: function () {
-            Bridge.Convert.toDateTime(Bridge.Decimal(1.0), null);
+            Bridge.Convert.toDateTime(Bridge.Decimal(1.0));
         }
     });
     

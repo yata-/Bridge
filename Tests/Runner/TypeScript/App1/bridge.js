@@ -8291,9 +8291,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
         },
 
         toBoolean: function (value, formatProvider) {
-            var type = typeof (value);
-
-            switch (type) {
+            switch (typeof (value)) {
                 case "boolean":
                     return value;
 
@@ -8328,7 +8326,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
             scope.internal.throwInvalidCastEx(typeCode, scope.convert.typeCodes.Boolean);
 
             // try converting using IConvertible
-            return scope.convert.convertToType(scope.convert.typeCodes.Boolean, value, formatProvider);
+            return scope.convert.convertToType(scope.convert.typeCodes.Boolean, value, formatProvider || null);
         },
 
         toChar: function (value, formatProvider, valueTypeCode) {
@@ -8388,67 +8386,47 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
             scope.internal.throwInvalidCastEx(valueTypeCode, scope.convert.typeCodes.Char);
 
             // try converting using IConvertible
-            return scope.convert.convertToType(typeCodes.Char, value, formatProvider);
+            return scope.convert.convertToType(typeCodes.Char, value, formatProvider || null);
         },
 
         toSByte: function (value, formatProvider, valueTypeCode) {
-            var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.SByte, valueTypeCode);
-
-            return result;
+            return scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.SByte, valueTypeCode || null);
         },
 
         toByte: function (value, formatProvider) {
-            var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.Byte);
-
-            return result;
+            return scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.Byte);
         },
 
         toInt16: function (value, formatProvider) {
-            var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.Int16);
-
-            return result;
+            return scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.Int16);
         },
 
         toUInt16: function (value, formatProvider) {
-            var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.UInt16);
-
-            return result;
+            return scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.UInt16);
         },
 
         toInt32: function (value, formatProvider) {
-            var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.Int32);
-
-            return result;
+            return scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.Int32);
         },
 
         toUInt32: function (value, formatProvider) {
-            var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.UInt32);
-
-            return result;
+            return scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.UInt32);
         },
 
         toInt64: function (value, formatProvider) {
-            var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.Int64);
-
-            return result;
+            return scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.Int64);
         },
 
         toUInt64: function (value, formatProvider) {
-            var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.UInt64);
-
-            return result;
+            return scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.UInt64);
         },
 
         toSingle: function (value, formatProvider) {
-            var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.Single);
-
-            return result;
+            return scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.Single);
         },
 
         toDouble: function (value, formatProvider) {
-            var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.Double);
-
-            return result;
+            return scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.Double);
         },
 
         toDecimal: function (value, formatProvider) {
@@ -8456,17 +8434,13 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
                 return value;
             }
 
-            var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.Decimal);
-            result = new Bridge.Decimal(result);
-
-            return result;
+            return new Bridge.Decimal(scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.Decimal));
         },
 
         toDateTime: function (value, formatProvider) {
             var typeCodes = scope.convert.typeCodes;
-            var type = typeof (value);
 
-            switch (type) {
+            switch (typeof (value)) {
                 case "boolean":
                     scope.internal.throwInvalidCastEx(typeCodes.Boolean, typeCodes.DateTime);
 
@@ -8475,7 +8449,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
                     scope.internal.throwInvalidCastEx(fromType, typeCodes.DateTime);
 
                 case "string":
-                    value = Bridge.Date.parse(value, formatProvider);
+                    value = Bridge.Date.parse(value, formatProvider || null);
 
                     return value;
 
@@ -8500,7 +8474,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
             scope.internal.throwInvalidCastEx(valueTypeCode, scope.convert.typeCodes.DateTime);
 
             // try converting using IConvertible
-            return scope.convert.convertToType(typeCodes.DateTime, value, formatProvider);
+            return scope.convert.convertToType(typeCodes.DateTime, value, formatProvider || null);
         },
 
         toString: function (value, formatProvider, valueTypeCode) {
@@ -8512,7 +8486,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
                     return value ? "True" : "False";
 
                 case "number":
-                    if (valueTypeCode === typeCodes.Char) {
+                    if ((valueTypeCode || null) === typeCodes.Char) {
                         return String.fromCharCode(value);
                     }
 
@@ -8535,7 +8509,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
                     }
 
                     if (Bridge.isDate(value)) {
-                        return Bridge.Date.format(value, null, formatProvider);
+                        return Bridge.Date.format(value, null, formatProvider || null);
                     }
 
                     if (value instanceof Bridge.Decimal) {
@@ -8546,7 +8520,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
                     }
 
                     if (value.format) {
-                        return value.format(null, formatProvider);
+                        return value.format(null, formatProvider || null);
                     }
 
                     var typeName = Bridge.getTypeName(value);
@@ -8555,7 +8529,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
             }
 
             // try converting using IConvertible
-            return scope.convert.convertToType(scope.convert.typeCodes.String, value, formatProvider);
+            return scope.convert.convertToType(scope.convert.typeCodes.String, value, formatProvider || null);
         },
 
         toNumberInBase: function (str, fromBase, typeCode) {
@@ -8687,7 +8661,6 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
                 }
             }
 
-
             if (value < minValue || value > maxValue) {
                 throw new Bridge.OverflowException("Value was either too large or too small for an unsigned byte.");
             }
@@ -8761,7 +8734,6 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
             length = length != null ? length : inArray.length;
             options = options || 0; // 0 - means "None", 1 - stands for "InsertLineBreaks"
 
-            
             if (length < 0) {
                 throw new Bridge.ArgumentOutOfRangeException("length", "Index was out of range. Must be non-negative and less than the size of the collection.");
             }
@@ -9095,7 +9067,6 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
                 type = "string";
             }
 
-
             switch (type) {
                 case "boolean":
                     return value ? 1 : 0;
@@ -9407,7 +9378,6 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
             var equalityCharEncountered = false;
 
             while (true) {
-
                 // break when done:
                 if (inputIndex >= endInputIndex) {
                     allInputConsumed = true;
