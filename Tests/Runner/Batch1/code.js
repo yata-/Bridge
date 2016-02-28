@@ -55,8 +55,8 @@
         },
         settingValueByIndexWorks: function () {
             var arr = Bridge.Array.init(2, null);
-            arr[0]  = "x";
-            arr[1]  = "y";
+            arr[0] = "x";
+            arr[1] = "y";
             Bridge.get(Bridge.Test.Assert).areEqual("x", arr[0]);
             Bridge.get(Bridge.Test.Assert).areEqual("y", arr[1]);
         },
@@ -307,7 +307,7 @@
     Bridge.define('Bridge.ClientTest.ArrayTests.C', {
         i: 0,
         constructor: function (i) {
-            this.i  = i;
+            this.i = i;
         },
         equals: function (o) {
             return Bridge.is(o, Bridge.ClientTest.ArrayTests.C) && this.i === (Bridge.cast(o, Bridge.ClientTest.ArrayTests.C)).i;
@@ -338,8 +338,8 @@
     Bridge.define('Bridge.ClientTest.BasicCSharp.ClassA', {
         statics: {
             constructor: function () {
-                Bridge.get(Bridge.ClientTest.BasicCSharp.ClassA).staticString  = "Defined string";
-                Bridge.get(Bridge.ClientTest.BasicCSharp.ClassA).staticInt  = -340;
+                Bridge.get(Bridge.ClientTest.BasicCSharp.ClassA).staticString = "Defined string";
+                Bridge.get(Bridge.ClientTest.BasicCSharp.ClassA).staticInt = -340;
             },
             statitIntNotInitialized: 0,
             statitStringNotInitialized: null,
@@ -348,8 +348,8 @@
             CONST_CHAR: 81,
             CONST_DECIMAL: Bridge.Decimal("3.123456789324324324"),
             staticMethod1: function (i, s, d) {
-                Bridge.get(Bridge.ClientTest.BasicCSharp.ClassA).statitIntNotInitialized  = i;
-                Bridge.get(Bridge.ClientTest.BasicCSharp.ClassA).statitStringNotInitialized  = s;
+                Bridge.get(Bridge.ClientTest.BasicCSharp.ClassA).statitIntNotInitialized = i;
+                Bridge.get(Bridge.ClientTest.BasicCSharp.ClassA).statitStringNotInitialized = s;
     
                 return Bridge.merge(new Bridge.ClientTest.BasicCSharp.ClassA("constructor"), {
                     setDoubleA: d
@@ -364,7 +364,7 @@
                 return Bridge.get(Bridge.ClientTest.BasicCSharp.ClassA).staticMethod1(i, s, d);
             },
             tryParse: function (o, i) {
-                i.v  = 3;
+                i.v = 3;
     
                 return true;
             },
@@ -437,7 +437,7 @@
             return this.data;
         },
         setData: function (value) {
-            this.data  = value;
+            this.data = value;
         },
         method1: function () {
             var a1 = Bridge.merge(new Bridge.ClientTest.BasicCSharp.ClassA.Aux1(), {
@@ -460,7 +460,7 @@
             return "no data";
         },
         method4: function (i, add) {
-            i  = i + add;
+            i = i + add;
             return i;
         },
         method5: function (i) {
@@ -497,8 +497,8 @@
     Bridge.define('Bridge.ClientTest.BasicCSharp.Point', {
         statics: {
             constructor: function () {
-                Bridge.get(Bridge.ClientTest.BasicCSharp.Point).staticInt  = 500;
-                Bridge.get(Bridge.ClientTest.BasicCSharp.Point).staticString  = "Initialized";
+                Bridge.get(Bridge.ClientTest.BasicCSharp.Point).staticInt = 500;
+                Bridge.get(Bridge.ClientTest.BasicCSharp.Point).staticString = "Initialized";
             },
             statitIntNotInitialized: 0,
             statitStringNotInitialized: null,
@@ -557,14 +557,14 @@
             // [#69]
             (new Bridge.ClientTest.BasicCSharp.Rectangle("constructor")).$clone(this);
     
-            this.l.x  = x;
-            this.l.y  = y;
+            this.l.x = x;
+            this.l.y = y;
         },
         constructor$2: function (x1, y1, x2, y2) {
-            this.l.x  = x1;
-            this.l.y  = y1;
-            this.t.x  = x2;
-            this.t.y  = y2;
+            this.l.x = x1;
+            this.l.y = y1;
+            this.t.x = x2;
+            this.t.y = y2;
         },
         constructor: function () {
         },
@@ -1081,7 +1081,7 @@
                 // Check constructor with parameter
                 Bridge.get(Bridge.Test.Assert).throws$4(Bridge.get(Bridge.ClientTest.BasicCSharp.TestSet1FailureHelper).testConstructor2Failure, "Should pass six parameters", "Should pass six parameters");
     
-                a  = new Bridge.ClientTest.BasicCSharp.ClassA("constructor$2", [150, "151", true, 1.53, Bridge.Decimal(1.54), Bridge.merge(new Bridge.ClientTest.BasicCSharp.ClassA.Aux1(), {
+                a = new Bridge.ClientTest.BasicCSharp.ClassA("constructor$2", [150, "151", true, 1.53, Bridge.Decimal(1.54), Bridge.merge(new Bridge.ClientTest.BasicCSharp.ClassA.Aux1(), {
                     setNumber: 155
                 } )]);
     
@@ -1142,7 +1142,7 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1("ASD", Bridge.get(Bridge.ClientTest.BasicCSharp.ClassA).statitStringNotInitialized, "ClassA.StatitStringNotInitialized ASD");
                 Bridge.get(Bridge.Test.Assert).areDeepEqual$1(Number.NaN, a.getDoubleA(), "DoubleA double.NaN");
     
-                a  = Bridge.get(Bridge.ClientTest.BasicCSharp.ClassA).staticMethod2([678, "QWE", 234]);
+                a = Bridge.get(Bridge.ClientTest.BasicCSharp.ClassA).staticMethod2([678, "QWE", 234]);
                 Bridge.get(Bridge.Test.Assert).areEqual$1(1678, Bridge.get(Bridge.ClientTest.BasicCSharp.ClassA).statitIntNotInitialized, "StatitIntNotInitialized 1678");
                 Bridge.get(Bridge.Test.Assert).areEqual$1("QWE", Bridge.get(Bridge.ClientTest.BasicCSharp.ClassA).statitStringNotInitialized, "ClassA.StatitStringNotInitialized QWE");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(234, a.getDoubleA(), "DoubleA 234");
@@ -1155,11 +1155,11 @@
                 var r = ra.method5(5);
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1(5, r, "r 5");
-                r  = ra.method5(15);
+                r = ra.method5(15);
                 Bridge.get(Bridge.Test.Assert).areEqual$1(15, r, "r 15");
-                r  = ra.method5$1(5, 6);
+                r = ra.method5$1(5, 6);
                 Bridge.get(Bridge.Test.Assert).areEqual$1(11, r, "r 11");
-                r  = ra.method5$1(-50, 6);
+                r = ra.method5$1(-50, 6);
                 Bridge.get(Bridge.Test.Assert).areEqual$1(-44, r, "r -44");
     
                 // Check referencing did not change data
@@ -1272,7 +1272,7 @@
                 }
                 catch (ex) {
                     ex = Bridge.Exception.create(ex);
-                    exceptionMessage  = ex.getMessage();
+                    exceptionMessage = ex.getMessage();
                 }
     
                 // var expectedMessage = Utilities.BrowserHelper.IsPhantomJs()
@@ -1296,7 +1296,7 @@
                     }
                     else {
                         ex = $e1;
-                        exceptionMessage  = ex.getMessage();
+                        exceptionMessage = ex.getMessage();
                     }
                 }
     
@@ -1462,12 +1462,12 @@
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1(7, data.getCount(), "Exception catch, Finally works");
     
-                data  = new Bridge.ClientTest.BasicCSharp.Data();
+                data = new Bridge.ClientTest.BasicCSharp.Data();
                 Bridge.get(Bridge.ClientTest.BasicCSharp.TestTryCatchFinallyBlocks).tryCatchFinallyWithCaughtTypedException(data);
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1(7, data.getCount(), "Typed exception catch, Finally works");
     
-                data  = new Bridge.ClientTest.BasicCSharp.Data();
+                data = new Bridge.ClientTest.BasicCSharp.Data();
                 var exceptionMessage = Bridge.get(Bridge.ClientTest.BasicCSharp.TestTryCatchFinallyBlocks).tryCatchFinallyWithCaughtArgumentException(data);
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1("catch me", exceptionMessage, "Typed exception catch with exception message");
@@ -1673,14 +1673,14 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1(0, r.t.x, "r.t.x 0");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(0, r.t.y, "r.t.y 0");
     
-                r  = new Bridge.ClientTest.BasicCSharp.Rectangle("constructor$1", 10, 20);
+                r = new Bridge.ClientTest.BasicCSharp.Rectangle("constructor$1", 10, 20);
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1(10, r.l.x, "r.l.x 10");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(20, r.l.y, "r.l.y 20");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(0, r.t.x, "r.t.x 0");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(0, r.t.y, "r.t.y 0");
     
-                r  = new Bridge.ClientTest.BasicCSharp.Rectangle("constructor$2", 30, 40, 50, 60);
+                r = new Bridge.ClientTest.BasicCSharp.Rectangle("constructor$2", 30, 40, 50, 60);
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1(30, r.l.x, "r.l.x 30");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(40, r.l.y, "r.l.y 40");
@@ -1690,11 +1690,11 @@
                 var i = a.test1();
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1(500, i, "i 500");
-                a.x  = 300;
-                i  = a.test1();
+                a.x = 300;
+                i = a.test1();
                 Bridge.get(Bridge.Test.Assert).areEqual$1(800, i, "i 800");
     
-                a.y  = 400;
+                a.y = 400;
     
                 var b = Bridge.merge(new Bridge.ClientTest.BasicCSharp.Point(), {
                     x: 5,
@@ -1712,7 +1712,7 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1(null, Bridge.get(Bridge.ClientTest.BasicCSharp.Point).statitStringNotInitialized, "Point.StatitStringNotInitialized null");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.cast(87, Bridge.Int), Bridge.get(Bridge.ClientTest.BasicCSharp.Point).CONST_CHAR, "Point.CONST_CHAR W");
     
-                Bridge.get(Bridge.ClientTest.BasicCSharp.Point).statitIntNotInitialized  = -1;
+                Bridge.get(Bridge.ClientTest.BasicCSharp.Point).statitIntNotInitialized = -1;
                 Bridge.get(Bridge.Test.Assert).areEqual$1(-1, Bridge.get(Bridge.ClientTest.BasicCSharp.Point).statitIntNotInitialized, "Point.StatitIntNotInitialized -1");
     
                 var i = Bridge.get(Bridge.ClientTest.BasicCSharp.Point).test3();
@@ -1766,7 +1766,7 @@
         y: 0,
         constructor$1: function (y1) {
             (new Bridge.ClientTest.BridgeIssues.Bridge069.Point69("constructor")).$clone(this);
-            this.y  = y1;
+            this.y = y1;
         },
         constructor: function () {
         },
@@ -1866,10 +1866,10 @@
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge169, {
         f1: function () {
-            Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge169).number  = 1;
+            Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge169).number = 1;
         },
         f2: function () {
-            Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge169).number  = 2;
+            Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge169).number = 2;
         }
     });
     
@@ -1927,7 +1927,7 @@
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge294', {
         name: null,
         constructor: function (name) {
-            this.name  = name;
+            this.name = name;
         },
         getName: function () {
             return this.name;
@@ -2013,7 +2013,7 @@
     
         },
         constructor$1: function (initialValues) {
-            this._backingDictionary  = initialValues;
+            this._backingDictionary = initialValues;
         },
         getItem: function (key) {
             return this._backingDictionary.get(key);
@@ -2071,14 +2071,14 @@
                 var s31 = values.join("|");
                 Bridge.get(Bridge.Test.Assert).areEqual$1("|Cobb|4189|11434|0.366", s31, "Join31");
     
-                values[0]  = "";
+                values[0] = "";
                 var s32 = values.join("|");
                 Bridge.get(Bridge.Test.Assert).areEqual$1("|Cobb|4189|11434|0.366", s32, "Join32");
     
     
                 var sArr = Bridge.Array.init(10, null);
                 for (var i = 0; i < 10; i++) {
-                    sArr[i]  = Bridge.String.format("{0,-3}", i * 5);
+                    sArr[i] = Bridge.String.format("{0,-3}", i * 5);
                 }
     
                 var s4 = sArr.join(":");
@@ -2095,8 +2095,8 @@
         kind: null,
         order: null,
         constructor: function (kind, order) {
-            this.kind  = kind;
-            this.order  = order;
+            this.kind = kind;
+            this.order = order;
         },
         toString: function () {
             return this.kind;
@@ -2361,9 +2361,9 @@
                 var root = document.getElementById("qunit-fixture");
     
                 var button1 = document.createElement('button');
-                button1.innerHTML  = "Button 1";
-                button1.id  = "button1";
-                button1.style.color  = "green";
+                button1.innerHTML = "Button 1";
+                button1.id = "button1";
+                button1.style.color = "green";
     
                 root.appendChild(button1);
     
@@ -2371,9 +2371,9 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1("green", b1.style.color, "b1.Style.Color green");
     
                 var button2 = document.createElement('button');
-                button2.innerHTML  = "Button 2";
-                button2.id  = "button2";
-                button2.style.backgroundColor  = "yellow";
+                button2.innerHTML = "Button 2";
+                button2.id = "button2";
+                button2.style.backgroundColor = "yellow";
     
                 root.appendChild(button2);
     
@@ -2382,9 +2382,9 @@
     
                 var hexColor = "#FFEEAA";
                 var divElement1 = document.createElement('div');
-                divElement1.innerHTML  = "Div 1";
-                divElement1.id  = "div1";
-                divElement1.style.color  = hexColor;
+                divElement1.innerHTML = "Div 1";
+                divElement1.id = "div1";
+                divElement1.style.color = hexColor;
     
                 root.appendChild(divElement1);
     
@@ -2444,25 +2444,25 @@
                 $t = Bridge.getEnumerator(numbers);
                 while ($t.moveNext()) {
                     var a = $t.getCurrent();
-                    sum  = sum + a;
+                    sum = sum + a;
                 }
     
                 $t1 = Bridge.getEnumerator(numbers);
                 while ($t1.moveNext()) {
                     var a1 = $t1.getCurrent();
-                    sum  = sum + a1;
+                    sum = sum + a1;
                 }
     
                 $t2 = Bridge.getEnumerator(numbers);
                 while ($t2.moveNext()) {
                     var a2 = $t2.getCurrent();
-                    sum  = sum + a2;
+                    sum = sum + a2;
                 }
     
                 $t3 = Bridge.getEnumerator(numbers);
                 while ($t3.moveNext()) {
                     var a3 = $t3.getCurrent();
-                    sum  = sum + a3;
+                    sum = sum + a3;
                 }
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1(24, sum, "Bridge502 sum");
@@ -2588,14 +2588,14 @@
                                     }
                                     case 5: {
                                         $taskResult2 = $task2.getAwaitedResult();
-                                        np  = $taskResult2;
+                                        np = $taskResult2;
                                         $step = 2;
                                         continue;
                                     }
                                     case 6: {
                                         
-                                        Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge508).count  = 0;
-                                        i  = 0;
+                                        Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge508).count = 0;
+                                        i = 0;
                                         $task1 = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge508).initPage();
                                         $step = 7;
                                         $task1.continueWith($asyncBody);
@@ -2619,7 +2619,7 @@
                                         result += Bridge.String.format("B({0})", i++);
                                     }
                                     case 10: {
-                                        np1  = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge508).nextPage1();
+                                        np1 = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge508).nextPage1();
                                         $step = 8;
                                         continue;
                                     }
@@ -2942,51 +2942,51 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1(thisName, Bridge.getTypeName(v1), thisType + " class name");
     
                 var v2 = new Float64Array(1);
-                thisType  = "Float64Array";
+                thisType = "Float64Array";
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.hasValue(v2), thisType + " created");
-                thisName  = isSpecialTypeName ? "Object" : thisType;
+                thisName = isSpecialTypeName ? "Object" : thisType;
                 Bridge.get(Bridge.Test.Assert).areEqual$1(thisName, Bridge.getTypeName(v2), thisType + " class name");
     
                 var v3 = new Int16Array(1);
-                thisType  = "Int16Array";
+                thisType = "Int16Array";
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.hasValue(v3), thisType + " created");
-                thisName  = isSpecialTypeName ? "Object" : thisType;
+                thisName = isSpecialTypeName ? "Object" : thisType;
                 Bridge.get(Bridge.Test.Assert).areEqual$1(thisName, Bridge.getTypeName(v3), thisType + " class name");
     
                 var v4 = new Int32Array(1);
-                thisType  = "Int32Array";
+                thisType = "Int32Array";
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.hasValue(v4), thisType + " created");
-                thisName  = isSpecialTypeName ? "Object" : thisType;
+                thisName = isSpecialTypeName ? "Object" : thisType;
                 Bridge.get(Bridge.Test.Assert).areEqual$1(thisName, Bridge.getTypeName(v4), thisType + " class name");
     
                 var v5 = new Int8Array(1);
-                thisType  = "Int8Array";
+                thisType = "Int8Array";
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.hasValue(v5), thisType + " created");
-                thisName  = isSpecialTypeName ? "Object" : thisType;
+                thisName = isSpecialTypeName ? "Object" : thisType;
                 Bridge.get(Bridge.Test.Assert).areEqual$1(thisName, Bridge.getTypeName(v5), thisType + " class name");
     
                 var v6 = new Uint16Array(1);
-                thisType  = "Uint16Array";
+                thisType = "Uint16Array";
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.hasValue(v6), thisType + " created");
-                thisName  = isSpecialTypeName ? "Object" : thisType;
+                thisName = isSpecialTypeName ? "Object" : thisType;
                 Bridge.get(Bridge.Test.Assert).areEqual$1(thisName, Bridge.getTypeName(v6), thisType + " class name");
     
                 var v7 = new Uint32Array(1);
-                thisType  = "Uint32Array";
+                thisType = "Uint32Array";
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.hasValue(v7), thisType + " created");
-                thisName  = isSpecialTypeName ? "Object" : thisType;
+                thisName = isSpecialTypeName ? "Object" : thisType;
                 Bridge.get(Bridge.Test.Assert).areEqual$1(thisName, Bridge.getTypeName(v7), thisType + " class name");
     
                 var v8 = new Uint8Array(1);
-                thisType  = "Uint8Array";
+                thisType = "Uint8Array";
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.hasValue(v8), thisType + " created");
-                thisName  = isSpecialTypeName ? "Object" : thisType;
+                thisName = isSpecialTypeName ? "Object" : thisType;
                 Bridge.get(Bridge.Test.Assert).areEqual$1(thisName, Bridge.getTypeName(v8), thisType + " class name");
     
                 var v9 = new Uint8ClampedArray(1);
-                thisType  = "Uint8ClampedArray";
+                thisType = "Uint8ClampedArray";
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.hasValue(v9), thisType + " created");
-                thisName  = isSpecialTypeName ? "Object" : thisType;
+                thisName = isSpecialTypeName ? "Object" : thisType;
                 Bridge.get(Bridge.Test.Assert).areEqual$1(thisName, Bridge.getTypeName(v9), thisType + " class name");
             }
         }
@@ -3007,9 +3007,9 @@
                 var v1 = new Float32Array(10);
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.hasValue(v1), "Float32Array created");
     
-                v1[1]  = 11;
-                v1[5]  = 5;
-                v1[9]  = 99;
+                v1[1] = 11;
+                v1[5] = 5;
+                v1[9] = 99;
                 Bridge.get(Bridge.Test.Assert).areEqual$1(11, v1[1], "Float32Array indexier works 1");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(99, v1[9], "Float32Array indexier works 9");
     
@@ -3051,9 +3051,9 @@
                 var v2 = new Float64Array(10);
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.hasValue(v2), "Float64Array created");
     
-                v2[1]  = 11;
-                v2[5]  = 5;
-                v2[9]  = 99;
+                v2[1] = 11;
+                v2[5] = 5;
+                v2[9] = 99;
                 Bridge.get(Bridge.Test.Assert).areEqual$1(11, v2[1], "Float64Array indexier works 1");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(99, v2[9], "Float64Array indexier works 9");
     
@@ -3083,9 +3083,9 @@
                 var v3 = new Int16Array(10);
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.hasValue(v3), "Int16Array created");
     
-                v3[1]  = 11;
-                v3[5]  = 5;
-                v3[9]  = 99;
+                v3[1] = 11;
+                v3[5] = 5;
+                v3[9] = 99;
                 Bridge.get(Bridge.Test.Assert).areEqual$1(11, v3[1], "Int16Array indexier works 1");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(99, v3[9], "Int16Array indexier works 9");
     
@@ -3115,9 +3115,9 @@
                 var v4 = new Int32Array(10);
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.hasValue(v4), "Int32Array created");
     
-                v4[1]  = 11;
-                v4[5]  = 5;
-                v4[9]  = 99;
+                v4[1] = 11;
+                v4[5] = 5;
+                v4[9] = 99;
                 Bridge.get(Bridge.Test.Assert).areEqual$1(11, v4[1], "Int32Array indexier works 1");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(99, v4[9], "Int32Array indexier works 9");
     
@@ -3147,9 +3147,9 @@
                 var v5 = new Int8Array(10);
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.hasValue(v5), "Int8Array created");
     
-                v5[1]  = 11;
-                v5[5]  = 5;
-                v5[9]  = 99;
+                v5[1] = 11;
+                v5[5] = 5;
+                v5[9] = 99;
                 Bridge.get(Bridge.Test.Assert).areEqual$1(11, v5[1], "Int8Array indexier works 1");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(99, v5[9], "Int8Array indexier works 9");
     
@@ -3179,9 +3179,9 @@
                 var v6 = new Uint16Array(10);
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.hasValue(v6), "Uint16Array created");
     
-                v6[1]  = 11;
-                v6[5]  = 5;
-                v6[9]  = 99;
+                v6[1] = 11;
+                v6[5] = 5;
+                v6[9] = 99;
                 Bridge.get(Bridge.Test.Assert).areEqual$1(11, v6[1], "Uint16Array indexier works 1");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(99, v6[9], "Uint16Array indexier works 9");
     
@@ -3211,9 +3211,9 @@
                 var v7 = new Uint32Array(10);
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.hasValue(v7), "Uint32Array created");
     
-                v7[1]  = 11;
-                v7[5]  = 5;
-                v7[9]  = 99;
+                v7[1] = 11;
+                v7[5] = 5;
+                v7[9] = 99;
                 Bridge.get(Bridge.Test.Assert).areEqual$1(11, v7[1], "Uint32Array indexier works 1");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(99, v7[9], "Uint32Array indexier works 9");
     
@@ -3243,9 +3243,9 @@
                 var v8 = new Uint8Array(10);
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.hasValue(v8), "Uint8Array created");
     
-                v8[1]  = 11;
-                v8[5]  = 5;
-                v8[9]  = 99;
+                v8[1] = 11;
+                v8[5] = 5;
+                v8[9] = 99;
                 Bridge.get(Bridge.Test.Assert).areEqual$1(11, v8[1], "Uint8Array indexier works 1");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(99, v8[9], "Uint8Array indexier works 9");
     
@@ -3275,9 +3275,9 @@
                 var v9 = new Uint8ClampedArray(10);
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.hasValue(v9), "Uint8ClampedArray created");
     
-                v9[1]  = 11;
-                v9[5]  = 5;
-                v9[9]  = 99;
+                v9[1] = 11;
+                v9[5] = 5;
+                v9[9] = 99;
                 Bridge.get(Bridge.Test.Assert).areEqual$1(11, v9[1], "Uint8ClampedArray indexier works 1");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(99, v9[9], "Uint8ClampedArray indexier works 9");
     
@@ -3483,7 +3483,7 @@
                 while ($t.moveNext()) {
                     (function () {
                         var itm = $t.getCurrent();
-                        handlers[i++]  = function () {
+                        handlers[i++] = function () {
                             result += itm;
                         };
                     }).call(this);
@@ -3497,14 +3497,14 @@
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1("123", result, "Bridge563 No block foreach loop");
     
-                i  = 0;
-                result  = "";
+                i = 0;
+                result = "";
     
                 $t2 = Bridge.getEnumerator(keys);
                 while ($t2.moveNext()) {
                     (function () {
                         var itm1 = $t2.getCurrent();
-                        handlers[i++]  = function () {
+                        handlers[i++] = function () {
                             result += itm1;
                         };
                     }).call(this);
@@ -3528,7 +3528,7 @@
                 for (var j = 0; j < keys.length; j++) {
                     (function () {
                         var itm = keys[j];
-                        handlers[i++]  = function () {
+                        handlers[i++] = function () {
                             result += itm;
                         };
                     }).call(this);
@@ -3692,15 +3692,15 @@
                 var intIndex;
     
                 var dst = Bridge.Array.init(2, null);
-                intIndex  = 0;
+                intIndex = 0;
                 Bridge.Array.copy(arrs, intIndex, dst, 0, arrs.length - intIndex);
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1(2, dst.length, "Bridge580 Length Int");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(arrs[0], dst[0], "Bridge580 0 Int");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(arrs[1], dst[1], "Bridge580 1 Int");
     
-                dst  = Bridge.Array.init(1, null);
-                intIndex  = 1;
+                dst = Bridge.Array.init(1, null);
+                intIndex = 1;
                 Bridge.Array.copy(arrs, intIndex, dst, 0, arrs.length - intIndex);
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1(1, dst.length, "Bridge580 Length 1 Int");
@@ -3708,16 +3708,16 @@
     
                 var longIndex;
     
-                dst  = Bridge.Array.init(2, null);
-                longIndex  = 0;
+                dst = Bridge.Array.init(2, null);
+                longIndex = 0;
                 Bridge.Array.copy(arrs, longIndex, dst, 0, arrs.length - longIndex);
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1(2, dst.length, "Bridge580 Length Long");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(arrs[0], dst[0], "Bridge580 0 Long");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(arrs[1], dst[1], "Bridge580 1 Long");
     
-                dst  = Bridge.Array.init(1, null);
-                longIndex  = 1;
+                dst = Bridge.Array.init(1, null);
+                longIndex = 1;
                 Bridge.Array.copy(arrs, longIndex, dst, 0, arrs.length - longIndex);
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1(1, dst.length, "Bridge580 Length 1 Long");
@@ -3742,7 +3742,7 @@
             },
             testAddTicks: function () {
                 var dt = new Date(2001, 1 - 1, 1);
-                dt  = new Date((dt).getTime() + ((20000000) / 10000));
+                dt = new Date((dt).getTime() + ((20000000) / 10000));
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1(2001, dt.getFullYear(), "Bridge582 TestAddTicks Year");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(1, (dt.getMonth() + 1), "Bridge582 TestAddTicks Month");
@@ -3787,11 +3787,11 @@
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.equalsT(new Date(date.getFullYear(), date.getMonth(), date.getDate()), new Date(2013, 9 - 1, 14)), "Bridge582 TestTimeOfDay Date 2013, 9, 14, 9, 28, 0");
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.Date.timeOfDay(date).equalsT(new Bridge.TimeSpan(9, 28, 0)), "Bridge582 TestTimeOfDay TimeOfDay 2013, 9, 14, 9, 28, 0");
     
-                date  = new Date(2011, 5 - 1, 28, 10, 35, 0);
+                date = new Date(2011, 5 - 1, 28, 10, 35, 0);
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.equalsT(new Date(date.getFullYear(), date.getMonth(), date.getDate()), new Date(2011, 5 - 1, 28)), "Bridge582 TestTimeOfDay Date 2011, 5, 28, 10, 35, 0");
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.Date.timeOfDay(date).equalsT(new Bridge.TimeSpan(10, 35, 0)), "Bridge582 TestTimeOfDay TimeOfDay 2011, 5, 28, 10, 35, 0");
     
-                date  = new Date(1979, 12 - 1, 25, 14, 30, 0);
+                date = new Date(1979, 12 - 1, 25, 14, 30, 0);
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.equalsT(new Date(date.getFullYear(), date.getMonth(), date.getDate()), new Date(1979, 12 - 1, 25)), "Bridge582 TestTimeOfDay Date 1979, 12, 25, 14, 30, 0");
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.Date.timeOfDay(date).equalsT(new Bridge.TimeSpan(14, 30, 0)), "Bridge582 TestTimeOfDay TimeOfDay 1979, 12, 25, 14, 30, 0");
             }
@@ -4049,7 +4049,7 @@
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge595A', {
         buffer: null,
         constructor: function (buffer) {
-            this.buffer  = buffer;
+            this.buffer = buffer;
         },
         render: function () {
             this.buffer.append("Render0");
@@ -4068,7 +4068,7 @@
         },
         buffer: null,
         constructor: function (buffer) {
-            this.buffer  = buffer;
+            this.buffer = buffer;
         },
         render: function () {
             this.buffer.append("Render0");
@@ -4117,7 +4117,7 @@
                 var c = Bridge.ClientTest.BridgeIssues.Bridge603A.op_Implicit(null);
                 Bridge.get(Bridge.Test.Assert).areEqual$1("[Null]", c.value, "Bridge603A TestUseCase Null");
     
-                c  = Bridge.ClientTest.BridgeIssues.Bridge603A.op_Implicit("Test");
+                c = Bridge.ClientTest.BridgeIssues.Bridge603A.op_Implicit("Test");
                 Bridge.get(Bridge.Test.Assert).areEqual$1("Test", c.value, "Bridge603A TestUseCase String");
             },
             testRelated: function () {
@@ -4127,13 +4127,13 @@
                 var c = Bridge.ClientTest.BridgeIssues.Bridge603B.op_Implicit$2(Bridge.cast(null, String));
                 Bridge.get(Bridge.Test.Assert).areEqual$1("[Null]", c.value, "Bridge603B TestRelated String Null");
     
-                c  = Bridge.ClientTest.BridgeIssues.Bridge603B.op_Implicit$2("Test");
+                c = Bridge.ClientTest.BridgeIssues.Bridge603B.op_Implicit$2("Test");
                 Bridge.get(Bridge.Test.Assert).areEqual$1("Test", c.value, "Bridge603B TestRelated String");
     
                 var d = Bridge.ClientTest.BridgeIssues.Bridge603B.op_Implicit(Bridge.cast(null, Bridge.ClientTest.BridgeIssues.Bridge603Class));
                 Bridge.get(Bridge.Test.Assert).areEqual$1("[Null]", d.value, "Bridge603B TestRelated Bridge603Class Null");
     
-                d  = Bridge.ClientTest.BridgeIssues.Bridge603B.op_Implicit(Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge603Class(), {
+                d = Bridge.ClientTest.BridgeIssues.Bridge603B.op_Implicit(Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge603Class(), {
                     setData: "Test 603B"
                 } ));
                 Bridge.get(Bridge.Test.Assert).areEqual$1("Test 603B", d.value, "Bridge603B TestRelated Bridge603Class");
@@ -4145,14 +4145,14 @@
         statics: {
             op_Implicit: function (value) {
                 var $t;
-                value  = ($t = value, Bridge.hasValue($t) ? $t : "[Null]");
+                value = ($t = value, Bridge.hasValue($t) ? $t : "[Null]");
                 return new Bridge.ClientTest.BridgeIssues.Bridge603A("constructor$1", value);
             },
             getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge603A(); }
         },
         value: null,
         constructor$1: function (value) {
-            this.value  = value;
+            this.value = value;
         },
         constructor: function () {
         },
@@ -4178,7 +4178,7 @@
         statics: {
             op_Implicit$2: function (value) {
                 var $t;
-                value  = ($t = value, Bridge.hasValue($t) ? $t : "[Null]");
+                value = ($t = value, Bridge.hasValue($t) ? $t : "[Null]");
                 return new Bridge.ClientTest.BridgeIssues.Bridge603B("constructor$3", value);
             },
             op_Implicit$1: function (value) {
@@ -4186,7 +4186,7 @@
             },
             op_Implicit: function (value) {
                 var $t;
-                value  = ($t = value, Bridge.hasValue($t) ? $t : Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge603Class(), {
+                value = ($t = value, Bridge.hasValue($t) ? $t : Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge603Class(), {
                     setData: "[Null]"
                 } ));
                 return new Bridge.ClientTest.BridgeIssues.Bridge603B("constructor$1", value);
@@ -4196,16 +4196,16 @@
         value: null,
         intValue: 0,
         constructor$3: function (value) {
-            this.value  = value;
-            this.intValue  = 0;
+            this.value = value;
+            this.intValue = 0;
         },
         constructor$2: function (value) {
-            this.value  = null;
-            this.intValue  = value;
+            this.value = null;
+            this.intValue = value;
         },
         constructor$1: function (value) {
-            this.value  = value.getData().toString();
-            this.intValue  = 0;
+            this.value = value.getData().toString();
+            this.intValue = 0;
         },
         constructor: function () {
         },
@@ -4344,7 +4344,7 @@
         },
         field: null,
         constructor$1: function (field) {
-            this.field  = field;
+            this.field = field;
         },
         constructor: function () {
         },
@@ -4438,8 +4438,8 @@
         foo: 0,
         func: null,
         constructor: function (foo, func) {
-            this.foo  = foo;
-            this.func  = func;
+            this.foo = foo;
+            this.func = func;
         },
         call: function () {
             return this.func();
@@ -4715,12 +4715,12 @@
         statics: {
             log: null,
             testUseCase: function () {
-                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge652).log  = null;
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge652).log = null;
                 var c = new Bridge.ClientTest.BridgeIssues.Bridge652.Bridge652A1();
                 Bridge.get(Bridge.Test.Assert).areNotEqual$1(null, c.bar, "Bridge652A1 Bar NotNull");
                 Bridge.get(Bridge.Test.Assert).areEqual$1("Bridge652B1", Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge652).log, "Bridge652A1 log");
     
-                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge652).log  = null;
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge652).log = null;
                 var d = new Bridge.ClientTest.BridgeIssues.Bridge652.Bridge652A2();
                 Bridge.get(Bridge.Test.Assert).areNotEqual$1(null, d.bar, "Bridge652A2 Bar NotNull");
                 Bridge.get(Bridge.Test.Assert).areEqual$1("Bridge652B2", Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge652).log, "Bridge652A2 log");
@@ -4730,21 +4730,21 @@
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge652.Bridge652B1', {
         constructor: function () {
-            Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge652).log  = "Bridge652B1";
+            Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge652).log = "Bridge652B1";
         }
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge652.Bridge652C$1', function (T) { return {
         bar: null,
         constructor: function () {
-            this.bar  = new T();
+            this.bar = new T();
         }
     }; });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge652.Bridge652B2', {
         inherits: [Bridge.IComparable],
         constructor: function () {
-            Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge652).log  = "Bridge652B2";
+            Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge652).log = "Bridge652B2";
         },
         compareTo: function (obj) {
             return 0;
@@ -4754,7 +4754,7 @@
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge652.Bridge652D$1', function (T) { return {
         bar: null,
         constructor: function () {
-            this.bar  = new T();
+            this.bar = new T();
         }
     }; });
     
@@ -4872,8 +4872,8 @@
     
         },
         constructor$2: function (value, isDefined) {
-            this.isDefined  = (Bridge.hasValue(value));
-            this.value  = value;
+            this.isDefined = (Bridge.hasValue(value));
+            this.value = value;
         },
         constructor: function () {
         },
@@ -4983,7 +4983,7 @@
                             $t1 = Bridge.getEnumerator(bigNumbers);
                             while ($t1.moveNext()) {
                                 var bn = $t1.getCurrent();
-                                sum  = sum + i * bn;
+                                sum = sum + i * bn;
                             }
                         };
     
@@ -5015,7 +5015,7 @@
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge671A', {
         func: null,
         constructor: function (func) {
-            this.func  = func;
+            this.func = func;
         },
         invoke: function () {
             return this.func();
@@ -5037,9 +5037,9 @@
         statics: {
             testUseCase: function () {
                 var me = Bridge.global.Bridge.ClientTest.BridgeIssues.Bridge675;
-                me.id  = "str1";
-                me.i1  = 1;
-                me.i2  = 2;
+                me.id = "str1";
+                me.i1 = 1;
+                me.i2 = 2;
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1("str1", me.dynMethod(me.id), "Bridge675 DynMethod");
                 Bridge.get(Bridge.Test.Assert).areEqual$1("str1", Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge675).method1$1(me.id), "Bridge675 Method1 id");
@@ -5063,14 +5063,14 @@
                 var c = new Bridge.ClientTest.BridgeIssues.Bridge687A(null);
                 var case1 = false;
                 if (!Bridge.hasValue(c)) {
-                    case1  = true;
+                    case1 = true;
                 }
                 Bridge.get(Bridge.Test.Assert).areEqual$1(false, case1, "Bridge687 case1");
     
-                c  = new Bridge.ClientTest.BridgeIssues.Bridge687A("test");
+                c = new Bridge.ClientTest.BridgeIssues.Bridge687A("test");
                 var case2 = false;
                 if (Bridge.ClientTest.BridgeIssues.Bridge687A.op_Implicit(c) === "test") {
-                    case2  = true;
+                    case2 = true;
                 }
                 Bridge.get(Bridge.Test.Assert).areEqual$1(true, case2, "Bridge687 case2");
             }
@@ -5426,7 +5426,7 @@
         },
         field1: 0,
         constructor$1: function (f) {
-            this.field1  = f;
+            this.field1 = f;
         },
         constructor: function () {
         },
@@ -5454,7 +5454,7 @@
         },
         field1: 0,
         constructor$1: function (f) {
-            this.field1  = f;
+            this.field1 = f;
         },
         constructor: function () {
         },
@@ -5497,7 +5497,7 @@
         },
         field1: 0,
         constructor$1: function (i) {
-            this.field1  = i;
+            this.field1 = i;
         },
         constructor: function () {
         },
@@ -5528,7 +5528,7 @@
         },
         field1: 0,
         constructor$1: function (i) {
-            this.field1  = i;
+            this.field1 = i;
         },
         constructor: function () {
         },
@@ -5605,9 +5605,9 @@
         statics: {
             testUseCase: function () {
                 var fruits = Bridge.Array.init(3, null);
-                fruits[0]  = "mango";
-                fruits[1]  = "apple";
-                fruits[2]  = "lemon";
+                fruits[0] = "mango";
+                fruits[1] = "apple";
+                fruits[2] = "lemon";
     
                 var list = Bridge.Linq.Enumerable.from(fruits).select(function(x) { return Bridge.cast(x, String); }).orderBy($_.Bridge.ClientTest.BridgeIssues.Bridge694.f1).select($_.Bridge.ClientTest.BridgeIssues.Bridge694.f1).toList(String);
                 Bridge.get(Bridge.Test.Assert).areEqual$1("apple", list.getItem(0), "Bridge694 apple");
@@ -5703,17 +5703,17 @@
                 ] );
                 Bridge.get(Bridge.Test.Assert).areEqual$1("ThirdLoop", Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge721).check(testList), "Bridge721 ThirdLoop");
     
-                testList  = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+                testList = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
                     [5]
                 ] );
                 Bridge.get(Bridge.Test.Assert).areEqual$1("SecondLoop", Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge721).check(testList), "Bridge721 SecondLoop");
     
-                testList  = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+                testList = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
                     [15]
                 ] );
                 Bridge.get(Bridge.Test.Assert).areEqual$1("FirstLoop", Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge721).check(testList), "Bridge721 FirstLoop");
     
-                testList  = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+                testList = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
                     [25]
                 ] );
                 Bridge.get(Bridge.Test.Assert).areEqual$1("NoLoops", Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge721).check(testList), "Bridge721 NoLoops");
@@ -5771,14 +5771,14 @@
                 var $t, $t1, $t2, $t3, $t4, $t5, $t6;
                 var c1 = new Bridge.ClientTest.BridgeIssues.Bridge722();
                 var asset1 = 1;
-                asset1  = ($t = 2, c1.setItem("path", $t), $t);
+                asset1 = ($t = 2, c1.setItem("path", $t), $t);
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1(2, asset1, "Bridge722 asset1");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(3, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge722).m1(($t1 = 3, c1.setItem("path", $t1), $t1)), "Bridge722 M1 3");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(4, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge722).m1(($t2 = ($t3 = 4, c1.setItem("path", $t3), $t3), asset1  = $t2, $t2)), "Bridge722 M1 4");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(4, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge722).m1(($t2 = ($t3 = 4, c1.setItem("path", $t3), $t3), asset1 = $t2, $t2)), "Bridge722 M1 4");
     
                 var c2 = { };
-                var asset2 = ($t4 = 5, c2.path  = $t4, $t4);
+                var asset2 = ($t4 = 5, c2.path = $t4, $t4);
                 Bridge.get(Bridge.Test.Assert).areEqual$1(5, asset2, "Bridge722 asset2");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(5, c2.path, "Bridge722 c2");
     
@@ -5799,7 +5799,7 @@
             return this.lastItem;
         },
         setItem: function (item, value) {
-            this.lastItem  = value;
+            this.lastItem = value;
         }
     });
     
@@ -5857,7 +5857,7 @@
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.equals(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge733).getDateA(), new Date(-864e13)), "Bridge733 DateA");
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.equals(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge733).dateb, new Date(-864e13)), "Bridge733 dateb");
     
-                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge733).dateb  = new Date(); // to prevent warning that dateb is never assigned
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge733).dateb = new Date(); // to prevent warning that dateb is never assigned
             }
         }
     });
@@ -5992,16 +5992,16 @@
                 var stringArray = Bridge.Array.init(9, null);
                 var decimalArray = Bridge.Array.init(10, Bridge.Decimal(0.0));
     
-                byteArray[0]  = 1;
-                sbyteArray[0]  = 2;
-                shortArray[0]  = 3;
-                ushortArray[0]  = 4;
-                intArray[0]  = 5;
-                uintArray[0]  = 6;
-                floatArray[0]  = 7;
-                doubleArray[0]  = 8;
+                byteArray[0] = 1;
+                sbyteArray[0] = 2;
+                shortArray[0] = 3;
+                ushortArray[0] = 4;
+                intArray[0] = 5;
+                uintArray[0] = 6;
+                floatArray[0] = 7;
+                doubleArray[0] = 8;
     
-                stringArray[0]  = "9";
+                stringArray[0] = "9";
                 decimalArray[0]  = Bridge.Decimal(10.0);
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1(1, byteArray[0], "get byteArray[0]");
@@ -6394,7 +6394,7 @@
                 return $throws;
             },
             method3: function ($throws) {
-                $throws.v  = false;
+                $throws.v = false;
                 return $throws.v;
             }
         }
@@ -6445,7 +6445,7 @@
         },
         field: 0,
         constructor$1: function (i) {
-            this.field  = i;
+            this.field = i;
         },
         constructor: function () {
         },
@@ -6471,8 +6471,8 @@
         statics: {
             testUseCase: function () {
                 var textArea = document.createElement('textarea');
-                textArea.id  = "textArea1";
-                textArea.value  = "Test";
+                textArea.id = "textArea1";
+                textArea.value = "Test";
     
                 var root = document.getElementById("qunit-fixture");
                 root.appendChild(textArea);
@@ -6509,7 +6509,7 @@
     
                 var i;
                 var j;
-                for (i  = 0, j  = 1; i < 10; i++, j++) {
+                for (i = 0, j = 1; i < 10; i++, j++) {
     
                 }
                 Bridge.get(Bridge.Test.Assert).areEqual$1(10, i, "Bridge818 i");
@@ -6580,13 +6580,13 @@
                 var d = null;
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge826).echoDecimal(Bridge.ClientTest.BridgeIssues.Bridge826A.op_Implicit$1(d)).equalsT(Bridge.Decimal(0)), "Bridge826 decimal 0");
     
-                d  = Bridge.ClientTest.BridgeIssues.Bridge826A.op_Implicit(Bridge.Decimal(1));
+                d = Bridge.ClientTest.BridgeIssues.Bridge826A.op_Implicit(Bridge.Decimal(1));
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge826).echoDecimal(Bridge.ClientTest.BridgeIssues.Bridge826A.op_Implicit$1(d)).equalsT(Bridge.Decimal(1)), "Bridge826 decimal 1");
     
                 var i = null;
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge826).echoDecimal(Bridge.Decimal(Bridge.ClientTest.BridgeIssues.Bridge826B.op_Implicit$1(i))).equalsT(Bridge.Decimal(0)), "Bridge826 int 0");
     
-                i  = Bridge.ClientTest.BridgeIssues.Bridge826B.op_Implicit(1);
+                i = Bridge.ClientTest.BridgeIssues.Bridge826B.op_Implicit(1);
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge826).echoDecimal(Bridge.Decimal(Bridge.ClientTest.BridgeIssues.Bridge826B.op_Implicit$1(i))).equalsT(Bridge.Decimal(1)), "Bridge826 int 1");
     
                 Bridge.get(Bridge.Test.Assert).true$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge826).echoDecimal().equalsT(Bridge.Decimal(42)), "Bridge826 42");
@@ -6620,7 +6620,7 @@
         },
         _val: 0,
         constructor: function (val) {
-            this._val  = val;
+            this._val = val;
         }
     });
     
@@ -6727,7 +6727,7 @@
                                 }
                                 case 2: {
                                     $taskResult1 = $task1.getAwaitedResult();
-                                    res  = $taskResult1;
+                                    res = $taskResult1;
                                     Bridge.get(Bridge.Test.Assert).areEqual("Fail: test", res.getMessage());
                                     
                                     done();
@@ -6930,7 +6930,7 @@
                 test = test || true;
                 Bridge.get(Bridge.Test.Assert).areStrictEqual(true, test);
     
-                test  = false;
+                test = false;
                 test = test && true;
                 Bridge.get(Bridge.Test.Assert).areStrictEqual(false, test);
     
@@ -6938,7 +6938,7 @@
                 test1 = Bridge.Nullable.or(test1, true);
                 Bridge.get(Bridge.Test.Assert).areStrictEqual(true, test1);
     
-                test1  = false;
+                test1 = false;
                 test1 = Bridge.Nullable.and(test1, true);
                 Bridge.get(Bridge.Test.Assert).areStrictEqual(false, test1);
             }
@@ -7417,7 +7417,7 @@
                                 }
                                 case 1: {
                                     $taskResult1 = $task1.getAwaitedResult();
-                                    result  = $taskResult1;
+                                    result = $taskResult1;
                                     
                                     Bridge.get(Bridge.Test.Assert).areEqual(1, result);
                                     
@@ -7582,7 +7582,7 @@
                                             $e1 = Bridge.Exception.create($e1);
                                         }
                                         
-                                        result  = true;
+                                        result = true;
                                         
                                         if ($jumpFromFinally > -1) {
                                             $step = $jumpFromFinally;
@@ -7979,10 +7979,10 @@
                 var d2 = Bridge.Date.toUTC(d1);
     
                 // This is required to change d1 to UTC without changing time
-                d1  = new Date(d1.getFullYear(), d1.getMonth() + (d1.getMonth() + 1) - (d2.getMonth() + 1), d1.getDate(), d1.getHours(), d1.getMinutes(), d1.getSeconds(), d1.getMilliseconds());
-                d1  = new Date(d1.valueOf() + Math.round((d1.getDate() - d2.getDate()) * 864e5));
-                d1  = new Date(d1.valueOf() + Math.round((d1.getHours() - d2.getHours()) * 36e5));
-                d1  = new Date(d1.valueOf() + Math.round((d1.getMinutes() - d2.getMinutes()) * 6e4));
+                d1 = new Date(d1.getFullYear(), d1.getMonth() + (d1.getMonth() + 1) - (d2.getMonth() + 1), d1.getDate(), d1.getHours(), d1.getMinutes(), d1.getSeconds(), d1.getMilliseconds());
+                d1 = new Date(d1.valueOf() + Math.round((d1.getDate() - d2.getDate()) * 864e5));
+                d1 = new Date(d1.valueOf() + Math.round((d1.getHours() - d2.getHours()) * 36e5));
+                d1 = new Date(d1.valueOf() + Math.round((d1.getMinutes() - d2.getMinutes()) * 6e4));
     
                 Bridge.get(Bridge.Test.Assert).areEqual("2011-10-05T14:48:00.000Z", d1.toISOString());
             },
@@ -8006,11 +8006,11 @@
                 var dict = new Bridge.Dictionary$2(Bridge.Int,Bridge.Int)();
                 var i = 0;
     
-                dict.set(0, ($t = 1, i = $t, $t));
+                dict.set(0, ($t = 1, i= $t, $t));
                 Bridge.get(Bridge.Test.Assert).areEqual(dict.get(0), 1);
                 Bridge.get(Bridge.Test.Assert).areEqual(i, 1);
     
-                i  = ($t1 = 2, dict.set(0, $t1), $t1);
+                i = ($t1 = 2, dict.set(0, $t1), $t1);
                 Bridge.get(Bridge.Test.Assert).areEqual(dict.get(0), 2);
                 Bridge.get(Bridge.Test.Assert).areEqual(i, 2);
     
@@ -8112,7 +8112,7 @@
                     ] ))).select($_.Bridge.ClientTest.BridgeIssues.Bridge999_1.f1);
     
                     list.forEach(function (el2) {
-                        sum  = sum + el2;
+                        sum = sum + el2;
                     });
                 });
     
@@ -8165,9 +8165,9 @@
             n264: function () {
                 // TEST
                 var oldHash = Bridge.global.location.hash;
-                Bridge.global.location.hash  = "#new-hash";
+                Bridge.global.location.hash = "#new-hash";
                 Bridge.get(Bridge.Test.Assert).areEqual$1("#new-hash", Bridge.global.location.hash, "Setting Location.Hash works");
-                Bridge.global.location.hash  = oldHash; // to clean up the url
+                Bridge.global.location.hash = oldHash; // to clean up the url
             },
             n266: function () {
                 // TEST
@@ -8192,13 +8192,13 @@
                 var r = items.slice(-1).toArray();
                 Bridge.get(Bridge.Test.Assert).areEqual$1([4], r, "Slices start = -1");
     
-                r  = items.slice(1).toArray();
+                r = items.slice(1).toArray();
                 Bridge.get(Bridge.Test.Assert).areEqual$1([1, 2, 3, 4], r, "Slices start = 1");
     
-                r  = items.slice(-3, 4).toArray();
+                r = items.slice(-3, 4).toArray();
                 Bridge.get(Bridge.Test.Assert).areEqual$1([2, 3], r, "Slices start = -3, end = 3");
     
-                r  = items.slice(1, 3).toArray();
+                r = items.slice(1, 3).toArray();
                 Bridge.get(Bridge.Test.Assert).areEqual$1([1, 2], r, "Slices start = 1, end = 2");
             },
             n277: function () {
@@ -8228,7 +8228,7 @@
                 $t = Bridge.getEnumerator(c);
                 while ($t.moveNext()) {
                     var item = $t.getCurrent();
-                    result  = result + item;
+                    result = result + item;
                 }
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1("123", result, "IEnumerator works");
@@ -8275,7 +8275,7 @@
                 Bridge.get(Bridge.Test.Assert).false$1(b, "Remove() not existing element returns false");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(["1", "2"], l.toArray(), "Remove() not existing does not change the List");
     
-                b  = l.remove("2");
+                b = l.remove("2");
                 Bridge.get(Bridge.Test.Assert).true$1(b, "Remove() existing element returns true");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(["1"], l.toArray(), "Remove() not existing changes the List");
             },
@@ -8436,25 +8436,25 @@
                 var result = null;
                 switch (test) {
                     case TESTA: 
-                        result  = TESTA;
+                        result = TESTA;
                         break;
                     case TESTB: 
-                        result  = TESTB;
+                        result = TESTB;
                         break;
                     case TESTC: 
-                        result  = TESTC;
+                        result = TESTC;
                         break;
                     case TESTD: 
-                        result  = TESTD;
+                        result = TESTD;
                         break;
                     case TESTE: 
-                        result  = TESTE;
+                        result = TESTE;
                         break;
                     case TESTF: 
-                        result  = TESTF;
+                        result = TESTF;
                         break;
                     case TESTG: 
-                        result  = TESTG;
+                        result = TESTG;
                         break;
                 }
     
@@ -8487,7 +8487,7 @@
             assertAlmostEqual: function (actual, expected, message) {
                 var diff = expected - actual;
                 if (diff < 0) {
-                    diff  = -diff;
+                    diff = -diff;
                 }
     
                 Bridge.get(Bridge.Test.Assert).true$1(diff < 1E-08, message + "actual: " + actual + "expeted:" + expected);
@@ -8539,12 +8539,12 @@
                 Bridge.get(Bridge.ClientTest.BridgeIssues.TestBridgeIssues).ensureNumber(DoubleNaN, "NaN", "DoubleNaN");
     
                 // Double consts in expressions
-                DoubleMaxValue  = Number.MAX_VALUE + 0;
-                DoubleMinValue  = Number.MIN_VALUE + 0;
-                DoubleEpsilon  = 4.94065645841247E-324;
-                DoubleNegativeInfinity  = Number.NEGATIVE_INFINITY + 0;
-                DoublePositiveInfinity  = Number.POSITIVE_INFINITY + 0;
-                DoubleNaN  = Number.NaN + 0;
+                DoubleMaxValue = Number.MAX_VALUE + 0;
+                DoubleMinValue = Number.MIN_VALUE + 0;
+                DoubleEpsilon = 4.94065645841247E-324;
+                DoubleNegativeInfinity = Number.NEGATIVE_INFINITY + 0;
+                DoublePositiveInfinity = Number.POSITIVE_INFINITY + 0;
+                DoubleNaN = Number.NaN + 0;
     
                 Bridge.get(Bridge.ClientTest.BridgeIssues.TestBridgeIssues).ensureNumber(DoubleMaxValue, "1.7976931348623157e+308", "DoubleMaxValuein expression");
                 Bridge.get(Bridge.ClientTest.BridgeIssues.TestBridgeIssues).ensureNumber(DoubleMinValue, "5e-324", "DoubleMinValuein expression");
@@ -8574,14 +8574,14 @@
                 Bridge.get(Bridge.ClientTest.BridgeIssues.TestBridgeIssues).ensureNumber(MathSQRT2, "1.4142135623730951", "MathSQRT2");
     
                 // Math consts in expression
-                MathE  = Math.E + 0;
-                MathLN10  = Math.LN10 + 0;
-                MathLN2  = Math.LN2 + 0;
-                MathLOG2E  = Math.LOG2E + 0;
-                MathLOG10E  = Math.LOG10E + 0;
-                MathPI  = Math.PI + 0;
-                MathSQRT1_2  = Math.SQRT1_2 + 0;
-                MathSQRT2  = Math.SQRT2 + 0;
+                MathE = Math.E + 0;
+                MathLN10 = Math.LN10 + 0;
+                MathLN2 = Math.LN2 + 0;
+                MathLOG2E = Math.LOG2E + 0;
+                MathLOG10E = Math.LOG10E + 0;
+                MathPI = Math.PI + 0;
+                MathSQRT1_2 = Math.SQRT1_2 + 0;
+                MathSQRT2 = Math.SQRT2 + 0;
     
                 Bridge.get(Bridge.ClientTest.BridgeIssues.TestBridgeIssues).ensureNumber(MathE, "2.718281828459045", "MathEin expression");
                 Bridge.get(Bridge.ClientTest.BridgeIssues.TestBridgeIssues).ensureNumber(MathLN10, "2.302585092994046", "MathLN10in expression");
@@ -8609,12 +8609,12 @@
                 Bridge.get(Bridge.ClientTest.BridgeIssues.TestBridgeIssues).ensureNumber(SinglePositiveInfinity, "Infinity", "SinglePositiveInfinity");
     
                 // Single consts in expression
-                SingleMaxValue  = 3.40282347E+38;
-                SingleMinValue  = -3.40282347E+38;
-                SingleEpsilon  = 1.401298E-45;
-                SingleNaN  = Number.NaN + 0;
-                SingleNegativeInfinity  = Number.NEGATIVE_INFINITY + 0;
-                SinglePositiveInfinity  = Number.POSITIVE_INFINITY + 0;
+                SingleMaxValue = 3.40282347E+38;
+                SingleMinValue = -3.40282347E+38;
+                SingleEpsilon = 1.401298E-45;
+                SingleNaN = Number.NaN + 0;
+                SingleNegativeInfinity = Number.NEGATIVE_INFINITY + 0;
+                SinglePositiveInfinity = Number.POSITIVE_INFINITY + 0;
     
                 Bridge.get(Bridge.ClientTest.BridgeIssues.TestBridgeIssues).ensureNumber(SingleMaxValue, "3.40282347e+38", "SingleMaxValuein expression");
                 Bridge.get(Bridge.ClientTest.BridgeIssues.TestBridgeIssues).ensureNumber(SingleMinValue, "-3.40282347e+38", "SingleMinValuein expression");
@@ -8675,7 +8675,7 @@
                 var b = new Bridge.ClientTest.BridgeIssues.Bridge439();
                 var accumulator = "";
                 b.register(function (s) {
-                    accumulator  = accumulator + s;
+                    accumulator = accumulator + s;
                 });
     
                 b.callDispatcher("1");
@@ -8694,7 +8694,7 @@
             n460: function () {
                 var number;
     
-                number  = -12345.6789;
+                number = -12345.6789;
                 Bridge.get(Bridge.Test.Assert).areEqual$1("-12345.6789", Bridge.Int.format(number, "G", Bridge.get(Bridge.CultureInfo).invariantCulture), "ToString(\"G\") for negative numbers in InvariantCulture");
             },
             n467: function () {
@@ -8846,7 +8846,7 @@
         inherits: function () { return [Bridge.IComparable$1(Bridge.ClientTest.Collections.Generic.ComparerTests.C)]; },
         value: 0,
         constructor: function (value) {
-            this.value  = value;
+            this.value = value;
         },
         compareTo: function (other) {
             return Bridge.compare(this.value, other.value);
@@ -8884,17 +8884,17 @@
         defaultComparerInvokesOverriddenEquals: function () {
             var c = new Bridge.ClientTest.Collections.Generic.EqualityComparerTests.MyClass();
             var other = new Bridge.ClientTest.Collections.Generic.EqualityComparerTests.MyClass();
-            c.shouldEqual  = false;
+            c.shouldEqual = false;
             Bridge.get(Bridge.Test.Assert).$false(new Bridge.EqualityComparer$1(Object)().equals(c, other));
             Bridge.get(Bridge.Test.Assert).areStrictEqual(other, c.other);
     
-            c.shouldEqual  = true;
-            c.other  = null;
+            c.shouldEqual = true;
+            c.other = null;
             Bridge.get(Bridge.Test.Assert).$true(new Bridge.EqualityComparer$1(Object)().equals(c, other));
             Bridge.get(Bridge.Test.Assert).areStrictEqual(other, c.other);
     
-            c.shouldEqual  = true;
-            c.other  = other;
+            c.shouldEqual = true;
+            c.other = other;
             Bridge.get(Bridge.Test.Assert).$false(new Bridge.EqualityComparer$1(Object)().equals(c, null)); // We should not invoke our own equals so its return value does not matter.
             Bridge.get(Bridge.Test.Assert).areEqual(other, c.other); // We should not invoke our own equals so the 'other' member should not be set.
         }
@@ -8908,7 +8908,7 @@
             return this.hashCode;
         },
         equals: function (o) {
-            this.other  = o;
+            this.other = o;
             return this.shouldEqual;
         }
     });
@@ -9237,7 +9237,7 @@
     Bridge.define('Bridge.ClientTest.Collections.Generic.ICollectionTests.C', {
         _i: 0,
         constructor: function (i) {
-            this._i  = i;
+            this._i = i;
         },
         equals: function (o) {
             return Bridge.is(o, Bridge.ClientTest.Collections.Generic.ICollectionTests.C) && this._i === (Bridge.cast(o, Bridge.ClientTest.Collections.Generic.ICollectionTests.C))._i;
@@ -9399,11 +9399,11 @@
             Bridge.get(Bridge.Test.Assert).$true(di2.tryGetValue(3, outVal));
             Bridge.get(Bridge.Test.Assert).areEqual("b", outVal.v);
     
-            outVal.v  = "!!!";
+            outVal.v = "!!!";
             Bridge.get(Bridge.Test.Assert).$false(d.tryGetValue(923, outVal));
             Bridge.get(Bridge.Test.Assert).areEqual(null, outVal.v);
     
-            outVal.v  = "!!!";
+            outVal.v = "!!!";
             Bridge.get(Bridge.Test.Assert).$false(di2.tryGetValue(353, outVal));
             Bridge.get(Bridge.Test.Assert).areEqual(null, outVal.v);
         },
@@ -9488,7 +9488,7 @@
     
         },
         constructor$1: function (initialValues) {
-            this._backingDictionary  = initialValues;
+            this._backingDictionary = initialValues;
         },
         getItem: function (key) {
             return this._backingDictionary.get(key);
@@ -9676,7 +9676,7 @@
     Bridge.define('Bridge.ClientTest.Collections.Generic.IListTests.C', {
         _i: 0,
         constructor: function (i) {
-            this._i  = i;
+            this._i = i;
         },
         equals: function (o) {
             return Bridge.is(o, Bridge.ClientTest.Collections.Generic.IListTests.C) && this._i === (Bridge.cast(o, Bridge.ClientTest.Collections.Generic.IListTests.C))._i;
@@ -9892,7 +9892,7 @@
     Bridge.define('Bridge.ClientTest.Collections.Generic.IteratorBlockTests.C', {
         _sb: null,
         constructor: function (sb) {
-            this._sb  = sb;
+            this._sb = sb;
         },
         getEnumerator: function (n) {
             var $yield = [];
@@ -9939,7 +9939,7 @@
             finally {
                 this._sb.appendLine("in finally");
             }
-            n  = 0; // Just to verify that the value of 'n' is not reused in the next call
+            n = 0; // Just to verify that the value of 'n' is not reused in the next call
             return Bridge.Array.toEnumerable($yield);
         },
         getEnumerableThrows: function (n) {
@@ -10527,7 +10527,7 @@
     Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests.C', {
         i: 0,
         constructor: function (i) {
-            this.i  = i;
+            this.i = i;
         },
         equals: function (o) {
             return Bridge.is(o, Bridge.ClientTest.Collections.Generic.ListTests.C) && this.i === (Bridge.cast(o, Bridge.ClientTest.Collections.Generic.ListTests.C)).i;
@@ -10785,7 +10785,7 @@
                 if (expected === void 0) { expected = null; }
                 if (expectedLengthBytes === void 0) { expectedLengthBytes = null; }
                 if (!Bridge.hasValue(expected)) {
-                    expected  = input;
+                    expected = input;
                 }
     
                 Bridge.get(Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests).verify(input, function (result) {
@@ -11148,7 +11148,7 @@
                 // Regression test for bug where offsetOut parameter was ignored
                 var outputBuffer = Bridge.String.toCharArray(("........"), 0, ("........").length);
                 var inputBuffer = Bridge.Array.init(6, 0);
-                for (var i = 0; i < inputBuffer.length; inputBuffer[i]  = Bridge.cast(i++, Bridge.Int)) {
+                for (var i = 0; i < inputBuffer.length; inputBuffer[i] = Bridge.cast(i++, Bridge.Int)) {
                     ;
                 }
     
@@ -11158,7 +11158,7 @@
                 Bridge.get(Bridge.Test.Assert).areEqual("AAEC....", String.fromCharCode.apply(null, outputBuffer));
     
                 // Convert the second half of the byte array, write to the second half of the char array
-                c  = Bridge.Convert.toBase64CharArray(inputBuffer, 3, 3, outputBuffer, 4, null);
+                c = Bridge.Convert.toBase64CharArray(inputBuffer, 3, 3, outputBuffer, 4, null);
                 Bridge.get(Bridge.Test.Assert).areEqual(4, c);
                 Bridge.get(Bridge.Test.Assert).areEqual("AAECAwQF", String.fromCharCode.apply(null, outputBuffer));
             },
@@ -11241,7 +11241,7 @@
             knownByteSequence: function () {
                 var inputBytes = Bridge.Array.init(4, 0);
                 for (var i = 0; i < 4; i++) {
-                    inputBytes[i]  = Bridge.cast((i + 5), Bridge.Int);
+                    inputBytes[i] = Bridge.cast((i + 5), Bridge.Int);
                 }
     
                 // The sequence of bits for this byte array is
@@ -11587,7 +11587,7 @@
                     var expected = expectedValues[i];
                     var actual = Bridge.Convert.toString(testValues[i], null);
                     Bridge.get(Bridge.Test.Assert).areEqual(expected, actual);
-                    actual  = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
+                    actual = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
                     Bridge.get(Bridge.Test.Assert).areEqual(expected, actual);
                 }
             },
@@ -11597,7 +11597,7 @@
                 for (var i = 0; i < testValues.length; i++) {
                     var result = Bridge.Convert.toString(testValues[i], null);
                     Bridge.get(Bridge.Test.Assert).areEqual(testValues[i].toString(), result);
-                    result  = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
+                    result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
                     Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
                 }
             },
@@ -11607,7 +11607,7 @@
                 for (var i = 0; i < testValues.length; i++) {
                     var result = Bridge.Convert.toString(testValues[i], null);
                     Bridge.get(Bridge.Test.Assert).areEqual(testValues[i].toString(), result);
-                    result  = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
+                    result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
                     Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
                 }
             },
@@ -11617,7 +11617,7 @@
                 for (var i = 0; i < testValues.length; i++) {
                     var result = Bridge.Convert.toString(testValues[i], null);
                     Bridge.get(Bridge.Test.Assert).areEqual(testValues[i].toString(), result);
-                    result  = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
+                    result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
                     Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
                 }
             },
@@ -11627,7 +11627,7 @@
                 for (var i = 0; i < testValues.length; i++) {
                     var result = Bridge.Convert.toString(testValues[i], null);
                     Bridge.get(Bridge.Test.Assert).areEqual(testValues[i].toString(), result);
-                    result  = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
+                    result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
                     Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
                 }
             },
@@ -11637,7 +11637,7 @@
                 for (var i = 0; i < testValues.length; i++) {
                     var result = Bridge.Convert.toString(testValues[i], null);
                     Bridge.get(Bridge.Test.Assert).areEqual(testValues[i].toString(), result);
-                    result  = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
+                    result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
                     Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
                 }
             },
@@ -11647,7 +11647,7 @@
                 for (var i = 0; i < testValues.length; i++) {
                     var result = Bridge.Convert.toString(testValues[i], null);
                     Bridge.get(Bridge.Test.Assert).areEqual(testValues[i].toString(), result);
-                    result  = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
+                    result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
                     Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
                 }
             },
@@ -11657,7 +11657,7 @@
                 for (var i = 0; i < testValues.length; i++) {
                     var result = Bridge.Convert.toString(testValues[i], null);
                     Bridge.get(Bridge.Test.Assert).areEqual(testValues[i].toString(), result);
-                    result  = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
+                    result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
                     Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
                 }
             },
@@ -11667,7 +11667,7 @@
                 for (var i = 0; i < testValues.length; i++) {
                     var result = Bridge.Convert.toString(testValues[i], null);
                     Bridge.get(Bridge.Test.Assert).areEqual(testValues[i].toString(), result);
-                    result  = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
+                    result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
                     Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Int.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
                 }
             },
@@ -11680,7 +11680,7 @@
                     var result = Bridge.Convert.toString(testValues[i], null);
                     Bridge.get(Bridge.Test.Assert).areEqual(expectedValues1[i], result);
     
-                    result  = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
+                    result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
                     Bridge.get(Bridge.Test.Assert).areEqual(expectedValues2[i], result);
                 }
             },
@@ -11711,7 +11711,7 @@
                 for (var i = 0; i < testValues.length; i++) {
                     var result = Bridge.Convert.toString(testValues[i], null);
                     Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Date.format(testValues[i]), result);
-                    result  = Bridge.Convert.toString(testValues[i], formatProvider);
+                    result = Bridge.Convert.toString(testValues[i], formatProvider);
                     var expected = Bridge.Date.format(testValues[i], null, formatProvider);
                     Bridge.get(Bridge.Test.Assert).areEqual(expected, result);
                 }
@@ -11722,7 +11722,7 @@
                 for (var i = 0; i < testValues.length; i++) {
                     var result = Bridge.Convert.toString(testValues[i], null);
                     Bridge.get(Bridge.Test.Assert).areEqual(testValues[i].toString(), result);
-                    result  = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
+                    result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
                     Bridge.get(Bridge.Test.Assert).areEqual(testValues[i].toString(), result);
                 }
             },
@@ -11730,22 +11730,22 @@
                 var foo = new Bridge.ClientTest.ConvertTests.ConvertToStringTests.FooFormattable(3);
                 var result = Bridge.Convert.toString(foo, null);
                 Bridge.get(Bridge.Test.Assert).areEqual("FooFormattable: 3", result);
-                result  = Bridge.Convert.toString(foo, Bridge.NumberFormatInfo.currentInfo);
+                result = Bridge.Convert.toString(foo, Bridge.NumberFormatInfo.currentInfo);
                 Bridge.get(Bridge.Test.Assert).areEqual("Bridge.NumberFormatInfo: 3", result);
     
-                foo  = null;
-                result  = Bridge.Convert.toString(foo, Bridge.NumberFormatInfo.currentInfo);
+                foo = null;
+                result = Bridge.Convert.toString(foo, Bridge.NumberFormatInfo.currentInfo);
                 Bridge.get(Bridge.Test.Assert).areEqual("", result);
             },
             fromNonIConvertible: function () {
                 var foo = new Bridge.ClientTest.ConvertTests.ConvertToStringTests.Foo(3);
                 var result = Bridge.Convert.toString(foo, null);
                 Bridge.get(Bridge.Test.Assert).areEqual("Bridge.ClientTest.ConvertTests.ConvertToStringTests.Foo", result);
-                result  = Bridge.Convert.toString(foo, Bridge.NumberFormatInfo.currentInfo);
+                result = Bridge.Convert.toString(foo, Bridge.NumberFormatInfo.currentInfo);
                 Bridge.get(Bridge.Test.Assert).areEqual("Bridge.ClientTest.ConvertTests.ConvertToStringTests.Foo", result);
     
-                foo  = null;
-                result  = Bridge.Convert.toString(foo, Bridge.NumberFormatInfo.currentInfo);
+                foo = null;
+                result = Bridge.Convert.toString(foo, Bridge.NumberFormatInfo.currentInfo);
                 Bridge.get(Bridge.Test.Assert).areEqual("", result);
             }
         }
@@ -11774,7 +11774,7 @@
     Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToStringTests.Foo', {
         _value: 0,
         constructor: function (value) {
-            this._value  = value;
+            this._value = value;
         },
         toString$1: function (provider) {
             if (Bridge.hasValue(provider)) {
@@ -11790,7 +11790,7 @@
         inherits: [Bridge.IFormattable],
         _value: 0,
         constructor: function (value) {
-            this._value  = value;
+            this._value = value;
         },
         toString$1: function (format, formatProvider) {
             if (Bridge.hasValue(formatProvider)) {
@@ -12071,8 +12071,8 @@
                 for (var i = 0; i < parameters.length; i++) {
                     if (i === 0) {
                         var d = Bridge.cast(parameters[0], Bridge.Decimal, true);
-                        result[0]  = Bridge.Nullable.hasValue(d) ? "HasDotNetDiff" : "NoDotNetDiff";
-                        result[1]  = Bridge.Nullable.hasValue(d) ? Bridge.Int.format(d, 'G') + "m" : "null";
+                        result[0] = Bridge.Nullable.hasValue(d) ? "HasDotNetDiff" : "NoDotNetDiff";
+                        result[1] = Bridge.Nullable.hasValue(d) ? Bridge.Int.format(d, 'G') + "m" : "null";
     
                         continue;
                     }
@@ -12082,29 +12082,29 @@
                     if (Bridge.is(o, Bridge.Decimal)) {
                         var d1 = Bridge.cast(o, Bridge.Decimal);
                         if (d1.equalsT(Bridge.get(Bridge.ClientTest.DecimalMathTests).maxValue)) {
-                            result[j]  = "DecimalMathTests.MaxValue";
+                            result[j] = "DecimalMathTests.MaxValue";
                         }
                         else  {
                             if (d1.equalsT(Bridge.get(Bridge.ClientTest.DecimalMathTests).minValue)) {
-                                result[j]  = "DecimalMathTests.MinValue";
+                                result[j] = "DecimalMathTests.MinValue";
                             }
                             else  {
                                 if (d1.equalsT(Bridge.Decimal.MinusOne)) {
-                                    result[j]  = "decimal.MinusOne";
+                                    result[j] = "decimal.MinusOne";
                                 }
                                 else  {
                                     if (d1.equalsT(Bridge.Decimal.One)) {
-                                        result[j]  = "decimal.One";
+                                        result[j] = "decimal.One";
                                     }
                                     else  {
-                                        result[j]  = Bridge.Int.format(d1, 'G') + "m";
+                                        result[j] = Bridge.Int.format(d1, 'G') + "m";
                                     }
                                 }
                             }
                         }
                     }
                     else  {
-                        result[j]  = o;
+                        result[j] = o;
                     }
                 }
     
@@ -12404,7 +12404,7 @@
             var hasIncreased = false;
             while (Bridge.TimeSpan.lt((Bridge.Date.subdd(new Date(), before)), Bridge.TimeSpan.fromMilliseconds(200))) {
                 if (watch.ticks() > 0) {
-                    hasIncreased  = true;
+                    hasIncreased = true;
                 }
             }
             watch.stop();
@@ -12947,8 +12947,8 @@
         constructor: function (message, innerException) {
             Bridge.Exception.prototype.$constructor.call(this);
     
-            this._message  = message;
-            this._innerException  = innerException;
+            this._message = message;
+            this._innerException = innerException;
         },
         getMessage: function () {
             return this._message;
@@ -13531,19 +13531,19 @@
     Bridge.define('Bridge.ClientTest.IComparableTests', {
         callingMethodThroughIComparableInterfaceInvokesImplementingMethod: function () {
             var a = new Bridge.ClientTest.IComparableTests.MyComparable(), b = new Bridge.ClientTest.IComparableTests.MyComparable();
-            a.result  = 534;
+            a.result = 534;
             Bridge.get(Bridge.Test.Assert).areEqual(534, Bridge.compare((Bridge.cast(a, Bridge.IComparable$1(Bridge.ClientTest.IComparableTests.MyComparable))), b));
             Bridge.get(Bridge.Test.Assert).areStrictEqual(b, a.other);
     
-            a.result  = -42;
+            a.result = -42;
             Bridge.get(Bridge.Test.Assert).areEqual(-42, Bridge.compare((Bridge.cast(a, Bridge.IComparable$1(Bridge.ClientTest.IComparableTests.MyComparable))), null));
             Bridge.get(Bridge.Test.Assert).areStrictEqual(null, a.other);
     
-            a.result  = -534;
+            a.result = -534;
             Bridge.get(Bridge.Test.Assert).areEqual(-534, a.compareTo(b));
             Bridge.get(Bridge.Test.Assert).areStrictEqual(b, a.other);
     
-            a.result  = 42;
+            a.result = 42;
             Bridge.get(Bridge.Test.Assert).areEqual(42, a.compareTo(null));
             Bridge.get(Bridge.Test.Assert).areStrictEqual(null, a.other);
         }
@@ -13554,7 +13554,7 @@
         result: 0,
         other: null,
         compareTo: function (other) {
-            this.other  = other;
+            this.other = other;
             return this.result;
         }
     });
@@ -13562,28 +13562,28 @@
     Bridge.define('Bridge.ClientTest.IEquatableTests', {
         callingMethodThroughIComparableInterfaceInvokesImplementingMethod: function () {
             var a = new Bridge.ClientTest.IEquatableTests.MyEquatable(), b = new Bridge.ClientTest.IEquatableTests.MyEquatable();
-            a.result  = true;
+            a.result = true;
             Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT((Bridge.cast(a, Bridge.IEquatable$1(Bridge.ClientTest.IEquatableTests.MyEquatable))), b));
             Bridge.get(Bridge.Test.Assert).areStrictEqual(b, a.other);
-            a.result  = false;
+            a.result = false;
             Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT((Bridge.cast(a, Bridge.IEquatable$1(Bridge.ClientTest.IEquatableTests.MyEquatable))), b));
     
-            a.result  = true;
+            a.result = true;
             Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT((Bridge.cast(a, Bridge.IEquatable$1(Bridge.ClientTest.IEquatableTests.MyEquatable))), null));
             Bridge.get(Bridge.Test.Assert).areStrictEqual(null, a.other);
-            a.result  = false;
+            a.result = false;
             Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT((Bridge.cast(a, Bridge.IEquatable$1(Bridge.ClientTest.IEquatableTests.MyEquatable))), null));
     
-            a.result  = true;
+            a.result = true;
             Bridge.get(Bridge.Test.Assert).$true(a.equalsT(b));
             Bridge.get(Bridge.Test.Assert).areStrictEqual(b, a.other);
-            a.result  = false;
+            a.result = false;
             Bridge.get(Bridge.Test.Assert).$false(a.equalsT(b));
     
-            a.result  = true;
+            a.result = true;
             Bridge.get(Bridge.Test.Assert).$true(a.equalsT(null));
             Bridge.get(Bridge.Test.Assert).areStrictEqual(null, a.other);
-            a.result  = false;
+            a.result = false;
             Bridge.get(Bridge.Test.Assert).$false(a.equalsT(null));
         }
     });
@@ -13593,7 +13593,7 @@
         result: false,
         other: null,
         equalsT: function (other) {
-            this.other  = other;
+            this.other = other;
             return this.result;
         }
     });
@@ -14479,7 +14479,7 @@
                 Bridge.get(Bridge.Test.Assert).areDeepEqual$1(anonimNamesToCompare, anonimNames, "Selects names as an anonymous type");
     
                 // TEST
-                numbers  = [0, 1, 3, 3];
+                numbers = [0, 1, 3, 3];
     
                 var numberssInPlace = Bridge.Linq.Enumerable.from(numbers).select($_.Bridge.ClientTest.Linq.TestLinqProjectionOperators.f4).toArray();
     
@@ -14499,8 +14499,8 @@
                 Bridge.get(Bridge.Test.Assert).areDeepEqual$1(expectedSimplePairs, simplePairs, "Join two numeric arrays with one where clause");
     
                 // TEST
-                numbersA  = [1, 5, 2, 4, 3];
-                numbersB  = [3, 4, 2, 5, 1];
+                numbersA = [1, 5, 2, 4, 3];
+                numbersB = [3, 4, 2, 5, 1];
     
                 var pairs = (Bridge.Linq.Enumerable.from(numbersA).where($_.Bridge.ClientTest.Linq.TestLinqProjectionOperators.f8).selectMany(function (a) {
                     return numbersB;
@@ -14511,8 +14511,8 @@
                 Bridge.get(Bridge.Test.Assert).areDeepEqual$1(expectedPairs, pairs, "Join two numeric arrays with two where clauses");
     
                 // TEST
-                numbersA  = [1, 5, 2, 4, 3];
-                numbersB  = [3, 4, 2, 5, 1];
+                numbersA = [1, 5, 2, 4, 3];
+                numbersB = [3, 4, 2, 5, 1];
     
                 var manyNumbers = Bridge.Linq.Enumerable.from(numbersA).selectMany(function (a, aIndex) {
                     return Bridge.Linq.Enumerable.from(numbersB).where(function (b) {
@@ -14634,7 +14634,7 @@
                 aQuery.toList(Bridge.Int);
                 Bridge.get(Bridge.Test.Assert).areEqual$1(10, i, "Query is  executed after you enumerate over them");
     
-                i  = 0;
+                i = 0;
     
                 // TEST
                 var bQuery = (Bridge.Linq.Enumerable.from(numbers).select(function (n) {
@@ -14649,7 +14649,7 @@
     
                 // TEST
                 Bridge.Linq.Enumerable.from(numbers).forEach(function (x, index) {
-                    numbers[index]  = -numbers[index];
+                    numbers[index] = -numbers[index];
                 });
                 Bridge.get(Bridge.Test.Assert).areDeepEqual$1([-5, -4, -1, -3, -9, -8, -6, -7, -2, 0], Bridge.Linq.Enumerable.from(numbers).toArray(), "ForEach()");
     
@@ -14683,7 +14683,7 @@
                 Bridge.get(Bridge.Test.Assert).areDeepEqual$1([300, 100, 500, 50], filteredCounts, "Where elements in Person array have Count below 501");
     
                 // TEST
-                filteredCounts  = (Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons()).where($_.Bridge.ClientTest.Linq.TestLinqRestrictionOperators.f4).select($_.Bridge.ClientTest.Linq.TestLinqRestrictionOperators.f3)).toArray();
+                filteredCounts = (Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons()).where($_.Bridge.ClientTest.Linq.TestLinqRestrictionOperators.f4).select($_.Bridge.ClientTest.Linq.TestLinqRestrictionOperators.f3)).toArray();
                 Bridge.get(Bridge.Test.Assert).areDeepEqual$1([300], filteredCounts, "Where elements in Person array have Count below 501 ang in group 'A'");
     
                 // TEST
@@ -14758,8 +14758,8 @@
                 Bridge.get(Bridge.Test.Assert).areDeepEqual$1([5, 8], commonNumbersCD, "Intersect() to get common number sequence");
     
                 // TEST
-                nameChars  = Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons()).select($_.Bridge.ClientTest.Linq.TestLinqSetOperators.f2);
-                cityChars  = Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons()).select($_.Bridge.ClientTest.Linq.TestLinqSetOperators.f3);
+                nameChars = Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons()).select($_.Bridge.ClientTest.Linq.TestLinqSetOperators.f2);
+                cityChars = Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons()).select($_.Bridge.ClientTest.Linq.TestLinqSetOperators.f3);
     
                 var commonFirstChars = Bridge.Linq.Enumerable.from(nameChars).intersect(cityChars).toArray();
                 Bridge.get(Bridge.Test.Assert).areDeepEqual$1([Bridge.cast(66, Bridge.Int), Bridge.cast(68, Bridge.Int)], commonFirstChars, "Intersect() to get common first letters of Name and City");
@@ -14793,7 +14793,7 @@
         assertAlmostEqual: function (d1, d2) {
             var diff = d2 - d1;
             if (diff < 0) {
-                diff  = -diff;
+                diff = -diff;
             }
             Bridge.get(Bridge.Test.Assert).$true(diff < 1E-08);
         },
@@ -15394,22 +15394,22 @@
             var arr = Bridge.Array.create(0, null, 2, 3, 4);
             var i = arr.get([1, 2, 3]);
             Bridge.get(Bridge.Test.Assert).$throws(function () {
-                i  = arr.get([2, 2, 1]);
+                i = arr.get([2, 2, 1]);
             });
             Bridge.get(Bridge.Test.Assert).$throws(function () {
-                i  = arr.get([1, 3, 1]);
+                i = arr.get([1, 3, 1]);
             });
             Bridge.get(Bridge.Test.Assert).$throws(function () {
-                i  = arr.get([1, 2, 4]);
+                i = arr.get([1, 2, 4]);
             });
             Bridge.get(Bridge.Test.Assert).$throws(function () {
-                i  = arr.get([-1, 0, 0]);
+                i = arr.get([-1, 0, 0]);
             });
             Bridge.get(Bridge.Test.Assert).$throws(function () {
-                i  = arr.get([0, -1, 0]);
+                i = arr.get([0, -1, 0]);
             });
             Bridge.get(Bridge.Test.Assert).$throws(function () {
-                i  = arr.get([0, 0, -1]);
+                i = arr.get([0, 0, -1]);
             });
         },
         setValueWithIndexOutOfRangeThrowsAnException: function () {
@@ -15726,10 +15726,10 @@
             c.setP1(42);
             Bridge.get(Bridge.Test.Assert).areEqual$1(41, c.f1, "F1 value");
     
-            c.f1  = 15;
+            c.f1 = 15;
             Bridge.get(Bridge.Test.Assert).areEqual$1(16, c.getP1(), "P1 value");
     
-            c.f2  = 17;
+            c.f2 = 17;
             Bridge.get(Bridge.Test.Assert).areEqual$1(18, c.getP2(), "P2 value");
     
             c.setP3(12);
@@ -15739,10 +15739,10 @@
             Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C1).setPS1(42);
             Bridge.get(Bridge.Test.Assert).areEqual$1(41, Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C1).fS1, "FS1 value");
     
-            Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C1).fS1  = 15;
+            Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C1).fS1 = 15;
             Bridge.get(Bridge.Test.Assert).areEqual$1(16, Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C1).getPS1(), "PS1 value");
     
-            Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C1).fS2  = 17;
+            Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C1).fS2 = 17;
             Bridge.get(Bridge.Test.Assert).areEqual$1(18, Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C1).getPS2(), "PS2 value");
     
             Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C1).setPS3(12);
@@ -15754,10 +15754,10 @@
             c.setP1(42);
             Bridge.get(Bridge.Test.Assert).areEqual$1(41, c.f1, "F1 value");
     
-            c.f1  = 15;
+            c.f1 = 15;
             Bridge.get(Bridge.Test.Assert).areEqual$1(16, c.getP1(), "P1 value");
     
-            c.f2  = 17;
+            c.f2 = 17;
             Bridge.get(Bridge.Test.Assert).areEqual$1(18, c.getP2(), "P2 value");
     
             c.setP3(12);
@@ -15767,10 +15767,10 @@
             Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C2$1(Bridge.Int)).setPS1(42);
             Bridge.get(Bridge.Test.Assert).areEqual$1(41, Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C2$1(Bridge.Int)).fS1, "FS1 value");
     
-            Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C2$1(Bridge.Int)).fS1  = 15;
+            Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C2$1(Bridge.Int)).fS1 = 15;
             Bridge.get(Bridge.Test.Assert).areEqual$1(16, Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C2$1(Bridge.Int)).getPS1(), "PS1 value");
     
-            Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C2$1(Bridge.Int)).fS2  = 17;
+            Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C2$1(Bridge.Int)).fS2 = 17;
             Bridge.get(Bridge.Test.Assert).areEqual$1(18, Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C2$1(Bridge.Int)).getPS2(), "PS2 value");
     
             Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C2$1(Bridge.Int)).setPS3(12);
@@ -15782,10 +15782,10 @@
             d.setP1(42);
             Bridge.get(Bridge.Test.Assert).areEqual$1(41, d.f1, "F1 value");
     
-            d.f1  = 15;
+            d.f1 = 15;
             Bridge.get(Bridge.Test.Assert).areEqual$1(16, d.getP1(), "P1 value");
     
-            d.f2  = 17;
+            d.f2 = 17;
             Bridge.get(Bridge.Test.Assert).areEqual$1(18, d.getP2(), "P2 value");
     
             d.setP3(12);
@@ -15797,10 +15797,10 @@
             d.setP1(42);
             Bridge.get(Bridge.Test.Assert).areEqual$1(41, d.f1, "F1 value");
     
-            d.f1  = 15;
+            d.f1 = 15;
             Bridge.get(Bridge.Test.Assert).areEqual$1(16, d.getP1(), "P1 value");
     
-            d.f2  = 17;
+            d.f2 = 17;
             Bridge.get(Bridge.Test.Assert).areEqual$1(18, d.getP2(), "P2 value");
     
             d.setP3(12);
@@ -15816,13 +15816,13 @@
             return this.f1;
         },
         setP1: function (value) {
-            this.f1  = value;
+            this.f1 = value;
         },
         getP2: function () {
             return this.f2;
         },
         setP3: function (value) {
-            this.f3  = value;
+            this.f3 = value;
         }
     });
     
@@ -15834,13 +15834,13 @@
             return this.f1;
         },
         setP1: function (value) {
-            this.f1  = value;
+            this.f1 = value;
         },
         getP2: function () {
             return this.f2;
         },
         setP3: function (value) {
-            this.f3  = value;
+            this.f3 = value;
         }
     }; });
     
@@ -15853,13 +15853,13 @@
                 return Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C1).fS1 + 1;
             },
             setPS1: function (value) {
-                Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C1).fS1  = value - 1;
+                Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C1).fS1 = value - 1;
             },
             getPS2: function () {
                 return Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C1).fS2 + 1;
             },
             setPS3: function (value) {
-                Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C1).fS3  = value - 1;
+                Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C1).fS3 = value - 1;
             }
         },
         f1: 0,
@@ -15869,13 +15869,13 @@
             return this.f1 + 1;
         },
         setP1: function (value) {
-            this.f1  = value - 1;
+            this.f1 = value - 1;
         },
         getP2: function () {
             return this.f2 + 1;
         },
         setP3: function (value) {
-            this.f3  = value - 1;
+            this.f3 = value - 1;
         }
     });
     
@@ -15888,13 +15888,13 @@
                 return Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C2$1(T)).fS1 + 1;
             },
             setPS1: function (value) {
-                Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C2$1(T)).fS1  = value - 1;
+                Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C2$1(T)).fS1 = value - 1;
             },
             getPS2: function () {
                 return Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C2$1(T)).fS2 + 1;
             },
             setPS3: function (value) {
-                Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C2$1(T)).fS3  = value - 1;
+                Bridge.get(Bridge.ClientTest.PropertyAccessorTests.C2$1(T)).fS3 = value - 1;
             }
         },
         f1: null,
@@ -15904,13 +15904,13 @@
             return this.f1 + 1;
         },
         setP1: function (value) {
-            this.f1  = value - 1;
+            this.f1 = value - 1;
         },
         getP2: function () {
             return this.f2 + 1;
         },
         setP3: function (value) {
-            this.f3  = value - 1;
+            this.f3 = value - 1;
         }
     }; });
     
@@ -16153,27 +16153,27 @@
             Bridge.get(Bridge.Test.Assert).$true(result);
             Bridge.get(Bridge.Test.Assert).areEqual(234, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("", numberResult, 0, 255);
+            result = Bridge.Int.tryParseInt("", numberResult, 0, 255);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt(null, numberResult, 0, 255);
+            result = Bridge.Int.tryParseInt(null, numberResult, 0, 255);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("notanumber", numberResult, 0, 255);
+            result = Bridge.Int.tryParseInt("notanumber", numberResult, 0, 255);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("54768", numberResult, 0, 255);
+            result = Bridge.Int.tryParseInt("54768", numberResult, 0, 255);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(54768, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("-1", numberResult, 0, 255);
+            result = Bridge.Int.tryParseInt("-1", numberResult, 0, 255);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(-1, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("2.5", numberResult, 0, 255);
+            result = Bridge.Int.tryParseInt("2.5", numberResult, 0, 255);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
         },
@@ -16924,27 +16924,27 @@
             Bridge.get(Bridge.Test.Assert).$true(result);
             Bridge.get(Bridge.Test.Assert).areEqual(234, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("", numberResult, -32768, 32767);
+            result = Bridge.Int.tryParseInt("", numberResult, -32768, 32767);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt(null, numberResult, -32768, 32767);
+            result = Bridge.Int.tryParseInt(null, numberResult, -32768, 32767);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("notanumber", numberResult, -32768, 32767);
+            result = Bridge.Int.tryParseInt("notanumber", numberResult, -32768, 32767);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("54768", numberResult, -32768, 32767);
+            result = Bridge.Int.tryParseInt("54768", numberResult, -32768, 32767);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(54768, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("-55678", numberResult, -32768, 32767);
+            result = Bridge.Int.tryParseInt("-55678", numberResult, -32768, 32767);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(-55678, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("2.5", numberResult, -32768, 32767);
+            result = Bridge.Int.tryParseInt("2.5", numberResult, -32768, 32767);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
         },
@@ -17121,23 +17121,23 @@
             Bridge.get(Bridge.Test.Assert).$true(result);
             Bridge.get(Bridge.Test.Assert).areEqual(57574, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("-14", numberResult, -2147483648, 2147483647);
+            result = Bridge.Int.tryParseInt("-14", numberResult, -2147483648, 2147483647);
             Bridge.get(Bridge.Test.Assert).$true(result);
             Bridge.get(Bridge.Test.Assert).areEqual(-14, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("", numberResult, -2147483648, 2147483647);
+            result = Bridge.Int.tryParseInt("", numberResult, -2147483648, 2147483647);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt(null, numberResult, -2147483648, 2147483647);
+            result = Bridge.Int.tryParseInt(null, numberResult, -2147483648, 2147483647);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("notanumber", numberResult, -2147483648, 2147483647);
+            result = Bridge.Int.tryParseInt("notanumber", numberResult, -2147483648, 2147483647);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("2.5", numberResult, -2147483648, 2147483647);
+            result = Bridge.Int.tryParseInt("2.5", numberResult, -2147483648, 2147483647);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
         },
@@ -17315,31 +17315,31 @@
             Bridge.get(Bridge.Test.Assert).$true(result);
             Bridge.get(Bridge.Test.Assert).areEqual(57574, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("-14", numberResult, -9007199254740991, 9007199254740991);
+            result = Bridge.Int.tryParseInt("-14", numberResult, -9007199254740991, 9007199254740991);
             Bridge.get(Bridge.Test.Assert).$true(result);
             Bridge.get(Bridge.Test.Assert).areEqual(-14, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("", numberResult, -9007199254740991, 9007199254740991);
+            result = Bridge.Int.tryParseInt("", numberResult, -9007199254740991, 9007199254740991);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt(null, numberResult, -9007199254740991, 9007199254740991);
+            result = Bridge.Int.tryParseInt(null, numberResult, -9007199254740991, 9007199254740991);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("notanumber", numberResult, -9007199254740991, 9007199254740991);
+            result = Bridge.Int.tryParseInt("notanumber", numberResult, -9007199254740991, 9007199254740991);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("2.5", numberResult, -9007199254740991, 9007199254740991);
+            result = Bridge.Int.tryParseInt("2.5", numberResult, -9007199254740991, 9007199254740991);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("-10000000000000000000", numberResult, -9007199254740991, 9007199254740991);
+            result = Bridge.Int.tryParseInt("-10000000000000000000", numberResult, -9007199254740991, 9007199254740991);
             Bridge.get(Bridge.Test.Assert).$false(result);
             //Assert.AreEqual(numberResult, 0);
     
-            result  = Bridge.Int.tryParseInt("10000000000000000000", numberResult, -9007199254740991, 9007199254740991);
+            result = Bridge.Int.tryParseInt("10000000000000000000", numberResult, -9007199254740991, 9007199254740991);
             Bridge.get(Bridge.Test.Assert).$false(result);
             //Assert.AreEqual(numberResult, 0);
         },
@@ -17901,27 +17901,27 @@
             Bridge.get(Bridge.Test.Assert).$true(result);
             Bridge.get(Bridge.Test.Assert).areEqual(124, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("-123", numberResult, -128, 127);
+            result = Bridge.Int.tryParseInt("-123", numberResult, -128, 127);
             Bridge.get(Bridge.Test.Assert).$true(result);
             Bridge.get(Bridge.Test.Assert).areEqual(-123, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("", numberResult, -128, 127);
+            result = Bridge.Int.tryParseInt("", numberResult, -128, 127);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt(null, numberResult, -128, 127);
+            result = Bridge.Int.tryParseInt(null, numberResult, -128, 127);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("notanumber", numberResult, -128, 127);
+            result = Bridge.Int.tryParseInt("notanumber", numberResult, -128, 127);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("54768", numberResult, -128, 127);
+            result = Bridge.Int.tryParseInt("54768", numberResult, -128, 127);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(54768, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("2.5", numberResult, -128, 127);
+            result = Bridge.Int.tryParseInt("2.5", numberResult, -128, 127);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
         },
@@ -18137,23 +18137,23 @@
                 var s = ("HELLO").toLowerCase();
                 Bridge.get(Bridge.Test.Assert).areEqual$1("hello", s, "'HELLO'.ToLower()");
     
-                s  = "HELLO".toLowerCase();
+                s = "HELLO".toLowerCase();
                 Bridge.get(Bridge.Test.Assert).areEqual$1("hello", s, "'HELLO'.ToLowerCase()");
     
-                s  = "HELLO".toLocaleLowerCase();
+                s = "HELLO".toLocaleLowerCase();
                 Bridge.get(Bridge.Test.Assert).areEqual$1("hello", s, "'HELLO'.ToLocaleLowerCase()");
     
                 // TEST ToUpper, ToUpperCase, ToLocaleUpperCase
-                s  = ("hello").toUpperCase();
+                s = ("hello").toUpperCase();
                 Bridge.get(Bridge.Test.Assert).areEqual$1("HELLO", s, "'hello'.ToUpper()");
     
-                s  = "hello".toUpperCase();
+                s = "hello".toUpperCase();
                 Bridge.get(Bridge.Test.Assert).areEqual$1("HELLO", s, "'hello'.ToUpperCase()");
     
-                s  = "HELLO".toLocaleUpperCase();
+                s = "HELLO".toLocaleUpperCase();
                 Bridge.get(Bridge.Test.Assert).areEqual$1("HELLO", s, "'hello'.ToLocaleUpperCase()");
     
-                s  = "Hello Bridge.NET";
+                s = "Hello Bridge.NET";
                 // TEST String(string) constructor
                 Bridge.get(Bridge.Test.Assert).areEqual$1(s, String(s), "new String('" + s + "')");
     
@@ -18172,14 +18172,14 @@
                     Bridge.String.indexOfAny(s, null);
                 }, "'" + s + "'.IndexOfAny(null)");
     
-                s  = "";
+                s = "";
                 Bridge.get(Bridge.Test.Assert).areEqual$1(-1, Bridge.String.indexOfAny(s, anyOf), "String.Empty.IndexOfAny(" + sAnyOf + ")");
     
-                s  = null;
+                s = null;
                 Bridge.get(Bridge.Test.Assert).areEqual$1(-1, Bridge.String.indexOfAny(s, anyOf), "null.IndexOfAny(" + sAnyOf + ")");
     
                 // TEST IndexOf
-                s  = "Hello Bridge.NET";
+                s = "Hello Bridge.NET";
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1(1, Bridge.String.indexOf(s, String.fromCharCode(101)), "'" + s + "'.IndexOf('e')");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(11, Bridge.String.indexOf(s, "e."), "'" + s + "'.IndexOf('e.')");
@@ -18192,10 +18192,10 @@
                     Bridge.get(Bridge.Test.Assert).areEqual$1(11, Bridge.String.indexOf(s, "E", 6, 8, 1), "'" + s + "'.IndexOf('E', 6, 8, StringComparison.CurrentCultureIgnoreCase)");
                 }
     
-                s  = "";
+                s = "";
                 Bridge.get(Bridge.Test.Assert).areEqual$1(-1, Bridge.String.indexOf(s, String.fromCharCode(101)), "String.Empty.IndexOf('e')");
     
-                s  = null;
+                s = null;
                 Bridge.get(Bridge.Test.Assert).areEqual$1(-1, Bridge.String.indexOf(s, String.fromCharCode(101)), "null.IndexOf('e')");
     
                 // TEST Compare
@@ -18210,9 +18210,9 @@
     
                 if (!isPhantomJs) {
                     var threeIs = Bridge.Array.init(3, null);
-                    threeIs[0]  = "i";
-                    threeIs[1]  = "ı";
-                    threeIs[2]  = "I";
+                    threeIs[0] = "i";
+                    threeIs[1] = "ı";
+                    threeIs[2] = "I";
     
                     var scValues = [0, 1, 2, 3, 4, 5];
     
@@ -18229,7 +18229,7 @@
                 }
     
                 // TEST Contains
-                s  = "Hello Bridge.NET";
+                s = "Hello Bridge.NET";
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1(true, Bridge.String.contains(s,"Bridge"), "'" + s + "'.Contains('Bridge')");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(true, Bridge.String.contains(s,""), "'" + s + "'.Contains(String.Empty)");
@@ -18239,21 +18239,21 @@
                 }, "null.Contains('Bridge')");
     
                 // TEST Concat
-                s  = [s, "2", "3", "4"].join('');
+                s = [s, "2", "3", "4"].join('');
                 Bridge.get(Bridge.Test.Assert).areEqual$1("Hello Bridge.NET234", s, "string.Concat()");
     
-                s  = [null, true, 3, false].join('');
+                s = [null, true, 3, false].join('');
                 Bridge.get(Bridge.Test.Assert).areEqual$1("true3false", s, "string.Concat()");
     
-                s  = ["1", "2", "3", "4", "5"].toString().split(',').join('');
+                s = ["1", "2", "3", "4", "5"].toString().split(',').join('');
                 Bridge.get(Bridge.Test.Assert).areEqual$1("12345", s, "string.Concat()");
     
-                s  = [1, null, 2, null, 3].toString().split(',').join('');
+                s = [1, null, 2, null, 3].toString().split(',').join('');
                 Bridge.get(Bridge.Test.Assert).areEqual$1("123", s, "string.Concat()");
             },
             test: function (x, y, comparison, testI, expected, expectedIndex) {
                 var cmpValue = 0;
-                cmpValue  = Bridge.String.compare(testI[x], testI[y], comparison);
+                cmpValue = Bridge.String.compare(testI[x], testI[y], comparison);
                 Bridge.get(Bridge.Test.Assert).areEqual$1(expected[expectedIndex], cmpValue, "String.Compare('" + testI[x] + "', '" + testI[y] + "'," + comparison + ")");
             },
             enumerable: function () {
@@ -18266,8 +18266,8 @@
                 $t = Bridge.getEnumerator("danny");
                 while ($t.moveNext()) {
                     var c = $t.getCurrent();
-                    a  = c;
-                    result[i]  = a;
+                    a = c;
+                    result[i] = a;
     
                     i++;
                 }
@@ -18768,12 +18768,12 @@
             var r = "a";
             Bridge.get(Bridge.Test.Assert).$true(Bridge.equals(("a"), r));
             Bridge.get(Bridge.Test.Assert).$false(Bridge.equals(("b"), r));
-            r  = "b";
+            r = "b";
             Bridge.get(Bridge.Test.Assert).$false(Bridge.equals(("a"), r));
             Bridge.get(Bridge.Test.Assert).$true(Bridge.equals(("b"), r));
-            r  = "A";
+            r = "A";
             Bridge.get(Bridge.Test.Assert).$false(Bridge.equals(("a"), r));
-            r  = "ab";
+            r = "ab";
             Bridge.get(Bridge.Test.Assert).$false(Bridge.equals(("a"), r));
         },
         iEquatableEqualsWorks: function () {
@@ -18849,7 +18849,7 @@
         inherits: [Bridge.IEnumerable$1(T)],
         _items: null,
         constructor: function (items) {
-            this._items  = items;
+            this._items = items;
         },
         getEnumerator: function () {
             return this.getEnumerator$1();
@@ -19087,15 +19087,15 @@
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(time, Bridge.TimeSpan), "ticks type");
             Bridge.get(Bridge.Test.Assert).areEqual$1(34567, time.getTicks(), "ticks value");
     
-            time  = new Bridge.TimeSpan(10, 20, 5);
+            time = new Bridge.TimeSpan(10, 20, 5);
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(time, Bridge.TimeSpan), "h, m, s type");
             Bridge.get(Bridge.Test.Assert).areEqual$1(372050000000, time.getTicks(), "h, m, s value");
     
-            time  = new Bridge.TimeSpan(15, 10, 20, 5);
+            time = new Bridge.TimeSpan(15, 10, 20, 5);
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(time, Bridge.TimeSpan), "d, h, m, s type");
             Bridge.get(Bridge.Test.Assert).areEqual$1(13332050000000, time.getTicks(), "d, h, m, s value");
     
-            time  = new Bridge.TimeSpan(15, 10, 20, 5, 14);
+            time = new Bridge.TimeSpan(15, 10, 20, 5, 14);
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(time, Bridge.TimeSpan), "full type");
             Bridge.get(Bridge.Test.Assert).areEqual$1(13332050140000, time.getTicks(), "full value");
         },
@@ -19104,23 +19104,23 @@
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(time, Bridge.TimeSpan), "FromDays type");
             Bridge.get(Bridge.Test.Assert).areEqual$1(2592000000000, time.getTicks(), "FromDays value");
     
-            time  = Bridge.TimeSpan.fromHours(3);
+            time = Bridge.TimeSpan.fromHours(3);
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(time, Bridge.TimeSpan), "FromHours type");
             Bridge.get(Bridge.Test.Assert).areEqual$1(108000000000, time.getTicks(), "FromHours value");
     
-            time  = Bridge.TimeSpan.fromMinutes(3);
+            time = Bridge.TimeSpan.fromMinutes(3);
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(time, Bridge.TimeSpan), "FromMinutes type");
             Bridge.get(Bridge.Test.Assert).areEqual$1(1800000000, time.getTicks(), "FromMinutes value");
     
-            time  = Bridge.TimeSpan.fromSeconds(3);
+            time = Bridge.TimeSpan.fromSeconds(3);
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(time, Bridge.TimeSpan), "FromSeconds type");
             Bridge.get(Bridge.Test.Assert).areEqual$1(30000000, time.getTicks(), "FromSeconds value");
     
-            time  = Bridge.TimeSpan.fromMilliseconds(3);
+            time = Bridge.TimeSpan.fromMilliseconds(3);
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(time, Bridge.TimeSpan), "FromMilliseconds type");
             Bridge.get(Bridge.Test.Assert).areEqual$1(30000, time.getTicks(), "FromMilliseconds value");
     
-            time  = Bridge.TimeSpan.fromTicks(3);
+            time = Bridge.TimeSpan.fromTicks(3);
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(time, Bridge.TimeSpan), "FromTicks type");
             Bridge.get(Bridge.Test.Assert).areEqual$1(3, time.getTicks(), "FromTicks value");
         },
@@ -19224,7 +19224,7 @@
         assertAlmostEqual: function (d1, d2) {
             var diff = d2 - d1;
             if (diff < 0) {
-                diff  = -diff;
+                diff = -diff;
             }
             Bridge.get(Bridge.Test.Assert).$true(diff < 1E-08);
         },
@@ -19441,27 +19441,27 @@
             Bridge.get(Bridge.Test.Assert).$true(result);
             Bridge.get(Bridge.Test.Assert).areEqual(23445, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("", numberResult, 0, 65535);
+            result = Bridge.Int.tryParseInt("", numberResult, 0, 65535);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt(null, numberResult, 0, 65535);
+            result = Bridge.Int.tryParseInt(null, numberResult, 0, 65535);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("notanumber", numberResult, 0, 65535);
+            result = Bridge.Int.tryParseInt("notanumber", numberResult, 0, 65535);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("32768", numberResult, 0, 65535);
+            result = Bridge.Int.tryParseInt("32768", numberResult, 0, 65535);
             Bridge.get(Bridge.Test.Assert).$true(result);
             Bridge.get(Bridge.Test.Assert).areEqual(32768, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("-1", numberResult, 0, 65535);
+            result = Bridge.Int.tryParseInt("-1", numberResult, 0, 65535);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(-1, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("2.5", numberResult, 0, 65535);
+            result = Bridge.Int.tryParseInt("2.5", numberResult, 0, 65535);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
         },
@@ -19611,23 +19611,23 @@
             Bridge.get(Bridge.Test.Assert).$true(result);
             Bridge.get(Bridge.Test.Assert).areEqual(23445, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("", numberResult, 0, 4294967295);
+            result = Bridge.Int.tryParseInt("", numberResult, 0, 4294967295);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt(null, numberResult, 0, 4294967295);
+            result = Bridge.Int.tryParseInt(null, numberResult, 0, 4294967295);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("notanumber", numberResult, 0, 4294967295);
+            result = Bridge.Int.tryParseInt("notanumber", numberResult, 0, 4294967295);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("-1", numberResult, 0, 4294967295);
+            result = Bridge.Int.tryParseInt("-1", numberResult, 0, 4294967295);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(-1, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("2.5", numberResult, 0, 4294967295);
+            result = Bridge.Int.tryParseInt("2.5", numberResult, 0, 4294967295);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
         },
@@ -19779,27 +19779,27 @@
             Bridge.get(Bridge.Test.Assert).$true(result);
             Bridge.get(Bridge.Test.Assert).areEqual(23445, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("", numberResult, 0, 9007199254740991);
+            result = Bridge.Int.tryParseInt("", numberResult, 0, 9007199254740991);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt(null, numberResult, 0, 9007199254740991);
+            result = Bridge.Int.tryParseInt(null, numberResult, 0, 9007199254740991);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("notanumber", numberResult, 0, 9007199254740991);
+            result = Bridge.Int.tryParseInt("notanumber", numberResult, 0, 9007199254740991);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("-1", numberResult, 0, 9007199254740991);
+            result = Bridge.Int.tryParseInt("-1", numberResult, 0, 9007199254740991);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(-1, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("2.5", numberResult, 0, 9007199254740991);
+            result = Bridge.Int.tryParseInt("2.5", numberResult, 0, 9007199254740991);
             Bridge.get(Bridge.Test.Assert).$false(result);
             Bridge.get(Bridge.Test.Assert).areEqual(0, numberResult.v);
     
-            result  = Bridge.Int.tryParseInt("100000000000000000000", numberResult, 0, 9007199254740991);
+            result = Bridge.Int.tryParseInt("100000000000000000000", numberResult, 0, 9007199254740991);
             Bridge.get(Bridge.Test.Assert).$false(result);
             //Assert.AreEqual(numberResult, 100000000000000000000);
         },
@@ -19943,20 +19943,20 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1("", sb.toString(), "StringBuilder() .ctor");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(sb1.toString(), sb.toString(), "StringBuilder(capacity) .ctor");
     
-                sb  = new Bridge.Text.StringBuilder("foo");
-                sb1  = new Bridge.Text.StringBuilder("foo", 2);
+                sb = new Bridge.Text.StringBuilder("foo");
+                sb1 = new Bridge.Text.StringBuilder("foo", 2);
                 Bridge.get(Bridge.Test.Assert).areEqual$1("foo", sb.toString(), "StringBuilder(string) .ctor");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(sb1.toString(), sb.toString(), "StringBuilder(string, capacity) .ctor");
     
-                sb  = new Bridge.Text.StringBuilder("foo bar", 4, 3);
+                sb = new Bridge.Text.StringBuilder("foo bar", 4, 3);
                 Bridge.get(Bridge.Test.Assert).areEqual$1("bar", sb.toString(), "StringBuilder(string) .ctor");
     
                 // TEST properties
     
                 // Capacity
-                sb  = new Bridge.Text.StringBuilder("", 128);
+                sb = new Bridge.Text.StringBuilder("", 128);
                 Bridge.get(Bridge.Test.Assert).areEqual$1(128, sb.getCapacity(), ".Capacity");
-                sb  = new Bridge.Text.StringBuilder("foo", 2);
+                sb = new Bridge.Text.StringBuilder("foo", 2);
                 Bridge.get(Bridge.Test.Assert).areEqual$1(16, sb.getCapacity(), ".Capacity");
                 sb.setCapacity(10);
                 Bridge.get(Bridge.Test.Assert).areEqual$1(10, sb.getCapacity(), ".Capacity");
@@ -20127,7 +20127,7 @@
                             $step = Bridge.Array.min([0,1], $step);
                             switch ($step) {
                                 case 0: {
-                                    state  = 1;
+                                    state = 1;
                                     $task1 = task;
                                     $step = 1;
                                     $task1.continueWith($asyncBody, true);
@@ -20135,7 +20135,7 @@
                                 }
                                 case 1: {
                                     $task1.getAwaitedResult();
-                                    state  = 2;
+                                    state = 2;
                                     return;
                                 }
                                 default: {
@@ -20181,7 +20181,7 @@
                                 $step = Bridge.Array.min([0,1], $step);
                                 switch ($step) {
                                     case 0: {
-                                        state  = 1;
+                                        state = 1;
                                         $task1 = task;
                                         $step = 1;
                                         $task1.continueWith($asyncBody);
@@ -20189,7 +20189,7 @@
                                     }
                                     case 1: {
                                         $task1.getAwaitedResult();
-                                        state  = 2;
+                                        state = 2;
                                         $tcs.setResult(null);
                                         return;
                                     }
@@ -20248,7 +20248,7 @@
                                 $step = Bridge.Array.min([0,1], $step);
                                 switch ($step) {
                                     case 0: {
-                                        state  = 1;
+                                        state = 1;
                                         $task1 = task;
                                         $step = 1;
                                         $task1.continueWith($asyncBody);
@@ -20256,7 +20256,7 @@
                                     }
                                     case 1: {
                                         $task1.getAwaitedResult();
-                                        state  = 2;
+                                        state = 2;
                                         throw ex;
                                         $tcs.setResult(null);
                                         return;
@@ -20317,7 +20317,7 @@
                                 $step = Bridge.Array.min([0,1], $step);
                                 switch ($step) {
                                     case 0: {
-                                        state  = 1;
+                                        state = 1;
                                         $task1 = task;
                                         $step = 1;
                                         $task1.continueWith($asyncBody);
@@ -20325,7 +20325,7 @@
                                     }
                                     case 1: {
                                         $task1.getAwaitedResult();
-                                        state  = 2;
+                                        state = 2;
                                         $tcs.setResult(null);
                                         return;
                                     }
@@ -20407,7 +20407,7 @@
                                         continue;
                                     }
                                     case 4: {
-                                        state  = 1;
+                                        state = 1;
                                         $tcs.setResult(null);
                                         return;
                                     }
@@ -20461,7 +20461,7 @@
                                 $step = Bridge.Array.min([0,1], $step);
                                 switch ($step) {
                                     case 0: {
-                                        state  = 1;
+                                        state = 1;
                                         $task1 = task;
                                         $step = 1;
                                         $task1.continueWith($asyncBody);
@@ -20469,7 +20469,7 @@
                                     }
                                     case 1: {
                                         $task1.getAwaitedResult();
-                                        state  = 2;
+                                        state = 2;
                                         $tcs.setResult(42);
                                         return;
                                     }
@@ -20716,7 +20716,7 @@
             cts.cancel();
             var state = 0;
             cts.token.register(function () {
-                state  = 1;
+                state = 1;
             });
             Bridge.get(Bridge.Test.Assert).areEqual(1, state);
         },
@@ -20727,7 +20727,7 @@
             var state = 0;
             cts.token.register(function (c) {
                 Bridge.get(Bridge.Test.Assert).true$1(context === c, "context");
-                state  = 1;
+                state = 1;
             }, context);
             Bridge.get(Bridge.Test.Assert).areEqual(1, state);
         },
@@ -20795,7 +20795,7 @@
     
             var state = 0;
             ct.register(function () {
-                state  = 1;
+                state = 1;
             });
     
             Bridge.get(Bridge.Test.Assert).areEqual(0, state);
@@ -20806,12 +20806,12 @@
             var state = 0;
             var context = { };
             ct.register(function () {
-                state  = 1;
+                state = 1;
             });
             Bridge.get(Bridge.Test.Assert).areEqual$1(1, state, "state 1");
             ct.register(function (c) {
                 Bridge.get(Bridge.Test.Assert).true$1(context === c, "context");
-                state  = 2;
+                state = 2;
             }, context);
             Bridge.get(Bridge.Test.Assert).areEqual$1(2, state, "state 2");
         },
@@ -20819,7 +20819,7 @@
             var cts = new Bridge.CancellationTokenSource();
             var calls = 0;
             cts.token.register(function () {
-                calls  = 1;
+                calls = 1;
             });
             cts.cancel();
             cts.cancel();
@@ -20949,7 +20949,7 @@
     
             var task1 = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(t === task, "ContinueWith parameter should be correct");
-                continuationRun  = true;
+                continuationRun = true;
             });
     
             Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
@@ -20978,7 +20978,7 @@
     
             var task1 = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(t === task, "ContinueWith parameter should be correct");
-                continuationRun  = true;
+                continuationRun = true;
             });
     
             Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
@@ -21009,7 +21009,7 @@
     
             var task1 = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(t === task, "ContinueWith parameter should be correct");
-                continuationRun  = true;
+                continuationRun = true;
             });
     
             Bridge.get(Bridge.Test.Assert).false$1(continuationRun, "Continuation should not be run too early.");
@@ -21061,7 +21061,7 @@
                             }
                             case 1: {
                                 $taskResult1 = $task1.getAwaitedResult();
-                                result  = $taskResult1;
+                                result = $taskResult1;
                                 
                                 Bridge.get(Bridge.Test.Assert).areEqual$1([42, "result 123", 101], result, "The result should be correct");
                                 completeAsync();
@@ -21124,7 +21124,7 @@
                                     continue;
                                 }
                                 case 3: {
-                                    continuationRun  = true;
+                                    continuationRun = true;
                                     Bridge.get(Bridge.Test.Assert).areEqual$1([42, "result 123", 101], ex.arguments, "The PromiseException arguments should be correct");
                                     $step = 5;
                                     continue;
@@ -21192,7 +21192,7 @@
         constructor: function () {
             this.setThens(new Bridge.List$1(Bridge.ClientTest.Threading.PromiseTests.SimplePromise.A)());
     
-            this.doThen  = Bridge.fn.bind(this, $_.Bridge.ClientTest.Threading.PromiseTests.SimplePromise.f1);
+            this.doThen = Bridge.fn.bind(this, $_.Bridge.ClientTest.Threading.PromiseTests.SimplePromise.f1);
         },
         then: function (fulfilledHandler, errorHandler, progressHandler) {
             if (errorHandler === void 0) { errorHandler = null; }
@@ -21210,12 +21210,12 @@
         complete: function (which, args) {
             if (args === void 0) { args = []; }
             if (which === Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which.resolve) {
-                this.doThen  = Bridge.fn.bind(this, function (f, e, p) {
+                this.doThen = Bridge.fn.bind(this, function (f, e, p) {
                     this.resolve(args);
                 });
             }
             else  {
-                this.doThen  = Bridge.fn.bind(this, function (f, e, p) {
+                this.doThen = Bridge.fn.bind(this, function (f, e, p) {
                     this.reject(args);
                 });
             }
@@ -21322,7 +21322,7 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1(1, task.getResult(), "Result should be 1 after the callback");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(null, task.exception, "Exception should be null in the callback");
     
-                callbackRun  = true;
+                callbackRun = true;
             });
     
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.running, task.status, "The task should be running before SetResult is called");
@@ -21358,7 +21358,7 @@
                     var x = task.getResult();
                 }, "Getting the result property in the callback should throw");
     
-                callbackRun  = true;
+                callbackRun = true;
             });
     
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.running, task.status, "The task should be running before the SetException() call");
@@ -21398,7 +21398,7 @@
                     var x = task.getResult();
                 }, "Getting the result property in the callback should throw");
     
-                callbackRun  = true;
+                callbackRun = true;
             });
     
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.running, task.status, "The task should be running before the SetException() call");
@@ -21435,7 +21435,7 @@
                     var x = task.getResult();
                 }, "Getting the result property in the callback should throw");
     
-                callbackRun  = true;
+                callbackRun = true;
             });
     
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.running, task.status, "The task should be running before the SetCanceled() call");
@@ -21492,7 +21492,7 @@
                                         continue;
                                     }
                                     case 3: {
-                                        caughtException  = ex;
+                                        caughtException = ex;
                                         $step = 4;
                                         continue;
                                     }
@@ -21624,7 +21624,7 @@
     
             var continuedTask = null;
     
-            continuedTask  = task.continueWith(function (t) {
+            continuedTask = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(t === task, "argument to task.ContinueWith callback should be correct");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.ranToCompletion, task.status, "task should have run to completion at point 2");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(null, task.exception, "task should not have an exception");
@@ -21638,7 +21638,7 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.ranToCompletion, continuedTask.status, "continuedTask should have run to completion at point 3");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(null, continuedTask.exception, "continuedTask should not have an exception");
     
-                complete  = true;
+                complete = true;
             });
     
             tcs.setResult(0);
@@ -21659,12 +21659,12 @@
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.running, task.status, "task should be running at point 1");
     
             var t1 = task.continueWith(function (t) {
-                cb1Invoked  = true;
+                cb1Invoked = true;
                 throw new Bridge.Exception("Test");
             });
     
             var t2 = task.continueWith(function (t) {
-                cb2Invoked  = true;
+                cb2Invoked = true;
             });
     
             tcs.setResult(0);
@@ -21692,7 +21692,7 @@
     
             var continuedTask = null;
     
-            continuedTask  = task.continueWith($_.Bridge.ClientTest.Threading.TaskTests.f1);
+            continuedTask = task.continueWith($_.Bridge.ClientTest.Threading.TaskTests.f1);
     
             Bridge.get(Bridge.Test.Assert).false$1(task === continuedTask, "task and continuedTask should not be the same");
     
@@ -21703,7 +21703,7 @@
                 Bridge.get(Bridge.Test.Assert).$true(Bridge.is(continuedTask.exception, Bridge.AggregateException));
                 Bridge.get(Bridge.Test.Assert).areEqual("This is a test message", continuedTask.exception.innerExceptions.get(0).getMessage());
     
-                complete  = true;
+                complete = true;
             });
     
             tcs.setResult(0);
@@ -21724,7 +21724,7 @@
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.running, task.status, "task should be running at point 1");
     
             var continuedTask = null;
-            continuedTask  = task.continueWith(function (t) {
+            continuedTask = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(t === task, "argument to task.ContinueWith callback should be correct");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.ranToCompletion, task.status, "task should have run to completion at point 2");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(null, task.exception, "task should not have an exception");
@@ -21742,7 +21742,7 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1(null, continuedTask.exception, "continuedTask should not have an exception");
                 Bridge.get(Bridge.Test.Assert).areEqual(42, t.getResult());
     
-                done  = true;
+                done = true;
             });
     
             tcs.setResult(0);
@@ -21764,7 +21764,7 @@
     
             var continuedTask = null;
     
-            continuedTask  = task.continueWith(function (t) {
+            continuedTask = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(t === task, "argument to task.ContinueWith callback should be correct");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.ranToCompletion, task.status, "task should have run to completion at point 2");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(null, task.exception, "task should not have an exception");
@@ -21778,7 +21778,7 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.ranToCompletion, continuedTask.status, "continuedTask should have run to completion at point 3");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(null, continuedTask.exception, "continuedTask should not have an exception");
     
-                done  = true;
+                done = true;
             });
     
             tcs.setResult(0);
@@ -21800,7 +21800,7 @@
     
             var continuedTask = null;
     
-            continuedTask  = task.continueWith(function (t) {
+            continuedTask = task.continueWith(function (t) {
                 Bridge.get(Bridge.Test.Assert).true$1(t === task, "argument to task.ContinueWith callback should be correct");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.ranToCompletion, task.status, "task should have run to completion at point 2");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(null, task.exception, "task should not have an exception");
@@ -21817,7 +21817,7 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1(null, continuedTask.exception, "continuedTask should not have an exception");
                 Bridge.get(Bridge.Test.Assert).areEqual("42_", t.getResult());
     
-                done  = true;
+                done = true;
             });
     
             tcs.setResult(42);
@@ -21846,7 +21846,7 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.ranToCompletion, delay.status, "delay should have run to completion at point 2");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(null, delay.exception, "delay should not have an exception");
     
-                done  = true;
+                done = true;
             });
     
             afterDelay.continueWith(function (x) {
@@ -21866,7 +21866,7 @@
             var bodyRun = false, continuationRun = false;
     
             var task = Bridge.Task.run(function () {
-                bodyRun  = true;
+                bodyRun = true;
             });
     
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.running, task.status, "task should be running at point 1");
@@ -21877,7 +21877,7 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.ranToCompletion, task.status, "task should have run to completion at point 2");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(null, task.exception, "task should not have an exception");
     
-                continuationRun  = true;
+                continuationRun = true;
             });
     
             doneTask.continueWith(function (x) {
@@ -21891,7 +21891,7 @@
             var bodyRun = false, continuationRun = false;
     
             var task = Bridge.Task.run(function () {
-                bodyRun  = true;
+                bodyRun = true;
                 return 42;
             });
     
@@ -21904,7 +21904,7 @@
                 Bridge.get(Bridge.Test.Assert).areEqual(42, task.getResult());
                 Bridge.get(Bridge.Test.Assert).areEqual$1(null, task.exception, "task should not have an exception");
     
-                continuationRun  = true;
+                continuationRun = true;
             });
     
             doneTask.continueWith(function (x) {
@@ -21918,7 +21918,7 @@
             var bodyRun = false, continuationRun = false;
     
             var task = Bridge.Task.run(function () {
-                bodyRun  = true;
+                bodyRun = true;
                 eval("throw 'This is a test message'");
             });
     
@@ -21931,7 +21931,7 @@
                 Bridge.get(Bridge.Test.Assert).$true(Bridge.is(task.exception, Bridge.AggregateException));
                 Bridge.get(Bridge.Test.Assert).areEqual("This is a test message", task.exception.innerExceptions.get(0).getMessage());
     
-                continuationRun  = true;
+                continuationRun = true;
             });
     
             doneTask.continueWith(function (x) {
@@ -21974,7 +21974,7 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1(null, t.exception, "Exception for the aggregate task should be null");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.ranToCompletion, t.status, "Aggregate task should have run to completion");
     
-                continuationRun  = true;
+                continuationRun = true;
             });
     
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.running, task.status, "task should be running after creation.");
@@ -22023,7 +22023,7 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1(null, t.exception, "Exception for the aggregate task should be null");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.ranToCompletion, t.status, "Aggregate task should have run to completion");
     
-                continuationRun  = true;
+                continuationRun = true;
             });
     
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.running, task.status, "task should be running after creation.");
@@ -22071,7 +22071,7 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1(null, t.exception, "Exception for the aggregate task should be null");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.ranToCompletion, t.status, "Aggregate task should have run to completion");
     
-                continuationRun  = true;
+                continuationRun = true;
             });
     
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.running, task.status, "task should be running after creation.");
@@ -22119,7 +22119,7 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1(null, t.exception, "Exception for the aggregate task should be null");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.ranToCompletion, t.status, "Aggregate task should have run to completion");
     
-                continuationRun  = true;
+                continuationRun = true;
             });
     
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.running, task.status, "task should be running after creation.");
@@ -22179,7 +22179,7 @@
                 Bridge.get(Bridge.Test.Assert).true$1(t.exception.innerExceptions.contains(ex2), "ex2 should be propagated");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.faulted, t.status, "Aggregate task should be faulted");
     
-                continuationRun  = true;
+                continuationRun = true;
             });
     
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.running, task.status, "task should be running after creation.");
@@ -22227,7 +22227,7 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1(null, t.exception, "Exception for the aggregate task should be null");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.canceled, t.status, "Aggregate task should have run to completion");
     
-                continuationRun  = true;
+                continuationRun = true;
             });
     
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.running, task.status, "task should be running after creation.");
@@ -22264,7 +22264,7 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1(null, t.exception, "Exception for the aggregate task should be null");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.ranToCompletion, t.status, "Aggregate task should have run to completion");
     
-                continuationRun  = true;
+                continuationRun = true;
             });
     
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.running, task.status, "task should be running after creation.");
@@ -22305,7 +22305,7 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1(null, t.exception, "Exception for the aggregate task should be null");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.ranToCompletion, t.status, "Aggregate task should have run to completion");
     
-                continuationRun  = true;
+                continuationRun = true;
             });
     
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.running, task.status, "task should be running after creation.");
@@ -22346,7 +22346,7 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1(null, t.exception, "Exception for the aggregate task should be null");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.ranToCompletion, t.status, "Aggregate task should have run to completion");
     
-                continuationRun  = true;
+                continuationRun = true;
             });
     
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.running, task.status, "task should be running after creation.");
@@ -22387,7 +22387,7 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1(null, t.exception, "Exception for the aggregate task should be null");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.ranToCompletion, task.status, "Aggregate task should have run to completion");
     
-                continuationRun  = true;
+                continuationRun = true;
             });
     
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.running, task.status, "task should be running after creation.");
@@ -22429,7 +22429,7 @@
                 Bridge.get(Bridge.Test.Assert).true$1(t.exception.innerExceptions.get(0) === ex, "Exception for the aggregate task should be correct");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.faulted, task.status, "Aggregate task should have faulted");
     
-                continuationRun  = true;
+                continuationRun = true;
             });
     
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.running, task.status, "task should be running after creation.");
@@ -22468,7 +22468,7 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1(null, t.exception, "Aggregate task should not have exception");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.canceled, task.status, "Aggregate task should be cancelled");
     
-                continuationRun  = true;
+                continuationRun = true;
             });
     
             Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.running, task.status, "task should be running after creation.");
@@ -22494,7 +22494,7 @@
             var taskRun = false, continuationRun = false;
     
             var task = new Bridge.Task(function () {
-                taskRun  = true;
+                taskRun = true;
             });
     
             var task1 = task.continueWith(function (t) {
@@ -22502,7 +22502,7 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.ranToCompletion, task.status, "Task should have run to completion");
                 Bridge.get(Bridge.Test.Assert).true$1(!Bridge.hasValue(task.exception), "Exception should be null");
     
-                continuationRun  = true;
+                continuationRun = true;
             });
     
             Bridge.get(Bridge.Test.Assert).areEqual(Bridge.TaskStatus.created, task.status);
@@ -22528,7 +22528,7 @@
     
             var task = new Bridge.Task(function (s) {
                 Bridge.get(Bridge.Test.Assert).true$1(state === s, "The state should be correct.");
-                taskRun  = true;
+                taskRun = true;
             }, state);
     
             var task1 = task.continueWith(function (t) {
@@ -22536,7 +22536,7 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.TaskStatus.ranToCompletion, task.status, "Task should have run to completion");
                 Bridge.get(Bridge.Test.Assert).true$1(!Bridge.hasValue(task.exception), "Exception should be null");
     
-                continuationRun  = true;
+                continuationRun = true;
             });
     
             Bridge.get(Bridge.Test.Assert).areEqual(Bridge.TaskStatus.created, task.status);
@@ -22562,7 +22562,7 @@
             var ex = new Bridge.Exception();
     
             var task = new Bridge.Task(function () {
-                taskRun  = true;
+                taskRun = true;
                 throw ex;
             });
     
@@ -22573,7 +22573,7 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1(1, task.exception.innerExceptions.getCount(), "There should be one inner exception");
                 Bridge.get(Bridge.Test.Assert).true$1(task.exception.innerExceptions.get(0) === ex, "InnerException should be correct");
     
-                continuationRun  = true;
+                continuationRun = true;
             });
     
             Bridge.get(Bridge.Test.Assert).areEqual(Bridge.TaskStatus.created, task.status);
@@ -22596,7 +22596,7 @@
             var taskRun = false, continuationRun = false;
     
             var task = new Bridge.Task(function () {
-                taskRun  = true;
+                taskRun = true;
                 return 42;
             });
     
@@ -22606,7 +22606,7 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1(42, task.getResult(), "Result should be correct");
                 Bridge.get(Bridge.Test.Assert).true$1(!Bridge.hasValue(task.exception), "Exception should be null");
     
-                continuationRun  = true;
+                continuationRun = true;
             });
     
             Bridge.get(Bridge.Test.Assert).areEqual(Bridge.TaskStatus.created, task.status);
@@ -22633,7 +22633,7 @@
     
             var task = new Bridge.Task(function (s) {
                 Bridge.get(Bridge.Test.Assert).true$1(state === s, "The state should be correct.");
-                taskRun  = true;
+                taskRun = true;
                 return 42;
             }, state);
     
@@ -22643,7 +22643,7 @@
                 Bridge.get(Bridge.Test.Assert).areEqual$1(42, task.getResult(), "Result should be correct");
                 Bridge.get(Bridge.Test.Assert).true$1(!Bridge.hasValue(task.exception), "Exception should be null");
     
-                continuationRun  = true;
+                continuationRun = true;
             });
     
             Bridge.get(Bridge.Test.Assert).areEqual(Bridge.TaskStatus.created, task.status);
@@ -22871,13 +22871,13 @@
         inherits: [Bridge.ClientTest.BasicCSharp.TestInterfaces.ISimple],
         data: 0,
         constructor: function () {
-            this.data  = 2;
+            this.data = 2;
         },
         getData: function () {
             return this.data;
         },
         setData: function (value) {
-            this.data  = value;
+            this.data = value;
         },
         getString: function () {
             return "explicit B.ISimple";
@@ -22889,20 +22889,20 @@
         data: 0,
         dataAsWell: 0,
         constructor: function () {
-            this.data  = 3;
-            this.dataAsWell  = 4;
+            this.data = 3;
+            this.dataAsWell = 4;
         },
         getData: function () {
             return this.data;
         },
         setData: function (value) {
-            this.data  = value;
+            this.data = value;
         },
         getDataAsWell: function () {
             return this.dataAsWell;
         },
         setDataAsWell: function (value) {
-            this.dataAsWell  = value;
+            this.dataAsWell = value;
         },
         getString: function () {
             return "C.ISimple";
@@ -23031,7 +23031,7 @@
         },
         list: null,
         constructor: function () {
-            this.list  = new Bridge.List$1(Bridge.ClientTest.BridgeIssues.Bridge537A)();
+            this.list = new Bridge.List$1(Bridge.ClientTest.BridgeIssues.Bridge537A)();
         },
         add: function (value) {
             this.list.add(value);
@@ -23475,7 +23475,7 @@
             var pattern = dateTimeFormat.longDatePattern + String.fromCharCode(32) + dateTimeFormat.longTimePattern;
             var testValues = Bridge.Array.init(expectedValues.length, null);
             for (var i = 0; i < expectedValues.length; i++) {
-                testValues[i]  = Bridge.Date.format(expectedValues[i], pattern, dateTimeFormat);
+                testValues[i] = Bridge.Date.format(expectedValues[i], pattern, dateTimeFormat);
             }
     
             this.verifyFromString(Bridge.Convert.toDateTime, Bridge.Convert.toDateTime, testValues, expectedValues);
@@ -23493,7 +23493,7 @@
             for (var i = 0; i < testValues.length; i++) {
                 var result = Bridge.Convert.toDateTime(testValues[i], Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests).s_dateTimeFormatInfo);
                 Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], result);
-                result  = Bridge.Convert.toDateTime(testValues[i], Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests).s_dateTimeFormatInfo);
+                result = Bridge.Convert.toDateTime(testValues[i], Bridge.get(Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests).s_dateTimeFormatInfo);
                 Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], result);
             }
     

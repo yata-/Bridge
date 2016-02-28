@@ -19,7 +19,7 @@
             return this.property;
         },
         setProperty: function (value) {
-            this.property  = value;
+            this.property = value;
         }
     });
     
@@ -30,20 +30,20 @@
     Bridge.define('Interfaces.Class4', {
         inherits: [Interfaces.Interface4],
         method6: function (b) {
-            b.v  = true;
+            b.v = true;
         },
         method7: function (i, b) {
-            b.v  = true;
+            b.v = true;
         },
         method8: function (s) {
-            s.v  = s.v + "Method8";
+            s.v = s.v + "Method8";
         },
         method9: function (i, s) {
-            s.v  = s.v + i;
+            s.v = s.v + i;
         },
         method10: function (i, b, s) {
-            b.v  = true;
-            s.v  = s.v + i;
+            b.v = true;
+            s.v = s.v + i;
         }
     });
     
@@ -69,17 +69,17 @@
     Bridge.define('Interfaces.Class2', {
         inherits: [Interfaces.Class1,Interfaces.Interface2],
         method1: function () {
-            this.field  = 1;
+            this.field = 1;
             this.setProperty(2);
         },
         method2: function (s) {
-            this.field  = s.length;
+            this.field = s.length;
         },
         method3: function () {
             return this.field;
         },
         method4: function (i) {
-            this.field  = i.getProperty();
+            this.field = i.getProperty();
     
             return true;
         }

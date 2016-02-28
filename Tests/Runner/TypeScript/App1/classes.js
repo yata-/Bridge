@@ -4,10 +4,10 @@
     Bridge.define('Classes.Animal', {
         name: null,
         constructor: function () {
-            this.name  = "Animal";
+            this.name = "Animal";
         },
         constructor$1: function (name) {
-            this.name  = name;
+            this.name = name;
         },
         getName: function () {
             return this.name;
@@ -40,8 +40,8 @@
         x: 0,
         y: 0,
         constructor$1: function (x, y) {
-            this.x  = x;
-            this.y  = y;
+            this.x = x;
+            this.y = y;
         },
         constructor: function () {
         },
@@ -91,8 +91,8 @@
         constructor: function (name, id) {
             Classes.Animal.prototype.constructor$1.call(this, name);
     
-            this.name$1  = name;
-            this.id  = id;
+            this.name$1 = name;
+            this.id = id;
         }
     });
     

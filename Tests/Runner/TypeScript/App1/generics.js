@@ -4,7 +4,7 @@
     Bridge.define('Generics.GenericClass$1', function (T) { return {
         instance: null,
         constructor: function (instance) {
-            this.instance  = instance;
+            this.instance = instance;
         },
         getSomething: function (input) {
             return input;
@@ -22,7 +22,7 @@
     Bridge.define('Generics.GenericNew$1', function (T) { return {
         instance: null,
         constructor: function (instance) {
-            this.instance  = instance;
+            this.instance = instance;
         },
         getSomething: function (input) {
             return input;
@@ -32,7 +32,7 @@
     Bridge.define('Generics.GenericNewAndClass$1', function (T) { return {
         instance: null,
         constructor: function (instance) {
-            this.instance  = instance;
+            this.instance = instance;
         },
         getSomething: function (input) {
             return input;
@@ -42,7 +42,7 @@
     Bridge.define('Generics.GenericStruct$1', function (T) { return {
         instance: null,
         constructor: function (instance) {
-            this.instance  = instance;
+            this.instance = instance;
         },
         getSomething: function (input) {
             return input;
@@ -69,7 +69,7 @@
     Bridge.define('Generics.NewClass', {
         data: 0,
         constructor: function () {
-            this.data  = 30;
+            this.data = 30;
         }
     });
     
@@ -79,8 +79,8 @@
         constructor: function () {
         },
         constructor$1: function (instanceT, instanceK) {
-            this.instanceT  = instanceT;
-            this.instanceK  = instanceK;
+            this.instanceT = instanceT;
+            this.instanceK = instanceK;
         },
         getSomething: function (input) {
             return input;
@@ -93,7 +93,7 @@
     Bridge.define('Generics.SimpleGeneric$1', function (T) { return {
         instance: null,
         constructor: function (instance) {
-            this.instance  = instance;
+            this.instance = instance;
         },
         getSomething: function (input) {
             return input;
@@ -103,7 +103,7 @@
     Bridge.define('Generics.GenericINamedEntity$1', function (T) { return {
         instance: null,
         constructor: function (instance) {
-            this.instance  = instance;
+            this.instance = instance;
         },
         getSomething: function (input) {
             return input;
@@ -122,7 +122,7 @@
     Bridge.define('Generics.GenericNamedEntity$1', function (T) { return {
         instance: null,
         constructor: function (instance) {
-            this.instance  = instance;
+            this.instance = instance;
         },
         getSomething: function (input) {
             return input;

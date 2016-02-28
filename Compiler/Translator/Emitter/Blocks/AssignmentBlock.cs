@@ -464,10 +464,6 @@ namespace Bridge.Translator
 
                 if (this.Emitter.Writers.Count == initCount && !thisAssignment && !special)
                 {
-                    if (assignmentExpression.Operator == AssignmentOperatorType.Assign)
-                    {
-                        this.WriteSpace();
-                    }
                     this.Write("= ");
                 }
             }

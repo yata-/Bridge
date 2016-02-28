@@ -99,24 +99,24 @@
             fixtureFabric: null,
             getFixtureFabric: function () {
                 if (!Bridge.hasValue(Bridge.get(Bridge.Test.QUnit.TestFixture$1(T)).fixtureFabric)) {
-                    Bridge.get(Bridge.Test.QUnit.TestFixture$1(T)).fixtureFabric  = new T();
+                    Bridge.get(Bridge.Test.QUnit.TestFixture$1(T)).fixtureFabric = new T();
                 }
     
                 return Bridge.get(Bridge.Test.QUnit.TestFixture$1(T)).fixtureFabric;
             },
             setFixtureFabric: function (value) {
-                Bridge.get(Bridge.Test.QUnit.TestFixture$1(T)).fixtureFabric  = value;
+                Bridge.get(Bridge.Test.QUnit.TestFixture$1(T)).fixtureFabric = value;
             },
             instanceFabric$1: function (type) {
                 if (!Bridge.hasValue(Bridge.get(Bridge.Test.QUnit.TestFixture$1(T)).instanceFabric)) {
-                    Bridge.get(Bridge.Test.QUnit.TestFixture$1(T)).instanceFabric  = Bridge.cast(new type(), Bridge.Test.QUnit.TestFixture$1(T));
+                    Bridge.get(Bridge.Test.QUnit.TestFixture$1(T)).instanceFabric = Bridge.cast(new type(), Bridge.Test.QUnit.TestFixture$1(T));
                 }
     
                 return Bridge.get(Bridge.Test.QUnit.TestFixture$1(T)).instanceFabric;
             },
             beforeTest: function (needInstance, assert, type, expectedCount) {
                 if (expectedCount === void 0) { expectedCount = null; }
-                Bridge.get(Bridge.Test.Assert).assert  = assert;
+                Bridge.get(Bridge.Test.Assert).assert = assert;
     
                 if (Bridge.Nullable.hasValue(expectedCount)) {
                     assert.expect(Bridge.Nullable.getValue(expectedCount));

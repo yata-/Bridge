@@ -20,7 +20,7 @@
             if (numbers === void 0) { numbers = []; }
             var s = "";
             for (var i = 0; i < numbers.length; i++) {
-                s  = s + numbers[i];
+                s = s + numbers[i];
             }
     
             return s;
