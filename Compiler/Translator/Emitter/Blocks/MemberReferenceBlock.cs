@@ -199,6 +199,7 @@ namespace Bridge.Translator
                 }
                 this.Emitter.IsAssignment = oldIsAssignment;
                 this.Emitter.IsUnaryAccessor = oldUnary;
+                var oldInline = inline;
                 inline = inline.Replace("{this}", this.Emitter.Output.ToString());
                 this.Emitter.Output = oldBuilder;
 
@@ -210,7 +211,7 @@ namespace Bridge.Translator
                 {
                     if (member != null && member.Member is IMethod)
                     {
-                        throw new EmitterException(memberReferenceExpression, "The templated method (" + member.Member.FullName + ") cannot be used like reference");
+                        new InlineArgumentsBlock(this.Emitter, new ArgumentsInfo(this.Emitter, memberReferenceExpression, resolveResult), oldInline, (IMethod)member.Member, targetrr).EmitFunctionReference();
                     }
                     else
                     {
@@ -235,17 +236,7 @@ namespace Bridge.Translator
                 {
                     if (member != null && member.Member is IMethod)
                     {
-                        var r = new Regex(@"([$\w\.]+)\(\s*\S.*\)");
-                        var match = r.Match(inline);
-
-                        if (match.Success)
-                        {
-                            this.Write(match.Groups[1].Value);
-                        }
-                        else
-                        {
-                            throw new EmitterException(memberReferenceExpression, "The templated method (" + member.Member.FullName + ") cannot be used like reference");    
-                        }
+                        new InlineArgumentsBlock(this.Emitter, new ArgumentsInfo(this.Emitter, memberReferenceExpression, resolveResult), inline, (IMethod)member.Member, targetrr).EmitFunctionReference();
                     }
                     else
                     {

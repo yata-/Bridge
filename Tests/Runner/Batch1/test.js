@@ -1023,6 +1023,7 @@
                 QUnit.test("#726 - TestUseCase", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge726).testUseCase);
                 QUnit.test("# 732- TestUseCase", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge732).testUseCase);
                 QUnit.test("#733 - TestUseCase", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge733).testUseCase);
+                QUnit.test("#743 - TestInlineMethodsAsReference", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge743).testInlineMethodsAsReference);
                 QUnit.test("#751 - TestUseCase", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge751).testUseCase);
                 QUnit.test("#758 - TestUseCase", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge758).testUseCase);
                 QUnit.test("#760 - TestUseCase", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge760).testUseCase);
@@ -2988,6 +2989,16 @@
             testUseCase: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge733)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge733, 2);
                 Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge733).testUseCase();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge743', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge743)],
+        statics: {
+            testInlineMethodsAsReference: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge743)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge743, 9);
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge743).testInlineMethodsAsReference();
             }
         }
     });
