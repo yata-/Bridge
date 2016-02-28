@@ -87,7 +87,7 @@ namespace Bridge.Translator
         }
     }
 
-    public class CaptureAnalyzer : CombinedAstAndResolveResultVisitor
+    public class CaptureAnalyzer : DepthFirstAstVisitor
     {
         private bool _usesThis;
         private HashSet<IVariable> _usedVariables = new HashSet<IVariable>();
@@ -96,12 +96,13 @@ namespace Bridge.Translator
         public bool UsesThis { get { return _usesThis; } }
         public HashSet<IVariable> UsedVariables { get { return _usedVariables; } }
         public List<string> Variables { get { return _variables; } }
+        private CSharpAstResolver resolver;
 
         public CaptureAnalyzer(CSharpAstResolver resolver)
-            : base(resolver)
         {
+            this.resolver = resolver;
         }
-
+        
         public void Analyze(AstNode node, IEnumerable<string> parameters = null)
         {
             _usesThis = false;
@@ -119,39 +120,40 @@ namespace Bridge.Translator
             node.AcceptVisitor(this);
         }
 
-        public void Analyze(LambdaResolveResult rr, IEnumerable<string> parameters = null)
+        public override void VisitTypeReferenceExpression(TypeReferenceExpression typeReferenceExpression)
         {
-            _usesThis = false;
-            _usedVariables.Clear();
-            _variables.Clear();
-
-            if (parameters != null)
-            {
-                foreach (var parameter in parameters)
-                {
-                    _variables.Add(parameter);
-                }
-            }
-
-            this.VisitChildResolveResults(rr, null);
+            this.CheckType(typeReferenceExpression.Type);
+            base.VisitTypeReferenceExpression(typeReferenceExpression);
         }
 
-        public override object VisitTypeOfResolveResult(TypeOfResolveResult rr, object data)
+        public override void VisitComposedType(ComposedType composedType)
         {
-            if (rr.ReferencedType.Kind == TypeKind.TypeParameter)
-            {
-                var ivar = new TypeVariable(rr.ReferencedType);
-                if (!_usedVariables.Contains(ivar))
-                {
-                    _usedVariables.Add(ivar);
-                }
-            }
-
-            return base.VisitTypeOfResolveResult(rr, data);
+            this.CheckType(composedType);
+            base.VisitComposedType(composedType);
         }
 
-        public override object VisitTypeResolveResult(TypeResolveResult rr, object data)
+        public override void VisitPrimitiveType(PrimitiveType primitiveType)
         {
+            this.CheckType(primitiveType);
+            base.VisitPrimitiveType(primitiveType);
+        }
+
+        public override void VisitSimpleType(SimpleType simpleType)
+        {
+            this.CheckType(simpleType);
+            base.VisitSimpleType(simpleType);
+        }
+
+        public override void VisitMemberType(MemberType memberType)
+        {
+            this.CheckType(memberType);
+            base.VisitMemberType(memberType);
+        }
+
+        public void CheckType(AstType type)
+        {
+            var rr = this.resolver.Resolve(type);
+
             if (rr.Type.Kind == TypeKind.TypeParameter)
             {
                 var ivar = new TypeVariable(rr.Type);
@@ -160,102 +162,28 @@ namespace Bridge.Translator
                     _usedVariables.Add(ivar);
                 }
             }
-
-            return base.VisitTypeResolveResult(rr, data);
         }
 
-        public override object VisitInvocationResolveResult(InvocationResolveResult rr, object data)
+        public override void VisitIdentifierExpression(IdentifierExpression identifierExpression)
         {
-            var method = rr.Member as IMethod;
-            if (method != null)
+            var rr = this.resolver.Resolve(identifierExpression);
+
+            var localResolveResult = rr as LocalResolveResult;
+            if (localResolveResult != null)
             {
-                foreach (var typeArgument in method.TypeArguments)
+                if (!_variables.Contains(localResolveResult.Variable.Name) && !_usedVariables.Contains(localResolveResult.Variable))
                 {
-                    if (typeArgument.Kind == TypeKind.TypeParameter)
-                    {
-                        var ivar = new TypeVariable(typeArgument);
-                        if (!_usedVariables.Contains(ivar))
-                        {
-                            _usedVariables.Add(ivar);
-                        }
-                    }
+                    _usedVariables.Add(localResolveResult.Variable);
                 }
             }
-            
-            return base.VisitInvocationResolveResult(rr, data);
-        }
-
-        public override object VisitCSharpInvocationResolveResult(CSharpInvocationResolveResult rr, object data)
-        {
-            var method = rr.Member as IMethod;
-            if (method != null)
+            else if (rr is ThisResolveResult)
             {
-                foreach (var typeArgument in method.TypeArguments)
-                {
-                    if (typeArgument.Kind == TypeKind.TypeParameter)
-                    {
-                        var ivar = new TypeVariable(typeArgument);
-                        if (!_usedVariables.Contains(ivar))
-                        {
-                            _usedVariables.Add(ivar);
-                        }
-                    }
-                }
-            }
-            return base.VisitCSharpInvocationResolveResult(rr, data);
-        }
-
-        public override object VisitConstantResolveResult(ConstantResolveResult rr, object data)
-        {
-            if (rr.Type.Kind == TypeKind.TypeParameter)
-            {
-                var ivar = new TypeVariable(rr.Type);
-                if (!_usedVariables.Contains(ivar))
-                {
-                    _usedVariables.Add(ivar);
-                }
+                _usesThis = true;
             }
 
-            return base.VisitConstantResolveResult(rr, data);
+            base.VisitIdentifierExpression(identifierExpression);
         }
 
-        public override object VisitThisResolveResult(ThisResolveResult rr, object data)
-        {
-            _usesThis = true;
-            return base.VisitThisResolveResult(rr, data);
-        }
-
-        public override object VisitLocalResolveResult(LocalResolveResult rr, object data)
-        {
-            if (!_variables.Contains(rr.Variable.Name) && !_usedVariables.Contains(rr.Variable))
-            {
-                _usedVariables.Add(rr.Variable);
-            }
-
-            return base.VisitLocalResolveResult(rr, data);
-        }
-
-        public override object VisitLambdaResolveResult(LambdaResolveResult rr, object data)
-        {
-            var analyzer = new CaptureAnalyzer(this._resolver);
-            analyzer.Analyze(rr, rr.Parameters.Select(p => p.Name));
-
-            foreach (var usedVariable in analyzer.UsedVariables)
-            {
-                if (!_variables.Contains(usedVariable.Name) && !_usedVariables.Contains(usedVariable))
-                {
-                    _usedVariables.Add(usedVariable);
-                }
-            }
-
-            if (analyzer.UsesThis)
-            {
-                this._usesThis = true;
-            }
-
-            return null;
-            //return base.VisitLambdaResolveResult(rr, data);
-        }
 
         public override void VisitVariableDeclarationStatement(VariableDeclarationStatement variableDeclarationStatement)
         {
@@ -268,7 +196,7 @@ namespace Bridge.Translator
 
         public override void VisitLambdaExpression(LambdaExpression lambdaExpression)
         {
-            var analyzer = new CaptureAnalyzer(this._resolver);
+            var analyzer = new CaptureAnalyzer(this.resolver);
             analyzer.Analyze(lambdaExpression.Body, lambdaExpression.Parameters.Select(p => p.Name));
 
             foreach (var usedVariable in analyzer.UsedVariables)
@@ -284,12 +212,12 @@ namespace Bridge.Translator
                 this._usesThis = true;
             }
 
-            base.VisitLambdaExpression(lambdaExpression);
+            //base.VisitLambdaExpression(lambdaExpression);
         }
 
         public override void VisitAnonymousMethodExpression(AnonymousMethodExpression anonymousMethodExpression)
         {
-            var analyzer = new CaptureAnalyzer(this._resolver);
+            var analyzer = new CaptureAnalyzer(this.resolver);
             analyzer.Analyze(anonymousMethodExpression.Body, anonymousMethodExpression.Parameters.Select(p => p.Name));
 
             foreach (var usedVariable in analyzer.UsedVariables)
@@ -305,7 +233,7 @@ namespace Bridge.Translator
                 this._usesThis = true;
             }
 
-            base.VisitAnonymousMethodExpression(anonymousMethodExpression);
+            //base.VisitAnonymousMethodExpression(anonymousMethodExpression);
         }
     }
 

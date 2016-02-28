@@ -7994,6 +7994,49 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge991', {
+        statics: {
+            config: {
+                properties: {
+                    Prop: 0
+                }
+            },
+            testMultiplyAssignment: function () {
+                var $t, $t1, $t2, $t3, $t4, $t5, $t6;
+                var dict = new Bridge.Dictionary$2(Bridge.Int,Bridge.Int)();
+                var i = 0;
+    
+                dict.set(0, ($t = 1, i= $t, $t));
+                Bridge.get(Bridge.Test.Assert).areEqual(dict.get(0), 1);
+                Bridge.get(Bridge.Test.Assert).areEqual(i, 1);
+    
+                i = ($t1 = 2, dict.set(0, $t1), $t1);
+                Bridge.get(Bridge.Test.Assert).areEqual(dict.get(0), 2);
+                Bridge.get(Bridge.Test.Assert).areEqual(i, 2);
+    
+                dict.set(0, ($t2 = 3, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).setProp($t2), $t2));
+                Bridge.get(Bridge.Test.Assert).areEqual(dict.get(0), 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).getProp(), 3);
+    
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).setProp(($t3 = 4, dict.set(0, $t3), $t3));
+                Bridge.get(Bridge.Test.Assert).areEqual(dict.get(0), 4);
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).getProp(), 4);
+    
+                dict.set(0, ($t4 = 5, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).setProp($t4), $t4));
+                Bridge.get(Bridge.Test.Assert).areEqual(dict.get(0), 5);
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).getProp(), 5);
+    
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).setProp(($t5 = 6, dict.set(0, $t5), $t5));
+                Bridge.get(Bridge.Test.Assert).areEqual(dict.get(0), 6);
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).getProp(), 6);
+    
+                dict.set(0, ($t6 = 7, dict.set(1, $t6), $t6));
+                Bridge.get(Bridge.Test.Assert).areEqual(dict.get(0), 7);
+                Bridge.get(Bridge.Test.Assert).areEqual(dict.get(1), 7);
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge999', {
         statics: {
             testNestedLambdasToLifting: function () {
@@ -8016,17 +8059,22 @@
                     return f4();
                 };
     
+                var f5 = $_.Bridge.ClientTest.BridgeIssues.Bridge999.f3;
+    
                 var scope = $_.Bridge.ClientTest.BridgeIssues.Bridge999;
     
-                Bridge.get(Bridge.Test.Assert).notNull(scope.f1);
-                Bridge.get(Bridge.Test.Assert).notNull(scope.f2);
-                Bridge.get(Bridge.Test.Assert).$null(scope.f3);
-                Bridge.get(Bridge.Test.Assert).$null(scope.f4);
-                Bridge.get(Bridge.Test.Assert).areEqual(scope.f1(1), 1);
-                Bridge.get(Bridge.Test.Assert).areEqual(scope.f2(), "1, 2, 3");
-                Bridge.get(Bridge.Test.Assert).areEqual(f1(), "1, 2, 3");
-                Bridge.get(Bridge.Test.Assert).areEqual(f2(), "5, 6, 7");
-                Bridge.get(Bridge.Test.Assert).areEqual(f3(), "8, 9, 10");
+                Bridge.get(Bridge.Test.Assert).notNull$1(scope.f1, "scope.f1 should exists");
+                Bridge.get(Bridge.Test.Assert).notNull$1(scope.f2, "scope.f2 should exists");
+                Bridge.get(Bridge.Test.Assert).notNull$1(scope.f3, "scope.f3 should exists");
+                Bridge.get(Bridge.Test.Assert).null$1(scope.f4, "scope.f4 should be null");
+                Bridge.get(Bridge.Test.Assert).null$1(scope.f5, "scope.f5 should be null");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(scope.f1(1), 1, "scope.f1(1) should be 1");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(scope.f2(), "1, 2, 3", "scope.f2() should be 1, 2, 3");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(scope.f3(), "6, 7, 8", "scope.f3() should be 6, 7, 8");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(f1(), "1, 2, 3", "f1() should be 1, 2, 3");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(f2(), "5, 6, 7", "f2() should be 5, 6, 7");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(f3(), "8, 9, 10", "f3() should be 8, 9, 10");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(f5(), "6, 7, 8", "f5() should be 6, 7, 8");
             }
         }
     });
@@ -8039,6 +8087,52 @@
         },
         f2: function () {
             return Bridge.toArray(Bridge.Linq.Enumerable.from([1, 2, 3]).select($_.Bridge.ClientTest.BridgeIssues.Bridge999.f1)).join(", ");
+        },
+        f3: function () {
+            var offset2 = 2;
+            return Bridge.toArray(Bridge.Linq.Enumerable.from([4, 5, 6]).select(function (value) {
+                return value + offset2;
+            })).join(", ");
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge999_1', {
+        statics: {
+            testNestedLambdasToLiftingInForeach: function () {
+                var one = Bridge.Linq.Enumerable.from((Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+                    [1]
+                ] ))).select($_.Bridge.ClientTest.BridgeIssues.Bridge999_1.f1);
+    
+                var sum = 0;
+    
+                one.forEach(function (el) {
+                    var list = Bridge.Linq.Enumerable.from((Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+                        [3],
+                        [5]
+                    ] ))).select($_.Bridge.ClientTest.BridgeIssues.Bridge999_1.f1);
+    
+                    list.forEach(function (el2) {
+                        sum = sum + el2;
+                    });
+                });
+    
+                Bridge.get(Bridge.Test.Assert).areEqual(8, sum);
+    
+                var scope = $_.Bridge.ClientTest.BridgeIssues.Bridge999_1;
+    
+                Bridge.get(Bridge.Test.Assert).notNull$1(scope.f1, "scope.f1 should exists");
+                Bridge.get(Bridge.Test.Assert).null$1(scope.f2, "scope.f2 should be null");
+                Bridge.get(Bridge.Test.Assert).null$1(scope.f3, "scope.f3 should be null");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(scope.f1(1), 1, "scope.f1(1) should be 1");
+            }
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge999_1", $_)
+    
+    Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge999_1, {
+        f1: function (x) {
+            return x;
         }
     });
     
