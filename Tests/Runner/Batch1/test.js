@@ -1080,6 +1080,7 @@
                 QUnit.test("#975 - TestCastToLongWorksForBigNumberInIE", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge975).testCastToLongWorksForBigNumberInIE);
                 QUnit.test("#989 - DateTimeToISOStringWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge989).dateTimeToISOStringWorks);
                 QUnit.test("#989 - DateToISOStringWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge989).dateToISOStringWorks);
+                QUnit.test("#991 - TestMultiplyAssignment", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge991).testMultiplyAssignment);
                 QUnit.test("#999 - TestNestedLambdasToLifting", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge999).testNestedLambdasToLifting);
                 QUnit.test("#999 - TestNestedLambdasToLiftingInForeach", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge999_1).testNestedLambdasToLiftingInForeach);
                 QUnit.test("#169", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_TestBridgeIssues).n169);
@@ -3521,6 +3522,16 @@
             dateToISOStringWorks: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge989)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge989, 1);
                 Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge989).dateToISOStringWorks();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge991', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge991)],
+        statics: {
+            testMultiplyAssignment: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge991)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge991, 14);
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).testMultiplyAssignment();
             }
         }
     });

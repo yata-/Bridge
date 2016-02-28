@@ -7994,6 +7994,49 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge991', {
+        statics: {
+            config: {
+                properties: {
+                    Prop: 0
+                }
+            },
+            testMultiplyAssignment: function () {
+                var $t, $t1, $t2, $t3, $t4, $t5, $t6;
+                var dict = new Bridge.Dictionary$2(Bridge.Int,Bridge.Int)();
+                var i = 0;
+    
+                dict.set(0, ($t = 1, i= $t, $t));
+                Bridge.get(Bridge.Test.Assert).areEqual(dict.get(0), 1);
+                Bridge.get(Bridge.Test.Assert).areEqual(i, 1);
+    
+                i = ($t1 = 2, dict.set(0, $t1), $t1);
+                Bridge.get(Bridge.Test.Assert).areEqual(dict.get(0), 2);
+                Bridge.get(Bridge.Test.Assert).areEqual(i, 2);
+    
+                dict.set(0, ($t2 = 3, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).setProp($t2), $t2));
+                Bridge.get(Bridge.Test.Assert).areEqual(dict.get(0), 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).getProp(), 3);
+    
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).setProp(($t3 = 4, dict.set(0, $t3), $t3));
+                Bridge.get(Bridge.Test.Assert).areEqual(dict.get(0), 4);
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).getProp(), 4);
+    
+                dict.set(0, ($t4 = 5, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).setProp($t4), $t4));
+                Bridge.get(Bridge.Test.Assert).areEqual(dict.get(0), 5);
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).getProp(), 5);
+    
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).setProp(($t5 = 6, dict.set(0, $t5), $t5));
+                Bridge.get(Bridge.Test.Assert).areEqual(dict.get(0), 6);
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).getProp(), 6);
+    
+                dict.set(0, ($t6 = 7, dict.set(1, $t6), $t6));
+                Bridge.get(Bridge.Test.Assert).areEqual(dict.get(0), 7);
+                Bridge.get(Bridge.Test.Assert).areEqual(dict.get(1), 7);
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge999', {
         statics: {
             testNestedLambdasToLifting: function () {
