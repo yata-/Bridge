@@ -53,8 +53,8 @@ Basically, there are two reasons why a test can fail:
   - Run all tests locally in Visual Studio using NUnit Test Adapter;
   - Push the changes.
   
-**Troubleshooting on CI server**
-1) Test results are on the build TESTS page. For example, https://ci.appveyor.com/project/ObjectDotNet/builder/build/tests
-   It contains both js client tests and cs server tests
+**Troubleshooting on CI server**  
+1) Test results are on the build TESTS page. For example, https://ci.appveyor.com/project/ObjectDotNet/builder/build/tests  
+   It contains both js client tests and cs server tests  
 2) There are logs accessible on the build ARTIFACTS page (three msbuild log files and one test log file `Bridge.Translator.Tests.run.log`)
    For example, https://ci.appveyor.com/project/ObjectDotNet/builder/build/artifacts
