@@ -264,15 +264,18 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
 
             return Bridge.Array.binarySearch(this.items, index, length, value, comparer);
         },
-        convertAll: function (T2, action) {
-            var $t;
-            var result = new Bridge.List$1(T2)();
-            $t = Bridge.getEnumerator(this);
-            while ($t.moveNext()) {
-                var item = $t.getCurrent();
-                result.add(action(item));
+
+        convertAll: function (TOutput, converter) {
+            if (!Bridge.hasValue(converter)) {
+                throw new Bridge.ArgumentNullException("converter is null.");
             }
-            return result;
+
+            var list = new Bridge.List$1(TOutput)(this.items.length);
+            for (var i = 0; i < this.items.length; i++) {
+                list.items[i] = converter(this.items[i]);
+            }
+
+            return list;
         }
     }));
 });

@@ -52,7 +52,7 @@ namespace System.Collections.Generic
 
         public extern bool Contains(T item);
 
-        public extern List<T2> ConvertAll<T2>(Func<T, T2> action);
+        public extern List<TOutput> ConvertAll<TOutput>(Converter<T, TOutput> converter);
 
         extern IEnumerator IEnumerable.GetEnumerator();
 
