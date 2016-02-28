@@ -12,7 +12,7 @@ namespace Bridge.ClientTest.BridgeIssues
     [TestFixture(TestNameFormat = "#999 - {0}")]
     public class Bridge999
     {
-        [Test(ExpectedCount = 9)]
+        [Test(ExpectedCount = 12)]
         public static void TestNestedLambdasToLifting()
         {
             var offset = 1;
@@ -36,20 +36,35 @@ namespace Bridge.ClientTest.BridgeIssues
                 return f4();
             };
 
+            Func<string> f5 = () =>
+            {
+                var offset2 = 2;
+                return string.Join(", ", new[] { 4, 5, 6 }.Select(value => value + offset2));
+            };
+
             dynamic scope = Script.Get("$_.Bridge.ClientTest.BridgeIssues.Bridge999");
 
-            Assert.NotNull(scope.f1);
-            Assert.NotNull(scope.f2);
-            Assert.Null(scope.f3);
-            Assert.Null(scope.f4);
-            Assert.AreEqual(scope.f1(1), 1);
-            Assert.AreEqual(scope.f2(), "1, 2, 3");
-            Assert.AreEqual(f1(), "1, 2, 3");
-            Assert.AreEqual(f2(), "5, 6, 7");
-            Assert.AreEqual(f3(), "8, 9, 10");
+            Assert.NotNull(scope.f1, "scope.f1 should exists");
+            Assert.NotNull(scope.f2, "scope.f2 should exists");
+            Assert.NotNull(scope.f3, "scope.f3 should exists");
+            Assert.Null(scope.f4, "scope.f4 should be null");
+            Assert.Null(scope.f5, "scope.f5 should be null");
+            Assert.AreEqual(scope.f1(1), 1, "scope.f1(1) should be 1");
+            Assert.AreEqual(scope.f2(), "1, 2, 3", "scope.f2() should be 1, 2, 3");
+            Assert.AreEqual(scope.f3(), "6, 7, 8", "scope.f3() should be 6, 7, 8");
+            Assert.AreEqual(f1(), "1, 2, 3", "f1() should be 1, 2, 3");
+            Assert.AreEqual(f2(), "5, 6, 7", "f2() should be 5, 6, 7");
+            Assert.AreEqual(f3(), "8, 9, 10", "f3() should be 8, 9, 10");
+            Assert.AreEqual(f5(), "6, 7, 8", "f5() should be 6, 7, 8");
         }
+    }
 
-        [Test(ExpectedCount = 1)]
+    // Bridge[#999_1]
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#999_1 - {0}")]
+    public class Bridge999_1
+    {
+        [Test(ExpectedCount = 5)]
         public static void TestNestedLambdasToLiftingInForeach()
         {
             var one = (new List<int>() { 1 }).Select(x => x);
@@ -67,6 +82,13 @@ namespace Bridge.ClientTest.BridgeIssues
             });
 
             Assert.AreEqual(8, sum);
+
+            dynamic scope = Script.Get("$_.Bridge.ClientTest.BridgeIssues.Bridge999_1");
+
+            Assert.NotNull(scope.f1, "scope.f1 should exists");
+            Assert.Null(scope.f2, "scope.f2 should be null");
+            Assert.Null(scope.f3, "scope.f3 should be null");
+            Assert.AreEqual(scope.f1(1), 1, "scope.f1(1) should be 1");
         }
     }
 }
