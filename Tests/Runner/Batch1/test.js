@@ -1081,6 +1081,7 @@
                 QUnit.test("#989 - DateTimeToISOStringWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge989).dateTimeToISOStringWorks);
                 QUnit.test("#989 - DateToISOStringWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge989).dateToISOStringWorks);
                 QUnit.test("#999 - TestNestedLambdasToLifting", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge999).testNestedLambdasToLifting);
+                QUnit.test("#999 - TestNestedLambdasToLiftingInForeach", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge999_1).testNestedLambdasToLiftingInForeach);
                 QUnit.test("#169", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_TestBridgeIssues).n169);
                 QUnit.test("#240", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_TestBridgeIssues).n240);
                 QUnit.test("#264", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_TestBridgeIssues).n264);
@@ -3528,8 +3529,18 @@
         inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge999)],
         statics: {
             testNestedLambdasToLifting: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge999)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge999, 9);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge999)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge999, 12);
                 Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge999).testNestedLambdasToLifting();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge999_1', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge999_1)],
+        statics: {
+            testNestedLambdasToLiftingInForeach: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge999_1)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge999_1, 5);
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge999_1).testNestedLambdasToLiftingInForeach();
             }
         }
     });
