@@ -52,6 +52,8 @@ namespace System.Collections.Generic
 
         public extern bool Contains(T item);
 
+        public extern List<T2> ConvertAll<T2>(Func<T, T2> action);
+
         extern IEnumerator IEnumerable.GetEnumerator();
 
         public extern IEnumerator<T> GetEnumerator();
