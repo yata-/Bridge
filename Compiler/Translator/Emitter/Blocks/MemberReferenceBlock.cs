@@ -40,21 +40,26 @@ namespace Bridge.Translator
         protected void WriteTarget(ResolveResult resolveResult)
         {
             MemberResolveResult member = resolveResult as MemberResolveResult;
-
-            if (member != null && member.Member.IsStatic)
+            if (member == null || !member.Member.IsStatic)
             {
-                if (this.Emitter.Validator.IsIgnoreType(member.Member.DeclaringType.GetDefinition()) || member.Member.DeclaringType.Kind == TypeKind.Enum)
-                {
-                    this.Write(BridgeTypes.ToJsName(member.Member.DeclaringType, this.Emitter));
-                }
-                else
-                {
-                    this.Write("Bridge.get(" + BridgeTypes.ToJsName(member.Member.DeclaringType, this.Emitter) + ")");
-                }
+                this.MemberReferenceExpression.Target.AcceptVisitor(this.Emitter);
+                return;
+            }
+
+            var method = member.Member as IMethod;
+            if (method == null || method.IsExtensionMethod)
+            {
+                this.MemberReferenceExpression.Target.AcceptVisitor(this.Emitter);
+                return;
+            }
+
+            if (member.Member.DeclaringType.Kind == TypeKind.Enum || this.Emitter.Validator.IsIgnoreType(member.Member.DeclaringType.GetDefinition()))
+            {
+                this.Write(BridgeTypes.ToJsName(member.Member.DeclaringType, this.Emitter));
             }
             else
             {
-                this.MemberReferenceExpression.Target.AcceptVisitor(this.Emitter);    
+                this.Write("Bridge.get(" + BridgeTypes.ToJsName(member.Member.DeclaringType, this.Emitter) + ")");
             }
         }
 
