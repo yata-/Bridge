@@ -1790,6 +1790,22 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1000', {
+        statics: {
+            testStaticViaChild: function () {
+                Bridge.get(Bridge.Test.Assert).areEqual("Test", Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1000.TestFixture$1(Object)).run());
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1000.TestFixture$1', function (T) { return {
+        statics: {
+            run: function () {
+                return "Test";
+            }
+        }
+    }; });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1001', {
         statics: {
             testDefaultValues: function () {
@@ -8097,6 +8113,41 @@
                 Bridge.get(Bridge.Test.Assert).areEqual(dict.get(0), 7);
                 Bridge.get(Bridge.Test.Assert).areEqual(dict.get(1), 7);
             }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge997', {
+        statics: {
+            testConvertAllForIntList: function () {
+                var l = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+                    [1],
+                    [2],
+                    [3]
+                ] );
+    
+                Bridge.get(Bridge.Test.Assert).areDeepEqual(["1", "2", "3"], l.convertAll(String, $_.Bridge.ClientTest.BridgeIssues.Bridge997.f1).toArray());
+            },
+            testConvertAllForNullConverter: function () {
+                var l = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+                    [1],
+                    [2],
+                    [3]
+                ] );
+    
+                var converter = null;
+    
+                Bridge.get(Bridge.Test.Assert).throws$5(function () {
+                    l.convertAll(String, converter);
+                }, "Null converter throws exception");
+            }
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge997", $_)
+    
+    Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge997, {
+        f1: function (x) {
+            return x.toString();
         }
     });
     
@@ -22983,6 +23034,10 @@
         test: function () {
             return "B";
         }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1000.ObjectTestFixture', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge1000.TestFixture$1(Object)]
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1001.Button', {

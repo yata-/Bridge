@@ -37,6 +37,32 @@ namespace Bridge.Translator
             this.VisitMemberReferenceExpression();
         }
 
+        protected void WriteTarget(ResolveResult resolveResult)
+        {
+            MemberResolveResult member = resolveResult as MemberResolveResult;
+            if (member == null || !member.Member.IsStatic)
+            {
+                this.MemberReferenceExpression.Target.AcceptVisitor(this.Emitter);
+                return;
+            }
+
+            var method = member.Member as IMethod;
+            if (method == null || method.IsExtensionMethod)
+            {
+                this.MemberReferenceExpression.Target.AcceptVisitor(this.Emitter);
+                return;
+            }
+
+            if (member.Member.DeclaringType.Kind == TypeKind.Enum || this.Emitter.Validator.IsIgnoreType(member.Member.DeclaringType.GetDefinition()))
+            {
+                this.Write(BridgeTypes.ToJsName(member.Member.DeclaringType, this.Emitter));
+            }
+            else
+            {
+                this.Write("Bridge.get(" + BridgeTypes.ToJsName(member.Member.DeclaringType, this.Emitter) + ")");
+            }
+        }
+
         protected void VisitMemberReferenceExpression()
         {
             MemberReferenceExpression memberReferenceExpression = this.MemberReferenceExpression;
@@ -192,7 +218,7 @@ namespace Bridge.Translator
                 {
                     this.Write("(");
                 }
-                memberReferenceExpression.Target.AcceptVisitor(this.Emitter);
+                this.WriteTarget(resolveResult);
                 if (isConstTarget)
                 {
                     this.Write(")");
@@ -335,7 +361,7 @@ namespace Bridge.Translator
                     if (!isStatic)
                     {
                         this.Write(Bridge.Translator.Emitter.ROOT + "." + (isExtensionMethod ? Bridge.Translator.Emitter.DELEGATE_BIND_SCOPE : Bridge.Translator.Emitter.DELEGATE_BIND) + "(");
-                        memberReferenceExpression.Target.AcceptVisitor(this.Emitter);
+                        this.WriteTarget(resolveResult);
                         this.Write(", ");
                     }
 
@@ -354,7 +380,7 @@ namespace Bridge.Translator
                         {
                             this.Write("(");
                         }
-                        memberReferenceExpression.Target.AcceptVisitor(this.Emitter);
+                        this.WriteTarget(resolveResult);
                         if (isConstTarget)
                         {
                             this.Write(")");
@@ -432,7 +458,7 @@ namespace Bridge.Translator
                     {
                         this.Write("(");
                     }
-                    memberReferenceExpression.Target.AcceptVisitor(this.Emitter);
+                    this.WriteTarget(resolveResult);
                     if (isConstTarget)
                     {
                         this.Write(")");
@@ -553,7 +579,7 @@ namespace Bridge.Translator
                                         }
                                         else
                                         {
-                                            memberReferenceExpression.Target.AcceptVisitor(this.Emitter);
+                                            this.WriteTarget(resolveResult);
                                         }
 
                                         this.WriteDot();
@@ -583,7 +609,7 @@ namespace Bridge.Translator
                                         }
                                         else
                                         {
-                                            memberReferenceExpression.Target.AcceptVisitor(this.Emitter);
+                                            this.WriteTarget(resolveResult);
                                         }
 
                                         this.WriteDot();
@@ -632,7 +658,7 @@ namespace Bridge.Translator
                                         {
                                             this.Write("(");
                                         }
-                                        memberReferenceExpression.Target.AcceptVisitor(this.Emitter);
+                                        this.WriteTarget(resolveResult);
                                         if (isConstTarget)
                                         {
                                             this.Write(")");
@@ -696,7 +722,7 @@ namespace Bridge.Translator
                                     {
                                         this.Write("(");
                                     }
-                                    memberReferenceExpression.Target.AcceptVisitor(this.Emitter);
+                                    this.WriteTarget(resolveResult);
                                     if (isConstTarget)
                                     {
                                         this.Write(")");
@@ -781,7 +807,7 @@ namespace Bridge.Translator
                                     }
                                     else
                                     {
-                                        memberReferenceExpression.Target.AcceptVisitor(this.Emitter);
+                                        this.WriteTarget(resolveResult);
                                     }
                                     this.WriteDot();
                                     this.Write(Helpers.GetPropertyRef(member.Member, this.Emitter, false));
@@ -844,7 +870,7 @@ namespace Bridge.Translator
 
                             this.Emitter.IsAssignment = false;
                             this.Emitter.IsUnaryAccessor = false;
-                            memberReferenceExpression.Target.AcceptVisitor(this.Emitter);
+                            this.WriteTarget(resolveResult);
                             this.Emitter.IsAssignment = oldIsAssignment;
                             this.Emitter.IsUnaryAccessor = oldUnary;
                             var trg = this.Emitter.Output.ToString();
