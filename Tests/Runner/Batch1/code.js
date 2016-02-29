@@ -6081,7 +6081,7 @@
                 doubleArray[0] = 8;
     
                 stringArray[0] = "9";
-                decimalArray[0]  = Bridge.Decimal(10.0);
+                decimalArray[0] = Bridge.Decimal(10.0);
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1(1, byteArray[0], "get byteArray[0]");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(2, sbyteArray[0], "get sbyteArray[0]");
@@ -6684,7 +6684,7 @@
         },
         _val: Bridge.Decimal(0.0),
         constructor: function (val) {
-            this._val  = val;
+            this._val = val;
         }
     });
     
@@ -8085,7 +8085,7 @@
                 var dict = new Bridge.Dictionary$2(Bridge.Int,Bridge.Int)();
                 var i = 0;
     
-                dict.set(0, ($t = 1, i= $t, $t));
+                dict.set(0, ($t = 1, i = $t, $t));
                 Bridge.get(Bridge.Test.Assert).areEqual(dict.get(0), 1);
                 Bridge.get(Bridge.Test.Assert).areEqual(i, 1);
     
@@ -8621,14 +8621,14 @@
                 Bridge.get(Bridge.ClientTest.BridgeIssues.TestBridgeIssues).ensureNumber(DecimalMinValue, "-7.9228162514264337593543950335e+28", "DecimalMinValue");
     
                 // Decimal consts in expressions
-                DecimalZero  = Bridge.Decimal.Zero.add(Bridge.Decimal(0));
-                DecimalOne  = Bridge.Decimal.One.add(Bridge.Decimal(0));
+                DecimalZero = Bridge.Decimal.Zero.add(Bridge.Decimal(0));
+                DecimalOne = Bridge.Decimal.One.add(Bridge.Decimal(0));
                 ;
-                DecimalMinusOne  = Bridge.Decimal.MinusOne.add(Bridge.Decimal(0));
+                DecimalMinusOne = Bridge.Decimal.MinusOne.add(Bridge.Decimal(0));
                 ;
-                DecimalMaxValue  = Bridge.Decimal.MaxValue.add(Bridge.Decimal(0));
+                DecimalMaxValue = Bridge.Decimal.MaxValue.add(Bridge.Decimal(0));
                 ;
-                DecimalMinValue  = Bridge.Decimal.MinValue.add(Bridge.Decimal(0));
+                DecimalMinValue = Bridge.Decimal.MinValue.add(Bridge.Decimal(0));
                 ;
     
                 Bridge.get(Bridge.ClientTest.BridgeIssues.TestBridgeIssues).ensureNumber(DecimalZero, "0", "DecimalZeroin expression");
@@ -12133,10 +12133,10 @@
             getDifference: function (expected, result) {
                 var difference;
                 if ((Bridge.is(result, Bridge.Decimal) || Bridge.is(result, Bridge.Int)) && (Bridge.is(expected, Bridge.Decimal) || Bridge.is(expected, Bridge.Int))) {
-                    difference  = Bridge.cast(expected, Bridge.Decimal).sub(Bridge.cast(result, Bridge.Decimal));
+                    difference = Bridge.cast(expected, Bridge.Decimal).sub(Bridge.cast(result, Bridge.Decimal));
                 }
                 else  {
-                    difference  = Bridge.Decimal(0.0);
+                    difference = Bridge.Decimal(0.0);
                 }
     
                 return difference;
