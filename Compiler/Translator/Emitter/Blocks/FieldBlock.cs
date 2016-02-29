@@ -168,12 +168,14 @@ namespace Bridge.Translator
                         }
                     }
 
-                    var defValueObj = Inspector.GetDefaultFieldValue(member.Entity.ReturnType, this.Emitter.Resolver);
+                    var defValueObj = member.Entity.ReturnType.IsNull ? null : Inspector.GetDefaultFieldValue(member.Entity.ReturnType, this.Emitter.Resolver);
                     string defValue;
+                    bool skip = false;
 
                     if (defValueObj == null)
                     {
-                        defValue = "null";
+                        defValue = null;
+                        skip = true;
                     }
                     else if (defValueObj is AstType)
                     {
@@ -192,7 +194,7 @@ namespace Bridge.Translator
                         defValue = this.Emitter.ToJavaScript(defValueObj);
                     }
 
-                    if (value != "undefined")
+                    if (value != "undefined" && !skip)
                     {
                         value = value + " || " + defValue;    
                     }
