@@ -16,7 +16,7 @@ namespace Bridge.ClientTest.BridgeIssues
         {
             var l = new List<int> { 1, 2, 3 };
 
-            Assert.AreStrictEqual(new[] { "1", "2", "3" }, l.ConvertAll(x => x.ToString()).ToArray());
+            Assert.AreDeepEqual(new[] { "1", "2", "3" }, l.ConvertAll(x => x.ToString()).ToArray());
         }
 
         [Test(ExpectedCount = 1)]

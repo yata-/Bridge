@@ -8037,6 +8037,41 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge997', {
+        statics: {
+            testConvertAllForIntList: function () {
+                var l = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+                    [1],
+                    [2],
+                    [3]
+                ] );
+    
+                Bridge.get(Bridge.Test.Assert).areDeepEqual(["1", "2", "3"], l.convertAll(String, $_.Bridge.ClientTest.BridgeIssues.Bridge997.f1).toArray());
+            },
+            testConvertAllForNullConverter: function () {
+                var l = Bridge.merge(new Bridge.List$1(Bridge.Int)(), [
+                    [1],
+                    [2],
+                    [3]
+                ] );
+    
+                var converter = null;
+    
+                Bridge.get(Bridge.Test.Assert).throws$5(function () {
+                    l.convertAll(String, converter);
+                }, "Null converter throws exception");
+            }
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge997", $_)
+    
+    Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge997, {
+        f1: function (x) {
+            return x.toString();
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge999', {
         statics: {
             testNestedLambdasToLifting: function () {
