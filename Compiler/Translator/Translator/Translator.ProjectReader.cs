@@ -30,7 +30,7 @@ namespace Bridge.Translator
                           where n.Name.LocalName == "OutputType"
                           select n).ToArray();
 
-            if (projectType.Length > 0 && projectType[0] != null && projectType[0].Value != "Library")
+            if (projectType.Length > 0 && projectType[0] != null && projectType[0].Value != Translator.SupportedProjectType)
             {
                 Bridge.Translator.Exception.Throw("Project type ({0}) is not supported, please use Library instead of {0}", projectType[0].Value);
             }
