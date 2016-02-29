@@ -22,13 +22,13 @@ namespace Bridge.Translator
             EvalTreatment = Microsoft.Ajax.Utilities.EvalTreatment.MakeAllSafe,
             LocalRenaming = Microsoft.Ajax.Utilities.LocalRenaming.KeepAll,
             TermSemicolons = true,
-            StrictMode = true
+            StrictMode = false
         };
 
         private static readonly CodeSettings MinifierCodeSettingsInternal = new CodeSettings
         {
             TermSemicolons = true,
-            StrictMode = true
+            StrictMode = false
         };
 
         private static readonly CodeSettings MinifierCodeSettingsLocales = new CodeSettings
