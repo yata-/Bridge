@@ -58,25 +58,29 @@
     
     Bridge.define('TestIssue921Nested.Issue921NestedOuter.Issue921Nested', {
         statics: {
+            computeNumberStatic: null,
             config: {
                 properties: {
                     NameStatic: null,
                     IntStatic: 0
                 },
                 init: function () {
-                    this.computeNumberStatic = $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f1 || null;
+                    this.computeNumberStatic = $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f1;
                 }
             }
         },
         _offset: 0,
+        computeNumber: null,
+        computeTwoNumbers: null,
+        doWithNumbers: null,
         config: {
             properties: {
                 Name: null
             },
             init: function () {
-                this.computeNumber = $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f2 || null;
-                this.computeTwoNumbers = $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f3 || null;
-                this.doWithNumbers = $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f4 || null;
+                this.computeNumber = $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f2;
+                this.computeTwoNumbers = $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f3;
+                this.doWithNumbers = $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f4;
             }
         },
         constructor: function (offset) {
