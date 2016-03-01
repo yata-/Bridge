@@ -3,9 +3,10 @@
 
     Bridge.define('Test.BridgeIssues.N883A.Control', {
         statics: {
+            test: 0,
             config: {
                 init: function () {
-                    this.test = Bridge.get(Test.BridgeIssues.N883A.Globals).myVar || 0;
+                    this.test = Bridge.get(Test.BridgeIssues.N883A.Globals).myVar;
                 }
             }
         }

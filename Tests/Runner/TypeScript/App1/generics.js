@@ -51,16 +51,24 @@
     
     Bridge.define('Generics.implementation', {
         statics: {
+            simpleGenericInt: null,
+            simpleDoubleGenericIntString: null,
+            genericINamedEntity: null,
+            genericNamedEntity: null,
+            genericClassObject: null,
+            genericClassNamedEntity: null,
+            genericNew: null,
+            genericNewAndClass: null,
             config: {
                 init: function () {
-                    this.simpleGenericInt = new Generics.SimpleGeneric$1(Bridge.Int)(1) || null;
-                    this.simpleDoubleGenericIntString = new Generics.SimpleDoubleGeneric$2(Bridge.Int,String)("constructor") || null;
-                    this.genericINamedEntity = new Generics.GenericINamedEntity$1(Generics.INamedEntity)(new Generics.NamedEntity()) || null;
-                    this.genericNamedEntity = new Generics.GenericNamedEntity$1(Generics.NamedEntity)(new Generics.NamedEntity()) || null;
-                    this.genericClassObject = new Generics.GenericClass$1(Object)(2) || null;
-                    this.genericClassNamedEntity = new Generics.GenericClass$1(Generics.NamedEntity)(new Generics.NamedEntity()) || null;
-                    this.genericNew = new Generics.GenericNew$1(Generics.NewClass)(new Generics.NewClass()) || null;
-                    this.genericNewAndClass = new Generics.GenericNewAndClass$1(Generics.NewClass)(new Generics.NewClass()) || null;
+                    this.simpleGenericInt = new Generics.SimpleGeneric$1(Bridge.Int)(1);
+                    this.simpleDoubleGenericIntString = new Generics.SimpleDoubleGeneric$2(Bridge.Int,String)("constructor");
+                    this.genericINamedEntity = new Generics.GenericINamedEntity$1(Generics.INamedEntity)(new Generics.NamedEntity());
+                    this.genericNamedEntity = new Generics.GenericNamedEntity$1(Generics.NamedEntity)(new Generics.NamedEntity());
+                    this.genericClassObject = new Generics.GenericClass$1(Object)(2);
+                    this.genericClassNamedEntity = new Generics.GenericClass$1(Generics.NamedEntity)(new Generics.NamedEntity());
+                    this.genericNew = new Generics.GenericNew$1(Generics.NewClass)(new Generics.NewClass());
+                    this.genericNewAndClass = new Generics.GenericNewAndClass$1(Generics.NewClass)(new Generics.NewClass());
                 }
             }
         }
