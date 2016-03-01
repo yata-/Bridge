@@ -1,8 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Bridge.Html5;
 using Bridge.Test;
 
 namespace Bridge.ClientTest.BridgeIssues
@@ -20,10 +16,23 @@ namespace Bridge.ClientTest.BridgeIssues
             FlagAlias = Flag
         }
 
+        public enum CommonEnum : uint
+        {
+            None = 0,
+            Flag = 2,
+            FlagAlias = Flag
+        }
+
+        [Test(ExpectedCount = 1)]
+        public static void TestFlagEnumWithReference()
+        {
+           Assert.AreEqual(TestEnum.FlagAlias, 1);
+        }
+
         [Test(ExpectedCount = 1)]
         public static void TestEnumWithReference()
         {
-           Assert.AreEqual(TestEnum.FlagAlias, 1);
+            Assert.AreEqual(CommonEnum.FlagAlias, 2);
         }
     }
 }

@@ -1871,10 +1871,22 @@
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1020', {
         statics: {
-            testEnumWithReference: function () {
+            testFlagEnumWithReference: function () {
                 Bridge.get(Bridge.Test.Assert).areEqual(Bridge.ClientTest.BridgeIssues.Bridge1020.TestEnum.flagAlias, 1);
+            },
+            testEnumWithReference: function () {
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.ClientTest.BridgeIssues.Bridge1020.CommonEnum.flagAlias, 2);
             }
         }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1020.CommonEnum', {
+        statics: {
+            none: 0,
+            flag: 2,
+            flagAlias: 2
+        },
+        $enum: true
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1020.TestEnum', {
