@@ -5,10 +5,11 @@ namespace System.Text.RegularExpressions.CoreFx
     /// <summary>
     /// Represents the results from a single regular expression match.
     /// </summary>
-    [External]
+    [Name("Bridge.Text.RegularExpressions.Match")]
     public class Match : Group
     {
-        internal Match()
+        internal Match(Regex regex, int capcount, String text, int begpos, int len, int startpos)
+            : base(text, new int[2], 0)
         {
         }
 

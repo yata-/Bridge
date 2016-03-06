@@ -36,7 +36,11 @@ namespace System.Text.RegularExpressions.CoreFx
         /// <summary>
         /// Enables access to a member of the collection by integer index.
         /// </summary>
-        public extern Group this[int groupnum] { get; }
+        public extern Group this[int groupnum]
+        {
+            [Template("get({0})")]
+            get;
+        }
 
         /// <summary>
         /// Enables access to a member of the collection by string index.

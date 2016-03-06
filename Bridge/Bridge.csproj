@@ -654,7 +654,15 @@
     <Content Include="Resources\Convert.js" />
     <Content Include="Resources\Enum.js" />
     <Content Include="Resources\Math.js" />
-    <Content Include="Resources\Text\RegexCoreFx.js" />
+    <Content Include="Resources\Text\RegularExpressions\Regex.js" />
+    <Content Include="Resources\Text\RegularExpressions\RegexCapture.js" />
+    <Content Include="Resources\Text\RegularExpressions\RegexCaptureCollection.js" />
+    <Content Include="Resources\Text\RegularExpressions\RegexGroup.js" />
+    <Content Include="Resources\Text\RegularExpressions\RegexGroupCollection.js" />
+    <Content Include="Resources\Text\RegularExpressions\RegexMatch.js" />
+    <Content Include="Resources\Text\RegularExpressions\RegexMatchCollection.js" />
+    <Content Include="Resources\Text\RegularExpressions\RegexOptions.js" />
+    <Content Include="Resources\Text\RegularExpressions\RegexRunner.js" />
     <Content Include="Resources\Version.js" />
     <None Include="AdditionalCompilerOptions.txt" />
     <Content Include="Resources\Array.js" />

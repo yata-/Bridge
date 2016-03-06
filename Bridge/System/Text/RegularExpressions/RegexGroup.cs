@@ -5,10 +5,14 @@ namespace System.Text.RegularExpressions.CoreFx
     /// <summary>
     /// Represents the results from a single capturing group.
     /// </summary>
-    [External]
+    [Name("Bridge.Text.RegularExpressions.Group")]
     public class Group : Capture
     {
-        internal Group()
+        internal Group(string text, int[] caps, int capcount)
+            : base(
+                  text, 
+                  capcount == 0 ? 0 : caps[(capcount - 1)*2],
+                  capcount == 0 ? 0 : caps[(capcount*2) - 1])
         {
         }
 

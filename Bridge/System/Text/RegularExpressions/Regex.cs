@@ -2,7 +2,7 @@
 
 namespace System.Text.RegularExpressions.CoreFx
 {
-    [Name("Bridge.RegexCoreFx")]
+    [Name("Bridge.Text.RegularExpressions.Regex")]
     public sealed class Regex
     {
         public Regex(string pattern)

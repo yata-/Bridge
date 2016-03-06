@@ -6,7 +6,7 @@ namespace System.Text.RegularExpressions.CoreFx
     /// <summary>
     /// Represents the set of captures made by a single capturing group.
     /// </summary>
-    [External]
+    [Name("Bridge.Text.RegularExpressions.CaptureCollection")]
     public class CaptureCollection : ICollection
     {
         internal CaptureCollection()
@@ -36,7 +36,12 @@ namespace System.Text.RegularExpressions.CoreFx
         /// <summary>
         /// Gets an individual member of the collection.
         /// </summary>
-        public extern Capture this[int i] { get; }
+
+        public extern Capture this[int i]
+        {
+            [Template("get({0})")]
+            get;
+        }
 
         /// <summary>
         /// Copies all the elements of the collection to the given array beginning at the given index.

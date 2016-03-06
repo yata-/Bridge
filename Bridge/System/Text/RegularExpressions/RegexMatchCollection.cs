@@ -9,7 +9,7 @@ namespace System.Text.RegularExpressions.CoreFx
     [External]
     public class MatchCollection : ICollection
     {
-        internal MatchCollection()
+        internal MatchCollection(Regex regex, string input, int beginning, int length, int startat)
         {
         }
 
@@ -36,7 +36,11 @@ namespace System.Text.RegularExpressions.CoreFx
         /// <summary>
         /// Gets an individual member of the collection.
         /// </summary>
-        public extern virtual Match this[int i] { get; }
+        public extern virtual Match this[int i]
+        {
+            [Template("get({0})")]
+            get;
+        }
 
         /// <summary>
         /// Copies all the elements of the collection to the given array starting at the given index.

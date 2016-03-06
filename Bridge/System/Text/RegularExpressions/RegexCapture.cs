@@ -5,10 +5,10 @@ namespace System.Text.RegularExpressions.CoreFx
     /// <summary>
     /// Represents the results from a single successful subexpression capture.
     /// </summary>
-    [External]
+    [Name("Bridge.Text.RegularExpressions.Capture")]
     public class Capture
     {
-        internal Capture()
+        internal Capture(string text, int i, int l)
         {
         }
 
