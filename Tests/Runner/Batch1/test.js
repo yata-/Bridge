@@ -957,6 +957,7 @@
                 QUnit.test("#1003 - TestGenericLambdasToLifting", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1003).testGenericLambdasToLifting);
                 QUnit.test("#1020 - TestFlagEnumWithReference", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1020).testFlagEnumWithReference);
                 QUnit.test("#1020 - TestEnumWithReference", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1020).testEnumWithReference);
+                QUnit.test("#1029 - TestNullableMethods", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1029).testNullableMethods);
                 QUnit.test("#381 - TestUseCase", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge381).testUseCase);
                 QUnit.test("#447 - CheckInlineExpression", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447).checkInlineExpression);
                 QUnit.test("#447 - CheckInlineCalls", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447).checkInlineCalls);
@@ -2226,6 +2227,16 @@
             testEnumWithReference: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1020)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1020, 1);
                 Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1020).testEnumWithReference();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1029', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1029)],
+        statics: {
+            testNullableMethods: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1029)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1029, 6);
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1029).testNullableMethods();
             }
         }
     });

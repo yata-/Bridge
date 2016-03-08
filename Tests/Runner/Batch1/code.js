@@ -1899,6 +1899,22 @@
         $flags: true
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1029', {
+        statics: {
+            testNullableMethods: function () {
+                var a = 1;
+                var b = 1;
+                Bridge.get(Bridge.Test.Assert).$true(Bridge.Nullable.equals(a, b, function ($t, other) { return $t === other; }));
+                Bridge.get(Bridge.Test.Assert).areEqual("1", Bridge.Nullable.toString(a));
+                Bridge.get(Bridge.Test.Assert).areEqual(1, Bridge.Nullable.getHashCode(a));
+                a = null;
+                Bridge.get(Bridge.Test.Assert).$false(Bridge.Nullable.equals(a, b, function ($t, other) { return $t === other; }));
+                Bridge.get(Bridge.Test.Assert).areEqual("", Bridge.Nullable.toString(a));
+                Bridge.get(Bridge.Test.Assert).areEqual(0, Bridge.Nullable.getHashCode(a));
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
@@ -6921,7 +6937,7 @@
                 var dt1 = new Date();
                 var dt2 = dt1;
     
-                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Date.format(dt2), Bridge.Date.format(dt1), "Bridge844");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(Bridge.Nullable.toString(dt2, function ($t) { return Bridge.Date.format($t); }), Bridge.Date.format(dt1), "Bridge844");
             }
         }
     });
@@ -12228,7 +12244,7 @@
                     if (i === 0) {
                         var d = Bridge.cast(parameters[0], Bridge.Decimal, true);
                         result[0] = Bridge.Nullable.hasValue(d) ? "HasDotNetDiff" : "NoDotNetDiff";
-                        result[1] = Bridge.Nullable.hasValue(d) ? Bridge.Int.format(d, 'G') + "m" : "null";
+                        result[1] = Bridge.Nullable.hasValue(d) ? Bridge.Nullable.toString(d, function ($t) { return Bridge.Int.format($t, 'G'); }) + "m" : "null";
     
                         continue;
                     }
@@ -16361,10 +16377,10 @@
             Bridge.get(Bridge.Test.Assert).$true(Bridge.equals(((Bridge.cast(1, Bridge.Int))), Bridge.cast(1, Bridge.Int)));
         },
         iEquatableEqualsWorks: function () {
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT(((Bridge.cast(0, Bridge.Int))), Bridge.cast(0, Bridge.Int)));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT(((Bridge.cast(1, Bridge.Int))), Bridge.cast(0, Bridge.Int)));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT(((Bridge.cast(0, Bridge.Int))), Bridge.cast(1, Bridge.Int)));
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT(((Bridge.cast(1, Bridge.Int))), Bridge.cast(1, Bridge.Int)));
+            Bridge.get(Bridge.Test.Assert).$true(((Bridge.cast(0, Bridge.Int))) === Bridge.cast(0, Bridge.Int));
+            Bridge.get(Bridge.Test.Assert).$false(((Bridge.cast(1, Bridge.Int))) === Bridge.cast(0, Bridge.Int));
+            Bridge.get(Bridge.Test.Assert).$false(((Bridge.cast(0, Bridge.Int))) === Bridge.cast(1, Bridge.Int));
+            Bridge.get(Bridge.Test.Assert).$true(((Bridge.cast(1, Bridge.Int))) === Bridge.cast(1, Bridge.Int));
     
             Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT((Bridge.cast((Bridge.cast(0, Bridge.Int)), Bridge.IEquatable$1(Bridge.Int))), Bridge.cast(0, Bridge.Int)));
             Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT((Bridge.cast((Bridge.cast(1, Bridge.Int)), Bridge.IEquatable$1(Bridge.Int))), Bridge.cast(0, Bridge.Int)));
@@ -16498,10 +16514,10 @@
             Bridge.get(Bridge.Test.Assert).$true(Bridge.equals((49), Bridge.cast(49, Bridge.Int)));
         },
         iEquatableEqualsWorks: function () {
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT((48), 48));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT((49), 48));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT((48), 49));
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT((49), 49));
+            Bridge.get(Bridge.Test.Assert).$true((48) === 48);
+            Bridge.get(Bridge.Test.Assert).$false((49) === 48);
+            Bridge.get(Bridge.Test.Assert).$false((48) === 49);
+            Bridge.get(Bridge.Test.Assert).$true((49) === 49);
         },
         compareToWorks: function () {
             Bridge.get(Bridge.Test.Assert).$true(Bridge.compare((49), 48) > 0);
@@ -16929,10 +16945,10 @@
             Bridge.get(Bridge.Test.Assert).$true(Bridge.equals(((Bridge.cast(1, Number))), Bridge.cast(1, Number)));
         },
         doubleEqualsWorks: function () {
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT(((Bridge.cast(0, Number))), Bridge.cast(0, Number)));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT(((Bridge.cast(1, Number))), Bridge.cast(0, Number)));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT(((Bridge.cast(0, Number))), 0.5));
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT(((Bridge.cast(1, Number))), Bridge.cast(1, Number)));
+            Bridge.get(Bridge.Test.Assert).$true(((Bridge.cast(0, Number))) === Bridge.cast(0, Number));
+            Bridge.get(Bridge.Test.Assert).$false(((Bridge.cast(1, Number))) === Bridge.cast(0, Number));
+            Bridge.get(Bridge.Test.Assert).$false(((Bridge.cast(0, Number))) === 0.5);
+            Bridge.get(Bridge.Test.Assert).$true(((Bridge.cast(1, Number))) === Bridge.cast(1, Number));
         },
         compareToWorks: function () {
             Bridge.get(Bridge.Test.Assert).$true(Bridge.compare(((Bridge.cast(0, Number))), Bridge.cast(0, Number)) === 0);
@@ -17132,10 +17148,10 @@
             Bridge.get(Bridge.Test.Assert).$true(Bridge.equals(((Bridge.cast(1, Bridge.Int))), Bridge.cast(1, Bridge.Int)));
         },
         iEquatableEqualsWorks: function () {
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT(((Bridge.cast(0, Bridge.Int))), Bridge.cast(0, Bridge.Int)));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT(((Bridge.cast(1, Bridge.Int))), Bridge.cast(0, Bridge.Int)));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT(((Bridge.cast(0, Bridge.Int))), Bridge.cast(1, Bridge.Int)));
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT(((Bridge.cast(1, Bridge.Int))), Bridge.cast(1, Bridge.Int)));
+            Bridge.get(Bridge.Test.Assert).$true(((Bridge.cast(0, Bridge.Int))) === Bridge.cast(0, Bridge.Int));
+            Bridge.get(Bridge.Test.Assert).$false(((Bridge.cast(1, Bridge.Int))) === Bridge.cast(0, Bridge.Int));
+            Bridge.get(Bridge.Test.Assert).$false(((Bridge.cast(0, Bridge.Int))) === Bridge.cast(1, Bridge.Int));
+            Bridge.get(Bridge.Test.Assert).$true(((Bridge.cast(1, Bridge.Int))) === Bridge.cast(1, Bridge.Int));
     
             Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT((Bridge.cast((Bridge.cast(0, Bridge.Int)), Bridge.IEquatable$1(Bridge.Int))), Bridge.cast(0, Bridge.Int)));
             Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT((Bridge.cast((Bridge.cast(1, Bridge.Int)), Bridge.IEquatable$1(Bridge.Int))), Bridge.cast(0, Bridge.Int)));
@@ -17327,10 +17343,10 @@
             Bridge.get(Bridge.Test.Assert).$true(Bridge.equals(((1)), 1));
         },
         iEquatableEqualsWorks: function () {
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT(((0)), 0));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT(((1)), 0));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT(((0)), 1));
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT(((1)), 1));
+            Bridge.get(Bridge.Test.Assert).$true(((0)) === 0);
+            Bridge.get(Bridge.Test.Assert).$false(((1)) === 0);
+            Bridge.get(Bridge.Test.Assert).$false(((0)) === 1);
+            Bridge.get(Bridge.Test.Assert).$true(((1)) === 1);
     
             Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT((Bridge.cast((0), Bridge.IEquatable$1(Bridge.Int))), 0));
             Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT((Bridge.cast((1), Bridge.IEquatable$1(Bridge.Int))), 0));
@@ -17539,10 +17555,10 @@
             Bridge.get(Bridge.Test.Assert).$true(Bridge.equals(((Bridge.cast(1, Bridge.Int))), Bridge.cast(1, Bridge.Int)));
         },
         iEquatableEqualsWorks: function () {
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT(((Bridge.cast(0, Bridge.Int))), Bridge.cast(0, Bridge.Int)));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT(((Bridge.cast(1, Bridge.Int))), Bridge.cast(0, Bridge.Int)));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT(((Bridge.cast(0, Bridge.Int))), Bridge.cast(1, Bridge.Int)));
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT(((Bridge.cast(1, Bridge.Int))), Bridge.cast(1, Bridge.Int)));
+            Bridge.get(Bridge.Test.Assert).$true(((Bridge.cast(0, Bridge.Int))) === Bridge.cast(0, Bridge.Int));
+            Bridge.get(Bridge.Test.Assert).$false(((Bridge.cast(1, Bridge.Int))) === Bridge.cast(0, Bridge.Int));
+            Bridge.get(Bridge.Test.Assert).$false(((Bridge.cast(0, Bridge.Int))) === Bridge.cast(1, Bridge.Int));
+            Bridge.get(Bridge.Test.Assert).$true(((Bridge.cast(1, Bridge.Int))) === Bridge.cast(1, Bridge.Int));
     
             Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT((Bridge.cast((Bridge.cast(0, Bridge.Int)), Bridge.IEquatable$1(Bridge.Int))), Bridge.cast(0, Bridge.Int)));
             Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT((Bridge.cast((Bridge.cast(1, Bridge.Int)), Bridge.IEquatable$1(Bridge.Int))), Bridge.cast(0, Bridge.Int)));
@@ -18109,10 +18125,10 @@
             Bridge.get(Bridge.Test.Assert).$true(Bridge.equals(((Bridge.cast(1, Bridge.Int))), Bridge.cast(1, Bridge.Int)));
         },
         iEquatableEqualsWorks: function () {
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT(((Bridge.cast(0, Bridge.Int))), Bridge.cast(0, Bridge.Int)));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT(((Bridge.cast(1, Bridge.Int))), Bridge.cast(0, Bridge.Int)));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT(((Bridge.cast(0, Bridge.Int))), Bridge.cast(1, Bridge.Int)));
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT(((Bridge.cast(1, Bridge.Int))), Bridge.cast(1, Bridge.Int)));
+            Bridge.get(Bridge.Test.Assert).$true(((Bridge.cast(0, Bridge.Int))) === Bridge.cast(0, Bridge.Int));
+            Bridge.get(Bridge.Test.Assert).$false(((Bridge.cast(1, Bridge.Int))) === Bridge.cast(0, Bridge.Int));
+            Bridge.get(Bridge.Test.Assert).$false(((Bridge.cast(0, Bridge.Int))) === Bridge.cast(1, Bridge.Int));
+            Bridge.get(Bridge.Test.Assert).$true(((Bridge.cast(1, Bridge.Int))) === Bridge.cast(1, Bridge.Int));
     
             Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT((Bridge.cast((Bridge.cast(0, Bridge.Int)), Bridge.IEquatable$1(Bridge.Int))), Bridge.cast(0, Bridge.Int)));
             Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT((Bridge.cast((Bridge.cast(1, Bridge.Int)), Bridge.IEquatable$1(Bridge.Int))), Bridge.cast(0, Bridge.Int)));
@@ -18255,10 +18271,10 @@
             Bridge.get(Bridge.Test.Assert).$true(Bridge.equals(((Bridge.cast(1, Number))), Bridge.cast(1, Number)));
         },
         iEquatableEqualsWorks: function () {
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT(((Bridge.cast(0, Number))), Bridge.cast(0, Number)));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT(((Bridge.cast(1, Number))), Bridge.cast(0, Number)));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT(((Bridge.cast(0, Number))), Bridge.cast(0.5, Number)));
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT(((Bridge.cast(1, Number))), Bridge.cast(1, Number)));
+            Bridge.get(Bridge.Test.Assert).$true(((Bridge.cast(0, Number))) === Bridge.cast(0, Number));
+            Bridge.get(Bridge.Test.Assert).$false(((Bridge.cast(1, Number))) === Bridge.cast(0, Number));
+            Bridge.get(Bridge.Test.Assert).$false(((Bridge.cast(0, Number))) === Bridge.cast(0.5, Number));
+            Bridge.get(Bridge.Test.Assert).$true(((Bridge.cast(1, Number))) === Bridge.cast(1, Number));
     
             Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT((Bridge.cast((Bridge.cast(0, Number)), Bridge.IEquatable$1(Number))), Bridge.cast(0, Number)));
             Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT((Bridge.cast((Bridge.cast(1, Number)), Bridge.IEquatable$1(Number))), Bridge.cast(0, Number)));
@@ -19649,10 +19665,10 @@
             Bridge.get(Bridge.Test.Assert).$true(Bridge.equals(((Bridge.cast(1, Bridge.Int))), Bridge.cast(1, Bridge.Int)));
         },
         iEquatableEqualsWorks: function () {
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT(((Bridge.cast(0, Bridge.Int))), Bridge.cast(0, Bridge.Int)));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT(((Bridge.cast(1, Bridge.Int))), Bridge.cast(0, Bridge.Int)));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT(((Bridge.cast(0, Bridge.Int))), Bridge.cast(1, Bridge.Int)));
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT(((Bridge.cast(1, Bridge.Int))), Bridge.cast(1, Bridge.Int)));
+            Bridge.get(Bridge.Test.Assert).$true(((Bridge.cast(0, Bridge.Int))) === Bridge.cast(0, Bridge.Int));
+            Bridge.get(Bridge.Test.Assert).$false(((Bridge.cast(1, Bridge.Int))) === Bridge.cast(0, Bridge.Int));
+            Bridge.get(Bridge.Test.Assert).$false(((Bridge.cast(0, Bridge.Int))) === Bridge.cast(1, Bridge.Int));
+            Bridge.get(Bridge.Test.Assert).$true(((Bridge.cast(1, Bridge.Int))) === Bridge.cast(1, Bridge.Int));
     
             Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT((Bridge.cast((Bridge.cast(0, Bridge.Int)), Bridge.IEquatable$1(Bridge.Int))), Bridge.cast(0, Bridge.Int)));
             Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT((Bridge.cast((Bridge.cast(1, Bridge.Int)), Bridge.IEquatable$1(Bridge.Int))), Bridge.cast(0, Bridge.Int)));
@@ -19815,10 +19831,10 @@
             Bridge.get(Bridge.Test.Assert).$true(Bridge.equals(((Bridge.cast(1, Bridge.Int))), Bridge.cast(1, Bridge.Int)));
         },
         iEquatableEqualsWorks: function () {
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT(((Bridge.cast(0, Bridge.Int))), Bridge.cast(0, Bridge.Int)));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT(((Bridge.cast(1, Bridge.Int))), Bridge.cast(0, Bridge.Int)));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT(((Bridge.cast(0, Bridge.Int))), Bridge.cast(1, Bridge.Int)));
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT(((Bridge.cast(1, Bridge.Int))), Bridge.cast(1, Bridge.Int)));
+            Bridge.get(Bridge.Test.Assert).$true(((Bridge.cast(0, Bridge.Int))) === Bridge.cast(0, Bridge.Int));
+            Bridge.get(Bridge.Test.Assert).$false(((Bridge.cast(1, Bridge.Int))) === Bridge.cast(0, Bridge.Int));
+            Bridge.get(Bridge.Test.Assert).$false(((Bridge.cast(0, Bridge.Int))) === Bridge.cast(1, Bridge.Int));
+            Bridge.get(Bridge.Test.Assert).$true(((Bridge.cast(1, Bridge.Int))) === Bridge.cast(1, Bridge.Int));
     
             Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT((Bridge.cast((Bridge.cast(0, Bridge.Int)), Bridge.IEquatable$1(Bridge.Int))), Bridge.cast(0, Bridge.Int)));
             Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT((Bridge.cast((Bridge.cast(1, Bridge.Int)), Bridge.IEquatable$1(Bridge.Int))), Bridge.cast(0, Bridge.Int)));
@@ -19987,10 +20003,10 @@
             Bridge.get(Bridge.Test.Assert).$true(Bridge.equals(((Bridge.cast(1, Bridge.Int))), Bridge.cast(1, Bridge.Int)));
         },
         iEquatableEqualsWorks: function () {
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT(((Bridge.cast(0, Bridge.Int))), Bridge.cast(0, Bridge.Int)));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT(((Bridge.cast(1, Bridge.Int))), Bridge.cast(0, Bridge.Int)));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT(((Bridge.cast(0, Bridge.Int))), Bridge.cast(1, Bridge.Int)));
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT(((Bridge.cast(1, Bridge.Int))), Bridge.cast(1, Bridge.Int)));
+            Bridge.get(Bridge.Test.Assert).$true(((Bridge.cast(0, Bridge.Int))) === Bridge.cast(0, Bridge.Int));
+            Bridge.get(Bridge.Test.Assert).$false(((Bridge.cast(1, Bridge.Int))) === Bridge.cast(0, Bridge.Int));
+            Bridge.get(Bridge.Test.Assert).$false(((Bridge.cast(0, Bridge.Int))) === Bridge.cast(1, Bridge.Int));
+            Bridge.get(Bridge.Test.Assert).$true(((Bridge.cast(1, Bridge.Int))) === Bridge.cast(1, Bridge.Int));
     
             Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT((Bridge.cast((Bridge.cast(0, Bridge.Int)), Bridge.IEquatable$1(Bridge.Int))), Bridge.cast(0, Bridge.Int)));
             Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT((Bridge.cast((Bridge.cast(1, Bridge.Int)), Bridge.IEquatable$1(Bridge.Int))), Bridge.cast(0, Bridge.Int)));

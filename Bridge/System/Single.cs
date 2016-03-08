@@ -168,7 +168,7 @@ namespace System
             return 0;
         }
 
-        [Template("Bridge.equalsT({this}, {other})")]
+        [Template("{this} === {other}")]
         public bool Equals(float other)
         {
             return false;

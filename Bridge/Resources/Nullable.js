@@ -56,6 +56,18 @@
             return !Bridge.hasValue(a) ? !Bridge.hasValue(b) : (a === b);
         },
 
+        equals: function (a, b, fn) {
+            return !Bridge.hasValue(a) ? !Bridge.hasValue(b) : (fn ? fn(a, b) : Bridge.equals(a, b));
+        },
+
+        toString: function (a, fn) {
+            return !Bridge.hasValue(a) ? "" : (fn ? fn(a) : a.toString());
+        },
+
+        getHashCode: function (a, fn) {
+            return !Bridge.hasValue(a) ? 0 : (fn ? fn(a) : Bridge.getHashCode(a));
+        },
+
         xor: function (a, b) {
             return Bridge.hasValue(a) && Bridge.hasValue(b) ? a ^ b : null;
         },
