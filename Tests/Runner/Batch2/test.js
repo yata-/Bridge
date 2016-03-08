@@ -66,28 +66,6 @@
             throws$5: function (block, message) {
                 Bridge.get(Bridge.Test.Assert).assert.throws(block, message);
             },
-            throws$6: function (T, block) {
-                Bridge.get(Bridge.Test.Assert).throws$7(T, block, "");
-            },
-            throws$7: function (T, block, message) {
-                var actual = null;
-                var expected = Bridge.getTypeName(T);
-    
-                try {
-                    block();
-                }
-                catch (ex) {
-                    ex = Bridge.Exception.create(ex);
-                    actual = Bridge.getTypeName(ex);
-                }
-    
-                if (actual !== expected) {
-                    Bridge.get(Bridge.Test.Assert).assert.equal(actual, expected, message);
-                }
-                else  {
-                    Bridge.get(Bridge.Test.Assert).assert.ok(true, message);
-                }
-            },
             throws$3: function (block, expected) {
                 Bridge.get(Bridge.Test.Assert).assert.throws(block, expected);
             },
@@ -117,57 +95,31 @@
     
     Bridge.define('Bridge.Test.QUnit.TestFixture$1', function (T) { return {
         statics: {
-            instanceFabric: null,
-            fixtureFabric: null,
-            getFixtureFabric: function () {
-                if (!Bridge.hasValue(Bridge.get(Bridge.Test.QUnit.TestFixture$1(T)).fixtureFabric)) {
-                    Bridge.get(Bridge.Test.QUnit.TestFixture$1(T)).fixtureFabric = new T();
+            _testInstance: null,
+            get_TestInstance: function () {
+                if (!Bridge.hasValue(Bridge.get(Bridge.Test.QUnit.TestFixture$1(T))._testInstance)) {
+                    Bridge.get(Bridge.Test.QUnit.TestFixture$1(T))._testInstance = new T();
                 }
     
-                return Bridge.get(Bridge.Test.QUnit.TestFixture$1(T)).fixtureFabric;
+                return Bridge.get(Bridge.Test.QUnit.TestFixture$1(T))._testInstance;
             },
-            setFixtureFabric: function (value) {
-                Bridge.get(Bridge.Test.QUnit.TestFixture$1(T)).fixtureFabric = value;
+            set_TestInstance: function (value) {
+                Bridge.get(Bridge.Test.QUnit.TestFixture$1(T))._testInstance = value;
             },
-            instanceFabric$1: function (type) {
-                if (!Bridge.hasValue(Bridge.get(Bridge.Test.QUnit.TestFixture$1(T)).instanceFabric)) {
-                    Bridge.get(Bridge.Test.QUnit.TestFixture$1(T)).instanceFabric = Bridge.cast(new type(), Bridge.Test.QUnit.TestFixture$1(T));
-                }
-    
-                return Bridge.get(Bridge.Test.QUnit.TestFixture$1(T)).instanceFabric;
-            },
-            beforeTest: function (needInstance, assert, type, expectedCount) {
+            _BeforeTest: function (isStatic, assert, expectedCount) {
                 if (expectedCount === void 0) { expectedCount = null; }
+                Bridge.get(Bridge.Test.QUnit.TestFixture$1(T)).set_TestInstance(Bridge.getDefaultValue(T));
+    
                 Bridge.get(Bridge.Test.Assert).assert = assert;
     
                 if (Bridge.Nullable.hasValue(expectedCount)) {
                     assert.expect(Bridge.Nullable.getValue(expectedCount));
                 }
     
-                var instance = Bridge.get(Bridge.Test.QUnit.TestFixture$1(T)).instanceFabric$1(type);
-                instance.setFixture(needInstance ? Bridge.get(Bridge.Test.QUnit.TestFixture$1(T)).getFixtureFabric() : Bridge.getDefaultValue(T));
+                var r = isStatic ? Bridge.getDefaultValue(T) : Bridge.get(Bridge.Test.QUnit.TestFixture$1(T)).get_TestInstance();
     
-                try {
-                    instance.setUp();
-                }
-                catch ($e1) {
-                    $e1 = Bridge.Exception.create($e1);
-                    assert.ok(false, "The test failed SetUp");
-    
-                    throw $e1;
-                }
-    
-                return instance;
+                return r;
             }
-        },
-        config: {
-            properties: {
-                Fixture: null
-            }
-        },
-        setUp: function () {
-        },
-        tearDown: function () {
         }
     }; });
     
@@ -238,203 +190,203 @@
         inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)],
         statics: {
             typePropertiesAreCorrect: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().typePropertiesAreCorrect();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.typePropertiesAreCorrect();
             },
             lengthWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().lengthWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.lengthWorks();
             },
             rankIsOne: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().rankIsOne();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.rankIsOne();
             },
             getLengthWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().getLengthWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.getLengthWorks();
             },
             getLowerBound: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().getLowerBound();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.getLowerBound();
             },
             getUpperBoundWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().getUpperBoundWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.getUpperBoundWorks();
             },
             gettingValueByIndexWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().gettingValueByIndexWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.gettingValueByIndexWorks();
             },
             getValueWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().getValueWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.getValueWorks();
             },
             settingValueByIndexWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().settingValueByIndexWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.settingValueByIndexWorks();
             },
             setValueWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().setValueWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.setValueWorks();
             },
             foreachWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().foreachWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.foreachWorks();
             },
             cloneWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().cloneWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.cloneWorks();
             },
             concatWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().concatWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.concatWorks();
             },
             containsWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().containsWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.containsWorks();
             },
             containsUsesEqualsMethod: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().containsUsesEqualsMethod();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.containsUsesEqualsMethod();
             },
             allWithArrayItemFilterCallbackWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().allWithArrayItemFilterCallbackWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.allWithArrayItemFilterCallbackWorks();
             },
             sliceWithoutEndWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().sliceWithoutEndWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.sliceWithoutEndWorks();
             },
             foreachWithArrayItemCallbackWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().foreachWithArrayItemCallbackWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.foreachWithArrayItemCallbackWorks();
             },
             foreachWithArrayCallbackWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().foreachWithArrayCallbackWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.foreachWithArrayCallbackWorks();
             },
             indexOfWithoutStartIndexWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().indexOfWithoutStartIndexWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.indexOfWithoutStartIndexWorks();
             },
             indexOfWithoutStartIndexUsesEqualsMethod: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().indexOfWithoutStartIndexUsesEqualsMethod();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.indexOfWithoutStartIndexUsesEqualsMethod();
             },
             indexOfWithStartIndexWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().indexOfWithStartIndexWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.indexOfWithStartIndexWorks();
             },
             joinWithoutDelimiterWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().joinWithoutDelimiterWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.joinWithoutDelimiterWorks();
             },
             reverseWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().reverseWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.reverseWorks();
             },
             anyWithArrayItemFilterCallbackWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().anyWithArrayItemFilterCallbackWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.anyWithArrayItemFilterCallbackWorks();
             },
             binarySearch1Works: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().binarySearch1Works();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.binarySearch1Works();
             },
             binarySearch2Works: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().binarySearch2Works();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.binarySearch2Works();
             },
             binarySearch3Works: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().binarySearch3Works();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.binarySearch3Works();
             },
             binarySearch4Works: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().binarySearch4Works();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.binarySearch4Works();
             },
             binarySearchExceptionsWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().binarySearchExceptionsWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.binarySearchExceptionsWorks();
             },
             sortWithDefaultCompareWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().sortWithDefaultCompareWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.sortWithDefaultCompareWorks();
             },
             sort1Works: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().sort1Works();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.sort1Works();
             },
             sort2Works: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().sort2Works();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.sort2Works();
             },
             sort3Works: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().sort3Works();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.sort3Works();
             },
             sort4Works: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().sort4Works();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.sort4Works();
             },
             sortExceptionsWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().sortExceptionsWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.sortExceptionsWorks();
             },
             foreachWhenCastToIListWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().foreachWhenCastToIListWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.foreachWhenCastToIListWorks();
             },
             iCollectionCountWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().iCollectionCountWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.iCollectionCountWorks();
             },
             iCollectionAddWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().iCollectionAddWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.iCollectionAddWorks();
             },
             iCollectionClearWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().iCollectionClearWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.iCollectionClearWorks();
             },
             iCollectionContainsWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().iCollectionContainsWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.iCollectionContainsWorks();
             },
             iCollectionContainsUsesEqualsMethod: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().iCollectionContainsUsesEqualsMethod();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.iCollectionContainsUsesEqualsMethod();
             },
             iCollectionRemoveWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().iCollectionRemoveWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.iCollectionRemoveWorks();
             },
             iListIndexingWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().iListIndexingWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.iListIndexingWorks();
             },
             iListIndexOfWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().iListIndexOfWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.iListIndexOfWorks();
             },
             iListIndexOfUsesEqualsMethod: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().iListIndexOfUsesEqualsMethod();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.iListIndexOfUsesEqualsMethod();
             },
             iListInsertWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().iListInsertWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.iListInsertWorks();
             },
             iListRemoveAtWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().iListRemoveAtWorks();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.iListRemoveAtWorks();
             },
             issueSpecific: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772);
-                t.getFixture().issueSpecific();
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(false, assert);
+                t.issueSpecific();
             },
             testUseCase: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTestOne_BridgeIssues_N772, 10);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTestOne.BridgeIssues.N772))._BeforeTest(true, assert, 10);
                 Bridge.get(Bridge.ClientTestOne.BridgeIssues.N772).testUseCase();
             }
         }
