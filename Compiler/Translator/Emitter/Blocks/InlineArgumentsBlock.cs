@@ -145,7 +145,7 @@ namespace Bridge.Translator
             this.Write(name);
         }
 
-        protected virtual void EmitInlineExpressionList(ArgumentsInfo argsInfo, string inline, bool asRef = false)
+        protected virtual void EmitInlineExpressionList(ArgumentsInfo argsInfo, string inline, bool asRef = false, bool isNull = false)
         {
             IEnumerable<NamedParamExpression> expressions = argsInfo.NamedExpressions;
             IEnumerable<TypeParamExpression> typeParams = argsInfo.TypeArguments;
@@ -155,7 +155,7 @@ namespace Bridge.Translator
             if (asRef)
             {
                 this.Write("function (");
-                this.EmitMethodParameters(this.Method, this.Method.Parameters, this.Method.TypeParameters);
+                this.EmitMethodParameters(this.Method, this.Method.Parameters, this.Method.TypeParameters, isNull);
                 this.Write(") { return ");
             }
 
@@ -280,7 +280,11 @@ namespace Bridge.Translator
 
                     if (key == "this")
                     {
-                        if (this.Method.IsExtensionMethod && this.TargetResolveResult is TypeResolveResult)
+                        if (isNull)
+                        {
+                            this.Write("$t");
+                        }
+                        else if (this.Method.IsExtensionMethod && this.TargetResolveResult is TypeResolveResult)
                         {
                             this.WriteParamName(this.Method.Parameters.First().Name);
                         }
@@ -452,7 +456,7 @@ namespace Bridge.Translator
             }
         }
         
-        protected virtual void EmitMethodParameters(IMethod method, IEnumerable<IParameter> parameters, IEnumerable<ITypeParameter> typeParameters)
+        protected virtual void EmitMethodParameters(IMethod method, IEnumerable<IParameter> parameters, IEnumerable<ITypeParameter> typeParameters, bool isNull)
         {
             bool needComma = false;
 
@@ -472,7 +476,12 @@ namespace Bridge.Translator
                 }
             }
 
-            if (!(this.TargetResolveResult is TypeResolveResult))
+            if (isNull)
+            {
+                this.Write("$t");
+                needComma = true;
+            }
+            else if (!(this.TargetResolveResult is TypeResolveResult))
             {
                 parameters = parameters.Skip(1);
             }
@@ -504,6 +513,11 @@ namespace Bridge.Translator
         public virtual void EmitFunctionReference()
         {
             this.EmitInlineExpressionList(this.ArgumentsInfo, this.InlineCode, true);
+        }
+
+        public virtual void EmitNullableReference()
+        {
+            this.EmitInlineExpressionList(this.ArgumentsInfo, this.InlineCode, true, true);
         }
     }
 }

@@ -52,5 +52,14 @@ namespace System
         {
             return default(T);
         }
+
+        [Template("Bridge.Nullable.equalsT({this}, {other})")]
+        public override extern bool Equals(object other);
+
+        [Template("Bridge.Nullable.getHashCode({this})")]
+        public override extern int GetHashCode();
+
+        [Template("Bridge.Nullable.toString({this})")]
+        public override extern string ToString();
     }
 }

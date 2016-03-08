@@ -146,7 +146,7 @@ namespace Bridge.Translator
                         }
                         else if (expression is ObjectCreateExpression)
                         {
-                            new InlineArgumentsBlock(block.Emitter, new ArgumentsInfo(block.Emitter, (InvocationExpression)expression), inline).Emit();
+                            new InlineArgumentsBlock(block.Emitter, new ArgumentsInfo(block.Emitter, (ObjectCreateExpression)expression), inline).Emit();
                         }
                         else if (expression is UnaryOperatorExpression)
                         {

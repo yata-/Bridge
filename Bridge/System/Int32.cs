@@ -84,7 +84,7 @@ namespace System
             return 0;
         }
 
-        [Template("Bridge.equalsT({this}, {other})")]
+        [Template("{this} === {other}")]
         public bool Equals(int other)
         {
             return false;
