@@ -8,6 +8,8 @@ namespace Bridge.Translator
 {
     public class FieldBlock : AbstractEmitterBlock
     {
+        public const string PropertiesName = "properties";
+
         public FieldBlock(IEmitter emitter, ITypeInfo typeInfo, bool staticBlock, bool fieldsOnly)
             : base(emitter, typeInfo.TypeDeclaration)
         {
@@ -81,7 +83,7 @@ namespace Bridge.Translator
 
             if (info.Properties.Count > 0)
             {
-                var hasProperties = this.WriteObject("properties", info.Properties, "Bridge.property(this, \"{0}\", {1});");
+                var hasProperties = this.WriteObject(FieldBlock.PropertiesName, info.Properties, "Bridge.property(this, \"{0}\", {1});");
                 if (hasProperties)
                 {
                     this.Emitter.Comma = true;
@@ -98,7 +100,7 @@ namespace Bridge.Translator
 
         protected virtual bool WriteObject(string objectName, List<TypeConfigItem> members, string format)
         {
-            bool hasProperties = this.HasProperties(members);
+            bool hasProperties = this.HasProperties(objectName, members);
 
             if (hasProperties && objectName != null)
             {
@@ -109,6 +111,7 @@ namespace Bridge.Translator
                 this.BeginBlock();
             }
 
+            bool isProperty = FieldBlock.PropertiesName == objectName;
             foreach (var member in members)
             {
                 object constValue = null;
@@ -148,7 +151,7 @@ namespace Bridge.Translator
                         isNullable = true;
                     }
                 }
-                
+
                 if (!isNull && (!isPrimitive || (constValue is AstType)))
                 {
                     string value = null;
@@ -187,10 +190,18 @@ namespace Bridge.Translator
                         value = isNullable ? "null" : Inspector.GetStructDefaultValue((AstType)constValue, this.Emitter);
                         constValue = value;
                         write = true;
-                        needContinue = !isNullable;
+                        needContinue = !isProperty && !isNullable;
                     }
 
-                    this.Injectors.Add(string.Format(format, member.GetName(this.Emitter), value + defValue));
+                    if (isProperty && isPrimitive)
+                    {
+                        constValue = "null";
+                        this.Injectors.Add(string.Format("this.{0} = {1};", member.GetName(this.Emitter), value)); 
+                    }
+                    else
+                    {
+                        this.Injectors.Add(string.Format(format, member.GetName(this.Emitter), value + defValue));    
+                    }
 
                     if (needContinue)
                     {
@@ -250,7 +261,7 @@ namespace Bridge.Translator
             return hasProperties;
         }
 
-        protected virtual bool HasProperties(List<TypeConfigItem> members)
+        protected virtual bool HasProperties(string objectName, List<TypeConfigItem> members)
         {
             foreach (var member in members)
             {
@@ -280,7 +291,7 @@ namespace Bridge.Translator
                     return true;
                 }
 
-                if (!isPrimitive || (constValue is AstType))
+                if (!isPrimitive || (constValue is AstType && objectName != FieldBlock.PropertiesName))
                 {
                     continue;
                 }
