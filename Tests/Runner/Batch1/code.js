@@ -402,9 +402,10 @@
             this.setData(d);
         },
         constructor$2: function (p) {
+            if (p === void 0) { p = []; }
+    
             Bridge.ClientTest.BasicCSharp.ClassA.prototype.$constructor.call(this);
     
-            if (p === void 0) { p = []; }
             if (!Bridge.hasValue(p) || p.length < 6) {
                 throw new Bridge.Exception("Should pass six parameters");
             }
@@ -1897,6 +1898,22 @@
         },
         $enum: true,
         $flags: true
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1024', {
+        statics: {
+            testConstructorOptionalParameter: function () {
+                var obj = new Bridge.ClientTest.BridgeIssues.Bridge1024.ClassB();
+                Bridge.get(Bridge.Test.Assert).areEqual("classB", obj.getFieldA());
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1024.ClassC', {
+        a: null,
+        constructor: function (b) {
+            this.a = b;
+        }
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1029', {
@@ -23104,6 +23121,19 @@
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1001.TextBox', {
         inherits: [Bridge.ClientTest.BridgeIssues.Bridge1001.Control]
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1024.ClassB', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge1024.ClassC],
+        constructor: function (p) {
+            if (p === void 0) { p = "classB"; }
+    
+            Bridge.ClientTest.BridgeIssues.Bridge1024.ClassC.prototype.$constructor.call(this, p);
+    
+        },
+        getFieldA: function () {
+            return this.a;
+        }
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge240B', {
