@@ -28,6 +28,42 @@
                 tcs.setException(Bridge.Exception.create(e));
             }
             return tcs.task;
+        },
+
+        sendAsync: function(buffer, messageType, endOfMessage, cancellationToken) {
+            this.throwIfNotConnected();
+            var tcs = new Bridge.TaskCompletionSource();
+            try {
+                var array = buffer.getArray(),
+                    data;
+                switch (messageType) {
+                case "binary":
+                    data = new ArrayBuffer(array.length);
+                    var dataView = new Int8Array(data);
+                    for (var i = 0; i < array.length; i++) {
+                        dataView[i] = array[i];
+                    }
+                    break;
+                case "text":
+                    data = String.fromCharCode.apply(null, array);
+                    break;
+                }
+                if (messageType === "close") {
+                    this.socket.close();
+                } else {
+                    this.socket.send(data);
+                }
+                tcs.setResult(null);
+            } catch (e) {
+                tcs.setException(Bridge.Exception.create(e));
+            }
+            return tcs.task;
+        },
+
+        throwIfNotConnected: function() {
+            if (this.socket.readyState !== 1) {
+                throw new Bridge.InvalidOperationException("Socket is not connected.");
+            }
         }
     });
 
