@@ -36,6 +36,7 @@
   <file name="ClientWebSocket.js" />
   <file name="Uri.js" />
   <file name="Array.js" />
+  <file name="ArraySegment.js" />
   <file name="linq.js" />
   <target name="Bridge.NET" file="$output\bridge.js" debug="True">
     <include name="Init.js" />
@@ -58,6 +59,7 @@
     <include name="Text/Regex.js" />
     <include name="Diagnostics.js" />
     <include name="Array.js" />
+    <include name="ArraySegment.js" />
     <include name="Collections/Interfaces.js" />
     <include name="Collections/CustomEnumerator.js" />
     <include name="Collections/ArrayEnumerator.js" />
