@@ -148,6 +148,7 @@
     <Compile Include="System\Threading\Tasks\TaskStatus.cs" />
     <Compile Include="System\SystemException.cs" />
     <Compile Include="System\TypeCode.cs" />
+    <Compile Include="System\Uri.cs" />
     <Compile Include="System\Version.cs" />
     <Compile Include="This.cs" />
     <Compile Include="System\OverflowException.cs" />
@@ -649,6 +650,7 @@
     <Content Include="Resources\Enum.js" />
     <Content Include="Resources\Math.js" />
     <Content Include="Resources\ClientWebSocket.js" />
+    <Content Include="Resources\Uri.js" />
     <Content Include="Resources\Version.js" />
     <None Include="AdditionalCompilerOptions.txt" />
     <Content Include="Resources\Array.js" />
