@@ -23,7 +23,7 @@ Bridge.define("Bridge.Text.RegularExpressions.GroupCollection", {
         // Construct all the Group objects the first time GetGroup is called
         if (this._groups == null) {
             var groups = [];
-            groups.length = this._match._matchCount.length - 1;
+            groups.length = this._match._matchcount.length - 1;
 
             for (var i = 0; i < groups.length; i++) {
                 var matchText = this._match._text;
@@ -49,7 +49,7 @@ Bridge.define("Bridge.Text.RegularExpressions.GroupCollection", {
             }
         }
         else {
-            if (groupnum >= this._match._matchCount.length || groupnum < 0) {
+            if (groupnum >= this._match._matchcount.length || groupnum < 0) {
                 group = Bridge.Text.RegularExpressions.Group.getEmpty();
             } else {
                 group = this._getGroupImpl(groupnum);
@@ -72,7 +72,7 @@ Bridge.define("Bridge.Text.RegularExpressions.GroupCollection", {
     },
 
     getCount: function () {
-        return this._match._matchCount.length;
+        return this._match._matchcount.length;
     },
 
     get: function (groupnum) {

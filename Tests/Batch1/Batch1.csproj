@@ -230,6 +230,9 @@
     <Compile Include="Linq\TestLinqSetOperators.cs" />
     <Compile Include="SimpleTypes\TestVersion.cs" />
     <Compile Include="Text\RegularExpressions\Msdn\IsMatchTests.cs" />
+    <Compile Include="Text\RegularExpressions\Msdn\MatchTests.cs" />
+    <Compile Include="Text\RegularExpressions\Msdn\NetEngineTests.cs" />
+    <Compile Include="Text\RegularExpressions\RegexTestBase.cs" />
     <Compile Include="Threading\CancellationTokenTests.cs" />
     <Compile Include="Threading\Tasks\AsyncTests.cs" />
     <Compile Include="Threading\Tasks\PromiseTests.cs" />

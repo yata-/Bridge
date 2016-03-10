@@ -54,7 +54,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Group", {
 
     getCaptures: function () {
         if (this._capColl == null) {
-            this._capColl = new scope.CaptureCollection(this);
+            this._capColl = new Bridge.Text.RegularExpressions.CaptureCollection(this);
         }
 
         return this._capColl;

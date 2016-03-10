@@ -146,7 +146,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
 
     getGroups: function () {
         if (this._groupColl == null) {
-            this._groupColl = new scope.GroupCollection(this, null);
+            this._groupColl = new Bridge.Text.RegularExpressions.GroupCollection(this, null);
         }
         return this._groupColl;
     },

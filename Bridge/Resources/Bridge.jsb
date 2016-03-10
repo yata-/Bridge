@@ -44,6 +44,7 @@
   <file name="Text/RegularExpressions/RegexMatchCollection.js" />
   <file name="Text/RegularExpressions/RegexOptions.js" />
   <file name="Text/RegularExpressions/RegexRunner.js" />
+  <file name="Text/RegularExpressions/RegexNetEngine.js" />
   <target name="Bridge.NET" file="$output\bridge.js" debug="True">
     <include name="Init.js" />
     <include name="Core.js" />
@@ -88,6 +89,7 @@
     <include name="Text/RegularExpressions/RegexMatchCollection.js" />
     <include name="Text/RegularExpressions/RegexOptions.js" />
     <include name="Text/RegularExpressions/RegexRunner.js" />
+    <include name="Text/RegularExpressions/RegexNetEngine.js" />
     <include name="End.js" />
     <include name="Finally.js" />
   </target>
