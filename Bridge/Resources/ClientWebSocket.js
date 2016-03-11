@@ -136,6 +136,36 @@
             return tcs.task;
         },
 
+        closeAsync: function(closeStatus, statusDescription, cancellationToken) {
+            this.throwIfNotConnected();
+            if (this.state !== "open") {
+                throw new Bridge.InvalidOperationException("Socket is not in connected state");
+            }
+            var tcs = new Bridge.TaskCompletionSource(),
+                self = this,
+                task,
+                asyncBody = function() {
+                    if (self.state === "closed") {
+                        tcs.setResult(null);
+                        return;
+                    }
+                    if (cancellationToken.getIsCancellationRequested()) {
+                        tcs.setException(new Bridge.TaskCanceledException("Closing has been cancelled.", tcs.task));
+                        return;
+                    }
+                    task = Bridge.Task.delay(0);
+                    task.continueWith(asyncBody);
+                };
+            try {
+                this.state = "closesent";
+                this.socket.close(closeStatus, statusDescription);
+            } catch (e) {
+                tcs.setException(Bridge.Exception.create(e));
+            }
+            asyncBody();
+            return tcs.task;
+        },
+
         abort: function() {
             this.dispose();
         },

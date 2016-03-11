@@ -65,6 +65,18 @@ namespace System.Net.WebSockets
 		public extern Task<WebSocketReceiveResult> ReceiveAsync(ArraySegment<byte> buffer,
 			CancellationToken cancellationToken);
 
+		/// <summary>
+		/// Close the ClientWebSocket instance as an asynchronous operation.
+		/// </summary>
+		/// <param name="closeStatus">The WebSocket close status.</param>
+		/// <param name="statusDescription">A description of the close status.</param>
+		/// <param name="cancellationToken">
+		/// A cancellation token used to propagate notification that this operation should be canceled.
+		/// Only useful if you don't want to wait for closing response, as closing can't be interrupted once initiated.
+		/// </param>
+		public extern Task CloseAsync(WebSocketCloseStatus closeStatus, string statusDescription,
+			CancellationToken cancellationToken);
+
 		public extern void Dispose();
 
 		/// <summary>
