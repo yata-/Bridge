@@ -125,6 +125,7 @@
     <Compile Include="System\Net\WebSockets\ClientWebSocket.cs" />
     <Compile Include="System\Net\WebSockets\ClientWebSocketOptions.cs" />
     <Compile Include="System\Net\WebSockets\WebSocketState.cs" />
+    <Compile Include="System\Net\WebSockets\WebSocketCloseStatus.cs" />
     <Compile Include="System\Net\WebSockets\WebSocketMessageType.cs" />
     <Compile Include="System\Predicate.cs" />
     <Compile Include="System\OutOfMemoryException.cs" />
