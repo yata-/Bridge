@@ -121,6 +121,7 @@
     <Compile Include="System\EventHandler.cs" />
     <Compile Include="System\IDisposable.cs" />
     <Compile Include="System\IAccessorsIndexer.cs" />
+    <Compile Include="System\Net\WebSockets\ClientWebSocket.cs" />
     <Compile Include="System\Predicate.cs" />
     <Compile Include="System\OutOfMemoryException.cs" />
     <Compile Include="System\RankException.cs" />
@@ -646,6 +647,7 @@
     <Content Include="Resources\Convert.js" />
     <Content Include="Resources\Enum.js" />
     <Content Include="Resources\Math.js" />
+    <Content Include="Resources\ClientWebSocket.js" />
     <Content Include="Resources\Version.js" />
     <None Include="AdditionalCompilerOptions.txt" />
     <Content Include="Resources\Array.js" />
@@ -713,6 +715,9 @@
     <NuGetPackageSourcePath Include="$(SolutionDir).build\specs\Bridge.Dev.nuspec">
       <Path>$(SolutionDir).build\specs\Bridge.Dev.nuspec</Path>
     </NuGetPackageSourcePath>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\Net\WebSockets\" />
   </ItemGroup>
   <Import Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " Project="$(SolutionDir)\.build\common\NuGet.Build.Package.targets" />
   <Target Name="CleanProjectNuGetOutput" BeforeTargets="Clean">

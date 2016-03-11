@@ -33,6 +33,7 @@
   <file name="Attribute.js" />
   <file name="INotifyPropertyChanged.js" />
   <file name="Convert.js" />
+  <file name="ClientWebSocket.js" />
   <file name="Array.js" />
   <file name="linq.js" />
   <target name="Bridge.NET" file="$output\bridge.js" debug="True">
@@ -69,6 +70,7 @@
     <include name="Attribute.js" />
     <include name="INotifyPropertyChanged.js" />
     <include name="Convert.js" />
+    <include name="ClientWebSocket.js" />
     <include name="linq.js" />
     <include name="End.js" />
     <include name="Finally.js" />
