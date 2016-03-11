@@ -11,5 +11,15 @@ namespace System.Net.WebSockets
 	[Namespace("Bridge.Net.WebSockets")]
 	public class ClientWebSocket: IBridgeClass
 	{
+		/// <summary>
+		/// Get the WebSocket state of the <see cref="ClientWebSocket"/> instance.
+		/// </summary>
+		public WebSocketState State
+		{
+			get
+			{
+				return WebSocketState.None;
+			}
+		}
 	}
 }
