@@ -130,6 +130,11 @@
             asyncBody();
             return tcs.task;
         },
+
+        abort: function() {
+            this.dispose();
+        },
+
         dispose: function() {
             if (this.disposed) {
                 return;

@@ -55,5 +55,10 @@ namespace System.Net.WebSockets
 			CancellationToken cancellationToken);
 
 		public extern void Dispose();
+
+		/// <summary>
+		/// Aborts the connection and cancels any pending IO operations.
+		/// </summary>
+		public extern void Abort();
 	}
 }
