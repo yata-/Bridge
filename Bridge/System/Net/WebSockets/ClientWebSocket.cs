@@ -45,6 +45,18 @@ namespace System.Net.WebSockets
 		}
 
 		/// <summary>
+		/// Returns the optional description that describes why the close handshake
+		/// has been initiated by the remote endpoint.
+		/// </summary>
+		public string CloseStatusDescription
+		{
+			get
+			{
+				return null;
+			}
+		}
+
+		/// <summary>
 		/// Connect to a WebSocket server as an asynchronous operation.
 		/// </summary>
 		/// <param name="uri">The URI of the WebSocket server to connect to.</param>

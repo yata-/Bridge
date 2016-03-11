@@ -8,6 +8,7 @@
             this.options = new Bridge.Net.WebSockets.ClientWebSocketOptions();
             this.disposed = false;
             this.closeStatus = null;
+            this.closeStatusDescription = null;
         },
 
         getCloseStatus: function() {
@@ -16,6 +17,10 @@
 
         getState: function() {
             return this.state;
+        },
+
+        getCloseStatusDescription: function() {
+            return this.closeStatusDescription;
         },
 
         connectAsync: function(uri, cancellationToken) {
@@ -56,6 +61,11 @@
                         return;
                     }
                     throw new Bridge.ArgumentException("Invalid message type.");
+                };
+                this.socket.onclose = function(e) {
+                    self.state = "closed";
+                    self.closeStatus = e.code;
+                    self.closeStatusDescription = e.reason;
                 }
             } catch (e) {
                 tcs.setException(Bridge.Exception.create(e));
