@@ -3,6 +3,7 @@
     Bridge.define("Bridge.Net.WebSockets.ClientWebSocket", {
         constructor: function() {
             this.state = "none";
+            this.options = new Bridge.Net.WebSockets.ClientWebSocketOptions();
         },
 
         getState: function() {

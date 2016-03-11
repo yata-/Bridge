@@ -21,5 +21,16 @@ namespace System.Net.WebSockets
 				return WebSocketState.None;
 			}
 		}
+
+		/// <summary>
+		/// Gets the WebSocket options for the ClientWebSocket instance.
+		/// </summary>
+		public ClientWebSocketOptions Options
+		{
+			get
+			{
+				return null;
+			}
+		}
 	}
 }
