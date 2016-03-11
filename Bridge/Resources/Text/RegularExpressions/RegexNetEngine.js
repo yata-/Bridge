@@ -71,6 +71,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
                     sBracketLvl++;
                     continue;
                 }
+
                 if (ch === "]") {
                     if (sBracketLvl > 0) {
                         sBracketLvl--;
@@ -95,6 +96,9 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
                         if (parent != null) {
                             parent.innerGroups.push(group);
                         }
+
+                        group.constructs = statics._getGroupConstructs(pattern, i + 1);
+                        i += group.constructs.exprLength; // Skip group Constructs in the pattern
                     }
                     continue;
                 }
@@ -109,6 +113,136 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
             }
 
             return groups;
+        },
+
+        _getGroupConstructs: function (pattern, i) {
+            var statics = Bridge.get(Bridge.Text.RegularExpressions.RegexNetEngine);
+            // ?<name1>
+            // ?'name1'
+            // ?<name1-name2>
+            // ?'name1-name2'
+            // ?:
+            // ?imnsx-imnsx
+            // ?=
+            // ?!
+            // ?<=
+            // ?<!
+            // ?>
+            var constructs = {
+                name1: null,
+                name2: null,
+
+                isNonCapturing: false,
+
+                isIgnoreCase: null,
+                isMultiline: null,
+                isExplicitCapture: null,
+                isSingleLine: null,
+                isIgnoreWhitespace: null,
+
+                isPositiveLookahead: false,
+                isNegativeLookahead: false,
+                isPositiveLookbehind: false,
+                isNegativeLookbehind: false,
+
+                isNonbacktracking: false,
+
+                exprLength: 0
+            };
+
+            if (i+1 >= pattern.length) {
+                return constructs;
+            }
+
+            if (pattern[i] !== "?") {
+                return constructs;
+            }
+
+            ++i;
+            var sfx2 = pattern.slice(i, i + 2);
+            if (sfx2.length === 2) {
+                if (sfx2 === "<=") {
+                    constructs.isPositiveLookbehind = true;
+                    constructs.exprLength = 3;
+                    return constructs;
+                }
+                if (sfx2 === "<!") {
+                    constructs.isNegativeLookbehind = true;
+                    constructs.exprLength = 3;
+                    return constructs;
+                }
+            }
+            var ch = pattern[i];
+            if (ch === ":") {
+                constructs.isNonCapturing = true;
+                constructs.exprLength = 2;
+                return constructs;
+            }
+            if (ch === "=") {
+                constructs.isPositiveLookahead = true;
+                constructs.exprLength = 2;
+                return constructs;
+            }
+            if (ch === "!") {
+                constructs.isNegativeLookahead = true;
+                constructs.exprLength = 2;
+                return constructs;
+            }
+            if (ch === ">") {
+                constructs.isNonbacktracking = true;
+                constructs.exprLength = 2;
+                return constructs;
+            }
+            if (ch === "<" || ch === "'") {
+                var endBracket = ch === "<" ? ">" : "'";
+                var name1Match = statics._matchUntil(pattern, i + 1, pattern.length, ["-", endBracket]);
+                constructs.name1 = name1Match.matched;
+                constructs.exprLength = name1Match.lastIndex - i + 2;
+                                                                    
+                if (name1Match.lastCh === "-") {
+                    var name2Match = statics._matchUntil(pattern, name1Match.lastIndex + 1, pattern.length, [endBracket]);
+                    constructs.name2 = name2Match.matched;
+                    constructs.exprLength = name2Match.lastIndex - i + 2;
+                }
+                return constructs;
+            }
+
+            var imnsx = ["i", "m", "n", "s", "x"];
+            var imnsx1Match = statics._matchAllowedChars(pattern, i + 1, pattern.length, imnsx);
+            if (imnsx1Match.lastCh === "-" || imnsx1Match.lastCh === ":") {
+                statics._parseImnsx(constructs, imnsx1Match.matched, true);
+
+                if (imnsx1Match.lastCh === "-") {
+                    var imnsx2Match = statics._matchAllowedChars(pattern, imnsx1Match.lastCh + 1, pattern.length, imnsx);
+                    statics._parseImnsx(constructs, imnsx2Match.matched, false);
+                    constructs.exprLength = imnsx2Match.lastIndex - i + 2;
+                } else {
+                    constructs.exprLength = imnsx1Match.lastIndex - i + 2;
+                }
+            }
+
+            return constructs;
+        },
+
+        _parseImnsx: function(prefix, imnsxString, value) {
+            for (var i = 0; i < imnsxString.length; i++) {
+                var ch = imnsxString[i];
+                if (ch === "i") {
+                    prefix.isIgnoreCase = value;
+                }
+                else if (ch === "m") {
+                    prefix.isMultiline = value;
+                }
+                else if (ch === "n") {
+                    prefix.isExplicitCapture = value;
+                }
+                else if (ch === "s") {
+                    prefix.isSingleLine = value;
+                }
+                else if (ch === "x") {
+                    prefix.isIgnoreWhitespace = value;
+                }
+            }
         },
 
         _fillPatternGroupInfo: function (group, pattern) {
@@ -190,6 +324,31 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
                     break;
                 }
 
+                index++;
+            }
+
+            return res;
+        },
+
+        _matchUntil: function(str, index, endIndex, unallowedChars) {
+            var res = {
+                matched: "",
+                lastCh: "",
+                lastIndex: 0
+            };
+
+            while (index < endIndex) {
+
+                var ch = str[index];
+                for (var i = 0; i < unallowedChars.length; i++) {
+                    if (ch === unallowedChars[i]) {
+                        res.lastCh = ch;
+                        res.lastIndex = index;
+                        return res;
+                    }
+                }
+
+                res.matched += ch;
                 index++;
             }
 
