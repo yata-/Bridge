@@ -34,6 +34,17 @@ namespace System.Net.WebSockets
 		}
 
 		/// <summary>
+		/// Gets the reason why the close handshake was initiated on ClientWebSocket instance.
+		/// </summary>
+		public WebSocketCloseStatus? CloseStatus
+		{
+			get
+			{
+				return null;
+			}
+		}
+
+		/// <summary>
 		/// Connect to a WebSocket server as an asynchronous operation.
 		/// </summary>
 		/// <param name="uri">The URI of the WebSocket server to connect to.</param>

@@ -7,6 +7,11 @@
             this.state = "none";
             this.options = new Bridge.Net.WebSockets.ClientWebSocketOptions();
             this.disposed = false;
+            this.closeStatus = null;
+        },
+
+        getCloseStatus: function() {
+            return this.closeStatus;
         },
 
         getState: function() {
