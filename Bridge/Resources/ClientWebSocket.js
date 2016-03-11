@@ -90,3 +90,33 @@
             this.requestedSubProtocols.push(subProtocol);
         }
     });
+
+    Bridge.define("Bridge.Net.WebSockets.WebSocketReceiveResult", {
+        constructor: function(count, messageType, endOfMessage, closeStatus, closeStatusDescription) {
+            this.count = count;
+            this.messageType = messageType;
+            this.endOfMessage = endOfMessage;
+            this.closeStatus = closeStatus;
+            this.closeStatusDescription = closeStatusDescription;
+        },
+
+        getCount: function() {
+            return this.count;
+        },
+
+        getMessageType: function() {
+            return this.messageType;
+        },
+
+        getEndOfMessage: function() {
+            return this.endOfMessage;
+        },
+
+        getCloseStatus: function() {
+            return this.closeStatus;
+        },
+
+        getCloseStatusDescription: function() {
+            return this.closeStatusDescription;
+        }
+    });
