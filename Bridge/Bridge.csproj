@@ -122,6 +122,7 @@
     <Compile Include="System\IDisposable.cs" />
     <Compile Include="System\IAccessorsIndexer.cs" />
     <Compile Include="System\Net\WebSockets\ClientWebSocket.cs" />
+    <Compile Include="System\Net\WebSockets\WebSocketState.cs" />
     <Compile Include="System\Predicate.cs" />
     <Compile Include="System\OutOfMemoryException.cs" />
     <Compile Include="System\RankException.cs" />
