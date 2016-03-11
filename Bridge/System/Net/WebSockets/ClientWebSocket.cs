@@ -32,5 +32,12 @@ namespace System.Net.WebSockets
 				return null;
 			}
 		}
+
+		/// <summary>
+		/// Connect to a WebSocket server as an asynchronous operation.
+		/// </summary>
+		/// <param name="uri">The URI of the WebSocket server to connect to.</param>
+		/// <param name="cancellationToken">IGNORED: Connection can't be interrupted in Javascript.</param>
+		public extern Task ConnectAsync(Uri uri, CancellationToken cancellationToken);
 	}
 }

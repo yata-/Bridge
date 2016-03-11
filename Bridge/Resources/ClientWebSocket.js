@@ -8,6 +8,26 @@
 
         getState: function() {
             return this.state;
+        },
+
+        connectAsync: function(uri, cancellationToken) {
+            if (this.state !== "none") {
+                throw new Bridge.InvalidOperationException("Socket is not in initial state");
+            }
+            this.options.setToReadOnly();
+            this.state = "connecting";
+            var tcs = new Bridge.TaskCompletionSource(),
+                self = this;
+            try {
+                this.socket = new WebSocket(uri.getAbsoluteUri(), this.options.requestedSubProtocols);
+                this.socket.onopen = function() {
+                    self.state = "open";
+                    tcs.setResult(null);
+                };
+            } catch (e) {
+                tcs.setException(Bridge.Exception.create(e));
+            }
+            return tcs.task;
         }
     });
 
