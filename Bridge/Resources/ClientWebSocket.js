@@ -1,10 +1,12 @@
     // @source ClientWebSocket.js
 
     Bridge.define("Bridge.Net.WebSockets.ClientWebSocket", {
+        inherits: [Bridge.IDisposable],
         constructor: function() {
             this.messageBuffer = [];
             this.state = "none";
             this.options = new Bridge.Net.WebSockets.ClientWebSocketOptions();
+            this.disposed = false;
         },
 
         getState: function() {
@@ -128,8 +130,22 @@
             asyncBody();
             return tcs.task;
         },
+        dispose: function() {
+            if (this.disposed) {
+                return;
+            }
+            this.disposed = true;
+            this.messageBuffer = [];
+            if (state === "open") {
+                this.state = "closesent";
+                this.socket.close();
+            }
+        },
 
         throwIfNotConnected: function() {
+            if (this.disposed) {
+                throw new Bridge.InvalidOperationException("Socket is disposed.");
+            }
             if (this.socket.readyState !== 1) {
                 throw new Bridge.InvalidOperationException("Socket is not connected.");
             }

@@ -9,7 +9,7 @@ namespace System.Net.WebSockets
 	/// </summary>
 	[External]
 	[Namespace("Bridge.Net.WebSockets")]
-	public class ClientWebSocket: IBridgeClass
+	public class ClientWebSocket: IBridgeClass, IDisposable
 	{
 		/// <summary>
 		/// Get the WebSocket state of the <see cref="ClientWebSocket"/> instance.
@@ -53,5 +53,7 @@ namespace System.Net.WebSockets
 
 		public extern Task<WebSocketReceiveResult> ReceiveAsync(ArraySegment<byte> buffer,
 			CancellationToken cancellationToken);
+
+		public extern void Dispose();
 	}
 }
