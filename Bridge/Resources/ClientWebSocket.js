@@ -166,6 +166,22 @@
             return tcs.task;
         },
 
+        closeOutputAsync: function(closeStatus, statusDescription, cancellationToken) {
+            this.throwIfNotConnected();
+            if (this.state !== "open") {
+                throw new Bridge.InvalidOperationException("Socket is not in connected state");
+            }
+            var tcs = new Bridge.TaskCompletionSource();
+            try {
+                this.state = "closesent";
+                this.socket.close(closeStatus, statusDescription);
+                tcs.setResult(null);
+            } catch (e) {
+                tcs.setException(Bridge.Exception.create(e));
+            }
+            return tcs.task;
+        },
+
         abort: function() {
             this.dispose();
         },

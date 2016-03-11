@@ -77,6 +77,16 @@ namespace System.Net.WebSockets
 		public extern Task CloseAsync(WebSocketCloseStatus closeStatus, string statusDescription,
 			CancellationToken cancellationToken);
 
+		/// <summary>
+		/// Close the ClientWebSocket instance. Though this method has Async suffix, returned Task will
+		/// always be completed(i.e. you can't track sending progress), due to Javascript limitations.
+		/// </summary>
+		/// <param name="closeStatus">The WebSocket close status.</param>
+		/// <param name="statusDescription">A description of the close status.</param>
+		/// <param name="cancellationToken">IGNORED: Close can't be interrupted in Javascript. </param>
+		public extern Task CloseOutputAsync(WebSocketCloseStatus closeStatus, string statusDescription,
+			CancellationToken cancellationToken);
+
 		public extern void Dispose();
 
 		/// <summary>
