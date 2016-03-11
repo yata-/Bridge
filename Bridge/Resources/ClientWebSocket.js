@@ -23,6 +23,10 @@
             return this.closeStatusDescription;
         },
 
+        getSubProtocol: function() {
+            return this.socket ? this.socket.protocol : null;
+        },
+
         connectAsync: function(uri, cancellationToken) {
             if (this.state !== "none") {
                 throw new Bridge.InvalidOperationException("Socket is not in initial state");

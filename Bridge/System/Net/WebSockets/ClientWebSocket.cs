@@ -57,6 +57,17 @@ namespace System.Net.WebSockets
 		}
 
 		/// <summary>
+		/// Gets the supported WebSocket sub-protocol for the ClientWebSocket instance.
+		/// </summary>
+		public string SubProtocol
+		{
+			get
+			{
+				return null;
+			}
+		}
+
+		/// <summary>
 		/// Connect to a WebSocket server as an asynchronous operation.
 		/// </summary>
 		/// <param name="uri">The URI of the WebSocket server to connect to.</param>
