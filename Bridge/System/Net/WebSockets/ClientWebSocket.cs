@@ -50,5 +50,8 @@ namespace System.Net.WebSockets
 		/// <param name="cancellationToken">IGNORED: Send can't be interrupted in Javascript.</param>
 		public extern Task SendAsync(ArraySegment<byte> buffer, WebSocketMessageType messageType,
 			bool endOfMessage = true, CancellationToken cancellationToken = default(CancellationToken));
+
+		public extern Task<WebSocketReceiveResult> ReceiveAsync(ArraySegment<byte> buffer,
+			CancellationToken cancellationToken);
 	}
 }

@@ -2,6 +2,7 @@
 
     Bridge.define("Bridge.Net.WebSockets.ClientWebSocket", {
         constructor: function() {
+            this.messageBuffer = [];
             this.state = "none";
             this.options = new Bridge.Net.WebSockets.ClientWebSocketOptions();
         },
@@ -20,10 +21,35 @@
                 self = this;
             try {
                 this.socket = new WebSocket(uri.getAbsoluteUri(), this.options.requestedSubProtocols);
+                this.socket.binaryType = "arraybuffer";
                 this.socket.onopen = function() {
                     self.state = "open";
                     tcs.setResult(null);
                 };
+                this.socket.onmessage = function(e) {
+                    var data = e.data,
+                        message = {},
+                        i;
+                    message.bytes = [];
+                    if (typeof (data) === "string") {
+                        for (i = 0; i < data.length; ++i) {
+                            message.bytes.push(data.charCodeAt(i));
+                        }
+                        message.messageType = "text";
+                        self.messageBuffer.push(message);
+                        return;
+                    }
+                    if (data instanceof ArrayBuffer) {
+                        var dataView = new Uint8Array(data);
+                        for (i = 0; i < dataView.length; i++) {
+                            message.bytes.push(dataView[i]);
+                        }
+                        message.messageType = "binary";
+                        self.messageBuffer.push(message);
+                        return;
+                    }
+                    throw new Bridge.ArgumentException("Invalid message type.");
+                }
             } catch (e) {
                 tcs.setException(Bridge.Exception.create(e));
             }
@@ -57,6 +83,49 @@
             } catch (e) {
                 tcs.setException(Bridge.Exception.create(e));
             }
+            return tcs.task;
+        },
+
+        receiveAsync: function(buffer, cancellationToken) {
+            this.throwIfNotConnected();
+            var task,
+                tcs = new Bridge.TaskCompletionSource(),
+                self = this,
+                asyncBody = Bridge.fn.bind(this, function() {
+                    try {
+                        if (cancellationToken.getIsCancellationRequested()) {
+                            tcs.setException(new Bridge.TaskCanceledException("Receive has been cancelled.", tcs.task));
+                            return;
+                        }
+                        if (self.messageBuffer.length === 0) {
+                            task = Bridge.Task.delay(0);
+                            task.continueWith(asyncBody);
+                            return;
+                        }
+                        var message = self.messageBuffer[0],
+                            array = buffer.getArray(),
+                            resultBytes,
+                            endOfMessage;
+                        if (message.bytes.length <= array.length) {
+                            self.messageBuffer.shift();
+                            resultBytes = message.bytes;
+                            endOfMessage = true;
+                        } else {
+                            resultBytes = message.bytes.slice(0, array.length);
+                            message.bytes = message.bytes.slice(array.length, message.bytes.length);
+                            endOfMessage = false;
+                        }
+                        for (var i = 0; i < resultBytes.length; i++) {
+                            array[i] = resultBytes[i];
+                        }
+                        tcs.setResult(new Bridge.Net.WebSockets.WebSocketReceiveResult(
+                            resultBytes.length, message.messageType, endOfMessage));
+                    } catch (e) {
+                        tcs.setException(Bridge.Exception.create(e));
+                    }
+                }, arguments);
+
+            asyncBody();
             return tcs.task;
         },
 
