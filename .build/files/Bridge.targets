@@ -15,7 +15,7 @@
       Configuration="$(Configuration)"
       Assembly="@(IntermediateAssembly)"
       AssembliesPath="$(OutputPath)"
-      ProjectPath="$(MSBuildProjectFullPath)">
-    </GenerateScript>
+      ProjectPath="$(MSBuildProjectFullPath)"
+      />
   </Target>
 </Project>
