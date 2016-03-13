@@ -9,11 +9,8 @@ Bridge.define("Bridge.Text.RegularExpressions.Group", {
         config: {
             init: function () {
                 var empty = new Bridge.Text.RegularExpressions.Group("", [], 0);
-
                 this.getEmpty = function () {
-                    return function () {
-                        return empty;
-                    };
+                    return empty;
                 }
             }
         },

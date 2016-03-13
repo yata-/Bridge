@@ -44,9 +44,12 @@ Bridge.define("Bridge.Text.RegularExpressions.CaptureCollection", {
     },
 
     copyTo: function (array, arrayIndex) {
-        //TODO: check
         if (array == null) {
             throw new Bridge.ArgumentNullException("array");
+        }
+
+        if (array.length < arrayIndex + this._capcount) {
+            throw new Bridge.IndexOutOfRangeException();
         }
 
         for (var i = arrayIndex, j = 0; j < this._capcount; i++, j++) {
@@ -56,8 +59,7 @@ Bridge.define("Bridge.Text.RegularExpressions.CaptureCollection", {
     },
 
     getEnumerator: function () {
-        this._ensureCapturesInited();
-        return new Bridge.ArrayEnumerator(this._captures);
+        return new Bridge.Text.RegularExpressions.CaptureEnumerator(this);
     },
 
     _ensureCapturesInited: function () {
@@ -70,7 +72,52 @@ Bridge.define("Bridge.Text.RegularExpressions.CaptureCollection", {
                 var length = this._group._caps[j * 2 + 1];
                 captures[j] = new Bridge.Text.RegularExpressions.Capture(this._group._text, index, length);
             }
+            if (this._capcount > 0) {
+                captures[this._capcount - 1] = this._group;
+            }
+
             this._captures = captures;
         }
+    }
+});
+
+Bridge.define("Bridge.Text.RegularExpressions.CaptureEnumerator", {
+    inherits: function () {
+        return [Bridge.IEnumerator];
+    },
+
+    _captureColl: null,
+    _curindex: 0,
+
+    constructor: function (captureColl) {
+        this._curindex = -1;
+        this._captureColl = captureColl;
+    },
+
+    moveNext: function () {
+        var size = this._captureColl.getCount();
+
+        if (this._curindex >= size) {
+            return false;
+        }
+
+        this._curindex++;
+        return (this._curindex < size);
+    },
+
+    getCurrent: function () {
+        return this.getCapture();
+    },
+
+    getCapture: function () {
+        if (this._curindex < 0 || this._curindex >= this._captureColl.getCount()) {
+            throw new Bridge.InvalidOperationException("Enumeration has either not started or has already finished.");
+        }
+
+        return this._captureColl.get(this._curindex);
+    },
+
+    reset: function () {
+        this._curindex = -1;
     }
 });

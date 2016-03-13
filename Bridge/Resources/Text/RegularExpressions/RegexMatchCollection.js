@@ -26,39 +26,6 @@ Bridge.define("Bridge.Text.RegularExpressions.MatchCollection", {
         this._startat = startat;
         this._prevlen = -1;
         this._matches = [];
-
-
-    },
-
-    _getMatch: function (i) {
-        if (i < 0) {
-            return null;
-        }
-        if (this._matches.length > i) {
-            return this._matches[i];
-        }
-        if (this._done) {
-            return null;
-        }
-
-        var match;
-
-        do {
-            //TODO: implement RUN: match = _regex.Run(false, _prevlen, _input, _beginning, _length, _startat);
-
-            if (!match.getSuccess()) {
-                this._done = true;
-                return null;
-            }
-
-            this._matches.push(match);
-
-            this._prevLen = match._length;//TODO: access
-            this._startAt = match._textpos;//TODO: access
-
-        } while (this._matches.length <= i);
-
-        return match;
     },
 
     getCount: function () {
@@ -90,15 +57,96 @@ Bridge.define("Bridge.Text.RegularExpressions.MatchCollection", {
     },
 
     copyTo: function (array, arrayIndex) {
-        //TODO: check
         if (array == null) {
             throw new Bridge.ArgumentNullException("array");
         }
-        this._matches.copyTo$1(array, arrayIndex);
+
+        var count = this.getCount();
+        if (array.length < arrayIndex + count) {
+            throw new Bridge.IndexOutOfRangeException();
+        }
+
+        for (var i = arrayIndex, j = 0; j < count; i++, j++) {
+            var match = this._getMatch(j);
+            Bridge.Array.set(array, match, [i]);
+        }
     },
 
     getEnumerator: function () {
-        //TODO: check
-        return new Bridge.ArrayEnumerator(this);
+        return new Bridge.Text.RegularExpressions.MatchEnumerator(this);
+    },
+
+    _getMatch: function (i) {
+        if (i < 0) {
+            return null;
+        }
+        if (this._matches.length > i) {
+            return this._matches[i];
+        }
+        if (this._done) {
+            return null;
+        }
+
+        var match;
+        do {
+            match = this._regex._runner.run(this._regex, false, this._prevLen, this._input, this._beginning, this._length, this._startat);
+            if (!match.getSuccess()) {
+                this._done = true;
+                return null;
+            }
+
+            this._matches.push(match);
+
+            this._prevLen = match._length;
+            this._startat = match._textpos;
+
+        } while (this._matches.length <= i);
+
+        return match;
+    }
+});
+
+Bridge.define("Bridge.Text.RegularExpressions.MatchEnumerator", {
+    inherits: function () {
+        return [Bridge.IEnumerator];
+    },
+
+    _matchcoll: null,
+    _match: null,
+    _curindex: 0,
+    _done: false,
+
+    constructor: function(matchColl) {
+        this._matchcoll = matchColl;
+    },
+
+    moveNext: function () {
+        if (this._done) {
+            return false;
+        }
+ 
+        this._match = this._matchcoll._getMatch(this._curindex);
+        this._curindex ++;
+ 
+        if (this._match == null) {
+            this._done = true;
+            return false;
+        }
+ 
+        return true;
+    },
+
+    getCurrent: function() {
+        if (this._match == null) {
+            throw new Bridge.InvalidOperationException("Enumeration has either not started or has already finished.");
+        }
+
+        return this._match;
+    },
+
+    reset: function() {
+        this._curindex = 0;
+        this._done = false;
+        this._match = null;
     }
 });

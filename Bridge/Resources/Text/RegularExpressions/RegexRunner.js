@@ -1,6 +1,5 @@
 ﻿// @source Text/RegularExpressions/RegexRunner.js
 
-
 Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
     statics: {
 
@@ -13,6 +12,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
     _runtextbeg: 0, // beginning of text to search
     _runtextend: 0, // end of text to search
     _runtextstart: 0, // starting point for search
+    _quick: false, // true value means IsMatch method call
 
     constructor: function () {
     },
@@ -26,30 +26,37 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
             throw new ArgumentOutOfRangeException("length", "Length cannot be less than 0 or exceed input length.");
         }
 
-        // Do the scan starting at the requested position            
-        var match = this.scan(regex, input, beginning, beginning + length, startat, prevlen, quick, null /*internalMatchTimeout*/); //TODO: internalMatchTimeout
-        return match;
+        this._runregex = regex;
+        this._runtext = input;
+        this._runtextbeg = beginning;
+        this._runtextend = beginning + length;
+        this._runtextstart = startat;
+        this._quick = quick;
+        //TODO: prevlen
+        //TODO: internalMatchTimeout
+
+        // Execute Regex:
+        var netEngine = new Bridge.Text.RegularExpressions.RegexNetEngine(regex._pattern);
+        var jsMatch = netEngine.match(this._runtext, this._runtextstart);
+
+        // Convert the results:
+        var result = this._convertNetEngineResults(jsMatch);
+        return result;
     },
 
-    scan: function (regex, text, textbeg, textend, textstart, prevlen, quick, timeout) {
-        this._runregex = regex;
-        this._runtext = text;
-        this._runtextbeg = textbeg;
-        this._runtextend = textend;
-        this._runtextstart = textstart;
+    _convertNetEngineResults: function (jsMatch) {
+        //TODO: var stopPos = this._runregex.getRightToLeft() ? this._runtextbeg : this._runtextend;
 
-        var netEngine = new Bridge.Text.RegularExpressions.RegexNetEngine(regex._pattern);
-        var jsMatch = netEngine.match(text, textstart);
-        if (!jsMatch.success) {
-            if (quick) {
-                var matchClass = Bridge.get(Bridge.Text.RegularExpressions.Match);
-                return matchClass.getEmpty();
-            }
-            return null;
+        if (jsMatch.success && this._quick) {
+            return null; // in quick mode, a successful match returns null
         }
 
-        var match = new Bridge.Text.RegularExpressions.Match(this._runregex, jsMatch.groups.length, text, 0, text.length, this._runtextstart);
-        //match._addMatch(0, jsMatch.capIndex, jsMatch.capLength);
+        if (!jsMatch.success) {
+            var matchClass = Bridge.get(Bridge.Text.RegularExpressions.Match);
+            return matchClass.getEmpty();
+        }
+
+        var match = new Bridge.Text.RegularExpressions.Match(this._runregex, jsMatch.groups.length, this._runtext, 0, this._runtext.length, this._runtextstart);
 
         for (var i = 0; i < jsMatch.groups.length; i++) {
             var jsGroup = jsMatch.groups[i];
@@ -59,20 +66,9 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
             }
         }
 
-        return this._tidyMatch(match, quick, jsMatch.capIndex + jsMatch.capLength);
-    },
-
-    
-
-    _tidyMatch: function (match, quick, textEndPos) {
-        if (!quick) {
-            // TODO: runmatch to be set to NULL
-            match._tidy(textEndPos);
-            return match;
-        } else {
-            // in quick mode, a successful match returns null
-            return null;
-        }
+        var textEndPos = jsMatch.capIndex + jsMatch.capLength;
+        match._tidy(textEndPos);
+        return match;
     }
 });
 

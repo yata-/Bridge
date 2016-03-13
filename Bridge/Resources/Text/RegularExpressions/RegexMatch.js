@@ -9,11 +9,8 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
         config: {
             init: function () {
                 var empty = new Bridge.Text.RegularExpressions.Match(null, 1, "", 0, 0, 0);
-
                 this.getEmpty = function () {
-                    return function () {
-                        return empty;
-                    };
+                    return empty;
                 }
             }
         },
@@ -102,6 +99,8 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
 
         if (this._balancing) {
 
+            //TODO: balancing
+
             // The idea here is that we want to compact all of our unbalanced captures.  To do that we
             // use j basically as a count of how many unbalanced captures we have at any given time 
             // (really j is an index, but j/2 is the count).  First we skip past all of the real captures
@@ -156,7 +155,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
             return this;
         }
 
-        return this._regex.run(this._regex, false, this._length, this._text, this._textbeg, this._textend - this._textbeg, this._textpos);
+        return this._regex._runner.run(this._regex, false, this._length, this._text, this._textbeg, this._textend - this._textbeg, this._textpos);
     },
 
     result: function (replacement) {

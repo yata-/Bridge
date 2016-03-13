@@ -15,26 +15,44 @@ Bridge.define("Bridge.Text.RegularExpressions.GroupCollection", {
         this._captureMap = caps;
     },
 
-    _getGroupImpl: function (groupnum) {
-        if (groupnum === 0) {
-            return this._match;
+    getSyncRoot: function () {
+        return this._match;
+    },
+
+    getIsSynchronized: function () {
+        return false;
+    },
+
+    getIsReadOnly: function () {
+        return true;
+    },
+
+    getCount: function () {
+        return this._match._matchcount.length;
+    },
+
+    get: function (groupnum) {
+        return this._getGroup(groupnum);
+    },
+
+    copyTo: function (array, arrayIndex) {
+        if (array == null) {
+            throw new Bridge.ArgumentNullException("array");
         }
 
-        // Construct all the Group objects the first time GetGroup is called
-        if (this._groups == null) {
-            var groups = [];
-            groups.length = this._match._matchcount.length - 1;
-
-            for (var i = 0; i < groups.length; i++) {
-                var matchText = this._match._text;
-                var matchCaps = this._match._matches[i + 1];
-                var matchCapcount = this._match._matchcount[i + 1];
-                groups[i] = new Bridge.Text.RegularExpressions.Group(matchText, matchCaps, matchCapcount);
-            }
-            this._groups = groups;
+        var count = this.getCount();
+        if (array.length < arrayIndex + count) {
+            throw new Bridge.IndexOutOfRangeException();
         }
 
-        return this._groups[groupnum - 1];
+        for (var i = arrayIndex, j = 0; j < count; i++, j++) {
+            var group = this._getGroup(j);
+            Bridge.Array.set(array, group, [i]);
+        }
+    },
+
+    getEnumerator: function () {
+        return new Bridge.Text.RegularExpressions.GroupEnumerator(this);
     },
 
     _getGroup: function (groupnum) {
@@ -59,41 +77,74 @@ Bridge.define("Bridge.Text.RegularExpressions.GroupCollection", {
         return group;
     },
 
-    getSyncRoot: function () {
-        return this._match;
-    },
-
-    getIsSynchronized: function () {
-        return false;
-    },
-
-    getIsReadOnly: function () {
-        return true;
-    },
-
-    getCount: function () {
-        return this._match._matchcount.length;
-    },
-
-    get: function (groupnum) {
-        return this._getGroup(groupnum);
-    },
-
-    copyTo: function (array, arrayIndex) {
-        //TODO: check
-        if (array == null) {
-            throw new Bridge.ArgumentNullException("array");
+    _getGroupImpl: function (groupnum) {
+        if (groupnum === 0) {
+            return this._match;
         }
 
-        var count = this._getCount();
-        for (var i = arrayIndex, j = 0; j < count; i++, j++) {
-            var group = this._getGroup(j);
-            Bridge.Array.set(array, group, [i]);
-        }
+        this._ensureGroupsInited();
+        return this._groups[groupnum];
     },
 
-    getEnumerator: function () {
-        //TODO: check
-        return new Bridge.ArrayEnumerator(this);
+    _ensureGroupsInited: function () {
+        // Construct all the Group objects the first time GetGroup is called
+        if (this._groups == null) {
+            var groups = [];
+            groups.length = this._match._matchcount.length;
+
+            if (groups.length > 0) {
+                groups[0] = this._match;
+            }
+
+            for (var i = 0; i < groups.length-1; i++) {
+                var matchText = this._match._text;
+                var matchCaps = this._match._matches[i + 1];
+                var matchCapcount = this._match._matchcount[i + 1];
+                groups[i+1] = new Bridge.Text.RegularExpressions.Group(matchText, matchCaps, matchCapcount);
+            }
+            this._groups = groups;
+        }
+    }
+});
+
+
+Bridge.define("Bridge.Text.RegularExpressions.GroupEnumerator", {
+    inherits: function () {
+        return [Bridge.IEnumerator];
+    },
+
+    _groupColl: null,
+    _curindex: 0,
+
+    constructor: function (groupColl) {
+        this._curindex = -1;
+        this._groupColl = groupColl;
+    },
+
+    moveNext: function () {
+        var size = this._groupColl.getCount();
+ 
+        if (this._curindex >= size) {
+            return false;
+        }
+ 
+        this._curindex++;
+        return (this._curindex < size);
+    },
+
+    getCurrent: function () {
+        return this.getCapture();
+    },
+
+    getCapture: function () {
+        if (this._curindex < 0 || this._curindex >= this._groupColl.getCount()) {
+            throw new Bridge.InvalidOperationException("Enumeration has either not started or has already finished.");
+        }
+
+        return this._groupColl.get(this._curindex);
+    },
+
+    reset: function () {
+        this._curindex = -1;
     }
 });

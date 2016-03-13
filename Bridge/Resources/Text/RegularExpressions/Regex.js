@@ -273,7 +273,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
             throw new Bridge.ArgumentNullException("input");
         }
 
-        return new Bridge.Text.RegularExpressions.MatchCollection(this, input, 0, input.Length, startat);
+        return new Bridge.Text.RegularExpressions.MatchCollection(this, input, 0, input.length, startat);
     },
 
     getGroupNames: function () {
