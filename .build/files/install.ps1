@@ -5,10 +5,10 @@ Write-Host ("Bridge.NET is configuring " + $project.ProjectName)
 
 # Remove all references of object
 $project.Object.References | foreach-object {
-	if ($_.Identity.ToLower().StartsWith("system") -or $_.Identity.ToLower().StartsWith("microsoft")) {
-		Write-Host ("Removing Reference to " + $_.Identity)
-		$_.Remove()
-	}
+    if ($_.Identity.ToLower().StartsWith("system") -or $_.Identity.ToLower().StartsWith("microsoft")) {
+        Write-Host ("Removing Reference to " + $_.Identity)
+        $_.Remove()
+    }
 }
 
 # Add a new PropertyGroup with NoStdLib node.
