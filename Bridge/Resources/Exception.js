@@ -67,6 +67,18 @@
         }
     });
 
+    Bridge.define("Bridge.IndexOutOfRangeException", {
+        inherits: [Bridge.SystemException],
+
+        constructor: function (message, innerException) {
+            if (!message) {
+                message = "Index was outside the bounds of the array.";
+            }
+
+            Bridge.SystemException.prototype.$constructor.call(this, message, innerException);
+        }
+    });
+
     Bridge.define("Bridge.ErrorException", {
         inherits: [Bridge.Exception],
 
