@@ -23,10 +23,11 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
             // Populate all groups by looking at each one
             var groups = match.getGroups();
             var groupsCount = groups.getCount();
+            var groupStatics = Bridge.get(Bridge.Text.RegularExpressions.Group);
 
             for (var i = 0; i < groupsCount; i++) {
                 var group = groups.get(i);
-                Bridge.Text.RegularExpressions.Group.synchronized(group);
+                groupStatics.synchronized(group);
             }
 
             return match;
