@@ -664,6 +664,8 @@
     <Content Include="Resources\Text\RegularExpressions\RegexMatchCollection.js" />
     <Content Include="Resources\Text\RegularExpressions\RegexNetEngine.js" />
     <Content Include="Resources\Text\RegularExpressions\RegexOptions.js" />
+    <Content Include="Resources\Text\RegularExpressions\RegexParser.js" />
+    <Content Include="Resources\Text\RegularExpressions\RegexReplacement.js" />
     <Content Include="Resources\Text\RegularExpressions\RegexRunner.js" />
     <Content Include="Resources\Version.js" />
     <None Include="AdditionalCompilerOptions.txt" />
