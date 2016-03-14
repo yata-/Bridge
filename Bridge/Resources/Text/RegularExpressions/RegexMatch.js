@@ -68,6 +68,30 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
         this._balancing = false;
     },
 
+    getGroups: function () {
+        if (this._groupColl == null) {
+            this._groupColl = new Bridge.Text.RegularExpressions.GroupCollection(this, null);
+        }
+        return this._groupColl;
+    },
+
+    nextMatch: function () {
+        if (this._regex == null) {
+            return this;
+        }
+
+        return this._regex._runner.run(this._regex, false, this._length, this._text, this._textbeg, this._textend - this._textbeg, this._textpos);
+    },
+
+    result: function (replacement) {
+        //TODO: implement
+        return replacement;
+    },
+
+    _isMatched: function (cap) {
+        return cap < this._matchcount.length && this._matchcount[cap] > 0 && this._matches[cap][this._matchcount[cap] * 2 - 1] !== (-3 + 1);
+    },
+
     _addMatch: function (cap, start, len) {
         if (this._matches[cap] == null) {
             this._matches[cap] = new Array(2);
@@ -142,25 +166,5 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
 
             this._balancing = false;
         }
-    },
-
-    getGroups: function () {
-        if (this._groupColl == null) {
-            this._groupColl = new Bridge.Text.RegularExpressions.GroupCollection(this, null);
-        }
-        return this._groupColl;
-    },
-
-    nextMatch: function () {
-        if (this._regex == null) {
-            return this;
-        }
-
-        return this._regex._runner.run(this._regex, false, this._length, this._text, this._textbeg, this._textend - this._textbeg, this._textpos);
-    },
-
-    result: function (replacement) {
-        //TODO: implement
-        return replacement;
     }
 });
