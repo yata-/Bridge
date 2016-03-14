@@ -33,18 +33,31 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Entities
         [Test]
         public void CaseDataTest()
         {
-            var m = GetTestDataMatch();
+            var m1 = GetTestDataMatch();
 
-            ValidateMatch(m, 0, 19, "This is a sentance.", 2, true);
+            ValidateMatch(m1, 0, 19, "This is a sentance.", 2, true);
 
-            ValidateGroup(m, 0, 0, 19, true, "This is a sentance.", 1);
-            ValidateCapture(m, 0, 0, 0, 19, "This is a sentance.");
+            ValidateGroup(m1, 0, 0, 19, true, "This is a sentance.", 1);
+            ValidateCapture(m1, 0, 0, 0, 19, "This is a sentance.");
 
-            ValidateGroup(m, 1, 10, 9, true, "sentance.", 4);
-            ValidateCapture(m, 1, 0, 0, 5, "This ");
-            ValidateCapture(m, 1, 1, 5, 3, "is ");
-            ValidateCapture(m, 1, 2, 8, 2, "a ");
-            ValidateCapture(m, 1, 3, 10, 9, "sentance.");
+            ValidateGroup(m1, 1, 10, 9, true, "sentance.", 4);
+            ValidateCapture(m1, 1, 0, 0, 5, "This ");
+            ValidateCapture(m1, 1, 1, 5, 3, "is ");
+            ValidateCapture(m1, 1, 2, 8, 2, "a ");
+            ValidateCapture(m1, 1, 3, 10, 9, "sentance.");
+
+            var m2 = GetTestDataMatch(2);
+
+            ValidateMatch(m2, 20, 25, "This is another sentance.", 2, true);
+
+            ValidateGroup(m2, 0, 20, 25, true, "This is another sentance.", 1);
+            ValidateCapture(m2, 0, 0, 20, 25, "This is another sentance.");
+
+            ValidateGroup(m2, 1, 36, 9, true, "sentance.", 4);
+            ValidateCapture(m2, 1, 0, 20, 5, "This ");
+            ValidateCapture(m2, 1, 1, 25, 3, "is ");
+            ValidateCapture(m2, 1, 2, 28, 8, "another ");
+            ValidateCapture(m2, 1, 3, 36, 9, "sentance.");
         }
 
         #region CaptureCollection
@@ -280,9 +293,38 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Entities
             Assert.Throws(() => { matches.CopyTo(dstArray, 1); }, err => err.GetClassName() == typeof(IndexOutOfRangeException).GetClassName(), "Exception: Out of range.");
         }
 
+        [Test]
+        public void MatchCollectionWithEmptyPatternTest()
+        {
+            var pattern = @"";
+            var tstText = @"characters";
+
+            var rx = new Regex(pattern);
+            var matches = rx.Matches(tstText);
+
+            Assert.AreEqual(tstText.Length + 1, matches.Count);
+            for (int i = 0; i < matches.Count; i++)
+            {
+                Assert.AreEqual(i, matches[i].Index, "Matches[" + i + "].Index");
+                Assert.AreEqual(0, matches[i].Length, "Matches[" + i + "].Length");
+            }
+        }
+
         #endregion
 
         #region Match
+
+        [Test]
+        public void MatchEmptyPatternTest()
+        {
+            var pattern = @"";
+            var tstText = @"characters";
+
+            var rx = new Regex(pattern);
+            var m = rx.Match(tstText);
+
+            ValidateMatch(m, 0, 0, "", 1, true);
+        }
 
         [Test]
         public void MatchEmptyFieldsTest()
@@ -305,6 +347,26 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Entities
 
             actual = Match.Empty.NextMatch();
             MatchesAreEqual(Match.Empty, actual, "Empty.NextMatch()");
+        }
+
+        [Test]
+        public void MatchNextMatchWithEmptyPatternTest()
+        {
+            var pattern = @"";
+            var tstText = @"characters";
+
+            var rx = new Regex(pattern);
+            var m = rx.Match(tstText);
+            ValidateMatch(m, 0, 0, "", 1, true);
+
+            for (int i = 1; i < tstText.Length+1; i++)
+            {
+                m = m.NextMatch();
+                ValidateMatch(m, i, 0, "", 1, true);
+            }
+
+            m = m.NextMatch();
+            ValidateMatchNotFound(m);
         }
 
         #endregion

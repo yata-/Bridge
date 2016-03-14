@@ -13,6 +13,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
     _runtextend: 0, // end of text to search
     _runtextstart: 0, // starting point for search
     _quick: false, // true value means IsMatch method call
+    _prevlen: 0,
 
     constructor: function () {
     },
@@ -32,8 +33,28 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
         this._runtextend = beginning + length;
         this._runtextstart = startat;
         this._quick = quick;
+        this._prevlen = prevlen;
         //TODO: prevlen
         //TODO: internalMatchTimeout
+
+        var stoppos;
+        var bump;
+        if (this._runregex.getRightToLeft()) {
+            stoppos = this._runtextbeg;
+            bump = -1;
+        } else {
+            stoppos = this._runtextend;
+            bump = 1;
+        }
+
+        if (this._prevlen === 0) {
+            if (this._runtextstart === stoppos) {
+                var matchClass = Bridge.get(Bridge.Text.RegularExpressions.Match);
+                return matchClass.getEmpty();
+            }
+
+            this._runtextstart += bump;
+        }
 
         // Execute Regex:
         var netEngine = new Bridge.Text.RegularExpressions.RegexNetEngine(regex._pattern);
