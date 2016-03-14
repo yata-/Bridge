@@ -34,7 +34,6 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
         this._runtextstart = startat;
         this._quick = quick;
         this._prevlen = prevlen;
-        //TODO: prevlen
         //TODO: internalMatchTimeout
 
         var stoppos;
@@ -56,8 +55,13 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
             this._runtextstart += bump;
         }
 
+        var options = regex.getOptions();
+        var optionsEnum = Bridge.Text.RegularExpressions.RegexOptions;
+        var isMultiline = (options & optionsEnum.Multiline) === optionsEnum.Multiline;
+        var isCaseInsensitive = (options & optionsEnum.IgnoreCase) === optionsEnum.IgnoreCase;
+
         // Execute Regex:
-        var netEngine = new Bridge.Text.RegularExpressions.RegexNetEngine(regex._pattern);
+        var netEngine = new Bridge.Text.RegularExpressions.RegexNetEngine(regex._pattern, isMultiline, isCaseInsensitive);
         var jsMatch = netEngine.match(this._runtext, this._runtextstart);
 
         // Convert the results:

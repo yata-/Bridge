@@ -56,7 +56,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
         isMatch$2: function (input, pattern, options, matchTimeout) {
             var scope = Bridge.Text.RegularExpressions;
-            var regex = new scope.Regex(pattern, options, matchTimeout, true);
+            var regex = new scope.Regex("constructor$3", pattern, options, matchTimeout, true);
             return regex.isMatch(input);
         },
 
@@ -74,7 +74,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
         match$2: function (input, pattern, options, matchTimeout) {
             var scope = Bridge.Text.RegularExpressions;
-            var regex = new scope.Regex(pattern, options, matchTimeout, true);
+            var regex = new scope.Regex("constructor$3", pattern, options, matchTimeout, true);
             return regex.match(input);
         },
 
@@ -92,7 +92,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
         matches$2: function (input, pattern, options, matchTimeout) {
             var scope = Bridge.Text.RegularExpressions;
-            var regex = new scope.Regex(pattern, options, matchTimeout, true);
+            var regex = new scope.Regex("constructor$3", pattern, options, matchTimeout, true);
             return regex.matches(input);
         },
 
@@ -110,7 +110,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
         replace$2: function (input, pattern, replacement, options, matchTimeout) {
             var scope = Bridge.Text.RegularExpressions;
-            var regex = new scope.Regex(pattern, options, matchTimeout, true);
+            var regex = new scope.Regex("constructor$3", pattern, options, matchTimeout, true);
             return regex.replace(input, replacement);
         },
 
@@ -128,7 +128,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
         replace$5: function (input, pattern, evaluator, options, matchTimeout) {
             var scope = Bridge.Text.RegularExpressions;
-            var regex = new scope.Regex(pattern, options, matchTimeout, true);
+            var regex = new scope.Regex("constructor$3", pattern, options, matchTimeout, true);
             return regex.replace$3(input, evaluator);
         },
 
@@ -146,7 +146,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
         split$2: function (input, pattern, options, matchTimeout) {
             var scope = Bridge.Text.RegularExpressions;
-            var regex = new scope.Regex(pattern, options, matchTimeout, true);
+            var regex = new scope.Regex("constructor$3", pattern, options, matchTimeout, true);
             return regex.split(input);
         }
     },

@@ -240,29 +240,30 @@ namespace Bridge.ClientTest.Text.RegularExpressions.CoreFx
             ValidateResult(expected, substrings);
         }
 
-        //TODO: Uncomment when Options are implemented.
-        //[Test]
-        //public void SplitStaticWithOptionsTest()
-        //{
-        //    var expected = new[] { "", "1234", "5678", "9012", "" };
+        [Test]
+        public void SplitStaticWithOptionsTest()
+        {
+            var expected = new[] { "", "1234", "5678", "9012", "" };
 
-        //    string pattern = "[a-z]+";
-        //    string input = "Abc1234Def5678Ghi9012Jklm";
-        //    string[] substrings = Regex.Split(input, pattern, RegexOptions.IgnoreCase);
+            string pattern = "[a-z]+";
+            string input = "Abc1234Def5678Ghi9012Jklm";
+            string[] substrings = Regex.Split(input, pattern, RegexOptions.IgnoreCase);
 
-        //    ValidateResult(expected, substrings);
-        //}
+            ValidateResult(expected, substrings);
+        }
 
-        //[Test]
-        //public void SplitStaticWithOptionsAndTimeout()
-        //{
-        //    var expected = new[] { "", "1234", "5678", "9012", "" };
+        [Test]
+        public void SplitStaticWithOptionsAndTimeout()
+        {
+            var expected = new[] { "", "1234", "5678", "9012", "" };
 
-        //    string pattern = "[a-z]+";
-        //    string input = "Abc1234Def5678Ghi9012Jklm";
-        //    string[] substrings = Regex.Split(input, pattern, RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(500));
+            string pattern = "[a-z]+";
+            string input = "Abc1234Def5678Ghi9012Jklm";
+            //TODO: check timeout
+            string[] substrings = Regex.Split(input, pattern, RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(500));
 
-        //    ValidateResult(expected, substrings);
-        //}
+
+            ValidateResult(expected, substrings);
+        }
     }
 }
