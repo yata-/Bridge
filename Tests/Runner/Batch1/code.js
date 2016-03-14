@@ -1915,6 +1915,145 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1041', {
+        statics: {
+            config: {
+                properties: {
+                    Prop1: 0
+                }
+            },
+            testPropertyOps: function () {
+                var $t;
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).setProp1(5);
+    
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).setProp1(Bridge.Int.div(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).getProp1(), 2));
+                Bridge.get(Bridge.Test.Assert).areEqual(2, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).getProp1());
+    
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).setProp1(Bridge.ClientTest.BridgeIssues.Bridge1041.getProp1()+2);
+                Bridge.get(Bridge.Test.Assert).areEqual(4, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).getProp1());
+    
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).setProp1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).getProp1()+1);
+                Bridge.get(Bridge.Test.Assert).areEqual(5, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).getProp1());
+    
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).setProp1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).getProp1()+1);
+                Bridge.get(Bridge.Test.Assert).areEqual(6, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).getProp1());
+    
+                Bridge.get(Bridge.Test.Assert).areEqual(3, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).method((Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).setProp1(Bridge.Int.div(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).getProp1(), 2)), Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).getProp1())));
+                Bridge.get(Bridge.Test.Assert).areEqual(3, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).getProp1());
+    
+                Bridge.get(Bridge.Test.Assert).areEqual(4, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).method((Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).setProp1(Bridge.ClientTest.BridgeIssues.Bridge1041.getProp1()+1), Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).getProp1())));
+                Bridge.get(Bridge.Test.Assert).areEqual(4, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).getProp1());
+    
+                Bridge.get(Bridge.Test.Assert).areEqual(4, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).method(($t = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).getProp1(), Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).setProp1($t+1), $t)));
+                Bridge.get(Bridge.Test.Assert).areEqual(5, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).getProp1());
+    
+                Bridge.get(Bridge.Test.Assert).areEqual(6, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).method(($t = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).getProp1(), Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).setProp1($t+1), Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).getProp1())));
+                Bridge.get(Bridge.Test.Assert).areEqual(6, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).getProp1());
+            },
+            testIndexerOps: function () {
+                var $t;
+                var app = new Bridge.ClientTest.BridgeIssues.Bridge1041();
+                app.setItem(0, 5);
+    
+                app.setItem(0, Bridge.Int.div(app.getItem(0), 2));
+                Bridge.get(Bridge.Test.Assert).areEqual(2, app.getItem(0));
+    
+                app.setItem(0, app.getItem(0)+2);
+                Bridge.get(Bridge.Test.Assert).areEqual(4, app.getItem(0));
+    
+                app.setItem(0, app.getItem(0)+1);
+                Bridge.get(Bridge.Test.Assert).areEqual(5, app.getItem(0));
+    
+                app.setItem(0, app.getItem(0)+1);
+                Bridge.get(Bridge.Test.Assert).areEqual(6, app.getItem(0));
+    
+                Bridge.get(Bridge.Test.Assert).areEqual(3, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).method((app.setItem(0, Bridge.Int.div(app.getItem(0), 2)), app.getItem(0))));
+                Bridge.get(Bridge.Test.Assert).areEqual(3, app.getItem(0));
+    
+                Bridge.get(Bridge.Test.Assert).areEqual(4, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).method((app.setItem(0, app.getItem(0)+1), app.getItem(0))));
+                Bridge.get(Bridge.Test.Assert).areEqual(4, app.getItem(0));
+    
+                Bridge.get(Bridge.Test.Assert).areEqual(4, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).method(($t = app.getItem(0), app.setItem(0, $t+1), $t)));
+                Bridge.get(Bridge.Test.Assert).areEqual(5, app.getItem(0));
+    
+                Bridge.get(Bridge.Test.Assert).areEqual(6, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).method(($t = app.getItem(0), app.setItem(0, $t+1), app.getItem(0))));
+                Bridge.get(Bridge.Test.Assert).areEqual(6, app.getItem(0));
+            },
+            testDictOps: function () {
+                var $t;
+                var dict = Bridge.merge(new Bridge.Dictionary$2(Bridge.Int,Bridge.Int)(), [
+                    [0, 5]
+                ] );
+    
+                dict.set(0, Bridge.Int.div(dict.get(0), 2));
+                Bridge.get(Bridge.Test.Assert).areEqual(2, dict.get(0));
+    
+                dict.set(0, dict.get(0)+2);
+                Bridge.get(Bridge.Test.Assert).areEqual(4, dict.get(0));
+    
+                dict.set(0, dict.get(0)+1);
+                Bridge.get(Bridge.Test.Assert).areEqual(5, dict.get(0));
+    
+                dict.set(0, dict.get(0)+1);
+                Bridge.get(Bridge.Test.Assert).areEqual(6, dict.get(0));
+    
+                Bridge.get(Bridge.Test.Assert).areEqual(3, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).method((dict.set(0, Bridge.Int.div(dict.get(0), 2)), dict.get(0))));
+                Bridge.get(Bridge.Test.Assert).areEqual(3, dict.get(0));
+    
+                Bridge.get(Bridge.Test.Assert).areEqual(4, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).method((dict.set(0, dict.get(0)+1), dict.get(0))));
+                Bridge.get(Bridge.Test.Assert).areEqual(4, dict.get(0));
+    
+                Bridge.get(Bridge.Test.Assert).areEqual(4, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).method(($t = dict.get(0), dict.set(0, $t+1), $t)));
+                Bridge.get(Bridge.Test.Assert).areEqual(5, dict.get(0));
+    
+                Bridge.get(Bridge.Test.Assert).areEqual(6, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).method(($t = dict.get(0), dict.set(0, $t+1), dict.get(0))));
+                Bridge.get(Bridge.Test.Assert).areEqual(6, dict.get(0));
+            },
+            testVariableOps: function () {
+                var i1 = 5;
+    
+                i1 = Bridge.Int.div(i1, 2);
+                Bridge.get(Bridge.Test.Assert).areEqual(2, i1);
+    
+                i1 += 2;
+                Bridge.get(Bridge.Test.Assert).areEqual(4, i1);
+    
+                i1++;
+                Bridge.get(Bridge.Test.Assert).areEqual(5, i1);
+    
+                ++i1;
+                Bridge.get(Bridge.Test.Assert).areEqual(6, i1);
+    
+                Bridge.get(Bridge.Test.Assert).areEqual(3, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).method((i1 = Bridge.Int.div(i1, 2))));
+                Bridge.get(Bridge.Test.Assert).areEqual(3, i1);
+    
+                Bridge.get(Bridge.Test.Assert).areEqual(4, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).method((i1 += 1)));
+                Bridge.get(Bridge.Test.Assert).areEqual(4, i1);
+    
+                Bridge.get(Bridge.Test.Assert).areEqual(4, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).method(i1++));
+                Bridge.get(Bridge.Test.Assert).areEqual(5, i1);
+    
+                Bridge.get(Bridge.Test.Assert).areEqual(6, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041).method(++i1));
+                Bridge.get(Bridge.Test.Assert).areEqual(6, i1);
+            },
+            method: function (i) {
+                return i;
+            }
+        },
+        dict: null,
+        config: {
+            init: function () {
+                this.dict = new Bridge.Dictionary$2(Bridge.Int,Bridge.Int)();
+            }
+        },
+        getItem: function (i) {
+            return this.dict.get(i);
+        },
+        setItem: function (i, value) {
+            this.dict.set(i, value);
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
@@ -5838,28 +5977,27 @@
                 return i;
             },
             testUseCase: function () {
-                var $t, $t1, $t2, $t3, $t4, $t5, $t6;
                 var c1 = new Bridge.ClientTest.BridgeIssues.Bridge722();
                 var asset1 = 1;
-                asset1 = ($t = 2, c1.setItem("path", $t), $t);
+                asset1 = (c1.setItem("path", 2), c1.getItem("path"));
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1(2, asset1, "Bridge722 asset1");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(3, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge722).m1(($t1 = 3, c1.setItem("path", $t1), $t1)), "Bridge722 M1 3");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(4, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge722).m1(($t2 = ($t3 = 4, c1.setItem("path", $t3), $t3), asset1 = $t2, $t2)), "Bridge722 M1 4");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(3, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge722).m1((c1.setItem("path", 3), c1.getItem("path"))), "Bridge722 M1 3");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(4, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge722).m1((asset1 = (c1.setItem("path", 4), c1.getItem("path")))), "Bridge722 M1 4");
     
                 var c2 = { };
-                var asset2 = ($t4 = 5, c2.path = $t4, $t4);
+                var asset2 = (c2.path = 5, c2.path);
                 Bridge.get(Bridge.Test.Assert).areEqual$1(5, asset2, "Bridge722 asset2");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(5, c2.path, "Bridge722 c2");
     
                 var c3 = new Bridge.Dictionary$2(String,Bridge.Int)();
-                var asset3 = ($t5 = 6, c3.set("path", $t5), $t5);
+                var asset3 = (c3.set("path", 6), c3.get("path"));
                 Bridge.get(Bridge.Test.Assert).areEqual$1(6, asset3, "Bridge722 asset3");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(6, c3.get("path"), "Bridge722 c3");
     
                 var data4 = [Bridge.Decimal(1.0), Bridge.Decimal(2.0), Bridge.Decimal(3.0), Bridge.Decimal(4.0), Bridge.Decimal(7.0)];
                 var c4 = new Bridge.Dictionary$2(String,Bridge.Decimal)();
-                var asset4 = ($t6 = Bridge.Linq.Enumerable.from(data4).select($_.Bridge.ClientTest.BridgeIssues.Bridge722.f1).last(), c4.set("path", $t6), $t6);
+                var asset4 = (c4.set("path", Bridge.Linq.Enumerable.from(data4).select($_.Bridge.ClientTest.BridgeIssues.Bridge722.f1).last()), c4.get("path"));
                 Bridge.get(Bridge.Test.Assert).areDeepEqual$1(Bridge.Decimal(7.0), asset4, "Bridge722 asset4");
                 Bridge.get(Bridge.Test.Assert).areDeepEqual$1(Bridge.Decimal(7.0), c4.get("path"), "Bridge722 c4");
             }
@@ -6165,7 +6303,6 @@
                 return null;
             },
             testUseCase: function () {
-                var $t, $t1, $t2;
                 var o = { };
                 o;
                 {
@@ -6173,12 +6310,12 @@
                     Bridge.get(Bridge.Test.Assert).areEqual$1(555, i, "Bridge777 i");
                 }
     
-                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge777).method(($t = o, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge777).setSomeProperty($t), $t));
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge777).method((Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge777).setSomeProperty(o), Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge777).getSomeProperty()));
                 {
                     Bridge.get(Bridge.Test.Assert).notNull$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge777).getSomeProperty(), "Bridge777 SomeProperty");
                 }
     
-                ($t1 = ($t2 = o, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge777).setP2($t2), $t2), Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge777).setP1($t1), $t1);
+                (Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge777).setP1((Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge777).setP2(o), Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge777).getP2())), Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge777).getP1());
                 {
                     Bridge.get(Bridge.Test.Assert).notNull$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge777).getP1(), "Bridge777 P1");
                     Bridge.get(Bridge.Test.Assert).notNull$1(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge777).getP2(), "Bridge777 P2");
@@ -8135,35 +8272,34 @@
                 }
             },
             testMultiplyAssignment: function () {
-                var $t, $t1, $t2, $t3, $t4, $t5, $t6;
                 var dict = new Bridge.Dictionary$2(Bridge.Int,Bridge.Int)();
                 var i = 0;
     
-                dict.set(0, ($t = 1, i = $t, $t));
+                dict.set(0, (i = 1));
                 Bridge.get(Bridge.Test.Assert).areEqual(dict.get(0), 1);
                 Bridge.get(Bridge.Test.Assert).areEqual(i, 1);
     
-                i = ($t1 = 2, dict.set(0, $t1), $t1);
+                i = (dict.set(0, 2), dict.get(0));
                 Bridge.get(Bridge.Test.Assert).areEqual(dict.get(0), 2);
                 Bridge.get(Bridge.Test.Assert).areEqual(i, 2);
     
-                dict.set(0, ($t2 = 3, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).setProp($t2), $t2));
+                dict.set(0, (Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).setProp(3), Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).getProp()));
                 Bridge.get(Bridge.Test.Assert).areEqual(dict.get(0), 3);
                 Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).getProp(), 3);
     
-                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).setProp(($t3 = 4, dict.set(0, $t3), $t3));
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).setProp((dict.set(0, 4), dict.get(0)));
                 Bridge.get(Bridge.Test.Assert).areEqual(dict.get(0), 4);
                 Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).getProp(), 4);
     
-                dict.set(0, ($t4 = 5, Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).setProp($t4), $t4));
+                dict.set(0, (Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).setProp(5), Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).getProp()));
                 Bridge.get(Bridge.Test.Assert).areEqual(dict.get(0), 5);
                 Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).getProp(), 5);
     
-                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).setProp(($t5 = 6, dict.set(0, $t5), $t5));
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).setProp((dict.set(0, 6), dict.get(0)));
                 Bridge.get(Bridge.Test.Assert).areEqual(dict.get(0), 6);
                 Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge991).getProp(), 6);
     
-                dict.set(0, ($t6 = 7, dict.set(1, $t6), $t6));
+                dict.set(0, (dict.set(1, 7), dict.get(1)));
                 Bridge.get(Bridge.Test.Assert).areEqual(dict.get(0), 7);
                 Bridge.get(Bridge.Test.Assert).areEqual(dict.get(1), 7);
             }
