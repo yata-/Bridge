@@ -5,7 +5,7 @@ namespace System.Collections.ObjectModel
 {
     [External]
     [Namespace("Bridge")]
-    public class ReadOnlyCollection<T> : IList<T>
+    public class ReadOnlyCollection<T> : IList<T>, IAccessorsIndexer
     {
         public ReadOnlyCollection(IList<T> list)
         {
@@ -19,7 +19,7 @@ namespace System.Collections.ObjectModel
 
         public T this[int index]
         {
-            [Template("get({0})")]
+            [Name("get")]
             get
             {
                 return default(T);
@@ -34,7 +34,7 @@ namespace System.Collections.ObjectModel
 
         T IList<T>.this[int index]
         {
-            [Template("get({0})")]
+            [Name("get")]
             get
             {
                 return default(T);
