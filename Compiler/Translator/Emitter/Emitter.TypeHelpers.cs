@@ -141,15 +141,22 @@ namespace Bridge.Translator
         {
             this.Log.Trace("Sorting types by inheritance...");
 
-            this.TopologicalSort();
+            if (this.Types.Count > 0)
+            {
+                this.TopologicalSort();
 
-            //this.Types.Sort has strange effects for items with 0 priority
+                //this.Types.Sort has strange effects for items with 0 priority
 
-            this.Log.Trace("Priority sorting...");
+                this.Log.Trace("Priority sorting...");
 
-            this.QuickSort(this.Types, 0, this.Types.Count - 1);
+                this.QuickSort(this.Types, 0, this.Types.Count - 1);
 
-            this.Log.Trace("Priority sorting done");
+                this.Log.Trace("Priority sorting done");
+            }
+            else
+            {
+                this.Log.Trace("No types to sort");
+            }
 
             this.Log.Trace("Sorting types by inheritance done");
         }

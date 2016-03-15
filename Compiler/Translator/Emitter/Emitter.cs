@@ -29,10 +29,7 @@ namespace Bridge.Translator
             this.Types.Sort(this.CompareTypeInfosByName);
             logger.Trace("Sorting types infos by name done");
 
-            if (this.Types.Count > 0)
-            {
-                this.SortTypesByInheritance();    
-            }
+            this.SortTypesByInheritance();
 
             this.Validator = validator;
             this.AssignmentType = ICSharpCode.NRefactory.CSharp.AssignmentOperatorType.Any;
