@@ -5918,9 +5918,12 @@
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge733', {
         statics: {
             config: {
+                properties: {
+                    DateA: null
+                },
                 init: function () {
                     this.dateb = new Date(-864e13);
-                    Bridge.property(this, "DateA", new Date(-864e13));
+                    this.DateA = new Date(-864e13);
                 }
             },
             testUseCase: function () {
