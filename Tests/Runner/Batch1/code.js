@@ -1916,6 +1916,28 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1026', {
+        statics: {
+            testReservedWordIfRefOut: function () {
+                var $function = { };
+                var i = { v : 1 };
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1026).testFunction(i, $function);
+                Bridge.get(Bridge.Test.Assert).areEqual(2, i.v);
+                Bridge.get(Bridge.Test.Assert).areEqual("1", $function.v);
+    
+                var res = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1026).$function($function.v);
+                Bridge.get(Bridge.Test.Assert).areEqual("11", res);
+            },
+            testFunction: function (i, $function) {
+                $function.v = i.v.toString();
+                i.v++;
+            },
+            $function: function ($function) {
+                return $function + "1";
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1029', {
         statics: {
             testNullableMethods: function () {

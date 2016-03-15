@@ -66,10 +66,16 @@ namespace Bridge.Translator
             {
                 var rr = this.Emitter.Resolver.ResolveNode(expr, this.Emitter);
 
-                if (rr is LocalResolveResult && expr is IdentifierExpression)
+                IdentifierExpression identifierExpression;
+
+                if (rr is LocalResolveResult && ((identifierExpression = expr as IdentifierExpression) != null))
                 {
-                    var ie = (IdentifierExpression)expr;
-                    this.Emitter.LocalsMap[ie.Identifier] = ie.Identifier + ".v";
+                    var name = identifierExpression.Identifier;
+                    if (Helpers.IsReservedWord(name))
+                    {
+                        name = Helpers.ChangeReservedWord(name);
+                    }
+                    this.Emitter.LocalsMap[identifierExpression.Identifier] = name + ".v";
                 }
                 else
                 {
@@ -87,7 +93,7 @@ namespace Bridge.Translator
 
             if (Helpers.IsReservedWord(vName))
             {
-                vName = this.GetUniqueName(vName);
+                vName = Helpers.ChangeReservedWord(vName);
             }
 
             if (!this.Emitter.LocalsNamesMap.ContainsKey(name))
