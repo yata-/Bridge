@@ -24,8 +24,11 @@
             }
         },
         config: {
+            properties: {
+                Point: null
+            },
             init: function () {
-                Bridge.property(this, "Point", new Classes.Point());
+                this.Point = new Classes.Point();
             }
         },
         move: function (dx, dy) {
