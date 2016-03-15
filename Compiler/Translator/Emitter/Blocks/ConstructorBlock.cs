@@ -276,8 +276,15 @@ namespace Bridge.Translator
 
                 this.WriteSpace();
                 this.BeginBlock();
-
+                var len = this.Emitter.Output.Length;
                 var requireNewLine = false;
+
+                this.ConvertParamsToReferences(ctor.Parameters);
+
+                if (len != this.Emitter.Output.Length)
+                {
+                    requireNewLine = true;
+                }
 
                 if (baseType != null && (!this.Emitter.Validator.IsIgnoreType(baseType) || this.Emitter.Validator.IsBridgeClass(baseType)) ||
                     (ctor.Initializer != null && ctor.Initializer.ConstructorInitializerType == ConstructorInitializerType.This))
@@ -301,8 +308,7 @@ namespace Bridge.Translator
                         {
                             this.WriteNewLine();
                         }
-
-                        this.ConvertParamsToReferences(ctor.Parameters);
+                        
                         ctor.Body.AcceptChildren(this.Emitter);
 
                         if (!this.Emitter.IsAsync)

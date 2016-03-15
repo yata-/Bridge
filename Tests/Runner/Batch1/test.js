@@ -957,6 +957,8 @@
                 QUnit.test("#1003 - TestGenericLambdasToLifting", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1003).testGenericLambdasToLifting);
                 QUnit.test("#1020 - TestFlagEnumWithReference", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1020).testFlagEnumWithReference);
                 QUnit.test("#1020 - TestEnumWithReference", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1020).testEnumWithReference);
+                QUnit.test("#1024 - TestConstructorOptionalParameter", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1024).testConstructorOptionalParameter);
+                QUnit.test("#1026 - TestReservedWordIfRefOut", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1026).testReservedWordIfRefOut);
                 QUnit.test("#1029 - TestNullableMethods", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1029).testNullableMethods);
                 QUnit.test("#1041 - TestPropertyOps", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1041).testPropertyOps);
                 QUnit.test("#1041 - TestIndexerOps", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1041).testIndexerOps);
@@ -2231,6 +2233,26 @@
             testEnumWithReference: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1020)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1020, 1);
                 Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1020).testEnumWithReference();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1024', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1024)],
+        statics: {
+            testConstructorOptionalParameter: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1024)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1024, 1);
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1024).testConstructorOptionalParameter();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1026', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1026)],
+        statics: {
+            testReservedWordIfRefOut: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1026)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1026, 3);
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1026).testReservedWordIfRefOut();
             }
         }
     });

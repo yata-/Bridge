@@ -402,9 +402,10 @@
             this.setData(d);
         },
         constructor$2: function (p) {
+            if (p === void 0) { p = []; }
+    
             Bridge.ClientTest.BasicCSharp.ClassA.prototype.$constructor.call(this);
     
-            if (p === void 0) { p = []; }
             if (!Bridge.hasValue(p) || p.length < 6) {
                 throw new Bridge.Exception("Should pass six parameters");
             }
@@ -1897,6 +1898,44 @@
         },
         $enum: true,
         $flags: true
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1024', {
+        statics: {
+            testConstructorOptionalParameter: function () {
+                var obj = new Bridge.ClientTest.BridgeIssues.Bridge1024.ClassB();
+                Bridge.get(Bridge.Test.Assert).areEqual("classB", obj.getFieldA());
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1024.ClassC', {
+        a: null,
+        constructor: function (b) {
+            this.a = b;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1026', {
+        statics: {
+            testReservedWordIfRefOut: function () {
+                var $function = { };
+                var i = { v : 1 };
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1026).testFunction(i, $function);
+                Bridge.get(Bridge.Test.Assert).areEqual(2, i.v);
+                Bridge.get(Bridge.Test.Assert).areEqual("1", $function.v);
+    
+                var res = Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1026).$function($function.v);
+                Bridge.get(Bridge.Test.Assert).areEqual("11", res);
+            },
+            testFunction: function (i, $function) {
+                $function.v = i.v.toString();
+                i.v++;
+            },
+            $function: function ($function) {
+                return $function + "1";
+            }
+        }
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1029', {
@@ -6056,9 +6095,12 @@
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge733', {
         statics: {
             config: {
+                properties: {
+                    DateA: null
+                },
                 init: function () {
                     this.dateb = new Date(-864e13);
-                    Bridge.property(this, "DateA", new Date(-864e13));
+                    this.DateA = new Date(-864e13);
                 }
             },
             testUseCase: function () {
@@ -23240,6 +23282,19 @@
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1001.TextBox', {
         inherits: [Bridge.ClientTest.BridgeIssues.Bridge1001.Control]
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1024.ClassB', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge1024.ClassC],
+        constructor: function (p) {
+            if (p === void 0) { p = "classB"; }
+    
+            Bridge.ClientTest.BridgeIssues.Bridge1024.ClassC.prototype.$constructor.call(this, p);
+    
+        },
+        getFieldA: function () {
+            return this.a;
+        }
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge240B', {
