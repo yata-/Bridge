@@ -56,6 +56,8 @@
     <Compile Include="CompatMode.cs" />
     <Compile Include="Console.cs" />
     <Compile Include="Elements\TemplateElement.cs" />
+    <Compile Include="Events\MessageEvent.cs" />
+    <Compile Include="Events\CloseEvent.cs" />
     <Compile Include="Events\TouchEvent.cs" />
     <Compile Include="Interfaces\Touch.cs" />
     <Compile Include="Interfaces\TouchList.cs" />
@@ -315,6 +317,7 @@
     <Compile Include="URLSearchParams.cs" />
     <Compile Include="ValidityState.cs" />
     <Compile Include="Global.cs" />
+    <Compile Include="WebSocket.cs" />
     <Compile Include="Window.cs" />
     <Compile Include="WindowInstance.cs" />
   </ItemGroup>
