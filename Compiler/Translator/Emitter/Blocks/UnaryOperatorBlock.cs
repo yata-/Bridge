@@ -129,7 +129,18 @@ namespace Bridge.Translator
 
             if (memberArgResolverResult != null && memberArgResolverResult.Member is IProperty)
             {
+                var prop = (IProperty) memberArgResolverResult.Member;
+                var isIgnore = this.Emitter.Validator.IsIgnoreType(memberArgResolverResult.Member.DeclaringTypeDefinition);
+                var inlineAttr = this.Emitter.GetAttribute(prop.Getter.Attributes, Translator.Bridge_ASSEMBLY + ".TemplateAttribute");
+                var ignoreAccessor = this.Emitter.Validator.IsIgnoreType(prop.Getter);
+                var isAccessorsIndexer = this.Emitter.Validator.IsAccessorsIndexer(memberArgResolverResult.Member);
+
                 isAccessor = true;
+
+                if (inlineAttr == null && (isIgnore || ignoreAccessor) && !isAccessorsIndexer)
+                {
+                    isAccessor = false;
+                }
             }
             else if (argResolverResult is ArrayAccessResolveResult)
             {
@@ -358,7 +369,17 @@ namespace Bridge.Translator
 
             if (memberArgResolverResult != null && memberArgResolverResult.Member is IProperty)
             {
+                var isIgnore = this.Emitter.Validator.IsIgnoreType(memberArgResolverResult.Member.DeclaringTypeDefinition);
+                var inlineAttr = this.Emitter.GetAttribute(memberArgResolverResult.Member.Attributes, Translator.Bridge_ASSEMBLY + ".TemplateAttribute");
+                var ignoreAccessor = this.Emitter.Validator.IsIgnoreType(((IProperty)memberArgResolverResult.Member).Getter);
+                var isAccessorsIndexer = this.Emitter.Validator.IsAccessorsIndexer(memberArgResolverResult.Member);
+
                 isAccessor = true;
+
+                if (inlineAttr == null && (isIgnore || ignoreAccessor) && !isAccessorsIndexer)
+                {
+                    isAccessor = false;
+                }
             }
             else if (argResolverResult is ArrayAccessResolveResult)
             {
@@ -369,6 +390,7 @@ namespace Bridge.Translator
                            op == UnaryOperatorType.Decrement ||
                            op == UnaryOperatorType.PostIncrement ||
                            op == UnaryOperatorType.PostDecrement;
+
             if (isAccessor && isOneOp)
             {
                 this.Emitter.IsUnaryAccessor = true;

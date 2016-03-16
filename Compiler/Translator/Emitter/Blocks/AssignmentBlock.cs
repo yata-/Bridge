@@ -166,18 +166,36 @@ namespace Bridge.Translator
                 }
             }
 
+            var needTempVar = needReturnValue;
+            if (assignmentExpression.Operator != AssignmentOperatorType.Any)
+            {
+                needTempVar = false;
+            }
+
             if (needReturnValue)
             {
-                variable = this.GetTempVarName();
-                this.Write("(" + variable + " = ");
+                if (needTempVar)
+                {
+                    variable = this.GetTempVarName();
+                    this.Write("(" + variable + " = ");
 
-                var oldValue1 = this.Emitter.ReplaceAwaiterByVar;
-                this.Emitter.ReplaceAwaiterByVar = true;
-                assignmentExpression.Right.AcceptVisitor(this.Emitter);
+                    var oldValue1 = this.Emitter.ReplaceAwaiterByVar;
+                    this.Emitter.ReplaceAwaiterByVar = true;
+                    assignmentExpression.Right.AcceptVisitor(this.Emitter);
 
-                this.Emitter.ReplaceAwaiterByVar = oldValue1;
-                this.Write(", ");
+                    this.Emitter.ReplaceAwaiterByVar = oldValue1;
+                    this.Write(", ");
+                }
+                else
+                {
+                    this.Write("(");
+                }
             }
+
+            var memberTargetrr = leftResolverResult as MemberResolveResult;
+            bool isField = (memberTargetrr != null && memberTargetrr.Member is IField &&
+                           (memberTargetrr.TargetResult is ThisResolveResult ||
+                            memberTargetrr.TargetResult is LocalResolveResult)) || leftResolverResult is ThisResolveResult || leftResolverResult is LocalResolveResult;
 
             if (assignmentExpression.Operator == AssignmentOperatorType.Divide &&
                 (
@@ -208,14 +226,8 @@ namespace Bridge.Translator
                 this.Write(", ");
                 oldValue1 = this.Emitter.ReplaceAwaiterByVar;
                 this.Emitter.ReplaceAwaiterByVar = true;
-                if (needReturnValue)
-                {
-                    this.Write(variable);
-                }
-                else
-                {
-                    assignmentExpression.Right.AcceptVisitor(this.Emitter);    
-                }
+
+                assignmentExpression.Right.AcceptVisitor(this.Emitter);
                 
                 this.Write(")");
 
@@ -226,6 +238,21 @@ namespace Bridge.Translator
                 {
                     this.PopWriter();
                 }
+
+                
+                if (needReturnValue && !isField)
+                {
+                    this.Write(", ");
+                    this.Emitter.IsAssignment = false;
+                    assignmentExpression.Left.AcceptVisitor(this.Emitter);
+                    this.Emitter.IsAssignment = oldAssigment;
+                }
+
+                if (needReturnValue)
+                {
+                    this.Write(")");
+                }
+
                 return;
             }
 
@@ -321,9 +348,21 @@ namespace Bridge.Translator
                     this.PopWriter();
                 }
 
-                if (needReturnValue)
+                if (needTempVar)
                 {
                     this.Write(", " + variable + ")");    
+                }
+                else if (needReturnValue)
+                {
+                    if (!isField)
+                    {
+                        this.Write(", ");
+                        this.Emitter.IsAssignment = false;
+                        assignmentExpression.Left.AcceptVisitor(this.Emitter);
+                        this.Emitter.IsAssignment = oldAssigment;
+                    }
+
+                    this.Write(")");
                 }
 
                 return;
@@ -486,7 +525,7 @@ namespace Bridge.Translator
                 this.Write("String.fromCharCode(");
             }
 
-            if (needReturnValue)
+            if (needTempVar)
             {
                 this.Write(variable);
             }
@@ -527,9 +566,21 @@ namespace Bridge.Translator
                 this.WriteCloseParentheses();
             }
 
-            if (needReturnValue)
+            if (needTempVar)
             {
                 this.Write(", " + variable + ")");
+            }
+            else if (needReturnValue)
+            {
+                if (!isField)
+                {
+                    this.Write(", ");
+                    this.Emitter.IsAssignment = false;
+                    assignmentExpression.Left.AcceptVisitor(this.Emitter);
+                    this.Emitter.IsAssignment = oldAssigment;
+                }
+                
+                this.Write(")");
             }
         }
 

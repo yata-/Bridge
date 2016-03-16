@@ -4,7 +4,7 @@ namespace System.Collections.Generic
 {
     [External]
     [Namespace("Bridge")]
-    public class List<T> : IList<T>, IBridgeClass, IAccessorsIndexer
+    public class List<T> : IList<T>, IBridgeClass
     {
         public List()
         {
@@ -19,6 +19,7 @@ namespace System.Collections.Generic
         {
         }
 
+        [AccessorsIndexer]
         public T this[int index]
         {
             get
