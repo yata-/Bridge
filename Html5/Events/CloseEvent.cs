@@ -9,9 +9,23 @@ namespace Bridge.Html5
     [Name("CloseEvent")]
     public class CloseEvent : Event
     {
-        private CloseEvent()
-        {
-        }
+        internal extern CloseEvent();
+
+        /// <summary>
+        /// creates a new CloseEven
+        /// </summary>
+        /// <param name="typeArg">Is a DOMString representing the name of the event.</param>
+        public extern  CloseEvent(string typeArg);
+
+        /// <summary>
+        /// creates a new CloseEven
+        /// </summary>
+        /// <param name="typeArg">Is a DOMString representing the name of the event.</param>
+        /// <param name="closeEventInit">Is a CloseEventInit dictionary, having the following fields:
+        /// "wasClean", optional and defaulting to false, of type long, indicates if the connection has been closed cleanly or not.
+        /// "code", optional and defaulting to 0, of type unsigned short, that is the connection close code sent by the server.
+        /// "reason", optional and defaulting to '', of type DOMString, that is a human-readable reason why the server closed the connection.</param>
+        public extern CloseEvent(string typeArg, CloseEventInit closeEventInit);
 
         /// <summary>
         /// Close code sent by the server.
@@ -97,5 +111,25 @@ namespace Bridge.Html5
             // 3000–3999	Available for use by libraries and frameworks. May not be used by applications. Available for registration at the IANA via first-come, first-serve.
             // 4000–4999	Available for use by applications.
         }
+    }
+
+    [External]
+    [Name("Object")]
+    public class CloseEventInit
+    {
+        /// <summary>
+        /// Close code sent by the server.
+        /// </summary>
+        public readonly CloseEvent.StatusCode Code;
+
+        /// <summary>
+        /// Reason the server closed the connection. This is specific to the particular server and sub-protocol.
+        /// </summary>
+        public readonly string Reason;
+
+        /// <summary>
+        /// Indicates whether or not the connection was cleanly closed.
+        /// </summary>
+        public readonly bool WasClean;
     }
 }
