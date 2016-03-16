@@ -21,12 +21,12 @@ namespace Bridge.Html5
         /// <summary>
         /// Reason the server closed the connection. This is specific to the particular server and sub-protocol.
         /// </summary>
-        public readonly float Reason;
+        public readonly string Reason;
 
         /// <summary>
         /// Indicates whether or not the connection was cleanly closed.
         /// </summary>
-        public readonly string WasClean;
+        public readonly bool WasClean;
 
         [External]
         [Name("Number")]
