@@ -12,19 +12,16 @@ namespace Bridge.Html5
         internal extern CloseEvent();
 
         /// <summary>
-        /// creates a new CloseEven
+        /// Creates a new CloseEvent
         /// </summary>
         /// <param name="typeArg">Is a DOMString representing the name of the event.</param>
         public extern  CloseEvent(string typeArg);
 
         /// <summary>
-        /// creates a new CloseEven
+        /// Creates a new CloseEvent
         /// </summary>
         /// <param name="typeArg">Is a DOMString representing the name of the event.</param>
-        /// <param name="closeEventInit">Is a CloseEventInit dictionary, having the following fields:
-        /// "wasClean", optional and defaulting to false, of type long, indicates if the connection has been closed cleanly or not.
-        /// "code", optional and defaulting to 0, of type unsigned short, that is the connection close code sent by the server.
-        /// "reason", optional and defaulting to '', of type DOMString, that is a human-readable reason why the server closed the connection.</param>
+        /// <param name="closeEventInit">Is a CloseEventInit dictionary</param>
         public extern CloseEvent(string typeArg, CloseEventInit closeEventInit);
 
         /// <summary>
@@ -118,18 +115,18 @@ namespace Bridge.Html5
     public class CloseEventInit
     {
         /// <summary>
-        /// Close code sent by the server.
+        /// Indicates the Close code.
         /// </summary>
-        public readonly CloseEvent.StatusCode Code;
+        public CloseEvent.StatusCode Code;
 
         /// <summary>
-        /// Reason the server closed the connection. This is specific to the particular server and sub-protocol.
+        /// Indicates the Reason the server closed the connection. This is specific to the particular server and sub-protocol.
         /// </summary>
-        public readonly string Reason;
+        public string Reason;
 
         /// <summary>
         /// Indicates whether or not the connection was cleanly closed.
         /// </summary>
-        public readonly bool WasClean;
+        public bool WasClean;
     }
 }
