@@ -1,4 +1,6 @@
-﻿using System;
+﻿// https://developer.mozilla.org/en-US/docs/Web/API/WebSocket
+
+using System;
 
 namespace Bridge.Html5
 {
@@ -13,9 +15,7 @@ namespace Bridge.Html5
 		/// <param name="url">
 		/// The URL to which to connect; this should be the URL to which the WebSocket server will respond.
 		/// </param>
-		public WebSocket(string url)
-		{
-		}
+		public extern WebSocket(string url);
 
 		/// <param name="url">
 		/// The URL to which to connect; this should be the URL to which the WebSocket server will respond.
@@ -25,9 +25,7 @@ namespace Bridge.Html5
 		/// can implement multiple WebSocket sub-protocols (for example, you might want one server
 		/// to be able to handle different types of interactions depending on the specified protocol).
 		/// </param>
-		public WebSocket(string url, string protocol)
-		{
-		}
+		public extern WebSocket(string url, string protocol);
 
 		/// <param name="url">
 		/// The URL to which to connect; this should be the URL to which the WebSocket server will respond.
@@ -37,9 +35,7 @@ namespace Bridge.Html5
 		/// can implement multiple WebSocket sub-protocols (for example, you might want one server
 		/// to be able to handle different types of interactions depending on the specified protocol).
 		/// </param>
-		public WebSocket(string url, string[] protocols)
-		{
-		}
+		public extern WebSocket(string url, string[] protocols);
 
 		/// <summary>
 		/// Closes the WebSocket connection or connection attempt, if any.
@@ -54,7 +50,7 @@ namespace Bridge.Html5
 		/// <param name="code">
 		/// A numeric value indicating the status code explaining why the connection is being closed.
 		/// </param>
-		public extern void Close(ushort code);
+		public extern void Close(CloseEvent.StatusCode code);
 
 		/// <summary>
 		/// Closes the WebSocket connection or connection attempt, if any.
@@ -67,7 +63,7 @@ namespace Bridge.Html5
 		/// A human-readable string explaining why the connection is closing. This string
 		/// must be no longer than 123 bytes of UTF-8 text (not characters).
 		/// </param>
-		public extern void Close(ushort code, string reason);
+		public extern void Close(CloseEvent.StatusCode code, string reason);
 
 		/// <summary>
 		/// Transmits data to the server over the WebSocket connection.
