@@ -133,7 +133,7 @@ namespace Bridge.Translator
                 var isIgnore = this.Emitter.Validator.IsIgnoreType(memberArgResolverResult.Member.DeclaringTypeDefinition);
                 var inlineAttr = this.Emitter.GetAttribute(prop.Getter.Attributes, Translator.Bridge_ASSEMBLY + ".TemplateAttribute");
                 var ignoreAccessor = this.Emitter.Validator.IsIgnoreType(prop.Getter);
-                var isAccessorsIndexer = memberArgResolverResult.Member.DeclaringTypeDefinition.DirectBaseTypes.Any(t => t.FullName == "Bridge.IAccessorsIndexer");
+                var isAccessorsIndexer = this.Emitter.Validator.IsAccessorsIndexer(memberArgResolverResult.Member);
 
                 isAccessor = true;
 

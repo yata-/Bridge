@@ -4,7 +4,7 @@ namespace System.Collections.Generic
 {
     [External]
     [Namespace("Bridge")]
-    public class Dictionary<TKey, TValue> : IDictionary<TKey, TValue>, IBridgeClass, IAccessorsIndexer
+    public class Dictionary<TKey, TValue> : IDictionary<TKey, TValue>, IBridgeClass
     {
         public Dictionary()
         {
@@ -67,6 +67,7 @@ namespace System.Collections.Generic
             }
         }
 
+        [AccessorsIndexer]
         public TValue this[TKey key]
         {
             [Name("get")]

@@ -81,7 +81,7 @@ namespace Bridge.Translator
             {
                 var resolvedMember = memberResolveResult.Member;
                 isIgnore = this.Emitter.Validator.IsIgnoreType(resolvedMember.DeclaringTypeDefinition);
-                isAccessorsIndexer = resolvedMember.DeclaringTypeDefinition.DirectBaseTypes.Any(t => t.FullName == "Bridge.IAccessorsIndexer");
+                isAccessorsIndexer = this.Emitter.Validator.IsAccessorsIndexer(resolvedMember);
 
                 var property = resolvedMember as IProperty;
                 if (property != null)

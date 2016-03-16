@@ -1,5 +1,10 @@
+﻿using Bridge.Contract;
+using Bridge.Translator.Constants;
+
 using System;
-using Bridge.Contract;
+using System.Collections.Generic;
+using System.Linq;
+
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
 using ICSharpCode.NRefactory.Semantics;
@@ -7,8 +12,6 @@ using ICSharpCode.NRefactory.TypeSystem;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
 using Mono.Cecil;
 using Object.Net.Utilities;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Bridge.Translator
 {
@@ -457,6 +460,21 @@ namespace Bridge.Translator
             {
                 throw new EmitterException(context, "Cannot use '" + name + "' as identifier");
             }
+        }
+
+        public virtual bool IsAccessorsIndexer(IEntity entity)
+        {
+            if (entity == null)
+            {
+                return false;
+            }
+
+            if (this.HasAttribute(entity.Attributes, AttributeConstants.ACCESSORSINDEXER_ATTRIBUTE_NAME))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

@@ -5,7 +5,7 @@ namespace System.Collections.ObjectModel
 {
     [External]
     [Namespace("Bridge")]
-    public class ReadOnlyCollection<T> : IList<T>, IAccessorsIndexer
+    public class ReadOnlyCollection<T> : IList<T>
     {
         public ReadOnlyCollection(IList<T> list)
         {
@@ -17,6 +17,7 @@ namespace System.Collections.ObjectModel
             private set;
         }
 
+        [AccessorsIndexer]
         public T this[int index]
         {
             [Name("get")]

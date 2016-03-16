@@ -4,8 +4,9 @@ namespace System.Collections.Generic
 {
     [External]
     [Namespace("Bridge")]
-    public interface IDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>, IBridgeClass, IAccessorsIndexer
+    public interface IDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>, IBridgeClass
     {
+        [AccessorsIndexer]
         TValue this[TKey key]
         {
             [Name("getItem")]
