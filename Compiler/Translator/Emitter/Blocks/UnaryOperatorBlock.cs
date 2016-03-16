@@ -372,7 +372,7 @@ namespace Bridge.Translator
                 var isIgnore = this.Emitter.Validator.IsIgnoreType(memberArgResolverResult.Member.DeclaringTypeDefinition);
                 var inlineAttr = this.Emitter.GetAttribute(memberArgResolverResult.Member.Attributes, Translator.Bridge_ASSEMBLY + ".TemplateAttribute");
                 var ignoreAccessor = this.Emitter.Validator.IsIgnoreType(((IProperty)memberArgResolverResult.Member).Getter);
-                var isAccessorsIndexer = memberArgResolverResult.Member.DeclaringTypeDefinition.DirectBaseTypes.Any(t => t.FullName == "Bridge.IAccessorsIndexer");
+                var isAccessorsIndexer = this.Emitter.Validator.IsAccessorsIndexer(memberArgResolverResult.Member);
 
                 isAccessor = true;
 
@@ -390,6 +390,7 @@ namespace Bridge.Translator
                            op == UnaryOperatorType.Decrement ||
                            op == UnaryOperatorType.PostIncrement ||
                            op == UnaryOperatorType.PostDecrement;
+
             if (isAccessor && isOneOp)
             {
                 this.Emitter.IsUnaryAccessor = true;
