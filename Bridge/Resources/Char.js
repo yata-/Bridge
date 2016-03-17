@@ -45,6 +45,10 @@
             return new RegExp("[\uD800-\uDFFF]").test(String.fromCharCode(value));
         },
 
+        isNull: function (value) {
+            return new RegExp("\u0000").test(String.fromCharCode(value));
+        },
+
         isSymbol: function (value) {
             if (value < 256) {
                 return ([36, 43, 60, 61, 62, 94, 96, 124, 126, 162, 163, 164, 165, 166, 167, 168, 169, 172, 174, 175, 176, 177, 180, 182, 184, 215, 247].indexOf(value) != -1);
