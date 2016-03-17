@@ -89,70 +89,70 @@ namespace System
 
         public extern int ComparedTo(decimal d);
 
-        [Template("Bridge.Decimal.lift({value})")]
+        //[Template("Bridge.Decimal.lift({value})")]
         public static extern implicit operator decimal(byte value);
 
-        [Template("Bridge.Decimal.lift({value})")]
+        //[Template("Bridge.Decimal.lift({value})")]
         public static extern implicit operator decimal(sbyte value);
 
-        [Template("Bridge.Decimal.lift({value})")]
+        //[Template("Bridge.Decimal.lift({value})")]
         public static extern implicit operator decimal(short value);
 
-        [Template("Bridge.Decimal.lift({value})")]
+        //[Template("Bridge.Decimal.lift({value})")]
         public static extern implicit operator decimal(ushort value);
 
-        [Template("Bridge.Decimal.lift({value})")]
+        //[Template("Bridge.Decimal.lift({value})")]
         public static extern implicit operator decimal(char value);
 
-        [Template("Bridge.Decimal.lift({value})")]
+        //[Template("Bridge.Decimal.lift({value})")]
         public static extern implicit operator decimal(int value);
 
-        [Template("Bridge.Decimal.lift({value})")]
+        //[Template("Bridge.Decimal.lift({value})")]
         public static extern implicit operator decimal(uint value);
 
-        [Template("Bridge.Decimal.lift({value})")]
+        //[Template("Bridge.Decimal.lift({value})")]
         public static extern implicit operator decimal(long value);
 
-        [Template("Bridge.Decimal.lift({value})")]
+        //[Template("Bridge.Decimal.lift({value})")]
         public static extern implicit operator decimal(ulong value);
 
-        [Template("Bridge.Decimal.lift({value})")]
+        //[Template("Bridge.Decimal.lift({value})")]
         public static extern explicit operator decimal(float value);
 
-        [Template("Bridge.Decimal.lift({value})")]
+        //[Template("Bridge.Decimal.lift({value})")]
         public static extern explicit operator decimal(double value);
 
-        [Template("Bridge.Decimal.toInt({value})")]
+        //[Template("Bridge.Decimal.toInt({value}, Bridge.Byte)")]
         public static extern explicit operator byte(decimal value);
 
-        [Template("Bridge.Decimal.toInt({value})")]
+        //[Template("Bridge.Decimal.toInt({value}, Bridge.SByte)")]
         public static extern explicit operator sbyte(decimal value);
 
-        [Template("Bridge.Decimal.toInt({value})")]
+        //[Template("Bridge.Decimal.toInt({value}, Bridge.Char)")]
         public static extern explicit operator char(decimal value);
 
-        [Template("Bridge.Decimal.toInt({value})")]
+        //[Template("Bridge.Decimal.toInt({value}, Bridge.Int16)")]
         public static extern explicit operator short(decimal value);
 
-        [Template("Bridge.Decimal.toInt({value})")]
+        //[Template("Bridge.Decimal.toInt({value}, Bridge.UInt16)")]
         public static extern explicit operator ushort(decimal value);
 
-        [Template("Bridge.Decimal.toInt({value})")]
+        //[Template("Bridge.Decimal.toInt({value}, Bridge.Int32)")]
         public static extern explicit operator int(decimal value);
 
-        [Template("Bridge.Decimal.toInt({value})")]
+        //[Template("Bridge.Decimal.toInt({value}, Bridge.UInt32)")]
         public static extern explicit operator uint(decimal value);
 
-        [Template("Bridge.Decimal.toInt({value})")]
+        //[Template("Bridge.Decimal.toInt({value}, Bridge.Long)")]
         public static extern explicit operator long(decimal value);
 
-        [Template("Bridge.Decimal.toInt({value})")]
+        //[Template("Bridge.Decimal.toInt({value}, Bridge.ULong)")]
         public static extern explicit operator ulong(decimal value);
 
-        [Template("Bridge.Decimal.toFloat({value})")]
+        //[Template("Bridge.Decimal.toFloat({value})")]
         public static extern explicit operator float(decimal value);
 
-        [Template("Bridge.Decimal.toFloat({value})")]
+        //[Template("Bridge.Decimal.toFloat({value})")]
         public static extern explicit operator double(decimal value);
 
         [Template("{d}.clone()")]

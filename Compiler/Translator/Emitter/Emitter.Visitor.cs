@@ -1,3 +1,4 @@
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 
 namespace Bridge.Translator
@@ -313,6 +314,11 @@ namespace Bridge.Translator
             uncheckedExpression.Expression.AcceptVisitor(this);
         }
 
+        public override void VisitUncheckedStatement(UncheckedStatement uncheckedStatement)
+        {
+            uncheckedStatement.Body.AcceptChildren(this);
+        }
+
         public override void VisitLockStatement(LockStatement lockStatement)
         {
             lockStatement.Expression.AcceptVisitor(this);
@@ -320,6 +326,16 @@ namespace Bridge.Translator
             this.Output.Append("\n");
             this.IsNewLine = true;
             lockStatement.EmbeddedStatement.AcceptVisitor(this);
+        }
+
+        public override void VisitCheckedExpression(CheckedExpression checkedExpression)
+        {
+            checkedExpression.Expression.AcceptVisitor(this);
+        }
+
+        public override void VisitCheckedStatement(CheckedStatement checkedStatement)
+        {
+            checkedStatement.Body.AcceptChildren(this);
         }
     }
 }

@@ -1,0 +1,515 @@
+using System;
+using Bridge.Contract;
+using ICSharpCode.NRefactory.CSharp;
+using ICSharpCode.NRefactory.Semantics;
+using ICSharpCode.NRefactory.TypeSystem;
+using ICSharpCode.NRefactory.TypeSystem.Implementation;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Bridge.Translator
+{
+    public abstract partial class ConversionBlock 
+    {
+        private static readonly bool[,] _needNarrowingConversion = {
+            /*                 Char    SByte     Byte    Int16   UInt16    Int32   UInt32    Int64   UInt64   Single   Double  Decimal
+            /*    Char */ {   false,    true,    true,    true,   false,   false,   false,   false,   false,   false,   false,   false },
+            /*   SByte */ {    true,   false,    true,   false,    true,   false,    true,   false,    true,   false,   false,   false },
+            /*    Byte */ {   false,    true,   false,   false,   false,   false,   false,   false,   false,   false,   false,   false },
+            /*   Int16 */ {    true,    true,    true,   false,    true,   false,    true,   false,    true,   false,   false,   false },
+            /*  UInt16 */ {   false,    true,    true,    true,   false,   false,   false,   false,   false,   false,   false,   false },
+            /*   Int32 */ {    true,    true,    true,    true,    true,   false,    true,   false,    true,   false,   false,   false },
+            /*  UInt32 */ {    true,    true,    true,    true,    true,    true,   false,   false,   false,   false,   false,   false },
+            /*   Int64 */ {    true,    true,    true,    true,    true,    true,    true,   false,    true,   false,   false,   false },
+            /*  UInt64 */ {    true,    true,    true,    true,    true,    true,    true,    true,   false,   false,   false,   false },
+            /*  Single */ {    true,    true,    true,    true,    true,    true,    true,    true,    true,   false,   false,   false },
+            /*  Double */ {    true,    true,    true,    true,    true,    true,    true,    true,    true,   false,   false,   false },
+            /* Decimal */ {    true,    true,    true,    true,    true,    true,    true,    true,    true,   false,   false,   false },
+        };
+
+        private static void CheckNumericConversion(ConversionBlock block, Expression expression, ResolveResult rr, IType expectedType, Conversion conversion)
+        {
+            if (conversion.IsNumericConversion && conversion.IsExplicit)
+            {
+                var fromType = rr.Type;
+                var toType = expectedType;
+
+                if (Helpers.IsDecimalType(expectedType, block.Emitter.Resolver) && !Helpers.IsDecimalType(fromType, block.Emitter.Resolver))
+                {
+                    block.Write("Bridge.Decimal(");
+                    block.AfterOutput += ")";
+                }
+                else if (Helpers.IsDecimalType(fromType, block.Emitter.Resolver))
+                {
+                    ClipDecimal(expression, block, toType);
+                }
+                else if (Helpers.Is64Type(fromType, block.Emitter.Resolver))
+                {
+                    CheckLong(block, expression, toType, fromType, IsInCheckedContext(block.Emitter, expression));
+                }
+                else if (Helpers.IsFloatType(fromType, block.Emitter.Resolver) && Helpers.IsIntegerType(toType, block.Emitter.Resolver))
+                {
+                    FloatToInt(block, expression, fromType, toType, IsInCheckedContext(block.Emitter, expression));
+                }
+                else if (NeedsNarrowingNumericConversion(fromType, toType))
+                {
+                    if (IsInCheckedContext(block.Emitter, expression))
+                    {
+                        CheckInteger(block, expression, toType);
+                    }
+                    else
+                    {
+                        ClipInteger(block, expression, toType, true);
+                    }
+                }
+            }
+            else if (conversion.IsNumericConversion && conversion.IsImplicit && !(expression.Parent is ArrayInitializerExpression) &&
+                     Helpers.Is64Type(rr.Type, block.Emitter.Resolver) &&
+                     Helpers.IsFloatType(expectedType, block.Emitter.Resolver) &&
+                     !Helpers.IsDecimalType(expectedType, block.Emitter.Resolver))
+            {
+                var be = expression.Parent as BinaryOperatorExpression;
+
+                if (be == null || be.Operator != BinaryOperatorType.Divide || be.Left != expression)
+                {
+                    block.Write("Bridge.Long.toNumber");
+                    if (!(expression is CastExpression && ((CastExpression)expression).Expression is ParenthesizedExpression))
+                    {
+                        block.Write("(");
+                        block.AfterOutput += ")";
+                    }
+                }
+            }
+            else if (!Helpers.Is64Type(expectedType, block.Emitter.Resolver) && Helpers.IsIntegerType(expectedType, block.Emitter.Resolver) && (expression is BinaryOperatorExpression || expression is UnaryOperatorExpression || expression.Parent is AssignmentExpression) && IsInCheckedContext(block.Emitter, expression))
+            {
+                var needCheck = false;
+
+                var be = expression as BinaryOperatorExpression;
+                if (be != null && (be.Operator == BinaryOperatorType.Add ||
+                    be.Operator == BinaryOperatorType.Divide ||
+                    be.Operator == BinaryOperatorType.Multiply ||
+                    be.Operator == BinaryOperatorType.Subtract))
+                {
+                    needCheck = true;
+                }
+                else
+                {
+                    var ue = expression as UnaryOperatorExpression;
+                    if (ue != null && (ue.Operator == UnaryOperatorType.Minus ||
+                                       ue.Operator == UnaryOperatorType.Increment ||
+                                       ue.Operator == UnaryOperatorType.Decrement ||
+                                       ue.Operator == UnaryOperatorType.PostIncrement ||
+                                       ue.Operator == UnaryOperatorType.PostDecrement))
+                    {
+                        needCheck = true;
+                    }
+                    else
+                    {
+                        var ae = expression.Parent as AssignmentExpression;
+                        if (ae != null && (ae.Operator == AssignmentOperatorType.Add ||
+                                           ae.Operator == AssignmentOperatorType.Divide ||
+                                           ae.Operator == AssignmentOperatorType.Multiply ||
+                                           ae.Operator == AssignmentOperatorType.Subtract))
+                        {
+                            needCheck = true;
+                        }
+                    }
+                }
+
+                if (needCheck)
+                {
+                    CheckInteger(block, expression, expectedType);
+                }
+            }
+            else if (!Helpers.Is64Type(expectedType, block.Emitter.Resolver) && Helpers.IsIntegerType(expectedType, block.Emitter.Resolver) && (expression is BinaryOperatorExpression || expression is UnaryOperatorExpression || expression.Parent is AssignmentExpression) && IsInUncheckedContext(block.Emitter, expression))
+            {
+                if (ConversionBlock.IsLongConversion(block, expression, rr, expectedType, conversion) || rr is ConstantResolveResult)
+                {
+                    return;
+                }
+
+                var needCheck = false;
+
+                var be = expression as BinaryOperatorExpression;
+                if (be != null && !(be.Left is PrimitiveExpression && be.Right is PrimitiveExpression) && (be.Operator == BinaryOperatorType.Add ||
+                    be.Operator == BinaryOperatorType.Divide ||
+                    be.Operator == BinaryOperatorType.Multiply ||
+                    be.Operator == BinaryOperatorType.Subtract))
+                {
+                    needCheck = true;
+                }
+                else
+                {
+                    var ue = expression as UnaryOperatorExpression;
+                    if (ue != null && !(ue.Expression is PrimitiveExpression) && (ue.Operator == UnaryOperatorType.Minus ||
+                                       ue.Operator == UnaryOperatorType.Increment ||
+                                       ue.Operator == UnaryOperatorType.Decrement ||
+                                       ue.Operator == UnaryOperatorType.PostIncrement ||
+                                       ue.Operator == UnaryOperatorType.PostDecrement))
+                    {
+                        needCheck = true;
+                    }
+                    else
+                    {
+                        var ae = expression.Parent as AssignmentExpression;
+                        if (ae != null && (ae.Operator == AssignmentOperatorType.Add ||
+                                           ae.Operator == AssignmentOperatorType.Divide ||
+                                           ae.Operator == AssignmentOperatorType.Multiply ||
+                                           ae.Operator == AssignmentOperatorType.Subtract))
+                        {
+                            needCheck = true;
+                        }
+                    }
+                }
+
+                if (needCheck)
+                {
+                    ClipInteger(block, expression, expectedType, false);
+                }
+            }
+        }
+
+        private static void ClipDecimal(Expression expression, ConversionBlock block, IType expectedType)
+        {
+            var toFloat = Helpers.IsFloatType(expectedType, block.Emitter.Resolver);
+
+            if (toFloat)
+            {
+                block.Write("Bridge.Decimal.toFloat");
+                if (!(expression is CastExpression && ((CastExpression)expression).Expression is ParenthesizedExpression))
+                {
+                    block.Write("(");
+                    block.AfterOutput += ")";
+                }
+            }
+            else
+            {
+                block.Write("Bridge.Decimal.toInt(");
+                block.AfterOutput = ", " + BridgeTypes.ToJsName(expectedType, block.Emitter) + ")";
+            }
+        }
+
+        private static void CheckLong(ConversionBlock block, Expression expression, IType expectedType, IType fromType, bool isChecked)
+        {
+            if (!NeedsNarrowingNumericConversion(fromType, expectedType))
+            {
+                return;
+            }
+
+            if (isChecked)
+            {
+                block.Write("Bridge.Long.check(");
+
+                block.AfterOutput += ", ";
+                block.AfterOutput += BridgeTypes.ToJsName(expectedType, block.Emitter);
+                block.AfterOutput += ")";
+            }
+            else
+            {
+                string action = null;
+                expectedType = NullableType.IsNullable(expectedType) ? NullableType.GetUnderlyingType(expectedType) : expectedType;
+                if (expectedType.IsKnownType(KnownTypeCode.Char))
+                {
+                    action = "clipu16";
+                }
+                else if (expectedType.IsKnownType(KnownTypeCode.SByte))
+                {
+                    action = "clip8";
+                }
+                else if (expectedType.IsKnownType(KnownTypeCode.Byte))
+                {
+                    action = "clipu8";
+                }
+                else if (expectedType.IsKnownType(KnownTypeCode.Int16))
+                {
+                    action = "clip16";
+                }
+                else if (expectedType.IsKnownType(KnownTypeCode.UInt16))
+                {
+                    action = "clipu16";
+                }
+                else if (expectedType.IsKnownType(KnownTypeCode.Int32))
+                {
+                    action = "clip32";
+                }
+                else if (expectedType.IsKnownType(KnownTypeCode.UInt32))
+                {
+                    action = "clipu32";
+                }
+                else if (expectedType.IsKnownType(KnownTypeCode.Int64))
+                {
+                    action = "clip64";
+                }
+                else if (expectedType.IsKnownType(KnownTypeCode.UInt64))
+                {
+                    action = "clipu64";
+                }
+                else
+                {
+                    throw new ArgumentException("Can not narrow to " + expectedType, "expectedType");
+                }
+
+                block.Write("Bridge.Long.");
+                block.Write(action);
+                if (!(expression is CastExpression && ((CastExpression)expression).Expression is ParenthesizedExpression))
+                {
+                    block.Write("(");
+                    block.AfterOutput += ")";
+                }
+            }
+        }
+
+        private static bool NeedsNarrowingNumericConversion(IType fromType, IType toType)
+        {
+            fromType = NullableType.IsNullable(fromType) ? NullableType.GetUnderlyingType(fromType) : fromType;
+            toType = NullableType.IsNullable(toType) ? NullableType.GetUnderlyingType(toType) : toType;
+
+            var fromTypeCode = fromType.GetDefinition().KnownTypeCode;
+            var toTypeCode = toType.GetDefinition().KnownTypeCode;
+
+            return fromTypeCode >= KnownTypeCode.Char
+                && fromTypeCode <= KnownTypeCode.Decimal
+                && _needNarrowingConversion[fromTypeCode - KnownTypeCode.Char, toTypeCode - KnownTypeCode.Char];
+        }
+
+        private static void NarrowingNumericOrEnumerationConversion(ConversionBlock block, Expression expression, IType targetType, bool fromFloatingPoint, bool isChecked, bool isNullable, bool isExplicit = true)
+        {
+            if (isChecked)
+            {
+                block.Write("Bridge.Int.check(");
+
+                if (fromFloatingPoint)
+                {
+                    block.Write("Bridge.Int.trunc");
+                    block.WriteOpenParentheses();
+                }
+
+                //expression.AcceptVisitor(block.Emitter);
+
+                if (fromFloatingPoint)
+                {
+                    block.AfterOutput += ")";
+                }
+
+                block.AfterOutput += ", ";
+                block.AfterOutput += BridgeTypes.ToJsName(targetType, block.Emitter);
+                block.AfterOutput += ")";
+            }
+            else
+            {
+                if (isNullable)
+                {
+                    targetType = NullableType.IsNullable(targetType) ? NullableType.GetUnderlyingType(targetType) : targetType;
+                    string action = null;
+                    if (targetType.IsKnownType(KnownTypeCode.Char))
+                    {
+                        action = "clipu16";
+                    }
+                    else if (targetType.IsKnownType(KnownTypeCode.SByte))
+                    {
+                        action = "clip8";
+                    }
+                    else if (targetType.IsKnownType(KnownTypeCode.Byte))
+                    {
+                        action = "clipu8";
+                    }
+                    else if (targetType.IsKnownType(KnownTypeCode.Int16))
+                    {
+                        action = "clip16";
+                    }
+                    else if (targetType.IsKnownType(KnownTypeCode.UInt16))
+                    {
+                        action = "clipu16";
+                    }
+                    else if (targetType.IsKnownType(KnownTypeCode.Int32))
+                    {
+                        action = "clip32";
+                    }
+                    else if (targetType.IsKnownType(KnownTypeCode.UInt32))
+                    {
+                        action = "clipu32";
+                    }
+                    else if (targetType.IsKnownType(KnownTypeCode.Int64))
+                    {
+                        action = "clip64";
+                        return;
+                    }
+                    else if (targetType.IsKnownType(KnownTypeCode.UInt64))
+                    {
+                        action = "clipu64";
+                        return;
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Can not narrow to " + targetType, "targetType");
+                    }
+
+                    block.Write("Bridge.Int.");
+                    block.Write(action);
+                    if (!(expression is CastExpression && ((CastExpression)expression).Expression is ParenthesizedExpression))
+                    {
+                        block.Write("(");
+                        block.AfterOutput += ")";
+                    }
+                }
+                else
+                {
+                    var skipWrap = isExplicit || targetType.IsKnownType(KnownTypeCode.Int64) ||
+                                 targetType.IsKnownType(KnownTypeCode.UInt64) ||
+                                 targetType.IsKnownType(KnownTypeCode.Int16) ||
+                                 targetType.IsKnownType(KnownTypeCode.SByte);
+
+                    if (!skipWrap)
+                    {
+                        block.WriteOpenParentheses();
+                        block.WriteOpenParentheses();
+                    }
+
+                    if (targetType.IsKnownType(KnownTypeCode.Char))
+                    {
+                        //expression.AcceptVisitor(block.Emitter);
+                        if (!skipWrap)
+                        {
+                            block.AfterOutput += ")";
+                        }
+                        block.AfterOutput += " & 65535";
+                    }
+                    else if (targetType.IsKnownType(KnownTypeCode.SByte))
+                    {
+                        block.Write("Bridge.Int.sxb(");
+                        if (!isExplicit)
+                        {
+                            block.Write("(");
+                            block.AfterOutput += ")";
+                        }
+                        //expression.AcceptVisitor(block.Emitter);
+                        block.AfterOutput += " & 255)";
+                    }
+                    else if (targetType.IsKnownType(KnownTypeCode.Byte))
+                    {
+                        if (!skipWrap)
+                        {
+                            block.AfterOutput += ")";
+                        }
+                        //expression.AcceptVisitor(block.Emitter);
+                        block.AfterOutput += " & 255";
+                    }
+                    else if (targetType.IsKnownType(KnownTypeCode.Int16))
+                    {
+                        block.Write("Bridge.Int.sxs(");
+                        if (!isExplicit)
+                        {
+                            block.Write("(");
+                            block.AfterOutput += ")";
+                        }
+                        //expression.AcceptVisitor(block.Emitter);
+                        block.AfterOutput += " & 65535)";
+                    }
+                    else if (targetType.IsKnownType(KnownTypeCode.UInt16))
+                    {
+                        if (!skipWrap)
+                        {
+                            block.AfterOutput += ")";
+                        }
+                        //expression.AcceptVisitor(block.Emitter);
+                        block.AfterOutput += " & 65535";
+                    }
+                    else if (targetType.IsKnownType(KnownTypeCode.Int32))
+                    {
+                        if (!skipWrap)
+                        {
+                            block.AfterOutput += ")";
+                        }
+                        //expression.AcceptVisitor(block.Emitter);
+                        block.AfterOutput += " | 0";
+                    }
+                    else if (targetType.IsKnownType(KnownTypeCode.UInt32))
+                    {
+                        if (!skipWrap)
+                        {
+                            block.AfterOutput += ")";
+                        }
+                        //expression.AcceptVisitor(block.Emitter);
+                        block.AfterOutput += " >>> 0";
+                    }
+                    else if (targetType.IsKnownType(KnownTypeCode.Int64))
+                    {
+                        block.Write("Bridge.Int.clip64(");
+                        block.AfterOutput += ")";
+                    }
+                    else if (targetType.IsKnownType(KnownTypeCode.UInt64))
+                    {
+                        block.Write("Bridge.Int.clipu64(");
+                        block.AfterOutput += ")";
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Can not narrow to " + targetType, "targetType");
+                    }
+
+                    if (!skipWrap)
+                    {
+                        block.AfterOutput += ")";
+                    }
+                }
+            }
+        }
+
+        public static void ClipInteger(ConversionBlock block, Expression expression, IType type, bool isExplicit)
+        {
+            var specialType = NullableType.IsNullable(type) ? NullableType.GetUnderlyingType(type) : type;
+
+            if (!isExplicit && (specialType.IsKnownType(KnownTypeCode.UInt64) || specialType.IsKnownType(KnownTypeCode.Int64)))
+            {
+                //expression.AcceptVisitor(block.Emitter);
+                return;
+            }
+
+            NarrowingNumericOrEnumerationConversion(block, expression, specialType, false, false, NullableType.IsNullable(type), isExplicit);
+        }
+
+        public static void CheckInteger(ConversionBlock block, Expression expression, IType type)
+        {
+            NarrowingNumericOrEnumerationConversion(block, expression, NullableType.IsNullable(type) ? NullableType.GetUnderlyingType(type) : type, false, true, NullableType.IsNullable(type));
+        }
+
+        public static void FloatToInt(ConversionBlock block, Expression expression, IType sourceType, IType targetType, bool isChecked)
+        {
+            NarrowingNumericOrEnumerationConversion(block, expression, NullableType.IsNullable(targetType) ? NullableType.GetUnderlyingType(targetType) : targetType, true, isChecked, NullableType.IsNullable(sourceType));
+        }
+
+        public static bool IsInCheckedContext(IEmitter emitter, Expression expression)
+        {
+            var checkedExpression = expression.GetParent<CheckedExpression>();
+            if (checkedExpression != null)
+            {
+                return true;
+            }
+
+            var checkedStatement = expression.GetParent<CheckedStatement>();
+            if (checkedStatement != null)
+            {
+                return true;
+            }
+
+            return emitter.AssemblyInfo.OverflowMode.HasValue && emitter.AssemblyInfo.OverflowMode == OverflowMode.Checked;
+        }
+
+        public static bool IsInUncheckedContext(IEmitter emitter, Expression expression)
+        {
+            var checkedExpression = expression.GetParent<UncheckedExpression>();
+            if (checkedExpression != null)
+            {
+                return true;
+            }
+
+            var checkedStatement = expression.GetParent<UncheckedStatement>();
+            if (checkedStatement != null)
+            {
+                return true;
+            }
+
+            return !emitter.AssemblyInfo.OverflowMode.HasValue || emitter.AssemblyInfo.OverflowMode == OverflowMode.Unchecked;
+        }
+    }
+}

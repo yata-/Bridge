@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
+using Bridge.Contract;
 
 namespace Bridge.Translator
 {
@@ -105,6 +106,19 @@ namespace Bridge.Translator
                     "Project file: " + this.Location + "\n" +
                     "Offending settings:\n" + offendingSettings
                 );
+            }
+
+            var nodes = from n in doc.Descendants()
+                        where n.Name.LocalName == "CheckForOverflowUnderflow"
+                        select n;
+            if (nodes.Any())
+            {
+                var value = nodes.Last().Value;
+                bool boolValue;
+                if (bool.TryParse(value, out boolValue))
+                {
+                    this.OverflowMode = boolValue ? Bridge.Contract.OverflowMode.Checked : Bridge.Contract.OverflowMode.Unchecked;
+                }
             }
         }
 
