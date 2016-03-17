@@ -186,6 +186,12 @@ namespace Bridge.Html5
         /// </summary>
         public static readonly WindowInstance Top;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        [Name("WebSocket")]
+        public static readonly Action WebSocket;
+
         #endregion Properties
 
         #region Methods
