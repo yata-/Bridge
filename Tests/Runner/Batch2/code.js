@@ -50,9 +50,9 @@
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(arr, Bridge.ICollection), "is ICollection should be true");
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(arr, Bridge.IEnumerable), "is IEnumerable should be true");
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(arr, Bridge.ICloneable), "is ICloneable should be true");
-            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(arr, Bridge.ICollection$1(Bridge.Int)), "is ICollection<int> should be true");
-            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(arr, Bridge.IEnumerable$1(Bridge.Int)), "is IEnumerable<int> should be true");
-            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(arr, Bridge.IList$1(Bridge.Int)), "is IList<int> should be true");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(arr, Bridge.ICollection$1(Bridge.Int32)), "is ICollection<int> should be true");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(arr, Bridge.IEnumerable$1(Bridge.Int32)), "is IEnumerable<int> should be true");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(arr, Bridge.IList$1(Bridge.Int32)), "is IList<int> should be true");
         },
         lengthWorks: function () {
             Bridge.get(Bridge.Test.Assert).areEqual(0, new Int32Array(0).length);
@@ -355,7 +355,7 @@
     });
     
     Bridge.define('Bridge.ClientTestOne.BridgeIssues.N772.TestReverseComparer', {
-        inherits: [Bridge.IComparer$1(Bridge.Int)],
+        inherits: [Bridge.IComparer$1(Bridge.Int32)],
         compare: function (x, y) {
             return x === y ? 0 : (x > y ? -1 : 1);
         }

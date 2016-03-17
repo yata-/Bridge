@@ -143,9 +143,9 @@ namespace Bridge.ClientTest.ConvertTests
             "2147483647",
 
             // Int64
-            "-9007199254740991", // Number.MIN_SAFE_INTEGER
+            "-9223372036854775808", // Number.MIN_SAFE_INTEGER
             "0",
-            "9007199254740991",  // Number.MAX_SAFE_INTEGER
+            "9223372036854775807",  // Number.MAX_SAFE_INTEGER
 
             // SByte
             "-128",
@@ -184,7 +184,7 @@ namespace Bridge.ClientTest.ConvertTests
             // UInt64
             "0",
             "100",
-            "9007199254740991", // Number.MAX_SAFE_INTEGER
+            "18446744073709551615", // Number.MAX_SAFE_INTEGER
         };
 
             for (int i = 0; i < testValues.Length; i++)
@@ -391,7 +391,7 @@ namespace Bridge.ClientTest.ConvertTests
         public static void FromInt64Base2()
         {
             long[] testValues = { int.MinValue, 0, int.MaxValue };
-            string[] expectedValues = { "10000000000000000000000000000000", "0", "1111111111111111111111111111111" };
+            string[] expectedValues = { "1111111111111111111111111111111110000000000000000000000000000000", "0", "1111111111111111111111111111111" };
 
             for (int i = 0; i < testValues.Length; i++)
             {
@@ -403,7 +403,7 @@ namespace Bridge.ClientTest.ConvertTests
         public static void FromInt64Base8()
         {
             long[] testValues = { int.MinValue, 0, int.MaxValue };
-            string[] expectedValues = { "20000000000", "0", "17777777777" };
+            string[] expectedValues = { "1777777777760000000000", "0", "17777777777" };
 
             for (int i = 0; i < testValues.Length; i++)
             {
@@ -414,10 +414,10 @@ namespace Bridge.ClientTest.ConvertTests
         [Test]
         public static void FromInt64Base10()
         {
-            var minSafeValue = -9007199254740991;       // Number.MAX_SAFE_INTEGER
-            var maxSafeValue = 9007199254740991;        // Number.MAX_SAFE_INTEGER
+            var minSafeValue = long.MinValue;       // Number.MAX_SAFE_INTEGER
+            var maxSafeValue = long.MaxValue;        // Number.MAX_SAFE_INTEGER
             long[] testValues = { minSafeValue, 0, maxSafeValue };
-            string[] expectedValues = { "-9007199254740991", "0", "9007199254740991" };
+            string[] expectedValues = { "-9223372036854775808", "0", "9223372036854775807" };
 
             for (int i = 0; i < testValues.Length; i++)
             {
@@ -429,7 +429,7 @@ namespace Bridge.ClientTest.ConvertTests
         public static void FromInt64Base16()
         {
             long[] testValues = { int.MinValue, 0, int.MaxValue };
-            string[] expectedValues = { "80000000", "0", "7fffffff" };
+            string[] expectedValues = { "ffffffff80000000", "0", "7fffffff" };
 
             for (int i = 0; i < testValues.Length; i++)
             {

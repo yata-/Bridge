@@ -172,8 +172,8 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.AreEqual(5, (int)(char)(decimal)(x + '\x5'));
             Assert.AreEqual(6, (int)(decimal)(x + 6));
             Assert.AreEqual(7, (uint)(decimal)(x + 7));
-            Assert.AreEqual(8, (long)(decimal)(x + 8));
-            Assert.AreEqual(9, (ulong)(decimal)(x + 9));
+            Assert.True(8 == (long)(decimal)(x + 8));
+            Assert.True(9 == (ulong)(decimal)(x + 9));
             Assert.AreEqual(10.5, (float)(decimal)(x + 10.5));
             Assert.AreEqual(11.5, (double)(decimal)(x + 11.5));
         }

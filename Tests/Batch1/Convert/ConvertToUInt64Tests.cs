@@ -22,12 +22,27 @@ namespace Bridge.ClientTest.ConvertTests
             }
         }
 
+        protected void VerifyULongViaObj<TInput>(Func<object, ulong> convert, TInput[] testValues, ulong[] expectedValues)
+        {
+            if (expectedValues == null || testValues == null || expectedValues.Length != testValues.Length)
+            {
+                Assert.Fail("Test data should have the same lenght");
+                return;
+            }
+
+            for (int i = 0; i < testValues.Length; i++)
+            {
+                ulong result = convert(testValues[i]);
+                Assert.True(expectedValues[i] == result);
+            }
+        }
+
         [Test]
         public void FromBoolean()
         {
             bool[] testValues = { true, false };
             ulong[] expectedValues = { 1, 0 };
-            VerifyViaObj(Convert.ToUInt64, testValues, expectedValues);
+            VerifyULongViaObj(Convert.ToUInt64, testValues, expectedValues);
         }
 
         [Test]
@@ -35,7 +50,7 @@ namespace Bridge.ClientTest.ConvertTests
         {
             byte[] testValues = { byte.MaxValue, byte.MinValue };
             ulong[] expectedValues = { byte.MaxValue, byte.MinValue };
-            VerifyViaObj(Convert.ToUInt64, testValues, expectedValues);
+            VerifyULongViaObj(Convert.ToUInt64, testValues, expectedValues);
         }
 
         [Test]
@@ -43,7 +58,7 @@ namespace Bridge.ClientTest.ConvertTests
         {
             char[] testValues = { char.MaxValue, char.MinValue, 'b' };
             ulong[] expectedValues = { char.MaxValue, char.MinValue, 98 };
-            VerifyViaObj(Convert.ToUInt64, testValues, expectedValues);
+            VerifyULongViaObj(Convert.ToUInt64, testValues, expectedValues);
         }
 
         [Test]
@@ -51,7 +66,7 @@ namespace Bridge.ClientTest.ConvertTests
         {
             decimal[] testValues = { 1000m, 0m };
             ulong[] expectedValues = { 1000, 0 };
-            VerifyViaObj(Convert.ToUInt64, testValues, expectedValues);
+            VerifyULongViaObj(Convert.ToUInt64, testValues, expectedValues);
 
             decimal[] overflowValues = { decimal.MinValue, decimal.MaxValue };
             VerifyThrowsViaObj<OverflowException, decimal>(Convert.ToUInt64, overflowValues);
@@ -62,7 +77,7 @@ namespace Bridge.ClientTest.ConvertTests
         {
             double[] testValues = { 1000.0, 0.0 };
             ulong[] expectedValues = { (ulong)1000, (ulong)0 };
-            VerifyViaObj(Convert.ToUInt64, testValues, expectedValues);
+            VerifyULongViaObj(Convert.ToUInt64, testValues, expectedValues);
 
             double[] overflowValues = { double.MaxValue, -100.0 };
             VerifyThrowsViaObj<OverflowException, double>(Convert.ToUInt64, overflowValues);
@@ -73,7 +88,7 @@ namespace Bridge.ClientTest.ConvertTests
         {
             short[] testValues = { 1000, 0, short.MaxValue };
             ulong[] expectedValues = { 1000, 0, (ulong)short.MaxValue };
-            VerifyViaObj(Convert.ToUInt64, testValues, expectedValues);
+            VerifyULongViaObj(Convert.ToUInt64, testValues, expectedValues);
 
             short[] overflowValues = { short.MinValue };
             VerifyThrowsViaObj<OverflowException, short>(Convert.ToUInt64, overflowValues);
@@ -84,7 +99,7 @@ namespace Bridge.ClientTest.ConvertTests
         {
             int[] testValues = { 1000, 0, int.MaxValue };
             ulong[] expectedValues = { 1000, 0, int.MaxValue };
-            VerifyViaObj(Convert.ToUInt64, testValues, expectedValues);
+            VerifyULongViaObj(Convert.ToUInt64, testValues, expectedValues);
 
             int[] overflowValues = { int.MinValue };
             VerifyThrowsViaObj<OverflowException, int>(Convert.ToUInt64, overflowValues);
@@ -95,7 +110,7 @@ namespace Bridge.ClientTest.ConvertTests
         {
             long[] testValues = { 1000, 0, long.MaxValue };
             ulong[] expectedValues = { 1000, 0, long.MaxValue };
-            VerifyViaObj(Convert.ToUInt64, testValues, expectedValues);
+            VerifyULongViaObj(Convert.ToUInt64, testValues, expectedValues);
 
             long[] overflowValues = { long.MinValue };
             VerifyThrowsViaObj<OverflowException, long>(Convert.ToUInt64, overflowValues);
@@ -117,7 +132,7 @@ namespace Bridge.ClientTest.ConvertTests
         {
             sbyte[] testValues = { 100, 0 };
             ulong[] expectedValues = { 100, 0 };
-            VerifyViaObj(Convert.ToUInt64, testValues, expectedValues);
+            VerifyULongViaObj(Convert.ToUInt64, testValues, expectedValues);
 
             sbyte[] overflowValues = { sbyte.MinValue };
             VerifyThrowsViaObj<OverflowException, sbyte>(Convert.ToUInt64, overflowValues);
@@ -128,7 +143,7 @@ namespace Bridge.ClientTest.ConvertTests
         {
             float[] testValues = { 1000.0f, 0.0f };
             ulong[] expectedValues = { 1000, 0 };
-            VerifyViaObj(Convert.ToUInt64, testValues, expectedValues);
+            VerifyULongViaObj(Convert.ToUInt64, testValues, expectedValues);
 
             float[] overflowValues = { float.MaxValue, -100.0f };
             VerifyThrowsViaObj<OverflowException, float>(Convert.ToUInt64, overflowValues);
@@ -160,19 +175,19 @@ namespace Bridge.ClientTest.ConvertTests
         public void FromStringWithBase()
         {
             // As there is a limitation on the range of Long values in JS. We'll test the method agains Number.MIN/MAX_SAFE_INTEGER values
-            var maxSafeValue = (ulong)9007199254740991;    // Number.MAX_SAFE_INTEGER
+            var maxSafeValue = UInt64.MaxValue;    // Number.MAX_SAFE_INTEGER
 
-            string[] testValues = { null, null, null, null, "1FFFFFFFFFFFFF", "9007199254740991", "377777777777777777", "11111111111111111111111111111111111111111111111111111" };
+            string[] testValues = { null, null, null, null, "FFFFFFFFFFFFFFFF", "18446744073709551615", "1777777777777777777777", "1111111111111111111111111111111111111111111111111111111111111111" };
             int[] testBases = { 10, 2, 8, 16, 16, 10, 8, 2 };
             ulong[] expectedValues = { 0, 0, 0, 0, maxSafeValue, maxSafeValue, maxSafeValue, maxSafeValue };
-            VerifyFromStringWithBase(Wrappers.ConvertFromStrWithBase, testValues, testBases, expectedValues);
+            VerifyFromStringWithBase(Wrappers.ConvertFromStrWithBase, testValues, testBases, expectedValues, true);
 
             string[] overflowValues = { "-9007199254740991", "-9223372036854775809" };
             int[] overflowBases = { 10, 10 };
             VerifyFromStringWithBaseThrows<OverflowException>(Wrappers.ConvertFromStrWithBase, overflowValues, overflowBases);
 
-            string[] overflowValuesBig = { "FFE0000000000001", "1777400000000000000001", "1111111111100000000000000000000000000000000000000000000000000001", "9223372036854775808", "11111111111111111111111111111111111111111111111111111111111111111", "1FFFFffffFFFFffff", "7777777777777777777777777" };
-            int[] overflowBasesBig = { 16, 8, 2, 10, 2, 16, 8 };
+            string[] overflowValuesBig = { "11111111111111111111111111111111111111111111111111111111111111111", "1FFFFffffFFFFffff", "7777777777777777777777777" };
+            int[] overflowBasesBig = { 2, 16, 8 };
             VerifyFromStringWithBaseThrows<OverflowException>(Wrappers.ConvertFromStrWithBase, overflowValuesBig, overflowBasesBig);
 
             string[] formatExceptionValues = { "12", "ffffffffffffffffffff" };
@@ -189,7 +204,7 @@ namespace Bridge.ClientTest.ConvertTests
         {
             ushort[] testValues = { 100, 0 };
             ulong[] expectedValues = { 100, 0 };
-            VerifyViaObj(Convert.ToUInt64, testValues, expectedValues);
+            VerifyULongViaObj(Convert.ToUInt64, testValues, expectedValues);
         }
 
         [Test]
@@ -197,7 +212,7 @@ namespace Bridge.ClientTest.ConvertTests
         {
             uint[] testValues = { uint.MinValue, uint.MaxValue };
             ulong[] expectedValues = { uint.MinValue, uint.MaxValue };
-            VerifyViaObj(Convert.ToUInt64, testValues, expectedValues);
+            VerifyULongViaObj(Convert.ToUInt64, testValues, expectedValues);
         }
 
         [Test]
@@ -205,7 +220,7 @@ namespace Bridge.ClientTest.ConvertTests
         {
             ulong[] testValues = { ulong.MaxValue, ulong.MinValue };
             ulong[] expectedValues = { ulong.MaxValue, ulong.MinValue };
-            VerifyViaObj(Convert.ToUInt64, testValues, expectedValues);
+            VerifyULongViaObj(Convert.ToUInt64, testValues, expectedValues);
         }
     }
 }

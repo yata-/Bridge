@@ -984,7 +984,7 @@ namespace Bridge.ClientTest.BridgeIssues
             var DoubleNaN = double.NaN;
 
             EnsureNumber(DoubleMaxValue, "1.7976931348623157e+308", "DoubleMaxValue");
-            EnsureNumber(DoubleMinValue, "5e-324", "DoubleMinValue");
+            EnsureNumber(DoubleMinValue, "-1.7976931348623157e+308", "DoubleMinValue");
             EnsureNumber(DoubleEpsilon, "5e-324", "DoubleEpsilon");
             EnsureNumber(DoubleNegativeInfinity, "-Infinity", "DoubleNegativeInfinity");
             EnsureNumber(DoublePositiveInfinity, "Infinity", "DoublePositiveInfinity");
@@ -999,7 +999,7 @@ namespace Bridge.ClientTest.BridgeIssues
             DoubleNaN = double.NaN + 0;
 
             EnsureNumber(DoubleMaxValue, "1.7976931348623157e+308", "DoubleMaxValuein expression");
-            EnsureNumber(DoubleMinValue, "5e-324", "DoubleMinValuein expression");
+            EnsureNumber(DoubleMinValue, "-1.7976931348623157e+308", "DoubleMinValuein expression");
             EnsureNumber(DoubleEpsilon, "5e-324", "DoubleEpsilonin expression");
             EnsureNumber(DoubleNegativeInfinity, "-Infinity", "DoubleNegativeInfinityin expression");
             EnsureNumber(DoublePositiveInfinity, "Infinity", "DoublePositiveInfinityin expression");
@@ -1139,7 +1139,7 @@ namespace Bridge.ClientTest.BridgeIssues
         {
             List<int> magic = new List<int>() { 0, 1, 2, 3, 4 };
             List<int> epic = magic.GetRange(0, 3);
-            Assert.AreEqual("Bridge.List$1$Bridge.Int", epic.GetType().GetClassName(), "epic.GetType().GetClassName()");
+            Assert.AreEqual("Bridge.List$1$Bridge.Int32", epic.GetType().GetClassName(), "epic.GetType().GetClassName()");
         }
 
         // Bridge[#439]

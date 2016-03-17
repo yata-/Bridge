@@ -14,7 +14,7 @@ namespace Bridge.ClientTest.SimpleTypes
         {
             Assert.True((object)(ulong)0 is ulong);
             Assert.False((object)0.5 is ulong);
-            Assert.AreEqual("Bridge.Int", typeof(ulong).GetClassName());
+            Assert.AreEqual("Bridge.ULong", typeof(ulong).GetClassName());
             object l = (ulong)0;
             Assert.True(l is ulong);
             Assert.True(l is IComparable<ulong>);
@@ -28,28 +28,48 @@ namespace Bridge.ClientTest.SimpleTypes
             long i2 = 0, i3 = 234, i4 = 9223372036854775000;
             long? ni2 = 0, ni3 = 234, ni4 = 9223372036854775000, ni6 = null;
 
-            // TODO unchecked
+            unchecked
             {
-                Assert.AreStrictEqual(0, (ulong)i2, "0 unchecked");
-                Assert.AreStrictEqual(234, (ulong)i3, "234 unchecked");
-                Assert.AreStrictEqual(9223372036854775000, (ulong)i4, "9223372036854775000 unchecked");
+                Assert.True(0 == (ulong)i2, "0 unchecked");
+                Assert.True(234 == (ulong)i3, "234 unchecked");
+                Assert.True(9223372036854775000 == (ulong)i4, "9223372036854775000 unchecked");
 
-                Assert.AreStrictEqual(0, (ulong?)ni2, "nullable 0 unchecked");
-                Assert.AreStrictEqual(234, (ulong?)ni3, "nullable 234 unchecked");
-                Assert.AreStrictEqual(9223372036854775000, (ulong?)ni4, "nullable 9223372036854775000 unchecked");
-                Assert.AreStrictEqual(null, (ulong?)ni6, "null unchecked");
+                Assert.True(0 == (ulong?)ni2, "nullable 0 unchecked");
+                Assert.True(234 == (ulong?)ni3, "nullable 234 unchecked");
+                Assert.True(9223372036854775000 == (ulong?)ni4, "nullable 9223372036854775000 unchecked");
+                Assert.True(null == (ulong?)ni6, "null unchecked");
             }
 
-            //checked
+            checked
             {
-                Assert.AreStrictEqual(0, (ulong)i2, "0 checked");
-                Assert.AreStrictEqual(234, (ulong)i3, "234 checked");
-                Assert.AreStrictEqual(9223372036854775000, (ulong)i4, "9223372036854775000 checked");
+                Assert.True(0 == (ulong)i2, "0 checked");
+                Assert.True(234 == (ulong)i3, "234 checked");
+                Assert.True(9223372036854775000 == (ulong)i4, "9223372036854775000 checked");
 
-                Assert.AreStrictEqual(0, (ulong?)ni2, "nullable 0 checked");
-                Assert.AreStrictEqual(234, (ulong?)ni3, "nullable 234 checked");
-                Assert.AreStrictEqual(9223372036854775000, (ulong?)ni4, "nullable 9223372036854775000 checked");
-                Assert.AreStrictEqual(null, (ulong?)ni6, "null checked");
+                Assert.True(0 == (ulong?)ni2, "nullable 0 checked");
+                Assert.True(234 == (ulong?)ni3, "nullable 234 checked");
+                Assert.True(9223372036854775000 == (ulong?)ni4, "nullable 9223372036854775000 checked");
+                Assert.True(null == (ulong?)ni6, "null checked");
+            }
+        }
+
+        [Test]
+        public void OverflowWork()
+        {
+            ulong min = ulong.MinValue;
+            ulong max = ulong.MaxValue;
+
+            unchecked
+            {
+                Assert.True((max + 1) == min, "max + 1 unchecked");
+                Assert.True((min - 1) == max, "min - 1 unchecked");
+            }
+
+            checked
+            {
+                Assert.Throws(() => { var l = max + 1; }, err => err is OverflowException, "max + 1 should be OverflowException");
+                Assert.Throws(() => { var l = min - 1; }, err => err is OverflowException, "min - 1 should be OverflowException");
+                Assert.Throws(() => { var l = max * max; }, err => err is OverflowException, "max * max should be OverflowException");
             }
         }
 
@@ -61,26 +81,26 @@ namespace Bridge.ClientTest.SimpleTypes
         [Test]
         public void DefaultValueIs0()
         {
-            Assert.AreStrictEqual(0, GetDefaultValue<ulong>());
+            Assert.True(0 == GetDefaultValue<ulong>());
         }
 
         [Test]
         public void DefaultConstructorReturnsZero()
         {
-            Assert.AreStrictEqual(0, new ulong());
+            Assert.True(0 == new ulong());
         }
 
         [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void CreatingInstanceReturnsZero()
         {
-            Assert.AreStrictEqual(0, Activator.CreateInstance<ulong>());
+            Assert.True(0 == Activator.CreateInstance<ulong>());
         }
 
         [Test]
         public void ConstantsWork()
         {
-            Assert.AreEqual(0, ulong.MinValue);
+            Assert.True(0 == ulong.MinValue);
         }
 
         [Test]
@@ -99,7 +119,7 @@ namespace Bridge.ClientTest.SimpleTypes
         public void CastingOfLargeValuesToUInt64Works()
         {
             double d1 = 5e9 + 0.5, d2 = -d1;
-            Assert.AreEqual(5000000000, (ulong)d1, "Positive");
+            Assert.True(5000000000 == (ulong)d1, "Positive");
             Assert.False((ulong)d2 > int.MaxValue, "Negative");
         }
 
@@ -107,7 +127,7 @@ namespace Bridge.ClientTest.SimpleTypes
         public void DivisionOfLargeUInt64Works()
         {
             ulong v1 = 50000000000L, v2 = 3;
-            Assert.AreEqual(16666666666, v1 / v2);
+            Assert.True(16666666666 == (v1 / v2));
         }
 
         [Test]
@@ -116,37 +136,37 @@ namespace Bridge.ClientTest.SimpleTypes
             ulong numberResult;
             bool result = ulong.TryParse("23445", out numberResult);
             Assert.True(result);
-            Assert.AreEqual(23445, numberResult);
+            Assert.True(23445 == numberResult);
 
             result = ulong.TryParse("", out numberResult);
             Assert.False(result);
-            Assert.AreEqual(0, numberResult);
+            Assert.True(0 == numberResult);
 
             result = ulong.TryParse(null, out numberResult);
             Assert.False(result);
-            Assert.AreEqual(0, numberResult);
+            Assert.True(0 == numberResult);
 
             result = ulong.TryParse("notanumber", out numberResult);
             Assert.False(result);
-            Assert.AreEqual(0, numberResult);
+            Assert.True(0 == numberResult);
 
             result = ulong.TryParse("-1", out numberResult);
             Assert.False(result);
-            Assert.AreEqual(-1, numberResult);
+            Assert.True(0 == numberResult);
 
             result = ulong.TryParse("2.5", out numberResult);
             Assert.False(result);
-            Assert.AreEqual(0, numberResult);
+            Assert.True(0 == numberResult);
 
             result = ulong.TryParse("100000000000000000000", out numberResult);
             Assert.False(result);
-            //Assert.AreEqual(numberResult, 100000000000000000000);
+            Assert.True(numberResult == 0);
         }
 
         [Test]
         public void ParseWorks()
         {
-            Assert.AreEqual(23445, ulong.Parse("23445"));
+            Assert.True(23445 == ulong.Parse("23445"));
             Assert.Throws(() => ulong.Parse(""));
             Assert.Throws(() => ulong.Parse(null));
             Assert.Throws(() => ulong.Parse("notanumber"));

@@ -13,7 +13,7 @@ namespace Bridge.ClientTest.ConvertTests
         /// <summary>
         /// Verify that the provided convert delegate produces expectedValues given testValues.
         /// </summary>
-        protected void Verify<TInput>(Func<TInput, TOutput> convert, TInput[] testValues, TOutput[] expectedValues)
+        protected void Verify<TInput>(Func<TInput, TOutput> convert, TInput[] testValues, TOutput[] expectedValues, bool useTrue = false)
         {
             if (expectedValues == null || testValues == null || expectedValues.Length != testValues.Length)
             {
@@ -24,7 +24,14 @@ namespace Bridge.ClientTest.ConvertTests
             for (int i = 0; i < testValues.Length; i++)
             {
                 TOutput result = convert(testValues[i]);
-                Assert.AreEqual(expectedValues[i], result);
+                if (useTrue)
+                {
+                    Assert.True(expectedValues[i].Equals(result));
+                }
+                else
+                {
+                    Assert.AreEqual(expectedValues[i], result);
+                }
             }
         }
 
@@ -50,10 +57,10 @@ namespace Bridge.ClientTest.ConvertTests
         /// <summary>
         /// Verify that the provided convert delegates produce expectedValues given testValues
         /// </summary>
-        protected void VerifyFromString(Func<string, TOutput> convert, Func<string, IFormatProvider, TOutput> convertWithFormatProvider, string[] testValues, TOutput[] expectedValues)
+        protected void VerifyFromString(Func<string, TOutput> convert, Func<string, IFormatProvider, TOutput> convertWithFormatProvider, string[] testValues, TOutput[] expectedValues, bool useTrue = false)
         {
-            Verify(convert, testValues, expectedValues);
-            Verify(input => convertWithFormatProvider(input, TestFormatProvider.s_instance), testValues, expectedValues);
+            Verify(convert, testValues, expectedValues, useTrue);
+            Verify(input => convertWithFormatProvider(input, TestFormatProvider.s_instance), testValues, expectedValues, useTrue);
         }
 
         /// <summary>
@@ -68,7 +75,7 @@ namespace Bridge.ClientTest.ConvertTests
         /// <summary>
         /// Verify that the provided convert delegate produces expectedValues given testValues and testBases
         /// </summary>
-        protected void VerifyFromStringWithBase(Func<string, int, TOutput> convert, string[] testValues, int[] testBases, TOutput[] expectedValues)
+        protected void VerifyFromStringWithBase(Func<string, int, TOutput> convert, string[] testValues, int[] testBases, TOutput[] expectedValues, bool useTrue = false)
         {
             if (expectedValues == null || testBases == null || testValues == null
                 || expectedValues.Length != testValues.Length
@@ -81,7 +88,15 @@ namespace Bridge.ClientTest.ConvertTests
             for (int i = 0; i < testValues.Length; i++)
             {
                 TOutput result = convert(testValues[i], testBases[i]);
-                Assert.AreEqual(expectedValues[i], result);
+                
+                if (useTrue)
+                {
+                    Assert.True(expectedValues[i].Equals(result));
+                }
+                else
+                {
+                    Assert.AreEqual(expectedValues[i], result);
+                }
             }
         }
 
