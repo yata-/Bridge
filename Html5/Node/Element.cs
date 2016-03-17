@@ -114,12 +114,12 @@ namespace Bridge.Html5
         /// <summary>
         /// The Element.scrollLeft property gets or sets the number of pixels that an element's content is scrolled to the left.
         /// </summary>
-        public readonly int ScrollLeft;
+        public int ScrollLeft;
 
         /// <summary>
         /// The Element.scrollTop property gets or sets the number of pixels that the content of an element is scrolled upward. An element's scrollTop is a measurement of the distance of an element's top to its topmost visible content. When an element content does not generate a vertical scrollbar, then its scrollTop value defaults to 0.
         /// </summary>
-        public readonly int ScrollTop;
+        public int ScrollTop;
 
         /// <summary>
         /// The Element.scrollWidth read–only property returns either the width in pixels of the content of an element or the width of the element itself, whichever is greater. If the element is wider than its content area (for example, if there are scroll bars for scrolling through the content), the scrollWidth is larger than the clientWidth.
