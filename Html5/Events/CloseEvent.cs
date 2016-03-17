@@ -73,7 +73,7 @@ namespace Bridge.Html5
             /// <summary>
             /// The endpoint is terminating the connection because a message was received that contained inconsistent data (e.g., non-UTF-8 data within a text message).
             /// </summary>
-            UUSUPPORTED_DATAData = 1007,
+            UNSUPPORTED_DATA = 1007,
             /// <summary>
             /// The endpoint is terminating the connection because it received a message that violates its policy. This is a generic status code, used when codes 1003 and 1009 are not suitable.
             /// </summary>
