@@ -319,7 +319,7 @@ namespace Bridge.Contract
             if (type.Kind == TypeKind.Struct)
             {
                 var typeDef = block.Emitter.GetTypeDefinition(type);
-                if (block.Emitter.Validator.IsIgnoreType(typeDef))
+                if (block.Emitter.Validator.IsIgnoreType(typeDef) || block.Emitter.Validator.IsImmutableType(typeDef))
                 {
                     return;
                 }
