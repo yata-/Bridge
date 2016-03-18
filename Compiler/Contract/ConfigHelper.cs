@@ -1,14 +1,41 @@
 using Newtonsoft.Json;
 using System;
 using System.IO;
+using Newtonsoft.Json.Linq;
 
 namespace Bridge.Contract
 {
     public class ConfigHelper<T>
     {
-        public virtual T ReadConfig(string configFileName, bool folderMode, string location)
+        public virtual T ReadConfig(string configFileName, bool folderMode, string location, string configuration)
         {
-            var configPath = GetConfigPath(configFileName, folderMode, location);
+            string configPath = null;
+            string mergePath = null;
+            if (!string.IsNullOrWhiteSpace(configuration))
+            {
+                configPath = GetConfigPath(configFileName.Insert(configFileName.LastIndexOf(".", StringComparison.Ordinal), "." + configuration), folderMode, location);
+                mergePath = GetConfigPath(configFileName, folderMode, location);
+
+                if (configPath == null)
+                {
+                    configPath = mergePath;
+                    mergePath = null;
+                }
+            }
+            else
+            {
+                configPath = GetConfigPath(configFileName, folderMode, location);
+
+                if (configPath == null)
+                {
+                    configPath = GetConfigPath(configFileName.Insert(configFileName.LastIndexOf(".", StringComparison.Ordinal), ".debug"), folderMode, location);
+                }
+
+                if (configPath == null)
+                {
+                    configPath = GetConfigPath(configFileName.Insert(configFileName.LastIndexOf(".", StringComparison.Ordinal), ".release"), folderMode, location);
+                }
+            }
 
             if (configPath == null)
             {
@@ -18,8 +45,22 @@ namespace Bridge.Contract
             try
             {
                 var json = File.ReadAllText(configPath);
-                var config = JsonConvert.DeserializeObject<T>(json);
+                T config;
+                if (mergePath != null)
+                {
+                    var jsonMerge = File.ReadAllText(mergePath);
+                    var cfgMain = JObject.Parse(json);
+                    var cfgMerge = JObject.Parse(jsonMerge);
 
+                    cfgMain.Merge(cfgMerge);
+                    config = cfgMain.ToObject<T>();
+                }
+                else
+                {
+                    config = JsonConvert.DeserializeObject<T>(json);    
+                }
+                
+                
                 if (config == null)
                 {
                     return default(T);

@@ -9,9 +9,9 @@ namespace Bridge.Translator.Utils
         private const string CONFIG_FILE_NAME = "bridge.json";
         private static ConfigHelper<AssemblyInfo> helper = new ConfigHelper<AssemblyInfo>();
 
-        public static IAssemblyInfo ReadConfig(string configFileName, bool folderMode, string location)
+        public static IAssemblyInfo ReadConfig(string configFileName, bool folderMode, string location, string configuration)
         {
-            var config = helper.ReadConfig(configFileName, folderMode, location);
+            var config = helper.ReadConfig(configFileName, folderMode, location, configuration);
 
             if (config == null)
             {
@@ -24,9 +24,9 @@ namespace Bridge.Translator.Utils
             return config;
         }
 
-        public static IAssemblyInfo ReadConfig(bool folderMode, string location)
+        public static IAssemblyInfo ReadConfig(bool folderMode, string location, string configuration)
         {
-            return ReadConfig(CONFIG_FILE_NAME, folderMode, location);
+            return ReadConfig(CONFIG_FILE_NAME, folderMode, location, configuration);
         }
 
         public static void CreateConfig(IAssemblyInfo bridgeConfig, string folder)

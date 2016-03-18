@@ -9,7 +9,7 @@ namespace Bridge.Translator
     {
         protected virtual IAssemblyInfo ReadConfig()
         {
-            var config = AssemblyConfigHelper.ReadConfig(this.FolderMode, this.Location);
+            var config = AssemblyConfigHelper.ReadConfig(this.FolderMode, this.Location, this.Configuration);
 
             return config;
         }
