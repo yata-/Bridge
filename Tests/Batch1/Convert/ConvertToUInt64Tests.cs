@@ -11,17 +11,6 @@ namespace Bridge.ClientTest.ConvertTests
     [TestFixture(TestNameFormat = "Convert.ToUInt64 - {0}")]
     public class ConvertToUInt64Tests : ConvertTestBase<ulong>
     {
-        private static class Wrappers
-        {
-            // TODO: These wrappers help to avoid issues #689 and #743. They can be deleted when issues are fixed.
-            // For more infromation see comment: https://github.com/bridgedotnet/Bridge/issues/743#issuecomment-183905400
-
-            public static ulong ConvertFromStrWithBase(string value, int fromBase)
-            {
-                return Convert.ToUInt64(value, fromBase);
-            }
-        }
-
         protected void VerifyULongViaObj<TInput>(Func<object, ulong> convert, TInput[] testValues, ulong[] expectedValues)
         {
             if (expectedValues == null || testValues == null || expectedValues.Length != testValues.Length)
@@ -180,23 +169,23 @@ namespace Bridge.ClientTest.ConvertTests
             string[] testValues = { null, null, null, null, "FFFFFFFFFFFFFFFF", "18446744073709551615", "1777777777777777777777", "1111111111111111111111111111111111111111111111111111111111111111" };
             int[] testBases = { 10, 2, 8, 16, 16, 10, 8, 2 };
             ulong[] expectedValues = { 0, 0, 0, 0, maxSafeValue, maxSafeValue, maxSafeValue, maxSafeValue };
-            VerifyFromStringWithBase(Wrappers.ConvertFromStrWithBase, testValues, testBases, expectedValues, true);
+            VerifyFromStringWithBase(Convert.ToUInt64, testValues, testBases, expectedValues, true);
 
             string[] overflowValues = { "-9007199254740991", "-9223372036854775809" };
             int[] overflowBases = { 10, 10 };
-            VerifyFromStringWithBaseThrows<OverflowException>(Wrappers.ConvertFromStrWithBase, overflowValues, overflowBases);
+            VerifyFromStringWithBaseThrows<OverflowException>(Convert.ToUInt64, overflowValues, overflowBases);
 
             string[] overflowValuesBig = { "11111111111111111111111111111111111111111111111111111111111111111", "1FFFFffffFFFFffff", "7777777777777777777777777" };
             int[] overflowBasesBig = { 2, 16, 8 };
-            VerifyFromStringWithBaseThrows<OverflowException>(Wrappers.ConvertFromStrWithBase, overflowValuesBig, overflowBasesBig);
+            VerifyFromStringWithBaseThrows<OverflowException>(Convert.ToUInt64, overflowValuesBig, overflowBasesBig);
 
             string[] formatExceptionValues = { "12", "ffffffffffffffffffff" };
             int[] formatExceptionBases = { 2, 8 };
-            VerifyFromStringWithBaseThrows<FormatException>(Wrappers.ConvertFromStrWithBase, formatExceptionValues, formatExceptionBases);
+            VerifyFromStringWithBaseThrows<FormatException>(Convert.ToUInt64, formatExceptionValues, formatExceptionBases);
 
             string[] argumentExceptionValues = { "10", "11", "abba", "-ab" };
             int[] argumentExceptionBases = { -1, 3, 0, 16 };
-            VerifyFromStringWithBaseThrows<ArgumentException>(Wrappers.ConvertFromStrWithBase, argumentExceptionValues, argumentExceptionBases);
+            VerifyFromStringWithBaseThrows<ArgumentException>(Convert.ToUInt64, argumentExceptionValues, argumentExceptionBases);
         }
 
         [Test]

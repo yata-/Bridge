@@ -11,17 +11,6 @@ namespace Bridge.ClientTest.ConvertTests
     [TestFixture(TestNameFormat = "Convert.ToUInt32 - {0}")]
     public class ConvertToUInt32Tests : ConvertTestBase<uint>
     {
-        private static class Wrappers
-        {
-            // TODO: These wrappers help to avoid issues #689 and #743. They can be deleted when issues are fixed.
-            // For more infromation see comment: https://github.com/bridgedotnet/Bridge/issues/743#issuecomment-183905400
-
-            public static uint ConvertFromStrWithBase(string value, int fromBase)
-            {
-                return Convert.ToUInt32(value, fromBase);
-            }
-        }
-
         [Test]
         public void FromBoolean()
         {
@@ -158,19 +147,19 @@ namespace Bridge.ClientTest.ConvertTests
             string[] testValues = { null, null, null, null, "ffffffff", "4294967295", "37777777777", "11111111111111111111111111111111", "0", "0", "0", "0", "2147483647", "2147483648", "2147483649" };
             int[] testBases = { 10, 2, 8, 16, 16, 10, 8, 2, 16, 10, 8, 2, 10, 10, 10 };
             uint[] expectedValues = { 0, 0, 0, 0, uint.MaxValue, uint.MaxValue, uint.MaxValue, uint.MaxValue, uint.MinValue, uint.MinValue, uint.MinValue, uint.MinValue, (uint)int.MaxValue, (uint)int.MaxValue + 1, (uint)int.MaxValue + 2 };
-            VerifyFromStringWithBase(Wrappers.ConvertFromStrWithBase, testValues, testBases, expectedValues);
+            VerifyFromStringWithBase(Convert.ToUInt32, testValues, testBases, expectedValues);
 
             string[] overflowValues = { "18446744073709551616", "18446744073709551617", "18446744073709551618", "18446744073709551619", "18446744073709551620", "-4294967297", "11111111111111111111111111111111111111111111111111111111111111111", "1FFFFffffFFFFffff", "7777777777777777777777777" };
             int[] overflowBases = { 10, 10, 10, 10, 10, 10, 2, 16, 8 };
-            VerifyFromStringWithBaseThrows<OverflowException>(Wrappers.ConvertFromStrWithBase, overflowValues, overflowBases);
+            VerifyFromStringWithBaseThrows<OverflowException>(Convert.ToUInt32, overflowValues, overflowBases);
 
             string[] formatExceptionValues = { "12", "ffffffffffffffffffff" };
             int[] formatExceptionBases = { 2, 8 };
-            VerifyFromStringWithBaseThrows<FormatException>(Wrappers.ConvertFromStrWithBase, formatExceptionValues, formatExceptionBases);
+            VerifyFromStringWithBaseThrows<FormatException>(Convert.ToUInt32, formatExceptionValues, formatExceptionBases);
 
             string[] argumentExceptionValues = { "10", "11", "abba", "-ab" };
             int[] argumentExceptionBases = { -1, 3, 0, 16 };
-            VerifyFromStringWithBaseThrows<ArgumentException>(Wrappers.ConvertFromStrWithBase, argumentExceptionValues, argumentExceptionBases);
+            VerifyFromStringWithBaseThrows<ArgumentException>(Convert.ToUInt32, argumentExceptionValues, argumentExceptionBases);
         }
 
         [Test]
