@@ -9901,8 +9901,8 @@
             Bridge.get(Bridge.Test.Assert).areEqual(1, d.getCount());
     
             di.add(3, "bb");
-            // TODO Bug
-            // Assert.AreEqual(di[3], "bb");
+            Bridge.get(Bridge.Test.Assert).areEqual(di.getItem(3), "bb");
+    
             var s = { };
             di.tryGetValue(3, s);
             Bridge.get(Bridge.Test.Assert).areEqual("bb", s.v);

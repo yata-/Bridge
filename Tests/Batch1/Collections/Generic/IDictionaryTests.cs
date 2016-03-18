@@ -215,8 +215,8 @@ namespace Bridge.ClientTest.Collections.Generic
             Assert.AreEqual(1, d.Count);
 
             di.Add(3, "bb");
-            // TODO Bug
-            // Assert.AreEqual(di[3], "bb");
+            Assert.AreEqual(di[3], "bb");
+
             string s;
             di.TryGetValue(3, out s);
             Assert.AreEqual("bb", s);
