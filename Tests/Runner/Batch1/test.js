@@ -409,6 +409,10 @@
                 QUnit.test("MultidimArray - SetValueWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_MultidimArrayTests).setValueWorks);
                 QUnit.test("MultidimArray - GetValueWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_MultidimArrayTests).getValueWorks);
                 QUnit.test("MultidimArray - GettingValueByIndexWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_MultidimArrayTests).gettingValueByIndexWorks);
+                QUnit.test("MultidimArray - GetLengthWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_MultidimArrayTests).getLengthWorks);
+                QUnit.test("MultidimArray - GetLowerBoundWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_MultidimArrayTests).getLowerBoundWorks);
+                QUnit.test("MultidimArray - GetUpperBoundWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_MultidimArrayTests).getUpperBoundWorks);
+                QUnit.test("MultidimArray - ForeachWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_MultidimArrayTests).foreachWorks);
                 QUnit.test("MultidimArray - RankWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_MultidimArrayTests).rankWorks);
                 QUnit.test("MultidimArray - GetValueWithIndexOutOfRangeThrowsAnException", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_MultidimArrayTests).getValueWithIndexOutOfRangeThrowsAnException);
                 QUnit.test("MultidimArray - SetValueWithIndexOutOfRangeThrowsAnException", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_MultidimArrayTests).setValueWithIndexOutOfRangeThrowsAnException);
@@ -6974,6 +6978,22 @@
             gettingValueByIndexWorks: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.MultidimArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_MultidimArrayTests);
                 t.getFixture().gettingValueByIndexWorks();
+            },
+            getLengthWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.MultidimArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_MultidimArrayTests);
+                t.getFixture().getLengthWorks();
+            },
+            getLowerBoundWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.MultidimArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_MultidimArrayTests);
+                t.getFixture().getLowerBoundWorks();
+            },
+            getUpperBoundWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.MultidimArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_MultidimArrayTests);
+                t.getFixture().getUpperBoundWorks();
+            },
+            foreachWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.MultidimArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_MultidimArrayTests);
+                t.getFixture().foreachWorks();
             },
             rankWorks: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.MultidimArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_MultidimArrayTests);

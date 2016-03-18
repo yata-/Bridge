@@ -15769,6 +15769,35 @@
             Bridge.get(Bridge.Test.Assert).areEqual(5, arr.get([2, 0]));
             Bridge.get(Bridge.Test.Assert).areEqual(6, arr.get([2, 1]));
         },
+        getLengthWorks: function () {
+            var arr = Bridge.Array.create(0, [[[1, 2], [3, 4], [5, 6]], [[7, 8], [9, 10], [11, 12]], [[13, 14], [15, 16], [17, 18]], [[19, 20], [21, 22], [23, 24]]], 4, 3, 2);
+            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getLength(arr, 0), 4);
+            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getLength(arr, 1), 3);
+            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getLength(arr, 2), 2);
+        },
+        getLowerBoundWorks: function () {
+            var arr = Bridge.Array.create(0, [[[1, 2], [3, 4], [5, 6]], [[7, 8], [9, 10], [11, 12]], [[13, 14], [15, 16], [17, 18]], [[19, 20], [21, 22], [23, 24]]], 4, 3, 2);
+            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getLower(arr, 0), 0);
+            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getLower(arr, 1), 0);
+            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getLower(arr, 2), 0);
+        },
+        getUpperBoundWorks: function () {
+            var arr = Bridge.Array.create(0, [[[1, 2], [3, 4], [5, 6]], [[7, 8], [9, 10], [11, 12]], [[13, 14], [15, 16], [17, 18]], [[19, 20], [21, 22], [23, 24]]], 4, 3, 2);
+            Bridge.get(Bridge.Test.Assert).areEqual((Bridge.Array.getLength(arr, 0) - 1), 3);
+            Bridge.get(Bridge.Test.Assert).areEqual((Bridge.Array.getLength(arr, 1) - 1), 2);
+            Bridge.get(Bridge.Test.Assert).areEqual((Bridge.Array.getLength(arr, 2) - 1), 1);
+        },
+        foreachWorks: function () {
+            var $t;
+            var arr = Bridge.Array.create(0, [[[1, 2], [3, 4], [5, 6]], [[7, 8], [9, 10], [11, 12]], [[13, 14], [15, 16], [17, 18]], [[19, 20], [21, 22], [23, 24]]], 4, 3, 2);
+            var actual = new Bridge.List$1(Bridge.Int32)();
+            $t = Bridge.getEnumerator(arr);
+            while ($t.moveNext()) {
+                var i = $t.getCurrent();
+                actual.add(i);
+            }
+            Bridge.get(Bridge.Test.Assert).areEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24], actual.toArray());
+        },
         rankWorks: function () {
             Bridge.get(Bridge.Test.Assert).areEqual(2, Bridge.Array.getRank(Bridge.Array.create(0, null, 0, 0)));
             Bridge.get(Bridge.Test.Assert).areEqual(3, Bridge.Array.getRank(Bridge.Array.create(0, null, 0, 0, 0)));
