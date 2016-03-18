@@ -1,4 +1,13 @@
-﻿(function (globals) {
+﻿
+var SomeExternalNamespace = {
+    SomeNonBridgeClass: function () {
+        
+    }               
+};
+SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
+
+
+(function (globals) {
     "use strict";
 
     /** @namespace System */
@@ -1935,6 +1944,29 @@
             $function: function ($function) {
                 return $function + "1";
             }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1027', {
+        statics: {
+            testNonBridgeInherits: function () {
+                var obj = new Bridge.ClientTest.BridgeIssues.Bridge1027.MyClass(11);
+                Bridge.get(Bridge.Test.Assert).areEqual(11, obj.number);
+                Bridge.get(Bridge.Test.Assert).areEqual(2, obj.foo());
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1027.MyClass', {
+        inherits: [SomeExternalNamespace.SomeNonBridgeClass],
+        number: 0,
+        constructor: function (n) {
+            this.number = n;
+        },
+        foo: function () {
+            var r = SomeExternalNamespace.SomeNonBridgeClass.prototype.foo.call(this);
+    
+            return r + 1;
         }
     });
     

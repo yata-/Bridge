@@ -959,6 +959,7 @@
                 QUnit.test("#1020 - TestEnumWithReference", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1020).testEnumWithReference);
                 QUnit.test("#1024 - TestConstructorOptionalParameter", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1024).testConstructorOptionalParameter);
                 QUnit.test("#1026 - TestReservedWordIfRefOut", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1026).testReservedWordIfRefOut);
+                QUnit.test("#1027 - TestNonBridgeInherits", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1027).testNonBridgeInherits);
                 QUnit.test("#1029 - TestNullableMethods", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1029).testNullableMethods);
                 QUnit.test("#1041 - Decimal TestPropertyOps", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1041Decimal).testPropertyOps);
                 QUnit.test("#1041 - Decimal TestIndexerOps", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1041Decimal).testIndexerOps);
@@ -2257,6 +2258,16 @@
             testReservedWordIfRefOut: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1026)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1026, 3);
                 Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1026).testReservedWordIfRefOut();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1027', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1027)],
+        statics: {
+            testNonBridgeInherits: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1027)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1027);
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1027).testNonBridgeInherits();
             }
         }
     });
