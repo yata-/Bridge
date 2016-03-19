@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Bridge.Test;
 
 namespace Bridge.ClientTest.BridgeIssues
@@ -8,10 +7,20 @@ namespace Bridge.ClientTest.BridgeIssues
     [TestFixture(TestNameFormat = "#1076 - {0}")]
     public class Bridge1076
     {
+        [InlineConst]
+        private const string SomeValue = "SomeV";
+
         [Test]
-        public static void TestInlineConstAsMemberReference()
+        public static void TestInlineConstantAsMemberReference()
+        {
+            Assert.AreEqual("SomeV", Bridge1076.SomeValue);
+        }
+
+        [Test]
+        public static void TestInlineBridgeNumericConstantsAsMemberReference()
         {
             string s;
+
             s = decimal.MaxValue.ToString();
             s = float.MaxValue.ToString();
             s = double.MaxValue.ToString();
@@ -19,7 +28,9 @@ namespace Bridge.ClientTest.BridgeIssues
 
             s = decimal.MinValue.ToString();
             s = Single.MinValue.ToString();
+            s = Single.Epsilon.ToString();
             s = double.MinValue.ToString();
+            s = double.Epsilon.ToString();
             s = char.MinValue.ToString();
 
             s = byte.MaxValue.ToString();

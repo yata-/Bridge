@@ -2242,8 +2242,12 @@
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1076', {
         statics: {
-            testInlineConstAsMemberReference: function () {
+            testInlineConstantAsMemberReference: function () {
+                Bridge.get(Bridge.Test.Assert).areEqual("SomeV", "SomeV");
+            },
+            testInlineBridgeNumericConstantsAsMemberReference: function () {
                 var s;
+    
                 s = Bridge.Int.format(Bridge.Decimal.MaxValue, 'G');
                 s = Bridge.Int.format(3.40282347E+38, 'G');
                 s = Bridge.Int.format(Number.MAX_VALUE, 'G');
@@ -2251,7 +2255,9 @@
     
                 s = Bridge.Int.format(Bridge.Decimal.MinValue, 'G');
                 s = Bridge.Int.format(-3.40282347E+38, 'G');
+                s = Bridge.Int.format(1.401298E-45, 'G');
                 s = Bridge.Int.format(Number.MIN_VALUE, 'G');
+                s = Bridge.Int.format(4.94065645841247E-324, 'G');
                 s = String.fromCharCode(0);
     
                 s = (255).toString();
