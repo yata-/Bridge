@@ -423,7 +423,15 @@ namespace Bridge.Translator
 
                         if (type != null)
                         {
-                            type.AcceptVisitor(this.Emitter);
+                            if (modifier == "default" || modifier == "defaultFn")
+                            {
+                                var def = Inspector.GetDefaultFieldValue(type, this.Emitter.Resolver);
+                                this.GetDefaultValue(def, modifier);
+                            }
+                            else
+                            {
+                                type.AcceptVisitor(this.Emitter);    
+                            }
                         }
                         else
                         {
@@ -431,7 +439,15 @@ namespace Bridge.Translator
 
                             if (iType != null)
                             {
-                                new CastBlock(this.Emitter, iType).Emit();
+                                if (modifier == "default" || modifier == "defaultFn")
+                                {
+                                    var def = Inspector.GetDefaultFieldValue(iType);
+                                    this.GetDefaultValue(def, modifier);
+                                }
+                                else
+                                {
+                                    new CastBlock(this.Emitter, iType).Emit();
+                                }
                             }
                         }
                     }
@@ -455,7 +471,37 @@ namespace Bridge.Translator
                 this.Write("; }");
             }
         }
-        
+
+        private void GetDefaultValue(object def, string modifier)
+        {
+            if (def is AstType)
+            {
+                if (modifier == "defaultFn")
+                {
+                    this.Write(BridgeTypes.ToJsName((AstType) def, this.Emitter) + ".getDefaultValue");
+                }
+                else
+                {
+                    this.Write(Inspector.GetStructDefaultValue((AstType) def, this.Emitter));
+                }
+            }
+            else if (def is IType)
+            {
+                if (modifier == "defaultFn")
+                {
+                    this.Write(BridgeTypes.ToJsName((IType) def, this.Emitter) + ".getDefaultValue");
+                }
+                else
+                {
+                    this.Write(Inspector.GetStructDefaultValue((IType) def, this.Emitter));
+                }
+            }
+            else
+            {
+                this.WriteScript(def);
+            }
+        }
+
         protected virtual void EmitMethodParameters(IMethod method, IEnumerable<IParameter> parameters, IEnumerable<ITypeParameter> typeParameters, bool isNull)
         {
             bool needComma = false;

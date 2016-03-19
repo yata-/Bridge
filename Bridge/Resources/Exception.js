@@ -346,3 +346,15 @@
             return new Bridge.AggregateException(this.getMessage(), flattenedExceptions);
         }
     });
+
+    Bridge.define("Bridge.IndexOutOfRangeException", {
+        inherits: [Bridge.SystemException],
+
+        constructor: function (message, innerException) {
+            if (!message) {
+                message = "Index was out of range. Must be non-negative and less than the size of the collection.\nParameter name: index";
+            }
+
+            Bridge.SystemException.prototype.$constructor.call(this, message, innerException);
+        }
+    });

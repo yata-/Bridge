@@ -83,6 +83,7 @@
     <Compile Include="Script.cs" />
     <Compile Include="System\Action.cs" />
     <Compile Include="System\Activator.cs" />
+    <Compile Include="System\IndexOutOfRangeException.cs" />
     <Compile Include="System\ArgumentNullException.cs" />
     <Compile Include="System\ArgumentException.cs" />
     <Compile Include="System\ArithmeticException.cs" />
