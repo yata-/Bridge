@@ -373,7 +373,10 @@ namespace Bridge.ClientTest
         {
             IList<string> l = new[] { "x", "y", "z" };
             l.Clear();
-            Assert.AreDeepEqual(new string[0], l);
+            Assert.AreDeepEqual(new string[3], l);
+            Assert.AreDeepEqual(null, l[0]);
+            Assert.AreDeepEqual(null, l[1]);
+            Assert.AreDeepEqual(null, l[2]);
         }
 
         [Test]

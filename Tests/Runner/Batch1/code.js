@@ -238,8 +238,11 @@
         },
         iCollectionClearWorks: function () {
             var l = ["x", "y", "z"];
-            Bridge.Array.clear(l);
-            Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.Array.init(0, null), l);
+            Bridge.Array.clear(l, String);
+            Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.Array.init(3, null), l);
+            Bridge.get(Bridge.Test.Assert).areDeepEqual(null, Bridge.Array.getItem(l, 0));
+            Bridge.get(Bridge.Test.Assert).areDeepEqual(null, Bridge.Array.getItem(l, 1));
+            Bridge.get(Bridge.Test.Assert).areDeepEqual(null, Bridge.Array.getItem(l, 2));
         },
         iCollectionContainsWorks: function () {
             var l = ["x", "y", "z"];
@@ -4084,35 +4087,35 @@
     
                 var dst = Bridge.Array.init(2, null);
                 intIndex = 0;
-                Bridge.Array.copy(arrs, intIndex, dst, 0, arrs.length - intIndex);
+                Bridge.Array.copy(arrs, 0, dst, intIndex, arrs.length);
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1(2, dst.length, "Bridge580 Length Int");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(arrs[0], dst[0], "Bridge580 0 Int");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(arrs[1], dst[1], "Bridge580 1 Int");
     
-                dst = Bridge.Array.init(1, null);
+                dst = Bridge.Array.init(3, null);
                 intIndex = 1;
-                Bridge.Array.copy(arrs, intIndex, dst, 0, arrs.length - intIndex);
+                Bridge.Array.copy(arrs, 0, dst, intIndex, arrs.length);
     
-                Bridge.get(Bridge.Test.Assert).areEqual$1(1, dst.length, "Bridge580 Length 1 Int");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(arrs[1], dst[0], "Bridge580 1_1 Int");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(3, dst.length, "Bridge580 Length 3 Int");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(arrs[1], dst[2], "Bridge580 1_1 Int");
     
                 var longIndex;
     
                 dst = Bridge.Array.init(2, null);
                 longIndex = 0;
-                Bridge.Array.copy(arrs, longIndex, dst, 0, arrs.length - longIndex);
+                Bridge.Array.copy(arrs, 0, dst, longIndex, arrs.length);
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1(2, dst.length, "Bridge580 Length Long");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(arrs[0], dst[0], "Bridge580 0 Long");
                 Bridge.get(Bridge.Test.Assert).areEqual$1(arrs[1], dst[1], "Bridge580 1 Long");
     
-                dst = Bridge.Array.init(1, null);
+                dst = Bridge.Array.init(3, null);
                 longIndex = 1;
-                Bridge.Array.copy(arrs, longIndex, dst, 0, arrs.length - longIndex);
+                Bridge.Array.copy(arrs, 0, dst, longIndex, arrs.length);
     
-                Bridge.get(Bridge.Test.Assert).areEqual$1(1, dst.length, "Bridge580 Length 1 Long");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(arrs[1], dst[0], "Bridge580 1_1 Long");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(3, dst.length, "Bridge580 Length 1 Long");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(arrs[1], dst[2], "Bridge580 1_1 Long");
             }
         }
     });
@@ -6387,9 +6390,9 @@
                 var test2 = null;
                 var test3 = null;
     
-                var value1 = Bridge.Nullable.getValueOrDefault(test1, Bridge.getDefaultValue(Bridge.Int));
-                var value2 = Bridge.Nullable.getValueOrDefault(test2, Bridge.getDefaultValue(Bridge.ClientTest.BridgeIssues.Bridge762A));
-                var value3 = Bridge.Nullable.getValueOrDefault(test3, Bridge.getDefaultValue(Bridge.ClientTest.BridgeIssues.Bridge762B));
+                var value1 = Bridge.Nullable.getValueOrDefault(test1, 0);
+                var value2 = Bridge.Nullable.getValueOrDefault(test2, new Bridge.ClientTest.BridgeIssues.Bridge762A());
+                var value3 = Bridge.Nullable.getValueOrDefault(test3, new Bridge.ClientTest.BridgeIssues.Bridge762B());
     
                 Bridge.get(Bridge.Test.Assert).areEqual$1(0, value1, "Bridge762 int");
                 Bridge.get(Bridge.Test.Assert).areNotEqual$1(null, value2, "Bridge762A struct");
@@ -9693,7 +9696,7 @@
         },
         classImplementingICollectionCastToICollectionClearWorks: function () {
             var c = new Bridge.ClientTest.Collections.Generic.ICollectionTests.MyCollection(["x", "y"]);
-            Bridge.Array.clear(c);
+            Bridge.Array.clear(c, String);
             Bridge.get(Bridge.Test.Assert).areEqual(0, Bridge.Array.getCount(c));
         },
         arrayCastToICollectionContainsWorks: function () {
@@ -10898,7 +10901,7 @@
                 ["y"],
                 ["z"]
             ] );
-            Bridge.Array.clear(l);
+            Bridge.Array.clear(l, String);
             Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.Array.init(0, null), (Bridge.cast(l, Bridge.List$1(String))).toArray());
         },
         iCollectionContainsWorks: function () {
@@ -14446,11 +14449,11 @@
                 Bridge.get(Bridge.Test.Assert).throws$5(Bridge.get(Bridge.ClientTest.Linq.TestLinqElementOperators).throwExceptionOnFirst2, "First() should throw exception on empty collection");
     
                 // TEST
-                Bridge.get(Bridge.Test.Assert).areEqual$1(null, Bridge.Linq.Enumerable.from(persons).firstOrDefault($_.Bridge.ClientTest.Linq.TestLinqElementOperators.f4, Bridge.getDefaultValue(Bridge.ClientTest.Utilities.Person)), "FirstOrDefault() unexisting element by lambda");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(null, Bridge.Linq.Enumerable.from(persons).where($_.Bridge.ClientTest.Linq.TestLinqElementOperators.f4).firstOrDefault(null, Bridge.getDefaultValue(Bridge.ClientTest.Utilities.Person)), "FirstOrDefault() with Where() unexisting element by lambda");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(persons.getItem(7), Bridge.Linq.Enumerable.from(persons).firstOrDefault($_.Bridge.ClientTest.Linq.TestLinqElementOperators.f5, Bridge.getDefaultValue(Bridge.ClientTest.Utilities.Person)), "FirstOrDefault() with Name = 'Nemo' by lambda");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(persons.getItem(7), Bridge.Linq.Enumerable.from(persons).where($_.Bridge.ClientTest.Linq.TestLinqElementOperators.f5).firstOrDefault(null, Bridge.getDefaultValue(Bridge.ClientTest.Utilities.Person)), "FirstOrDefault() with Where() with Name = 'Nemo' by lambda");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(null, Bridge.Linq.Enumerable.from(([])).firstOrDefault(null, Bridge.getDefaultValue(Object)), "FirstOrDefault() within zero-length array by lambda");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(null, Bridge.Linq.Enumerable.from(persons).firstOrDefault($_.Bridge.ClientTest.Linq.TestLinqElementOperators.f4, null), "FirstOrDefault() unexisting element by lambda");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(null, Bridge.Linq.Enumerable.from(persons).where($_.Bridge.ClientTest.Linq.TestLinqElementOperators.f4).firstOrDefault(null, null), "FirstOrDefault() with Where() unexisting element by lambda");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(persons.getItem(7), Bridge.Linq.Enumerable.from(persons).firstOrDefault($_.Bridge.ClientTest.Linq.TestLinqElementOperators.f5, null), "FirstOrDefault() with Name = 'Nemo' by lambda");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(persons.getItem(7), Bridge.Linq.Enumerable.from(persons).where($_.Bridge.ClientTest.Linq.TestLinqElementOperators.f5).firstOrDefault(null, null), "FirstOrDefault() with Where() with Name = 'Nemo' by lambda");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(null, Bridge.Linq.Enumerable.from(([])).firstOrDefault(null, null), "FirstOrDefault() within zero-length array by lambda");
     
                 // TEST
                 var lastPerson = (Bridge.Linq.Enumerable.from(Bridge.get(Bridge.ClientTest.Utilities.Person).getPersons()).select($_.Bridge.ClientTest.Linq.TestLinqElementOperators.f6)).last();
@@ -14462,10 +14465,10 @@
                 Bridge.get(Bridge.Test.Assert).throws$5(Bridge.get(Bridge.ClientTest.Linq.TestLinqElementOperators).throwExceptionOnLast2, "Last() should throw exception on empty collection");
     
                 // TEST
-                Bridge.get(Bridge.Test.Assert).areEqual$1(null, Bridge.Linq.Enumerable.from(persons).lastOrDefault($_.Bridge.ClientTest.Linq.TestLinqElementOperators.f4, Bridge.getDefaultValue(Bridge.ClientTest.Utilities.Person)), "LastOrDefault() unexisting element by lambda");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(null, Bridge.Linq.Enumerable.from(persons).where($_.Bridge.ClientTest.Linq.TestLinqElementOperators.f4).lastOrDefault(null, Bridge.getDefaultValue(Bridge.ClientTest.Utilities.Person)), "LastOrDefault() with Where() unexisting element by lambda");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(persons.getItem(7), Bridge.Linq.Enumerable.from(persons).lastOrDefault($_.Bridge.ClientTest.Linq.TestLinqElementOperators.f5, Bridge.getDefaultValue(Bridge.ClientTest.Utilities.Person)), "LastOrDefault() with Name = 'Nemo' by lambda");
-                Bridge.get(Bridge.Test.Assert).areEqual$1(null, Bridge.Linq.Enumerable.from(([])).lastOrDefault(null, Bridge.getDefaultValue(Object)), "LastOrDefault() within zero-length array by lambda");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(null, Bridge.Linq.Enumerable.from(persons).lastOrDefault($_.Bridge.ClientTest.Linq.TestLinqElementOperators.f4, null), "LastOrDefault() unexisting element by lambda");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(null, Bridge.Linq.Enumerable.from(persons).where($_.Bridge.ClientTest.Linq.TestLinqElementOperators.f4).lastOrDefault(null, null), "LastOrDefault() with Where() unexisting element by lambda");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(persons.getItem(7), Bridge.Linq.Enumerable.from(persons).lastOrDefault($_.Bridge.ClientTest.Linq.TestLinqElementOperators.f5, null), "LastOrDefault() with Name = 'Nemo' by lambda");
+                Bridge.get(Bridge.Test.Assert).areEqual$1(null, Bridge.Linq.Enumerable.from(([])).lastOrDefault(null, null), "LastOrDefault() within zero-length array by lambda");
     
                 // TEST
                 var numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0];
@@ -14476,15 +14479,15 @@
                 Bridge.get(Bridge.Test.Assert).throws$5(Bridge.get(Bridge.ClientTest.Linq.TestLinqElementOperators).throwExceptionOnElementAt2, "ElementAt() should throw exception on empty collection");
     
                 // TEST
-                var elementAt1OrDefault = Bridge.Linq.Enumerable.from(numbers).elementAtOrDefault(1, Bridge.getDefaultValue(Bridge.Int));
+                var elementAt1OrDefault = Bridge.Linq.Enumerable.from(numbers).elementAtOrDefault(1, 0);
                 Bridge.get(Bridge.Test.Assert).areEqual$1(4, elementAt1OrDefault, "ElementAtOrDefault() should return 4");
     
                 // TEST
-                var elementAt2OrDefault = (Bridge.Linq.Enumerable.from(numbers).where($_.Bridge.ClientTest.Linq.TestLinqElementOperators.f9)).elementAtOrDefault(2, Bridge.getDefaultValue(Bridge.Int));
+                var elementAt2OrDefault = (Bridge.Linq.Enumerable.from(numbers).where($_.Bridge.ClientTest.Linq.TestLinqElementOperators.f9)).elementAtOrDefault(2, 0);
                 Bridge.get(Bridge.Test.Assert).areEqual$1(6, elementAt2OrDefault, "ElementAtOrDefault() should return 6");
     
                 // TEST
-                var elementAt100OrDefault = (Bridge.Linq.Enumerable.from(numbers).where($_.Bridge.ClientTest.Linq.TestLinqElementOperators.f9)).elementAtOrDefault(100, Bridge.getDefaultValue(Bridge.Int));
+                var elementAt100OrDefault = (Bridge.Linq.Enumerable.from(numbers).where($_.Bridge.ClientTest.Linq.TestLinqElementOperators.f9)).elementAtOrDefault(100, 0);
                 Bridge.get(Bridge.Test.Assert).areEqual$1(0, elementAt100OrDefault, "ElementAtOrDefault() should return 0");
             },
             throwExceptionOnFirst1: function () {
@@ -14753,7 +14756,7 @@
             return { g: g, pg: pg };
         },
         f7: function (x0) {
-            return Bridge.Linq.Enumerable.from(x0.pg).defaultIfEmpty(Bridge.getDefaultValue(Bridge.ClientTest.Utilities.Person));
+            return Bridge.Linq.Enumerable.from(x0.pg).defaultIfEmpty(null);
         },
         f8: function (x1, ep) {
             return { groupName: x1.g.getName(), personName: Bridge.hasValue(ep) ? ep.getName() : "" };
@@ -14765,7 +14768,7 @@
             return { name: p.getGroup(), digit: 1 };
         },
         f11: function (x2) {
-            return Bridge.Linq.Enumerable.from(x2.pg).defaultIfEmpty(Bridge.getDefaultValue(Bridge.ClientTest.Utilities.Person));
+            return Bridge.Linq.Enumerable.from(x2.pg).defaultIfEmpty(null);
         },
         f12: function (x3, ep) {
             return { x3: x3, ep: ep };
@@ -15930,6 +15933,1383 @@
             Bridge.get(Bridge.Test.Assert).$throws(function () {
                 arr.set([0, 0, -1], 0);
             });
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.NewArrayTests', {
+        statics: {
+            getBinarySearchTestData: function () {
+                var intArray = [1, 3, 6, 6, 8, 10, 12, 16];
+                var intComparer = new Bridge.ClientTest.NewArrayTests.IntegerComparer();
+                var intGenericComparer = new Bridge.ClientTest.NewArrayTests.IntegerComparer();
+    
+                var strArray = [null, "aa", "bb", "bb", "cc", "dd", "ee"];
+                var strComparer = new Bridge.ClientTest.NewArrayTests.StringComparer();
+                var strGenericComparer = new Bridge.ClientTest.NewArrayTests.StringComparer();
+    
+                return [[intArray, 8, intComparer, intGenericComparer, $_.Bridge.ClientTest.NewArrayTests.f1], [intArray, 99, intComparer, intGenericComparer, function (i) {
+                    return i === ~(intArray.length);
+                }], [intArray, 6, intComparer, intGenericComparer, $_.Bridge.ClientTest.NewArrayTests.f2], [strArray, "bb", strComparer, strGenericComparer, $_.Bridge.ClientTest.NewArrayTests.f2], [strArray, null, strComparer, null, $_.Bridge.ClientTest.NewArrayTests.f3]];
+            },
+            getBinarySearchTestDataInRange: function () {
+                var intArray = [1, 3, 6, 6, 8, 10, 12, 16];
+                var intComparer = new Bridge.ClientTest.NewArrayTests.IntegerComparer();
+                var intGenericComparer = new Bridge.ClientTest.NewArrayTests.IntegerComparer();
+    
+                var strArray = [null, "aa", "bb", "bb", "cc", "dd", "ee"];
+                var strComparer = new Bridge.ClientTest.NewArrayTests.StringComparer();
+                var strGenericComparer = new Bridge.ClientTest.NewArrayTests.StringComparer();
+    
+                return [[intArray, 0, 8, 99, intComparer, intGenericComparer, function (i) {
+                    return i === ~(intArray.length);
+                }], [intArray, 0, 8, 6, intComparer, intGenericComparer, $_.Bridge.ClientTest.NewArrayTests.f2], [intArray, 1, 5, 16, intComparer, intGenericComparer, $_.Bridge.ClientTest.NewArrayTests.f4], [strArray, 0, strArray.length, "bb", strComparer, strGenericComparer, $_.Bridge.ClientTest.NewArrayTests.f2], [strArray, 3, 4, "bb", strComparer, strGenericComparer, $_.Bridge.ClientTest.NewArrayTests.f5], [strArray, 4, 3, "bb", strComparer, strGenericComparer, $_.Bridge.ClientTest.NewArrayTests.f6], [strArray, 4, 0, "bb", strComparer, strGenericComparer, $_.Bridge.ClientTest.NewArrayTests.f6], [strArray, 0, 7, null, strComparer, null, $_.Bridge.ClientTest.NewArrayTests.f3]];
+            },
+            testArrayAsIListOfT: function () {
+                var sa = ["Hello", "There"];
+                var s;
+                var idx;
+    
+                var b = (Bridge.is(sa, Bridge.IList$1(String)));
+                Bridge.get(Bridge.Test.Assert).$true(b);
+    
+                var ils = sa;
+                var len = Bridge.Array.getCount(ils);
+                Bridge.get(Bridge.Test.Assert).areEqual(len, 2);
+    
+                b = Bridge.Array.contains(ils, null);
+                Bridge.get(Bridge.Test.Assert).$false(b);
+    
+                b = Bridge.Array.contains(ils, "There");
+                Bridge.get(Bridge.Test.Assert).$true(b);
+    
+                idx = Bridge.Array.indexOf(ils, "There");
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 1);
+                idx = Bridge.Array.indexOf(ils, null);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, -1);
+    
+                var sa2 = Bridge.Array.init(2, null);
+                Bridge.Array.copy(sa, 0, sa2, 0, sa.length);
+                Bridge.get(Bridge.Test.Assert).areEqual(sa2[0], sa[0]);
+                Bridge.get(Bridge.Test.Assert).areEqual(sa2[1], sa[1]);
+    
+                var ia1;
+                var dst;
+                ia1 = [1, 2, 3, 4];
+                dst = Bridge.Array.init(4, 0);
+                Bridge.Array.copy(ia1, 0, dst, 0, ia1.length);
+                Bridge.get(Bridge.Test.Assert).areEqual(dst, ia1);
+    
+                ia1 = [1, 2, 3, 4];
+                dst = Bridge.Array.init(6, 0);
+                Bridge.Array.copy(ia1, 0, dst, 1, ia1.length);
+                Bridge.get(Bridge.Test.Assert).areEqual(dst, [0, 1, 2, 3, 4, 0]);
+    
+                var e = Bridge.getEnumerator(ils, "$1");
+                b = e.moveNext();
+                Bridge.get(Bridge.Test.Assert).$true(b);
+                s = e.getCurrent$1();
+                Bridge.get(Bridge.Test.Assert).areEqual(s, sa[0]);
+                b = e.moveNext();
+                Bridge.get(Bridge.Test.Assert).$true(b);
+                s = e.getCurrent$1();
+                Bridge.get(Bridge.Test.Assert).areEqual(s, sa[1]);
+                b = e.moveNext();
+                Bridge.get(Bridge.Test.Assert).$false(b);
+    
+                s = Bridge.Array.getItem(ils, 1);
+                Bridge.get(Bridge.Test.Assert).areEqual(s, sa[1]);
+    
+                Bridge.Array.setItem(ils, 1, "42");
+                Bridge.get(Bridge.Test.Assert).areEqual(sa[1], "42");
+            },
+            testTrivials: function () {
+                // Check a number of the simple APIs on Array for dimensions up to 4.
+                var a = [1, 2, 3];
+                Bridge.get(Bridge.Test.Assert).areEqual(a.length, 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getLength(a, 0), 3);
+                Bridge.get(Bridge.Test.Assert).throws$6(Bridge.IndexOutOfRangeException, function () {
+                    Bridge.Array.getLength(a, -1);
+                });
+                Bridge.get(Bridge.Test.Assert).throws$6(Bridge.IndexOutOfRangeException, function () {
+                    Bridge.Array.getLength(a, 1);
+                });
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getLower(a, 0), 0);
+                Bridge.get(Bridge.Test.Assert).throws$6(Bridge.IndexOutOfRangeException, function () {
+                    Bridge.Array.getLower(a, 1);
+                });
+                Bridge.get(Bridge.Test.Assert).areEqual((Bridge.Array.getLength(a, 0) - 1), 2);
+                Bridge.get(Bridge.Test.Assert).throws$6(Bridge.IndexOutOfRangeException, function () {
+                    (Bridge.Array.getLength(a, 1) - 1);
+                });
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getRank(a), 1);
+                var il = a;
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getCount(il), 3);
+    
+                Bridge.get(Bridge.Test.Assert).$true(Bridge.Array.contains(il, 1));
+                Bridge.get(Bridge.Test.Assert).$false(Bridge.Array.contains(il, 999));
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.indexOf(il, 1), 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.indexOf(il, 999), -1);
+                var v = Bridge.Array.getItem(il, 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(v, 1);
+                v = Bridge.Array.getItem(il, 1);
+                Bridge.get(Bridge.Test.Assert).areEqual(v, 2);
+                v = Bridge.Array.getItem(il, 2);
+                Bridge.get(Bridge.Test.Assert).areEqual(v, 3);
+                Bridge.Array.setItem(il, 2, 42);
+                Bridge.get(Bridge.Test.Assert).areEqual((Bridge.cast(a, Array))[2], 42);
+    
+                var a2 = Bridge.Array.create(0, [[1, 2, 3], [4, 5, 6]], 2, 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getLength(a2, 0), 2);
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getLength(a2, 1), 3);
+                Bridge.get(Bridge.Test.Assert).throws$6(Bridge.IndexOutOfRangeException, function () {
+                    Bridge.Array.getLength(a2, -1);
+                });
+                Bridge.get(Bridge.Test.Assert).throws$6(Bridge.IndexOutOfRangeException, function () {
+                    Bridge.Array.getLength(a2, 2);
+                });
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getLower(a2, 0), 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getLower(a2, 1), 0);
+                Bridge.get(Bridge.Test.Assert).throws$6(Bridge.IndexOutOfRangeException, function () {
+                    Bridge.Array.getLower(a2, 2);
+                });
+                Bridge.get(Bridge.Test.Assert).areEqual((Bridge.Array.getLength(a2, 0) - 1), 1);
+                Bridge.get(Bridge.Test.Assert).areEqual((Bridge.Array.getLength(a2, 1) - 1), 2);
+                Bridge.get(Bridge.Test.Assert).throws$6(Bridge.IndexOutOfRangeException, function () {
+                    (Bridge.Array.getLength(a2, 2) - 1);
+                });
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getRank(a2), 2);
+    
+                var a3 = Bridge.Array.create(0, null, 2, 3, 4);
+                var tracer = 0; // makes it easier to confirm row major ordering
+                for (var i = 0; i < 2; i++) {
+                    for (var j = 0; j < 3; j++) {
+                        for (var k = 0; k < 4; k++) {
+                            Bridge.Array.set(a3, tracer++, i, j, k);
+                        }
+                    }
+                }
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getLength(a3, 0), 2);
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getLength(a3, 1), 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getLength(a3, 2), 4);
+                Bridge.get(Bridge.Test.Assert).throws$6(Bridge.IndexOutOfRangeException, function () {
+                    Bridge.Array.getLength(a3, -1);
+                });
+                Bridge.get(Bridge.Test.Assert).throws$6(Bridge.IndexOutOfRangeException, function () {
+                    Bridge.Array.getLength(a3, 3);
+                });
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getLower(a3, 0), 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getLower(a3, 1), 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getLower(a3, 2), 0);
+                Bridge.get(Bridge.Test.Assert).throws$6(Bridge.IndexOutOfRangeException, function () {
+                    Bridge.Array.getLower(a3, 3);
+                });
+                Bridge.get(Bridge.Test.Assert).areEqual((Bridge.Array.getLength(a3, 0) - 1), 1);
+                Bridge.get(Bridge.Test.Assert).areEqual((Bridge.Array.getLength(a3, 1) - 1), 2);
+                Bridge.get(Bridge.Test.Assert).areEqual((Bridge.Array.getLength(a3, 2) - 1), 3);
+                Bridge.get(Bridge.Test.Assert).throws$6(Bridge.IndexOutOfRangeException, function () {
+                    (Bridge.Array.getLength(a3, 3) - 1);
+                });
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getRank(a3), 3);
+    
+                var a4 = Bridge.Array.create(0, null, 2, 3, 4, 5);
+    
+                tracer = 0; // makes it easier to confirm row major ordering
+                for (var i1 = 0; i1 < 2; i1++) {
+                    for (var j1 = 0; j1 < 3; j1++) {
+                        for (var k1 = 0; k1 < 4; k1++) {
+                            for (var l = 0; l < 5; l++) {
+                                Bridge.Array.set(a4, tracer++, i1, j1, k1, l);
+                            }
+                        }
+                    }
+                }
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getLength(a4, 0), 2);
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getLength(a4, 1), 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getLength(a4, 2), 4);
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getLength(a4, 3), 5);
+                Bridge.get(Bridge.Test.Assert).throws$6(Bridge.IndexOutOfRangeException, function () {
+                    Bridge.Array.getLength(a4, -1);
+                });
+                Bridge.get(Bridge.Test.Assert).throws$6(Bridge.IndexOutOfRangeException, function () {
+                    Bridge.Array.getLength(a4, 4);
+                });
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getLower(a4, 0), 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getLower(a4, 1), 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getLower(a4, 2), 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getLower(a4, 3), 0);
+                Bridge.get(Bridge.Test.Assert).throws$6(Bridge.IndexOutOfRangeException, function () {
+                    Bridge.Array.getLower(a4, 4);
+                });
+                Bridge.get(Bridge.Test.Assert).areEqual((Bridge.Array.getLength(a4, 0) - 1), 1);
+                Bridge.get(Bridge.Test.Assert).areEqual((Bridge.Array.getLength(a4, 1) - 1), 2);
+                Bridge.get(Bridge.Test.Assert).areEqual((Bridge.Array.getLength(a4, 2) - 1), 3);
+                Bridge.get(Bridge.Test.Assert).areEqual((Bridge.Array.getLength(a4, 3) - 1), 4);
+                Bridge.get(Bridge.Test.Assert).throws$6(Bridge.IndexOutOfRangeException, function () {
+                    (Bridge.Array.getLength(a4, 4) - 1);
+                });
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.getRank(a4), 4);
+            },
+            testGetAndSetValue: function () {
+                var idirect = [7, 8, 9];
+                var a = idirect;
+    
+                var seven = Bridge.Array.get(a, 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(7, seven);
+                Bridge.Array.set(a, 41, 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(41, idirect[0]);
+    
+                var eight = Bridge.Array.get(a, 1);
+                Bridge.get(Bridge.Test.Assert).areEqual(8, eight);
+                Bridge.Array.set(a, 42, 1);
+                Bridge.get(Bridge.Test.Assert).areEqual(42, idirect[1]);
+    
+                var nine = Bridge.Array.get(a, 2);
+                Bridge.get(Bridge.Test.Assert).areEqual(9, nine);
+                Bridge.Array.set(a, 43, 2);
+                Bridge.get(Bridge.Test.Assert).areEqual(43, idirect[2]);
+    
+                var idirect2 = Bridge.Array.create(0, [[1, 2, 3], [4, 5, 6]], 2, 3);
+                var b = idirect2;
+                Bridge.get(Bridge.Test.Assert).areEqual(1, Bridge.Array.get(b, 0, 0));
+                Bridge.get(Bridge.Test.Assert).areEqual(6, Bridge.Array.get(b, 1, 2));
+                Bridge.Array.set(b, 42, 1, 2);
+                Bridge.get(Bridge.Test.Assert).areEqual(42, Bridge.Array.get(b, 1, 2));
+    
+                var nullIndices = null;
+                Bridge.get(Bridge.Test.Assert).throws$6(Bridge.ArgumentNullException, function () {
+                    Bridge.Array.get.apply(Bridge.Array, [b].concat(nullIndices));
+                });
+    
+                var tooManyIndices = [1, 2, 3, 4];
+                Bridge.get(Bridge.Test.Assert).throws$6(Bridge.ArgumentException, function () {
+                    Bridge.Array.get.apply(Bridge.Array, [b].concat(tooManyIndices));
+                });
+            },
+            testClear: function () {
+                //----------------------------------------------------------
+                // Primitives/valuetypes with no gc-ref pointers
+                //----------------------------------------------------------
+                var idirect;
+                idirect = [7, 8, 9];
+    
+                Bridge.Array.fill(idirect, 0, 0, 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(idirect[0], 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(idirect[1], 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(idirect[2], 0);
+    
+                idirect = [7, 8, 9];
+    
+                Bridge.Array.clear((Bridge.cast(idirect, Bridge.IList$1(Bridge.Int))), Bridge.Int);
+                Bridge.get(Bridge.Test.Assert).areEqual(idirect[0], 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(idirect[1], 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(idirect[2], 0);
+    
+                idirect = [19088743, 2023406814, 573785173, 1719109785, 288576887, 574908040];
+                Bridge.Array.fill(idirect, 0, 2, 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(idirect[0], 19088743);
+                Bridge.get(Bridge.Test.Assert).areEqual(idirect[1], 2023406814);
+                Bridge.get(Bridge.Test.Assert).areEqual(idirect[2], 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(idirect[3], 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(idirect[4], 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(idirect[5], 574908040);
+    
+                idirect = [19088743, 2023406814, 573785173, 1719109785, 288576887, 574908040];
+                Bridge.Array.fill(idirect, 0, 0, 6);
+                Bridge.get(Bridge.Test.Assert).areEqual(idirect[0], 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(idirect[1], 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(idirect[2], 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(idirect[3], 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(idirect[4], 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(idirect[5], 0);
+    
+                idirect = [19088743, 2023406814, 573785173, 1719109785, 288576887, 574908040];
+                Bridge.Array.fill(idirect, 0, 6, 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(idirect[0], 19088743);
+                Bridge.get(Bridge.Test.Assert).areEqual(idirect[1], 2023406814);
+                Bridge.get(Bridge.Test.Assert).areEqual(idirect[2], 573785173);
+                Bridge.get(Bridge.Test.Assert).areEqual(idirect[3], 1719109785);
+                Bridge.get(Bridge.Test.Assert).areEqual(idirect[4], 288576887);
+                Bridge.get(Bridge.Test.Assert).areEqual(idirect[5], 574908040);
+    
+                idirect = [19088743, 2023406814, 573785173, 1719109785, 288576887, 574908040];
+                Bridge.Array.fill(idirect, 0, 0, 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(idirect[0], 19088743);
+                Bridge.get(Bridge.Test.Assert).areEqual(idirect[1], 2023406814);
+                Bridge.get(Bridge.Test.Assert).areEqual(idirect[2], 573785173);
+                Bridge.get(Bridge.Test.Assert).areEqual(idirect[3], 1719109785);
+                Bridge.get(Bridge.Test.Assert).areEqual(idirect[4], 288576887);
+                Bridge.get(Bridge.Test.Assert).areEqual(idirect[5], 574908040);
+    
+                //----------------------------------------------------------
+                // GC-refs
+                //----------------------------------------------------------
+                var sdirect;
+    
+                sdirect = ["7", "8", "9"];
+    
+                Bridge.Array.fill(sdirect, null, 0, 3);
+                Bridge.get(Bridge.Test.Assert).$null(sdirect[0]);
+                Bridge.get(Bridge.Test.Assert).$null(sdirect[1]);
+                Bridge.get(Bridge.Test.Assert).$null(sdirect[2]);
+    
+                sdirect = ["7", "8", "9"];
+    
+                Bridge.Array.clear((Bridge.cast(sdirect, Bridge.IList$1(String))), String);
+                Bridge.get(Bridge.Test.Assert).$null(sdirect[0]);
+                Bridge.get(Bridge.Test.Assert).$null(sdirect[1]);
+                Bridge.get(Bridge.Test.Assert).$null(sdirect[2]);
+    
+                sdirect = ["0x1234567", "0x789abcde", "0x22334455", "0x66778899", "0x11335577", "0x22446688"];
+                Bridge.Array.fill(sdirect, null, 2, 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(sdirect[0], "0x1234567");
+                Bridge.get(Bridge.Test.Assert).areEqual(sdirect[1], "0x789abcde");
+                Bridge.get(Bridge.Test.Assert).$null(sdirect[2]);
+                Bridge.get(Bridge.Test.Assert).$null(sdirect[3]);
+                Bridge.get(Bridge.Test.Assert).$null(sdirect[4]);
+                Bridge.get(Bridge.Test.Assert).areEqual(sdirect[5], "0x22446688");
+    
+                sdirect = ["0x1234567", "0x789abcde", "0x22334455", "0x66778899", "0x11335577", "0x22446688"];
+                Bridge.Array.fill(sdirect, null, 0, 6);
+                Bridge.get(Bridge.Test.Assert).$null(sdirect[0]);
+                Bridge.get(Bridge.Test.Assert).$null(sdirect[1]);
+                Bridge.get(Bridge.Test.Assert).$null(sdirect[2]);
+                Bridge.get(Bridge.Test.Assert).$null(sdirect[3]);
+                Bridge.get(Bridge.Test.Assert).$null(sdirect[4]);
+                Bridge.get(Bridge.Test.Assert).$null(sdirect[5]);
+    
+                sdirect = ["0x1234567", "0x789abcde", "0x22334455", "0x66778899", "0x11335577", "0x22446688"];
+                Bridge.Array.fill(sdirect, null, 6, 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(sdirect[0], "0x1234567");
+                Bridge.get(Bridge.Test.Assert).areEqual(sdirect[1], "0x789abcde");
+                Bridge.get(Bridge.Test.Assert).areEqual(sdirect[2], "0x22334455");
+                Bridge.get(Bridge.Test.Assert).areEqual(sdirect[3], "0x66778899");
+                Bridge.get(Bridge.Test.Assert).areEqual(sdirect[4], "0x11335577");
+                Bridge.get(Bridge.Test.Assert).areEqual(sdirect[5], "0x22446688");
+    
+                sdirect = ["0x1234567", "0x789abcde", "0x22334455", "0x66778899", "0x11335577", "0x22446688"];
+                Bridge.Array.fill(sdirect, null, 0, 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(sdirect[0], "0x1234567");
+                Bridge.get(Bridge.Test.Assert).areEqual(sdirect[1], "0x789abcde");
+                Bridge.get(Bridge.Test.Assert).areEqual(sdirect[2], "0x22334455");
+                Bridge.get(Bridge.Test.Assert).areEqual(sdirect[3], "0x66778899");
+                Bridge.get(Bridge.Test.Assert).areEqual(sdirect[4], "0x11335577");
+                Bridge.get(Bridge.Test.Assert).areEqual(sdirect[5], "0x22446688");
+    
+                //----------------------------------------------------------
+                // Valuetypes with embedded GC-refs
+                //----------------------------------------------------------
+                var g;
+                g = Bridge.Array.init(5, function (){
+                    return new Bridge.ClientTest.NewArrayTests.G();
+                });
+                g[0].x = 7;
+                g[0].s = "Hello";
+                g[0].z = 8;
+                g[1].x = 7;
+                g[1].s = "Hello";
+                g[1].z = 8;
+                g[2].x = 7;
+                g[2].s = "Hello";
+                g[2].z = 8;
+                g[3].x = 7;
+                g[3].s = "Hello";
+                g[3].z = 8;
+                g[4].x = 7;
+                g[4].s = "Hello";
+                g[4].z = 8;
+    
+                Bridge.Array.fill(g, Bridge.ClientTest.NewArrayTests.G.getDefaultValue, 0, 5);
+                for (var i = 0; i < g.length; i++) {
+                    Bridge.get(Bridge.Test.Assert).areEqual(g[i].x, 0);
+                    Bridge.get(Bridge.Test.Assert).$null(g[i].s);
+                    Bridge.get(Bridge.Test.Assert).areEqual(g[i].z, 0);
+                }
+    
+                g = Bridge.Array.init(5, function (){
+                    return new Bridge.ClientTest.NewArrayTests.G();
+                });
+                g[0].x = 7;
+                g[0].s = "Hello";
+                g[0].z = 8;
+                g[1].x = 7;
+                g[1].s = "Hello";
+                g[1].z = 8;
+                g[2].x = 7;
+                g[2].s = "Hello";
+                g[2].z = 8;
+                g[3].x = 7;
+                g[3].s = "Hello";
+                g[3].z = 8;
+                g[4].x = 7;
+                g[4].s = "Hello";
+                g[4].z = 8;
+    
+                Bridge.Array.fill(g, Bridge.ClientTest.NewArrayTests.G.getDefaultValue, 2, 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(g[0].x, 7);
+                Bridge.get(Bridge.Test.Assert).areEqual(g[0].s, "Hello");
+                Bridge.get(Bridge.Test.Assert).areEqual(g[0].z, 8);
+                Bridge.get(Bridge.Test.Assert).areEqual(g[1].x, 7);
+                Bridge.get(Bridge.Test.Assert).areEqual(g[1].s, "Hello");
+                Bridge.get(Bridge.Test.Assert).areEqual(g[1].z, 8);
+                for (var i1 = 2; i1 < 5; i1++) {
+                    Bridge.get(Bridge.Test.Assert).areEqual(g[i1].x, 0);
+                    Bridge.get(Bridge.Test.Assert).$null(g[i1].s);
+                    Bridge.get(Bridge.Test.Assert).areEqual(g[i1].z, 0);
+                }
+    
+                //----------------------------------------------------------
+                // Range-checks
+                //----------------------------------------------------------
+                Bridge.get(Bridge.Test.Assert).throws$6(Bridge.ArgumentNullException, $_.Bridge.ClientTest.NewArrayTests.f7);
+    
+                Bridge.get(Bridge.Test.Assert).throws$6(Bridge.IndexOutOfRangeException, function () {
+                    Bridge.Array.fill(idirect, 0, -1, 1);
+                });
+    
+                Bridge.get(Bridge.Test.Assert).throws$6(Bridge.IndexOutOfRangeException, function () {
+                    Bridge.Array.fill(idirect, 0, 0, 7);
+                });
+    
+                Bridge.get(Bridge.Test.Assert).throws$6(Bridge.IndexOutOfRangeException, function () {
+                    Bridge.Array.fill(idirect, 0, 7, 0);
+                });
+    
+                Bridge.get(Bridge.Test.Assert).throws$6(Bridge.IndexOutOfRangeException, function () {
+                    Bridge.Array.fill(idirect, 0, 5, 2);
+                });
+    
+                Bridge.get(Bridge.Test.Assert).throws$6(Bridge.IndexOutOfRangeException, function () {
+                    Bridge.Array.fill(idirect, 0, 6, 2);
+                });
+    
+                Bridge.get(Bridge.Test.Assert).throws$6(Bridge.IndexOutOfRangeException, function () {
+                    Bridge.Array.fill(idirect, 0, 6, 2147483647);
+                });
+            },
+            testCopy_GCRef: function () {
+                var s;
+                var d;
+    
+                s = ["Red", "Green", null, "Blue"];
+                d = ["X", "X", "X", "X"];
+                Bridge.Array.copy(s, 0, d, 0, 4);
+                Bridge.get(Bridge.Test.Assert).areEqual(d[0], "Red");
+                Bridge.get(Bridge.Test.Assert).areEqual(d[1], "Green");
+                Bridge.get(Bridge.Test.Assert).$null(d[2]);
+                Bridge.get(Bridge.Test.Assert).areEqual(d[3], "Blue");
+    
+                // With reverse overlap
+                s = ["Red", "Green", null, "Blue"];
+                Bridge.Array.copy(s, 1, s, 2, 2);
+                Bridge.get(Bridge.Test.Assert).areEqual(s[0], "Red");
+                Bridge.get(Bridge.Test.Assert).areEqual(s[1], "Green");
+                Bridge.get(Bridge.Test.Assert).areEqual(s[2], "Green");
+                Bridge.get(Bridge.Test.Assert).$null(s[3]);
+            },
+            testCopy_VTToObj: function () {
+                // Test the Array.Copy code for value-type arrays => Object[]
+                var s;
+                var d;
+                s = Bridge.Array.init(5, function (){
+                    return new Bridge.ClientTest.NewArrayTests.G();
+                });
+                d = Bridge.Array.init(5, null);
+    
+                s[0].x = 7;
+                s[0].s = "Hello0";
+                s[0].z = 8;
+    
+                s[1].x = 9;
+                s[1].s = "Hello1";
+                s[1].z = 10;
+    
+                s[2].x = 11;
+                s[2].s = "Hello2";
+                s[2].z = 12;
+    
+                s[3].x = 13;
+                s[3].s = "Hello3";
+                s[3].z = 14;
+    
+                s[4].x = 15;
+                s[4].s = "Hello4";
+                s[4].z = 16;
+    
+                Bridge.Array.copy(s, 0, d, 0, 5);
+                for (var i = 0; i < d.length; i++) {
+                    Bridge.get(Bridge.Test.Assert).$true(Bridge.is(d[i], Bridge.ClientTest.NewArrayTests.G));
+                    var g = Bridge.cast((d[i]), Bridge.ClientTest.NewArrayTests.G);
+                    Bridge.get(Bridge.Test.Assert).areEqual(g.x, s[i].x);
+                    Bridge.get(Bridge.Test.Assert).areEqual(g.s, s[i].s);
+                    Bridge.get(Bridge.Test.Assert).areEqual(g.z, s[i].z);
+                }
+            },
+            testCopy_VTWithGCRef: function () {
+                // Test the Array.Copy code for value-type arrays with no internal GC-refs.
+    
+                var s;
+                var d;
+                s = Bridge.Array.init(5, function (){
+                    return new Bridge.ClientTest.NewArrayTests.G();
+                });
+                d = Bridge.Array.init(5, function (){
+                    return new Bridge.ClientTest.NewArrayTests.G();
+                });
+    
+                s[0].x = 7;
+                s[0].s = "Hello0";
+                s[0].z = 8;
+    
+                s[1].x = 9;
+                s[1].s = "Hello1";
+                s[1].z = 10;
+    
+                s[2].x = 11;
+                s[2].s = "Hello2";
+                s[2].z = 12;
+    
+                s[3].x = 13;
+                s[3].s = "Hello3";
+                s[3].z = 14;
+    
+                s[4].x = 15;
+                s[4].s = "Hello4";
+                s[4].z = 16;
+    
+                Bridge.Array.copy(s, 0, d, 0, 5);
+                for (var i = 0; i < d.length; i++) {
+                    Bridge.get(Bridge.Test.Assert).areEqual(d[i].x, s[i].x);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d[i].s, s[i].s);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d[i].z, s[i].z);
+                }
+    
+                // With overlap
+                Bridge.Array.copy(s, 1, s, 2, 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(s[0].x, 7);
+                Bridge.get(Bridge.Test.Assert).areEqual(s[0].s, "Hello0");
+                Bridge.get(Bridge.Test.Assert).areEqual(s[0].z, 8);
+    
+                Bridge.get(Bridge.Test.Assert).areEqual(s[1].x, 9);
+                Bridge.get(Bridge.Test.Assert).areEqual(s[1].s, "Hello1");
+                Bridge.get(Bridge.Test.Assert).areEqual(s[1].z, 10);
+    
+                Bridge.get(Bridge.Test.Assert).areEqual(s[2].x, 9);
+                Bridge.get(Bridge.Test.Assert).areEqual(s[2].s, "Hello1");
+                Bridge.get(Bridge.Test.Assert).areEqual(s[2].z, 10);
+    
+                Bridge.get(Bridge.Test.Assert).areEqual(s[3].x, 11);
+                Bridge.get(Bridge.Test.Assert).areEqual(s[3].s, "Hello2");
+                Bridge.get(Bridge.Test.Assert).areEqual(s[3].z, 12);
+    
+                Bridge.get(Bridge.Test.Assert).areEqual(s[4].x, 13);
+                Bridge.get(Bridge.Test.Assert).areEqual(s[4].s, "Hello3");
+                Bridge.get(Bridge.Test.Assert).areEqual(s[4].z, 14);
+            },
+            testCopy_VTNoGCRef: function () {
+                // Test the Array.Copy code for value-type arrays with no internal GC-refs.
+    
+                var s;
+                var d;
+                s = [305419896, 573785173, 2005440938];
+                d = Bridge.Array.init(3, 0);
+    
+                // Value-type to value-type array copy.
+                Bridge.Array.copy(s, 0, d, 0, 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(d[0], 305419896);
+                Bridge.get(Bridge.Test.Assert).areEqual(d[1], 573785173);
+                Bridge.get(Bridge.Test.Assert).areEqual(d[2], 2005440938);
+    
+                s = [305419896, 573785173, 2005440938, 1430532898, 860116326];
+                // Value-type to value-type array copy (in place, with overlap)
+                Bridge.Array.copy(s, 3, s, 2, 2);
+                Bridge.get(Bridge.Test.Assert).areEqual(s[0], 305419896);
+                Bridge.get(Bridge.Test.Assert).areEqual(s[1], 573785173);
+                Bridge.get(Bridge.Test.Assert).areEqual(s[2], 1430532898);
+                Bridge.get(Bridge.Test.Assert).areEqual(s[3], 860116326);
+                Bridge.get(Bridge.Test.Assert).areEqual(s[4], 860116326);
+    
+                s = [305419896, 573785173, 2005440938, 1430532898, 860116326];
+                // Value-type to value-type array copy (in place, with reverse overlap)
+                Bridge.Array.copy(s, 2, s, 3, 2);
+                Bridge.get(Bridge.Test.Assert).areEqual(s[0], 305419896);
+                Bridge.get(Bridge.Test.Assert).areEqual(s[1], 573785173);
+                Bridge.get(Bridge.Test.Assert).areEqual(s[2], 2005440938);
+                Bridge.get(Bridge.Test.Assert).areEqual(s[3], 2005440938);
+                Bridge.get(Bridge.Test.Assert).areEqual(s[4], 1430532898);
+            },
+            testFind: function () {
+                var ia = [7, 8, 9];
+                var b;
+    
+                // Exists included here since it's a trivial wrapper around FindIndex
+                b = (Bridge.Array.findIndex(ia, $_.Bridge.ClientTest.NewArrayTests.f8) !== -1);
+                Bridge.get(Bridge.Test.Assert).$true(b);
+    
+                b = (Bridge.Array.findIndex(ia, $_.Bridge.ClientTest.NewArrayTests.f9) !== -1);
+                Bridge.get(Bridge.Test.Assert).$false(b);
+    
+                var results;
+                results = Bridge.Array.findAll(ia, $_.Bridge.ClientTest.NewArrayTests.f10);
+                Bridge.get(Bridge.Test.Assert).areEqual(results.length, 2);
+                Bridge.get(Bridge.Test.Assert).$true((Bridge.Array.findIndex(results, $_.Bridge.ClientTest.NewArrayTests.f11) !== -1));
+                Bridge.get(Bridge.Test.Assert).$true((Bridge.Array.findIndex(results, $_.Bridge.ClientTest.NewArrayTests.f12) !== -1));
+    
+                var sa = ["7", "8", "88", "888", "9"];
+                var elem;
+                elem = Bridge.Array.find(String, sa, $_.Bridge.ClientTest.NewArrayTests.f13);
+                Bridge.get(Bridge.Test.Assert).areEqual(elem, "8");
+    
+                elem = Bridge.Array.find(String, sa, $_.Bridge.ClientTest.NewArrayTests.f14);
+                Bridge.get(Bridge.Test.Assert).$null(elem);
+    
+                ia = [40, 41, 42, 43, 44, 45, 46, 47, 48, 49];
+                var idx;
+                idx = Bridge.Array.findIndex(ia, $_.Bridge.ClientTest.NewArrayTests.f15);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 3);
+    
+                idx = Bridge.Array.findIndex(ia, $_.Bridge.ClientTest.NewArrayTests.f16);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, -1);
+    
+                idx = Bridge.Array.findIndex(ia, 3, $_.Bridge.ClientTest.NewArrayTests.f17);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 3);
+    
+                idx = Bridge.Array.findIndex(ia, 4, $_.Bridge.ClientTest.NewArrayTests.f17);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, -1);
+    
+                idx = Bridge.Array.findIndex(ia, 1, 3, $_.Bridge.ClientTest.NewArrayTests.f17);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 3);
+    
+                idx = Bridge.Array.findIndex(ia, 1, 2, $_.Bridge.ClientTest.NewArrayTests.f17);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, -1);
+    
+                sa = ["7", "8", "88", "888", "9"];
+                elem = Bridge.Array.findLast(String, sa, $_.Bridge.ClientTest.NewArrayTests.f13);
+                Bridge.get(Bridge.Test.Assert).areEqual(elem, "888");
+    
+                elem = Bridge.Array.findLast(String, sa, $_.Bridge.ClientTest.NewArrayTests.f14);
+                Bridge.get(Bridge.Test.Assert).$null(elem);
+    
+                ia = [40, 41, 42, 43, 44, 45, 46, 47, 48, 49];
+                idx = Bridge.Array.findLastIndex(ia, $_.Bridge.ClientTest.NewArrayTests.f15);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 9);
+    
+                idx = Bridge.Array.findLastIndex(ia, $_.Bridge.ClientTest.NewArrayTests.f16);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, -1);
+    
+                idx = Bridge.Array.findLastIndex(ia, 3, $_.Bridge.ClientTest.NewArrayTests.f17);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 3);
+    
+                idx = Bridge.Array.findLastIndex(ia, 2, $_.Bridge.ClientTest.NewArrayTests.f17);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, -1);
+    
+                idx = Bridge.Array.findLastIndex(ia, 5, 3, $_.Bridge.ClientTest.NewArrayTests.f17);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 3);
+    
+                idx = Bridge.Array.findLastIndex(ia, 5, 2, $_.Bridge.ClientTest.NewArrayTests.f17);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, -1);
+            },
+            testGetEnumerator: function () {
+                var i = [7, 8, 9];
+    
+                var ie = Bridge.getEnumerator(i);
+                var b;
+                var v;
+    
+                b = ie.moveNext();
+                Bridge.get(Bridge.Test.Assert).$true(b);
+                v = ie.getCurrent();
+                Bridge.get(Bridge.Test.Assert).areEqual(v, 7);
+    
+                b = ie.moveNext();
+                Bridge.get(Bridge.Test.Assert).$true(b);
+                v = ie.getCurrent();
+                Bridge.get(Bridge.Test.Assert).areEqual(v, 8);
+    
+                b = ie.moveNext();
+                Bridge.get(Bridge.Test.Assert).$true(b);
+                v = ie.getCurrent();
+                Bridge.get(Bridge.Test.Assert).areEqual(v, 9);
+    
+                b = ie.moveNext();
+                Bridge.get(Bridge.Test.Assert).$false(b);
+    
+                ie.reset();
+                b = ie.moveNext();
+                Bridge.get(Bridge.Test.Assert).$true(b);
+                v = ie.getCurrent();
+                Bridge.get(Bridge.Test.Assert).areEqual(v, 7);
+            },
+            testIndexOf: function () {
+                var a;
+    
+                a = [7, 7, 8, 8, 9, 9];
+                var idx;
+                idx = Bridge.Array.lastIndexOfT(a, 8);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 3);
+    
+                idx = Bridge.Array.lastIndexOfT(a, 8, 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 3);
+    
+                idx = Bridge.Array.indexOfT(a, 8, 4);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, -1);
+    
+                idx = Bridge.Array.indexOfT(a, 9, 2, 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 4);
+    
+                idx = Bridge.Array.indexOfT(a, 9, 2, 2);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, -1);
+    
+                var ia = Bridge.cast(a, Array);
+                idx = Bridge.Array.indexOfT(ia, 8);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 2);
+    
+                idx = Bridge.Array.indexOfT(ia, 8, 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 3);
+    
+                idx = Bridge.Array.indexOfT(ia, 8, 4);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, -1);
+    
+                idx = Bridge.Array.indexOfT(ia, 9, 2, 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 4);
+    
+                idx = Bridge.Array.indexOfT(ia, 9, 2, 2);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, -1);
+    
+                a = [null, null, "Hello", "Hello", "Goodbye", "Goodbye", null, null];
+                idx = Bridge.Array.indexOfT(a, null);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 0);
+                idx = Bridge.Array.indexOfT(a, "Hello");
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 2);
+                idx = Bridge.Array.indexOfT(a, "Goodbye");
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 4);
+                idx = Bridge.Array.indexOfT(a, "Nowhere");
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, -1);
+                idx = Bridge.Array.indexOfT(a, "Hello", 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 3);
+                idx = Bridge.Array.indexOfT(a, "Hello", 4);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, -1);
+                idx = Bridge.Array.indexOfT(a, "Goodbye", 2, 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 4);
+                idx = Bridge.Array.indexOfT(a, "Goodbye", 2, 2);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, -1);
+    
+                var sa = Bridge.cast(a, Array);
+                idx = Bridge.Array.indexOfT(sa, null);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 0);
+                idx = Bridge.Array.indexOfT(sa, "Hello");
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 2);
+                idx = Bridge.Array.indexOfT(sa, "Goodbye");
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 4);
+                idx = Bridge.Array.indexOfT(sa, "Nowhere");
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, -1);
+                idx = Bridge.Array.indexOfT(sa, "Hello", 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 3);
+                idx = Bridge.Array.indexOfT(sa, "Hello", 4);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, -1);
+                idx = Bridge.Array.indexOfT(sa, "Goodbye", 2, 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 4);
+                idx = Bridge.Array.indexOfT(sa, "Goodbye", 2, 2);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, -1);
+            },
+            testLastIndexOf: function () {
+                var a;
+    
+                a = [7, 7, 8, 8, 9, 9];
+                var idx;
+                idx = Bridge.Array.lastIndexOfT(a, 8);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 3);
+    
+                idx = Bridge.Array.lastIndexOfT(a, 8, 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 3);
+    
+                idx = Bridge.Array.lastIndexOfT(a, 8, 1);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, -1);
+    
+                idx = Bridge.Array.lastIndexOfT(a, 7, 3, 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 1);
+    
+                idx = Bridge.Array.lastIndexOfT(a, 7, 3, 2);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, -1);
+    
+                var ia = Bridge.cast(a, Array);
+                idx = Bridge.Array.lastIndexOfT(ia, 8);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 3);
+    
+                idx = Bridge.Array.lastIndexOfT(ia, 8, 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 3);
+    
+                idx = Bridge.Array.lastIndexOfT(ia, 8, 1);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, -1);
+    
+                idx = Bridge.Array.lastIndexOfT(ia, 7, 3, 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 1);
+    
+                idx = Bridge.Array.lastIndexOfT(ia, 7, 3, 2);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, -1);
+    
+                a = [null, null, "Hello", "Hello", "Goodbye", "Goodbye", null, null];
+                idx = Bridge.Array.lastIndexOfT(a, null);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 7);
+                idx = Bridge.Array.lastIndexOfT(a, "Hello");
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 3);
+                idx = Bridge.Array.lastIndexOfT(a, "Goodbye");
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 5);
+                idx = Bridge.Array.lastIndexOfT(a, "Nowhere");
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, -1);
+                idx = Bridge.Array.lastIndexOfT(a, "Hello", 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 3);
+                idx = Bridge.Array.lastIndexOfT(a, "Hello", 2);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 2);
+                idx = Bridge.Array.lastIndexOfT(a, "Goodbye", 7, 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 5);
+                idx = Bridge.Array.lastIndexOfT(a, "Goodbye", 7, 2);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, -1);
+    
+                var sa = Bridge.cast(a, Array);
+                idx = Bridge.Array.lastIndexOfT(sa, null);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 7);
+                idx = Bridge.Array.lastIndexOfT(sa, "Hello");
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 3);
+                idx = Bridge.Array.lastIndexOfT(sa, "Goodbye");
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 5);
+                idx = Bridge.Array.lastIndexOfT(sa, "Nowhere");
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, -1);
+                idx = Bridge.Array.lastIndexOfT(sa, "Hello", 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 3);
+                idx = Bridge.Array.lastIndexOfT(sa, "Hello", 2);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 2);
+                idx = Bridge.Array.lastIndexOfT(sa, "Goodbye", 7, 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, 5);
+                idx = Bridge.Array.lastIndexOfT(sa, "Goodbye", 7, 2);
+                Bridge.get(Bridge.Test.Assert).areEqual(idx, -1);
+            },
+            testResize: function () {
+                var i = { };
+    
+                i.v = [1, 2, 3, 4, 5];
+                Bridge.Array.resize(i, 7, 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(i.v.length, 7);
+                Bridge.get(Bridge.Test.Assert).areEqual(i.v[0], 1);
+                Bridge.get(Bridge.Test.Assert).areEqual(i.v[1], 2);
+                Bridge.get(Bridge.Test.Assert).areEqual(i.v[2], 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(i.v[3], 4);
+                Bridge.get(Bridge.Test.Assert).areEqual(i.v[4], 5);
+                Bridge.get(Bridge.Test.Assert).areEqual(i.v[5], Bridge.getDefaultValue(Bridge.Int));
+                Bridge.get(Bridge.Test.Assert).areEqual(i.v[6], Bridge.getDefaultValue(Bridge.Int));
+    
+                i.v = [1, 2, 3, 4, 5];
+                Bridge.Array.resize(i, 3, 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(i.v.length, 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(i.v[0], 1);
+                Bridge.get(Bridge.Test.Assert).areEqual(i.v[1], 2);
+                Bridge.get(Bridge.Test.Assert).areEqual(i.v[2], 3);
+    
+                i.v = null;
+                Bridge.Array.resize(i, 3, 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(i.v.length, 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(i.v[0], Bridge.getDefaultValue(Bridge.Int));
+                Bridge.get(Bridge.Test.Assert).areEqual(i.v[1], Bridge.getDefaultValue(Bridge.Int));
+                Bridge.get(Bridge.Test.Assert).areEqual(i.v[2], Bridge.getDefaultValue(Bridge.Int));
+            },
+            testReverse: function () {
+                var i;
+    
+                i = [1, 2, 3, 4, 5];
+                Bridge.Array.reverse(Bridge.cast(i, Array));
+                Bridge.get(Bridge.Test.Assert).areEqual(i[0], 5);
+                Bridge.get(Bridge.Test.Assert).areEqual(i[1], 4);
+                Bridge.get(Bridge.Test.Assert).areEqual(i[2], 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(i[3], 2);
+                Bridge.get(Bridge.Test.Assert).areEqual(i[4], 1);
+    
+                i = [1, 2, 3, 4, 5];
+                Bridge.Array.reverse(Bridge.cast(i, Array), 2, 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(i[0], 1);
+                Bridge.get(Bridge.Test.Assert).areEqual(i[1], 2);
+                Bridge.get(Bridge.Test.Assert).areEqual(i[2], 5);
+                Bridge.get(Bridge.Test.Assert).areEqual(i[3], 4);
+                Bridge.get(Bridge.Test.Assert).areEqual(i[4], 3);
+    
+                var s;
+    
+                s = ["1", "2", "3", "4", "5"];
+                Bridge.Array.reverse(Bridge.cast(s, Array));
+                Bridge.get(Bridge.Test.Assert).areEqual(s[0], "5");
+                Bridge.get(Bridge.Test.Assert).areEqual(s[1], "4");
+                Bridge.get(Bridge.Test.Assert).areEqual(s[2], "3");
+                Bridge.get(Bridge.Test.Assert).areEqual(s[3], "2");
+                Bridge.get(Bridge.Test.Assert).areEqual(s[4], "1");
+    
+                s = ["1", "2", "3", "4", "5"];
+                Bridge.Array.reverse(Bridge.cast(s, Array), 2, 3);
+                Bridge.get(Bridge.Test.Assert).areEqual(s[0], "1");
+                Bridge.get(Bridge.Test.Assert).areEqual(s[1], "2");
+                Bridge.get(Bridge.Test.Assert).areEqual(s[2], "5");
+                Bridge.get(Bridge.Test.Assert).areEqual(s[3], "4");
+                Bridge.get(Bridge.Test.Assert).areEqual(s[4], "3");
+            },
+            testSort: function () {
+                var icomparer = new Bridge.ClientTest.NewArrayTests.IntegerComparer();
+    
+                Bridge.get(Bridge.ClientTest.NewArrayTests).testSortHelper(Bridge.Int, [], 0, 0, icomparer);
+                Bridge.get(Bridge.ClientTest.NewArrayTests).testSortHelper(Bridge.Int, [5], 0, 1, icomparer);
+                Bridge.get(Bridge.ClientTest.NewArrayTests).testSortHelper(Bridge.Int, [5, 2], 0, 2, icomparer);
+    
+                Bridge.get(Bridge.ClientTest.NewArrayTests).testSortHelper(Bridge.Int, [5, 2, 9, 8, 4, 3, 2, 4, 6], 0, 9, icomparer);
+                Bridge.get(Bridge.ClientTest.NewArrayTests).testSortHelper(Bridge.Int, [5, 2, 9, 8, 4, 3, 2, 4, 6], 3, 4, icomparer);
+                Bridge.get(Bridge.ClientTest.NewArrayTests).testSortHelper(Bridge.Int, [5, 2, 9, 8, 4, 3, 2, 4, 6], 3, 6, icomparer);
+    
+                var scomparer = new Bridge.ClientTest.NewArrayTests.StringComparer();
+                Bridge.get(Bridge.ClientTest.NewArrayTests).testSortHelper(String, [], 0, 0, scomparer);
+                Bridge.get(Bridge.ClientTest.NewArrayTests).testSortHelper(String, ["5"], 0, 1, scomparer);
+                Bridge.get(Bridge.ClientTest.NewArrayTests).testSortHelper(String, ["5", "2"], 0, 2, scomparer);
+    
+                Bridge.get(Bridge.ClientTest.NewArrayTests).testSortHelper(String, ["5", "2", null, "8", "4", "3", "2", "4", "6"], 0, 9, scomparer);
+                Bridge.get(Bridge.ClientTest.NewArrayTests).testSortHelper(String, ["5", "2", null, "8", "4", "3", "2", "4", "6"], 3, 4, scomparer);
+                Bridge.get(Bridge.ClientTest.NewArrayTests).testSortHelper(String, ["5", "2", null, "8", "4", "3", "2", "4", "6"], 3, 6, scomparer);
+            },
+            testSortHelper: function (T, array, index, length, comparer) {
+                var control = Bridge.get(Bridge.ClientTest.NewArrayTests).simpleSort(T, array, index, length, comparer);
+    
+                {
+                    var spawn2 = Bridge.cast(((Bridge.Array.clone(array))), Array);
+                    Bridge.Array.sort(spawn2, index, length, comparer);
+                    Bridge.get(Bridge.Test.Assert).$true(Bridge.get(Bridge.ClientTest.NewArrayTests).arraysAreEqual(T, spawn2, control, comparer));
+                }
+            },
+            simpleSort: function (T, a, index, length, comparer) {
+                var result = Bridge.cast(((Bridge.Array.clone(a))), Array);
+                if (length < 2) {
+                    return result;
+                }
+    
+                for (var i = index; i < index + length - 1; i++) {
+                    var tmp = result[i];
+                    for (var j = i + 1; j < index + length; j++) {
+                        if (comparer.compare(tmp, result[j]) > 0) {
+                            result[i] = result[j];
+                            result[j] = tmp;
+                            tmp = result[i];
+                        }
+                    }
+                }
+                return result;
+            },
+            arraysAreEqual: function (T, a, b, comparer) {
+                // If the same instances were passed, this is unlikely what the test intended.
+                Bridge.get(Bridge.Test.Assert).$false(a === b);
+    
+                if (a.length !== b.length) {
+                    return false;
+                }
+                for (var i = 0; i < a.length; i++) {
+                    if (0 !== comparer.compare(a[i], b[i])) {
+                        return false;
+                    }
+                }
+                return true;
+            },
+            testTrueForAll: function () {
+                var ia;
+                var b;
+    
+                ia = [1, 2, 3, 4, 5];
+    
+                b = Bridge.Array.trueForAll(ia, $_.Bridge.ClientTest.NewArrayTests.f18);
+                Bridge.get(Bridge.Test.Assert).$true(b);
+    
+                b = Bridge.Array.trueForAll(ia, $_.Bridge.ClientTest.NewArrayTests.f5);
+                Bridge.get(Bridge.Test.Assert).$false(b);
+    
+                ia = Bridge.Array.init(0, 0);
+                b = Bridge.Array.trueForAll(ia, $_.Bridge.ClientTest.NewArrayTests.f19);
+                Bridge.get(Bridge.Test.Assert).$true(b);
+            },
+            testSetValueCasting: function () {
+                var indices = [1];
+                {
+                    // null -> default(null)
+                    var a = Bridge.Array.init(3, function (){
+                        return new Bridge.ClientTest.NewArrayTests.S();
+                    });
+                    a[1].x = 572662306;
+                    //a.SetValue(null, indices);
+                    //Assert.AreEqual(a[1].X, 0);
+                }
+    
+                {
+                    // T -> Nullable<T>
+                    var a1 = Bridge.Array.init(3, null);
+                    Bridge.Array.set.apply(Bridge.Array, [a1, 42].concat(indices));
+                    var ni = a1[1];
+                    Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Nullable.hasValue(ni), true);
+                    Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Nullable.getValue(ni), 42);
+                }
+    
+                {
+                    // null -> Nullable<T>
+                    var a2 = Bridge.Array.init(3, null);
+                    var orig = 42;
+                    a2[1] = orig;
+                    Bridge.Array.set.apply(Bridge.Array, [a2, null].concat(indices));
+                    var ni1 = a2[1];
+                    Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Nullable.hasValue(ni1), false);
+                }
+    
+                {
+                    // primitive widening
+                    var a3 = Bridge.Array.init(3, 0);
+                    Bridge.Array.set.apply(Bridge.Array, [a3, Bridge.cast(42, Bridge.Int)].concat(indices));
+                    Bridge.get(Bridge.Test.Assert).areEqual(a3[1], 42);
+                }
+    
+                {
+                    // widening from enum to primitive
+                    var a4 = Bridge.Array.init(3, 0);
+                    Bridge.Array.set.apply(Bridge.Array, [a4, Bridge.ClientTest.NewArrayTests.E1.minusTwo].concat(indices));
+                    Bridge.get(Bridge.Test.Assert).areEqual(a4[1], -2);
+                }
+            },
+            testValueTypeToReferenceCopy: function () {
+                {
+                    var s = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+                    var d = Bridge.Array.init(10, null);
+    
+                    Bridge.Array.copy(s, 2, d, 5, 3);
+    
+                    Bridge.get(Bridge.Test.Assert).areEqual(d[0], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d[1], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d[2], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d[3], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d[4], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d[5], 2);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d[6], 3);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d[7], 4);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d[8], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d[9], null);
+                }
+    
+                {
+                    var s1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+                    var d1 = Bridge.Array.init(10, null);
+    
+                    Bridge.Array.copy(s1, 2, d1, 5, 3);
+    
+                    Bridge.get(Bridge.Test.Assert).areEqual(d1[0], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d1[1], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d1[2], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d1[3], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d1[4], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d1[5], 2);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d1[6], 3);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d1[7], 4);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d1[8], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d1[9], null);
+                }
+    
+                {
+                    var s2 = [0, 1, 2, null, 4, 5, 6, 7, 8, 9];
+                    var d2 = Bridge.Array.init(10, null);
+    
+                    Bridge.Array.copy(s2, 2, d2, 5, 3);
+    
+                    Bridge.get(Bridge.Test.Assert).areEqual(d2[0], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d2[1], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d2[2], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d2[3], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d2[4], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d2[5], 2);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d2[6], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d2[7], 4);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d2[8], null);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d2[9], null);
+                }
+    
+                return;
+            },
+            testReferenceToValueTypeCopy: function () {
+                var cc = Bridge.cast(3435973836, Bridge.Int);
+    
+                {
+                    var s = Bridge.Array.init(10, null);
+                    for (var i = 0; i < s.length; i++) {
+                        s[i] = i;
+                    }
+    
+                    var d = Bridge.Array.init(10, 0);
+                    for (var i1 = 0; i1 < d.length; i1++) {
+                        d[i1] = cc;
+                    }
+    
+                    Bridge.Array.copy(s, 2, d, 5, 3);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d[0], cc);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d[1], cc);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d[2], cc);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d[3], cc);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d[4], cc);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d[5], 2);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d[6], 3);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d[7], 4);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d[8], cc);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d[9], cc);
+                }
+    
+                {
+                    var s1 = Bridge.Array.init(10, null);
+                    for (var i2 = 0; i2 < s1.length; i2++) {
+                        s1[i2] = i2;
+                    }
+    
+                    var d1 = Bridge.Array.init(10, 0);
+                    for (var i3 = 0; i3 < d1.length; i3++) {
+                        d1[i3] = cc;
+                    }
+    
+                    Bridge.Array.copy(s1, 2, d1, 5, 3);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d1[0], cc);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d1[1], cc);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d1[2], cc);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d1[3], cc);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d1[4], cc);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d1[5], 2);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d1[6], 3);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d1[7], 4);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d1[8], cc);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d1[9], cc);
+                }
+    
+                {
+                    var s2 = Bridge.Array.init(10, null);
+                    for (var i4 = 0; i4 < s2.length; i4++) {
+                        s2[i4] = i4;
+                    }
+                    s2[1] = new Bridge.ClientTest.NewArrayTests.NotInt32();
+                    s2[5] = new Bridge.ClientTest.NewArrayTests.NotInt32();
+    
+                    var d2 = Bridge.Array.init(10, 0);
+                    for (var i5 = 0; i5 < d2.length; i5++) {
+                        d2[i5] = cc;
+                    }
+    
+                    Bridge.Array.copy(s2, 2, d2, 5, 3);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d2[0], cc);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d2[1], cc);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d2[2], cc);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d2[3], cc);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d2[4], cc);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d2[5], 2);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d2[6], 3);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d2[7], 4);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d2[8], cc);
+                    Bridge.get(Bridge.Test.Assert).areEqual(d2[9], cc);
+                }
+    
+                {
+                    var s3 = Bridge.Array.init(10, null);
+                    for (var i6 = 0; i6 < s3.length; i6++) {
+                        s3[i6] = i6;
+                    }
+                    s3[4] = null;
+    
+                    var d3 = Bridge.Array.init(10, null);
+                    for (var i7 = 0; i7 < d3.length; i7++) {
+                        d3[i7] = cc;
+                    }
+    
+                    Bridge.Array.copy(s3, 2, d3, 5, 3);
+                    Bridge.get(Bridge.Test.Assert).$true(Bridge.Nullable.hasValue(d3[0]) && Bridge.Nullable.getValue(d3[0]) === cc);
+                    Bridge.get(Bridge.Test.Assert).$true(Bridge.Nullable.hasValue(d3[1]) && Bridge.Nullable.getValue(d3[1]) === cc);
+                    Bridge.get(Bridge.Test.Assert).$true(Bridge.Nullable.hasValue(d3[2]) && Bridge.Nullable.getValue(d3[2]) === cc);
+                    Bridge.get(Bridge.Test.Assert).$true(Bridge.Nullable.hasValue(d3[3]) && Bridge.Nullable.getValue(d3[3]) === cc);
+                    Bridge.get(Bridge.Test.Assert).$true(Bridge.Nullable.hasValue(d3[4]) && Bridge.Nullable.getValue(d3[4]) === cc);
+                    Bridge.get(Bridge.Test.Assert).$true(Bridge.Nullable.hasValue(d3[5]) && Bridge.Nullable.getValue(d3[5]) === 2);
+                    Bridge.get(Bridge.Test.Assert).$true(Bridge.Nullable.hasValue(d3[6]) && Bridge.Nullable.getValue(d3[6]) === 3);
+                    Bridge.get(Bridge.Test.Assert).$true(!Bridge.Nullable.hasValue(d3[7]));
+                    Bridge.get(Bridge.Test.Assert).$true(Bridge.Nullable.hasValue(d3[8]) && Bridge.Nullable.getValue(d3[8]) === cc);
+                    Bridge.get(Bridge.Test.Assert).$true(Bridge.Nullable.hasValue(d3[9]) && Bridge.Nullable.getValue(d3[9]) === cc);
+                }
+    
+                return;
+            },
+            testArrayConstructionMultidimArrays: function () {
+                // This C# initialization syntax generates some peculiar looking IL.
+                // Initializations of this form are handled specially on Desktop and
+                // in .NET Native by UTC.
+                var arr = Bridge.Array.create(0, [[[[1, 2, 3], [1, 2, 3]], [[1, 2, 3], [1, 2, 3]]], [[[1, 2, 3], [1, 2, 3]], [[1, 2, 3], [1, 2, 3]]]], 2, 2, 2, 3);
+                Bridge.get(Bridge.Test.Assert).notNull(arr);
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.get(arr, 0, 0, 0, 0), 1);
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.get(arr, 0, 0, 0, 1), 2);
+                Bridge.get(Bridge.Test.Assert).areEqual(Bridge.Array.get(arr, 0, 0, 0, 2), 3);
+            }
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.NewArrayTests", $_)
+    
+    Bridge.apply($_.Bridge.ClientTest.NewArrayTests, {
+        f1: function (i) {
+            return i === 4;
+        },
+        f2: function (i) {
+            return i === 2 || i === 3;
+        },
+        f3: function (i) {
+            return i === 0;
+        },
+        f4: function (i) {
+            return i === -7;
+        },
+        f5: function (i) {
+            return i === 3;
+        },
+        f6: function (i) {
+            return i === -5;
+        },
+        f7: function () {
+            Bridge.Array.fill(null, null, 0, 0);
+        },
+        f8: function (i) {
+            return i === 8;
+        },
+        f9: function (i) {
+            return i === -1;
+        },
+        f10: function (i) {
+            return (i % 2) !== 0;
+        },
+        f11: function (i) {
+            return i === 7;
+        },
+        f12: function (i) {
+            return i === 9;
+        },
+        f13: function (s) {
+            return Bridge.String.startsWith(s, "8");
+        },
+        f14: function (s) {
+            return s === "X";
+        },
+        f15: function (i) {
+            return i >= 43;
+        },
+        f16: function (i) {
+            return i === 99;
+        },
+        f17: function (i) {
+            return i === 43;
+        },
+        f18: function (i) {
+            return i > 0;
+        },
+        f19: function (i) {
+            return false;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.NewArrayTests.B1');
+    
+    Bridge.define('Bridge.ClientTest.NewArrayTests.B2');
+    
+    Bridge.define('Bridge.ClientTest.NewArrayTests.E1', {
+        statics: {
+            minusTwo: -2
+        },
+        $enum: true
+    });
+    
+    Bridge.define('Bridge.ClientTest.NewArrayTests.G', {
+        statics: {
+            getDefaultValue: function () { return new Bridge.ClientTest.NewArrayTests.G(); }
+        },
+        x: 0,
+        s: null,
+        z: 0,
+        constructor: function () {
+        },
+        getHashCode: function () {
+            var hash = 17;
+            hash = hash * 23 + (this.x == null ? 0 : Bridge.getHashCode(this.x));
+            hash = hash * 23 + (this.s == null ? 0 : Bridge.getHashCode(this.s));
+            hash = hash * 23 + (this.z == null ? 0 : Bridge.getHashCode(this.z));
+            return hash;
+        },
+        equals: function (o) {
+            if (!Bridge.is(o,Bridge.ClientTest.NewArrayTests.G)) {
+                return false;
+            }
+            return Bridge.equals(this.x, o.x) && Bridge.equals(this.s, o.s) && Bridge.equals(this.z, o.z);
+        },
+        $clone: function (to) {
+            var s = to || new Bridge.ClientTest.NewArrayTests.G();
+            s.x = this.x;
+            s.s = this.s;
+            s.z = this.z;
+            return s;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.NewArrayTests.I1');
+    
+    Bridge.define('Bridge.ClientTest.NewArrayTests.I2');
+    
+    Bridge.define('Bridge.ClientTest.NewArrayTests.IntegerComparer', {
+        inherits: [Bridge.IComparer$1(Bridge.Int),Bridge.IEqualityComparer],
+        compare: function (x, y) {
+            return x - y;
+        },
+        equals: function (x, y) {
+            return (Bridge.cast(x, Bridge.Int)) === (Bridge.cast(y, Bridge.Int));
+        },
+        getHashCode: function (obj) {
+            return (Bridge.cast(obj, Bridge.Int)) >> 2;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.NewArrayTests.NotInt32', {
+        inherits: [Bridge.IEquatable$1(Bridge.Int)],
+        equalsT: function (other) {
+            throw new Bridge.NotImplementedException();
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.NewArrayTests.S', {
+        statics: {
+            getDefaultValue: function () { return new Bridge.ClientTest.NewArrayTests.S(); }
+        },
+        x: 0,
+        constructor: function () {
+        },
+        getHashCode: function () {
+            var hash = 17;
+            hash = hash * 23 + (this.x == null ? 0 : Bridge.getHashCode(this.x));
+            return hash;
+        },
+        equals: function (o) {
+            if (!Bridge.is(o,Bridge.ClientTest.NewArrayTests.S)) {
+                return false;
+            }
+            return Bridge.equals(this.x, o.x);
+        },
+        $clone: function (to) {
+            var s = to || new Bridge.ClientTest.NewArrayTests.S();
+            s.x = this.x;
+            return s;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.NewArrayTests.StringComparer', {
+        inherits: [Bridge.IComparer$1(String)],
+        compare: function (x, y) {
+            if (x === y) {
+                return 0;
+            }
+            if (!Bridge.hasValue(x)) {
+                return -1;
+            }
+            if (!Bridge.hasValue(y)) {
+                return 1;
+            }
+            return Bridge.String.compare(x, y);
         }
     });
     
@@ -25338,6 +26718,14 @@
             Bridge.ClientTest.ExceptionTests.E1.prototype.$constructor.call(this, message);
     
         }
+    });
+    
+    Bridge.define('Bridge.ClientTest.NewArrayTests.D1', {
+        inherits: [Bridge.ClientTest.NewArrayTests.B1]
+    });
+    
+    Bridge.define('Bridge.ClientTest.NewArrayTests.D2', {
+        inherits: [Bridge.ClientTest.NewArrayTests.B2]
     });
     
     Bridge.define('Bridge.ClientTest.PropertyAccessorTests.D3', {

@@ -2680,6 +2680,17 @@
         }
     });
 
+    Bridge.define("Bridge.IndexOutOfRangeException", {
+        inherits: [Bridge.SystemException],
+
+        constructor: function (message, innerException) {
+            if (!message) {
+                message = "Index was out of range. Must be non-negative and less than the size of the collection.\nParameter name: index";
+            }
+
+            Bridge.SystemException.prototype.$constructor.call(this, message, innerException);
+        }
+    });
     // @source Interfaces.js
 
     Bridge.define("Bridge.IFormattable", {
@@ -5731,7 +5742,19 @@ Bridge.define("Bridge.ContractException", {
         },
 
         get: function (arr) {
-            var r = arr[Bridge.Array.toIndex(arr, Array.prototype.slice.call(arguments, 1))];
+            if (arguments.length < 2) {
+                throw new Bridge.ArgumentNullException("indices");
+            }
+
+            var idx = Array.prototype.slice.call(arguments, 1);
+
+            for (var i = 0; i < idx.length; i++) {
+                if (!Bridge.hasValue(idx[i])) {
+                    throw new Bridge.ArgumentNullException("indices");
+                }
+            }
+
+            var r = arr[Bridge.Array.toIndex(arr, idx)];
 
             return typeof r !== "undefined" ? r : arr.$v;
         },
@@ -5746,8 +5769,8 @@ Bridge.define("Bridge.ContractException", {
         },
 
         getLength: function (arr, dimension) {
-            if (dimension >= (arr.$s ? arr.$s.length : 1)) {
-                throw new Bridge.ArgumentException("Invalid dimension");
+            if (dimension < 0 || dimension >= (arr.$s ? arr.$s.length : 1)) {
+                throw new Bridge.IndexOutOfRangeException();
             }
 
             return arr.$s ? arr.$s[dimension] : arr.length;
@@ -5758,6 +5781,7 @@ Bridge.define("Bridge.ContractException", {
         },
 
         getLower: function (arr, d) {
+            Bridge.Array.getLength(arr, d);
             return 0;
         },
 
@@ -5881,17 +5905,21 @@ Bridge.define("Bridge.ContractException", {
             }
         },
 
-        clear: function (obj) {
+        clear: function (obj, T) {
             if (Bridge.isArray(obj)) {
-                obj.length = 0;
+                Bridge.Array.fill(obj, T ? (T.getDefaultValue || Bridge.getDefaultValue(T)) : null, 0, obj.length);
             } else if (Bridge.isFunction(obj.clear)) {
                 obj.clear();
             }
         },
 
         fill: function (dst, val, index, count) {
+            if (!Bridge.hasValue(dst)) {
+                throw new Bridge.ArgumentNullException("dst");
+            }
+
             if (index < 0 || count < 0 || (index + count) > dst.length) {
-                throw new Bridge.ArgumentException();
+                throw new Bridge.IndexOutOfRangeException();
             }
 
             var isFn = Bridge.isFunction(val);
@@ -5907,7 +5935,7 @@ Bridge.define("Bridge.ContractException", {
             }
 
             if (len > (src.length - spos) || len > (dst.length - dpos)) {
-                throw new Bridge.ArgumentException();
+                throw new Bridge.IndexOutOfRangeException();
             }
 
             if (spos < dpos && src === dst) {
@@ -5921,13 +5949,16 @@ Bridge.define("Bridge.ContractException", {
             }
         },
 
-        indexOf: function (arr, item) {
+        indexOf: function (arr, item, startIndex, count) {
             if (Bridge.isArray(arr)) {
                 var i,
-                    ln,
-                    el;
+                    el,
+                    endIndex;
 
-                for (i = 0, ln = arr.length; i < ln; i++) {
+                startIndex = startIndex || 0;
+                count = count || arr.length;
+                endIndex = startIndex + count;
+                for (i = startIndex; i < endIndex; i++) {
                     el = arr[i];
 
                     if (el === item || Bridge.EqualityComparer$1.$default.equals(el, item)) {
@@ -6013,18 +6044,21 @@ Bridge.define("Bridge.ContractException", {
             }
 
             var oldSize = 0,
-                isFn = Bridge.isFunction(val);
+                isFn = Bridge.isFunction(val),
+                ref = arr.v;
 
-            if (!arr) {
-                arr = new Array(newSize);
+            if (!ref) {
+                ref = new Array(newSize);
             } else {
-                oldSize = arr.length;
-                arr.length = newSize;
+                oldSize = ref.length;
+                ref.length = newSize;
             }
 
             for (var i = oldSize; i < newSize; i++) {
-                arr[i] = isFn ? val() : val;
+                ref[i] = isFn ? val() : val;
             }
+
+            arr.v = ref;
         },
 
         reverse: function (arr, index, length) {
@@ -6186,6 +6220,219 @@ Bridge.define("Bridge.ContractException", {
                     }
                 }
             }
+        },
+
+        convertAll: function (array, converter) {
+            if (!Bridge.hasValue(array)) {
+                throw new Bridge.ArgumentNullException("array");
+            }
+            if (!Bridge.hasValue(converter)) {
+                throw new Bridge.ArgumentNullException("converter");
+            }
+            var array2 = [];
+            for (var i = 0; i < array.length; i++) {
+                array2[i] = converter(array[i]);
+            }
+            return array2;
+        },
+
+        find: function(T, array, match) {
+            if (!Bridge.hasValue(array)) {
+                throw new Bridge.ArgumentNullException("array");
+            }
+            if (!Bridge.hasValue(match)) {
+                throw new Bridge.ArgumentNullException("match");
+            }
+            for (var i = 0; i < array.length; i++) {
+                if (match(array[i])) {
+                    return array[i];
+                }
+            }
+            return Bridge.getDefaultValue(T);
+        },
+
+        findAll: function (array, match) {
+            if (!Bridge.hasValue(array)) {
+                throw new Bridge.ArgumentNullException("array");
+            }
+            if (!Bridge.hasValue(match)) {
+                throw new Bridge.ArgumentNullException("match");
+            }
+            var list = [];
+            for (var i = 0; i < array.length; i++) {
+                if (match(array[i])) {
+                    list.push(array[i]);
+                }
+            }
+            return list;
+        },
+
+        findIndex: function (array, startIndex, count, match) {
+            if (!Bridge.hasValue(array)) {
+                throw new Bridge.ArgumentNullException("array");
+            }
+
+            if (arguments.length === 2) {
+                match = startIndex;
+                startIndex = 0;
+                count = array.length;
+            }
+            else if (arguments.length === 3) {
+                match = count;
+                count = array.length - startIndex;
+            }
+            
+            if (startIndex < 0 || startIndex > array.length) {
+                throw new Bridge.ArgumentOutOfRangeException("startIndex");
+            }
+            if (count < 0 || startIndex > array.length - count) {
+                throw new Bridge.ArgumentOutOfRangeException("count");
+            }
+            if (!Bridge.hasValue(match)) {
+                throw new Bridge.ArgumentNullException("match");
+            }
+            var endIndex = startIndex + count;
+            for (var i = startIndex; i < endIndex; i++) {
+                if (match(array[i]))
+                    return i;
+            }
+            return -1;
+        },
+
+        findLast: function (T, array, match) {
+            if (!Bridge.hasValue(array)) {
+                throw new Bridge.ArgumentNullException("array");
+            }
+            if (!Bridge.hasValue(match)) {
+                throw new Bridge.ArgumentNullException("match");
+            }
+            for (var i = array.length - 1; i >= 0; i--) {
+                if (match(array[i])) {
+                    return array[i];
+                }
+            }
+            return Bridge.getDefaultValue(T);
+        },
+
+        findLastIndex: function (array, startIndex, count, match) {
+            if (!Bridge.hasValue(array)) {
+                throw new Bridge.ArgumentNullException("array");
+            }
+
+            if (arguments.length === 2) {
+                match = startIndex;
+                startIndex = array.length - 1;
+                count = array.length;
+            }
+            else if (arguments.length === 3) {
+                match = count;
+                count = startIndex + 1;
+            }
+
+            if (!Bridge.hasValue(match)) {
+                throw new Bridge.ArgumentNullException("match");
+            }
+
+            if (array.length === 0) {
+                if (startIndex !== -1) {
+                    throw new Bridge.ArgumentOutOfRangeException("startIndex");
+                }
+            }
+            else {
+                if (startIndex < 0 || startIndex >= array.length) {
+                    throw new Bridge.ArgumentOutOfRangeException("startIndex");
+                }
+            }
+            if (count < 0 || startIndex - count + 1 < 0) {
+                throw new Bridge.ArgumentOutOfRangeException("count");
+            }
+            
+            var endIndex = startIndex - count;
+            for (var i = startIndex; i > endIndex; i--) {
+                if (match(array[i])) {
+                    return i;
+                }
+            }
+            return -1;
+        },
+
+        forEach: function(array, action) {
+            if (!Bridge.hasValue(array)) {
+                throw new Bridge.ArgumentNullException("array");
+            }
+            if (!Bridge.hasValue(action)) {
+                throw new Bridge.ArgumentNullException("action");
+            }
+            for (var i = 0; i < array.length; i++) {
+                action(array[i]);
+            }
+        },
+
+        indexOfT: function (array, value, startIndex, count) {
+            if (!Bridge.hasValue(array)) {
+                throw new Bridge.ArgumentNullException("array");
+            }
+
+            if (arguments.length === 2) {
+                startIndex = 0;
+                count = array.length;
+            }
+            else if (arguments.length === 3) {
+                count = array.length - startIndex;
+            }
+
+            if (startIndex < 0 || (startIndex >= array.length && array.length > 0)) {
+                throw new Bridge.ArgumentOutOfRangeException("startIndex", "out of range");
+            }
+            if (count < 0 || count > array.length - startIndex) {
+                throw new Bridge.ArgumentOutOfRangeException("count", "out of range");
+            }
+            return Bridge.Array.indexOf(array, value, startIndex, count);
+        },
+
+        lastIndexOfT: function (array, value, startIndex, count) {
+            if (!Bridge.hasValue(array)) {
+                throw new Bridge.ArgumentNullException("array");
+            }
+
+            if (arguments.length === 2) {
+                startIndex = array.length - 1;
+                count = array.length;
+            }
+            else if (arguments.length === 3) {
+                count = (array.length === 0) ? 0 : (startIndex + 1);
+            }
+
+            if (startIndex < 0 || (startIndex >= array.length && array.length > 0)) {
+                throw new Bridge.ArgumentOutOfRangeException("startIndex", "out of range");
+            }
+            if (count < 0 || startIndex - count + 1 < 0) {
+                throw new Bridge.ArgumentOutOfRangeException("count", "out of range");
+            }
+
+            var endIndex = startIndex - count + 1;
+            for (var i = startIndex; i >= endIndex; i--) {
+                var el = array[i];
+                if (el === value || Bridge.EqualityComparer$1.$default.equals(el, value)) {
+                    return i;
+                }
+            }
+            return -1;
+        },
+
+        trueForAll: function(array, match) {
+            if (!Bridge.hasValue(array)) {
+                throw new Bridge.ArgumentNullException("array");
+            }
+            if (!Bridge.hasValue(match)) {
+                throw new Bridge.ArgumentNullException("match");
+            }
+            for (var i = 0; i < array.length; i++) {
+                if (!match(array[i])) {
+                    return false;
+                }
+            }
+            return true;
         }
     };
 
