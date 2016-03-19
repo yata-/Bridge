@@ -11,4 +11,13 @@ $project.Object.References | foreach-object {
  }
 }
 
+# Sets the NoStdLib setting to True for every project configuration.
+$project.ConfigurationManager | ForEach-Object {
+ $nostdlib_setting = $_.Properties.Item("NoStdLib")
+
+ if (-not $nostdlib_setting.Value) {
+  $nostdlib_setting.Value = $true
+ }
+}
+
 write-output "All done."
