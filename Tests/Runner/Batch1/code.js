@@ -2240,6 +2240,49 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1076', {
+        statics: {
+            testInlineConstantAsMemberReference: function () {
+                Bridge.get(Bridge.Test.Assert).areEqual("SomeV", "SomeV");
+            },
+            testInlineBridgeNumericConstantsAsMemberReference: function () {
+                var s;
+    
+                s = Bridge.Int.format(Bridge.Decimal.MaxValue, 'G');
+                s = Bridge.Int.format(3.40282347E+38, 'G');
+                s = Bridge.Int.format(Number.MAX_VALUE, 'G');
+                s = String.fromCharCode(65535);
+    
+                s = Bridge.Int.format(Bridge.Decimal.MinValue, 'G');
+                s = Bridge.Int.format(-3.40282347E+38, 'G');
+                s = Bridge.Int.format(1.401298E-45, 'G');
+                s = Bridge.Int.format(Number.MIN_VALUE, 'G');
+                s = Bridge.Int.format(4.94065645841247E-324, 'G');
+                s = String.fromCharCode(0);
+    
+                s = (255).toString();
+                s = (65535).toString();
+                s = (4294967295).toString();
+                s = (9007199254740991).toString();
+                s = (127).toString();
+                s = (32767).toString();
+                s = (2147483647).toString();
+                s = (9007199254740991).toString();
+    
+                s = (0).toString();
+                s = (0).toString();
+                s = (0).toString();
+                s = (0).toString();
+                s = (-128).toString();
+                s = (-32768).toString();
+                s = (-2147483648).toString();
+                s = (-9007199254740991).toString();
+    
+                Bridge.get(Bridge.Test.Assert).areEqual("-9007199254740991", s);
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
