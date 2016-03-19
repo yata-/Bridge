@@ -250,7 +250,27 @@ namespace Bridge.Translator
 
             if (member != null && member.Member.SymbolKind == SymbolKind.Field && this.Emitter.IsMemberConst(member.Member) && this.Emitter.IsInlineConst(member.Member))
             {
+                var wrap = memberReferenceExpression.Parent is MemberReferenceExpression;
+
+                if (wrap)
+                {
+                    var rr = this.Emitter.Resolver.ResolveNode(memberReferenceExpression.Parent, this.Emitter);
+                    var ii = this.Emitter.GetInlineCode((MemberReferenceExpression)memberReferenceExpression.Parent);
+
+                    if (!string.IsNullOrEmpty(ii.Item3))
+                    {
+                        wrap = false;
+                    }
+                    else
+                    {
+                        this.WriteOpenParentheses();    
+                    }
+                }
                 this.WriteScript(member.ConstantValue);
+                if (wrap)
+                {
+                    this.WriteCloseParentheses();
+                }
             }
             else if (hasInline && member.Member.IsStatic)
             {
