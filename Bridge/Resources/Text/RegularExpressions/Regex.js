@@ -154,6 +154,11 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
     _pattern: "",
     _matchTimeout: Bridge.TimeSpan.fromMilliseconds(-1),
     _runner: null,
+    _caps: null,
+    _capsize: 0,
+    _capnames: null,
+    _capslist: null,
+
     config: {
         init: function() {
             this._options = Bridge.Text.RegularExpressions.RegexOptions.None;
@@ -197,9 +202,28 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         this._matchTimeout = matchTimeout;
         this._runner = new scope.RegexRunner();
 
-        //TODO: ValidateMatchTimeout(matchTimeout);
 
-        //TODO: Cache
+        //TODO: cache
+        var engine = Bridge.get(Bridge.Text.RegularExpressions.RegexNetEngine);
+        var groupInfos = engine.parsePatternGroups(this._pattern);
+
+        this._capsize = groupInfos.length;
+        //this._caps = ;/
+        this._capslist = [];
+        this._capnames = {};
+
+        this._capsize ++;
+        this._capslist.push("0");
+        this._capnames["0"] = 0;
+
+        for (var i = 0; i < groupInfos.length; i++) {
+            var groupInfo = groupInfos[i];
+            this._capslist.push(groupInfo.name);
+            this._capnames[groupInfo.name] = i+1;
+        }
+
+
+        //TODO: ValidateMatchTimeout(matchTimeout);
     },
 
     getMatchTimeout: function () {
@@ -277,19 +301,105 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
     },
 
     getGroupNames: function () {
-        return []; //TODO: Implement
+        if (this._capslist == null) {
+            var invariantCulture = Bridge.get(Bridge.CultureInfo).invariantCulture;
+
+            var result = [];
+            var max = this._capsize;
+            for (var i = 0; i < max; i++) {
+                result[i] = Bridge.Convert.toString(i, invariantCulture, Bridge.Convert.typeCodes.Int32);
+            }
+
+            return result;
+        }
+        else {
+            return this._capslist.slice();
+        }
     },
 
     getGroupNumbers: function () {
-        return []; //TODO: Implement
+        var result;
+        var caps = this._caps;
+ 
+        if (caps == null) {
+            result = [];
+            var max = this._capsize;
+            for (var i = 0; i < max; i++) {
+                result.push(i);
+            }
+        }
+        else {
+            result = [];
+            for (var key in caps) {
+                if(caps.hasOwnProperty(key)) {
+                    result[caps[key]] = key;
+                }
+            }
+        }
+ 
+        return result;
     },
 
-    groupNameFromNumber: function (i) {
-        return ""; //TODO: Implement
+    groupNameFromNumber: function(i) {
+
+        if (this._capslist == null) {
+            if (i >= 0 && i < this._capsize) {
+                var invariantCulture = Bridge.get(Bridge.CultureInfo).invariantCulture;
+                return Bridge.Convert.toString(i, invariantCulture, Bridge.Convert.typeCodes.Int32);
+            }
+            return "";
+
+        } else {
+
+            if (this._caps != null) {
+                var obj = this._caps[i];
+                if (obj == null) {
+                    return "";
+                }
+                return parseInt(obj);
+            }
+
+            if (i >= 0 && i < this._capslist.length) {
+                return this._capslist[i];
+            }
+
+            return "";
+        }
     },
 
-    groupNumberFromName: function (name) {
-        return 0; //TODO: Implement
+    groupNumberFromName: function(name) {
+        if (name == null) {
+            throw new Bridge.ArgumentNullException("name");
+        }
+
+        // look up name if we have a hashtable of names
+        if (this._capnames != null) {
+            var ret = this._capnames[name];
+            if (ret == null) {
+                return -1;
+            }
+            return parseInt(ret);
+        }
+
+        // convert to an int if it looks like a number
+        var result = 0;
+        for (var i = 0; i < name.Length; i++) {
+            var ch = name[i];
+
+            if (ch > "9" || ch < "0") {
+                return -1;
+            }
+
+            result *= 10;
+            result += (ch - "0");
+        }
+
+        // return int if it's in range
+        if (result >= 0 && result < this._capsize) {
+            return result;
+        }
+
+        return -1;
     },
 
     replace: function (input, replacement) {

@@ -112,6 +112,10 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
                 }
             }
 
+            for (var j = 0; j < groups.length; j++) {
+                groups[j].name = groups[j].constructs.name1 || (j+1).toString(); //TODO: check case name1-name2
+            }
+
             return groups;
         },
 
