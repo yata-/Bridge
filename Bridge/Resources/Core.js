@@ -76,7 +76,7 @@
         },
 
         get: function (t) {
-            if (t && t.$staticInit) {
+            if (t && t.$staticInit !== null) {
                 t.$staticInit();
             }
 

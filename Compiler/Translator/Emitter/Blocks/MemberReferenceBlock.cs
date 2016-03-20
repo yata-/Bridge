@@ -53,14 +53,15 @@ namespace Bridge.Translator
                 return;
             }
 
-            if (member.Member.DeclaringType.Kind == TypeKind.Enum || this.Emitter.Validator.IsIgnoreType(member.Member.DeclaringType.GetDefinition()))
+            this.Write(BridgeTypes.ToJsName(member.Member.DeclaringType, this.Emitter));
+            /*if (member.Member.DeclaringType.Kind == TypeKind.Enum || this.Emitter.Validator.IsIgnoreType(member.Member.DeclaringType.GetDefinition()) || this.Emitter.TypeInfo.Type == member.Member.DeclaringType)
             {
                 this.Write(BridgeTypes.ToJsName(member.Member.DeclaringType, this.Emitter));
             }
             else
             {
                 this.Write("Bridge.get(" + BridgeTypes.ToJsName(member.Member.DeclaringType, this.Emitter) + ")");
-            }
+            }*/
         }
 
         protected void VisitMemberReferenceExpression()
@@ -327,7 +328,8 @@ namespace Bridge.Translator
                 if (resolveResult is TypeResolveResult)
                 {
                     TypeResolveResult typeResolveResult = (TypeResolveResult)resolveResult;
-                    var isNative = this.Emitter.Validator.IsIgnoreType(typeResolveResult.Type.GetDefinition()) || typeResolveResult.Type.Kind == TypeKind.Enum;
+                    this.Write(BridgeTypes.ToJsName(typeResolveResult.Type, this.Emitter));
+                    /*var isNative = this.Emitter.Validator.IsIgnoreType(typeResolveResult.Type.GetDefinition()) || typeResolveResult.Type.Kind == TypeKind.Enum;
                     if (isNative)
                     {
                         this.Write(BridgeTypes.ToJsName(typeResolveResult.Type, this.Emitter));
@@ -335,7 +337,7 @@ namespace Bridge.Translator
                     else
                     {
                         this.Write("Bridge.get(" + BridgeTypes.ToJsName(typeResolveResult.Type, this.Emitter) + ")");
-                    }                    
+                    }*/                    
 
                     return;
                 }

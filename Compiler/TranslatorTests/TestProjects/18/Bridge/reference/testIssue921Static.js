@@ -4,7 +4,7 @@
     Bridge.define('TestIssue921Static.Issue921Static', {
         statics: {
             constructor: function () {
-                Bridge.get(TestIssue921Static.Issue921Static)._offset = 10;
+                TestIssue921Static.Issue921Static._offset = 10;
             },
             _offset: 0,
             config: {
@@ -48,9 +48,9 @@
                 }).select(function (value, index) {
                     return addThousand(value + index);
                 }).select(function (value) {
-                    return addThousand(value) + Bridge.get(TestIssue921Static.Issue921Static)._offset;
+                    return addThousand(value) + TestIssue921Static.Issue921Static._offset;
                 }).select(function (value, index) {
-                    return addThousand(value) + index + Bridge.get(TestIssue921Static.Issue921Static)._offset;
+                    return addThousand(value) + index + TestIssue921Static.Issue921Static._offset;
                 }).select(function (value) {
                     return addThousand(value + addThousand(localValue));
                 });
@@ -68,9 +68,9 @@
                 }).select(function (value, index) {
                     return toString(value.length + index);
                 }).select(function (value) {
-                    return toString(value.length) + Bridge.get(TestIssue921Static.Issue921Static)._offset;
+                    return toString(value.length) + TestIssue921Static.Issue921Static._offset;
                 }).select(function (value, index) {
-                    return toString(value.length) + index + Bridge.get(TestIssue921Static.Issue921Static)._offset;
+                    return toString(value.length) + index + TestIssue921Static.Issue921Static._offset;
                 }).select(function (value) {
                     return toString(value.length + toString(localValue).length);
                 });
@@ -90,28 +90,28 @@
             return value + index;
         },
         f3: function (value) {
-            return value + Bridge.get(TestIssue921Static.Issue921Static)._offset;
+            return value + TestIssue921Static.Issue921Static._offset;
         },
         f4: function (value, index) {
-            return value + index + Bridge.get(TestIssue921Static.Issue921Static)._offset;
+            return value + index + TestIssue921Static.Issue921Static._offset;
         },
         f5: function (value) {
-            return value + Bridge.get(TestIssue921Static.Issue921Static).get$Name();
+            return value + TestIssue921Static.Issue921Static.get$Name();
         },
         f6: function (value, index) {
-            return value + index + Bridge.get(TestIssue921Static.Issue921Static).get$Name();
+            return value + index + TestIssue921Static.Issue921Static.get$Name();
         },
         f7: function (value) {
             return value.add(Bridge.Decimal(1));
         },
         f8: function (value, index) {
-            return value.add(Bridge.get(TestIssue921Static.Issue921Static).computeValue(Bridge.Decimal.lift(index)));
+            return value.add(TestIssue921Static.Issue921Static.computeValue(Bridge.Decimal.lift(index)));
         },
         f9: function (value) {
-            return value.add(Bridge.get(TestIssue921Static.Issue921Static).computeValue(Bridge.Decimal(100.0)));
+            return value.add(TestIssue921Static.Issue921Static.computeValue(Bridge.Decimal(100.0)));
         },
         f10: function (value, index) {
-            return value.add(Bridge.Decimal(index)).add(Bridge.get(TestIssue921Static.Issue921Static).computeValue(Bridge.Decimal(200.0)));
+            return value.add(Bridge.Decimal(index)).add(TestIssue921Static.Issue921Static.computeValue(Bridge.Decimal(200.0)));
         },
         f11: function (i) {
             return i + 1000;

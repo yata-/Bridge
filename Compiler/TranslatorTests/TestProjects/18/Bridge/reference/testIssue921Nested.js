@@ -52,7 +52,7 @@
             return x;
         },
         f2: function (x) {
-            return Bridge.get(TestIssue921Nested.Issue921NestedOuter.Issue921Nested).computeNumberStatic(x);
+            return TestIssue921Nested.Issue921NestedOuter.Issue921Nested.computeNumberStatic(x);
         }
     });
     
@@ -85,7 +85,7 @@
         },
         constructor: function (offset) {
             this._offset = offset;
-            Bridge.get(TestIssue921Nested.Issue921NestedOuter.Issue921Nested).setNameStatic("Static");
+            TestIssue921Nested.Issue921NestedOuter.Issue921Nested.setNameStatic("Static");
         },
         computeValue: function (d) {
             return d.add(Bridge.Decimal(10));
@@ -163,16 +163,16 @@
     
     Bridge.apply($_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested, {
         f1: function (i) {
-            return 3 * i + Bridge.get(TestIssue921Nested.Issue921NestedOuter.Issue921Nested).getIntStatic();
+            return 3 * i + TestIssue921Nested.Issue921NestedOuter.Issue921Nested.getIntStatic();
         },
         f2: function (i) {
-            return 2 * i + Bridge.get(TestIssue921Nested.Issue921NestedOuter.Issue921Nested).getIntStatic();
+            return 2 * i + TestIssue921Nested.Issue921NestedOuter.Issue921Nested.getIntStatic();
         },
         f3: function (i, j) {
-            return i + j + Bridge.get(TestIssue921Nested.Issue921NestedOuter.Issue921Nested).getIntStatic();
+            return i + j + TestIssue921Nested.Issue921NestedOuter.Issue921Nested.getIntStatic();
         },
         f4: function (i, j, k) {
-            var x = i + j + k + Bridge.get(TestIssue921Nested.Issue921NestedOuter.Issue921Nested).getIntStatic();
+            var x = i + j + k + TestIssue921Nested.Issue921NestedOuter.Issue921Nested.getIntStatic();
         },
         f5: function (value) {
             return value + 1;
@@ -193,7 +193,7 @@
             return value + index + this.getName();
         },
         f11: function (value, index) {
-            return value + index + Bridge.get(TestIssue921Nested.Issue921NestedOuter.Issue921Nested).getNameStatic();
+            return value + index + TestIssue921Nested.Issue921NestedOuter.Issue921Nested.getNameStatic();
         },
         f12: function (value) {
             return value.add(Bridge.Decimal(1));
