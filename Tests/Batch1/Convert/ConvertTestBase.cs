@@ -115,14 +115,26 @@ namespace Bridge.ClientTest.ConvertTests
 
             for (int i = 0; i < testValues.Length; i++)
             {
-                TOutput result = convert(testValues[i]);
-                if (useTrue)
+                var testValue = testValues[i];
+
+                try
                 {
-                    Assert.True(expectedValues[i].Equals(result));
+                    TOutput result = convert(testValue);
+
+                    var expected = expectedValues[i];
+
+                    if (useTrue)
+                    {
+                        Assert.True(expected.Equals(result), "Test: " + testValue + " Expected: " + expected.ToString() + " Result: " + result.ToString());
+                    }
+                    else
+                    {
+                        Assert.AreEqual(expected, result);
+                    }
                 }
-                else
+                catch(Exception ex)
                 {
-                    Assert.AreEqual(expectedValues[i], result);
+                    Assert.Fail("Exception occurred while Verify " + testValue + " Exception: " + ex.ToString());
                 }
             }
         }
@@ -141,8 +153,20 @@ namespace Bridge.ClientTest.ConvertTests
 
             for (int i = 0; i < testValues.Length; i++)
             {
-                TOutput result = convert(testValues[i]);
-                Assert.AreEqual(expectedValues[i], result);
+                var testValue = testValues[i];
+
+                try
+                {
+                    TOutput result = convert(testValue);
+
+                    var expected = expectedValues[i];
+
+                    Assert.AreEqual(expected, result);
+                }
+                catch (Exception ex)
+                {
+                    Assert.Fail("Exception occurred while VerifyViaObj " + testValue + " Exception: " + ex.ToString());
+                }
             }
         }
 
@@ -182,17 +206,24 @@ namespace Bridge.ClientTest.ConvertTests
                 var testValue = testValues[i];
                 var radix = testBases[i];
 
-                TOutput result = convert(testValue, radix);
-
-                var expected = expectedValues[i];
-
-                if (useTrue)
+                try
                 {
-                    Assert.True(expected.Equals(result), "Test: " + testValue + " Radix: " + radix + " Expected: " + expected.ToString() + " Result: " + result.ToString());
+                    TOutput result = convert(testValue, radix);
+
+                    var expected = expectedValues[i];
+
+                    if (useTrue)
+                    {
+                        Assert.True(expected.Equals(result), "Test: " + testValue + " Radix: " + radix + " Expected: " + expected.ToString() + " Result: " + result.ToString());
+                    }
+                    else
+                    {
+                        Assert.AreEqual(expected, result);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    Assert.AreEqual(expected, result);
+                    Assert.Fail("Exception occurred while VerifyFromStringWithBase " + testValue + " Radix: " + radix + " Exception: " + ex.ToString());
                 }
             }
         }

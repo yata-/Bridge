@@ -11468,12 +11468,23 @@
             }
     
             for (var i = 0; i < testValues.length; i = ((i + 1) | 0)) {
-                var result = convert(testValues[i]);
-                if (useTrue) {
-                    Bridge.get(Bridge.Test.Assert).$true(Bridge.equals(expectedValues[i], result));
+                var testValue = testValues[i];
+    
+                try {
+                    var result = convert(testValue);
+    
+                    var expected = expectedValues[i];
+    
+                    if (useTrue) {
+                        Bridge.get(Bridge.Test.Assert).true$1(Bridge.equals(expected, result), "Test: " + testValue + " Expected: " + expected.toString() + " Result: " + result.toString());
+                    }
+                    else  {
+                        Bridge.get(Bridge.Test.Assert).areEqual(expected, result);
+                    }
                 }
-                else  {
-                    Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], result);
+                catch (ex) {
+                    ex = Bridge.Exception.create(ex);
+                    Bridge.get(Bridge.Test.Assert).fail$1("Exception occurred while Verify " + testValue + " Exception: " + ex.toString());
                 }
             }
         },
@@ -11498,8 +11509,19 @@
             }
     
             for (var i = 0; i < testValues.length; i = ((i + 1) | 0)) {
-                var result = convert(testValues[i]);
-                Bridge.get(Bridge.Test.Assert).areEqual(expectedValues[i], result);
+                var testValue = testValues[i];
+    
+                try {
+                    var result = convert(testValue);
+    
+                    var expected = expectedValues[i];
+    
+                    Bridge.get(Bridge.Test.Assert).areEqual(expected, result);
+                }
+                catch (ex) {
+                    ex = Bridge.Exception.create(ex);
+                    Bridge.get(Bridge.Test.Assert).fail$1("Exception occurred while VerifyViaObj " + testValue + " Exception: " + ex.toString());
+                }
             }
         },
         /**
@@ -11567,15 +11589,21 @@
                 var testValue = testValues[i];
                 var radix = testBases[i];
     
-                var result = convert(testValue, radix);
+                try {
+                    var result = convert(testValue, radix);
     
-                var expected = expectedValues[i];
+                    var expected = expectedValues[i];
     
-                if (useTrue) {
-                    Bridge.get(Bridge.Test.Assert).true$1(Bridge.equals(expected, result), "Test: " + testValue + " Radix: " + radix + " Expected: " + expected.toString() + " Result: " + result.toString());
+                    if (useTrue) {
+                        Bridge.get(Bridge.Test.Assert).true$1(Bridge.equals(expected, result), "Test: " + testValue + " Radix: " + radix + " Expected: " + expected.toString() + " Result: " + result.toString());
+                    }
+                    else  {
+                        Bridge.get(Bridge.Test.Assert).areEqual(expected, result);
+                    }
                 }
-                else  {
-                    Bridge.get(Bridge.Test.Assert).areEqual(expected, result);
+                catch (ex) {
+                    ex = Bridge.Exception.create(ex);
+                    Bridge.get(Bridge.Test.Assert).fail$1("Exception occurred while VerifyFromStringWithBase " + testValue + " Radix: " + radix + " Exception: " + ex.toString());
                 }
             }
         },
