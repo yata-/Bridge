@@ -21,11 +21,6 @@ namespace Bridge.ClientTest.ConvertTests
             true,
             false,
 
-            // Byte
-            byte.MinValue,
-            (byte)100,
-            byte.MaxValue,
-
             // Decimal
             decimal.Zero,
             decimal.One,
@@ -46,6 +41,30 @@ namespace Bridge.ClientTest.ConvertTests
             double.PositiveInfinity,
             double.NaN,
 
+            // Single
+            -12.2364f,
+            -1.7753e-83f,
+            +12e+1f,
+            float.NegativeInfinity,
+            float.PositiveInfinity,
+            float.NaN,
+
+            // TODO: Uncomment when IConvertible is implemented. #822
+            //-12.2364659234064826243f,
+            //(float)+12.345e+234,
+
+            //// TimeSpan
+            //TimeSpan.Zero,
+            //TimeSpan.Parse("1999.9:09:09"),
+            //TimeSpan.Parse("-1111.1:11:11"),
+            //TimeSpan.Parse("1:23:45"),
+            //TimeSpan.Parse("-2:34:56"),
+
+            // SByte
+            sbyte.MinValue,
+            (sbyte)0,
+            sbyte.MaxValue,
+
             // Int16
             short.MinValue,
             0,
@@ -61,29 +80,10 @@ namespace Bridge.ClientTest.ConvertTests
             (long)0,
             long.MaxValue,
 
-            // SByte
-            sbyte.MinValue,
-            (sbyte)0,
-            sbyte.MaxValue,
-
-            // Single
-            -12.2364f,
-            -1.7753e-83f,
-            +12e+1f,
-            float.NegativeInfinity,
-            float.PositiveInfinity,
-            float.NaN,
-
-            // TODO: Uncomment when IConvertible is implemented.
-            //-12.2364659234064826243f,
-            //(float)+12.345e+234,
-
-            //// TimeSpan
-            //TimeSpan.Zero,
-            //TimeSpan.Parse("1999.9:09:09"),
-            //TimeSpan.Parse("-1111.1:11:11"),
-            //TimeSpan.Parse("1:23:45"),
-            //TimeSpan.Parse("-2:34:56"),
+            // Byte
+            byte.MinValue,
+            (byte)100,
+            byte.MaxValue,
 
             // UInt16
             ushort.MinValue,
@@ -107,17 +107,12 @@ namespace Bridge.ClientTest.ConvertTests
             "True",
             "False",
 
-            // Byte
-            "0",
-            "100",
-            "255",
-
             // Decimal
             "0",
             "1",
             "-1",
-            "79228162514264337593543950335",
-            "-79228162514264337593543950335",
+            ConvertConstants.DECIMAL_MAX_STRING,
+            ConvertConstants.DECIMAL_MIN_STRING,
             "1.234567890123456789012345678",
             "1234.56",
             "-1234.56",
@@ -132,26 +127,6 @@ namespace Bridge.ClientTest.ConvertTests
             "Infinity",
             "NaN",
 
-            // Int16
-            "-32768",
-            "0",
-            "32767",
-
-            // Int32
-            "-2147483648",
-            "0",
-            "2147483647",
-
-            // Int64
-            "-9223372036854775808", // Number.MIN_SAFE_INTEGER
-            "0",
-            "9223372036854775807",  // Number.MAX_SAFE_INTEGER
-
-            // SByte
-            "-128",
-            "0",
-            "127",
-
             // Single
             "-12.2364",
             "0",
@@ -160,7 +135,7 @@ namespace Bridge.ClientTest.ConvertTests
             "Infinity",
             "NaN",
 
-            // TODO: Uncomment when IConvertible is implemented.
+            // TODO : Uncomment when IConvertible is implemented. #822
             //"-12.23647",
             //"Infinity",
 
@@ -171,25 +146,53 @@ namespace Bridge.ClientTest.ConvertTests
             //"01:23:45",
             //"-02:34:56",
 
-            // UInt16
+            // SByte
+            sbyte.MinValue.ToString(),
             "0",
+            sbyte.MaxValue.ToString(),
+
+            // Int16
+            short.MinValue.ToString(),
+            "0",
+            short.MaxValue.ToString(),
+
+            // Int32
+            int.MinValue.ToString(),
+            "0",
+            int.MaxValue.ToString(),
+
+            // Int64
+            long.MinValue.ToString(),
+            "0",
+            long.MaxValue.ToString(),
+
+            // Byte
+            byte.MinValue.ToString(),
             "100",
-            "65535",
+            byte.MaxValue.ToString(),
+
+            // UInt16
+            ushort.MinValue.ToString(),
+            "100",
+            ushort.MaxValue.ToString(),
 
             // UInt32
-            "0",
+            uint.MinValue.ToString(),
             "100",
-            "4294967295",
+            uint.MaxValue.ToString(),
 
             // UInt64
-            "0",
+           ulong.MinValue.ToString(),
             "100",
-            "18446744073709551615", // Number.MAX_SAFE_INTEGER
+           ulong.MaxValue.ToString(),
         };
 
             for (int i = 0; i < testValues.Length; i++)
             {
-                Assert.AreEqual(expectedValues[i].ToLower(), Convert.ToString(testValues[i], NumberFormatInfo.InvariantInfo).ToLower());
+                Assert.AreEqual(
+                    expectedValues[i].ToLower(),
+                    Convert.ToString(testValues[i], NumberFormatInfo.InvariantInfo).ToLower(),
+                    "Index in testValues " + i);
             }
         }
 
@@ -229,7 +232,7 @@ namespace Bridge.ClientTest.ConvertTests
         public static void FromByteBase2()
         {
             byte[] testValues = { byte.MinValue, 100, byte.MaxValue };
-            string[] expectedValues = { "0", "1100100", "11111111" };
+            string[] expectedValues = { byte.MinValue.ToString(), "1100100", ConvertConstants.UINT8_MAX_STRING_BASE_2 };
 
             for (int i = 0; i < testValues.Length; i++)
             {
@@ -241,7 +244,7 @@ namespace Bridge.ClientTest.ConvertTests
         public static void FromByteBase8()
         {
             byte[] testValues = { byte.MinValue, 100, byte.MaxValue };
-            string[] expectedValues = { "0", "144", "377" };
+            string[] expectedValues = { byte.MinValue.ToString(), "144", ConvertConstants.UINT8_MAX_STRING_BASE_8 };
 
             for (int i = 0; i < testValues.Length; i++)
             {
@@ -253,7 +256,7 @@ namespace Bridge.ClientTest.ConvertTests
         public static void FromByteBase10()
         {
             byte[] testValues = { byte.MinValue, 100, byte.MaxValue };
-            string[] expectedValues = { "0", "100", "255" };
+            string[] expectedValues = { byte.MinValue.ToString(), "100", byte.MaxValue.ToString() };
 
             for (int i = 0; i < testValues.Length; i++)
             {
@@ -265,7 +268,7 @@ namespace Bridge.ClientTest.ConvertTests
         public static void FromByteBase16()
         {
             byte[] testValues = { byte.MinValue, 100, byte.MaxValue };
-            string[] expectedValues = { "0", "64", "ff" };
+            string[] expectedValues = { byte.MinValue.ToString(), "64", ConvertConstants.UINT8_MAX_STRING_BASE_16 };
 
             for (int i = 0; i < testValues.Length; i++)
             {
@@ -283,7 +286,7 @@ namespace Bridge.ClientTest.ConvertTests
         public static void FromInt16Base2()
         {
             short[] testValues = { short.MinValue, 0, short.MaxValue };
-            string[] expectedValues = { "1000000000000000", "0", "111111111111111" };
+            string[] expectedValues = { ConvertConstants.INT16_MIN_STRING_BASE_2, "0", ConvertConstants.INT16_MAX_STRING_BASE_2 };
 
             for (int i = 0; i < testValues.Length; i++)
             {
@@ -295,7 +298,7 @@ namespace Bridge.ClientTest.ConvertTests
         public static void FromInt16Base8()
         {
             short[] testValues = { short.MinValue, 0, short.MaxValue };
-            string[] expectedValues = { "100000", "0", "77777" };
+            string[] expectedValues = { ConvertConstants.INT16_MIN_STRING_BASE_8, "0", ConvertConstants.INT16_MAX_STRING_BASE_8 };
 
             for (int i = 0; i < testValues.Length; i++)
             {
@@ -307,7 +310,7 @@ namespace Bridge.ClientTest.ConvertTests
         public static void FromInt16Base10()
         {
             short[] testValues = { short.MinValue, 0, short.MaxValue };
-            string[] expectedValues = { "-32768", "0", "32767" };
+            string[] expectedValues = { short.MinValue.ToString(), "0", short.MaxValue.ToString() };
 
             for (int i = 0; i < testValues.Length; i++)
             {
@@ -319,7 +322,7 @@ namespace Bridge.ClientTest.ConvertTests
         public static void FromInt16Base16()
         {
             short[] testValues = { short.MinValue, 0, short.MaxValue };
-            string[] expectedValues = { "8000", "0", "7fff" };
+            string[] expectedValues = { ConvertConstants.INT16_MIN_STRING_BASE_16, "0", ConvertConstants.INT16_MAX_STRING_BASE_16 };
 
             for (int i = 0; i < testValues.Length; i++)
             {
@@ -337,7 +340,7 @@ namespace Bridge.ClientTest.ConvertTests
         public static void FromInt32Base2()
         {
             int[] testValues = { int.MinValue, 0, int.MaxValue };
-            string[] expectedValues = { "10000000000000000000000000000000", "0", "1111111111111111111111111111111" };
+            string[] expectedValues = { ConvertConstants.INT32_MIN_STRING_BASE_2, "0", ConvertConstants.INT32_MAX_STRING_BASE_2 };
 
             for (int i = 0; i < testValues.Length; i++)
             {
@@ -349,7 +352,7 @@ namespace Bridge.ClientTest.ConvertTests
         public static void FromInt32Base8()
         {
             int[] testValues = { int.MinValue, 0, int.MaxValue };
-            string[] expectedValues = { "20000000000", "0", "17777777777" };
+            string[] expectedValues = { ConvertConstants.INT32_MIN_STRING_BASE_8, "0", ConvertConstants.INT32_MAX_STRING_BASE_8 };
 
             for (int i = 0; i < testValues.Length; i++)
             {
@@ -361,7 +364,7 @@ namespace Bridge.ClientTest.ConvertTests
         public static void FromInt32Base10()
         {
             int[] testValues = { int.MinValue, 0, int.MaxValue };
-            string[] expectedValues = { "-2147483648", "0", "2147483647" };
+            string[] expectedValues = { int.MinValue.Format(null), "0", int.MaxValue.Format(null) };
 
             for (int i = 0; i < testValues.Length; i++)
             {
@@ -373,7 +376,7 @@ namespace Bridge.ClientTest.ConvertTests
         public static void FromInt32Base16()
         {
             int[] testValues = { int.MinValue, 0, int.MaxValue };
-            string[] expectedValues = { "80000000", "0", "7fffffff" };
+            string[] expectedValues = { ConvertConstants.INT32_MIN_STRING_BASE_16, "0", ConvertConstants.INT32_MAX_STRING_BASE_16 };
 
             for (int i = 0; i < testValues.Length; i++)
             {
@@ -390,8 +393,8 @@ namespace Bridge.ClientTest.ConvertTests
         [Test]
         public static void FromInt64Base2()
         {
-            long[] testValues = { int.MinValue, 0, int.MaxValue };
-            string[] expectedValues = { "1111111111111111111111111111111110000000000000000000000000000000", "0", "1111111111111111111111111111111" };
+            long[] testValues = { long.MinValue, 0, long.MaxValue };
+            string[] expectedValues = { ConvertConstants.INT64_MIN_STRING_BASE_2, "0", ConvertConstants.INT64_MAX_STRING_BASE_2 };
 
             for (int i = 0; i < testValues.Length; i++)
             {
@@ -402,8 +405,8 @@ namespace Bridge.ClientTest.ConvertTests
         [Test]
         public static void FromInt64Base8()
         {
-            long[] testValues = { int.MinValue, 0, int.MaxValue };
-            string[] expectedValues = { "1777777777760000000000", "0", "17777777777" };
+            long[] testValues = { long.MinValue, 0, long.MaxValue };
+            string[] expectedValues = { ConvertConstants.INT64_MIN_STRING_BASE_8, "0", ConvertConstants.INT64_MAX_STRING_BASE_8 };
 
             for (int i = 0; i < testValues.Length; i++)
             {
@@ -414,23 +417,21 @@ namespace Bridge.ClientTest.ConvertTests
         [Test]
         public static void FromInt64Base10()
         {
-            var minSafeValue = long.MinValue;       // Number.MAX_SAFE_INTEGER
-            var maxSafeValue = long.MaxValue;        // Number.MAX_SAFE_INTEGER
-            long[] testValues = { minSafeValue, 0, maxSafeValue };
-            string[] expectedValues = { "-9223372036854775808", "0", "9223372036854775807" };
+            long[] testValues = { long.MinValue, 0, long.MaxValue };
+            string[] expectedValues = { long.MinValue.ToString(), "0", long.MaxValue.ToString() };
 
             for (int i = 0; i < testValues.Length; i++)
             {
                 Assert.AreEqual(expectedValues[i], Convert.ToString(testValues[i], 10));
             }
         }
-
+        
         [Test]
         public static void FromInt64Base16()
         {
-            long[] testValues = { int.MinValue, 0, int.MaxValue };
-            string[] expectedValues = { "ffffffff80000000", "0", "7fffffff" };
-
+            long[] testValues = { long.MinValue, 0, long.MaxValue };
+            string[] expectedValues = { ConvertConstants.INT64_MIN_STRING_BASE_16, "0", ConvertConstants.INT64_MAX_STRING_BASE_16 };
+                                                                  
             for (int i = 0; i < testValues.Length; i++)
             {
                 Assert.AreEqual(expectedValues[i], Convert.ToString(testValues[i], 16));
@@ -575,8 +576,8 @@ namespace Bridge.ClientTest.ConvertTests
         public static void FromSingleArray()
         {
             float[] testValues = new float[] { float.MinValue, 0.0f, 1.0f, 1000.0f, float.MaxValue, float.NegativeInfinity, float.PositiveInfinity, float.Epsilon, float.NaN };
-            string[] expectedValues1 = new string[] { "-3.40282347e+38", "0", "1", "1000", "3.40282347e+38", "-Infinity", "Infinity", "1.401298e-45", "NaN" };
-            string[] expectedValues2 = new string[] { "-3.40282347e+38", "0", "1", "1000", "3.40282347e+38", "-Infinity", "Infinity", "1.401298e-45", "NaN" };
+            string[] expectedValues1 = new string[] { ConvertConstants.SINGLE_MIN_STRING, "0", "1", "1000", ConvertConstants.SINGLE_MAX_STRING, "-Infinity", "Infinity", ConvertConstants.SINGLE_EPSILON_STRING, "NaN" };
+            string[] expectedValues2 = new string[] { ConvertConstants.SINGLE_MIN_STRING, "0", "1", "1000", ConvertConstants.SINGLE_MAX_STRING, "-Infinity", "Infinity", ConvertConstants.SINGLE_EPSILON_STRING, "NaN" };
 
             for (int i = 0; i < testValues.Length; i++)
             {
@@ -592,7 +593,7 @@ namespace Bridge.ClientTest.ConvertTests
         public static void FromDoubleArray()
         {
             double[] testValues = new double[] { -double.MaxValue, 0.0, 1.0, 1000.0, double.MaxValue, double.NegativeInfinity, double.PositiveInfinity, double.Epsilon, double.NaN };
-            string[] expectedValues = new string[] { "-1.7976931348623157e+308", "0", "1", "1000", "1.7976931348623157e+308", "-Infinity", "Infinity", "5e-324", "NaN" };
+            string[] expectedValues = new string[] { ConvertConstants.DOUBLE_MIN_STRING, "0", "1", "1000", ConvertConstants.DOUBLE_MAX_STRING, "-Infinity", "Infinity", ConvertConstants.DOUBLE_EPSILON_STRING, "NaN" };
 
             // Vanila Test Cases
             for (int i = 0; i < testValues.Length; i++)
@@ -606,7 +607,7 @@ namespace Bridge.ClientTest.ConvertTests
         public static void FromDecimalArray()
         {
             decimal[] testValues = new decimal[] { decimal.MinValue, decimal.Parse("-1.234567890123456789012345678", NumberFormatInfo.InvariantInfo), (decimal)0.0, (decimal)1.0, (decimal)1000.0, decimal.MaxValue, decimal.One, decimal.Zero, decimal.MinusOne };
-            string[] expectedValues = new string[] { "-79228162514264337593543950335", "-1.234567890123456789012345678", "0", "1", "1000", "79228162514264337593543950335", "1", "0", "-1" };
+            string[] expectedValues = new string[] { ConvertConstants.DECIMAL_MIN_STRING, "-1.234567890123456789012345678", "0", "1", "1000", ConvertConstants.DECIMAL_MAX_STRING, "1", "0", "-1" };
 
             for (int i = 0; i < testValues.Length; i++)
             {

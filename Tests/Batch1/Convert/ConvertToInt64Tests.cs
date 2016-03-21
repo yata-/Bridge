@@ -129,14 +129,14 @@ namespace Bridge.ClientTest.ConvertTests
         [Test]
         public void FromString()
         {
-            var longMinValue = Int64.MinValue;   // Number.MIN_SAFE_INTEGER
-            var longMaxValue = Int64.MaxValue;    // Number.MAX_SAFE_INTEGER
+            var longMinValue = Int64.MinValue;
+            var longMaxValue = Int64.MaxValue;
 
-            string[] testValues = { "100", "-100", "0", "-9223372036854775808", "9223372036854775807", null };
+            string[] testValues = { "100", "-100", "0", longMinValue.ToString(), longMaxValue.ToString(), null };
             long[] expectedValues = { 100, -100, 0, longMinValue, longMaxValue, 0 };
             VerifyFromString(Convert.ToInt64, Convert.ToInt64, testValues, expectedValues, true);
 
-            string[] overflowValues = { "1" + longMaxValue.ToString(), longMinValue.ToString() + "1" };
+            string[] overflowValues = { ConvertConstants.INT64_OVERFLOW_MAX_STRING, ConvertConstants.INT64_OVERFLOW_MIN_STRING };
             VerifyFromStringThrows<OverflowException>(Convert.ToInt64, Convert.ToInt64, overflowValues);
 
             string[] formatExceptionValues = { "abba" };
@@ -146,13 +146,23 @@ namespace Bridge.ClientTest.ConvertTests
         [Test]
         public void FromStringWithBase()
         {
-            // As there is a limitation on the range of Long values in JS. We'll test the method against Number.MIN/MAX_SAFE_INTEGER values
-            var minSafeValue = Int64.MinValue;   // Number.MIN_SAFE_INTEGER
-            var maxSafeValue = Int64.MaxValue;    // Number.MAX_SAFE_INTEGER
+            var minSafeValue = Int64.MinValue;
+            var maxSafeValue = Int64.MaxValue;
 
-            string[] testValues = { null, null, null, null, "7FFFFFFFFFFFFFFF", "9223372036854775807", "777777777777777777777", "111111111111111111111111111111111111111111111111111111111111111", "-9223372036854775808" };
-            int[] testBases = {10, 2, 8, 16, 16, 10, 8, 2, 10 };
-            long[] expectedValues = {0, 0, 0, 0, maxSafeValue, maxSafeValue, maxSafeValue, maxSafeValue, minSafeValue };
+            string[] testValues = {
+                null, null, null, null,
+                ConvertConstants.INT64_MAX_STRING_BASE_16, maxSafeValue.ToString(), ConvertConstants.INT64_MAX_STRING_BASE_8, ConvertConstants.INT64_MAX_STRING_BASE_2,
+                ConvertConstants.INT64_MIN_STRING_BASE_16, minSafeValue.ToString(), ConvertConstants.INT64_MIN_STRING_BASE_8, ConvertConstants.INT64_MIN_STRING_BASE_2
+            };
+            int[] testBases = {
+                10, 2, 8, 16,
+                16, 10, 8, 2,
+                16, 10, 8, 2
+            };
+            long[] expectedValues = {0, 0, 0, 0,
+                maxSafeValue, maxSafeValue, maxSafeValue, maxSafeValue,
+                minSafeValue, minSafeValue, minSafeValue, minSafeValue
+            };
             VerifyFromStringWithBase(Convert.ToInt64, testValues, testBases, expectedValues, true);
 
             string[] overflowValues = { "FFE0000000000001", "1777400000000000000001", "1111111111100000000000000000000000000000000000000000000000000001", "9223372036854775808", "-9223372036854775809", "11111111111111111111111111111111111111111111111111111111111111111", "1FFFFffffFFFFffff", "7777777777777777777777777" };
@@ -191,7 +201,7 @@ namespace Bridge.ClientTest.ConvertTests
             long[] expectedValues = { 100, 0 };
             VerifyLongViaObj(Convert.ToInt64, testValues, expectedValues);
 
-            ulong[] overflowValues = { 9223372036854775808 }; // Number.MAX_SAFE_INTEGER + 1
+            ulong[] overflowValues = { (ulong)long.MaxValue + 1 };
             VerifyThrowsViaObj<OverflowException, ulong>(Convert.ToInt64, overflowValues);
         }
     }

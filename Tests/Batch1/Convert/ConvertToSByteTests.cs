@@ -150,12 +150,12 @@ namespace Bridge.ClientTest.ConvertTests
         [Test]
         public void FromStringWithBase()
         {
-            string[] testValues = { null, null, null, null, "7f", "127", "177", "1111111", "80", "-128", "200", "10000000" };
+            string[] testValues = { null, null, null, null, ConvertConstants.INT8_MAX_STRING_BASE_16, sbyte.MaxValue.ToString(), ConvertConstants.INT8_MAX_STRING_BASE_8, ConvertConstants.INT8_MAX_STRING_BASE_2, ConvertConstants.INT8_MIN_STRING_BASE_16, sbyte.MinValue.ToString(), ConvertConstants.INT8_MIN_STRING_BASE_8, ConvertConstants.INT8_MIN_STRING_BASE_2 };
             int[] testBases = { 10, 2, 8, 16, 16, 10, 8, 2, 16, 10, 8, 2 };
             sbyte[] expectedValues = { 0, 0, 0, 0, sbyte.MaxValue, sbyte.MaxValue, sbyte.MaxValue, sbyte.MaxValue, sbyte.MinValue, sbyte.MinValue, sbyte.MinValue, sbyte.MinValue };
             VerifyFromStringWithBase(Convert.ToSByte, testValues, testBases, expectedValues);
 
-            string[] overflowValues = { "128", "-129", "111111111", "1FF", "777" };
+            string[] overflowValues = { ConvertConstants.INT8_OVERFLOW_MAX_STRING, ConvertConstants.INT8_OVERFLOW_MIN_STRING, ConvertConstants.INT8_OVERFLOW_MAX_STRING_BASE_2, ConvertConstants.INT8_OVERFLOW_MAX_STRING_BASE_16, ConvertConstants.INT8_OVERFLOW_MAX_STRING_BASE_8 };
             int[] overflowBases = { 10, 10, 2, 16, 8 };
             VerifyFromStringWithBaseThrows<OverflowException>(Convert.ToSByte, overflowValues, overflowBases);
 
