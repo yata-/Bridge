@@ -24804,36 +24804,25 @@
     
     Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToInt64Tests', {
         inherits: [Bridge.ClientTest.ConvertTests.ConvertTestBase$1(Bridge.Long)],
-        verifyLongViaObj: function (TInput, convert, testValues, expectedValues) {
-            if (!Bridge.hasValue(expectedValues) || !Bridge.hasValue(testValues) || expectedValues.length !== testValues.length) {
-                Bridge.get(Bridge.Test.Assert).fail$1("Test data should have the same lenght");
-                return;
-            }
-    
-            for (var i = 0; i < testValues.length; i = ((i + 1) | 0)) {
-                var result = convert(testValues[i]);
-                Bridge.get(Bridge.Test.Assert).$true(expectedValues[i].equals(result));
-            }
-        },
         fromBoolean: function () {
             var testValues = [true, false];
             var expectedValues = [Bridge.Long(1), Bridge.Long(0)];
-            this.verifyLongViaObj(Boolean, function (value) { return Bridge.Convert.toInt64(value); }, testValues, expectedValues);
+            this.verifyViaObj(Boolean, function (value) { return Bridge.Convert.toInt64(value); }, testValues, expectedValues);
         },
         fromByte: function () {
             var testValues = [255, 0];
             var expectedValues = [Bridge.Long(255), Bridge.Long(0)];
-            this.verifyLongViaObj(Bridge.Byte, function (value) { return Bridge.Convert.toInt64(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.Byte, function (value) { return Bridge.Convert.toInt64(value); }, testValues, expectedValues);
         },
         fromChar: function () {
             var testValues = [65535, 0, 98];
             var expectedValues = [Bridge.Long(65535), Bridge.Long(0), Bridge.Long(98)];
-            this.verifyLongViaObj(Bridge.Char, function (value) { return Bridge.Convert.toInt64(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.Char, function (value) { return Bridge.Convert.toInt64(value); }, testValues, expectedValues);
         },
         fromDecimal: function () {
             var testValues = [Bridge.Decimal(100.0), Bridge.Decimal(-100.0), Bridge.Decimal(0.0)];
             var expectedValues = [Bridge.Long(100), Bridge.Long(-100), Bridge.Long(0)];
-            this.verifyLongViaObj(Bridge.Decimal, function (value) { return Bridge.Convert.toInt64(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.Decimal, function (value) { return Bridge.Convert.toInt64(value); }, testValues, expectedValues);
     
             var overflowValues = [Bridge.Decimal.MaxValue, Bridge.Decimal.MinValue];
             this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Decimal, function (value) { return Bridge.Convert.toInt64(value); }, overflowValues);
@@ -24841,7 +24830,7 @@
         fromDouble: function () {
             var testValues = [100.0, -100.0, 0];
             var expectedValues = [Bridge.Long(100), Bridge.Long(-100), Bridge.Long(0)];
-            this.verifyLongViaObj(Number, function (value) { return Bridge.Convert.toInt64(value); }, testValues, expectedValues);
+            this.verifyViaObj(Number, function (value) { return Bridge.Convert.toInt64(value); }, testValues, expectedValues);
     
             var overflowValues = [Number.MAX_VALUE, -Number.MAX_VALUE];
             this.verifyThrowsViaObj(Bridge.OverflowException, Number, function (value) { return Bridge.Convert.toInt64(value); }, overflowValues);
@@ -24849,17 +24838,17 @@
         fromInt16: function () {
             var testValues = [100, -100, 0];
             var expectedValues = [Bridge.Long(100), Bridge.Long(-100), Bridge.Long(0)];
-            this.verifyLongViaObj(Bridge.Int16, function (value) { return Bridge.Convert.toInt64(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.Int16, function (value) { return Bridge.Convert.toInt64(value); }, testValues, expectedValues);
         },
         fromInt32: function () {
             var testValues = [2147483647, -2147483648, 0];
             var expectedValues = [Bridge.Long(2147483647), Bridge.Long(-2147483648), Bridge.Long(0)];
-            this.verifyLongViaObj(Bridge.Int32, function (value) { return Bridge.Convert.toInt64(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.Int32, function (value) { return Bridge.Convert.toInt64(value); }, testValues, expectedValues);
         },
         fromInt64: function () {
             var testValues = [Bridge.Long.MaxValue, Bridge.Long.MinValue, Bridge.Long(0)];
             var expectedValues = [Bridge.Long.MaxValue, Bridge.Long.MinValue, Bridge.Long(0)];
-            this.verifyLongViaObj(Bridge.Long, function (value) { return Bridge.Convert.toInt64(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.Long, function (value) { return Bridge.Convert.toInt64(value); }, testValues, expectedValues);
         },
         fromObject: function () {
             var testValues = [null];
@@ -24872,12 +24861,12 @@
         fromSByte: function () {
             var testValues = [100, -100, 0];
             var expectedValues = [Bridge.Long(100), Bridge.Long(-100), Bridge.Long(0)];
-            this.verifyLongViaObj(Bridge.SByte, function (value) { return Bridge.Convert.toInt64(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.SByte, function (value) { return Bridge.Convert.toInt64(value); }, testValues, expectedValues);
         },
         fromSingle: function () {
             var testValues = [100.0, -100.0, 0.0];
             var expectedValues = [Bridge.Long(100), Bridge.Long(-100), Bridge.Long(0)];
-            this.verifyLongViaObj(Number, function (value) { return Bridge.Convert.toInt64(value); }, testValues, expectedValues);
+            this.verifyViaObj(Number, function (value) { return Bridge.Convert.toInt64(value); }, testValues, expectedValues);
     
             var overflowValues = [3.40282347E+38, -3.40282347E+38];
             this.verifyThrowsViaObj(Bridge.OverflowException, Number, function (value) { return Bridge.Convert.toInt64(value); }, overflowValues);
@@ -24920,17 +24909,17 @@
         fromUInt16: function () {
             var testValues = [100, 0];
             var expectedValues = [Bridge.Long(100), Bridge.Long(0)];
-            this.verifyLongViaObj(Bridge.UInt16, function (value) { return Bridge.Convert.toInt64(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.UInt16, function (value) { return Bridge.Convert.toInt64(value); }, testValues, expectedValues);
         },
         fromUInt32: function () {
             var testValues = [100, 0];
             var expectedValues = [Bridge.Long(100), Bridge.Long(0)];
-            this.verifyLongViaObj(Bridge.UInt32, function (value) { return Bridge.Convert.toInt64(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.UInt32, function (value) { return Bridge.Convert.toInt64(value); }, testValues, expectedValues);
         },
         fromUInt64: function () {
             var testValues = [Bridge.ULong(100), Bridge.ULong(0)];
             var expectedValues = [Bridge.Long(100), Bridge.Long(0)];
-            this.verifyLongViaObj(Bridge.ULong, function (value) { return Bridge.Convert.toInt64(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.ULong, function (value) { return Bridge.Convert.toInt64(value); }, testValues, expectedValues);
     
             var overflowValues = [Bridge.ULong([0,-2147483648])];
             this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.ULong, function (value) { return Bridge.Convert.toInt64(value); }, overflowValues);

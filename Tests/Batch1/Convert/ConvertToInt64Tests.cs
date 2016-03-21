@@ -11,27 +11,12 @@ namespace Bridge.ClientTest.ConvertTests
     [TestFixture(TestNameFormat = "Convert.ToInt64 - {0}")]
     public class ConvertToInt64Tests : ConvertTestBase<long>
     {
-        protected void VerifyLongViaObj<TInput>(Func<object, long> convert, TInput[] testValues, long[] expectedValues)
-        {
-            if (expectedValues == null || testValues == null || expectedValues.Length != testValues.Length)
-            {
-                Assert.Fail("Test data should have the same lenght");
-                return;
-            }
-
-            for (int i = 0; i < testValues.Length; i++)
-            {
-                long result = convert(testValues[i]);
-                Assert.True(expectedValues[i] == result);
-            }
-        }
-
         [Test]
         public void FromBoolean()
         {
             bool[] testValues = { true, false };
             long[] expectedValues = { 1, 0 };
-            VerifyLongViaObj(Convert.ToInt64, testValues, expectedValues);
+            VerifyViaObj(Convert.ToInt64, testValues, expectedValues);
         }
 
         [Test]
@@ -39,7 +24,7 @@ namespace Bridge.ClientTest.ConvertTests
         {
             byte[] testValues = { byte.MaxValue, byte.MinValue };
             long[] expectedValues = { 255, 0 };
-            VerifyLongViaObj(Convert.ToInt64, testValues, expectedValues);
+            VerifyViaObj(Convert.ToInt64, testValues, expectedValues);
         }
 
         [Test]
@@ -47,7 +32,7 @@ namespace Bridge.ClientTest.ConvertTests
         {
             char[] testValues = { char.MaxValue, char.MinValue, 'b' };
             long[] expectedValues = { char.MaxValue, char.MinValue, 98 };
-            VerifyLongViaObj(Convert.ToInt64, testValues, expectedValues);
+            VerifyViaObj(Convert.ToInt64, testValues, expectedValues);
         }
 
         [Test]
@@ -55,7 +40,7 @@ namespace Bridge.ClientTest.ConvertTests
         {
             decimal[] testValues = { 100m, -100m, 0m };
             long[] expectedValues = { 100, -100, 0 };
-            VerifyLongViaObj(Convert.ToInt64, testValues, expectedValues);
+            VerifyViaObj(Convert.ToInt64, testValues, expectedValues);
 
             decimal[] overflowValues = { decimal.MaxValue, decimal.MinValue };
             VerifyThrowsViaObj<OverflowException, decimal>(Convert.ToInt64, overflowValues);
@@ -66,7 +51,7 @@ namespace Bridge.ClientTest.ConvertTests
         {
             double[] testValues = { 100.0, -100.0, 0 };
             long[] expectedValues = { 100, -100, 0 };
-            VerifyLongViaObj(Convert.ToInt64, testValues, expectedValues);
+            VerifyViaObj(Convert.ToInt64, testValues, expectedValues);
 
             double[] overflowValues = { double.MaxValue, -double.MaxValue };
             VerifyThrowsViaObj<OverflowException, double>(Convert.ToInt64, overflowValues);
@@ -77,7 +62,7 @@ namespace Bridge.ClientTest.ConvertTests
         {
             short[] testValues = { 100, -100, 0, };
             long[] expectedValues = { 100, -100, 0, };
-            VerifyLongViaObj(Convert.ToInt64, testValues, expectedValues);
+            VerifyViaObj(Convert.ToInt64, testValues, expectedValues);
         }
 
         [Test]
@@ -85,7 +70,7 @@ namespace Bridge.ClientTest.ConvertTests
         {
             int[] testValues = { int.MaxValue, int.MinValue, 0 };
             long[] expectedValues = { int.MaxValue, int.MinValue, 0 };
-            VerifyLongViaObj(Convert.ToInt64, testValues, expectedValues);
+            VerifyViaObj(Convert.ToInt64, testValues, expectedValues);
         }
 
         [Test]
@@ -93,7 +78,7 @@ namespace Bridge.ClientTest.ConvertTests
         {
             long[] testValues = { long.MaxValue, long.MinValue, 0 };
             long[] expectedValues = { long.MaxValue, long.MinValue, 0 };
-            VerifyLongViaObj(Convert.ToInt64, testValues, expectedValues);
+            VerifyViaObj(Convert.ToInt64, testValues, expectedValues);
         }
 
         [Test]
@@ -112,7 +97,7 @@ namespace Bridge.ClientTest.ConvertTests
         {
             sbyte[] testValues = { 100, -100, 0 };
             long[] expectedValues = { 100, -100, 0 };
-            VerifyLongViaObj(Convert.ToInt64, testValues, expectedValues);
+            VerifyViaObj(Convert.ToInt64, testValues, expectedValues);
         }
 
         [Test]
@@ -120,7 +105,7 @@ namespace Bridge.ClientTest.ConvertTests
         {
             float[] testValues = { 100.0f, -100.0f, 0.0f, };
             long[] expectedValues = { 100, -100, 0, };
-            VerifyLongViaObj(Convert.ToInt64, testValues, expectedValues);
+            VerifyViaObj(Convert.ToInt64, testValues, expectedValues);
 
             float[] overflowValues = { float.MaxValue, float.MinValue };
             VerifyThrowsViaObj<OverflowException, float>(Convert.ToInt64, overflowValues);
@@ -183,7 +168,7 @@ namespace Bridge.ClientTest.ConvertTests
         {
             ushort[] testValues = { 100, 0 };
             long[] expectedValues = { 100, 0 };
-            VerifyLongViaObj(Convert.ToInt64, testValues, expectedValues);
+            VerifyViaObj(Convert.ToInt64, testValues, expectedValues);
         }
 
         [Test]
@@ -191,7 +176,7 @@ namespace Bridge.ClientTest.ConvertTests
         {
             uint[] testValues = { 100, 0 };
             long[] expectedValues = { 100, 0 };
-            VerifyLongViaObj(Convert.ToInt64, testValues, expectedValues);
+            VerifyViaObj(Convert.ToInt64, testValues, expectedValues);
         }
 
         [Test]
@@ -199,7 +184,7 @@ namespace Bridge.ClientTest.ConvertTests
         {
             ulong[] testValues = { 100, 0 };
             long[] expectedValues = { 100, 0 };
-            VerifyLongViaObj(Convert.ToInt64, testValues, expectedValues);
+            VerifyViaObj(Convert.ToInt64, testValues, expectedValues);
 
             ulong[] overflowValues = { (ulong)long.MaxValue + 1 };
             VerifyThrowsViaObj<OverflowException, ulong>(Convert.ToInt64, overflowValues);
