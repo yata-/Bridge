@@ -1,7 +1,6 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using Bridge.Test;
-using Bridge.ClientTest;
+﻿using Bridge.Test;
+
+using System;
 
 namespace Bridge.ClientTest.SimpleTypes
 {
@@ -9,6 +8,19 @@ namespace Bridge.ClientTest.SimpleTypes
     [TestFixture(TestNameFormat = "Int64 - {0}")]
     public class Int64Tests
     {
+        private void AssertLong(object expected, object actual, string message = "")
+        {
+            if (message == null)
+            {
+                message = "";
+            }
+
+            var typeMessage = message + "Type is Long";
+            Assert.AreEqual("Bridge.Long", actual.GetType().GetClassName(), typeMessage);
+
+            Assert.AreEqual(expected.ToString(), actual.ToString(), message);
+        }
+
         [Test]
         public void TypePropertiesAreCorrect()
         {
@@ -24,7 +36,12 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.True(l is IFormattable);
         }
 
-
+        [Test]
+        public void MinMaxValuesAreCorrect()
+        {
+            AssertLong("-9223372036854775808", long.MinValue);
+            AssertLong("9223372036854775807", long.MaxValue);
+        }
 
         [Test]
         public void CastsWork()

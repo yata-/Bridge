@@ -9,6 +9,19 @@ namespace Bridge.ClientTest.SimpleTypes
     [TestFixture(TestNameFormat = "UInt64 - {0}")]
     public class UInt64Tests
     {
+        private void AssertLong(object expected, object actual, string message = "")
+        {
+            if (message == null)
+            {
+                message = "";
+            }
+
+            var typeMessage = message + "Type is Long";
+            Assert.AreEqual("Bridge.ULong", actual.GetType().GetClassName(), typeMessage);
+
+            Assert.AreEqual(expected.ToString(), actual.ToString(), message);
+        }
+
         [Test]
         public void TypePropertiesAreCorrect()
         {
@@ -20,6 +33,13 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.True(l is IComparable<ulong>);
             Assert.True(l is IEquatable<ulong>);
             Assert.True(l is IFormattable);
+        }
+
+        [Test]
+        public void MinMaxValuesAreCorrect()
+        {
+            AssertLong("0", ulong.MinValue);
+            AssertLong("18446744073709551615", ulong.MaxValue);
         }
 
         [Test]

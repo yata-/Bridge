@@ -17829,6 +17829,17 @@
     });
     
     Bridge.define('Bridge.ClientTest.SimpleTypes.Int64Tests', {
+        assertLong: function (expected, actual, message) {
+            if (message === void 0) { message = ""; }
+            if (!Bridge.hasValue(message)) {
+                message = "";
+            }
+    
+            var typeMessage = message + "Type is Long";
+            Bridge.get(Bridge.Test.Assert).areEqual$1("Bridge.Long", Bridge.getTypeName(Bridge.getType(actual)), typeMessage);
+    
+            Bridge.get(Bridge.Test.Assert).areEqual$1(expected.toString(), actual.toString(), message);
+        },
         typePropertiesAreCorrect: function () {
             Bridge.get(Bridge.Test.Assert).$true(Bridge.is(Bridge.Long(0), Bridge.Long));
             Bridge.get(Bridge.Test.Assert).$false(Bridge.is(0.5, Bridge.Long));
@@ -17840,6 +17851,10 @@
             Bridge.get(Bridge.Test.Assert).$true(Bridge.is(l, Bridge.IComparable$1(Bridge.Long)));
             Bridge.get(Bridge.Test.Assert).$true(Bridge.is(l, Bridge.IEquatable$1(Bridge.Long)));
             Bridge.get(Bridge.Test.Assert).$true(Bridge.is(l, Bridge.IFormattable));
+        },
+        minMaxValuesAreCorrect: function () {
+            this.assertLong("-9223372036854775808", Bridge.Long.MinValue);
+            this.assertLong("9223372036854775807", Bridge.Long.MaxValue);
         },
         castsWork: function () {
             var i3 = Bridge.ULong(5754), i4 = Bridge.ULong(Bridge.Long([-808,2147483647])), i5 = Bridge.ULong([-1816395584,-517669143]);
@@ -20372,6 +20387,17 @@
     });
     
     Bridge.define('Bridge.ClientTest.SimpleTypes.UInt64Tests', {
+        assertLong: function (expected, actual, message) {
+            if (message === void 0) { message = ""; }
+            if (!Bridge.hasValue(message)) {
+                message = "";
+            }
+    
+            var typeMessage = message + "Type is Long";
+            Bridge.get(Bridge.Test.Assert).areEqual$1("Bridge.ULong", Bridge.getTypeName(Bridge.getType(actual)), typeMessage);
+    
+            Bridge.get(Bridge.Test.Assert).areEqual$1(expected.toString(), actual.toString(), message);
+        },
         typePropertiesAreCorrect: function () {
             Bridge.get(Bridge.Test.Assert).$true(Bridge.is(Bridge.ULong(0), Bridge.ULong));
             Bridge.get(Bridge.Test.Assert).$false(Bridge.is(0.5, Bridge.ULong));
@@ -20381,6 +20407,10 @@
             Bridge.get(Bridge.Test.Assert).$true(Bridge.is(l, Bridge.IComparable$1(Bridge.ULong)));
             Bridge.get(Bridge.Test.Assert).$true(Bridge.is(l, Bridge.IEquatable$1(Bridge.ULong)));
             Bridge.get(Bridge.Test.Assert).$true(Bridge.is(l, Bridge.IFormattable));
+        },
+        minMaxValuesAreCorrect: function () {
+            this.assertLong("0", Bridge.ULong.MinValue);
+            this.assertLong("18446744073709551615", Bridge.ULong.MaxValue);
         },
         castsWork: function () {
             var i2 = Bridge.Long(0), i3 = Bridge.Long(234), i4 = Bridge.Long([-808,2147483647]);
