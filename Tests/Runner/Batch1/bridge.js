@@ -2275,16 +2275,12 @@
                     if (typeof o === "function" && o.$$name) {
                         if (Object.defineProperty && !Bridge.Browser.isIE8) {
                             (function(cls, key, o) {
-                                var needInit = true;
                                 Object.defineProperty(cls, key, {
                                     get: function () {
-                                        if (needInit) {
-                                            if (o.$staticInit) {
-                                                o.$staticInit();
-                                            }
-                                            needInit = false;
+                                        if (o.$staticInit) {
+                                            o.$staticInit();
                                         }
-
+                                        Bridge.Class.defineProperty(cls, key, o);
                                         return o;
                                     },
                                     set: function (newValue) {
@@ -2303,17 +2299,13 @@
 
             if (Object.defineProperty && !Bridge.Browser.isIE8 && noDefineProp !== true) {
                 (function (scope, name, cls) {
-                    var needInit = true;
                     Object.defineProperty(scope, name, {
                         get: function () {
-                            if (needInit) {
-                                if (cls.$staticInit) {
-                                    cls.$staticInit();
-                                }
-
-                                needInit = false;
+                            if (cls.$staticInit) {
+                                cls.$staticInit();
                             }
 
+                            Bridge.Class.defineProperty(scope, name, cls);
                             return cls;
                         },
                         set: function (newValue) {
@@ -2329,6 +2321,14 @@
             }
 
             return scope;
+        },
+
+        defineProperty: function (scope, name, cls) {
+            Object.defineProperty(scope, name, {
+                value: cls,
+                enumerable: true,
+                configurable: true
+            });
         },
 
         genericName: function () {
