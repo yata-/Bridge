@@ -8,15 +8,15 @@ namespace Bridge.ClientTest.SimpleTypes
     [TestFixture(TestNameFormat = "Int64 - {0}")]
     public class Int64Tests
     {
-        private void AssertLong(object expected, object actual, string message = "")
+        private void AssertLong(object expected, object actual, string message = "", string checkedType = "Bridge.Long")
         {
             if (message == null)
             {
                 message = "";
             }
 
-            var typeMessage = message + "Type is Long";
-            Assert.AreEqual("Bridge.Long", actual.GetType().GetClassName(), typeMessage);
+            var typeMessage = message + "Type is " + checkedType;
+            Assert.AreEqual(checkedType, actual.GetType().GetClassName(), typeMessage);
 
             Assert.AreEqual(expected.ToString(), actual.ToString(), message);
         }
@@ -73,7 +73,7 @@ namespace Bridge.ClientTest.SimpleTypes
         }
 
         [Test]
-        public void OverflowWork()
+        public void OverflowWorks()
         {
             long min = long.MinValue;
             long max = long.MaxValue;
@@ -94,6 +94,44 @@ namespace Bridge.ClientTest.SimpleTypes
                 Assert.Throws(() => { var l = min * min; }, err => err is OverflowException);
                 Assert.Throws(() => { var l = -min; }, err => err is OverflowException);
             }
+        }
+
+        [Test]
+        public void CombinedTypesOperationsWork()
+        {
+            byte ub = 1;
+            sbyte sb = 2;
+            ushort us = 3;
+            short ss = 4;
+            uint ui = 5;
+            int si = 6;
+            ulong ul = 7;
+            
+            long l1 = (long)byte.MaxValue + 1;
+            long l2 = (long)sbyte.MaxValue + 1;
+            long l3 = (long)ushort.MaxValue + 1;
+            long l4 = (long)short.MaxValue + 1;
+            long l5 = (long)uint.MaxValue + 1;
+            long l6 = (long)int.MaxValue + 1;
+            long l7 = (long)ulong.MinValue + 1;
+
+            AssertLong("257", ub + l1);
+            AssertLong("130", sb + l2);
+            AssertLong("65539", us + l3);
+            AssertLong("32772", ss + l4);
+            AssertLong("4294967301", ui + l5);
+            AssertLong("2147483654", si + l6);
+            AssertLong("8", (long)ul + l7);
+
+            decimal dcml = 11m;
+            double dbl = 12d;
+            float flt = 13;
+
+            long l = 100;
+
+            AssertLong("111", dcml + l, null, "Bridge.Decimal");
+            AssertLong("112", dbl + l, null, "Number");
+            AssertLong("113", flt + l, null, "Number");
         }
 
         private T GetDefaultValue<T>()

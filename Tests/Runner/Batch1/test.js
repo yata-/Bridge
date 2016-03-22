@@ -1452,7 +1452,8 @@
                 QUnit.test("Int64 - TypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int64Tests).typePropertiesAreCorrect);
                 QUnit.test("Int64 - MinMaxValuesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int64Tests).minMaxValuesAreCorrect);
                 QUnit.test("Int64 - CastsWork", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int64Tests).castsWork);
-                QUnit.test("Int64 - OverflowWork", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int64Tests).overflowWork);
+                QUnit.test("Int64 - OverflowWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int64Tests).overflowWorks);
+                QUnit.test("Int64 - CombinedTypesOperationsWork", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int64Tests).combinedTypesOperationsWork);
                 QUnit.test("Int64 - DefaultValueIs0", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int64Tests).defaultValueIs0);
                 QUnit.test("Int64 - DefaultConstructorReturnsZero", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int64Tests).defaultConstructorReturnsZero);
                 QUnit.test("Int64 - CreatingInstanceReturnsZero", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int64Tests).creatingInstanceReturnsZero);
@@ -1567,7 +1568,8 @@
                 QUnit.test("UInt64 - TypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt64Tests).typePropertiesAreCorrect);
                 QUnit.test("UInt64 - MinMaxValuesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt64Tests).minMaxValuesAreCorrect);
                 QUnit.test("UInt64 - CastsWork", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt64Tests).castsWork);
-                QUnit.test("UInt64 - OverflowWork", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt64Tests).overflowWork);
+                QUnit.test("UInt64 - OverflowWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt64Tests).overflowWorks);
+                QUnit.test("UInt64 - CombinedTypesOperationsWork", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt64Tests).combinedTypesOperationsWork);
                 QUnit.test("UInt64 - DefaultValueIs0", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt64Tests).defaultValueIs0);
                 QUnit.test("UInt64 - DefaultConstructorReturnsZero", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt64Tests).defaultConstructorReturnsZero);
                 QUnit.test("UInt64 - CreatingInstanceReturnsZero", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt64Tests).creatingInstanceReturnsZero);
@@ -7915,9 +7917,13 @@
                 var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.Int64Tests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int64Tests);
                 t.getFixture().castsWork();
             },
-            overflowWork: function (assert) {
+            overflowWorks: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.Int64Tests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int64Tests);
-                t.getFixture().overflowWork();
+                t.getFixture().overflowWorks();
+            },
+            combinedTypesOperationsWork: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.Int64Tests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int64Tests);
+                t.getFixture().combinedTypesOperationsWork();
             },
             defaultValueIs0: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.Int64Tests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int64Tests);
@@ -9153,9 +9159,13 @@
                 var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.UInt64Tests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt64Tests);
                 t.getFixture().castsWork();
             },
-            overflowWork: function (assert) {
+            overflowWorks: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.UInt64Tests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt64Tests);
-                t.getFixture().overflowWork();
+                t.getFixture().overflowWorks();
+            },
+            combinedTypesOperationsWork: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.UInt64Tests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt64Tests);
+                t.getFixture().combinedTypesOperationsWork();
             },
             defaultValueIs0: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.UInt64Tests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt64Tests);

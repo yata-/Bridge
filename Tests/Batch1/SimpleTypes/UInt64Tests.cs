@@ -9,15 +9,15 @@ namespace Bridge.ClientTest.SimpleTypes
     [TestFixture(TestNameFormat = "UInt64 - {0}")]
     public class UInt64Tests
     {
-        private void AssertLong(object expected, object actual, string message = "")
+        private void AssertULong(object expected, object actual, string message = "", string checkedType = "Bridge.ULong")
         {
             if (message == null)
             {
                 message = "";
             }
 
-            var typeMessage = message + "Type is Long";
-            Assert.AreEqual("Bridge.ULong", actual.GetType().GetClassName(), typeMessage);
+            var typeMessage = message + "Type is " + checkedType;
+            Assert.AreEqual(checkedType, actual.GetType().GetClassName(), typeMessage);
 
             Assert.AreEqual(expected.ToString(), actual.ToString(), message);
         }
@@ -38,8 +38,8 @@ namespace Bridge.ClientTest.SimpleTypes
         [Test]
         public void MinMaxValuesAreCorrect()
         {
-            AssertLong("0", ulong.MinValue);
-            AssertLong("18446744073709551615", ulong.MaxValue);
+            AssertULong("0", ulong.MinValue);
+            AssertULong("18446744073709551615", ulong.MaxValue);
         }
 
         [Test]
@@ -74,7 +74,7 @@ namespace Bridge.ClientTest.SimpleTypes
         }
 
         [Test]
-        public void OverflowWork()
+        public void OverflowWorks()
         {
             ulong min = ulong.MinValue;
             ulong max = ulong.MaxValue;
@@ -91,6 +91,44 @@ namespace Bridge.ClientTest.SimpleTypes
                 Assert.Throws(() => { var l = min - 1; }, err => err is OverflowException, "min - 1 should be OverflowException");
                 Assert.Throws(() => { var l = max * max; }, err => err is OverflowException, "max * max should be OverflowException");
             }
+        }
+
+        [Test]
+        public void CombinedTypesOperationsWork()
+        {
+            byte ub = 1;
+            sbyte sb = 2;
+            ushort us = 3;
+            short ss = 4;
+            uint ui = 5;
+            int si = 6;
+            long sl = 7;
+
+            ulong l1 = (ulong)byte.MaxValue + 1;
+            ulong l2 = (ulong)sbyte.MaxValue + 1;
+            ulong l3 = (ulong)ushort.MaxValue + 1;
+            ulong l4 = (ulong)short.MaxValue + 1;
+            ulong l5 = (ulong)uint.MaxValue + 1;
+            ulong l6 = (ulong)int.MaxValue + 1;
+            ulong l7 = (ulong)(long)0 + 1;
+
+            AssertULong("257", ub + l1);
+            AssertULong("130", (ulong)sb + l2);
+            AssertULong("65539", us + l3);
+            AssertULong("32772", (ulong)ss + l4);
+            AssertULong("4294967301", ui + l5);
+            AssertULong("2147483654", (ulong)si + l6);
+            AssertULong("8", (ulong)sl + l7);
+
+            decimal dcml = 11m;
+            double dbl = 12d;
+            float flt = 13;
+
+            long l = 100;
+
+            AssertULong("111", dcml + l, null, "Bridge.Decimal");
+            AssertULong("112", dbl + l, null, "Number");
+            AssertULong("113", flt + l, null, "Number");
         }
 
         private T GetDefaultValue<T>()
