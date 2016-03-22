@@ -36,7 +36,6 @@ namespace Bridge.ClientTest.SimpleTypes
             AssertIsDecimalAndEqualTo(GetDefaultValue<decimal>(), 0);
         }
 
-        [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void CreatingInstanceReturnsZero()
         {
@@ -51,7 +50,6 @@ namespace Bridge.ClientTest.SimpleTypes
             AssertIsDecimalAndEqualTo(decimal.MinusOne, -1);
         }
 
-        [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void DefaultConstructorReturnsZero()
         {
