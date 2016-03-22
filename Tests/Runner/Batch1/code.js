@@ -2240,6 +2240,21 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1053', {
+        statics: {
+            testFieldPropertyWithInterface: function () {
+                var Foo = function(){this.bar = null;};
+                var foo = new Foo();
+                var car = foo;
+                foo.bar = "1";
+                Bridge.get(Bridge.Test.Assert).areEqual("1", foo.bar);
+                Bridge.get(Bridge.Test.Assert).areEqual("1", foo.bar);
+                Bridge.get(Bridge.Test.Assert).areEqual("1", car.bar);
+                Bridge.get(Bridge.Test.Assert).areEqual("1", car.bar);
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1076', {
         statics: {
             testInlineConstantAsMemberReference: function () {
