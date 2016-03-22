@@ -4591,7 +4591,7 @@ Bridge.ULong.MaxValue = Bridge.ULong(Bridge.$Long.MAX_UNSIGNED_VALUE);
 
     Bridge.Decimal.getValue = function (d) {
         if (!Bridge.hasValue(d)) {
-            return null;
+            return this.getDefaultValue();
         }
 
         if (d instanceof Bridge.Decimal) {
