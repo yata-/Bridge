@@ -42,8 +42,7 @@ namespace Bridge.ClientTest.SimpleTypes
             object s = "X";
             Assert.True(s is string);
         }
-        //#353
-        [IgnoreTest(Until = Constants.IGNORE_DATE)]
+
         [Test]
         public void StringInterfaces()
         {
@@ -204,7 +203,6 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.AreEqual("xabcd", string.Format("x{0}{1}{2}{3}", arr4[0], arr4[1], arr4[2], arr4[3]));
         }
 
-        [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void FormatWorksExtended()
         {

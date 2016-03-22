@@ -113,7 +113,6 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.True(0 == new long());
         }
 
-        [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void CreatingInstanceReturnsZero()
         {

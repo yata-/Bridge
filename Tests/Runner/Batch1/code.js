@@ -14053,6 +14053,7 @@
                     Bridge.get(Bridge.Test.Assert).fail$1("Should not catch E1");
                 }
                 else {
+                    Bridge.get(Bridge.Test.Assert).$true(true);
                     return;
                 }
             }
@@ -17274,7 +17275,7 @@
             Bridge.get(Bridge.Test.Assert).areStrictEqual(0, this.getDefaultValue(Number));
         },
         creatingInstanceReturnsZero: function () {
-            Bridge.get(Bridge.Test.Assert).areStrictEqual(0, new Number());
+            Bridge.get(Bridge.Test.Assert).areEqual(0, new Number());
         },
         constantsWork: function () {
             var zero = 0;
@@ -17380,7 +17381,7 @@
     
     Bridge.define('Bridge.ClientTest.SimpleTypes.EnumTests', {
         typePropertiesAreCorrect: function () {
-            //Assert.AreEqual(typeof(Enum).GetClassName(), "Bridge.Enum");
+            //Assert.AreEqual("Bridge.Enum", typeof(Enum).GetClassName());
             Bridge.get(Bridge.Test.Assert).areEqual("Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum", Bridge.getTypeName(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum));
             Bridge.get(Bridge.Test.Assert).$true(Bridge.hasValue(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.firstValue));
         },
@@ -17390,20 +17391,20 @@
         defaultValueOfEnumClassIsNull: function () {
             Bridge.get(Bridge.Test.Assert).areStrictEqual(null, this.getDefaultValue(Bridge.Enum));
         },
-        defaultValueOfEnumTypeIsZero: function () {
-            Bridge.get(Bridge.Test.Assert).areStrictEqual(0, this.getDefaultValue(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum));
+        defaultValueOfEnumTypeIsFirstValue: function () {
+            Bridge.get(Bridge.Test.Assert).areStrictEqual(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.firstValue, this.getDefaultValue(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum));
         },
         defaultConstructorOfEnumTypeReturnsZero: function () {
             Bridge.get(Bridge.Test.Assert).areStrictEqual(0, new Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum().valueOf());
         },
         firstValueOfEnumIsZero: function () {
-            Bridge.get(Bridge.Test.Assert).areStrictEqual(0, Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.firstValue);
+            Bridge.get(Bridge.Test.Assert).areStrictEqual(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.firstValue, Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.firstValue);
         },
         creatingInstanceOfEnumTypeReturnsZero: function () {
-            Bridge.get(Bridge.Test.Assert).areStrictEqual(0, new Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum());
+            Bridge.get(Bridge.Test.Assert).areStrictEqual(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.firstValue, new Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum());
         },
         defaultExpressionWithEnumReturnsZero: function () {
-            Bridge.get(Bridge.Test.Assert).areStrictEqual(0, Bridge.getDefaultValue(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum));
+            Bridge.get(Bridge.Test.Assert).areStrictEqual(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.firstValue, Bridge.getDefaultValue(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum));
         },
         getHashCodeWorks: function () {
             Bridge.get(Bridge.Test.Assert).areEqual(Bridge.getHashCode(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.firstValue), Bridge.getHashCode(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.firstValue));
@@ -18703,7 +18704,7 @@
             Bridge.get(Bridge.Test.Assert).areStrictEqual(0, this.getDefaultValue(Number));
         },
         creatingInstanceReturnsZero: function () {
-            Bridge.get(Bridge.Test.Assert).areStrictEqual(0, new Number());
+            Bridge.get(Bridge.Test.Assert).areEqual(0, new Number());
         },
         constantsWork: function () {
             var zero = 0;

@@ -110,7 +110,6 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.True(0 == new ulong());
         }
 
-        [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void CreatingInstanceReturnsZero()
         {

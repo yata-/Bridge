@@ -364,7 +364,6 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.True(((decimal)1).CompareTo((decimal)1) == 0);
         }
 
-        [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void IComparableCompareToWorks()
         {

@@ -159,7 +159,6 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.True(time1.Equals(time3));
         }
 
-        [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void IEquatableEqualsWorks()
         {
