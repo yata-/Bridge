@@ -217,6 +217,7 @@
                 QUnit.test("Value types - TestInstanceConstructorsAndMethods", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BasicCSharp_TestValueTypes).testInstanceConstructorsAndMethods);
                 QUnit.test("Value types - TestStaticConstructorsAndMethods", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BasicCSharp_TestValueTypes).testStaticConstructorsAndMethods);
                 QUnit.test("Virtual methods - TestB", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BasicCSharp_TestVirtualMethods).testB);
+                QUnit.module("Checked/Unckecked");
                 QUnit.test("CheckedInsideUnchecked - TestInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CheckedInsideUncheckedTests).testInt32);
                 QUnit.test("CheckedInsideUnchecked - TestUInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CheckedInsideUncheckedTests).testUInt32);
                 QUnit.test("CheckedInsideUnchecked - TestLong", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CheckedInsideUncheckedTests).testLong);
@@ -233,6 +234,10 @@
                 QUnit.test("Unchecked - TestUInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_UncheckedTests).testUInt32);
                 QUnit.test("Unchecked - TestLong", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_UncheckedTests).testLong);
                 QUnit.test("Unchecked - TestULong", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_UncheckedTests).testULong);
+                QUnit.test("WithNoUncheckedKeyword - TestInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_WithNoUncheckedKeywordTests).testInt32);
+                QUnit.test("WithNoUncheckedKeyword - TestUInt32", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_WithNoUncheckedKeywordTests).testUInt32);
+                QUnit.test("WithNoUncheckedKeyword - TestLong", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_WithNoUncheckedKeywordTests).testLong);
+                QUnit.test("WithNoUncheckedKeyword - TestULong", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_WithNoUncheckedKeywordTests).testULong);
                 QUnit.module("Collections");
                 QUnit.test("Array - TypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).typePropertiesAreCorrect);
                 QUnit.test("Array - LengthWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).lengthWorks);
@@ -9830,6 +9835,28 @@
             testULong: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CheckedUncheckedTests.UncheckedTests)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_UncheckedTests);
                 Bridge.get(Bridge.ClientTest.CheckedUncheckedTests.UncheckedTests).testULong();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_WithNoUncheckedKeywordTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CheckedUncheckedTests.WithNoUncheckedKeywordTests)],
+        statics: {
+            testInt32: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CheckedUncheckedTests.WithNoUncheckedKeywordTests)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_WithNoUncheckedKeywordTests);
+                Bridge.get(Bridge.ClientTest.CheckedUncheckedTests.WithNoUncheckedKeywordTests).testInt32();
+            },
+            testUInt32: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CheckedUncheckedTests.WithNoUncheckedKeywordTests)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_WithNoUncheckedKeywordTests);
+                Bridge.get(Bridge.ClientTest.CheckedUncheckedTests.WithNoUncheckedKeywordTests).testUInt32();
+            },
+            testLong: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CheckedUncheckedTests.WithNoUncheckedKeywordTests)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_WithNoUncheckedKeywordTests);
+                Bridge.get(Bridge.ClientTest.CheckedUncheckedTests.WithNoUncheckedKeywordTests).testLong();
+            },
+            testULong: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CheckedUncheckedTests.WithNoUncheckedKeywordTests)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_WithNoUncheckedKeywordTests);
+                Bridge.get(Bridge.ClientTest.CheckedUncheckedTests.WithNoUncheckedKeywordTests).testULong();
             }
         }
     });
