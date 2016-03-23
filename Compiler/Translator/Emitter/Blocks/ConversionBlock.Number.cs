@@ -80,7 +80,10 @@ namespace Bridge.Translator
                     }
                 }
             }
-            else if (!Helpers.Is64Type(expectedType, block.Emitter.Resolver) && Helpers.IsIntegerType(expectedType, block.Emitter.Resolver) && (expression is BinaryOperatorExpression || expression is UnaryOperatorExpression || expression.Parent is AssignmentExpression) && IsInCheckedContext(block.Emitter, expression))
+            else if (((!Helpers.Is64Type(expectedType, block.Emitter.Resolver) && Helpers.IsIntegerType(expectedType, block.Emitter.Resolver)) ||
+                     (rr is OperatorResolveResult && !Helpers.Is64Type(rr.Type, block.Emitter.Resolver) && Helpers.IsIntegerType(rr.Type, block.Emitter.Resolver))) && 
+                     (expression is BinaryOperatorExpression || expression is UnaryOperatorExpression || expression.Parent is AssignmentExpression) && 
+                     IsInCheckedContext(block.Emitter, expression))
             {
                 var needCheck = false;
 
@@ -116,16 +119,35 @@ namespace Bridge.Translator
                     }
                 }
 
+                if (!Helpers.IsIntegerType(expectedType, block.Emitter.Resolver))
+                {
+                    if (rr is OperatorResolveResult)
+                    {
+                        expectedType = rr.Type;
+                    }
+                }
+
                 if (needCheck)
                 {
                     CheckInteger(block, expression, expectedType);
                 }
             }
-            else if (!Helpers.Is64Type(expectedType, block.Emitter.Resolver) && Helpers.IsIntegerType(expectedType, block.Emitter.Resolver) && (expression is BinaryOperatorExpression || expression is UnaryOperatorExpression || expression.Parent is AssignmentExpression) && IsInUncheckedContext(block.Emitter, expression))
+            else if (((!Helpers.Is64Type(expectedType, block.Emitter.Resolver) && Helpers.IsIntegerType(expectedType, block.Emitter.Resolver)) ||
+                     (rr is OperatorResolveResult && !Helpers.Is64Type(rr.Type, block.Emitter.Resolver) && Helpers.IsIntegerType(rr.Type, block.Emitter.Resolver))) &&
+                     (expression is BinaryOperatorExpression || expression is UnaryOperatorExpression || expression.Parent is AssignmentExpression) &&
+                     IsInUncheckedContext(block.Emitter, expression))
             {
                 if (ConversionBlock.IsLongConversion(block, expression, rr, expectedType, conversion) || rr is ConstantResolveResult)
                 {
                     return;
+                }
+
+                if (!Helpers.IsIntegerType(expectedType, block.Emitter.Resolver))
+                {
+                    if (rr is OperatorResolveResult)
+                    {
+                        expectedType = rr.Type;
+                    }
                 }
 
                 var needCheck = false;
@@ -480,14 +502,25 @@ namespace Bridge.Translator
 
         public static bool IsInCheckedContext(IEmitter emitter, Expression expression)
         {
-            var checkedExpression = expression.GetParent<CheckedExpression>();
-            if (checkedExpression != null)
+            var found = false;
+            expression.GetParent(p =>
             {
-                return true;
-            }
+                if (p is CheckedExpression || p is CheckedStatement)
+                {
+                    found = true;
+                    return true;
+                }
 
-            var checkedStatement = expression.GetParent<CheckedStatement>();
-            if (checkedStatement != null)
+                if (p is UncheckedExpression || p is UncheckedStatement)
+                {
+                    found = false;
+                    return true;
+                }
+
+                return false;
+            });
+
+            if (found)
             {
                 return true;
             }
@@ -497,14 +530,25 @@ namespace Bridge.Translator
 
         public static bool IsInUncheckedContext(IEmitter emitter, Expression expression)
         {
-            var checkedExpression = expression.GetParent<UncheckedExpression>();
-            if (checkedExpression != null)
+            var found = false;
+            expression.GetParent(p =>
             {
-                return true;
-            }
+                if (p is UncheckedExpression || p is UncheckedStatement)
+                {
+                    found = true;
+                    return true;
+                }
 
-            var checkedStatement = expression.GetParent<UncheckedStatement>();
-            if (checkedStatement != null)
+                if (p is CheckedExpression || p is CheckedStatement)
+                {
+                    found = false;
+                    return true;
+                }
+
+                return false;
+            });
+
+            if (found)
             {
                 return true;
             }
