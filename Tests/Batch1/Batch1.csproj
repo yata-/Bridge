@@ -218,6 +218,7 @@
     <Compile Include="Convert\ConvertToUInt16Tests.cs" />
     <Compile Include="Convert\ConvertToUInt32Tests.cs" />
     <Compile Include="Convert\ConvertToUInt64Tests.cs" />
+    <Compile Include="CheckedUncheckedTests.cs" />
     <Compile Include="Diagnostics\Contracts\ContractTests.cs" />
     <Compile Include="Diagnostics\StopwatchTests.cs" />
     <Compile Include="Exceptions\AggregateExceptionTests.cs" />

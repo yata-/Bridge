@@ -71,7 +71,7 @@
     Bridge.define('Classes.StaticClass', {
         statics: {
             move: function (p, dx, dy) {
-                return new Classes.Point("constructor$1", p.x + dx, p.y + dy);
+                return new Classes.Point("constructor$1", ((p.x + dx) | 0), ((p.y + dy) | 0));
             }
         }
     });

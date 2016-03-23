@@ -50,8 +50,8 @@ namespace Bridge.ClientTest.BridgeIssues
             s = Int16.MinValue.ToString();
             s = Int32.MinValue.ToString();
             s = Int64.MinValue.ToString();
-
-            Assert.AreEqual("-9007199254740991", s);
+                                         
+            Assert.AreEqual("-9223372036854775808", s);
         }
     }
 }

@@ -28,29 +28,29 @@
             },
 
             constructor: function () {
-                this.zero = new Bridge.TimeSpan(0);
-                this.maxValue = new Bridge.TimeSpan(864e13);
-                this.minValue = new Bridge.TimeSpan(-864e13);
+                this.zero = new Bridge.TimeSpan(Bridge.Long.Zero);
+                this.maxValue = new Bridge.TimeSpan(Bridge.Long.MaxValue);
+                this.minValue = new Bridge.TimeSpan(Bridge.Long.MinValue);
             },
 
             getDefaultValue: function () {
-                return new Bridge.TimeSpan(0);
+                return new Bridge.TimeSpan(Bridge.Long.Zero);
             },
 
             neg: function (t) {
-                return Bridge.hasValue(t) ? (new Bridge.TimeSpan(-t.ticks)) : null;
+                return Bridge.hasValue(t) ? (new Bridge.TimeSpan(t.ticks.neg())) : null;
             },
 
             sub: function (t1, t2) {
-                return Bridge.hasValue(t1) && Bridge.hasValue(t2) ? (new Bridge.TimeSpan(t1.ticks - t2.ticks)) : null;
+                return Bridge.hasValue(t1) && Bridge.hasValue(t2) ? (new Bridge.TimeSpan(t1.ticks.sub(t2.ticks))) : null;
             },
 
             eq: function(t1, t2) {
-                return Bridge.hasValue(t1) && Bridge.hasValue(t2) ? (t1.ticks === t2.ticks) : null;
+                return Bridge.hasValue(t1) && Bridge.hasValue(t2) ? (t1.ticks.eq(t2.ticks)) : null;
             },
 
             neq: function (t1, t2) {
-                return Bridge.hasValue(t1) && Bridge.hasValue(t2) ? (t1.ticks !== t2.ticks) : null;
+                return Bridge.hasValue(t1) && Bridge.hasValue(t2) ? (t1.ticks.ne(t2.ticks)) : null;
             },
 
             plus: function (t) {
@@ -58,37 +58,37 @@
             },
 
             add: function (t1, t2) {
-                return Bridge.hasValue(t1) && Bridge.hasValue(t2) ? (new Bridge.TimeSpan(t1.ticks + t2.ticks)) : null;
+                return Bridge.hasValue(t1) && Bridge.hasValue(t2) ? (new Bridge.TimeSpan(t1.ticks.add(t2.ticks))) : null;
             },
 
             gt: function (a, b) {
-                return Bridge.hasValue(a) && Bridge.hasValue(b) ? (a.ticks > b.ticks) : false;
+                return Bridge.hasValue(a) && Bridge.hasValue(b) ? (a.ticks.gt(b.ticks)) : false;
             },
 
             gte: function (a, b) {
-                return Bridge.hasValue(a) && Bridge.hasValue(b) ? (a.ticks >= b.ticks) : false;
+                return Bridge.hasValue(a) && Bridge.hasValue(b) ? (a.ticks.gte(b.ticks)) : false;
             },
 
             lt: function (a, b) {
-                return Bridge.hasValue(a) && Bridge.hasValue(b) ? (a.ticks < b.ticks) : false;
+                return Bridge.hasValue(a) && Bridge.hasValue(b) ? (a.ticks.lt(b.ticks)) : false;
             },
 
             lte: function (a, b) {
-                return Bridge.hasValue(a) && Bridge.hasValue(b) ? (a.ticks <= b.ticks) : false;
+                return Bridge.hasValue(a) && Bridge.hasValue(b) ? (a.ticks.lte(b.ticks)) : false;
             }
         },
 
         constructor: function () {
-            this.ticks = 0;
+            this.ticks = Bridge.Long.Zero;
 
             if (arguments.length === 1) {
-                this.ticks = arguments[0];
+                this.ticks = arguments[0] instanceof Bridge.Long ? arguments[0] : new Bridge.Long(arguments[0]);
             } else if (arguments.length === 3) {
-                this.ticks = (((arguments[0] * 60 + arguments[1]) * 60) + arguments[2]) * 1e7;
+                this.ticks = new Bridge.Long(arguments[0]).mul(60).add(arguments[1]).mul(60).add(arguments[2]).mul(1e7);
             } else if (arguments.length === 4) {
-                this.ticks = ((((arguments[0] * 24 + arguments[1]) * 60 + arguments[2]) * 60) + arguments[3]) * 1e7;
+                this.ticks = new Bridge.Long(arguments[0]).mul(24).add(arguments[1]).mul(60).add(arguments[2]).mul(60).add(arguments[3]).mul(1e7);
             } else if (arguments.length === 5) {
-                this.ticks = (((((arguments[0] * 24 + arguments[1]) * 60 + arguments[2]) * 60) + arguments[3]) * 1e3 + arguments[4]) * 1e4;
+                this.ticks = new Bridge.Long(arguments[0]).mul(24).add(arguments[1]).mul(60).add(arguments[2]).mul(60).add(arguments[3]).mul(1e3).add(arguments[4]).mul(1e4);
             }
         },
 
@@ -97,43 +97,43 @@
         },
 
         getDays: function () {
-            return this.ticks / 864e9 | 0;
+            return this.ticks.div(864e9).toNumber();
         },
 
         getHours: function () {
-            return this.ticks / 36e9 % 24 | 0;
+            return this.ticks.div(36e9).mod(24).toNumber();
         },
 
         getMilliseconds: function () {
-            return this.ticks / 1e4 % 1e3 | 0;
+            return this.ticks.div(1e4).mod(1e3).toNumber();
         },
 
         getMinutes: function () {
-            return this.ticks / 6e8 % 60 | 0;
+            return this.ticks.div(6e8).mod(60).toNumber();
         },
 
         getSeconds: function () {
-            return this.ticks / 1e7 % 60 | 0;
+            return this.ticks.div(1e7).mod(60).toNumber();
         },
 
         getTotalDays: function () {
-            return this.ticks / 864e9;
+            return this.ticks.toNumberDivided(864e9);
         },
 
         getTotalHours: function () {
-            return this.ticks / 36e9;
+            return this.ticks.toNumberDivided(36e9);
         },
 
         getTotalMilliseconds: function () {
-            return this.ticks / 1e4;
+            return this.ticks.toNumberDivided(1e4);
         },
 
         getTotalMinutes: function () {
-            return this.ticks / 6e8;
+            return this.ticks.toNumberDivided(6e8);
         },
 
         getTotalSeconds: function () {
-            return this.ticks / 1e7;
+            return this.ticks.toNumberDivided(1e7);
         },
 
         get12HourHour: function () {
@@ -141,31 +141,31 @@
         },
 
         add: function (ts) {
-            return new Bridge.TimeSpan(this.ticks + ts.ticks);
+            return new Bridge.TimeSpan(this.ticks.add(ts.ticks));
         },
 
         subtract: function (ts) {
-            return new Bridge.TimeSpan(this.ticks - ts.ticks);
+            return new Bridge.TimeSpan(this.ticks.sub(ts.ticks));
         },
 
         duration: function () {
-            return new Bridge.TimeSpan(Math.abs(this.ticks));
+            return new Bridge.TimeSpan(this.ticks.abs());
         },
 
         negate: function () {
-            return new Bridge.TimeSpan(-this.ticks);
+            return new Bridge.TimeSpan(this.ticks.neg());
         },
 
         compareTo: function (other) {
-            return this.ticks < other.ticks ? -1 : (this.ticks > other.ticks ? 1 : 0);
+            return this.ticks.compareTo(other.ticks);
         },
 
         equals: function (other) {
-            return other.ticks === this.ticks;
+            return other.ticks.eq(this.ticks);
         },
 
         equalsT: function (other) {
-            return other.ticks === this.ticks;
+            return other.ticks.eq(this.ticks);
         },
 
         format: function (formatStr, provider) {
@@ -214,20 +214,20 @@
                 );
             }
 
-            if (Math.abs(ticks) >= 864e9) {
-                result += format(ticks / 864e9) + ".";
-                ticks %= 864e9;
+            if (ticks.abs().gte(864e9)) {
+                result += format(ticks.toNumberDivided(864e9)) + ".";
+                ticks = ticks.mod(864e9);
             }
 
-            result += format(ticks / 36e9) + ":";
-            ticks %= 36e9;
-            result += format(ticks / 6e8 | 0) + ":";
-            ticks %= 6e8;
-            result += format(ticks / 1e7);
-            ticks %= 1e7;
+            result += format(ticks.toNumberDivided(36e9)) + ":";
+            ticks = ticks.mod(36e9);
+            result += format(ticks.toNumberDivided(6e8) | 0) + ":";
+            ticks = ticks.mod(6e8);
+            result += format(ticks.toNumberDivided(1e7));
+            ticks = ticks.mod(1e7);
 
-            if (ticks > 0) {
-                result += "." + format(ticks, 7);
+            if (ticks.gt(0)) {
+                result += "." + format(ticks.toNumber(), 7);
             }
 
             return result;

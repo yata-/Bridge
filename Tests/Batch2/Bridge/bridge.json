@@ -6,5 +6,6 @@
   "outputBy": "Project",
   "loggerLevel": "Info",
 
-  "useTypedArrays": true
+  "useTypedArrays": true,
+  "overflowMode":  "Javascript"
 }

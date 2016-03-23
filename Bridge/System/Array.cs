@@ -140,7 +140,7 @@ namespace System
         [Template("Bridge.Array.copy({this}, {index}, {array}, 0, {this}.length - {index})")]
         public extern void CopyTo(Array array, int index);
 
-        [Template("Bridge.Array.copy({this}, {index}, {array}, 0, {this}.length - {index})")]
+        [Template("Bridge.Array.copy({this}, {index}.toNumber(), {array}, 0, {this}.length - {index}.toNumber())")]
         public extern void CopyTo(Array array, long index);
 
         [Template("Bridge.Array.resize({array}, {newSize}, {T}.getDefaultValue || Bridge.getDefaultValue({T}))")]

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using ICSharpCode.NRefactory.CSharp;
 
 namespace Bridge.Translator
 {
@@ -134,11 +135,17 @@ namespace Bridge.Translator
             this.BuildSyntaxTree();
 
             var resolver = new MemberResolver(this.ParsedSourceFiles, Emitter.ToAssemblyReferences(references, logger));
+            resolver = this.Preconvert(resolver);
 
             this.InspectTypes(resolver, config);
 
             resolver.CanFreeze = true;
             var emitter = this.CreateEmitter(resolver);
+
+            if (!this.AssemblyInfo.OverflowMode.HasValue)
+            {
+                this.AssemblyInfo.OverflowMode = this.OverflowMode;
+            }
 
             emitter.Translator = this;
             emitter.AssemblyInfo = this.AssemblyInfo;
@@ -162,6 +169,34 @@ namespace Bridge.Translator
             logger.Info("Translating done");
 
             return this.Outputs;
+        }
+
+        protected virtual MemberResolver Preconvert(MemberResolver resolver)
+        {
+            bool needRecompile = false;
+            foreach (var sourceFile in this.ParsedSourceFiles)
+            {
+                var syntaxTree = sourceFile.SyntaxTree;
+
+                var detecter = new PreconverterDetecter(resolver);
+                syntaxTree.AcceptVisitor(detecter);
+
+                if (detecter.Found)
+                {
+                    var fixer = new PreconverterFixer(resolver);
+                    var astNode = syntaxTree.AcceptVisitor(fixer);
+                    syntaxTree = (astNode != null ? (SyntaxTree)astNode : syntaxTree);
+                    sourceFile.SyntaxTree = syntaxTree;
+                    needRecompile = true;
+                }
+            }
+
+            if (needRecompile)
+            {
+                return new MemberResolver(this.ParsedSourceFiles, resolver.Assemblies);
+            }
+
+            return resolver;
         }
 
         protected virtual void SortReferences()
