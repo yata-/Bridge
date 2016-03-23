@@ -4,6 +4,7 @@
     Bridge.define('Test.BridgeIssues.N1092.App', {
         statics: {
             main: function () {
+                // Should contain instruction to check data type range as cspoj contains <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
                 var maxInt32 = 2147483647;
                 var rInt32Max = Bridge.Int.check(maxInt32 + 1, Bridge.Int32);
     
