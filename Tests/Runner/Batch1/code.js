@@ -8435,6 +8435,15 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge952', {
+        statics: {
+            testDoubleMinValue: function () {
+                Bridge.get(Bridge.Test.Assert).areEqual$1(-1.7976931348623157E+308, -Number.MAX_VALUE, "Compare value");
+                Bridge.get(Bridge.Test.Assert).areEqual$1("-1.7976931348623157e+308", Bridge.Int.format(-Number.MAX_VALUE, 'G'), "Compare by ToString()");
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge968', {
         statics: {
             testDecimalDoesNotParseIncorrectValue: function () {

@@ -1142,6 +1142,7 @@
                 QUnit.test("#929 - TestAsyncException", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge929).testAsyncException);
                 QUnit.test("#930 - TestAsyncException", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge930).testAsyncException);
                 QUnit.test("#933 - TestBooleanInIfStatement", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge933).testBooleanInIfStatement);
+                QUnit.test("#952 - TestDoubleMinValue", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge952).testDoubleMinValue);
                 QUnit.test("#968 - TestDecimalDoesNotParseIncorrectValue", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge968).testDecimalDoesNotParseIncorrectValue);
                 QUnit.test("#968 - TestDecimalParsesCorrectValues", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge968).testDecimalParsesCorrectValues);
                 QUnit.test("#975 - TestCastToLongWorksForBigNumberInIE", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge975).testCastToLongWorksForBigNumberInIE);
@@ -3697,6 +3698,16 @@
             testBooleanInIfStatement: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge933)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge933, 1);
                 Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge933).testBooleanInIfStatement();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge952', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge952)],
+        statics: {
+            testDoubleMinValue: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge952)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge952, 2);
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge952).testDoubleMinValue();
             }
         }
     });
