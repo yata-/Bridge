@@ -1,7 +1,7 @@
 ﻿(function (globals) {
     "use strict";
 
-    Bridge.define('Bridge.ClientTestOne.BridgeIssues.N772', {
+    Bridge.define('Bridge.ClientTest.Batch2.BridgeIssues.N772', {
         statics: {
             testUseCase: function () {
                 //These arrays depend on "useTypedArray" bridge.json option
@@ -127,13 +127,13 @@
             Bridge.get(Bridge.Test.Assert).$false(Bridge.Linq.Enumerable.from(arr).contains("z"));
         },
         containsUsesEqualsMethod: function () {
-            var arr = [new Bridge.ClientTestOne.BridgeIssues.N772.C(1), new Bridge.ClientTestOne.BridgeIssues.N772.C(2), new Bridge.ClientTestOne.BridgeIssues.N772.C(3)];
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.Linq.Enumerable.from(arr).contains(new Bridge.ClientTestOne.BridgeIssues.N772.C(2)));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.Linq.Enumerable.from(arr).contains(new Bridge.ClientTestOne.BridgeIssues.N772.C(4)));
+            var arr = [new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(1), new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(2), new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(3)];
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Linq.Enumerable.from(arr).contains(new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(2)));
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.Linq.Enumerable.from(arr).contains(new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(4)));
         },
         allWithArrayItemFilterCallbackWorks: function () {
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.Linq.Enumerable.from([1, 2, 3]).all($_.Bridge.ClientTestOne.BridgeIssues.N772.f1));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.Linq.Enumerable.from([1, 2, 3]).all($_.Bridge.ClientTestOne.BridgeIssues.N772.f2));
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Linq.Enumerable.from([1, 2, 3]).all($_.Bridge.ClientTest.Batch2.BridgeIssues.N772.f1));
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.Linq.Enumerable.from([1, 2, 3]).all($_.Bridge.ClientTest.Batch2.BridgeIssues.N772.f2));
         },
         sliceWithoutEndWorks: function () {
             Bridge.get(Bridge.Test.Assert).areDeepEqual(["c", "d"], ["a", "b", "c", "d"].slice(2));
@@ -157,9 +157,9 @@
             Bridge.get(Bridge.Test.Assert).areEqual(1, ["a", "b", "c", "b"].indexOf("b"));
         },
         indexOfWithoutStartIndexUsesEqualsMethod: function () {
-            var arr = [new Bridge.ClientTestOne.BridgeIssues.N772.C(1), new Bridge.ClientTestOne.BridgeIssues.N772.C(2), new Bridge.ClientTestOne.BridgeIssues.N772.C(3)];
-            Bridge.get(Bridge.Test.Assert).areEqual(1, Bridge.Linq.Enumerable.from(arr).indexOf(new Bridge.ClientTestOne.BridgeIssues.N772.C(2)));
-            Bridge.get(Bridge.Test.Assert).areEqual(-1, Bridge.Linq.Enumerable.from(arr).indexOf(new Bridge.ClientTestOne.BridgeIssues.N772.C(4)));
+            var arr = [new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(1), new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(2), new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(3)];
+            Bridge.get(Bridge.Test.Assert).areEqual(1, Bridge.Linq.Enumerable.from(arr).indexOf(new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(2)));
+            Bridge.get(Bridge.Test.Assert).areEqual(-1, Bridge.Linq.Enumerable.from(arr).indexOf(new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(4)));
         },
         indexOfWithStartIndexWorks: function () {
             Bridge.get(Bridge.Test.Assert).areEqual(3, ["a", "b", "c", "b"].indexOf("b", 2));
@@ -175,8 +175,8 @@
             Bridge.get(Bridge.Test.Assert).areDeepEqual([2, 3, 1, 4, 3, 1], arr);
         },
         anyWithArrayItemFilterCallbackWorks: function () {
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.Linq.Enumerable.from([1, 2, 3, 4]).any($_.Bridge.ClientTestOne.BridgeIssues.N772.f3));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.Linq.Enumerable.from([1, 2, 3, 4]).any($_.Bridge.ClientTestOne.BridgeIssues.N772.f4));
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Linq.Enumerable.from([1, 2, 3, 4]).any($_.Bridge.ClientTest.Batch2.BridgeIssues.N772.f3));
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.Linq.Enumerable.from([1, 2, 3, 4]).any($_.Bridge.ClientTest.Batch2.BridgeIssues.N772.f4));
         },
         binarySearch1Works: function () {
             var arr = [1, 2, 3, 3, 4, 5];
@@ -193,14 +193,14 @@
         binarySearch3Works: function () {
             var arr = [1, 2, 3, 3, 4, 5];
     
-            Bridge.get(Bridge.Test.Assert).areEqual(2, Bridge.Array.binarySearch(arr, 0, arr.length, 3, new Bridge.ClientTestOne.BridgeIssues.N772.TestReverseComparer()));
-            Bridge.get(Bridge.Test.Assert).areEqual(-1, Bridge.Array.binarySearch(arr, 0, arr.length, 6, new Bridge.ClientTestOne.BridgeIssues.N772.TestReverseComparer()));
+            Bridge.get(Bridge.Test.Assert).areEqual(2, Bridge.Array.binarySearch(arr, 0, arr.length, 3, new Bridge.ClientTest.Batch2.BridgeIssues.N772.TestReverseComparer()));
+            Bridge.get(Bridge.Test.Assert).areEqual(-1, Bridge.Array.binarySearch(arr, 0, arr.length, 6, new Bridge.ClientTest.Batch2.BridgeIssues.N772.TestReverseComparer()));
         },
         binarySearch4Works: function () {
             var arr = [1, 2, 3, 3, 4, 5];
     
-            Bridge.get(Bridge.Test.Assert).areEqual(3, Bridge.Array.binarySearch(arr, 3, 2, 3, new Bridge.ClientTestOne.BridgeIssues.N772.TestReverseComparer()));
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.Array.binarySearch(arr, 3, 2, 4, new Bridge.ClientTestOne.BridgeIssues.N772.TestReverseComparer()) < 0);
+            Bridge.get(Bridge.Test.Assert).areEqual(3, Bridge.Array.binarySearch(arr, 3, 2, 3, new Bridge.ClientTest.Batch2.BridgeIssues.N772.TestReverseComparer()));
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Array.binarySearch(arr, 3, 2, 4, new Bridge.ClientTest.Batch2.BridgeIssues.N772.TestReverseComparer()) < 0);
         },
         binarySearchExceptionsWorks: function () {
             var arr1 = null;
@@ -233,12 +233,12 @@
         },
         sort3Works: function () {
             var arr = [1, 2, 6, 3, 6, 7];
-            Bridge.Array.sort(arr, 2, 3, new Bridge.ClientTestOne.BridgeIssues.N772.TestReverseComparer());
+            Bridge.Array.sort(arr, 2, 3, new Bridge.ClientTest.Batch2.BridgeIssues.N772.TestReverseComparer());
             Bridge.get(Bridge.Test.Assert).areDeepEqual([1, 2, 6, 6, 3, 7], arr);
         },
         sort4Works: function () {
             var arr = [1, 6, 6, 4, 2];
-            Bridge.Array.sort(arr, new Bridge.ClientTestOne.BridgeIssues.N772.TestReverseComparer());
+            Bridge.Array.sort(arr, new Bridge.ClientTest.Batch2.BridgeIssues.N772.TestReverseComparer());
             Bridge.get(Bridge.Test.Assert).areDeepEqual([6, 6, 4, 2, 1], arr);
         },
         sortExceptionsWorks: function () {
@@ -279,9 +279,9 @@
             Bridge.get(Bridge.Test.Assert).$false(Bridge.Array.contains(l, "a"));
         },
         iCollectionContainsUsesEqualsMethod: function () {
-            var l = [new Bridge.ClientTestOne.BridgeIssues.N772.C(1), new Bridge.ClientTestOne.BridgeIssues.N772.C(2), new Bridge.ClientTestOne.BridgeIssues.N772.C(3)];
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.Array.contains(l, new Bridge.ClientTestOne.BridgeIssues.N772.C(2)));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.Array.contains(l, new Bridge.ClientTestOne.BridgeIssues.N772.C(4)));
+            var l = [new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(1), new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(2), new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(3)];
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Array.contains(l, new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(2)));
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.Array.contains(l, new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(4)));
         },
         iCollectionRemoveWorks: function () {
             var l = ["x", "y", "z"];
@@ -301,9 +301,9 @@
             Bridge.get(Bridge.Test.Assert).areEqual(-1, Bridge.Array.indexOf(l, "a"));
         },
         iListIndexOfUsesEqualsMethod: function () {
-            var arr = [new Bridge.ClientTestOne.BridgeIssues.N772.C(1), new Bridge.ClientTestOne.BridgeIssues.N772.C(2), new Bridge.ClientTestOne.BridgeIssues.N772.C(3)];
-            Bridge.get(Bridge.Test.Assert).areEqual(1, Bridge.Linq.Enumerable.from(arr).indexOf(new Bridge.ClientTestOne.BridgeIssues.N772.C(2)));
-            Bridge.get(Bridge.Test.Assert).areEqual(-1, Bridge.Linq.Enumerable.from(arr).indexOf(new Bridge.ClientTestOne.BridgeIssues.N772.C(4)));
+            var arr = [new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(1), new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(2), new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(3)];
+            Bridge.get(Bridge.Test.Assert).areEqual(1, Bridge.Linq.Enumerable.from(arr).indexOf(new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(2)));
+            Bridge.get(Bridge.Test.Assert).areEqual(-1, Bridge.Linq.Enumerable.from(arr).indexOf(new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(4)));
         },
         iListInsertWorks: function () {
             var l = ["x", "y", "z"];
@@ -324,9 +324,9 @@
     
     var $_ = {};
     
-    Bridge.ns("Bridge.ClientTestOne.BridgeIssues.N772", $_)
+    Bridge.ns("Bridge.ClientTest.Batch2.BridgeIssues.N772", $_)
     
-    Bridge.apply($_.Bridge.ClientTestOne.BridgeIssues.N772, {
+    Bridge.apply($_.Bridge.ClientTest.Batch2.BridgeIssues.N772, {
         f1: function (x) {
             return x > 0;
         },
@@ -341,23 +341,31 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTestOne.BridgeIssues.N772.C', {
+    Bridge.define('Bridge.ClientTest.Batch2.BridgeIssues.N772.C', {
         i: 0,
         constructor: function (i) {
             this.i = i;
         },
         equals: function (o) {
-            return Bridge.is(o, Bridge.ClientTestOne.BridgeIssues.N772.C) && this.i === (Bridge.cast(o, Bridge.ClientTestOne.BridgeIssues.N772.C)).i;
+            return Bridge.is(o, Bridge.ClientTest.Batch2.BridgeIssues.N772.C) && this.i === (Bridge.cast(o, Bridge.ClientTest.Batch2.BridgeIssues.N772.C)).i;
         },
         getHashCode: function () {
             return this.i;
         }
     });
     
-    Bridge.define('Bridge.ClientTestOne.BridgeIssues.N772.TestReverseComparer', {
+    Bridge.define('Bridge.ClientTest.Batch2.BridgeIssues.N772.TestReverseComparer', {
         inherits: [Bridge.IComparer$1(Bridge.Int32)],
         compare: function (x, y) {
             return x === y ? 0 : (x > y ? -1 : 1);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch2.Constants', {
+        statics: {
+            BATCH_NAME: "Batch2",
+            MODULE_ISSUES: "Issues",
+            MODULE_CHECKED_UNCKECKED: "Checked/Unckecked"
         }
     });
     
