@@ -9458,7 +9458,6 @@
                 Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
                     var r = ((min2 = Bridge.Int.check(min2 - 1, Bridge.UInt32)));
                 }, "Through identifier pre--");
-                //Assert.Throws<OverflowException>(() => { var r = -min; }, "Through identifier unary -");
     
                 Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
                     Bridge.get(Bridge.ClientTest.CheckedUncheckedTests).bypass(Bridge.Int.check(min - 1, Bridge.UInt32));
@@ -9469,7 +9468,6 @@
                 Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
                     Bridge.get(Bridge.ClientTest.CheckedUncheckedTests).bypass(((min4 = Bridge.Int.check(min4 - 1, Bridge.UInt32))));
                 }, "Through parameter --pre");
-                //Assert.Throws<OverflowException>(() => { Bypass(-min); }, "Through parameter unary -");
             },
             testLong: function () {
                 var max = Bridge.Long.MaxValue;
@@ -9721,7 +9719,6 @@
                 Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
                     var r = ((min2 = Bridge.Int.check(min2 - 1, Bridge.UInt32)));
                 }, "Through identifier pre--");
-                //Assert.Throws<OverflowException>(() => { var r = -min; }, "Through identifier unary -");
     
                 Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
                     Bridge.get(Bridge.ClientTest.CheckedUncheckedTests).bypass(Bridge.Int.check(min - 1, Bridge.UInt32));
@@ -9732,7 +9729,6 @@
                 Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
                     Bridge.get(Bridge.ClientTest.CheckedUncheckedTests).bypass(((min4 = Bridge.Int.check(min4 - 1, Bridge.UInt32))));
                 }, "Through parameter --pre");
-                //Assert.Throws<OverflowException>(() => { Bypass(-min); }, "Through parameter unary -");
             },
             testLong: function () {
                 var max = Bridge.Long.MaxValue;
