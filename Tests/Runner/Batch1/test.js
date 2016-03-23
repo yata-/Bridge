@@ -968,6 +968,7 @@
                 QUnit.test("#1041 - Integer TestIndexerOps", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1041Integer).testIndexerOps);
                 QUnit.test("#1041 - Integer TestDictOps", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1041Integer).testDictOps);
                 QUnit.test("#1041 - Integer TestVariableOps", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1041Integer).testVariableOps);
+                QUnit.test("#1059 - TestEnumNameModes", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1059).testEnumNameModes);
                 QUnit.test("#1076 - TestInlineConstantAsMemberReference", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1076).testInlineConstantAsMemberReference);
                 QUnit.test("#1076 - TestInlineBridgeNumericConstantsAsMemberReference", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1076).testInlineBridgeNumericConstantsAsMemberReference);
                 QUnit.test("#381 - TestUseCase", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge381).testUseCase);
@@ -2313,6 +2314,16 @@
             testVariableOps: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1041Integer, 12);
                 Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer).testVariableOps();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1059', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1059)],
+        statics: {
+            testEnumNameModes: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1059)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1059);
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1059).testEnumNameModes();
             }
         }
     });
