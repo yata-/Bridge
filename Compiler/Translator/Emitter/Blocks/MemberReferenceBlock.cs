@@ -307,7 +307,7 @@ namespace Bridge.Translator
                             return;
                         }
 
-                        if (enumMode >= 3)
+                        if (enumMode >= 3 && enumMode < 7)
                         {
                             string enumStringName = member.Member.Name;
                             var attr = Helpers.GetInheritedAttribute(member.Member, Translator.Bridge_ASSEMBLY + ".NameAttribute");
