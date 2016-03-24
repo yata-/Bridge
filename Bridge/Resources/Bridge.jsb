@@ -12,6 +12,7 @@
   <file name="Exception.js" />
   <file name="Globalization.js" />
   <file name="Math.js" />
+  <file name="Bool.js" />
   <file name="Integer.js" />
   <file name="Long.js" />
   <file name="Decimal.js" />
@@ -49,6 +50,7 @@
     <include name="Exception.js" />
     <include name="Globalization.js" />
     <include name="Math.js" />
+    <include name="Bool.js" />
     <include name="Integer.js" />
     <include name="Long.js" />
     <include name="Decimal.js" />

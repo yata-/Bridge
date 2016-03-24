@@ -310,6 +310,10 @@
                 return Bridge.String.is(obj, type);
             }
 
+            if (Bridge.isBoolean(obj)) {
+                return Bridge.Boolean.is(obj, type);
+            }
+
             if (!type.$$inheritors) {
                 return false;
             }
