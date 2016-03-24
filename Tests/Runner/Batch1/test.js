@@ -988,6 +988,7 @@
                 QUnit.test("#1024 - TestConstructorOptionalParameter", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1024).testConstructorOptionalParameter);
                 QUnit.test("#1026 - TestReservedWordIfRefOut", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1026).testReservedWordIfRefOut);
                 QUnit.test("#1029 - TestNullableMethods", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1029).testNullableMethods);
+                QUnit.test("#Bridge1039 - TestMoreThanDecimalDigitsFromTotalHours", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1039).testMoreThanDecimalDigitsFromTotalHours);
                 QUnit.test("#1041 - Decimal TestPropertyOps", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1041Decimal).testPropertyOps);
                 QUnit.test("#1041 - Decimal TestIndexerOps", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1041Decimal).testIndexerOps);
                 QUnit.test("#1041 - Decimal TestDictOps", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1041Decimal).testDictOps);
@@ -2320,6 +2321,16 @@
             testNullableMethods: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1029)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1029, 6);
                 Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1029).testNullableMethods();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1039', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1039)],
+        statics: {
+            testMoreThanDecimalDigitsFromTotalHours: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1039)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1039, 1);
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1039).testMoreThanDecimalDigitsFromTotalHours();
             }
         }
     });

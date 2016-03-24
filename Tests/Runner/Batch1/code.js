@@ -1954,6 +1954,19 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1039', {
+        statics: {
+            testMoreThanDecimalDigitsFromTotalHours: function () {
+                var a = new Date(2015, 1 - 1, 1, 9);
+                var b = new Date(2015, 1 - 1, 1, 12, 52);
+    
+                var value = Bridge.Decimal(((Bridge.Date.subdd(b, a)).getTotalHours()));
+    
+                Bridge.get(Bridge.Test.Assert).areEqual("3.866666666666667", Bridge.Int.format(value, 'G'));
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1041');
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal', {
