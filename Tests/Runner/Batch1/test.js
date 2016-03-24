@@ -999,6 +999,7 @@
                 QUnit.test("#1041 - Integer TestVariableOps", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1041Integer).testVariableOps);
                 QUnit.test("#1076 - TestInlineConstantAsMemberReference", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1076).testInlineConstantAsMemberReference);
                 QUnit.test("#1076 - TestInlineBridgeNumericConstantsAsMemberReference", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1076).testInlineBridgeNumericConstantsAsMemberReference);
+                QUnit.test("#1096 - TestClippingIssues", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1096).testClippingIssues);
                 QUnit.test("#381 - TestUseCase", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge381).testUseCase);
                 QUnit.test("#447 - CheckInlineExpression", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447).checkInlineExpression);
                 QUnit.test("#447 - CheckInlineCalls", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447).checkInlineCalls);
@@ -2392,6 +2393,16 @@
             testInlineBridgeNumericConstantsAsMemberReference: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1076)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1076);
                 Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1076).testInlineBridgeNumericConstantsAsMemberReference();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1096', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1096)],
+        statics: {
+            testClippingIssues: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1096)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1096);
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1096).testClippingIssues();
             }
         }
     });
