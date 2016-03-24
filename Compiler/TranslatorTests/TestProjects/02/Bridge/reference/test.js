@@ -2051,7 +2051,7 @@
                     delete prop.config;
                 }
             } else {
-                prop.$initMembers = extend ? function () {
+                prop.$initMembers = extend && base.$initMembers ? function () {
                     base.$initMembers.apply(this, arguments);
                 } : function () { };
             }
@@ -2073,7 +2073,7 @@
                 }
             }            
 
-            for (var i = 0; i < keys.length; i++) {
+            for (i = 0; i < keys.length; i++) {
                 name = keys[i];
 
                 v = prop[name];
