@@ -4819,11 +4819,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         getHashCode: function () {
             return Bridge.getHashCode(this.field);
         },
-        $clone: function (to) {
-            var s = to || new Bridge.ClientTest.BridgeIssues.Bridge608A();
-            s.field = this.field;
-            return s;
-        }
+        $clone: function (to) { return this; }
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge615', {
@@ -5904,11 +5900,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             }
             return Bridge.equals(this.field1, o.field1);
         },
-        $clone: function (to) {
-            var s = to || new Bridge.ClientTest.BridgeIssues.Bridge692.B1();
-            s.field1 = this.field1;
-            return s;
-        }
+        $clone: function (to) { return this; }
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge692.B2', {
@@ -5935,11 +5927,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             }
             return Bridge.equals(this.field1, o.field1);
         },
-        $clone: function (to) {
-            var s = to || new Bridge.ClientTest.BridgeIssues.Bridge692.B2();
-            s.field1 = this.field1;
-            return s;
-        }
+        $clone: function (to) { return this; }
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge692.B3', {
