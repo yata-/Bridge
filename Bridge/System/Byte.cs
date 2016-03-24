@@ -3,7 +3,7 @@ using Bridge;
 namespace System
 {
     [External]
-    [Name("Bridge.Int")]
+    [Name("Bridge.Byte")]
     [Constructor("Number")]
     public struct Byte : IComparable, IComparable<Byte>, IEquatable<Byte>, IFormattable
     {

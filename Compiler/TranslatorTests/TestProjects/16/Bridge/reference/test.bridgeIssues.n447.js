@@ -4,7 +4,7 @@
     Bridge.define('Test.BridgeIssues.N447.Math447', {
         statics: {
             getSum$1: function (a, b) {
-                return a + b;
+                return ((a + b) | 0);
             },
             getSum$2: function (a, b) {
                 return a + b;

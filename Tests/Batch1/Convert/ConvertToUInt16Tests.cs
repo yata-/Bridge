@@ -11,17 +11,6 @@ namespace Bridge.ClientTest.ConvertTests
     [TestFixture(TestNameFormat = "Convert.ToUInt16 - {0}")]
     public class ConvertToUInt16Tests : ConvertTestBase<ushort>
     {
-        private static class Wrappers
-        {
-            // TODO: These wrappers help to avoid issues #689 and #743. They can be deleted when issues are fixed.
-            // For more infromation see comment: https://github.com/bridgedotnet/Bridge/issues/743#issuecomment-183905400
-
-            public static ushort ConvertFromStrWithBase(string value, int fromBase)
-            {
-                return Convert.ToUInt16(value, fromBase);
-            }
-        }
-
         [Test]
         public void FromBoolean()
         {
@@ -139,11 +128,11 @@ namespace Bridge.ClientTest.ConvertTests
         {
             var ushortMaxValue = ushort.MaxValue;
 
-            string[] testValues = { "1000", "0", ushortMaxValue.ToString(), null };
-            ushort[] expectedValues = { 1000, 0, ushortMaxValue, 0 };
+            string[] testValues = { "1000", ushort.MinValue.ToString(), ushortMaxValue.ToString(), null };
+            ushort[] expectedValues = { 1000, ushort.MinValue, ushortMaxValue, 0 };
             VerifyFromString(Convert.ToUInt16, Convert.ToUInt16, testValues, expectedValues);
 
-            string[] overflowValues = { "-1", decimal.MaxValue.ToFixed(0, MidpointRounding.AwayFromZero) };
+            string[] overflowValues = { ConvertConstants.UINT16_OVERFLOW_MIN_STRING, decimal.MaxValue.ToFixed(0, MidpointRounding.AwayFromZero) };
             VerifyFromStringThrows<OverflowException>(Convert.ToUInt16, Convert.ToUInt16, overflowValues);
 
             string[] formatExceptionValues = { "abba" };
@@ -153,22 +142,22 @@ namespace Bridge.ClientTest.ConvertTests
         [Test]
         public void FromStringWithBase()
         {
-            string[] testValues = { null, null, null, null, "ffff", "65535", "177777", "1111111111111111", "0", "0", "0", "0" };
+            string[] testValues = { null, null, null, null, ConvertConstants.UINT16_MAX_STRING_BASE_16, ushort.MaxValue.ToString(), ConvertConstants.UINT16_MAX_STRING_BASE_8, ConvertConstants.UINT16_MAX_STRING_BASE_2, ushort.MinValue.ToString(), ushort.MinValue.ToString(), ushort.MinValue.ToString(), ushort.MinValue.ToString() };
             int[] testBases = { 10, 2, 8, 16, 16, 10, 8, 2, 16, 10, 8, 2 };
             ushort[] expectedValues = { 0, 0, 0, 0, ushort.MaxValue, ushort.MaxValue, ushort.MaxValue, ushort.MaxValue, ushort.MinValue, ushort.MinValue, ushort.MinValue, ushort.MinValue };
-            VerifyFromStringWithBase(Wrappers.ConvertFromStrWithBase, testValues, testBases, expectedValues);
+            VerifyFromStringWithBase(Convert.ToUInt16, testValues, testBases, expectedValues);
 
-            string[] overflowValues = { "65536", "-1", "11111111111111111", "1FFFF", "777777" };
+            string[] overflowValues = { ConvertConstants.UINT16_OVERFLOW_MAX_STRING, ConvertConstants.UINT16_OVERFLOW_MIN_STRING,ConvertConstants.UINT16_OVERFLOW_MAX_STRING_BASE_2, ConvertConstants.UINT16_OVERFLOW_MAX_STRING_BASE_16, ConvertConstants.UINT16_OVERFLOW_MAX_STRING_BASE_8 };
             int[] overflowBases = { 10, 10, 2, 16, 8 };
-            VerifyFromStringWithBaseThrows<OverflowException>(Wrappers.ConvertFromStrWithBase, overflowValues, overflowBases);
+            VerifyFromStringWithBaseThrows<OverflowException>(Convert.ToUInt16, overflowValues, overflowBases);
 
             string[] formatExceptionValues = { "12", "ffffffffffffffffffff" };
             int[] formatExceptionBases = { 2, 8 };
-            VerifyFromStringWithBaseThrows<FormatException>(Wrappers.ConvertFromStrWithBase, formatExceptionValues, formatExceptionBases);
+            VerifyFromStringWithBaseThrows<FormatException>(Convert.ToUInt16, formatExceptionValues, formatExceptionBases);
 
             string[] argumentExceptionValues = { "10", "11", "abba", "-ab" };
             int[] argumentExceptionBases = { -1, 3, 0, 16 };
-            VerifyFromStringWithBaseThrows<ArgumentException>(Wrappers.ConvertFromStrWithBase, argumentExceptionValues, argumentExceptionBases);
+            VerifyFromStringWithBaseThrows<ArgumentException>(Convert.ToUInt16, argumentExceptionValues, argumentExceptionBases);
         }
 
         [Test]

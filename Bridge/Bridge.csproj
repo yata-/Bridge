@@ -121,6 +121,7 @@
     <Compile Include="System\EventArgs.cs" />
     <Compile Include="System\EventHandler.cs" />
     <Compile Include="System\IDisposable.cs" />
+    <Compile Include="System\IConvertible.cs" />
     <Compile Include="System\Predicate.cs" />
     <Compile Include="System\OutOfMemoryException.cs" />
     <Compile Include="System\RankException.cs" />
@@ -646,6 +647,7 @@
     <Content Include="Resources\Diagnostics.js" />
     <Content Include="Resources\Convert.js" />
     <Content Include="Resources\Enum.js" />
+    <Content Include="Resources\Long.js" />
     <Content Include="Resources\Math.js" />
     <Content Include="Resources\Version.js" />
     <None Include="AdditionalCompilerOptions.txt" />

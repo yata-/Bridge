@@ -11,17 +11,6 @@ namespace Bridge.ClientTest.ConvertTests
     [TestFixture(TestNameFormat = "Convert.ToByte - {0}")]
     public class ConvertToByteTests : ConvertTestBase<byte>
     {
-        private static class Wrappers
-        {
-            // TODO: These wrappers help to avoid issues #689 and #743. They can be deleted when issues are fixed.
-            // For more infromation see comment: https://github.com/bridgedotnet/Bridge/issues/743#issuecomment-183905400
-
-            public static byte ConvertFromStrWithBase(string value, int fromBase)
-            {
-                return Convert.ToByte(value, fromBase);
-            }
-        }
-
         [Test]
         public void FromBoolean()
         {
@@ -154,19 +143,19 @@ namespace Bridge.ClientTest.ConvertTests
             string[] testValues = { null, null, null, null, "10", "100", "1011", "ff", "0xff", "77", "11", "11111111" };
             int[] testBases = { 10, 2, 8, 16, 10, 10, 2, 16, 16, 8, 2, 2 };
             byte[] expectedValues = { 0, 0, 0, 0, 10, 100, 11, 255, 255, 63, 3, 255 };
-            VerifyFromStringWithBase(Wrappers.ConvertFromStrWithBase, testValues, testBases, expectedValues);
+            VerifyFromStringWithBase(Convert.ToByte, testValues, testBases, expectedValues);
 
             string[] overflowValues = { "256", "111111111", "ffffe", "7777777", "-1" };
             int[] overflowBases = { 10, 2, 16, 8, 10 };
-            VerifyFromStringWithBaseThrows<OverflowException>(Wrappers.ConvertFromStrWithBase, overflowValues, overflowBases);
+            VerifyFromStringWithBaseThrows<OverflowException>(Convert.ToByte, overflowValues, overflowBases);
 
             string[] formatExceptionValues = { "fffg", "0xxfff", "8", "112", "!56" };
             int[] formatExceptionBases = { 16, 16, 8, 2, 10 };
-            VerifyFromStringWithBaseThrows<FormatException>(Wrappers.ConvertFromStrWithBase, formatExceptionValues, formatExceptionBases);
+            VerifyFromStringWithBaseThrows<FormatException>(Convert.ToByte, formatExceptionValues, formatExceptionBases);
 
             string[] argumentExceptionValues = { null };
             int[] argumentExceptionBases = { 11 };
-            VerifyFromStringWithBaseThrows<ArgumentException>(Wrappers.ConvertFromStrWithBase, argumentExceptionValues, argumentExceptionBases);
+            VerifyFromStringWithBaseThrows<ArgumentException>(Convert.ToByte, argumentExceptionValues, argumentExceptionBases);
         }
 
         [Test]
