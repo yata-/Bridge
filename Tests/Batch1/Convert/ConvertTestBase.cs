@@ -8,12 +8,104 @@ using Bridge.Test;
 
 namespace Bridge.ClientTest.ConvertTests
 {
+    class ConvertConstants
+    {
+        public const string UINT64_MAX_STRING_BASE_16 = "ffffffffffffffff";
+        public const string UINT64_MAX_STRING_BASE_8 = "1777777777777777777777";
+        public const string UINT64_MAX_STRING_BASE_2 = "1111111111111111111111111111111111111111111111111111111111111111";
+        public const string UINT64_OVERFLOW_MAX_STRING = "18446744073709551616";
+        public const string UINT64_OVERFLOW_MAX_STRING_BASE_16 = "10000000000000000";
+        public const string UINT64_OVERFLOW_MAX_STRING_BASE_8 = "7777777777777777777777777";
+        public const string UINT64_OVERFLOW_MAX_STRING_BASE_2 = "11111111111111111111111111111111111111111111111111111111111111111";
+        public const string UINT64_OVERFLOW_MIN_STRING = "-1";
+
+        public const string INT64_MAX_STRING_BASE_16 = "7fffffffffffffff";
+        public const string INT64_MAX_STRING_BASE_8 = "777777777777777777777";
+        public const string INT64_MAX_STRING_BASE_2 = "111111111111111111111111111111111111111111111111111111111111111";
+        public const string INT64_MIN_STRING_BASE_16 = "8000000000000000";
+        public const string INT64_MIN_STRING_BASE_8 = "1000000000000000000000";
+        public const string INT64_MIN_STRING_BASE_2 = "1000000000000000000000000000000000000000000000000000000000000000";
+        public const string INT64_OVERFLOW_MAX_STRING = "9223372036854775808";
+        public const string INT64_OVERFLOW_MIN_STRING = "-9223372036854775809";
+
+        public const string UINT32_MAX_STRING_BASE_16 = "ffffffff";
+        public const string UINT32_MAX_STRING_BASE_8 = "37777777777";
+        public const string UINT32_MAX_STRING_BASE_2 = "11111111111111111111111111111111";
+        public const string UINT32_OVERFLOW_MAX_STRING = "4294967296";
+        public const string UINT32_OVERFLOW_MAX_STRING_BASE_16 = "100000000";
+        public const string UINT32_OVERFLOW_MAX_STRING_BASE_8 = "77777777777";
+        public const string UINT32_OVERFLOW_MAX_STRING_BASE_2 = "111111111111111111111111111111111";
+        public const string UINT32_OVERFLOW_MIN_STRING = "-1";
+
+        public const string INT32_MAX_STRING_BASE_16 = "7fffffff";
+        public const string INT32_MAX_STRING_BASE_8 = "17777777777";
+        public const string INT32_MAX_STRING_BASE_2 = "1111111111111111111111111111111";
+        public const string INT32_MIN_STRING_BASE_16 = "80000000";
+        public const string INT32_MIN_STRING_BASE_8 = "20000000000";
+        public const string INT32_MIN_STRING_BASE_2 = "10000000000000000000000000000000";
+        public const string INT32_OVERFLOW_MAX_STRING = "2147483648";
+        public const string INT32_OVERFLOW_MAX_STRING_BASE_16 = "1ffffffff";
+        public const string INT32_OVERFLOW_MAX_STRING_BASE_8 = "777777777777";
+        public const string INT32_OVERFLOW_MAX_STRING_BASE_2 = "111111111111111111111111111111111";
+        public const string INT32_OVERFLOW_MIN_STRING = "-2147483649";
+
+        public const string UINT16_MAX_STRING_BASE_16 = "ffff";
+        public const string UINT16_MAX_STRING_BASE_8 = "177777";
+        public const string UINT16_MAX_STRING_BASE_2 = "1111111111111111";
+        public const string UINT16_OVERFLOW_MAX_STRING = "65536";
+        public const string UINT16_OVERFLOW_MAX_STRING_BASE_16 = "10000";
+        public const string UINT16_OVERFLOW_MAX_STRING_BASE_8 = "777777";
+        public const string UINT16_OVERFLOW_MAX_STRING_BASE_2 = "11111111111111111";
+        public const string UINT16_OVERFLOW_MIN_STRING = "-1";
+
+        public const string INT16_MAX_STRING_BASE_16 = "7fff";
+        public const string INT16_MAX_STRING_BASE_8 = "77777";
+        public const string INT16_MAX_STRING_BASE_2 = "111111111111111";
+        public const string INT16_MIN_STRING_BASE_16 = "8000";
+        public const string INT16_MIN_STRING_BASE_8 = "100000";
+        public const string INT16_MIN_STRING_BASE_2 = "1000000000000000";
+        public const string INT16_OVERFLOW_MAX_STRING = "32768";
+        public const string INT16_OVERFLOW_MAX_STRING_BASE_16 = "1ffff";
+        public const string INT16_OVERFLOW_MAX_STRING_BASE_8 = "777777";
+        public const string INT16_OVERFLOW_MAX_STRING_BASE_2 = "11111111111111111";
+        public const string INT16_OVERFLOW_MIN_STRING = "-32769";
+
+        public const string UINT8_MAX_STRING_BASE_16 = "ff";
+        public const string UINT8_MAX_STRING_BASE_8 = "377";
+        public const string UINT8_MAX_STRING_BASE_2 = "11111111";
+        public const string UINT8_OVERFLOW_MAX_STRING = "256";
+        public const string UINT8_OVERFLOW_MIN_STRING = "-1";
+
+        public const string INT8_MAX_STRING_BASE_16 = "7f";
+        public const string INT8_MAX_STRING_BASE_8 = "177";
+        public const string INT8_MAX_STRING_BASE_2 = "1111111";
+        public const string INT8_MIN_STRING_BASE_16 = "80";
+        public const string INT8_MIN_STRING_BASE_8 = "200";
+        public const string INT8_MIN_STRING_BASE_2 = "10000000";
+        public const string INT8_OVERFLOW_MAX_STRING = "128";
+        public const string INT8_OVERFLOW_MAX_STRING_BASE_16 = "1ff";
+        public const string INT8_OVERFLOW_MAX_STRING_BASE_8 = "777";
+        public const string INT8_OVERFLOW_MAX_STRING_BASE_2 = "111111111";
+        public const string INT8_OVERFLOW_MIN_STRING = "-129";
+
+        public const string DECIMAL_MAX_STRING = "79228162514264337593543950335";
+        public const string DECIMAL_MIN_STRING = "-79228162514264337593543950335";
+
+        public const string DOUBLE_MAX_STRING = "1.7976931348623157e+308";
+        public const string DOUBLE_MIN_STRING = "-1.7976931348623157e+308";
+        public const string DOUBLE_EPSILON_STRING = "5e-324";
+
+        public const string SINGLE_MAX_STRING = "3.40282347e+38";
+        public const string SINGLE_MIN_STRING = "-3.40282347e+38";
+        public const string SINGLE_EPSILON_STRING = "1.401298e-45";
+    }
+
     public abstract class ConvertTestBase<TOutput>
     {
         /// <summary>
         /// Verify that the provided convert delegate produces expectedValues given testValues.
         /// </summary>
-        protected void Verify<TInput>(Func<TInput, TOutput> convert, TInput[] testValues, TOutput[] expectedValues)
+        protected void Verify<TInput>(Func<TInput, TOutput> convert, TInput[] testValues, TOutput[] expectedValues, bool useTrue = false)
         {
             if (expectedValues == null || testValues == null || expectedValues.Length != testValues.Length)
             {
@@ -23,8 +115,27 @@ namespace Bridge.ClientTest.ConvertTests
 
             for (int i = 0; i < testValues.Length; i++)
             {
-                TOutput result = convert(testValues[i]);
-                Assert.AreEqual(expectedValues[i], result);
+                var testValue = testValues[i];
+
+                try
+                {
+                    TOutput result = convert(testValue);
+
+                    var expected = expectedValues[i];
+
+                    if (useTrue)
+                    {
+                        Assert.True(expected.Equals(result), "Test: " + testValue + " Expected: " + expected.ToString() + " Result: " + result.ToString());
+                    }
+                    else
+                    {
+                        Assert.AreEqual(expected, result);
+                    }
+                }
+                catch(Exception ex)
+                {
+                    Assert.Fail("Exception occurred while Verify " + testValue + " Exception: " + ex.ToString());
+                }
             }
         }
 
@@ -42,18 +153,30 @@ namespace Bridge.ClientTest.ConvertTests
 
             for (int i = 0; i < testValues.Length; i++)
             {
-                TOutput result = convert(testValues[i]);
-                Assert.AreEqual(expectedValues[i], result);
+                var testValue = testValues[i];
+
+                try
+                {
+                    TOutput result = convert(testValue);
+
+                    var expected = expectedValues[i];
+
+                    Assert.AreEqual(expected, result);
+                }
+                catch (Exception ex)
+                {
+                    Assert.Fail("Exception occurred while VerifyViaObj " + testValue + " Exception: " + ex.ToString());
+                }
             }
         }
 
         /// <summary>
         /// Verify that the provided convert delegates produce expectedValues given testValues
         /// </summary>
-        protected void VerifyFromString(Func<string, TOutput> convert, Func<string, IFormatProvider, TOutput> convertWithFormatProvider, string[] testValues, TOutput[] expectedValues)
+        protected void VerifyFromString(Func<string, TOutput> convert, Func<string, IFormatProvider, TOutput> convertWithFormatProvider, string[] testValues, TOutput[] expectedValues, bool useTrue = false)
         {
-            Verify(convert, testValues, expectedValues);
-            Verify(input => convertWithFormatProvider(input, TestFormatProvider.s_instance), testValues, expectedValues);
+            Verify(convert, testValues, expectedValues, useTrue);
+            Verify(input => convertWithFormatProvider(input, TestFormatProvider.s_instance), testValues, expectedValues, useTrue);
         }
 
         /// <summary>
@@ -68,7 +191,7 @@ namespace Bridge.ClientTest.ConvertTests
         /// <summary>
         /// Verify that the provided convert delegate produces expectedValues given testValues and testBases
         /// </summary>
-        protected void VerifyFromStringWithBase(Func<string, int, TOutput> convert, string[] testValues, int[] testBases, TOutput[] expectedValues)
+        protected void VerifyFromStringWithBase(Func<string, int, TOutput> convert, string[] testValues, int[] testBases, TOutput[] expectedValues, bool useTrue = false)
         {
             if (expectedValues == null || testBases == null || testValues == null
                 || expectedValues.Length != testValues.Length
@@ -80,8 +203,28 @@ namespace Bridge.ClientTest.ConvertTests
 
             for (int i = 0; i < testValues.Length; i++)
             {
-                TOutput result = convert(testValues[i], testBases[i]);
-                Assert.AreEqual(expectedValues[i], result);
+                var testValue = testValues[i];
+                var radix = testBases[i];
+
+                try
+                {
+                    TOutput result = convert(testValue, radix);
+
+                    var expected = expectedValues[i];
+
+                    if (useTrue)
+                    {
+                        Assert.True(expected.Equals(result), "Test: " + testValue + " Radix: " + radix + " Expected: " + expected.ToString() + " Result: " + result.ToString());
+                    }
+                    else
+                    {
+                        Assert.AreEqual(expected, result);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Assert.Fail("Exception occurred while VerifyFromStringWithBase " + testValue + " Radix: " + radix + " Exception: " + ex.ToString());
+                }
             }
         }
 

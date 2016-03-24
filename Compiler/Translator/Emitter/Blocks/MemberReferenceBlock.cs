@@ -87,6 +87,14 @@ namespace Bridge.Translator
                 isConstTarget = true;
             }
 
+            if (memberReferenceExpression.Target is ParenthesizedExpression || 
+                (targetrr is ConstantResolveResult && targetrr.Type.IsKnownType(KnownTypeCode.Int64)) ||
+                (targetrr is ConstantResolveResult && targetrr.Type.IsKnownType(KnownTypeCode.UInt64)) ||
+                (targetrr is ConstantResolveResult && targetrr.Type.IsKnownType(KnownTypeCode.Decimal)))
+            {
+                isConstTarget = false;
+            }
+
             if (memberReferenceExpression.Parent is InvocationExpression && (((InvocationExpression)(memberReferenceExpression.Parent)).Target == memberReferenceExpression))
             {
                 resolveResult = this.Emitter.Resolver.ResolveNode(memberReferenceExpression.Parent, this.Emitter);
@@ -250,7 +258,27 @@ namespace Bridge.Translator
 
             if (member != null && member.Member.SymbolKind == SymbolKind.Field && this.Emitter.IsMemberConst(member.Member) && this.Emitter.IsInlineConst(member.Member))
             {
+                var parentExpression = memberReferenceExpression.Parent as MemberReferenceExpression;
+                bool wrap = false;
+
+                if (parentExpression != null)
+                {
+                    var rr = this.Emitter.Resolver.ResolveNode(memberReferenceExpression.Parent, this.Emitter);
+                    var ii = this.Emitter.GetInlineCode(parentExpression);
+
+                    if (string.IsNullOrEmpty(ii.Item3))
+                    {
+                        wrap = true;
+                        this.WriteOpenParentheses();
+                    }
+                }
+
                 this.WriteScript(member.ConstantValue);
+
+                if (wrap)
+                {
+                    this.WriteCloseParentheses();
+                }
             }
             else if (hasInline && member.Member.IsStatic)
             {
@@ -540,6 +568,7 @@ namespace Bridge.Translator
                         {
                             bool isNullable = NullableType.IsNullable(member.Member.ReturnType);
                             bool isDecimal = Helpers.IsDecimalType(member.Member.ReturnType, this.Emitter.Resolver);
+                            bool isLong = Helpers.Is64Type(member.Member.ReturnType, this.Emitter.Resolver);
 
                             if (isStatement)
                             {
@@ -556,7 +585,7 @@ namespace Bridge.Translator
                                     this.WriteOpenParentheses();
                                 }
 
-                                if (isDecimal)
+                                if (isDecimal || isLong)
                                 {
                                     if (isNullable)
                                     {
@@ -744,7 +773,7 @@ namespace Bridge.Translator
                                     this.WriteOpenParentheses();
                                 }
 
-                                if (isDecimal)
+                                if (isDecimal || isLong)
                                 {
                                     if (isNullable)
                                     {

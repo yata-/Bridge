@@ -20,7 +20,6 @@ namespace Bridge.ClientTest
             }
         }
 
-        [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void CallingMethodThroughIComparableInterfaceInvokesImplementingMethod()
         {

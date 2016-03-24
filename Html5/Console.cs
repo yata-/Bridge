@@ -45,8 +45,11 @@ namespace Bridge.Html5
         [Template("console.log({value})")]
         public static extern void WriteLine(int value);
 
-        [Template("console.log({value})")]
+        [Template("console.log({value}.toString())")]
         public static extern void WriteLine(long value);
+
+        [Template("console.log({value} && {value}.toString())")]
+        public static extern void WriteLine(long? value);
 
         [Template("console.log({value})")]
         public static extern void WriteLine(object value);
@@ -54,8 +57,11 @@ namespace Bridge.Html5
         [Template("console.log({value})")]
         public static extern void WriteLine(uint value);
 
-        [Template("console.log({value})")]
+        [Template("console.log({value}.toString())")]
         public static extern void WriteLine(ulong value);
+
+        [Template("console.log({value} && {value}.toString())")]
+        public static extern void WriteLine(ulong? value);
 
         /// <summary>
         /// ReadLine uses the native JavaScript prompt() to dialog with an optional message prompting the user to input some text.
@@ -129,11 +135,19 @@ namespace Bridge.Html5
 
         public static extern void Log(int value);
 
+		[Template("console.log({value}.toString())")]
         public static extern void Log(long value);
+		
+		[Template("console.log({value} && {value}.toString())")]
+        public static extern void Log(long? value);
 
         public static extern void Log(uint value);
 
+        [Template("console.log({value}.toString())")]
         public static extern void Log(ulong value);
+		
+		[Template("console.log({value} && {value}.toString())")]
+        public static extern void Log(ulong? value);
 
         /// <summary>
         /// Outputs a message to the Web Console.
@@ -168,11 +182,19 @@ namespace Bridge.Html5
 
         public static extern void Debug(int value);
 
+        [Template("console.debug({value}.toString())")]
         public static extern void Debug(long value);
+
+        [Template("console.debug({value} && {value}.toString())")]
+        public static extern void Debug(long? value);
 
         public static extern void Debug(uint value);
 
+        [Template("console.debug({value}.toString())")]
         public static extern void Debug(ulong value);
+
+        [Template("console.debug({value} && {value}.toString())")]
+        public static extern void Debug(ulong? value);
 
         /// <summary>
         /// An alias for log(); this was added to improve compatibility with existing sites already using debug(). However, you should use console.log() instead.
@@ -207,11 +229,19 @@ namespace Bridge.Html5
 
         public static extern void Info(int value);
 
+		[Template("console.info({value}.toString())")]
         public static extern void Info(long value);
 
+        [Template("console.info({value} && {value}.toString())")]
+        public static extern void Info(long? value);
+		
         public static extern void Info(uint value);
 
+        [Template("console.info({value}.toString())")]
         public static extern void Info(ulong value);
+
+        [Template("console.info({value} && {value}.toString())")]
+        public static extern void Info(ulong? value);
 
         /// <summary>
         /// Outputs an informational message to the Web Console. In Firefox, a small "i" icon is displayed next to these items in the Web Console's log.
@@ -246,11 +276,19 @@ namespace Bridge.Html5
 
         public static extern void Warn(int value);
 
+        [Template("console.warn({value}.toString())")]
         public static extern void Warn(long value);
+
+        [Template("console.warn({value} && {value}.toString())")]
+        public static extern void Warn(long? value);
 
         public static extern void Warn(uint value);
 
+        [Template("console.warn({value}.toString())")]
         public static extern void Warn(ulong value);
+
+        [Template("console.warn({value} && {value}.toString())")]
+        public static extern void Warn(ulong? value);
 
         /// <summary>
         /// Outputs a warning message to the Web Console.
@@ -285,11 +323,19 @@ namespace Bridge.Html5
 
         public static extern void Error(int value);
 
+        [Template("console.error({value}.toString())")]
         public static extern void Error(long value);
+
+        [Template("console.error({value} && {value}.toString())")]
+        public static extern void Error(long? value);
 
         public static extern void Error(uint value);
 
+        [Template("console.error({value}.toString())")]
         public static extern void Error(ulong value);
+
+        [Template("console.error({value} && {value}.toString())")]
+        public static extern void Error(ulong? value);
 
         /// <summary>
         /// Outputs an error message to the Web Console.
@@ -334,11 +380,19 @@ namespace Bridge.Html5
 
         public static extern void Group(int value);
 
+        [Template("console.group({value}.toString())")]
         public static extern void Group(long value);
+
+        [Template("console.group({value} && {value}.toString())")]
+        public static extern void Group(long? value);
 
         public static extern void Group(uint value);
 
+        [Template("console.group({value}.toString())")]
         public static extern void Group(ulong value);
+
+        [Template("console.group({value} && {value}.toString())")]
+        public static extern void Group(ulong? value);
 
         /// <summary>
         /// Creates a new inline group, indenting all following output by another level. To move back out a level, call groupEnd().
@@ -374,11 +428,19 @@ namespace Bridge.Html5
 
         public static extern void GroupCollapsed(int value);
 
+        [Template("console.groupCollapsed({value}.toString())")]
         public static extern void GroupCollapsed(long value);
+
+        [Template("console.groupCollapsed({value} && {value}.toString())")]
+        public static extern void GroupCollapsed(long? value);
 
         public static extern void GroupCollapsed(uint value);
 
+         [Template("console.groupCollapsed({value}.toString())")]
         public static extern void GroupCollapsed(ulong value);
+
+        [Template("console.groupCollapsed({value} && {value}.toString())")]
+        public static extern void GroupCollapsed(ulong? value);
 
         /// <summary>
         /// Creates a new inline group, indenting all following output by another level; unlike group(), this starts with the inline group collapsed, requiring the use of a disclosure button to expand it. To move back out a level, call groupEnd(). See Using groups in the console.
