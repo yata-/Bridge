@@ -110,7 +110,6 @@ namespace Bridge.ClientTest.Collections.Generic
             Assert.AreEqual(0, c.Count);
         }
 
-        // TODO Bug
         [Test]
         public void ArrayCastToICollectionContainsWorks()
         {

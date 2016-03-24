@@ -1,7 +1,7 @@
 ﻿(function (globals) {
     "use strict";
 
-    Bridge.define('Bridge.ClientTestOne.BridgeIssues.N772', {
+    Bridge.define('Bridge.ClientTest.Batch2.BridgeIssues.N772', {
         statics: {
             testUseCase: function () {
                 //These arrays depend on "useTypedArray" bridge.json option
@@ -50,9 +50,9 @@
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(arr, Bridge.ICollection), "is ICollection should be true");
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(arr, Bridge.IEnumerable), "is IEnumerable should be true");
             Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(arr, Bridge.ICloneable), "is ICloneable should be true");
-            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(arr, Bridge.ICollection$1(Bridge.Int)), "is ICollection<int> should be true");
-            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(arr, Bridge.IEnumerable$1(Bridge.Int)), "is IEnumerable<int> should be true");
-            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(arr, Bridge.IList$1(Bridge.Int)), "is IList<int> should be true");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(arr, Bridge.ICollection$1(Bridge.Int32)), "is ICollection<int> should be true");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(arr, Bridge.IEnumerable$1(Bridge.Int32)), "is IEnumerable<int> should be true");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(arr, Bridge.IList$1(Bridge.Int32)), "is IList<int> should be true");
         },
         lengthWorks: function () {
             Bridge.get(Bridge.Test.Assert).areEqual(0, new Int32Array(0).length);
@@ -127,13 +127,13 @@
             Bridge.get(Bridge.Test.Assert).$false(Bridge.Linq.Enumerable.from(arr).contains("z"));
         },
         containsUsesEqualsMethod: function () {
-            var arr = [new Bridge.ClientTestOne.BridgeIssues.N772.C(1), new Bridge.ClientTestOne.BridgeIssues.N772.C(2), new Bridge.ClientTestOne.BridgeIssues.N772.C(3)];
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.Linq.Enumerable.from(arr).contains(new Bridge.ClientTestOne.BridgeIssues.N772.C(2)));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.Linq.Enumerable.from(arr).contains(new Bridge.ClientTestOne.BridgeIssues.N772.C(4)));
+            var arr = [new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(1), new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(2), new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(3)];
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Linq.Enumerable.from(arr).contains(new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(2)));
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.Linq.Enumerable.from(arr).contains(new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(4)));
         },
         allWithArrayItemFilterCallbackWorks: function () {
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.Linq.Enumerable.from([1, 2, 3]).all($_.Bridge.ClientTestOne.BridgeIssues.N772.f1));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.Linq.Enumerable.from([1, 2, 3]).all($_.Bridge.ClientTestOne.BridgeIssues.N772.f2));
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Linq.Enumerable.from([1, 2, 3]).all($_.Bridge.ClientTest.Batch2.BridgeIssues.N772.f1));
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.Linq.Enumerable.from([1, 2, 3]).all($_.Bridge.ClientTest.Batch2.BridgeIssues.N772.f2));
         },
         sliceWithoutEndWorks: function () {
             Bridge.get(Bridge.Test.Assert).areDeepEqual(["c", "d"], ["a", "b", "c", "d"].slice(2));
@@ -157,9 +157,9 @@
             Bridge.get(Bridge.Test.Assert).areEqual(1, ["a", "b", "c", "b"].indexOf("b"));
         },
         indexOfWithoutStartIndexUsesEqualsMethod: function () {
-            var arr = [new Bridge.ClientTestOne.BridgeIssues.N772.C(1), new Bridge.ClientTestOne.BridgeIssues.N772.C(2), new Bridge.ClientTestOne.BridgeIssues.N772.C(3)];
-            Bridge.get(Bridge.Test.Assert).areEqual(1, Bridge.Linq.Enumerable.from(arr).indexOf(new Bridge.ClientTestOne.BridgeIssues.N772.C(2)));
-            Bridge.get(Bridge.Test.Assert).areEqual(-1, Bridge.Linq.Enumerable.from(arr).indexOf(new Bridge.ClientTestOne.BridgeIssues.N772.C(4)));
+            var arr = [new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(1), new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(2), new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(3)];
+            Bridge.get(Bridge.Test.Assert).areEqual(1, Bridge.Linq.Enumerable.from(arr).indexOf(new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(2)));
+            Bridge.get(Bridge.Test.Assert).areEqual(-1, Bridge.Linq.Enumerable.from(arr).indexOf(new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(4)));
         },
         indexOfWithStartIndexWorks: function () {
             Bridge.get(Bridge.Test.Assert).areEqual(3, ["a", "b", "c", "b"].indexOf("b", 2));
@@ -175,8 +175,8 @@
             Bridge.get(Bridge.Test.Assert).areDeepEqual([2, 3, 1, 4, 3, 1], arr);
         },
         anyWithArrayItemFilterCallbackWorks: function () {
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.Linq.Enumerable.from([1, 2, 3, 4]).any($_.Bridge.ClientTestOne.BridgeIssues.N772.f3));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.Linq.Enumerable.from([1, 2, 3, 4]).any($_.Bridge.ClientTestOne.BridgeIssues.N772.f4));
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Linq.Enumerable.from([1, 2, 3, 4]).any($_.Bridge.ClientTest.Batch2.BridgeIssues.N772.f3));
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.Linq.Enumerable.from([1, 2, 3, 4]).any($_.Bridge.ClientTest.Batch2.BridgeIssues.N772.f4));
         },
         binarySearch1Works: function () {
             var arr = [1, 2, 3, 3, 4, 5];
@@ -193,14 +193,14 @@
         binarySearch3Works: function () {
             var arr = [1, 2, 3, 3, 4, 5];
     
-            Bridge.get(Bridge.Test.Assert).areEqual(2, Bridge.Array.binarySearch(arr, 0, arr.length, 3, new Bridge.ClientTestOne.BridgeIssues.N772.TestReverseComparer()));
-            Bridge.get(Bridge.Test.Assert).areEqual(-1, Bridge.Array.binarySearch(arr, 0, arr.length, 6, new Bridge.ClientTestOne.BridgeIssues.N772.TestReverseComparer()));
+            Bridge.get(Bridge.Test.Assert).areEqual(2, Bridge.Array.binarySearch(arr, 0, arr.length, 3, new Bridge.ClientTest.Batch2.BridgeIssues.N772.TestReverseComparer()));
+            Bridge.get(Bridge.Test.Assert).areEqual(-1, Bridge.Array.binarySearch(arr, 0, arr.length, 6, new Bridge.ClientTest.Batch2.BridgeIssues.N772.TestReverseComparer()));
         },
         binarySearch4Works: function () {
             var arr = [1, 2, 3, 3, 4, 5];
     
-            Bridge.get(Bridge.Test.Assert).areEqual(3, Bridge.Array.binarySearch(arr, 3, 2, 3, new Bridge.ClientTestOne.BridgeIssues.N772.TestReverseComparer()));
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.Array.binarySearch(arr, 3, 2, 4, new Bridge.ClientTestOne.BridgeIssues.N772.TestReverseComparer()) < 0);
+            Bridge.get(Bridge.Test.Assert).areEqual(3, Bridge.Array.binarySearch(arr, 3, 2, 3, new Bridge.ClientTest.Batch2.BridgeIssues.N772.TestReverseComparer()));
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Array.binarySearch(arr, 3, 2, 4, new Bridge.ClientTest.Batch2.BridgeIssues.N772.TestReverseComparer()) < 0);
         },
         binarySearchExceptionsWorks: function () {
             var arr1 = null;
@@ -233,12 +233,12 @@
         },
         sort3Works: function () {
             var arr = [1, 2, 6, 3, 6, 7];
-            Bridge.Array.sort(arr, 2, 3, new Bridge.ClientTestOne.BridgeIssues.N772.TestReverseComparer());
+            Bridge.Array.sort(arr, 2, 3, new Bridge.ClientTest.Batch2.BridgeIssues.N772.TestReverseComparer());
             Bridge.get(Bridge.Test.Assert).areDeepEqual([1, 2, 6, 6, 3, 7], arr);
         },
         sort4Works: function () {
             var arr = [1, 6, 6, 4, 2];
-            Bridge.Array.sort(arr, new Bridge.ClientTestOne.BridgeIssues.N772.TestReverseComparer());
+            Bridge.Array.sort(arr, new Bridge.ClientTest.Batch2.BridgeIssues.N772.TestReverseComparer());
             Bridge.get(Bridge.Test.Assert).areDeepEqual([6, 6, 4, 2, 1], arr);
         },
         sortExceptionsWorks: function () {
@@ -279,9 +279,9 @@
             Bridge.get(Bridge.Test.Assert).$false(Bridge.Array.contains(l, "a"));
         },
         iCollectionContainsUsesEqualsMethod: function () {
-            var l = [new Bridge.ClientTestOne.BridgeIssues.N772.C(1), new Bridge.ClientTestOne.BridgeIssues.N772.C(2), new Bridge.ClientTestOne.BridgeIssues.N772.C(3)];
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.Array.contains(l, new Bridge.ClientTestOne.BridgeIssues.N772.C(2)));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.Array.contains(l, new Bridge.ClientTestOne.BridgeIssues.N772.C(4)));
+            var l = [new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(1), new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(2), new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(3)];
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.Array.contains(l, new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(2)));
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.Array.contains(l, new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(4)));
         },
         iCollectionRemoveWorks: function () {
             var l = ["x", "y", "z"];
@@ -301,9 +301,9 @@
             Bridge.get(Bridge.Test.Assert).areEqual(-1, Bridge.Array.indexOf(l, "a"));
         },
         iListIndexOfUsesEqualsMethod: function () {
-            var arr = [new Bridge.ClientTestOne.BridgeIssues.N772.C(1), new Bridge.ClientTestOne.BridgeIssues.N772.C(2), new Bridge.ClientTestOne.BridgeIssues.N772.C(3)];
-            Bridge.get(Bridge.Test.Assert).areEqual(1, Bridge.Linq.Enumerable.from(arr).indexOf(new Bridge.ClientTestOne.BridgeIssues.N772.C(2)));
-            Bridge.get(Bridge.Test.Assert).areEqual(-1, Bridge.Linq.Enumerable.from(arr).indexOf(new Bridge.ClientTestOne.BridgeIssues.N772.C(4)));
+            var arr = [new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(1), new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(2), new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(3)];
+            Bridge.get(Bridge.Test.Assert).areEqual(1, Bridge.Linq.Enumerable.from(arr).indexOf(new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(2)));
+            Bridge.get(Bridge.Test.Assert).areEqual(-1, Bridge.Linq.Enumerable.from(arr).indexOf(new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(4)));
         },
         iListInsertWorks: function () {
             var l = ["x", "y", "z"];
@@ -324,9 +324,9 @@
     
     var $_ = {};
     
-    Bridge.ns("Bridge.ClientTestOne.BridgeIssues.N772", $_)
+    Bridge.ns("Bridge.ClientTest.Batch2.BridgeIssues.N772", $_)
     
-    Bridge.apply($_.Bridge.ClientTestOne.BridgeIssues.N772, {
+    Bridge.apply($_.Bridge.ClientTest.Batch2.BridgeIssues.N772, {
         f1: function (x) {
             return x > 0;
         },
@@ -341,23 +341,1087 @@
         }
     });
     
-    Bridge.define('Bridge.ClientTestOne.BridgeIssues.N772.C', {
+    Bridge.define('Bridge.ClientTest.Batch2.BridgeIssues.N772.C', {
         i: 0,
         constructor: function (i) {
             this.i = i;
         },
         equals: function (o) {
-            return Bridge.is(o, Bridge.ClientTestOne.BridgeIssues.N772.C) && this.i === (Bridge.cast(o, Bridge.ClientTestOne.BridgeIssues.N772.C)).i;
+            return Bridge.is(o, Bridge.ClientTest.Batch2.BridgeIssues.N772.C) && this.i === (Bridge.cast(o, Bridge.ClientTest.Batch2.BridgeIssues.N772.C)).i;
         },
         getHashCode: function () {
             return this.i;
         }
     });
     
-    Bridge.define('Bridge.ClientTestOne.BridgeIssues.N772.TestReverseComparer', {
-        inherits: [Bridge.IComparer$1(Bridge.Int)],
+    Bridge.define('Bridge.ClientTest.Batch2.BridgeIssues.N772.TestReverseComparer', {
+        inherits: [Bridge.IComparer$1(Bridge.Int32)],
         compare: function (x, y) {
             return x === y ? 0 : (x > y ? -1 : 1);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch2.CheckedUncheckedTests', {
+        statics: {
+            assertEqual: function (expected, actual, message) {
+                if (message === void 0) { message = null; }
+                Bridge.get(Bridge.Test.Assert).areEqual$1(expected.toString(), actual.toString(), message);
+            },
+            bypass: function (o) {
+                return o;
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch2.CheckedUncheckedTests.CheckedInsideUncheckedTests', {
+        statics: {
+            testInt32: function () {
+                var max = 2147483647;
+    
+                var max1 = max;
+                var max2 = max;
+                var max3 = max;
+                var max4 = max;
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.Int.check(max + 1, Bridge.Int32);
+                }, "Through identifier +");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.identity(max2, (max2 = Bridge.Int.check(max2 + 1, Bridge.Int32)));
+                }, "Through identifier post++");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = ((max3 = Bridge.Int.check(max3 + 1, Bridge.Int32)));
+                }, "Through identifier ++pre");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.Int.check(2 * max, Bridge.Int32);
+                }, "Through identifier *");
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.Int.check(max + 1, Bridge.Int32));
+                }, "Through parameter +");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(max3, (max3 = Bridge.Int.check(max3 + 1, Bridge.Int32))));
+                }, "Through parameter post++");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((max4 = Bridge.Int.check(max4 + 1, Bridge.Int32))));
+                }, "Through parameter ++pre");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.Int.check(2 * max, Bridge.Int32));
+                }, "Through parameter *");
+    
+                var min = -2147483648;
+    
+                var min1 = min;
+                var min2 = min;
+                var min3 = min;
+                var min4 = min;
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.Int.check(min - 1, Bridge.Int32);
+                }, "Through identifier -");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.identity(min1, (min1 = Bridge.Int.check(min1 - 1, Bridge.Int32)));
+                }, "Through identifier post--");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = ((min2 = Bridge.Int.check(min2 - 1, Bridge.Int32)));
+                }, "Through identifier pre--");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.Int.check(-min, Bridge.Int32);
+                }, "Through identifier unary -");
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.Int.check(min - 1, Bridge.Int32));
+                }, "Through parameter -");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(min3, (min3 = Bridge.Int.check(min3 - 1, Bridge.Int32))));
+                }, "Through parameter post--");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((min4 = Bridge.Int.check(min4 - 1, Bridge.Int32))));
+                }, "Through parameter --pre");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.Int.check(-min, Bridge.Int32));
+                }, "Through parameter unary -");
+            },
+            testUInt32: function () {
+                var max = 4294967295;
+    
+                var max1 = max;
+                var max2 = max;
+                var max3 = max;
+                var max4 = max;
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.Int.check(max + 1, Bridge.UInt32);
+                }, "Through identifier +");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.identity(max1, (max1 = Bridge.Int.check(max1 + 1, Bridge.UInt32)));
+                }, "Through identifier post++");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = ((max2 = Bridge.Int.check(max2 + 1, Bridge.UInt32)));
+                }, "Through identifier ++pre");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.Int.check(2 * max, Bridge.UInt32);
+                }, "Through identifier *");
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.Int.check(max + 1, Bridge.UInt32));
+                }, "Through parameter +");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(max3, (max3 = Bridge.Int.check(max3 + 1, Bridge.UInt32))));
+                }, "Through parameter post++");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((max4 = Bridge.Int.check(max4 + 1, Bridge.UInt32))));
+                }, "Through parameter ++pre");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.Int.check(2 * max, Bridge.UInt32));
+                }, "Through parameter *");
+    
+                var min = 0;
+    
+                var min1 = min;
+                var min2 = min;
+                var min3 = min;
+                var min4 = min;
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.Int.check(min - 1, Bridge.UInt32);
+                }, "Through identifier -");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.identity(min1, (min1 = Bridge.Int.check(min1 - 1, Bridge.UInt32)));
+                }, "Through identifier post--");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = ((min2 = Bridge.Int.check(min2 - 1, Bridge.UInt32)));
+                }, "Through identifier pre--");
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.Int.check(min - 1, Bridge.UInt32));
+                }, "Through parameter -");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(min3, (min3 = Bridge.Int.check(min3 - 1, Bridge.UInt32))));
+                }, "Through parameter post--");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((min4 = Bridge.Int.check(min4 - 1, Bridge.UInt32))));
+                }, "Through parameter --pre");
+            },
+            testLong: function () {
+                var max = Bridge.Long.MaxValue;
+    
+                var max1 = max;
+                var max2 = max;
+                var max3 = max;
+                var max4 = max;
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = max.add(Bridge.Long(1), 1);
+                }, "Through identifier +");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.identity(max1, (max1 = max1.add(Bridge.Long(1), 1)));
+                }, "Through identifier post++");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = ((max2 = max2.add(Bridge.Long(1), 1)));
+                }, "Through identifier ++pre");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.Long(2).mul(max, 1);
+                }, "Through identifier *");
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(max.add(Bridge.Long(1), 1));
+                }, "Through parameter +");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(max3, (max3 = max3.add(Bridge.Long(1), 1))));
+                }, "Through parameter post++");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((max4 = max4.add(Bridge.Long(1), 1))));
+                }, "Through parameter ++pre");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.Long(2).mul(max, 1));
+                }, "Through parameter *");
+    
+                var min = Bridge.Long.MinValue;
+    
+                var min1 = min;
+                var min2 = min;
+                var min3 = min;
+                var min4 = min;
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = min.sub(Bridge.Long(1), 1);
+                }, "Through identifier -");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.identity(min1, (min1 = min1.sub(Bridge.Long(1), 1)));
+                }, "Through identifier post--");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = ((min2 = min2.sub(Bridge.Long(1), 1)));
+                }, "Through identifier pre--");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = min.neg(1);
+                }, "Through identifier unary -");
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(min.sub(Bridge.Long(1), 1));
+                }, "Through parameter -");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(min3, (min3 = min3.sub(Bridge.Long(1), 1))));
+                }, "Through parameter post--");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((min4 = min4.sub(Bridge.Long(1), 1))));
+                }, "Through parameter --pre");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(min.neg(1));
+                }, "Through parameter unary -");
+            },
+            testULong: function () {
+                var max = Bridge.ULong.MaxValue;
+    
+                var max1 = max;
+                var max2 = max;
+                var max3 = max;
+                var max4 = max;
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = max.add(Bridge.ULong(1), 1);
+                }, "Through identifier +");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.identity(max1, (max1 = max1.add(Bridge.ULong(1), 1)));
+                }, "Through identifier post++");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = ((max2 = max2.add(Bridge.ULong(1), 1)));
+                }, "Through identifier ++pre");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.ULong(2).mul(max, 1);
+                }, "Through identifier *");
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(max.add(Bridge.ULong(1), 1));
+                }, "Through parameter +");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(max3, (max3 = max3.add(Bridge.ULong(1), 1))));
+                }, "Through parameter post++");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((max4 = max4.add(Bridge.ULong(1), 1))));
+                }, "Through parameter ++pre");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.ULong(2).mul(max, 1));
+                }, "Through parameter *");
+    
+                var min = Bridge.ULong.MinValue;
+    
+                var min1 = min;
+                var min2 = min;
+                var min3 = min;
+                var min4 = min;
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = min.sub(Bridge.ULong(1), 1);
+                }, "Through identifier -");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.identity(min1, (min1 = min1.sub(Bridge.ULong(1), 1)));
+                }, "Through identifier post--");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = ((min2 = min2.sub(Bridge.ULong(1), 1)));
+                }, "Through identifier pre--");
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(min.sub(Bridge.ULong(1), 1));
+                }, "Through parameter -");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(min3, (min3 = min3.sub(Bridge.ULong(1), 1))));
+                }, "Through parameter post--");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((min4 = min4.sub(Bridge.ULong(1), 1))));
+                }, "Through parameter --pre");
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch2.CheckedUncheckedTests.CheckedTests', {
+        statics: {
+            testInt32: function () {
+                var max = 2147483647;
+    
+                var max1 = max;
+                var max2 = max;
+                var max3 = max;
+                var max4 = max;
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.Int.check(max + 1, Bridge.Int32);
+                }, "Through identifier +");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.identity(max2, (max2 = Bridge.Int.check(max2 + 1, Bridge.Int32)));
+                }, "Through identifier post++");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = ((max3 = Bridge.Int.check(max3 + 1, Bridge.Int32)));
+                }, "Through identifier ++pre");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.Int.check(2 * max, Bridge.Int32);
+                }, "Through identifier *");
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.Int.check(max + 1, Bridge.Int32));
+                }, "Through parameter +");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(max3, (max3 = Bridge.Int.check(max3 + 1, Bridge.Int32))));
+                }, "Through parameter post++");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((max4 = Bridge.Int.check(max4 + 1, Bridge.Int32))));
+                }, "Through parameter ++pre");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.Int.check(2 * max, Bridge.Int32));
+                }, "Through parameter *");
+    
+                var min = -2147483648;
+    
+                var min1 = min;
+                var min2 = min;
+                var min3 = min;
+                var min4 = min;
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.Int.check(min - 1, Bridge.Int32);
+                }, "Through identifier -");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.identity(min1, (min1 = Bridge.Int.check(min1 - 1, Bridge.Int32)));
+                }, "Through identifier post--");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = ((min2 = Bridge.Int.check(min2 - 1, Bridge.Int32)));
+                }, "Through identifier pre--");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.Int.check(-min, Bridge.Int32);
+                }, "Through identifier unary -");
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.Int.check(min - 1, Bridge.Int32));
+                }, "Through parameter -");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(min3, (min3 = Bridge.Int.check(min3 - 1, Bridge.Int32))));
+                }, "Through parameter post--");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((min4 = Bridge.Int.check(min4 - 1, Bridge.Int32))));
+                }, "Through parameter --pre");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.Int.check(-min, Bridge.Int32));
+                }, "Through parameter unary -");
+            },
+            testUInt32: function () {
+                var max = 4294967295;
+    
+                var max1 = max;
+                var max2 = max;
+                var max3 = max;
+                var max4 = max;
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.Int.check(max + 1, Bridge.UInt32);
+                }, "Through identifier +");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.identity(max1, (max1 = Bridge.Int.check(max1 + 1, Bridge.UInt32)));
+                }, "Through identifier post++");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = ((max2 = Bridge.Int.check(max2 + 1, Bridge.UInt32)));
+                }, "Through identifier ++pre");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.Int.check(2 * max, Bridge.UInt32);
+                }, "Through identifier *");
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.Int.check(max + 1, Bridge.UInt32));
+                }, "Through parameter +");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(max3, (max3 = Bridge.Int.check(max3 + 1, Bridge.UInt32))));
+                }, "Through parameter post++");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((max4 = Bridge.Int.check(max4 + 1, Bridge.UInt32))));
+                }, "Through parameter ++pre");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.Int.check(2 * max, Bridge.UInt32));
+                }, "Through parameter *");
+    
+                var min = 0;
+    
+                var min1 = min;
+                var min2 = min;
+                var min3 = min;
+                var min4 = min;
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.Int.check(min - 1, Bridge.UInt32);
+                }, "Through identifier -");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.identity(min1, (min1 = Bridge.Int.check(min1 - 1, Bridge.UInt32)));
+                }, "Through identifier post--");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = ((min2 = Bridge.Int.check(min2 - 1, Bridge.UInt32)));
+                }, "Through identifier pre--");
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.Int.check(min - 1, Bridge.UInt32));
+                }, "Through parameter -");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(min3, (min3 = Bridge.Int.check(min3 - 1, Bridge.UInt32))));
+                }, "Through parameter post--");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((min4 = Bridge.Int.check(min4 - 1, Bridge.UInt32))));
+                }, "Through parameter --pre");
+            },
+            testLong: function () {
+                var max = Bridge.Long.MaxValue;
+    
+                var max1 = max;
+                var max2 = max;
+                var max3 = max;
+                var max4 = max;
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = max.add(Bridge.Long(1), 1);
+                }, "Through identifier +");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.identity(max1, (max1 = max1.add(Bridge.Long(1), 1)));
+                }, "Through identifier post++");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = ((max2 = max2.add(Bridge.Long(1), 1)));
+                }, "Through identifier ++pre");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.Long(2).mul(max, 1);
+                }, "Through identifier *");
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(max.add(Bridge.Long(1), 1));
+                }, "Through parameter +");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(max3, (max3 = max3.add(Bridge.Long(1), 1))));
+                }, "Through parameter post++");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((max4 = max4.add(Bridge.Long(1), 1))));
+                }, "Through parameter ++pre");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.Long(2).mul(max, 1));
+                }, "Through parameter *");
+    
+                var min = Bridge.Long.MinValue;
+    
+                var min1 = min;
+                var min2 = min;
+                var min3 = min;
+                var min4 = min;
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = min.sub(Bridge.Long(1), 1);
+                }, "Through identifier -");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.identity(min1, (min1 = min1.sub(Bridge.Long(1), 1)));
+                }, "Through identifier post--");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = ((min2 = min2.sub(Bridge.Long(1), 1)));
+                }, "Through identifier pre--");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = min.neg(1);
+                }, "Through identifier unary -");
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(min.sub(Bridge.Long(1), 1));
+                }, "Through parameter -");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(min3, (min3 = min3.sub(Bridge.Long(1), 1))));
+                }, "Through parameter post--");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((min4 = min4.sub(Bridge.Long(1), 1))));
+                }, "Through parameter --pre");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(min.neg(1));
+                }, "Through parameter unary -");
+            },
+            testULong: function () {
+                var max = Bridge.ULong.MaxValue;
+    
+                var max1 = max;
+                var max2 = max;
+                var max3 = max;
+                var max4 = max;
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = max.add(Bridge.ULong(1), 1);
+                }, "Through identifier +");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.identity(max1, (max1 = max1.add(Bridge.ULong(1), 1)));
+                }, "Through identifier post++");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = ((max2 = max2.add(Bridge.ULong(1), 1)));
+                }, "Through identifier ++pre");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.ULong(2).mul(max, 1);
+                }, "Through identifier *");
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(max.add(Bridge.ULong(1), 1));
+                }, "Through parameter +");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(max3, (max3 = max3.add(Bridge.ULong(1), 1))));
+                }, "Through parameter post++");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((max4 = max4.add(Bridge.ULong(1), 1))));
+                }, "Through parameter ++pre");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.ULong(2).mul(max, 1));
+                }, "Through parameter *");
+    
+                var min = Bridge.ULong.MinValue;
+    
+                var min1 = min;
+                var min2 = min;
+                var min3 = min;
+                var min4 = min;
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = min.sub(Bridge.ULong(1), 1);
+                }, "Through identifier -");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = Bridge.identity(min1, (min1 = min1.sub(Bridge.ULong(1), 1)));
+                }, "Through identifier post--");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    var r = ((min2 = min2.sub(Bridge.ULong(1), 1)));
+                }, "Through identifier pre--");
+    
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(min.sub(Bridge.ULong(1), 1));
+                }, "Through parameter -");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(min3, (min3 = min3.sub(Bridge.ULong(1), 1))));
+                }, "Through parameter post--");
+                Bridge.get(Bridge.Test.Assert).throws$7(Bridge.OverflowException, function () {
+                    Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((min4 = min4.sub(Bridge.ULong(1), 1))));
+                }, "Through parameter --pre");
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch2.CheckedUncheckedTests.UncheckedInsideCheckedTests', {
+        statics: {
+            testInt32: function () {
+                var max = 2147483647;
+    
+                var max1 = max;
+                var max2 = max;
+                var max3 = max;
+                var max4 = max;
+    
+                var rMax1 = ((max + 1) | 0);
+                var rMax2 = Bridge.identity(max1, (max1 = ((max1 + 1) | 0)));
+                var rMax3 = ((max2 = ((max2 + 1) | 0)));
+                var rMax4 = ((2 * max) | 0);
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2147483648", rMax1, "Through identifier +");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("2147483647", rMax2, "Through identifier post++");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2147483648", rMax3, "Through identifier ++pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2", rMax4, "Through identifier *");
+    
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2147483648", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((max + 1) | 0)), "Through parameter +");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("2147483647", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(max3, (max3 = ((max3 + 1) | 0)))), "Through parameter post++");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2147483648", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((max4 = ((max4 + 1) | 0)))), "Through parameter ++pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((2 * max) | 0)), "Through parameter *");
+    
+                var min = -2147483648;
+    
+                var min1 = min;
+                var min2 = min;
+                var min3 = min;
+                var min4 = min;
+    
+                var rMin1 = ((min - 1) | 0);
+                var rMin2 = Bridge.identity(min1, (min1 = ((min1 - 1) | 0)));
+                var rMin3 = ((min2 = ((min2 - 1) | 0)));
+                var rMin4 = ((-min) | 0);
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("2147483647", rMin1, "Through identifier -");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2147483648", rMin2, "Through identifier post--");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("2147483647", rMin3, "Through identifier --pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2147483648", rMin4, "Through identifier unary -");
+    
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("2147483647", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((min - 1) | 0)), "Through parameter -");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2147483648", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(min3, (min3 = ((min3 - 1) | 0)))), "Through parameter post--");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("2147483647", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((min4 = ((min4 - 1) | 0)))), "Through parameter --pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2147483648", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((-min) | 0)), "Through parameter unary -");
+            },
+            testUInt32: function () {
+                var max = 4294967295;
+    
+                var max1 = max;
+                var max2 = max;
+                var max3 = max;
+                var max4 = max;
+    
+                var rMax1 = ((max + 1) >>> 0);
+                var rMax2 = Bridge.identity(max1, (max1 = ((max1 + 1) >>> 0)));
+                var rMax3 = ((max2 = ((max2 + 1) >>> 0)));
+                var rMax4 = ((2 * max) >>> 0);
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", rMax1, "Through identifier +");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("4294967295", rMax2, "Through identifier post++");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", rMax3, "Through identifier ++pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("4294967294", rMax4, "Through identifier *");
+    
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((max + 1) >>> 0)), "Through parameter +");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("4294967295", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(max3, (max3 = ((max3 + 1) >>> 0)))), "Through parameter post++");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((max4 = ((max4 + 1) >>> 0)))), "Through parameter ++pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("4294967294", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((2 * max) >>> 0)), "Through parameter *");
+    
+                var min = 0;
+    
+                var min1 = min;
+                var min2 = min;
+                var min3 = min;
+                var min4 = min;
+    
+                var rMin1 = ((min - 1) >>> 0);
+                var rMin2 = Bridge.identity(min1, (min1 = ((min1 - 1) >>> 0)));
+                var rMin3 = ((min2 = ((min2 - 1) >>> 0)));
+                var rMin4 = Bridge.Long(min).neg();
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("4294967295", rMin1, "Through identifier -");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", rMin2, "Through identifier post--");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("4294967295", rMin3, "Through identifier --pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", rMin4, "Through identifier unary -");
+    
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("4294967295", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((min - 1) >>> 0)), "Through parameter -");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(min3, (min3 = ((min3 - 1) >>> 0)))), "Through parameter post--");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("4294967295", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((min4 = ((min4 - 1) >>> 0)))), "Through parameter --pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.Long(min).neg()), "Through parameter unary -");
+            },
+            testLong: function () {
+                var max = Bridge.Long.MaxValue;
+    
+                var max1 = max;
+                var max2 = max;
+                var max3 = max;
+                var max4 = max;
+    
+                var rMax1 = max.add(Bridge.Long(1));
+                var rMax2 = Bridge.identity(max1, (max1 = max1.add(Bridge.Long(1))));
+                var rMax3 = ((max2 = max2.add(Bridge.Long(1))));
+                var rMax4 = Bridge.Long(2).mul(max);
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-9223372036854775808", rMax1, "Through identifier +");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("9223372036854775807", rMax2, "Through identifier post++");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-9223372036854775808", rMax3, "Through identifier ++pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2", rMax4, "Through identifier *");
+    
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-9223372036854775808", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(max.add(Bridge.Long(1))), "Through parameter +");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("9223372036854775807", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(max3, (max3 = max3.add(Bridge.Long(1))))), "Through parameter post++");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-9223372036854775808", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((max4 = max4.add(Bridge.Long(1))))), "Through parameter ++pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.Long(2).mul(max)), "Through parameter *");
+    
+                var min = Bridge.Long.MinValue;
+    
+                var min1 = min;
+                var min2 = min;
+                var min3 = min;
+                var min4 = min;
+    
+                var rMin1 = min.sub(Bridge.Long(1));
+                var rMin2 = Bridge.identity(min1, (min1 = min1.sub(Bridge.Long(1))));
+                var rMin3 = ((min2 = min2.sub(Bridge.Long(1))));
+                var rMin4 = min.neg();
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("9223372036854775807", rMin1, "Through identifier -");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-9223372036854775808", rMin2, "Through identifier post--");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("9223372036854775807", rMin3, "Through identifier --pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-9223372036854775808", rMin4, "Through identifier unary -");
+    
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("9223372036854775807", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(min.sub(Bridge.Long(1))), "Through parameter -");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-9223372036854775808", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(min3, (min3 = min3.sub(Bridge.Long(1))))), "Through parameter post--");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("9223372036854775807", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((min4 = min4.sub(Bridge.Long(1))))), "Through parameter --pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-9223372036854775808", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(min.neg()), "Through parameter unary -");
+            },
+            testULong: function () {
+                var max = Bridge.ULong.MaxValue;
+    
+                var max1 = max;
+                var max2 = max;
+                var max3 = max;
+                var max4 = max;
+    
+                var rMax1 = max.add(Bridge.ULong(1));
+                var rMax2 = Bridge.identity(max1, (max1 = max1.add(Bridge.ULong(1))));
+                var rMax3 = ((max2 = max2.add(Bridge.ULong(1))));
+                var rMax4 = Bridge.ULong(2).mul(max);
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", rMax1, "Through identifier +");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("18446744073709551615", rMax2, "Through identifier post++");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", rMax3, "Through identifier ++pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("18446744073709551614", rMax4, "Through identifier *");
+    
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(max.add(Bridge.ULong(1))), "Through parameter +");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("18446744073709551615", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(max3, (max3 = max3.add(Bridge.ULong(1))))), "Through parameter post++");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((max4 = max4.add(Bridge.ULong(1))))), "Through parameter ++pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("18446744073709551614", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.ULong(2).mul(max)), "Through parameter *");
+    
+                var min = Bridge.ULong.MinValue;
+    
+                var min1 = min;
+                var min2 = min;
+                var min3 = min;
+                var min4 = min;
+    
+                var rMin1 = min.sub(Bridge.ULong(1));
+                var rMin2 = Bridge.identity(min1, (min1 = min1.sub(Bridge.ULong(1))));
+                var rMin3 = ((min2 = min2.sub(Bridge.ULong(1))));
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("18446744073709551615", rMin1, "Through identifier -");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", rMin2, "Through identifier post--");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("18446744073709551615", rMin3, "Through identifier --pre");
+    
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("18446744073709551615", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(min.sub(Bridge.ULong(1))), "Through parameter -");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(min3, (min3 = min3.sub(Bridge.ULong(1))))), "Through parameter post--");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("18446744073709551615", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((min4 = min4.sub(Bridge.ULong(1))))), "Through parameter --pre");
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch2.CheckedUncheckedTests.UncheckedTests', {
+        statics: {
+            testInt32: function () {
+                var max = 2147483647;
+    
+                var max1 = max;
+                var max2 = max;
+                var max3 = max;
+                var max4 = max;
+    
+                var rMax1 = ((max + 1) | 0);
+                var rMax2 = Bridge.identity(max1, (max1 = ((max1 + 1) | 0)));
+                var rMax3 = ((max2 = ((max2 + 1) | 0)));
+                var rMax4 = ((2 * max) | 0);
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2147483648", rMax1, "Through identifier +");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("2147483647", rMax2, "Through identifier post++");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2147483648", rMax3, "Through identifier ++pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2", rMax4, "Through identifier *");
+    
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2147483648", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((max + 1) | 0)), "Through parameter +");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("2147483647", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(max3, (max3 = ((max3 + 1) | 0)))), "Through parameter post++");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2147483648", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((max4 = ((max4 + 1) | 0)))), "Through parameter ++pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((2 * max) | 0)), "Through parameter *");
+    
+                var min = -2147483648;
+    
+                var min1 = min;
+                var min2 = min;
+                var min3 = min;
+                var min4 = min;
+    
+                var rMin1 = ((min - 1) | 0);
+                var rMin2 = Bridge.identity(min1, (min1 = ((min1 - 1) | 0)));
+                var rMin3 = ((min2 = ((min2 - 1) | 0)));
+                var rMin4 = ((-min) | 0);
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("2147483647", rMin1, "Through identifier -");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2147483648", rMin2, "Through identifier post--");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("2147483647", rMin3, "Through identifier --pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2147483648", rMin4, "Through identifier unary -");
+    
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("2147483647", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((min - 1) | 0)), "Through parameter -");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2147483648", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(min3, (min3 = ((min3 - 1) | 0)))), "Through parameter post--");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("2147483647", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((min4 = ((min4 - 1) | 0)))), "Through parameter --pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2147483648", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((-min) | 0)), "Through parameter unary -");
+            },
+            testUInt32: function () {
+                var max = 4294967295;
+    
+                var max1 = max;
+                var max2 = max;
+                var max3 = max;
+                var max4 = max;
+    
+                var rMax1 = ((max + 1) >>> 0);
+                var rMax2 = Bridge.identity(max1, (max1 = ((max1 + 1) >>> 0)));
+                var rMax3 = ((max2 = ((max2 + 1) >>> 0)));
+                var rMax4 = ((2 * max) >>> 0);
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", rMax1, "Through identifier +");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("4294967295", rMax2, "Through identifier post++");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", rMax3, "Through identifier ++pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("4294967294", rMax4, "Through identifier *");
+    
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((max + 1) >>> 0)), "Through parameter +");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("4294967295", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(max3, (max3 = ((max3 + 1) >>> 0)))), "Through parameter post++");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((max4 = ((max4 + 1) >>> 0)))), "Through parameter ++pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("4294967294", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((2 * max) >>> 0)), "Through parameter *");
+    
+                var min = 0;
+    
+                var min1 = min;
+                var min2 = min;
+                var min3 = min;
+                var min4 = min;
+    
+                var rMin1 = ((min - 1) >>> 0);
+                var rMin2 = Bridge.identity(min1, (min1 = ((min1 - 1) >>> 0)));
+                var rMin3 = ((min2 = ((min2 - 1) >>> 0)));
+                var rMin4 = Bridge.Long(min).neg();
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("4294967295", rMin1, "Through identifier -");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", rMin2, "Through identifier post--");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("4294967295", rMin3, "Through identifier --pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", rMin4, "Through identifier unary -");
+    
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("4294967295", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((min - 1) >>> 0)), "Through parameter -");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(min3, (min3 = ((min3 - 1) >>> 0)))), "Through parameter post--");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("4294967295", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((min4 = ((min4 - 1) >>> 0)))), "Through parameter --pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.Long(min).neg()), "Through parameter unary -");
+            },
+            testLong: function () {
+                var max = Bridge.Long.MaxValue;
+    
+                var max1 = max;
+                var max2 = max;
+                var max3 = max;
+                var max4 = max;
+    
+                var rMax1 = max.add(Bridge.Long(1));
+                var rMax2 = Bridge.identity(max1, (max1 = max1.add(Bridge.Long(1))));
+                var rMax3 = ((max2 = max2.add(Bridge.Long(1))));
+                var rMax4 = Bridge.Long(2).mul(max);
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-9223372036854775808", rMax1, "Through identifier +");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("9223372036854775807", rMax2, "Through identifier post++");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-9223372036854775808", rMax3, "Through identifier ++pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2", rMax4, "Through identifier *");
+    
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-9223372036854775808", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(max.add(Bridge.Long(1))), "Through parameter +");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("9223372036854775807", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(max3, (max3 = max3.add(Bridge.Long(1))))), "Through parameter post++");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-9223372036854775808", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((max4 = max4.add(Bridge.Long(1))))), "Through parameter ++pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.Long(2).mul(max)), "Through parameter *");
+    
+                var min = Bridge.Long.MinValue;
+    
+                var min1 = min;
+                var min2 = min;
+                var min3 = min;
+                var min4 = min;
+    
+                var rMin1 = min.sub(Bridge.Long(1));
+                var rMin2 = Bridge.identity(min1, (min1 = min1.sub(Bridge.Long(1))));
+                var rMin3 = ((min2 = min2.sub(Bridge.Long(1))));
+                var rMin4 = min.neg();
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("9223372036854775807", rMin1, "Through identifier -");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-9223372036854775808", rMin2, "Through identifier post--");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("9223372036854775807", rMin3, "Through identifier --pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-9223372036854775808", rMin4, "Through identifier unary -");
+    
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("9223372036854775807", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(min.sub(Bridge.Long(1))), "Through parameter -");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-9223372036854775808", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(min3, (min3 = min3.sub(Bridge.Long(1))))), "Through parameter post--");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("9223372036854775807", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((min4 = min4.sub(Bridge.Long(1))))), "Through parameter --pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-9223372036854775808", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(min.neg()), "Through parameter unary -");
+            },
+            testULong: function () {
+                var max = Bridge.ULong.MaxValue;
+    
+                var max1 = max;
+                var max2 = max;
+                var max3 = max;
+                var max4 = max;
+    
+                var rMax1 = max.add(Bridge.ULong(1));
+                var rMax2 = Bridge.identity(max1, (max1 = max1.add(Bridge.ULong(1))));
+                var rMax3 = ((max2 = max2.add(Bridge.ULong(1))));
+                var rMax4 = Bridge.ULong(2).mul(max);
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", rMax1, "Through identifier +");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("18446744073709551615", rMax2, "Through identifier post++");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", rMax3, "Through identifier ++pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("18446744073709551614", rMax4, "Through identifier *");
+    
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(max.add(Bridge.ULong(1))), "Through parameter +");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("18446744073709551615", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(max3, (max3 = max3.add(Bridge.ULong(1))))), "Through parameter post++");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((max4 = max4.add(Bridge.ULong(1))))), "Through parameter ++pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("18446744073709551614", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.ULong(2).mul(max)), "Through parameter *");
+    
+                var min = Bridge.ULong.MinValue;
+    
+                var min1 = min;
+                var min2 = min;
+                var min3 = min;
+                var min4 = min;
+    
+                var rMin1 = min.sub(Bridge.ULong(1));
+                var rMin2 = Bridge.identity(min1, (min1 = min1.sub(Bridge.ULong(1))));
+                var rMin3 = ((min2 = min2.sub(Bridge.ULong(1))));
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("18446744073709551615", rMin1, "Through identifier -");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", rMin2, "Through identifier post--");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("18446744073709551615", rMin3, "Through identifier --pre");
+    
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("18446744073709551615", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(min.sub(Bridge.ULong(1))), "Through parameter -");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(min3, (min3 = min3.sub(Bridge.ULong(1))))), "Through parameter post--");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("18446744073709551615", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((min4 = min4.sub(Bridge.ULong(1))))), "Through parameter --pre");
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch2.CheckedUncheckedTests.WithNoUncheckedKeywordTests', {
+        statics: {
+            testInt32: function () {
+                var max = 2147483647;
+    
+                var max1 = max;
+                var max2 = max;
+                var max3 = max;
+                var max4 = max;
+    
+                var rMax1 = max + 1;
+                var rMax2 = Bridge.identity(max1, (max1 = max1 + 1));
+                var rMax3 = ((max2 = max2 + 1));
+                var rMax4 = 2 * max;
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("2147483648", rMax1, "Through identifier +");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("2147483647", rMax2, "Through identifier post++");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("2147483648", rMax3, "Through identifier ++pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("4294967294", rMax4, "Through identifier *");
+    
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("2147483648", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(max + 1), "Through parameter +");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("2147483647", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(max3, (max3 = max3 + 1))), "Through parameter post++");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("2147483648", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((max4 = max4 + 1))), "Through parameter ++pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("4294967294", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(2 * max), "Through parameter *");
+    
+                var min = -2147483648;
+    
+                var min1 = min;
+                var min2 = min;
+                var min3 = min;
+                var min4 = min;
+    
+                var rMin1 = min - 1;
+                var rMin2 = Bridge.identity(min1, (min1 = min1 - 1));
+                var rMin3 = ((min2 = min2 - 1));
+                var rMin4 = -min;
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2147483649", rMin1, "Through identifier -");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2147483648", rMin2, "Through identifier post--");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2147483649", rMin3, "Through identifier --pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("2147483648", rMin4, "Through identifier unary -");
+    
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2147483649", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(min - 1), "Through parameter -");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2147483648", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(min3, (min3 = min3 - 1))), "Through parameter post--");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2147483649", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((min4 = min4 - 1))), "Through parameter --pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("2147483648", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(-min), "Through parameter unary -");
+            },
+            testUInt32: function () {
+                var max = 4294967295;
+    
+                var max1 = max;
+                var max2 = max;
+                var max3 = max;
+                var max4 = max;
+    
+                var rMax1 = max + 1;
+                var rMax2 = Bridge.identity(max1, (max1 = max1 + 1));
+                var rMax3 = ((max2 = max2 + 1));
+                var rMax4 = 2 * max;
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("4294967296", rMax1, "Through identifier +");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("4294967295", rMax2, "Through identifier post++");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("4294967296", rMax3, "Through identifier ++pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("8589934590", rMax4, "Through identifier *");
+    
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("4294967296", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(max + 1), "Through parameter +");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("4294967295", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(max3, (max3 = max3 + 1))), "Through parameter post++");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("4294967296", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((max4 = max4 + 1))), "Through parameter ++pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("8589934590", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(2 * max), "Through parameter *");
+    
+                var min = 0;
+    
+                var min1 = min;
+                var min2 = min;
+                var min3 = min;
+                var min4 = min;
+    
+                var rMin1 = min - 1;
+                var rMin2 = Bridge.identity(min1, (min1 = min1 - 1));
+                var rMin3 = ((min2 = min2 - 1));
+                var rMin4 = Bridge.Long(min).neg();
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-1", rMin1, "Through identifier -");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", rMin2, "Through identifier post--");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-1", rMin3, "Through identifier --pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", rMin4, "Through identifier unary -");
+    
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-1", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(min - 1), "Through parameter -");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(min3, (min3 = min3 - 1))), "Through parameter post--");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-1", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((min4 = min4 - 1))), "Through parameter --pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.Long(min).neg()), "Through parameter unary -");
+            },
+            testLong: function () {
+                var max = Bridge.Long.MaxValue;
+    
+                var max1 = max;
+                var max2 = max;
+                var max3 = max;
+                var max4 = max;
+    
+                var rMax1 = max.add(Bridge.Long(1));
+                var rMax2 = Bridge.identity(max1, (max1 = max1.add(Bridge.Long(1))));
+                var rMax3 = ((max2 = max2.add(Bridge.Long(1))));
+                var rMax4 = Bridge.Long(2).mul(max);
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-9223372036854775808", rMax1, "Through identifier +");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("9223372036854775807", rMax2, "Through identifier post++");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-9223372036854775808", rMax3, "Through identifier ++pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2", rMax4, "Through identifier *");
+    
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-9223372036854775808", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(max.add(Bridge.Long(1))), "Through parameter +");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("9223372036854775807", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(max3, (max3 = max3.add(Bridge.Long(1))))), "Through parameter post++");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-9223372036854775808", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((max4 = max4.add(Bridge.Long(1))))), "Through parameter ++pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-2", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.Long(2).mul(max)), "Through parameter *");
+    
+                var min = Bridge.Long.MinValue;
+    
+                var min1 = min;
+                var min2 = min;
+                var min3 = min;
+                var min4 = min;
+    
+                var rMin1 = min.sub(Bridge.Long(1));
+                var rMin2 = Bridge.identity(min1, (min1 = min1.sub(Bridge.Long(1))));
+                var rMin3 = ((min2 = min2.sub(Bridge.Long(1))));
+                var rMin4 = min.neg();
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("9223372036854775807", rMin1, "Through identifier -");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-9223372036854775808", rMin2, "Through identifier post--");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("9223372036854775807", rMin3, "Through identifier --pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-9223372036854775808", rMin4, "Through identifier unary -");
+    
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("9223372036854775807", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(min.sub(Bridge.Long(1))), "Through parameter -");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-9223372036854775808", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(min3, (min3 = min3.sub(Bridge.Long(1))))), "Through parameter post--");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("9223372036854775807", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((min4 = min4.sub(Bridge.Long(1))))), "Through parameter --pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("-9223372036854775808", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(min.neg()), "Through parameter unary -");
+            },
+            testULong: function () {
+                var max = Bridge.ULong.MaxValue;
+    
+                var max1 = max;
+                var max2 = max;
+                var max3 = max;
+                var max4 = max;
+    
+                var rMax1 = max.add(Bridge.ULong(1));
+                var rMax2 = Bridge.identity(max1, (max1 = max1.add(Bridge.ULong(1))));
+                var rMax3 = ((max2 = max2.add(Bridge.ULong(1))));
+                var rMax4 = Bridge.ULong(2).mul(max);
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", rMax1, "Through identifier +");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("18446744073709551615", rMax2, "Through identifier post++");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", rMax3, "Through identifier ++pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("18446744073709551614", rMax4, "Through identifier *");
+    
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(max.add(Bridge.ULong(1))), "Through parameter +");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("18446744073709551615", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(max3, (max3 = max3.add(Bridge.ULong(1))))), "Through parameter post++");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((max4 = max4.add(Bridge.ULong(1))))), "Through parameter ++pre");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("18446744073709551614", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.ULong(2).mul(max)), "Through parameter *");
+    
+                var min = Bridge.ULong.MinValue;
+    
+                var min1 = min;
+                var min2 = min;
+                var min3 = min;
+                var min4 = min;
+    
+                var rMin1 = min.sub(Bridge.ULong(1));
+                var rMin2 = Bridge.identity(min1, (min1 = min1.sub(Bridge.ULong(1))));
+                var rMin3 = ((min2 = min2.sub(Bridge.ULong(1))));
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("18446744073709551615", rMin1, "Through identifier -");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", rMin2, "Through identifier post--");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("18446744073709551615", rMin3, "Through identifier --pre");
+    
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("18446744073709551615", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(min.sub(Bridge.ULong(1))), "Through parameter -");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("0", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(Bridge.identity(min3, (min3 = min3.sub(Bridge.ULong(1))))), "Through parameter post--");
+                Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).assertEqual("18446744073709551615", Bridge.get(Bridge.ClientTest.Batch2.CheckedUncheckedTests).bypass(((min4 = min4.sub(Bridge.ULong(1))))), "Through parameter --pre");
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch2.Constants', {
+        statics: {
+            BATCH_NAME: "Batch2",
+            MODULE_ISSUES: "Issues",
+            MODULE_CHECKED_UNCKECKED: "Checked/Unckecked"
         }
     });
     

@@ -5,6 +5,8 @@
 
         emptyFn: function () { },
 
+        identity: function (x) { return x; },
+
         property : function (scope, name, v) {
             scope[name] = v;
 
@@ -308,6 +310,10 @@
                 return Bridge.String.is(obj, type);
             }
 
+            if (Bridge.isBoolean(obj)) {
+                return Bridge.Boolean.is(obj, type);
+            }
+
             if (!type.$$inheritors) {
                 return false;
             }
@@ -364,11 +370,25 @@
 	            return new Bridge.Decimal(from);
 	        }
 
+	        if (to instanceof Bridge.Long && Bridge.isNumber(from)) {
+	            return new Bridge.Long(from);
+	        }
+
+	        if (to instanceof Bridge.ULong && Bridge.isNumber(from)) {
+	            return new Bridge.ULong(from);
+	        }
+
 	        if (to instanceof Boolean ||
                 to instanceof Number ||
                 to instanceof String ||
                 to instanceof Function ||
                 to instanceof Date ||
+                to instanceof Bridge.Byte ||
+	            to instanceof Bridge.SByte ||
+	            to instanceof Bridge.Int16 ||
+	            to instanceof Bridge.UInt16 ||
+	            to instanceof Bridge.Int32 ||
+	            to instanceof Bridge.UInt32 ||
                 to instanceof Bridge.Int ||
                 to instanceof Bridge.Decimal) {
 	            return from;
