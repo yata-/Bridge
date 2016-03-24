@@ -12,7 +12,7 @@ namespace Bridge.Builder
     {
         private static void Main(string[] args)
         {
-            var logger = new Logger(null, true, new ConsoleLoggerWriter(), new SimpleFileLoggerWriter());
+            var logger = new Logger(null, true, LoggerLevel.Trace, new ConsoleLoggerWriter(), new SimpleFileLoggerWriter());
 
             string projectLocation = null;
             string outputLocation = null;

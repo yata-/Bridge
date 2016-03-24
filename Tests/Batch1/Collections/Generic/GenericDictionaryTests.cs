@@ -25,7 +25,7 @@ namespace Bridge.ClientTest.Collections.Generic
         [Test]
         public void TypePropertiesAreCorrect()
         {
-            Assert.AreEqual("Bridge.Dictionary$2$Bridge.Int$String", typeof(Dictionary<int, string>).GetClassName(), "FullName should be correct");
+            Assert.AreEqual("Bridge.Dictionary$2$Bridge.Int32$String", typeof(Dictionary<int, string>).GetClassName(), "FullName should be correct");
             object dict = new Dictionary<int, string>();
             Assert.True(dict is Dictionary<int, string>, "is Dictionary<int,string> should be true");
             Assert.True(dict is IDictionary<int, string>, "is IDictionary<int,string> should be true");

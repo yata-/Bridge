@@ -301,6 +301,7 @@ namespace Bridge.Translator
                     this.RestoreWriter(oldWriter);
 
                     bool isDecimal = Helpers.IsDecimalType(member.ReturnType, this.Emitter.Resolver);
+					bool isLong = Helpers.Is64Type(member.ReturnType, this.Emitter.Resolver);
                     bool isNullable = NullableType.IsNullable(member.ReturnType);
                     if (isStatement)
                     {
@@ -309,7 +310,7 @@ namespace Bridge.Translator
                         this.Write(paramsStr);
                         this.WriteComma(false);
 
-                        if (isDecimal)
+                        if (isDecimal || isLong)
                         {
                             if (isNullable)
                             {
@@ -429,7 +430,7 @@ namespace Bridge.Translator
                         this.Write(paramsStr);
                         this.WriteComma(false);
 
-                        if (isDecimal)
+                        if (isDecimal || isLong)
                         {
                             if (isNullable)
                             {
@@ -689,6 +690,7 @@ namespace Bridge.Translator
                 if (this.Emitter.IsUnaryAccessor)
                 {
                     bool isDecimal = Helpers.IsDecimalType(resolveResult.Type, this.Emitter.Resolver);
+					bool isLong = Helpers.Is64Type(resolveResult.Type, this.Emitter.Resolver);
                     bool isNullable = NullableType.IsNullable(resolveResult.Type);
 
                     if (isStatement)
@@ -700,7 +702,7 @@ namespace Bridge.Translator
                         this.WriteCloseBracket();
                         this.WriteComma(false);
 
-                        if (isDecimal)
+                        if (isDecimal || isLong)
                         {
                             if (isNullable)
                             {
@@ -827,7 +829,7 @@ namespace Bridge.Translator
                         this.WriteCloseBracket();
                         this.WriteComma(false);
 
-                        if (isDecimal)
+                        if (isDecimal || isLong)
                         {
                             if (isNullable)
                             {

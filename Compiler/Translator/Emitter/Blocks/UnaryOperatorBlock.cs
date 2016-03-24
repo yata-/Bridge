@@ -83,6 +83,8 @@ namespace Bridge.Translator
             var expectedType = this.Emitter.Resolver.Resolver.GetExpectedType(unaryOperatorExpression);
             bool isDecimalExpected = Helpers.IsDecimalType(expectedType, this.Emitter.Resolver);
             bool isDecimal = Helpers.IsDecimalType(resolveOperator.Type, this.Emitter.Resolver);
+            bool isLongExpected = Helpers.Is64Type(expectedType, this.Emitter.Resolver);
+            bool isLong = Helpers.Is64Type(resolveOperator.Type, this.Emitter.Resolver);
             OperatorResolveResult orr = resolveOperator as OperatorResolveResult;
             int count = this.Emitter.Writers.Count;
 
@@ -101,6 +103,23 @@ namespace Bridge.Translator
             if (isDecimal && isDecimalExpected)
             {
                 this.HandleDecimal(resolveOperator);
+                return;
+            }
+
+            if (this.ResolveOperator(unaryOperatorExpression, orr))
+            {
+                return;
+            }
+
+            if (Helpers.Is64Type(resolveOperator.Type, this.Emitter.Resolver))
+            {
+                isLong = true;
+                isLongExpected = true;
+            }
+
+            if (isLong && isLongExpected)
+            {
+                this.HandleDecimal(resolveOperator, true);
                 return;
             }
 
@@ -186,14 +205,6 @@ namespace Bridge.Translator
                     case UnaryOperatorType.BitNot:
                         if (nullable)
                         {
-                            bool is64bit = resolveOperator.Type.IsKnownType(KnownTypeCode.UInt64) ||
-                               resolveOperator.Type.IsKnownType(KnownTypeCode.Int64);
-
-                            if (is64bit)
-                            {
-                                throw new EmitterException(this.UnaryOperatorExpression, "Bitwise operations are not allowed on 64-bit types");
-                            }
-
                             this.Write("bnot(");
                             unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
                             this.Write(")");
@@ -353,13 +364,28 @@ namespace Bridge.Translator
             this.Emitter.UnaryOperatorType = oldType;
         }
 
-        private void HandleDecimal(ResolveResult resolveOperator)
+        private void AddOveflowFlag(KnownTypeCode typeCode, string op_name, bool lifted)
+        {
+            if ((typeCode == KnownTypeCode.Int64 || typeCode == KnownTypeCode.UInt64) && ConversionBlock.IsInCheckedContext(this.Emitter, this.UnaryOperatorExpression))
+            {
+                if (op_name == "neg" || op_name == "dec" || op_name == "inc")
+                {
+                    if (lifted)
+                    {
+                        this.Write(", ");
+                    }
+                    this.Write("1");
+                }
+            }
+        }
+
+        private void HandleDecimal(ResolveResult resolveOperator, bool isLong = false)
         {
             var orr = resolveOperator as OperatorResolveResult;
             var op = this.UnaryOperatorExpression.Operator;
             var oldType = this.Emitter.UnaryOperatorType;
             var oldAccessor = this.Emitter.IsUnaryAccessor;
-
+            var typeCode = isLong ? KnownTypeCode.Int64 : KnownTypeCode.Decimal;
             this.Emitter.UnaryOperatorType = op;
 
             var argResolverResult = this.Emitter.Resolver.ResolveNode(this.UnaryOperatorExpression.Expression, this.Emitter);
@@ -425,83 +451,153 @@ namespace Bridge.Translator
                 method = type.GetMethods(m => m.Name == name, GetMemberOptions.IgnoreInheritedMembers).FirstOrDefault();
             }
 
-            if (method != null)
+            if (orr.IsLiftedOperator)
+            {
+                if (!isOneOp)
+                {
+                    this.Write(Bridge.Translator.Emitter.ROOT + ".Nullable.");
+                }
+
+                string action = "lift1";
+                string op_name = null;
+
+                switch (this.UnaryOperatorExpression.Operator)
+                {
+                    case UnaryOperatorType.Minus:
+                        op_name = "neg";
+                        break;
+
+                    case UnaryOperatorType.Plus:
+                        op_name = "clone";
+                        break;
+
+                    case UnaryOperatorType.BitNot:
+                        op_name = "not";
+                        break;
+
+                    case UnaryOperatorType.Increment:
+                    case UnaryOperatorType.Decrement:
+                        this.Write("(Bridge.hasValue(");
+                        this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
+                        this.Write(") ? ");
+                        this.WriteOpenParentheses();
+                        this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
+                        this.Write(" = Bridge.Nullable.lift1('" + (op == UnaryOperatorType.Decrement ? "dec" : "inc") + "', ");
+                        this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
+                        this.AddOveflowFlag(typeCode, "dec", true);
+                        this.Write(")");
+                        this.WriteCloseParentheses();
+
+                        this.Write(" : null)");
+                        break;
+
+                    case UnaryOperatorType.PostIncrement:
+                    case UnaryOperatorType.PostDecrement:
+                        this.Write("(Bridge.hasValue(");
+                        this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
+                        this.Write(") ? ");
+                        this.WriteOpenParentheses();
+                        var valueVar = this.GetTempVarName();
+
+                        this.Write(valueVar);
+                        this.Write(" = ");
+
+                        this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
+                        this.WriteComma();
+                        this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
+                        this.Write(" = Bridge.Nullable.lift1('" + (op == UnaryOperatorType.PostDecrement ? "dec" : "inc") + "', ");
+                        this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
+                        this.AddOveflowFlag(typeCode, "dec", true);
+                        this.Write(")");
+                        this.WriteComma();
+                        this.Write(valueVar);
+                        this.WriteCloseParentheses();
+                        this.RemoveTempVar(valueVar);
+
+                        this.Write(" : null)");
+                        break;
+                }
+
+                if (!isOneOp)
+                {
+                    this.Write(action);
+                    this.WriteOpenParentheses();
+                    this.WriteScript(op_name);
+                    this.WriteComma();
+                    new ExpressionListBlock(this.Emitter,
+                        new Expression[] { this.UnaryOperatorExpression.Expression }, null).Emit();
+                    this.AddOveflowFlag(typeCode, op_name, true);
+                    this.WriteCloseParentheses();
+                }
+            }
+            else if (method == null)
+            {
+                string op_name = null;
+
+                switch (this.UnaryOperatorExpression.Operator)
+                {
+                    case UnaryOperatorType.Minus:
+                        op_name = "neg";
+                        break;
+
+                    case UnaryOperatorType.Plus:
+                        op_name = "clone";
+                        break;
+
+                    case UnaryOperatorType.BitNot:
+                        op_name = "not";
+                        break;
+
+                    case UnaryOperatorType.Increment:
+                    case UnaryOperatorType.Decrement:
+                        this.WriteOpenParentheses();
+                        this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
+                        this.Write(" = ");
+                        this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
+                        this.Write("." + (op == UnaryOperatorType.Decrement ? "dec" : "inc") + "(");
+                        this.AddOveflowFlag(typeCode, "dec", false);
+                        this.Write("), ");
+                        this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
+                        this.WriteCloseParentheses();
+                        break;
+
+                    case UnaryOperatorType.PostIncrement:
+                    case UnaryOperatorType.PostDecrement:
+                        this.WriteOpenParentheses();
+                        var valueVar = this.GetTempVarName();
+
+                        this.Write(valueVar);
+                        this.Write(" = ");
+
+                        this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
+                        this.WriteComma();
+                        this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
+                        this.Write(" = ");
+                        this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
+                        this.Write("." + (op == UnaryOperatorType.PostDecrement ? "dec" : "inc") + "(");
+                        this.AddOveflowFlag(typeCode, "dec", false);
+                        this.Write("), ");
+                        this.Write(valueVar);
+                        this.WriteCloseParentheses();
+                        this.RemoveTempVar(valueVar);
+                        break;
+                }
+
+                if (!isOneOp)
+                {
+                    this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
+                    this.WriteDot();
+                    this.Write(op_name);
+                    this.WriteOpenParentheses();
+                    this.AddOveflowFlag(typeCode, op_name, false);
+                    this.WriteCloseParentheses();
+                }
+            }
+            else
             {
                 var inline = this.Emitter.GetInline(method);
 
-                if (orr.IsLiftedOperator)
-                {
-                    if (!isOneOp)
-                    {
-                        this.Write(Bridge.Translator.Emitter.ROOT + ".Nullable.");
-                    }
-
-                    string action = "lift1";
-                    string op_name = null;
-
-                    switch (this.UnaryOperatorExpression.Operator)
-                    {
-                        case UnaryOperatorType.Minus:
-                            op_name = "neg";
-                            break;
-
-                        case UnaryOperatorType.Plus:
-                            op_name = "clone";
-                            break;
-
-                        case UnaryOperatorType.Increment:
-                        case UnaryOperatorType.Decrement:
-                            this.Write("(Bridge.hasValue(");
-                            this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
-                            this.Write(") ? ");
-                            this.WriteOpenParentheses();
-                            this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
-                            this.Write(" = Bridge.Nullable.lift1('" + (op == UnaryOperatorType.Decrement ? "dec" : "inc") + "', ");
-                            this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
-                            this.Write(")");
-                            this.WriteCloseParentheses();
-
-                            this.Write(" : null)");
-                            break;
-
-                        case UnaryOperatorType.PostIncrement:
-                        case UnaryOperatorType.PostDecrement:
-                            this.Write("(Bridge.hasValue(");
-                            this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
-                            this.Write(") ? ");
-                            this.WriteOpenParentheses();
-                            var valueVar = this.GetTempVarName();
-
-                            this.Write(valueVar);
-                            this.Write(" = ");
-
-                            this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
-                            this.WriteComma();
-                            this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
-                            this.Write(" = Bridge.Nullable.lift1('" + (op == UnaryOperatorType.PostDecrement ? "dec" : "inc") + "', ");
-                            this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
-                            this.Write(")");
-                            this.WriteComma();
-                            this.Write(valueVar);
-                            this.WriteCloseParentheses();
-                            this.RemoveTempVar(valueVar);
-
-                            this.Write(" : null)");
-                            break;
-                    }
-
-                    if (!isOneOp)
-                    {
-                        this.Write(action);
-                        this.WriteOpenParentheses();
-                        this.WriteScript(op_name);
-                        this.WriteComma();
-                        new ExpressionListBlock(this.Emitter,
-                            new Expression[] { this.UnaryOperatorExpression.Expression }, null).Emit();
-                        this.WriteCloseParentheses();
-                    }
-                }
-                else if (!string.IsNullOrWhiteSpace(inline))
+                if (!string.IsNullOrWhiteSpace(inline))
                 {
                     if (isOneOp)
                     {

@@ -30,11 +30,10 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.AreStrictEqual(0, GetDefaultValue<double>());
         }
 
-        [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void CreatingInstanceReturnsZero()
         {
-            Assert.AreStrictEqual(0, Activator.CreateInstance<double>());
+            Assert.AreEqual(0, Activator.CreateInstance<double>());
         }
 
         [Test]
@@ -191,7 +190,6 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.True(((double)1).CompareTo((double)1) == 0);
         }
 
-        [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void IComparableCompareToWorks()
         {

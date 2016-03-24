@@ -75,6 +75,11 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.False(true.Equals(false));
             Assert.False(false.Equals(true));
             Assert.True(false.Equals(false));
+
+            Assert.True(((IEquatable<bool>)true).Equals(true));
+            Assert.False(((IEquatable<bool>)true).Equals(false));
+            Assert.False(((IEquatable<bool>)false).Equals(true));
+            Assert.True(((IEquatable<bool>)false).Equals(false));
         }
 
         [Test]
@@ -217,22 +222,95 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.False(f != f1);
         }
 
-        //[Test]
-        //public void CompareToWorks()
-        //{
-        //    Assert.True(true.CompareTo(true) == 0);
-        //    Assert.True(true.CompareTo(false) > 0);
-        //    Assert.True(false.CompareTo(true) < 0);
-        //    Assert.True(false.CompareTo(false) == 0);
-        //}
+        [Test]
+        public void CompareToWorks()
+        {
+            Assert.True(true.CompareTo(true) == 0);
+            Assert.True(true.CompareTo(false) > 0);
+            Assert.True(false.CompareTo(true) < 0);
+            Assert.True(false.CompareTo(false) == 0);
+        }
 
-        //[Test]
-        //public void IComparableCompareToWorks()
-        //{
-        //    Assert.True(((IComparable<bool>)true).CompareTo(true) == 0);
-        //    Assert.True(((IComparable<bool>)true).CompareTo(false) > 0);
-        //    Assert.True(((IComparable<bool>)false).CompareTo(true) < 0);
-        //    Assert.True(((IComparable<bool>)false).CompareTo(false) == 0);
-        //}
+        [Test]
+        public void IComparableCompareToWorks()
+        {
+            Assert.True(((IComparable<bool>)true).CompareTo(true) == 0);
+            Assert.True(((IComparable<bool>)true).CompareTo(false) > 0);
+            Assert.True(((IComparable<bool>)false).CompareTo(true) < 0);
+            Assert.True(((IComparable<bool>)false).CompareTo(false) == 0);
+        }
+
+        [Test]
+        public void ParseWorks()
+        {
+            Assert.AreStrictEqual(bool.Parse("true"), true, "true");
+            Assert.AreStrictEqual(bool.Parse("TRue"), true, "TRue");
+            Assert.AreStrictEqual(bool.Parse("TRUE"), true, "TRUE");
+            Assert.AreStrictEqual(bool.Parse("  true\t"), true, "true with spaces");
+
+            Assert.AreStrictEqual(bool.Parse("false"), false, "false");
+            Assert.AreStrictEqual(bool.Parse("FAlse"), false, "FAlse");
+            Assert.AreStrictEqual(bool.Parse("FALSE"), false, "FALSE");
+            Assert.AreStrictEqual(bool.Parse("  false\t"), false, "false with spaces");
+
+            Assert.Throws<ArgumentNullException>(() => { var b = Boolean.Parse(null); });
+            Assert.Throws<FormatException>(() => { var b = Boolean.Parse(""); });
+            Assert.Throws<FormatException>(() => { var b = Boolean.Parse(" "); });
+            Assert.Throws<FormatException>(() => { var b = Boolean.Parse("Garbage"); });
+            Assert.Throws<FormatException>(() => { var b = Boolean.Parse("True\0Garbage"); });
+            Assert.Throws<FormatException>(() => { var b = Boolean.Parse("True\0True"); });
+            Assert.Throws<FormatException>(() => { var b = Boolean.Parse("True True"); });
+            Assert.Throws<FormatException>(() => { var b = Boolean.Parse("True False"); });
+            Assert.Throws<FormatException>(() => { var b = Boolean.Parse("False True"); });
+            Assert.Throws<FormatException>(() => { var b = Boolean.Parse("Fa lse"); });
+            Assert.Throws<FormatException>(() => { var b = Boolean.Parse("T"); });
+            Assert.Throws<FormatException>(() => { var b = Boolean.Parse("0"); });
+            Assert.Throws<FormatException>(() => { var b = Boolean.Parse("1"); });
+        }
+
+        [Test]
+        public void TryParseWorks()
+        {
+            // Success cases
+	        VerifyBooleanTryParse(1, "True", true, true);
+            VerifyBooleanTryParse(2, "true", true, true);
+	        VerifyBooleanTryParse(3, "TRUE", true, true);
+	        VerifyBooleanTryParse(4, "tRuE", true, true);
+	        VerifyBooleanTryParse(5, "False", false, true);
+	        VerifyBooleanTryParse(6, "false", false, true);
+	        VerifyBooleanTryParse(7, "FALSE", false, true);
+	        VerifyBooleanTryParse(8, "fAlSe", false, true);
+	        VerifyBooleanTryParse(9, "  True  ", true, true);
+	        VerifyBooleanTryParse(10, "False  ", false, true);
+            VerifyBooleanTryParse(11, "True\0", true, true);
+            VerifyBooleanTryParse(12, "False\0", false, true);
+            VerifyBooleanTryParse(13, "True\0    ", true, true);
+            VerifyBooleanTryParse(14, " \0 \0  True   \0 ", true, true);
+            VerifyBooleanTryParse(15, "  False \0\0\0  ", false, true);
+
+	        // Fail cases
+	        VerifyBooleanTryParse(16, null, false, false);
+	        VerifyBooleanTryParse(17, "", false, false);
+	        VerifyBooleanTryParse(18, " ", false, false);
+	        VerifyBooleanTryParse(19, "Garbage", false, false);
+	        VerifyBooleanTryParse(20, "True\0Garbage", false, false);
+	        VerifyBooleanTryParse(21, "True\0True", false, false);
+	        VerifyBooleanTryParse(22, "True True", false, false);
+	        VerifyBooleanTryParse(23, "True False", false, false);
+	        VerifyBooleanTryParse(24, "False True", false, false);
+	        VerifyBooleanTryParse(25, "Fa lse", false, false);
+	        VerifyBooleanTryParse(26, "T", false, false);
+	        VerifyBooleanTryParse(27, "0", false, false);
+	        VerifyBooleanTryParse(28, "1", false, false);
+        }
+
+        private void VerifyBooleanTryParse(int i, string value, bool expectedResult, bool expectedReturn)
+        {
+            bool result;
+
+            bool returnValue = Boolean.TryParse(value, out result);
+            Assert.AreEqual(expectedReturn, returnValue, i + " Return value: " + value);
+            Assert.AreEqual(expectedResult, result, i + " Result: " + value);
+        }
     }
 }

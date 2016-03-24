@@ -219,7 +219,7 @@ namespace System
         [Template("Bridge.Array.copy({this}, 0, {array}, {index}, {this}.length)")]
         public extern void CopyTo(Array array, int index);
 
-        [Template("Bridge.Array.copy({this}, 0, {array}, {index}, {this}.length)")]
+        [Template("Bridge.Array.copy({this}, 0, {array}, {index}.toNumber(), {this}.length)")]
         public extern void CopyTo(Array array, long index);
 
         [Template("Bridge.Array.resize({array}, {newSize}, {T:defaultFn})")]

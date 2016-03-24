@@ -7,12 +7,12 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-namespace Bridge.ClientTestOne.BridgeIssues
+namespace Bridge.ClientTest.Batch2.BridgeIssues
 {
     // Bridge[#772]
     // "useTypedArray" bridge.json option is true in this project
-    [Category("Issues")]
-    [TestFixture(TestNameFormat = "#772 clientOne - {0}")]
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#772 - " + Constants.BATCH_NAME + " {0}")]
     public class N772
     {
         private class C

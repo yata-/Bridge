@@ -269,6 +269,26 @@ namespace Bridge.Contract
 
         public static bool IsDecimalType(IType type, IMemberResolver resolver, bool allowArray = false)
         {
+            return IsKnownType(KnownTypeCode.Decimal, type, resolver, allowArray);
+        }
+
+        public static bool IsLongType(IType type, IMemberResolver resolver, bool allowArray = false)
+        {
+            return IsKnownType(KnownTypeCode.Int64, type, resolver, allowArray);
+        }
+
+        public static bool IsULongType(IType type, IMemberResolver resolver, bool allowArray = false)
+        {
+            return IsKnownType(KnownTypeCode.UInt64, type, resolver, allowArray);
+        }
+
+        public static bool Is64Type(IType type, IMemberResolver resolver, bool allowArray = false)
+        {
+            return IsKnownType(KnownTypeCode.UInt64, type, resolver, allowArray) || IsKnownType(KnownTypeCode.Int64, type, resolver, allowArray);
+        }
+
+        public static bool IsKnownType(KnownTypeCode typeCode, IType type, IMemberResolver resolver, bool allowArray = false)
+        {
             if (allowArray && type.Kind == TypeKind.Array)
             {
                 var elements = (TypeWithElementType)type;
@@ -277,7 +297,7 @@ namespace Bridge.Contract
 
             type = type.IsKnownType(KnownTypeCode.NullableOfT) ? ((ParameterizedType)type).TypeArguments[0] : type;
 
-            return type.Equals(resolver.Compilation.FindType(KnownTypeCode.Decimal));
+            return type.Equals(resolver.Compilation.FindType(typeCode));
         }
 
         public static void CheckValueTypeClone(ResolveResult resolveResult, Expression expression, IAbstractEmitterBlock block, int insertPosition)
@@ -319,7 +339,7 @@ namespace Bridge.Contract
             if (type.Kind == TypeKind.Struct)
             {
                 var typeDef = block.Emitter.GetTypeDefinition(type);
-                if (block.Emitter.Validator.IsIgnoreType(typeDef))
+                if (block.Emitter.Validator.IsIgnoreType(typeDef) || block.Emitter.Validator.IsImmutableType(typeDef))
                 {
                     return;
                 }
