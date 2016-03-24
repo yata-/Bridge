@@ -52,6 +52,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Bridge\bridge.Release.json" />
+    <None Include="Bridge\bridge.Debug.json" />
     <None Include="Bridge\bridge.json" />
   </ItemGroup>
   <ItemGroup>
