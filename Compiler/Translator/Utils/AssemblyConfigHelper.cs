@@ -7,11 +7,19 @@ namespace Bridge.Translator.Utils
     public class AssemblyConfigHelper
     {
         private const string CONFIG_FILE_NAME = "bridge.json";
-        private static ConfigHelper<AssemblyInfo> helper = new ConfigHelper<AssemblyInfo>();
 
-        public static IAssemblyInfo ReadConfig(string configFileName, bool folderMode, string location)
+        private ILogger Logger { get; set; }
+        private ConfigHelper<AssemblyInfo> helper { get; set; }
+
+        public AssemblyConfigHelper(ILogger logger)
         {
-            var config = helper.ReadConfig(configFileName, folderMode, location);
+            this.Logger = logger;
+            this.helper = new ConfigHelper<AssemblyInfo>(logger);
+        }
+
+        public IAssemblyInfo ReadConfig(string configFileName, bool folderMode, string location, string configuration)
+        {
+            var config = helper.ReadConfig(configFileName, folderMode, location, configuration);
 
             if (config == null)
             {
@@ -24,12 +32,12 @@ namespace Bridge.Translator.Utils
             return config;
         }
 
-        public static IAssemblyInfo ReadConfig(bool folderMode, string location)
+        public IAssemblyInfo ReadConfig(bool folderMode, string location, string configuration)
         {
-            return ReadConfig(CONFIG_FILE_NAME, folderMode, location);
+            return ReadConfig(CONFIG_FILE_NAME, folderMode, location, configuration);
         }
 
-        public static void CreateConfig(IAssemblyInfo bridgeConfig, string folder)
+        public void CreateConfig(IAssemblyInfo bridgeConfig, string folder)
         {
             using (var textFile = File.CreateText(folder + Path.DirectorySeparatorChar + CONFIG_FILE_NAME))
             {
@@ -43,7 +51,7 @@ namespace Bridge.Translator.Utils
             return JsonConvert.SerializeObject(config);
         }
 
-        public static void ConvertConfigPaths(IAssemblyInfo assemblyInfo)
+        public void ConvertConfigPaths(IAssemblyInfo assemblyInfo)
         {
             if (!string.IsNullOrWhiteSpace(assemblyInfo.AfterBuild))
             {

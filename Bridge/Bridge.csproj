@@ -53,6 +53,7 @@
     <AdditionalExplicitAssemblyReferences />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Attributes\ImmutableAttribute.cs" />
     <Compile Include="Attributes\AccessorsIndexerAttribute.cs" />
     <Compile Include="Attributes\GlobalTargetAttribute.cs" />
     <Compile Include="Attributes\IgnoreCastAttribute.cs" />
@@ -643,6 +644,7 @@
     <EmbeddedResource Include="Resources\Locales\zh.js" />
     <EmbeddedResource Include="Resources\Locales\zu-ZA.js" />
     <EmbeddedResource Include="Resources\Locales\zu.js" />
+    <Content Include="Resources\Bool.js" />
     <Content Include="Resources\Diagnostics.js" />
     <Content Include="Resources\Convert.js" />
     <Content Include="Resources\Enum.js" />

@@ -987,6 +987,7 @@
                 QUnit.test("#1020 - TestEnumWithReference", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1020).testEnumWithReference);
                 QUnit.test("#1024 - TestConstructorOptionalParameter", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1024).testConstructorOptionalParameter);
                 QUnit.test("#1026 - TestReservedWordIfRefOut", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1026).testReservedWordIfRefOut);
+                QUnit.test("#1027 - TestNonBridgeInherits", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1027).testNonBridgeInherits);
                 QUnit.test("#1029 - TestNullableMethods", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1029).testNullableMethods);
                 QUnit.test("#Bridge1039 - TestMoreThanDecimalDigitsFromTotalHours", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1039).testMoreThanDecimalDigitsFromTotalHours);
                 QUnit.test("#1041 - Decimal TestPropertyOps", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1041Decimal).testPropertyOps);
@@ -1341,6 +1342,10 @@
                 QUnit.test("Boolean - ConditionalOrWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_BooleanTests).conditionalOrWorks);
                 QUnit.test("Boolean - EqualityWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_BooleanTests).equalityWorks);
                 QUnit.test("Boolean - InequalityWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_BooleanTests).inequalityWorks);
+                QUnit.test("Boolean - CompareToWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_BooleanTests).compareToWorks);
+                QUnit.test("Boolean - IComparableCompareToWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_BooleanTests).iComparableCompareToWorks);
+                QUnit.test("Boolean - ParseWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_BooleanTests).parseWorks);
+                QUnit.test("Boolean - TryParseWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_BooleanTests).tryParseWorks);
                 QUnit.test("Byte - TypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_ByteTests).typePropertiesAreCorrect);
                 QUnit.test("Byte - CastsWork", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_ByteTests).castsWork);
                 QUnit.test("Byte - DefaultValueIs0", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_ByteTests).defaultValueIs0);
@@ -2311,6 +2316,16 @@
             testReservedWordIfRefOut: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1026)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1026, 3);
                 Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1026).testReservedWordIfRefOut();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1027', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1027)],
+        statics: {
+            testNonBridgeInherits: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1027)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1027);
+                Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge1027).testNonBridgeInherits();
             }
         }
     });
@@ -7403,6 +7418,22 @@
             inequalityWorks: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.BooleanTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_BooleanTests);
                 t.getFixture().inequalityWorks();
+            },
+            compareToWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.BooleanTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_BooleanTests);
+                t.getFixture().compareToWorks();
+            },
+            iComparableCompareToWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.BooleanTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_BooleanTests);
+                t.getFixture().iComparableCompareToWorks();
+            },
+            parseWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.BooleanTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_BooleanTests);
+                t.getFixture().parseWorks();
+            },
+            tryParseWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.BooleanTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_BooleanTests);
+                t.getFixture().tryParseWorks();
             }
         }
     });

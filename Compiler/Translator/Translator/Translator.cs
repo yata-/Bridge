@@ -66,13 +66,10 @@ namespace Bridge.Translator
 
             var config = this.ReadConfig();
 
-            if (config.LoggerLevel.HasValue)
+            var l = logger as Bridge.Translator.Logging.Logger;
+            if (l != null)
             {
-                var l = logger as Bridge.Translator.Logging.Logger;
-                if (l != null)
-                {
-                    l.LoggerLevel = config.LoggerLevel.Value;
-                }
+                l.LoggerLevel = config.LoggerLevel ?? LoggerLevel.Info;
             }
 
             logger.Trace("Read config file: " + Utils.AssemblyConfigHelper.ConfigToString(config));

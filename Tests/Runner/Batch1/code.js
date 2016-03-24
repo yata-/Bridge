@@ -1,4 +1,13 @@
-﻿(function (globals) {
+﻿
+var SomeExternalNamespace = {
+    SomeNonBridgeClass: function () {
+        
+    }               
+};
+SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
+
+
+(function (globals) {
     "use strict";
 
     /** @namespace System */
@@ -1935,6 +1944,29 @@
             $function: function ($function) {
                 return $function + "1";
             }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1027', {
+        statics: {
+            testNonBridgeInherits: function () {
+                var obj = new Bridge.ClientTest.BridgeIssues.Bridge1027.MyClass(11);
+                Bridge.get(Bridge.Test.Assert).areEqual(11, obj.number);
+                Bridge.get(Bridge.Test.Assert).areEqual(2, obj.foo());
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1027.MyClass', {
+        inherits: [SomeExternalNamespace.SomeNonBridgeClass],
+        number: 0,
+        constructor: function (n) {
+            this.number = n;
+        },
+        foo: function () {
+            var r = SomeExternalNamespace.SomeNonBridgeClass.prototype.foo.call(this);
+    
+            return ((r + 1) | 0);
         }
     });
     
@@ -4800,11 +4832,7 @@
         getHashCode: function () {
             return Bridge.getHashCode(this.field);
         },
-        $clone: function (to) {
-            var s = to || new Bridge.ClientTest.BridgeIssues.Bridge608A();
-            s.field = this.field;
-            return s;
-        }
+        $clone: function (to) { return this; }
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge615', {
@@ -5885,11 +5913,7 @@
             }
             return Bridge.equals(this.field1, o.field1);
         },
-        $clone: function (to) {
-            var s = to || new Bridge.ClientTest.BridgeIssues.Bridge692.B1();
-            s.field1 = this.field1;
-            return s;
-        }
+        $clone: function (to) { return this; }
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge692.B2', {
@@ -5916,11 +5940,7 @@
             }
             return Bridge.equals(this.field1, o.field1);
         },
-        $clone: function (to) {
-            var s = to || new Bridge.ClientTest.BridgeIssues.Bridge692.B2();
-            s.field1 = this.field1;
-            return s;
-        }
+        $clone: function (to) { return this; }
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge692.B3', {
@@ -17592,10 +17612,15 @@
             Bridge.get(Bridge.Test.Assert).$true(Bridge.equals((false), false));
         },
         boolEqualsWorks: function () {
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.equals((true), true));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.equals((true), false));
-            Bridge.get(Bridge.Test.Assert).$false(Bridge.equals((false), true));
-            Bridge.get(Bridge.Test.Assert).$true(Bridge.equals((false), false));
+            Bridge.get(Bridge.Test.Assert).$true((true) === true);
+            Bridge.get(Bridge.Test.Assert).$false((true) === false);
+            Bridge.get(Bridge.Test.Assert).$false((false) === true);
+            Bridge.get(Bridge.Test.Assert).$true((false) === false);
+    
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT((true), true));
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT((true), false));
+            Bridge.get(Bridge.Test.Assert).$false(Bridge.equalsT((false), true));
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.equalsT((false), false));
         },
         logicalExclusiveOrWorks: function () {
             Bridge.get(Bridge.Test.Assert).$true(true);
@@ -17712,6 +17737,127 @@
             Bridge.get(Bridge.Test.Assert).$true(t !== f);
             Bridge.get(Bridge.Test.Assert).$true(f !== t);
             Bridge.get(Bridge.Test.Assert).$false(f !== f1);
+        },
+        compareToWorks: function () {
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.compare((true), true) === 0);
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.compare((true), false) > 0);
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.compare((false), true) < 0);
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.compare((false), false) === 0);
+        },
+        iComparableCompareToWorks: function () {
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.compare((true), true) === 0);
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.compare((true), false) > 0);
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.compare((false), true) < 0);
+            Bridge.get(Bridge.Test.Assert).$true(Bridge.compare((false), false) === 0);
+        },
+        parseWorks: function () {
+            Bridge.get(Bridge.Test.Assert).areStrictEqual$1(Bridge.Boolean.parse("true"), true, "true");
+            Bridge.get(Bridge.Test.Assert).areStrictEqual$1(Bridge.Boolean.parse("TRue"), true, "TRue");
+            Bridge.get(Bridge.Test.Assert).areStrictEqual$1(Bridge.Boolean.parse("TRUE"), true, "TRUE");
+            Bridge.get(Bridge.Test.Assert).areStrictEqual$1(Bridge.Boolean.parse("  true\t"), true, "true with spaces");
+    
+            Bridge.get(Bridge.Test.Assert).areStrictEqual$1(Bridge.Boolean.parse("false"), false, "false");
+            Bridge.get(Bridge.Test.Assert).areStrictEqual$1(Bridge.Boolean.parse("FAlse"), false, "FAlse");
+            Bridge.get(Bridge.Test.Assert).areStrictEqual$1(Bridge.Boolean.parse("FALSE"), false, "FALSE");
+            Bridge.get(Bridge.Test.Assert).areStrictEqual$1(Bridge.Boolean.parse("  false\t"), false, "false with spaces");
+    
+            Bridge.get(Bridge.Test.Assert).throws$6(Bridge.ArgumentNullException, $_.Bridge.ClientTest.SimpleTypes.BooleanTests.f1);
+            Bridge.get(Bridge.Test.Assert).throws$6(Bridge.FormatException, $_.Bridge.ClientTest.SimpleTypes.BooleanTests.f2);
+            Bridge.get(Bridge.Test.Assert).throws$6(Bridge.FormatException, $_.Bridge.ClientTest.SimpleTypes.BooleanTests.f3);
+            Bridge.get(Bridge.Test.Assert).throws$6(Bridge.FormatException, $_.Bridge.ClientTest.SimpleTypes.BooleanTests.f4);
+            Bridge.get(Bridge.Test.Assert).throws$6(Bridge.FormatException, $_.Bridge.ClientTest.SimpleTypes.BooleanTests.f5);
+            Bridge.get(Bridge.Test.Assert).throws$6(Bridge.FormatException, $_.Bridge.ClientTest.SimpleTypes.BooleanTests.f6);
+            Bridge.get(Bridge.Test.Assert).throws$6(Bridge.FormatException, $_.Bridge.ClientTest.SimpleTypes.BooleanTests.f7);
+            Bridge.get(Bridge.Test.Assert).throws$6(Bridge.FormatException, $_.Bridge.ClientTest.SimpleTypes.BooleanTests.f8);
+            Bridge.get(Bridge.Test.Assert).throws$6(Bridge.FormatException, $_.Bridge.ClientTest.SimpleTypes.BooleanTests.f9);
+            Bridge.get(Bridge.Test.Assert).throws$6(Bridge.FormatException, $_.Bridge.ClientTest.SimpleTypes.BooleanTests.f10);
+            Bridge.get(Bridge.Test.Assert).throws$6(Bridge.FormatException, $_.Bridge.ClientTest.SimpleTypes.BooleanTests.f11);
+            Bridge.get(Bridge.Test.Assert).throws$6(Bridge.FormatException, $_.Bridge.ClientTest.SimpleTypes.BooleanTests.f12);
+            Bridge.get(Bridge.Test.Assert).throws$6(Bridge.FormatException, $_.Bridge.ClientTest.SimpleTypes.BooleanTests.f13);
+        },
+        tryParseWorks: function () {
+            // Success cases
+            this.verifyBooleanTryParse(1, "True", true, true);
+            this.verifyBooleanTryParse(2, "true", true, true);
+            this.verifyBooleanTryParse(3, "TRUE", true, true);
+            this.verifyBooleanTryParse(4, "tRuE", true, true);
+            this.verifyBooleanTryParse(5, "False", false, true);
+            this.verifyBooleanTryParse(6, "false", false, true);
+            this.verifyBooleanTryParse(7, "FALSE", false, true);
+            this.verifyBooleanTryParse(8, "fAlSe", false, true);
+            this.verifyBooleanTryParse(9, "  True  ", true, true);
+            this.verifyBooleanTryParse(10, "False  ", false, true);
+            this.verifyBooleanTryParse(11, "True\u0000", true, true);
+            this.verifyBooleanTryParse(12, "False\u0000", false, true);
+            this.verifyBooleanTryParse(13, "True\u0000    ", true, true);
+            this.verifyBooleanTryParse(14, " \u0000 \u0000  True   \u0000 ", true, true);
+            this.verifyBooleanTryParse(15, "  False \u0000\u0000\u0000  ", false, true);
+    
+            // Fail cases
+            this.verifyBooleanTryParse(16, null, false, false);
+            this.verifyBooleanTryParse(17, "", false, false);
+            this.verifyBooleanTryParse(18, " ", false, false);
+            this.verifyBooleanTryParse(19, "Garbage", false, false);
+            this.verifyBooleanTryParse(20, "True\u0000Garbage", false, false);
+            this.verifyBooleanTryParse(21, "True\u0000True", false, false);
+            this.verifyBooleanTryParse(22, "True True", false, false);
+            this.verifyBooleanTryParse(23, "True False", false, false);
+            this.verifyBooleanTryParse(24, "False True", false, false);
+            this.verifyBooleanTryParse(25, "Fa lse", false, false);
+            this.verifyBooleanTryParse(26, "T", false, false);
+            this.verifyBooleanTryParse(27, "0", false, false);
+            this.verifyBooleanTryParse(28, "1", false, false);
+        },
+        verifyBooleanTryParse: function (i, value, expectedResult, expectedReturn) {
+            var result = { };
+    
+            var returnValue = Bridge.Boolean.tryParse(value, result);
+            Bridge.get(Bridge.Test.Assert).areEqual$1(expectedReturn, returnValue, i + " Return value: " + value);
+            Bridge.get(Bridge.Test.Assert).areEqual$1(expectedResult, result.v, i + " Result: " + value);
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.SimpleTypes.BooleanTests", $_)
+    
+    Bridge.apply($_.Bridge.ClientTest.SimpleTypes.BooleanTests, {
+        f1: function () {
+            var b = Bridge.Boolean.parse(null);
+        },
+        f2: function () {
+            var b = Bridge.Boolean.parse("");
+        },
+        f3: function () {
+            var b = Bridge.Boolean.parse(" ");
+        },
+        f4: function () {
+            var b = Bridge.Boolean.parse("Garbage");
+        },
+        f5: function () {
+            var b = Bridge.Boolean.parse("True\u0000Garbage");
+        },
+        f6: function () {
+            var b = Bridge.Boolean.parse("True\u0000True");
+        },
+        f7: function () {
+            var b = Bridge.Boolean.parse("True True");
+        },
+        f8: function () {
+            var b = Bridge.Boolean.parse("True False");
+        },
+        f9: function () {
+            var b = Bridge.Boolean.parse("False True");
+        },
+        f10: function () {
+            var b = Bridge.Boolean.parse("Fa lse");
+        },
+        f11: function () {
+            var b = Bridge.Boolean.parse("T");
+        },
+        f12: function () {
+            var b = Bridge.Boolean.parse("0");
+        },
+        f13: function () {
+            var b = Bridge.Boolean.parse("1");
         }
     });
     
