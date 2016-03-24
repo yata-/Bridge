@@ -3347,7 +3347,7 @@ Bridge.Class.addExtend(Bridge.Char, [Bridge.IComparable$1(Bridge.Char), Bridge.I
                             }
 
                             if (fs === "G") {
-                                if (exponent > -5 && (!precision || exponent < precision)) {
+                                if (exponent > -5 && (exponent < (precision || 15))) {
                                     minDecimals = precision ? precision - (exponent > 0 ? exponent + 1 : 1) : 0;
                                     maxDecimals = precision ? precision - (exponent > 0 ? exponent + 1 : 1) : 15;
                                     return this.defaultFormat(number, 1, minDecimals, maxDecimals, nf, true);
@@ -3356,7 +3356,7 @@ Bridge.Class.addExtend(Bridge.Char, [Bridge.IComparable$1(Bridge.Char), Bridge.I
                                 exponentPrefix = exponentPrefix === "G" ? "E" : "e";
                                 exponentPrecision = 2;
                                 minDecimals = (precision || 1) - 1;
-                                maxDecimals = (precision || 11) - 1;
+                                maxDecimals = (precision || 15) - 1;
                             } else {
                                 minDecimals = maxDecimals = isNaN(precision) ? 6 : precision;
                             }
@@ -3479,11 +3479,11 @@ Bridge.Class.addExtend(Bridge.Char, [Bridge.IComparable$1(Bridge.Char), Bridge.I
                 roundingFactor = Math.pow(10, maxDecLen);
 
                 if (isDecimal) {
-                    str = number.abs().mul(roundingFactor).round().div(roundingFactor).toString();
+                    str = number.abs().toDecimalPlaces(maxDecLen).toString();
                 } else if (isLong) {
                     str = number.eq(Bridge.Long.MinValue) ? number.value.toUnsigned().toString() : number.abs().toString();
                 } else {
-                    str = "" + (Math.round(Math.abs(number) * roundingFactor) / roundingFactor);
+                    str = "" + (+Math.abs(number).toFixed(maxDecLen));
                 }
 
                 decimalIndex = str.indexOf(".");

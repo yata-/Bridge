@@ -1986,6 +1986,19 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1039', {
+        statics: {
+            testMoreThanDecimalDigitsFromTotalHours: function () {
+                var a = new Date(2015, 1 - 1, 1, 9);
+                var b = new Date(2015, 1 - 1, 1, 12, 52);
+    
+                var value = Bridge.Decimal(((Bridge.Date.subdd(b, a)).getTotalHours()));
+    
+                Bridge.get(Bridge.Test.Assert).areEqual("3.866666666666667", Bridge.Int.format(value, 'G'));
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1041');
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal', {
@@ -8451,6 +8464,15 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 }
     
                 Bridge.get(Bridge.Test.Assert).$false(Bridge.get(Bridge.ClientTest.BridgeIssues.Bridge933).isRunning);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge952', {
+        statics: {
+            testDoubleMinValue: function () {
+                Bridge.get(Bridge.Test.Assert).areEqual$1(-1.7976931348623157E+308, -Number.MAX_VALUE, "Compare value");
+                Bridge.get(Bridge.Test.Assert).areEqual$1("-1.79769313486232E+308", Bridge.Int.format(-Number.MAX_VALUE, 'G'), "Compare by ToString()");
             }
         }
     });
