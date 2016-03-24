@@ -67,8 +67,8 @@ namespace Bridge.Contract
                     var cfgMain = JObject.Parse(json);
                     var cfgMerge = JObject.Parse(jsonMerge);
 
-                    cfgMain.Merge(cfgMerge);
-                    config = cfgMain.ToObject<T>();
+                    cfgMerge.Merge(cfgMain);
+                    config = cfgMerge.ToObject<T>();
                 }
                 else
                 {
