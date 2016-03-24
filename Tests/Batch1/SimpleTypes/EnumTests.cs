@@ -30,7 +30,7 @@ namespace Bridge.ClientTest.SimpleTypes
         [Test]
         public void TypePropertiesAreCorrect()
         {
-            //Assert.AreEqual(typeof(Enum).GetClassName(), "Bridge.Enum");
+            //Assert.AreEqual("Bridge.Enum", typeof(Enum).GetClassName());
             Assert.AreEqual("Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum", typeof(TestEnum).GetClassName());
             Assert.True((object)TestEnum.FirstValue is TestEnum);
         }
@@ -49,9 +49,9 @@ namespace Bridge.ClientTest.SimpleTypes
 
         [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
-        public void DefaultValueOfEnumTypeIsZero()
+        public void DefaultValueOfEnumTypeIsFirstValue()
         {
-            Assert.AreStrictEqual(0, GetDefaultValue<TestEnum>());
+            Assert.AreStrictEqual(TestEnum.FirstValue, GetDefaultValue<TestEnum>());
         }
 
         [IgnoreTest(Until = Constants.IGNORE_DATE)]
@@ -64,21 +64,21 @@ namespace Bridge.ClientTest.SimpleTypes
         [Test]
         public void FirstValueOfEnumIsZero()
         {
-            Assert.AreStrictEqual(0, TestEnum.FirstValue);
+            Assert.AreStrictEqual(TestEnum.FirstValue, TestEnum.FirstValue);
         }
 
         [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void CreatingInstanceOfEnumTypeReturnsZero()
         {
-            Assert.AreStrictEqual(0, Activator.CreateInstance<TestEnum>());
+            Assert.AreStrictEqual(TestEnum.FirstValue, Activator.CreateInstance<TestEnum>());
         }
 
         [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void DefaultExpressionWithEnumReturnsZero()
         {
-            Assert.AreStrictEqual(0, default(TestEnum));
+            Assert.AreStrictEqual(TestEnum.FirstValue, default(TestEnum));
         }
 
         [Test]

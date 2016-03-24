@@ -105,6 +105,7 @@
     <Compile Include="Emitter\Blocks\ArrayInitializerBlock.cs" />
     <Compile Include="Emitter\Blocks\AnonymousTypeCreateBlock.cs" />
     <Compile Include="Emitter\Blocks\AsyncBlock.cs" />
+    <Compile Include="Emitter\Blocks\ConversionBlock.Number.cs" />
     <Compile Include="Emitter\Blocks\ConversionBlock.cs" />
     <Compile Include="Emitter\Blocks\ConstructorBlock.Events.cs" />
     <Compile Include="Emitter\Blocks\EmitBlock.cs" />
@@ -184,6 +185,7 @@
     <Compile Include="Utils\CombinedAstAndResolveResultVisitor.cs" />
     <Compile Include="Utils\DependencyFinderVisitor.cs" />
     <Compile Include="Utils\AssemblyConfigHelper.cs" />
+    <Compile Include="Utils\Preconverter.cs" />
     <Compile Include="Utils\EmptyLambdaFixer.cs" />
     <Compile Include="Utils\IResolveResultVisitor.cs" />
     <Compile Include="Utils\JsDoc.cs" />
