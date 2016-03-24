@@ -937,6 +937,10 @@
                 QUnit.test("FormatException - DefaultConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_FormatExceptionTests).defaultConstructorWorks);
                 QUnit.test("FormatException - ConstructorWithMessageWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_FormatExceptionTests).constructorWithMessageWorks);
                 QUnit.test("FormatException - ConstructorWithMessageAndInnerExceptionWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_FormatExceptionTests).constructorWithMessageAndInnerExceptionWorks);
+                QUnit.test("IndexOutOfRangeException - TypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_IndexOutOfRangeExceptionTests).typePropertiesAreCorrect);
+                QUnit.test("IndexOutOfRangeException - DefaultConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_IndexOutOfRangeExceptionTests).defaultConstructorWorks);
+                QUnit.test("IndexOutOfRangeException - ConstructorWithMessageWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_IndexOutOfRangeExceptionTests).constructorWithMessageWorks);
+                QUnit.test("IndexOutOfRangeException - ConstructorWithMessageAndInnerExceptionWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_IndexOutOfRangeExceptionTests).constructorWithMessageAndInnerExceptionWorks);
                 QUnit.test("InvalidCastException - TypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_InvalidCastExceptionTests).typePropertiesAreCorrect);
                 QUnit.test("InvalidCastException - DefaultConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_InvalidCastExceptionTests).defaultConstructorWorks);
                 QUnit.test("InvalidCastException - ConstructorWithMessageWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_InvalidCastExceptionTests).constructorWithMessageWorks);
@@ -6491,6 +6495,28 @@
             },
             constructorWithMessageAndInnerExceptionWorks: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Exceptions.FormatExceptionTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_FormatExceptionTests);
+                t.getFixture().constructorWithMessageAndInnerExceptionWorks();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_IndexOutOfRangeExceptionTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Exceptions.IndexOutOfRangeExceptionTests)],
+        statics: {
+            typePropertiesAreCorrect: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Exceptions.IndexOutOfRangeExceptionTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_IndexOutOfRangeExceptionTests);
+                t.getFixture().typePropertiesAreCorrect();
+            },
+            defaultConstructorWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Exceptions.IndexOutOfRangeExceptionTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_IndexOutOfRangeExceptionTests);
+                t.getFixture().defaultConstructorWorks();
+            },
+            constructorWithMessageWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Exceptions.IndexOutOfRangeExceptionTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_IndexOutOfRangeExceptionTests);
+                t.getFixture().constructorWithMessageWorks();
+            },
+            constructorWithMessageAndInnerExceptionWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Exceptions.IndexOutOfRangeExceptionTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_IndexOutOfRangeExceptionTests);
                 t.getFixture().constructorWithMessageAndInnerExceptionWorks();
             }
         }

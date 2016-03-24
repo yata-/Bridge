@@ -16007,6 +16007,37 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Exceptions.IndexOutOfRangeExceptionTests', {
+        statics: {
+            DefaultMessage: "Index was out of range. Must be non-negative and less than the size of the collection.\nParameter name: index"
+        },
+        typePropertiesAreCorrect: function () {
+            Bridge.get(Bridge.Test.Assert).areEqual$1("Bridge.IndexOutOfRangeException", Bridge.getTypeName(Bridge.IndexOutOfRangeException), "Name");
+            var d = new Bridge.IndexOutOfRangeException();
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(d, Bridge.IndexOutOfRangeException), "is IndexOutOfRangeException");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(d, Bridge.Exception), "is Exception");
+        },
+        defaultConstructorWorks: function () {
+            var ex = new Bridge.IndexOutOfRangeException();
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.IndexOutOfRangeException), "is IndexOutOfRangeException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(null, ex.getInnerException(), "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual(Bridge.get(Bridge.ClientTest.Exceptions.IndexOutOfRangeExceptionTests).DefaultMessage, ex.getMessage());
+        },
+        constructorWithMessageWorks: function () {
+            var ex = new Bridge.IndexOutOfRangeException("The message");
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.IndexOutOfRangeException), "is IndexOutOfRangeException");
+            Bridge.get(Bridge.Test.Assert).areEqual$1(null, ex.getInnerException(), "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual("The message", ex.getMessage());
+        },
+        constructorWithMessageAndInnerExceptionWorks: function () {
+            var inner = new Bridge.Exception("a");
+            var ex = new Bridge.IndexOutOfRangeException("The message", inner);
+            Bridge.get(Bridge.Test.Assert).true$1(Bridge.is(ex, Bridge.IndexOutOfRangeException), "is IndexOutOfRangeException");
+            Bridge.get(Bridge.Test.Assert).true$1(ex.getInnerException() === inner, "InnerException");
+            Bridge.get(Bridge.Test.Assert).areEqual("The message", ex.getMessage());
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Exceptions.InvalidCastExceptionTests', {
         typePropertiesAreCorrect: function () {
             Bridge.get(Bridge.Test.Assert).areEqual$1("Bridge.InvalidCastException", Bridge.getTypeName(Bridge.InvalidCastException), "Name");
