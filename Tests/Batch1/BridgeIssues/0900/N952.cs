@@ -12,7 +12,7 @@ namespace Bridge.ClientTest.BridgeIssues
         public static void TestDoubleMinValue()
         {
             Assert.AreEqual(-1.7976931348623157e+308, double.MinValue, "Compare value");
-            Assert.AreEqual("-1.7976931348623157e+308", double.MinValue.ToString(), "Compare by ToString()");
+            Assert.AreEqual("-1.79769313486232E+308", double.MinValue.ToString(), "Compare by ToString()");
         }
     }
 }
