@@ -45,7 +45,6 @@
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="NewArrayTests.cs" />
     <Compile Include="BasicCSharp\TestMethodParametersClass.cs" />
     <Compile Include="BasicCSharp\TestInterfaces.cs" />
     <Compile Include="BasicCSharp\TestOverloadInstanceMethods.cs" />
