@@ -2321,6 +2321,32 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1098', {
+        statics: {
+            testInlineConstantAsMemberReference: function () {
+                var max = 2147483647;
+                Bridge.get(Bridge.Test.Assert).areEqual(2147483647, max);
+                var r = ((max + 1) | 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(-2147483648, r);
+    
+                var max1 = -2147483648;
+                Bridge.get(Bridge.Test.Assert).areEqual(-2147483648, max1);
+                var r1 = ((max1 - 1) | 0);
+                Bridge.get(Bridge.Test.Assert).areEqual(2147483647, r1);
+    
+                var max2 = 2147483647;
+                Bridge.get(Bridge.Test.Assert).areEqual(2147483647, max2);
+                var r2 = Bridge.Int.check(max2 - 1, Bridge.Int32);
+                Bridge.get(Bridge.Test.Assert).areEqual(2147483646, r2);
+    
+                var max3 = -2147483648;
+                Bridge.get(Bridge.Test.Assert).areEqual(-2147483648, max3);
+                var r3 = Bridge.Int.check(max3 + 1, Bridge.Int32);
+                Bridge.get(Bridge.Test.Assert).areEqual(-2147483647, r3);
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
