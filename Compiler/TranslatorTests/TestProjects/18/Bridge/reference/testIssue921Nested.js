@@ -52,7 +52,7 @@
             return x;
         },
         f2: function (x) {
-            return TestIssue921Nested.Issue921NestedOuter.Issue921Nested.computeNumberStatic(x);
+            return Bridge.get(TestIssue921Nested.Issue921NestedOuter.Issue921Nested).computeNumberStatic(x);
         }
     });
     
@@ -85,7 +85,7 @@
         },
         constructor: function (offset) {
             this._offset = offset;
-            TestIssue921Nested.Issue921NestedOuter.Issue921Nested.setNameStatic("Static");
+            Bridge.get(TestIssue921Nested.Issue921NestedOuter.Issue921Nested).setNameStatic("Static");
         },
         computeValue: function (d) {
             return d.add(Bridge.Decimal(10));
@@ -93,68 +93,68 @@
         lambaLiftingWithReadOnlyField: function () {
             var localValue = 456;
             return Bridge.Linq.Enumerable.from([1, 2, 3]).select($_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f5).select($_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f5).select($_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f6).select(Bridge.fn.bind(this, $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f7)).select(Bridge.fn.bind(this, $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f8)).select(function (value) {
-                return value + localValue;
+                return ((value + localValue) | 0);
             });
         },
         lambaLiftingWithProperty: function () {
             var localValue = "What a name";
     
-            return Bridge.Linq.Enumerable.from(["one", "two", "three"]).select($_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f5).select($_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f5).select($_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f6).select(Bridge.fn.bind(this, $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f9)).select(Bridge.fn.bind(this, $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f10)).select(function (value) {
+            return Bridge.Linq.Enumerable.from(["one", "two", "three"]).select($_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f9).select($_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f9).select($_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f10).select(Bridge.fn.bind(this, $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f11)).select(Bridge.fn.bind(this, $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f12)).select(function (value) {
                 return value + localValue;
             });
         },
         lambaLiftingWithStaticProperty: function () {
             var localValue = "What a name";
     
-            return Bridge.Linq.Enumerable.from(["one", "two", "three"]).select($_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f5).select($_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f5).select($_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f6).select(Bridge.fn.bind(this, $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f9)).select($_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f11).select(function (value) {
+            return Bridge.Linq.Enumerable.from(["one", "two", "three"]).select($_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f9).select($_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f9).select($_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f10).select(Bridge.fn.bind(this, $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f11)).select($_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f13).select(function (value) {
                 return value + localValue;
             });
         },
         lambaLiftingWithInstanceMethod: function () {
             var localValue = Bridge.Decimal(10.0);
     
-            return Bridge.Linq.Enumerable.from([Bridge.Decimal(1.0), Bridge.Decimal(2.0), Bridge.Decimal(3.0)]).select($_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f12).select($_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f12).select(Bridge.fn.bind(this, $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f13)).select(Bridge.fn.bind(this, $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f14)).select(Bridge.fn.bind(this, $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f15)).select(function (value) {
+            return Bridge.Linq.Enumerable.from([Bridge.Decimal(1.0), Bridge.Decimal(2.0), Bridge.Decimal(3.0)]).select($_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f14).select($_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f14).select(Bridge.fn.bind(this, $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f15)).select(Bridge.fn.bind(this, $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f16)).select(Bridge.fn.bind(this, $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f17)).select(function (value) {
                 return value.add(localValue);
             });
         },
         lambaLiftingWithDelegate: function () {
             // Lift
-            var addThousand = $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f16;
+            var addThousand = $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f18;
     
             var localValue = 123;
     
             return Bridge.Linq.Enumerable.from([1, 2, 3]).select(function (value) {
-                return addThousand(value + 1);
+                return addThousand(((value + 1) | 0));
             }).select(function (value) {
-                return addThousand(value + 1);
+                return addThousand(((value + 1) | 0));
             }).select(function (value, index) {
-                return addThousand(value + index);
+                return addThousand(((value + index) | 0));
             }).select(Bridge.fn.bind(this, function (value) {
-                return addThousand(value) + this._offset;
+                return ((addThousand(value) + this._offset) | 0);
             })).select(Bridge.fn.bind(this, function (value, index) {
-                return addThousand(value) + index + this._offset;
+                return ((((addThousand(value) + index) | 0) + this._offset) | 0);
             })).select(function (value) {
-                return addThousand(value + addThousand(localValue));
+                return addThousand(((value + addThousand(localValue)) | 0));
             });
         },
         lambaLiftingWithDelegateChangingType: function () {
             // Lift
-            var toString = $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f17;
+            var toString = $_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested.f19;
     
             var localValue = 7;
     
             return Bridge.Linq.Enumerable.from([1, 2, 3]).select(function (value) {
-                return toString(value + 1);
+                return toString(((value + 1) | 0));
             }).select(function (value) {
                 return toString(value.length);
             }).select(function (value, index) {
-                return toString(value.length + index);
+                return toString(((value.length + index) | 0));
             }).select(Bridge.fn.bind(this, function (value) {
                 return toString(value.length) + this._offset;
             })).select(Bridge.fn.bind(this, function (value, index) {
                 return toString(value.length) + index + this._offset;
             })).select(function (value) {
-                return toString(value.length + toString(localValue).length);
+                return toString(((value.length + toString(localValue).length) | 0));
             });
         }
     });
@@ -163,54 +163,60 @@
     
     Bridge.apply($_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested, {
         f1: function (i) {
-            return 3 * i + TestIssue921Nested.Issue921NestedOuter.Issue921Nested.getIntStatic();
+            return ((((3 * i) | 0) + Bridge.get(TestIssue921Nested.Issue921NestedOuter.Issue921Nested).getIntStatic()) | 0);
         },
         f2: function (i) {
-            return 2 * i + TestIssue921Nested.Issue921NestedOuter.Issue921Nested.getIntStatic();
+            return ((((2 * i) | 0) + Bridge.get(TestIssue921Nested.Issue921NestedOuter.Issue921Nested).getIntStatic()) | 0);
         },
         f3: function (i, j) {
-            return i + j + TestIssue921Nested.Issue921NestedOuter.Issue921Nested.getIntStatic();
+            return ((((i + j) | 0) + Bridge.get(TestIssue921Nested.Issue921NestedOuter.Issue921Nested).getIntStatic()) | 0);
         },
         f4: function (i, j, k) {
-            var x = i + j + k + TestIssue921Nested.Issue921NestedOuter.Issue921Nested.getIntStatic();
+            var x = ((((((i + j) | 0) + k) | 0) + Bridge.get(TestIssue921Nested.Issue921NestedOuter.Issue921Nested).getIntStatic()) | 0);
         },
         f5: function (value) {
-            return value + 1;
+            return ((value + 1) | 0);
         },
         f6: function (value, index) {
-            return value + index;
+            return ((value + index) | 0);
         },
         f7: function (value) {
-            return value + this._offset;
+            return ((value + this._offset) | 0);
         },
         f8: function (value, index) {
-            return value + index + this._offset;
+            return ((((value + index) | 0) + this._offset) | 0);
         },
         f9: function (value) {
-            return value + this.getName();
+            return value + 1;
         },
         f10: function (value, index) {
+            return value + index;
+        },
+        f11: function (value) {
+            return value + this.getName();
+        },
+        f12: function (value, index) {
             return value + index + this.getName();
         },
-        f11: function (value, index) {
-            return value + index + TestIssue921Nested.Issue921NestedOuter.Issue921Nested.getNameStatic();
-        },
-        f12: function (value) {
-            return value.add(Bridge.Decimal(1));
-        },
         f13: function (value, index) {
-            return value.add(this.computeValue(Bridge.Decimal.lift(index)));
+            return value + index + Bridge.get(TestIssue921Nested.Issue921NestedOuter.Issue921Nested).getNameStatic();
         },
         f14: function (value) {
-            return value.add(this.computeValue(Bridge.Decimal(100.0)));
+            return value.add(Bridge.Decimal(1));
         },
         f15: function (value, index) {
+            return value.add(this.computeValue(Bridge.Decimal(Bridge.Decimal(index))));
+        },
+        f16: function (value) {
+            return value.add(this.computeValue(Bridge.Decimal(100.0)));
+        },
+        f17: function (value, index) {
             return value.add(Bridge.Decimal(index)).add(this.computeValue(Bridge.Decimal(200.0)));
         },
-        f16: function (i) {
-            return i + 1000;
+        f18: function (i) {
+            return ((i + 1000) | 0);
         },
-        f17: function (i) {
+        f19: function (i) {
             return i.toString();
         }
     });

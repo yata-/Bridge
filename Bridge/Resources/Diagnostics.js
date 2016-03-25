@@ -38,8 +38,8 @@ Bridge.Debug = {
 
 Bridge.define("Bridge.Stopwatch", {
     constructor: function () {
-        this._stopTime = 0;
-        this._startTime = 0;
+        this._stopTime = Bridge.Long.Zero;
+        this._startTime = Bridge.Long.Zero;
         this.isRunning = false;
     },
 
@@ -49,15 +49,15 @@ Bridge.define("Bridge.Stopwatch", {
     },
 
     ticks: function () {
-        return (this.isRunning ? Bridge.Stopwatch.getTimestamp() : this._stopTime) - this._startTime;
+        return (this.isRunning ? Bridge.Stopwatch.getTimestamp() : this._stopTime).sub(this._startTime);
     },
 
     milliseconds: function () {
-        return Math.round(this.ticks() / Bridge.Stopwatch.frequency * 1000);
+        return this.ticks().mul(1000).div(Bridge.Stopwatch.frequency);
     },
 
     timeSpan: function () {
-        return new Bridge.TimeSpan(this.milliseconds() * 10000);
+        return new Bridge.TimeSpan(this.milliseconds().mul(10000));
     },
 
     start: function () {
@@ -89,19 +89,19 @@ Bridge.define("Bridge.Stopwatch", {
 });
 
 if (typeof (window) !== 'undefined' && window.performance && window.performance.now) {
-    Bridge.Stopwatch.frequency = 1e6;
+    Bridge.Stopwatch.frequency = new Bridge.Long(1e6);
     Bridge.Stopwatch.isHighResolution = true;
-    Bridge.Stopwatch.getTimestamp = function () { return Math.round(window.performance.now() * 1000); };
+    Bridge.Stopwatch.getTimestamp = function () { return new Bridge.Long(Math.round(window.performance.now() * 1000)); };
 }
 else if (typeof (process) !== 'undefined' && process.hrtime) {
-    Bridge.Stopwatch.frequency = 1e9;
+    Bridge.Stopwatch.frequency = new Bridge.Long(1e9);
     Bridge.Stopwatch.isHighResolution = true;
-    Bridge.Stopwatch.getTimestamp = function () { var hr = process.hrtime(); return hr[0] * 1e9 + hr[1]; };
+    Bridge.Stopwatch.getTimestamp = function () { var hr = process.hrtime(); return new Bridge.Long(hr[0]).mul(1e9).add(hr[1]); };
 }
 else {
-    Bridge.Stopwatch.frequency = 1e3;
+    Bridge.Stopwatch.frequency = new Bridge.Long(1e3);
     Bridge.Stopwatch.isHighResolution = false;
-    Bridge.Stopwatch.getTimestamp = function () { return new Date().valueOf(); };
+    Bridge.Stopwatch.getTimestamp = function () { return new Bridge.Long(new Date().valueOf()); };
 }
 
 Bridge.Contract = {

@@ -220,7 +220,7 @@ namespace System
             return false;
         }
 
-        [Template("{t1}.ticks === {t2}.ticks")]
+        [Template("({t1}).ticks.eq(({t2}).ticks)")]
         public static bool Equals(TimeSpan t1, TimeSpan t2)
         {
             return false;

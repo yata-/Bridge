@@ -11,17 +11,6 @@ namespace Bridge.ClientTest.ConvertTests
     [TestFixture(TestNameFormat = "Convert.ToSByte - {0}")]
     public class ConvertToSByteTests : ConvertTestBase<sbyte>
     {
-        private static class Wrappers
-        {
-            // TODO: These wrappers help to avoid issues #689 and #743. They can be deleted when issues are fixed.
-            // For more infromation see comment: https://github.com/bridgedotnet/Bridge/issues/743#issuecomment-183905400
-
-            public static sbyte ConvertFromStrWithBase(string value, int fromBase)
-            {
-                return Convert.ToSByte(value, fromBase);
-            }
-        }
-
         [Test]
         public void FromBoolean()
         {
@@ -161,22 +150,22 @@ namespace Bridge.ClientTest.ConvertTests
         [Test]
         public void FromStringWithBase()
         {
-            string[] testValues = { null, null, null, null, "7f", "127", "177", "1111111", "80", "-128", "200", "10000000" };
+            string[] testValues = { null, null, null, null, ConvertConstants.INT8_MAX_STRING_BASE_16, sbyte.MaxValue.ToString(), ConvertConstants.INT8_MAX_STRING_BASE_8, ConvertConstants.INT8_MAX_STRING_BASE_2, ConvertConstants.INT8_MIN_STRING_BASE_16, sbyte.MinValue.ToString(), ConvertConstants.INT8_MIN_STRING_BASE_8, ConvertConstants.INT8_MIN_STRING_BASE_2 };
             int[] testBases = { 10, 2, 8, 16, 16, 10, 8, 2, 16, 10, 8, 2 };
             sbyte[] expectedValues = { 0, 0, 0, 0, sbyte.MaxValue, sbyte.MaxValue, sbyte.MaxValue, sbyte.MaxValue, sbyte.MinValue, sbyte.MinValue, sbyte.MinValue, sbyte.MinValue };
-            VerifyFromStringWithBase(Wrappers.ConvertFromStrWithBase, testValues, testBases, expectedValues);
+            VerifyFromStringWithBase(Convert.ToSByte, testValues, testBases, expectedValues);
 
-            string[] overflowValues = { "128", "-129", "111111111", "1FF", "777" };
+            string[] overflowValues = { ConvertConstants.INT8_OVERFLOW_MAX_STRING, ConvertConstants.INT8_OVERFLOW_MIN_STRING, ConvertConstants.INT8_OVERFLOW_MAX_STRING_BASE_2, ConvertConstants.INT8_OVERFLOW_MAX_STRING_BASE_16, ConvertConstants.INT8_OVERFLOW_MAX_STRING_BASE_8 };
             int[] overflowBases = { 10, 10, 2, 16, 8 };
-            VerifyFromStringWithBaseThrows<OverflowException>(Wrappers.ConvertFromStrWithBase, overflowValues, overflowBases);
+            VerifyFromStringWithBaseThrows<OverflowException>(Convert.ToSByte, overflowValues, overflowBases);
 
             string[] formatExceptionValues = { "12", "ffffffffffffffffffff" };
             int[] formatExceptionBases = { 2, 8 };
-            VerifyFromStringWithBaseThrows<FormatException>(Wrappers.ConvertFromStrWithBase, formatExceptionValues, formatExceptionBases);
+            VerifyFromStringWithBaseThrows<FormatException>(Convert.ToSByte, formatExceptionValues, formatExceptionBases);
 
             string[] argumentExceptionValues = { "10", "11", "abba", "-ab" };
             int[] argumentExceptionBases = { -1, 3, 0, 16 };
-            VerifyFromStringWithBaseThrows<ArgumentException>(Wrappers.ConvertFromStrWithBase, argumentExceptionValues, argumentExceptionBases);
+            VerifyFromStringWithBaseThrows<ArgumentException>(Convert.ToSByte, argumentExceptionValues, argumentExceptionBases);
         }
 
         [Test]

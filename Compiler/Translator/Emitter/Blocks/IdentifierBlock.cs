@@ -205,13 +205,14 @@ namespace Bridge.Translator
                     if (this.Emitter.IsUnaryAccessor)
                     {
                         bool isDecimal = Helpers.IsDecimalType(memberResult.Member.ReturnType, this.Emitter.Resolver);
+                        bool isLong = Helpers.Is64Type(memberResult.Member.ReturnType, this.Emitter.Resolver);
                         bool isNullable = NullableType.IsNullable(memberResult.Member.ReturnType);
                         if (isStatement)
                         {
                             this.Write(Helpers.GetPropertyRef(memberResult.Member, this.Emitter, true));
                             this.WriteOpenParentheses();
 
-                            if (isDecimal)
+                            if (isDecimal || isLong)
                             {
                                 if (isNullable)
                                 {
@@ -291,7 +292,7 @@ namespace Bridge.Translator
                             this.Write(Helpers.GetPropertyRef(memberResult.Member, this.Emitter, true));
                             this.WriteOpenParentheses();
 
-                            if (isDecimal)
+                            if (isDecimal || isLong)
                             {
                                 if (isNullable)
                                 {
