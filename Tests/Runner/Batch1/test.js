@@ -1024,6 +1024,7 @@
                 QUnit.test("#1041 - Integer TestDictOps", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1041Integer.testDictOps);
                 QUnit.test("#1041 - Integer TestVariableOps", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1041Integer.testVariableOps);
                 QUnit.test("#1051 - TestInlinePopertyWithValue", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1051.testInlinePopertyWithValue);
+                QUnit.test("#1053 - TestFieldPropertyWithInterface", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1053.testFieldPropertyWithInterface);
                 QUnit.test("#1076 - TestInlineConstantAsMemberReference", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1076.testInlineConstantAsMemberReference);
                 QUnit.test("#1076 - TestInlineBridgeNumericConstantsAsMemberReference", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1076.testInlineBridgeNumericConstantsAsMemberReference);
                 QUnit.test("#1085 - TestInlineArrayExpand", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1085.testInlineArrayExpand);
@@ -2517,6 +2518,16 @@
             testInlinePopertyWithValue: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1051).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1051);
                 Bridge.ClientTest.BridgeIssues.Bridge1051.testInlinePopertyWithValue();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1053', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1053)],
+        statics: {
+            testFieldPropertyWithInterface: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1053).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1053);
+                Bridge.ClientTest.BridgeIssues.Bridge1053.testFieldPropertyWithInterface();
             }
         }
     });

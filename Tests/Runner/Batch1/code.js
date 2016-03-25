@@ -3684,6 +3684,21 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1053', {
+        statics: {
+            testFieldPropertyWithInterface: function () {
+                var Foo = function(){this.bar = null;};
+                var foo = new Foo();
+                var car = foo;
+                foo.bar = "1";
+                Bridge.Test.Assert.areEqual("1", foo.bar);
+                Bridge.Test.Assert.areEqual("1", foo.bar);
+                Bridge.Test.Assert.areEqual("1", car.bar);
+                Bridge.Test.Assert.areEqual("1", car.bar);
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1076', {
         statics: {
             testInlineConstantAsMemberReference: function () {

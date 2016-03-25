@@ -560,7 +560,27 @@ namespace Bridge.Translator
                         }
                     }
 
-                    if (Helpers.IsFieldProperty(member.Member, this.Emitter))
+                    bool isFieldProperty = Helpers.IsFieldProperty(member.Member, this.Emitter);
+                    if (isFieldProperty)
+                    {
+                        if (member.Member.ImplementedInterfaceMembers.Count > 0 &&
+                            !member.Member.ImplementedInterfaceMembers.All(m => Helpers.IsFieldProperty(m, this.Emitter)))
+                        {
+                            throw new EmitterException(memberReferenceExpression,
+                                string.Format(
+                                    "The property {0} is marked as FieldProperty but implemented interface member has no such attribute",
+                                    member.Member.ToString()));
+                        }
+                    }
+                    else
+                    {
+                        if (member.Member.ImplementedInterfaceMembers.Count > 0 && member.Member.ImplementedInterfaceMembers.Any(m => Helpers.IsFieldProperty(m, this.Emitter)))
+                        {
+                            throw new EmitterException(memberReferenceExpression, string.Format("The property {0} is not marked as FieldProperty but implemented interface member has such attribute", member.Member.ToString()));
+                        }
+                    }
+
+                    if (isFieldProperty)
                     {
                         this.Write(Helpers.GetPropertyRef(member.Member, this.Emitter));
                     }

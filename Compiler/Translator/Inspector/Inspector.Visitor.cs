@@ -343,6 +343,11 @@ namespace Bridge.Translator
 
                 if (!autoPropertyToField)
                 {
+                    if (resolvedProperty != null && resolvedProperty.Member.ImplementedInterfaceMembers.Count > 0 && resolvedProperty.Member.ImplementedInterfaceMembers.Any(m => Helpers.IsFieldProperty(m, this.AssemblyInfo)))
+                    {
+                        throw new EmitterException(propertyDeclaration, string.Format("The property {0} is not marked as FieldProperty but implemented interface member has such attribute", resolvedProperty.Member.ToString()));
+                    }
+
                     info.Properties.Add(new TypeConfigItem
                     {
                         Name = key,
@@ -352,6 +357,11 @@ namespace Bridge.Translator
                 }
                 else
                 {
+                    if (resolvedProperty != null && resolvedProperty.Member.ImplementedInterfaceMembers.Count > 0 && !resolvedProperty.Member.ImplementedInterfaceMembers.All(m => Helpers.IsFieldProperty(m, this.AssemblyInfo)))
+                    {
+                        throw new EmitterException(propertyDeclaration, string.Format("The property {0} is marked as FieldProperty but implemented interface member has no such attribute", resolvedProperty.Member.ToString()));
+                    }
+
                     info.Fields.Add(new TypeConfigItem
                     {
                         Name = key,
