@@ -206,6 +206,7 @@
     <Compile Include="BridgeIssues\0800\N881.cs" />
     <Compile Include="BridgeIssues\0800\N863.cs" />
     <Compile Include="BridgeIssues\0900\N999.cs" />
+    <Compile Include="BridgeIssues\1100\N1105.cs" />
     <Compile Include="BridgeIssues\TestBridgeIssues.cs" />
     <Compile Include="Convert\ConvertFromBase64Tests.cs" />
     <Compile Include="Convert\ConvertTestBase.cs" />
