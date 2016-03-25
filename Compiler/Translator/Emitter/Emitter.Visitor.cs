@@ -316,7 +316,8 @@ namespace Bridge.Translator
 
         public override void VisitUncheckedStatement(UncheckedStatement uncheckedStatement)
         {
-            uncheckedStatement.Body.AcceptChildren(this);
+            this.NoBraceBlock = uncheckedStatement.Body;
+            uncheckedStatement.Body.AcceptVisitor(this);
         }
 
         public override void VisitLockStatement(LockStatement lockStatement)
@@ -335,7 +336,8 @@ namespace Bridge.Translator
 
         public override void VisitCheckedStatement(CheckedStatement checkedStatement)
         {
-            checkedStatement.Body.AcceptChildren(this);
+            this.NoBraceBlock = checkedStatement.Body;
+            checkedStatement.Body.AcceptVisitor(this);
         }
     }
 }

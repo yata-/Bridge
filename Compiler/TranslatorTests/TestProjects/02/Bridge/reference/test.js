@@ -2146,6 +2146,9 @@
             }
 
             fn = function () {
+                if (Bridge.Class.staticInitSuspended) {
+                    return;
+                }
                 Class.$staticInit = null;
 
                 if (Class.$initMembers) {
@@ -2188,6 +2191,7 @@
                 exists,
                 i;
 
+            Bridge.Class.staticInitSuspended = true;
             for (i = 0; i < (nameParts.length - 1) ; i++) {
                 if (typeof scope[nameParts[i]] == "undefined") {
                     scope[nameParts[i]] = { };
@@ -2249,6 +2253,8 @@
             } else {
                 scope[name] = cls;
             }
+
+            Bridge.Class.staticInitSuspended = false;
 
             return scope;
         },

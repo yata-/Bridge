@@ -172,7 +172,7 @@
             return ((((i + j) | 0) + TestIssue921Nested.Issue921NestedOuter.Issue921Nested.getIntStatic()) | 0);
         },
         f4: function (i, j, k) {
-            var x = ((((((i + j) | 0) + k) | 0) + TestIssue921Nested.Issue921NestedOuter.Issue921Nested.getIntStatic()) | 0);
+            var x = (((((i + j) | 0) + k) | 0) + TestIssue921Nested.Issue921NestedOuter.Issue921Nested.getIntStatic()) | 0;
         },
         f5: function (value) {
             return ((value + 1) | 0);

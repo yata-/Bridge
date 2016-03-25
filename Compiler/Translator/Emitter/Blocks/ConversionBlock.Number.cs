@@ -376,22 +376,36 @@ namespace Bridge.Translator
                 }
                 else
                 {
-                    var skipWrap = isExplicit || targetType.IsKnownType(KnownTypeCode.Int64) ||
-                                 targetType.IsKnownType(KnownTypeCode.UInt64) ||
-                                 targetType.IsKnownType(KnownTypeCode.Int16) ||
-                                 targetType.IsKnownType(KnownTypeCode.SByte);
+                    var skipOuterWrap = (expression.Parent is VariableInitializer) || 
+                                        (expression.Parent is AssignmentExpression) ||
+                                        targetType.IsKnownType(KnownTypeCode.Int64) ||
+                                        targetType.IsKnownType(KnownTypeCode.UInt64) ||
+                                        targetType.IsKnownType(KnownTypeCode.Int16) ||
+                                        targetType.IsKnownType(KnownTypeCode.SByte);
 
-                    if (!skipWrap)
+                    bool skipInnerWrap = false;
+
+                    var rr = block.Emitter.Resolver.ResolveNode(expression is CastExpression ? ((CastExpression)expression).Expression : expression, block.Emitter);
+                    var memberTargetrr = rr as MemberResolveResult;
+                    bool isField = memberTargetrr != null && memberTargetrr.Member is IField &&
+                               (memberTargetrr.TargetResult is ThisResolveResult ||
+                                memberTargetrr.TargetResult is LocalResolveResult);
+
+                    if (rr is ThisResolveResult || rr is LocalResolveResult || isField)
                     {
-                        block.WriteOpenParentheses();
+                        skipInnerWrap = true;
+                    }
+
+                    if (!skipOuterWrap)
+                    {
                         block.WriteOpenParentheses();
                     }
 
                     if (targetType.IsKnownType(KnownTypeCode.Char))
                     {
-                        //expression.AcceptVisitor(block.Emitter);
-                        if (!skipWrap)
+                        if (!skipInnerWrap)
                         {
+                            block.WriteOpenParentheses();
                             block.AfterOutput += ")";
                         }
                         block.AfterOutput += " & 65535";
@@ -399,59 +413,57 @@ namespace Bridge.Translator
                     else if (targetType.IsKnownType(KnownTypeCode.SByte))
                     {
                         block.Write("Bridge.Int.sxb(");
-                        if (!isExplicit)
+                        if (!skipInnerWrap)
                         {
-                            block.Write("(");
+                            block.WriteOpenParentheses();
                             block.AfterOutput += ")";
                         }
-                        //expression.AcceptVisitor(block.Emitter);
                         block.AfterOutput += " & 255)";
                     }
                     else if (targetType.IsKnownType(KnownTypeCode.Byte))
                     {
-                        if (!skipWrap)
+                        if (!skipInnerWrap)
                         {
+                            block.WriteOpenParentheses();
                             block.AfterOutput += ")";
                         }
-                        //expression.AcceptVisitor(block.Emitter);
                         block.AfterOutput += " & 255";
                     }
                     else if (targetType.IsKnownType(KnownTypeCode.Int16))
                     {
                         block.Write("Bridge.Int.sxs(");
-                        if (!isExplicit)
+                        if (!skipInnerWrap)
                         {
-                            block.Write("(");
+                            block.WriteOpenParentheses();
                             block.AfterOutput += ")";
                         }
-                        //expression.AcceptVisitor(block.Emitter);
                         block.AfterOutput += " & 65535)";
                     }
                     else if (targetType.IsKnownType(KnownTypeCode.UInt16))
                     {
-                        if (!skipWrap)
+                        if (!skipInnerWrap)
                         {
+                            block.WriteOpenParentheses();
                             block.AfterOutput += ")";
                         }
-                        //expression.AcceptVisitor(block.Emitter);
                         block.AfterOutput += " & 65535";
                     }
                     else if (targetType.IsKnownType(KnownTypeCode.Int32))
                     {
-                        if (!skipWrap)
+                        if (!skipInnerWrap)
                         {
+                            block.WriteOpenParentheses();
                             block.AfterOutput += ")";
                         }
-                        //expression.AcceptVisitor(block.Emitter);
                         block.AfterOutput += " | 0";
                     }
                     else if (targetType.IsKnownType(KnownTypeCode.UInt32))
                     {
-                        if (!skipWrap)
+                        if (!skipInnerWrap)
                         {
+                            block.WriteOpenParentheses();
                             block.AfterOutput += ")";
                         }
-                        //expression.AcceptVisitor(block.Emitter);
                         block.AfterOutput += " >>> 0";
                     }
                     else if (targetType.IsKnownType(KnownTypeCode.Int64))
@@ -469,7 +481,7 @@ namespace Bridge.Translator
                         throw new ArgumentException("Can not narrow to " + targetType, "targetType");
                     }
 
-                    if (!skipWrap)
+                    if (!skipOuterWrap)
                     {
                         block.AfterOutput += ")";
                     }
