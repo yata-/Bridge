@@ -17,6 +17,8 @@ namespace Bridge
 
         public static extern T[] ToArray<T>(IEnumerable<T> items);
 
+        public static extern T Identity<T>(T arg, params object[] args);
+
         [Template("delete {0}")]
         public static extern void Delete(object value);
 

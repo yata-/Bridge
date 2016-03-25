@@ -1114,7 +1114,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).defaultIfEmpty(Bridge.getDefaultValue({TSource}))")]
+        [Template("Bridge.Linq.Enumerable.from({source}).defaultIfEmpty({TSource:default})")]
         public static EnumerableInstance<TSource> DefaultIfEmpty<TSource>(this IEnumerable<TSource> source)
         {
             return default(EnumerableInstance<TSource>);
@@ -1242,7 +1242,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).elementAtOrDefault({index}, Bridge.getDefaultValue({TSource}))")]
+        [Template("Bridge.Linq.Enumerable.from({source}).elementAtOrDefault({index}, {TSource:default})")]
         public static TSource ElementAtOrDefault<TSource>(this IEnumerable<TSource> source, int index)
         {
             return default(TSource);
@@ -1398,7 +1398,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).firstOrDefault(null, Bridge.getDefaultValue({TSource}))")]
+        [Template("Bridge.Linq.Enumerable.from({source}).firstOrDefault(null, {TSource:default})")]
         public static TSource FirstOrDefault<TSource>(this IEnumerable<TSource> source)
         {
             return default(TSource);
@@ -1425,7 +1425,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or predicate is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).firstOrDefault({predicate}, Bridge.getDefaultValue({TSource}))")]
+        [Template("Bridge.Linq.Enumerable.from({source}).firstOrDefault({predicate}, {TSource:default})")]
         public static TSource FirstOrDefault<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             return default(TSource);
@@ -2116,7 +2116,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).lastOrDefault(null, Bridge.getDefaultValue({TSource}))")]
+        [Template("Bridge.Linq.Enumerable.from({source}).lastOrDefault(null, {TSource:default})")]
         public static TSource LastOrDefault<TSource>(this IEnumerable<TSource> source)
         {
             return default(TSource);
@@ -2143,7 +2143,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or predicate is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).lastOrDefault({predicate}, Bridge.getDefaultValue({TSource}))")]
+        [Template("Bridge.Linq.Enumerable.from({source}).lastOrDefault({predicate}, {TSource:default})")]
         public static TSource LastOrDefault<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             return default(TSource);
@@ -4198,7 +4198,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// The input sequence contains more than one element.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).singleOrDefault(null, Bridge.getDefaultValue({TSource}))")]
+        [Template("Bridge.Linq.Enumerable.from({source}).singleOrDefault(null, {TSource:default})")]
         public static TSource SingleOrDefault<TSource>(this IEnumerable<TSource> source)
         {
             return default(TSource);
@@ -4225,7 +4225,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or predicate is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).singleOrDefault({predicate}, Bridge.getDefaultValue({TSource}))")]
+        [Template("Bridge.Linq.Enumerable.from({source}).singleOrDefault({predicate}, {TSource:default})")]
         public static TSource SingleOrDefault<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             return default(TSource);

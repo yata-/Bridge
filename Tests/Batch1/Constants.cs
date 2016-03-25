@@ -82,9 +82,10 @@ namespace Bridge.ClientTest
         public const string MODULE_ARGUMENTEXCEPTION = PREFIX_EXCEPTIONS; // + "ArgumentException";
         public const string MODULE_NULLREFERENCEEXCEPTION = PREFIX_EXCEPTIONS; // + "NullReferenceException";
         public const string MODULE_ARGUMENTOUTOFRANGEEXCEPTION = PREFIX_EXCEPTIONS; // + "ArgumentOutOfRangeException";
-
+        
         public const string MODULE_THREADING = "Threading"; // + "ArgumentException";
         public const string MODULE_DIAGNOSTICS = "Diagnostics";
+        public const string MODULE_CHECKED_UNCKECKED = "Checked/Unckecked";
 
         public const string IGNORE_DATE = null;
     }

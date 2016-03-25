@@ -95,7 +95,7 @@ namespace Bridge.Build
 
                 translator.BridgeLocation = Path.Combine(this.AssembliesPath, "Bridge.dll");
                 translator.Rebuild = false;
-                translator.Log = new Translator.Logging.Logger("Bridge.Build.Task", true, new SimpleFileLoggerWriter());
+                translator.Log = new Translator.Logging.Logger("Bridge.Build.Task", true, LoggerLevel.Trace, new SimpleFileLoggerWriter());
 
                 translator.Log.Info("Translator properties:");
                 translator.Log.Info("\tBridgeLocation:" + translator.BridgeLocation ?? "");

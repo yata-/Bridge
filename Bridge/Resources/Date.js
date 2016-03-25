@@ -761,11 +761,11 @@ var date = {
         },
 
         subdt: function(d, t) {
-            return Bridge.hasValue(d) && Bridge.hasValue(t) ? (new Date(d - new Date(t.ticks / 10000))) : null;
+            return Bridge.hasValue(d) && Bridge.hasValue(t) ? (new Date(d - new Date(t.ticks.toNumberDivided(10000)))) : null;
         },
 
         adddt: function(d, t) {
-            return Bridge.hasValue(d) && Bridge.hasValue(t) ? (new Date(d.getTime() + (t.ticks / 10000))) : null;
+            return Bridge.hasValue(d) && Bridge.hasValue(t) ? (new Date(d.getTime() + t.ticks.toNumberDivided(10000))) : null;
         },
 
         subdd: function (a, b) {

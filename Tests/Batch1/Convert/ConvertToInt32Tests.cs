@@ -11,17 +11,6 @@ namespace Bridge.ClientTest.ConvertTests
     [TestFixture(TestNameFormat = "Convert.ToInt32 - {0}")]
     public class ConvertToInt32Tests : ConvertTestBase<int>
     {
-        private static class Wrappers
-        {
-            // TODO: These wrappers help to avoid issues #689 and #743. They can be deleted when issues are fixed.
-            // For more infromation see comment: https://github.com/bridgedotnet/Bridge/issues/743#issuecomment-183905400
-
-            public static int ConvertFromStrWithBase(string value, int fromBase)
-            {
-                return Convert.ToInt32(value, fromBase);
-            }
-        }
-
         [Test]
         public void FromBoolean()
         {
@@ -147,22 +136,34 @@ namespace Bridge.ClientTest.ConvertTests
         [Test]
         public void FromStringWithBase()
         {
-            string[] testValues = { null, null, null, null, "7FFFFFFF", "2147483647", "17777777777", "1111111111111111111111111111111", "80000000", "-2147483648", "20000000000", "10000000000000000000000000000000", };
-            int[] testBases = { 10, 2, 8, 16, 16, 10, 8, 2, 16, 10, 8, 2, };
-            int[] expectedValues = { 0, 0, 0, 0, int.MaxValue, int.MaxValue, int.MaxValue, int.MaxValue, int.MinValue, int.MinValue, int.MinValue, int.MinValue, };
-            VerifyFromStringWithBase(Wrappers.ConvertFromStrWithBase, testValues, testBases, expectedValues);
+            string[] testValues = {
+                null, null, null, null,
+                ConvertConstants.INT32_MAX_STRING_BASE_16, int.MaxValue.ToString(), ConvertConstants.INT32_MAX_STRING_BASE_8, ConvertConstants.INT32_MAX_STRING_BASE_2,
+                ConvertConstants.INT32_MIN_STRING_BASE_16, int.MinValue.ToString(), ConvertConstants.INT32_MIN_STRING_BASE_8, ConvertConstants.INT32_MIN_STRING_BASE_2
+            };
+            int[] testBases = {
+                10, 2, 8, 16,
+                16, 10, 8, 2,
+                16, 10, 8, 2
+            };
+            int[] expectedValues = {
+                0, 0, 0, 0,
+                int.MaxValue, int.MaxValue, int.MaxValue, int.MaxValue,
+                int.MinValue, int.MinValue, int.MinValue, int.MinValue
+            };
+            VerifyFromStringWithBase( Convert.ToInt32, testValues, testBases, expectedValues);
 
-            string[] overflowValues = { "2147483648", "-2147483649", "111111111111111111111111111111111", "1FFFFffff", "777777777777" };
+            string[] overflowValues = { ConvertConstants.INT32_OVERFLOW_MAX_STRING, ConvertConstants.INT32_OVERFLOW_MIN_STRING, ConvertConstants.INT32_OVERFLOW_MAX_STRING_BASE_2, ConvertConstants.INT32_OVERFLOW_MAX_STRING_BASE_16, ConvertConstants.INT32_OVERFLOW_MAX_STRING_BASE_8 };
             int[] overflowBases = { 10, 10, 2, 16, 8 };
-            VerifyFromStringWithBaseThrows<OverflowException>(Wrappers.ConvertFromStrWithBase, overflowValues, overflowBases);
+            VerifyFromStringWithBaseThrows<OverflowException>( Convert.ToInt32, overflowValues, overflowBases);
 
             string[] formatExceptionValues = { "12", "ffffffffffffffffffff" };
             int[] formatExceptionBases = { 2, 8 };
-            VerifyFromStringWithBaseThrows<FormatException>(Wrappers.ConvertFromStrWithBase, formatExceptionValues, formatExceptionBases);
+            VerifyFromStringWithBaseThrows<FormatException>( Convert.ToInt32, formatExceptionValues, formatExceptionBases);
 
             string[] argumentExceptionValues = { "10", "11", "abba", "-ab" };
             int[] argumentExceptionBases = { -1, 3, 0, 16 };
-            VerifyFromStringWithBaseThrows<ArgumentException>(Wrappers.ConvertFromStrWithBase, argumentExceptionValues, argumentExceptionBases);
+            VerifyFromStringWithBaseThrows<ArgumentException>( Convert.ToInt32, argumentExceptionValues, argumentExceptionBases);
         }
 
         [Test]
