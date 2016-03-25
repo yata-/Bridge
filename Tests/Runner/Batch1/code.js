@@ -3714,6 +3714,21 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1085', {
+        statics: {
+            testInlineArrayExpand: function () {
+                var part1 = ["Hello", "World"];
+                var part2 = ["Part", "Two"];
+                var merged = [];
+                merged.push("Lets", "Beginn");
+                merged.push.apply(merged,part1);
+                merged.push.apply(merged,part2);
+    
+                Bridge.Test.Assert.areEqual(["Lets", "Beginn", "Hello", "World", "Part", "Two"], merged);
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
