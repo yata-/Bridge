@@ -4,7 +4,8 @@ using Bridge.Translator.Constants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Reflection;
+using System.Text;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
 using ICSharpCode.NRefactory.Semantics;
@@ -12,6 +13,7 @@ using ICSharpCode.NRefactory.TypeSystem;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
 using Mono.Cecil;
 using Object.Net.Utilities;
+using ICustomAttributeProvider = Mono.Cecil.ICustomAttributeProvider;
 
 namespace Bridge.Translator
 {
@@ -211,17 +213,66 @@ namespace Bridge.Translator
             return this.HasAttribute(type.Attributes, Translator.Bridge_ASSEMBLY + ".ObjectLiteralAttribute");
         }
 
+        private Stack<TypeDefinition> _stack = new Stack<TypeDefinition>(); 
         public virtual string GetCustomTypeName(TypeDefinition type, IEmitter emitter)
         {
-            var name = this.GetAttributeValue(type.CustomAttributes, Translator.Bridge_ASSEMBLY + ".NameAttribute");
+            if (this._stack.Contains(type))
+            {
+                return null;
+            }
+
+            var nsAtrr = this.GetAttribute(type.CustomAttributes, Translator.Bridge_ASSEMBLY + ".NamespaceAttribute");
+            bool hasNs = nsAtrr != null && nsAtrr.ConstructorArguments.Count > 0;
+            var nameAttr = this.GetAttribute(type.CustomAttributes, Translator.Bridge_ASSEMBLY + ".NameAttribute");
+
+            string name = null;
+            bool changeCase = false;
+            if (nameAttr != null && nameAttr.ConstructorArguments.Count > 0)
+            {
+                if (nameAttr.ConstructorArguments[0].Value is string)
+                {
+                    name = (string)nameAttr.ConstructorArguments[0].Value;
+                }
+                else if (nameAttr.ConstructorArguments[0].Value is bool)
+                {
+                    var boolValue = (bool)nameAttr.ConstructorArguments[0].Value;
+
+                    if (boolValue)
+                    {
+                        if (hasNs)
+                        {
+                            changeCase = true;
+                        }
+                        else
+                        {
+                            this._stack.Push(type);
+                            name = BridgeTypes.ToJsName(type, emitter);
+                            var i = name.LastIndexOf(".");
+
+                            if (i > -1)
+                            {
+                                char[] chars = name.ToCharArray();
+                                chars[i + 1] = Char.ToLowerInvariant(chars[i + 1]);
+                                name = new string(chars);
+                            }
+                            else
+                            {
+                                name = name.ToLowerCamelCase();
+                            }
+                            this._stack.Pop();
+
+                            return name;
+                        }
+                    }
+                }
+            }
 
             if (!string.IsNullOrEmpty(name))
             {
                 return name;
             }
-
-            var nsAtrr = this.GetAttribute(type.CustomAttributes, Translator.Bridge_ASSEMBLY + ".NamespaceAttribute");
-            if (nsAtrr != null && nsAtrr.ConstructorArguments.Count > 0)
+            
+            if (hasNs)
             {
                 var arg = nsAtrr.ConstructorArguments[0];
                 name = "";
@@ -240,7 +291,7 @@ namespace Bridge.Translator
                     name = (string.IsNullOrEmpty(name) ? "" : (name + ".")) + BridgeTypes.GetParentNames(type);
                 }
 
-                name = (string.IsNullOrEmpty(name) ? "" : (name + ".")) + BridgeTypes.ConvertName(type.Name);
+                name = (string.IsNullOrEmpty(name) ? "" : (name + ".")) + BridgeTypes.ConvertName(changeCase ? type.Name.ToLowerCamelCase() : type.Name);
 
                 return name;
             }

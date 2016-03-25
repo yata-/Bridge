@@ -3699,6 +3699,28 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1058', {
+        statics: {
+            testNameTrue: function () {
+                Bridge.Test.Assert.areEqual("Bridge.ClientTest.BridgeIssues.Bridge1058.overlayType", Bridge.getTypeName(Bridge.ClientTest.BridgeIssues.Bridge1058.overlayType));
+                Bridge.Test.Assert.areEqual("$Bridge1058.Bridge1058.class1", Bridge.getTypeName($Bridge1058.Bridge1058.class1));
+                Bridge.Test.Assert.areEqual("Bridge1058.class2", Bridge.getTypeName(Bridge1058.class2));
+            }
+        }
+    });
+    
+    Bridge.define('$Bridge1058.Bridge1058.class1');
+    
+    Bridge.define('Bridge1058.class2');
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1058.overlayType', {
+        statics: {
+            cIRCLE: 0,
+            mARKER: 1
+        },
+        $enum: true
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1076', {
         statics: {
             testInlineConstantAsMemberReference: function () {
