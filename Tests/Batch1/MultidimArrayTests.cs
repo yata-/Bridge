@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Bridge.Test;
+
+using System;
 using System.Collections.Generic;
-using Bridge.Test;
-using Bridge.ClientTest;
+
 
 namespace Bridge.ClientTest
 {

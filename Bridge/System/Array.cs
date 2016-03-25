@@ -1,6 +1,7 @@
 using Bridge;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace System
 {
@@ -26,6 +27,84 @@ namespace System
             {
             }
         }
+
+        [Template("new Bridge.ReadOnlyCollection$1({T})({array})")]
+        public extern static ReadOnlyCollection<T> AsReadOnly<T>(T[] array);
+
+        [Template("Bridge.Array.convertAll({array}, {converter})")]
+        public extern static TOutput[] ConvertAll<TInput, TOutput>(TInput[] array, Converter<TInput, TOutput> converter);
+
+        [Template("(Bridge.Array.findIndex({array}, {match}) !== -1)")]
+        public extern static bool Exists<T>(T[] array, Predicate<T> match);
+
+        [Template("Bridge.Array.find({T}, {array}, {match})")]
+        public extern static T Find<T>(T[] array, Predicate<T> match);
+
+        [Template("Bridge.Array.findAll({array}, {match})")]
+        public extern static T[] FindAll<T>(T[] array, Predicate<T> match);
+
+        [Template("Bridge.Array.findIndex({array}, {match})")]
+        public extern static int FindIndex<T>(T[] array, Predicate<T> match);
+
+        [Template("Bridge.Array.findIndex({array}, {startIndex}, {match})")]
+        public extern static int FindIndex<T>(T[] array, int startIndex, Predicate<T> match);
+
+        [Template("Bridge.Array.findIndex({array}, {startIndex}, {count}, {match})")]
+        public extern static int FindIndex<T>(T[] array, int startIndex, int count, Predicate<T> match);
+
+        [Template("Bridge.Array.findLast({T}, {array}, {match})")]
+        public extern static T FindLast<T>(T[] array, Predicate<T> match);
+
+        [Template("Bridge.Array.findLastIndex({array}, {match})")]
+        public extern static int FindLastIndex<T>(T[] array, Predicate<T> match);
+
+        [Template("Bridge.Array.findLastIndex({array}, {startIndex}, {match})")]
+        public extern static int FindLastIndex<T>(T[] array, int startIndex, Predicate<T> match);
+
+        [Template("Bridge.Array.findLastIndex({array}, {startIndex}, {count}, {match})")]
+        public extern static int FindLastIndex<T>(T[] array, int startIndex, int count, Predicate<T> match);
+
+        [Template("Bridge.Array.forEach({array}, {action})")]
+        public extern static void ForEach<T>(T[] array, Action<T> action);
+
+        [Template("Bridge.Array.indexOfT({array}, {value})")]
+        public extern static int IndexOf(Array array, Object value);
+
+        [Template("Bridge.Array.indexOfT({array}, {value}, {startIndex})")]
+        public extern static int IndexOf(Array array, Object value, int startIndex);
+
+        [Template("Bridge.Array.indexOfT({array}, {value}, {startIndex}, {count})")]
+        public extern static int IndexOf(Array array, Object value, int startIndex, int count);
+
+        [Template("Bridge.Array.indexOfT({array}, {value})")]
+        public extern static int IndexOf<T>(T[] array, T value);
+
+        [Template("Bridge.Array.indexOfT({array}, {value}, {startIndex})")]
+        public extern static int IndexOf<T>(T[] array, T value, int startIndex);
+
+        [Template("Bridge.Array.indexOfT({array}, {value}, {startIndex}, {count})")]
+        public static extern int IndexOf<T>(T[] array, T value, int startIndex, int count);
+
+        [Template("Bridge.Array.lastIndexOfT({array}, {value})")]
+        public extern static int LastIndexOf(Array array, Object value);
+
+        [Template("Bridge.Array.lastIndexOfT({array}, {value}, {startIndex})")]
+        public extern static int LastIndexOf(Array array, Object value, int startIndex);
+
+        [Template("Bridge.Array.lastIndexOfT({array}, {value}, {startIndex}, {count})")]
+        public extern static int LastIndexOf(Array array, Object value, int startIndex, int count);
+
+        [Template("Bridge.Array.lastIndexOfT({array}, {value})")]
+        public extern static int LastIndexOf<T>(T[] array, T value);
+
+        [Template("Bridge.Array.lastIndexOfT({array}, {value}, {startIndex})")]
+        public extern static int LastIndexOf<T>(T[] array, T value, int startIndex);
+
+        [Template("Bridge.Array.lastIndexOfT({array}, {value}, {startIndex}, {count})")]
+        public static extern int LastIndexOf<T>(T[] array, T value, int startIndex, int count);
+
+        [Template("Bridge.Array.trueForAll({array}, {match})")]
+        public extern static bool TrueForAll<T>(T[] array, Predicate<T> match);
 
         public extern Array Concat(params object[] items);
 
@@ -128,7 +207,7 @@ namespace System
         [Template("Bridge.Array.init({count}, {value})")]
         public static extern T[] Repeat<T>(T value, int count);
 
-        [Template("Bridge.Array.fill({dst}, {T}.getDefaultValue || Bridge.getDefaultValue({T}), {index}, {count})")]
+        [Template("Bridge.Array.fill({dst}, {T:defaultFn}, {index}, {count})")]
         public static extern void Clear<T>(T[] dst, int index, int count);
 
         [Template("Bridge.Array.copy({src}, {spos}, {dst}, {dpos}, {len})")]
@@ -137,14 +216,14 @@ namespace System
         [Template("Bridge.Array.copy({src}, 0, {dst}, 0, {len})")]
         public static extern void Copy(Array src, Array dst, int len);
 
-        [Template("Bridge.Array.copy({this}, {index}, {array}, 0, {this}.length - {index})")]
+        [Template("Bridge.Array.copy({this}, 0, {array}, {index}, {this}.length)")]
         public extern void CopyTo(Array array, int index);
 
-        [Template("Bridge.Array.copy({this}, {index}.toNumber(), {array}, 0, {this}.length - {index}.toNumber())")]
+        [Template("Bridge.Array.copy({this}, 0, {array}, {index}.toNumber(), {this}.length)")]
         public extern void CopyTo(Array array, long index);
 
-        [Template("Bridge.Array.resize({array}, {newSize}, {T}.getDefaultValue || Bridge.getDefaultValue({T}))")]
-        public static extern void Resize<T>(T[] array, int newSize);
+        [Template("Bridge.Array.resize({array}, {newSize}, {T:defaultFn})")]
+        public static extern void Resize<T>(ref T[] array, int newSize);
 
         [Template("Bridge.Array.reverse({array})")]
         public static extern void Reverse(Array array);
