@@ -6,7 +6,7 @@
             test: 0,
             config: {
                 init: function () {
-                    this.test = Bridge.get(Test.BridgeIssues.N883A.Globals).myVar;
+                    this.test = Test.BridgeIssues.N883A.Globals.myVar;
                 }
             }
         }

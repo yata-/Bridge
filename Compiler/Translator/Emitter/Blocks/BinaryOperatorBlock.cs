@@ -116,6 +116,8 @@ namespace Bridge.Translator
             var expectedType = this.Emitter.Resolver.Resolver.GetExpectedType(binaryOperatorExpression);
             bool isDecimalExpected = Helpers.IsDecimalType(expectedType, this.Emitter.Resolver);
             bool isDecimal = Helpers.IsDecimalType(resolveOperator.Type, this.Emitter.Resolver);
+            bool isLongExpected = Helpers.Is64Type(expectedType, this.Emitter.Resolver);
+            bool isLong = Helpers.Is64Type(resolveOperator.Type, this.Emitter.Resolver);
             OperatorResolveResult orr = resolveOperator as OperatorResolveResult;
             var leftResolverResult = this.Emitter.Resolver.ResolveNode(binaryOperatorExpression.Left, this.Emitter);
             var rightResolverResult = this.Emitter.Resolver.ResolveNode(binaryOperatorExpression.Right, this.Emitter);
@@ -123,6 +125,9 @@ namespace Bridge.Translator
             string variable = null;
             bool leftIsNull = this.BinaryOperatorExpression.Left is NullReferenceExpression;
             bool rightIsNull = this.BinaryOperatorExpression.Right is NullReferenceExpression;
+            bool isUint = resolveOperator.Type.IsKnownType(KnownTypeCode.UInt16) ||
+                          resolveOperator.Type.IsKnownType(KnownTypeCode.UInt32) ||
+                          resolveOperator.Type.IsKnownType(KnownTypeCode.UInt64);
 
             if ((leftIsNull || rightIsNull) && (binaryOperatorExpression.Operator == BinaryOperatorType.Equality || binaryOperatorExpression.Operator == BinaryOperatorType.InEquality))
             {
@@ -176,6 +181,25 @@ namespace Bridge.Translator
             {
                 this.HandleDecimal(resolveOperator);
                 return;
+            }
+            
+            var isFloatResult = Helpers.IsFloatType(resolveOperator.Type, this.Emitter.Resolver);
+            var isLeftLong = Helpers.Is64Type(leftResolverResult.Type, this.Emitter.Resolver);
+            var isRightLong = Helpers.Is64Type(rightResolverResult.Type, this.Emitter.Resolver);
+
+            if (!((expectedType.IsKnownType(KnownTypeCode.String) || resolveOperator.Type.IsKnownType(KnownTypeCode.String)) && binaryOperatorExpression.Operator == BinaryOperatorType.Add) && (isLeftLong || isRightLong))
+            {
+                isLong = true;
+                isLongExpected = true;    
+            }
+            
+            if (isLong && isLongExpected && binaryOperatorExpression.Operator != BinaryOperatorType.NullCoalescing)
+            {
+                if (!isFloatResult || binaryOperatorExpression.Operator == BinaryOperatorType.Divide && isLeftLong)
+                {
+                    this.HandleLong(resolveOperator, isUint);
+                    return;
+                }
             }
 
             var delegateOperator = false;
@@ -261,23 +285,6 @@ namespace Bridge.Translator
                     this.WriteSpace();
                 }
                 bool isBool = NullableType.IsNullable(resolveOperator.Type) ? NullableType.GetUnderlyingType(resolveOperator.Type).IsKnownType(KnownTypeCode.Boolean) : resolveOperator.Type.IsKnownType(KnownTypeCode.Boolean);
-                bool isUint = resolveOperator.Type.IsKnownType(KnownTypeCode.UInt16) ||
-                              resolveOperator.Type.IsKnownType(KnownTypeCode.UInt32) ||
-                              resolveOperator.Type.IsKnownType(KnownTypeCode.UInt64);
-
-                bool is64bit = resolveOperator.Type.IsKnownType(KnownTypeCode.UInt64) ||
-                               resolveOperator.Type.IsKnownType(KnownTypeCode.Int64);
-
-                bool isBitwise = binaryOperatorExpression.Operator == BinaryOperatorType.BitwiseAnd ||
-                                 binaryOperatorExpression.Operator == BinaryOperatorType.BitwiseOr ||
-                                 binaryOperatorExpression.Operator == BinaryOperatorType.ExclusiveOr ||
-                                 binaryOperatorExpression.Operator == BinaryOperatorType.ShiftLeft ||
-                                 binaryOperatorExpression.Operator == BinaryOperatorType.ShiftRight;
-
-                if (isBitwise && is64bit)
-                {
-                    throw new EmitterException(this.BinaryOperatorExpression, "Bitwise operations are not allowed on 64-bit types");
-                }
 
                 switch (binaryOperatorExpression.Operator)
                 {
@@ -429,7 +436,7 @@ namespace Bridge.Translator
             }
         }
 
-        private void HandleDecimal(ResolveResult resolveOperator)
+        private void HandleType(ResolveResult resolveOperator, KnownTypeCode typeCode, string op_name, string action)
         {
             var orr = resolveOperator as OperatorResolveResult;
             var method = orr != null ? orr.UserDefinedOperatorMethod : null;
@@ -437,7 +444,7 @@ namespace Bridge.Translator
             if (orr != null && method == null)
             {
                 var name = Helpers.GetBinaryOperatorMethodName(this.BinaryOperatorExpression.Operator);
-                var type = this.Emitter.Resolver.Compilation.FindType(KnownTypeCode.Decimal);
+                var type = this.Emitter.Resolver.Compilation.FindType(typeCode);
                 method = type.GetMethods(m => m.Name == name, GetMemberOptions.IgnoreInheritedMembers).FirstOrDefault();
             }
 
@@ -448,71 +455,14 @@ namespace Bridge.Translator
                 if (orr.IsLiftedOperator)
                 {
                     this.Write(Bridge.Translator.Emitter.ROOT + ".Nullable.");
-                    string action = "lift2";
-                    string op_name = null;
-
-                    switch (this.BinaryOperatorExpression.Operator)
-                    {
-                        case BinaryOperatorType.GreaterThan:
-                            op_name = "gt";
-                            action = "liftcmp";
-                            break;
-
-                        case BinaryOperatorType.GreaterThanOrEqual:
-                            op_name = "gte";
-                            action = "liftcmp";
-                            break;
-
-                        case BinaryOperatorType.Equality:
-                            op_name = "equals";
-                            action = "lifteq";
-                            break;
-
-                        case BinaryOperatorType.InEquality:
-                            op_name = "ne";
-                            action = "liftne";
-                            break;
-
-                        case BinaryOperatorType.LessThan:
-                            op_name = "lt";
-                            action = "liftcmp";
-                            break;
-
-                        case BinaryOperatorType.LessThanOrEqual:
-                            op_name = "lte";
-                            action = "liftcmp";
-                            break;
-
-                        case BinaryOperatorType.Add:
-                            op_name = "add";
-                            break;
-
-                        case BinaryOperatorType.Subtract:
-                            op_name = "sub";
-                            break;
-
-                        case BinaryOperatorType.Multiply:
-                            op_name = "mul";
-                            break;
-
-                        case BinaryOperatorType.Divide:
-                            op_name = "div";
-                            break;
-
-                        case BinaryOperatorType.Modulus:
-                            op_name = "mod";
-                            break;
-
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-
                     this.Write(action);
                     this.WriteOpenParentheses();
                     this.WriteScript(op_name);
                     this.WriteComma();
                     new ExpressionListBlock(this.Emitter,
-                        new Expression[] { this.BinaryOperatorExpression.Left, this.BinaryOperatorExpression.Right }, null).Emit();
+                        new Expression[] {this.BinaryOperatorExpression.Left, this.BinaryOperatorExpression.Right}, null)
+                        .Emit();
+                    this.AddOveflowFlag(typeCode, op_name);
                     this.WriteCloseParentheses();
                 }
                 else if (!string.IsNullOrWhiteSpace(inline))
@@ -530,10 +480,201 @@ namespace Bridge.Translator
                     this.WriteOpenParentheses();
 
                     new ExpressionListBlock(this.Emitter,
-                        new Expression[] { this.BinaryOperatorExpression.Left, this.BinaryOperatorExpression.Right }, null).Emit();
+                        new Expression[] {this.BinaryOperatorExpression.Left, this.BinaryOperatorExpression.Right}, null)
+                        .Emit();
+                    this.AddOveflowFlag(typeCode, op_name);
                     this.WriteCloseParentheses();
                 }
             }
+            else
+            {
+                if (orr.IsLiftedOperator)
+                {
+                    this.Write(Bridge.Translator.Emitter.ROOT + ".Nullable.");
+                    this.Write(action);
+                    this.WriteOpenParentheses();
+                    this.WriteScript(op_name);
+                    this.WriteComma();
+                    new ExpressionListBlock(this.Emitter,
+                        new Expression[] { this.BinaryOperatorExpression.Left, this.BinaryOperatorExpression.Right }, null)
+                        .Emit();
+                    this.AddOveflowFlag(typeCode, op_name);
+                    this.WriteCloseParentheses();
+                }
+                else
+                {
+                    this.BinaryOperatorExpression.Left.AcceptVisitor(this.Emitter);
+                    this.WriteDot();
+                    this.Write(op_name);
+                    this.WriteOpenParentheses();
+                    this.BinaryOperatorExpression.Right.AcceptVisitor(this.Emitter);
+                    this.AddOveflowFlag(typeCode, op_name);
+                    this.WriteCloseParentheses();    
+                }
+            }
+        }
+
+        private void AddOveflowFlag(KnownTypeCode typeCode, string op_name)
+        {
+            if ((typeCode == KnownTypeCode.Int64 || typeCode == KnownTypeCode.UInt64) && ConversionBlock.IsInCheckedContext(this.Emitter, this.BinaryOperatorExpression))
+            {
+                if (op_name == "add" || op_name == "sub" || op_name == "mul")
+                {
+                    this.Write(", 1");
+                }
+            }
+        }
+
+        private void HandleDecimal(ResolveResult resolveOperator)
+        {
+            string action = "lift2";
+            string op_name = null;
+
+            switch (this.BinaryOperatorExpression.Operator)
+            {
+                case BinaryOperatorType.GreaterThan:
+                    op_name = "gt";
+                    action = "liftcmp";
+                    break;
+
+                case BinaryOperatorType.GreaterThanOrEqual:
+                    op_name = "gte";
+                    action = "liftcmp";
+                    break;
+
+                case BinaryOperatorType.Equality:
+                    op_name = "equals";
+                    action = "lifteq";
+                    break;
+
+                case BinaryOperatorType.InEquality:
+                    op_name = "ne";
+                    action = "liftne";
+                    break;
+
+                case BinaryOperatorType.LessThan:
+                    op_name = "lt";
+                    action = "liftcmp";
+                    break;
+
+                case BinaryOperatorType.LessThanOrEqual:
+                    op_name = "lte";
+                    action = "liftcmp";
+                    break;
+
+                case BinaryOperatorType.Add:
+                    op_name = "add";
+                    break;
+
+                case BinaryOperatorType.Subtract:
+                    op_name = "sub";
+                    break;
+
+                case BinaryOperatorType.Multiply:
+                    op_name = "mul";
+                    break;
+
+                case BinaryOperatorType.Divide:
+                    op_name = "div";
+                    break;
+
+                case BinaryOperatorType.Modulus:
+                    op_name = "mod";
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            this.HandleType(resolveOperator, KnownTypeCode.Decimal,  op_name, action);
+        }
+
+        private void HandleLong(ResolveResult resolveOperator, bool isUint)
+        {
+            string action = "lift2";
+            string op_name = null;
+
+            switch (this.BinaryOperatorExpression.Operator)
+            {
+                case BinaryOperatorType.GreaterThan:
+                    op_name = "gt";
+                    action = "liftcmp";
+                    break;
+
+                case BinaryOperatorType.GreaterThanOrEqual:
+                    op_name = "gte";
+                    action = "liftcmp";
+                    break;
+
+                case BinaryOperatorType.Equality:
+                    op_name = "equals";
+                    action = "lifteq";
+                    break;
+
+                case BinaryOperatorType.InEquality:
+                    op_name = "ne";
+                    action = "liftne";
+                    break;
+
+                case BinaryOperatorType.LessThan:
+                    op_name = "lt";
+                    action = "liftcmp";
+                    break;
+
+                case BinaryOperatorType.LessThanOrEqual:
+                    op_name = "lte";
+                    action = "liftcmp";
+                    break;
+
+                case BinaryOperatorType.Add:
+                    op_name = "add";
+                    break;
+
+                case BinaryOperatorType.Subtract:
+                    op_name = "sub";
+                    break;
+
+                case BinaryOperatorType.Multiply:
+                    op_name = "mul";
+                    break;
+
+                case BinaryOperatorType.Divide:
+                    op_name = "div";
+                    if (Helpers.IsFloatType(resolveOperator.Type, this.Emitter.Resolver))
+                    {
+                        op_name = "toNumberDivided";
+                    }
+                    break;
+
+                case BinaryOperatorType.Modulus:
+                    op_name = "mod";
+                    break;
+
+                case BinaryOperatorType.BitwiseAnd:
+                    op_name = "and";
+                    break;
+
+                case BinaryOperatorType.BitwiseOr:
+                    op_name = "or";
+                    break;
+
+                case BinaryOperatorType.ExclusiveOr:
+                    op_name = "xor";
+                    break;
+
+                case BinaryOperatorType.ShiftLeft:
+                    op_name = "shl";
+                    break;
+
+                case BinaryOperatorType.ShiftRight:
+                    op_name = isUint ? "shru" : "shr";
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            this.HandleType(resolveOperator, isUint ? KnownTypeCode.UInt64  : KnownTypeCode.Int64, op_name, action);
         }
     }
 }

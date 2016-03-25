@@ -72,11 +72,9 @@ namespace Bridge.ClientTest
             Assert.Fail("Should not get to statement after catch");
         }
 
-        //[System.Runtime.CompilerServices.InlineCode("(function() {{ throw 'The message'; }})()")]
         [Template("(function() {{ throw 'The message'; }})()")]
         private static void ThrowIt() { }
 
-        [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void CanCatchStringAsException()
         {
@@ -97,8 +95,7 @@ namespace Bridge.ClientTest
             Assert.Fail("Should not get to statement after catch");
         }
 
-        [IgnoreTest(Until = Constants.IGNORE_DATE)]
-        [Test(Name = "Exception - {0}", ExpectedCount = 0)]
+        [Test(Name = "Exception - {0}", ExpectedCount = 1)]
         public void CanCatchStringAsCatchAll()
         {
             try
@@ -112,6 +109,7 @@ namespace Bridge.ClientTest
             }
             catch
             {
+                Assert.True(true);
                 return;
             }
             Assert.Fail("Should not get to statement after catch");

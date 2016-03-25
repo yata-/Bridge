@@ -40,11 +40,18 @@ namespace Bridge.Translator
             }
         }
 
+        public IEnumerable<IAssemblyReference> Assemblies
+        {
+            get; 
+            private set;
+        }
+
         public MemberResolver(IList<ParsedSourceFile> sourceFiles, IEnumerable<IAssemblyReference> assemblies)
         {
             this.project = null;
             this.lastFileName = null;
             this.sourceFiles = sourceFiles;
+            this.Assemblies = assemblies;
 
             this.project = new CSharpProjectContent();
             this.project = this.project.AddAssemblyReferences(assemblies);
