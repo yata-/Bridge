@@ -52,7 +52,7 @@
             return x;
         },
         f2: function (x) {
-            return Bridge.get(TestIssue921Nested.Issue921NestedOuter.Issue921Nested).computeNumberStatic(x);
+            return TestIssue921Nested.Issue921NestedOuter.Issue921Nested.computeNumberStatic(x);
         }
     });
     
@@ -85,7 +85,7 @@
         },
         constructor: function (offset) {
             this._offset = offset;
-            Bridge.get(TestIssue921Nested.Issue921NestedOuter.Issue921Nested).setNameStatic("Static");
+            TestIssue921Nested.Issue921NestedOuter.Issue921Nested.setNameStatic("Static");
         },
         computeValue: function (d) {
             return d.add(Bridge.Decimal(10));
@@ -163,16 +163,16 @@
     
     Bridge.apply($_.TestIssue921Nested.Issue921NestedOuter.Issue921Nested, {
         f1: function (i) {
-            return ((((3 * i) | 0) + Bridge.get(TestIssue921Nested.Issue921NestedOuter.Issue921Nested).getIntStatic()) | 0);
+            return ((((3 * i) | 0) + TestIssue921Nested.Issue921NestedOuter.Issue921Nested.getIntStatic()) | 0);
         },
         f2: function (i) {
-            return ((((2 * i) | 0) + Bridge.get(TestIssue921Nested.Issue921NestedOuter.Issue921Nested).getIntStatic()) | 0);
+            return ((((2 * i) | 0) + TestIssue921Nested.Issue921NestedOuter.Issue921Nested.getIntStatic()) | 0);
         },
         f3: function (i, j) {
-            return ((((i + j) | 0) + Bridge.get(TestIssue921Nested.Issue921NestedOuter.Issue921Nested).getIntStatic()) | 0);
+            return ((((i + j) | 0) + TestIssue921Nested.Issue921NestedOuter.Issue921Nested.getIntStatic()) | 0);
         },
         f4: function (i, j, k) {
-            var x = ((((((i + j) | 0) + k) | 0) + Bridge.get(TestIssue921Nested.Issue921NestedOuter.Issue921Nested).getIntStatic()) | 0);
+            var x = ((((((i + j) | 0) + k) | 0) + TestIssue921Nested.Issue921NestedOuter.Issue921Nested.getIntStatic()) | 0);
         },
         f5: function (value) {
             return ((value + 1) | 0);
@@ -199,7 +199,7 @@
             return value + index + this.getName();
         },
         f13: function (value, index) {
-            return value + index + Bridge.get(TestIssue921Nested.Issue921NestedOuter.Issue921Nested).getNameStatic();
+            return value + index + TestIssue921Nested.Issue921NestedOuter.Issue921Nested.getNameStatic();
         },
         f14: function (value) {
             return value.add(Bridge.Decimal(1));

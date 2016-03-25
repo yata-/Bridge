@@ -88,7 +88,7 @@
                 prop = gscope;
                 gscope = Bridge.global;
             }
-
+            var fn;
             if (Bridge.isFunction(prop)) {
                 fn = function () {
                     var args = Array.prototype.slice.call(arguments),
@@ -108,7 +108,7 @@
                     obj.$cacheName = name;
                     c = Bridge.define(name, obj);
 
-                    return  c;
+                    return Bridge.get(c);
                 };
 
                 return Bridge.Class.generic(className, gscope, fn);
@@ -127,8 +127,7 @@
                 ctorCounter,
                 isCtor,
                 ctorName,
-                name,
-                fn;
+                name;
 
             if (prop.$inherits) {
                 delete prop.$inherits;
@@ -348,7 +347,7 @@
             }
         },
 
-        set: function (scope, className, cls) {
+        set: function (scope, className, cls, noDefineProp) {
             var nameParts = className.split("."),
                 name,
                 key,
@@ -368,21 +367,64 @@
 
             if (exists) {
                 for (key in exists) {
-                    if (key.indexOf("$", key.length - 1) !== -1) {
-                        var key1 = key.slice(0, -1);
-                        if (typeof exists[key1] === "function" && exists[key1].$$name) {
-                            cls[key] = exists[key];
+                    var o = exists[key];
+                    if (typeof o === "function" && o.$$name) {
+                        if (Object.defineProperty && !Bridge.Browser.isIE8) {
+                            (function(cls, key, o) {
+                                Object.defineProperty(cls, key, {
+                                    get: function () {
+                                        if (o.$staticInit) {
+                                            o.$staticInit();
+                                        }
+                                        Bridge.Class.defineProperty(cls, key, o);
+                                        return o;
+                                    },
+                                    set: function (newValue) {
+                                        o = newValue;
+                                    },
+                                    enumerable: true,
+                                    configurable: true
+                                });
+                            })(cls, key, o);
+                        } else {
+                            cls[key] = o;
                         }
                     }
-                    else if (typeof exists[key] === "function" && exists[key].$$name) {
-                        cls[key] = exists[key];
-                    }
                 }
-            }            
+            }
 
-            scope[name] = cls;
+            if (Object.defineProperty && !Bridge.Browser.isIE8 && noDefineProp !== true) {
+                (function (scope, name, cls) {
+                    Object.defineProperty(scope, name, {
+                        get: function () {
+                            if (cls.$staticInit) {
+                                cls.$staticInit();
+                            }
+
+                            Bridge.Class.defineProperty(scope, name, cls);
+                            return cls;
+                        },
+                        set: function (newValue) {
+                            cls = newValue;
+                        },
+                        enumerable: true,
+                        configurable: true
+                    });
+                })(scope, name, cls);
+                
+            } else {
+                scope[name] = cls;
+            }
 
             return scope;
+        },
+
+        defineProperty: function (scope, name, cls) {
+            Object.defineProperty(scope, name, {
+                value: cls,
+                enumerable: true,
+                configurable: true
+            });
         },
 
         genericName: function () {
@@ -401,7 +443,7 @@
                 scope = Bridge.global;
             }
             fn.$$name = className;
-            Bridge.Class.set(scope, className, fn);
+            Bridge.Class.set(scope, className, fn, true);
 
             return fn;
         },

@@ -7,7 +7,7 @@
         statics: {
             main: function () {
                 var message = new TestIssue958.SetValue("Hi!");
-                Bridge.get(TestIssue958.Issue958).processMessage(message);
+                TestIssue958.Issue958.processMessage(message);
             },
             processMessage: function (message) {
                 // The call should have generic type as function parameter
