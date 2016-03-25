@@ -1142,6 +1142,18 @@ namespace Bridge.ClientTest
             }
 
             [Test]
+            public static void TestForEach()
+            {
+                int[] intArray = new int[] { 2, 3, 4 };
+                int sum = 0;
+
+                Action<int> action = new Action<int>((i) => { sum += i; });
+
+                Array.ForEach(intArray, action);
+                Assert.AreEqual(9, sum);
+            }
+
+            [Test]
             public static void TestGetEnumerator()
             {
                 int[] i = { 7, 8, 9 };

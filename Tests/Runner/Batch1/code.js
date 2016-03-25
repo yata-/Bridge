@@ -1010,6 +1010,17 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 idx = Bridge.Array.findLastIndex(ia, 5, 2, $_.Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.f17);
                 Bridge.get(Bridge.Test.Assert).areEqual(idx, -1);
             },
+            testForEach: function () {
+                var intArray = [2, 3, 4];
+                var sum = 0;
+    
+                var action = function (i) {
+                    sum = ((sum + i) | 0);
+                };
+    
+                Bridge.Array.forEach(intArray, action);
+                Bridge.get(Bridge.Test.Assert).areEqual(9, sum);
+            },
             testGetEnumerator: function () {
                 var i = [7, 8, 9];
     

@@ -296,6 +296,7 @@
                 QUnit.test("Array - Set1 TestCopy_VTWithGCRef", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2).testCopy_VTWithGCRef);
                 QUnit.test("Array - Set1 TestCopy_VTNoGCRef", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2).testCopy_VTNoGCRef);
                 QUnit.test("Array - Set1 TestFind", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2).testFind);
+                QUnit.test("Array - Set1 TestForEach", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2).testForEach);
                 QUnit.test("Array - Set1 TestGetEnumerator", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2).testGetEnumerator);
                 QUnit.test("Array - Set1 TestIndexOf", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2).testIndexOf);
                 QUnit.test("Array - Set1 TestLastIndexOf", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2).testLastIndexOf);
@@ -2088,6 +2089,10 @@
             testFind: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2);
                 Bridge.get(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2).testFind();
+            },
+            testForEach: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2);
+                Bridge.get(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2).testForEach();
             },
             testGetEnumerator: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2);
