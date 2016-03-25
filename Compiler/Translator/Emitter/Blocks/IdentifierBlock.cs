@@ -194,7 +194,15 @@ namespace Bridge.Translator
 
                 if (!string.IsNullOrWhiteSpace(inlineCode))
                 {
-                    this.Write(inlineCode);
+                    //this.Write(inlineCode);
+                    if (resolveResult is InvocationResolveResult || (memberResult.Member.SymbolKind == SymbolKind.Property && this.Emitter.IsAssignment))
+                    {
+                        this.PushWriter(inlineCode);
+                    }
+                    else
+                    {
+                        this.Write(inlineCode);
+                    }
                 }
                 else if (Helpers.IsFieldProperty(memberResult.Member, this.Emitter))
                 {
