@@ -647,7 +647,7 @@ namespace Bridge.Contract
                 return constantValue;
             }
 
-            if (enumMode >= 3)
+            if (enumMode >= 3 && enumMode < 7)
             {
                 var member = type.GetFields().FirstOrDefault(f => f.ConstantValue == constantValue);
 

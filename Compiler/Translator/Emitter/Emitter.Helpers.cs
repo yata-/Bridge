@@ -425,6 +425,14 @@ namespace Bridge.Translator
         public virtual string GetEntityName(IEntity member, bool forcePreserveMemberCase = false, bool ignoreInterface = false)
         {
             bool preserveMemberChange = !this.IsNativeMember(member.FullName) ? this.AssemblyInfo.PreserveMemberCase : false;
+
+            int enumMode = -1;
+            if (member.DeclaringType.Kind == TypeKind.Enum && member is IField)
+            {
+                enumMode = this.Validator.EnumEmitMode(member.DeclaringType);
+            }
+
+
             if (member is IMember && this.IsMemberConst((IMember)member)/* || member.DeclaringType.Kind == TypeKind.Anonymous*/)
             {
                 preserveMemberChange = true;
@@ -451,9 +459,30 @@ namespace Bridge.Translator
                 }
 
                 preserveMemberChange = !(bool)value;
+                enumMode = -1;
             }
 
-            name = !preserveMemberChange && !forcePreserveMemberCase ? Object.Net.Utilities.StringUtils.ToLowerCamelCase(name) : name;
+            if (enumMode > 6)
+            {
+                switch (enumMode)
+                {
+                    case 7:
+                        break;
+
+                    case 8:
+                        name = name.ToLowerInvariant();
+                        break;
+
+                    case 9:
+                        name = name.ToUpperInvariant();
+                        break;
+                }
+            }
+            else
+            {
+                name = !preserveMemberChange && !forcePreserveMemberCase ? Object.Net.Utilities.StringUtils.ToLowerCamelCase(name) : name;
+            }
+            
 
             if (!isIgnore && ((member.IsStatic && Emitter.IsReservedStaticName(name)) || Helpers.IsReservedWord(name)))
             {

@@ -3738,6 +3738,60 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $enum: true
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1059', {
+        statics: {
+            testEnumNameModes: function () {
+                var t1 = Bridge.ClientTest.BridgeIssues.Bridge1059.OverlayType1;
+                Bridge.Test.Assert.areEqual(Bridge.ClientTest.BridgeIssues.Bridge1059.OverlayType1.cIRCLE, t1.cIRCLE);
+                Bridge.Test.Assert.areEqual(Bridge.ClientTest.BridgeIssues.Bridge1059.OverlayType1.marker, t1.marker);
+    
+                var t2 = Bridge.ClientTest.BridgeIssues.Bridge1059.OverlayType2;
+                Bridge.Test.Assert.areEqual(Bridge.ClientTest.BridgeIssues.Bridge1059.OverlayType2.CIRCLE, t2.CIRCLE);
+                Bridge.Test.Assert.areEqual(Bridge.ClientTest.BridgeIssues.Bridge1059.OverlayType2.marker, t2.marker);
+    
+                var t3 = Bridge.ClientTest.BridgeIssues.Bridge1059.OverlayType3;
+                Bridge.Test.Assert.areEqual(Bridge.ClientTest.BridgeIssues.Bridge1059.OverlayType3.circle, t3.circle);
+                Bridge.Test.Assert.areEqual(Bridge.ClientTest.BridgeIssues.Bridge1059.OverlayType3.marker, t3.marker);
+    
+                var t4 = Bridge.ClientTest.BridgeIssues.Bridge1059.OverlayType4;
+                Bridge.Test.Assert.areEqual(Bridge.ClientTest.BridgeIssues.Bridge1059.OverlayType4.CIRCLE, t4.CIRCLE);
+                Bridge.Test.Assert.areEqual(Bridge.ClientTest.BridgeIssues.Bridge1059.OverlayType4.MARKER, t4.MARKER);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1059.OverlayType1', {
+        statics: {
+            cIRCLE: 1,
+            marker: 2
+        },
+        $enum: true
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1059.OverlayType2', {
+        statics: {
+            CIRCLE: 1,
+            marker: 2
+        },
+        $enum: true
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1059.OverlayType3', {
+        statics: {
+            circle: 1,
+            marker: 2
+        },
+        $enum: true
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1059.OverlayType4', {
+        statics: {
+            CIRCLE: 1,
+            MARKER: 2
+        },
+        $enum: true
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1076', {
         statics: {
             testInlineConstantAsMemberReference: function () {

@@ -142,7 +142,8 @@ namespace Bridge.Translator
 
         public virtual bool IsNameEnum(DefaultResolvedTypeDefinition type)
         {
-            return this.EnumEmitMode(type) == 1;
+            var enumEmitMode = this.EnumEmitMode(type);
+            return enumEmitMode == 1 || enumEmitMode > 6;
         }
 
         public virtual bool IsStringNameEnum(DefaultResolvedTypeDefinition type)
