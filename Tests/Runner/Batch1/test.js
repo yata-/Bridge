@@ -239,54 +239,74 @@
                 QUnit.test("WithNoUncheckedKeyword - TestLong", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_WithNoUncheckedKeywordTests).testLong);
                 QUnit.test("WithNoUncheckedKeyword - TestULong", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_WithNoUncheckedKeywordTests).testULong);
                 QUnit.module("Collections");
-                QUnit.test("Array - TypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).typePropertiesAreCorrect);
-                QUnit.test("Array - LengthWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).lengthWorks);
-                QUnit.test("Array - RankIsOne", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).rankIsOne);
-                QUnit.test("Array - GetLengthWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).getLengthWorks);
-                QUnit.test("Array - GetLowerBound", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).getLowerBound);
-                QUnit.test("Array - GetUpperBoundWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).getUpperBoundWorks);
-                QUnit.test("Array - GettingValueByIndexWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).gettingValueByIndexWorks);
-                QUnit.test("Array - GetValueWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).getValueWorks);
-                QUnit.test("Array - SettingValueByIndexWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).settingValueByIndexWorks);
-                QUnit.test("Array - SetValueWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).setValueWorks);
-                QUnit.test("Array - ForeachWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).foreachWorks);
-                QUnit.test("Array - CloneWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).cloneWorks);
-                QUnit.test("Array - ConcatWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).concatWorks);
-                QUnit.test("Array - ContainsWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).containsWorks);
-                QUnit.test("Array - ContainsUsesEqualsMethod", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).containsUsesEqualsMethod);
-                QUnit.test("Array - AllWithArrayItemFilterCallbackWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).allWithArrayItemFilterCallbackWorks);
-                QUnit.test("Array - SliceWithoutEndWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).sliceWithoutEndWorks);
-                QUnit.test("Array - ForeachWithArrayItemCallbackWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).foreachWithArrayItemCallbackWorks);
-                QUnit.test("Array - ForeachWithArrayCallbackWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).foreachWithArrayCallbackWorks);
-                QUnit.test("Array - IndexOfWithoutStartIndexWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).indexOfWithoutStartIndexWorks);
-                QUnit.test("Array - IndexOfWithoutStartIndexUsesEqualsMethod", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).indexOfWithoutStartIndexUsesEqualsMethod);
-                QUnit.test("Array - IndexOfWithStartIndexWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).indexOfWithStartIndexWorks);
-                QUnit.test("Array - JoinWithoutDelimiterWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).joinWithoutDelimiterWorks);
-                QUnit.test("Array - ReverseWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).reverseWorks);
-                QUnit.test("Array - AnyWithArrayItemFilterCallbackWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).anyWithArrayItemFilterCallbackWorks);
-                QUnit.test("Array - BinarySearch1Works", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).binarySearch1Works);
-                QUnit.test("Array - BinarySearch2Works", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).binarySearch2Works);
-                QUnit.test("Array - BinarySearch3Works", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).binarySearch3Works);
-                QUnit.test("Array - BinarySearch4Works", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).binarySearch4Works);
-                QUnit.test("Array - BinarySearchExceptionsWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).binarySearchExceptionsWorks);
-                QUnit.test("Array - SortWithDefaultCompareWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).sortWithDefaultCompareWorks);
-                QUnit.test("Array - Sort1Works", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).sort1Works);
-                QUnit.test("Array - Sort2Works", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).sort2Works);
-                QUnit.test("Array - Sort3Works", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).sort3Works);
-                QUnit.test("Array - Sort4Works", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).sort4Works);
-                QUnit.test("Array - SortExceptionsWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).sortExceptionsWorks);
-                QUnit.test("Array - ForeachWhenCastToIListWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).foreachWhenCastToIListWorks);
-                QUnit.test("Array - ICollectionCountWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).iCollectionCountWorks);
-                QUnit.test("Array - ICollectionAddWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).iCollectionAddWorks);
-                QUnit.test("Array - ICollectionClearWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).iCollectionClearWorks);
-                QUnit.test("Array - ICollectionContainsWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).iCollectionContainsWorks);
-                QUnit.test("Array - ICollectionContainsUsesEqualsMethod", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).iCollectionContainsUsesEqualsMethod);
-                QUnit.test("Array - ICollectionRemoveWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).iCollectionRemoveWorks);
-                QUnit.test("Array - IListIndexingWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).iListIndexingWorks);
-                QUnit.test("Array - IListIndexOfWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).iListIndexOfWorks);
-                QUnit.test("Array - IListIndexOfUsesEqualsMethod", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).iListIndexOfUsesEqualsMethod);
-                QUnit.test("Array - IListInsertWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).iListInsertWorks);
-                QUnit.test("Array - IListRemoveAtWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests).iListRemoveAtWorks);
+                QUnit.test("Array - Set1 TypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).typePropertiesAreCorrect);
+                QUnit.test("Array - Set1 LengthWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).lengthWorks);
+                QUnit.test("Array - Set1 RankIsOne", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).rankIsOne);
+                QUnit.test("Array - Set1 GetLengthWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).getLengthWorks);
+                QUnit.test("Array - Set1 GetLowerBound", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).getLowerBound);
+                QUnit.test("Array - Set1 GetUpperBoundWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).getUpperBoundWorks);
+                QUnit.test("Array - Set1 GettingValueByIndexWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).gettingValueByIndexWorks);
+                QUnit.test("Array - Set1 GetValueWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).getValueWorks);
+                QUnit.test("Array - Set1 SettingValueByIndexWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).settingValueByIndexWorks);
+                QUnit.test("Array - Set1 SetValueWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).setValueWorks);
+                QUnit.test("Array - Set1 ForeachWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).foreachWorks);
+                QUnit.test("Array - Set1 CloneWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).cloneWorks);
+                QUnit.test("Array - Set1 ConcatWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).concatWorks);
+                QUnit.test("Array - Set1 ContainsWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).containsWorks);
+                QUnit.test("Array - Set1 ContainsUsesEqualsMethod", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).containsUsesEqualsMethod);
+                QUnit.test("Array - Set1 AllWithArrayItemFilterCallbackWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).allWithArrayItemFilterCallbackWorks);
+                QUnit.test("Array - Set1 SliceWithoutEndWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).sliceWithoutEndWorks);
+                QUnit.test("Array - Set1 ForeachWithArrayItemCallbackWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).foreachWithArrayItemCallbackWorks);
+                QUnit.test("Array - Set1 ForeachWithArrayCallbackWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).foreachWithArrayCallbackWorks);
+                QUnit.test("Array - Set1 IndexOfWithoutStartIndexWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).indexOfWithoutStartIndexWorks);
+                QUnit.test("Array - Set1 IndexOfWithoutStartIndexUsesEqualsMethod", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).indexOfWithoutStartIndexUsesEqualsMethod);
+                QUnit.test("Array - Set1 IndexOfWithStartIndexWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).indexOfWithStartIndexWorks);
+                QUnit.test("Array - Set1 JoinWithoutDelimiterWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).joinWithoutDelimiterWorks);
+                QUnit.test("Array - Set1 ReverseWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).reverseWorks);
+                QUnit.test("Array - Set1 AnyWithArrayItemFilterCallbackWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).anyWithArrayItemFilterCallbackWorks);
+                QUnit.test("Array - Set1 BinarySearch1Works", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).binarySearch1Works);
+                QUnit.test("Array - Set1 BinarySearch2Works", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).binarySearch2Works);
+                QUnit.test("Array - Set1 BinarySearch3Works", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).binarySearch3Works);
+                QUnit.test("Array - Set1 BinarySearch4Works", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).binarySearch4Works);
+                QUnit.test("Array - Set1 BinarySearchExceptionsWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).binarySearchExceptionsWorks);
+                QUnit.test("Array - Set1 SortWithDefaultCompareWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).sortWithDefaultCompareWorks);
+                QUnit.test("Array - Set1 Sort1Works", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).sort1Works);
+                QUnit.test("Array - Set1 Sort2Works", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).sort2Works);
+                QUnit.test("Array - Set1 Sort3Works", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).sort3Works);
+                QUnit.test("Array - Set1 Sort4Works", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).sort4Works);
+                QUnit.test("Array - Set1 SortExceptionsWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).sortExceptionsWorks);
+                QUnit.test("Array - Set1 ForeachWhenCastToIListWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).foreachWhenCastToIListWorks);
+                QUnit.test("Array - Set1 ICollectionCountWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).iCollectionCountWorks);
+                QUnit.test("Array - Set1 ICollectionAddWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).iCollectionAddWorks);
+                QUnit.test("Array - Set1 ICollectionClearWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).iCollectionClearWorks);
+                QUnit.test("Array - Set1 ICollectionContainsWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).iCollectionContainsWorks);
+                QUnit.test("Array - Set1 ICollectionContainsUsesEqualsMethod", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).iCollectionContainsUsesEqualsMethod);
+                QUnit.test("Array - Set1 ICollectionRemoveWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).iCollectionRemoveWorks);
+                QUnit.test("Array - Set1 IListIndexingWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).iListIndexingWorks);
+                QUnit.test("Array - Set1 IListIndexOfWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).iListIndexOfWorks);
+                QUnit.test("Array - Set1 IListIndexOfUsesEqualsMethod", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).iListIndexOfUsesEqualsMethod);
+                QUnit.test("Array - Set1 IListInsertWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).iListInsertWorks);
+                QUnit.test("Array - Set1 IListRemoveAtWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1).iListRemoveAtWorks);
+                QUnit.test("Array - Set1 TestArrayAsIListOfT", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2).testArrayAsIListOfT);
+                QUnit.test("Array - Set1 TestTrivials", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2).testTrivials);
+                QUnit.test("Array - Set1 TestGetAndSetValue", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2).testGetAndSetValue);
+                QUnit.test("Array - Set1 TestClear", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2).testClear);
+                QUnit.test("Array - Set1 TestCopy_GCRef", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2).testCopy_GCRef);
+                QUnit.test("Array - Set1 TestCopy_VTToObj", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2).testCopy_VTToObj);
+                QUnit.test("Array - Set1 TestCopy_VTWithGCRef", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2).testCopy_VTWithGCRef);
+                QUnit.test("Array - Set1 TestCopy_VTNoGCRef", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2).testCopy_VTNoGCRef);
+                QUnit.test("Array - Set1 TestFind", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2).testFind);
+                QUnit.test("Array - Set1 TestGetEnumerator", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2).testGetEnumerator);
+                QUnit.test("Array - Set1 TestIndexOf", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2).testIndexOf);
+                QUnit.test("Array - Set1 TestLastIndexOf", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2).testLastIndexOf);
+                QUnit.test("Array - Set1 TestResize", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2).testResize);
+                QUnit.test("Array - Set1 TestReverse", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2).testReverse);
+                QUnit.test("Array - Set1 TestSort", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2).testSort);
+                QUnit.test("Array - Set1 TestTrueForAll", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2).testTrueForAll);
+                QUnit.test("Array - Set1 TestSetValueCasting", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2).testSetValueCasting);
+                QUnit.test("Array - Set1 TestValueTypeToReferenceCopy", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2).testValueTypeToReferenceCopy);
+                QUnit.test("Array - Set1 TestReferenceToValueTypeCopy", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2).testReferenceToValueTypeCopy);
+                QUnit.test("Array - Set1 TestArrayConstructionMultidimArrays", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2).testArrayConstructionMultidimArrays);
                 QUnit.test("GenericDictionary - TypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_GenericDictionaryTests).typePropertiesAreCorrect);
                 QUnit.test("GenericDictionary - DefaultConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_GenericDictionaryTests).defaultConstructorWorks);
                 QUnit.test("GenericDictionary - CapacityConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_GenericDictionaryTests).capacityConstructorWorks);
@@ -917,6 +937,10 @@
                 QUnit.test("FormatException - DefaultConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_FormatExceptionTests).defaultConstructorWorks);
                 QUnit.test("FormatException - ConstructorWithMessageWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_FormatExceptionTests).constructorWithMessageWorks);
                 QUnit.test("FormatException - ConstructorWithMessageAndInnerExceptionWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_FormatExceptionTests).constructorWithMessageAndInnerExceptionWorks);
+                QUnit.test("IndexOutOfRangeException - TypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_IndexOutOfRangeExceptionTests).typePropertiesAreCorrect);
+                QUnit.test("IndexOutOfRangeException - DefaultConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_IndexOutOfRangeExceptionTests).defaultConstructorWorks);
+                QUnit.test("IndexOutOfRangeException - ConstructorWithMessageWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_IndexOutOfRangeExceptionTests).constructorWithMessageWorks);
+                QUnit.test("IndexOutOfRangeException - ConstructorWithMessageAndInnerExceptionWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_IndexOutOfRangeExceptionTests).constructorWithMessageAndInnerExceptionWorks);
                 QUnit.test("InvalidCastException - TypePropertiesAreCorrect", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_InvalidCastExceptionTests).typePropertiesAreCorrect);
                 QUnit.test("InvalidCastException - DefaultConstructorWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_InvalidCastExceptionTests).defaultConstructorWorks);
                 QUnit.test("InvalidCastException - ConstructorWithMessageWorks", Bridge.get(Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_InvalidCastExceptionTests).constructorWithMessageWorks);
@@ -1828,200 +1852,286 @@
         }
     });
     
-    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests', {
-        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)],
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)],
         statics: {
             typePropertiesAreCorrect: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().typePropertiesAreCorrect();
             },
             lengthWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().lengthWorks();
             },
             rankIsOne: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().rankIsOne();
             },
             getLengthWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().getLengthWorks();
             },
             getLowerBound: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().getLowerBound();
             },
             getUpperBoundWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().getUpperBoundWorks();
             },
             gettingValueByIndexWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().gettingValueByIndexWorks();
             },
             getValueWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().getValueWorks();
             },
             settingValueByIndexWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().settingValueByIndexWorks();
             },
             setValueWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().setValueWorks();
             },
             foreachWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().foreachWorks();
             },
             cloneWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().cloneWorks();
             },
             concatWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().concatWorks();
             },
             containsWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().containsWorks();
             },
             containsUsesEqualsMethod: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().containsUsesEqualsMethod();
             },
             allWithArrayItemFilterCallbackWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().allWithArrayItemFilterCallbackWorks();
             },
             sliceWithoutEndWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().sliceWithoutEndWorks();
             },
             foreachWithArrayItemCallbackWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().foreachWithArrayItemCallbackWorks();
             },
             foreachWithArrayCallbackWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().foreachWithArrayCallbackWorks();
             },
             indexOfWithoutStartIndexWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().indexOfWithoutStartIndexWorks();
             },
             indexOfWithoutStartIndexUsesEqualsMethod: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().indexOfWithoutStartIndexUsesEqualsMethod();
             },
             indexOfWithStartIndexWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().indexOfWithStartIndexWorks();
             },
             joinWithoutDelimiterWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().joinWithoutDelimiterWorks();
             },
             reverseWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().reverseWorks();
             },
             anyWithArrayItemFilterCallbackWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().anyWithArrayItemFilterCallbackWorks();
             },
             binarySearch1Works: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().binarySearch1Works();
             },
             binarySearch2Works: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().binarySearch2Works();
             },
             binarySearch3Works: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().binarySearch3Works();
             },
             binarySearch4Works: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().binarySearch4Works();
             },
             binarySearchExceptionsWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().binarySearchExceptionsWorks();
             },
             sortWithDefaultCompareWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().sortWithDefaultCompareWorks();
             },
             sort1Works: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().sort1Works();
             },
             sort2Works: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().sort2Works();
             },
             sort3Works: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().sort3Works();
             },
             sort4Works: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().sort4Works();
             },
             sortExceptionsWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().sortExceptionsWorks();
             },
             foreachWhenCastToIListWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().foreachWhenCastToIListWorks();
             },
             iCollectionCountWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().iCollectionCountWorks();
             },
             iCollectionAddWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().iCollectionAddWorks();
             },
             iCollectionClearWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().iCollectionClearWorks();
             },
             iCollectionContainsWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().iCollectionContainsWorks();
             },
             iCollectionContainsUsesEqualsMethod: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().iCollectionContainsUsesEqualsMethod();
             },
             iCollectionRemoveWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().iCollectionRemoveWorks();
             },
             iListIndexingWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().iListIndexingWorks();
             },
             iListIndexOfWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().iListIndexOfWorks();
             },
             iListIndexOfUsesEqualsMethod: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().iListIndexOfUsesEqualsMethod();
             },
             iListInsertWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().iListInsertWorks();
             },
             iListRemoveAtWorks: function (assert) {
-                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTests);
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet1)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1);
                 t.getFixture().iListRemoveAtWorks();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2)],
+        statics: {
+            testArrayAsIListOfT: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2);
+                Bridge.get(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2).testArrayAsIListOfT();
+            },
+            testTrivials: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2);
+                Bridge.get(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2).testTrivials();
+            },
+            testGetAndSetValue: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2);
+                Bridge.get(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2).testGetAndSetValue();
+            },
+            testClear: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2);
+                Bridge.get(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2).testClear();
+            },
+            testCopy_GCRef: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2);
+                Bridge.get(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2).testCopy_GCRef();
+            },
+            testCopy_VTToObj: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2);
+                Bridge.get(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2).testCopy_VTToObj();
+            },
+            testCopy_VTWithGCRef: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2);
+                Bridge.get(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2).testCopy_VTWithGCRef();
+            },
+            testCopy_VTNoGCRef: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2);
+                Bridge.get(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2).testCopy_VTNoGCRef();
+            },
+            testFind: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2);
+                Bridge.get(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2).testFind();
+            },
+            testGetEnumerator: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2);
+                Bridge.get(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2).testGetEnumerator();
+            },
+            testIndexOf: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2);
+                Bridge.get(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2).testIndexOf();
+            },
+            testLastIndexOf: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2);
+                Bridge.get(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2).testLastIndexOf();
+            },
+            testResize: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2);
+                Bridge.get(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2).testResize();
+            },
+            testReverse: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2);
+                Bridge.get(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2).testReverse();
+            },
+            testSort: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2);
+                Bridge.get(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2).testSort();
+            },
+            testTrueForAll: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2);
+                Bridge.get(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2).testTrueForAll();
+            },
+            testSetValueCasting: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2);
+                Bridge.get(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2).testSetValueCasting();
+            },
+            testValueTypeToReferenceCopy: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2);
+                Bridge.get(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2).testValueTypeToReferenceCopy();
+            },
+            testReferenceToValueTypeCopy: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2);
+                Bridge.get(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2).testReferenceToValueTypeCopy();
+            },
+            testArrayConstructionMultidimArrays: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2)).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet2);
+                Bridge.get(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2).testArrayConstructionMultidimArrays();
             }
         }
     });
@@ -6385,6 +6495,28 @@
             },
             constructorWithMessageAndInnerExceptionWorks: function (assert) {
                 var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Exceptions.FormatExceptionTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_FormatExceptionTests);
+                t.getFixture().constructorWithMessageAndInnerExceptionWorks();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_IndexOutOfRangeExceptionTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Exceptions.IndexOutOfRangeExceptionTests)],
+        statics: {
+            typePropertiesAreCorrect: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Exceptions.IndexOutOfRangeExceptionTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_IndexOutOfRangeExceptionTests);
+                t.getFixture().typePropertiesAreCorrect();
+            },
+            defaultConstructorWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Exceptions.IndexOutOfRangeExceptionTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_IndexOutOfRangeExceptionTests);
+                t.getFixture().defaultConstructorWorks();
+            },
+            constructorWithMessageWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Exceptions.IndexOutOfRangeExceptionTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_IndexOutOfRangeExceptionTests);
+                t.getFixture().constructorWithMessageWorks();
+            },
+            constructorWithMessageAndInnerExceptionWorks: function (assert) {
+                var t = Bridge.get(Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Exceptions.IndexOutOfRangeExceptionTests)).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_IndexOutOfRangeExceptionTests);
                 t.getFixture().constructorWithMessageAndInnerExceptionWorks();
             }
         }

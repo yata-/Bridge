@@ -270,8 +270,11 @@
         },
         iCollectionClearWorks: function () {
             var l = ["x", "y", "z"];
-            Bridge.Array.clear(l);
-            Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.Array.init(0, null), l);
+            Bridge.Array.clear(l, String);
+            Bridge.get(Bridge.Test.Assert).areDeepEqual(Bridge.Array.init(3, null), l);
+            Bridge.get(Bridge.Test.Assert).areDeepEqual(null, Bridge.Array.getItem(l, 0));
+            Bridge.get(Bridge.Test.Assert).areDeepEqual(null, Bridge.Array.getItem(l, 1));
+            Bridge.get(Bridge.Test.Assert).areDeepEqual(null, Bridge.Array.getItem(l, 2));
         },
         iCollectionContainsWorks: function () {
             var l = ["x", "y", "z"];

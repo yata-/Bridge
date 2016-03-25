@@ -1,5 +1,6 @@
 using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
+using ICSharpCode.NRefactory.TypeSystem;
 
 namespace Bridge.Translator
 {
@@ -22,7 +23,7 @@ namespace Bridge.Translator
         {
             var resolveResult = this.Emitter.Resolver.ResolveNode(this.DefaultValueExpression.Type, this.Emitter);
 
-            if (!resolveResult.IsError && resolveResult.Type.IsReferenceType.HasValue && resolveResult.Type.IsReferenceType.Value)
+            if ((!resolveResult.IsError && resolveResult.Type.IsReferenceType.HasValue && resolveResult.Type.IsReferenceType.Value) || resolveResult.Type.IsKnownType(KnownTypeCode.NullableOfT))
             {
                 this.Write("null");
             }
