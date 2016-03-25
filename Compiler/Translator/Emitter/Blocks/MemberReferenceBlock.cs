@@ -53,14 +53,15 @@ namespace Bridge.Translator
                 return;
             }
 
-            if (member.Member.DeclaringType.Kind == TypeKind.Enum || this.Emitter.Validator.IsIgnoreType(member.Member.DeclaringType.GetDefinition()))
+            this.Write(BridgeTypes.ToJsName(member.Member.DeclaringType, this.Emitter));
+            /*if (member.Member.DeclaringType.Kind == TypeKind.Enum || this.Emitter.Validator.IsIgnoreType(member.Member.DeclaringType.GetDefinition()) || this.Emitter.TypeInfo.Type == member.Member.DeclaringType)
             {
                 this.Write(BridgeTypes.ToJsName(member.Member.DeclaringType, this.Emitter));
             }
             else
             {
                 this.Write("Bridge.get(" + BridgeTypes.ToJsName(member.Member.DeclaringType, this.Emitter) + ")");
-            }
+            }*/
         }
 
         protected void VisitMemberReferenceExpression()
@@ -315,7 +316,7 @@ namespace Bridge.Translator
                             return;
                         }
 
-                        if (enumMode >= 3)
+                        if (enumMode >= 3 && enumMode < 7)
                         {
                             string enumStringName = member.Member.Name;
                             var attr = Helpers.GetInheritedAttribute(member.Member, Translator.Bridge_ASSEMBLY + ".NameAttribute");
@@ -355,7 +356,8 @@ namespace Bridge.Translator
                 if (resolveResult is TypeResolveResult)
                 {
                     TypeResolveResult typeResolveResult = (TypeResolveResult)resolveResult;
-                    var isNative = this.Emitter.Validator.IsIgnoreType(typeResolveResult.Type.GetDefinition()) || typeResolveResult.Type.Kind == TypeKind.Enum;
+                    this.Write(BridgeTypes.ToJsName(typeResolveResult.Type, this.Emitter));
+                    /*var isNative = this.Emitter.Validator.IsIgnoreType(typeResolveResult.Type.GetDefinition()) || typeResolveResult.Type.Kind == TypeKind.Enum;
                     if (isNative)
                     {
                         this.Write(BridgeTypes.ToJsName(typeResolveResult.Type, this.Emitter));
@@ -363,7 +365,7 @@ namespace Bridge.Translator
                     else
                     {
                         this.Write("Bridge.get(" + BridgeTypes.ToJsName(typeResolveResult.Type, this.Emitter) + ")");
-                    }                    
+                    }*/                    
 
                     return;
                 }
@@ -558,7 +560,27 @@ namespace Bridge.Translator
                         }
                     }
 
-                    if (Helpers.IsFieldProperty(member.Member, this.Emitter))
+                    bool isFieldProperty = Helpers.IsFieldProperty(member.Member, this.Emitter);
+                    if (isFieldProperty)
+                    {
+                        if (member.Member.ImplementedInterfaceMembers.Count > 0 &&
+                            !member.Member.ImplementedInterfaceMembers.All(m => Helpers.IsFieldProperty(m, this.Emitter)))
+                        {
+                            throw new EmitterException(memberReferenceExpression,
+                                string.Format(
+                                    "The property {0} is marked as FieldProperty but implemented interface member has no such attribute",
+                                    member.Member.ToString()));
+                        }
+                    }
+                    else
+                    {
+                        if (member.Member.ImplementedInterfaceMembers.Count > 0 && member.Member.ImplementedInterfaceMembers.Any(m => Helpers.IsFieldProperty(m, this.Emitter)))
+                        {
+                            throw new EmitterException(memberReferenceExpression, string.Format("The property {0} is not marked as FieldProperty but implemented interface member has such attribute", member.Member.ToString()));
+                        }
+                    }
+
+                    if (isFieldProperty)
                     {
                         this.Write(Helpers.GetPropertyRef(member.Member, this.Emitter));
                     }

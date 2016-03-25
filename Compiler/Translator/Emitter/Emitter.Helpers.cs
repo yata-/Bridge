@@ -163,6 +163,11 @@ namespace Bridge.Translator
             var inlineCode = isInlineMethod ? null : this.GetInline(member);
             var isStatic = member.IsStatic;
 
+            if (!string.IsNullOrEmpty(inlineCode) && member is IProperty)
+            {
+                inlineCode = inlineCode.Replace("{value}", "{0}");
+            }
+
             return new Tuple<bool, bool, string>(isStatic, isInlineMethod, inlineCode);
         }
 
@@ -420,6 +425,14 @@ namespace Bridge.Translator
         public virtual string GetEntityName(IEntity member, bool forcePreserveMemberCase = false, bool ignoreInterface = false)
         {
             bool preserveMemberChange = !this.IsNativeMember(member.FullName) ? this.AssemblyInfo.PreserveMemberCase : false;
+
+            int enumMode = -1;
+            if (member.DeclaringType.Kind == TypeKind.Enum && member is IField)
+            {
+                enumMode = this.Validator.EnumEmitMode(member.DeclaringType);
+            }
+
+
             if (member is IMember && this.IsMemberConst((IMember)member)/* || member.DeclaringType.Kind == TypeKind.Anonymous*/)
             {
                 preserveMemberChange = true;
@@ -446,9 +459,30 @@ namespace Bridge.Translator
                 }
 
                 preserveMemberChange = !(bool)value;
+                enumMode = -1;
             }
 
-            name = !preserveMemberChange && !forcePreserveMemberCase ? Object.Net.Utilities.StringUtils.ToLowerCamelCase(name) : name;
+            if (enumMode > 6)
+            {
+                switch (enumMode)
+                {
+                    case 7:
+                        break;
+
+                    case 8:
+                        name = name.ToLowerInvariant();
+                        break;
+
+                    case 9:
+                        name = name.ToUpperInvariant();
+                        break;
+                }
+            }
+            else
+            {
+                name = !preserveMemberChange && !forcePreserveMemberCase ? Object.Net.Utilities.StringUtils.ToLowerCamelCase(name) : name;
+            }
+            
 
             if (!isIgnore && ((member.IsStatic && Emitter.IsReservedStaticName(name)) || Helpers.IsReservedWord(name)))
             {
@@ -559,6 +593,7 @@ namespace Bridge.Translator
         public virtual string GetInline(IEntity entity)
         {
             string attrName = Bridge.Translator.Translator.Bridge_ASSEMBLY + ".TemplateAttribute";
+            bool isProp = entity is IProperty;
 
             if (entity.SymbolKind == SymbolKind.Property)
             {
@@ -573,7 +608,14 @@ namespace Bridge.Translator
                     return a.AttributeType.FullName == attrName;
                 });
 
-                return attr != null && attr.PositionalArguments.Count > 0 ? attr.PositionalArguments[0].ConstantValue.ToString() : null;
+                var inlineCode = attr != null && attr.PositionalArguments.Count > 0 ? attr.PositionalArguments[0].ConstantValue.ToString() : null;
+
+                if (!string.IsNullOrEmpty(inlineCode) && isProp)
+                {
+                    inlineCode = inlineCode.Replace("{value}", "{0}");
+                }
+
+                return inlineCode;
             }
 
             return null;
