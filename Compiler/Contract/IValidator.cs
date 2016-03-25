@@ -1,4 +1,5 @@
 using ICSharpCode.NRefactory.TypeSystem;
+using Mono.Cecil;
 
 namespace Bridge.Contract
 {
@@ -55,6 +56,8 @@ namespace Bridge.Contract
         bool IsIgnoreType(Mono.Cecil.ICustomAttributeProvider type, bool ignoreLiteral = false);
 
         bool IsIgnoreType(ICSharpCode.NRefactory.TypeSystem.ITypeDefinition typeDefinition, bool ignoreLiteral = false);
+
+        bool IsImmutableType(ICustomAttributeProvider type);
 
         bool IsIgnoreType(IEntity enity, bool ignoreLiteral = false);
 

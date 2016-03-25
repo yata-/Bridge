@@ -47,8 +47,8 @@ namespace Bridge.ClientTest.Diagnostics
         public void ElapsedWorks()
         {
             var watch = new Stopwatch();
-            Assert.AreEqual(0, watch.ElapsedTicks);
-            Assert.AreEqual(0, watch.ElapsedMilliseconds);
+            Assert.True(0 == watch.ElapsedTicks);
+            Assert.True(0 == watch.ElapsedMilliseconds);
             Assert.AreEqual(new TimeSpan(), watch.Elapsed);
             watch.Start();
             DateTime before = DateTime.Now;

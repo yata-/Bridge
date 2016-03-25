@@ -131,10 +131,10 @@ namespace Bridge.ClientTest
             long resultLong;
 
             Math.DivRem(2, 4, out resultLong);
-            Assert.AreEqual(2, resultLong);
+            Assert.True(2 == resultLong);
 
             Math.DivRem(2341, 157, out resultLong);
-            Assert.AreEqual(143, resultLong);
+            Assert.True(143 == resultLong);
         }
 
         [Test]
@@ -236,8 +236,8 @@ namespace Bridge.ClientTest
         [Test]
         public void MaxOfULongWorks()
         {
-            Assert.AreEqual((ulong)300, Math.Max((ulong)100, (ulong)300));
-            Assert.AreEqual((ulong)500, Math.Max((ulong)500, (ulong)300));
+            Assert.True((ulong)300 == Math.Max((ulong)100, (ulong)300));
+            Assert.True((ulong)500 == Math.Max((ulong)500, (ulong)300));
         }
 
         [Test]
@@ -278,8 +278,8 @@ namespace Bridge.ClientTest
         [Test]
         public void MinOfLongWorks()
         {
-            Assert.AreEqual(1L, Math.Min(1L, 3L));
-            Assert.AreEqual(3L, Math.Min(4L, 3L));
+            Assert.True(1L == Math.Min(1L, 3L));
+            Assert.True(3L == Math.Min(4L, 3L));
         }
 
         [Test]
@@ -313,8 +313,8 @@ namespace Bridge.ClientTest
         [Test]
         public void MinOfULongWorks()
         {
-            Assert.AreEqual((ulong)100, Math.Min((ulong)100, (ulong)300));
-            Assert.AreEqual((ulong)300, Math.Min((ulong)500, (ulong)300));
+            Assert.True((ulong)100 == Math.Min((ulong)100, (ulong)300));
+            Assert.True((ulong)300 == Math.Min((ulong)500, (ulong)300));
         }
 
         [Test]

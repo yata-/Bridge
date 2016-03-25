@@ -15,7 +15,7 @@ namespace System.Collections.Generic
         [Template("Bridge.Array.add({this}, {item})")]
         void Add(T item);
 
-        [Template("Bridge.Array.clear({this})")]
+        [Template("Bridge.Array.clear({this}, {T})")]
         void Clear();
 
         [Template("Bridge.Array.contains({this}, {item})")]
