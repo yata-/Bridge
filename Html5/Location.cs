@@ -29,6 +29,7 @@ namespace Bridge.Html5
         /// <summary>
         /// String containing the domain of the URL.
         /// </summary>
+        [Name("hostname")]
         public string HostName;
 
         /// <summary>
@@ -39,6 +40,7 @@ namespace Bridge.Html5
         /// <summary>
         /// String containing an initial '/' followed by the path of the URL.
         /// </summary>
+        [Name("pathname")]
         public string PathName;
 
         /// <summary>
