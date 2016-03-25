@@ -53,14 +53,15 @@ namespace Bridge.Translator
                 return;
             }
 
-            if (member.Member.DeclaringType.Kind == TypeKind.Enum || this.Emitter.Validator.IsIgnoreType(member.Member.DeclaringType.GetDefinition()))
+            this.Write(BridgeTypes.ToJsName(member.Member.DeclaringType, this.Emitter));
+            /*if (member.Member.DeclaringType.Kind == TypeKind.Enum || this.Emitter.Validator.IsIgnoreType(member.Member.DeclaringType.GetDefinition()) || this.Emitter.TypeInfo.Type == member.Member.DeclaringType)
             {
                 this.Write(BridgeTypes.ToJsName(member.Member.DeclaringType, this.Emitter));
             }
             else
             {
                 this.Write("Bridge.get(" + BridgeTypes.ToJsName(member.Member.DeclaringType, this.Emitter) + ")");
-            }
+            }*/
         }
 
         protected void VisitMemberReferenceExpression()
@@ -85,6 +86,14 @@ namespace Bridge.Translator
             if (memberTargetrr != null && memberTargetrr.Type.Kind == TypeKind.Enum && memberTargetrr.Member is DefaultResolvedField && this.Emitter.Validator.EnumEmitMode(memberTargetrr.Type) == 2)
             {
                 isConstTarget = true;
+            }
+
+            if (memberReferenceExpression.Target is ParenthesizedExpression || 
+                (targetrr is ConstantResolveResult && targetrr.Type.IsKnownType(KnownTypeCode.Int64)) ||
+                (targetrr is ConstantResolveResult && targetrr.Type.IsKnownType(KnownTypeCode.UInt64)) ||
+                (targetrr is ConstantResolveResult && targetrr.Type.IsKnownType(KnownTypeCode.Decimal)))
+            {
+                isConstTarget = false;
             }
 
             if (memberReferenceExpression.Parent is InvocationExpression && (((InvocationExpression)(memberReferenceExpression.Parent)).Target == memberReferenceExpression))
@@ -347,7 +356,8 @@ namespace Bridge.Translator
                 if (resolveResult is TypeResolveResult)
                 {
                     TypeResolveResult typeResolveResult = (TypeResolveResult)resolveResult;
-                    var isNative = this.Emitter.Validator.IsIgnoreType(typeResolveResult.Type.GetDefinition()) || typeResolveResult.Type.Kind == TypeKind.Enum;
+                    this.Write(BridgeTypes.ToJsName(typeResolveResult.Type, this.Emitter));
+                    /*var isNative = this.Emitter.Validator.IsIgnoreType(typeResolveResult.Type.GetDefinition()) || typeResolveResult.Type.Kind == TypeKind.Enum;
                     if (isNative)
                     {
                         this.Write(BridgeTypes.ToJsName(typeResolveResult.Type, this.Emitter));
@@ -355,7 +365,7 @@ namespace Bridge.Translator
                     else
                     {
                         this.Write("Bridge.get(" + BridgeTypes.ToJsName(typeResolveResult.Type, this.Emitter) + ")");
-                    }                    
+                    }*/                    
 
                     return;
                 }
@@ -550,7 +560,27 @@ namespace Bridge.Translator
                         }
                     }
 
-                    if (Helpers.IsFieldProperty(member.Member, this.Emitter))
+                    bool isFieldProperty = Helpers.IsFieldProperty(member.Member, this.Emitter);
+                    if (isFieldProperty)
+                    {
+                        if (member.Member.ImplementedInterfaceMembers.Count > 0 &&
+                            !member.Member.ImplementedInterfaceMembers.All(m => Helpers.IsFieldProperty(m, this.Emitter)))
+                        {
+                            throw new EmitterException(memberReferenceExpression,
+                                string.Format(
+                                    "The property {0} is marked as FieldProperty but implemented interface member has no such attribute",
+                                    member.Member.ToString()));
+                        }
+                    }
+                    else
+                    {
+                        if (member.Member.ImplementedInterfaceMembers.Count > 0 && member.Member.ImplementedInterfaceMembers.Any(m => Helpers.IsFieldProperty(m, this.Emitter)))
+                        {
+                            throw new EmitterException(memberReferenceExpression, string.Format("The property {0} is not marked as FieldProperty but implemented interface member has such attribute", member.Member.ToString()));
+                        }
+                    }
+
+                    if (isFieldProperty)
                     {
                         this.Write(Helpers.GetPropertyRef(member.Member, this.Emitter));
                     }
@@ -560,6 +590,7 @@ namespace Bridge.Translator
                         {
                             bool isNullable = NullableType.IsNullable(member.Member.ReturnType);
                             bool isDecimal = Helpers.IsDecimalType(member.Member.ReturnType, this.Emitter.Resolver);
+                            bool isLong = Helpers.Is64Type(member.Member.ReturnType, this.Emitter.Resolver);
 
                             if (isStatement)
                             {
@@ -576,7 +607,7 @@ namespace Bridge.Translator
                                     this.WriteOpenParentheses();
                                 }
 
-                                if (isDecimal)
+                                if (isDecimal || isLong)
                                 {
                                     if (isNullable)
                                     {
@@ -764,7 +795,7 @@ namespace Bridge.Translator
                                     this.WriteOpenParentheses();
                                 }
 
-                                if (isDecimal)
+                                if (isDecimal || isLong)
                                 {
                                     if (isNullable)
                                     {

@@ -163,6 +163,11 @@ namespace Bridge.Translator
             var inlineCode = isInlineMethod ? null : this.GetInline(member);
             var isStatic = member.IsStatic;
 
+            if (!string.IsNullOrEmpty(inlineCode) && member is IProperty)
+            {
+                inlineCode = inlineCode.Replace("{value}", "{0}");
+            }
+
             return new Tuple<bool, bool, string>(isStatic, isInlineMethod, inlineCode);
         }
 
@@ -588,6 +593,7 @@ namespace Bridge.Translator
         public virtual string GetInline(IEntity entity)
         {
             string attrName = Bridge.Translator.Translator.Bridge_ASSEMBLY + ".TemplateAttribute";
+            bool isProp = entity is IProperty;
 
             if (entity.SymbolKind == SymbolKind.Property)
             {
@@ -602,7 +608,14 @@ namespace Bridge.Translator
                     return a.AttributeType.FullName == attrName;
                 });
 
-                return attr != null && attr.PositionalArguments.Count > 0 ? attr.PositionalArguments[0].ConstantValue.ToString() : null;
+                var inlineCode = attr != null && attr.PositionalArguments.Count > 0 ? attr.PositionalArguments[0].ConstantValue.ToString() : null;
+
+                if (!string.IsNullOrEmpty(inlineCode) && isProp)
+                {
+                    inlineCode = inlineCode.Replace("{value}", "{0}");
+                }
+
+                return inlineCode;
             }
 
             return null;

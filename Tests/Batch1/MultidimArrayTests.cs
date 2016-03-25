@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Bridge.Test;
+
+using System;
 using System.Collections.Generic;
-using Bridge.Test;
-using Bridge.ClientTest;
+
 
 namespace Bridge.ClientTest
 {
@@ -114,45 +115,44 @@ namespace Bridge.ClientTest
             Assert.AreEqual(6, arr[2, 1]);
         }
 
-        // TODO [Array] Multidimensional initializer does not compile #354 All the tests below
-        //[Test]
-        //public void GetLengthWorks()
-        //{
-        //    var arr = new int[,,] { { { 1, 2 }, { 3, 4 }, { 5, 6 } }, { { 7, 8 }, { 9, 10 }, { 11, 12 } }, { { 13, 14 }, { 15, 16 }, { 17, 18 } }, { { 19, 20 }, { 21, 22 }, { 23, 24 } } };
-        //    Assert.AreEqual(arr.GetLength(0), 4);
-        //    Assert.AreEqual(arr.GetLength(1), 3);
-        //    Assert.AreEqual(arr.GetLength(2), 2);
-        //}
+        [Test]
+        public void GetLengthWorks()
+        {
+            var arr = new int[,,] { { { 1, 2 }, { 3, 4 }, { 5, 6 } }, { { 7, 8 }, { 9, 10 }, { 11, 12 } }, { { 13, 14 }, { 15, 16 }, { 17, 18 } }, { { 19, 20 }, { 21, 22 }, { 23, 24 } } };
+            Assert.AreEqual(arr.GetLength(0), 4);
+            Assert.AreEqual(arr.GetLength(1), 3);
+            Assert.AreEqual(arr.GetLength(2), 2);
+        }
 
-        //[Test]
-        //public void GetLowerBoundWorks()
-        //{
-        //    var arr = new int[,,] { { { 1, 2 }, { 3, 4 }, { 5, 6 } }, { { 7, 8 }, { 9, 10 }, { 11, 12 } }, { { 13, 14 }, { 15, 16 }, { 17, 18 } }, { { 19, 20 }, { 21, 22 }, { 23, 24 } } };
-        //    Assert.AreEqual(arr.GetLowerBound(0), 0);
-        //    Assert.AreEqual(arr.GetLowerBound(1), 0);
-        //    Assert.AreEqual(arr.GetLowerBound(2), 0);
-        //}
+        [Test]
+        public void GetLowerBoundWorks()
+        {
+            var arr = new int[,,] { { { 1, 2 }, { 3, 4 }, { 5, 6 } }, { { 7, 8 }, { 9, 10 }, { 11, 12 } }, { { 13, 14 }, { 15, 16 }, { 17, 18 } }, { { 19, 20 }, { 21, 22 }, { 23, 24 } } };
+            Assert.AreEqual(arr.GetLowerBound(0), 0);
+            Assert.AreEqual(arr.GetLowerBound(1), 0);
+            Assert.AreEqual(arr.GetLowerBound(2), 0);
+        }
 
-        //[Test]
-        //public void GetUpperBoundWorks()
-        //{
-        //    var arr = new int[,,] { { { 1, 2 }, { 3, 4 }, { 5, 6 } }, { { 7, 8 }, { 9, 10 }, { 11, 12 } }, { { 13, 14 }, { 15, 16 }, { 17, 18 } }, { { 19, 20 }, { 21, 22 }, { 23, 24 } } };
-        //    Assert.AreEqual(arr.GetUpperBound(0), 3);
-        //    Assert.AreEqual(arr.GetUpperBound(1), 2);
-        //    Assert.AreEqual(arr.GetUpperBound(2), 1);
-        //}
+        [Test]
+        public void GetUpperBoundWorks()
+        {
+            var arr = new int[,,] { { { 1, 2 }, { 3, 4 }, { 5, 6 } }, { { 7, 8 }, { 9, 10 }, { 11, 12 } }, { { 13, 14 }, { 15, 16 }, { 17, 18 } }, { { 19, 20 }, { 21, 22 }, { 23, 24 } } };
+            Assert.AreEqual(arr.GetUpperBound(0), 3);
+            Assert.AreEqual(arr.GetUpperBound(1), 2);
+            Assert.AreEqual(arr.GetUpperBound(2), 1);
+        }
 
-        //[Test]
-        //public void ForeachWorks()
-        //{
-        //    var arr = new int[,,] { { { 1, 2 }, { 3, 4 }, { 5, 6 } }, { { 7, 8 }, { 9, 10 }, { 11, 12 } }, { { 13, 14 }, { 15, 16 }, { 17, 18 } }, { { 19, 20 }, { 21, 22 }, { 23, 24 } } };
-        //    var actual = new List<int>();
-        //    foreach (var i in arr)
-        //    {
-        //        actual.Add(i);
-        //    }
-        //    Assert.AreEqual(actual, new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24 });
-        //}
+        [Test]
+        public void ForeachWorks()
+        {
+            var arr = new int[,,] { { { 1, 2 }, { 3, 4 }, { 5, 6 } }, { { 7, 8 }, { 9, 10 }, { 11, 12 } }, { { 13, 14 }, { 15, 16 }, { 17, 18 } }, { { 19, 20 }, { 21, 22 }, { 23, 24 } } };
+            var actual = new List<int>();
+            foreach (var i in arr)
+            {
+                actual.Add(i);
+            }
+            Assert.AreEqual(new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24 }, actual.ToArray());
+        }
 
         [Test]
         public void RankWorks()

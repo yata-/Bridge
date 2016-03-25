@@ -14,9 +14,9 @@ namespace Bridge.ClientTest.SimpleTypes
         {
             Assert.True((object)(short)0 is short);
             Assert.False((object)0.5 is short);
-            Assert.True((object)-32769 is short);
-            Assert.True((object)32768 is short);
-            Assert.AreEqual("Bridge.Int", typeof(short).GetClassName());
+            Assert.False((object)-32769 is short);
+            Assert.False((object)32768 is short);
+            Assert.AreEqual("Bridge.Int16", typeof(short).GetClassName());
 
             object s = (short)0;
             Assert.True(s is short);
@@ -32,31 +32,35 @@ namespace Bridge.ClientTest.SimpleTypes
             int i1 = -32769, i2 = -32768, i3 = 5754, i4 = 32767, i5 = 32768;
             int? ni1 = -32769, ni2 = -32768, ni3 = 5754, ni4 = 32767, ni5 = 32768, ni6 = null;
 
-            // TODO unchecked
+            unchecked
             {
-                Assert.AreStrictEqual(-32769, (short)i1, "-32769 unchecked");
+                Assert.AreStrictEqual(32767, (short)i1, "-32769 unchecked");
                 Assert.AreStrictEqual(-32768, (short)i2, "-32768 unchecked");
                 Assert.AreStrictEqual(5754, (short)i3, "5754 unchecked");
                 Assert.AreStrictEqual(32767, (short)i4, "32767 unchecked");
-                Assert.AreStrictEqual(32768, (short)i5, "32768 unchecked");
+                Assert.AreStrictEqual(-32768, (short)i5, "32768 unchecked");
 
-                Assert.AreStrictEqual(-32769, (short?)ni1, "nullable -32769 unchecked");
+                Assert.AreStrictEqual(32767, (short?)ni1, "nullable -32769 unchecked");
                 Assert.AreStrictEqual(-32768, (short?)ni2, "nullable -32768 unchecked");
                 Assert.AreStrictEqual(5754, (short?)ni3, "nullable 5754 unchecked");
                 Assert.AreStrictEqual(32767, (short?)ni4, "nullable 32767 unchecked");
-                Assert.AreStrictEqual(32768, (short?)ni5, "nullable 32768 unchecked");
+                Assert.AreStrictEqual(-32768, (short?)ni5, "nullable 32768 unchecked");
                 Assert.AreStrictEqual(null, (short?)ni6, "null unchecked");
             }
 
-            //checked
+            checked
             {
+                Assert.Throws(() => { var b = (short)i1; }, err => err is OverflowException);
                 Assert.AreStrictEqual(-32768, (short)i2, "-32768 checked");
                 Assert.AreStrictEqual(5754, (short)i3, "5754 checked");
                 Assert.AreStrictEqual(32767, (short)i4, "32767 checked");
+                Assert.Throws(() => { var b = (short)i5; }, err => err is OverflowException);
 
+                Assert.Throws(() => { var b = (short?)ni1; }, err => err is OverflowException);
                 Assert.AreStrictEqual(-32768, (short?)ni2, "nullable -32768 checked");
                 Assert.AreStrictEqual(5754, (short?)ni3, "nullable 5754 checked");
                 Assert.AreStrictEqual(32767, (short?)ni4, "nullable 32767 checked");
+                Assert.Throws(() => { var b = (short?)ni5; }, err => err is OverflowException);
                 Assert.AreStrictEqual(null, (short?)ni6, "null checked");
             }
         }
