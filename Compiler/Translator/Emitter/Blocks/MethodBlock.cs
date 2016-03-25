@@ -4,6 +4,7 @@ using Object.Net.Utilities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ICSharpCode.NRefactory.TypeSystem;
 
 namespace Bridge.Translator
 {
@@ -116,6 +117,16 @@ namespace Bridge.Translator
                 structName = BridgeTypes.ToJsName(this.TypeInfo.Type, this.Emitter);
             }
 
+            bool immutable = this.Emitter.Validator.IsImmutableType(typeDef);
+
+            if (!immutable)
+            {
+                var mutableFields = this.TypeInfo.Type.GetFields(f => !f.IsReadOnly && !f.IsConst, GetMemberOptions.IgnoreInheritedMembers);
+                var autoProps = typeDef.Properties.Where(Helpers.IsAutoProperty);
+                var autoEvents = this.TypeInfo.Type.GetEvents(null, GetMemberOptions.IgnoreInheritedMembers);
+                immutable = !mutableFields.Any() && !autoProps.Any() && !autoEvents.Any();
+            }
+
             var fields = this.TypeInfo.InstanceConfig.Fields;
             var props = this.TypeInfo.InstanceConfig.Properties.Where(ent =>
             {
@@ -204,28 +215,37 @@ namespace Bridge.Translator
             }
 
             this.EnsureComma();
-            this.Write("$clone: function (to) ");
-            this.BeginBlock();
-            this.Write("var s = to || new ");
-            this.Write(structName);
-            this.Write("();");
 
-            foreach (var field in list)
+            if (immutable)
             {
-                this.WriteNewLine();
-                string fieldName = field.GetName(this.Emitter);
-
-                this.Write("s.");
-                this.Write(fieldName);
-                this.Write(" = this.");
-                this.Write(fieldName);
-                this.Write(";");
+                this.Write("$clone: function (to) { return this; }");
             }
+            else
+            {
+                this.Write("$clone: function (to) ");
+                this.BeginBlock();
+                this.Write("var s = to || new ");
+                this.Write(structName);
+                this.Write("();");
 
-            this.WriteNewLine();
-            this.Write("return s;");
-            this.WriteNewLine();
-            this.EndBlock();
+                foreach (var field in list)
+                {
+                    this.WriteNewLine();
+                    string fieldName = field.GetName(this.Emitter);
+
+                    this.Write("s.");
+                    this.Write(fieldName);
+                    this.Write(" = this.");
+                    this.Write(fieldName);
+                    this.Write(";");
+                }
+
+                this.WriteNewLine();
+                this.Write("return s;");
+                this.WriteNewLine();
+                this.EndBlock();
+            }
+           
             this.Emitter.Comma = true;
         }
 

@@ -11,17 +11,6 @@ namespace Bridge.ClientTest.ConvertTests
     [TestFixture(TestNameFormat = "Convert.ToUInt64 - {0}")]
     public class ConvertToUInt64Tests : ConvertTestBase<ulong>
     {
-        private static class Wrappers
-        {
-            // TODO: These wrappers help to avoid issues #689 and #743. They can be deleted when issues are fixed.
-            // For more infromation see comment: https://github.com/bridgedotnet/Bridge/issues/743#issuecomment-183905400
-
-            public static ulong ConvertFromStrWithBase(string value, int fromBase)
-            {
-                return Convert.ToUInt64(value, fromBase);
-            }
-        }
-
         [Test]
         public void FromBoolean()
         {
@@ -144,12 +133,12 @@ namespace Bridge.ClientTest.ConvertTests
             ulong[] expectedValues = { 1000, 0, ushort.MaxValue, uint.MaxValue, 0 };
             VerifyFromString(Convert.ToUInt64, Convert.ToUInt64, testValues, expectedValues);
 
-            var longMaxValue = 9007199254740991;    // Number.MAX_SAFE_INTEGER
-            string[] testValuesLong = { longMaxValue.ToString(), "9007199254740990" };
-            ulong[] expectedValuesLong = {(ulong)longMaxValue, (ulong)longMaxValue - 1 };
+            var longMaxValue = ulong.MaxValue;
+            string[] testValuesLong = { longMaxValue.ToString() };
+            ulong[] expectedValuesLong = { longMaxValue };
             VerifyFromString(Convert.ToUInt64, Convert.ToUInt64, testValuesLong, expectedValuesLong);
 
-            string[] overflowValues = { "-1", decimal.MaxValue.ToFixed(0, MidpointRounding.AwayFromZero) };
+            string[] overflowValues = { ConvertConstants.UINT64_OVERFLOW_MIN_STRING, decimal.MaxValue.ToFixed(0, MidpointRounding.AwayFromZero) };
             VerifyFromStringThrows<OverflowException>(Convert.ToUInt64, Convert.ToUInt64, overflowValues);
 
             string[] formatExceptionValues = { "abba" };
@@ -159,29 +148,28 @@ namespace Bridge.ClientTest.ConvertTests
         [Test]
         public void FromStringWithBase()
         {
-            // As there is a limitation on the range of Long values in JS. We'll test the method agains Number.MIN/MAX_SAFE_INTEGER values
-            var maxSafeValue = (ulong)9007199254740991;    // Number.MAX_SAFE_INTEGER
+            var maxSafeValue = UInt64.MaxValue;
 
-            string[] testValues = { null, null, null, null, "1FFFFFFFFFFFFF", "9007199254740991", "377777777777777777", "11111111111111111111111111111111111111111111111111111" };
+            string[] testValues = { null, null, null, null, ConvertConstants.UINT64_MAX_STRING_BASE_16, maxSafeValue.ToString(), ConvertConstants.UINT64_MAX_STRING_BASE_8, ConvertConstants.UINT64_MAX_STRING_BASE_2 };
             int[] testBases = { 10, 2, 8, 16, 16, 10, 8, 2 };
             ulong[] expectedValues = { 0, 0, 0, 0, maxSafeValue, maxSafeValue, maxSafeValue, maxSafeValue };
-            VerifyFromStringWithBase(Wrappers.ConvertFromStrWithBase, testValues, testBases, expectedValues);
+            VerifyFromStringWithBase(Convert.ToUInt64, testValues, testBases, expectedValues, true);
 
-            string[] overflowValues = { "-9007199254740991", "-9223372036854775809" };
+            string[] overflowValues = { ConvertConstants.UINT64_OVERFLOW_MAX_STRING, ConvertConstants.UINT64_OVERFLOW_MIN_STRING };
             int[] overflowBases = { 10, 10 };
-            VerifyFromStringWithBaseThrows<OverflowException>(Wrappers.ConvertFromStrWithBase, overflowValues, overflowBases);
+            VerifyFromStringWithBaseThrows<OverflowException>(Convert.ToUInt64, overflowValues, overflowBases);
 
-            string[] overflowValuesBig = { "FFE0000000000001", "1777400000000000000001", "1111111111100000000000000000000000000000000000000000000000000001", "9223372036854775808", "11111111111111111111111111111111111111111111111111111111111111111", "1FFFFffffFFFFffff", "7777777777777777777777777" };
-            int[] overflowBasesBig = { 16, 8, 2, 10, 2, 16, 8 };
-            VerifyFromStringWithBaseThrows<OverflowException>(Wrappers.ConvertFromStrWithBase, overflowValuesBig, overflowBasesBig);
+            string[] overflowValuesBig = { ConvertConstants.UINT64_OVERFLOW_MAX_STRING_BASE_2, ConvertConstants.UINT64_OVERFLOW_MAX_STRING_BASE_16, ConvertConstants.UINT64_OVERFLOW_MAX_STRING_BASE_8 };
+            int[] overflowBasesBig = { 2, 16, 8 };
+            VerifyFromStringWithBaseThrows<OverflowException>(Convert.ToUInt64, overflowValuesBig, overflowBasesBig);
 
             string[] formatExceptionValues = { "12", "ffffffffffffffffffff" };
             int[] formatExceptionBases = { 2, 8 };
-            VerifyFromStringWithBaseThrows<FormatException>(Wrappers.ConvertFromStrWithBase, formatExceptionValues, formatExceptionBases);
+            VerifyFromStringWithBaseThrows<FormatException>(Convert.ToUInt64, formatExceptionValues, formatExceptionBases);
 
             string[] argumentExceptionValues = { "10", "11", "abba", "-ab" };
             int[] argumentExceptionBases = { -1, 3, 0, 16 };
-            VerifyFromStringWithBaseThrows<ArgumentException>(Wrappers.ConvertFromStrWithBase, argumentExceptionValues, argumentExceptionBases);
+            VerifyFromStringWithBaseThrows<ArgumentException>(Convert.ToUInt64, argumentExceptionValues, argumentExceptionBases);
         }
 
         [Test]
