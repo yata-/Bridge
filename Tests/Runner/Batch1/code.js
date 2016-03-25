@@ -2321,6 +2321,29 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1103', {
+        statics: {
+            testPropertyOps: function () {
+                var res = "";
+                if (true) {
+                    var scope = { };
+                    if (Bridge.Decimal.tryParse("1.0", null, scope) && scope.v.equalsT(Bridge.Decimal(1))) {
+                        res += "first OK ";
+                    }
+                }
+    
+                if (true) {
+                    var scope1 = { };
+                    if (Bridge.Decimal.tryParse("2.0", null, scope1) && scope1.v.equalsT(Bridge.Decimal(2))) {
+                        res += "second OK ";
+                    }
+                }
+    
+                Bridge.get(Bridge.Test.Assert).areEqual("first OK second OK ", res);
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
