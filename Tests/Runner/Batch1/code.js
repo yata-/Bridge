@@ -3913,6 +3913,52 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1105', {
+        statics: {
+            testStaticInitForNestedClasses: function () {
+                Bridge.Test.Assert.areEqual("test", Bridge.ClientTest.BridgeIssues.Bridge1105.Foo.items.getItem(0).value);
+                Bridge.Test.Assert.areEqual("Value1", Bridge.ClientTest.BridgeIssues.Bridge1105.Foo1.defaultItem);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1105.Foo', {
+        statics: {
+            items: null,
+            config: {
+                init: function () {
+                    this.items = Bridge.merge(new Bridge.List$1(Bridge.ClientTest.BridgeIssues.Bridge1105.Foo.Item)(), [
+        [new Bridge.ClientTest.BridgeIssues.Bridge1105.Foo.Item("test")]
+    ] );
+                }
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1105.Foo.Item', {
+        value: null,
+        constructor: function (value) {
+            this.value = value;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1105.Foo1', {
+        statics: {
+            defaultItem: null,
+            config: {
+                init: function () {
+                    this.defaultItem = Bridge.ClientTest.BridgeIssues.Bridge1105.Foo1.Item.value;
+                }
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1105.Foo1.Item', {
+        statics: {
+            value: "Value1"
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,

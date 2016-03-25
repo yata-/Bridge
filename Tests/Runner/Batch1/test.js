@@ -1034,6 +1034,7 @@
                 QUnit.test("#1096 - TestClippingIssues", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1096.testClippingIssues);
                 QUnit.test("#1098 - TestInlineConstantAsMemberReference", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1098.testInlineConstantAsMemberReference);
                 QUnit.test("#1103 - TestPropertyOps", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1103.testPropertyOps);
+                QUnit.test("#1105 - TestStaticInitForNestedClasses", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1105.testStaticInitForNestedClasses);
                 QUnit.test("#381 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge381.testUseCase);
                 QUnit.test("#447 - CheckInlineExpression", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineExpression);
                 QUnit.test("#447 - CheckInlineCalls", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineCalls);
@@ -2612,6 +2613,16 @@
             testPropertyOps: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1103).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1103);
                 Bridge.ClientTest.BridgeIssues.Bridge1103.testPropertyOps();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1105', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1105)],
+        statics: {
+            testStaticInitForNestedClasses: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1105).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1105);
+                Bridge.ClientTest.BridgeIssues.Bridge1105.testStaticInitForNestedClasses();
             }
         }
     });
