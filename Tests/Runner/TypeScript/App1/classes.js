@@ -20,7 +20,7 @@
     Bridge.define('Classes.MovePoint', {
         statics: {
             move: function (p, dx, dy) {
-                return Bridge.get(Classes.StaticClass).move(p.$clone(), dx, dy);
+                return Classes.StaticClass.move(p.$clone(), dx, dy);
             }
         },
         config: {
@@ -32,7 +32,7 @@
             }
         },
         move: function (dx, dy) {
-            this.setPoint(Bridge.get(Classes.MovePoint).move(this.getPoint().$clone(), dx, dy).$clone());
+            this.setPoint(Classes.MovePoint.move(this.getPoint().$clone(), dx, dy).$clone());
         }
     });
     

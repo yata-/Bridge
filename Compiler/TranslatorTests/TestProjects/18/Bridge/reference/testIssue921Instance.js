@@ -17,7 +17,7 @@
         },
         constructor: function (offset) {
             this._offset = offset;
-            Bridge.get(TestIssue921Instance.Issue921Instance).setNameStatic("Static");
+            TestIssue921Instance.Issue921Instance.setNameStatic("Static");
         },
         computeValue: function (d) {
             return d.add(Bridge.Decimal(10));
@@ -121,7 +121,7 @@
             return value + index + this.getName();
         },
         f9: function (value, index) {
-            return value + index + Bridge.get(TestIssue921Instance.Issue921Instance).getNameStatic();
+            return value + index + TestIssue921Instance.Issue921Instance.getNameStatic();
         },
         f10: function (value) {
             return value.add(Bridge.Decimal(1));
