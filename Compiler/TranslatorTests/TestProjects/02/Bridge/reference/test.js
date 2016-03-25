@@ -2778,7 +2778,7 @@ Bridge.Class.addExtend(Bridge.Char, [Bridge.IComparable$1(Bridge.Char), Bridge.I
 
         constructor: function (message, innerException) {
             if (!message) {
-                message = "Index was out of range. Must be non-negative and less than the size of the collection.\nParameter name: index";
+                message = "Index was outside the bounds of the array.";
             }
 
             Bridge.SystemException.prototype.$constructor.call(this, message, innerException);

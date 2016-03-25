@@ -16009,7 +16009,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.define('Bridge.ClientTest.Exceptions.IndexOutOfRangeExceptionTests', {
         statics: {
-            DefaultMessage: "Index was out of range. Must be non-negative and less than the size of the collection.\nParameter name: index"
+            DefaultMessage: "Index was outside the bounds of the array."
         },
         typePropertiesAreCorrect: function () {
             Bridge.get(Bridge.Test.Assert).areEqual$1("Bridge.IndexOutOfRangeException", Bridge.getTypeName(Bridge.IndexOutOfRangeException), "Name");
