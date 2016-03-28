@@ -6,7 +6,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.CoreFx
 {
     [Category(Constants.MODULE_REGEX)]
     [TestFixture(TestNameFormat = "Regex.Replace - {0}")]
-    public class ReplaceTests
+    public class RegexReplaceTests
     {
         #region Instance methods
 

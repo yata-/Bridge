@@ -7,7 +7,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.CoreFx
 {
     [Category(Constants.MODULE_REGEX)]
     [TestFixture(TestNameFormat = "Regex.IsMatch - {0}")]
-    public class IsMatchTests
+    public class RegexIsMatchTests
     {
         private readonly List<Tuple<string, bool>> _isMatchTestData = new List<Tuple<string, bool>>
         {

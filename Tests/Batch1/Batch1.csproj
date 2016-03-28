@@ -230,11 +230,10 @@
     <Compile Include="Linq\TestLinqRestrictionOperators.cs" />
     <Compile Include="Linq\TestLinqSetOperators.cs" />
     <Compile Include="SimpleTypes\TestVersion.cs" />
-    <Compile Include="Text\RegularExpressions\Msdn\IsMatchTests.cs" />
-    <Compile Include="Text\RegularExpressions\Msdn\MatchTests.cs" />
-    <Compile Include="Text\RegularExpressions\Msdn\NetEngineTests.cs" />
-    <Compile Include="Text\RegularExpressions\Msdn\ReplaceTests.cs" />
-    <Compile Include="Text\RegularExpressions\Msdn\SplitTests.cs" />
+    <Compile Include="Text\RegularExpressions\Msdn\RegexIsMatchTests.cs" />
+    <Compile Include="Text\RegularExpressions\Msdn\RegexMatchTests.cs" />
+    <Compile Include="Text\RegularExpressions\Msdn\RegexReplaceTests.cs" />
+    <Compile Include="Text\RegularExpressions\Msdn\RegexSplitTests.cs" />
     <Compile Include="Text\RegularExpressions\RegexEntitiesTests.cs" />
     <Compile Include="Text\RegularExpressions\RegexTestBase.cs" />
     <Compile Include="Threading\CancellationTokenTests.cs" />
