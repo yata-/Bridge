@@ -58,21 +58,21 @@ namespace Bridge.ClientTest.BridgeIssues
         [Test(ExpectedCount = 4)]
         public static void TestSubtractTimeSpan()
         {
-            DateTime date1 = new DateTime(DateTime.Utc(1996, 6, 3, 22, 15, 0));
-            DateTime date2 = new DateTime(DateTime.Utc(1996, 12, 6, 13, 2, 0));
-            DateTime date3 = new DateTime(DateTime.Utc(1996, 10, 12, 8, 42, 0));
+            DateTime date1 = new DateTime(1996, 6, 3, 22, 15, 0);
+            DateTime date2 = new DateTime(1996, 12, 6, 13, 2, 0);
+            DateTime date3 = new DateTime(1996, 10, 12, 8, 42, 0);
 
             TimeSpan diff1 = date2.Subtract(date1);
             Assert.True(diff1.Equals(new TimeSpan(185, 14, 47, 0)), "Bridge582 TestSubtractTimeSpan diff1");
 
             DateTime date4 = date3.Subtract(diff1);
-            Assert.True(date4.Equals(new DateTime(DateTime.Utc(1996, 4, 9, 17, 55, 0))), "Bridge582 TestSubtractTimeSpan date4");
+            Assert.True(date4.Equals(new DateTime(1996, 4, 9, 17, 55, 0)), "Bridge582 TestSubtractTimeSpan date4");
 
             TimeSpan diff2 = date2 - date3;
             Assert.True(diff2.Equals(new TimeSpan(55, 4, 20, 0)), "Bridge582 TestSubtractTimeSpan diff2");
 
             DateTime date5 = date1 - diff2;
-            Assert.True(date5.Equals(new DateTime(DateTime.Utc(1996, 4, 9, 17, 55, 0))), "Bridge582 TestSubtractTimeSpan date5");
+            Assert.True(date5.Equals(new DateTime(1996, 4, 9, 17, 55, 0)), "Bridge582 TestSubtractTimeSpan date5");
         }
 
         [Test(ExpectedCount = 6)]
