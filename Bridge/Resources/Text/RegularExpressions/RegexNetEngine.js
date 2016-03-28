@@ -112,8 +112,17 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
                 }
             }
 
+            var groupId = 1;
             for (var j = 0; j < groups.length; j++) {
-                groups[j].name = groups[j].constructs.name1 || (j+1).toString(); //TODO: check case name1-name2
+                if (groups[j].constructs.name1 != null) {
+                    //TODO: check balancing case: name1-name2
+                    groups[j].name = groups[j].constructs.name1;
+                    groups[j].hasName = true;
+                } else {
+                    groups[j].hasName = false;
+                    groups[j].name = groupId.toString();
+                    ++groupId;
+                }
             }
 
             return groups;
@@ -439,8 +448,13 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
                 patternEnd: this._pattern.length
             };
 
-            for (var i = 1; i < total.length; i++) {
+            var nonCapturingCount = 0;
+            for (var i = 1; i < total.length + nonCapturingCount; i++) {
                 var groupDesc = groupDescs[i - 1];
+                if (groupDesc.constructs.isNonCapturing) {
+                    nonCapturingCount++;
+                    continue;
+                }
 
                 var group = {
                     descriptor: groupDesc,
@@ -547,7 +561,9 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
 
     _matchCaptures: function (group) {
         var groupDesc = group.descriptor;
-        if (groupDesc.quantifier == null || groupDesc.quantifier.length === 0) {
+
+        //TODO: is it enough for Non-capturing groups?
+        if (groupDesc.quantifier == null || groupDesc.quantifier.length === 0 || group.valueFull == null || group.valueFull.length === 0) {
             // For non-repeating groups - only 1 capture exists (the same as the group).
             group.captures.push({
                 capIndex: group.capIndex,
