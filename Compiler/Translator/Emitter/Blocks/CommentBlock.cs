@@ -28,7 +28,7 @@ namespace Bridge.Translator
         private static Regex injectComment = new Regex("^@(.*)@?$", RegexOptions.Singleline | RegexOptions.IgnoreCase | RegexOptions.Multiline);
         private static Regex removeStars = new Regex("(^\\s*)(\\* )", RegexOptions.Singleline | RegexOptions.IgnoreCase | RegexOptions.Multiline);
 
-        protected virtual void WriteMultiLineComment(string text, bool newline)
+        protected virtual void WriteMultiLineComment(string text, bool newline, bool wrap = true)
         {
             bool needRemoveIndent = false;
             var methodDeclaration = this.Comment.GetParent<MethodDeclaration>();
@@ -65,8 +65,15 @@ namespace Bridge.Translator
                 text = AbstractEmitterBlock.RemoveIndentFromString(text, this.Comment.StartLocation.Column - (mode == 1 ? 5 : 1));
             }
 
-            this.Write("/* " + text + "*/");
-            this.WriteNewLine();
+            if (wrap)
+            {
+                this.Write("/* " + text + "*/");
+                this.WriteNewLine();
+            }
+            else
+            {
+                this.Write(text);
+            }
         }
 
         protected virtual void WriteSingleLineComment(string text, bool newline)
@@ -103,7 +110,7 @@ namespace Bridge.Translator
                     code = code.Substring(0, code.Length - 1);
                 }
 
-                this.Write(code);
+                this.WriteMultiLineComment(code, true, false);
                 this.WriteNewLine();
             }
             else if (comment.CommentType == CommentType.MultiLine)

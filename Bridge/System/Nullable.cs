@@ -30,7 +30,7 @@ namespace System
             }
         }
 
-        [Template("Bridge.Nullable.getValueOrDefault({this}, Bridge.getDefaultValue({T}))")]
+        [Template("Bridge.Nullable.getValueOrDefault({this}, {T:default})")]
         public T GetValueOrDefault()
         {
             return default(T);

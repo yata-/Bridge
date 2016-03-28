@@ -4,7 +4,7 @@
     Bridge.init(function(){
         // One line above the method
         var before = 5;
-        before++;
+        before = (before + 1) | 0;
         // One line below the method
     });
     
@@ -12,7 +12,7 @@
         statics: {
             main: function () {
                 var i = 5;
-                i++;
+                i = (i + 1) | 0;
             }
         }
     });

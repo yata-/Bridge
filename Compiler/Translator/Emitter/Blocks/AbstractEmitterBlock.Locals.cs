@@ -107,6 +107,12 @@ namespace Bridge.Translator
 
             var result = this.Emitter.LocalsNamesMap[name];
 
+            if (this.Emitter.LocalsMap != null && this.Emitter.LocalsMap.ContainsKey(name))
+            {
+                var oldValue = this.Emitter.LocalsMap[name];
+                this.Emitter.LocalsMap[name] = result + (oldValue.EndsWith(".v") ? ".v" : "");
+            }
+
             if (this.Emitter.IsAsync && !this.Emitter.AsyncVariables.Contains(result))
             {
                 this.Emitter.AsyncVariables.Add(result);
