@@ -231,6 +231,7 @@
     <Compile Include="Linq\TestLinqSetOperators.cs" />
     <Compile Include="SimpleTypes\TestVersion.cs" />
     <Compile Include="Text\RegularExpressions\Msdn\RegexIsMatchTests.cs" />
+    <Compile Include="Text\RegularExpressions\Msdn\RegexMatchesTests.cs" />
     <Compile Include="Text\RegularExpressions\Msdn\RegexMatchTests.cs" />
     <Compile Include="Text\RegularExpressions\Msdn\RegexReplaceTests.cs" />
     <Compile Include="Text\RegularExpressions\Msdn\RegexSplitTests.cs" />
