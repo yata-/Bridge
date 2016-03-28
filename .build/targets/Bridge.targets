@@ -3,7 +3,7 @@
 
   <PropertyGroup>
     <NoStdLib>True</NoStdLib>
-	<AddAdditionalExplicitAssemblyReferences>false</AddAdditionalExplicitAssemblyReferences>
+    <AddAdditionalExplicitAssemblyReferences>false</AddAdditionalExplicitAssemblyReferences>
     <AdditionalExplicitAssemblyReferences />
   </PropertyGroup>
 
@@ -19,7 +19,7 @@
       Configuration="$(Configuration)"
       Assembly="@(IntermediateAssembly)"
       AssembliesPath="$(MSBuildThisFileDirectory)"
-      ProjectPath="$(MSBuildProjectFullPath)">
-    </GenerateScript>
+      ProjectPath="$(MSBuildProjectFullPath)"
+      />
   </Target>
 </Project>
