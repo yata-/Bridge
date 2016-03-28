@@ -114,7 +114,12 @@ namespace Bridge.Translator
                 {
                     return level;
                 }
-                
+
+                if (expression is ParenthesizedExpression && expression.Parent is CastExpression)
+                {
+                    return level;
+                }
+
                 if (rr is ConstantResolveResult && expression is CastExpression && !conversion.IsUserDefined)
                 {
                     return level;
