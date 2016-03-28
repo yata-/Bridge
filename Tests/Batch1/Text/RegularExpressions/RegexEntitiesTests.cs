@@ -424,6 +424,10 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Entities
             rgx = new Regex("(?<name1>(?'inner1'))(?'name2')");
             names = rgx.GetGroupNames();
             ValidateCollection(new[] { "0", "name1", "inner1", "name2" }, names, "NameGroup3");
+
+            rgx = new Regex("(?<test>)()");
+            names = rgx.GetGroupNames();
+            ValidateCollection(new[] { "0", "1", "test" }, names, "NameGroupAndNoname1");
         }
 
         [Test]
@@ -460,6 +464,10 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Entities
             rgx = new Regex("(?<name1>(?'inner1'))(?'name2')");
             numbers = rgx.GetGroupNumbers();
             ValidateCollection(new[] { 0, 1, 2, 3 }, numbers, "NameGroup3");
+
+            rgx = new Regex("(?<test>)()");
+            numbers = rgx.GetGroupNumbers();
+            ValidateCollection(new[] { 0, 1, 2 }, numbers, "NameGroupAndNoname1");
         }
 
         [Test]
@@ -504,7 +512,13 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Entities
             Assert.AreEqual("name2", rgx.GroupNameFromNumber(3), "NameGroup3.GroupNameFromNumber(3)");
 
             Assert.AreEqual("", rgx.GroupNameFromNumber(999), "NameGroup3.GroupNameFromNumber(999)");
+
+            rgx = new Regex("(?<test>)()");
+            Assert.AreEqual("0", rgx.GroupNameFromNumber(0), "NameGroupAndNoname1.GroupNameFromNumber(0)");
+            Assert.AreEqual("1", rgx.GroupNameFromNumber(1), "NameGroupAndNoname1.GroupNameFromNumber(1)");
+            Assert.AreEqual("test", rgx.GroupNameFromNumber(2), "NameGroupAndNoname1.GroupNameFromNumber(2)");
         }
+
         [Test]
         public void GroupNumberFromNameTest()
         {
@@ -547,6 +561,11 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Entities
             Assert.AreEqual(3, rgx.GroupNumberFromName("name2"), "NameGroup3.GroupNumberFromName(\"name2\")");
 
             Assert.AreEqual(-1, rgx.GroupNumberFromName("Fake"), "NameGroup3.GroupNumberFromName(\"Fake\")");
+
+            rgx = new Regex("(?<test>)()");
+            Assert.AreEqual(0, rgx.GroupNumberFromName("0"), "NameGroupAndNoname1.GroupNumberFromName(\"0\")");
+            Assert.AreEqual(1, rgx.GroupNumberFromName("1"), "NameGroupAndNoname1.GroupNumberFromName(\"1\")");
+            Assert.AreEqual(2, rgx.GroupNumberFromName("test"), "NameGroupAndNoname1.GroupNumberFromName(\"test\")");
         }
 
         #endregion
