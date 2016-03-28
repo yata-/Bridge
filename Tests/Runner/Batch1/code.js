@@ -3959,6 +3959,35 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1110', {
+        statics: {
+            testOverflowForConditionInParenthesized: function () {
+                var v = Bridge.Long(1);
+                v = Bridge.Long((v.gt(Bridge.Long(1)) ? 1 : 0));
+                var res = v.equals(Bridge.Long(1));
+                Bridge.Test.Assert.$false(res);
+            },
+            testOverflowForIndexer: function () {
+                var data = [1];
+                var v = Bridge.Long(data[0]);
+                v = Bridge.Long((v.gt(Bridge.Long(1)) ? 1 : 0));
+                var res = v.equals(Bridge.Long(1));
+                Bridge.Test.Assert.$false(res);
+            },
+            testOverflowForBitwise: function () {
+                var v2 = 4294967295;
+                var shifted = (v2 << 31) >>> 0;
+                var res2 = shifted === 2147483648;
+                Bridge.Test.Assert.$true(res2);
+    
+                var v3 = 4294967295;
+                var shifted3 = (v3 << 31) >>> 0;
+                var res3 = shifted === 2147483648;
+                Bridge.Test.Assert.$true(res3);
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
@@ -13974,9 +14003,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
                     var triplet = (((result[0] << 16) | (result[1] << 8) | result[2])) >>> 0;
                     Bridge.Test.Assert.areEqual(triplet >>> 18, 45); // 't'
-                    Bridge.Test.Assert.areEqual((triplet << 14) >>> 26, 30); // 'e'
-                    Bridge.Test.Assert.areEqual((triplet << 20) >>> 26, 44); // 's'
-                    Bridge.Test.Assert.areEqual((triplet << 26) >>> 26, 45); // 't'
+                    Bridge.Test.Assert.areEqual((((triplet << 14) >>> 0)) >>> 26, 30); // 'e'
+                    Bridge.Test.Assert.areEqual((((triplet << 20) >>> 0)) >>> 26, 44); // 's'
+                    Bridge.Test.Assert.areEqual((((triplet << 26) >>> 0)) >>> 26, 45); // 't'
     
                     Bridge.Test.Assert.areEqual(Bridge.Convert.toBase64String(result, null, null, null), input);
                 });
