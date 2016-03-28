@@ -9,77 +9,209 @@ namespace Bridge.ClientTest.Text.RegularExpressions.CoreFx
     [TestFixture(TestNameFormat = "Regex.Match - {0}")]
     public class MatchTests : RegexTestBase
     {
-        #region Instance methods
-
-        [Test(ExpectedCount = 0)]
-        public void MatchGroup()
-        {
-            var pattern = @"ra(i)?n";
-            var text = @"zranz";
-
-            var rgx = new Regex(pattern);
-            var m = rgx.Match(text);
-        }
-
-        [Test]
-        public void MatchCapture()
-        {
-            var pattern = @"(g\d(a)+x\s*)+";
-            var text = @"g1aaax g2aaax";
-
-            var rgx = new Regex(pattern);
-            var m = rgx.Match(text);
-
-            ValidateMatch(m, 0, 13, "g1aaax g2aaax", 3);
-
-            ValidateGroup(m, 0, 0, 13, true, "g1aaax g2aaax", 1);
-            ValidateCapture(m, 0, 0, 0, 13, "g1aaax g2aaax");
-
-            ValidateGroup(m, 1, 7, 6, true, "g2aaax", 2);
-            ValidateCapture(m, 1, 0, 0, 7, "g1aaax ");
-            ValidateCapture(m, 1, 1, 7, 6, "g2aaax");
-
-            ValidateGroup(m, 2, 11, 1, true, "a", 6);
-            ValidateCapture(m, 2, 0, 2, 1, "a");
-            ValidateCapture(m, 2, 1, 3, 1, "a");
-            ValidateCapture(m, 2, 2, 4, 1, "a");
-            ValidateCapture(m, 2, 3, 9, 1, "a");
-            ValidateCapture(m, 2, 4, 10, 1, "a");
-            ValidateCapture(m, 2, 5, 11, 1, "a");
-        }
-
         [Test]
         public void MatchTest()
         {
-            var text = @"One car red car blue car";
-            var pattern = @"(\w+)\s+(car)";
+            var expectedGroupValues = new[] { "One", "car", "red", "car", "blue", "car" };
+            var expectedCaptureValues = new[] { "One", "car", "red", "car", "blue", "car" };
+            var expectedCaptureIndexes = new[] { 0, 4, 8, 12, 16, 21 };
 
-            var rgx = new Regex(pattern, RegexOptions.IgnoreCase);
-            var m = rgx.Match(text);
+            var actualGroupValues = new List<string>();
+            var actualCaptureValues = new List<string>();
+            var actualCaptureIndexes = new List<int>();
 
-            ValidateMatch(m, 0, 7, "One car", 3);
+            string text = "One car red car blue car";
+            string pat = @"(\w+)\s+(car)";
 
-            //ValidateGroup(m, 0, 0, 7, true, "One car", 1);
-            //ValidateGroup(m, 1, 0, 3, true, "One");
-            //ValidateGroup(m, 2, 4, 3, true, "car");
+            // Instantiate the regular expression object.
+            Regex r = new Regex(pat, RegexOptions.IgnoreCase);
 
-            //TODO: Enable [switched off] Captures
-            //Assert.NotNull(m.Captures);
-            //Assert.AreEqual(1, m.Captures.Count);
-            //var innerCapture = m.Captures[0];
-            //Assert.AreEqual(m.Index, innerCapture.Index);
-            //Assert.AreEqual(m.Length, innerCapture.Length);
-            //Assert.AreEqual(m.Value, innerCapture.Value);
+            // Match the regular expression pattern against a text string.
+            Match m = r.Match(text);
+            while (m.Success)
+            {
+                for (int i = 1; i <= 2; i++)
+                {
+                    Group g = m.Groups[i];
+                    actualGroupValues.Add(g.ToString());
 
+                    CaptureCollection cc = g.Captures;
+                    for (int j = 0; j < cc.Count; j++)
+                    {
+                        Capture c = cc[j];
+                        actualCaptureValues.Add(c.ToString());
+                        actualCaptureIndexes.Add(c.Index);
+                    }
+                }
+                m = m.NextMatch();
+            }
 
-            //TODO: m.NextMatch()
-            //TODO: m.Result()
+            ValidateCollection(expectedGroupValues, actualGroupValues.ToArray(), "GroupValues");
+            ValidateCollection(expectedCaptureValues, actualCaptureValues.ToArray(), "CaptureValues");
+            ValidateCollection(expectedCaptureIndexes, actualCaptureIndexes.ToArray(), "CaptureIndexes");
         }
 
-        #endregion
+        [Test]
+        public void MatchAtPositionTest()
+        {
+            var expectedGroupValues = new[] { "red", "car", "blue", "car" };
+            var expectedCaptureValues = new[] { "red", "car", "blue", "car" };
+            var expectedCaptureIndexes = new[] { 8, 12, 16, 21 };
 
-        #region Static methods
+            var actualGroupValues = new List<string>();
+            var actualCaptureValues = new List<string>();
+            var actualCaptureIndexes = new List<int>();
 
-        #endregion
+            string text = "One car red car blue car";
+            string pat = @"(\w+)\s+(car)";
+
+            // Instantiate the regular expression object.
+            Regex r = new Regex(pat, RegexOptions.IgnoreCase);
+
+            // Match the regular expression pattern against a text string.
+            Match m = r.Match(text, 3);
+            while (m.Success)
+            {
+                for (int i = 1; i <= 2; i++)
+                {
+                    Group g = m.Groups[i];
+                    actualGroupValues.Add(g.ToString());
+
+                    CaptureCollection cc = g.Captures;
+                    for (int j = 0; j < cc.Count; j++)
+                    {
+                        Capture c = cc[j];
+                        actualCaptureValues.Add(c.ToString());
+                        actualCaptureIndexes.Add(c.Index);
+                    }
+                }
+                m = m.NextMatch();
+            }
+
+            ValidateCollection(expectedGroupValues, actualGroupValues.ToArray(), "GroupValues");
+            ValidateCollection(expectedCaptureValues, actualCaptureValues.ToArray(), "CaptureValues");
+            ValidateCollection(expectedCaptureIndexes, actualCaptureIndexes.ToArray(), "CaptureIndexes");
+        }
+
+        [Test]
+        public void MatchAtPositionAndLengthTest()
+        {
+            var expectedGroupValues = new[] {  "red", "car" };
+            var expectedCaptureValues = new[] { "red", "car" };
+            var expectedCaptureIndexes = new[] { 8, 12 };
+
+            var actualGroupValues = new List<string>();
+            var actualCaptureValues = new List<string>();
+            var actualCaptureIndexes = new List<int>();
+
+            string text = "One car red car blue car";
+            string pat = @"(\w+)\s+(car)";
+
+            // Instantiate the regular expression object.
+            Regex r = new Regex(pat, RegexOptions.IgnoreCase);
+
+            // Match the regular expression pattern against a text string.
+            Match m = r.Match(text, 3, 15);
+            while (m.Success)
+            {
+                for (int i = 1; i <= 2; i++)
+                {
+                    Group g = m.Groups[i];
+                    actualGroupValues.Add(g.ToString());
+
+                    CaptureCollection cc = g.Captures;
+                    for (int j = 0; j < cc.Count; j++)
+                    {
+                        Capture c = cc[j];
+                        actualCaptureValues.Add(c.ToString());
+                        actualCaptureIndexes.Add(c.Index);
+                    }
+                }
+                m = m.NextMatch();
+                if (m.Index > 15)
+                {
+                    break;
+                }
+            }
+
+            ValidateCollection(expectedGroupValues, actualGroupValues.ToArray(), "GroupValues");
+            ValidateCollection(expectedCaptureValues, actualCaptureValues.ToArray(), "CaptureValues");
+            ValidateCollection(expectedCaptureIndexes, actualCaptureIndexes.ToArray(), "CaptureIndexes");
+        }
+
+        [Test]
+        public void MatchStaticTest()
+        {
+            var expectedMatchValues = new[] { "ablaze", "dozen", "glaze", "jazz", "pizza", "quiz", "whiz", "zealous" };
+            var expectedMatchIndexes = new[] { 0, 21, 46, 65, 104, 110, 157, 174 };
+
+            var actualMatchValues = new List<string>();
+            var actualMatchIndexes = new List<int>();
+
+            string pattern = @"\b\w*z+\w*\b";
+            string input = "ablaze beagle choral dozen elementary fanatic " +
+                           "glaze hunger inept jazz kitchen lemon minus " +
+                           "night optical pizza quiz restoration stamina " +
+                           "train unrest vertical whiz xray yellow zealous";
+
+            Match m = Regex.Match(input, pattern);
+            while (m.Success)
+            {
+                actualMatchValues.Add(m.Value);
+                actualMatchIndexes.Add(m.Index);
+                m = m.NextMatch();
+            }
+
+            ValidateCollection(expectedMatchValues, actualMatchValues.ToArray(), "MatchValues");
+            ValidateCollection(expectedMatchIndexes, actualMatchIndexes.ToArray(), "MatchIndexes");
+        }
+
+        [Test]
+        public void MatchStaticWithOptionsTest()
+        {
+            var expectedMatchValues = new[] { "An" };
+            var expectedMatchIndexes = new[] { 0 };
+
+            var actualMatchValues = new List<string>();
+            var actualMatchIndexes = new List<int>();
+
+            string pattern = @"\ba\w*\b";
+            string input = "An extraordinary day dawns with each new day.";
+
+            Match m = Regex.Match(input, pattern, RegexOptions.IgnoreCase);
+            while (m.Success)
+            {
+                actualMatchValues.Add(m.Value);
+                actualMatchIndexes.Add(m.Index);
+                m = m.NextMatch();
+            }
+
+            ValidateCollection(expectedMatchValues, actualMatchValues.ToArray(), "MatchValues");
+            ValidateCollection(expectedMatchIndexes, actualMatchIndexes.ToArray(), "MatchIndexes");
+        }
+
+        [Test]
+        public void MatchStaticWithOptionsAndTimeoutTest()
+        {
+            var expectedMatchValues = new[] { "An" };
+            var expectedMatchIndexes = new[] { 0 };
+
+            var actualMatchValues = new List<string>();
+            var actualMatchIndexes = new List<int>();
+
+            string pattern = @"\ba\w*\b";
+            string input = "An extraordinary day dawns with each new day.";
+
+            Match m = Regex.Match(input, pattern, RegexOptions.IgnoreCase, TimeSpan.FromSeconds(1));
+            while (m.Success)
+            {
+                actualMatchValues.Add(m.Value);
+                actualMatchIndexes.Add(m.Index);
+                m = m.NextMatch();
+            }
+
+            ValidateCollection(expectedMatchValues, actualMatchValues.ToArray(), "MatchValues");
+            ValidateCollection(expectedMatchIndexes, actualMatchIndexes.ToArray(), "MatchIndexes");
+        }
     }
 }

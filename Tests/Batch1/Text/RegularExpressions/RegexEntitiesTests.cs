@@ -30,23 +30,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Entities
             return m;
         }
 
-        private static void ValidateCollection<T>(T[] expected, T[] actual, string msg)
-        {
-            if (expected == null)
-            {
-                Assert.Null(actual, msg + " is NULL");
-            }
-            else
-            {
-                Assert.NotNull(actual, msg + " is not NULL");
-                Assert.AreEqual(expected.Length, actual.Length, msg + ".Length");
-                for (int i = 0; i < expected.Length; i++)
-                {
-                    Assert.AreEqual(expected[i], actual[i], msg + "[" + i + "]");
-                }
-            }
-        }
-
         [Test]
         public void CaseDataTest()
         {
