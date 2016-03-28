@@ -84,8 +84,20 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
     },
 
     result: function (replacement) {
-        //TODO: implement
-        return replacement;
+ 
+        if (replacement == null) {
+            throw new Bridge.ArgumentNullException("replacement");
+        }
+ 
+        if (this._regex == null) {
+            throw new Bridge.NotSupportedException("Result cannot be called on a failed Match.");
+        }
+
+        var regexParser = Bridge.get(Bridge.Text.RegularExpressions.RegexParser);
+        var repl = regexParser.parseReplacement(replacement, this._regex.caps, this._regex.capsize, this._regex.capnames, this._regex.roptions);
+        //TODO: cache
+ 
+        return repl.Replacement(this);
     },
 
     _isMatched: function (cap) {
@@ -166,5 +178,22 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
 
             this._balancing = false;
         }
+    },
+
+    _groupToStringImpl: function(groupnum) {
+        var c = this._matchcount[groupnum];
+        if (c === 0) {
+            return "";
+        }
+ 
+        var matches = this._matches[groupnum];
+
+        var capIndex = matches[(c - 1) * 2];
+        var capLength = matches[(c * 2) - 1];
+        return this._text.slice(capIndex, capIndex + capLength);
+    },
+
+    _lastGroupToStringImpl: function () {
+        return this._groupToStringImpl(this._matchcount.length - 1);
     }
 });

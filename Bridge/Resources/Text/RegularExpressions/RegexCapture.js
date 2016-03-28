@@ -25,5 +25,17 @@ Bridge.define("Bridge.Text.RegularExpressions.Capture", {
 
     toString: function () {
         return this.getValue();
+    },
+
+    _getOriginalString: function() {
+        return this._text;
+    },
+
+    _getLeftSubstring: function() {
+        return this._text.slice(0, _index);
+    },
+
+    _getRightSubstring: function() {
+        return this._text.slice(this._index + this._length, this._text.length);
     }
 });
