@@ -94,10 +94,10 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
         }
 
         var regexParser = Bridge.get(Bridge.Text.RegularExpressions.RegexParser);
-        var repl = regexParser.parseReplacement(replacement, this._regex.caps, this._regex.capsize, this._regex.capnames, this._regex.roptions);
+        var repl = regexParser.parseReplacement(replacement, this._regex._caps, this._regex._capsize, this._regex._capnames, this._regex._options);
         //TODO: cache
  
-        return repl.Replacement(this);
+        return repl.replacement(this);
     },
 
     _isMatched: function (cap) {

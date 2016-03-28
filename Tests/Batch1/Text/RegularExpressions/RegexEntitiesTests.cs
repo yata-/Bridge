@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions.CoreFx;
 using Bridge.Test;
 
@@ -367,6 +368,24 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Entities
 
             m = m.NextMatch();
             ValidateMatchNotFound(m);
+        }
+
+        [Test]
+        public void MatchResultTest()
+        {
+            var expected = new[] {"(decisively)", "(whatever time it was)"};
+            var actual = new List<string>();
+
+            string pattern = "--(.+?)--";
+            string replacement = "($1)";
+            string input = "He said--decisively--that the time--whatever time it was--had come.";
+            foreach (Match match in Regex.Matches(input, pattern))
+            {
+                string result = match.Result(replacement);
+                actual.Add(result);
+            }
+
+            ValidateCollection(expected, actual.ToArray(), "Result");
         }
 
         #endregion
