@@ -216,12 +216,23 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         this._capslist.push("0");
         this._capnames["0"] = 0;
 
-        for (var i = 0; i < groupInfos.length; i++) {
-            var groupInfo = groupInfos[i];
-            this._capslist.push(groupInfo.name);
-            this._capnames[groupInfo.name] = i+1;
-        }
+        var i;
+        var groupInfo;
 
+        for (i = 0; i < groupInfos.length; i++) {
+            groupInfo = groupInfos[i];
+            if (!groupInfo.hasName) {
+                this._capslist.push(groupInfo.name);
+                this._capnames[groupInfo.name] = this._capslist.length-1;
+            }
+        }
+        for (i = 0; i < groupInfos.length; i++) {
+            groupInfo = groupInfos[i];
+            if (groupInfo.hasName) {
+                this._capslist.push(groupInfo.name);
+                this._capnames[groupInfo.name] = this._capslist.length - 1;
+            }
+        }
 
         //TODO: ValidateMatchTimeout(matchTimeout);
     },
@@ -428,7 +439,8 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
             throw new Bridge.ArgumentNullException("replacement");
         }
 
-        var repl = new Bridge.Text.RegularExpressions.RegexReplacement();
+        var regexParser = Bridge.get(Bridge.Text.RegularExpressions.RegexParser);
+        var repl = regexParser.parseReplacement(replacement, this._caps, this._capsize, this._capnames, this._options);
         //TODO: Cache
 
         return repl.replace(this, input, count, startat);
