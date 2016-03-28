@@ -388,6 +388,26 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Entities
             ValidateCollection(expected, actual.ToArray(), "Result");
         }
 
+
+        [Test]
+        public void MatchSearchGroupByNameTest()
+        {
+            var groupNames = new[] {"groupName1", "groupName2", "groupName3"};
+
+            var pattern = @"(?<" + groupNames[0] + @">\d+)(?'" + groupNames[1] + @"'ZZ)(?<" + groupNames[2] + @">\s+)";
+            var tstText = @"Number123ZZ   ";
+
+            var rx = new Regex(pattern);
+            var m = rx.Match(tstText);
+
+            for (int i = 1; i < 4; i++)
+            {
+                var groupName = groupNames[i - 1];
+                var g = m.Groups[groupName];
+                ValidateGroup(m, i, g.Index, g.Length, g.Success, g.Value, g.Captures.Count);
+            }
+        }
+
         #endregion
 
         #region Regex

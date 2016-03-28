@@ -35,6 +35,15 @@ Bridge.define("Bridge.Text.RegularExpressions.GroupCollection", {
         return this._getGroup(groupnum);
     },
 
+    getByName: function (groupname) {
+        if (this._match._regex == null) {
+            return Bridge.Text.RegularExpressions.Group.getEmpty();
+        }
+
+        var groupnum = this._match._regex.groupNumberFromName(groupname);
+        return this._getGroup(groupnum);
+    },
+
     copyTo: function (array, arrayIndex) {
         if (array == null) {
             throw new Bridge.ArgumentNullException("array");

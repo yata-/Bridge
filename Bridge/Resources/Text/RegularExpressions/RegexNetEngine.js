@@ -386,10 +386,6 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
         this._isCaseInsensitive = isCaseInsensitive;
     },
 
-    nextMatch: function () {
-
-    },
-
     match: function (text, textStart) {
         if (text == null) {
             throw new Bridge.ArgumentNullException("text");
@@ -409,6 +405,9 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
             groups: [],
             captures: []
         };
+
+        // Get group descriptors (+ remove group name before any processing);
+        var groupDescs = this._getGroupDescriptors();
 
         // The 1st run (to know the total capture):
         var statics = Bridge.get(Bridge.Text.RegularExpressions.RegexNetEngine);
@@ -438,7 +437,6 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
 
         // Get more details about groups and captures (if any):
         if (total.length > 1) {
-            var groupDescs = this._getGroupDescriptors();
             var descToGroupMap = {};
             var globalCtx = {
                 text: this._text,
@@ -650,7 +648,36 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
         if (this._groupDescriptors == null) {
             var statics = Bridge.get(Bridge.Text.RegularExpressions.RegexNetEngine);
             this._groupDescriptors = statics.parsePatternGroups(this._pattern);
+            this._removeGroupNamesFromPattern();
         }
         return this._groupDescriptors;
+    },
+
+    _removeGroupNamesFromPattern: function() {
+        // Remove group names (JS RegExp does not support them):
+
+        var updatedPattern = this._pattern;
+        for (var i = 0; i < this._groupDescriptors.length; i++) {
+            var gr = this._groupDescriptors[i];
+            if (gr.hasName) {
+                var name = gr.constructs.name1;
+                var nameConstrLen = 3 + name.length;
+                gr.expr = this._removeSubstring(gr.expr, 1, nameConstrLen);
+                gr.exprFull = gr.expr + gr.quantifier;
+                gr.exprLength -= nameConstrLen;
+
+                updatedPattern = this._removeSubstring(updatedPattern, gr.exprIndex + 1, nameConstrLen);
+                for (var j = i + 1; j < this._groupDescriptors.length; j++) {
+                    var nextGr = this._groupDescriptors[j];
+                    nextGr.exprIndex -= nameConstrLen;
+                }
+            }
+        }
+        this._pattern = updatedPattern;
+    },
+
+    _removeSubstring: function(str, index, length) {
+        var result = str.slice(0, index) + str.slice(index + length, str.length);
+        return result;
     }
 });

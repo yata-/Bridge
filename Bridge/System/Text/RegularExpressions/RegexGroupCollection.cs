@@ -45,7 +45,11 @@ namespace System.Text.RegularExpressions.CoreFx
         /// <summary>
         /// Enables access to a member of the collection by string index.
         /// </summary>
-        public extern new Group this[string groupname] { get; }
+        public extern new Group this[string groupname]
+        {
+            [Template("getByName({0})")]
+            get;
+        }
 
         /// <summary>
         /// Copies all the elements of the collection to the given array beginning at the given index.
