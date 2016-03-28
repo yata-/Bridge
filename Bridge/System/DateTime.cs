@@ -16,6 +16,7 @@ namespace System
         /// Double value representing the number of milliseconds since 1 January 1970 00:00:00 UTC (Unix Epoch).
         /// </summary>
         /// <param name="value">The numberof milliseconds since 1 January 1970 00:00:00 UTC (Unix Epoch)</param>
+        [Template("new Date({value}.toNumber())")]
         public DateTime(long value)
         {
         }
@@ -58,37 +59,37 @@ namespace System
         {
         }
 
-        [Template("Date.UTC({year}, {month} - 1, {day}, {hours}, {minutes}, {seconds}, {ms})")]
+        [Template("Bridge.Long(Date.UTC({year}, {month} - 1, {day}, {hours}, {minutes}, {seconds}, {ms}))")]
         public static long Utc(int year, int month, int day, int hours, int minutes, int seconds, int ms)
         {
             return 0;
         }
 
-        [Template("Date.UTC({year}, {month} - 1, {day}, {hours}, {minutes}, {seconds})")]
+        [Template("Bridge.Long(Date.UTC({year}, {month} - 1, {day}, {hours}, {minutes}, {seconds}))")]
         public static long Utc(int year, int month, int day, int hours, int minutes, int seconds)
         {
             return 0;
         }
 
-        [Template("Date.UTC({year}, {month} - 1, {day}, {hours}, {minutes})")]
+        [Template("Bridge.Long(Date.UTC({year}, {month} - 1, {day}, {hours}, {minutes}))")]
         public static long Utc(int year, int month, int day, int hours, int minutes)
         {
             return 0;
         }
 
-        [Template("Date.UTC({year}, {month} - 1, {day}, {hours})")]
+        [Template("Bridge.Long(Date.UTC({year}, {month} - 1, {day}, {hours}))")]
         public static long Utc(int year, int month, int day, int hours)
         {
             return 0;
         }
 
-        [Template("Date.UTC({year}, {month} - 1, {day})")]
+        [Template("Bridge.Long(Date.UTC({year}, {month} - 1, {day}))")]
         public static long Utc(int year, int month, int day)
         {
             return 0;
         }
 
-        [Template("Date.UTC({year}, {month} - 1)")]
+        [Template("Bridge.Long(Date.UTC({year}, {month} - 1))")]
         public static long Utc(int year, int month)
         {
             return 0;
@@ -192,6 +193,7 @@ namespace System
             return 0;
         }
 
+        [Template("Bridge.Long(({this}).getTime())")]
         public long GetTime()
         {
             return 0;
@@ -701,13 +703,13 @@ namespace System
             return default(DateTime);
         }
 
-        [Template("new Date(({this}).getTime() + (({value}).ticks / 10000))")]
+        [Template("new Date(({this}).getTime() + (({value}).ticks.div(10000).toNumber()))")]
         public extern DateTime Add(TimeSpan value);
 
-        [Template("new Date(({this}).getTime() + (({value}) / 10000))")]
+        [Template("new Date(Bridge.Long(({this}).getTime()).add(({value}).div(10000)).toNumber())")]
         public extern DateTime AddTicks(long value);
 
-        [Template("new Date({this} - new Date(({value}).ticks / 10000))")]
+        [Template("new Date({this} - new Date(({value}).ticks.div(10000).toNumber()))")]
         public extern DateTime Subtract(TimeSpan value);
 
         public TimeSpan TimeOfDay
@@ -721,7 +723,7 @@ namespace System
 
         public long Ticks
         {
-            [Template("({this}.getTime() * 10000)")]
+            [Template("Bridge.Long(({this}).getTime()).mul(10000)")]
             get
             {
                 return 0;

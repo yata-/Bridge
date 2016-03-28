@@ -20,7 +20,7 @@ namespace Bridge.ClientTest
         {
             int? a = 3, b = null;
             Assert.AreEqual("Boolean", typeof(Nullable<bool>).GetClassName(), "Open FullName");
-            Assert.AreEqual("Bridge.Int", typeof(int?).GetClassName(), "Instantiated FullName");
+            Assert.AreEqual("Bridge.Int32", typeof(int?).GetClassName(), "Instantiated FullName");
             Assert.True((object)a is int?, "is int? #1");
             Assert.False((object)b is int?, "is int? #2");
 

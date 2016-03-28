@@ -85,6 +85,7 @@ namespace System.Text
             return new StringBuilder();
         }
 
+        [Template("{this}.append({value}.toString())")]
         public StringBuilder Append(long value)
         {
             return new StringBuilder();
@@ -105,6 +106,7 @@ namespace System.Text
             return new StringBuilder();
         }
 
+        [Template("{this}.append({value}.toString())")]
         public StringBuilder Append(ulong value)
         {
             return new StringBuilder();
@@ -174,6 +176,7 @@ namespace System.Text
             return new StringBuilder();
         }
 
+        [Template("{this}.insert({index}, {value}.toString())")]
         public StringBuilder Insert(int index, long value)
         {
             return new StringBuilder();
@@ -194,6 +197,7 @@ namespace System.Text
             return new StringBuilder();
         }
 
+        [Template("{this}.insert({index}, {value}.toString())")]
         public StringBuilder Insert(int index, ulong value)
         {
             return new StringBuilder();

@@ -83,7 +83,7 @@ namespace System.Linq
 
         public extern int Count(Func<TElement, bool> predicate);
 
-        [Template("{this}.defaultIfEmpty(Bridge.getDefaultValue({TElement}))")]
+        [Template("{this}.defaultIfEmpty({TElement:default})")]
         public extern EnumerableInstance<TElement> DefaultIfEmpty();
 
         public extern EnumerableInstance<TElement> DefaultIfEmpty(TElement defaultValue);
@@ -101,7 +101,7 @@ namespace System.Linq
             return default(TElement);
         }
 
-        [Template("{this}.elementAtOrDefault({index}, Bridge.getDefaultValue({TElement}))")]
+        [Template("{this}.elementAtOrDefault({index}, {TElement:default})")]
         public TElement ElementAtOrDefault(int index)
         {
             return default(TElement);
@@ -128,7 +128,7 @@ namespace System.Linq
             return default(TElement);
         }
 
-        [Template("{this}.firstOrDefault(null, Bridge.getDefaultValue({TElement}))")]
+        [Template("{this}.firstOrDefault(null, {TElement:default})")]
         public TElement FirstOrDefault()
         {
             return default(TElement);
@@ -140,7 +140,7 @@ namespace System.Linq
             return default(TElement);
         }
 
-        [Template("{this}.firstOrDefault({predicate}, Bridge.getDefaultValue({TElement}))")]
+        [Template("{this}.firstOrDefault({predicate}, {TElement:default})")]
         public TElement FirstOrDefault(Func<TElement, bool> predicate)
         {
             return default(TElement);
@@ -244,7 +244,7 @@ namespace System.Linq
             return default(long);
         }
 
-        [Template("{this}.lastOrDefault(null, Bridge.getDefaultValue({TElement}))")]
+        [Template("{this}.lastOrDefault(null, {TElement:default})")]
         public TElement LastOrDefault()
         {
             return default(TElement);
@@ -256,7 +256,7 @@ namespace System.Linq
             return default(TElement);
         }
 
-        [Template("{this}.lastOrDefault({predicate}, Bridge.getDefaultValue({TElement}))")]
+        [Template("{this}.lastOrDefault({predicate}, {TElement:default})")]
         public TElement LastOrDefault(Func<TElement, bool> predicate)
         {
             return default(TElement);
@@ -449,7 +449,7 @@ namespace System.Linq
             return default(TElement);
         }
 
-        [Template("{this}.singleOrDefault(null, Bridge.getDefaultValue({TElement}))")]
+        [Template("{this}.singleOrDefault(null, {TElement:default})")]
         public TElement SingleOrDefault()
         {
             return default(TElement);
@@ -461,7 +461,7 @@ namespace System.Linq
             return default(TElement);
         }
 
-        [Template("{this}.singleOrDefault({predicate}, Bridge.getDefaultValue({TElement}))")]
+        [Template("{this}.singleOrDefault({predicate}, {TElement:default})")]
         public TElement SingleOrDefault(Func<TElement, bool> predicate)
         {
             return default(TElement);
