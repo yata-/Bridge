@@ -11345,7 +11345,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
                 return new IEnumerator(
                     Functions.Blank,
                     function () {
-                        return (index < obj.length) ? this.yieldReturn(obj.charAt(index++)) : false;
+                        return (index < obj.length) ? this.yieldReturn(obj.charCodeAt(index++)) : false;
                     },
                     Functions.Blank);
             });
