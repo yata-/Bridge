@@ -14,7 +14,7 @@ $project.Object.References | foreach-object {
 # Sets the NoStdLib setting to True for every project configuration.
 # See Issue #419 for more information on why.
 # https://github.com/bridgedotnet/Bridge/issues/419
-# Once Visual Studio or NuGet defect is fixed, lines 19-25 can be removed.
+# Once Visual Studio or NuGet defect is fixed, lines 14-25 can be removed.
 
 $project.ConfigurationManager | ForEach-Object {
     $nostdlib_setting = $_.Properties.Item("NoStdLib")

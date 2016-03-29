@@ -5905,21 +5905,21 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(0, elapsedSpan.getSeconds(), "Bridge582 TestTicks minutes");
             },
             testSubtractTimeSpan: function () {
-                var date1 = new Date(Bridge.Long(Date.UTC(1996, 6 - 1, 3, 22, 15, 0)).toNumber());
-                var date2 = new Date(Bridge.Long(Date.UTC(1996, 12 - 1, 6, 13, 2, 0)).toNumber());
-                var date3 = new Date(Bridge.Long(Date.UTC(1996, 10 - 1, 12, 8, 42, 0)).toNumber());
+                var date1 = new Date(1996, 6 - 1, 3, 22, 15, 0);
+                var date2 = new Date(1996, 12 - 1, 6, 13, 2, 0);
+                var date3 = new Date(1996, 10 - 1, 12, 8, 42, 0);
     
                 var diff1 = Bridge.Date.subdd(date2, date1);
                 Bridge.Test.Assert.true$1(diff1.equalsT(new Bridge.TimeSpan(185, 14, 47, 0)), "Bridge582 TestSubtractTimeSpan diff1");
     
                 var date4 = new Date(date3 - new Date((diff1).ticks.div(10000).toNumber()));
-                Bridge.Test.Assert.true$1(Bridge.equalsT(date4, new Date(Bridge.Long(Date.UTC(1996, 4 - 1, 9, 17, 55, 0)).toNumber())), "Bridge582 TestSubtractTimeSpan date4");
+                Bridge.Test.Assert.true$1(Bridge.equalsT(date4, new Date(1996, 4 - 1, 9, 17, 55, 0)), "Bridge582 TestSubtractTimeSpan date4");
     
                 var diff2 = Bridge.Date.subdd(date2, date3);
                 Bridge.Test.Assert.true$1(diff2.equalsT(new Bridge.TimeSpan(55, 4, 20, 0)), "Bridge582 TestSubtractTimeSpan diff2");
     
                 var date5 = Bridge.Date.subdt(date1, diff2);
-                Bridge.Test.Assert.true$1(Bridge.equalsT(date5, new Date(Bridge.Long(Date.UTC(1996, 4 - 1, 9, 17, 55, 0)).toNumber())), "Bridge582 TestSubtractTimeSpan date5");
+                Bridge.Test.Assert.true$1(Bridge.equalsT(date5, new Date(1996, 4 - 1, 9, 17, 55, 0)), "Bridge582 TestSubtractTimeSpan date5");
             },
             testTimeOfDay: function () {
                 var date = new Date(2013, 9 - 1, 14, 9, 28, 0);
