@@ -3792,6 +3792,21 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $enum: true
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1065', {
+        statics: {
+            testDecimalLongWithDictionary: function () {
+                var decimalDict = Bridge.merge(new Bridge.Dictionary$2(Bridge.Long,Bridge.Decimal)(), [
+                    [Bridge.Long(0), Bridge.Decimal(5)]
+                ] );
+                Bridge.Test.Assert.areEqual("Bridge.Decimal", Bridge.getTypeName(decimalDict.get(Bridge.Long(0))));
+                Bridge.Test.Assert.areEqual("5", Bridge.Int.format(decimalDict.get(Bridge.Long(0)), 'G'));
+                decimalDict.set(Bridge.Long(0), Bridge.Decimal(1));
+                Bridge.Test.Assert.areEqual("Bridge.Decimal", Bridge.getTypeName(decimalDict.get(Bridge.Long(0))));
+                Bridge.Test.Assert.areEqual("1", Bridge.Int.format(decimalDict.get(Bridge.Long(0)), 'G'));
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1076', {
         statics: {
             testInlineConstantAsMemberReference: function () {
