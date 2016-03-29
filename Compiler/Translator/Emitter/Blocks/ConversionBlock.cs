@@ -524,6 +524,38 @@ namespace Bridge.Translator
                 }
             }
 
+            var indexerExpr = expression.Parent as IndexerExpression;
+            if (indexerExpr != null)
+            {
+                var index = indexerExpr.Arguments.ToList().IndexOf(expression);
+
+                if (index >= 0)
+                {
+                    var invocationrr = block.Emitter.Resolver.ResolveNode(indexerExpr, block.Emitter) as InvocationResolveResult;
+
+                    if (invocationrr != null && isType(invocationrr.Member.Parameters.ElementAt(index).Type, block.Emitter.Resolver) && !isType(rr.Type, block.Emitter.Resolver))
+                    {
+                        if (expression.IsNull)
+                        {
+                            return false;
+                        }
+
+                        block.Write(typeName);
+                        if (NullableType.IsNullable(invocationrr.Member.Parameters.ElementAt(index).Type) && ConversionBlock.ShouldBeLifted(expression))
+                        {
+                            block.Write(".lift");
+                        }
+                        if (expression is CastExpression &&
+                            ((CastExpression)expression).Expression is ParenthesizedExpression)
+                        {
+                            return false;
+                        }
+                        block.WriteOpenParentheses();
+                        return true;
+                    }
+                }
+            }
+
             var arrayInit = expression.Parent as ArrayInitializerExpression;
             if (arrayInit != null)
             {
@@ -550,9 +582,28 @@ namespace Bridge.Translator
                 {
                     var rrElemenet = block.Emitter.Resolver.ResolveNode(arrayInit.Parent, block.Emitter);
                     var pt = rrElemenet.Type as ParameterizedType;
-                    if (pt != null)
+                    if (pt != null && pt.TypeArguments.Count > 0)
                     {
-                        elementType = pt.TypeArguments.Count > 0 ? pt.TypeArguments.First() : null;
+                        if (pt.TypeArguments.Count == 1)
+                        {
+                            elementType = pt.TypeArguments.First();
+                        }
+                        else
+                        {
+                            var index = 0;
+                            arrayInit = expression.Parent as ArrayInitializerExpression;
+
+                            for (int i = 0; i < arrayInit.Elements.Count; i++)
+                            {
+                                if (expression == arrayInit.Elements.ElementAt(i))
+                                {
+                                    index = i;
+                                    break;
+                                }
+                            }
+
+                            elementType = index < pt.TypeArguments.Count ? pt.TypeArguments.ElementAt(index) : pt.TypeArguments.ElementAt(0);
+                        }
                     }
                     else
                     {

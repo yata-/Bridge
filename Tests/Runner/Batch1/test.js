@@ -1029,6 +1029,7 @@
                 QUnit.test("#1058 - TestNameFales", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1058.testNameFales);
                 QUnit.test("#1059 - TestEnumNameModes", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1059.testEnumNameModes);
                 QUnit.test("#1061 - TestIsDigitFromLinq", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1061.testIsDigitFromLinq);
+                QUnit.test("#1065 - TestDecimalLongWithDictionary", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1065.testDecimalLongWithDictionary);
                 QUnit.test("#1076 - TestInlineConstantAsMemberReference", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1076.testInlineConstantAsMemberReference);
                 QUnit.test("#1076 - TestInlineBridgeNumericConstantsAsMemberReference", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1076.testInlineBridgeNumericConstantsAsMemberReference);
                 QUnit.test("#1085 - TestInlineArrayExpand", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1085.testInlineArrayExpand);
@@ -2574,6 +2575,16 @@
             testIsDigitFromLinq: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1061).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1061);
                 Bridge.ClientTest.BridgeIssues.Bridge1061.testIsDigitFromLinq();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1065', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1065)],
+        statics: {
+            testDecimalLongWithDictionary: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1065).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1065);
+                Bridge.ClientTest.BridgeIssues.Bridge1065.testDecimalLongWithDictionary();
             }
         }
     });
