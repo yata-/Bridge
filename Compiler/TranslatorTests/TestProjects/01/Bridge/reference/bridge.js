@@ -2211,10 +2211,12 @@
                             (function(cls, key, o) {
                                 Object.defineProperty(cls, key, {
                                     get: function () {
-                                        if (o.$staticInit) {
-                                            o.$staticInit();
+                                        if (!Bridge.Class.staticInitSuspended) {
+                                            if (o.$staticInit) {
+                                                o.$staticInit();
+                                            }
+                                            Bridge.Class.defineProperty(cls, key, o);
                                         }
-                                        Bridge.Class.defineProperty(cls, key, o);
                                         return o;
                                     },
                                     set: function (newValue) {
@@ -2235,11 +2237,14 @@
                 (function (scope, name, cls) {
                     Object.defineProperty(scope, name, {
                         get: function () {
-                            if (cls.$staticInit) {
-                                cls.$staticInit();
-                            }
+                            if (!Bridge.Class.staticInitSuspended) {
+                                if (cls.$staticInit) {
+                                    cls.$staticInit();
+                                }
 
-                            Bridge.Class.defineProperty(scope, name, cls);
+                                Bridge.Class.defineProperty(scope, name, cls);
+                            }
+                            
                             return cls;
                         },
                         set: function (newValue) {
