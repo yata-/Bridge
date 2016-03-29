@@ -35,7 +35,7 @@ namespace Bridge.Translator
         }
     }
 
-    public class IndexerBlock : AbstractEmitterBlock
+    public class IndexerBlock : ConversionBlock
     {
         public IndexerBlock(IEmitter emitter, IndexerExpression indexerExpression)
             : base(emitter, indexerExpression)
@@ -50,7 +50,12 @@ namespace Bridge.Translator
             set;
         }
 
-        protected override void DoEmit()
+        protected override Expression GetExpression()
+        {
+            return this.IndexerExpression;
+        }
+
+        protected override void EmitConversionExpression()
         {
             this.VisitIndexerExpression();
         }

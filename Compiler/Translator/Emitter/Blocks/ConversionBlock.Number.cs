@@ -88,16 +88,30 @@ namespace Bridge.Translator
                 var needCheck = false;
 
                 var be = expression as BinaryOperatorExpression;
-                if (be != null && (be.Operator == BinaryOperatorType.Add ||
+                bool isBitwiseOperator = be != null && (be.Operator == BinaryOperatorType.ShiftLeft || be.Operator == BinaryOperatorType.ShiftRight || be.Operator == BinaryOperatorType.BitwiseAnd || be.Operator == BinaryOperatorType.BitwiseOr || be.Operator == BinaryOperatorType.ExclusiveOr);
+                if ((Helpers.IsKnownType(KnownTypeCode.Int32, expectedType, block.Emitter.Resolver) && isBitwiseOperator) || (Helpers.IsKnownType(KnownTypeCode.UInt32, expectedType, block.Emitter.Resolver) && be != null && be.Operator == BinaryOperatorType.ShiftRight))
+                {
+                    // Don't need to check even in checked context and don't need to clip
+                } 
+                else if (be != null && (be.Operator == BinaryOperatorType.Add ||
                     be.Operator == BinaryOperatorType.Divide ||
                     be.Operator == BinaryOperatorType.Multiply ||
+                    isBitwiseOperator ||
                     be.Operator == BinaryOperatorType.Subtract))
                 {
-                    needCheck = true;
+                    if (isBitwiseOperator)
+                    {
+                        ClipInteger(block, expression, expectedType, false);
+                    }
+                    else
+                    {
+                        needCheck = true;    
+                    }
                 }
                 else
                 {
                     var ue = expression as UnaryOperatorExpression;
+                    
                     if (ue != null && (ue.Operator == UnaryOperatorType.Minus ||
                                        ue.Operator == UnaryOperatorType.Increment ||
                                        ue.Operator == UnaryOperatorType.Decrement ||
@@ -109,12 +123,25 @@ namespace Bridge.Translator
                     else
                     {
                         var ae = expression.Parent as AssignmentExpression;
-                        if (ae != null && (ae.Operator == AssignmentOperatorType.Add ||
+                        isBitwiseOperator = ae != null && (ae.Operator == AssignmentOperatorType.ShiftRight || ae.Operator == AssignmentOperatorType.ShiftLeft || ae.Operator == AssignmentOperatorType.BitwiseAnd || ae.Operator == AssignmentOperatorType.BitwiseOr || ae.Operator == AssignmentOperatorType.ExclusiveOr);
+                        if ((isBitwiseOperator && Helpers.IsKnownType(KnownTypeCode.Int32, expectedType, block.Emitter.Resolver))
+                            || (ae != null && ae.Operator == AssignmentOperatorType.ShiftRight && Helpers.IsKnownType(KnownTypeCode.UInt32, expectedType, block.Emitter.Resolver)))
+                        {
+                            // Don't need to check even in checked context and don't need to clip
+                        }
+                        else if (ae != null && (isBitwiseOperator || ae.Operator == AssignmentOperatorType.Add ||
                                            ae.Operator == AssignmentOperatorType.Divide ||
                                            ae.Operator == AssignmentOperatorType.Multiply ||
                                            ae.Operator == AssignmentOperatorType.Subtract))
                         {
-                            needCheck = true;
+                            if (isBitwiseOperator)
+                            {
+                                ClipInteger(block, expression, expectedType, false);
+                            }
+                            else
+                            {
+                                needCheck = true;
+                            }
                         }
                     }
                 }
@@ -153,9 +180,16 @@ namespace Bridge.Translator
                 var needCheck = false;
 
                 var be = expression as BinaryOperatorExpression;
-                if (be != null && !(be.Left is PrimitiveExpression && be.Right is PrimitiveExpression) && (be.Operator == BinaryOperatorType.Add ||
+                bool isBitwiseOperator = be != null && (be.Operator == BinaryOperatorType.ShiftLeft || be.Operator == BinaryOperatorType.ShiftRight || be.Operator == BinaryOperatorType.BitwiseAnd || be.Operator == BinaryOperatorType.BitwiseOr || be.Operator == BinaryOperatorType.ExclusiveOr);
+
+                if ((Helpers.IsKnownType(KnownTypeCode.Int32, expectedType, block.Emitter.Resolver) && isBitwiseOperator) || (Helpers.IsKnownType(KnownTypeCode.UInt32, expectedType, block.Emitter.Resolver) && be != null && be.Operator == BinaryOperatorType.ShiftRight))
+                {
+                    // Don't need to check even in checked context and don't need to clip
+                } 
+                else if (be != null && !(be.Left is PrimitiveExpression && be.Right is PrimitiveExpression) && (be.Operator == BinaryOperatorType.Add ||
                     be.Operator == BinaryOperatorType.Divide ||
                     be.Operator == BinaryOperatorType.Multiply ||
+                    isBitwiseOperator ||
                     be.Operator == BinaryOperatorType.Subtract))
                 {
                     needCheck = true;
@@ -174,7 +208,13 @@ namespace Bridge.Translator
                     else
                     {
                         var ae = expression.Parent as AssignmentExpression;
-                        if (ae != null && (ae.Operator == AssignmentOperatorType.Add ||
+                        isBitwiseOperator = ae != null && (ae.Operator == AssignmentOperatorType.ShiftRight || ae.Operator == AssignmentOperatorType.ShiftLeft || ae.Operator == AssignmentOperatorType.BitwiseAnd || ae.Operator == AssignmentOperatorType.BitwiseOr || ae.Operator == AssignmentOperatorType.ExclusiveOr);
+                        if ((isBitwiseOperator && Helpers.IsKnownType(KnownTypeCode.Int32, expectedType, block.Emitter.Resolver))
+                            || (ae != null && ae.Operator == AssignmentOperatorType.ShiftRight && Helpers.IsKnownType(KnownTypeCode.UInt32, expectedType, block.Emitter.Resolver)))
+                        {
+                            // Don't need to check even in checked context and don't need to clip
+                        }
+                        else if (ae != null && (isBitwiseOperator || ae.Operator == AssignmentOperatorType.Add ||
                                            ae.Operator == AssignmentOperatorType.Divide ||
                                            ae.Operator == AssignmentOperatorType.Multiply ||
                                            ae.Operator == AssignmentOperatorType.Subtract))

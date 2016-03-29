@@ -3792,6 +3792,34 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $enum: true
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1061', {
+        statics: {
+            testIsDigitFromLinq: function () {
+                Bridge.Test.Assert.$true(Bridge.Char.isDigit(49));
+                Bridge.Test.Assert.$true(Bridge.Linq.Enumerable.from("1").any($_.Bridge.ClientTest.BridgeIssues.Bridge1061.f1));
+    
+                var s = "s1*";
+                Bridge.Test.Assert.areEqual$1(1, Bridge.Linq.Enumerable.from(s).count($_.Bridge.ClientTest.BridgeIssues.Bridge1061.f1), "String IsDigit");
+                Bridge.Test.Assert.areEqual$1(1, Bridge.Linq.Enumerable.from(s).count($_.Bridge.ClientTest.BridgeIssues.Bridge1061.f2), "String IsLetter");
+                Bridge.Test.Assert.areEqual$1(2, Bridge.Linq.Enumerable.from(s).count($_.Bridge.ClientTest.BridgeIssues.Bridge1061.f3), "String IsLetterOrDigit");
+            }
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1061", $_)
+    
+    Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge1061, {
+        f1: function (c) {
+            return Bridge.Char.isDigit(c);
+        },
+        f2: function (c) {
+            return Bridge.Char.isLetter(c);
+        },
+        f3: function (c) {
+            return (Bridge.Char.isDigit(c) || Bridge.Char.isLetter(c));
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1076', {
         statics: {
             testInlineConstantAsMemberReference: function () {
@@ -3956,6 +3984,35 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1105.Foo1.Item', {
         statics: {
             value: "Value1"
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1110', {
+        statics: {
+            testOverflowForConditionInParenthesized: function () {
+                var v = Bridge.Long(1);
+                v = Bridge.Long((v.gt(Bridge.Long(1)) ? 1 : 0));
+                var res = v.equals(Bridge.Long(1));
+                Bridge.Test.Assert.$false(res);
+            },
+            testOverflowForIndexer: function () {
+                var data = [1];
+                var v = Bridge.Long(data[0]);
+                v = Bridge.Long((v.gt(Bridge.Long(1)) ? 1 : 0));
+                var res = v.equals(Bridge.Long(1));
+                Bridge.Test.Assert.$false(res);
+            },
+            testOverflowForBitwise: function () {
+                var v2 = 4294967295;
+                var shifted = (v2 << 31) >>> 0;
+                var res2 = shifted === 2147483648;
+                Bridge.Test.Assert.$true(res2);
+    
+                var v3 = 4294967295;
+                var shifted3 = (v3 << 31) >>> 0;
+                var res3 = shifted === 2147483648;
+                Bridge.Test.Assert.$true(res3);
+            }
         }
     });
     
@@ -5876,21 +5933,21 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(0, elapsedSpan.getSeconds(), "Bridge582 TestTicks minutes");
             },
             testSubtractTimeSpan: function () {
-                var date1 = new Date(Bridge.Long(Date.UTC(1996, 6 - 1, 3, 22, 15, 0)).toNumber());
-                var date2 = new Date(Bridge.Long(Date.UTC(1996, 12 - 1, 6, 13, 2, 0)).toNumber());
-                var date3 = new Date(Bridge.Long(Date.UTC(1996, 10 - 1, 12, 8, 42, 0)).toNumber());
+                var date1 = new Date(1996, 6 - 1, 3, 22, 15, 0);
+                var date2 = new Date(1996, 12 - 1, 6, 13, 2, 0);
+                var date3 = new Date(1996, 10 - 1, 12, 8, 42, 0);
     
                 var diff1 = Bridge.Date.subdd(date2, date1);
                 Bridge.Test.Assert.true$1(diff1.equalsT(new Bridge.TimeSpan(185, 14, 47, 0)), "Bridge582 TestSubtractTimeSpan diff1");
     
                 var date4 = new Date(date3 - new Date((diff1).ticks.div(10000).toNumber()));
-                Bridge.Test.Assert.true$1(Bridge.equalsT(date4, new Date(Bridge.Long(Date.UTC(1996, 4 - 1, 9, 17, 55, 0)).toNumber())), "Bridge582 TestSubtractTimeSpan date4");
+                Bridge.Test.Assert.true$1(Bridge.equalsT(date4, new Date(1996, 4 - 1, 9, 17, 55, 0)), "Bridge582 TestSubtractTimeSpan date4");
     
                 var diff2 = Bridge.Date.subdd(date2, date3);
                 Bridge.Test.Assert.true$1(diff2.equalsT(new Bridge.TimeSpan(55, 4, 20, 0)), "Bridge582 TestSubtractTimeSpan diff2");
     
                 var date5 = Bridge.Date.subdt(date1, diff2);
-                Bridge.Test.Assert.true$1(Bridge.equalsT(date5, new Date(Bridge.Long(Date.UTC(1996, 4 - 1, 9, 17, 55, 0)).toNumber())), "Bridge582 TestSubtractTimeSpan date5");
+                Bridge.Test.Assert.true$1(Bridge.equalsT(date5, new Date(1996, 4 - 1, 9, 17, 55, 0)), "Bridge582 TestSubtractTimeSpan date5");
             },
             testTimeOfDay: function () {
                 var date = new Date(2013, 9 - 1, 14, 9, 28, 0);
@@ -13974,9 +14031,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
                     var triplet = (((result[0] << 16) | (result[1] << 8) | result[2])) >>> 0;
                     Bridge.Test.Assert.areEqual(triplet >>> 18, 45); // 't'
-                    Bridge.Test.Assert.areEqual((triplet << 14) >>> 26, 30); // 'e'
-                    Bridge.Test.Assert.areEqual((triplet << 20) >>> 26, 44); // 's'
-                    Bridge.Test.Assert.areEqual((triplet << 26) >>> 26, 45); // 't'
+                    Bridge.Test.Assert.areEqual((((triplet << 14) >>> 0)) >>> 26, 30); // 'e'
+                    Bridge.Test.Assert.areEqual((((triplet << 20) >>> 0)) >>> 26, 44); // 's'
+                    Bridge.Test.Assert.areEqual((((triplet << 26) >>> 0)) >>> 26, 45); // 't'
     
                     Bridge.Test.Assert.areEqual(Bridge.Convert.toBase64String(result, null, null, null), input);
                 });

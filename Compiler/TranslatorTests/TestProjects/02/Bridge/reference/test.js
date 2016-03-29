@@ -2211,10 +2211,12 @@
                             (function(cls, key, o) {
                                 Object.defineProperty(cls, key, {
                                     get: function () {
-                                        if (o.$staticInit) {
-                                            o.$staticInit();
+                                        if (!Bridge.Class.staticInitSuspended) {
+                                            if (o.$staticInit) {
+                                                o.$staticInit();
+                                            }
+                                            Bridge.Class.defineProperty(cls, key, o);
                                         }
-                                        Bridge.Class.defineProperty(cls, key, o);
                                         return o;
                                     },
                                     set: function (newValue) {
@@ -2235,11 +2237,14 @@
                 (function (scope, name, cls) {
                     Object.defineProperty(scope, name, {
                         get: function () {
-                            if (cls.$staticInit) {
-                                cls.$staticInit();
-                            }
+                            if (!Bridge.Class.staticInitSuspended) {
+                                if (cls.$staticInit) {
+                                    cls.$staticInit();
+                                }
 
-                            Bridge.Class.defineProperty(scope, name, cls);
+                                Bridge.Class.defineProperty(scope, name, cls);
+                            }
+                            
                             return cls;
                         },
                         set: function (newValue) {
@@ -5914,16 +5919,35 @@ var date = {
                                      date.getMilliseconds()));
         },
 
+        dateDiff: function (a, b) {
+            var utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate(), a.getHours(), a.getMinutes(), a.getSeconds(), a.getMilliseconds());
+            var utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate(), b.getHours(), b.getMinutes(), b.getSeconds(), b.getMilliseconds());
+
+            return utc1 - utc2;
+        },
+
+        dateAddSubTimespan: function (d, t, direction) {
+            var result = new Date(d.getTime());
+
+            result.setDate(result.getDate() + (direction * t.getDays()));
+            result.setHours(result.getHours() + (direction * t.getHours()));
+            result.setMinutes(result.getMinutes() + (direction * t.getMinutes()));
+            result.setSeconds(result.getSeconds() + (direction * t.getSeconds()));
+            result.setMilliseconds(result.getMilliseconds() + (direction * t.getMilliseconds()));
+
+            return result;
+        },
+
         subdt: function(d, t) {
-            return Bridge.hasValue(d) && Bridge.hasValue(t) ? (new Date(d - new Date(t.ticks.toNumberDivided(10000)))) : null;
+            return Bridge.hasValue(d) && Bridge.hasValue(t) ? this.dateAddSubTimespan(d, t, -1) : null;
         },
 
         adddt: function(d, t) {
-            return Bridge.hasValue(d) && Bridge.hasValue(t) ? (new Date(d.getTime() + t.ticks.toNumberDivided(10000))) : null;
+            return Bridge.hasValue(d) && Bridge.hasValue(t) ? this.dateAddSubTimespan(d, t, 1) : null;
         },
 
         subdd: function (a, b) {
-            return Bridge.hasValue(a) && Bridge.hasValue(b) ? (new Bridge.TimeSpan((a - b) * 10000)) : null;
+            return Bridge.hasValue(a) && Bridge.hasValue(b) ? (new Bridge.TimeSpan(Bridge.Date.dateDiff(a, b) * 10000)) : null;
         },
 
         gt: function (a, b) {
@@ -11321,7 +11345,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
                 return new IEnumerator(
                     Functions.Blank,
                     function () {
-                        return (index < obj.length) ? this.yieldReturn(obj.charAt(index++)) : false;
+                        return (index < obj.length) ? this.yieldReturn(obj.charCodeAt(index++)) : false;
                     },
                     Functions.Blank);
             });

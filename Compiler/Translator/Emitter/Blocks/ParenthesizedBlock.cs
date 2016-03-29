@@ -3,7 +3,7 @@ using ICSharpCode.NRefactory.CSharp;
 
 namespace Bridge.Translator
 {
-    public class ParenthesizedBlock : AbstractEmitterBlock
+    public class ParenthesizedBlock : ConversionBlock
     {
         public ParenthesizedBlock(IEmitter emitter, ParenthesizedExpression parenthesizedExpression)
             : base(emitter, parenthesizedExpression)
@@ -18,7 +18,12 @@ namespace Bridge.Translator
             set;
         }
 
-        protected override void DoEmit()
+        protected override Expression GetExpression()
+        {
+            return this.ParenthesizedExpression;
+        }
+
+        protected override void EmitConversionExpression()
         {
             var ignoreParentheses = this.IgnoreParentheses(this.ParenthesizedExpression.Expression);
 
@@ -34,7 +39,7 @@ namespace Bridge.Translator
                 this.WriteCloseParentheses();
             }
         }
-
+        
         protected bool IgnoreParentheses(Expression expression)
         {
             if (expression is CastExpression)
