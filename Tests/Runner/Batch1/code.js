@@ -4031,6 +4031,33 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1120', {
+        statics: {
+            testEnumDoesNotGenerateValuesAsPowerOfTwo: function () {
+                Bridge.Test.Assert.areEqual$1(-10, -10, "-10");
+                Bridge.Test.Assert.areEqual$1(-9, -9, "-9");
+                Bridge.Test.Assert.areEqual$1(-8, -8, "-8");
+                Bridge.Test.Assert.areEqual$1(1, 1, "1");
+                Bridge.Test.Assert.areEqual$1(-9, -9, "-9");
+                Bridge.Test.Assert.areEqual$1(0, 0, "0");
+                Bridge.Test.Assert.areEqual$1(1, 1, "1");
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1120.Test', {
+        statics: {
+            m1: -10,
+            m2: -9,
+            m3: -8,
+            m4: 1,
+            m5: -9,
+            m6: 0,
+            m7: 1
+        },
+        $enum: true
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
