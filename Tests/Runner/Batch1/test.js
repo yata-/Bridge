@@ -1041,6 +1041,7 @@
                 QUnit.test("#1110 - TestOverflowForIndexer", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1110.testOverflowForIndexer);
                 QUnit.test("#1110 - TestOverflowForBitwise", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1110.testOverflowForBitwise);
                 QUnit.test("#1120 - TestEnumDoesNotGenerateValuesAsPowerOfTwo", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1120.testEnumDoesNotGenerateValuesAsPowerOfTwo);
+                QUnit.test("#1120 - TestFlagEnumDoesNotGenerateValuesAsPowerOfTwo", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1120.testFlagEnumDoesNotGenerateValuesAsPowerOfTwo);
                 QUnit.test("#381 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge381.testUseCase);
                 QUnit.test("#447 - CheckInlineExpression", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineExpression);
                 QUnit.test("#447 - CheckInlineCalls", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineCalls);
@@ -2678,6 +2679,10 @@
             testEnumDoesNotGenerateValuesAsPowerOfTwo: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1120).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1120);
                 Bridge.ClientTest.BridgeIssues.Bridge1120.testEnumDoesNotGenerateValuesAsPowerOfTwo();
+            },
+            testFlagEnumDoesNotGenerateValuesAsPowerOfTwo: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1120).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1120);
+                Bridge.ClientTest.BridgeIssues.Bridge1120.testFlagEnumDoesNotGenerateValuesAsPowerOfTwo();
             }
         }
     });

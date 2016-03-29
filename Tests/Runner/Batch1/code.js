@@ -4041,8 +4041,25 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(-9, -9, "-9");
                 Bridge.Test.Assert.areEqual$1(0, 0, "0");
                 Bridge.Test.Assert.areEqual$1(1, 1, "1");
+            },
+            testFlagEnumDoesNotGenerateValuesAsPowerOfTwo: function () {
+                Bridge.Test.Assert.areEqual$1(0, 0, "0");
+                Bridge.Test.Assert.areEqual$1(7, 7, "7");
+                Bridge.Test.Assert.areEqual$1(8, 8, "8");
+                Bridge.Test.Assert.areEqual$1(9, 9, "9");
             }
         }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1120.Baz', {
+        statics: {
+            a: 0,
+            b: 7,
+            c: 8,
+            d: 9
+        },
+        $enum: true,
+        $flags: true
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1120.Test', {
