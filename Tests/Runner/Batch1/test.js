@@ -1028,6 +1028,7 @@
                 QUnit.test("#1058 - TestNameTrue", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1058.testNameTrue);
                 QUnit.test("#1058 - TestNameFales", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1058.testNameFales);
                 QUnit.test("#1059 - TestEnumNameModes", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1059.testEnumNameModes);
+                QUnit.test("#1061 - TestIsDigitFromLinq", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1061.testIsDigitFromLinq);
                 QUnit.test("#1065 - TestDecimalLongWithDictionary", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1065.testDecimalLongWithDictionary);
                 QUnit.test("#1076 - TestInlineConstantAsMemberReference", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1076.testInlineConstantAsMemberReference);
                 QUnit.test("#1076 - TestInlineBridgeNumericConstantsAsMemberReference", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1076.testInlineBridgeNumericConstantsAsMemberReference);
@@ -1812,6 +1813,7 @@
                 QUnit.test("Promise - TaskFromPromiseWorksWhenPromiseFails", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_PromiseTests.taskFromPromiseWorksWhenPromiseFails);
                 QUnit.test("Promise - CompletingPromiseCanBeAwaited", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_PromiseTests.completingPromiseCanBeAwaited);
                 QUnit.test("Promise - FailingPromiseCanBeAwaited", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_PromiseTests.failingPromiseCanBeAwaited);
+                QUnit.test("Promise - TaskFromPromiseWithProgressWithoutResultFactoryWorksWhenPromiseProgressesAndCompletes", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_PromiseTests.taskFromPromiseWithProgressWithoutResultFactoryWorksWhenPromiseProgressesAndCompletes);
                 QUnit.test("Tasks - TaskCompletionSourceTypePropertiesAreCorrect", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_TaskTests.taskCompletionSourceTypePropertiesAreCorrect);
                 QUnit.test("Tasks - TaskTypePropertiesAreCorrect", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_TaskTests.taskTypePropertiesAreCorrect);
                 QUnit.test("Tasks - TaskCompletionSourceWorksWhenSettingResult", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_TaskTests.taskCompletionSourceWorksWhenSettingResult);
@@ -2563,6 +2565,16 @@
             testEnumNameModes: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1059).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1059);
                 Bridge.ClientTest.BridgeIssues.Bridge1059.testEnumNameModes();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1061', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1061)],
+        statics: {
+            testIsDigitFromLinq: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1061).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1061);
+                Bridge.ClientTest.BridgeIssues.Bridge1061.testIsDigitFromLinq();
             }
         }
     });
@@ -9931,6 +9943,10 @@
             failingPromiseCanBeAwaited: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Threading.PromiseTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_PromiseTests, 4);
                 t.getFixture().failingPromiseCanBeAwaited();
+            },
+            taskFromPromiseWithProgressWithoutResultFactoryWorksWhenPromiseProgressesAndCompletes: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Threading.PromiseTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_PromiseTests, 9);
+                t.getFixture().taskFromPromiseWithProgressWithoutResultFactoryWorksWhenPromiseProgressesAndCompletes();
             }
         }
     });
