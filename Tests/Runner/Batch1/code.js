@@ -3797,6 +3797,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             testIsDigitFromLinq: function () {
                 Bridge.Test.Assert.$true(Bridge.Char.isDigit(49));
                 Bridge.Test.Assert.$true(Bridge.Linq.Enumerable.from("1").any($_.Bridge.ClientTest.BridgeIssues.Bridge1061.f1));
+    
+                var s = "s1*";
+                Bridge.Test.Assert.areEqual$1(1, Bridge.Linq.Enumerable.from(s).count($_.Bridge.ClientTest.BridgeIssues.Bridge1061.f1), "String IsDigit");
+                Bridge.Test.Assert.areEqual$1(1, Bridge.Linq.Enumerable.from(s).count($_.Bridge.ClientTest.BridgeIssues.Bridge1061.f2), "String IsLetter");
+                Bridge.Test.Assert.areEqual$1(2, Bridge.Linq.Enumerable.from(s).count($_.Bridge.ClientTest.BridgeIssues.Bridge1061.f3), "String IsLetterOrDigit");
             }
         }
     });
@@ -3806,6 +3811,12 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge1061, {
         f1: function (c) {
             return Bridge.Char.isDigit(c);
+        },
+        f2: function (c) {
+            return Bridge.Char.isLetter(c);
+        },
+        f3: function (c) {
+            return (Bridge.Char.isDigit(c) || Bridge.Char.isLetter(c));
         }
     });
     

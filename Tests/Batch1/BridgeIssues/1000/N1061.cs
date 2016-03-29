@@ -13,6 +13,11 @@ namespace Bridge.ClientTest.BridgeIssues
         {
             Assert.True(char.IsDigit('1'));
             Assert.True("1".Any(c => char.IsDigit(c)));
+
+            string s = "s1*";
+            Assert.AreEqual(1, s.Count(c => char.IsDigit(c)), "String IsDigit");
+            Assert.AreEqual(1, s.Count(c => char.IsLetter(c)), "String IsLetter");
+            Assert.AreEqual(2, s.Count(c => char.IsLetterOrDigit(c)), "String IsLetterOrDigit");
         }
     }
 }
