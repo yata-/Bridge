@@ -383,7 +383,7 @@ namespace Bridge.Translator
             {
                 dynamic i = this.CurrentType.LastEnumValue;
 
-                if (this.CurrentType.Type.GetDefinition().Attributes.Any(attr => attr.AttributeType.FullName == "System.FlagsAttribute"))
+                /*if (this.CurrentType.Type.GetDefinition().Attributes.Any(attr => attr.AttributeType.FullName == "System.FlagsAttribute"))
                 {
                     if (i <= 0)
                     {
@@ -397,11 +397,11 @@ namespace Bridge.Translator
                     initializer = new PrimitiveExpression(this.CurrentType.LastEnumValue);
                 }
                 else
-                {
+                {*/
                     ++i;
                     this.CurrentType.LastEnumValue = i;
                     initializer = new PrimitiveExpression(this.CurrentType.LastEnumValue);
-                }
+                //}
             }
             else
             {
