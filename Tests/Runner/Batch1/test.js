@@ -1812,6 +1812,7 @@
                 QUnit.test("Promise - TaskFromPromiseWorksWhenPromiseFails", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_PromiseTests.taskFromPromiseWorksWhenPromiseFails);
                 QUnit.test("Promise - CompletingPromiseCanBeAwaited", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_PromiseTests.completingPromiseCanBeAwaited);
                 QUnit.test("Promise - FailingPromiseCanBeAwaited", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_PromiseTests.failingPromiseCanBeAwaited);
+                QUnit.test("Promise - TaskFromPromiseWithProgressWithoutResultFactoryWorksWhenPromiseProgressesAndCompletes", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_PromiseTests.taskFromPromiseWithProgressWithoutResultFactoryWorksWhenPromiseProgressesAndCompletes);
                 QUnit.test("Tasks - TaskCompletionSourceTypePropertiesAreCorrect", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_TaskTests.taskCompletionSourceTypePropertiesAreCorrect);
                 QUnit.test("Tasks - TaskTypePropertiesAreCorrect", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_TaskTests.taskTypePropertiesAreCorrect);
                 QUnit.test("Tasks - TaskCompletionSourceWorksWhenSettingResult", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_TaskTests.taskCompletionSourceWorksWhenSettingResult);
@@ -9931,6 +9932,10 @@
             failingPromiseCanBeAwaited: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Threading.PromiseTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_PromiseTests, 4);
                 t.getFixture().failingPromiseCanBeAwaited();
+            },
+            taskFromPromiseWithProgressWithoutResultFactoryWorksWhenPromiseProgressesAndCompletes: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Threading.PromiseTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_PromiseTests, 9);
+                t.getFixture().taskFromPromiseWithProgressWithoutResultFactoryWorksWhenPromiseProgressesAndCompletes();
             }
         }
     });
