@@ -23,7 +23,7 @@ namespace Bridge.ClientTest.Threading
 
             enum Which
             {
-                Resolve, Reject
+                Resolve, Reject, Progress
             }
 
             private delegate void Next(PromiseDelegate fulfilledHandler, PromiseDelegate errorHandler = null, PromiseDelegate progressHandler = null);
@@ -59,15 +59,24 @@ namespace Bridge.ClientTest.Threading
                 Complete(Which.Reject, args);
             }
 
+            public void Progress(params object[] args)
+            {
+                Complete(Which.Progress, args);
+            }
+
             private void Complete(Which which, params object[] args)
             {
                 if (which == Which.Resolve)
                 {
                     DoThen = (f, e, p) => { Resolve(args); };
                 }
-                else
+                else if (which == Which.Reject)
                 {
                     DoThen = (f, e, p) => { Reject(args); };
+                }
+                else
+                {
+                    DoThen = (f, e, p) => { Progress(args); };
                 }
 
                 var i = 0;
@@ -82,11 +91,18 @@ namespace Bridge.ClientTest.Threading
                             aThen.Filled.Apply(null, args);
                         }
                     }
-                    else
+                    else if (which == Which.Reject)
                     {
                         if (aThen.Error != null)
                         {
                             aThen.Error.Apply(null, args);
+                        }
+                    }
+                    else
+                    {
+                        if (aThen.Progress != null)
+                        {
+                            aThen.Progress.Apply(null, args);
                         }
                     }
                     i++;
@@ -273,6 +289,57 @@ namespace Bridge.ClientTest.Threading
             Assert.True(continuationRun, "Continuation should have been run after promise was rejected.");
 
             completeAsync();
+        }
+
+
+        public int PromiseProgress { get; set; }
+
+        private void HandleProgress(params object[] args)
+        {
+            var i = (int)args[0];
+            this.PromiseProgress = i;
+        }
+
+        [Test(ExpectedCount = 9)]
+        public void TaskFromPromiseWithProgressWithoutResultFactoryWorksWhenPromiseCompletes()
+        {
+            var completeAsync = Assert.Async();
+
+            var promise = CreatePromise();
+
+            PromiseProgress = -1;
+            var task = Task.FromPromise<TaskResult>(promise, null, null, (SimplePromise.PromiseDelegate)HandleProgress);
+
+            Assert.AreEqual(TaskStatus.Running, task.Status, "Task should be running after being created");
+
+            bool continuationRun = false;
+
+            var task1 = task.ContinueWith(t =>
+            {
+                Assert.True(t == task, "ContinueWith parameter should be correct");
+                continuationRun = true;
+            });
+
+            Assert.False(continuationRun, "Continuation should not be run too early.");
+            Assert.AreEqual(TaskStatus.Running, task.Status, "Task should be running before promise is completed.");
+
+            promise.Progress(20);
+            Assert.AreEqual(20, PromiseProgress, "Progress 20");
+
+            promise.Resolve(42, "result 123", 101);
+
+            promise.Progress(100);
+            Assert.AreEqual(100, PromiseProgress, "Progress 100");
+
+
+            task1.ContinueWith(x =>
+            {
+                Assert.AreEqual(TaskStatus.RanToCompletion, task.Status, "Task should be completed after promise");
+                Assert.True(continuationRun, "Continuation should have been run after promise was completed.");
+                Assert.AreDeepEqual(new object[] { 42, "result 123", 101 }, task.Result, "The result should be correct");
+
+                completeAsync();
+            });
         }
     }
 }

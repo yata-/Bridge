@@ -24640,6 +24640,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Threading.PromiseTests', {
+        config: {
+            properties: {
+                PromiseProgress: 0
+            }
+        },
         createPromise: function () {
             return new Bridge.ClientTest.Threading.PromiseTests.SimplePromise();
         },
@@ -24872,6 +24877,48 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 }, arguments);
     
             $asyncBody();
+        },
+        handleProgress: function (args) {
+            if (args === void 0) { args = []; }
+            var i = Bridge.cast(args[0], Bridge.Int32);
+            this.setPromiseProgress(i);
+        },
+        taskFromPromiseWithProgressWithoutResultFactoryWorksWhenPromiseCompletes: function () {
+            var completeAsync = Bridge.Test.Assert.async();
+    
+            var promise = this.createPromise();
+    
+            this.setPromiseProgress(-1);
+            var task = Bridge.Task.fromPromise(promise, null, null, Bridge.fn.bind(this, this.handleProgress));
+    
+            Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.running, task.status, "Task should be running after being created");
+    
+            var continuationRun = false;
+    
+            var task1 = task.continueWith(function (t) {
+                Bridge.Test.Assert.true$1(t === task, "ContinueWith parameter should be correct");
+                continuationRun = true;
+            });
+    
+            Bridge.Test.Assert.false$1(continuationRun, "Continuation should not be run too early.");
+            Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.running, task.status, "Task should be running before promise is completed.");
+    
+            promise.progress([20]);
+            Bridge.Test.Assert.areEqual$1(20, this.getPromiseProgress(), "Progress 20");
+    
+            promise.resolve([42, "result 123", 101]);
+    
+            promise.progress([100]);
+            Bridge.Test.Assert.areEqual$1(100, this.getPromiseProgress(), "Progress 100");
+    
+    
+            task1.continueWith(function (x) {
+                Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, task.status, "Task should be completed after promise");
+                Bridge.Test.Assert.true$1(continuationRun, "Continuation should have been run after promise was completed.");
+                Bridge.Test.Assert.areDeepEqual$1([42, "result 123", 101], task.getResult(), "The result should be correct");
+    
+                completeAsync();
+            });
         }
     });
     
@@ -24913,6 +24960,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             if (args === void 0) { args = []; }
             this.complete(Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which.reject, args);
         },
+        progress: function (args) {
+            if (args === void 0) { args = []; }
+            this.complete(Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which.progress, args);
+        },
         complete: function (which, args) {
             if (args === void 0) { args = []; }
             if (which === Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which.resolve) {
@@ -24921,9 +24972,16 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 });
             }
             else  {
-                this.doThen = Bridge.fn.bind(this, function (f, e, p) {
-                    this.reject(args);
-                });
+                if (which === Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which.reject) {
+                    this.doThen = Bridge.fn.bind(this, function (f, e, p) {
+                        this.reject(args);
+                    });
+                }
+                else  {
+                    this.doThen = Bridge.fn.bind(this, function (f, e, p) {
+                        this.progress(args);
+                    });
+                }
             }
     
             var i = 0;
@@ -24936,8 +24994,15 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     }
                 }
                 else  {
-                    if (Bridge.hasValue(aThen.getError())) {
-                        aThen.getError().apply(null, args);
+                    if (which === Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which.reject) {
+                        if (Bridge.hasValue(aThen.getError())) {
+                            aThen.getError().apply(null, args);
+                        }
+                    }
+                    else  {
+                        if (Bridge.hasValue(aThen.getProgress())) {
+                            aThen.getProgress().apply(null, args);
+                        }
                     }
                 }
                 i = (i + 1) | 0;
@@ -24971,7 +25036,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     Bridge.define('Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which', {
         statics: {
             resolve: 0,
-            reject: 1
+            reject: 1,
+            progress: 2
         },
         $enum: true
     });
