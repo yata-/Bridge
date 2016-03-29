@@ -42,8 +42,8 @@ namespace Bridge.ClientTest.BridgeIssues
             Assert.AreEqual(0, Bridge857C.All1, "Bridge857 Bridge857C All1");
             Assert.AreEqual(1, Bridge857C.All2, "Bridge857 Bridge857C All2");
             Assert.AreEqual(0xFFFFFFFF, Bridge857D.All, "Bridge857 Bridge857D All");
-            Assert.AreEqual(1, Bridge857D.All1, "Bridge857 Bridge857D All1");
-            Assert.AreEqual(2, Bridge857D.All2, "Bridge857 Bridge857D All2");
+            Assert.AreEqual(0, Bridge857D.All1, "Bridge857 Bridge857D All1");
+            Assert.AreEqual(1, Bridge857D.All2, "Bridge857 Bridge857D All2");
         }
     }
 }

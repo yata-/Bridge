@@ -9074,8 +9074,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(0, Bridge.ClientTest.BridgeIssues.Bridge857C.all1, "Bridge857 Bridge857C All1");
                 Bridge.Test.Assert.areEqual$1(1, Bridge.ClientTest.BridgeIssues.Bridge857C.all2, "Bridge857 Bridge857C All2");
                 Bridge.Test.Assert.areEqual$1(4294967295, Bridge.ClientTest.BridgeIssues.Bridge857D.all, "Bridge857 Bridge857D All");
-                Bridge.Test.Assert.areEqual$1(1, Bridge.ClientTest.BridgeIssues.Bridge857D.all1, "Bridge857 Bridge857D All1");
-                Bridge.Test.Assert.areEqual$1(2, Bridge.ClientTest.BridgeIssues.Bridge857D.all2, "Bridge857 Bridge857D All2");
+                Bridge.Test.Assert.areEqual$1(0, Bridge.ClientTest.BridgeIssues.Bridge857D.all1, "Bridge857 Bridge857D All1");
+                Bridge.Test.Assert.areEqual$1(1, Bridge.ClientTest.BridgeIssues.Bridge857D.all2, "Bridge857 Bridge857D All2");
             }
         }
     });
@@ -9105,8 +9105,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge857D', {
         statics: {
-            all1: 1,
-            all2: 2,
+            all1: 0,
+            all2: 1,
             all: 4294967295
         },
         $enum: true,
