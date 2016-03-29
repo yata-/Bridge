@@ -24940,7 +24940,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var i = Bridge.cast(args[0], Bridge.Int32);
             this.setPromiseProgress(i);
         },
-        taskFromPromiseWithProgressWithoutResultFactoryWorksWhenPromiseCompletes: function () {
+        taskFromPromiseWithProgressWithoutResultFactoryWorksWhenPromiseProgressesAndCompletes: function () {
             var completeAsync = Bridge.Test.Assert.async();
     
             var promise = this.createPromise();
@@ -24963,11 +24963,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             promise.progress([20]);
             Bridge.Test.Assert.areEqual$1(20, this.getPromiseProgress(), "Progress 20");
     
+            // Resolve will set Progress to 100%
             promise.resolve([42, "result 123", 101]);
-    
-            promise.progress([100]);
             Bridge.Test.Assert.areEqual$1(100, this.getPromiseProgress(), "Progress 100");
-    
     
             task1.continueWith(function (x) {
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, task.status, "Task should be completed after promise");
@@ -25019,7 +25017,16 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         progress: function (args) {
             if (args === void 0) { args = []; }
-            this.complete(Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which.progress, args);
+            var i = 0;
+            while (i < this.getThens().getCount()) {
+                var aThen = this.getThens().getItem(i);
+    
+                if (Bridge.hasValue(aThen.getProgress())) {
+                    aThen.Progress(args);
+                }
+    
+                i = (i + 1) | 0;
+            }
         },
         complete: function (which, args) {
             if (args === void 0) { args = []; }
@@ -25029,16 +25036,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 });
             }
             else  {
-                if (which === Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which.reject) {
-                    this.doThen = Bridge.fn.bind(this, function (f, e, p) {
-                        this.reject(args);
-                    });
-                }
-                else  {
-                    this.doThen = Bridge.fn.bind(this, function (f, e, p) {
-                        this.progress(args);
-                    });
-                }
+                this.doThen = Bridge.fn.bind(this, function (f, e, p) {
+                    this.reject(args);
+                });
             }
     
             var i = 0;
@@ -25051,17 +25051,15 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     }
                 }
                 else  {
-                    if (which === Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which.reject) {
-                        if (Bridge.hasValue(aThen.getError())) {
-                            aThen.getError().apply(null, args);
-                        }
-                    }
-                    else  {
-                        if (Bridge.hasValue(aThen.getProgress())) {
-                            aThen.getProgress().apply(null, args);
-                        }
+                    if (Bridge.hasValue(aThen.getError())) {
+                        aThen.getError().apply(null, args);
                     }
                 }
+    
+                if (Bridge.hasValue(aThen.getProgress())) {
+                    aThen.Progress([100]);
+                }
+    
                 i = (i + 1) | 0;
             }
             this.getThens().clear();
@@ -25093,8 +25091,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     Bridge.define('Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which', {
         statics: {
             resolve: 0,
-            reject: 1,
-            progress: 2
+            reject: 1
         },
         $enum: true
     });

@@ -23,7 +23,7 @@ namespace Bridge.ClientTest.Threading
 
             enum Which
             {
-                Resolve, Reject, Progress
+                Resolve, Reject
             }
 
             private delegate void Next(PromiseDelegate fulfilledHandler, PromiseDelegate errorHandler = null, PromiseDelegate progressHandler = null);
@@ -61,7 +61,18 @@ namespace Bridge.ClientTest.Threading
 
             public void Progress(params object[] args)
             {
-                Complete(Which.Progress, args);
+                var i = 0;
+                while (i < Thens.Count)
+                {
+                    var aThen = Thens[i];
+
+                    if (aThen.Progress != null)
+                    {
+                        aThen.Progress(args);
+                    }
+
+                    i++;
+                }
             }
 
             private void Complete(Which which, params object[] args)
@@ -70,13 +81,9 @@ namespace Bridge.ClientTest.Threading
                 {
                     DoThen = (f, e, p) => { Resolve(args); };
                 }
-                else if (which == Which.Reject)
-                {
-                    DoThen = (f, e, p) => { Reject(args); };
-                }
                 else
                 {
-                    DoThen = (f, e, p) => { Progress(args); };
+                    DoThen = (f, e, p) => { Reject(args); };
                 }
 
                 var i = 0;
@@ -91,20 +98,19 @@ namespace Bridge.ClientTest.Threading
                             aThen.Filled.Apply(null, args);
                         }
                     }
-                    else if (which == Which.Reject)
+                    else
                     {
                         if (aThen.Error != null)
                         {
                             aThen.Error.Apply(null, args);
                         }
                     }
-                    else
+
+                    if (aThen.Progress != null)
                     {
-                        if (aThen.Progress != null)
-                        {
-                            aThen.Progress.Apply(null, args);
-                        }
+                        aThen.Progress(100);
                     }
+
                     i++;
                 }
                 Thens.Clear();
@@ -291,7 +297,6 @@ namespace Bridge.ClientTest.Threading
             completeAsync();
         }
 
-
         public int PromiseProgress { get; set; }
 
         private void HandleProgress(params object[] args)
@@ -301,7 +306,7 @@ namespace Bridge.ClientTest.Threading
         }
 
         [Test(ExpectedCount = 9)]
-        public void TaskFromPromiseWithProgressWithoutResultFactoryWorksWhenPromiseCompletes()
+        public void TaskFromPromiseWithProgressWithoutResultFactoryWorksWhenPromiseProgressesAndCompletes()
         {
             var completeAsync = Assert.Async();
 
@@ -326,11 +331,9 @@ namespace Bridge.ClientTest.Threading
             promise.Progress(20);
             Assert.AreEqual(20, PromiseProgress, "Progress 20");
 
+            // Resolve will set Progress to 100%
             promise.Resolve(42, "result 123", 101);
-
-            promise.Progress(100);
             Assert.AreEqual(100, PromiseProgress, "Progress 100");
-
 
             task1.ContinueWith(x =>
             {
