@@ -204,6 +204,7 @@ namespace Bridge.Translator
                             memberTargetrr.TargetResult is LocalResolveResult)) || leftResolverResult is ThisResolveResult || leftResolverResult is LocalResolveResult;
 
             if (assignmentExpression.Operator == AssignmentOperatorType.Divide &&
+                !(this.Emitter.AssemblyInfo.OverflowMode.HasValue && this.Emitter.AssemblyInfo.OverflowMode == OverflowMode.Javascript && !ConversionBlock.InsideOverflowContext(this.Emitter, assignmentExpression)) &&
                 !isLong && !isLongExpected &&
                 (
                     (Helpers.IsIntegerType(leftResolverResult.Type, this.Emitter.Resolver) &&

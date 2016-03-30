@@ -235,7 +235,7 @@ namespace Bridge.Translator
         {
             var toFloat = Helpers.IsFloatType(expectedType, block.Emitter.Resolver);
 
-            if (toFloat)
+            if (toFloat || (block.Emitter.AssemblyInfo.OverflowMode.HasValue && block.Emitter.AssemblyInfo.OverflowMode == OverflowMode.Javascript && !InsideOverflowContext(block.Emitter, expression)))
             {
                 block.Write("Bridge.Decimal.toFloat");
                 if (!(expression is CastExpression && ((CastExpression)expression).Expression is ParenthesizedExpression))
@@ -270,7 +270,12 @@ namespace Bridge.Translator
             {
                 string action = null;
                 expectedType = NullableType.IsNullable(expectedType) ? NullableType.GetUnderlyingType(expectedType) : expectedType;
-                if (expectedType.IsKnownType(KnownTypeCode.Char))
+
+                if (block.Emitter.AssemblyInfo.OverflowMode.HasValue && block.Emitter.AssemblyInfo.OverflowMode == OverflowMode.Javascript && !InsideOverflowContext(block.Emitter, expression))
+                {
+                    action = "toNumber";
+                }
+                else if (expectedType.IsKnownType(KnownTypeCode.Char))
                 {
                     action = "clipu16";
                 }
@@ -336,6 +341,11 @@ namespace Bridge.Translator
 
         private static void NarrowingNumericOrEnumerationConversion(ConversionBlock block, Expression expression, IType targetType, bool fromFloatingPoint, bool isChecked, bool isNullable, bool isExplicit = true)
         {
+            if (block.Emitter.AssemblyInfo.OverflowMode.HasValue && block.Emitter.AssemblyInfo.OverflowMode == OverflowMode.Javascript && !InsideOverflowContext(block.Emitter, expression))
+            {
+                return;
+            }
+
             if (isChecked)
             {
                 block.Write("Bridge.Int.check(");
@@ -606,6 +616,23 @@ namespace Bridge.Translator
             }
 
             return !emitter.AssemblyInfo.OverflowMode.HasValue || emitter.AssemblyInfo.OverflowMode == OverflowMode.Unchecked;
+        }
+
+        public static bool InsideOverflowContext(IEmitter emitter, Expression expression)
+        {
+            var found = false;
+            expression.GetParent(p =>
+            {
+                if (p is UncheckedExpression || p is UncheckedStatement || p is CheckedExpression || p is CheckedStatement)
+                {
+                    found = true;
+                    return true;
+                }
+
+                return false;
+            });
+
+            return found;
         }
     }
 }
