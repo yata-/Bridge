@@ -10462,35 +10462,42 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.N1122', {
         statics: {
+            assertNumber: function (expected, actual, message) {
+                if (message === void 0) { message = null; }
+                var a = Bridge.hasValue(actual) ? actual.toString() : "null";
+                var e = Bridge.hasValue(expected) ? expected.toString() : "null";
+    
+                Bridge.Test.Assert.areEqual$1(e, a, message);
+            },
             testClippingInDefaultOverflowMode: function () {
                 var x = Number.MAX_VALUE;
     
                 var y1 = (Math.floor(x / 0.2)) | 0;
-                Bridge.Test.Assert.areEqual$1(0, y1, "int");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(-2147483648, y1, "int");
     
                 var y2 = (Math.floor(x / 0.2)) >>> 0;
-                Bridge.Test.Assert.areEqual$1(0, y2, "uint");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, y2, "uint");
     
                 var z1 = Bridge.Int.clip64(Math.floor(x / 0.2));
-                Bridge.Test.Assert.areEqual$1(0, z1, "long");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.Long.MinValue, z1, "long");
     
                 var z2 = Bridge.Int.clipu64(Math.floor(x / 0.2));
-                Bridge.Test.Assert.areEqual$1(0, z2, "ulong");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.ULong.MinValue, z2, "ulong");
             },
             testIntegerDivisionInDefaultMode: function () {
                 var x = 1.1;
     
                 var y1 = ((1 / x)) | 0;
-                Bridge.Test.Assert.areEqual$1(0, y1, "int");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, y1, "int");
     
                 var y2 = ((1 / x)) >>> 0;
-                Bridge.Test.Assert.areEqual$1(0, y2, "uint");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, y2, "uint");
     
                 var z1 = Bridge.Int.clip64((1 / x));
-                Bridge.Test.Assert.areEqual$1(Bridge.Long(0), z1, "long");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.Long(0), z1, "long");
     
                 var z2 = Bridge.Int.clipu64((1 / x));
-                Bridge.Test.Assert.areEqual$1(Bridge.ULong(0), z2, "ulong");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.ULong(0), z2, "ulong");
             }
         }
     });
