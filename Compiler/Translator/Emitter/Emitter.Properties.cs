@@ -417,5 +417,13 @@ namespace Bridge.Translator
             get;
             set;
         }
+
+        public bool IsJavaScriptOverflowMode
+        {
+            get
+            {
+                return this.AssemblyInfo.OverflowMode.HasValue && this.AssemblyInfo.OverflowMode == OverflowMode.Javascript;
+            }
+        }
     }
 }

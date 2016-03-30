@@ -235,7 +235,7 @@ namespace Bridge.Translator
         {
             var toFloat = Helpers.IsFloatType(expectedType, block.Emitter.Resolver);
 
-            if (toFloat || (block.Emitter.AssemblyInfo.OverflowMode.HasValue && block.Emitter.AssemblyInfo.OverflowMode == OverflowMode.Javascript && !InsideOverflowContext(block.Emitter, expression)))
+            if (toFloat || (block.Emitter.IsJavaScriptOverflowMode && !InsideOverflowContext(block.Emitter, expression)))
             {
                 block.Write("Bridge.Decimal.toFloat");
                 if (!(expression is CastExpression && ((CastExpression)expression).Expression is ParenthesizedExpression))
@@ -271,7 +271,7 @@ namespace Bridge.Translator
                 string action = null;
                 expectedType = NullableType.IsNullable(expectedType) ? NullableType.GetUnderlyingType(expectedType) : expectedType;
 
-                if (block.Emitter.AssemblyInfo.OverflowMode.HasValue && block.Emitter.AssemblyInfo.OverflowMode == OverflowMode.Javascript && !InsideOverflowContext(block.Emitter, expression))
+                if (block.Emitter.IsJavaScriptOverflowMode && !InsideOverflowContext(block.Emitter, expression))
                 {
                     action = "toNumber";
                 }
@@ -341,7 +341,7 @@ namespace Bridge.Translator
 
         private static void NarrowingNumericOrEnumerationConversion(ConversionBlock block, Expression expression, IType targetType, bool fromFloatingPoint, bool isChecked, bool isNullable, bool isExplicit = true)
         {
-            if (block.Emitter.AssemblyInfo.OverflowMode.HasValue && block.Emitter.AssemblyInfo.OverflowMode == OverflowMode.Javascript && !InsideOverflowContext(block.Emitter, expression))
+            if (block.Emitter.IsJavaScriptOverflowMode && !InsideOverflowContext(block.Emitter, expression))
             {
                 return;
             }
