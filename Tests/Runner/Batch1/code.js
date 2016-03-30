@@ -10460,6 +10460,41 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.N1122', {
+        statics: {
+            testClippingInDefaultOverflowMode: function () {
+                var x = Number.MAX_VALUE;
+    
+                var y1 = (Math.floor(x / 0.2)) | 0;
+                Bridge.Test.Assert.areEqual$1(0, y1, "int");
+    
+                var y2 = (Math.floor(x / 0.2)) >>> 0;
+                Bridge.Test.Assert.areEqual$1(0, y2, "uint");
+    
+                var z1 = Bridge.Int.clip64(Math.floor(x / 0.2));
+                Bridge.Test.Assert.areEqual$1(0, z1, "long");
+    
+                var z2 = Bridge.Int.clipu64(Math.floor(x / 0.2));
+                Bridge.Test.Assert.areEqual$1(0, z2, "ulong");
+            },
+            testIntegerDivisionInDefaultMode: function () {
+                var x = 1.1;
+    
+                var y1 = ((1 / x)) | 0;
+                Bridge.Test.Assert.areEqual$1(0, y1, "int");
+    
+                var y2 = ((1 / x)) >>> 0;
+                Bridge.Test.Assert.areEqual$1(0, y2, "uint");
+    
+                var z1 = Bridge.Int.clip64((1 / x));
+                Bridge.Test.Assert.areEqual$1(Bridge.Long(0), z1, "long");
+    
+                var z2 = Bridge.Int.clipu64((1 / x));
+                Bridge.Test.Assert.areEqual$1(Bridge.ULong(0), z2, "ulong");
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Person383', {
         config: {
             properties: {

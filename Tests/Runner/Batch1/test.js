@@ -1197,6 +1197,8 @@
                 QUnit.test("#997 - TestConvertAllForNullConverter", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge997.testConvertAllForNullConverter);
                 QUnit.test("#999 - TestNestedLambdasToLifting", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge999.testNestedLambdasToLifting);
                 QUnit.test("#999 - TestNestedLambdasToLiftingInForeach", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge999_1.testNestedLambdasToLiftingInForeach);
+                QUnit.test("#1122 - TestClippingInDefaultOverflowMode", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_N1122.testClippingInDefaultOverflowMode);
+                QUnit.test("#1122 - TestIntegerDivisionInDefaultMode", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_N1122.testIntegerDivisionInDefaultMode);
                 QUnit.test("#169", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_TestBridgeIssues.n169);
                 QUnit.test("#240", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_TestBridgeIssues.n240);
                 QUnit.test("#264", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_TestBridgeIssues.n264);
@@ -4095,6 +4097,20 @@
             testNestedLambdasToLiftingInForeach: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge999_1).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge999_1, 5);
                 Bridge.ClientTest.BridgeIssues.Bridge999_1.testNestedLambdasToLiftingInForeach();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_N1122', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.N1122)],
+        statics: {
+            testClippingInDefaultOverflowMode: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.N1122).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_N1122, 4);
+                Bridge.ClientTest.BridgeIssues.N1122.testClippingInDefaultOverflowMode();
+            },
+            testIntegerDivisionInDefaultMode: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.N1122).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_N1122, 4);
+                Bridge.ClientTest.BridgeIssues.N1122.testIntegerDivisionInDefaultMode();
             }
         }
     });
