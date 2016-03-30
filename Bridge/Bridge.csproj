@@ -649,6 +649,7 @@
     <Content Include="Resources\Diagnostics.js" />
     <Content Include="Resources\Convert.js" />
     <Content Include="Resources\Enum.js" />
+    <Content Include="Resources\LongLib.js" />
     <Content Include="Resources\Long.js" />
     <Content Include="Resources\Math.js" />
     <Content Include="Resources\Version.js" />
