@@ -1,9 +1,7 @@
 ﻿// @source /Collections/Dictionary.js
 
-Bridge.Class.generic('Bridge.KeyValuePair$2', function (TKey, TValue) {
-    var $$name = Bridge.Class.genericName('Bridge.KeyValuePair$2', TKey, TValue);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+Bridge.define('Bridge.KeyValuePair$2', function (TKey, TValue) {
+    return {
         constructor: function (key, value) {
             this.key = key;
             this.value = value;
@@ -26,13 +24,11 @@ Bridge.Class.generic('Bridge.KeyValuePair$2', function (TKey, TValue) {
 
             return s;
         }
-    }));
+    };
 });
 
-Bridge.Class.generic('Bridge.Dictionary$2', function (TKey, TValue) {
-    var $$name = Bridge.Class.genericName('Bridge.Dictionary$2', TKey, TValue);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+Bridge.define('Bridge.Dictionary$2', function (TKey, TValue) {
+    return {
         inherits: [Bridge.IDictionary$2(TKey, TValue)],
 
         constructor: function (obj, comparer) {
@@ -230,13 +226,11 @@ Bridge.Class.generic('Bridge.Dictionary$2', function (TKey, TValue) {
                  return e;
             });
         }
-    }));
+    };
 });
 
-Bridge.Class.generic('Bridge.DictionaryCollection$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.DictionaryCollection$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+Bridge.define('Bridge.DictionaryCollection$1', function (T) {
+    return {
         inherits: [Bridge.ICollection$1(T)],
 
         constructor: function (dictionary, keys) {
@@ -271,5 +265,5 @@ Bridge.Class.generic('Bridge.DictionaryCollection$1', function (T) {
         remove: function () {
             throw new Bridge.NotSupportedException();
         }
-    }));
+    };
 });
