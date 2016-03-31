@@ -4179,6 +4179,21 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1130', {
+        statics: {
+            testUlongDivision: function () {
+                var a = Bridge.ULong(Bridge.Long([0,8]));
+                var b = Bridge.ULong(2656901066);
+                var x = a.div(b);
+                var y = Bridge.ULong(3850086465);
+                var z = Bridge.ULong(2476925576);
+                var res = (x.mul(y)).gt((z.shl(32)));
+    
+                Bridge.Test.Assert.$false(res);
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
