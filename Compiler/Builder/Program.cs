@@ -28,7 +28,7 @@ namespace Bridge.Builder
 
             if (args.Length == 0)
             {
-                showHelp();
+                showHelp(logger);
                 return 1; // error: arguments not provided, so can't guess what to do
             }
 
@@ -43,8 +43,8 @@ namespace Bridge.Builder
                     case "-project":
                         if (lib != null)
                         {
-                            Console.WriteLine("Error: Project and assembly file specification is mutually exclusive.");
-                            showHelp();
+                            logger.Error("Error: Project and assembly file specification is mutually exclusive.");
+                            showHelp(logger);
                             return 1;
                         };
                         projectLocation = args[++i];
@@ -108,8 +108,8 @@ namespace Bridge.Builder
                     case "-lib": // backwards compatibility -- now is non-switch argument to builder
                         if (projectLocation != null)
                         {
-                            Console.WriteLine("Error: Project and assembly file specification is mutually exclusive.");
-                            showHelp();
+                            logger.Error("Error: Project and assembly file specification is mutually exclusive.");
+                            showHelp(logger);
                             return 1;
                         }
                         lib = args[++i];
@@ -117,7 +117,7 @@ namespace Bridge.Builder
 
                     case "-h":
                     case "--help":
-                        showHelp();
+                        showHelp(logger);
                         return 0; // success. Asked for help. Help provided.
 
 #if DEBUG
@@ -137,7 +137,7 @@ namespace Bridge.Builder
                         {
                             // don't care about success. If not set already, then try next cmdline argument
                             // as the file parameter and ignore following arguments, if any.
-                            bindArgToVar(args[i + 1], ref projectLocation, ref lib);
+                            bindArgToVar(args[i + 1], ref projectLocation, ref lib, logger);
                         }
                         i = args.Length; // move to the end of arguments list
                         break;
@@ -146,10 +146,10 @@ namespace Bridge.Builder
 
                     // If this argument does not look like a cmdline switch and
                         // neither backwards -project nor -lib were specified
-                        if (!bindArgToVar(args[i], ref projectLocation, ref lib))
+                        if (!bindArgToVar(args[i], ref projectLocation, ref lib, logger))
                         {
-                            Console.WriteLine("Invalid argument: " + args[i]);
-                            showHelp();
+                            logger.Error("Invalid argument: " + args[i]);
+                            showHelp(logger);
                             return 1;
                         }
                         break;
@@ -160,8 +160,8 @@ namespace Bridge.Builder
 
             if (projectLocation == null && lib == null)
             {
-                Console.WriteLine("Error: Project or assembly file name must be specified.");
-                showHelp();
+                logger.Error("Error: Project or assembly file name must be specified.");
+                showHelp(logger);
                 return 1;
             }
 
@@ -176,10 +176,10 @@ namespace Bridge.Builder
             {
                 logger.Name = "Bridge.Builder.Console";
 
-                Console.WriteLine("Generating script...");
+                logger.Info("Generating script...");
 
-                Console.WriteLine("Command line arguments:");
-                Console.WriteLine("\t" + (string.Join(" ", args) ?? ""));
+                logger.Info("Command line arguments:");
+                logger.Info("\t" + (string.Join(" ", args) ?? ""));
 
                 // FIXME: detect by extension whether first argument is a project or DLL
                 if (!string.IsNullOrWhiteSpace(projectLocation))
@@ -234,16 +234,16 @@ namespace Bridge.Builder
 
                 if (extractCore)
                 {
-                    Console.WriteLine("Extracting core scripts...");
+                    logger.Info("Extracting core scripts...");
                     translator.ExtractCore(outputPath);
                 }
 
-                Console.WriteLine("Saving to " + outputPath);
+                logger.Info("Saving to " + outputPath);
                 translator.SaveTo(outputPath, Path.GetFileName(outputLocation));
                 translator.Flush(outputPath, Path.GetFileName(outputLocation));
                 translator.Plugins.AfterOutput(translator, outputPath, !extractCore);
 
-                Console.WriteLine("Done translating Bridge files.");
+                logger.Info("Done translating Bridge files.");
             }
             catch (EmitterException ex)
             {
@@ -278,12 +278,12 @@ namespace Bridge.Builder
         /// <summary>
         /// Commandline arguments based on http://docopt.org/
         /// </summary>
-        private static void showHelp()
+        private static void showHelp(ILogger logger)
         {
             string codeBase = Assembly.GetExecutingAssembly().CodeBase;
             string programName = Path.GetFileName(codeBase);
 
-            Console.WriteLine(@"Usage: " + programName + @" [options] (<project-file>|<assembly-file>)
+            logger.Warn(@"Usage: " + programName + @" [options] (<project-file>|<assembly-file>)
        " + programName + @" [-h|--help]
 
 -h --help                  This help message.
@@ -300,27 +300,27 @@ namespace Bridge.Builder
 
 #if DEBUG
             // This code and logic is only compiled in when building bridge.net in Debug configuration
-            Console.WriteLine(@"-d --debug                 Attach the builder to a visual studio debugging
+            logger.Warn(@"-d --debug                 Attach the builder to a visual studio debugging
                            session. Use this to attach the process to an
                            open Bridge.NET solution. This option is equivalent
                            to Build.dll's 'AttachDebugger'.");
 #endif
         }
 
-        private static bool bindArgToVar(string arg, ref string proj, ref string lib)
+        private static bool bindArgToVar(string arg, ref string proj, ref string lib, ILogger logger)
         {
             if (proj == null && lib == null)
             {
-                Console.WriteLine("hey");
+                logger.Info("hey");
                 if (arg.ToLower().EndsWith(".csproj"))
                 {
-                    Console.WriteLine("prj");
+                    logger.Info("prj");
                     proj = arg;
                     return true;
                 }
                 else if (arg.ToLower().EndsWith(".dll"))
                 {
-                    Console.WriteLine("lib");
+                    logger.Info("lib");
                     lib = arg;
                     return true;
                 }
