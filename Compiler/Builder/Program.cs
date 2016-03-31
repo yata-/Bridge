@@ -14,160 +14,16 @@ namespace Bridge.Builder
         {
             var logger = new Logger(null, false, LoggerLevel.Trace, new ConsoleLoggerWriter());
 
-            string projectLocation = null;
-            string outputLocation = null;
-            string bridgeLocation = null;
-            bool rebuild = false;
-            bool extractCore = true;
-            string cfg = null;
-            string source = null;
-            string folder = Environment.CurrentDirectory;
-            bool recursive = false;
-            string lib = null;
-            string def = null;
+            var bridgeOptions = GetBridgeOptionsFromCommandLine(args, logger);
 
-            if (args.Length == 0)
+            if (bridgeOptions == null)
             {
-                showHelp(logger);
-                return 1; // error: arguments not provided, so can't guess what to do
-            }
-
-            int i = 0;
-
-            while (i < args.Length)
-            {
-                switch (args[i])
-                {
-                    // backwards compatibility -- now is non-switch argument to builder
-                    case "-p":
-                    case "-project":
-                        if (lib != null)
-                        {
-                            logger.Error("Error: Project and assembly file specification is mutually exclusive.");
-                            showHelp(logger);
-                            return 1;
-                        };
-                        projectLocation = args[++i];
-                        break;
-
-                    case "-b":
-                    case "-bridge": // backwards compatibility
-                    case "--bridge":
-                        bridgeLocation = args[++i];
-                        break;
-
-                    case "-o":
-                    case "-output": // backwards compatibility
-                    case "--output":
-                        outputLocation = args[++i];
-                        break;
-
-                    case "-c":
-                    case "-cfg": // backwards compatibility
-                    case "-configuration": // backwards compatibility
-                    case "--configuration":
-                        cfg = args[++i];
-                        break;
-
-                    case "-def": // backwards compatibility
-                    case "-D":
-                    case "-define": // backwards compatibility
-                    case "--define":
-                        def = args[++i];
-                        break;
-
-                    case "-rebuild": // backwards compatibility
-                    case "--rebuild":
-                    case "-r":
-                        rebuild = true;
-                        break;
-
-                    case "-nocore": // backwards compatibility
-                    case "--nocore":
-                        extractCore = false;
-                        break;
-
-                    case "-s":
-                    case "-src": // backwards compatibility
-                    case "--source":
-                        source = args[++i];
-                        break;
-
-                    case "-f":
-                    case "-folder": // backwards compatibility
-                    case "--folder":
-                        folder = Path.Combine(Environment.CurrentDirectory, args[++i]);
-                        break;
-
-                    case "-R":
-                    case "-recursive": // backwards compatibility
-                    case "--recursive":
-                        recursive = true;
-                        break;
-
-                    case "-lib": // backwards compatibility -- now is non-switch argument to builder
-                        if (projectLocation != null)
-                        {
-                            logger.Error("Error: Project and assembly file specification is mutually exclusive.");
-                            showHelp(logger);
-                            return 1;
-                        }
-                        lib = args[++i];
-                        break;
-
-                    case "-h":
-                    case "--help":
-                        showHelp(logger);
-                        return 0; // success. Asked for help. Help provided.
-
-#if DEBUG
-                    case "-debug":
-                    case "--debug":
-                    case "-attachdebugger":
-                    case "--attachdebugger":
-                    case "-d":
-                        System.Diagnostics.Debugger.Launch();
-                        break;
-#endif
-                    case "--": // stop reading commandline arguments
-                        // Only non-hyphen commandline argument accepted is the file name of the project or
-                        // assembly file, so if not provided already, when this option is specified, check if
-                        // it is still needed and bind the file to the correct location
-                        if (i < (args.Length-1))
-                        {
-                            // don't care about success. If not set already, then try next cmdline argument
-                            // as the file parameter and ignore following arguments, if any.
-                            bindArgToVar(args[i + 1], ref projectLocation, ref lib, logger);
-                        }
-                        i = args.Length; // move to the end of arguments list
-                        break;
-
-                    default:
-
-                    // If this argument does not look like a cmdline switch and
-                        // neither backwards -project nor -lib were specified
-                        if (!bindArgToVar(args[i], ref projectLocation, ref lib, logger))
-                        {
-                            logger.Error("Invalid argument: " + args[i]);
-                            showHelp(logger);
-                            return 1;
-                        }
-                        break;
-                }
-
-                i++;
-            }
-
-            if (projectLocation == null && lib == null)
-            {
-                logger.Error("Error: Project or assembly file name must be specified.");
-                showHelp(logger);
                 return 1;
             }
 
-            if (string.IsNullOrEmpty(outputLocation))
+            if (bridgeOptions.Help)
             {
-                outputLocation = !string.IsNullOrWhiteSpace(projectLocation) ? Path.GetFileNameWithoutExtension(projectLocation) : folder;
+                return 0;
             }
 
             Bridge.Translator.Translator translator = null;
@@ -182,30 +38,30 @@ namespace Bridge.Builder
                 logger.Info("\t" + (string.Join(" ", args) ?? ""));
 
                 // FIXME: detect by extension whether first argument is a project or DLL
-                if (!string.IsNullOrWhiteSpace(projectLocation))
+                if (!string.IsNullOrWhiteSpace(bridgeOptions.ProjectLocation))
                 {
-                    translator = new Bridge.Translator.Translator(projectLocation);
+                    translator = new Bridge.Translator.Translator(bridgeOptions.ProjectLocation);
                 }
                 else
                 {
-                    if (string.IsNullOrWhiteSpace(lib))
+                    if (string.IsNullOrWhiteSpace(bridgeOptions.Lib))
                     {
                         throw new Exception("Please define path to assembly using -lib option");
                     }
 
-                    lib = Path.Combine(folder, lib);
-                    translator = new Bridge.Translator.Translator(folder, source, recursive, lib);
+                    bridgeOptions.Lib = Path.Combine(bridgeOptions.Folder, bridgeOptions.Lib);
+                    translator = new Bridge.Translator.Translator(bridgeOptions.Folder, bridgeOptions.Source, bridgeOptions.Recursive, bridgeOptions.Lib);
                 }
 
-                bridgeLocation = !string.IsNullOrEmpty(bridgeLocation) ? bridgeLocation : Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Bridge.dll");
+                bridgeOptions.BridgeLocation = !string.IsNullOrEmpty(bridgeOptions.BridgeLocation) ? bridgeOptions.BridgeLocation : Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Bridge.dll");
 
-                translator.BridgeLocation = bridgeLocation;
-                translator.Rebuild = rebuild;
+                translator.BridgeLocation = bridgeOptions.BridgeLocation;
+                translator.Rebuild = bridgeOptions.Rebuild;
                 translator.Log = logger;
-                translator.Configuration = cfg;
-                if (def != null)
+                translator.Configuration = bridgeOptions.Cfg;
+                if (bridgeOptions.Def != null)
                 {
-                    translator.DefineConstants.AddRange(def.Split(';').Select(s => s.Trim()).Where(s => s != ""));
+                    translator.DefineConstants.AddRange(bridgeOptions.Def.Split(';').Select(s => s.Trim()).Where(s => s != ""));
                     translator.DefineConstants = translator.DefineConstants.Distinct().ToList();
                 }
 
@@ -218,30 +74,33 @@ namespace Bridge.Builder
 
                 translator.Translate();
 
-                string path = string.IsNullOrWhiteSpace(Path.GetFileName(outputLocation)) ? outputLocation : Path.GetDirectoryName(outputLocation);
+                string path = string.IsNullOrWhiteSpace(Path.GetFileName(bridgeOptions.OutputLocation))
+                    ? bridgeOptions.OutputLocation : Path.GetDirectoryName(bridgeOptions.OutputLocation);
                 string outputPath = null;
 
                 if (!string.IsNullOrWhiteSpace(translator.AssemblyInfo.Output))
                 {
-                    outputPath = Path.Combine(!string.IsNullOrWhiteSpace(projectLocation) ? Path.GetDirectoryName(projectLocation) : folder, translator.AssemblyInfo.Output);
+                    outputPath = Path.Combine(!string.IsNullOrWhiteSpace(bridgeOptions.ProjectLocation)
+                        ? Path.GetDirectoryName(bridgeOptions.ProjectLocation) : bridgeOptions.Folder, translator.AssemblyInfo.Output);
                 }
                 else
                 {
-                    outputPath = Path.Combine(!string.IsNullOrWhiteSpace(projectLocation) ? Path.GetDirectoryName(projectLocation) : folder, !string.IsNullOrWhiteSpace(translator.AssemblyInfo.Output) ? translator.AssemblyInfo.Output : path);
+                    outputPath = Path.Combine(!string.IsNullOrWhiteSpace(bridgeOptions.ProjectLocation)
+                        ? Path.GetDirectoryName(bridgeOptions.ProjectLocation) : bridgeOptions.Folder, !string.IsNullOrWhiteSpace(translator.AssemblyInfo.Output) ? translator.AssemblyInfo.Output : path);
                 }
 
                 translator.CleanOutputFolderIfRequired(outputPath);
 
-                if (extractCore)
+                if (bridgeOptions.ExtractCore)
                 {
                     logger.Info("Extracting core scripts...");
                     translator.ExtractCore(outputPath);
                 }
 
                 logger.Info("Saving to " + outputPath);
-                translator.SaveTo(outputPath, Path.GetFileName(outputLocation));
-                translator.Flush(outputPath, Path.GetFileName(outputLocation));
-                translator.Plugins.AfterOutput(translator, outputPath, !extractCore);
+                translator.SaveTo(outputPath, Path.GetFileName(bridgeOptions.OutputLocation));
+                translator.Flush(outputPath, Path.GetFileName(bridgeOptions.OutputLocation));
+                translator.Plugins.AfterOutput(translator, outputPath, !bridgeOptions.ExtractCore);
 
                 logger.Info("Done translating Bridge files.");
             }
@@ -307,25 +166,200 @@ namespace Bridge.Builder
 #endif
         }
 
-        private static bool bindArgToVar(string arg, ref string proj, ref string lib, ILogger logger)
+        private static bool bindArgToVar(string arg, BridgeOptions bridgeOptions, ILogger logger)
         {
-            if (proj == null && lib == null)
+            if (bridgeOptions.ProjectLocation == null && bridgeOptions.Lib == null)
             {
                 logger.Info("hey");
                 if (arg.ToLower().EndsWith(".csproj"))
                 {
                     logger.Info("prj");
-                    proj = arg;
+                    bridgeOptions.ProjectLocation = arg;
                     return true;
                 }
                 else if (arg.ToLower().EndsWith(".dll"))
                 {
                     logger.Info("lib");
-                    lib = arg;
+                    bridgeOptions.Lib = arg;
                     return true;
                 }
             }
             return false; // didn't bind anywhere
+        }
+
+        private static BridgeOptions GetBridgeOptionsFromCommandLine(string[] args, ILogger logger)
+        {
+            if (args.Length == 0)
+            {
+                showHelp(logger);
+                return null; // error: arguments not provided, so can't guess what to do
+            }
+
+            var bridgeOptions = new BridgeOptions();
+
+            int i = 0;
+
+            while (i < args.Length)
+            {
+                switch (args[i])
+                {
+                    // backwards compatibility -- now is non-switch argument to builder
+                    case "-p":
+                    case "-project":
+                        if (bridgeOptions.Lib != null)
+                        {
+                            logger.Error("Error: Project and assembly file specification is mutually exclusive.");
+                            showHelp(logger);
+                            return null;
+                        };
+                        bridgeOptions.ProjectLocation = args[++i];
+                        break;
+
+                    case "-b":
+                    case "-bridge": // backwards compatibility
+                    case "--bridge":
+                        bridgeOptions.BridgeLocation = args[++i];
+                        break;
+
+                    case "-o":
+                    case "-output": // backwards compatibility
+                    case "--output":
+                        bridgeOptions.OutputLocation = args[++i];
+                        break;
+
+                    case "-c":
+                    case "-cfg": // backwards compatibility
+                    case "-configuration": // backwards compatibility
+                    case "--configuration":
+                        bridgeOptions.Cfg = args[++i];
+                        break;
+
+                    case "-def": // backwards compatibility
+                    case "-D":
+                    case "-define": // backwards compatibility
+                    case "--define":
+                        bridgeOptions.Def = args[++i];
+                        break;
+
+                    case "-rebuild": // backwards compatibility
+                    case "--rebuild":
+                    case "-r":
+                        bridgeOptions.Rebuild = true;
+                        break;
+
+                    case "-nocore": // backwards compatibility
+                    case "--nocore":
+                        bridgeOptions.ExtractCore = false;
+                        break;
+
+                    case "-s":
+                    case "-src": // backwards compatibility
+                    case "--source":
+                        bridgeOptions.Source = args[++i];
+                        break;
+
+                    case "-f":
+                    case "-folder": // backwards compatibility
+                    case "--folder":
+                        bridgeOptions.Folder = Path.Combine(Environment.CurrentDirectory, args[++i]);
+                        break;
+
+                    case "-R":
+                    case "-recursive": // backwards compatibility
+                    case "--recursive":
+                        bridgeOptions.Recursive = true;
+                        break;
+
+                    case "-lib": // backwards compatibility -- now is non-switch argument to builder
+                        if (bridgeOptions.ProjectLocation != null)
+                        {
+                            logger.Error("Error: Project and assembly file specification is mutually exclusive.");
+                            showHelp(logger);
+                            return null;
+                        }
+                        bridgeOptions.Lib = args[++i];
+                        break;
+
+                    case "-h":
+                    case "--help":
+                        showHelp(logger);
+                        bridgeOptions.Help = true;
+                        return bridgeOptions; // success. Asked for help. Help provided.
+
+#if DEBUG
+                    case "-debug":
+                    case "--debug":
+                    case "-attachdebugger":
+                    case "--attachdebugger":
+                    case "-d":
+                        System.Diagnostics.Debugger.Launch();
+                        break;
+#endif
+                    case "--": // stop reading commandline arguments
+                        // Only non-hyphen commandline argument accepted is the file name of the project or
+                        // assembly file, so if not provided already, when this option is specified, check if
+                        // it is still needed and bind the file to the correct location
+                        if (i < (args.Length - 1))
+                        {
+                            // don't care about success. If not set already, then try next cmdline argument
+                            // as the file parameter and ignore following arguments, if any.
+                            bindArgToVar(args[i + 1], bridgeOptions, logger);
+                        }
+                        i = args.Length; // move to the end of arguments list
+                        break;
+
+                    default:
+
+                        // If this argument does not look like a cmdline switch and
+                        // neither backwards -project nor -lib were specified
+                        if (!bindArgToVar(args[i], bridgeOptions, logger))
+                        {
+                            logger.Error("Invalid argument: " + args[i]);
+                            showHelp(logger);
+                            return null;
+                        }
+                        break;
+                }
+
+                i++;
+            }
+
+            if (bridgeOptions.ProjectLocation == null && bridgeOptions.Lib == null)
+            {
+                logger.Error("Error: Project or assembly file name must be specified.");
+                showHelp(logger);
+                return null;
+            }
+
+            if (string.IsNullOrEmpty(bridgeOptions.OutputLocation))
+            {
+                bridgeOptions.OutputLocation = !string.IsNullOrWhiteSpace(bridgeOptions.ProjectLocation)
+                    ? Path.GetFileNameWithoutExtension(bridgeOptions.ProjectLocation) : bridgeOptions.Folder;
+            }
+
+            return bridgeOptions;
+        }
+    }
+
+    class BridgeOptions
+    {
+        public string ProjectLocation { get; set; }
+        public string OutputLocation { get; set; }
+        public string BridgeLocation { get; set; }
+        public bool Rebuild { get; set; }
+        public bool ExtractCore { get; set; }
+        public string Cfg { get; set; }
+        public string Source { get; set; }
+        public string Folder { get; set; }
+        public bool Recursive { get; set; }
+        public string Lib { get; set; }
+        public string Def { get; set; }
+        public bool Help { get; set; }
+
+        public BridgeOptions()
+        {
+            ExtractCore = true;
+            Folder = Environment.CurrentDirectory;
         }
     }
 }
