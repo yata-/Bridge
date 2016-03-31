@@ -133,6 +133,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Batch1", "Tests\TypeScript\
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Transpiled", "Transpiled\Bridge.Transpiled.csproj", "{8DAF3989-FF37-470C-A55D-3E7868613AA5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{243BB709-3912-4C65-82D4-787A5E2201D7} = {243BB709-3912-4C65-82D4-787A5E2201D7}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
