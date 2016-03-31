@@ -29,6 +29,7 @@ namespace System
         /// Returns a non-negative random integer.
         /// </summary>
         /// <returns>A 32-bit signed integer that is greater than or equal to 0 and less than Int32.MaxValue.</returns>
+        [Template("next()")]
         public extern virtual int Next();
 
         /// <summary>
@@ -37,6 +38,7 @@ namespace System
         /// <param name="minValue">The inclusive lower bound of the random number returned.</param>
         /// <param name="maxValue">The exclusive upper bound of the random number returned. maxValue must be greater than or equal to minValue.</param>
         /// <returns>A 32-bit signed integer greater than or equal to minValue and less than maxValue; that is, the range of return values includes minValue but not maxValue. If minValue equals maxValue, minValue is returned.</returns>
+        [Template("next$2({minValue}, {maxValue})")]
         public extern virtual int Next(int minValue, int maxValue);
 
         /// <summary>
@@ -44,6 +46,7 @@ namespace System
         /// </summary>
         /// <param name="maxValue">The exclusive upper bound of the random number to be generated. maxValue must be greater than or equal to 0</param>
         /// <returns>A 32-bit signed integer that is greater than or equal to 0, and less than maxValue; that is, the range of return values ordinarily includes 0 but not maxValue. However, if maxValue equals 0, maxValue is returned.</returns>
+        [Template("next$1({maxValue})")]
         public extern virtual int Next(int maxValue);
 
         /// <summary>
