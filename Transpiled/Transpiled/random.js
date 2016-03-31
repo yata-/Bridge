@@ -63,6 +63,7 @@
             if (((locINext = (locINext + 1) | 0)) >= 56) {
                 locINext = 1;
             }
+    
             if (((locINextp = (locINextp + 1) | 0)) >= 56) {
                 locINextp = 1;
             }
@@ -72,6 +73,7 @@
             if (retVal === Bridge.Random.MBIG) {
                 retVal = (retVal - 1) | 0;
             }
+    
             if (retVal < 0) {
                 retVal = (retVal + Bridge.Random.MBIG) | 0;
             }

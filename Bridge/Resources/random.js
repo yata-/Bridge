@@ -17,12 +17,12 @@
         },
         constructor: function () {
             Bridge.Random.prototype.constructor$1.call(this, Bridge.Long.clip32(Bridge.Long((new Date()).getTime()).mul(10000)));
-    
+
         },
         constructor$1: function (Seed) {
             var ii;
             var mj, mk;
-    
+
             //Initialize our Seed array.
             //This algorithm comes from Numerical Recipes in C (2nd Ed.)
             var subtraction = (Seed === -2147483648) ? 2147483647 : Math.abs(Seed);
@@ -59,28 +59,30 @@
             var retVal;
             var locINext = this.inext;
             var locINextp = this.inextp;
-    
+
             if (((locINext = (locINext + 1) | 0)) >= 56) {
                 locINext = 1;
             }
+
             if (((locINextp = (locINextp + 1) | 0)) >= 56) {
                 locINextp = 1;
             }
-    
+
             retVal = (this.seedArray[locINext] - this.seedArray[locINextp]) | 0;
-    
+
             if (retVal === Bridge.Random.MBIG) {
                 retVal = (retVal - 1) | 0;
             }
+
             if (retVal < 0) {
                 retVal = (retVal + Bridge.Random.MBIG) | 0;
             }
-    
+
             this.seedArray[locINext] = retVal;
-    
+
             this.inext = locINext;
             this.inextp = locINextp;
-    
+
             return retVal;
         },
         next: function () {
@@ -90,12 +92,12 @@
             if (minValue > maxValue) {
                 throw new Bridge.ArgumentOutOfRangeException("minValue", "'minValue' cannot be greater than maxValue.");
             }
-    
+
             var range = Bridge.Long(Bridge.Long(maxValue)).sub(Bridge.Long(minValue));
             if (range.lte(Bridge.Long(2147483647))) {
                 return ((((((this.sample() * Bridge.Long.toNumber(range))) | 0) + minValue) | 0));
             }
-            else  {
+            else {
                 return Bridge.Long.clip32(Bridge.Int.clip64((this.getSampleForLargeRange() * Bridge.Long.toNumber(range))).add(Bridge.Long(minValue)));
             }
         },
@@ -110,7 +112,7 @@
             // is not distributed well enough for a large range.
             // If we use Sample for a range [Int32.MinValue..Int32.MaxValue)
             // We will end up getting even numbers only.
-    
+
             var result = this.internalSample();
             // Note we can't use addition here. The distribution will be bad if we do that.
             var negative = (this.internalSample() % 2 === 0) ? true : false; // decide the sign based on second sample
@@ -134,6 +136,6 @@
             }
         }
     });
-    
+
     Bridge.init();
 })(this);

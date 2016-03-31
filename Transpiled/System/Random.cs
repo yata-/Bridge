@@ -75,7 +75,10 @@ namespace Transpiled.System
                 ii = (21 * i) % 55;
                 SeedArray[ii] = mk;
                 mk = mj - mk;
-                if (mk < 0) mk += MBIG;
+                if (mk < 0)
+                {
+                    mk += MBIG;
+                }
                 mj = SeedArray[ii];
             }
             for (int k = 1; k < 5; k++)
@@ -83,7 +86,10 @@ namespace Transpiled.System
                 for (int i = 1; i < 56; i++)
                 {
                     SeedArray[i] -= SeedArray[1 + (i + 30) % 55];
-                    if (SeedArray[i] < 0) SeedArray[i] += MBIG;
+                    if (SeedArray[i] < 0)
+                    {
+                        SeedArray[i] += MBIG;
+                    }
                 }
             }
             inext = 0;
@@ -114,13 +120,27 @@ namespace Transpiled.System
             int locINext = inext;
             int locINextp = inextp;
 
-            if (++locINext >= 56) locINext = 1;
-            if (++locINextp >= 56) locINextp = 1;
+            if (++locINext >= 56)
+            {
+                locINext = 1;
+            }
+
+            if (++locINextp >= 56)
+            {
+                locINextp = 1;
+            }
 
             retVal = SeedArray[locINext] - SeedArray[locINextp];
 
-            if (retVal == MBIG) retVal--;
-            if (retVal < 0) retVal += MBIG;
+            if (retVal == MBIG)
+            {
+                retVal--;
+            }
+
+            if (retVal < 0)
+            {
+                retVal += MBIG;
+            }
 
             SeedArray[locINext] = retVal;
 
@@ -227,7 +247,10 @@ namespace Transpiled.System
         ==============================================================================*/
         public virtual void NextBytes(byte[] buffer)
         {
-            if (buffer == null) throw new ArgumentNullException("buffer");
+            if (buffer == null)
+            {
+                throw new ArgumentNullException("buffer");
+            }
             Contract.EndContractBlock();
             for (int i = 0; i < buffer.Length; i++)
             {
