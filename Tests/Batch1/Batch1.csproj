@@ -259,6 +259,7 @@
     <Compile Include="Linq\TestLinqQueryExecution.cs" />
     <Compile Include="Linq\TestLinqRestrictionOperators.cs" />
     <Compile Include="Linq\TestLinqSetOperators.cs" />
+    <Compile Include="RandomTests.cs" />
     <Compile Include="SimpleTypes\TestVersion.cs" />
     <Compile Include="Threading\CancellationTokenTests.cs" />
     <Compile Include="Threading\Tasks\AsyncTests.cs" />
