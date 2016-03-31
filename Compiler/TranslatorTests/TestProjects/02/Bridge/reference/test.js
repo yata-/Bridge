@@ -1918,7 +1918,13 @@
 
         // Create a new Class that inherits from this class
         define: function (className, gscope, prop) {
-            if (!prop) {
+            var preventClear = false;
+            if (prop === true) {
+                preventClear = true;
+                prop = gscope;
+                gscope = Bridge.global;
+            }
+            else if (!prop) {
                 prop = gscope;
                 gscope = Bridge.global;
             }
@@ -1931,8 +1937,8 @@
                         c;
 
                     args.unshift(className);
-                    name = Bridge.Class.genericName.apply(null, args),
-                        c = Bridge.Class.cache[name];
+                    name = Bridge.Class.genericName.apply(null, args);
+                    c = Bridge.Class.cache[name];
 
                     if (c) {
                         return c;
@@ -1940,14 +1946,17 @@
 
                     obj = prop.apply(null, args.slice(1));
                     obj.$cacheName = name;
-                    c = Bridge.define(name, obj);
-
+                    c = Bridge.define(name, obj, true);
                     return Bridge.get(c);
                 };
 
                 return Bridge.Class.generic(className, gscope, fn);
             }
 
+            if (!preventClear) {
+                Bridge.Class.staticInitAllow = false;
+            }
+            
             prop = prop || {};
 
             var extend = prop.$inherits || prop.inherits,
@@ -2146,23 +2155,21 @@
             }
 
             fn = function () {
-                if (Bridge.Class.staticInitSuspended) {
-                    return;
-                }
-                Class.$staticInit = null;
+                if (Bridge.Class.staticInitAllow) {
+                    Class.$staticInit = null;
 
-                if (Class.$initMembers) {
-                    Class.$initMembers.call(Class);
-                }
+                    if (Class.$initMembers) {
+                        Class.$initMembers.call(Class);
+                    }
 
-                if (Class.constructor) {
-                    Class.constructor.call(Class);
+                    if (Class.constructor) {
+                        Class.constructor.call(Class);
+                    }
                 }
             };
 
             Bridge.Class.$queue.push(Class);
             Class.$staticInit = fn;
-
             return Class;
         },
 
@@ -2191,7 +2198,6 @@
                 exists,
                 i;
 
-            Bridge.Class.staticInitSuspended = true;
             for (i = 0; i < (nameParts.length - 1) ; i++) {
                 if (typeof scope[nameParts[i]] == "undefined") {
                     scope[nameParts[i]] = { };
@@ -2211,7 +2217,7 @@
                             (function(cls, key, o) {
                                 Object.defineProperty(cls, key, {
                                     get: function () {
-                                        if (!Bridge.Class.staticInitSuspended) {
+                                        if (Bridge.Class.staticInitAllow) {
                                             if (o.$staticInit) {
                                                 o.$staticInit();
                                             }
@@ -2237,7 +2243,7 @@
                 (function (scope, name, cls) {
                     Object.defineProperty(scope, name, {
                         get: function () {
-                            if (!Bridge.Class.staticInitSuspended) {
+                            if (Bridge.Class.staticInitAllow) {
                                 if (cls.$staticInit) {
                                     cls.$staticInit();
                                 }
@@ -2258,8 +2264,6 @@
             } else {
                 scope[name] = cls;
             }
-
-            Bridge.Class.staticInitSuspended = false;
 
             return scope;
         },
@@ -2294,6 +2298,7 @@
         },
 
         init: function (fn) {
+            Bridge.Class.staticInitAllow = true;
             for (var i = 0; i < Bridge.Class.$queue.length; i++) {
                 var t = Bridge.Class.$queue[i];
 
@@ -2338,19 +2343,12 @@
 
     Bridge.define("Bridge.ICloneable");
 
-    Bridge.Class.generic("Bridge.IComparable$1", function (T) {
-        var $$name = Bridge.Class.genericName("Bridge.IComparable$1", T);
+    Bridge.define('Bridge.IComparable$1', function (T) { return {}; });
 
-        return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name));
-    });
-
-    Bridge.Class.generic("Bridge.IEquatable$1", function (T) {
-        var $$name = Bridge.Class.genericName("Bridge.IEquatable$1", T);
-
-        return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name));
-    });
+    Bridge.define('Bridge.IEquatable$1', function (T) { return {}; });
 
     Bridge.define("Bridge.IPromise");
+
     Bridge.define("Bridge.IDisposable");
 
 // @source Char.js
@@ -7491,66 +7489,47 @@ Bridge.define('Bridge.ICollection', {
     inherits: [Bridge.IEnumerable]
 });
 
-Bridge.Class.generic('Bridge.IEnumerator$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.IEnumerator$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
-        inherits: [Bridge.IEnumerator]
-    }));
+Bridge.define('Bridge.IEnumerator$1', function (T) { return {
+    inherits: [Bridge.IEnumerator]
+};
 });
 
-Bridge.Class.generic('Bridge.IEnumerable$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.IEnumerable$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+Bridge.define('Bridge.IEnumerable$1', function (T) {
+    return {
         inherits: [Bridge.IEnumerable]
-    }));
+    };
 });
 
-Bridge.Class.generic('Bridge.ICollection$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.ICollection$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+Bridge.define('Bridge.ICollection$1', function (T) {
+    return {
         inherits: [Bridge.IEnumerable$1(T)]
-    }));
+    };
 });
 
-Bridge.Class.generic('Bridge.IEqualityComparer$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.IEqualityComparer$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
-    }));
+Bridge.define('Bridge.IEqualityComparer$1', function (T) {
+    return {};
 });
 
-Bridge.Class.generic('Bridge.IDictionary$2', function (TKey, TValue) {
-    var $$name = Bridge.Class.genericName('Bridge.IDictionary$2', TKey, TValue);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+Bridge.define('Bridge.IDictionary$2', function (TKey, TValue) {
+    return {
         inherits: [Bridge.IEnumerable$1(Bridge.KeyValuePair$2(TKey, TValue))]
-    }));
+    };
 });
 
-Bridge.Class.generic('Bridge.IList$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.IList$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+Bridge.define('Bridge.IList$1', function (T) {
+    return {
         inherits: [Bridge.ICollection$1(T)]
-    }));
+    };
 });
 
-Bridge.Class.generic('Bridge.IComparer$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.IComparer$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
-    }));
+Bridge.define('Bridge.IComparer$1', function (T) {
+    return {};
 });
 
-Bridge.Class.generic('Bridge.ISet$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.ISet$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+Bridge.define('Bridge.ISet$1', function (T) {
+    return {
         inherits: [Bridge.ICollection$1(T)]
-    }));
+    };
 });
 // @source /Collections/CustomEnumerator.js
 
@@ -7640,10 +7619,8 @@ Bridge.define('Bridge.ArrayEnumerable', {
 });
 // @source /Collections/Comparer.js
 
-Bridge.Class.generic('Bridge.EqualityComparer$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.EqualityComparer$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+Bridge.define('Bridge.EqualityComparer$1', function (T) {
+    return {
         inherits: [Bridge.IEqualityComparer$1(T)],
 
         equals: function (x, y) {
@@ -7671,22 +7648,20 @@ Bridge.Class.generic('Bridge.EqualityComparer$1', function (T) {
         getHashCode: function (obj) {
             return Bridge.isDefined(obj, true) ? Bridge.getHashCode(obj) : 0;
         }
-    }));
+    };
 });
 
 Bridge.EqualityComparer$1.$default = new Bridge.EqualityComparer$1(Object)();
 
-Bridge.Class.generic('Bridge.Comparer$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.Comparer$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+Bridge.define('Bridge.Comparer$1', function(T) {
+    return {
         inherits: [Bridge.IComparer$1(T)],
 
-        constructor: function (fn) {
+        constructor: function(fn) {
             this.fn = fn;
             this.compare = fn;
         }
-    }));
+    }
 });
 
 Bridge.Comparer$1.$default = new Bridge.Comparer$1(Object)(function (x, y) {
@@ -7700,10 +7675,8 @@ Bridge.Comparer$1.$default = new Bridge.Comparer$1(Object)(function (x, y) {
 });
 // @source /Collections/Dictionary.js
 
-Bridge.Class.generic('Bridge.KeyValuePair$2', function (TKey, TValue) {
-    var $$name = Bridge.Class.genericName('Bridge.KeyValuePair$2', TKey, TValue);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+Bridge.define('Bridge.KeyValuePair$2', function (TKey, TValue) {
+    return {
         constructor: function (key, value) {
             this.key = key;
             this.value = value;
@@ -7726,13 +7699,11 @@ Bridge.Class.generic('Bridge.KeyValuePair$2', function (TKey, TValue) {
 
             return s;
         }
-    }));
+    };
 });
 
-Bridge.Class.generic('Bridge.Dictionary$2', function (TKey, TValue) {
-    var $$name = Bridge.Class.genericName('Bridge.Dictionary$2', TKey, TValue);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+Bridge.define('Bridge.Dictionary$2', function (TKey, TValue) {
+    return {
         inherits: [Bridge.IDictionary$2(TKey, TValue)],
 
         constructor: function (obj, comparer) {
@@ -7930,13 +7901,11 @@ Bridge.Class.generic('Bridge.Dictionary$2', function (TKey, TValue) {
                  return e;
             });
         }
-    }));
+    };
 });
 
-Bridge.Class.generic('Bridge.DictionaryCollection$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.DictionaryCollection$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+Bridge.define('Bridge.DictionaryCollection$1', function (T) {
+    return {
         inherits: [Bridge.ICollection$1(T)],
 
         constructor: function (dictionary, keys) {
@@ -7971,15 +7940,13 @@ Bridge.Class.generic('Bridge.DictionaryCollection$1', function (T) {
         remove: function () {
             throw new Bridge.NotSupportedException();
         }
-    }));
+    };
 });
 
 // @source /Collections/List.js
 
-Bridge.Class.generic('Bridge.List$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.List$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+Bridge.define('Bridge.List$1', function (T) {
+    return {
         inherits: [Bridge.ICollection$1(T), Bridge.ICollection, Bridge.IList$1(T)],
         constructor: function (obj) {
             if (Object.prototype.toString.call(obj) === '[object Array]') {
@@ -8253,13 +8220,11 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
 
             return list;
         }
-    }));
+    };
 });
 
-Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.ReadOnlyCollection$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+Bridge.define('Bridge.ReadOnlyCollection$1', function (T) {
+    return {
         inherits: [Bridge.List$1(T)],
         constructor: function (list) {
             if (list == null) {
@@ -8269,7 +8234,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
             Bridge.List$1(T).prototype.$constructor.call(this, list);
             this.readOnly = true;
         }
-    }));
+    };
 });
 
     // @source Task.js

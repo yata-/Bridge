@@ -84,7 +84,13 @@
 
         // Create a new Class that inherits from this class
         define: function (className, gscope, prop) {
-            if (!prop) {
+            var preventClear = false;
+            if (prop === true) {
+                preventClear = true;
+                prop = gscope;
+                gscope = Bridge.global;
+            }
+            else if (!prop) {
                 prop = gscope;
                 gscope = Bridge.global;
             }
@@ -97,8 +103,8 @@
                         c;
 
                     args.unshift(className);
-                    name = Bridge.Class.genericName.apply(null, args),
-                        c = Bridge.Class.cache[name];
+                    name = Bridge.Class.genericName.apply(null, args);
+                    c = Bridge.Class.cache[name];
 
                     if (c) {
                         return c;
@@ -106,14 +112,17 @@
 
                     obj = prop.apply(null, args.slice(1));
                     obj.$cacheName = name;
-                    c = Bridge.define(name, obj);
-
+                    c = Bridge.define(name, obj, true);
                     return Bridge.get(c);
                 };
 
                 return Bridge.Class.generic(className, gscope, fn);
             }
 
+            if (!preventClear) {
+                Bridge.Class.staticInitAllow = false;
+            }
+            
             prop = prop || {};
 
             var extend = prop.$inherits || prop.inherits,
@@ -312,23 +321,21 @@
             }
 
             fn = function () {
-                if (Bridge.Class.staticInitSuspended) {
-                    return;
-                }
-                Class.$staticInit = null;
+                if (Bridge.Class.staticInitAllow) {
+                    Class.$staticInit = null;
 
-                if (Class.$initMembers) {
-                    Class.$initMembers.call(Class);
-                }
+                    if (Class.$initMembers) {
+                        Class.$initMembers.call(Class);
+                    }
 
-                if (Class.constructor) {
-                    Class.constructor.call(Class);
+                    if (Class.constructor) {
+                        Class.constructor.call(Class);
+                    }
                 }
             };
 
             Bridge.Class.$queue.push(Class);
             Class.$staticInit = fn;
-
             return Class;
         },
 
@@ -357,7 +364,6 @@
                 exists,
                 i;
 
-            Bridge.Class.staticInitSuspended = true;
             for (i = 0; i < (nameParts.length - 1) ; i++) {
                 if (typeof scope[nameParts[i]] == "undefined") {
                     scope[nameParts[i]] = { };
@@ -377,7 +383,7 @@
                             (function(cls, key, o) {
                                 Object.defineProperty(cls, key, {
                                     get: function () {
-                                        if (!Bridge.Class.staticInitSuspended) {
+                                        if (Bridge.Class.staticInitAllow) {
                                             if (o.$staticInit) {
                                                 o.$staticInit();
                                             }
@@ -403,7 +409,7 @@
                 (function (scope, name, cls) {
                     Object.defineProperty(scope, name, {
                         get: function () {
-                            if (!Bridge.Class.staticInitSuspended) {
+                            if (Bridge.Class.staticInitAllow) {
                                 if (cls.$staticInit) {
                                     cls.$staticInit();
                                 }
@@ -424,8 +430,6 @@
             } else {
                 scope[name] = cls;
             }
-
-            Bridge.Class.staticInitSuspended = false;
 
             return scope;
         },
@@ -460,6 +464,7 @@
         },
 
         init: function (fn) {
+            Bridge.Class.staticInitAllow = true;
             for (var i = 0; i < Bridge.Class.$queue.length; i++) {
                 var t = Bridge.Class.$queue[i];
 

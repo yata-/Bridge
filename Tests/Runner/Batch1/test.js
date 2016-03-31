@@ -1042,6 +1042,7 @@
                 QUnit.test("#1110 - TestOverflowForBitwise", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1110.testOverflowForBitwise);
                 QUnit.test("#1120 - TestEnumDoesNotGenerateValuesAsPowerOfTwo", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1120.testEnumDoesNotGenerateValuesAsPowerOfTwo);
                 QUnit.test("#1120 - TestFlagEnumDoesNotGenerateValuesAsPowerOfTwo", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1120.testFlagEnumDoesNotGenerateValuesAsPowerOfTwo);
+                QUnit.test("#1128 - TestNestedClassesWithInterface", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1128.testNestedClassesWithInterface);
                 QUnit.test("#1130 - TestUlongDivision", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1130.testUlongDivision);
                 QUnit.test("#381 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge381.testUseCase);
                 QUnit.test("#447 - CheckInlineExpression", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineExpression);
@@ -2684,6 +2685,16 @@
             testFlagEnumDoesNotGenerateValuesAsPowerOfTwo: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1120).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1120);
                 Bridge.ClientTest.BridgeIssues.Bridge1120.testFlagEnumDoesNotGenerateValuesAsPowerOfTwo();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1128', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1128)],
+        statics: {
+            testNestedClassesWithInterface: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1128).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1128);
+                Bridge.ClientTest.BridgeIssues.Bridge1128.testNestedClassesWithInterface();
             }
         }
     });
