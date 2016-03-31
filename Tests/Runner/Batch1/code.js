@@ -4075,6 +4075,125 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $enum: true
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1128', {
+        statics: {
+            testNestedClassesWithInterface: function () {
+                var res = Bridge.ClientTest.BridgeIssues.Bridge1128.Foo.items[0].value;
+                Bridge.Test.Assert.areEqual("test", res);
+    
+                res = Bridge.ClientTest.BridgeIssues.Bridge1128.Foo1.items[0].value;
+                Bridge.Test.Assert.areEqual("abc", res);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1128.Foo', {
+        statics: {
+            constructor: function () {
+                Bridge.Array.sort(Bridge.ClientTest.BridgeIssues.Bridge1128.Foo.items);
+            },
+            items: null,
+            config: {
+                init: function () {
+                    this.items = [new Bridge.ClientTest.BridgeIssues.Bridge1128.Foo.Item("constructor$1", "test")];
+                }
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1128.Foo.Item', {
+        inherits: function () { return [Bridge.IComparable$1(Bridge.ClientTest.BridgeIssues.Bridge1128.Foo.Item)]; },
+        statics: {
+            getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge1128.Foo.Item(); }
+        },
+        value: null,
+        constructor$1: function (value) {
+            this.value = value;
+        },
+        constructor: function () {
+        },
+        compareTo: function (other) {
+            return Bridge.String.compare(this.value, other.value);
+        },
+        getHashCode: function () {
+            var hash = 17;
+            hash = hash * 23 + (this.value == null ? 0 : Bridge.getHashCode(this.value));
+            return hash;
+        },
+        equals: function (o) {
+            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge1128.Foo.Item)) {
+                return false;
+            }
+            return Bridge.equals(this.value, o.value);
+        },
+        $clone: function (to) {
+            var s = to || new Bridge.ClientTest.BridgeIssues.Bridge1128.Foo.Item();
+            s.value = this.value;
+            return s;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1128.Foo1', {
+        statics: {
+            constructor: function () {
+                Bridge.Array.sort(Bridge.ClientTest.BridgeIssues.Bridge1128.Foo1.items, new Bridge.ClientTest.BridgeIssues.Bridge1128.Foo1.Comparer()); // throws
+            },
+            items: null,
+            config: {
+                init: function () {
+                    this.items = [new Bridge.ClientTest.BridgeIssues.Bridge1128.Foo1.Item("constructor$1", "test"), new Bridge.ClientTest.BridgeIssues.Bridge1128.Foo1.Item("constructor$1", "xyz"), new Bridge.ClientTest.BridgeIssues.Bridge1128.Foo1.Item("constructor$1", "abc")];
+                }
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1128.Foo1.Item', {
+        inherits: function () { return [Bridge.IComparable$1(Bridge.ClientTest.BridgeIssues.Bridge1128.Foo1.Item)]; },
+        statics: {
+            getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge1128.Foo1.Item(); }
+        },
+        value: null,
+        constructor$1: function (value) {
+            this.value = value;
+        },
+        constructor: function () {
+        },
+        compareTo: function (other) {
+            return Bridge.String.compare(this.value, other.value);
+        },
+        getHashCode: function () {
+            var hash = 17;
+            hash = hash * 23 + (this.value == null ? 0 : Bridge.getHashCode(this.value));
+            return hash;
+        },
+        equals: function (o) {
+            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge1128.Foo1.Item)) {
+                return false;
+            }
+            return Bridge.equals(this.value, o.value);
+        },
+        $clone: function (to) {
+            var s = to || new Bridge.ClientTest.BridgeIssues.Bridge1128.Foo1.Item();
+            s.value = this.value;
+            return s;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1130', {
+        statics: {
+            testUlongDivision: function () {
+                var a = Bridge.ULong(Bridge.Long([0,8]));
+                var b = Bridge.ULong(2656901066);
+                var x = a.div(b);
+                var y = Bridge.ULong(3850086465);
+                var z = Bridge.ULong(2476925576);
+                var res = (x.mul(y)).gt((z.shl(32)));
+    
+                Bridge.Test.Assert.$false(res);
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
@@ -26879,6 +26998,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getFieldA: function () {
             return this.a;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1128.Foo1.Comparer', {
+        inherits: [Bridge.IComparer$1(Bridge.ClientTest.BridgeIssues.Bridge1128.Foo1.Item)],
+        compare: function (x, y) {
+            return Bridge.String.compare(x.value, y.value);
         }
     });
     

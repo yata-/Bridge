@@ -1918,7 +1918,13 @@
 
         // Create a new Class that inherits from this class
         define: function (className, gscope, prop) {
-            if (!prop) {
+            var preventClear = false;
+            if (prop === true) {
+                preventClear = true;
+                prop = gscope;
+                gscope = Bridge.global;
+            }
+            else if (!prop) {
                 prop = gscope;
                 gscope = Bridge.global;
             }
@@ -1931,8 +1937,8 @@
                         c;
 
                     args.unshift(className);
-                    name = Bridge.Class.genericName.apply(null, args),
-                        c = Bridge.Class.cache[name];
+                    name = Bridge.Class.genericName.apply(null, args);
+                    c = Bridge.Class.cache[name];
 
                     if (c) {
                         return c;
@@ -1940,14 +1946,17 @@
 
                     obj = prop.apply(null, args.slice(1));
                     obj.$cacheName = name;
-                    c = Bridge.define(name, obj);
-
+                    c = Bridge.define(name, obj, true);
                     return Bridge.get(c);
                 };
 
                 return Bridge.Class.generic(className, gscope, fn);
             }
 
+            if (!preventClear) {
+                Bridge.Class.staticInitAllow = false;
+            }
+            
             prop = prop || {};
 
             var extend = prop.$inherits || prop.inherits,
@@ -2146,23 +2155,21 @@
             }
 
             fn = function () {
-                if (Bridge.Class.staticInitSuspended) {
-                    return;
-                }
-                Class.$staticInit = null;
+                if (Bridge.Class.staticInitAllow) {
+                    Class.$staticInit = null;
 
-                if (Class.$initMembers) {
-                    Class.$initMembers.call(Class);
-                }
+                    if (Class.$initMembers) {
+                        Class.$initMembers.call(Class);
+                    }
 
-                if (Class.constructor) {
-                    Class.constructor.call(Class);
+                    if (Class.constructor) {
+                        Class.constructor.call(Class);
+                    }
                 }
             };
 
             Bridge.Class.$queue.push(Class);
             Class.$staticInit = fn;
-
             return Class;
         },
 
@@ -2191,7 +2198,6 @@
                 exists,
                 i;
 
-            Bridge.Class.staticInitSuspended = true;
             for (i = 0; i < (nameParts.length - 1) ; i++) {
                 if (typeof scope[nameParts[i]] == "undefined") {
                     scope[nameParts[i]] = { };
@@ -2211,7 +2217,7 @@
                             (function(cls, key, o) {
                                 Object.defineProperty(cls, key, {
                                     get: function () {
-                                        if (!Bridge.Class.staticInitSuspended) {
+                                        if (Bridge.Class.staticInitAllow) {
                                             if (o.$staticInit) {
                                                 o.$staticInit();
                                             }
@@ -2237,7 +2243,7 @@
                 (function (scope, name, cls) {
                     Object.defineProperty(scope, name, {
                         get: function () {
-                            if (!Bridge.Class.staticInitSuspended) {
+                            if (Bridge.Class.staticInitAllow) {
                                 if (cls.$staticInit) {
                                     cls.$staticInit();
                                 }
@@ -2258,8 +2264,6 @@
             } else {
                 scope[name] = cls;
             }
-
-            Bridge.Class.staticInitSuspended = false;
 
             return scope;
         },
@@ -2294,6 +2298,7 @@
         },
 
         init: function (fn) {
+            Bridge.Class.staticInitAllow = true;
             for (var i = 0; i < Bridge.Class.$queue.length; i++) {
                 var t = Bridge.Class.$queue[i];
 
@@ -2338,19 +2343,12 @@
 
     Bridge.define("Bridge.ICloneable");
 
-    Bridge.Class.generic("Bridge.IComparable$1", function (T) {
-        var $$name = Bridge.Class.genericName("Bridge.IComparable$1", T);
+    Bridge.define('Bridge.IComparable$1', function (T) { return {}; });
 
-        return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name));
-    });
-
-    Bridge.Class.generic("Bridge.IEquatable$1", function (T) {
-        var $$name = Bridge.Class.genericName("Bridge.IEquatable$1", T);
-
-        return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name));
-    });
+    Bridge.define('Bridge.IEquatable$1', function (T) { return {}; });
 
     Bridge.define("Bridge.IPromise");
+
     Bridge.define("Bridge.IDisposable");
 
 // @source Char.js
@@ -3877,9 +3875,13 @@ Bridge.Class.addExtend(Bridge.Char, [Bridge.IComparable$1(Bridge.Char), Bridge.I
                 return true;
             },
 
+            isInfinite: function(x) {
+                return x === Number.POSITIVE_INFINITY || x === Number.NEGATIVE_INFINITY;
+            },
+
             trunc: function (num) {
                 if (!Bridge.isNumber(num)) {
-                    return null;
+                    return Bridge.Int.isInfinite(num) ? num : null;
                 }
 
                 return num > 0 ? Math.floor(num) : Math.ceil(num);
@@ -3919,48 +3921,55 @@ Bridge.Class.addExtend(Bridge.Char, [Bridge.IComparable$1(Bridge.Char), Bridge.I
                 if (Bridge.isNumber(x) && !type.instanceOf(x)) {
                     throw new Bridge.OverflowException();
                 }
+
+                if (Bridge.Int.isInfinite(x)) {
+                    if (type === Bridge.Long || type === Bridge.ULong) {
+                        return type.MinValue;
+                    }
+                    return type.min;
+                }
                 
                 return x;
             },
 
             sxb: function (x) {
-                return Bridge.isNumber(x) ? (x | (x & 0x80 ? 0xffffff00 : 0)) : null;
+                return Bridge.isNumber(x) ? (x | (x & 0x80 ? 0xffffff00 : 0)) : (Bridge.Int.isInfinite(x) ? Bridge.SByte.min : null);
             },
 
             sxs: function (x) {
-                return Bridge.isNumber(x) ? (x | (x & 0x8000 ? 0xffff0000 : 0)) : null;
+                return Bridge.isNumber(x) ? (x | (x & 0x8000 ? 0xffff0000 : 0)) : (Bridge.Int.isInfinite(x) ? Bridge.Int16.min : null);
             },
 
             clip8: function (x) {
-                return Bridge.isNumber(x) ? Bridge.Int.sxb(x & 0xff) : null;
+                return Bridge.isNumber(x) ? Bridge.Int.sxb(x & 0xff) : (Bridge.Int.isInfinite(x) ? Bridge.SByte.min : null);
             },
 
             clipu8: function (x) {
-                return Bridge.isNumber(x) ? x & 0xff : null;
+                return Bridge.isNumber(x) ? x & 0xff : (Bridge.Int.isInfinite(x) ? Bridge.Byte.min : null);
             },
 
             clip16: function (x) {
-                return Bridge.isNumber(x) ? Bridge.Int.sxs(x & 0xffff) : null;
+                return Bridge.isNumber(x) ? Bridge.Int.sxs(x & 0xffff) : (Bridge.Int.isInfinite(x) ? Bridge.Int16.min : null);
             },
 
             clipu16: function (x) {
-                return Bridge.isNumber(x) ? x & 0xffff : null;
+                return Bridge.isNumber(x) ? x & 0xffff : (Bridge.Int.isInfinite(x) ? Bridge.UInt16.min : null);
             },
 
             clip32: function (x) {
-                return Bridge.isNumber(x) ? x | 0 : null;
+                return Bridge.isNumber(x) ? x | 0 : (Bridge.Int.isInfinite(x) ? Bridge.Int32.min : null);
             },
 
             clipu32: function (x) {
-                return Bridge.isNumber(x) ? x >>> 0 : null;
+                return Bridge.isNumber(x) ? x >>> 0 : (Bridge.Int.isInfinite(x) ? Bridge.UInt32.min : null);
             },
 
             clip64: function (x) {
-                return Bridge.isNumber(x) ? Bridge.Long(Bridge.Int.trunc(x)) : null;
+                return Bridge.isNumber(x) ? Bridge.Long(Bridge.Int.trunc(x)) : (Bridge.Int.isInfinite(x) ? Bridge.Long.MinValue : null);
             },
 
             clipu64: function (x) {
-                return Bridge.isNumber(x) ? Bridge.ULong(Bridge.Int.trunc(x)) : null;
+                return Bridge.isNumber(x) ? Bridge.ULong(Bridge.Int.trunc(x)) : (Bridge.Int.isInfinite(x) ? Bridge.ULong.MinValue : null);
             },
 
             sign: function (x) {
@@ -3973,7 +3982,7 @@ Bridge.Class.addExtend(Bridge.Char, [Bridge.IComparable$1(Bridge.Char), Bridge.I
 
 /* long.js https://github.com/dcodeIO/long.js/blob/master/LICENSE */
 
-(function (global) { function i(n, t, i) { this.low = n | 0; this.high = t | 0; this.unsigned = !!i } function u(n) { return (n && n.__isLong__) === !0 } function s(n, i) { var r, u, f; return i ? (n >>>= 0, (f = 0 <= n && n < 256) && (u = p[n], u)) ? u : (r = t(n, (n | 0) < 0 ? -1 : 0, !0), f && (p[n] = r), r) : (n |= 0, (f = -128 <= n && n < 128) && (u = y[n], u)) ? u : (r = t(n, n < 0 ? -1 : 0, !1), f && (y[n] = r), r) } function f(n, i) { if (isNaN(n) || !isFinite(n)) return i ? l : e; if (i) { if (n < 0) return l; if (n >= g) return k } else { if (n <= -nt) return r; if (n + 1 >= nt) return b } return n < 0 ? f(-n, i).neg() : t(n % c | 0, n / c | 0, i) } function t(n, t, r) { return new i(n, t, r) } function w(n, t, i) { var h, c, r, u, o, s, l; if (n.length === 0) throw Error("empty string"); if (n === "NaN" || n === "Infinity" || n === "+Infinity" || n === "-Infinity") return e; if (typeof t == "number" && (i = t, t = !1), i = i || 10, i < 2 || 36 < i) throw RangeError("radix"); if (typeof t == 'undefined') t = false; if ((h = n.indexOf("-")) > 0) throw Error("interior hyphen"); else if (h === 0) return w(n.substring(1), t, i).neg(); for (c = f(a(i, 8)), r = e, u = 0; u < n.length; u += 8) o = Math.min(8, n.length - u), s = parseInt(n.substring(u, u + o), i), o < 8 ? (l = f(a(i, o)), r = r.mul(l).add(f(s))) : (r = r.mul(c), r = r.add(f(s))); return r.unsigned = t, r } function o(n) { return n instanceof i ? n : typeof n == "number" ? f(n) : typeof n == "string" ? w(n) : t(n.low, n.high, n.unsigned) } var y, p, a, l, h, it, v, b, k, r, n; global.Bridge.$Long = i; i.__isLong__; Object.defineProperty(i.prototype, "__isLong__", { value: !0, enumerable: !1, configurable: !1 }); i.isLong = u; y = {}; p = {}; i.fromInt = s; i.fromNumber = f; i.fromBits = t; a = Math.pow; i.fromString = w; i.fromValue = o; var d = 65536, c = d * d, g = c * c, nt = g / 2, tt = s(16777216), e = s(0); i.ZERO = e; l = s(0, !0); i.UZERO = l; h = s(1); i.ONE = h; it = s(1, !0); i.UONE = it; v = s(-1); i.NEG_ONE = v; b = t(4294967295 | 0, 2147483647, !1); i.MAX_VALUE = b; k = t(4294967295 | 0, 4294967295 | 0, !0); i.MAX_UNSIGNED_VALUE = k; r = t(0, 2147483648 | 0, !1); i.MIN_VALUE = r; n = i.prototype; n.toInt = function () { return this.unsigned ? this.low >>> 0 : this.low }; n.toNumber = function () { return this.unsigned ? (this.high >>> 0) * c + (this.low >>> 0) : this.high * c + (this.low >>> 0) }; n.toString = function (n) { if (n = n || 10, n < 2 || 36 < n) throw RangeError("radix"); if (this.isZero()) return "0"; if (this.isNegative()) { if (this.eq(r)) { var e = f(n), o = this.div(e), c = o.mul(e).sub(this); return o.toString(n) + c.toInt().toString(n) } return (((typeof n === "undefined") || (n === 10)) ? "-" : "") + this.neg().toString(n) } for (var s = f(a(n, 6), this.unsigned), i = this, u = ""; ;) { var h = i.div(s), l = i.sub(h.mul(s)).toInt() >>> 0, t = l.toString(n); if (i = h, i.isZero()) return t + u; while (t.length < 6) t = "0" + t; u = "" + t + u } }; n.getHighBits = function () { return this.high }; n.getHighBitsUnsigned = function () { return this.high >>> 0 }; n.getLowBits = function () { return this.low }; n.getLowBitsUnsigned = function () { return this.low >>> 0 }; n.getNumBitsAbs = function () { var t, n; if (this.isNegative()) return this.eq(r) ? 64 : this.neg().getNumBitsAbs(); for (t = this.high != 0 ? this.high : this.low, n = 31; n > 0; n--) if ((t & 1 << n) != 0) break; return this.high != 0 ? n + 33 : n + 1 }; n.isZero = function () { return this.high === 0 && this.low === 0 }; n.isNegative = function () { return !this.unsigned && this.high < 0 }; n.isPositive = function () { return this.unsigned || this.high >= 0 }; n.isOdd = function () { return (this.low & 1) == 1 }; n.isEven = function () { return (this.low & 1) == 0 }; n.equals = function (n) { return (u(n) || (n = o(n)), this.unsigned !== n.unsigned && this.high >>> 31 == 1 && n.high >>> 31 == 1) ? !1 : this.high === n.high && this.low === n.low }; n.eq = n.equals; n.notEquals = function (n) { return !this.eq(n) }; n.neq = n.notEquals; n.lessThan = function (n) { return this.comp(n) < 0 }; n.lt = n.lessThan; n.lessThanOrEqual = function (n) { return this.comp(n) <= 0 }; n.lte = n.lessThanOrEqual; n.greaterThan = function (n) { return this.comp(n) > 0 }; n.gt = n.greaterThan; n.greaterThanOrEqual = function (n) { return this.comp(n) >= 0 }; n.gte = n.greaterThanOrEqual; n.compare = function (n) { if (u(n) || (n = o(n)), this.eq(n)) return 0; var t = this.isNegative(), i = n.isNegative(); return t && !i ? -1 : !t && i ? 1 : this.unsigned ? n.high >>> 0 > this.high >>> 0 || n.high === this.high && n.low >>> 0 > this.low >>> 0 ? -1 : 1 : this.sub(n).isNegative() ? -1 : 1 }; n.comp = n.compare; n.negate = function () { return !this.unsigned && this.eq(r) ? r : this.not().add(h) }; n.neg = n.negate; n.add = function (n) { u(n) || (n = o(n)); var s = this.high >>> 16, h = this.high & 65535, c = this.low >>> 16, l = this.low & 65535, a = n.high >>> 16, v = n.high & 65535, y = n.low >>> 16, p = n.low & 65535, f = 0, i = 0, r = 0, e = 0; return e += l + p, r += e >>> 16, e &= 65535, r += c + y, i += r >>> 16, r &= 65535, i += h + v, f += i >>> 16, i &= 65535, f += s + a, f &= 65535, t(r << 16 | e, f << 16 | i, this.unsigned) }; n.subtract = function (n) { return u(n) || (n = o(n)), this.add(n.neg()) }; n.sub = n.subtract; n.multiply = function (n) { if (this.isZero() || (u(n) || (n = o(n)), n.isZero())) return e; if (this.eq(r)) return n.isOdd() ? r : e; if (n.eq(r)) return this.isOdd() ? r : e; if (this.isNegative()) return n.isNegative() ? this.neg().mul(n.neg()) : this.neg().mul(n).neg(); if (n.isNegative()) return this.mul(n.neg()).neg(); if (this.lt(tt) && n.lt(tt)) return f(this.toNumber() * n.toNumber(), this.unsigned); var b = this.high >>> 16, p = this.high & 65535, v = this.low >>> 16, c = this.low & 65535, k = n.high >>> 16, w = n.high & 65535, y = n.low >>> 16, l = n.low & 65535, h = 0, i = 0, s = 0, a = 0; return a += c * l, s += a >>> 16, a &= 65535, s += v * l, i += s >>> 16, s &= 65535, s += c * y, i += s >>> 16, s &= 65535, i += p * l, h += i >>> 16, i &= 65535, i += v * y, h += i >>> 16, i &= 65535, i += c * w, h += i >>> 16, i &= 65535, h += b * l + p * y + v * w + c * k, h &= 65535, t(s << 16 | a, h << 16 | i, this.unsigned) }; n.mul = n.multiply; n.divide = function (n) { var t, i, c, p; if (u(n) || (n = o(n)), n.isZero()) throw Error("division by zero"); if (this.isZero()) return this.unsigned ? l : e; if (this.eq(r)) return n.eq(h) || n.eq(v) ? r : n.eq(r) ? h : (p = this.shr(1), t = p.div(n).shl(1), t.eq(e) ? n.isNegative() ? h : v : (i = this.sub(n.mul(t)), t.add(i.div(n)))); if (n.eq(r)) return this.unsigned ? l : e; if (this.isNegative()) return n.isNegative() ? this.neg().div(n.neg()) : this.neg().div(n).neg(); if (n.isNegative()) return this.div(n.neg()).neg(); for (c = e, i = this; i.gte(n) ;) { t = Math.max(1, Math.floor(i.toNumber() / n.toNumber())); for (var w = Math.ceil(Math.log(t) / Math.LN2), b = w <= 48 ? 1 : a(2, w - 48), s = f(t), y = s.mul(n) ; y.isNegative() || y.gt(i) ;) t -= b, s = f(t, this.unsigned), y = s.mul(n); s.isZero() && (s = h); c = c.add(s); i = i.sub(y) } return c }; n.div = n.divide; n.modulo = function (n) { return u(n) || (n = o(n)), this.sub(this.div(n).mul(n)) }; n.mod = n.modulo; n.not = function () { return t(~this.low, ~this.high, this.unsigned) }; n.and = function (n) { return u(n) || (n = o(n)), t(this.low & n.low, this.high & n.high, this.unsigned) }; n.or = function (n) { return u(n) || (n = o(n)), t(this.low | n.low, this.high | n.high, this.unsigned) }; n.xor = function (n) { return u(n) || (n = o(n)), t(this.low ^ n.low, this.high ^ n.high, this.unsigned) }; n.shiftLeft = function (n) { return u(n) && (n = n.toInt()), (n &= 63) == 0 ? this : n < 32 ? t(this.low << n, this.high << n | this.low >>> 32 - n, this.unsigned) : t(0, this.low << n - 32, this.unsigned) }; n.shl = n.shiftLeft; n.shiftRight = function (n) { return u(n) && (n = n.toInt()), (n &= 63) == 0 ? this : n < 32 ? t(this.low >>> n | this.high << 32 - n, this.high >> n, this.unsigned) : t(this.high >> n - 32, this.high >= 0 ? 0 : -1, this.unsigned) }; n.shr = n.shiftRight; n.shiftRightUnsigned = function (n) { var i, r; return u(n) && (n = n.toInt()), n &= 63, n === 0 ? this : (i = this.high, n < 32 ? (r = this.low, t(r >>> n | i << 32 - n, i >>> n, this.unsigned)) : n === 32 ? t(i, 0, this.unsigned) : t(i >>> n - 32, 0, this.unsigned)) }; n.shru = n.shiftRightUnsigned; n.toSigned = function () { return this.unsigned ? t(this.low, this.high, !1) : this }; n.toUnsigned = function () { return this.unsigned ? this : t(this.low, this.high, !0) } })(Bridge.global);
+(function (b) { function d(a, b, c) { this.low = a | 0; this.high = b | 0; this.unsigned = !!c } function g(a) { return !0 === (a && a.__isLong__) } function m(a, b) { var c, u; if (b) { a >>>= 0; if (u = 0 <= a && 256 > a) if (c = A[a]) return c; c = e(a, 0 > (a | 0) ? -1 : 0, !0); u && (A[a] = c) } else { a |= 0; if (u = -128 <= a && 128 > a) if (c = B[a]) return c; c = e(a, 0 > a ? -1 : 0, !1); u && (B[a] = c) } return c } function n(a, b) { if (isNaN(a) || !isFinite(a)) return b ? k : p; if (b) { if (0 > a) return k; if (a >= C) return D } else { if (a <= -E) return l; if (a + 1 >= E) return F } return 0 > a ? n(-a, b).neg() : e(a % 4294967296 | 0, a / 4294967296 | 0, b) } function e(a, b, c) { return new d(a, b, c) } function y(a, b, c) { if (0 === a.length) throw Error("empty string"); "number" === typeof b ? (c = b, b = !1) : b = !!b; if ("NaN" === a || "Infinity" === a || "+Infinity" === a || "-Infinity" === a) return b ? k : p; c = c || 10; if (2 > c || 36 < c) throw RangeError("radix"); var u; if (0 < (u = a.indexOf("-"))) throw Error("interior hyphen"); if (0 === u) return y(a.substring(1), b, c).neg(); u = n(v(c, 8)); for (var e = b ? k : p, f = 0; f < a.length; f += 8) { var d = Math.min(8, a.length - f), g = parseInt(a.substring(f, f + d), c); 8 > d ? (d = n(v(c, d)), e = e.mul(d).add(n(g))) : (e = e.mul(u), e = e.add(n(g))) } e.unsigned = b; return e } function q(a) { return a instanceof d ? a : "number" === typeof a ? n(a) : "string" === typeof a ? y(a) : e(a.low, a.high, a.unsigned) } b.Bridge.$Long = d; d.__isLong__; Object.defineProperty(d.prototype, "__isLong__", { value: !0, enumerable: !1, configurable: !1 }); d.isLong = g; var B = {}, A = {}; d.fromInt = m; d.fromNumber = n; d.fromBits = e; var v = Math.pow; d.fromString = y; d.fromValue = q; var C = 4294967296 * 4294967296, E = C / 2, G = m(16777216), p = m(0); d.ZERO = p; var k = m(0, !0); d.UZERO = k; var r = m(1); d.ONE = r; b = m(1, !0); d.UONE = b; var z = m(-1); d.NEG_ONE = z; var F = e(-1, 2147483647, !1); d.MAX_VALUE = F; var D = e(-1, -1, !0); d.MAX_UNSIGNED_VALUE = D; var l = e(0, -2147483648, !1); d.MIN_VALUE = l; b = d.prototype; b.toInt = function () { return this.unsigned ? this.low >>> 0 : this.low }; b.toNumber = function () { return this.unsigned ? 4294967296 * (this.high >>> 0) + (this.low >>> 0) : 4294967296 * this.high + (this.low >>> 0) }; b.toString = function (a) { a = a || 10; if (2 > a || 36 < a) throw RangeError("radix"); if (this.isZero()) return "0"; if (this.isNegative()) { if (this.eq(l)) { var b = n(a), c = this.div(b), b = c.mul(b).sub(this); return c.toString(a) + b.toInt().toString(a) } return (((typeof a === "undefined") || (a === 10)) ? "-" : "") + this.neg().toString(a) } for (var c = n(v(a, 6), this.unsigned), b = this, e = ""; ;) { var d = b.div(c), f = (b.sub(d.mul(c)).toInt() >>> 0).toString(a), b = d; if (b.isZero()) return f + e; for (; 6 > f.length;) f = "0" + f; e = "" + f + e } }; b.getHighBits = function () { return this.high }; b.getHighBitsUnsigned = function () { return this.high >>> 0 }; b.getLowBits = function () { return this.low }; b.getLowBitsUnsigned = function () { return this.low >>> 0 }; b.getNumBitsAbs = function () { if (this.isNegative()) return this.eq(l) ? 64 : this.neg().getNumBitsAbs(); for (var a = 0 != this.high ? this.high : this.low, b = 31; 0 < b && 0 == (a & 1 << b) ; b--); return 0 != this.high ? b + 33 : b + 1 }; b.isZero = function () { return 0 === this.high && 0 === this.low }; b.isNegative = function () { return !this.unsigned && 0 > this.high }; b.isPositive = function () { return this.unsigned || 0 <= this.high }; b.isOdd = function () { return 1 === (this.low & 1) }; b.isEven = function () { return 0 === (this.low & 1) }; b.equals = function (a) { g(a) || (a = q(a)); return this.unsigned !== a.unsigned && 1 === this.high >>> 31 && 1 === a.high >>> 31 ? !1 : this.high === a.high && this.low === a.low }; b.eq = b.equals; b.notEquals = function (a) { return !this.eq(a) }; b.neq = b.notEquals; b.lessThan = function (a) { return 0 > this.comp(a) }; b.lt = b.lessThan; b.lessThanOrEqual = function (a) { return 0 >= this.comp(a) }; b.lte = b.lessThanOrEqual; b.greaterThan = function (a) { return 0 < this.comp(a) }; b.gt = b.greaterThan; b.greaterThanOrEqual = function (a) { return 0 <= this.comp(a) }; b.gte = b.greaterThanOrEqual; b.compare = function (a) { g(a) || (a = q(a)); if (this.eq(a)) return 0; var b = this.isNegative(), c = a.isNegative(); return b && !c ? -1 : !b && c ? 1 : this.unsigned ? a.high >>> 0 > this.high >>> 0 || a.high === this.high && a.low >>> 0 > this.low >>> 0 ? -1 : 1 : this.sub(a).isNegative() ? -1 : 1 }; b.comp = b.compare; b.negate = function () { return !this.unsigned && this.eq(l) ? l : this.not().add(r) }; b.neg = b.negate; b.add = function (a) { g(a) || (a = q(a)); var b = this.high >>> 16, c = this.high & 65535, d = this.low >>> 16, l = a.high >>> 16, f = a.high & 65535, n = a.low >>> 16, k; k = 0 + ((this.low & 65535) + (a.low & 65535)); a = 0 + (k >>> 16); a += d + n; d = 0 + (a >>> 16); d += c + f; c = 0 + (d >>> 16); c = c + (b + l) & 65535; return e((a & 65535) << 16 | k & 65535, c << 16 | d & 65535, this.unsigned) }; b.subtract = function (a) { g(a) || (a = q(a)); return this.add(a.neg()) }; b.sub = b.subtract; b.multiply = function (a) { if (this.isZero()) return this.unsigned ? k : p; g(a) || (a = q(a)); if (a.isZero()) return this.unsigned ? k : p; if (this.eq(l)) return a.isOdd() ? l : this.unsigned ? k : p; if (a.eq(l)) return this.isOdd() ? l : this.unsigned ? k : p; if (this.isNegative()) return a.isNegative() ? this.neg().mul(a.neg()) : this.neg().mul(a).neg(); if (a.isNegative()) return this.mul(a.neg()).neg(); if (this.lt(G) && a.lt(G)) return n(this.toNumber() * a.toNumber(), this.unsigned); var b = this.high >>> 16, c = this.high & 65535, d = this.low >>> 16, x = this.low & 65535, f = a.high >>> 16, m = a.high & 65535, r = a.low >>> 16; a = a.low & 65535; var w, h, t, v; v = 0 + x * a; t = 0 + (v >>> 16); t += d * a; h = 0 + (t >>> 16); t = (t & 65535) + x * r; h += t >>> 16; t &= 65535; h += c * a; w = 0 + (h >>> 16); h = (h & 65535) + d * r; w += h >>> 16; h &= 65535; h += x * m; w += h >>> 16; h &= 65535; w = w + (b * a + c * r + d * m + x * f) & 65535; return e(t << 16 | v & 65535, w << 16 | h, this.unsigned) }; b.mul = b.multiply; b.divide = function (a) { g(a) || (a = q(a)); if (a.isZero()) throw Error("division by zero"); if (this.isZero()) return this.unsigned ? k : p; var b, c, d; if (this.eq(l)) { if (a.eq(r) || a.eq(z)) return l; if (a.eq(l)) return r; b = this.shr(1).div(a).shl(1); if (b.eq(p)) return a.isNegative() ? r : z; c = this.sub(a.mul(b)); return d = b.add(c.div(a)) } if (a.eq(l)) return this.unsigned ? k : p; if (this.isNegative()) return a.isNegative() ? this.neg().div(a.neg()) : this.neg().div(a).neg(); if (a.isNegative()) return this.div(a.neg()).neg(); d = this.unsigned ? k : p; for (c = this; c.gte(a) ;) { b = Math.max(1, Math.floor(c.toNumber() / a.toNumber())); for (var e = Math.ceil(Math.log(b) / Math.LN2), e = 48 >= e ? 1 : v(2, e - 48), f = n(b), m = f.mul(a) ; m.isNegative() || m.gt(c) ;) b -= e, f = n(b, this.unsigned), m = f.mul(a); f.isZero() && (f = r); d = d.add(f); c = c.sub(m) } return d }; b.div = b.divide; b.modulo = function (a) { g(a) || (a = q(a)); return this.sub(this.div(a).mul(a)) }; b.mod = b.modulo; b.not = function () { return e(~this.low, ~this.high, this.unsigned) }; b.and = function (a) { g(a) || (a = q(a)); return e(this.low & a.low, this.high & a.high, this.unsigned) }; b.or = function (a) { g(a) || (a = q(a)); return e(this.low | a.low, this.high | a.high, this.unsigned) }; b.xor = function (a) { g(a) || (a = q(a)); return e(this.low ^ a.low, this.high ^ a.high, this.unsigned) }; b.shiftLeft = function (a) { g(a) && (a = a.toInt()); return 0 === (a &= 63) ? this : 32 > a ? e(this.low << a, this.high << a | this.low >>> 32 - a, this.unsigned) : e(0, this.low << a - 32, this.unsigned) }; b.shl = b.shiftLeft; b.shiftRight = function (a) { g(a) && (a = a.toInt()); return 0 === (a &= 63) ? this : 32 > a ? e(this.low >>> a | this.high << 32 - a, this.high >> a, this.unsigned) : e(this.high >> a - 32, 0 <= this.high ? 0 : -1, this.unsigned) }; b.shr = b.shiftRight; b.shiftRightUnsigned = function (a) { g(a) && (a = a.toInt()); a &= 63; if (0 === a) return this; var b = this.high; return 32 > a ? e(this.low >>> a | b << 32 - a, b >>> a, this.unsigned) : 32 === a ? e(b, 0, this.unsigned) : e(b >>> a - 32, 0, this.unsigned) }; b.shru = b.shiftRightUnsigned; b.toSigned = function () { return this.unsigned ? e(this.low, this.high, !1) : this }; b.toUnsigned = function () { return this.unsigned ? this : e(this.low, this.high, !0) } })(Bridge.global);
 
 Bridge.Long = function (l) {
     if (this.constructor !== Bridge.Long) {
@@ -4409,6 +4418,13 @@ Bridge.Long.prototype.xor = function (l) {
 };
 
 Bridge.Long.check = function (v, tp) {
+    if (Bridge.Int.isInfinite(v)) {
+        if (tp === Bridge.Long || tp === Bridge.ULong) {
+            return tp.MinValue;
+        }
+        return tp.min;
+    }
+
     if (!v) {
         return null;
     }
@@ -4451,35 +4467,35 @@ Bridge.Long.check = function (v, tp) {
 };
 
 Bridge.Long.clip8 = function(x) {
-    return x ? Bridge.Int.sxb(x.toNumber() & 0xff) : null;
+    return x ? Bridge.Int.sxb(x.toNumber() & 0xff) : (Bridge.Int.isInfinite(x) ? Bridge.SByte.min : null);
 };
 
 Bridge.Long.clipu8 = function (x) {
-    return x ? x.toNumber() & 0xff : null;
+    return x ? x.toNumber() & 0xff : (Bridge.Int.isInfinite(x) ? Bridge.Byte.min : null);
 };
 
 Bridge.Long.clip16 = function (x) {
-    return x ? Bridge.Int.sxs(x.toNumber() & 0xffff) : null;
+    return x ? Bridge.Int.sxs(x.toNumber() & 0xffff) : (Bridge.Int.isInfinite(x) ? Bridge.Int16.min : null);
 };
 
 Bridge.Long.clipu16 = function (x) {
-    return x ? x.toNumber() & 0xffff : null;
+    return x ? x.toNumber() & 0xffff : (Bridge.Int.isInfinite(x) ? Bridge.UInt16.min : null);
 };
 
 Bridge.Long.clip32 = function (x) {
-    return x ? x.toNumber() | 0 : null;
+    return x ? x.toNumber() | 0 : (Bridge.Int.isInfinite(x) ? Bridge.Int32.min : null);
 };
 
 Bridge.Long.clipu32 = function (x) {
-    return x ? x.toNumber() >>> 0 : null;
+    return x ? x.toNumber() >>> 0 : (Bridge.Int.isInfinite(x) ? Bridge.UInt32.min : null);
 };
 
 Bridge.Long.clip64 = function (x) {
-    return x ? new Bridge.Long(x.value.toSigned()) : null;
+    return x ? new Bridge.Long(x.value.toSigned()) : (Bridge.Int.isInfinite(x) ? Bridge.Long.MinValue : null);
 };
 
 Bridge.Long.clipu64 = function (x) {
-    return x ? new Bridge.ULong(x.value.toUnsigned()) : null;
+    return x ? new Bridge.ULong(x.value.toUnsigned()) : (Bridge.Int.isInfinite(x) ? Bridge.ULong.MinValue : null);
 };
 
 Bridge.Long.Zero = Bridge.Long(Bridge.$Long.ZERO);
@@ -4706,6 +4722,7 @@ Bridge.ULong.prototype.xor = Bridge.Long.prototype.xor;
 Bridge.ULong.Zero = Bridge.ULong(Bridge.$Long.UZERO);
 Bridge.ULong.MinValue = Bridge.ULong.Zero;
 Bridge.ULong.MaxValue = Bridge.ULong(Bridge.$Long.MAX_UNSIGNED_VALUE);
+
     // @source Decimal.js
 
     /* decimal.js v5.0.7 https://github.com/MikeMcl/decimal.js/LICENCE */
@@ -7491,66 +7508,47 @@ Bridge.define('Bridge.ICollection', {
     inherits: [Bridge.IEnumerable]
 });
 
-Bridge.Class.generic('Bridge.IEnumerator$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.IEnumerator$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
-        inherits: [Bridge.IEnumerator]
-    }));
+Bridge.define('Bridge.IEnumerator$1', function (T) { return {
+    inherits: [Bridge.IEnumerator]
+};
 });
 
-Bridge.Class.generic('Bridge.IEnumerable$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.IEnumerable$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+Bridge.define('Bridge.IEnumerable$1', function (T) {
+    return {
         inherits: [Bridge.IEnumerable]
-    }));
+    };
 });
 
-Bridge.Class.generic('Bridge.ICollection$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.ICollection$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+Bridge.define('Bridge.ICollection$1', function (T) {
+    return {
         inherits: [Bridge.IEnumerable$1(T)]
-    }));
+    };
 });
 
-Bridge.Class.generic('Bridge.IEqualityComparer$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.IEqualityComparer$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
-    }));
+Bridge.define('Bridge.IEqualityComparer$1', function (T) {
+    return {};
 });
 
-Bridge.Class.generic('Bridge.IDictionary$2', function (TKey, TValue) {
-    var $$name = Bridge.Class.genericName('Bridge.IDictionary$2', TKey, TValue);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+Bridge.define('Bridge.IDictionary$2', function (TKey, TValue) {
+    return {
         inherits: [Bridge.IEnumerable$1(Bridge.KeyValuePair$2(TKey, TValue))]
-    }));
+    };
 });
 
-Bridge.Class.generic('Bridge.IList$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.IList$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+Bridge.define('Bridge.IList$1', function (T) {
+    return {
         inherits: [Bridge.ICollection$1(T)]
-    }));
+    };
 });
 
-Bridge.Class.generic('Bridge.IComparer$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.IComparer$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
-    }));
+Bridge.define('Bridge.IComparer$1', function (T) {
+    return {};
 });
 
-Bridge.Class.generic('Bridge.ISet$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.ISet$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+Bridge.define('Bridge.ISet$1', function (T) {
+    return {
         inherits: [Bridge.ICollection$1(T)]
-    }));
+    };
 });
 // @source /Collections/CustomEnumerator.js
 
@@ -7640,10 +7638,8 @@ Bridge.define('Bridge.ArrayEnumerable', {
 });
 // @source /Collections/Comparer.js
 
-Bridge.Class.generic('Bridge.EqualityComparer$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.EqualityComparer$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+Bridge.define('Bridge.EqualityComparer$1', function (T) {
+    return {
         inherits: [Bridge.IEqualityComparer$1(T)],
 
         equals: function (x, y) {
@@ -7671,22 +7667,20 @@ Bridge.Class.generic('Bridge.EqualityComparer$1', function (T) {
         getHashCode: function (obj) {
             return Bridge.isDefined(obj, true) ? Bridge.getHashCode(obj) : 0;
         }
-    }));
+    };
 });
 
 Bridge.EqualityComparer$1.$default = new Bridge.EqualityComparer$1(Object)();
 
-Bridge.Class.generic('Bridge.Comparer$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.Comparer$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+Bridge.define('Bridge.Comparer$1', function(T) {
+    return {
         inherits: [Bridge.IComparer$1(T)],
 
-        constructor: function (fn) {
+        constructor: function(fn) {
             this.fn = fn;
             this.compare = fn;
         }
-    }));
+    }
 });
 
 Bridge.Comparer$1.$default = new Bridge.Comparer$1(Object)(function (x, y) {
@@ -7700,10 +7694,8 @@ Bridge.Comparer$1.$default = new Bridge.Comparer$1(Object)(function (x, y) {
 });
 // @source /Collections/Dictionary.js
 
-Bridge.Class.generic('Bridge.KeyValuePair$2', function (TKey, TValue) {
-    var $$name = Bridge.Class.genericName('Bridge.KeyValuePair$2', TKey, TValue);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+Bridge.define('Bridge.KeyValuePair$2', function (TKey, TValue) {
+    return {
         constructor: function (key, value) {
             this.key = key;
             this.value = value;
@@ -7726,13 +7718,11 @@ Bridge.Class.generic('Bridge.KeyValuePair$2', function (TKey, TValue) {
 
             return s;
         }
-    }));
+    };
 });
 
-Bridge.Class.generic('Bridge.Dictionary$2', function (TKey, TValue) {
-    var $$name = Bridge.Class.genericName('Bridge.Dictionary$2', TKey, TValue);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+Bridge.define('Bridge.Dictionary$2', function (TKey, TValue) {
+    return {
         inherits: [Bridge.IDictionary$2(TKey, TValue)],
 
         constructor: function (obj, comparer) {
@@ -7930,13 +7920,11 @@ Bridge.Class.generic('Bridge.Dictionary$2', function (TKey, TValue) {
                  return e;
             });
         }
-    }));
+    };
 });
 
-Bridge.Class.generic('Bridge.DictionaryCollection$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.DictionaryCollection$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+Bridge.define('Bridge.DictionaryCollection$1', function (T) {
+    return {
         inherits: [Bridge.ICollection$1(T)],
 
         constructor: function (dictionary, keys) {
@@ -7971,15 +7959,13 @@ Bridge.Class.generic('Bridge.DictionaryCollection$1', function (T) {
         remove: function () {
             throw new Bridge.NotSupportedException();
         }
-    }));
+    };
 });
 
 // @source /Collections/List.js
 
-Bridge.Class.generic('Bridge.List$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.List$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+Bridge.define('Bridge.List$1', function (T) {
+    return {
         inherits: [Bridge.ICollection$1(T), Bridge.ICollection, Bridge.IList$1(T)],
         constructor: function (obj) {
             if (Object.prototype.toString.call(obj) === '[object Array]') {
@@ -8253,13 +8239,11 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
 
             return list;
         }
-    }));
+    };
 });
 
-Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.ReadOnlyCollection$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+Bridge.define('Bridge.ReadOnlyCollection$1', function (T) {
+    return {
         inherits: [Bridge.List$1(T)],
         constructor: function (list) {
             if (list == null) {
@@ -8269,7 +8253,7 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
             Bridge.List$1(T).prototype.$constructor.call(this, list);
             this.readOnly = true;
         }
-    }));
+    };
 });
 
     // @source Task.js
