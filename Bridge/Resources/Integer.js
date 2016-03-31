@@ -579,9 +579,13 @@
                 return true;
             },
 
+            isInfinite: function(x) {
+                return x === Number.POSITIVE_INFINITY || x === Number.NEGATIVE_INFINITY;
+            },
+
             trunc: function (num) {
                 if (!Bridge.isNumber(num)) {
-                    return null;
+                    return Bridge.Int.isInfinite(num) ? num : null;
                 }
 
                 return num > 0 ? Math.floor(num) : Math.ceil(num);
@@ -621,48 +625,55 @@
                 if (Bridge.isNumber(x) && !type.instanceOf(x)) {
                     throw new Bridge.OverflowException();
                 }
+
+                if (Bridge.Int.isInfinite(x)) {
+                    if (type === Bridge.Long || type === Bridge.ULong) {
+                        return type.MinValue;
+                    }
+                    return type.min;
+                }
                 
                 return x;
             },
 
             sxb: function (x) {
-                return Bridge.isNumber(x) ? (x | (x & 0x80 ? 0xffffff00 : 0)) : null;
+                return Bridge.isNumber(x) ? (x | (x & 0x80 ? 0xffffff00 : 0)) : (Bridge.Int.isInfinite(x) ? Bridge.SByte.min : null);
             },
 
             sxs: function (x) {
-                return Bridge.isNumber(x) ? (x | (x & 0x8000 ? 0xffff0000 : 0)) : null;
+                return Bridge.isNumber(x) ? (x | (x & 0x8000 ? 0xffff0000 : 0)) : (Bridge.Int.isInfinite(x) ? Bridge.Int16.min : null);
             },
 
             clip8: function (x) {
-                return Bridge.isNumber(x) ? Bridge.Int.sxb(x & 0xff) : null;
+                return Bridge.isNumber(x) ? Bridge.Int.sxb(x & 0xff) : (Bridge.Int.isInfinite(x) ? Bridge.SByte.min : null);
             },
 
             clipu8: function (x) {
-                return Bridge.isNumber(x) ? x & 0xff : null;
+                return Bridge.isNumber(x) ? x & 0xff : (Bridge.Int.isInfinite(x) ? Bridge.Byte.min : null);
             },
 
             clip16: function (x) {
-                return Bridge.isNumber(x) ? Bridge.Int.sxs(x & 0xffff) : null;
+                return Bridge.isNumber(x) ? Bridge.Int.sxs(x & 0xffff) : (Bridge.Int.isInfinite(x) ? Bridge.Int16.min : null);
             },
 
             clipu16: function (x) {
-                return Bridge.isNumber(x) ? x & 0xffff : null;
+                return Bridge.isNumber(x) ? x & 0xffff : (Bridge.Int.isInfinite(x) ? Bridge.UInt16.min : null);
             },
 
             clip32: function (x) {
-                return Bridge.isNumber(x) ? x | 0 : null;
+                return Bridge.isNumber(x) ? x | 0 : (Bridge.Int.isInfinite(x) ? Bridge.Int32.min : null);
             },
 
             clipu32: function (x) {
-                return Bridge.isNumber(x) ? x >>> 0 : null;
+                return Bridge.isNumber(x) ? x >>> 0 : (Bridge.Int.isInfinite(x) ? Bridge.UInt32.min : null);
             },
 
             clip64: function (x) {
-                return Bridge.isNumber(x) ? Bridge.Long(Bridge.Int.trunc(x)) : null;
+                return Bridge.isNumber(x) ? Bridge.Long(Bridge.Int.trunc(x)) : (Bridge.Int.isInfinite(x) ? Bridge.Long.MinValue : null);
             },
 
             clipu64: function (x) {
-                return Bridge.isNumber(x) ? Bridge.ULong(Bridge.Int.trunc(x)) : null;
+                return Bridge.isNumber(x) ? Bridge.ULong(Bridge.Int.trunc(x)) : (Bridge.Int.isInfinite(x) ? Bridge.ULong.MinValue : null);
             },
 
             sign: function (x) {

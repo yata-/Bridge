@@ -369,7 +369,7 @@ namespace Bridge.Translator
             }
             else
             {
-                if (isNullable)
+                if (isNullable || fromFloatingPoint)
                 {
                     targetType = NullableType.IsNullable(targetType) ? NullableType.GetUnderlyingType(targetType) : targetType;
                     string action = null;
@@ -404,12 +404,10 @@ namespace Bridge.Translator
                     else if (targetType.IsKnownType(KnownTypeCode.Int64))
                     {
                         action = "clip64";
-                        return;
                     }
                     else if (targetType.IsKnownType(KnownTypeCode.UInt64))
                     {
                         action = "clipu64";
-                        return;
                     }
                     else
                     {
