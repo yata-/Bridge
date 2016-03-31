@@ -138,7 +138,7 @@ namespace Bridge.Builder
         /// <summary>
         /// Commandline arguments based on http://docopt.org/
         /// </summary>
-        private static void showHelp(ILogger logger)
+        private static void ShowHelp(ILogger logger)
         {
             string codeBase = Assembly.GetExecutingAssembly().CodeBase;
             string programName = Path.GetFileName(codeBase);
@@ -157,7 +157,7 @@ namespace Bridge.Builder
                            [default: current wd].
 -R --recursive             Recursively search for .cs source files inside
                            current workind directory.
--notimestamp --notimestamp Do not show timestamp in log messages [dafault: shows timestamp]");
+-notimestamp --notimestamp Do not show timestamp in log messages [default: shows timestamp]");
 
 #if DEBUG
             // This code and logic is only compiled in when building bridge.net in Debug configuration
@@ -168,7 +168,7 @@ namespace Bridge.Builder
 #endif
         }
 
-        private static bool bindArgToVar(string arg, BridgeOptions bridgeOptions, ILogger logger)
+        private static bool BindCmdArgumentToOption(string arg, BridgeOptions bridgeOptions, ILogger logger)
         {
             if (bridgeOptions.ProjectLocation == null && bridgeOptions.Lib == null)
             {
@@ -193,7 +193,7 @@ namespace Bridge.Builder
         {
             if (args.Length == 0)
             {
-                showHelp(logger);
+                ShowHelp(logger);
                 return null; // error: arguments not provided, so can't guess what to do
             }
 
@@ -211,7 +211,7 @@ namespace Bridge.Builder
                         if (bridgeOptions.Lib != null)
                         {
                             logger.Error("Error: Project and assembly file specification is mutually exclusive.");
-                            showHelp(logger);
+                            ShowHelp(logger);
                             return null;
                         };
                         bridgeOptions.ProjectLocation = args[++i];
@@ -276,7 +276,7 @@ namespace Bridge.Builder
                         if (bridgeOptions.ProjectLocation != null)
                         {
                             logger.Error("Error: Project and assembly file specification is mutually exclusive.");
-                            showHelp(logger);
+                            ShowHelp(logger);
                             return null;
                         }
                         bridgeOptions.Lib = args[++i];
@@ -284,7 +284,7 @@ namespace Bridge.Builder
 
                     case "-h":
                     case "--help":
-                        showHelp(logger);
+                        ShowHelp(logger);
                         bridgeOptions.Help = true;
                         return bridgeOptions; // success. Asked for help. Help provided.
 
@@ -310,7 +310,7 @@ namespace Bridge.Builder
                         {
                             // don't care about success. If not set already, then try next cmdline argument
                             // as the file parameter and ignore following arguments, if any.
-                            bindArgToVar(args[i + 1], bridgeOptions, logger);
+                            BindCmdArgumentToOption(args[i + 1], bridgeOptions, logger);
                         }
                         i = args.Length; // move to the end of arguments list
                         break;
@@ -319,10 +319,10 @@ namespace Bridge.Builder
 
                         // If this argument does not look like a cmdline switch and
                         // neither backwards -project nor -lib were specified
-                        if (!bindArgToVar(args[i], bridgeOptions, logger))
+                        if (!BindCmdArgumentToOption(args[i], bridgeOptions, logger))
                         {
                             logger.Error("Invalid argument: " + args[i]);
-                            showHelp(logger);
+                            ShowHelp(logger);
                             return null;
                         }
                         break;
@@ -334,7 +334,7 @@ namespace Bridge.Builder
             if (bridgeOptions.ProjectLocation == null && bridgeOptions.Lib == null)
             {
                 logger.Error("Error: Project or assembly file name must be specified.");
-                showHelp(logger);
+                ShowHelp(logger);
                 return null;
             }
 
