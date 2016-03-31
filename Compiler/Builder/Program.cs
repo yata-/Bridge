@@ -26,17 +26,18 @@ namespace Bridge.Builder
                 return 0;
             }
 
+            logger.Name = "Bridge.Builder.Console";
+            logger.UseTimeStamp = !bridgeOptions.NoTimeStamp;
+
+            logger.Info("Command line arguments:");
+            logger.Info("\t" + (string.Join(" ", args) ?? ""));
+
+            logger.Info("Generating script...");
+
             Bridge.Translator.Translator translator = null;
 
             try
             {
-                logger.Name = "Bridge.Builder.Console";
-
-                logger.Info("Generating script...");
-
-                logger.Info("Command line arguments:");
-                logger.Info("\t" + (string.Join(" ", args) ?? ""));
-
                 // FIXME: detect by extension whether first argument is a project or DLL
                 if (!string.IsNullOrWhiteSpace(bridgeOptions.ProjectLocation))
                 {
@@ -155,7 +156,8 @@ namespace Bridge.Builder
 -f --folder <path>         Builder working directory relative to current WD
                            [default: current wd].
 -R --recursive             Recursively search for .cs source files inside
-                           current workind directory.");
+                           current workind directory.
+-notimestamp --notimestamp Do not show timestamp in log messages [dafault: shows timestamp]");
 
 #if DEBUG
             // This code and logic is only compiled in when building bridge.net in Debug configuration
@@ -286,6 +288,11 @@ namespace Bridge.Builder
                         bridgeOptions.Help = true;
                         return bridgeOptions; // success. Asked for help. Help provided.
 
+                    case "-notimestamp":
+                    case "--notimestamp":
+                        bridgeOptions.NoTimeStamp = true;
+                        break;
+
 #if DEBUG
                     case "-debug":
                     case "--debug":
@@ -355,6 +362,7 @@ namespace Bridge.Builder
         public string Lib { get; set; }
         public string Def { get; set; }
         public bool Help { get; set; }
+        public bool NoTimeStamp { get; set; }
 
         public BridgeOptions()
         {
