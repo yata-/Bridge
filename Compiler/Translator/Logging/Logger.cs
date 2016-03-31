@@ -120,6 +120,11 @@ namespace Bridge.Translator.Logging
                 return null;
             }
 
+            if (!this.UseTimeStamp)
+            {
+                return message;
+            }
+
             string wrappedMessage = string.Empty;
 
             if (!string.IsNullOrEmpty(this.Name))
@@ -129,15 +134,11 @@ namespace Bridge.Translator.Logging
 
             wrappedMessage += logLevel + " ";
 
-            if (this.UseTimeStamp)
-            {
-                wrappedMessage += DateTime.Now.ToString("s") + ":" + DateTime.Now.Millisecond + " ";
-            }
+            wrappedMessage += DateTime.Now.ToString("s") + ":" + DateTime.Now.Millisecond + " ";
 
             wrappedMessage += message;
 
             return wrappedMessage;
         }
-
     }
 }
