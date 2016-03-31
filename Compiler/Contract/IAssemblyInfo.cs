@@ -267,5 +267,11 @@ namespace Bridge.Contract
             get; 
             set;
         }
+
+        bool? NoLoggerTimeStamps
+        {
+            get;
+            set;
+        }
     }
 }
