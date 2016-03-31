@@ -19373,40 +19373,44 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         statics: {
             ITERATIONS: 100,
             unseeded: function () {
-                var r = new Bridge.Random();
+                var r = new Bridge.Random("constructor");
     
                 for (var i = 0; i < Bridge.ClientTest.RandomTests.ITERATIONS; i = (i + 1) | 0) {
-                    var x = r.next(20);
-                    Bridge.Test.Assert.true$1(x >= 0 && x < 20, x + " under 20");
+                    var x = r.next$1(20);
+                    Bridge.Test.Assert.true$1(x >= 0 && x < 20, x + " under 20 - Next(maxValue)");
                 }
     
                 for (var i1 = 0; i1 < Bridge.ClientTest.RandomTests.ITERATIONS; i1 = (i1 + 1) | 0) {
-                    var x1 = r.next(20, 30);
-                    Bridge.Test.Assert.true$1(x1 >= 20 && x1 < 30, x1 + " between 20 and 30");
+                    var x1 = r.next$2(20, 30);
+                    Bridge.Test.Assert.true$1(x1 >= 20 && x1 < 30, x1 + " between 20 and 30 - Next(minValue, maxValue)");
                 }
     
                 for (var i2 = 0; i2 < Bridge.ClientTest.RandomTests.ITERATIONS; i2 = (i2 + 1) | 0) {
                     var x2 = r.nextDouble();
-                    Bridge.Test.Assert.true$1(x2 >= 0.0 && x2 < 1.0, x2 + " between 0.0 and 1.0");
+                    Bridge.Test.Assert.true$1(x2 >= 0.0 && x2 < 1.0, x2 + " between 0.0 and 1.0  - NextDouble()");
                 }
             },
             seeded: function () {
                 var seed = Bridge.Long.clip32(Bridge.Long((new Date()).getTime()).mul(10000));
     
-                var r1 = new Bridge.Random(seed);
-                var r2 = new Bridge.Random(seed);
+                var r1 = new Bridge.Random("constructor$1", seed);
+                var r2 = new Bridge.Random("constructor$1", seed);
     
                 var b1 = Bridge.Array.init(Bridge.ClientTest.RandomTests.ITERATIONS, 0);
                 r1.nextBytes(b1);
+    
                 var b2 = Bridge.Array.init(Bridge.ClientTest.RandomTests.ITERATIONS, 0);
                 r2.nextBytes(b2);
+    
                 for (var i = 0; i < b1.length; i = (i + 1) | 0) {
-                    Bridge.Test.Assert.areEqual(b1[i], b2[i]);
+                    Bridge.Test.Assert.areEqual$1(b1[i], b2[i], "NextBytes()");
                 }
+    
                 for (var i1 = 0; i1 < b1.length; i1 = (i1 + 1) | 0) {
                     var x1 = r1.next();
                     var x2 = r2.next();
-                    Bridge.Test.Assert.areEqual(x1, x2);
+    
+                    Bridge.Test.Assert.areEqual$1(x1, x2, "Next()");
                 }
             },
             sample: function () {
@@ -19414,7 +19418,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
                 for (var i = 0; i < Bridge.ClientTest.RandomTests.ITERATIONS; i = (i + 1) | 0) {
                     var d = r.exposeSample();
-                    Bridge.Test.Assert.$true(d >= 0.0 && d < 1.0);
+                    Bridge.Test.Assert.true$1(d >= 0.0 && d < 1.0, d + " between 0.0 and 1.0  - ExposeSample()");
                 }
             }
         }
