@@ -14,15 +14,15 @@
 **
 ** 
 ===========================================================*/
-namespace System
+using System;
+using System.Runtime;
+using System.Runtime.CompilerServices;
+using System.Globalization;
+using System.Diagnostics.Contracts;
+
+namespace Transpiled.System
 {
     using Bridge;
-
-    using System;
-    using System.Runtime;
-    using System.Runtime.CompilerServices;
-    using System.Globalization;
-    using System.Diagnostics.Contracts;
 
     [Name("Bridge.Random")]
     public class Random
