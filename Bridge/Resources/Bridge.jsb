@@ -37,6 +37,7 @@
   <file name="Convert.js" />
   <file name="Array.js" />
   <file name="linq.js" />
+  <file name="random.js" />
   <target name="Bridge.NET" file="$output\bridge.js" debug="True">
     <include name="Init.js" />
     <include name="Core.js" />
@@ -74,6 +75,7 @@
     <include name="INotifyPropertyChanged.js" />
     <include name="Convert.js" />
     <include name="linq.js" />
+    <include name="random.js" />
     <include name="End.js" />
     <include name="Finally.js" />
   </target>
