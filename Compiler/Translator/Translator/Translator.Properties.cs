@@ -199,5 +199,14 @@ namespace Bridge.Translator
         {
             get; set;
         }
+
+        /// <summary>
+        /// Handle of the opened project in the chosen configuration. Used while reading the
+        /// project's files and settings.
+        /// </summary>
+        public Microsoft.Build.Evaluation.Project ProjectHandle
+        {
+            get; set;
+        }
     }
 }

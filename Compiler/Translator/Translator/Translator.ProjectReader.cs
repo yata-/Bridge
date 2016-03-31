@@ -18,8 +18,17 @@ namespace Bridge.Translator
 
             this.ValidateProject(doc);
 
+            // FIXME: This is not the appropriate location to determine the configuration. Should be, maybe
+            //        during Translator.ReadConfig() instead. This was moved from GetSourceFiles() (which is
+            //        no better a place than here) so that LoadProject() works.
+            this.Configuration = this.Configuration ?? "Debug";
+
+            // If the project is valid, then load the msbuild evaluation handle
+            // Currently used by GetOutputPath() and GetSourceFiles().
+            this.ProjectHandle = LoadProject();
+
             this.BuildAssemblyLocation(doc);
-            this.SourceFiles = this.GetSourceFiles(doc);
+            this.SourceFiles = this.GetProjectSourceFiles();
             this.ParsedSourceFiles = new List<ParsedSourceFile>();
 
             if (!this.FromTask)
@@ -36,6 +45,9 @@ namespace Bridge.Translator
                 Bridge.Translator.Exception.Throw("Project type ({0}) is not supported, please use Library instead of {0}", projectType[0].Value);
             }
 
+            // No need to use the project file anymore, unload it.
+            UnloadProject(this.ProjectHandle);
+
             this.Log.Info("Reading project file done");
         }
 
@@ -43,7 +55,7 @@ namespace Bridge.Translator
         {
             this.Log.Info("Reading folder files...");
 
-            this.SourceFiles = this.GetSourceFiles();
+            this.SourceFiles = this.GetFSSourceFiles();
             this.ParsedSourceFiles = new List<ParsedSourceFile>();
 
             this.Log.Info("Reading folder files done");
@@ -126,40 +138,22 @@ namespace Bridge.Translator
         {
             if (this.AssemblyLocation == null || this.AssemblyLocation.Length == 0)
             {
-                this.Configuration = this.Configuration ?? "Debug";
-                var outputPath = this.GetOutputPath(doc, this.Configuration);
-
-                if (string.IsNullOrEmpty(outputPath))
-                {
-                    outputPath = this.GetOutputPath(doc, "Release");
-                }
+                var outputPath = this.GetOutputPath();
 
                 this.AssemblyLocation = Path.Combine(outputPath, this.GetAssemblyName(doc) + ".dll");
 
                 if (!File.Exists(this.AssemblyLocation) && !this.Rebuild)
                 {
-                    outputPath = this.GetOutputPath(doc, "Release");
-                    this.AssemblyLocation = Path.Combine(outputPath, this.GetAssemblyName(doc) + ".dll");
+                    throw new FileNotFoundException("Assembly file '" + this.AssemblyLocation + "' does not exist.");
                 }
             }
         }
 
-        protected virtual string GetOutputPath(XDocument doc, string configuration)
+        protected virtual string GetOutputPath()
         {
-            var opnodes = from n in doc.Descendants()
-                          where n.Name.LocalName == "OutputPath"
-                          select n;
-            var nodes = from n in doc.Descendants()
-                        where n.Name.LocalName == "OutputPath" &&
-                              n.Parent.Attribute("Condition").Value.Contains(configuration)
-                        select n;
+            var path = this.ProjectHandle.GetPropertyValue("OutputPath");
 
-            if (nodes.Count() != 1)
-            {
-                Bridge.Translator.Exception.Throw("Unable to determine output path");
-            }
-
-            var path = nodes.First().Value;
+            this.Log.Info("Project OutputPath setting for '" + this.Configuration + "' configuration: " + path);
 
             if (!Path.IsPathRooted(path))
             {
@@ -174,34 +168,57 @@ namespace Bridge.Translator
             return System.Type.GetType("Mono.Runtime") != null;
         }
 
-        protected virtual IList<string> GetSourceFiles(XDocument doc)
+        /// <summary>
+        /// Gets source files determined by the project file.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual IList<string> GetProjectSourceFiles()
+        {
+            var sourceFiles = new List<string>();
+
+            foreach (var projectItem in this.ProjectHandle.GetItems("Compile"))
+            {
+                sourceFiles.Add(projectItem.EvaluatedInclude);
+            }
+
+            if (sourceFiles.Count() == 0)
+            {
+                throw new Bridge.Translator.Exception("Unable to get source file list from project file '" +
+                    this.Location + "'. In order to use bridge, you have to have at least one source code file " +
+                    "with the 'compile' property set (usually .cs files have it by default in C# projects).");
+            };
+
+            return sourceFiles;
+        }
+
+        protected Project LoadProject()
         {
             Project project;
+            var projectCollection = new ProjectCollection();
 
-            var isOnMono = Translator.IsRunningOnMono();
-            if (isOnMono)
+            // Set here project's global settings (Configuration, Platform, etc) to load with
+            projectCollection.SetGlobalProperty("Configuration", this.Configuration);
+
+            if (Translator.IsRunningOnMono())
             {
                 // Using XmlReader here addresses a Mono issue logged as #38224 at Mono's official BugZilla.
                 // Bridge issue #860
                 // This constructor below works on Linux and DOES break #531
-                project = new Project(XmlReader.Create(this.Location), null, null, new ProjectCollection());
+                project = new Project(XmlReader.Create(this.Location), null, null, projectCollection);
             }
             else
             {
                 // Using XmlReader above breaks feature #531 - referencing linked files in csproj (Compiler test 18 fails)
                 // To avoid it at least on Windows, use different Project constructors
                 // This constructor below works on Windows and does NOT break #531
-                project = new Project(this.Location, null, null, new ProjectCollection());
-            }
-            
-            var sourceFiles = new List<string>();
-
-            foreach (var projectItem in project.GetItems("Compile"))
-            {
-                sourceFiles.Add(projectItem.EvaluatedInclude);
+                project = new Project(this.Location, null, null, projectCollection);
             }
 
-            if (isOnMono)
+            return project;
+        }
+        protected void UnloadProject(Project project)
+        {
+            if (Translator.IsRunningOnMono())
             {
                 // This UnloadProject overload should be used if the project created by new Project(XmlReader.Create(this.Location)...)
                 // Otherwise it does NOT work either on Windows or Linux
@@ -213,15 +230,6 @@ namespace Bridge.Translator
                 // Otherwise it does NOT work either on Windows or Linux
                 project.ProjectCollection.UnloadProject(project);
             }
-
-            if (sourceFiles.Count() == 0)
-            {
-                throw new Bridge.Translator.Exception("Unable to get source file list from project file '" +
-                    this.Location + "'. In order to use bridge, you have to have at least one source code file " +
-                    "with the 'compile' property set (usually .cs files have it by default in C# projects).");
-            };
-
-            return sourceFiles;
         }
 
         protected virtual void ReadDefineConstants(XDocument doc)
@@ -274,7 +282,11 @@ namespace Bridge.Translator
             return nodes.First().Value;
         }
 
-        protected virtual IList<string> GetSourceFiles()
+        /// <summary>
+        /// Get source files from filesystem
+        /// </summary>
+        /// <returns></returns>
+        protected virtual IList<string> GetFSSourceFiles()
         {
             var result = new List<string>();
             if (string.IsNullOrWhiteSpace(this.Source))
