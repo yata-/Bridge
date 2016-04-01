@@ -10617,6 +10617,129 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
                 var z2 = Bridge.Int.clipu64(1 / x);
                 Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.ULong(0), z2, "ulong");
+            },
+            testInfinityCastDefaultOverflowMode: function () {
+                var pi = Number.POSITIVE_INFINITY;
+    
+                var y1 = Bridge.Int.clipu8(pi);
+                var y2 = Bridge.Int.clip8(pi);
+                var y3 = Bridge.Int.clip16(pi);
+                var y4 = Bridge.Int.clipu16(pi);
+                var y5 = Bridge.Int.clip32(pi);
+                var y6 = Bridge.Int.clipu32(pi);
+                var y7 = Bridge.Int.clip64(pi);
+                var y8 = Bridge.Int.clipu64(pi);
+    
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, y1, "PositiveInfinity -> byte");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, y2, "PositiveInfinity -> sbyte");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, y3, "PositiveInfinity -> short");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, y4, "PositiveInfinity -> ushort");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(-2147483648, y5, "PositiveInfinity -> int");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, y6, "PositiveInfinity -> uint");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.Long.MinValue, y7, "PositiveInfinity -> long");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.ULong.MinValue, y8, "PositiveInfinity -> ulong");
+    
+                var ni = Number.NEGATIVE_INFINITY;
+    
+                var z1 = Bridge.Int.clipu8(ni);
+                var z2 = Bridge.Int.clip8(ni);
+                var z3 = Bridge.Int.clip16(ni);
+                var z4 = Bridge.Int.clipu16(ni);
+                var z5 = Bridge.Int.clip32(ni);
+                var z6 = Bridge.Int.clipu32(ni);
+                var z7 = Bridge.Int.clip64(ni);
+                var z8 = Bridge.Int.clipu64(ni);
+    
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, z1, "NegativeInfinity -> byte");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, z2, "NegativeInfinity -> sbyte");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, z3, "NegativeInfinity -> short");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, z4, "NegativeInfinity -> ushort");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(-2147483648, z5, "NegativeInfinity -> int");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, z6, "NegativeInfinity -> uint");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.Long.MinValue, z7, "NegativeInfinity -> long");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.ULong([0,-2147483648]), z8, "NegativeInfinity -> ulong");
+            },
+            testInfinityCastWithNullable1DefaultOverflowMode: function () {
+                var pi = Number.POSITIVE_INFINITY;
+    
+                var y1 = Bridge.Int.clipu8(pi);
+                var y2 = Bridge.Int.clip8(pi);
+                var y3 = Bridge.Int.clip16(pi);
+                var y4 = Bridge.Int.clipu16(pi);
+                var y5 = Bridge.Int.clip32(pi);
+                var y6 = Bridge.Int.clipu32(pi);
+                var y7 = Bridge.Int.clip64(pi);
+                var y8 = Bridge.Int.clipu64(pi);
+    
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, y1, "PositiveInfinity -> byte");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, y2, "PositiveInfinity -> sbyte");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, y3, "PositiveInfinity -> short");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, y4, "PositiveInfinity -> ushort");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(-2147483648, y5, "PositiveInfinity -> int");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, y6, "PositiveInfinity -> uint");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.Long.MinValue, y7, "PositiveInfinity -> long");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.ULong.MinValue, y8, "PositiveInfinity -> ulong");
+    
+                var ni = Number.NEGATIVE_INFINITY;
+    
+                var z1 = Bridge.Int.clipu8(ni);
+                var z2 = Bridge.Int.clip8(ni);
+                var z3 = Bridge.Int.clip16(ni);
+                var z4 = Bridge.Int.clipu16(ni);
+                var z5 = Bridge.Int.clip32(ni);
+                var z6 = Bridge.Int.clipu32(ni);
+                var z7 = Bridge.Int.clip64(ni);
+                var z8 = Bridge.Int.clipu64(ni);
+    
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, z1, "NegativeInfinity -> byte");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, z2, "NegativeInfinity -> sbyte");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, z3, "NegativeInfinity -> short");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, z4, "NegativeInfinity -> ushort");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(-2147483648, z5, "NegativeInfinity -> int");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, z6, "NegativeInfinity -> uint");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.Long.MinValue, z7, "NegativeInfinity -> long");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.ULong([0,-2147483648]), z8, "NegativeInfinity -> ulong");
+            },
+            testInfinityCastWithNullable2DefaultOverflowMode: function () {
+                var pi = Number.POSITIVE_INFINITY;
+    
+                var y1 = Bridge.Int.clipu8(pi);
+                var y2 = Bridge.Int.clip8(pi);
+                var y3 = Bridge.Int.clip16(pi);
+                var y4 = Bridge.Int.clipu16(pi);
+                var y5 = Bridge.Int.clip32(pi);
+                var y6 = Bridge.Int.clipu32(pi);
+                var y7 = Bridge.Int.clip64(pi);
+                var y8 = Bridge.Int.clipu64(pi);
+    
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, Bridge.Nullable.getValue(y1), "PositiveInfinity -> byte");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, Bridge.Nullable.getValue(y2), "PositiveInfinity -> sbyte");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, Bridge.Nullable.getValue(y3), "PositiveInfinity -> short");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, Bridge.Nullable.getValue(y4), "PositiveInfinity -> ushort");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(-2147483648, Bridge.Nullable.getValue(y5), "PositiveInfinity -> int");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, Bridge.Nullable.getValue(y6), "PositiveInfinity -> uint");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.Long.MinValue, Bridge.Nullable.getValue(y7), "PositiveInfinity -> long");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.ULong.MinValue, Bridge.Nullable.getValue(y8), "PositiveInfinity -> ulong");
+    
+                var ni = Number.NEGATIVE_INFINITY;
+    
+                var z1 = Bridge.Int.clipu8(ni);
+                var z2 = Bridge.Int.clip8(ni);
+                var z3 = Bridge.Int.clip16(ni);
+                var z4 = Bridge.Int.clipu16(ni);
+                var z5 = Bridge.Int.clip32(ni);
+                var z6 = Bridge.Int.clipu32(ni);
+                var z7 = Bridge.Int.clip64(ni);
+                var z8 = Bridge.Int.clipu64(ni);
+    
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, Bridge.Nullable.getValue(z1), "NegativeInfinity -> byte");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, Bridge.Nullable.getValue(z2), "NegativeInfinity -> sbyte");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, Bridge.Nullable.getValue(z3), "NegativeInfinity -> short");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, Bridge.Nullable.getValue(z4), "NegativeInfinity -> ushort");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(-2147483648, Bridge.Nullable.getValue(z5), "NegativeInfinity -> int");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, Bridge.Nullable.getValue(z6), "NegativeInfinity -> uint");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.Long.MinValue, Bridge.Nullable.getValue(z7), "NegativeInfinity -> long");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.ULong([0,-2147483648]), Bridge.Nullable.getValue(z8), "NegativeInfinity -> ulong");
             }
         }
     });

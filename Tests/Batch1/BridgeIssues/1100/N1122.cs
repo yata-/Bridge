@@ -52,5 +52,137 @@ namespace Bridge.ClientTest.BridgeIssues
             ulong z2 = (ulong)(1 / x);
             AssertNumber((ulong)0, z2, "ulong");
         }
+
+        [Test(ExpectedCount = 16)]
+        public static void TestInfinityCastDefaultOverflowMode()
+        {
+            var pi = double.PositiveInfinity;
+
+            var y1 = (byte)pi;
+            var y2 = (sbyte)pi;
+            var y3 = (short)pi;
+            var y4 = (ushort)pi;
+            var y5 = (int)pi;
+            var y6 = (uint)pi;
+            var y7 = (long)pi;
+            var y8 = (ulong)pi;
+
+            AssertNumber(byte.MinValue, y1, "PositiveInfinity -> byte");
+            AssertNumber(0, y2, "PositiveInfinity -> sbyte");
+            AssertNumber(0, y3, "PositiveInfinity -> short");
+            AssertNumber(ushort.MinValue, y4, "PositiveInfinity -> ushort");
+            AssertNumber(int.MinValue, y5, "PositiveInfinity -> int");
+            AssertNumber(uint.MinValue, y6, "PositiveInfinity -> uint");
+            AssertNumber(long.MinValue, y7, "PositiveInfinity -> long");
+            AssertNumber(ulong.MinValue, y8, "PositiveInfinity -> ulong");
+
+            var ni = double.NegativeInfinity;
+
+            var z1 = (byte)ni;
+            var z2 = (sbyte)ni;
+            var z3 = (short)ni;
+            var z4 = (ushort)ni;
+            var z5 = (int)ni;
+            var z6 = (uint)ni;
+            var z7 = (long)ni;
+            var z8 = (ulong)ni;
+
+            AssertNumber(byte.MinValue, z1, "NegativeInfinity -> byte");
+            AssertNumber(0, z2, "NegativeInfinity -> sbyte");
+            AssertNumber(0, z3, "NegativeInfinity -> short");
+            AssertNumber(ushort.MinValue, z4, "NegativeInfinity -> ushort");
+            AssertNumber(int.MinValue, z5, "NegativeInfinity -> int");
+            AssertNumber(uint.MinValue, z6, "NegativeInfinity -> uint");
+            AssertNumber(long.MinValue, z7, "NegativeInfinity -> long");
+            AssertNumber((ulong)long.MaxValue + 1, z8, "NegativeInfinity -> ulong");
+        }
+
+        [Test(ExpectedCount = 16)]
+        public static void TestInfinityCastWithNullable1DefaultOverflowMode()
+        {
+            var pi = double.PositiveInfinity;
+
+            var y1 = (byte?)pi;
+            var y2 = (sbyte?)pi;
+            var y3 = (short?)pi;
+            var y4 = (ushort?)pi;
+            var y5 = (int?)pi;
+            var y6 = (uint?)pi;
+            var y7 = (long?)pi;
+            var y8 = (ulong?)pi;
+
+            AssertNumber(byte.MinValue, y1, "PositiveInfinity -> byte");
+            AssertNumber(0, y2, "PositiveInfinity -> sbyte");
+            AssertNumber(0, y3, "PositiveInfinity -> short");
+            AssertNumber(ushort.MinValue, y4, "PositiveInfinity -> ushort");
+            AssertNumber(int.MinValue, y5, "PositiveInfinity -> int");
+            AssertNumber(uint.MinValue, y6, "PositiveInfinity -> uint");
+            AssertNumber(long.MinValue, y7, "PositiveInfinity -> long");
+            AssertNumber(ulong.MinValue, y8, "PositiveInfinity -> ulong");
+
+            var ni = double.NegativeInfinity;
+
+            var z1 = (byte?)ni;
+            var z2 = (sbyte?)ni;
+            var z3 = (short?)ni;
+            var z4 = (ushort?)ni;
+            var z5 = (int?)ni;
+            var z6 = (uint?)ni;
+            var z7 = (long?)ni;
+            var z8 = (ulong?)ni;
+
+            AssertNumber(byte.MinValue, z1, "NegativeInfinity -> byte");
+            AssertNumber(0, z2, "NegativeInfinity -> sbyte");
+            AssertNumber(0, z3, "NegativeInfinity -> short");
+            AssertNumber(ushort.MinValue, z4, "NegativeInfinity -> ushort");
+            AssertNumber(int.MinValue, z5, "NegativeInfinity -> int");
+            AssertNumber(uint.MinValue, z6, "NegativeInfinity -> uint");
+            AssertNumber(long.MinValue, z7, "NegativeInfinity -> long");
+            AssertNumber((ulong)long.MaxValue + 1, z8, "NegativeInfinity -> ulong");
+        }
+
+        [Test(ExpectedCount = 16)]
+        public static void TestInfinityCastWithNullable2DefaultOverflowMode()
+        {
+            var pi = double.PositiveInfinity;
+
+            byte? y1 = (byte)pi;
+            sbyte? y2 = (sbyte)pi;
+            short? y3 = (short)pi;
+            ushort? y4 = (ushort)pi;
+            int? y5 = (int)pi;
+            uint? y6 = (uint)pi;
+            long? y7 = (long)pi;
+            ulong? y8 = (ulong)pi;
+
+            AssertNumber(byte.MinValue, y1.Value, "PositiveInfinity -> byte");
+            AssertNumber(0, y2.Value, "PositiveInfinity -> sbyte");
+            AssertNumber(0, y3.Value, "PositiveInfinity -> short");
+            AssertNumber(ushort.MinValue, y4.Value, "PositiveInfinity -> ushort");
+            AssertNumber(int.MinValue, y5.Value, "PositiveInfinity -> int");
+            AssertNumber(uint.MinValue, y6.Value, "PositiveInfinity -> uint");
+            AssertNumber(long.MinValue, y7.Value, "PositiveInfinity -> long");
+            AssertNumber(ulong.MinValue, y8.Value, "PositiveInfinity -> ulong");
+
+            var ni = double.NegativeInfinity;
+
+            byte? z1 = (byte)ni;
+            sbyte? z2 = (sbyte)ni;
+            short? z3 = (short)ni;
+            ushort? z4 = (ushort)ni;
+            int? z5 = (int)ni;
+            uint? z6 = (uint)ni;
+            long? z7 = (long)ni;
+            ulong? z8 = (ulong)ni;
+
+            AssertNumber(byte.MinValue, z1.Value, "NegativeInfinity -> byte");
+            AssertNumber(0, z2.Value, "NegativeInfinity -> sbyte");
+            AssertNumber(0, z3.Value, "NegativeInfinity -> short");
+            AssertNumber(ushort.MinValue, z4.Value, "NegativeInfinity -> ushort");
+            AssertNumber(int.MinValue, z5.Value, "NegativeInfinity -> int");
+            AssertNumber(uint.MinValue, z6.Value, "NegativeInfinity -> uint");
+            AssertNumber(long.MinValue, z7.Value, "NegativeInfinity -> long");
+            AssertNumber((ulong)long.MaxValue + 1, z8.Value, "NegativeInfinity -> ulong");
+        }
     }
 }
