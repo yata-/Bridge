@@ -352,8 +352,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Bridge.Collections, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Bridge.Collections.Dev.1.0.2\lib\net40\Bridge.Collections.dll</HintPath>
+    <Reference Include="Bridge.Collections, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Bridge.Collections.Dev.1.1.0\lib\net40\Bridge.Collections.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Bridge.Test, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -363,7 +363,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Readme\Bridge.NET\README.Bridge.Test.txt" />
-    <Content Include="App_Readme\Bridge.NET\README.Collections.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BridgeIssues\0200\" />
