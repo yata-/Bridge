@@ -1045,6 +1045,7 @@
                 QUnit.test("#1128 - TestNestedClassesWithInterface", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1128.testNestedClassesWithInterface);
                 QUnit.test("#1130 - TestUlongDivision", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1130.testUlongDivision);
                 QUnit.test("#1134 - TestJsonArrayParse", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1134.testJsonArrayParse);
+                QUnit.test("#1141 - TestLongDivisionInfiniteLoopFixed", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1141.testLongDivisionInfiniteLoopFixed);
                 QUnit.test("#381 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge381.testUseCase);
                 QUnit.test("#447 - CheckInlineExpression", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineExpression);
                 QUnit.test("#447 - CheckInlineCalls", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineCalls);
@@ -2716,6 +2717,16 @@
             testJsonArrayParse: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1134).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1134);
                 Bridge.ClientTest.BridgeIssues.Bridge1134.testJsonArrayParse();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1141', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1141)],
+        statics: {
+            testLongDivisionInfiniteLoopFixed: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1141).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1141);
+                Bridge.ClientTest.BridgeIssues.Bridge1141.testLongDivisionInfiniteLoopFixed();
             }
         }
     });

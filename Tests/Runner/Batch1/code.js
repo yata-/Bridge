@@ -4205,6 +4205,18 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1141', {
+        statics: {
+            testLongDivisionInfiniteLoopFixed: function () {
+                var m = Bridge.ULong.MaxValue;
+                var m1 = Bridge.ULong([-2,-1]);
+                var res1 = m.div(m1);
+    
+                Bridge.Test.Assert.areEqual$1("1", res1.toString(), "https://github.com/dcodeIO/long.js/issues/31");
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,

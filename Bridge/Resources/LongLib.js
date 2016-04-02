@@ -1,4 +1,23 @@
-﻿(function (global) {
+﻿/*
+ Copyright 2013 Daniel Wirtz <dcode@dcode.io>
+ Copyright 2009 The Closure Library Authors. All Rights Reserved.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS-IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
+/**
+ * @license long.js (c) 2013 Daniel Wirtz <dcode@dcode.io>
+ * Released under the Apache License, Version 2.0
+ * see: https://github.com/dcodeIO/long.js for details
+ */
+(function (global) {
     /**
      * Constructs a 64 bit two's-complement integer, given its low and high 32 bit values as *signed* integers.
      *  See the from* functions below for more convenient ways of constructing Longs.
@@ -219,6 +238,8 @@
     function fromString(str, unsigned, radix) {
         if (str.length === 0)
             throw Error('empty string');
+        if (str === "NaN" || str === "Infinity" || str === "+Infinity" || str === "-Infinity")
+            return ZERO;
         if (typeof unsigned === 'number') {
             // For goog.math.long compatibility
             radix = unsigned,
@@ -226,10 +247,6 @@
         } else {
             unsigned = !!unsigned;
         }
-
-        if (str === "NaN" || str === "Infinity" || str === "+Infinity" || str === "-Infinity")
-            return unsigned ? UZERO : ZERO;
-
         radix = radix || 10;
         if (radix < 2 || 36 < radix)
             throw RangeError('radix');
@@ -245,7 +262,7 @@
         // minimize the calls to the very expensive emulated div.
         var radixToPower = fromNumber(pow_dbl(radix, 8));
 
-        var result = unsigned ? UZERO : ZERO;
+        var result = ZERO;
         for (var i = 0; i < str.length; i += 8) {
             var size = Math.min(8, str.length - i),
                 value = parseInt(str.substring(i, i + size), radix);
@@ -495,8 +512,10 @@
                     div = this.div(radixLong),
                     rem1 = div.mul(radixLong).sub(this);
                 return div.toString(radix) + rem1.toInt().toString(radix);
-            } else
+            } else {
+                //Bridge fix - only numbers in radix 10 can have "-" in string representation
                 return (((typeof radix === "undefined") || (radix === 10)) ? "-" : "") + this.neg().toString(radix);
+            }
         }
 
         // Do several (6) digits each time through the loop, so as to
@@ -853,15 +872,15 @@
      */
     LongPrototype.multiply = function multiply(multiplier) {
         if (this.isZero())
-            return this.unsigned ? UZERO : ZERO;
+            return ZERO;
         if (!isLong(multiplier))
             multiplier = fromValue(multiplier);
         if (multiplier.isZero())
-            return this.unsigned ? UZERO : ZERO;
+            return ZERO;
         if (this.eq(MIN_VALUE))
-            return multiplier.isOdd() ? MIN_VALUE : (this.unsigned ? UZERO : ZERO);
+            return multiplier.isOdd() ? MIN_VALUE : ZERO;
         if (multiplier.eq(MIN_VALUE))
-            return this.isOdd() ? MIN_VALUE : (this.unsigned ? UZERO : ZERO);
+            return this.isOdd() ? MIN_VALUE : ZERO;
 
         if (this.isNegative()) {
             if (multiplier.isNegative())
@@ -922,7 +941,8 @@
     LongPrototype.mul = LongPrototype.multiply;
 
     /**
-     * Returns this Long divided by the specified.
+     * Returns this Long divided by the specified. The result is signed if this Long is signed or
+     *  unsigned if this Long is unsigned.
      * @param {!Long|number|string} divisor Divisor
      * @returns {!Long} Quotient
      * @expose
@@ -935,38 +955,51 @@
         if (this.isZero())
             return this.unsigned ? UZERO : ZERO;
         var approx, rem, res;
-        if (this.eq(MIN_VALUE)) {
-            if (divisor.eq(ONE) || divisor.eq(NEG_ONE))
-                return MIN_VALUE;  // recall that -MIN_VALUE == MIN_VALUE
-            else if (divisor.eq(MIN_VALUE))
-                return ONE;
-            else {
-                // At this point, we have |other| >= 2, so |this/other| < |MIN_VALUE|.
-                var halfThis = this.shr(1);
-                approx = halfThis.div(divisor).shl(1);
-                if (approx.eq(ZERO)) {
-                    return divisor.isNegative() ? ONE : NEG_ONE;
-                } else {
-                    rem = this.sub(divisor.mul(approx));
-                    res = approx.add(rem.div(divisor));
-                    return res;
+        if (!this.unsigned) {
+            if (this.eq(MIN_VALUE)) {
+                if (divisor.eq(ONE) || divisor.eq(NEG_ONE))
+                    return MIN_VALUE;  // recall that -MIN_VALUE == MIN_VALUE
+                else if (divisor.eq(MIN_VALUE))
+                    return ONE;
+                else {
+                    // At this point, we have |other| >= 2, so |this/other| < |MIN_VALUE|.
+                    var halfThis = this.shr(1);
+                    approx = halfThis.div(divisor).shl(1);
+                    if (approx.eq(ZERO)) {
+                        return divisor.isNegative() ? ONE : NEG_ONE;
+                    } else {
+                        rem = this.sub(divisor.mul(approx));
+                        res = approx.add(rem.div(divisor));
+                        return res;
+                    }
                 }
-            }
-        } else if (divisor.eq(MIN_VALUE))
-            return this.unsigned ? UZERO : ZERO;
-        if (this.isNegative()) {
-            if (divisor.isNegative())
-                return this.neg().div(divisor.neg());
-            return this.neg().div(divisor).neg();
-        } else if (divisor.isNegative())
-            return this.div(divisor.neg()).neg();
+            } else if (divisor.eq(MIN_VALUE))
+                return this.unsigned ? UZERO : ZERO;
+            if (this.isNegative()) {
+                if (divisor.isNegative())
+                    return this.neg().div(divisor.neg());
+                return this.neg().div(divisor).neg();
+            } else if (divisor.isNegative())
+                return this.div(divisor.neg()).neg();
+        } else if (!divisor.unsigned)
+            divisor = divisor.toUnsigned();
+
+        // The algorithm below has not been made for unsigned longs. It's therefore
+        // required to take special care of the MSB prior to running it.
+        if (this.unsigned) {
+            if (divisor.gt(this))
+                return UZERO;
+            if (divisor.gt(this.shru(1))) // 15 >>> 1 = 7 ; with divisor = 8 ; true
+                return UONE;
+            res = UZERO;
+        } else
+            res = ZERO;
 
         // Repeat the following until the remainder is less than other:  find a
         // floating-point that approximates remainder / other *from below*, add this
         // into the result, and subtract it from the remainder.  It is critical that
         // the approximate value is less than or equal to the real value so that the
         // remainder never becomes negative.
-        res = this.unsigned ? UZERO : ZERO;
         rem = this;
         while (rem.gte(divisor)) {
             // Approximate the result of division. This may be a little greater or
