@@ -1,6 +1,6 @@
 ﻿using Bridge;
 
-namespace System.Text.RegularExpressions.CoreFx
+namespace System.Text.RegularExpressions
 {
     /// <summary>
     /// Provides enumerated values to use to set regular expression options.

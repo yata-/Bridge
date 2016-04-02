@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using Bridge;
 
-namespace System.Text.RegularExpressions.CoreFx
+namespace System.Text.RegularExpressions
 {
     /// <summary>
     /// Represents the set of captures made by a single capturing group.

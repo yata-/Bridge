@@ -1,7 +1,7 @@
 using System.Collections;
 using Bridge;
 
-namespace System.Text.RegularExpressions.CoreFx
+namespace System.Text.RegularExpressions
 {
     /// <summary>
     /// Returns the set of captured groups in a single match.

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions.CoreFx;
+using System.Text.RegularExpressions;
 using Bridge.Test;
 
-namespace Bridge.ClientTest.Text.RegularExpressions.Entities
+namespace Bridge.ClientTest.Text.RegularExpressions
 {
     [Category(Constants.MODULE_REGEX)]
     [TestFixture(TestNameFormat = "Regex Entities - {0}")]

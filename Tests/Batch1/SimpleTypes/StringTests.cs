@@ -1,13 +1,10 @@
-﻿using Bridge;
-using Bridge.Html5;
+﻿using Bridge.Html5;
 using Bridge.Test;
-
-using Bridge.ClientTest;
+using Bridge.Text.RegularExpressions;
 
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 
 namespace Bridge.ClientTest.SimpleTypes
 {

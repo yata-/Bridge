@@ -1,4 +1,4 @@
-﻿using System.Text.RegularExpressions.CoreFx;
+﻿using System.Text.RegularExpressions;
 using Bridge.Test;
 
 namespace Bridge.ClientTest.Text.RegularExpressions

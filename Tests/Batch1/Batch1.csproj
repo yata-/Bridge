@@ -288,7 +288,7 @@
     <Compile Include="SimpleTypes\TimeSpanTests.cs" />
     <Compile Include="SimpleTypes\ByteTests.cs" />
     <Compile Include="Collections\Generic\GenericDictionaryTests.cs" />
-    <Compile Include="Text\RegularExpressions\RegexTests.cs" />
+    <Compile Include="Text\RegularExpressions\BridgeRegexTests.cs" />
     <Compile Include="Text\StringBuilderTests.cs" />
     <Compile Include="Collections\Generic\ListTests.cs" />
     <Compile Include="SimpleTypes\UInt16Tests.cs" />

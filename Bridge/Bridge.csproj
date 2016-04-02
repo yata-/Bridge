@@ -227,8 +227,8 @@
     <Compile Include="System\Runtime.cs" />
     <Compile Include="System\String.cs" />
     <Compile Include="System\Stubs.cs" />
-    <Compile Include="System\Text\Regex.cs" />
-    <Compile Include="System\Text\RegexMatch.cs" />
+    <Compile Include="Bridge\Text\RegularExpressions\Regex.cs" />
+    <Compile Include="Bridge\Text\RegularExpressions\RegexMatch.cs" />
     <Compile Include="System\TimeSpan.cs" />
     <Compile Include="System\Any.cs" />
     <Compile Include="System\Tuple.cs" />
@@ -693,7 +693,7 @@
     <EmbeddedResource Include="Resources\list" />
     <EmbeddedResource Include="Resources\Locales\ru-RU.js" />
     <Content Include="Resources\Char.js" />
-    <Content Include="Resources\Text\Regex.js" />
+    <Content Include="Resources\Text\BridgeRegex.js" />
     <Content Include="Resources\Text\StringBuilder.js" />
     <Content Include="Resources\TimeSpan.js" />
     <Content Include="Resources\Integer.js" />
@@ -736,6 +736,7 @@
       <Path>$(SolutionDir).build\specs\Bridge.Dev.nuspec</Path>
     </NuGetPackageSourcePath>
   </ItemGroup>
+  <ItemGroup />
   <Import Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " Project="$(SolutionDir)\.build\common\NuGet.Build.Package.targets" />
   <Target Name="CleanProjectNuGetOutput" BeforeTargets="Clean">
     <ItemGroup>

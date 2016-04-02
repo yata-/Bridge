@@ -17,7 +17,7 @@
   <file name="Date.js" />
   <file name="TimeSpan.js" />
   <file name="Text/StringBuilder.js" />
-  <file name="Text/Regex.js" />
+  <file name="Text/BridgeRegex.js" />
   <file name="Diagnostics.js" />
   <file name="Collections/Interfaces.js" path="Collections" />
   <file name="Collections/CustomEnumerator.js" path="Collections" />
@@ -66,7 +66,7 @@
     <include name="Date.js" />
     <include name="TimeSpan.js" />
     <include name="Text/StringBuilder.js" />
-    <include name="Text/Regex.js" />
+    <include name="Text/BridgeRegex.js" />
     <include name="Diagnostics.js" />
     <include name="Array.js" />
     <include name="Collections/Interfaces.js" />

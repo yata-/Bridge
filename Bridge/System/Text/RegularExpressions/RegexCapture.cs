@@ -1,6 +1,6 @@
 ﻿using Bridge;
 
-namespace System.Text.RegularExpressions.CoreFx
+namespace System.Text.RegularExpressions
 {
     /// <summary>
     /// Represents the results from a single successful subexpression capture.

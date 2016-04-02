@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using Bridge;
 
-namespace System.Text.RegularExpressions.CoreFx
+namespace System.Text.RegularExpressions
 {
     /// <summary>
     /// Represents the set of successful matches found by iteratively applying a regular expression pattern to the input string.

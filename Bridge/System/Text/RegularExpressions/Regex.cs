@@ -1,6 +1,6 @@
 ﻿using Bridge;
 
-namespace System.Text.RegularExpressions.CoreFx
+namespace System.Text.RegularExpressions
 {
     [Name("Bridge.Text.RegularExpressions.Regex")]
     public sealed class Regex
