@@ -478,6 +478,13 @@ Bridge.Long.prototype.xor = function (l) {
 };
 
 Bridge.Long.check = function (v, tp) {
+    if (Bridge.Int.isInfinite(v)) {
+        if (tp === Bridge.Long || tp === Bridge.ULong) {
+            return tp.MinValue;
+        }
+        return tp.min;
+    }
+
     if (!v) {
         return null;
     }
@@ -520,35 +527,35 @@ Bridge.Long.check = function (v, tp) {
 };
 
 Bridge.Long.clip8 = function(x) {
-    return x ? Bridge.Int.sxb(x.toNumber() & 0xff) : null;
+    return x ? Bridge.Int.sxb(x.toNumber() & 0xff) : (Bridge.Int.isInfinite(x) ? Bridge.SByte.min : null);
 };
 
 Bridge.Long.clipu8 = function (x) {
-    return x ? x.toNumber() & 0xff : null;
+    return x ? x.toNumber() & 0xff : (Bridge.Int.isInfinite(x) ? Bridge.Byte.min : null);
 };
 
 Bridge.Long.clip16 = function (x) {
-    return x ? Bridge.Int.sxs(x.toNumber() & 0xffff) : null;
+    return x ? Bridge.Int.sxs(x.toNumber() & 0xffff) : (Bridge.Int.isInfinite(x) ? Bridge.Int16.min : null);
 };
 
 Bridge.Long.clipu16 = function (x) {
-    return x ? x.toNumber() & 0xffff : null;
+    return x ? x.toNumber() & 0xffff : (Bridge.Int.isInfinite(x) ? Bridge.UInt16.min : null);
 };
 
 Bridge.Long.clip32 = function (x) {
-    return x ? x.toNumber() | 0 : null;
+    return x ? x.toNumber() | 0 : (Bridge.Int.isInfinite(x) ? Bridge.Int32.min : null);
 };
 
 Bridge.Long.clipu32 = function (x) {
-    return x ? x.toNumber() >>> 0 : null;
+    return x ? x.toNumber() >>> 0 : (Bridge.Int.isInfinite(x) ? Bridge.UInt32.min : null);
 };
 
 Bridge.Long.clip64 = function (x) {
-    return x ? new Bridge.Long(x.value.toSigned()) : null;
+    return x ? new Bridge.Long(x.value.toSigned()) : (Bridge.Int.isInfinite(x) ? Bridge.Long.MinValue : null);
 };
 
 Bridge.Long.clipu64 = function (x) {
-    return x ? new Bridge.ULong(x.value.toUnsigned()) : null;
+    return x ? new Bridge.ULong(x.value.toUnsigned()) : (Bridge.Int.isInfinite(x) ? Bridge.ULong.MinValue : null);
 };
 
 Bridge.Long.Zero = Bridge.Long(Bridge.$Long.ZERO);

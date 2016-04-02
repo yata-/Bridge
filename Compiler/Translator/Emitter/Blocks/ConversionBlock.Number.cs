@@ -235,7 +235,7 @@ namespace Bridge.Translator
         {
             var toFloat = Helpers.IsFloatType(expectedType, block.Emitter.Resolver);
 
-            if (toFloat)
+            if (toFloat || (block.Emitter.IsJavaScriptOverflowMode && !InsideOverflowContext(block.Emitter, expression)))
             {
                 block.Write("Bridge.Decimal.toFloat");
                 if (!(expression is CastExpression && ((CastExpression)expression).Expression is ParenthesizedExpression))
@@ -270,7 +270,12 @@ namespace Bridge.Translator
             {
                 string action = null;
                 expectedType = NullableType.IsNullable(expectedType) ? NullableType.GetUnderlyingType(expectedType) : expectedType;
-                if (expectedType.IsKnownType(KnownTypeCode.Char))
+
+                if (block.Emitter.IsJavaScriptOverflowMode && !InsideOverflowContext(block.Emitter, expression))
+                {
+                    action = "toNumber";
+                }
+                else if (expectedType.IsKnownType(KnownTypeCode.Char))
                 {
                     action = "clipu16";
                 }
@@ -336,6 +341,11 @@ namespace Bridge.Translator
 
         private static void NarrowingNumericOrEnumerationConversion(ConversionBlock block, Expression expression, IType targetType, bool fromFloatingPoint, bool isChecked, bool isNullable, bool isExplicit = true)
         {
+            if (block.Emitter.IsJavaScriptOverflowMode && !InsideOverflowContext(block.Emitter, expression))
+            {
+                return;
+            }
+
             if (isChecked)
             {
                 block.Write("Bridge.Int.check(");
@@ -359,7 +369,7 @@ namespace Bridge.Translator
             }
             else
             {
-                if (isNullable)
+                if (isNullable || fromFloatingPoint)
                 {
                     targetType = NullableType.IsNullable(targetType) ? NullableType.GetUnderlyingType(targetType) : targetType;
                     string action = null;
@@ -394,12 +404,10 @@ namespace Bridge.Translator
                     else if (targetType.IsKnownType(KnownTypeCode.Int64))
                     {
                         action = "clip64";
-                        return;
                     }
                     else if (targetType.IsKnownType(KnownTypeCode.UInt64))
                     {
                         action = "clipu64";
-                        return;
                     }
                     else
                     {
@@ -606,6 +614,23 @@ namespace Bridge.Translator
             }
 
             return !emitter.AssemblyInfo.OverflowMode.HasValue || emitter.AssemblyInfo.OverflowMode == OverflowMode.Unchecked;
+        }
+
+        public static bool InsideOverflowContext(IEmitter emitter, Expression expression)
+        {
+            var found = false;
+            expression.GetParent(p =>
+            {
+                if (p is UncheckedExpression || p is UncheckedStatement || p is CheckedExpression || p is CheckedStatement)
+                {
+                    found = true;
+                    return true;
+                }
+
+                return false;
+            });
+
+            return found;
         }
     }
 }
