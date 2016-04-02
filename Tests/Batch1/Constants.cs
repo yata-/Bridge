@@ -77,6 +77,8 @@ namespace Bridge.ClientTest
         public const string MODULE_OUTOFMEMORYEXCEPTION = PREFIX_EXCEPTIONS; // + "OutOfMemoryException";
         public const string MODULE_INDEXOUTOFRANGEEXCEPTION = PREFIX_EXCEPTIONS; // + "IndexOutOfRangeException";
         public const string MODULE_SYSTEMEXCEPTION = PREFIX_EXCEPTIONS; // + "SystemException";
+        public const string MODULE_TIMOUTEXCEPTION = PREFIX_EXCEPTIONS; // + "TimeoutException";
+        public const string MODULE_REGEXMATCHTIMEOUTEXCEPTION = PREFIX_EXCEPTIONS; // + "RegexMatchTimeoutException";
         public const string MODULE_ARITHMETICEXCEPTION = PREFIX_EXCEPTIONS; // + "ArithmeticException";
         public const string MODULE_FORMATEXCEPTION = PREFIX_EXCEPTIONS; // + "FormatException";
         public const string MODULE_INVALIDOPERATIONEXCEPTION = PREFIX_EXCEPTIONS; // + "InvalidOperationException";

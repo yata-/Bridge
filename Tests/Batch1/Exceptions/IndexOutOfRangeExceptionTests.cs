@@ -5,7 +5,7 @@ using System;
 
 namespace Bridge.ClientTest.Exceptions
 {
-    [Category(Constants.PREFIX_EXCEPTIONS)]
+    [Category(Constants.MODULE_INDEXOUTOFRANGEEXCEPTION)]
     [TestFixture(TestNameFormat = "IndexOutOfRangeException - {0}")]
     public class IndexOutOfRangeExceptionTests
     {
