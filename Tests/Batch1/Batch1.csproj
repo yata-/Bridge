@@ -263,6 +263,14 @@
     <Compile Include="Linq\TestLinqRestrictionOperators.cs" />
     <Compile Include="Linq\TestLinqSetOperators.cs" />
     <Compile Include="SimpleTypes\TestVersion.cs" />
+    <Compile Include="Text\RegularExpressions\Msdn\RegexEscapeTests.cs" />
+    <Compile Include="Text\RegularExpressions\Msdn\RegexIsMatchTests.cs" />
+    <Compile Include="Text\RegularExpressions\Msdn\RegexMatchesTests.cs" />
+    <Compile Include="Text\RegularExpressions\Msdn\RegexMatchTests.cs" />
+    <Compile Include="Text\RegularExpressions\Msdn\RegexReplaceTests.cs" />
+    <Compile Include="Text\RegularExpressions\Msdn\RegexSplitTests.cs" />
+    <Compile Include="Text\RegularExpressions\RegexEntitiesTests.cs" />
+    <Compile Include="Text\RegularExpressions\RegexTestBase.cs" />
     <Compile Include="Threading\CancellationTokenTests.cs" />
     <Compile Include="Threading\Tasks\AsyncTests.cs" />
     <Compile Include="Threading\Tasks\PromiseTests.cs" />
@@ -313,7 +321,7 @@
     <Compile Include="SimpleTypes\TimeSpanTests.cs" />
     <Compile Include="SimpleTypes\ByteTests.cs" />
     <Compile Include="Collections\Generic\GenericDictionaryTests.cs" />
-    <Compile Include="Text\RegularExpressions\RegexTests.cs" />
+    <Compile Include="Text\RegularExpressions\BridgeRegexTests.cs" />
     <Compile Include="Text\StringBuilderTests.cs" />
     <Compile Include="Collections\Generic\ListTests.cs" />
     <Compile Include="SimpleTypes\UInt16Tests.cs" />
