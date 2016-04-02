@@ -1,8 +1,5 @@
 using Bridge.Test;
 
-using System;
-using Bridge.Html5;
-
 namespace Bridge.ClientTest.BridgeIssues
 {
     [Category(Constants.MODULE_ISSUES)]
@@ -12,14 +9,15 @@ namespace Bridge.ClientTest.BridgeIssues
         [Test]
         public static void TestLongIssues()
         {
-            Assert.True(IntUintEquality(0, 0));
-            Assert.True(Precedence());
+            Assert.True(IntUintEquality(0, 0), "int == uint uses .Equals() between long: Bridge.Long(a).equals(Bridge.Long(b))");
+            Assert.True(Precedence(), "Correct order for `a += b >> 1` -> `(a + (b >>> 1))`");
         }
 
         static bool IntUintEquality(int a, uint b)
         {
             return a == b;
         }
+
         static bool Precedence()
         {
             uint a = 1;
