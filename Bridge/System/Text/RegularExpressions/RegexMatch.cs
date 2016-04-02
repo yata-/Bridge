@@ -33,11 +33,9 @@ namespace System.Text.RegularExpressions
         /// </summary>
         public extern virtual string Result(string replacement);
 
-#if !SILVERLIGHT
         /// <summary>
         /// Returns a Match instance equivalent to the one supplied that is suitable to share between multiple threads.
         /// </summary>
         public extern static Match Synchronized(Match inner);
-#endif
     }
 }

@@ -19,12 +19,10 @@ namespace System.Text.RegularExpressions
 
         #region Instance members
 
-#if !SILVERLIGHT || FEATURE_NETCORE
         /// <summary>
         /// Gets the time-out interval of the current instance.
         /// </summary>
         public extern TimeSpan MatchTimeout { get; }
-#endif
 
         /// <summary>
         /// Gets the options that were passed into the Regex constructor.
@@ -140,10 +138,11 @@ namespace System.Text.RegularExpressions
 
         #region Static members
 
-        /// <summary>
-        /// Gets or sets the maximum number of entries in the current static cache of compiled regular expressions.
-        /// </summary>
-        public static extern int CacheSize { get; set; }
+//TODO: Enable when Cache is implemented.
+        ///// <summary>
+        ///// Gets or sets the maximum number of entries in the current static cache of compiled regular expressions.
+        ///// </summary>
+        //public static extern int CacheSize { get; set; }
 
 //#if !SILVERLIGHT
 //        /// <summary>
@@ -182,12 +181,10 @@ namespace System.Text.RegularExpressions
         /// </summary>
         public static extern bool IsMatch(string input, string pattern, RegexOptions options);
 
-#if !SILVERLIGHT || FEATURE_NETCORE
         /// <summary>
         /// Indicates whether the specified regular expression finds a match in the specified input string, using the specified matching options and time-out interval.
         /// </summary>
         public static extern bool IsMatch(string input, string pattern, RegexOptions options, TimeSpan matchTimeout);
-#endif
 
         /// <summary>
         /// Searches the specified input string for the first occurrence of the specified regular expression.
@@ -199,12 +196,10 @@ namespace System.Text.RegularExpressions
         /// </summary>
         public static extern Match Match(string input, string pattern, RegexOptions options);
 
-#if !SILVERLIGHT || FEATURE_NETCORE
         /// <summary>
         /// Searches the input string for the first occurrence of the specified regular expression, using the specified matching options and time-out interval.
         /// </summary>
         public static extern Match Match(string input, string pattern, RegexOptions options, TimeSpan matchTimeout);
-#endif
 
         /// <summary>
         /// Searches the specified input string for all occurrences of a specified regular expression.
@@ -216,12 +211,10 @@ namespace System.Text.RegularExpressions
         /// </summary>
         public static extern MatchCollection Matches(string input, string pattern, RegexOptions options);
 
-#if !SILVERLIGHT || FEATURE_NETCORE
         /// <summary>
         /// Searches the specified input string for all occurrences of a specified regular expression, using the specified matching options and time-out interval.
         /// </summary>
         public static extern MatchCollection Matches(string input, string pattern, RegexOptions options, TimeSpan matchTimeout);
-#endif
 
         /// <summary>
         /// In a specified input string, replaces all strings that match a specified regular expression with a specified replacement string.
@@ -233,12 +226,10 @@ namespace System.Text.RegularExpressions
         /// </summary>
         public static extern string Replace(string input, string pattern, string replacement, RegexOptions options);
 
-#if !SILVERLIGHT || FEATURE_NETCORE
         /// <summary>
         /// In a specified input string, replaces all strings that match a specified regular expression with a specified replacement string. Additional parameters specify options that modify the matching operation and a time-out interval if no match is found.
         /// </summary>
         public static extern string Replace(string input, string pattern, string replacement, RegexOptions options, TimeSpan matchTimeout);
-#endif
 
         /// <summary>
         /// In a specified input string, replaces all strings that match a specified regular expression with a string returned by a <see cref="MatchEvaluator"/> delegate.
@@ -250,12 +241,10 @@ namespace System.Text.RegularExpressions
         /// </summary>
         public static extern string Replace(string input, string pattern, MatchEvaluator evaluator, RegexOptions options);
 
-#if !SILVERLIGHT || FEATURE_NETCORE
         /// <summary>
         /// In a specified input string, replaces all substrings that match a specified regular expression with a string returned by a <see cref="MatchEvaluator"/> delegate. Additional parameters specify options that modify the matching operation and a time-out interval if no match is found.
         /// </summary>
         public static extern string Replace(string input, string pattern, MatchEvaluator evaluator, RegexOptions options, TimeSpan matchTimeout);
-#endif
 
         /// <summary>
         /// Splits an input string into an array of substrings at the positions defined by a regular expression pattern.
@@ -267,12 +256,10 @@ namespace System.Text.RegularExpressions
         /// </summary>
         public static extern string[] Split(string input, string pattern, RegexOptions options);
 
-#if !SILVERLIGHT || FEATURE_NETCORE
         /// <summary>
         /// Splits an input string into an array of substrings at the positions defined by a specified regular expression pattern. Additional parameters specify options that modify the matching operation and a time-out interval if no match is found.
         /// </summary>
         public static extern string[] Split(string input, string pattern, RegexOptions options, TimeSpan matchTimeout);
-#endif
 
         #endregion
     }
