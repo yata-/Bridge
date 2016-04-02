@@ -4217,6 +4217,38 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1144', {
+        statics: {
+            testStringFormat: function () {
+                var z = Bridge.Decimal(-1.122);
+                Bridge.Test.Assert.areEqual("-1.12", Bridge.Int.format(z, "##.##"));
+                Bridge.Test.Assert.areEqual("-1.12", Bridge.Int.format(z, "##.00"));
+                Bridge.Test.Assert.areEqual("-01.12", Bridge.Int.format(z, "00.##"));
+    
+                var x = Bridge.Decimal(0.0);
+                Bridge.Test.Assert.areEqual("0", Bridge.Int.format(x, "#0"));
+                Bridge.Test.Assert.areEqual("", Bridge.Int.format(x, "##"));
+                Bridge.Test.Assert.areEqual("", Bridge.Int.format(x, "##.##"));
+                Bridge.Test.Assert.areEqual(".0", Bridge.Int.format(x, "##.0#"));
+                Bridge.Test.Assert.areEqual(".00", Bridge.Int.format(x, "##.#0"));
+                Bridge.Test.Assert.areEqual(".00", Bridge.Int.format(x, "##.00"));
+    
+                var y = Bridge.Decimal(0.2);
+                Bridge.Test.Assert.areEqual("", Bridge.Int.format(y, "##"));
+                Bridge.Test.Assert.areEqual(".2", Bridge.Int.format(y, "##.##"));
+                Bridge.Test.Assert.areEqual(".2", Bridge.Int.format(y, "##.0#"));
+                Bridge.Test.Assert.areEqual(".20", Bridge.Int.format(y, "##.#0"));
+                Bridge.Test.Assert.areEqual(".20", Bridge.Int.format(y, "##.00"));
+    
+                var d = Bridge.Decimal(2.0);
+                Bridge.Test.Assert.areEqual("2", Bridge.Int.format(d, "."));
+                Bridge.Test.Assert.areEqual("2", Bridge.Int.format(d, ".#"));
+                Bridge.Test.Assert.areEqual("2", Bridge.Int.format(d, ".##"));
+                Bridge.Test.Assert.areEqual("%200", Bridge.Int.format(d, "%.##"));
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
@@ -11278,7 +11310,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             },
             n435: function () {
                 var i = 0;
-                Bridge.Test.Assert.areEqual$1("0E+000", Bridge.Int.format(i, "E"), "i.Format(\"E\")");
+                Bridge.Test.Assert.areEqual$1("0.000000E+000", Bridge.Int.format(i, "E"), "i.Format(\"E\")");
                 Bridge.Test.Assert.areEqual$1("a", Bridge.Int.format(i, "a"), "Test custom formatting in \"use strict\" mode");
             },
             n436: function () {
@@ -14279,6 +14311,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             MODULE_NUMBERFORMATINFO: "NumberFormatInfo",
             MODULE_CULTUREINFO: "СultureInfo",
             MODULE_PROPERTYACCESSOR: "Property accessor",
+            MODULE_NUMBERFORMATSPECIFIERS: "Number format specifiers",
             MODULE_RUNTIMEHELPERS: "Utilities",
             MODULE_ENVIRONMENT: "Utilities",
             MODULE_NOTSUPPORTEDEXCEPTION: "Exceptions",
@@ -15542,43 +15575,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define('Bridge.ClientTest.DateTimeFormatInfoTests', {
-        typePropertiesAreCorrect: function () {
-            var format = Bridge.DateTimeFormatInfo.invariantInfo;
-            Bridge.Test.Assert.areEqual("Bridge.DateTimeFormatInfo", Bridge.getTypeName(Bridge.DateTimeFormatInfo));
-            Bridge.Test.Assert.$true(true);
-        },
-        getFormatWorks: function () {
-            var format = Bridge.DateTimeFormatInfo.invariantInfo;
-            Bridge.Test.Assert.areEqual(null, format.getFormat(Bridge.Int32));
-            Bridge.Test.Assert.areEqual(format, format.getFormat(Bridge.DateTimeFormatInfo));
-        },
-        invariantWorks: function () {
-            var format = Bridge.DateTimeFormatInfo.invariantInfo;
-            Bridge.Test.Assert.areEqual("AM", format.amDesignator);
-            Bridge.Test.Assert.areEqual("PM", format.pmDesignator);
-    
-            Bridge.Test.Assert.areEqual("/", format.dateSeparator);
-            Bridge.Test.Assert.areEqual(":", format.timeSeparator);
-    
-            Bridge.Test.Assert.areEqual("dddd, dd MMMM yyyy HH:mm:ss", format.fullDateTimePattern);
-            Bridge.Test.Assert.areEqual("yyyy MMMM", format.yearMonthPattern);
-    
-            Bridge.Test.Assert.areEqual("yyyy'-'MM'-'dd'T'HH':'mm':'ss", format.sortableDateTimePattern);
-    
-            Bridge.Test.Assert.areEqual("dddd, dd MMMM yyyy", format.longDatePattern);
-            Bridge.Test.Assert.areEqual("MM/dd/yyyy", format.shortDatePattern);
-    
-            Bridge.Test.Assert.areEqual("HH:mm:ss", format.longTimePattern);
-            Bridge.Test.Assert.areEqual("HH:mm", format.shortTimePattern);
-    
-            Bridge.Test.Assert.areEqual(0, format.firstDayOfWeek);
-            Bridge.Test.Assert.areDeepEqual(["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], format.dayNames);
-    
-            Bridge.Test.Assert.areDeepEqual(["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", ""], format.monthNames);
-        }
-    });
-    
     Bridge.define('Bridge.ClientTest.DecimalMathTests', {
         statics: {
             useLogging: false,
@@ -16489,6 +16485,113 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Exceptions.CommonExceptionTests', {
+        throwingAndCatchingExceptionsWorks: function () {
+            try {
+                throw new Bridge.ClientTest.Exceptions.CommonExceptionTests.E2("The message");
+                Bridge.Test.Assert.fail$1("Should not get to statement after throw");
+            }
+            catch ($e1) {
+                $e1 = Bridge.Exception.create($e1);
+                var e;
+                if (Bridge.is($e1, Bridge.ClientTest.Exceptions.CommonExceptionTests.E2)) {
+                    e = $e1;
+                    Bridge.Test.Assert.areEqual("The message", e.getMessage());
+                    return;
+                }
+                else {
+                    throw $e1;
+                }
+            }
+            Bridge.Test.Assert.fail$1("Should not get to statement after catch");
+        },
+        exceptionOfWrongTypeIsNotCaught: function () {
+            try {
+                throw new Bridge.ClientTest.Exceptions.CommonExceptionTests.E1("The message");
+                Bridge.Test.Assert.fail$1("Should not get to statement after throw");
+            }
+            catch ($e1) {
+                $e1 = Bridge.Exception.create($e1);
+                var e;
+                if (Bridge.is($e1, Bridge.ClientTest.Exceptions.CommonExceptionTests.E2)) {
+                    Bridge.Test.Assert.fail$1("Should not catch E2");
+                }
+                else if (Bridge.is($e1, Bridge.ClientTest.Exceptions.CommonExceptionTests.E1)) {
+                    e = $e1;
+                    Bridge.Test.Assert.areEqual("The message", e.getMessage());
+                    return;
+                }
+                else {
+                    throw $e1;
+                }
+            }
+            Bridge.Test.Assert.fail$1("Should not get to statement after catch");
+        },
+        canCatchExceptionAsBaseType: function () {
+            try {
+                throw new Bridge.ClientTest.Exceptions.CommonExceptionTests.E2("The message");
+                Bridge.Test.Assert.fail$1("Should not get to statement after throw");
+            }
+            catch ($e1) {
+                $e1 = Bridge.Exception.create($e1);
+                var e;
+                if (Bridge.is($e1, Bridge.ClientTest.Exceptions.CommonExceptionTests.E1)) {
+                    e = $e1;
+                    Bridge.Test.Assert.areEqual("The message", e.getMessage());
+                    return;
+                }
+                else {
+                    throw $e1;
+                }
+            }
+            Bridge.Test.Assert.fail$1("Should not get to statement after catch");
+        },
+        canCatchStringAsException: function () {
+            try {
+                (function() {{ throw 'The message'; }})();
+                Bridge.Test.Assert.fail$1("Should not get to statement after throw");
+            }
+            catch ($e1) {
+                $e1 = Bridge.Exception.create($e1);
+                var e;
+                if (Bridge.is($e1, Bridge.ClientTest.Exceptions.CommonExceptionTests.E1)) {
+                    Bridge.Test.Assert.fail$1("Should not catch E1");
+                }
+                else {
+                    e = $e1;
+                    Bridge.Test.Assert.areEqual("The message", e.getMessage());
+                    return;
+                }
+            }
+            Bridge.Test.Assert.fail$1("Should not get to statement after catch");
+        },
+        canCatchStringAsCatchAll: function () {
+            try {
+                (function() {{ throw 'The message'; }})();
+                Bridge.Test.Assert.fail$1("Should not get to statement after throw");
+            }
+            catch ($e1) {
+                $e1 = Bridge.Exception.create($e1);
+                if (Bridge.is($e1, Bridge.ClientTest.Exceptions.CommonExceptionTests.E1)) {
+                    Bridge.Test.Assert.fail$1("Should not catch E1");
+                }
+                else {
+                    Bridge.Test.Assert.$true(true);
+                    return;
+                }
+            }
+            Bridge.Test.Assert.fail$1("Should not get to statement after catch");
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Exceptions.CommonExceptionTests.E1', {
+        inherits: [Bridge.Exception],
+        constructor: function (message) {
+            Bridge.Exception.prototype.$constructor.call(this, message);
+    
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Exceptions.CultureNotFoundExceptionTests', {
         statics: {
             DefaultMessage: "Culture is not supported."
@@ -17153,110 +17256,366 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define('Bridge.ClientTest.ExceptionTests', {
-        throwingAndCatchingExceptionsWorks: function () {
-            try {
-                throw new Bridge.ClientTest.ExceptionTests.E2("The message");
-                Bridge.Test.Assert.fail$1("Should not get to statement after throw");
-            }
-            catch ($e1) {
-                $e1 = Bridge.Exception.create($e1);
-                var e;
-                if (Bridge.is($e1, Bridge.ClientTest.ExceptionTests.E2)) {
-                    e = $e1;
-                    Bridge.Test.Assert.areEqual("The message", e.getMessage());
-                    return;
-                }
-                else {
-                    throw $e1;
-                }
-            }
-            Bridge.Test.Assert.fail$1("Should not get to statement after catch");
+    Bridge.define('Bridge.ClientTest.Format.DateTimeFormatInfoTests', {
+        typePropertiesAreCorrect: function () {
+            var format = Bridge.DateTimeFormatInfo.invariantInfo;
+            Bridge.Test.Assert.areEqual("Bridge.DateTimeFormatInfo", Bridge.getTypeName(Bridge.DateTimeFormatInfo));
+            Bridge.Test.Assert.$true(true);
         },
-        exceptionOfWrongTypeIsNotCaught: function () {
-            try {
-                throw new Bridge.ClientTest.ExceptionTests.E1("The message");
-                Bridge.Test.Assert.fail$1("Should not get to statement after throw");
-            }
-            catch ($e1) {
-                $e1 = Bridge.Exception.create($e1);
-                var e;
-                if (Bridge.is($e1, Bridge.ClientTest.ExceptionTests.E2)) {
-                    Bridge.Test.Assert.fail$1("Should not catch E2");
-                }
-                else if (Bridge.is($e1, Bridge.ClientTest.ExceptionTests.E1)) {
-                    e = $e1;
-                    Bridge.Test.Assert.areEqual("The message", e.getMessage());
-                    return;
-                }
-                else {
-                    throw $e1;
-                }
-            }
-            Bridge.Test.Assert.fail$1("Should not get to statement after catch");
+        getFormatWorks: function () {
+            var format = Bridge.DateTimeFormatInfo.invariantInfo;
+            Bridge.Test.Assert.areEqual(null, format.getFormat(Bridge.Int32));
+            Bridge.Test.Assert.areEqual(format, format.getFormat(Bridge.DateTimeFormatInfo));
         },
-        canCatchExceptionAsBaseType: function () {
-            try {
-                throw new Bridge.ClientTest.ExceptionTests.E2("The message");
-                Bridge.Test.Assert.fail$1("Should not get to statement after throw");
-            }
-            catch ($e1) {
-                $e1 = Bridge.Exception.create($e1);
-                var e;
-                if (Bridge.is($e1, Bridge.ClientTest.ExceptionTests.E1)) {
-                    e = $e1;
-                    Bridge.Test.Assert.areEqual("The message", e.getMessage());
-                    return;
-                }
-                else {
-                    throw $e1;
-                }
-            }
-            Bridge.Test.Assert.fail$1("Should not get to statement after catch");
-        },
-        canCatchStringAsException: function () {
-            try {
-                (function() {{ throw 'The message'; }})();
-                Bridge.Test.Assert.fail$1("Should not get to statement after throw");
-            }
-            catch ($e1) {
-                $e1 = Bridge.Exception.create($e1);
-                var e;
-                if (Bridge.is($e1, Bridge.ClientTest.ExceptionTests.E1)) {
-                    Bridge.Test.Assert.fail$1("Should not catch E1");
-                }
-                else {
-                    e = $e1;
-                    Bridge.Test.Assert.areEqual("The message", e.getMessage());
-                    return;
-                }
-            }
-            Bridge.Test.Assert.fail$1("Should not get to statement after catch");
-        },
-        canCatchStringAsCatchAll: function () {
-            try {
-                (function() {{ throw 'The message'; }})();
-                Bridge.Test.Assert.fail$1("Should not get to statement after throw");
-            }
-            catch ($e1) {
-                $e1 = Bridge.Exception.create($e1);
-                if (Bridge.is($e1, Bridge.ClientTest.ExceptionTests.E1)) {
-                    Bridge.Test.Assert.fail$1("Should not catch E1");
-                }
-                else {
-                    Bridge.Test.Assert.$true(true);
-                    return;
-                }
-            }
-            Bridge.Test.Assert.fail$1("Should not get to statement after catch");
+        invariantWorks: function () {
+            var format = Bridge.DateTimeFormatInfo.invariantInfo;
+            Bridge.Test.Assert.areEqual("AM", format.amDesignator);
+            Bridge.Test.Assert.areEqual("PM", format.pmDesignator);
+    
+            Bridge.Test.Assert.areEqual("/", format.dateSeparator);
+            Bridge.Test.Assert.areEqual(":", format.timeSeparator);
+    
+            Bridge.Test.Assert.areEqual("dddd, dd MMMM yyyy HH:mm:ss", format.fullDateTimePattern);
+            Bridge.Test.Assert.areEqual("yyyy MMMM", format.yearMonthPattern);
+    
+            Bridge.Test.Assert.areEqual("yyyy'-'MM'-'dd'T'HH':'mm':'ss", format.sortableDateTimePattern);
+    
+            Bridge.Test.Assert.areEqual("dddd, dd MMMM yyyy", format.longDatePattern);
+            Bridge.Test.Assert.areEqual("MM/dd/yyyy", format.shortDatePattern);
+    
+            Bridge.Test.Assert.areEqual("HH:mm:ss", format.longTimePattern);
+            Bridge.Test.Assert.areEqual("HH:mm", format.shortTimePattern);
+    
+            Bridge.Test.Assert.areEqual(0, format.firstDayOfWeek);
+            Bridge.Test.Assert.areDeepEqual(["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], format.dayNames);
+    
+            Bridge.Test.Assert.areDeepEqual(["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", ""], format.monthNames);
         }
     });
     
-    Bridge.define('Bridge.ClientTest.ExceptionTests.E1', {
-        inherits: [Bridge.Exception],
-        constructor: function (message) {
-            Bridge.Exception.prototype.$constructor.call(this, message);
+    Bridge.define('Bridge.ClientTest.Format.NumberFormatInfoTests', {
+        typePropertiesAreCorrect: function () {
+            var format = Bridge.NumberFormatInfo.invariantInfo;
+            Bridge.Test.Assert.areEqual("Bridge.NumberFormatInfo", Bridge.getTypeName(Bridge.NumberFormatInfo));
+            Bridge.Test.Assert.$true(true);
+        },
+        getFormatWorks: function () {
+            var format = Bridge.NumberFormatInfo.invariantInfo;
+            Bridge.Test.Assert.areEqual(null, format.getFormat(Bridge.Int32));
+            Bridge.Test.Assert.areEqual(format, format.getFormat(Bridge.NumberFormatInfo));
+        },
+        invariantWorks: function () {
+            var format = Bridge.NumberFormatInfo.invariantInfo;
+            Bridge.Test.Assert.areEqual("NaN", format.nanSymbol);
+            Bridge.Test.Assert.areEqual("-", format.negativeSign);
+            Bridge.Test.Assert.areEqual("+", format.positiveSign);
+            Bridge.Test.Assert.areEqual("-Infinity", format.negativeInfinitySymbol);
+            Bridge.Test.Assert.areEqual("Infinity", format.positiveInfinitySymbol);
     
+            Bridge.Test.Assert.areEqual("%", format.percentSymbol);
+            Bridge.Test.Assert.areDeepEqual([3], format.percentGroupSizes);
+            Bridge.Test.Assert.areEqual(2, format.percentDecimalDigits);
+            Bridge.Test.Assert.areEqual(".", format.percentDecimalSeparator);
+            Bridge.Test.Assert.areEqual(",", format.percentGroupSeparator);
+            Bridge.Test.Assert.areEqual(0, format.percentPositivePattern);
+            Bridge.Test.Assert.areEqual(0, format.percentNegativePattern);
+    
+            Bridge.Test.Assert.areEqual("¤", format.currencySymbol);
+            Bridge.Test.Assert.areDeepEqual([3], format.currencyGroupSizes);
+            Bridge.Test.Assert.areEqual(2, format.currencyDecimalDigits);
+            Bridge.Test.Assert.areEqual(".", format.currencyDecimalSeparator);
+            Bridge.Test.Assert.areEqual(",", format.currencyGroupSeparator);
+            Bridge.Test.Assert.areEqual(0, format.currencyNegativePattern);
+            Bridge.Test.Assert.areEqual(0, format.currencyPositivePattern);
+    
+            Bridge.Test.Assert.areDeepEqual([3], format.numberGroupSizes);
+            Bridge.Test.Assert.areEqual(2, format.numberDecimalDigits);
+            Bridge.Test.Assert.areEqual(".", format.numberDecimalSeparator);
+            Bridge.Test.Assert.areEqual(",", format.numberGroupSeparator);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Format.NumberFormatSpecifiersTests', {
+        currencyFormatSpecifierWorks: function () {
+            var value = 12345.6789;
+            Bridge.Test.Assert.areEqual("¤12,345.68", Bridge.Int.format(value, "C"));
+            Bridge.Test.Assert.areEqual("¤12,345.68", Bridge.Int.format(value, "C2"));
+            Bridge.Test.Assert.areEqual("¤12,345.679", Bridge.Int.format(value, "C3"));
+            Bridge.Test.Assert.areEqual("12 345,679 ₽", Bridge.Int.format(value, "C3", Bridge.CultureInfo.getCultureInfo("ru-RU")));
+        },
+        decimalFormatSpecifierWorks: function () {
+            var value = 12345;
+            Bridge.Test.Assert.areEqual("12345", Bridge.Int.format(value, "D"));
+            Bridge.Test.Assert.areEqual("00012345", Bridge.Int.format(value, "D8"));
+            value = -12345;
+            Bridge.Test.Assert.areEqual("-12345", Bridge.Int.format(value, "D"));
+            Bridge.Test.Assert.areEqual("-00012345", Bridge.Int.format(value, "D8"));
+        },
+        exponentialFormatSpecifierWorks: function () {
+            var value = 12345.6789;
+            Bridge.Test.Assert.areEqual("1.234568E+004", Bridge.Int.format(value, "E"));
+            Bridge.Test.Assert.areEqual("1.2345678900E+004", Bridge.Int.format(value, "E10"));
+            Bridge.Test.Assert.areEqual("1.2346e+004", Bridge.Int.format(value, "e4"));
+            Bridge.Test.Assert.areEqual("1,234568E+004", Bridge.Int.format(value, "E", Bridge.CultureInfo.getCultureInfo("ru-RU")));
+        },
+        fixedPointFormatSpecifierWorks: function () {
+            var integerNumber = 17843;
+            Bridge.Test.Assert.areEqual("17843.00", Bridge.Int.format(integerNumber, "F"));
+    
+            integerNumber = -29541;
+            Bridge.Test.Assert.areEqual("-29541.000", Bridge.Int.format(integerNumber, "F3"));
+    
+            var doubleNumber = 18934.1879;
+            Bridge.Test.Assert.areEqual("18934.19", Bridge.Int.format(doubleNumber, "F"));
+            Bridge.Test.Assert.areEqual("18934", Bridge.Int.format(doubleNumber, "F0"));
+    
+            doubleNumber = -1898300.1987;
+            Bridge.Test.Assert.areEqual("-1898300.2", Bridge.Int.format(doubleNumber, "F1"));
+            Bridge.Test.Assert.areEqual("-1898300,199", Bridge.Int.format(doubleNumber, "F3", Bridge.CultureInfo.getCultureInfo("ru-RU")));
+        },
+        generalFormatSpecifierWorks: function () {
+            var number = 12345.6789;
+            Bridge.Test.Assert.areEqual("12345.6789", Bridge.Int.format(number, "G"));
+            Bridge.Test.Assert.areEqual("12345,6789", Bridge.Int.format(number, "G", Bridge.CultureInfo.getCultureInfo("ru-RU")));
+            Bridge.Test.Assert.areEqual("12345.68", Bridge.Int.format(number, "G7"));
+    
+            number = 2.3E-06;
+            Bridge.Test.Assert.areEqual("2.3E-06", Bridge.Int.format(number, "G"));
+            Bridge.Test.Assert.areEqual("2,3E-06", Bridge.Int.format(number, "G", Bridge.CultureInfo.getCultureInfo("ru-RU")));
+    
+            number = 0.0023;
+            Bridge.Test.Assert.areEqual("0.0023", Bridge.Int.format(number, "G"));
+    
+            number = 1234;
+            Bridge.Test.Assert.areEqual("1.2E+03", Bridge.Int.format(number, "G2"));
+    
+            number = Math.PI;
+            Bridge.Test.Assert.areEqual("3.1416", Bridge.Int.format(number, "G5"));
+        },
+        numericFormatSpecifierWorks: function () {
+            var dblValue = -12445.6789;
+            Bridge.Test.Assert.areEqual("-12,445.68", Bridge.Int.format(dblValue, "N"));
+            Bridge.Test.Assert.areEqual("-12 445,7", Bridge.Int.format(dblValue, "N1", Bridge.CultureInfo.getCultureInfo("ru-RU")));
+    
+            var intValue = 123456789;
+            Bridge.Test.Assert.areEqual("123,456,789.0", Bridge.Int.format(intValue, "N1"));
+        },
+        percentFormatSpecifierWorks: function () {
+            var number = 0.2468013;
+            Bridge.Test.Assert.areEqual("24.68 %", Bridge.Int.format(number, "P"));
+            Bridge.Test.Assert.areEqual("24,68%", Bridge.Int.format(number, "P", Bridge.CultureInfo.getCultureInfo("ru-RU")));
+            Bridge.Test.Assert.areEqual("24.7 %", Bridge.Int.format(number, "P1"));
+        },
+        roundTripFormatSpecifierWorks: function () {
+            var value = Math.PI;
+            Bridge.Test.Assert.areEqual("3.141592653589793", Bridge.Int.format(value, "r"));
+            Bridge.Test.Assert.areEqual("3,141592653589793", Bridge.Int.format(value, "r", Bridge.CultureInfo.getCultureInfo("ru-RU")));
+    
+            value = 1.623E-21;
+            Bridge.Test.Assert.areEqual("1.623E-21", Bridge.Int.format(value, "r"));
+        },
+        hexadecimalFormatSpecifierWorks: function () {
+            var value = 132190;
+            Bridge.Test.Assert.areEqual("2045e", Bridge.Int.format(value, "x"));
+            Bridge.Test.Assert.areEqual("2045E", Bridge.Int.format(value, "X"));
+            Bridge.Test.Assert.areEqual("0002045E", Bridge.Int.format(value, "X8"));
+    
+            value = 123456789;
+            Bridge.Test.Assert.areEqual("75BCD15", Bridge.Int.format(value, "X"));
+            Bridge.Test.Assert.areEqual("75BCD15", Bridge.Int.format(value, "X2"));
+        },
+        customZeroFormatSpecifierWorks: function () {
+            var value = 123;
+            Bridge.Test.Assert.areEqual("00123", Bridge.Int.format(value, "00000"));
+    
+            value = 1.2;
+            Bridge.Test.Assert.areEqual("1.20", Bridge.Int.format(value, "0.00"));
+            Bridge.Test.Assert.areEqual("01.20", Bridge.Int.format(value, "00.00"));
+            Bridge.Test.Assert.areEqual("01,20", Bridge.Int.format(value, "00.00", Bridge.CultureInfo.getCultureInfo("ru-RU")));
+    
+            value = 0.56;
+            Bridge.Test.Assert.areEqual("0.6", Bridge.Int.format(value, "0.0"));
+    
+            value = 1234567890;
+            Bridge.Test.Assert.areEqual("1,234,567,890", Bridge.Int.format(value, "0,0"));
+            Bridge.Test.Assert.areEqual("1 234 567 890", Bridge.Int.format(value, "0,0", Bridge.CultureInfo.getCultureInfo("ru-RU")));
+    
+            value = 1234567890.123456;
+            Bridge.Test.Assert.areEqual("1,234,567,890.1", Bridge.Int.format(value, "0,0.0"));
+    
+            value = 1234.56789;
+            Bridge.Test.Assert.areEqual("1,234.57", Bridge.Int.format(value, "0,0.00"));
+        },
+        customHashFormatSpecifierWorks: function () {
+            var value = 1.2;
+            Bridge.Test.Assert.areEqual("1.2", Bridge.Int.format(value, "#.##"));
+    
+            value = 123;
+            Bridge.Test.Assert.areEqual("123", Bridge.Int.format(value, "#####"));
+    
+            value = 123456;
+            Bridge.Test.Assert.areEqual("[12-34-56]", Bridge.Int.format(value, "[##-##-##]"));
+    
+            value = 1234567890;
+            Bridge.Test.Assert.areEqual("1234567890", Bridge.Int.format(value, "#"));
+            Bridge.Test.Assert.areEqual("(123) 456-7890", Bridge.Int.format(value, "(###) ###-####"));
+    
+            value = 42;
+            Bridge.Test.Assert.areEqual("My Number = 42", Bridge.Int.format(value, "My Number = #"));
+        },
+        customDotFormatSpecifierWorks: function () {
+            var value = 1.2;
+            Bridge.Test.Assert.areEqual("1.20", Bridge.Int.format(value, "0.00"));
+            Bridge.Test.Assert.areEqual("01.20", Bridge.Int.format(value, "00.00"));
+            Bridge.Test.Assert.areEqual("01,20", Bridge.Int.format(value, "00.00", Bridge.CultureInfo.getCultureInfo("ru-RU")));
+    
+            value = 0.086;
+            Bridge.Test.Assert.areEqual("8.6%", Bridge.Int.format(value, "#0.##%"));
+        },
+        customCommaFormatSpecifierWorks: function () {
+            var value = 1234567890;
+            Bridge.Test.Assert.areEqual("1,234,567,890", Bridge.Int.format(value, "#,#"));
+            Bridge.Test.Assert.areEqual("1,235", Bridge.Int.format(value, "#,##0,,"));
+    
+            value = 1234567890;
+            Bridge.Test.Assert.areEqual("1235", Bridge.Int.format(value, "#,,"));
+            Bridge.Test.Assert.areEqual("1", Bridge.Int.format(value, "#,,,"));
+            Bridge.Test.Assert.areEqual("1,235", Bridge.Int.format(value, "#,##0,,"));
+        },
+        customPercentFormatSpecifierWorks: function () {
+            var value = 0.086;
+            Bridge.Test.Assert.areEqual("8.6%", Bridge.Int.format(value, "#0.##%"));
+        },
+        customPerMileFormatSpecifierWorks: function () {
+            var value = 0.00354;
+            Bridge.Test.Assert.areEqual("3.54 ‰", Bridge.Int.format(value, "#0.## " + String.fromCharCode(8240)));
+        },
+        customEscapeFormatSpecifierWorks: function () {
+            var value = 123;
+            Bridge.Test.Assert.areEqual("### 123 dollars and 00 cents ###", Bridge.Int.format(value, "\\#\\#\\# ##0 dollars and \\0\\0 cents \\#\\#\\#"));
+            Bridge.Test.Assert.areEqual("### 123 dollars and 00 cents ###", Bridge.Int.format(value, "\\#\\#\\# ##0 dollars and \\0\\0 cents \\#\\#\\#"));
+            Bridge.Test.Assert.areEqual("\\\\\\ 123 dollars and 00 cents \\\\\\", Bridge.Int.format(value, "\\\\\\\\\\\\ ##0 dollars and \\0\\0 cents \\\\\\\\\\\\"));
+            Bridge.Test.Assert.areEqual("\\\\\\ 123 dollars and 00 cents \\\\\\", Bridge.Int.format(value, "\\\\\\\\\\\\ ##0 dollars and \\0\\0 cents \\\\\\\\\\\\"));
+        },
+        customSemicolonFormatSpecifierWorks: function () {
+            var posValue = 1234;
+            var negValue = -1234;
+            var zeroValue = 0;
+    
+            var fmt2 = "##;(##)";
+            var fmt3 = "##;(##);**Zero**";
+    
+            Bridge.Test.Assert.areEqual("1234", Bridge.Int.format(posValue, fmt2));
+            Bridge.Test.Assert.areEqual("(1234)", Bridge.Int.format(negValue, fmt2));
+            Bridge.Test.Assert.areEqual("**Zero**", Bridge.Int.format(zeroValue, fmt3));
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Format.StringFormatTests', {
+        simple: function () {
+            var pricePerOunce = Bridge.Decimal(17.36);
+            var s = Bridge.String.format("The current price is {0} per ounce.", pricePerOunce);
+            Bridge.Test.Assert.areEqual("The current price is 17.36 per ounce.", s);
+        },
+        valueFormating: function () {
+            var pricePerOunce = Bridge.Decimal(17.36);
+            var s = Bridge.String.format("The current price is {0:C2} per ounce.", pricePerOunce);
+            Bridge.Test.Assert.areEqual("The current price is ¤17.36 per ounce.", s);
+        },
+        spaceControlling: function () {
+            var years = [2013, 2014, 2015];
+            var population = [1025632, 1105967, 1148203];
+            var s = Bridge.String.format("{0,6} {1,15}", "Year", "Population");
+            Bridge.Test.Assert.areEqual("  Year      Population", s);
+    
+            s = Bridge.String.format("{0,6} {1,15:N0}", years[0], population[0]);
+            Bridge.Test.Assert.areEqual("  2013       1,025,632", s);
+    
+            s = Bridge.String.format("{0,6} {1,15:N0}", years[1], population[1]);
+            Bridge.Test.Assert.areEqual("  2014       1,105,967", s);
+    
+            s = Bridge.String.format("{0,6} {1,15:N0}", years[2], population[2]);
+            Bridge.Test.Assert.areEqual("  2015       1,148,203", s);
+        },
+        aligment: function () {
+            // Create array of 5-tuples with population data for three U.S. cities, 1940-1950.
+            var cities = [{ item1: "Los Angeles", item2: new Date(1940, 1 - 1, 1), item3: 1504277, item4: new Date(1950, 1 - 1, 1), item5: 1970358 }, { item1: "New York", item2: new Date(1940, 1 - 1, 1), item3: 7454995, item4: new Date(1950, 1 - 1, 1), item5: 7891957 }, { item1: "Chicago", item2: new Date(1940, 1 - 1, 1), item3: 3396808, item4: new Date(1950, 1 - 1, 1), item5: 3620962 }, { item1: "Detroit", item2: new Date(1940, 1 - 1, 1), item3: 1623452, item4: new Date(1950, 1 - 1, 1), item5: 1849568 }];
+    
+            // Display header
+            var header = Bridge.String.format("{0,-12}{1,8}{2,12}{1,8}{2,12}{3,14}", "City", "Year", "Population", "Change (%)");
+            Bridge.Test.Assert.areEqual("City            Year  Population    Year  Population    Change (%)", header);
+    
+            var output = Bridge.String.format("{0,-12}{1,8:yyyy}{2,12:N0}{3,8:yyyy}{4,12:N0}{5,14:P1}", cities[0].item1, cities[0].item2, cities[0].item3, cities[0].item4, cities[0].item5, (((cities[0].item5 - cities[0].item3) | 0)) / cities[0].item3);
+            Bridge.Test.Assert.areEqual("Los Angeles     1940   1,504,277    1950   1,970,358        31.0 %", output);
+    
+            output = Bridge.String.format("{0,-12}{1,8:yyyy}{2,12:N0}{3,8:yyyy}{4,12:N0}{5,14:P1}", cities[1].item1, cities[1].item2, cities[1].item3, cities[1].item4, cities[1].item5, (((cities[1].item5 - cities[1].item3) | 0)) / cities[1].item3);
+            Bridge.Test.Assert.areEqual("New York        1940   7,454,995    1950   7,891,957         5.9 %", output);
+    
+            output = Bridge.String.format("{0,-12}{1,8:yyyy}{2,12:N0}{3,8:yyyy}{4,12:N0}{5,14:P1}", cities[2].item1, cities[2].item2, cities[2].item3, cities[2].item4, cities[2].item5, (((cities[2].item5 - cities[2].item3) | 0)) / cities[2].item3);
+            Bridge.Test.Assert.areEqual("Chicago         1940   3,396,808    1950   3,620,962         6.6 %", output);
+    
+            output = Bridge.String.format("{0,-12}{1,8:yyyy}{2,12:N0}{3,8:yyyy}{4,12:N0}{5,14:P1}", cities[3].item1, cities[3].item2, cities[3].item3, cities[3].item4, cities[3].item5, (((cities[3].item5 - cities[3].item3) | 0)) / cities[3].item3);
+            Bridge.Test.Assert.areEqual("Detroit         1940   1,623,452    1950   1,849,568        13.9 %", output);
+        },
+        padIntegerWithLeadingZeros: function () {
+            var byteValue = 254;
+            var shortValue = 10342;
+            var intValue = 1023983;
+            var lngValue = Bridge.Long(6985321);
+            var ulngValue = Bridge.ULong.MaxValue;
+    
+            Bridge.Test.Assert.areEqual("              00000254               000000FE", Bridge.String.format("{0,22} {1,22}", Bridge.Int.format(byteValue, "D8"), Bridge.Int.format(byteValue, "X8")));
+            Bridge.Test.Assert.areEqual("              00010342               00002866", Bridge.String.format("{0,22} {1,22}", Bridge.Int.format(shortValue, "D8"), Bridge.Int.format(shortValue, "X8")));
+            Bridge.Test.Assert.areEqual("              01023983               000F9FEF", Bridge.String.format("{0,22} {1,22}", Bridge.Int.format(intValue, "D8"), Bridge.Int.format(intValue, "X8")));
+            Bridge.Test.Assert.areEqual("              06985321               006A9669", Bridge.String.format("{0,22} {1,22}", lngValue.toString("D8"), lngValue.toString("X8")));
+            Bridge.Test.Assert.areEqual("  18446744073709551615       FFFFFFFFFFFFFFFF", Bridge.String.format("{0,22} {1,22}", ulngValue.toString("D8"), ulngValue.toString("X8")));
+            Bridge.Test.Assert.areEqual("              00000254               000000FE", Bridge.String.format("{0,22:D8} {0,22:X8}", byteValue));
+            Bridge.Test.Assert.areEqual("              00010342               00002866", Bridge.String.format("{0,22:D8} {0,22:X8}", shortValue));
+            Bridge.Test.Assert.areEqual("              01023983               000F9FEF", Bridge.String.format("{0,22:D8} {0,22:X8}", intValue));
+            Bridge.Test.Assert.areEqual("              06985321               006A9669", Bridge.String.format("{0,22:D8} {0,22:X8}", lngValue));
+            Bridge.Test.Assert.areEqual("  18446744073709551615       FFFFFFFFFFFFFFFF", Bridge.String.format("{0,22:D8} {0,22:X8}", ulngValue));
+        },
+        padIntegerWithSpecificNumberLeadingZeros: function () {
+            var value = 160934;
+            var decimalLength = (Bridge.Int.format(value, "D").length + 5) | 0;
+            var hexLength = (Bridge.Int.format(value, "X").length + 5) | 0;
+            Bridge.Test.Assert.areEqual("00000160934", Bridge.String.format(Bridge.Int.format(value, "D" + decimalLength.toString()), null));
+            Bridge.Test.Assert.areEqual("00000274A6", Bridge.String.format(Bridge.Int.format(value, "X" + hexLength.toString()), null));
+        },
+        padNumericWithLeadingZerosToLength: function () {
+            var fmt = "00000000.##";
+            var intValue = 1053240;
+            var decValue = Bridge.Decimal(103932.52);
+            var dblValue = 9034521202.9321747;
+    
+            // Display the numbers using composite formatting.
+            var formatString = " {0,15:" + fmt + "}";
+            Bridge.Test.Assert.areEqual("        01053240", Bridge.String.format(formatString, intValue));
+            Bridge.Test.Assert.areEqual("     00103932.52", Bridge.String.format(formatString, decValue));
+            Bridge.Test.Assert.areEqual("   9034521202.93", Bridge.String.format(formatString, dblValue));
+        },
+        padNumericWithSpecificNumberOfLeadingZeros: function () {
+            var $t;
+            var dblValues = [9034521202.9321747, Bridge.Long.toNumber(Bridge.Long([444586610,2]))];
+            var result = ["  000009034521202.93", "          9034521202"];
+            var i = 0;
+            $t = Bridge.getEnumerator(dblValues);
+            while ($t.moveNext()) {
+                var dblValue = $t.getCurrent();
+                var decSeparator = Bridge.NumberFormatInfo.currentInfo.numberDecimalSeparator;
+                var fmt, formatString;
+    
+                if (Bridge.String.contains(Bridge.Int.format(dblValue, 'G'),decSeparator)) {
+                    var digits = Bridge.String.indexOf(Bridge.Int.format(dblValue, 'G'), decSeparator);
+                    fmt = Bridge.String.fromCharCount(48, 5) + Bridge.String.fromCharCount(35, digits) + ".##";
+                }
+                else  {
+                    fmt = Bridge.String.fromCharCount(48, Bridge.Int.format(dblValue, 'G').length);
+                }
+                formatString = "{0,20:" + fmt + "}";
+    
+                Bridge.Test.Assert.areEqual(result[Bridge.identity(i, (i = (i + 1) | 0))], Bridge.String.format(formatString, dblValue));
+            }
         }
     });
     
@@ -19435,48 +19794,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         f1: function () {
             var o = "x";
             var x = Bridge.cast(o, Bridge.Int32);
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.NumberFormatInfoTests', {
-        typePropertiesAreCorrect: function () {
-            var format = Bridge.NumberFormatInfo.invariantInfo;
-            Bridge.Test.Assert.areEqual("Bridge.NumberFormatInfo", Bridge.getTypeName(Bridge.NumberFormatInfo));
-            Bridge.Test.Assert.$true(true);
-        },
-        getFormatWorks: function () {
-            var format = Bridge.NumberFormatInfo.invariantInfo;
-            Bridge.Test.Assert.areEqual(null, format.getFormat(Bridge.Int32));
-            Bridge.Test.Assert.areEqual(format, format.getFormat(Bridge.NumberFormatInfo));
-        },
-        invariantWorks: function () {
-            var format = Bridge.NumberFormatInfo.invariantInfo;
-            Bridge.Test.Assert.areEqual("NaN", format.nanSymbol);
-            Bridge.Test.Assert.areEqual("-", format.negativeSign);
-            Bridge.Test.Assert.areEqual("+", format.positiveSign);
-            Bridge.Test.Assert.areEqual("-Infinity", format.negativeInfinitySymbol);
-            Bridge.Test.Assert.areEqual("Infinity", format.positiveInfinitySymbol);
-    
-            Bridge.Test.Assert.areEqual("%", format.percentSymbol);
-            Bridge.Test.Assert.areDeepEqual([3], format.percentGroupSizes);
-            Bridge.Test.Assert.areEqual(2, format.percentDecimalDigits);
-            Bridge.Test.Assert.areEqual(".", format.percentDecimalSeparator);
-            Bridge.Test.Assert.areEqual(",", format.percentGroupSeparator);
-            Bridge.Test.Assert.areEqual(0, format.percentPositivePattern);
-            Bridge.Test.Assert.areEqual(0, format.percentNegativePattern);
-    
-            Bridge.Test.Assert.areEqual("¤", format.currencySymbol);
-            Bridge.Test.Assert.areDeepEqual([3], format.currencyGroupSizes);
-            Bridge.Test.Assert.areEqual(2, format.currencyDecimalDigits);
-            Bridge.Test.Assert.areEqual(".", format.currencyDecimalSeparator);
-            Bridge.Test.Assert.areEqual(",", format.currencyGroupSeparator);
-            Bridge.Test.Assert.areEqual(0, format.currencyNegativePattern);
-            Bridge.Test.Assert.areEqual(0, format.currencyPositivePattern);
-    
-            Bridge.Test.Assert.areDeepEqual([3], format.numberGroupSizes);
-            Bridge.Test.Assert.areEqual(2, format.numberDecimalDigits);
-            Bridge.Test.Assert.areEqual(".", format.numberDecimalSeparator);
-            Bridge.Test.Assert.areEqual(",", format.numberGroupSeparator);
         }
     });
     
@@ -29043,10 +29360,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define('Bridge.ClientTest.ExceptionTests.E2', {
-        inherits: [Bridge.ClientTest.ExceptionTests.E1],
+    Bridge.define('Bridge.ClientTest.Exceptions.CommonExceptionTests.E2', {
+        inherits: [Bridge.ClientTest.Exceptions.CommonExceptionTests.E1],
         constructor: function (message) {
-            Bridge.ClientTest.ExceptionTests.E1.prototype.$constructor.call(this, message);
+            Bridge.ClientTest.Exceptions.CommonExceptionTests.E1.prototype.$constructor.call(this, message);
     
         }
     });
