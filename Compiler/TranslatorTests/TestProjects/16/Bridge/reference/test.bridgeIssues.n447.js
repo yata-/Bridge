@@ -4,7 +4,7 @@
     Bridge.define('Test.BridgeIssues.N447.Math447', {
         statics: {
             getSum$1: function (a, b) {
-                return a + b;
+                return ((a + b) | 0);
             },
             getSum$2: function (a, b) {
                 return a + b;
@@ -26,9 +26,9 @@
                 var d = Bridge.Decimal(10.5);
             },
             checkInlineCalls: function () {
-                var s = Bridge.get(Test.BridgeIssues.N447.Math447).getSum$2(Bridge.get(Test.BridgeIssues.N447.N447).Another, "Some");
-                var i = Bridge.get(Test.BridgeIssues.N447.Math447).getSum$1(Bridge.get(Test.BridgeIssues.N447.N447).Five, 15);
-                var d = Bridge.get(Test.BridgeIssues.N447.Math447).getSum(Bridge.get(Test.BridgeIssues.N447.N447).Ten, Bridge.Decimal(0.5));
+                var s = Test.BridgeIssues.N447.Math447.getSum$2(Test.BridgeIssues.N447.N447.Another, "Some");
+                var i = Test.BridgeIssues.N447.Math447.getSum$1(Test.BridgeIssues.N447.N447.Five, 15);
+                var d = Test.BridgeIssues.N447.Math447.getSum(Test.BridgeIssues.N447.N447.Ten, Bridge.Decimal(0.5));
             }
         }
     });

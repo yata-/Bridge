@@ -1,4 +1,5 @@
 using ICSharpCode.NRefactory.TypeSystem;
+using Mono.Cecil;
 
 namespace Bridge.Contract
 {
@@ -56,6 +57,8 @@ namespace Bridge.Contract
 
         bool IsIgnoreType(ICSharpCode.NRefactory.TypeSystem.ITypeDefinition typeDefinition, bool ignoreLiteral = false);
 
+        bool IsImmutableType(ICustomAttributeProvider type);
+
         bool IsIgnoreType(IEntity enity, bool ignoreLiteral = false);
 
         bool IsBridgeClass(Mono.Cecil.TypeDefinition type);
@@ -71,5 +74,7 @@ namespace Bridge.Contract
         bool IsStringNameEnum(ICSharpCode.NRefactory.TypeSystem.Implementation.DefaultResolvedTypeDefinition type);
 
         bool IsValueEnum(ICSharpCode.NRefactory.TypeSystem.Implementation.DefaultResolvedTypeDefinition type);
+
+        bool IsAccessorsIndexer(IEntity enity);
     }
 }

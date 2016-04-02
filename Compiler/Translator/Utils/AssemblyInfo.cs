@@ -278,5 +278,17 @@ namespace Bridge.Translator
             get;
             set;
         }
+
+        public OverflowMode? OverflowMode
+        {
+            get;
+            set;
+        }
+
+        public bool? NoLoggerTimeStamps
+        {
+            get;
+            set;
+        }
     }
 }

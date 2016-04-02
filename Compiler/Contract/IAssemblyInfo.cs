@@ -261,5 +261,17 @@ namespace Bridge.Contract
             get;
             set;
         }
+
+        OverflowMode? OverflowMode
+        {
+            get; 
+            set;
+        }
+
+        bool? NoLoggerTimeStamps
+        {
+            get;
+            set;
+        }
     }
 }

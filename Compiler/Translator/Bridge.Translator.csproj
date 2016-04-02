@@ -46,15 +46,15 @@
     </Reference>
     <Reference Include="ICSharpCode.NRefactory, Version=5.0.0.0, Culture=neutral, PublicKeyToken=d4bfe873e7598c49, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Bridge.NRefactory.5.5.2\lib\ICSharpCode.NRefactory.dll</HintPath>
+      <HintPath>..\..\packages\Bridge.NRefactory.5.5.3\lib\ICSharpCode.NRefactory.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.NRefactory.Cecil, Version=5.0.0.0, Culture=neutral, PublicKeyToken=d4bfe873e7598c49, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Bridge.NRefactory.5.5.2\lib\ICSharpCode.NRefactory.Cecil.dll</HintPath>
+      <HintPath>..\..\packages\Bridge.NRefactory.5.5.3\lib\ICSharpCode.NRefactory.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.NRefactory.CSharp, Version=5.0.0.0, Culture=neutral, PublicKeyToken=d4bfe873e7598c49, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Bridge.NRefactory.5.5.2\lib\ICSharpCode.NRefactory.CSharp.dll</HintPath>
+      <HintPath>..\..\packages\Bridge.NRefactory.5.5.3\lib\ICSharpCode.NRefactory.CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Build" />
     <Reference Include="Microsoft.CSharp" />
@@ -94,6 +94,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants\Attributes.cs" />
     <Compile Include="Emitter\ArgumentsInfo.cs" />
     <Compile Include="Emitter\Blocks\AbstractEmitterBlock.Locals.cs" />
     <Compile Include="Emitter\Blocks\AbstractCommentBlock.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="Emitter\Blocks\ArrayInitializerBlock.cs" />
     <Compile Include="Emitter\Blocks\AnonymousTypeCreateBlock.cs" />
     <Compile Include="Emitter\Blocks\AsyncBlock.cs" />
+    <Compile Include="Emitter\Blocks\ConversionBlock.Number.cs" />
     <Compile Include="Emitter\Blocks\ConversionBlock.cs" />
     <Compile Include="Emitter\Blocks\ConstructorBlock.Events.cs" />
     <Compile Include="Emitter\Blocks\EmitBlock.cs" />
@@ -183,6 +185,7 @@
     <Compile Include="Utils\CombinedAstAndResolveResultVisitor.cs" />
     <Compile Include="Utils\DependencyFinderVisitor.cs" />
     <Compile Include="Utils\AssemblyConfigHelper.cs" />
+    <Compile Include="Utils\Preconverter.cs" />
     <Compile Include="Utils\EmptyLambdaFixer.cs" />
     <Compile Include="Utils\IResolveResultVisitor.cs" />
     <Compile Include="Utils\JsDoc.cs" />
@@ -224,7 +227,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

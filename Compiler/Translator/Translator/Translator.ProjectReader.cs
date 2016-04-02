@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
+using Bridge.Contract;
 
 namespace Bridge.Translator
 {
@@ -24,6 +25,15 @@ namespace Bridge.Translator
             if (!this.FromTask)
             {
                 this.ReadDefineConstants(doc);
+            }
+
+            var projectType = (from n in doc.Descendants()
+                          where n.Name.LocalName == "OutputType"
+                          select n).ToArray();
+
+            if (projectType.Length > 0 && projectType[0] != null && projectType[0].Value != Translator.SupportedProjectType)
+            {
+                Bridge.Translator.Exception.Throw("Project type ({0}) is not supported, please use Library instead of {0}", projectType[0].Value);
             }
 
             this.Log.Info("Reading project file done");
@@ -96,6 +106,19 @@ namespace Bridge.Translator
                     "Project file: " + this.Location + "\n" +
                     "Offending settings:\n" + offendingSettings
                 );
+            }
+
+            var nodes = from n in doc.Descendants()
+                        where n.Name.LocalName == "CheckForOverflowUnderflow"
+                        select n;
+            if (nodes.Any())
+            {
+                var value = nodes.Last().Value;
+                bool boolValue;
+                if (bool.TryParse(value, out boolValue))
+                {
+                    this.OverflowMode = boolValue ? Bridge.Contract.OverflowMode.Checked : Bridge.Contract.OverflowMode.Unchecked;
+                }
             }
         }
 
@@ -170,7 +193,7 @@ namespace Bridge.Translator
                 // This constructor below works on Windows and does NOT break #531
                 project = new Project(this.Location, null, null, new ProjectCollection());
             }
-
+            
             var sourceFiles = new List<string>();
 
             foreach (var projectItem in project.GetItems("Compile"))

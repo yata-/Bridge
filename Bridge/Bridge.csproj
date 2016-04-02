@@ -53,6 +53,8 @@
     <AdditionalExplicitAssemblyReferences />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Attributes\ImmutableAttribute.cs" />
+    <Compile Include="Attributes\AccessorsIndexerAttribute.cs" />
     <Compile Include="Attributes\GlobalTargetAttribute.cs" />
     <Compile Include="Attributes\IgnoreCastAttribute.cs" />
     <Compile Include="Attributes\IgnoreGenericAttribute.cs" />
@@ -82,6 +84,7 @@
     <Compile Include="Script.cs" />
     <Compile Include="System\Action.cs" />
     <Compile Include="System\Activator.cs" />
+    <Compile Include="System\IndexOutOfRangeException.cs" />
     <Compile Include="System\ArgumentNullException.cs" />
     <Compile Include="System\ArgumentException.cs" />
     <Compile Include="System\ArithmeticException.cs" />
@@ -93,6 +96,7 @@
     <Compile Include="System\Collections\Generic\ISet.cs" />
     <Compile Include="System\Collections\ObjectModel\ReadOnlyCollection.cs" />
     <Compile Include="System\Comparison.cs" />
+    <Compile Include="System\Converter.cs" />
     <Compile Include="System\Diagnostics\ConditionalAttribute.cs" />
     <Compile Include="System\Diagnostics\Contracts\Contract.cs" />
     <Compile Include="System\Diagnostics\Contracts\ContractAbbreviatorAttribute.cs" />
@@ -119,8 +123,7 @@
     <Compile Include="System\EventArgs.cs" />
     <Compile Include="System\EventHandler.cs" />
     <Compile Include="System\IDisposable.cs" />
-    <Compile Include="System\IAccessorsIndexer.cs" />
-    <Compile Include="System\IndexOutOfRangeException.cs" />
+    <Compile Include="System\IConvertible.cs" />
     <Compile Include="System\Predicate.cs" />
     <Compile Include="System\OutOfMemoryException.cs" />
     <Compile Include="System\RankException.cs" />
@@ -651,9 +654,12 @@
     <EmbeddedResource Include="Resources\Locales\zh.js" />
     <EmbeddedResource Include="Resources\Locales\zu-ZA.js" />
     <EmbeddedResource Include="Resources\Locales\zu.js" />
+    <Content Include="Resources\Bool.js" />
     <Content Include="Resources\Diagnostics.js" />
     <Content Include="Resources\Convert.js" />
     <Content Include="Resources\Enum.js" />
+    <Content Include="Resources\LongLib.js" />
+    <Content Include="Resources\Long.js" />
     <Content Include="Resources\Math.js" />
     <Content Include="Resources\Text\RegularExpressions\Regex.js" />
     <Content Include="Resources\Text\RegularExpressions\RegexCapture.js" />
@@ -736,7 +742,6 @@
       <Path>$(SolutionDir).build\specs\Bridge.Dev.nuspec</Path>
     </NuGetPackageSourcePath>
   </ItemGroup>
-  <ItemGroup />
   <Import Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " Project="$(SolutionDir)\.build\common\NuGet.Build.Package.targets" />
   <Target Name="CleanProjectNuGetOutput" BeforeTargets="Clean">
     <ItemGroup>

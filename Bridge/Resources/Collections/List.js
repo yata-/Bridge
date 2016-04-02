@@ -1,9 +1,7 @@
 // @source /Collections/List.js
 
-Bridge.Class.generic('Bridge.List$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.List$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+Bridge.define('Bridge.List$1', function (T) {
+    return {
         inherits: [Bridge.ICollection$1(T), Bridge.ICollection, Bridge.IList$1(T)],
         constructor: function (obj) {
             if (Object.prototype.toString.call(obj) === '[object Array]') {
@@ -263,14 +261,25 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
             }
 
             return Bridge.Array.binarySearch(this.items, index, length, value, comparer);
+        },
+
+        convertAll: function (TOutput, converter) {
+            if (!Bridge.hasValue(converter)) {
+                throw new Bridge.ArgumentNullException("converter is null.");
+            }
+
+            var list = new Bridge.List$1(TOutput)(this.items.length);
+            for (var i = 0; i < this.items.length; i++) {
+                list.items[i] = converter(this.items[i]);
+            }
+
+            return list;
         }
-    }));
+    };
 });
 
-Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.ReadOnlyCollection$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+Bridge.define('Bridge.ReadOnlyCollection$1', function (T) {
+    return {
         inherits: [Bridge.List$1(T)],
         constructor: function (list) {
             if (list == null) {
@@ -280,5 +289,5 @@ Bridge.Class.generic('Bridge.ReadOnlyCollection$1', function (T) {
             Bridge.List$1(T).prototype.$constructor.call(this, list);
             this.readOnly = true;
         }
-    }));
+    };
 });

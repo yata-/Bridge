@@ -14,7 +14,7 @@ namespace System
         [Name("MAX_VALUE")]
         public static readonly double MaxValue = 0;
 
-        [Name("MIN_VALUE")]
+        [Template("-Number.MAX_VALUE")]
         public static readonly double MinValue = 0;
 
         [InlineConst]
@@ -168,7 +168,7 @@ namespace System
             return 0;
         }
 
-        [Template("Bridge.equalsT({this}, {other})")]
+        [Template("{this} === {other}")]
         public bool Equals(double other)
         {
             return false;

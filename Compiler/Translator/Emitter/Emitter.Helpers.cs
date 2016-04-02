@@ -125,7 +125,9 @@ namespace Bridge.Translator
         public virtual Tuple<bool, bool, string> GetInlineCode(MemberReferenceExpression node)
         {
             var member = LiftNullableMember(node);
-            return GetInlineCodeFromMember(member, node);
+            var info = GetInlineCodeFromMember(member, node);
+
+            return WrapNullableMember(info, member, node);
         }
         
         public virtual Tuple<bool, bool, string> GetInlineCode(InvocationExpression node)
@@ -137,7 +139,8 @@ namespace Bridge.Translator
                 member = LiftNullableMember(target);
             }
 
-            return GetInlineCodeFromMember(member, node);
+            var info = GetInlineCodeFromMember(member, node);
+            return WrapNullableMember(info, member, node.Target);
         }
 
         private Tuple<bool, bool, string> GetInlineCodeFromMember(IMember member, Expression node)
@@ -160,7 +163,45 @@ namespace Bridge.Translator
             var inlineCode = isInlineMethod ? null : this.GetInline(member);
             var isStatic = member.IsStatic;
 
+            if (!string.IsNullOrEmpty(inlineCode) && member is IProperty)
+            {
+                inlineCode = inlineCode.Replace("{value}", "{0}");
+            }
+
             return new Tuple<bool, bool, string>(isStatic, isInlineMethod, inlineCode);
+        }
+
+        private Tuple<bool, bool, string> WrapNullableMember(Tuple<bool, bool, string> info, IMember member, Expression node)
+        {
+            if (member != null && !string.IsNullOrEmpty(info.Item3))
+            {
+                IMethod method = (IMethod) member;
+
+                StringBuilder savedBuilder = this.Output;
+                this.Output = new StringBuilder();
+                var mrr = new MemberResolveResult(null, member);
+                var argsInfo = new ArgumentsInfo(this, node, mrr);
+                argsInfo.ThisArgument = "$t";
+                new InlineArgumentsBlock(this, argsInfo, info.Item3, method, mrr).EmitNullableReference();
+                string tpl = this.Output.ToString();
+                this.Output = savedBuilder;
+
+                if (member.Name == "Equals")
+                {
+                    tpl = string.Format("Bridge.Nullable.equals({{this}}, {{{0}}}, {1})", method.Parameters.First().Name, tpl);    
+                }
+                else if (member.Name == "ToString")
+                {
+                    tpl = string.Format("Bridge.Nullable.toString({{this}}, {0})", tpl);
+                }
+                else if (member.Name == "GetHashCode")
+                {
+                    tpl = string.Format("Bridge.Nullable.getHashCode({{this}}, {0})", tpl);
+                }
+
+                info = new Tuple<bool, bool, string>(info.Item1, info.Item2, tpl);
+            }
+            return info;
         }
 
         private IMember LiftNullableMember(MemberReferenceExpression target)
@@ -171,12 +212,21 @@ namespace Bridge.Translator
             {
                 string name = null;
                 int count = 0;
+                IType typeArg = null;
                 if (target.MemberName == "ToString" || target.MemberName == "GetHashCode")
                 {
                     name = target.MemberName;
                 }
                 else if (target.MemberName == "Equals")
                 {
+                    if (target.Parent is InvocationExpression)
+                    {
+                        var rr = this.Resolver.ResolveNode(target.Parent, this) as InvocationResolveResult;
+                        if (rr != null)
+                        {
+                            typeArg = rr.Arguments.First().Type;
+                        }
+                    }
                     name = target.MemberName;
                     count = 1;
                 }
@@ -184,8 +234,23 @@ namespace Bridge.Translator
                 if (name != null)
                 {
                     var type = ((ParameterizedType) targetrr.Type).TypeArguments[0];
-                    member = type.GetMethods(null, GetMemberOptions.IgnoreInheritedMembers)
-                            .FirstOrDefault(m => m.Name == name && m.Parameters.Count == count);
+                    var methods = type.GetMethods(null, GetMemberOptions.IgnoreInheritedMembers);
+
+                    if (count == 0)
+                    {
+                        member = methods.FirstOrDefault(m => m.Name == name && m.Parameters.Count == count);
+                    }
+                    else
+                    {
+                        member = methods.FirstOrDefault(m => m.Name == name && m.Parameters.Count == count && m.Parameters.First().Type.Equals(typeArg));
+
+                        if (member == null)
+                        {
+                            var typeDef = typeArg.GetDefinition();
+                            member = methods.FirstOrDefault(m => m.Name == name && m.Parameters.Count == count && m.Parameters.First().Type.GetDefinition().IsDerivedFrom(typeDef));
+                        }
+                    }
+                    
                 }
             }
             return member;
@@ -360,6 +425,14 @@ namespace Bridge.Translator
         public virtual string GetEntityName(IEntity member, bool forcePreserveMemberCase = false, bool ignoreInterface = false)
         {
             bool preserveMemberChange = !this.IsNativeMember(member.FullName) ? this.AssemblyInfo.PreserveMemberCase : false;
+
+            int enumMode = -1;
+            if (member.DeclaringType.Kind == TypeKind.Enum && member is IField)
+            {
+                enumMode = this.Validator.EnumEmitMode(member.DeclaringType);
+            }
+
+
             if (member is IMember && this.IsMemberConst((IMember)member)/* || member.DeclaringType.Kind == TypeKind.Anonymous*/)
             {
                 preserveMemberChange = true;
@@ -386,9 +459,30 @@ namespace Bridge.Translator
                 }
 
                 preserveMemberChange = !(bool)value;
+                enumMode = -1;
             }
 
-            name = !preserveMemberChange && !forcePreserveMemberCase ? Object.Net.Utilities.StringUtils.ToLowerCamelCase(name) : name;
+            if (enumMode > 6)
+            {
+                switch (enumMode)
+                {
+                    case 7:
+                        break;
+
+                    case 8:
+                        name = name.ToLowerInvariant();
+                        break;
+
+                    case 9:
+                        name = name.ToUpperInvariant();
+                        break;
+                }
+            }
+            else
+            {
+                name = !preserveMemberChange && !forcePreserveMemberCase ? Object.Net.Utilities.StringUtils.ToLowerCamelCase(name) : name;
+            }
+            
 
             if (!isIgnore && ((member.IsStatic && Emitter.IsReservedStaticName(name)) || Helpers.IsReservedWord(name)))
             {
@@ -491,7 +585,7 @@ namespace Bridge.Translator
 
         public virtual string GetInline(EntityDeclaration method)
         {
-            var attr = this.GetAttribute(method.Attributes, Bridge.Translator.Translator.Bridge_ASSEMBLY + ".Template");
+            var attr = this.GetAttribute(method.Attributes, Bridge.Translator.Translator.Bridge_ASSEMBLY + ".TemplateAttribute");
 
             return attr != null && attr.Arguments.Count > 0 ? ((string)((PrimitiveExpression)attr.Arguments.First()).Value) : null;
         }
@@ -499,6 +593,7 @@ namespace Bridge.Translator
         public virtual string GetInline(IEntity entity)
         {
             string attrName = Bridge.Translator.Translator.Bridge_ASSEMBLY + ".TemplateAttribute";
+            bool isProp = entity is IProperty;
 
             if (entity.SymbolKind == SymbolKind.Property)
             {
@@ -513,7 +608,14 @@ namespace Bridge.Translator
                     return a.AttributeType.FullName == attrName;
                 });
 
-                return attr != null && attr.PositionalArguments.Count > 0 ? attr.PositionalArguments[0].ConstantValue.ToString() : null;
+                var inlineCode = attr != null && attr.PositionalArguments.Count > 0 ? attr.PositionalArguments[0].ConstantValue.ToString() : null;
+
+                if (!string.IsNullOrEmpty(inlineCode) && isProp)
+                {
+                    inlineCode = inlineCode.Replace("{value}", "{0}");
+                }
+
+                return inlineCode;
             }
 
             return null;

@@ -25,9 +25,7 @@
         },
 
         toBoolean: function (value, formatProvider) {
-            var type = typeof (value);
-
-            switch (type) {
+            switch (typeof (value)) {
                 case "boolean":
                     return value;
 
@@ -54,6 +52,10 @@
                         return !value.isZero();
                     }
 
+                    if (Bridge.Long.is64Bit(value)) {
+                        return value.ne(0);
+                    }
+
                     break;
             }
 
@@ -62,7 +64,7 @@
             scope.internal.throwInvalidCastEx(typeCode, scope.convert.typeCodes.Boolean);
 
             // try converting using IConvertible
-            return scope.convert.convertToType(scope.convert.typeCodes.Boolean, value, formatProvider);
+            return scope.convert.convertToType(scope.convert.typeCodes.Boolean, value, formatProvider || null);
         },
 
         toChar: function (value, formatProvider, valueTypeCode) {
@@ -70,6 +72,10 @@
 
             if (value instanceof Bridge.Decimal) {
                 value = value.toFloat();
+            }
+
+            if (value instanceof Bridge.Long || value instanceof Bridge.ULong) {
+                value = value.toNumber();
             }
 
             var type = typeof (value);
@@ -122,67 +128,49 @@
             scope.internal.throwInvalidCastEx(valueTypeCode, scope.convert.typeCodes.Char);
 
             // try converting using IConvertible
-            return scope.convert.convertToType(typeCodes.Char, value, formatProvider);
+            return scope.convert.convertToType(typeCodes.Char, value, formatProvider || null);
         },
 
         toSByte: function (value, formatProvider, valueTypeCode) {
-            var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.SByte, valueTypeCode);
-
-            return result;
+            return scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.SByte, valueTypeCode || null);
         },
 
         toByte: function (value, formatProvider) {
-            var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.Byte);
-
-            return result;
+            return scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.Byte);
         },
 
         toInt16: function (value, formatProvider) {
-            var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.Int16);
-
-            return result;
+            return scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.Int16);
         },
 
         toUInt16: function (value, formatProvider) {
-            var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.UInt16);
-
-            return result;
+            return scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.UInt16);
         },
 
         toInt32: function (value, formatProvider) {
-            var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.Int32);
-
-            return result;
+            return scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.Int32);
         },
 
         toUInt32: function (value, formatProvider) {
-            var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.UInt32);
-
-            return result;
+            return scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.UInt32);
         },
 
         toInt64: function (value, formatProvider) {
-            var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.Int64);
-
-            return result;
+            var result = scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.Int64);
+	    return new Bridge.Long(result);
         },
 
         toUInt64: function (value, formatProvider) {
-            var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.UInt64);
-
-            return result;
+            var result = scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.UInt64);
+	    return new Bridge.ULong(result);
         },
 
         toSingle: function (value, formatProvider) {
-            var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.Single);
-
-            return result;
+            return scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.Single);
         },
 
         toDouble: function (value, formatProvider) {
-            var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.Double);
-
-            return result;
+            return scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.Double);
         },
 
         toDecimal: function (value, formatProvider) {
@@ -190,17 +178,13 @@
                 return value;
             }
 
-            var result = scope.internal.toNumber(value, formatProvider, scope.convert.typeCodes.Decimal);
-            result = new Bridge.Decimal(result);
-
-            return result;
+            return new Bridge.Decimal(scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.Decimal));
         },
 
         toDateTime: function (value, formatProvider) {
             var typeCodes = scope.convert.typeCodes;
-            var type = typeof (value);
 
-            switch (type) {
+            switch (typeof (value)) {
                 case "boolean":
                     scope.internal.throwInvalidCastEx(typeCodes.Boolean, typeCodes.DateTime);
 
@@ -209,7 +193,7 @@
                     scope.internal.throwInvalidCastEx(fromType, typeCodes.DateTime);
 
                 case "string":
-                    value = Bridge.Date.parse(value, formatProvider);
+                    value = Bridge.Date.parse(value, formatProvider || null);
 
                     return value;
 
@@ -226,6 +210,14 @@
                         scope.internal.throwInvalidCastEx(typeCodes.Decimal, typeCodes.DateTime);
                     }
 
+                    if (value instanceof Bridge.Long) {
+                        scope.internal.throwInvalidCastEx(typeCodes.Int64, typeCodes.DateTime);
+                    }
+
+                    if (value instanceof Bridge.ULong) {
+                        scope.internal.throwInvalidCastEx(typeCodes.UInt64, typeCodes.DateTime);
+                    }
+
                     break;
             }
 
@@ -234,7 +226,7 @@
             scope.internal.throwInvalidCastEx(valueTypeCode, scope.convert.typeCodes.DateTime);
 
             // try converting using IConvertible
-            return scope.convert.convertToType(typeCodes.DateTime, value, formatProvider);
+            return scope.convert.convertToType(typeCodes.DateTime, value, formatProvider || null);
         },
 
         toString: function (value, formatProvider, valueTypeCode) {
@@ -246,7 +238,7 @@
                     return value ? "True" : "False";
 
                 case "number":
-                    if (valueTypeCode === typeCodes.Char) {
+                    if ((valueTypeCode || null) === typeCodes.Char) {
                         return String.fromCharCode(value);
                     }
 
@@ -269,7 +261,7 @@
                     }
 
                     if (Bridge.isDate(value)) {
-                        return Bridge.Date.format(value, null, formatProvider);
+                        return Bridge.Date.format(value, null, formatProvider || null);
                     }
 
                     if (value instanceof Bridge.Decimal) {
@@ -279,8 +271,12 @@
                         return value.toPrecision(value.precision());
                     }
 
+                    if (Bridge.Long.is64Bit(value)) {
+                        return value.toString();
+                    }
+
                     if (value.format) {
-                        return value.format(null, formatProvider);
+                        return value.format(null, formatProvider || null);
                     }
 
                     var typeName = Bridge.getTypeName(value);
@@ -289,7 +285,7 @@
             }
 
             // try converting using IConvertible
-            return scope.convert.convertToType(scope.convert.typeCodes.String, value, formatProvider);
+            return scope.convert.convertToType(scope.convert.typeCodes.String, value, formatProvider || null);
         },
 
         toNumberInBase: function (str, fromBase, typeCode) {
@@ -297,7 +293,17 @@
                 throw new Bridge.ArgumentException("Invalid Base.");
             }
 
+            var typeCodes = scope.convert.typeCodes;
+
             if (str == null) {
+                if (typeCode === typeCodes.Int64) {
+                    return Bridge.Long.Zero;
+                }
+
+                if (typeCode === typeCodes.UInt64) {
+                    return Bridge.ULong.Zero;
+                }
+
                 return 0;
             }
 
@@ -360,29 +366,53 @@
             var firstAllowed = allowedCodes[0];
             var lastAllowed = allowedCodes[allowedCodes.length - 1];
 
-            // Parse the number:
-            var res = 0;
-            var totalMax = maxValue - minValue + 1;
-
-            for (var j = startIndex; j < str.length; j++) {
-                var code = str[j].charCodeAt(0);
-
-                if (code >= firstAllowed && code <= lastAllowed) {
-                    res *= fromBase;
-                    res += codeValues[code];
-
-                    if (res > scope.internal.typeRanges.Int64_MaxValue_Safe) {
-                        throw new Bridge.OverflowException("Value was either too large or too small. Long values are not supported.");
-                    }
-
-                } else {
-                    if (j === startIndex) {
-                        throw new Bridge.FormatException("Could not find any recognizable digits.");
-                    } else {
-                        throw new Bridge.FormatException("Additional non-parsable characters are at the end of the string.");
+            var res, totalMax, code, j;
+            if (typeCode === typeCodes.Int64 || typeCode === typeCodes.UInt64) {
+                for (j = startIndex; j < str.length; j++) {
+                    code = str[j].charCodeAt(0);
+                    if (!(code >= firstAllowed && code <= lastAllowed)) {
+                        if (j === startIndex) {
+                            throw new Bridge.FormatException("Could not find any recognizable digits.");
+                        } else {
+                            throw new Bridge.FormatException("Additional non-parsable characters are at the end of the string.");
+                        }
                     }
                 }
-            }
+
+                var isSign = typeCode === typeCodes.Int64;
+
+                if (isSign) {
+                    res = new Bridge.Long(Bridge.$Long.fromString(str, false, fromBase));
+                } else {
+                    res = new Bridge.ULong(Bridge.$Long.fromString(str, true, fromBase));
+                }
+
+                if (res.toString(fromBase) !== str) {
+                    throw new Bridge.OverflowException("Value was either too large or too small.");
+                }
+
+                return res;
+            } else {
+                // Parse the number:
+                res = 0;
+                totalMax = maxValue - minValue + 1;
+                for (j = startIndex; j < str.length; j++) {
+                    code = str[j].charCodeAt(0);
+                    if (code >= firstAllowed && code <= lastAllowed) {
+                        res *= fromBase;
+                        res += codeValues[code];
+
+                        if (res > scope.internal.typeRanges.Int64_MaxValue) {
+                            throw new Bridge.OverflowException("Value was either too large or too small.");
+                        }
+                    } else {
+                        if (j === startIndex) {
+                            throw new Bridge.FormatException("Could not find any recognizable digits.");
+                        } else {
+                            throw new Bridge.FormatException("Additional non-parsable characters are at the end of the string.");
+                        }
+                    }
+                }
 
             if (isNegative) {
                 res *= -1;
@@ -397,7 +427,8 @@
                 throw new Bridge.OverflowException("Value was either too large or too small.");
             }
 
-            return res;
+                return res;
+            }
         },
 
         toStringInBase: function (value, toBase, typeCode) {
@@ -409,27 +440,28 @@
 
             var minValue = scope.internal.getMinValue(typeCode);
             var maxValue = scope.internal.getMaxValue(typeCode);
+            var special = Bridge.Long.is64Bit(value);
 
-            // TODO: #778 Remove this temp solution when (U)Int64 is fully supported
-            if (toBase !== 10) {
-                if (typeCode === typeCodes.Int64) {
-                    minValue = scope.internal.getMinValue(typeCodes.Int32);
-                    maxValue = scope.internal.getMaxValue(typeCodes.Int32);
-                } else if (typeCode === typeCodes.UInt64) {
-                    minValue = scope.internal.getMinValue(typeCodes.UInt32);
-                    maxValue = scope.internal.getMaxValue(typeCodes.UInt32);
+            if (special) {
+                if (value.lt(minValue) || value.gt(maxValue)) {
+                    throw new Bridge.OverflowException("Value was either too large or too small for an unsigned byte.");
                 }
             }
-
-
-            if (value < minValue || value > maxValue) {
+            else if (value < minValue || value > maxValue) {
                 throw new Bridge.OverflowException("Value was either too large or too small for an unsigned byte.");
             }
 
             // Handle negative numbers:
             var isNegative = false;
 
-            if (value < 0) {
+            if (special) {
+                if (toBase === 10) {
+                    return value.toString();
+                } else {
+                    return value.value.toUnsigned().toString(toBase);
+                }
+            }
+            else if (value < 0) {
                 if (toBase === 10) {
                     isNegative = true;
                     value *= -1;
@@ -465,15 +497,26 @@
             // Parse the number:
             var res = "";
 
-            if (value === 0) {
+            if (value === 0 || (special && value.eq(0))) {
                 res = "0";
             } else {
-                while (value > 0) {
-                    var mod = value % toBase;
-                    value = (value - mod) / toBase;
+                var mod, char;
+                if (special) {
+                    while (value.gt(0)) {
+                        mod = value.mod(toBase);
+                        value = value.sub(mod).div(toBase);
 
-                    var char = charByValues[mod];
-                    res += char;
+                        char = charByValues[mod.toNumber()];
+                        res += char;
+                    }
+                } else {
+                    while (value > 0) {
+                        mod = value % toBase;
+                        value = (value - mod) / toBase;
+
+                        char = charByValues[mod];
+                        res += char;
+                    }
                 }
             }
 
@@ -495,7 +538,6 @@
             length = length != null ? length : inArray.length;
             options = options || 0; // 0 - means "None", 1 - stands for "InsertLineBreaks"
 
-            
             if (length < 0) {
                 throw new Bridge.ArgumentOutOfRangeException("length", "Index was out of range. Must be non-negative and less than the size of the collection.");
             }
@@ -658,11 +700,11 @@
             UInt32_MinValue: 0,
             UInt32_MaxValue: 4294967295,
 
-            Int64_MinValue_Safe: -9007199254740991,
-            Int64_MaxValue_Safe: 9007199254740991,
+            Int64_MinValue: Bridge.Long.MinValue,
+            Int64_MaxValue: Bridge.Long.MaxValue,
 
-            UInt64_MinValue_Safe: 0,
-            UInt64_MaxValue_Safe: 9007199254740991,
+            UInt64_MinValue: Bridge.ULong.MinValue,
+            UInt64_MaxValue: Bridge.ULong.MaxValue,
 
             Single_MinValue: -3.40282347e+38,
             Single_MaxValue: 3.40282347e+38,
@@ -670,8 +712,8 @@
             Double_MinValue: -1.7976931348623157e+308,
             Double_MaxValue: 1.7976931348623157e+308,
 
-            Decimal_MinValue: -79228162514264337593543950335,
-            Decimal_MaxValue: 79228162514264337593543950335
+            Decimal_MinValue: Bridge.Decimal.MinValue,
+            Decimal_MaxValue: Bridge.Decimal.MaxValue
         },
 
         base64LineBreakPosition: 76,
@@ -753,9 +795,9 @@
                 case typeCodes.UInt32:
                     return scope.internal.typeRanges.UInt32_MinValue;
                 case typeCodes.Int64:
-                    return scope.internal.typeRanges.Int64_MinValue_Safe;
+                    return scope.internal.typeRanges.Int64_MinValue;
                 case typeCodes.UInt64:
-                    return scope.internal.typeRanges.UInt64_MinValue_Safe;
+                    return scope.internal.typeRanges.UInt64_MinValue;
                 case typeCodes.Single:
                     return scope.internal.typeRanges.Single_MinValue;
                 case typeCodes.Double:
@@ -791,9 +833,9 @@
                 case typeCodes.UInt32:
                     return scope.internal.typeRanges.UInt32_MaxValue;
                 case typeCodes.Int64:
-                    return scope.internal.typeRanges.Int64_MaxValue_Safe;
+                    return scope.internal.typeRanges.Int64_MaxValue;
                 case typeCodes.UInt64:
-                    return scope.internal.typeRanges.UInt64_MaxValue_Safe;
+                    return scope.internal.typeRanges.UInt64_MaxValue;
                 case typeCodes.Single:
                     return scope.internal.typeRanges.Single_MaxValue;
                 case typeCodes.Double:
@@ -818,10 +860,6 @@
         toNumber: function (value, formatProvider, typeCode, valueTypeCode) {
             var typeCodes = scope.convert.typeCodes;
 
-            if (value instanceof Bridge.Decimal) {
-                value = value.toFloat();
-            }
-
             var type = typeof (value);
             var isFloating = scope.internal.isFloatingType(typeCode);
 
@@ -829,6 +867,9 @@
                 type = "string";
             }
 
+            if (Bridge.Long.is64Bit(value) || value instanceof Bridge.Decimal) {
+                type = "number";
+            }
 
             switch (type) {
                 case "boolean":
@@ -839,6 +880,25 @@
                         scope.internal.validateNumberRange(value, typeCode, true);
 
                         return new Bridge.Decimal(value, formatProvider);
+                    }
+
+                    if (typeCode === typeCodes.Int64) {
+                        scope.internal.validateNumberRange(value, typeCode, true);
+
+                        return new Bridge.Long(value);
+                    }
+
+                    if (typeCode === typeCodes.UInt64) {
+                        scope.internal.validateNumberRange(value, typeCode, true);
+
+                        return new Bridge.ULong(value);
+                    }
+
+                    if (Bridge.Long.is64Bit(value)) {
+                        value = value.toNumber();
+                    }
+                    else if (value instanceof Bridge.Decimal) {
+                        value = value.toFloat();
                     }
 
                     if (!isFloating && (value % 1 !== 0)) {
@@ -889,7 +949,20 @@
                             throw new Bridge.FormatException("Input string was not in a correct format.");
                         }
 
-                        value = parseInt(value, 10);
+                        var str = value;
+                        if (typeCode === typeCodes.Int64) {
+                            value = new Bridge.Long(value);
+                            if (str !== value.toString()) {
+                                this.throwOverflow(scope.internal.getTypeCodeName(typeCode));
+                            }
+                        } else if (typeCode === typeCodes.UInt64) {
+                            value = new Bridge.ULong(value);
+                            if (str !== value.toString()) {
+                                this.throwOverflow(scope.internal.getTypeCodeName(typeCode));
+                            }
+                        } else {
+                            value = parseInt(value, 10);
+                        }
                     }
 
                     if (isNaN(value)) {
@@ -934,9 +1007,61 @@
                 }
             }
 
-            if (value < minValue || value > maxValue) {
-                throw new Bridge.OverflowException("Value was either too large or too small for '" + typeName + "'.");
+            if (typeCode === typeCodes.Decimal || typeCode === typeCodes.Int64 || typeCode === typeCodes.UInt64) {
+                if (typeCode === typeCodes.Decimal) {
+                    if (!Bridge.Long.is64Bit(value)) {
+                        if (minValue.gt(value) || maxValue.lt(value)) {
+                            this.throwOverflow(typeName);
+                        }
+                    }
+
+                    value = new Bridge.Decimal(value);
+                }
+                else if (typeCode === typeCodes.Int64) {
+                    if (value instanceof Bridge.ULong) {
+                        if (value.gt(Bridge.Long.MaxValue)) {
+                            this.throwOverflow(typeName);
+                        }
+                    }
+                    else if (value instanceof Bridge.Decimal) {
+                        if ((value.gt(new Bridge.Decimal(maxValue)) || value.lt(new Bridge.Decimal(minValue)))) {
+                            this.throwOverflow(typeName);
+                        }
+                    }
+                    else if (!(value instanceof Bridge.Long)) {
+                        if (minValue.toNumber() > value || maxValue.toNumber() < value) {
+                            this.throwOverflow(typeName);
+                        }
+                    }
+
+                    value = new Bridge.Long(value);
+                }
+                else if (typeCode === typeCodes.UInt64) {
+                    if (value instanceof Bridge.Long) {
+                        if (value.isNegative()) {
+                            this.throwOverflow(typeName);
+                        }
+                    }
+                    else if (value instanceof Bridge.Decimal) {
+                        if ((value.gt(new Bridge.Decimal(maxValue)) || value.lt(new Bridge.Decimal(minValue)))) {
+                            this.throwOverflow(typeName);
+                        }
+                    }
+                    else if (!(value instanceof Bridge.ULong)) {
+                        if (minValue.toNumber() > value || maxValue.toNumber() < value) {
+                            this.throwOverflow(typeName);
+                        }
+                    }
+                    value = new Bridge.ULong(value);
+                }
             }
+            else if (value < minValue || value > maxValue) {
+                this.throwOverflow(typeName);
+            }
+        },
+
+        throwOverflow: function(typeName) {
+            throw new Bridge.OverflowException("Value was either too large or too small for '" + typeName + "'.");
         },
 
         roundToInt: function (value, typeCode) {
@@ -1141,7 +1266,6 @@
             var equalityCharEncountered = false;
 
             while (true) {
-
                 // break when done:
                 if (inputIndex >= endInputIndex) {
                     allInputConsumed = true;

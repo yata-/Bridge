@@ -3,7 +3,7 @@ using Bridge;
 namespace System
 {
     [External]
-    [Name("Bridge.Int")]
+    [Name("Bridge.Char")]
     [Constructor("Number")]
     public struct Char : IComparable, IComparable<Char>, IEquatable<Char>, IFormattable
     {
@@ -65,7 +65,7 @@ namespace System
             return 0;
         }
 
-        [Template("Bridge.equalsT({this}, {other})")]
+        [Template("{this} === {other}")]
         public bool Equals(char other)
         {
             return false;

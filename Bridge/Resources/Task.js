@@ -186,7 +186,7 @@
                 return tcs.task;
             },
 
-            fromPromise: function (promise, handler, errorHandler) {
+            fromPromise: function (promise, handler, errorHandler, progressHandler) {
                 var tcs = new Bridge.TaskCompletionSource();
 
                 if (!promise.then) {
@@ -204,7 +204,7 @@
                     tcs.setResult(handler ? handler.apply(null, arguments) : Array.prototype.slice.call(arguments, 0));
                 }, function () {
                     tcs.setException(errorHandler ? errorHandler.apply(null, arguments) : new Bridge.PromiseException(Array.prototype.slice.call(arguments, 0)));
-                });
+                }, progressHandler);
 
                 return tcs.task;
             }

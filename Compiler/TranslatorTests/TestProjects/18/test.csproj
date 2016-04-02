@@ -35,8 +35,10 @@
     <DefineConstants>TEST1;TEST2</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Issues\Issue1050.cs" />
     <Compile Include="Issues\Issue921Generic.cs" />
     <Compile Include="Issues\Issue921Nested.cs" />
+    <Compile Include="Issues\Issue1035.cs" />
     <Compile Include="Issues\Issue960.cs" />
     <Compile Include="Issues\Issue958.cs" />
     <Compile Include="Issues\Issue921Instance.cs" />
@@ -52,6 +54,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Bridge\bridge.Release.json" />
+    <None Include="Bridge\bridge.Debug.json" />
     <None Include="Bridge\bridge.json" />
   </ItemGroup>
   <ItemGroup>

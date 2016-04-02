@@ -22,17 +22,10 @@
 
     Bridge.define("Bridge.ICloneable");
 
-    Bridge.Class.generic("Bridge.IComparable$1", function (T) {
-        var $$name = Bridge.Class.genericName("Bridge.IComparable$1", T);
+    Bridge.define('Bridge.IComparable$1', function (T) { return {}; });
 
-        return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name));
-    });
-
-    Bridge.Class.generic("Bridge.IEquatable$1", function (T) {
-        var $$name = Bridge.Class.genericName("Bridge.IEquatable$1", T);
-
-        return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name));
-    });
+    Bridge.define('Bridge.IEquatable$1', function (T) { return {}; });
 
     Bridge.define("Bridge.IPromise");
+
     Bridge.define("Bridge.IDisposable");

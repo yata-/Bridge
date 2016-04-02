@@ -37,6 +37,33 @@ namespace Bridge.Translator
             this.VisitMemberReferenceExpression();
         }
 
+        protected void WriteTarget(ResolveResult resolveResult)
+        {
+            MemberResolveResult member = resolveResult as MemberResolveResult;
+            if (member == null || !member.Member.IsStatic)
+            {
+                this.MemberReferenceExpression.Target.AcceptVisitor(this.Emitter);
+                return;
+            }
+
+            var method = member.Member as IMethod;
+            if (method == null || method.IsExtensionMethod)
+            {
+                this.MemberReferenceExpression.Target.AcceptVisitor(this.Emitter);
+                return;
+            }
+
+            this.Write(BridgeTypes.ToJsName(member.Member.DeclaringType, this.Emitter));
+            /*if (member.Member.DeclaringType.Kind == TypeKind.Enum || this.Emitter.Validator.IsIgnoreType(member.Member.DeclaringType.GetDefinition()) || this.Emitter.TypeInfo.Type == member.Member.DeclaringType)
+            {
+                this.Write(BridgeTypes.ToJsName(member.Member.DeclaringType, this.Emitter));
+            }
+            else
+            {
+                this.Write("Bridge.get(" + BridgeTypes.ToJsName(member.Member.DeclaringType, this.Emitter) + ")");
+            }*/
+        }
+
         protected void VisitMemberReferenceExpression()
         {
             MemberReferenceExpression memberReferenceExpression = this.MemberReferenceExpression;
@@ -59,6 +86,14 @@ namespace Bridge.Translator
             if (memberTargetrr != null && memberTargetrr.Type.Kind == TypeKind.Enum && memberTargetrr.Member is DefaultResolvedField && this.Emitter.Validator.EnumEmitMode(memberTargetrr.Type) == 2)
             {
                 isConstTarget = true;
+            }
+
+            if (memberReferenceExpression.Target is ParenthesizedExpression || 
+                (targetrr is ConstantResolveResult && targetrr.Type.IsKnownType(KnownTypeCode.Int64)) ||
+                (targetrr is ConstantResolveResult && targetrr.Type.IsKnownType(KnownTypeCode.UInt64)) ||
+                (targetrr is ConstantResolveResult && targetrr.Type.IsKnownType(KnownTypeCode.Decimal)))
+            {
+                isConstTarget = false;
             }
 
             if (memberReferenceExpression.Parent is InvocationExpression && (((InvocationExpression)(memberReferenceExpression.Parent)).Target == memberReferenceExpression))
@@ -192,13 +227,14 @@ namespace Bridge.Translator
                 {
                     this.Write("(");
                 }
-                memberReferenceExpression.Target.AcceptVisitor(this.Emitter);
+                this.WriteTarget(resolveResult);
                 if (isConstTarget)
                 {
                     this.Write(")");
                 }
                 this.Emitter.IsAssignment = oldIsAssignment;
                 this.Emitter.IsUnaryAccessor = oldUnary;
+                var oldInline = inline;
                 inline = inline.Replace("{this}", this.Emitter.Output.ToString());
                 this.Emitter.Output = oldBuilder;
 
@@ -210,7 +246,7 @@ namespace Bridge.Translator
                 {
                     if (member != null && member.Member is IMethod)
                     {
-                        throw new EmitterException(memberReferenceExpression, "The templated method (" + member.Member.FullName + ") cannot be used like reference");
+                        new InlineArgumentsBlock(this.Emitter, new ArgumentsInfo(this.Emitter, memberReferenceExpression, resolveResult), oldInline, (IMethod)member.Member, targetrr).EmitFunctionReference();
                     }
                     else
                     {
@@ -223,7 +259,27 @@ namespace Bridge.Translator
 
             if (member != null && member.Member.SymbolKind == SymbolKind.Field && this.Emitter.IsMemberConst(member.Member) && this.Emitter.IsInlineConst(member.Member))
             {
+                var parentExpression = memberReferenceExpression.Parent as MemberReferenceExpression;
+                bool wrap = false;
+
+                if (parentExpression != null)
+                {
+                    var rr = this.Emitter.Resolver.ResolveNode(memberReferenceExpression.Parent, this.Emitter);
+                    var ii = this.Emitter.GetInlineCode(parentExpression);
+
+                    if (string.IsNullOrEmpty(ii.Item3))
+                    {
+                        wrap = true;
+                        this.WriteOpenParentheses();
+                    }
+                }
+
                 this.WriteScript(member.ConstantValue);
+
+                if (wrap)
+                {
+                    this.WriteCloseParentheses();
+                }
             }
             else if (hasInline && member.Member.IsStatic)
             {
@@ -235,17 +291,7 @@ namespace Bridge.Translator
                 {
                     if (member != null && member.Member is IMethod)
                     {
-                        var r = new Regex(@"([$\w\.]+)\(\s*\S.*\)");
-                        var match = r.Match(inline);
-
-                        if (match.Success)
-                        {
-                            this.Write(match.Groups[1].Value);
-                        }
-                        else
-                        {
-                            throw new EmitterException(memberReferenceExpression, "The templated method (" + member.Member.FullName + ") cannot be used like reference");    
-                        }
+                        new InlineArgumentsBlock(this.Emitter, new ArgumentsInfo(this.Emitter, memberReferenceExpression, resolveResult), inline, (IMethod)member.Member, targetrr).EmitFunctionReference();
                     }
                     else
                     {
@@ -270,7 +316,7 @@ namespace Bridge.Translator
                             return;
                         }
 
-                        if (enumMode >= 3)
+                        if (enumMode >= 3 && enumMode < 7)
                         {
                             string enumStringName = member.Member.Name;
                             var attr = Helpers.GetInheritedAttribute(member.Member, Translator.Bridge_ASSEMBLY + ".NameAttribute");
@@ -310,7 +356,8 @@ namespace Bridge.Translator
                 if (resolveResult is TypeResolveResult)
                 {
                     TypeResolveResult typeResolveResult = (TypeResolveResult)resolveResult;
-                    var isNative = this.Emitter.Validator.IsIgnoreType(typeResolveResult.Type.GetDefinition()) || typeResolveResult.Type.Kind == TypeKind.Enum;
+                    this.Write(BridgeTypes.ToJsName(typeResolveResult.Type, this.Emitter));
+                    /*var isNative = this.Emitter.Validator.IsIgnoreType(typeResolveResult.Type.GetDefinition()) || typeResolveResult.Type.Kind == TypeKind.Enum;
                     if (isNative)
                     {
                         this.Write(BridgeTypes.ToJsName(typeResolveResult.Type, this.Emitter));
@@ -318,7 +365,7 @@ namespace Bridge.Translator
                     else
                     {
                         this.Write("Bridge.get(" + BridgeTypes.ToJsName(typeResolveResult.Type, this.Emitter) + ")");
-                    }                    
+                    }*/                    
 
                     return;
                 }
@@ -344,7 +391,7 @@ namespace Bridge.Translator
                     if (!isStatic)
                     {
                         this.Write(Bridge.Translator.Emitter.ROOT + "." + (isExtensionMethod ? Bridge.Translator.Emitter.DELEGATE_BIND_SCOPE : Bridge.Translator.Emitter.DELEGATE_BIND) + "(");
-                        memberReferenceExpression.Target.AcceptVisitor(this.Emitter);
+                        this.WriteTarget(resolveResult);
                         this.Write(", ");
                     }
 
@@ -363,7 +410,7 @@ namespace Bridge.Translator
                         {
                             this.Write("(");
                         }
-                        memberReferenceExpression.Target.AcceptVisitor(this.Emitter);
+                        this.WriteTarget(resolveResult);
                         if (isConstTarget)
                         {
                             this.Write(")");
@@ -441,7 +488,7 @@ namespace Bridge.Translator
                     {
                         this.Write("(");
                     }
-                    memberReferenceExpression.Target.AcceptVisitor(this.Emitter);
+                    this.WriteTarget(resolveResult);
                     if (isConstTarget)
                     {
                         this.Write(")");
@@ -513,7 +560,27 @@ namespace Bridge.Translator
                         }
                     }
 
-                    if (Helpers.IsFieldProperty(member.Member, this.Emitter))
+                    bool isFieldProperty = Helpers.IsFieldProperty(member.Member, this.Emitter);
+                    if (isFieldProperty)
+                    {
+                        if (member.Member.ImplementedInterfaceMembers.Count > 0 &&
+                            !member.Member.ImplementedInterfaceMembers.All(m => Helpers.IsFieldProperty(m, this.Emitter)))
+                        {
+                            throw new EmitterException(memberReferenceExpression,
+                                string.Format(
+                                    "The property {0} is marked as FieldProperty but implemented interface member has no such attribute",
+                                    member.Member.ToString()));
+                        }
+                    }
+                    else
+                    {
+                        if (member.Member.ImplementedInterfaceMembers.Count > 0 && member.Member.ImplementedInterfaceMembers.Any(m => Helpers.IsFieldProperty(m, this.Emitter)))
+                        {
+                            throw new EmitterException(memberReferenceExpression, string.Format("The property {0} is not marked as FieldProperty but implemented interface member has such attribute", member.Member.ToString()));
+                        }
+                    }
+
+                    if (isFieldProperty)
                     {
                         this.Write(Helpers.GetPropertyRef(member.Member, this.Emitter));
                     }
@@ -523,6 +590,7 @@ namespace Bridge.Translator
                         {
                             bool isNullable = NullableType.IsNullable(member.Member.ReturnType);
                             bool isDecimal = Helpers.IsDecimalType(member.Member.ReturnType, this.Emitter.Resolver);
+                            bool isLong = Helpers.Is64Type(member.Member.ReturnType, this.Emitter.Resolver);
 
                             if (isStatement)
                             {
@@ -539,7 +607,7 @@ namespace Bridge.Translator
                                     this.WriteOpenParentheses();
                                 }
 
-                                if (isDecimal)
+                                if (isDecimal || isLong)
                                 {
                                     if (isNullable)
                                     {
@@ -562,7 +630,7 @@ namespace Bridge.Translator
                                         }
                                         else
                                         {
-                                            memberReferenceExpression.Target.AcceptVisitor(this.Emitter);
+                                            this.WriteTarget(resolveResult);
                                         }
 
                                         this.WriteDot();
@@ -592,7 +660,7 @@ namespace Bridge.Translator
                                         }
                                         else
                                         {
-                                            memberReferenceExpression.Target.AcceptVisitor(this.Emitter);
+                                            this.WriteTarget(resolveResult);
                                         }
 
                                         this.WriteDot();
@@ -641,7 +709,7 @@ namespace Bridge.Translator
                                         {
                                             this.Write("(");
                                         }
-                                        memberReferenceExpression.Target.AcceptVisitor(this.Emitter);
+                                        this.WriteTarget(resolveResult);
                                         if (isConstTarget)
                                         {
                                             this.Write(")");
@@ -705,7 +773,7 @@ namespace Bridge.Translator
                                     {
                                         this.Write("(");
                                     }
-                                    memberReferenceExpression.Target.AcceptVisitor(this.Emitter);
+                                    this.WriteTarget(resolveResult);
                                     if (isConstTarget)
                                     {
                                         this.Write(")");
@@ -727,7 +795,7 @@ namespace Bridge.Translator
                                     this.WriteOpenParentheses();
                                 }
 
-                                if (isDecimal)
+                                if (isDecimal || isLong)
                                 {
                                     if (isNullable)
                                     {
@@ -790,7 +858,7 @@ namespace Bridge.Translator
                                     }
                                     else
                                     {
-                                        memberReferenceExpression.Target.AcceptVisitor(this.Emitter);
+                                        this.WriteTarget(resolveResult);
                                     }
                                     this.WriteDot();
                                     this.Write(Helpers.GetPropertyRef(member.Member, this.Emitter, false));
@@ -853,7 +921,7 @@ namespace Bridge.Translator
 
                             this.Emitter.IsAssignment = false;
                             this.Emitter.IsUnaryAccessor = false;
-                            memberReferenceExpression.Target.AcceptVisitor(this.Emitter);
+                            this.WriteTarget(resolveResult);
                             this.Emitter.IsAssignment = oldIsAssignment;
                             this.Emitter.IsUnaryAccessor = oldUnary;
                             var trg = this.Emitter.Output.ToString();

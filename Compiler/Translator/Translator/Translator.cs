@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using ICSharpCode.NRefactory.CSharp;
 
 namespace Bridge.Translator
 {
@@ -14,6 +15,7 @@ namespace Bridge.Translator
     {
         public const string Bridge_ASSEMBLY = "Bridge";
         public const string BridgeResourcesList = "Bridge.Resources.list";
+        public const string SupportedProjectType = "Library";
         private static readonly Encoding OutputEncoding = System.Text.Encoding.UTF8;
         private static readonly string[] MinifierCodeSettingsInternalFileNames = new string[] { "bridge.js", "bridge.min.js", "bridge.collections.js", "bridge.collections.min.js" };
 
@@ -22,13 +24,13 @@ namespace Bridge.Translator
             EvalTreatment = Microsoft.Ajax.Utilities.EvalTreatment.MakeAllSafe,
             LocalRenaming = Microsoft.Ajax.Utilities.LocalRenaming.KeepAll,
             TermSemicolons = true,
-            StrictMode = true
+            StrictMode = false
         };
 
         private static readonly CodeSettings MinifierCodeSettingsInternal = new CodeSettings
         {
             TermSemicolons = true,
-            StrictMode = true
+            StrictMode = false
         };
 
         private static readonly CodeSettings MinifierCodeSettingsLocales = new CodeSettings
@@ -64,12 +66,14 @@ namespace Bridge.Translator
 
             var config = this.ReadConfig();
 
-            if (config.LoggerLevel.HasValue)
+            var l = logger as Bridge.Translator.Logging.Logger;
+            if (l != null)
             {
-                var l = logger as Bridge.Translator.Logging.Logger;
-                if (l != null)
+                l.LoggerLevel = config.LoggerLevel ?? LoggerLevel.Info;
+
+                if (config.NoLoggerTimeStamps.HasValue)
                 {
-                    l.LoggerLevel = config.LoggerLevel.Value;
+                    l.UseTimeStamp = !config.NoLoggerTimeStamps.Value;
                 }
             }
 
@@ -133,11 +137,17 @@ namespace Bridge.Translator
             this.BuildSyntaxTree();
 
             var resolver = new MemberResolver(this.ParsedSourceFiles, Emitter.ToAssemblyReferences(references, logger));
+            resolver = this.Preconvert(resolver);
 
             this.InspectTypes(resolver, config);
 
             resolver.CanFreeze = true;
             var emitter = this.CreateEmitter(resolver);
+
+            if (!this.AssemblyInfo.OverflowMode.HasValue)
+            {
+                this.AssemblyInfo.OverflowMode = this.OverflowMode;
+            }
 
             emitter.Translator = this;
             emitter.AssemblyInfo = this.AssemblyInfo;
@@ -161,6 +171,34 @@ namespace Bridge.Translator
             logger.Info("Translating done");
 
             return this.Outputs;
+        }
+
+        protected virtual MemberResolver Preconvert(MemberResolver resolver)
+        {
+            bool needRecompile = false;
+            foreach (var sourceFile in this.ParsedSourceFiles)
+            {
+                var syntaxTree = sourceFile.SyntaxTree;
+
+                var detecter = new PreconverterDetecter(resolver);
+                syntaxTree.AcceptVisitor(detecter);
+
+                if (detecter.Found)
+                {
+                    var fixer = new PreconverterFixer(resolver);
+                    var astNode = syntaxTree.AcceptVisitor(fixer);
+                    syntaxTree = (astNode != null ? (SyntaxTree)astNode : syntaxTree);
+                    sourceFile.SyntaxTree = syntaxTree;
+                    needRecompile = true;
+                }
+            }
+
+            if (needRecompile)
+            {
+                return new MemberResolver(this.ParsedSourceFiles, resolver.Assemblies);
+            }
+
+            return resolver;
         }
 
         protected virtual void SortReferences()

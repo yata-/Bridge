@@ -6,11 +6,12 @@ namespace System.Collections.Generic
     [Namespace("Bridge")]
     public interface IDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>, IBridgeClass
     {
+        [AccessorsIndexer]
         TValue this[TKey key]
         {
-            [Template("getItem({0})")]
+            [Name("getItem")]
             get;
-            [Template("setItem({0})")]
+            [Name("setItem")]
             set;
         }
 

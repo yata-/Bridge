@@ -22,28 +22,28 @@ namespace Bridge.ClientTest.SimpleTypes
         public void DefaultConstructorWorks()
         {
             var time = new TimeSpan();
-            Assert.AreEqual(0, time.Ticks);
+            Assert.True(0 == time.Ticks);
         }
 
         [Test]
         public void DefaultValueWorks()
         {
             var ts = default(TimeSpan);
-            Assert.AreEqual(0, ts.Ticks);
+            Assert.True(0 == ts.Ticks);
         }
 
         [Test]
         public void ZeroWorks()
         {
             var ts = TimeSpan.Zero;
-            Assert.AreEqual(0, ts.Ticks);
+            Assert.True(0 == ts.Ticks);
         }
 
         [Test]
         public void CreatingInstanceReturnsTimeSpanWithZeroValue()
         {
             var ts = Activator.CreateInstance<TimeSpan>();
-            Assert.AreEqual(0, ts.Ticks);
+            Assert.True(0 == ts.Ticks);
         }
 
         [Test]
@@ -51,19 +51,19 @@ namespace Bridge.ClientTest.SimpleTypes
         {
             var time = new TimeSpan(34567L);
             Assert.True((object)time is TimeSpan, "ticks type");
-            Assert.AreEqual(34567, time.Ticks, "ticks value");
+            Assert.True(34567 == time.Ticks, "ticks value");
 
             time = new TimeSpan(10, 20, 5);
             Assert.True((object)time is TimeSpan, "h, m, s type");
-            Assert.AreEqual(372050000000, time.Ticks, "h, m, s value");
+            Assert.True(372050000000 == time.Ticks, "h, m, s value");
 
             time = new TimeSpan(15, 10, 20, 5);
             Assert.True((object)time is TimeSpan, "d, h, m, s type");
-            Assert.AreEqual(13332050000000, time.Ticks, "d, h, m, s value");
+            Assert.True(13332050000000 == time.Ticks, "d, h, m, s value");
 
             time = new TimeSpan(15, 10, 20, 5, 14);
             Assert.True((object)time is TimeSpan, "full type");
-            Assert.AreEqual(13332050140000, time.Ticks, "full value");
+            Assert.True(13332050140000 == time.Ticks, "full value");
         }
 
         [Test]
@@ -71,27 +71,27 @@ namespace Bridge.ClientTest.SimpleTypes
         {
             var time = TimeSpan.FromDays(3);
             Assert.True((object)time is TimeSpan, "FromDays type");
-            Assert.AreEqual(2592000000000, time.Ticks, "FromDays value");
+            Assert.True(2592000000000 == time.Ticks, "FromDays value");
 
             time = TimeSpan.FromHours(3);
             Assert.True((object)time is TimeSpan, "FromHours type");
-            Assert.AreEqual(108000000000, time.Ticks, "FromHours value");
+            Assert.True(108000000000 == time.Ticks, "FromHours value");
 
             time = TimeSpan.FromMinutes(3);
             Assert.True((object)time is TimeSpan, "FromMinutes type");
-            Assert.AreEqual(1800000000, time.Ticks, "FromMinutes value");
+            Assert.True(1800000000 == time.Ticks, "FromMinutes value");
 
             time = TimeSpan.FromSeconds(3);
             Assert.True((object)time is TimeSpan, "FromSeconds type");
-            Assert.AreEqual(30000000, time.Ticks, "FromSeconds value");
+            Assert.True(30000000 == time.Ticks, "FromSeconds value");
 
             time = TimeSpan.FromMilliseconds(3);
             Assert.True((object)time is TimeSpan, "FromMilliseconds type");
-            Assert.AreEqual(30000, time.Ticks, "FromMilliseconds value");
+            Assert.True(30000 == time.Ticks, "FromMilliseconds value");
 
             time = TimeSpan.FromTicks(3);
             Assert.True((object)time is TimeSpan, "FromTicks type");
-            Assert.AreEqual(3, time.Ticks, "FromTicks value");
+            Assert.True(3 == time.Ticks, "FromTicks value");
         }
 
         [Test]
@@ -108,7 +108,7 @@ namespace Bridge.ClientTest.SimpleTypes
             AssertAlmostEqual(time.TotalMinutes, 22220.083566666668d);
             AssertAlmostEqual(time.TotalSeconds, 1333205.014d);
             AssertAlmostEqual(time.TotalMilliseconds, 1333205014.0d);
-            Assert.AreEqual(15 * TimeSpan.TicksPerDay + 10 * TimeSpan.TicksPerHour + 20 * TimeSpan.TicksPerMinute + 5 * TimeSpan.TicksPerSecond + 14 * TimeSpan.TicksPerMillisecond, time.Ticks);
+            Assert.True(15 * TimeSpan.TicksPerDay + 10 * TimeSpan.TicksPerHour + 20 * TimeSpan.TicksPerMinute + 5 * TimeSpan.TicksPerSecond + 14 * TimeSpan.TicksPerMillisecond == time.Ticks);
         }
 
         [Test]
@@ -159,7 +159,6 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.True(time1.Equals(time3));
         }
 
-        [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void IEquatableEqualsWorks()
         {

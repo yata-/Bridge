@@ -67,14 +67,15 @@ namespace System.Collections.Generic
             }
         }
 
+        [AccessorsIndexer]
         public TValue this[TKey key]
         {
-            [Template("get({0})")]
+            [Name("get")]
             get
             {
                 return default(TValue);
             }
-            [Template("set({0})")]
+            [Name("set")]
             set
             {
             }
