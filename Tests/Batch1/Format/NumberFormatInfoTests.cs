@@ -1,12 +1,11 @@
-﻿using System;
-using System.Globalization;
-using Bridge.Test;
-using Bridge.ClientTest;
+﻿using Bridge.Test;
 
-namespace Bridge.ClientTest
+using System.Globalization;
+
+namespace Bridge.ClientTest.Format
 {
     [Category(Constants.MODULE_NUMBERFORMATINFO)]
-    [TestFixture]
+    [TestFixture(TestNameFormat = "NumberFormatInfoTests - {0}")]
     public class NumberFormatInfoTests
     {
         [Test]

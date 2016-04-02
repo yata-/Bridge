@@ -62,6 +62,7 @@ namespace Bridge.ClientTest
         public const string MODULE_NUMBERFORMATINFO = "NumberFormatInfo";
         public const string MODULE_CULTUREINFO = "СultureInfo";
         public const string MODULE_PROPERTYACCESSOR = "Property accessor";
+        public const string MODULE_NUMBERFORMATSPECIFIERS = "Number format specifiers";
 
         public const string MODULE_RUNTIMEHELPERS = PREFIX_UTILITIES;
         public const string MODULE_ENVIRONMENT = PREFIX_UTILITIES;

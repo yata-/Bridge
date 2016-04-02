@@ -214,6 +214,7 @@
     <Compile Include="BridgeIssues\1100\N1128.cs" />
     <Compile Include="BridgeIssues\1100\N1134.cs" />
     <Compile Include="BridgeIssues\1100\N1141.cs" />
+    <Compile Include="BridgeIssues\1100\N1144.cs" />
     <Compile Include="BridgeIssues\1100\N1130.cs" />
     <Compile Include="BridgeIssues\1100\N1120.cs" />
     <Compile Include="BridgeIssues\1100\N1110.cs" />
@@ -263,6 +264,8 @@
     <Compile Include="Linq\TestLinqQueryExecution.cs" />
     <Compile Include="Linq\TestLinqRestrictionOperators.cs" />
     <Compile Include="Linq\TestLinqSetOperators.cs" />
+    <Compile Include="Format\StringFormatTests.cs" />
+    <Compile Include="Format\NumberFormatSpecifiersTests.cs" />
     <Compile Include="SimpleTypes\TestVersion.cs" />
     <Compile Include="Threading\CancellationTokenTests.cs" />
     <Compile Include="Threading\Tasks\AsyncTests.cs" />
@@ -286,8 +289,8 @@
     <Compile Include="Exceptions\NotImplementedExceptionTests.cs" />
     <Compile Include="Exceptions\DivideByZeroExceptionTests.cs" />
     <Compile Include="CultureInfoTests.cs" />
-    <Compile Include="NumberFormatInfoTests.cs" />
-    <Compile Include="DateTimeFormatInfoTests.cs" />
+    <Compile Include="Format\NumberFormatInfoTests.cs" />
+    <Compile Include="Format\DateTimeFormatInfoTests.cs" />
     <Compile Include="Exceptions\ArgumentExceptionTests.cs" />
     <Compile Include="Exceptions\ArgumentNullExceptionTests.cs" />
     <Compile Include="Exceptions\ArgumentOutOfRangeExceptionTests.cs" />
@@ -303,7 +306,7 @@
     <Compile Include="Collections\Generic\IListTests.cs" />
     <Compile Include="Collections\Generic\ICollectionTests.cs" />
     <Compile Include="Collections\Generic\IEnumerableTests.cs" />
-    <Compile Include="ExceptionTests.cs" />
+    <Compile Include="Exceptions\CommonExceptionTests.cs" />
     <Compile Include="IEquatableTests.cs" />
     <Compile Include="Collections\Generic\EqualityComparerTests.cs" />
     <Compile Include="IComparableTests.cs" />
