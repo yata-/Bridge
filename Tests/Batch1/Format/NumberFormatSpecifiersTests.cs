@@ -1,10 +1,9 @@
-﻿using System;
-using System.Globalization;
-using Bridge.Test;
-using Bridge.ClientTest;
-using Bridge.Html5;
+﻿using Bridge.Test;
 
-namespace Bridge.ClientTest
+using System;
+using System.Globalization;
+
+namespace Bridge.ClientTest.Format
 {
     [Category(Constants.MODULE_NUMBERFORMATINFO)]
     [TestFixture(TestNameFormat = "NumberFormatSpecifiersTests - {0}")]
