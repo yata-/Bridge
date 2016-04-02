@@ -4194,6 +4194,17 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1134', {
+        statics: {
+            testJsonArrayParse: function () {
+                var o = Bridge.merge(new Array(), JSON.parse("[1]"));
+                Bridge.Test.Assert.$true(Bridge.hasValue(o));
+                Bridge.Test.Assert.areEqual(1, o.length);
+                Bridge.Test.Assert.areEqual(1, o[0]);
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1141', {
         statics: {
             testLongDivisionInfiniteLoopFixed: function () {

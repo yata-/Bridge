@@ -415,7 +415,11 @@
 	            fn = Bridge.isArray(to) ? to.push : to.add;
 
 	            for (i = 0; i < from.length; i++) {
-	                fn.apply(to, from[i]);
+	                var item = from[i];
+                    if (!Bridge.isArray(item)) {
+                        item = [item];
+                    }
+	                fn.apply(to, item);
 	            }
 	        } else {
 	            for (key in from) {
