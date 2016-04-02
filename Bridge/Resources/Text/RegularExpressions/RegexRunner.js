@@ -48,8 +48,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
 
         if (this._prevlen === 0) {
             if (this._runtextstart === stoppos) {
-                var matchClass = Bridge.get(Bridge.Text.RegularExpressions.Match);
-                return matchClass.getEmpty();
+                return Bridge.Text.RegularExpressions.Match.getEmpty();
             }
 
             this._runtextstart += bump;
@@ -77,8 +76,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
         }
 
         if (!jsMatch.success) {
-            var matchClass = Bridge.get(Bridge.Text.RegularExpressions.Match);
-            return matchClass.getEmpty();
+            return Bridge.Text.RegularExpressions.Match.getEmpty();
         }
 
         var match = new Bridge.Text.RegularExpressions.Match(this._runregex, jsMatch.groups.length, this._runtext, 0, this._runtext.length, this._runtextstart);

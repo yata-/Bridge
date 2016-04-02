@@ -23,11 +23,10 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
             // Populate all groups by looking at each one
             var groups = match.getGroups();
             var groupsCount = groups.getCount();
-            var groupStatics = Bridge.get(Bridge.Text.RegularExpressions.Group);
 
             for (var i = 0; i < groupsCount; i++) {
                 var group = groups.get(i);
-                groupStatics.synchronized(group);
+                Bridge.Text.RegularExpressions.Group.synchronized(group);
             }
 
             return match;
@@ -93,8 +92,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
             throw new Bridge.NotSupportedException("Result cannot be called on a failed Match.");
         }
 
-        var regexParser = Bridge.get(Bridge.Text.RegularExpressions.RegexParser);
-        var repl = regexParser.parseReplacement(replacement, this._regex._caps, this._regex._capsize, this._regex._capnames, this._regex._options);
+        var repl = Bridge.Text.RegularExpressions.RegexParser.parseReplacement(replacement, this._regex._caps, this._regex._capsize, this._regex._capnames, this._regex._options);
         //TODO: cache
  
         return repl.replacement(this);

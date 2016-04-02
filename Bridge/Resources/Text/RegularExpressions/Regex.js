@@ -6,9 +6,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         _defaultMatchTimeout: Bridge.TimeSpan.fromMilliseconds(-1),
 
         getCacheSize: function () {
-            var scope = Bridge.Text.RegularExpressions;
-            var regexClass = Bridge.get(scope.Regex);
-            return regexClass._cacheSize;
+            return Bridge.Text.RegularExpressions.Regex._cacheSize;
         },
 
         setCacheSize: function (value) {
@@ -16,9 +14,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
                 throw new Bridge.ArgumentOutOfRangeException("value");
             }
 
-            var scope = Bridge.Text.RegularExpressions;
-            var regexClass = Bridge.get(scope.Regex);
-            regexClass._cacheSize = value;
+            Bridge.Text.RegularExpressions.Regex._cacheSize = value;
             //TODO: remove extra items from cache
         },
 
@@ -27,9 +23,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
                 throw new Bridge.ArgumentNullException("str");
             }
 
-            var scope = Bridge.Text.RegularExpressions;
-            var regexParserClass = Bridge.get(scope.RegexParser);
-            return regexParserClass.escape(str);
+            return Bridge.Text.RegularExpressions.RegexParser.escape(str);
         },
 
         unescape: function (str) {
@@ -37,116 +31,96 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
                 throw new Bridge.ArgumentNullException("str");
             }
 
-            var scope = Bridge.Text.RegularExpressions;
-            var regexParserClass = Bridge.get(scope.RegexParser);
-            return regexParserClass.unescape(str);
+            return Bridge.Text.RegularExpressions.RegexParser.unescape(str);
         },
 
         isMatch: function (input, pattern) {
             var scope = Bridge.Text.RegularExpressions;
-            var regexClass = Bridge.get(scope.Regex);
-            return regexClass.isMatch$2(input, pattern, scope.RegexOptions.None, regexClass._defaultMatchTimeout);
+            return scope.Regex.isMatch$2(input, pattern, scope.RegexOptions.None, scope.Regex._defaultMatchTimeout);
         },
 
         isMatch$1: function (input, pattern, options) {
             var scope = Bridge.Text.RegularExpressions;
-            var regexClass = Bridge.get(scope.Regex);
-            return regexClass.isMatch$2(input, pattern, options, regexClass._defaultMatchTimeout);
+            return scope.Regex.isMatch$2(input, pattern, options, scope.Regex._defaultMatchTimeout);
         },
 
         isMatch$2: function (input, pattern, options, matchTimeout) {
-            var scope = Bridge.Text.RegularExpressions;
-            var regex = new scope.Regex("constructor$3", pattern, options, matchTimeout, true);
+            var regex = new Bridge.Text.RegularExpressions.Regex("constructor$3", pattern, options, matchTimeout, true);
             return regex.isMatch(input);
         },
 
         match: function (input, pattern) {
             var scope = Bridge.Text.RegularExpressions;
-            var regexClass = Bridge.get(scope.Regex);
-            return regexClass.match$2(input, pattern, scope.RegexOptions.None, regexClass._defaultMatchTimeout);
+            return scope.Regex.match$2(input, pattern, scope.RegexOptions.None, scope.Regex._defaultMatchTimeout);
         },
 
         match$1: function (input, pattern, options) {
             var scope = Bridge.Text.RegularExpressions;
-            var regexClass = Bridge.get(scope.Regex);
-            return regexClass.match$2(input, pattern, options, regexClass._defaultMatchTimeout);
+            return scope.Regex.match$2(input, pattern, options, scope.Regex._defaultMatchTimeout);
         },
 
         match$2: function (input, pattern, options, matchTimeout) {
-            var scope = Bridge.Text.RegularExpressions;
-            var regex = new scope.Regex("constructor$3", pattern, options, matchTimeout, true);
+            var regex = new Bridge.Text.RegularExpressions.Regex("constructor$3", pattern, options, matchTimeout, true);
             return regex.match(input);
         },
 
         matches: function (input, pattern) {
             var scope = Bridge.Text.RegularExpressions;
-            var regexClass = Bridge.get(scope.Regex);
-            return regexClass.matches$2(input, pattern, scope.RegexOptions.None, regexClass._defaultMatchTimeout);
+            return scope.Regex.matches$2(input, pattern, scope.RegexOptions.None, scope.Regex._defaultMatchTimeout);
         },
 
         matches$1: function (input, pattern, options) {
             var scope = Bridge.Text.RegularExpressions;
-            var regexClass = Bridge.get(scope.Regex);
-            return regexClass.matches$2(input, pattern, options, regexClass._defaultMatchTimeout);
+            return scope.Regex.matches$2(input, pattern, options, scope.Regex._defaultMatchTimeout);
         },
 
         matches$2: function (input, pattern, options, matchTimeout) {
-            var scope = Bridge.Text.RegularExpressions;
-            var regex = new scope.Regex("constructor$3", pattern, options, matchTimeout, true);
+            var regex = new Bridge.Text.RegularExpressions.Regex("constructor$3", pattern, options, matchTimeout, true);
             return regex.matches(input);
         },
 
         replace: function (input, pattern, replacement) {
             var scope = Bridge.Text.RegularExpressions;
-            var regexClass = Bridge.get(scope.Regex);
-            return regexClass.replace$2(input, pattern, replacement, scope.RegexOptions.None, regexClass._defaultMatchTimeout);
+            return scope.Regex.replace$2(input, pattern, replacement, scope.RegexOptions.None, scope.Regex._defaultMatchTimeout);
         },
 
         replace$1: function (input, pattern, replacement, options) {
             var scope = Bridge.Text.RegularExpressions;
-            var regexClass = Bridge.get(scope.Regex);
-            return regexClass.replace$2(input, pattern, replacement, options, regexClass._defaultMatchTimeout);
+            return scope.Regex.replace$2(input, pattern, replacement, options, scope.Regex._defaultMatchTimeout);
         },
 
         replace$2: function (input, pattern, replacement, options, matchTimeout) {
-            var scope = Bridge.Text.RegularExpressions;
-            var regex = new scope.Regex("constructor$3", pattern, options, matchTimeout, true);
+            var regex = new Bridge.Text.RegularExpressions.Regex("constructor$3", pattern, options, matchTimeout, true);
             return regex.replace(input, replacement);
         },
 
         replace$3: function (input, pattern, evaluator) {
             var scope = Bridge.Text.RegularExpressions;
-            var regexClass = Bridge.get(scope.Regex);
-            return regexClass.replace$5(input, pattern, evaluator, scope.RegexOptions.None, regexClass._defaultMatchTimeout);
+            return scope.Regex.replace$5(input, pattern, evaluator, scope.RegexOptions.None, scope.Regex._defaultMatchTimeout);
         },
 
         replace$4: function (input, pattern, evaluator, options) {
             var scope = Bridge.Text.RegularExpressions;
-            var regexClass = Bridge.get(scope.Regex);
-            return regexClass.replace$5(input, pattern, evaluator, options, regexClass._defaultMatchTimeout);
+            return scope.Regex.replace$5(input, pattern, evaluator, options, scope.Regex._defaultMatchTimeout);
         },
 
         replace$5: function (input, pattern, evaluator, options, matchTimeout) {
-            var scope = Bridge.Text.RegularExpressions;
-            var regex = new scope.Regex("constructor$3", pattern, options, matchTimeout, true);
+            var regex = new Bridge.Text.RegularExpressions.Regex("constructor$3", pattern, options, matchTimeout, true);
             return regex.replace$3(input, evaluator);
         },
 
         split: function (input, pattern) {
             var scope = Bridge.Text.RegularExpressions;
-            var regexClass = Bridge.get(scope.Regex);
-            return regexClass.split$2(input, pattern, scope.RegexOptions.None, regexClass._defaultMatchTimeout);
+            return scope.Regex.split$2(input, pattern, scope.RegexOptions.None, scope.Regex._defaultMatchTimeout);
         },
 
         split$1: function (input, pattern, options) {
             var scope = Bridge.Text.RegularExpressions;
-            var regexClass = Bridge.get(scope.Regex);
-            return regexClass.split$2(input, pattern, options, regexClass._defaultMatchTimeout);
+            return scope.Regex.split$2(input, pattern, options, scope.Regex._defaultMatchTimeout);
         },
 
         split$2: function (input, pattern, options, matchTimeout) {
-            var scope = Bridge.Text.RegularExpressions;
-            var regex = new scope.Regex("constructor$3", pattern, options, matchTimeout, true);
+            var regex = new Bridge.Text.RegularExpressions.Regex("constructor$3", pattern, options, matchTimeout, true);
             return regex.split(input);
         }
     },
@@ -204,8 +178,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
 
         //TODO: cache
-        var engine = Bridge.get(Bridge.Text.RegularExpressions.RegexNetEngine);
-        var groupInfos = engine.parsePatternGroups(this._pattern);
+        var groupInfos = Bridge.Text.RegularExpressions.RegexNetEngine.parsePatternGroups(this._pattern);
 
         this._capsize = groupInfos.length;
         //this._caps = ;/
@@ -313,7 +286,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
     getGroupNames: function () {
         if (this._capslist == null) {
-            var invariantCulture = Bridge.get(Bridge.CultureInfo).invariantCulture;
+            var invariantCulture = Bridge.CultureInfo.invariantCulture;
 
             var result = [];
             var max = this._capsize;
@@ -355,7 +328,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
         if (this._capslist == null) {
             if (i >= 0 && i < this._capsize) {
-                var invariantCulture = Bridge.get(Bridge.CultureInfo).invariantCulture;
+                var invariantCulture = Bridge.CultureInfo.invariantCulture;
                 return Bridge.Convert.toString(i, invariantCulture, Bridge.Convert.typeCodes.Int32);
             }
             return "";
@@ -439,8 +412,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
             throw new Bridge.ArgumentNullException("replacement");
         }
 
-        var regexParser = Bridge.get(Bridge.Text.RegularExpressions.RegexParser);
-        var repl = regexParser.parseReplacement(replacement, this._caps, this._capsize, this._capnames, this._options);
+        var repl = Bridge.Text.RegularExpressions.RegexParser.parseReplacement(replacement, this._caps, this._capsize, this._capnames, this._options);
         //TODO: Cache
 
         return repl.replace(this, input, count, startat);
@@ -469,9 +441,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
             throw new Bridge.ArgumentNullException("input");
         }
 
-        var scope = Bridge.Text.RegularExpressions;
-        var regexReplacement = Bridge.get(scope.RegexReplacement);
-        return regexReplacement.replace(evaluator, this, input, count, startat);
+        return Bridge.Text.RegularExpressions.RegexReplacement.replace(evaluator, this, input, count, startat);
     },
 
     split: function (input) {
@@ -497,8 +467,6 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
             throw new Bridge.ArgumentNullException("input");
         }
 
-        var scope = Bridge.Text.RegularExpressions;
-        var regexReplacement = Bridge.get(scope.RegexReplacement);
-        return regexReplacement.split(this, input, count, startat);
+        return Bridge.Text.RegularExpressions.RegexReplacement.split(this, input, count, startat);
     }
 });

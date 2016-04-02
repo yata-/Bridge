@@ -20,10 +20,8 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
                 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,4,0,0,0],
 
         escape: function(input) {
-            var statics = Bridge.get(Bridge.Text.RegularExpressions.RegexParser);
-
             for (var i = 0; i < input.length; i++) {
-                if (statics._isMetachar(input[i])) {
+                if (Bridge.Text.RegularExpressions.RegexParser._isMetachar(input[i])) {
                     var sb = "";
                     var ch = input[i];
                     var lastpos;
@@ -53,7 +51,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
  
                         while (i < input.length) {
                             ch = input[i];
-                            if (statics._isMetachar(ch)) {
+                            if (Bridge.Text.RegularExpressions.RegexParser._isMetachar(ch)) {
                                 break;
                             }
  
@@ -75,7 +73,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
             for (var i = 0; i < input.length; i++) {
                 if (input[i] === "\\") {
                     var sb = "";
-                    var culture = Bridge.get(Bridge.CultureInfo).invariantCulture;
+                    var culture = Bridge.CultureInfo.invariantCulture;
                     var p = new Bridge.Text.RegularExpressions.RegexParser(culture);
 
                     var lastpos;
@@ -108,7 +106,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
         },
 
         parseReplacement: function(rep, caps, capsize, capnames, op) {
-            var culture = Bridge.get(Bridge.CultureInfo).getCurrentCulture(); // TODO: InvariantCulture
+            var culture = Bridge.CultureInfo.getCurrentCulture(); // TODO: InvariantCulture
 
             var p = new Bridge.Text.RegularExpressions.RegexParser(culture);
             p._options = op;
@@ -120,10 +118,8 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
         },
 
         _isMetachar: function (ch) {
-            var statics = Bridge.get(Bridge.Text.RegularExpressions.RegexParser);
-
             var code = ch.charCodeAt(0);
-            return (code <= "|".charCodeAt(0) && statics._category[code] >= statics._E);
+            return (code <= "|".charCodeAt(0) && Bridge.Text.RegularExpressions.RegexParser._category[code] >= Bridge.Text.RegularExpressions.RegexParser._E);
         }
     },
 
@@ -162,8 +158,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
     },
 
     _scanReplacement: function () {
-        var scope = Bridge.Text.RegularExpressions;
-        this._concatenation = new scope.RegexNode(Bridge.get(scope.RegexNode).Concatenate, this._options);
+        this._concatenation = new Bridge.Text.RegularExpressions.RegexNode(Bridge.Text.RegularExpressions.RegexNode.Concatenate, this._options);
 
         while (true) {
             var c = this._charsRight();
@@ -191,9 +186,6 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
     },
 
     _addConcatenate: function(pos, cch/*, bool isReplacement*/) {
-        var scope = Bridge.Text.RegularExpressions;
-        var nodeStatics = Bridge.get(scope.RegexNode);
-
         if (cch === 0) {
             return;
         }
@@ -201,10 +193,10 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
         var node;
         if (cch > 1) {
             var str = this._pattern.slice(pos, pos + cch);
-            node = new Bridge.Text.RegularExpressions.RegexNode(nodeStatics.Multi, this._options, str);
+            node = new Bridge.Text.RegularExpressions.RegexNode(Bridge.Text.RegularExpressions.RegexNode.Multi, this._options, str);
         } else {
             var ch = this._pattern[pos];
-            node = new Bridge.Text.RegularExpressions.RegexNode(nodeStatics.One, this._options, ch);
+            node = new Bridge.Text.RegularExpressions.RegexNode(Bridge.Text.RegularExpressions.RegexNode.One, this._options, ch);
         }
  
         this._concatenation.addChild(node);
@@ -219,14 +211,12 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
     },
 
     _scanDollar: function () {
-        var scope = Bridge.Text.RegularExpressions;
-        var nodeStatics = Bridge.get(scope.RegexNode);
         var maxValueDiv10 = 214748364;  // Int32.MaxValue / 10;
         var maxValueMod10 = 7;          // Int32.MaxValue % 10;
 
 
         if (this._charsRight() === 0) {
-            return new scope.RegexNode(nodeStatics.One, this._options, "$");
+            return new Bridge.Text.RegularExpressions.RegexNode(Bridge.Text.RegularExpressions.RegexNode.One, this._options, "$");
         }
 
         var ch = this._rightChar();
@@ -275,14 +265,14 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
                 }
                 this._textto(lastEndPos);
                 if (capnum >= 0) {
-                    return new scope.RegexNode(nodeStatics.Ref, this._options, capnum);
+                    return new Bridge.Text.RegularExpressions.RegexNode(Bridge.Text.RegularExpressions.RegexNode.Ref, this._options, capnum);
                 }
             }
             else {
                 capnum = this._scanDecimal();
                 if (!angled || this._charsRight() > 0 && this._moveRightGetChar() === "}") {
                     if (this._isCaptureSlot(capnum)) {
-                        return new scope.RegexNode(nodeStatics.Ref, this._options, capnum);
+                        return new Bridge.Text.RegularExpressions.RegexNode(Bridge.Text.RegularExpressions.RegexNode.Ref, this._options, capnum);
                     }
                 }
             }
@@ -293,50 +283,49 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
             if (this._charsRight() > 0 && this._moveRightGetChar() === "}") {
                 if (this._isCaptureName(capname)) {
                     var captureSlot = this._captureSlotFromName(capname);
-                    return new scope.RegexNode(nodeStatics.Ref, this._options, captureSlot);
+                    return new Bridge.Text.RegularExpressions.RegexNode(Bridge.Text.RegularExpressions.RegexNode.Ref, this._options, captureSlot);
                 }
             }
         }
         else if (!angled) {
             capnum = 1;
-            var replacementStatics = Bridge.get(Bridge.Text.RegularExpressions.RegexReplacement);
 
             switch (ch) {
                 case "$":
                     this._moveRight();
-                    return new scope.RegexNode(nodeStatics.One, this._options, "$");
+                    return new Bridge.Text.RegularExpressions.RegexNode(Bridge.Text.RegularExpressions.RegexNode.One, this._options, "$");
 
                 case "&":
                     capnum = 0;
                     break;
 
                 case "`":
-                    capnum = replacementStatics.LeftPortion;
+                    capnum = Bridge.Text.RegularExpressions.RegexReplacement.LeftPortion;
                     break;
 
                 case "\'":
-                    capnum = replacementStatics.RightPortion;
+                    capnum = Bridge.Text.RegularExpressions.RegexReplacement.RightPortion;
                     break;
 
                 case "+":
-                    capnum = replacementStatics.LastGroup;
+                    capnum = Bridge.Text.RegularExpressions.RegexReplacement.LastGroup;
                     break;
 
                 case "_":
-                    capnum = replacementStatics.WholeString;
+                    capnum = Bridge.Text.RegularExpressions.RegexReplacement.WholeString;
                     break;
             }
 
             if (capnum !== 1) {
                 this._moveRight();
-                return new scope.RegexNode(nodeStatics.Ref, this._options, capnum);
+                return new Bridge.Text.RegularExpressions.RegexNode(Bridge.Text.RegularExpressions.RegexNode.Ref, this._options, capnum);
             }
         }
 
         // unrecognized $: literalize
 
         this._textto(backpos);
-        return new scope.RegexNode(nodeStatics.One, this._options, "$");
+        return new Bridge.Text.RegularExpressions.RegexNode(Bridge.Text.RegularExpressions.RegexNode.One, this._options, "$");
     },
 
     _scanDecimal: function () {

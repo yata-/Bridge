@@ -22,13 +22,10 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNode", {
     },
 
     constructor: function (type, options, arg) {
-        var scope = Bridge.Text.RegularExpressions;
-        var statics = Bridge.get(scope.RegexNode);
-
         this._type = type;
         this._options = options;
 
-        if (type === statics.Ref) {
+        if (type === Bridge.Text.RegularExpressions.RegexNode.Ref) {
             this._m = arg;
         } else {
             this._str = arg || null;
@@ -56,12 +53,9 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNode", {
     _reduce: function() {
         // Warning: current implementation is just partial (for Replacement servicing)
 
-        var scope = Bridge.Text.RegularExpressions;
-        var statics = Bridge.get(scope.RegexNode);
-
         var n;
         switch (this._type) {
-            case statics.Concatenate:
+            case Bridge.Text.RegularExpressions.RegexNode.Concatenate:
                 n = this._reduceConcatenation();
                 break;
  
@@ -73,9 +67,6 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNode", {
     },
 
     _reduceConcatenation: function() {
-        var scope = Bridge.Text.RegularExpressions;
-        var statics = Bridge.get(scope.RegexNode);
-
         var wasLastString = false;
         var optionsLast = 0;
         var optionsAt;
@@ -83,7 +74,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNode", {
         var j;
  
         if (this._children == null) {
-            return new scope.RegexNode(statics.Empty, this._options);
+            return new Bridge.Text.RegularExpression.RegexNode(Bridge.Text.RegularExpressions.RegexNode.Empty, this._options);
         }
 
         for (i = 0, j = 0; i < this._children.length; i++, j++) {
@@ -96,7 +87,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNode", {
                 this._children[j] = at;
             }
 
-            if (at._type === statics.Concatenate && at._isRightToLeft()) {
+            if (at._type === Bridge.Text.RegularExpressions.RegexNode.Concatenate && at._isRightToLeft()) {
                 for (var k = 0; k < at._children.length; k++) {
                     at._children[k]._next = this;
                 }
@@ -104,10 +95,10 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNode", {
                 this._children.splice.apply(this._children, [i + 1, 0].concat(at._children)); // _children.InsertRange(i + 1, at._children);
                 j--;
 
-            } else if (at._type === statics.Multi || at._type === statics.One) {
+            } else if (at._type === Bridge.Text.RegularExpressions.RegexNode.Multi || at._type === Bridge.Text.RegularExpressions.RegexNode.One) {
 
                 // Cannot merge strings if L or I options differ
-                optionsAt = at._options & (scope.RegexOptions.RightToLeft | scope.RegexOptions.IgnoreCase);
+                optionsAt = at._options & (Bridge.Text.RegularExpression.RegexOptions.RightToLeft | Bridge.Text.RegularExpression.RegexOptions.IgnoreCase);
 
                 if (!wasLastString || optionsLast !== optionsAt) {
                     wasLastString = true;
@@ -117,18 +108,18 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNode", {
 
                 prev = this._children[--j];
 
-                if (prev._type === statics.One) {
-                    prev._type = statics.Multi;
+                if (prev._type === Bridge.Text.RegularExpressions.RegexNode.One) {
+                    prev._type = Bridge.Text.RegularExpressions.RegexNode.Multi;
                     prev._str = prev._str;
                 }
 
-                if ((optionsAt & scope.RegexOptions.RightToLeft) === 0) {
+                if ((optionsAt & Bridge.Text.RegularExpression.RegexOptions.RightToLeft) === 0) {
                     prev._str += at._str;
                 } else {
                     prev._str = at._str + prev._str;
                 }
 
-            } else if (at._type === statics.Empty) {
+            } else if (at._type === Bridge.Text.RegularExpressions.RegexNode.Empty) {
                 j--;
             } else {
                 wasLastString = false;
@@ -139,7 +130,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNode", {
             this._children.splice(j, i - j);
         }
  
-        return this._stripEnation(statics.Empty);
+        return this._stripEnation(Bridge.Text.RegularExpressions.RegexNode.Empty);
     },
 
     _stripEnation: function(emptyType) {

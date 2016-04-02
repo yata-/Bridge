@@ -196,13 +196,9 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
     _rules: [], // negative -> group #, positive -> string #
 
     constructor: function(rep, concat, caps) {
-        var scope = Bridge.Text.RegularExpressions;
-        var nodeStatics = Bridge.get(scope.RegexNode);
-        var replacementStatics = Bridge.get(scope.RegexReplacement);
-
         this._rep = rep;
 
-        if (concat._type !== nodeStatics.Concatenate) {
+        if (concat._type !== Bridge.Text.RegularExpressions.RegexNode.Concatenate) {
             throw new Bridge.ArgumentException("Replacement error.");
         }
 
@@ -215,12 +211,12 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
             var child = concat.child(i);
 
             switch (child._type) {
-                case nodeStatics.Multi:
-                case nodeStatics.One:
+                case Bridge.Text.RegularExpressions.RegexNode.Multi:
+                case Bridge.Text.RegularExpressions.RegexNode.One:
                     sb += child._str;
                     break;
 
-                case nodeStatics.Ref:
+                case Bridge.Text.RegularExpressions.RegexNode.Ref:
                     if (sb.length > 0) {
                         rules.push(strings.length);
                         strings.push(sb);
@@ -232,7 +228,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
                         slot = caps[slot];
                     }
 
-                    rules.push(-replacementStatics.Specials - 1 - slot);
+                    rules.push(-Bridge.Text.RegularExpressions.RegexReplacement.Specials - 1 - slot);
                     break;
                 default:
                     throw new Bridge.ArgumentException("Replacement error.");
@@ -335,9 +331,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
     },
 
     _replacementImpl: function (sb, match) {
-        var scope = Bridge.Text.RegularExpressions;
-        var replacementStatics = Bridge.get(scope.RegexReplacement);
-        var specials = replacementStatics.Specials;
+        var specials = Bridge.Text.RegularExpressions.RegexReplacement.Specials;
 
         for (var i = 0; i < this._rules.length; i++) {
             var r = this._rules[i];
@@ -353,16 +347,16 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
             } else {
                 // special insertion patterns
                 switch (-specials - 1 - r) {
-                    case replacementStatics.LeftPortion:
+                    case Bridge.Text.RegularExpressions.RegexReplacement.LeftPortion:
                         sb += match._getLeftSubstring();
                         break;
-                    case replacementStatics.RightPortion:
+                    case Bridge.Text.RegularExpressions.RegexReplacement.RightPortion:
                         sb += match._getRightSubstring();
                         break;
-                    case replacementStatics.LastGroup:
+                    case Bridge.Text.RegularExpressions.RegexReplacement.LastGroup:
                         sb += match._lastGroupToStringImpl();
                         break;
-                    case replacementStatics.WholeString:
+                    case Bridge.Text.RegularExpressions.RegexReplacement.WholeString:
                         sb += match._getOriginalString();
                         break;
                 }
@@ -373,9 +367,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
     },
 
     _replacementImplRTL: function (al, match) {
-        var scope = Bridge.Text.RegularExpressions;
-        var replacementStatics = Bridge.get(scope.RegexReplacement);
-        var specials = replacementStatics.Specials;
+        var specials = Bridge.Text.RegularExpressions.RegexReplacement.Specials;
 
         for (var i = _rules.length - 1; i >= 0; i--) {
             var r = this._rules[i];
@@ -391,16 +383,16 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
             } else {
                 // special insertion patterns
                 switch (-specials - 1 - r) {
-                    case replacementStatics.LeftPortion:
+                    case Bridge.Text.RegularExpressions.RegexReplacement.LeftPortion:
                         al.push(match._getLeftSubstring());
                         break;
-                    case replacementStatics.RightPortion:
+                    case Bridge.Text.RegularExpressions.RegexReplacement.RightPortion:
                         al.push(match._getRightSubstring());
                         break;
-                    case replacementStatics.LastGroup:
+                    case Bridge.Text.RegularExpressions.RegexReplacement.LastGroup:
                         al.push(match._lastGroupToStringImpl());
                         break;
-                    case replacementStatics.WholeString:
+                    case Bridge.Text.RegularExpressions.RegexReplacement.WholeString:
                         al.push(match._getOriginalString());
                         break;
                 }
