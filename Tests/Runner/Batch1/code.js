@@ -4249,6 +4249,24 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1146', {
+        statics: {
+            testLongIssues: function () {
+                Bridge.Test.Assert.$true(Bridge.ClientTest.BridgeIssues.Bridge1146.intUintEquality(0, 0));
+                Bridge.Test.Assert.$true(Bridge.ClientTest.BridgeIssues.Bridge1146.precedence());
+            },
+            intUintEquality: function (a, b) {
+                return Bridge.Long(a).equals(Bridge.Long(b));
+            },
+            precedence: function () {
+                var a = 1;
+                var b = 2;
+                a = (a + (b >>> 1)) >>> 0;
+                return a === 2;
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
