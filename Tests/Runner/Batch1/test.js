@@ -1044,6 +1044,7 @@
                 QUnit.test("#1120 - TestFlagEnumDoesNotGenerateValuesAsPowerOfTwo", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1120.testFlagEnumDoesNotGenerateValuesAsPowerOfTwo);
                 QUnit.test("#1128 - TestNestedClassesWithInterface", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1128.testNestedClassesWithInterface);
                 QUnit.test("#1130 - TestUlongDivision", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1130.testUlongDivision);
+                QUnit.test("#1144 - TestStringFormat", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1144.testStringFormat);
                 QUnit.test("#381 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge381.testUseCase);
                 QUnit.test("#447 - CheckInlineExpression", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineExpression);
                 QUnit.test("#447 - CheckInlineCalls", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineCalls);
@@ -1350,6 +1351,23 @@
                 QUnit.test("TypePropertiesAreCorrect", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatInfoTests.typePropertiesAreCorrect);
                 QUnit.test("GetFormatWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatInfoTests.getFormatWorks);
                 QUnit.test("InvariantWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatInfoTests.invariantWorks);
+                QUnit.test("CurrencyFormatSpecifierWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests.currencyFormatSpecifierWorks);
+                QUnit.test("DecimalFormatSpecifierWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests.decimalFormatSpecifierWorks);
+                QUnit.test("ExponentialFormatSpecifierWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests.exponentialFormatSpecifierWorks);
+                QUnit.test("FixedPointFormatSpecifierWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests.fixedPointFormatSpecifierWorks);
+                QUnit.test("GeneralFormatSpecifierWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests.generalFormatSpecifierWorks);
+                QUnit.test("NumericFormatSpecifierWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests.numericFormatSpecifierWorks);
+                QUnit.test("PercentFormatSpecifierWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests.percentFormatSpecifierWorks);
+                QUnit.test("RoundTripFormatSpecifierWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests.roundTripFormatSpecifierWorks);
+                QUnit.test("HexadecimalFormatSpecifierWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests.hexadecimalFormatSpecifierWorks);
+                QUnit.test("CustomZeroFormatSpecifierWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests.customZeroFormatSpecifierWorks);
+                QUnit.test("CustomHashFormatSpecifierWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests.customHashFormatSpecifierWorks);
+                QUnit.test("CustomDotFormatSpecifierWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests.customDotFormatSpecifierWorks);
+                QUnit.test("CustomCommaFormatSpecifierWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests.customCommaFormatSpecifierWorks);
+                QUnit.test("CustomPercentFormatSpecifierWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests.customPercentFormatSpecifierWorks);
+                QUnit.test("CustomPerMileFormatSpecifierWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests.customPerMileFormatSpecifierWorks);
+                QUnit.test("CustomEscapeFormatSpecifierWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests.customEscapeFormatSpecifierWorks);
+                QUnit.test("CustomSemicolonFormatSpecifierWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests.customSemicolonFormatSpecifierWorks);
                 QUnit.module("Property accessor");
                 QUnit.test("AccessorsCanBeInvokedInstance", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_PropertyAccessorTests.accessorsCanBeInvokedInstance);
                 QUnit.test("AccessorsCanBeInvokedStatic", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_PropertyAccessorTests.accessorsCanBeInvokedStatic);
@@ -1756,6 +1774,14 @@
                 QUnit.test("String - ToCharArrayWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_StringTests.toCharArrayWorks);
                 QUnit.test("String - Strings", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_StringTests.strings);
                 QUnit.test("String - Enumerable", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_StringTests.enumerable);
+                QUnit.test("Simple", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_StringFormatTests.simple);
+                QUnit.test("ValueFormating", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_StringFormatTests.valueFormating);
+                QUnit.test("SpaceControlling", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_StringFormatTests.spaceControlling);
+                QUnit.test("Aligment", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_StringFormatTests.aligment);
+                QUnit.test("PadIntegerWithLeadingZeros", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_StringFormatTests.padIntegerWithLeadingZeros);
+                QUnit.test("PadIntegerWithSpecificNumberLeadingZeros", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_StringFormatTests.padIntegerWithSpecificNumberLeadingZeros);
+                QUnit.test("PadNumericWithLeadingZerosToLength", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_StringFormatTests.padNumericWithLeadingZerosToLength);
+                QUnit.test("PadNumericWithSpecificNumberOfLeadingZeros", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_StringFormatTests.padNumericWithSpecificNumberOfLeadingZeros);
                 QUnit.test("StringBuilder - TypePropertiesAreCorrect", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_StringBuilderTests.typePropertiesAreCorrect);
                 QUnit.test("StringBuilder - DefaultConstructorWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_StringBuilderTests.defaultConstructorWorks);
                 QUnit.test("StringBuilder - ConstructorWithCapacityWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_StringBuilderTests.constructorWithCapacityWorks);
@@ -2705,6 +2731,16 @@
             testUlongDivision: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1130).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1130);
                 Bridge.ClientTest.BridgeIssues.Bridge1130.testUlongDivision();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1144', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1144)],
+        statics: {
+            testStringFormat: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1144).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1144);
+                Bridge.ClientTest.BridgeIssues.Bridge1144.testStringFormat();
             }
         }
     });
@@ -7649,6 +7685,80 @@
         }
     });
     
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.NumberFormatSpecifiersTests)],
+        statics: {
+            currencyFormatSpecifierWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.NumberFormatSpecifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests);
+                t.getFixture().currencyFormatSpecifierWorks();
+            },
+            decimalFormatSpecifierWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.NumberFormatSpecifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests);
+                t.getFixture().decimalFormatSpecifierWorks();
+            },
+            exponentialFormatSpecifierWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.NumberFormatSpecifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests);
+                t.getFixture().exponentialFormatSpecifierWorks();
+            },
+            fixedPointFormatSpecifierWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.NumberFormatSpecifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests);
+                t.getFixture().fixedPointFormatSpecifierWorks();
+            },
+            generalFormatSpecifierWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.NumberFormatSpecifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests);
+                t.getFixture().generalFormatSpecifierWorks();
+            },
+            numericFormatSpecifierWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.NumberFormatSpecifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests);
+                t.getFixture().numericFormatSpecifierWorks();
+            },
+            percentFormatSpecifierWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.NumberFormatSpecifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests);
+                t.getFixture().percentFormatSpecifierWorks();
+            },
+            roundTripFormatSpecifierWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.NumberFormatSpecifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests);
+                t.getFixture().roundTripFormatSpecifierWorks();
+            },
+            hexadecimalFormatSpecifierWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.NumberFormatSpecifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests);
+                t.getFixture().hexadecimalFormatSpecifierWorks();
+            },
+            customZeroFormatSpecifierWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.NumberFormatSpecifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests);
+                t.getFixture().customZeroFormatSpecifierWorks();
+            },
+            customHashFormatSpecifierWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.NumberFormatSpecifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests);
+                t.getFixture().customHashFormatSpecifierWorks();
+            },
+            customDotFormatSpecifierWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.NumberFormatSpecifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests);
+                t.getFixture().customDotFormatSpecifierWorks();
+            },
+            customCommaFormatSpecifierWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.NumberFormatSpecifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests);
+                t.getFixture().customCommaFormatSpecifierWorks();
+            },
+            customPercentFormatSpecifierWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.NumberFormatSpecifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests);
+                t.getFixture().customPercentFormatSpecifierWorks();
+            },
+            customPerMileFormatSpecifierWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.NumberFormatSpecifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests);
+                t.getFixture().customPerMileFormatSpecifierWorks();
+            },
+            customEscapeFormatSpecifierWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.NumberFormatSpecifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests);
+                t.getFixture().customEscapeFormatSpecifierWorks();
+            },
+            customSemicolonFormatSpecifierWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.NumberFormatSpecifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_NumberFormatSpecifiersTests);
+                t.getFixture().customSemicolonFormatSpecifierWorks();
+            }
+        }
+    });
+    
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_PropertyAccessorTests', {
         inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.PropertyAccessorTests)],
         statics: {
@@ -9675,6 +9785,44 @@
             iComparableCompareToWorks: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.UInt64Tests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt64Tests);
                 t.getFixture().iComparableCompareToWorks();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_StringFormatTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.StringFormatTests)],
+        statics: {
+            simple: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.StringFormatTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_StringFormatTests);
+                t.getFixture().simple();
+            },
+            valueFormating: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.StringFormatTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_StringFormatTests);
+                t.getFixture().valueFormating();
+            },
+            spaceControlling: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.StringFormatTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_StringFormatTests);
+                t.getFixture().spaceControlling();
+            },
+            aligment: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.StringFormatTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_StringFormatTests);
+                t.getFixture().aligment();
+            },
+            padIntegerWithLeadingZeros: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.StringFormatTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_StringFormatTests);
+                t.getFixture().padIntegerWithLeadingZeros();
+            },
+            padIntegerWithSpecificNumberLeadingZeros: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.StringFormatTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_StringFormatTests);
+                t.getFixture().padIntegerWithSpecificNumberLeadingZeros();
+            },
+            padNumericWithLeadingZerosToLength: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.StringFormatTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_StringFormatTests);
+                t.getFixture().padNumericWithLeadingZerosToLength();
+            },
+            padNumericWithSpecificNumberOfLeadingZeros: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.StringFormatTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_StringFormatTests);
+                t.getFixture().padNumericWithSpecificNumberOfLeadingZeros();
             }
         }
     });

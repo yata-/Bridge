@@ -212,6 +212,7 @@
     <Compile Include="BridgeIssues\0900\N999.cs" />
     <Compile Include="BridgeIssues\1100\N1105.cs" />
     <Compile Include="BridgeIssues\1100\N1128.cs" />
+    <Compile Include="BridgeIssues\1100\N1144.cs" />
     <Compile Include="BridgeIssues\1100\N1130.cs" />
     <Compile Include="BridgeIssues\1100\N1120.cs" />
     <Compile Include="BridgeIssues\1100\N1110.cs" />
@@ -261,6 +262,8 @@
     <Compile Include="Linq\TestLinqQueryExecution.cs" />
     <Compile Include="Linq\TestLinqRestrictionOperators.cs" />
     <Compile Include="Linq\TestLinqSetOperators.cs" />
+    <Compile Include="StringFormatTests.cs" />
+    <Compile Include="NumberFormatSpecifiersTests.cs" />
     <Compile Include="SimpleTypes\TestVersion.cs" />
     <Compile Include="Threading\CancellationTokenTests.cs" />
     <Compile Include="Threading\Tasks\AsyncTests.cs" />

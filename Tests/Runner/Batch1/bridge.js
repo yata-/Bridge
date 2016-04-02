@@ -3466,7 +3466,12 @@ Bridge.Class.addExtend(Bridge.Char, [Bridge.IComparable$1(Bridge.Char), Bridge.I
 
                             return this.defaultFormat(number, 1, precision, precision, nf, false, "currency");
                         case "R":
-                            return isDecimal || isLong ? (number.toString()) : ("" + number);
+                            var r_result = isDecimal || isLong ? (number.toString()) : ("" + number);
+                            if (decimalSeparator !== ".") {
+                                r_result = r_result.replace(".", decimalSeparator);
+                            }
+                            r_result = r_result.replace("e", "E");
+                            return r_result;
                     }
                 }
 
@@ -3495,6 +3500,14 @@ Bridge.Class.addExtend(Bridge.Char, [Bridge.IComparable$1(Bridge.Char), Bridge.I
                         number = number.mul(100);
                     } else {
                         number *= 100;
+                    }
+                }
+
+                if (format.indexOf("‰") !== -1) {
+                    if (isDecimal || isLong) {
+                        number = number.mul(1000);
+                    } else {
+                        number *= 1000;
                     }
                 }
 
@@ -3569,6 +3582,9 @@ Bridge.Class.addExtend(Bridge.Char, [Bridge.IComparable$1(Bridge.Char), Bridge.I
                     } else if ((decimalPart.length - 1) > maxDecLen) {
                         decimalPart = decimalPart.substr(0, maxDecLen + 1);
                     }
+                }
+                else if (minDecLen > 0) {
+                    decimalPart = nf[name + "DecimalSeparator"] + Array(minDecLen + 1).join("0");
                 }
 
                 groupIndex = 0;
@@ -3650,6 +3666,9 @@ Bridge.Class.addExtend(Bridge.Char, [Bridge.IComparable$1(Bridge.Char), Bridge.I
                     name,
                     groupCfg,
                     buffer = "",
+                    isZeroInt = false,
+                    wasSeparator = false,
+                    wasIntPart = false,
                     isDecimal = number instanceof Bridge.Decimal,
                     isLong = number instanceof Bridge.Long || number instanceof Bridge.ULong,
                     isNeg = isDecimal || isLong ? number.isNegative() : number < 0;
@@ -3716,6 +3735,10 @@ Bridge.Class.addExtend(Bridge.Char, [Bridge.IComparable$1(Bridge.Char), Bridge.I
                     sep: noGroup ? "" : nf[name + "GroupSeparator"]
                 };
 
+                if (integralDigits === 1 && number.charAt(0) === "0") {
+                    isZeroInt = true;
+                }
+
                 for (f = 0; f < format.length; f++) {
                     c = format.charAt(f);
 
@@ -3733,28 +3756,38 @@ Bridge.Class.addExtend(Bridge.Char, [Bridge.IComparable$1(Bridge.Char), Bridge.I
                         buffer += format.charAt(f + 1);
                         f++;
                     } else if (c === "#" || c === "0") {
-                        groupCfg.buffer = buffer;
+                        wasIntPart = true;
+                        if (!wasSeparator && isZeroInt && c === "#") {
+                            i++;
+                        } else {
+                            groupCfg.buffer = buffer;
 
-                        if (i < integralDigits) {
-                            if (i >= 0) {
-                                if (unused) {
-                                    this.addGroup(number.substr(0, i), groupCfg);
+                            if (i < integralDigits) {
+                                if (i >= 0) {
+                                    if (unused) {
+                                        this.addGroup(number.substr(0, i), groupCfg);
+                                    }
+
+                                    this.addGroup(number.charAt(i), groupCfg);
+                                } else if (i >= integralDigits - forcedDigits) {
+                                    this.addGroup("0", groupCfg);
                                 }
-
-                                this.addGroup(number.charAt(i), groupCfg);
-                            } else if (i >= integralDigits - forcedDigits) {
-                                this.addGroup("0", groupCfg);
+                                unused = 0;
+                            } else if (forcedDecimals-- > 0 || i < number.length) {
+                                this.addGroup(i >= number.length ? "0" : number.charAt(i), groupCfg);
                             }
-                            unused = 0;
-                        } else if (forcedDecimals-- > 0 || i < number.length) {
-                            this.addGroup(i >= number.length ? "0" : number.charAt(i), groupCfg);
+
+                            buffer = groupCfg.buffer;
+
+                            i++;
                         }
-
-                        buffer = groupCfg.buffer;
-
-                        i++;
                     } else if (c === ".") {
+                        if (!wasIntPart && !isZeroInt) {
+                            buffer += number.substr(0, integralDigits);
+                            wasIntPart = true;
+                        }
                         if (number.length > ++i || forcedDecimals > 0) {
+                            wasSeparator = true;
                             buffer += nf[name + "DecimalSeparator"];
                         }
                     } else if (c !== ",") {
@@ -3762,7 +3795,7 @@ Bridge.Class.addExtend(Bridge.Char, [Bridge.IComparable$1(Bridge.Char), Bridge.I
                     }
                 }
 
-                if (isNegative < 0) {
+                if (isNegative) {
                     buffer = "-" + buffer;
                 }
 
