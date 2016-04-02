@@ -16357,6 +16357,113 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Exceptions.CommonExceptionTests', {
+        throwingAndCatchingExceptionsWorks: function () {
+            try {
+                throw new Bridge.ClientTest.Exceptions.CommonExceptionTests.E2("The message");
+                Bridge.Test.Assert.fail$1("Should not get to statement after throw");
+            }
+            catch ($e1) {
+                $e1 = Bridge.Exception.create($e1);
+                var e;
+                if (Bridge.is($e1, Bridge.ClientTest.Exceptions.CommonExceptionTests.E2)) {
+                    e = $e1;
+                    Bridge.Test.Assert.areEqual("The message", e.getMessage());
+                    return;
+                }
+                else {
+                    throw $e1;
+                }
+            }
+            Bridge.Test.Assert.fail$1("Should not get to statement after catch");
+        },
+        exceptionOfWrongTypeIsNotCaught: function () {
+            try {
+                throw new Bridge.ClientTest.Exceptions.CommonExceptionTests.E1("The message");
+                Bridge.Test.Assert.fail$1("Should not get to statement after throw");
+            }
+            catch ($e1) {
+                $e1 = Bridge.Exception.create($e1);
+                var e;
+                if (Bridge.is($e1, Bridge.ClientTest.Exceptions.CommonExceptionTests.E2)) {
+                    Bridge.Test.Assert.fail$1("Should not catch E2");
+                }
+                else if (Bridge.is($e1, Bridge.ClientTest.Exceptions.CommonExceptionTests.E1)) {
+                    e = $e1;
+                    Bridge.Test.Assert.areEqual("The message", e.getMessage());
+                    return;
+                }
+                else {
+                    throw $e1;
+                }
+            }
+            Bridge.Test.Assert.fail$1("Should not get to statement after catch");
+        },
+        canCatchExceptionAsBaseType: function () {
+            try {
+                throw new Bridge.ClientTest.Exceptions.CommonExceptionTests.E2("The message");
+                Bridge.Test.Assert.fail$1("Should not get to statement after throw");
+            }
+            catch ($e1) {
+                $e1 = Bridge.Exception.create($e1);
+                var e;
+                if (Bridge.is($e1, Bridge.ClientTest.Exceptions.CommonExceptionTests.E1)) {
+                    e = $e1;
+                    Bridge.Test.Assert.areEqual("The message", e.getMessage());
+                    return;
+                }
+                else {
+                    throw $e1;
+                }
+            }
+            Bridge.Test.Assert.fail$1("Should not get to statement after catch");
+        },
+        canCatchStringAsException: function () {
+            try {
+                (function() {{ throw 'The message'; }})();
+                Bridge.Test.Assert.fail$1("Should not get to statement after throw");
+            }
+            catch ($e1) {
+                $e1 = Bridge.Exception.create($e1);
+                var e;
+                if (Bridge.is($e1, Bridge.ClientTest.Exceptions.CommonExceptionTests.E1)) {
+                    Bridge.Test.Assert.fail$1("Should not catch E1");
+                }
+                else {
+                    e = $e1;
+                    Bridge.Test.Assert.areEqual("The message", e.getMessage());
+                    return;
+                }
+            }
+            Bridge.Test.Assert.fail$1("Should not get to statement after catch");
+        },
+        canCatchStringAsCatchAll: function () {
+            try {
+                (function() {{ throw 'The message'; }})();
+                Bridge.Test.Assert.fail$1("Should not get to statement after throw");
+            }
+            catch ($e1) {
+                $e1 = Bridge.Exception.create($e1);
+                if (Bridge.is($e1, Bridge.ClientTest.Exceptions.CommonExceptionTests.E1)) {
+                    Bridge.Test.Assert.fail$1("Should not catch E1");
+                }
+                else {
+                    Bridge.Test.Assert.$true(true);
+                    return;
+                }
+            }
+            Bridge.Test.Assert.fail$1("Should not get to statement after catch");
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Exceptions.CommonExceptionTests.E1', {
+        inherits: [Bridge.Exception],
+        constructor: function (message) {
+            Bridge.Exception.prototype.$constructor.call(this, message);
+    
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Exceptions.CultureNotFoundExceptionTests', {
         statics: {
             DefaultMessage: "Culture is not supported."
@@ -17018,113 +17125,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.null$1(ex.task, "Task");
             Bridge.Test.Assert.true$1(ex.cancellationToken === Bridge.CancellationToken.none, "CancellationToken");
             Bridge.Test.Assert.true$1(ex.getInnerException() === innerException, "InnerException");
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.ExceptionTests', {
-        throwingAndCatchingExceptionsWorks: function () {
-            try {
-                throw new Bridge.ClientTest.ExceptionTests.E2("The message");
-                Bridge.Test.Assert.fail$1("Should not get to statement after throw");
-            }
-            catch ($e1) {
-                $e1 = Bridge.Exception.create($e1);
-                var e;
-                if (Bridge.is($e1, Bridge.ClientTest.ExceptionTests.E2)) {
-                    e = $e1;
-                    Bridge.Test.Assert.areEqual("The message", e.getMessage());
-                    return;
-                }
-                else {
-                    throw $e1;
-                }
-            }
-            Bridge.Test.Assert.fail$1("Should not get to statement after catch");
-        },
-        exceptionOfWrongTypeIsNotCaught: function () {
-            try {
-                throw new Bridge.ClientTest.ExceptionTests.E1("The message");
-                Bridge.Test.Assert.fail$1("Should not get to statement after throw");
-            }
-            catch ($e1) {
-                $e1 = Bridge.Exception.create($e1);
-                var e;
-                if (Bridge.is($e1, Bridge.ClientTest.ExceptionTests.E2)) {
-                    Bridge.Test.Assert.fail$1("Should not catch E2");
-                }
-                else if (Bridge.is($e1, Bridge.ClientTest.ExceptionTests.E1)) {
-                    e = $e1;
-                    Bridge.Test.Assert.areEqual("The message", e.getMessage());
-                    return;
-                }
-                else {
-                    throw $e1;
-                }
-            }
-            Bridge.Test.Assert.fail$1("Should not get to statement after catch");
-        },
-        canCatchExceptionAsBaseType: function () {
-            try {
-                throw new Bridge.ClientTest.ExceptionTests.E2("The message");
-                Bridge.Test.Assert.fail$1("Should not get to statement after throw");
-            }
-            catch ($e1) {
-                $e1 = Bridge.Exception.create($e1);
-                var e;
-                if (Bridge.is($e1, Bridge.ClientTest.ExceptionTests.E1)) {
-                    e = $e1;
-                    Bridge.Test.Assert.areEqual("The message", e.getMessage());
-                    return;
-                }
-                else {
-                    throw $e1;
-                }
-            }
-            Bridge.Test.Assert.fail$1("Should not get to statement after catch");
-        },
-        canCatchStringAsException: function () {
-            try {
-                (function() {{ throw 'The message'; }})();
-                Bridge.Test.Assert.fail$1("Should not get to statement after throw");
-            }
-            catch ($e1) {
-                $e1 = Bridge.Exception.create($e1);
-                var e;
-                if (Bridge.is($e1, Bridge.ClientTest.ExceptionTests.E1)) {
-                    Bridge.Test.Assert.fail$1("Should not catch E1");
-                }
-                else {
-                    e = $e1;
-                    Bridge.Test.Assert.areEqual("The message", e.getMessage());
-                    return;
-                }
-            }
-            Bridge.Test.Assert.fail$1("Should not get to statement after catch");
-        },
-        canCatchStringAsCatchAll: function () {
-            try {
-                (function() {{ throw 'The message'; }})();
-                Bridge.Test.Assert.fail$1("Should not get to statement after throw");
-            }
-            catch ($e1) {
-                $e1 = Bridge.Exception.create($e1);
-                if (Bridge.is($e1, Bridge.ClientTest.ExceptionTests.E1)) {
-                    Bridge.Test.Assert.fail$1("Should not catch E1");
-                }
-                else {
-                    Bridge.Test.Assert.$true(true);
-                    return;
-                }
-            }
-            Bridge.Test.Assert.fail$1("Should not get to statement after catch");
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.ExceptionTests.E1', {
-        inherits: [Bridge.Exception],
-        constructor: function (message) {
-            Bridge.Exception.prototype.$constructor.call(this, message);
-    
         }
     });
     
@@ -29195,10 +29195,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define('Bridge.ClientTest.ExceptionTests.E2', {
-        inherits: [Bridge.ClientTest.ExceptionTests.E1],
+    Bridge.define('Bridge.ClientTest.Exceptions.CommonExceptionTests.E2', {
+        inherits: [Bridge.ClientTest.Exceptions.CommonExceptionTests.E1],
         constructor: function (message) {
-            Bridge.ClientTest.ExceptionTests.E1.prototype.$constructor.call(this, message);
+            Bridge.ClientTest.Exceptions.CommonExceptionTests.E1.prototype.$constructor.call(this, message);
     
         }
     });

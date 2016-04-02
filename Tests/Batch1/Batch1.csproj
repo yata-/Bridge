@@ -306,7 +306,7 @@
     <Compile Include="Collections\Generic\IListTests.cs" />
     <Compile Include="Collections\Generic\ICollectionTests.cs" />
     <Compile Include="Collections\Generic\IEnumerableTests.cs" />
-    <Compile Include="ExceptionTests.cs" />
+    <Compile Include="Exceptions\CommonExceptionTests.cs" />
     <Compile Include="IEquatableTests.cs" />
     <Compile Include="Collections\Generic\EqualityComparerTests.cs" />
     <Compile Include="IComparableTests.cs" />
