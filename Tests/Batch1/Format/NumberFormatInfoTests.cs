@@ -6,7 +6,7 @@ using Bridge.ClientTest;
 namespace Bridge.ClientTest
 {
     [Category(Constants.MODULE_NUMBERFORMATINFO)]
-    [TestFixture]
+    [TestFixture(TestNameFormat = "NumberFormatInfoTests - {0}")]
     public class NumberFormatInfoTests
     {
         [Test]

@@ -264,8 +264,8 @@
     <Compile Include="Linq\TestLinqQueryExecution.cs" />
     <Compile Include="Linq\TestLinqRestrictionOperators.cs" />
     <Compile Include="Linq\TestLinqSetOperators.cs" />
-    <Compile Include="StringFormatTests.cs" />
-    <Compile Include="NumberFormatSpecifiersTests.cs" />
+    <Compile Include="Format\StringFormatTests.cs" />
+    <Compile Include="Format\NumberFormatSpecifiersTests.cs" />
     <Compile Include="SimpleTypes\TestVersion.cs" />
     <Compile Include="Threading\CancellationTokenTests.cs" />
     <Compile Include="Threading\Tasks\AsyncTests.cs" />
@@ -289,8 +289,8 @@
     <Compile Include="Exceptions\NotImplementedExceptionTests.cs" />
     <Compile Include="Exceptions\DivideByZeroExceptionTests.cs" />
     <Compile Include="CultureInfoTests.cs" />
-    <Compile Include="NumberFormatInfoTests.cs" />
-    <Compile Include="DateTimeFormatInfoTests.cs" />
+    <Compile Include="Format\NumberFormatInfoTests.cs" />
+    <Compile Include="Format\DateTimeFormatInfoTests.cs" />
     <Compile Include="Exceptions\ArgumentExceptionTests.cs" />
     <Compile Include="Exceptions\ArgumentNullExceptionTests.cs" />
     <Compile Include="Exceptions\ArgumentOutOfRangeExceptionTests.cs" />

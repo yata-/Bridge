@@ -7,7 +7,7 @@ using Bridge.Html5;
 namespace Bridge.ClientTest
 {
     [Category(Constants.MODULE_STRING)]
-    [TestFixture]
+    [TestFixture(TestNameFormat = "StringFormatTests - {0}")]
     public class StringFormatTests
     {
         [Test]

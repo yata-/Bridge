@@ -7,7 +7,7 @@ using Bridge.Html5;
 namespace Bridge.ClientTest
 {
     [Category(Constants.MODULE_NUMBERFORMATINFO)]
-    [TestFixture]
+    [TestFixture(TestNameFormat = "NumberFormatSpecifiersTests - {0}")]
     public class NumberFormatSpecifiersTests
     {
         [Test]
