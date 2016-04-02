@@ -9,7 +9,11 @@ namespace System.Globalization
         {
         }
 
+        [Name("getCultureInfo")]
         public static extern CultureInfo GetCultureInfo(string name);
+
+        [Name("getCultureInfo")]
+        public static extern CultureInfo CreateSpecificCulture(string name);
 
         public static extern CultureInfo[] GetCultures();
 
