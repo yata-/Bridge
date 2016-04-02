@@ -212,6 +212,8 @@
     <Compile Include="BridgeIssues\0900\N999.cs" />
     <Compile Include="BridgeIssues\1100\N1105.cs" />
     <Compile Include="BridgeIssues\1100\N1128.cs" />
+    <Compile Include="BridgeIssues\1100\N1134.cs" />
+    <Compile Include="BridgeIssues\1100\N1141.cs" />
     <Compile Include="BridgeIssues\1100\N1144.cs" />
     <Compile Include="BridgeIssues\1100\N1130.cs" />
     <Compile Include="BridgeIssues\1100\N1120.cs" />
@@ -354,9 +356,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Bridge.Collections, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Bridge.Collections.Dev.1.0.2\lib\net40\Bridge.Collections.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Bridge.Collections, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Bridge.Collections.Dev.1.2.0\lib\net40\Bridge.Collections.dll</HintPath>
     </Reference>
     <Reference Include="Bridge.Test, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Bridge.Testing.1.0.0\lib\net40\Bridge.Test.dll</HintPath>
@@ -365,7 +367,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Readme\Bridge.NET\README.Bridge.Test.txt" />
-    <Content Include="App_Readme\Bridge.NET\README.Collections.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BridgeIssues\0200\" />
