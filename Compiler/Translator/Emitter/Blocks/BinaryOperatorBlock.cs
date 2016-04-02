@@ -184,8 +184,10 @@ namespace Bridge.Translator
             }
             
             var isFloatResult = Helpers.IsFloatType(resolveOperator.Type, this.Emitter.Resolver);
-            var isLeftLong = Helpers.Is64Type(leftResolverResult.Type, this.Emitter.Resolver);
-            var isRightLong = Helpers.Is64Type(rightResolverResult.Type, this.Emitter.Resolver);
+            var leftExpected = this.Emitter.Resolver.Resolver.GetExpectedType(binaryOperatorExpression.Left);
+            var rightExpected = this.Emitter.Resolver.Resolver.GetExpectedType(binaryOperatorExpression.Right);
+            var isLeftLong = Helpers.Is64Type(leftExpected, this.Emitter.Resolver);
+            var isRightLong = Helpers.Is64Type(rightExpected, this.Emitter.Resolver);
 
             if (!((expectedType.IsKnownType(KnownTypeCode.String) || resolveOperator.Type.IsKnownType(KnownTypeCode.String)) && binaryOperatorExpression.Operator == BinaryOperatorType.Add) && (isLeftLong || isRightLong))
             {

@@ -4249,6 +4249,24 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1146', {
+        statics: {
+            testLongIssues: function () {
+                Bridge.Test.Assert.true$1(Bridge.ClientTest.BridgeIssues.Bridge1146.intUintEquality(0, 0), "int == uint uses .Equals() between long: Bridge.Long(a).equals(Bridge.Long(b))");
+                Bridge.Test.Assert.true$1(Bridge.ClientTest.BridgeIssues.Bridge1146.precedence(), "Correct order for `a += b >> 1` -> `(a + (b >>> 1))`");
+            },
+            intUintEquality: function (a, b) {
+                return Bridge.Long(a).equals(Bridge.Long(b));
+            },
+            precedence: function () {
+                var a = 1;
+                var b = 2;
+                a = (a + (b >>> 1)) >>> 0;
+                return a === 2;
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
