@@ -1,7 +1,7 @@
 ﻿using Bridge.Test;
 using Bridge.Text.RegularExpressions;
 
-namespace Bridge.ClientTest.Text.RegularExpressions
+namespace Bridge.ClientTest.Text.RegularExpressions.JavaScript
 {
     [Category(Constants.MODULE_REGEX_JS)]
     [TestFixture]

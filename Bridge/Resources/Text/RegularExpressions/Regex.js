@@ -171,17 +171,23 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
             throw new Bridge.ArgumentOutOfRangeException("options");
         }
 
+        // Check if the specified options are supported.
+        var supportedOptions = Bridge.Text.RegularExpressions.RegexOptions.IgnoreCase | Bridge.Text.RegularExpressions.RegexOptions.Multiline;
+        if ((options | supportedOptions) !== supportedOptions) {
+            throw new Bridge.NotSupportedException("Specified Regex options are not supported.");
+        }
+
+        this._validateMatchTimeout(matchTimeout);
+
         this._pattern = pattern;
         this._options = options;
         this._matchTimeout = matchTimeout;
         this._runner = new scope.RegexRunner();
 
-
         //TODO: cache
         var groupInfos = Bridge.Text.RegularExpressions.RegexNetEngine.parsePatternGroups(this._pattern);
 
         this._capsize = groupInfos.length;
-        //this._caps = ;/
         this._capslist = [];
         this._capnames = {};
 
@@ -468,5 +474,19 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         }
 
         return Bridge.Text.RegularExpressions.RegexReplacement.split(this, input, count, startat);
+    },
+
+    _validateMatchTimeout(matchTimeout) {
+        var ms = matchTimeout.getTotalMilliseconds();
+
+        if (-1 === ms) {
+            return;
+        }
+
+        if (ms > 0 && ms <= 2147483646) {
+            return;
+        }
+ 
+        throw new Bridge.ArgumentOutOfRangeException("matchTimeout");
     }
 });

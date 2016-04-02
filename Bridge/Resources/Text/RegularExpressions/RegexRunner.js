@@ -60,7 +60,8 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
         var isCaseInsensitive = (options & optionsEnum.IgnoreCase) === optionsEnum.IgnoreCase;
 
         // Execute Regex:
-        var netEngine = new Bridge.Text.RegularExpressions.RegexNetEngine(regex._pattern, isMultiline, isCaseInsensitive);
+        var timeoutMs = regex._matchTimeout.getTotalMilliseconds();
+        var netEngine = new Bridge.Text.RegularExpressions.RegexNetEngine(regex._pattern, isMultiline, isCaseInsensitive, timeoutMs);
         var jsMatch = netEngine.match(this._runtext, this._runtextstart);
 
         // Convert the results:

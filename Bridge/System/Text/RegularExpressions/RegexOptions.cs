@@ -7,6 +7,7 @@ namespace System.Text.RegularExpressions
     /// </summary>
     [External]
     [Enum(Emit.Value)]
+    [Name("Bridge.Text.RegularExpressions.RegexOptions")]
     public enum RegexOptions
     {
         /// <summary>

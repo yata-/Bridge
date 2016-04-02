@@ -371,8 +371,10 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
     _text: "",
     _textStart: 0,
     _groupDescriptors: null,
+    _timeoutMs: -1,
+    _timeoutTime: -1,
 
-    constructor: function (pattern, isMultiLine, isCaseInsensitive) {
+    constructor: function (pattern, isMultiLine, isCaseInsensitive, timeoutMs) {
         if (pattern == null) {
             throw new Bridge.ArgumentNullException("pattern");
         }
@@ -380,6 +382,8 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
         this._pattern = pattern;
         this._isMultiLine = isMultiLine;
         this._isCaseInsensitive = isCaseInsensitive;
+        this._timeoutMs = timeoutMs;
+        this._timeoutTime = timeoutMs > 0 ? new Date().getTime() + Bridge.Convert.toInt32(timeoutMs + 0.5) : -1;
     },
 
     match: function (text, textStart) {
@@ -404,6 +408,8 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
 
         // Get group descriptors (+ remove group name before any processing);
         var groupDescs = this._getGroupDescriptors();
+
+        this._checkTimeout();
 
         // The 1st run (to know the total capture):
         var total = Bridge.Text.RegularExpressions.RegexNetEngine.jsRegex(this._text, this._textStart, this._pattern, this._isMultiLine, this._isCaseInsensitive, false);
@@ -443,6 +449,8 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
 
             var nonCapturingCount = 0;
             for (var i = 1; i < total.length + nonCapturingCount; i++) {
+                this._checkTimeout();
+
                 var groupDesc = groupDescs[i - 1];
                 if (groupDesc.constructs.isNonCapturing) {
                     nonCapturingCount++;
@@ -477,6 +485,8 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
                     if (parentGroup.success === true) {
                         // Match the group in every single parent capture:
                         for (var j = 0; j < parentGroup.captures.length; j++) {
+                            this._checkTimeout();
+                            
                             var parentCapture = parentGroup.captures[j];
                             this._matchGroup(parentCapture.ctx, group, parentCapture.capIndex);
 
@@ -671,5 +681,16 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
     _removeSubstring: function(str, index, length) {
         var result = str.slice(0, index) + str.slice(index + length, str.length);
         return result;
+    },
+
+    _checkTimeout: function () {
+        if (this._timeoutTime < 0) {
+            return;
+        }
+
+        var time = new Date().getTime();
+        if (time >= this._timeoutTime) {
+            throw new Bridge.RegexMatchTimeoutException(this._text, this._pattern, Bridge.TimeSpan.fromMilliseconds(this._timeoutMs));
+        }
     }
 });
