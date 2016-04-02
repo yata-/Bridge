@@ -201,7 +201,15 @@ namespace Bridge.Translator
                         throw new ArgumentOutOfRangeException();
                 }
 
-                clonAssignmentExpression.Right = new BinaryOperatorExpression(clonAssignmentExpression.Left.Clone(), opType, clonAssignmentExpression.Right.Clone());
+                if (clonAssignmentExpression.Right is BinaryOperatorExpression)
+                {
+                    clonAssignmentExpression.Right = new BinaryOperatorExpression(clonAssignmentExpression.Left.Clone(), opType, new ParenthesizedExpression(clonAssignmentExpression.Right.Clone()));
+                }
+                else
+                {
+                    clonAssignmentExpression.Right = new BinaryOperatorExpression(clonAssignmentExpression.Left.Clone(), opType, clonAssignmentExpression.Right.Clone());    
+                }
+                
 
                 return clonAssignmentExpression;
             }
