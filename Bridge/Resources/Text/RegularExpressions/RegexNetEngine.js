@@ -2,7 +2,7 @@
 
 Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
     statics: {
-        jsRegex: function (text, textStart, pattern, isMultiLine, isCaseInsensitive, returnAllMatches) {
+        jsRegex: function (text, textStart, pattern, isMultiLine, isCaseInsensitive, returnAllMatches, re) {
             if (text == null) {
                 throw new Bridge.ArgumentNullException("text");
             }
@@ -37,6 +37,9 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
                 do {
                     matches.push(match);
                     match = jsRegExp.exec(text);
+                    if (match != null && re) {
+                        re._checkTimeout();
+                    }
                 } while (match != null)
 
                 return matches;
@@ -412,7 +415,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
         this._checkTimeout();
 
         // The 1st run (to know the total capture):
-        var total = Bridge.Text.RegularExpressions.RegexNetEngine.jsRegex(this._text, this._textStart, this._pattern, this._isMultiLine, this._isCaseInsensitive, false);
+        var total = Bridge.Text.RegularExpressions.RegexNetEngine.jsRegex(this._text, this._textStart, this._pattern, this._isMultiLine, this._isCaseInsensitive, false, this);
         if (total == null) {
             return match;
         }
@@ -578,7 +581,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
             // For repeating groups - find all captures:
             var qCh = groupDesc.quantifier[0];
             if (qCh === "*" || qCh === "+" || qCh === "{") {
-                var capMatches = Bridge.Text.RegularExpressions.RegexNetEngine.jsRegex(group.valueFull, 0, groupDesc.expr, this._isMultiLine, this._isCaseInsensitive, true);
+                var capMatches = Bridge.Text.RegularExpressions.RegexNetEngine.jsRegex(group.valueFull, 0, groupDesc.expr, this._isMultiLine, this._isCaseInsensitive, true, this);
                 if (capMatches == null) {
                     throw new Bridge.InvalidOperationException("Can't identify captures for the already matched group.");
                 }
@@ -635,7 +638,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
         var restExpr = pattern.slice(subExprEndIndex, patternEndIndex);
         var transformedPattern = subExpr + "(?=" + restExpr + ")";
 
-        var subExpRes = Bridge.Text.RegularExpressions.RegexNetEngine.jsRegex(text, textOffset, transformedPattern, this._isMultiLine, this._isCaseInsensitive, false);
+        var subExpRes = Bridge.Text.RegularExpressions.RegexNetEngine.jsRegex(text, textOffset, transformedPattern, this._isMultiLine, this._isCaseInsensitive, false, this);
         if (subExpRes != null) {
             return {
                 capture: subExpRes[0],
