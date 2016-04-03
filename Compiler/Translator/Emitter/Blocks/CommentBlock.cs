@@ -33,21 +33,24 @@ namespace Bridge.Translator
             bool needRemoveIndent = false;
             var methodDeclaration = this.Comment.GetParent<MethodDeclaration>();
             int mode = 0;
-            foreach (var attrSection in methodDeclaration.Attributes)
+            if (methodDeclaration != null)
             {
-                foreach (var attr in attrSection.Attributes)
+                foreach (var attrSection in methodDeclaration.Attributes)
                 {
-                    var rr = this.Emitter.Resolver.ResolveNode(attr.Type, this.Emitter);
-                    if (rr.Type.FullName == "Bridge.InitAttribute")
+                    foreach (var attr in attrSection.Attributes)
                     {
-                        if (attr.HasArgumentList && attr.Arguments.Count > 0)
+                        var rr = this.Emitter.Resolver.ResolveNode(attr.Type, this.Emitter);
+                        if (rr.Type.FullName == "Bridge.InitAttribute")
                         {
-                            var argExpr = attr.Arguments.First();
-                            var argrr = this.Emitter.Resolver.ResolveNode(argExpr, this.Emitter);
-                            if (argrr.ConstantValue is int && (int)argrr.ConstantValue > 0)
+                            if (attr.HasArgumentList && attr.Arguments.Count > 0)
                             {
-                                mode = (int) argrr.ConstantValue;
-                                needRemoveIndent = true;
+                                var argExpr = attr.Arguments.First();
+                                var argrr = this.Emitter.Resolver.ResolveNode(argExpr, this.Emitter);
+                                if (argrr.ConstantValue is int && (int)argrr.ConstantValue > 0)
+                                {
+                                    mode = (int)argrr.ConstantValue;
+                                    needRemoveIndent = true;
+                                }
                             }
                         }
                     }
