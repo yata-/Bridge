@@ -284,5 +284,11 @@ namespace Bridge.Translator
             get;
             set;
         }
+
+        public bool? NoLoggerTimeStamps
+        {
+            get;
+            set;
+        }
     }
 }

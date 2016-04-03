@@ -45,6 +45,7 @@
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BridgeIssues\N1122.cs" />
     <Compile Include="BridgeIssues\N772.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -68,10 +69,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Bridge.Collections, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Bridge.Collections.Dev.1.0.0\lib\net40\Bridge.Collections.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Bridge.Test, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Bridge.Testing.1.0.0\lib\net40\Bridge.Test.dll</HintPath>
       <Private>True</Private>

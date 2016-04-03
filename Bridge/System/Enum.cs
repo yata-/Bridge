@@ -36,5 +36,8 @@ namespace System
 
         [Template("Bridge.Enum.toString({this:type}, {this})")]
         public override extern string ToString();
+
+        [Template("Bridge.Enum.format({this:type}, {this}, {format})")]
+        public extern string ToString(string format);
     }
 }

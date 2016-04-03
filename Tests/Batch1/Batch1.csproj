@@ -211,6 +211,14 @@
     <Compile Include="BridgeIssues\0800\N863.cs" />
     <Compile Include="BridgeIssues\0900\N999.cs" />
     <Compile Include="BridgeIssues\1100\N1105.cs" />
+    <Compile Include="BridgeIssues\1100\N1122.cs" />
+    <Compile Include="BridgeIssues\1100\N1128.cs" />
+    <Compile Include="BridgeIssues\1100\N1134.cs" />
+    <Compile Include="BridgeIssues\1100\N1140.cs" />
+    <Compile Include="BridgeIssues\1100\N1141.cs" />
+    <Compile Include="BridgeIssues\1100\N1146.cs" />
+    <Compile Include="BridgeIssues\1100\N1144.cs" />
+    <Compile Include="BridgeIssues\1100\N1130.cs" />
     <Compile Include="BridgeIssues\1100\N1120.cs" />
     <Compile Include="BridgeIssues\1100\N1110.cs" />
     <Compile Include="BridgeIssues\1100\N1103.cs" />
@@ -260,6 +268,8 @@
     <Compile Include="Linq\TestLinqRestrictionOperators.cs" />
     <Compile Include="Linq\TestLinqSetOperators.cs" />
     <Compile Include="RandomTests.cs" />
+    <Compile Include="Format\StringFormatTests.cs" />
+    <Compile Include="Format\NumberFormatSpecifiersTests.cs" />
     <Compile Include="SimpleTypes\TestVersion.cs" />
     <Compile Include="Threading\CancellationTokenTests.cs" />
     <Compile Include="Threading\Tasks\AsyncTests.cs" />
@@ -283,8 +293,8 @@
     <Compile Include="Exceptions\NotImplementedExceptionTests.cs" />
     <Compile Include="Exceptions\DivideByZeroExceptionTests.cs" />
     <Compile Include="CultureInfoTests.cs" />
-    <Compile Include="NumberFormatInfoTests.cs" />
-    <Compile Include="DateTimeFormatInfoTests.cs" />
+    <Compile Include="Format\NumberFormatInfoTests.cs" />
+    <Compile Include="Format\DateTimeFormatInfoTests.cs" />
     <Compile Include="Exceptions\ArgumentExceptionTests.cs" />
     <Compile Include="Exceptions\ArgumentNullExceptionTests.cs" />
     <Compile Include="Exceptions\ArgumentOutOfRangeExceptionTests.cs" />
@@ -300,7 +310,7 @@
     <Compile Include="Collections\Generic\IListTests.cs" />
     <Compile Include="Collections\Generic\ICollectionTests.cs" />
     <Compile Include="Collections\Generic\IEnumerableTests.cs" />
-    <Compile Include="ExceptionTests.cs" />
+    <Compile Include="Exceptions\CommonExceptionTests.cs" />
     <Compile Include="IEquatableTests.cs" />
     <Compile Include="Collections\Generic\EqualityComparerTests.cs" />
     <Compile Include="IComparableTests.cs" />
@@ -350,9 +360,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Bridge.Collections, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Bridge.Collections.Dev.1.0.2\lib\net40\Bridge.Collections.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Bridge.Collections, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Bridge.Collections.Dev.1.2.0\lib\net40\Bridge.Collections.dll</HintPath>
     </Reference>
     <Reference Include="Bridge.Test, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Bridge.Testing.1.0.0\lib\net40\Bridge.Test.dll</HintPath>
@@ -361,7 +371,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Readme\Bridge.NET\README.Bridge.Test.txt" />
-    <Content Include="App_Readme\Bridge.NET\README.Collections.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BridgeIssues\0200\" />

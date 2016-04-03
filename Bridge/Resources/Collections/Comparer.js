@@ -1,14 +1,12 @@
-Bridge.Class.generic('Bridge.Comparer$1', function (T) {
-    var $$name = Bridge.Class.genericName('Bridge.Comparer$1', T);
-
-    return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
+Bridge.define('Bridge.Comparer$1', function(T) {
+    return {
         inherits: [Bridge.IComparer$1(T)],
 
-        constructor: function (fn) {
+        constructor: function(fn) {
             this.fn = fn;
             this.compare = fn;
         }
-    }));
+    }
 });
 
 Bridge.Comparer$1.$default = new Bridge.Comparer$1(Object)(function (x, y) {

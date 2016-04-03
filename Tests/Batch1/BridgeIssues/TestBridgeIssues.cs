@@ -1115,7 +1115,7 @@ namespace Bridge.ClientTest.BridgeIssues
         public static void N435()
         {
             int i = 0;
-            Assert.AreEqual("0E+000", i.Format("E"), "i.Format(\"E\")");
+            Assert.AreEqual("0.000000E+000", i.Format("E"), "i.Format(\"E\")");
             Assert.AreEqual("a", i.Format("a"), "Test custom formatting in \"use strict\" mode");
         }
 
