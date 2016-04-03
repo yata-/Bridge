@@ -4205,6 +4205,22 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1140', {
+        statics: {
+            testDefaultNullable: function () {
+                var d = null;
+                var m = null;
+                var l = null;
+                var c = null;
+    
+                Bridge.Test.Assert.areEqual$1(null, d, "double?");
+                Bridge.Test.Assert.areEqual$1(null, m, "decimal?");
+                Bridge.Test.Assert.areEqual$1(null, l, "long?");
+                Bridge.Test.Assert.areEqual$1(null, c, "char?");
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1141', {
         statics: {
             testLongDivisionInfiniteLoopFixed: function () {
