@@ -5,11 +5,11 @@ using Bridge.ClientTest;
 using System;
 #pragma warning disable 162	// CS0162: Unreachable code detected. Disable because we want to assert that code does not reach unreachable parts
 
-namespace Bridge.ClientTest
+namespace Bridge.ClientTest.Exceptions
 {
     [Category(Constants.MODULE_EXCEPTION)]
     [TestFixture(TestNameFormat = "Try/Catch/Finally - {0}")]
-    public class ExceptionTests
+    public class CommonExceptionTests
     {
         public class E1 : Exception
         {

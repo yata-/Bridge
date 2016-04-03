@@ -37,6 +37,7 @@
   <file name="Convert.js" />
   <file name="Array.js" />
   <file name="linq.js" />
+  <file name="random.js" />
   <file name="Text/RegularExpressions/Regex.js" />
   <file name="Text/RegularExpressions/RegexCapture.js" />
   <file name="Text/RegularExpressions/RegexCaptureCollection.js" />
@@ -87,6 +88,7 @@
     <include name="INotifyPropertyChanged.js" />
     <include name="Convert.js" />
     <include name="linq.js" />
+    <include name="random.js" />
     <include name="Text/RegularExpressions/Regex.js" />
     <include name="Text/RegularExpressions/RegexCapture.js" />
     <include name="Text/RegularExpressions/RegexCaptureCollection.js" />

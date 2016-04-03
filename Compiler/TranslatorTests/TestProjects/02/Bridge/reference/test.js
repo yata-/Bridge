@@ -415,7 +415,11 @@
 	            fn = Bridge.isArray(to) ? to.push : to.add;
 
 	            for (i = 0; i < from.length; i++) {
-	                fn.apply(to, from[i]);
+	                var item = from[i];
+                    if (!Bridge.isArray(item)) {
+                        item = [item];
+                    }
+	                fn.apply(to, item);
 	            }
 	        } else {
 	            for (key in from) {
@@ -3466,7 +3470,12 @@ Bridge.Class.addExtend(Bridge.Char, [Bridge.IComparable$1(Bridge.Char), Bridge.I
 
                             return this.defaultFormat(number, 1, precision, precision, nf, false, "currency");
                         case "R":
-                            return isDecimal || isLong ? (number.toString()) : ("" + number);
+                            var r_result = isDecimal || isLong ? (number.toString()) : ("" + number);
+                            if (decimalSeparator !== ".") {
+                                r_result = r_result.replace(".", decimalSeparator);
+                            }
+                            r_result = r_result.replace("e", "E");
+                            return r_result;
                     }
                 }
 
@@ -3495,6 +3504,14 @@ Bridge.Class.addExtend(Bridge.Char, [Bridge.IComparable$1(Bridge.Char), Bridge.I
                         number = number.mul(100);
                     } else {
                         number *= 100;
+                    }
+                }
+
+                if (format.indexOf("‰") !== -1) {
+                    if (isDecimal || isLong) {
+                        number = number.mul(1000);
+                    } else {
+                        number *= 1000;
                     }
                 }
 
@@ -3569,6 +3586,9 @@ Bridge.Class.addExtend(Bridge.Char, [Bridge.IComparable$1(Bridge.Char), Bridge.I
                     } else if ((decimalPart.length - 1) > maxDecLen) {
                         decimalPart = decimalPart.substr(0, maxDecLen + 1);
                     }
+                }
+                else if (minDecLen > 0) {
+                    decimalPart = nf[name + "DecimalSeparator"] + Array(minDecLen + 1).join("0");
                 }
 
                 groupIndex = 0;
@@ -3650,6 +3670,9 @@ Bridge.Class.addExtend(Bridge.Char, [Bridge.IComparable$1(Bridge.Char), Bridge.I
                     name,
                     groupCfg,
                     buffer = "",
+                    isZeroInt = false,
+                    wasSeparator = false,
+                    wasIntPart = false,
                     isDecimal = number instanceof Bridge.Decimal,
                     isLong = number instanceof Bridge.Long || number instanceof Bridge.ULong,
                     isNeg = isDecimal || isLong ? number.isNegative() : number < 0;
@@ -3716,6 +3739,10 @@ Bridge.Class.addExtend(Bridge.Char, [Bridge.IComparable$1(Bridge.Char), Bridge.I
                     sep: noGroup ? "" : nf[name + "GroupSeparator"]
                 };
 
+                if (integralDigits === 1 && number.charAt(0) === "0") {
+                    isZeroInt = true;
+                }
+
                 for (f = 0; f < format.length; f++) {
                     c = format.charAt(f);
 
@@ -3733,28 +3760,38 @@ Bridge.Class.addExtend(Bridge.Char, [Bridge.IComparable$1(Bridge.Char), Bridge.I
                         buffer += format.charAt(f + 1);
                         f++;
                     } else if (c === "#" || c === "0") {
-                        groupCfg.buffer = buffer;
+                        wasIntPart = true;
+                        if (!wasSeparator && isZeroInt && c === "#") {
+                            i++;
+                        } else {
+                            groupCfg.buffer = buffer;
 
-                        if (i < integralDigits) {
-                            if (i >= 0) {
-                                if (unused) {
-                                    this.addGroup(number.substr(0, i), groupCfg);
+                            if (i < integralDigits) {
+                                if (i >= 0) {
+                                    if (unused) {
+                                        this.addGroup(number.substr(0, i), groupCfg);
+                                    }
+
+                                    this.addGroup(number.charAt(i), groupCfg);
+                                } else if (i >= integralDigits - forcedDigits) {
+                                    this.addGroup("0", groupCfg);
                                 }
-
-                                this.addGroup(number.charAt(i), groupCfg);
-                            } else if (i >= integralDigits - forcedDigits) {
-                                this.addGroup("0", groupCfg);
+                                unused = 0;
+                            } else if (forcedDecimals-- > 0 || i < number.length) {
+                                this.addGroup(i >= number.length ? "0" : number.charAt(i), groupCfg);
                             }
-                            unused = 0;
-                        } else if (forcedDecimals-- > 0 || i < number.length) {
-                            this.addGroup(i >= number.length ? "0" : number.charAt(i), groupCfg);
+
+                            buffer = groupCfg.buffer;
+
+                            i++;
                         }
-
-                        buffer = groupCfg.buffer;
-
-                        i++;
                     } else if (c === ".") {
+                        if (!wasIntPart && !isZeroInt) {
+                            buffer += number.substr(0, integralDigits);
+                            wasIntPart = true;
+                        }
                         if (number.length > ++i || forcedDecimals > 0) {
+                            wasSeparator = true;
                             buffer += nf[name + "DecimalSeparator"];
                         }
                     } else if (c !== ",") {
@@ -3762,7 +3799,7 @@ Bridge.Class.addExtend(Bridge.Char, [Bridge.IComparable$1(Bridge.Char), Bridge.I
                     }
                 }
 
-                if (isNegative < 0) {
+                if (isNegative) {
                     buffer = "-" + buffer;
                 }
 
@@ -3875,9 +3912,13 @@ Bridge.Class.addExtend(Bridge.Char, [Bridge.IComparable$1(Bridge.Char), Bridge.I
                 return true;
             },
 
+            isInfinite: function(x) {
+                return x === Number.POSITIVE_INFINITY || x === Number.NEGATIVE_INFINITY;
+            },
+
             trunc: function (num) {
                 if (!Bridge.isNumber(num)) {
-                    return null;
+                    return Bridge.Int.isInfinite(num) ? num : null;
                 }
 
                 return num > 0 ? Math.floor(num) : Math.ceil(num);
@@ -3917,48 +3958,55 @@ Bridge.Class.addExtend(Bridge.Char, [Bridge.IComparable$1(Bridge.Char), Bridge.I
                 if (Bridge.isNumber(x) && !type.instanceOf(x)) {
                     throw new Bridge.OverflowException();
                 }
+
+                if (Bridge.Int.isInfinite(x)) {
+                    if (type === Bridge.Long || type === Bridge.ULong) {
+                        return type.MinValue;
+                    }
+                    return type.min;
+                }
                 
                 return x;
             },
 
             sxb: function (x) {
-                return Bridge.isNumber(x) ? (x | (x & 0x80 ? 0xffffff00 : 0)) : null;
+                return Bridge.isNumber(x) ? (x | (x & 0x80 ? 0xffffff00 : 0)) : (Bridge.Int.isInfinite(x) ? Bridge.SByte.min : null);
             },
 
             sxs: function (x) {
-                return Bridge.isNumber(x) ? (x | (x & 0x8000 ? 0xffff0000 : 0)) : null;
+                return Bridge.isNumber(x) ? (x | (x & 0x8000 ? 0xffff0000 : 0)) : (Bridge.Int.isInfinite(x) ? Bridge.Int16.min : null);
             },
 
             clip8: function (x) {
-                return Bridge.isNumber(x) ? Bridge.Int.sxb(x & 0xff) : null;
+                return Bridge.isNumber(x) ? Bridge.Int.sxb(x & 0xff) : (Bridge.Int.isInfinite(x) ? Bridge.SByte.min : null);
             },
 
             clipu8: function (x) {
-                return Bridge.isNumber(x) ? x & 0xff : null;
+                return Bridge.isNumber(x) ? x & 0xff : (Bridge.Int.isInfinite(x) ? Bridge.Byte.min : null);
             },
 
             clip16: function (x) {
-                return Bridge.isNumber(x) ? Bridge.Int.sxs(x & 0xffff) : null;
+                return Bridge.isNumber(x) ? Bridge.Int.sxs(x & 0xffff) : (Bridge.Int.isInfinite(x) ? Bridge.Int16.min : null);
             },
 
             clipu16: function (x) {
-                return Bridge.isNumber(x) ? x & 0xffff : null;
+                return Bridge.isNumber(x) ? x & 0xffff : (Bridge.Int.isInfinite(x) ? Bridge.UInt16.min : null);
             },
 
             clip32: function (x) {
-                return Bridge.isNumber(x) ? x | 0 : null;
+                return Bridge.isNumber(x) ? x | 0 : (Bridge.Int.isInfinite(x) ? Bridge.Int32.min : null);
             },
 
             clipu32: function (x) {
-                return Bridge.isNumber(x) ? x >>> 0 : null;
+                return Bridge.isNumber(x) ? x >>> 0 : (Bridge.Int.isInfinite(x) ? Bridge.UInt32.min : null);
             },
 
             clip64: function (x) {
-                return Bridge.isNumber(x) ? Bridge.Long(Bridge.Int.trunc(x)) : null;
+                return Bridge.isNumber(x) ? Bridge.Long(Bridge.Int.trunc(x)) : (Bridge.Int.isInfinite(x) ? Bridge.Long.MinValue : null);
             },
 
             clipu64: function (x) {
-                return Bridge.isNumber(x) ? Bridge.ULong(Bridge.Int.trunc(x)) : null;
+                return Bridge.isNumber(x) ? Bridge.ULong(Bridge.Int.trunc(x)) : (Bridge.Int.isInfinite(x) ? Bridge.ULong.MinValue : null);
             },
 
             sign: function (x) {
@@ -4449,6 +4497,13 @@ Bridge.Long.prototype.xor = function (l) {
 };
 
 Bridge.Long.check = function (v, tp) {
+    if (Bridge.Int.isInfinite(v)) {
+        if (tp === Bridge.Long || tp === Bridge.ULong) {
+            return tp.MinValue;
+        }
+        return tp.min;
+    }
+
     if (!v) {
         return null;
     }
@@ -4491,35 +4546,35 @@ Bridge.Long.check = function (v, tp) {
 };
 
 Bridge.Long.clip8 = function(x) {
-    return x ? Bridge.Int.sxb(x.toNumber() & 0xff) : null;
+    return x ? Bridge.Int.sxb(x.toNumber() & 0xff) : (Bridge.Int.isInfinite(x) ? Bridge.SByte.min : null);
 };
 
 Bridge.Long.clipu8 = function (x) {
-    return x ? x.toNumber() & 0xff : null;
+    return x ? x.toNumber() & 0xff : (Bridge.Int.isInfinite(x) ? Bridge.Byte.min : null);
 };
 
 Bridge.Long.clip16 = function (x) {
-    return x ? Bridge.Int.sxs(x.toNumber() & 0xffff) : null;
+    return x ? Bridge.Int.sxs(x.toNumber() & 0xffff) : (Bridge.Int.isInfinite(x) ? Bridge.Int16.min : null);
 };
 
 Bridge.Long.clipu16 = function (x) {
-    return x ? x.toNumber() & 0xffff : null;
+    return x ? x.toNumber() & 0xffff : (Bridge.Int.isInfinite(x) ? Bridge.UInt16.min : null);
 };
 
 Bridge.Long.clip32 = function (x) {
-    return x ? x.toNumber() | 0 : null;
+    return x ? x.toNumber() | 0 : (Bridge.Int.isInfinite(x) ? Bridge.Int32.min : null);
 };
 
 Bridge.Long.clipu32 = function (x) {
-    return x ? x.toNumber() >>> 0 : null;
+    return x ? x.toNumber() >>> 0 : (Bridge.Int.isInfinite(x) ? Bridge.UInt32.min : null);
 };
 
 Bridge.Long.clip64 = function (x) {
-    return x ? new Bridge.Long(x.value.toSigned()) : null;
+    return x ? new Bridge.Long(x.value.toSigned()) : (Bridge.Int.isInfinite(x) ? Bridge.Long.MinValue : null);
 };
 
 Bridge.Long.clipu64 = function (x) {
-    return x ? new Bridge.ULong(x.value.toUnsigned()) : null;
+    return x ? new Bridge.ULong(x.value.toUnsigned()) : (Bridge.Int.isInfinite(x) ? Bridge.ULong.MinValue : null);
 };
 
 Bridge.Long.Zero = Bridge.Long(Bridge.$Long.ZERO);
@@ -4746,6 +4801,7 @@ Bridge.ULong.prototype.xor = Bridge.Long.prototype.xor;
 Bridge.ULong.Zero = Bridge.ULong(Bridge.$Long.UZERO);
 Bridge.ULong.MinValue = Bridge.ULong.Zero;
 Bridge.ULong.MaxValue = Bridge.ULong(Bridge.$Long.MAX_UNSIGNED_VALUE);
+
     // @source Decimal.js
 
     /* decimal.js v5.0.7 https://github.com/MikeMcl/decimal.js/LICENCE */
@@ -13968,6 +14024,148 @@ Bridge.define('Bridge.ReadOnlyCollection$1', function (T) {
     Bridge.Linq = {};
     Bridge.Linq.Enumerable = Enumerable;
 })(Bridge.global);
+
+(function (globals) {
+    "use strict";
+
+    Bridge.define('Bridge.Random', {
+        statics: {
+            MBIG: 2147483647,
+            MSEED: 161803398,
+            MZ: 0
+        },
+        inext: 0,
+        inextp: 0,
+        seedArray: null,
+        config: {
+            init: function () {
+                this.seedArray = Bridge.Array.init(56, 0);
+            }
+        },
+        constructor: function () {
+            Bridge.Random.prototype.constructor$1.call(this, Bridge.Long.clip32(Bridge.Long((new Date()).getTime()).mul(10000)));
+
+        },
+        constructor$1: function (Seed) {
+            var ii;
+            var mj, mk;
+
+            //Initialize our Seed array.
+            //This algorithm comes from Numerical Recipes in C (2nd Ed.)
+            var subtraction = (Seed === -2147483648) ? 2147483647 : Math.abs(Seed);
+            mj = (Bridge.Random.MSEED - subtraction) | 0;
+            this.seedArray[55] = mj;
+            mk = 1;
+            for (var i = 1; i < 55; i = (i + 1) | 0) { //Apparently the range [1..55] is special (Knuth) and so we're wasting the 0'th position.
+                ii = (((21 * i) | 0)) % 55;
+                this.seedArray[ii] = mk;
+                mk = (mj - mk) | 0;
+                if (mk < 0) {
+                    mk = (mk + Bridge.Random.MBIG) | 0;
+                }
+                mj = this.seedArray[ii];
+            }
+            for (var k = 1; k < 5; k = (k + 1) | 0) {
+                for (var i1 = 1; i1 < 56; i1 = (i1 + 1) | 0) {
+                    this.seedArray[i1] = (this.seedArray[i1] - this.seedArray[((1 + (((i1 + 30) | 0)) % 55) | 0)]) | 0;
+                    if (this.seedArray[i1] < 0) {
+                        this.seedArray[i1] = (this.seedArray[i1] + Bridge.Random.MBIG) | 0;
+                    }
+                }
+            }
+            this.inext = 0;
+            this.inextp = 21;
+            Seed = 1;
+        },
+        sample: function () {
+            //Including this division at the end gives us significantly improved
+            //random number distribution.
+            return (this.internalSample() * (4.6566128752457969E-10));
+        },
+        internalSample: function () {
+            var retVal;
+            var locINext = this.inext;
+            var locINextp = this.inextp;
+
+            if (((locINext = (locINext + 1) | 0)) >= 56) {
+                locINext = 1;
+            }
+
+            if (((locINextp = (locINextp + 1) | 0)) >= 56) {
+                locINextp = 1;
+            }
+
+            retVal = (this.seedArray[locINext] - this.seedArray[locINextp]) | 0;
+
+            if (retVal === Bridge.Random.MBIG) {
+                retVal = (retVal - 1) | 0;
+            }
+
+            if (retVal < 0) {
+                retVal = (retVal + Bridge.Random.MBIG) | 0;
+            }
+
+            this.seedArray[locINext] = retVal;
+
+            this.inext = locINext;
+            this.inextp = locINextp;
+
+            return retVal;
+        },
+        next: function () {
+            return this.internalSample();
+        },
+        next$2: function (minValue, maxValue) {
+            if (minValue > maxValue) {
+                throw new Bridge.ArgumentOutOfRangeException("minValue", "'minValue' cannot be greater than maxValue.");
+            }
+
+            var range = Bridge.Long(Bridge.Long(maxValue)).sub(Bridge.Long(minValue));
+            if (range.lte(Bridge.Long(2147483647))) {
+                return ((((((this.sample() * Bridge.Long.toNumber(range))) | 0) + minValue) | 0));
+            }
+            else {
+                return Bridge.Long.clip32(Bridge.Int.clip64((this.getSampleForLargeRange() * Bridge.Long.toNumber(range))).add(Bridge.Long(minValue)));
+            }
+        },
+        next$1: function (maxValue) {
+            if (maxValue < 0) {
+                throw new Bridge.ArgumentOutOfRangeException("maxValue", "'maxValue' must be greater than zero.");
+            }
+            return (((this.sample() * maxValue)) | 0);
+        },
+        getSampleForLargeRange: function () {
+            // The distribution of double value returned by Sample 
+            // is not distributed well enough for a large range.
+            // If we use Sample for a range [Int32.MinValue..Int32.MaxValue)
+            // We will end up getting even numbers only.
+
+            var result = this.internalSample();
+            // Note we can't use addition here. The distribution will be bad if we do that.
+            var negative = (this.internalSample() % 2 === 0) ? true : false; // decide the sign based on second sample
+            if (negative) {
+                result = (-result) | 0;
+            }
+            var d = result;
+            d += (2147483646); // get a number in range [0 .. 2 * Int32MaxValue - 1)
+            d /= 4294967293;
+            return d;
+        },
+        nextDouble: function () {
+            return this.sample();
+        },
+        nextBytes: function (buffer) {
+            if (!Bridge.hasValue(buffer)) {
+                throw new Bridge.ArgumentNullException("buffer");
+            }
+            for (var i = 0; i < buffer.length; i = (i + 1) | 0) {
+                buffer[i] = ((this.internalSample() % (256))) & 255;
+            }
+        }
+    });
+
+    Bridge.init();
+})(this);
 
     // @source End.js
 

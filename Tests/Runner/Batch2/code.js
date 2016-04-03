@@ -1,6 +1,41 @@
 ﻿(function (globals) {
     "use strict";
 
+    Bridge.define('Bridge.ClientTest.Batch2.BridgeIssues.N1122', {
+        statics: {
+            testClippingInJavaScriptOverflowMode: function () {
+                var x = Number.MAX_VALUE;
+    
+                var y1 = Math.floor(x / 0.2);
+                Bridge.Test.Assert.areEqual$1(Number.POSITIVE_INFINITY, y1, "int");
+    
+                var y2 = Math.floor(x / 0.2);
+                Bridge.Test.Assert.areEqual$1(Number.POSITIVE_INFINITY, y2, "uint");
+    
+                var z1 = Math.floor(x / 0.2);
+                Bridge.Test.Assert.areEqual$1(Number.POSITIVE_INFINITY, z1, "long");
+    
+                var z2 = Math.floor(x / 0.2);
+                Bridge.Test.Assert.areEqual$1(Number.POSITIVE_INFINITY, z2, "ulong");
+            },
+            testIntegerDivisionInJavaScriptOverflowMode: function () {
+                var x = 1.1;
+    
+                var y1 = (1 / x);
+                Bridge.Test.Assert.areEqual$1("0.9090909090909091", y1.toString(), "int");
+    
+                var y2 = (1 / x);
+                Bridge.Test.Assert.areEqual$1("0.9090909090909091", y2.toString(), "uint");
+    
+                var z1 = (1 / x);
+                Bridge.Test.Assert.areEqual$1("0.9090909090909091", z1.toString(), "long");
+    
+                var z2 = (1 / x);
+                Bridge.Test.Assert.areEqual$1("0.9090909090909091", z2.toString(), "ulong");
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Batch2.BridgeIssues.N772', {
         statics: {
             testUseCase: function () {
