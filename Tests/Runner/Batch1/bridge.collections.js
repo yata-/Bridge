@@ -163,7 +163,7 @@
                 var last = (Bridge.Collections.BitArray.getArrayLength(this.m_length, Bridge.Collections.BitArray.BitsPerInt32) - 1) | 0;
                 var bits = this.m_length % 32;
                 if (bits > 0) {
-                    this.m_array[last] = this.m_array[last] & (((1 << bits) - 1) | 0);
+                    this.m_array[last] = this.m_array[last] & ((((1 << bits) - 1) | 0));
                 }
     
                 // clear remaining int values
@@ -460,7 +460,7 @@
             },
             isPrime: function (candidate) {
                 if ((candidate & 1) !== 0) {
-                    var limit = (Math.sqrt(candidate)) | 0;
+                    var limit = Bridge.Int.clip32(Math.sqrt(candidate));
                     for (var divisor = 3; divisor <= limit; divisor = (divisor + 2) | 0) {
                         if ((candidate % divisor) === 0) {
                             return false;
@@ -1519,7 +1519,7 @@
             return (tmp === this._array.length) ? 0 : tmp;
         },
         trimExcess: function () {
-            var threshold = ((this._array.length * 0.9)) | 0;
+            var threshold = Bridge.Int.clip32(this._array.length * 0.9);
             if (this._size < threshold) {
                 this.setCapacity(this._size);
             }
@@ -1729,7 +1729,7 @@
             return new Bridge.Collections.Stack$1.Enumerator(T)("constructor$1", this);
         },
         trimExcess: function () {
-            var threshold = (((this._array.length) * 0.9)) | 0;
+            var threshold = Bridge.Int.clip32((this._array.length) * 0.9);
             if (this._size < threshold) {
                 var localArray = { v : this._array };
                 Bridge.Array.resize(localArray, this._size, null);
