@@ -5,7 +5,7 @@ using System;
 
 namespace Bridge.ClientTest.Exceptions
 {
-    [Category(Constants.PREFIX_EXCEPTIONS)]
+    [Category(Constants.MODULE_INDEXOUTOFRANGEEXCEPTION)]
     [TestFixture(TestNameFormat = "IndexOutOfRangeException - {0}")]
     public class IndexOutOfRangeExceptionTests
     {
@@ -17,6 +17,7 @@ namespace Bridge.ClientTest.Exceptions
             Assert.AreEqual("Bridge.IndexOutOfRangeException", typeof(IndexOutOfRangeException).GetClassName(), "Name");
             object d = new IndexOutOfRangeException();
             Assert.True(d is IndexOutOfRangeException, "is IndexOutOfRangeException");
+            Assert.True(d is SystemException, "is SystemException");
             Assert.True(d is Exception, "is Exception");
         }
 

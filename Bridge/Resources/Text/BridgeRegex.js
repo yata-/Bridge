@@ -1,4 +1,4 @@
-// @source Text/Regex.js
+// @source Text/BridgeRegex.js
 
 (function () {
     var specials = [

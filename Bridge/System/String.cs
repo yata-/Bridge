@@ -1,9 +1,9 @@
 using Bridge;
+using Bridge.Text.RegularExpressions;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
 
 namespace System
 {

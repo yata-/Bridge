@@ -160,6 +160,11 @@
         constructor(message: string);
     }
 
+    export class IndexOutOfRangeException extends SystemException {
+        constructor(message: string, innerException: Exception);
+        constructor(message: string);
+    }
+
     export class ArgumentException extends Exception {
         constructor(message: string, paramName: string, innerException: Exception);
         constructor(message: string, innerException: Exception);

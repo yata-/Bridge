@@ -3,6 +3,7 @@ using Bridge;
 namespace System.Collections.Generic
 {
     [Namespace("Bridge")]
+    [External]
     public abstract class Comparer<T> : IComparer<T>
     {
         public static Comparer<T> Default
