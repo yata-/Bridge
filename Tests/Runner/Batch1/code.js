@@ -31269,11 +31269,21 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 for (var i = 0; i < 10000; i = (i + 1) | 0) {
                     Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longText += "TestStringForTimeout";
                 }
+    
+                Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortText = "";
+                for (var i1 = 0; i1 < 100; i1 = (i1 + 1) | 0) {
+                    Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortText += "TestStringWithNoTimeout";
+                }
             },
             pattern: "([0-9a-zA-Z]{1})+",
-            shortTimeoutMs: 1,
-            longTimeoutMs: 3000,
-            longText: null
+            shortText: null,
+            longText: null,
+            config: {
+                init: function () {
+                    this.shortTimeoutMs = Bridge.TimeSpan.fromMilliseconds(1) || new Bridge.TimeSpan();
+                    this.longTimeoutMs = Bridge.TimeSpan.fromMilliseconds(3000) || new Bridge.TimeSpan();
+                }
+            }
         },
         regexTimeoutValidationWorks: function () {
             var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "fakePattern");
@@ -31288,57 +31298,64 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.throws$6(Bridge.ArgumentOutOfRangeException, $_.Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.f1);
         },
         regexIsMatchWorksWithShortTimeout: function () {
-            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor$2", Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, 0, Bridge.TimeSpan.fromMilliseconds(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortTimeoutMs));
-            Bridge.Test.Assert.throws$1(function () {
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor$2", Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, 0, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortTimeoutMs);
+            Bridge.Test.Assert.throws$6(Bridge.RegexMatchTimeoutException, function () {
                 rgx.isMatch(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longText);
-            }, $_.Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.f2);
+            });
         },
         regexIsMatchWorksWithLongTimeout: function () {
-            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor$2", Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, 0, Bridge.TimeSpan.fromMilliseconds(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longTimeoutMs));
-            rgx.isMatch(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longText);
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor$2", Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, 0, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longTimeoutMs);
+            rgx.isMatch(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortText);
+            Bridge.Test.Assert.$true(Bridge.hasValue(rgx));
         },
         regexMatchWorksWithShortTimeout: function () {
-            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor$2", Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, 0, Bridge.TimeSpan.fromMilliseconds(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortTimeoutMs));
-            Bridge.Test.Assert.throws$1(function () {
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor$2", Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, 0, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortTimeoutMs);
+            Bridge.Test.Assert.throws$6(Bridge.RegexMatchTimeoutException, function () {
                 rgx.match(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longText);
-            }, $_.Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.f2);
+            });
         },
         regexMatchWorksWithLongTimeout: function () {
-            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor$2", Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, 0, Bridge.TimeSpan.fromMilliseconds(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longTimeoutMs));
-            rgx.match(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longText);
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor$2", Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, 0, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longTimeoutMs);
+            rgx.match(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortText);
+            Bridge.Test.Assert.$true(Bridge.hasValue(rgx));
         },
         regexNextMatchWorksWithShortTimeout: function () {
-            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor$2", "%%|" + Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, 0, Bridge.TimeSpan.fromMilliseconds(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortTimeoutMs));
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor$2", "%%|" + Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, 0, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortTimeoutMs);
     
-            Bridge.Test.Assert.throws$1(function () {
+            Bridge.Test.Assert.throws$6(Bridge.RegexMatchTimeoutException, function () {
                 var result = rgx.match("%%" + Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longText);
                 result.nextMatch();
-            }, $_.Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.f2);
+            });
         },
         regexNextMatchWorksWithLongTimeout: function () {
-            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor$2", "%%| " + Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, 0, Bridge.TimeSpan.fromMilliseconds(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longTimeoutMs));
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor$2", "%%| " + Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, 0, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longTimeoutMs);
     
-            var result = rgx.match("%%" + Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longText);
+            var result = rgx.match("%%" + Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortText);
             result.nextMatch();
+    
+            Bridge.Test.Assert.$true(Bridge.hasValue(rgx));
         },
         regexReplaceWorksWithShortTimeout: function () {
-            Bridge.Test.Assert.throws$1($_.Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.f3, $_.Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.f2);
+            Bridge.Test.Assert.throws$6(Bridge.RegexMatchTimeoutException, $_.Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.f2);
     
         },
         regexReplaceWorksWithLongTimeout: function () {
-            Bridge.Text.RegularExpressions.Regex.replace$2(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longText, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, "fakeReplacement", 0, Bridge.TimeSpan.fromMilliseconds(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longTimeoutMs));
+            Bridge.Text.RegularExpressions.Regex.replace$2(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortText, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, "fakeReplacement", 0, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longTimeoutMs);
+            Bridge.Test.Assert.$true(true);
         },
         regexReplaceEvaluatorWorksWithShortTimeout: function () {
-            Bridge.Test.Assert.throws$1($_.Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.f5, $_.Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.f2);
+            Bridge.Test.Assert.throws$6(Bridge.RegexMatchTimeoutException, $_.Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.f4);
         },
         regexReplaceEvaluatorWorksWithLongTimeout: function () {
-            Bridge.Text.RegularExpressions.Regex.replace$5(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longText, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, $_.Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.f4, 0, Bridge.TimeSpan.fromMilliseconds(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longTimeoutMs));
+            Bridge.Text.RegularExpressions.Regex.replace$5(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortText, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, $_.Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.f3, 0, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longTimeoutMs);
+            Bridge.Test.Assert.$true(true);
         },
         regexSplitWorksWithShortTimeout: function () {
-            Bridge.Test.Assert.throws$1($_.Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.f6, $_.Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.f2);
+            Bridge.Test.Assert.throws$6(Bridge.RegexMatchTimeoutException, $_.Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.f5);
         },
         regexSplitWorksWithLongTimeout: function () {
-            Bridge.Text.RegularExpressions.Regex.split$2(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longText, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, 0, Bridge.TimeSpan.fromMilliseconds(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longTimeoutMs));
+            Bridge.Text.RegularExpressions.Regex.split$2(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortText, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, 0, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longTimeoutMs);
+            Bridge.Test.Assert.$true(true);
         }
     });
     
@@ -31348,20 +31365,17 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         f1: function () {
             new Bridge.Text.RegularExpressions.Regex("constructor$2", "fakePattern", 0, Bridge.TimeSpan.fromMilliseconds(-5));
         },
-        f2: function (err) {
-            return Bridge.is(err, Bridge.RegexMatchTimeoutException);
+        f2: function () {
+            Bridge.Text.RegularExpressions.Regex.replace$2(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longText, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, "fakeReplacement", 0, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortTimeoutMs);
         },
-        f3: function () {
-            Bridge.Text.RegularExpressions.Regex.replace$2(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longText, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, "fakeReplacement", 0, Bridge.TimeSpan.fromMilliseconds(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortTimeoutMs));
-        },
-        f4: function (m) {
+        f3: function (m) {
             return "fakeReplacement";
         },
-        f5: function () {
-            Bridge.Text.RegularExpressions.Regex.replace$5(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longText, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, $_.Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.f4, 0, Bridge.TimeSpan.fromMilliseconds(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortTimeoutMs));
+        f4: function () {
+            Bridge.Text.RegularExpressions.Regex.replace$5(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longText, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, $_.Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.f3, 0, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortTimeoutMs);
         },
-        f6: function () {
-            Bridge.Text.RegularExpressions.Regex.split$2(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longText, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, 0, Bridge.TimeSpan.fromMilliseconds(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortTimeoutMs));
+        f5: function () {
+            Bridge.Text.RegularExpressions.Regex.split$2(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longText, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, 0, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortTimeoutMs);
         }
     });
     

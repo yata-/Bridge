@@ -9,8 +9,9 @@ namespace Bridge.ClientTest.Text.RegularExpressions
     public class RegexTimeoutTests : RegexTestBase
     {
         private static readonly string Pattern = "([0-9a-zA-Z]{1})+";
-        private static readonly int ShortTimeoutMs = 1;
-        private static readonly int LongTimeoutMs = 3000;
+        private static readonly TimeSpan ShortTimeoutMs = TimeSpan.FromMilliseconds(1);
+        private static readonly TimeSpan LongTimeoutMs = TimeSpan.FromMilliseconds(3000);
+        private static readonly string ShortText;
         private static readonly string LongText;
 
         static RegexTimeoutTests()
@@ -19,6 +20,12 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             for (int i = 0; i < 10000; i++)
             {
                 LongText += "TestStringForTimeout";
+            }
+
+            ShortText = string.Empty;
+            for (int i = 0; i < 100; i++)
+            {
+                ShortText += "TestStringWithNoTimeout";
             }
         }
 
@@ -40,102 +47,103 @@ namespace Bridge.ClientTest.Text.RegularExpressions
         [Test]
         public void RegexIsMatchWorksWithShortTimeout()
         {
-            var rgx = new Regex(Pattern, RegexOptions.None, TimeSpan.FromMilliseconds(ShortTimeoutMs));
-            Assert.Throws(() =>
-            {
-                rgx.IsMatch(LongText);
-            }, err => err is RegexMatchTimeoutException);
+            var rgx = new Regex(Pattern, RegexOptions.None, ShortTimeoutMs);
+            Assert.Throws<RegexMatchTimeoutException>(() => { rgx.IsMatch(LongText); });
         }
 
-        [Test(ExpectedCount = 0)]
+        [Test]
         public void RegexIsMatchWorksWithLongTimeout()
         {
-            var rgx = new Regex(Pattern, RegexOptions.None, TimeSpan.FromMilliseconds(LongTimeoutMs));
-            rgx.IsMatch(LongText);
+            var rgx = new Regex(Pattern, RegexOptions.None, LongTimeoutMs);
+            rgx.IsMatch(ShortText);
+            Assert.True(rgx != null);
         }
 
         [Test]
         public void RegexMatchWorksWithShortTimeout()
         {
-            var rgx = new Regex(Pattern, RegexOptions.None, TimeSpan.FromMilliseconds(ShortTimeoutMs));
-            Assert.Throws(() =>
-            {
-                rgx.Match(LongText);
-            }, err => err is RegexMatchTimeoutException);
+            var rgx = new Regex(Pattern, RegexOptions.None, ShortTimeoutMs);
+            Assert.Throws<RegexMatchTimeoutException>(() => { rgx.Match(LongText); });
         }
 
-        [Test(ExpectedCount = 0)]
+        [Test]
         public void RegexMatchWorksWithLongTimeout()
         {
-            var rgx = new Regex(Pattern, RegexOptions.None, TimeSpan.FromMilliseconds(LongTimeoutMs));
-            rgx.Match(LongText);
+            var rgx = new Regex(Pattern, RegexOptions.None, LongTimeoutMs);
+            rgx.Match(ShortText);
+            Assert.True(rgx != null);
         }
 
         [Test]
         public void RegexNextMatchWorksWithShortTimeout()
         {
-            var rgx = new Regex("%%|" + Pattern, RegexOptions.None, TimeSpan.FromMilliseconds(ShortTimeoutMs));
+            var rgx = new Regex("%%|" + Pattern, RegexOptions.None, ShortTimeoutMs);
 
-            Assert.Throws(() =>
+            Assert.Throws<RegexMatchTimeoutException>(() =>
             {
                 var result = rgx.Match("%%" + LongText);
                 result.NextMatch();
-            }, err => err is RegexMatchTimeoutException);
+            });
         }
 
-        [Test(ExpectedCount = 0)]
+        [Test]
         public void RegexNextMatchWorksWithLongTimeout()
         {
-            var rgx = new Regex("%%| " + Pattern, RegexOptions.None, TimeSpan.FromMilliseconds(LongTimeoutMs));
+            var rgx = new Regex("%%| " + Pattern, RegexOptions.None, LongTimeoutMs);
 
-            var result = rgx.Match("%%" + LongText);
+            var result = rgx.Match("%%" + ShortText);
             result.NextMatch();
+
+            Assert.True(rgx != null);
         }
 
         [Test]
         public void RegexReplaceWorksWithShortTimeout()
         {
-            Assert.Throws(() =>
+            Assert.Throws<RegexMatchTimeoutException>(() =>
             {
-                Regex.Replace(LongText, Pattern, "fakeReplacement", RegexOptions.None, TimeSpan.FromMilliseconds(ShortTimeoutMs));
-            }, err => err is RegexMatchTimeoutException);
+                Regex.Replace(LongText, Pattern, "fakeReplacement", RegexOptions.None, ShortTimeoutMs);
+            });
 
         }
 
-        [Test(ExpectedCount = 0)]
+        [Test]
         public void RegexReplaceWorksWithLongTimeout()
         {
-            Regex.Replace(LongText, Pattern, "fakeReplacement", RegexOptions.None, TimeSpan.FromMilliseconds(LongTimeoutMs));
+            Regex.Replace(ShortText, Pattern, "fakeReplacement", RegexOptions.None, LongTimeoutMs);
+            Assert.True(true);
         }
 
         [Test]
         public void RegexReplaceEvaluatorWorksWithShortTimeout()
         {
-            Assert.Throws(() =>
+            Assert.Throws<RegexMatchTimeoutException>(() =>
             {
-                Regex.Replace(LongText, Pattern, m => "fakeReplacement", RegexOptions.None, TimeSpan.FromMilliseconds(ShortTimeoutMs));
-            }, err => err is RegexMatchTimeoutException);
+                Regex.Replace(LongText, Pattern, m => "fakeReplacement", RegexOptions.None, ShortTimeoutMs);
+            });
         }
 
-        [Test(ExpectedCount = 0)]
+        [Test]
         public void RegexReplaceEvaluatorWorksWithLongTimeout()
         {
-            Regex.Replace(LongText, Pattern, m => "fakeReplacement", RegexOptions.None, TimeSpan.FromMilliseconds(LongTimeoutMs));
+            Regex.Replace(ShortText, Pattern, m => "fakeReplacement", RegexOptions.None, LongTimeoutMs);
+            Assert.True(true);
         }
 
         [Test]
         public void RegexSplitWorksWithShortTimeout()
         {
-            Assert.Throws(() =>
+            Assert.Throws<RegexMatchTimeoutException>(() =>
             {
-                Regex.Split(LongText, Pattern, RegexOptions.None, TimeSpan.FromMilliseconds(ShortTimeoutMs));
-            }, err => err is RegexMatchTimeoutException);
+                Regex.Split(LongText, Pattern, RegexOptions.None, ShortTimeoutMs);
+            });
         }
 
-        [Test(ExpectedCount = 0)]
+        [Test]
         public void RegexSplitWorksWithLongTimeout()
         {
-            Regex.Split(LongText, Pattern, RegexOptions.None, TimeSpan.FromMilliseconds(LongTimeoutMs));
+            Regex.Split(ShortText, Pattern, RegexOptions.None, LongTimeoutMs);
+            Assert.True(true);
         }
     }
 }

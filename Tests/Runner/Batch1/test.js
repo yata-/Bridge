@@ -10532,7 +10532,7 @@
                 t.getFixture().regexIsMatchWorksWithShortTimeout();
             },
             regexIsMatchWorksWithLongTimeout: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexTimeoutTests, 0);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexTimeoutTests);
                 t.getFixture().regexIsMatchWorksWithLongTimeout();
             },
             regexMatchWorksWithShortTimeout: function (assert) {
@@ -10540,7 +10540,7 @@
                 t.getFixture().regexMatchWorksWithShortTimeout();
             },
             regexMatchWorksWithLongTimeout: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexTimeoutTests, 0);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexTimeoutTests);
                 t.getFixture().regexMatchWorksWithLongTimeout();
             },
             regexNextMatchWorksWithShortTimeout: function (assert) {
@@ -10548,7 +10548,7 @@
                 t.getFixture().regexNextMatchWorksWithShortTimeout();
             },
             regexNextMatchWorksWithLongTimeout: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexTimeoutTests, 0);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexTimeoutTests);
                 t.getFixture().regexNextMatchWorksWithLongTimeout();
             },
             regexReplaceWorksWithShortTimeout: function (assert) {
@@ -10556,7 +10556,7 @@
                 t.getFixture().regexReplaceWorksWithShortTimeout();
             },
             regexReplaceWorksWithLongTimeout: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexTimeoutTests, 0);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexTimeoutTests);
                 t.getFixture().regexReplaceWorksWithLongTimeout();
             },
             regexReplaceEvaluatorWorksWithShortTimeout: function (assert) {
@@ -10564,7 +10564,7 @@
                 t.getFixture().regexReplaceEvaluatorWorksWithShortTimeout();
             },
             regexReplaceEvaluatorWorksWithLongTimeout: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexTimeoutTests, 0);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexTimeoutTests);
                 t.getFixture().regexReplaceEvaluatorWorksWithLongTimeout();
             },
             regexSplitWorksWithShortTimeout: function (assert) {
@@ -10572,7 +10572,7 @@
                 t.getFixture().regexSplitWorksWithShortTimeout();
             },
             regexSplitWorksWithLongTimeout: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexTimeoutTests, 0);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexTimeoutTests);
                 t.getFixture().regexSplitWorksWithLongTimeout();
             }
         }
