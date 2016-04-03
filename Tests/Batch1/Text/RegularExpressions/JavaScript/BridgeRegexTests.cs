@@ -1,12 +1,11 @@
 ﻿using Bridge.Test;
-using Bridge.ClientTest;
-using System.Text.RegularExpressions;
+using Bridge.Text.RegularExpressions;
 
-namespace Bridge.ClientTest.Text.RegularExpressions
+namespace Bridge.ClientTest.Text.RegularExpressions.JavaScript
 {
-    [Category(Constants.MODULE_REGEX)]
+    [Category(Constants.MODULE_REGEX_JS)]
     [TestFixture]
-    public class RegexTests
+    public class BridgeRegexTests
     {
         [Test]
         public void TypePropertiesAreCorrect()

@@ -1,6 +1,4 @@
-using Bridge;
-
-namespace System.Text.RegularExpressions
+namespace Bridge.Text.RegularExpressions
 {
     [External]
     [Name("RegExp")]
