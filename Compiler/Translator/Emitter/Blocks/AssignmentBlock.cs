@@ -554,8 +554,9 @@ namespace Bridge.Translator
 
             if (!special && isBool && (assignmentExpression.Operator == AssignmentOperatorType.BitwiseAnd || assignmentExpression.Operator == AssignmentOperatorType.BitwiseOr))
             {
+                this.Write("!!(");
                 assignmentExpression.Left.AcceptVisitor(this.Emitter);
-                this.Write(assignmentExpression.Operator == AssignmentOperatorType.BitwiseAnd ? " && " : " || ");
+                this.Write(assignmentExpression.Operator == AssignmentOperatorType.BitwiseAnd ? " & " : " | ");
             }
 
             oldValue = this.Emitter.ReplaceAwaiterByVar;
@@ -575,9 +576,16 @@ namespace Bridge.Translator
                 assignmentExpression.Right.AcceptVisitor(this.Emitter);
             }
 
+            if (!special && isBool &&
+                (assignmentExpression.Operator == AssignmentOperatorType.BitwiseAnd ||
+                 assignmentExpression.Operator == AssignmentOperatorType.BitwiseOr))
+            {
+                this.WriteCloseParentheses();
+            }
+
             if (charToString == 1)
             {
-                this.Write(")");
+                this.WriteCloseParentheses();
             }
 
             if (special)

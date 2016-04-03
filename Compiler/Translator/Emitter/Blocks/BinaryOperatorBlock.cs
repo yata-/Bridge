@@ -244,7 +244,8 @@ namespace Bridge.Translator
             string root = Bridge.Translator.Emitter.ROOT + ".Nullable.";
             bool special = nullable;
             bool rootSpecial = nullable;
-
+            bool isBool = NullableType.IsNullable(resolveOperator.Type) ? NullableType.GetUnderlyingType(resolveOperator.Type).IsKnownType(KnownTypeCode.Boolean) : resolveOperator.Type.IsKnownType(KnownTypeCode.Boolean);
+            bool toBool = isBool && !rootSpecial && !delegateOperator && (binaryOperatorExpression.Operator == BinaryOperatorType.BitwiseAnd || binaryOperatorExpression.Operator == BinaryOperatorType.BitwiseOr);
             if (rootSpecial)
             {
                 this.Write(root);
@@ -261,6 +262,11 @@ namespace Bridge.Translator
                 else if (charToString == 0)
                 {
                     this.Write("String.fromCharCode(");
+                }
+
+                if (toBool)
+                {
+                    this.Write("!!(");
                 }
 
                 binaryOperatorExpression.Left.AcceptVisitor(this.Emitter);
@@ -284,8 +290,7 @@ namespace Bridge.Translator
                 {
                     this.WriteSpace();
                 }
-                bool isBool = NullableType.IsNullable(resolveOperator.Type) ? NullableType.GetUnderlyingType(resolveOperator.Type).IsKnownType(KnownTypeCode.Boolean) : resolveOperator.Type.IsKnownType(KnownTypeCode.Boolean);
-
+                
                 switch (binaryOperatorExpression.Operator)
                 {
                     case BinaryOperatorType.Add:
@@ -295,7 +300,7 @@ namespace Bridge.Translator
                     case BinaryOperatorType.BitwiseAnd:
                         if (isBool)
                         {
-                            this.Write(rootSpecial ? "and" : "&&");
+                            this.Write(rootSpecial ? "and" : "&");
                         }
                         else
                         {
@@ -307,7 +312,7 @@ namespace Bridge.Translator
                     case BinaryOperatorType.BitwiseOr:
                         if (isBool)
                         {
-                            this.Write(rootSpecial ? "or" : "||");
+                            this.Write(rootSpecial ? "or" : "|");
                         }
                         else
                         {
@@ -425,9 +430,14 @@ namespace Bridge.Translator
 
             binaryOperatorExpression.Right.AcceptVisitor(this.Emitter);
 
+            if (toBool)
+            {
+                this.WriteCloseParentheses();
+            }
+
             if (charToString == 1 || isCoalescing)
             {
-                this.Write(")");
+                this.WriteCloseParentheses();
             }
 
             if (delegateOperator || special)

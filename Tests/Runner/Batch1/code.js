@@ -4249,6 +4249,24 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1149', {
+        statics: {
+            bar_str: null,
+            testBitwiseOrAnd: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1149.bar_str = "";
+                var foo = true;
+                foo = !!(foo | Bridge.ClientTest.BridgeIssues.Bridge1149.bar());
+                foo = !!(foo | Bridge.ClientTest.BridgeIssues.Bridge1149.bar());
+    
+                Bridge.Test.Assert.areEqual("barbar", Bridge.ClientTest.BridgeIssues.Bridge1149.bar_str);
+            },
+            bar: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1149.bar_str += "bar";
+                return false;
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
@@ -9382,11 +9400,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         statics: {
             testUseCase: function () {
                 var test = false;
-                test = test || true;
+                test = !!(test | true);
                 Bridge.Test.Assert.areStrictEqual(true, test);
     
                 test = false;
-                test = test && true;
+                test = !!(test & true);
                 Bridge.Test.Assert.areStrictEqual(false, test);
     
                 var test1 = false;
@@ -19882,9 +19900,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$true(true);
             var t = true;
             var f = false;
-            Bridge.Test.Assert.$false(t && f);
-            Bridge.Test.Assert.$false(f && f);
-            Bridge.Test.Assert.$true(t && t);
+            Bridge.Test.Assert.$false(!!(t & f));
+            Bridge.Test.Assert.$false(!!(f & f));
+            Bridge.Test.Assert.$true(!!(t & t));
         },
         logicalNegationWorks: function () {
             Bridge.Test.Assert.$false(false);
