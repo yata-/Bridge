@@ -14716,7 +14716,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         return Bridge.Text.RegularExpressions.RegexReplacement.split(this, input, count, startat);
     },
 
-    _validateMatchTimeout(matchTimeout) {
+    _validateMatchTimeout: function(matchTimeout) {
         var ms = matchTimeout.getTotalMilliseconds();
 
         if (-1 === ms) {
