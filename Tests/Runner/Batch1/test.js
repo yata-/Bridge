@@ -1384,6 +1384,10 @@
                 QUnit.test("AccessorsCanBeInvokedGenericStatic", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_PropertyAccessorTests.accessorsCanBeInvokedGenericStatic);
                 QUnit.test("BaseAccessorsCanBeInvoked", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_PropertyAccessorTests.baseAccessorsCanBeInvoked);
                 QUnit.test("BaseAccessorsCanBeInvokedGeneric", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_PropertyAccessorTests.baseAccessorsCanBeInvokedGeneric);
+                QUnit.module("Random");
+                QUnit.test("Random - Unseeded", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_RandomTests.unseeded);
+                QUnit.test("Random - Seeded", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_RandomTests.seeded);
+                QUnit.test("Random - Sample", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_RandomTests.sample);
                 QUnit.module("Regex");
                 QUnit.test("TypePropertiesAreCorrect", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexTests.typePropertiesAreCorrect);
                 QUnit.test("StringOnlyConstructorWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexTests.stringOnlyConstructorWorks);
@@ -7898,6 +7902,24 @@
             baseAccessorsCanBeInvokedGeneric: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.PropertyAccessorTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_PropertyAccessorTests);
                 t.getFixture().baseAccessorsCanBeInvokedGeneric();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_RandomTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.RandomTests)],
+        statics: {
+            unseeded: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.RandomTests).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_RandomTests);
+                Bridge.ClientTest.RandomTests.unseeded();
+            },
+            seeded: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.RandomTests).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_RandomTests);
+                Bridge.ClientTest.RandomTests.seeded();
+            },
+            sample: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.RandomTests).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_RandomTests);
+                Bridge.ClientTest.RandomTests.sample();
             }
         }
     });

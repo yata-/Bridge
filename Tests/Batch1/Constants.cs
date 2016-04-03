@@ -44,6 +44,7 @@ namespace Bridge.ClientTest
         public const string MODULE_DECIMAL_MATH = "Decimal Math";
 
         public const string MODULE_CONVERT = "Convert";
+        public const string MODULE_RANDOM = "Random";
 
         public const string MODULE_ICOLLECTION = PREFIX_COLLECTIONS; // + "ICollection";
         public const string MODULE_IDICTIONARY = PREFIX_COLLECTIONS; // + "IDictionary";
