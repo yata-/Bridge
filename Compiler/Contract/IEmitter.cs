@@ -406,5 +406,10 @@ namespace Bridge.Contract
             get;
             set;
         }
+
+        bool IsJavaScriptOverflowMode
+        {
+            get;
+        }
     }
 }

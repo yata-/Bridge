@@ -16,6 +16,7 @@ namespace Bridge.ClientTest.Exceptions
             Assert.AreEqual("Bridge.OutOfMemoryException", typeof(OutOfMemoryException).GetClassName(), "Name");
             object d = new OutOfMemoryException();
             Assert.True(d is OutOfMemoryException, "is OutOfMemoryException");
+            Assert.True(d is SystemException, "is SystemException");
             Assert.True(d is Exception, "is Exception");
         }
 

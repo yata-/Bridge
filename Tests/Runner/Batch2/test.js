@@ -201,6 +201,8 @@
                 QUnit.test("WithNoUncheckedKeyword - Batch2 TestLong", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_WithNoUncheckedKeywordTests.testLong);
                 QUnit.test("WithNoUncheckedKeyword - Batch2 TestULong", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_WithNoUncheckedKeywordTests.testULong);
                 QUnit.module("Issues");
+                QUnit.test("#1122 - Batch2 TestClippingInJavaScriptOverflowMode", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N1122.testClippingInJavaScriptOverflowMode);
+                QUnit.test("#1122 - Batch2 TestIntegerDivisionInJavaScriptOverflowMode", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N1122.testIntegerDivisionInJavaScriptOverflowMode);
                 QUnit.test("#772 - Batch2 TypePropertiesAreCorrect", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N772.typePropertiesAreCorrect);
                 QUnit.test("#772 - Batch2 LengthWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N772.lengthWorks);
                 QUnit.test("#772 - Batch2 RankIsOne", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N772.rankIsOne);
@@ -251,6 +253,20 @@
                 QUnit.test("#772 - Batch2 IListRemoveAtWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N772.iListRemoveAtWorks);
                 QUnit.test("#772 - Batch2 IssueSpecific", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N772.issueSpecific);
                 QUnit.test("#772 - Batch2 TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N772.testUseCase);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N1122', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch2.BridgeIssues.N1122)],
+        statics: {
+            testClippingInJavaScriptOverflowMode: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch2.BridgeIssues.N1122).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N1122, 4);
+                Bridge.ClientTest.Batch2.BridgeIssues.N1122.testClippingInJavaScriptOverflowMode();
+            },
+            testIntegerDivisionInJavaScriptOverflowMode: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch2.BridgeIssues.N1122).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N1122, 4);
+                Bridge.ClientTest.Batch2.BridgeIssues.N1122.testIntegerDivisionInJavaScriptOverflowMode();
             }
         }
     });

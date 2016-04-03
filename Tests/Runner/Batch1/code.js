@@ -3901,7 +3901,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual(8, result);
     
                 var a = 1, b = 4;
-                var res = (((Math.ceil(a / 1.0)) | 0) * b) | 0;
+                var res = (Bridge.Int.clip32(Math.ceil(a / 1.0)) * b) | 0;
                 Bridge.Test.Assert.areEqual(4, res);
             }
         }
@@ -4205,6 +4205,22 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1140', {
+        statics: {
+            testDefaultNullable: function () {
+                var d = null;
+                var m = null;
+                var l = null;
+                var c = null;
+    
+                Bridge.Test.Assert.areEqual$1(null, d, "double?");
+                Bridge.Test.Assert.areEqual$1(null, m, "decimal?");
+                Bridge.Test.Assert.areEqual$1(null, l, "long?");
+                Bridge.Test.Assert.areEqual$1(null, c, "char?");
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1141', {
         statics: {
             testLongDivisionInfiniteLoopFixed: function () {
@@ -4245,6 +4261,24 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual("2", Bridge.Int.format(d, ".#"));
                 Bridge.Test.Assert.areEqual("2", Bridge.Int.format(d, ".##"));
                 Bridge.Test.Assert.areEqual("%200", Bridge.Int.format(d, "%.##"));
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1146', {
+        statics: {
+            testLongIssues: function () {
+                Bridge.Test.Assert.true$1(Bridge.ClientTest.BridgeIssues.Bridge1146.intUintEquality(0, 0), "int == uint uses .Equals() between long: Bridge.Long(a).equals(Bridge.Long(b))");
+                Bridge.Test.Assert.true$1(Bridge.ClientTest.BridgeIssues.Bridge1146.precedence(), "Correct order for `a += b >> 1` -> `(a + (b >>> 1))`");
+            },
+            intUintEquality: function (a, b) {
+                return Bridge.Long(a).equals(Bridge.Long(b));
+            },
+            precedence: function () {
+                var a = 1;
+                var b = 2;
+                a = (a + (b >>> 1)) >>> 0;
+                return a === 2;
             }
         }
     });
@@ -10652,6 +10686,183 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.N1122', {
+        statics: {
+            assertNumber: function (expected, actual, message) {
+                if (message === void 0) { message = null; }
+                var a = Bridge.hasValue(actual) ? actual.toString() : "null";
+                var e = Bridge.hasValue(expected) ? expected.toString() : "null";
+    
+                Bridge.Test.Assert.areEqual$1(e, a, message);
+            },
+            testClippingInDefaultOverflowMode: function () {
+                var x = Number.MAX_VALUE;
+    
+                var y1 = Bridge.Int.clip32(Math.floor(x / 0.2));
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(-2147483648, y1, "int");
+    
+                var y2 = Bridge.Int.clipu32(Math.floor(x / 0.2));
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, y2, "uint");
+    
+                var z1 = Bridge.Int.clip64(Math.floor(x / 0.2));
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.Long.MinValue, z1, "long");
+    
+                var z2 = Bridge.Int.clipu64(Math.floor(x / 0.2));
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.ULong.MinValue, z2, "ulong");
+            },
+            testIntegerDivisionInDefaultMode: function () {
+                var x = 1.1;
+    
+                var y1 = Bridge.Int.clip32(1 / x);
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, y1, "int");
+    
+                var y2 = Bridge.Int.clipu32(1 / x);
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, y2, "uint");
+    
+                var z1 = Bridge.Int.clip64(1 / x);
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.Long(0), z1, "long");
+    
+                var z2 = Bridge.Int.clipu64(1 / x);
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.ULong(0), z2, "ulong");
+            },
+            testInfinityCastDefaultOverflowMode: function () {
+                var pi = Number.POSITIVE_INFINITY;
+    
+                var y1 = Bridge.Int.clipu8(pi);
+                var y2 = Bridge.Int.clip8(pi);
+                var y3 = Bridge.Int.clip16(pi);
+                var y4 = Bridge.Int.clipu16(pi);
+                var y5 = Bridge.Int.clip32(pi);
+                var y6 = Bridge.Int.clipu32(pi);
+                var y7 = Bridge.Int.clip64(pi);
+                var y8 = Bridge.Int.clipu64(pi);
+    
+                // https://msdn.microsoft.com/en-us/library/aa691289(v=vs.71).aspx
+                // If the value of the operand is NaN or infinite, the result of the conversion is an unspecified value of the destination type.
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, y1, "PositiveInfinity -> byte");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(-128, y2, "PositiveInfinity -> sbyte");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(-32768, y3, "PositiveInfinity -> short");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, y4, "PositiveInfinity -> ushort");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(-2147483648, y5, "PositiveInfinity -> int");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, y6, "PositiveInfinity -> uint");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.Long.MinValue, y7, "PositiveInfinity -> long");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.ULong.MinValue, y8, "PositiveInfinity -> ulong");
+    
+                var ni = Number.NEGATIVE_INFINITY;
+    
+                var z1 = Bridge.Int.clipu8(ni);
+                var z2 = Bridge.Int.clip8(ni);
+                var z3 = Bridge.Int.clip16(ni);
+                var z4 = Bridge.Int.clipu16(ni);
+                var z5 = Bridge.Int.clip32(ni);
+                var z6 = Bridge.Int.clipu32(ni);
+                var z7 = Bridge.Int.clip64(ni);
+                var z8 = Bridge.Int.clipu64(ni);
+    
+                // https://msdn.microsoft.com/en-us/library/aa691289(v=vs.71).aspx
+                // If the value of the operand is NaN or infinite, the result of the conversion is an unspecified value of the destination type.
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, z1, "NegativeInfinity -> byte");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(-128, z2, "NegativeInfinity -> sbyte");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(-32768, z3, "NegativeInfinity -> short");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, z4, "NegativeInfinity -> ushort");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(-2147483648, z5, "NegativeInfinity -> int");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, z6, "NegativeInfinity -> uint");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.Long.MinValue, z7, "NegativeInfinity -> long");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.ULong.MinValue, z8, "NegativeInfinity -> ulong");
+            },
+            testInfinityCastWithNullable1DefaultOverflowMode: function () {
+                var pi = Number.POSITIVE_INFINITY;
+    
+                var y1 = Bridge.Int.clipu8(pi);
+                var y2 = Bridge.Int.clip8(pi);
+                var y3 = Bridge.Int.clip16(pi);
+                var y4 = Bridge.Int.clipu16(pi);
+                var y5 = Bridge.Int.clip32(pi);
+                var y6 = Bridge.Int.clipu32(pi);
+                var y7 = Bridge.Int.clip64(pi);
+                var y8 = Bridge.Int.clipu64(pi);
+    
+                // https://msdn.microsoft.com/en-us/library/aa691289(v=vs.71).aspx
+                // If the value of the operand is NaN or infinite, the result of the conversion is an unspecified value of the destination type.
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, y1, "PositiveInfinity -> byte");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(-128, y2, "PositiveInfinity -> sbyte");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(-32768, y3, "PositiveInfinity -> short");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, y4, "PositiveInfinity -> ushort");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(-2147483648, y5, "PositiveInfinity -> int");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, y6, "PositiveInfinity -> uint");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.Long.MinValue, y7, "PositiveInfinity -> long");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.ULong.MinValue, y8, "PositiveInfinity -> ulong");
+    
+                var ni = Number.NEGATIVE_INFINITY;
+    
+                var z1 = Bridge.Int.clipu8(ni);
+                var z2 = Bridge.Int.clip8(ni);
+                var z3 = Bridge.Int.clip16(ni);
+                var z4 = Bridge.Int.clipu16(ni);
+                var z5 = Bridge.Int.clip32(ni);
+                var z6 = Bridge.Int.clipu32(ni);
+                var z7 = Bridge.Int.clip64(ni);
+                var z8 = Bridge.Int.clipu64(ni);
+    
+                // https://msdn.microsoft.com/en-us/library/aa691289(v=vs.71).aspx
+                // If the value of the operand is NaN or infinite, the result of the conversion is an unspecified value of the destination type.
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, z1, "NegativeInfinity -> byte");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(-128, z2, "NegativeInfinity -> sbyte");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(-32768, z3, "NegativeInfinity -> short");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, z4, "NegativeInfinity -> ushort");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(-2147483648, z5, "NegativeInfinity -> int");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, z6, "NegativeInfinity -> uint");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.Long.MinValue, z7, "NegativeInfinity -> long");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.ULong.MinValue, z8, "NegativeInfinity -> ulong");
+            },
+            testInfinityCastWithNullable2DefaultOverflowMode: function () {
+                var pi = Number.POSITIVE_INFINITY;
+    
+                var y1 = Bridge.Int.clipu8(pi);
+                var y2 = Bridge.Int.clip8(pi);
+                var y3 = Bridge.Int.clip16(pi);
+                var y4 = Bridge.Int.clipu16(pi);
+                var y5 = Bridge.Int.clip32(pi);
+                var y6 = Bridge.Int.clipu32(pi);
+                var y7 = Bridge.Int.clip64(pi);
+                var y8 = Bridge.Int.clipu64(pi);
+    
+                // https://msdn.microsoft.com/en-us/library/aa691289(v=vs.71).aspx
+                // If the value of the operand is NaN or infinite, the result of the conversion is an unspecified value of the destination type.
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, Bridge.Nullable.getValue(y1), "PositiveInfinity -> byte");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(-128, Bridge.Nullable.getValue(y2), "PositiveInfinity -> sbyte");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(-32768, Bridge.Nullable.getValue(y3), "PositiveInfinity -> short");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, Bridge.Nullable.getValue(y4), "PositiveInfinity -> ushort");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(-2147483648, Bridge.Nullable.getValue(y5), "PositiveInfinity -> int");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, Bridge.Nullable.getValue(y6), "PositiveInfinity -> uint");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.Long.MinValue, Bridge.Nullable.getValue(y7), "PositiveInfinity -> long");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.ULong.MinValue, Bridge.Nullable.getValue(y8), "PositiveInfinity -> ulong");
+    
+                var ni = Number.NEGATIVE_INFINITY;
+    
+                var z1 = Bridge.Int.clipu8(ni);
+                var z2 = Bridge.Int.clip8(ni);
+                var z3 = Bridge.Int.clip16(ni);
+                var z4 = Bridge.Int.clipu16(ni);
+                var z5 = Bridge.Int.clip32(ni);
+                var z6 = Bridge.Int.clipu32(ni);
+                var z7 = Bridge.Int.clip64(ni);
+                var z8 = Bridge.Int.clipu64(ni);
+    
+                // https://msdn.microsoft.com/en-us/library/aa691289(v=vs.71).aspx
+                // If the value of the operand is NaN or infinite, the result of the conversion is an unspecified value of the destination type.
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, Bridge.Nullable.getValue(z1), "NegativeInfinity -> byte");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(-128, Bridge.Nullable.getValue(z2), "NegativeInfinity -> sbyte");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(-32768, Bridge.Nullable.getValue(z3), "NegativeInfinity -> short");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, Bridge.Nullable.getValue(z4), "NegativeInfinity -> ushort");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(-2147483648, Bridge.Nullable.getValue(z5), "NegativeInfinity -> int");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(0, Bridge.Nullable.getValue(z6), "NegativeInfinity -> uint");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.Long.MinValue, Bridge.Nullable.getValue(z7), "NegativeInfinity -> long");
+                Bridge.ClientTest.BridgeIssues.N1122.assertNumber(Bridge.ULong.MinValue, Bridge.Nullable.getValue(z8), "NegativeInfinity -> ulong");
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Person383', {
         config: {
             properties: {
@@ -14145,10 +14356,12 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             MODULE_NULLABLE: "Nullable",
             MODULE_STRING: "String",
             MODULE_REGEX: "Regex",
+            MODULE_REGEX_JS: "RegexJS",
             MODULE_ENUM: "Enum",
             MODULE_MATH: "Math",
             MODULE_DECIMAL_MATH: "Decimal Math",
             MODULE_CONVERT: "Convert",
+            MODULE_RANDOM: "Random",
             MODULE_ICOLLECTION: "Collections",
             MODULE_IDICTIONARY: "Collections",
             MODULE_LIST: "Collections",
@@ -14175,7 +14388,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             MODULE_NOTIMPLEMENTEDEXCEPTION: "Exceptions",
             MODULE_OVERFLOWEXCEPTION: "Exceptions",
             MODULE_OUTOFMEMORYEXCEPTION: "Exceptions",
+            MODULE_INDEXOUTOFRANGEEXCEPTION: "Exceptions",
             MODULE_SYSTEMEXCEPTION: "Exceptions",
+            MODULE_TIMOUTEXCEPTION: "Exceptions",
+            MODULE_REGEXMATCHTIMEOUTEXCEPTION: "Exceptions",
             MODULE_ARITHMETICEXCEPTION: "Exceptions",
             MODULE_FORMATEXCEPTION: "Exceptions",
             MODULE_INVALIDOPERATIONEXCEPTION: "Exceptions",
@@ -16650,6 +16866,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.areEqual$1("Bridge.IndexOutOfRangeException", Bridge.getTypeName(Bridge.IndexOutOfRangeException), "Name");
             var d = new Bridge.IndexOutOfRangeException();
             Bridge.Test.Assert.true$1(Bridge.is(d, Bridge.IndexOutOfRangeException), "is IndexOutOfRangeException");
+            Bridge.Test.Assert.true$1(Bridge.is(d, Bridge.SystemException), "is SystemException");
             Bridge.Test.Assert.true$1(Bridge.is(d, Bridge.Exception), "is Exception");
         },
         defaultConstructorWorks: function () {
@@ -16925,6 +17142,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.areEqual$1("Bridge.OutOfMemoryException", Bridge.getTypeName(Bridge.OutOfMemoryException), "Name");
             var d = new Bridge.OutOfMemoryException();
             Bridge.Test.Assert.true$1(Bridge.is(d, Bridge.OutOfMemoryException), "is OutOfMemoryException");
+            Bridge.Test.Assert.true$1(Bridge.is(d, Bridge.SystemException), "is SystemException");
             Bridge.Test.Assert.true$1(Bridge.is(d, Bridge.Exception), "is Exception");
         },
         defaultConstructorWorks: function () {
@@ -17034,6 +17252,49 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Exceptions.RegexMatchTimeoutExceptionTests', {
+        statics: {
+            DefaultMessage1: "The operation has timed out.",
+            DefaultMessage2: "The RegEx engine has timed out while trying to match a pattern to an input string. This can occur for many reasons, including very large inputs or excessive backtracking caused by nested quantifiers, back-references and other factors."
+        },
+        typePropertiesAreCorrect: function () {
+            Bridge.Test.Assert.areEqual$1("Bridge.RegexMatchTimeoutException", Bridge.getTypeName(Bridge.RegexMatchTimeoutException), "Name");
+            var d = new Bridge.RegexMatchTimeoutException("constructor");
+            Bridge.Test.Assert.true$1(Bridge.is(d, Bridge.RegexMatchTimeoutException), "is RegexMatchTimeoutException");
+            Bridge.Test.Assert.true$1(Bridge.is(d, Bridge.TimeoutException), "is TimeoutException");
+            Bridge.Test.Assert.true$1(Bridge.is(d, Bridge.SystemException), "is SystemException");
+            Bridge.Test.Assert.true$1(Bridge.is(d, Bridge.Exception), "is Exception");
+        },
+        defaultConstructorWorks: function () {
+            var ex = new Bridge.RegexMatchTimeoutException("constructor");
+            Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.RegexMatchTimeoutException), "is RegexMatchTimeoutException");
+            Bridge.Test.Assert.areEqual$1(null, ex.getInnerException(), "InnerException");
+            Bridge.Test.Assert.areEqual(Bridge.ClientTest.Exceptions.RegexMatchTimeoutExceptionTests.DefaultMessage1, ex.getMessage());
+        },
+        constructorWithMessageWorks: function () {
+            var ex = new Bridge.RegexMatchTimeoutException("constructor$1", "The message");
+            Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.RegexMatchTimeoutException), "is RegexMatchTimeoutException");
+            Bridge.Test.Assert.areEqual$1(null, ex.getInnerException(), "InnerException");
+            Bridge.Test.Assert.areEqual("The message", ex.getMessage());
+        },
+        constructorWithMessageAndInnerExceptionWorks: function () {
+            var inner = new Bridge.Exception("a");
+            var ex = new Bridge.RegexMatchTimeoutException("constructor$2", "The message", inner);
+            Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.RegexMatchTimeoutException), "is RegexMatchTimeoutException");
+            Bridge.Test.Assert.true$1(ex.getInnerException() === inner, "InnerException");
+            Bridge.Test.Assert.areEqual("The message", ex.getMessage());
+        },
+        constructorWithExceptionDetailsWorks: function () {
+            var ex = new Bridge.RegexMatchTimeoutException("constructor$3", "testInput", "testPattern", Bridge.TimeSpan.fromSeconds(77));
+            Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.RegexMatchTimeoutException), "is RegexMatchTimeoutException");
+            Bridge.Test.Assert.areEqual$1(null, ex.getInnerException(), "InnerException");
+            Bridge.Test.Assert.areEqual$1("testInput", ex.getInput(), "Input");
+            Bridge.Test.Assert.areEqual$1("testPattern", ex.getPattern(), "Pattern");
+            Bridge.Test.Assert.areEqual$1(Bridge.TimeSpan.fromSeconds(77), ex.getMatchTimeout(), "MatchTimeout");
+            Bridge.Test.Assert.areEqual(Bridge.ClientTest.Exceptions.RegexMatchTimeoutExceptionTests.DefaultMessage2, ex.getMessage());
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Exceptions.SystemExceptionTests', {
         statics: {
             DefaultMessage: "System error."
@@ -17106,6 +17367,38 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.null$1(ex.task, "Task");
             Bridge.Test.Assert.true$1(ex.cancellationToken === Bridge.CancellationToken.none, "CancellationToken");
             Bridge.Test.Assert.true$1(ex.getInnerException() === innerException, "InnerException");
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Exceptions.TimeoutExceptionTests', {
+        statics: {
+            DefaultMessage: "The operation has timed out."
+        },
+        typePropertiesAreCorrect: function () {
+            Bridge.Test.Assert.areEqual$1("Bridge.TimeoutException", Bridge.getTypeName(Bridge.TimeoutException), "Name");
+            var d = new Bridge.TimeoutException();
+            Bridge.Test.Assert.true$1(Bridge.is(d, Bridge.TimeoutException), "is TimeoutException");
+            Bridge.Test.Assert.true$1(Bridge.is(d, Bridge.SystemException), "is SystemException");
+            Bridge.Test.Assert.true$1(Bridge.is(d, Bridge.Exception), "is Exception");
+        },
+        defaultConstructorWorks: function () {
+            var ex = new Bridge.TimeoutException();
+            Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.TimeoutException), "is TimeoutException");
+            Bridge.Test.Assert.areEqual$1(null, ex.getInnerException(), "InnerException");
+            Bridge.Test.Assert.areEqual(Bridge.ClientTest.Exceptions.TimeoutExceptionTests.DefaultMessage, ex.getMessage());
+        },
+        constructorWithMessageWorks: function () {
+            var ex = new Bridge.TimeoutException("The message");
+            Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.TimeoutException), "is TimeoutException");
+            Bridge.Test.Assert.areEqual$1(null, ex.getInnerException(), "InnerException");
+            Bridge.Test.Assert.areEqual("The message", ex.getMessage());
+        },
+        constructorWithMessageAndInnerExceptionWorks: function () {
+            var inner = new Bridge.Exception("a");
+            var ex = new Bridge.TimeoutException("The message", inner);
+            Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.TimeoutException), "is TimeoutException");
+            Bridge.Test.Assert.true$1(ex.getInnerException() === inner, "InnerException");
+            Bridge.Test.Assert.areEqual("The message", ex.getMessage());
         }
     });
     
@@ -19845,6 +20138,68 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     }; });
     
+    Bridge.define('Bridge.ClientTest.RandomTests', {
+        statics: {
+            ITERATIONS: 100,
+            unseeded: function () {
+                var r = new Bridge.Random("constructor");
+    
+                for (var i = 0; i < Bridge.ClientTest.RandomTests.ITERATIONS; i = (i + 1) | 0) {
+                    var x = r.next$1(20);
+                    Bridge.Test.Assert.true$1(x >= 0 && x < 20, x + " under 20 - Next(maxValue)");
+                }
+    
+                for (var i1 = 0; i1 < Bridge.ClientTest.RandomTests.ITERATIONS; i1 = (i1 + 1) | 0) {
+                    var x1 = r.next$2(20, 30);
+                    Bridge.Test.Assert.true$1(x1 >= 20 && x1 < 30, x1 + " between 20 and 30 - Next(minValue, maxValue)");
+                }
+    
+                for (var i2 = 0; i2 < Bridge.ClientTest.RandomTests.ITERATIONS; i2 = (i2 + 1) | 0) {
+                    var x2 = r.nextDouble();
+                    Bridge.Test.Assert.true$1(x2 >= 0.0 && x2 < 1.0, x2 + " between 0.0 and 1.0  - NextDouble()");
+                }
+            },
+            seeded: function () {
+                var seed = Bridge.Long.clip32(Bridge.Long((new Date()).getTime()).mul(10000));
+    
+                var r1 = new Bridge.Random("constructor$1", seed);
+                var r2 = new Bridge.Random("constructor$1", seed);
+    
+                var b1 = Bridge.Array.init(Bridge.ClientTest.RandomTests.ITERATIONS, 0);
+                r1.nextBytes(b1);
+    
+                var b2 = Bridge.Array.init(Bridge.ClientTest.RandomTests.ITERATIONS, 0);
+                r2.nextBytes(b2);
+    
+                for (var i = 0; i < b1.length; i = (i + 1) | 0) {
+                    Bridge.Test.Assert.areEqual$1(b1[i], b2[i], "NextBytes()");
+                }
+    
+                for (var i1 = 0; i1 < b1.length; i1 = (i1 + 1) | 0) {
+                    var x1 = r1.next();
+                    var x2 = r2.next();
+    
+                    Bridge.Test.Assert.areEqual$1(x1, x2, "Next()");
+                }
+            },
+            sample: function () {
+                var r = new Bridge.ClientTest.RandomTests.SubRandom();
+    
+                for (var i = 0; i < Bridge.ClientTest.RandomTests.ITERATIONS; i = (i + 1) | 0) {
+                    var d = r.exposeSample();
+                    Bridge.Test.Assert.true$1(d >= 0.0 && d < 1.0, d + " between 0.0 and 1.0  - ExposeSample()");
+                }
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.RandomTests.SubRandom', {
+        inherits: [Bridge.Random],
+        exposeSample: function () {
+            return this.sample();
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.SimpleTypes.BooleanTests', {
         typePropertiesAreCorrect: function () {
             Bridge.Test.Assert.$true(Bridge.is(true, Boolean));
@@ -21308,8 +21663,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var d1 = 4.5;
             var d2 = null;
             var d3 = 8.5;
-            Bridge.Test.Assert.areEqual(4, (d1 | 0));
-            Bridge.Test.Assert.areEqual(-4, ((-d1) | 0));
+            Bridge.Test.Assert.areEqual(4, Bridge.Int.clip32(d1));
+            Bridge.Test.Assert.areEqual(-4, Bridge.Int.clip32(-d1));
             Bridge.Test.Assert.areEqual(null, Bridge.Int.clip32(d2));
             Bridge.Test.Assert.areEqual(8, Bridge.Int.clip32(Bridge.Nullable.getValue(d3)));
             Bridge.Test.Assert.areEqual(-8, Bridge.Int.clip32(Bridge.Nullable.getValue(Bridge.Nullable.neg(d3))));
@@ -24175,7 +24530,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define('Bridge.ClientTest.Text.RegularExpressions.RegexTests', {
+    Bridge.define('Bridge.ClientTest.Text.RegularExpressions.JavaScript.BridgeRegexTests', {
         statics: {
             escapeWorks: function () {
                 var escaped = Bridge.regexpEscape("[-/\\^$*+?.()|[]{}]");
@@ -24230,6 +24585,568 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         testWorks: function () {
             Bridge.Test.Assert.$true(new RegExp("a|b").test("xaybz"));
             Bridge.Test.Assert.$false(new RegExp("c").test("xaybz"));
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Text.RegularExpressions.RegexTestBase', {
+        validateMatchNotFound: function (match) {
+            this.validateMatch(match, 0, 0, "", 1, false);
+        },
+        validateMatch: function (match, index, length, value, groupCount, success) {
+            if (success === void 0) { success = true; }
+            var matchCapCount = success ? 1 : 0;
+            this.validateGroupImpl(match, index, length, success, value, matchCapCount, "ValidateMatch: Match");
+    
+            Bridge.Test.Assert.notNull$1(match.getGroups(), "ValidateMatch: Match.Groups is not NULL");
+            Bridge.Test.Assert.areEqual(groupCount, match.getGroups().getCount());
+            if (groupCount > 0) {
+                this.validateGroupImpl(match.getGroups().get(0), index, length, success, value, matchCapCount, "ValidateMatch: Match.Group0");
+            }
+    
+            Bridge.Test.Assert.notNull$1(match.getCaptures(), "ValidateMatch: Match.Captures is not NULL");
+            Bridge.Test.Assert.areEqual$1(matchCapCount, match.getCaptures().getCount(), "ValidateMatch: Match.Captures.Count");
+            if (success) {
+                this.validateCaptureImpl(match.getCaptures().get(0), index, length, value, "ValidateMatch: Match.Capture0");
+            }
+        },
+        validateGroup: function (match, groupIndex, index, length, success, value, captureCount) {
+            var group = match.getGroups().get(groupIndex);
+            this.validateGroupImpl(group, index, length, success, value, captureCount, "ValidateGroup: Group" + groupIndex);
+        },
+        validateGroupImpl: function (group, index, length, success, value, captureCount, descr) {
+            this.validateCaptureImpl(group, index, length, value, descr);
+            Bridge.Test.Assert.areEqual$1(success, group.getSuccess(), descr + ".Success");
+    
+            Bridge.Test.Assert.notNull$1(group.getCaptures(), descr + ".Captures is not NULL");
+            Bridge.Test.Assert.areEqual$1(captureCount, group.getCaptures().getCount(), descr + ".Captures.Count");
+        },
+        validateCapture: function (match, groupIndex, captureIndex, index, length, value) {
+            Bridge.Test.Assert.notNull$1(match, "ValidateCapture: Match is not NULL");
+            Bridge.Test.Assert.notNull$1(match.getGroups(), "ValidateCapture: Match.Groups is not NULL");
+            var group = match.getGroups().get(groupIndex);
+    
+            Bridge.Test.Assert.notNull$1(group, "ValidateCapture: Group" + groupIndex + " is not NULL");
+            Bridge.Test.Assert.notNull$1(group.getCaptures(), "ValidateCapture: Group" + groupIndex + ".Captures is not NULL");
+            var capture = group.getCaptures().get(captureIndex);
+    
+            this.validateCaptureImpl(capture, index, length, value, "ValidateCapture: Group" + groupIndex + ".Capture" + captureIndex);
+        },
+        validateCaptureImpl: function (capture, index, length, value, descr) {
+            Bridge.Test.Assert.notNull$1(capture, descr + " is not NULL");
+    
+            Bridge.Test.Assert.areEqual$1(index, capture.getIndex(), descr + ".Index");
+            Bridge.Test.Assert.areEqual$1(length, capture.getLength(), descr + ".Length");
+            Bridge.Test.Assert.areEqual$1(value, capture.getValue(), descr + ".Value");
+            Bridge.Test.Assert.areEqual$1(value, capture.toString(), descr + ".ToString()");
+        },
+        capturesAreEqual: function (expected, actual, descr) {
+            if (!Bridge.hasValue(expected)) {
+                Bridge.Test.Assert.null$1(actual, descr + " is NULL");
+            }
+            else  {
+                Bridge.Test.Assert.notNull$1(actual, descr + " is not NULL");
+    
+                Bridge.Test.Assert.areEqual$1(expected.getIndex(), actual.getIndex(), descr + ".Index");
+                Bridge.Test.Assert.areEqual$1(expected.getLength(), actual.getLength(), descr + ".Length");
+                Bridge.Test.Assert.areEqual$1(expected.getValue(), actual.getValue(), descr + ".Value");
+                Bridge.Test.Assert.areEqual$1(expected.toString(), actual.toString(), descr + ".ToString()");
+            }
+        },
+        groupsAreEqual: function (expected, actual, descr) {
+            if (!Bridge.hasValue(expected)) {
+                Bridge.Test.Assert.null$1(actual, descr + " is NULL");
+            }
+            else  {
+                Bridge.Test.Assert.notNull$1(actual, descr + " is not NULL");
+    
+                this.capturesAreEqual(expected, actual, descr);
+                Bridge.Test.Assert.areEqual$1(expected.getSuccess(), actual.getSuccess(), descr + ".Success");
+    
+                if (!Bridge.hasValue(expected.getCaptures())) {
+                    Bridge.Test.Assert.null$1(actual.getCaptures(), descr + ".Captures is NULL");
+                }
+                else  {
+                    Bridge.Test.Assert.notNull$1(actual.getCaptures(), descr + ".Captures is not NULL");
+                    Bridge.Test.Assert.areEqual$1(expected.getCaptures().getCount(), actual.getCaptures().getCount(), descr + ".Captures.Count");
+                    for (var i = 0; i < expected.getCaptures().getCount(); i = (i + 1) | 0) {
+                        this.capturesAreEqual(expected.getCaptures().get(i), actual.getCaptures().get(i), descr + ".Captures[" + i + "]");
+                    }
+                }
+            }
+        },
+        matchesAreEqual: function (expected, actual, descr) {
+            if (!Bridge.hasValue(expected)) {
+                Bridge.Test.Assert.null$1(actual, descr + " is NULL");
+            }
+            else  {
+                Bridge.Test.Assert.notNull$1(actual, descr + " is not NULL");
+                this.groupsAreEqual(expected, actual, descr);
+    
+                if (!Bridge.hasValue(expected.getGroups())) {
+                    Bridge.Test.Assert.null$1(actual.getGroups(), descr + ".Groups is NULL");
+                }
+                else  {
+                    Bridge.Test.Assert.notNull$1(actual.getGroups(), descr + ".Groups is not NULL");
+                    Bridge.Test.Assert.areEqual$1(expected.getGroups().getCount(), actual.getGroups().getCount(), descr + ".Groups.Count");
+                    for (var i = 0; i < expected.getGroups().getCount(); i = (i + 1) | 0) {
+                        this.capturesAreEqual(expected.getGroups().get(i), actual.getGroups().get(i), descr + ".Groups[" + i + "]");
+                    }
+                }
+            }
+        },
+        validateCollection: function (T, expected, actual, msg) {
+            if (!Bridge.hasValue(expected)) {
+                Bridge.Test.Assert.null$1(actual, msg + " is NULL");
+            }
+            else  {
+                Bridge.Test.Assert.notNull$1(actual, msg + " is not NULL");
+                Bridge.Test.Assert.areEqual$1(expected.length, actual.length, msg + ".Length");
+                for (var i = 0; i < expected.length; i = (i + 1) | 0) {
+                    Bridge.Test.Assert.areEqual$1(expected[i], actual[i], msg + "[" + i + "]");
+                }
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexIsMatchTests', {
+        _isMatchTestData: null,
+        _isMatchWithOffsetTestData: null,
+        config: {
+            init: function () {
+                this._isMatchTestData = Bridge.merge(new Bridge.List$1(Object)(), [
+        [{ item1: "1298-673-4192", item2: true }],
+        [{ item1: "1298-673-4192", item2: true }],
+        [{ item1: "A08Z-931-468A", item2: true }],
+        [{ item1: "_A90-123-129X", item2: false }],
+        [{ item1: "12345-KKA-1230", item2: false }],
+        [{ item1: "0919-2893-1256", item2: false }]
+    ] );
+                this._isMatchWithOffsetTestData = Bridge.merge(new Bridge.List$1(Object)(), [
+        [{ item1: "ID: 1234-567-8901", item2: true }],
+        [{ item1: "Identifier: A170-222-777z", item2: true }],
+        [{ item1: "1234-567-8901 IDENTITY: 9287-5555-1233", item2: false }]
+    ] );
+            }
+        },
+        isMatchTest: function () {
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "^[a-zA-Z0-9]\\d{2}[a-zA-Z0-9](-\\d{3}){2}[A-Za-z0-9]$");
+            for (var i = 0; i < this._isMatchTestData.getCount(); i = (i + 1) | 0) {
+                var testValue = this._isMatchTestData.getItem(i).item1;
+                var exptected = this._isMatchTestData.getItem(i).item2;
+    
+                var actual = rgx.isMatch(testValue);
+                Bridge.Test.Assert.areEqual(exptected, actual);
+            }
+        },
+        isMatchWithOffsetTest: function () {
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "[a-zA-Z0-9]\\d{2}[a-zA-Z0-9](-\\d{3}){2}[A-Za-z0-9]");
+            for (var i = 0; i < this._isMatchWithOffsetTestData.getCount(); i = (i + 1) | 0) {
+                var testValue = this._isMatchWithOffsetTestData.getItem(i).item1;
+                var exptected = this._isMatchWithOffsetTestData.getItem(i).item2;
+    
+                var startAt = Bridge.String.indexOf(testValue, String.fromCharCode(58));
+                var actual = rgx.isMatch$1(testValue, startAt);
+                Bridge.Test.Assert.areEqual(exptected, actual);
+            }
+        },
+        isMatchStaticTest: function () {
+            var pattern = "^[a-zA-Z0-9]\\d{2}[a-zA-Z0-9](-\\d{3}){2}[A-Za-z0-9]$";
+            for (var i = 0; i < this._isMatchTestData.getCount(); i = (i + 1) | 0) {
+                var testValue = this._isMatchTestData.getItem(i).item1;
+                var exptected = this._isMatchTestData.getItem(i).item2;
+    
+                var actual = Bridge.Text.RegularExpressions.Regex.isMatch(testValue, pattern);
+                Bridge.Test.Assert.areEqual(exptected, actual);
+            }
+        },
+        isMatchStaticWithOptionsTest: function () {
+            var pattern = "^[a-zA-Z0-9]\\d{2}[a-zA-Z0-9](-\\d{3}){2}[A-Za-z0-9]$";
+            for (var i = 0; i < this._isMatchTestData.getCount(); i = (i + 1) | 0) {
+                var testValue = this._isMatchTestData.getItem(i).item1;
+                var exptected = this._isMatchTestData.getItem(i).item2;
+    
+                var actual = Bridge.Text.RegularExpressions.Regex.isMatch$1(testValue, pattern, 0);
+                Bridge.Test.Assert.areEqual(exptected, actual);
+            }
+        },
+        isMatchStaticWithOptionsAndTimeoutTest: function () {
+            var pattern = "^[a-zA-Z0-9]\\d{2}[a-zA-Z0-9](-\\d{3}){2}[A-Za-z0-9]$";
+            for (var i = 0; i < this._isMatchTestData.getCount(); i = (i + 1) | 0) {
+                var testValue = this._isMatchTestData.getItem(i).item1;
+                var exptected = this._isMatchTestData.getItem(i).item2;
+    
+                var actual = Bridge.Text.RegularExpressions.Regex.isMatch$2(testValue, pattern, 0, Bridge.TimeSpan.fromDays(1));
+                Bridge.Test.Assert.areEqual(exptected, actual);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexReplaceTests', {
+        statics: {
+            capText: function (m) {
+                // Get the matched string.
+                var x = m.toString();
+                // If the first char is lower case...
+                if (Bridge.isLower(x.charCodeAt(0))) {
+                    // Capitalize it.
+                    return String.fromCharCode(String.fromCharCode(x.charCodeAt(0)).toUpperCase().charCodeAt(0)) + x.substr(1, ((x.length - 1) | 0));
+                }
+                return x;
+            },
+            reverseLetter: function (match) {
+                return Bridge.Text.RegularExpressions.Regex.replace$1(match.getValue(), "([ie])([ie])", "$2$1", 1);
+            },
+            wordScrambler: function (match) {
+                // Adjusted logic here. Will just reverse the value string.
+    
+                var value = match.getValue();
+                var letters = Bridge.Array.init(value.length, function (){
+                    return new Bridge.Char();
+                });
+                for (var i = 0; i < value.length; i = (i + 1) | 0) {
+                    letters[i] = value.charCodeAt(((((value.length - i) | 0) - 1) | 0));
+                }
+    
+                return String.fromCharCode.apply(null, letters);
+            }
+        },
+        replaceTest1: function () {
+            var expected = "This is text with far too much whitespace.";
+    
+            var input = "This is   text with   far  too   much   whitespace.";
+            var pattern = "\\s+";
+            var replacement = " ";
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", pattern);
+            var result = rgx.replace(input, replacement);
+    
+            Bridge.Test.Assert.areEqual(expected, result);
+        },
+        replaceAtPositionTest: function () {
+            var expected = "abcdefghijkklmm";
+    
+            var str = "aabccdeefgghiijkklmm";
+            var pattern = "(\\w)\\1";
+            var replacement = "$1";
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", pattern);
+    
+            var result = rgx.replace$1(str, replacement, 5);
+            Bridge.Test.Assert.areEqual(expected, result);
+        },
+        replaceAtPositionAndLengthTest: function () {
+            var expected = "Instantiating a New Type\n\nGenerally, there are two ways that an\n\ninstance of a class or structure can\n\nbe instantiated. ";
+    
+            var input = "Instantiating a New Type\nGenerally, there are two ways that an\ninstance of a class or structure can\nbe instantiated. ";
+            var pattern = "^.*$";
+            var replacement = "\n$&";
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor$1", pattern, 2);
+    
+            var match = rgx.match(input);
+    
+            var result = rgx.replace$2(input, replacement, -1, ((((match.getIndex() + match.getLength()) | 0) + 1) | 0));
+            Bridge.Test.Assert.areEqual(expected, result);
+        },
+        replaceWithEvaluatorTest: function () {
+            var expected = "Four Score And Seven Years Ago";
+            var text = "four score and seven years ago";
+            var rx = new Bridge.Text.RegularExpressions.Regex("constructor", "\\w+");
+            var result = rx.replace$3(text, Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexReplaceTests.capText);
+            Bridge.Test.Assert.areEqual(expected, result);
+        },
+        replaceWithEvaluatorAndCountTest: function () {
+            var expected = "decieve releive acheive belief fierce receive";
+            var input = "deceive relieve achieve belief fierce receive";
+            var pattern = "\\w*(ie|ei)\\w*";
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor$1", pattern, 1);
+    
+            var result = rgx.replace$4(input, Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexReplaceTests.reverseLetter, ((Bridge.Int.div(input.split(String.fromCharCode(32)).length, 2)) | 0));
+            Bridge.Test.Assert.areEqual(expected, result);
+        },
+        replaceWithEvaluatorAndCountAtPostitionTest: function () {
+            var expected = "deceive releive acheive belief fierce receive";
+            var input = "deceive relieve achieve belief fierce receive";
+            var pattern = "\\w*(ie|ei)\\w*";
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor$1", pattern, 1);
+    
+            var result = rgx.replace$5(input, Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexReplaceTests.reverseLetter, ((((Bridge.Int.div(input.split(String.fromCharCode(32)).length, 2)) | 0) - 1) | 0), 7);
+            Bridge.Test.Assert.areEqual(expected, result);
+        },
+        replaceStaticTest1: function () {
+            var expected = "This is text with far too much whitespace.";
+    
+            var input = "This is   text with   far  too   much   whitespace.";
+            var pattern = "\\s+";
+            var replacement = " ";
+            var result = Bridge.Text.RegularExpressions.Regex.replace(input, pattern, replacement);
+    
+            Bridge.Test.Assert.areEqual(expected, result);
+        },
+        replaceStaticTest2: function () {
+            var pattern = "\\\\\\\\MyMachine(?:\\.\\w+)*\\\\([cde])\\$";
+            var replacement = "$1:";
+            var uncPaths = ["\\\\MyMachine.domain1.mycompany.com\\c$\\ThingsToDo.txt", "\\\\MyMachine\\c$\\ThingsToDo.txt", "\\\\MyMachine\\d$\\documents\\mydocument.docx"];
+            var expected = ["c:\\ThingsToDo.txt", "c:\\ThingsToDo.txt", "d:\\documents\\mydocument.docx"];
+    
+            for (var i = 0; i < uncPaths.length; i = (i + 1) | 0) {
+                var uncPath = uncPaths[i];
+                var result = Bridge.Text.RegularExpressions.Regex.replace(uncPath, pattern, replacement);
+                Bridge.Test.Assert.areEqual$1(expected[i], result, "Result at #" + i);
+            }
+        },
+        replaceStaticWithOptionsTest: function () {
+            var pattern = "\\\\\\\\MyMachine(?:\\.\\w+)*\\\\([cde])\\$";
+            var replacement = "$1:";
+            var uncPaths = ["\\\\MyMachine.domain1.mycompany.com\\C$\\ThingsToDo.txt", "\\\\MyMachine\\c$\\ThingsToDo.txt", "\\\\MyMachine\\D$\\documents\\mydocument.docx"];
+            var expected = ["C:\\ThingsToDo.txt", "c:\\ThingsToDo.txt", "D:\\documents\\mydocument.docx"];
+    
+            for (var i = 0; i < uncPaths.length; i = (i + 1) | 0) {
+                var uncPath = uncPaths[i];
+                var result = Bridge.Text.RegularExpressions.Regex.replace$1(uncPath, pattern, replacement, 1);
+                Bridge.Test.Assert.areEqual$1(expected[i], result, "Result at #" + i);
+            }
+        },
+        replaceStaticWithOptionsAndTimeoutTest: function () {
+            var pattern = "\\\\\\\\MyMachine(?:\\.\\w+)*\\\\([cde])\\$";
+            var replacement = "$1:";
+            var uncPaths = ["\\\\MyMachine.domain1.mycompany.com\\C$\\ThingsToDo.txt", "\\\\MyMachine\\c$\\ThingsToDo.txt", "\\\\MyMachine\\D$\\documents\\mydocument.docx"];
+            var expected = ["C:\\ThingsToDo.txt", "c:\\ThingsToDo.txt", "D:\\documents\\mydocument.docx"];
+    
+            for (var i = 0; i < uncPaths.length; i = (i + 1) | 0) {
+                var uncPath = uncPaths[i];
+                var result = Bridge.Text.RegularExpressions.Regex.replace$2(uncPath, pattern, replacement, 1, Bridge.TimeSpan.fromSeconds(1));
+                Bridge.Test.Assert.areEqual$1(expected[i], result, "Result at #" + i);
+            }
+        },
+        replaceStaticWithEvaluatorTest: function () {
+            var expected = "rettel lacitebahpla gnissim kcal esaeler tnahcnep kcals cillyrca yrdnual esaec";
+            var words = "letter alphabetical missing lack release penchant slack acryllic laundry cease";
+    
+            var pattern = "\\w+";
+            var evaluator = Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexReplaceTests.wordScrambler;
+    
+            var result = Bridge.Text.RegularExpressions.Regex.replace$3(words, pattern, evaluator);
+            Bridge.Test.Assert.areEqual(expected, result);
+    
+        },
+        replaceStaticWithEvaluatorAndOptionsTest: function () {
+            var expected1 = "LETTER lacitebahpla gnissim kcal esaeler tnahcnep kcals cillyrca yrdnual esaec";
+            var expected2 = "RETTEL lacitebahpla gnissim kcal esaeler tnahcnep kcals cillyrca yrdnual esaec";
+            var words = "LETTER alphabetical missing lack release penchant slack acryllic laundry cease";
+    
+            var pattern = "[a-z]+";
+            var evaluator = Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexReplaceTests.wordScrambler;
+    
+            var result1 = Bridge.Text.RegularExpressions.Regex.replace$4(words, pattern, evaluator, 0);
+            Bridge.Test.Assert.areEqual(expected1, result1);
+    
+            var result2 = Bridge.Text.RegularExpressions.Regex.replace$4(words, pattern, evaluator, 1);
+            Bridge.Test.Assert.areEqual(expected2, result2);
+        },
+        replaceStaticWithEvaluatorAndOptionsAndTimoutTest: function () {
+            var expected = "RETTEL lacitebahpla gnissim kcal esaeler tnahcnep kcals cillyrca yrdnual esaec";
+            var words = "LETTER alphabetical missing lack release penchant slack acryllic laundry cease";
+    
+            var pattern = "[a-z]+";
+            var evaluator = Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexReplaceTests.wordScrambler;
+    
+            var result = Bridge.Text.RegularExpressions.Regex.replace$5(words, pattern, evaluator, 1, Bridge.TimeSpan.fromSeconds(1));
+            Bridge.Test.Assert.areEqual(expected, result);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexSplitTests', {
+        validateResult: function (expected, actual) {
+            Bridge.Test.Assert.areEqual$1(expected.length, actual.length, "Length");
+            for (var i = 0; i < actual.length; i = (i + 1) | 0) {
+                Bridge.Test.Assert.areEqual$1(expected[i], actual[i], "Result at " + i);
+            }
+        },
+        splitTest1: function () {
+            var expected = ["plum", "", "pear"];
+    
+            var regex = new Bridge.Text.RegularExpressions.Regex("constructor", "-"); // Split on hyphens.
+            var substrings = regex.split("plum--pear");
+    
+            this.validateResult(expected, substrings);
+        },
+        splitTest2: function () {
+            var expected = ["", "ABCDE", "FGHIJKL", "MNOPQ", ""];
+    
+            var pattern = "\\d+";
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", pattern);
+            var input = "123ABCDE456FGHIJKL789MNOPQ012";
+            var substrings = rgx.split(input);
+    
+            this.validateResult(expected, substrings);
+        },
+        splitTest3: function () {
+            var expected = ["plum", "-", "pear"];
+    
+            var regex = new Bridge.Text.RegularExpressions.Regex("constructor", "(-)"); // Split on hyphens.
+            var substrings = regex.split("plum-pear");
+    
+            this.validateResult(expected, substrings);
+        },
+        splitTest4: function () {
+            var expected = ["07", "/", "14", "/", "2007"];
+    
+            var input = "07/14/2007";
+            var pattern = "(-)|(/)";
+            var regex = new Bridge.Text.RegularExpressions.Regex("constructor", pattern);
+            var substrings = regex.split(input);
+    
+            this.validateResult(expected, substrings);
+        },
+        splitTest5: function () {
+            var expected = ["", "c", "h", "a", "r", "a", "c", "t", "e", "r", "s", ""];
+    
+            var input = "characters";
+            var regex = new Bridge.Text.RegularExpressions.Regex("constructor", "");
+            var substrings = regex.split(input);
+    
+            this.validateResult(expected, substrings);
+        },
+        splitWithCountTest1: function () {
+            var expected = ["", "ABCDE", "FGHIJKL789MNOPQ012"];
+    
+            var pattern = "\\d+";
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", pattern);
+            var input = "123ABCDE456FGHIJKL789MNOPQ012";
+            var substrings = rgx.split$1(input, 3);
+    
+            this.validateResult(expected, substrings);
+        },
+        splitWithCountTest2: function () {
+            var expected = ["apple", "-", "apricot", "-", "plum", "-", "pear-banana"];
+    
+            var pattern = "(-)";
+            var input = "apple-apricot-plum-pear-banana";
+            var regex = new Bridge.Text.RegularExpressions.Regex("constructor", pattern); // Split on hyphens.
+            var substrings = regex.split$1(input, 4);
+    
+            this.validateResult(expected, substrings);
+        },
+        splitWithCountTest3: function () {
+            var expected = ["07", "/", "14/2007"];
+    
+            var input = "07/14/2007";
+            var pattern = "(-)|(/)";
+            var regex = new Bridge.Text.RegularExpressions.Regex("constructor", pattern);
+            var substrings = regex.split$1(input, 2);
+    
+            this.validateResult(expected, substrings);
+        },
+        splitWithCountTest4: function () {
+            var expected = ["", "c", "h", "a", "r", "a", "c", "t", "e", "rs"];
+    
+            var input = "characters";
+            var regex = new Bridge.Text.RegularExpressions.Regex("constructor", "");
+            var substrings = regex.split$1(input, input.length);
+    
+            this.validateResult(expected, substrings);
+        },
+        splitWithCountAndStartAtTest1: function () {
+            var expected = ["", "ABCDE", "FGHIJ789KLMNO012PQRST"];
+    
+            var pattern = "\\d+";
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", pattern);
+            var input = "123ABCDE456FGHIJ789KLMNO012PQRST";
+            var m = rgx.match(input);
+            if (m.getSuccess()) {
+                var startAt = m.getIndex();
+                var substrings = rgx.split$2(input, 3, startAt);
+    
+                this.validateResult(expected, substrings);
+            }
+        },
+        splitWithCountAndStartAtTest2: function () {
+            var expected = ["apple-apricot-plum", "-", "pear", "-", "pomegranate", "-", "pineapple-peach"];
+    
+            var pattern = "(-)";
+            var input = "apple-apricot-plum-pear-pomegranate-pineapple-peach";
+    
+            var regex = new Bridge.Text.RegularExpressions.Regex("constructor", pattern);
+            var substrings = regex.split$2(input, 4, 15); // Split on hyphens from 15th character on
+    
+            this.validateResult(expected, substrings);
+        },
+        splitWithCountAndStartAtTest3: function () {
+            var expected = ["apple|apricot|plum", "|", "pear", "|", "pomegranate", "|", "pineapple|peach"];
+    
+            var pattern = "(-)|([|])"; // possible delimiters found in string
+            var input = "apple|apricot|plum|pear|pomegranate|pineapple|peach";
+            var regex = new Bridge.Text.RegularExpressions.Regex("constructor", pattern);
+            var substrings = regex.split$2(input, 4, 15); // Split on delimiters from 15th character on
+    
+            this.validateResult(expected, substrings);
+        },
+        splitWithCountAndStartAtTest4: function () {
+            var expected = ["ch", "a", "r", "a", "c", "t", "e", "r", "s", ""];
+    
+            var input = "characters";
+            var regex = new Bridge.Text.RegularExpressions.Regex("constructor", "");
+            var substrings = regex.split$2(input, input.length, Bridge.String.indexOf(input, "a"));
+    
+            this.validateResult(expected, substrings);
+        },
+        splitStaticTest1: function () {
+            var expected = ["plum", "", "pear"];
+    
+            var substrings = Bridge.Text.RegularExpressions.Regex.split("plum--pear", "-");
+    
+            this.validateResult(expected, substrings);
+        },
+        splitStaticTest2: function () {
+            var expected = ["", "ABCDE", "FGHIJKL", "MNOPQ", ""];
+    
+            var pattern = "\\d+";
+            var input = "123ABCDE456FGHIJKL789MNOPQ012";
+            var substrings = Bridge.Text.RegularExpressions.Regex.split(input, pattern);
+    
+            this.validateResult(expected, substrings);
+        },
+        splitStaticTest3: function () {
+            var expected = ["plum", "-", "pear"];
+    
+            var substrings = Bridge.Text.RegularExpressions.Regex.split("plum-pear", "(-)");
+    
+            this.validateResult(expected, substrings);
+        },
+        splitStaticTest4: function () {
+            var expected = ["07", "/", "14", "/", "2007"];
+    
+            var input = "07/14/2007";
+            var pattern = "(-)|(/)";
+            var substrings = Bridge.Text.RegularExpressions.Regex.split(input, pattern);
+    
+            this.validateResult(expected, substrings);
+        },
+        splitStaticTest5: function () {
+            var expected = ["", "c", "h", "a", "r", "a", "c", "t", "e", "r", "s", ""];
+    
+            var input = "characters";
+            var substrings = Bridge.Text.RegularExpressions.Regex.split(input, "");
+    
+            this.validateResult(expected, substrings);
+        },
+        splitStaticWithOptionsTest: function () {
+            var expected = ["", "1234", "5678", "9012", ""];
+    
+            var pattern = "[a-z]+";
+            var input = "Abc1234Def5678Ghi9012Jklm";
+            var substrings = Bridge.Text.RegularExpressions.Regex.split$1(input, pattern, 1);
+    
+            this.validateResult(expected, substrings);
+        },
+        splitStaticWithOptionsAndTimeout: function () {
+            var expected = ["", "1234", "5678", "9012", ""];
+    
+            var pattern = "[a-z]+";
+            var input = "Abc1234Def5678Ghi9012Jklm";
+            //TODO: check timeout
+            var substrings = Bridge.Text.RegularExpressions.Regex.split$2(input, pattern, 1, Bridge.TimeSpan.fromMilliseconds(500));
+    
+    
+            this.validateResult(expected, substrings);
         }
     });
     
@@ -29255,6 +30172,1229 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.define('Bridge.ClientTest.SimpleTypes.ObjectTests.C2', {
         inherits: [Bridge.ClientTest.SimpleTypes.ObjectTests.C1]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexEscapeTests', {
+        inherits: [Bridge.ClientTest.Text.RegularExpressions.RegexTestBase],
+        escapeTest: function () {
+            var $t, $t1;
+            var expected1 = ["?", "?"];
+            var actual1 = new Bridge.List$1(String)();
+    
+            var expected2 = ["[what kind?]", "[by whom?]"];
+            var actual2 = new Bridge.List$1(String)();
+    
+    
+            var pattern = "[(.*?)]";
+            var input = "The animal [what kind?] was visible [by whom?] from the window";
+    
+            var matches = Bridge.Text.RegularExpressions.Regex.matches(input, pattern);
+            $t = Bridge.getEnumerator(matches);
+            while ($t.moveNext()) {
+                var match = $t.getCurrent();
+                actual1.add(match.getValue());
+            }
+            this.validateCollection(String, expected1, actual1.toArray(), "MatchValues1");
+    
+            pattern = Bridge.Text.RegularExpressions.Regex.escape("[") + "(.*?)]";
+            var matches2 = Bridge.Text.RegularExpressions.Regex.matches(input, pattern);
+            $t1 = Bridge.getEnumerator(matches2);
+            while ($t1.moveNext()) {
+                var match1 = $t1.getCurrent();
+                actual2.add(match1.getValue());
+            }
+    
+            this.validateCollection(String, expected2, actual2.toArray(), "MatchValues2");
+    
+        },
+        unescapeTest: function () {
+            var pattern = "\n\r\t\f[](){}!123abc \\, *, +, ?, |, {, [, (,), ^, $,., #,  \u0007, \b, \t, and \u000b";
+            var escaped = Bridge.Text.RegularExpressions.Regex.escape(pattern);
+            var unescaped = Bridge.Text.RegularExpressions.Regex.unescape(escaped);
+    
+            Bridge.Test.Assert.areEqual(pattern, unescaped);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexMatchesTests', {
+        inherits: [Bridge.ClientTest.Text.RegularExpressions.RegexTestBase],
+        matchesTest: function () {
+            var $t;
+            var expectedMatchValues = ["writes", "notes"];
+            var expectedMatchIndexes = [4, 17];
+    
+            var actualMatchValues = new Bridge.List$1(String)();
+            var actualMatchIndexes = new Bridge.List$1(Bridge.Int32)();
+    
+            var pattern = "\\b\\w+es\\b";
+            var sentence = "Who writes these notes?";
+    
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", pattern);
+    
+            $t = Bridge.getEnumerator(rgx.matches(sentence));
+            while ($t.moveNext()) {
+                var match = $t.getCurrent();
+                actualMatchValues.add(match.getValue());
+                actualMatchIndexes.add(match.getIndex());
+            }
+    
+            this.validateCollection(String, expectedMatchValues, actualMatchValues.toArray(), "MatchValues");
+            this.validateCollection(Bridge.Int32, expectedMatchIndexes, actualMatchIndexes.toArray(), "MatchIndexes");
+        },
+        matchesAtPositionTest: function () {
+            var $t;
+            var expectedMatchValues = ["writes", "notes", "uses"];
+            var expectedMatchIndexes = [4, 17, 27];
+    
+            var actualMatchValues = new Bridge.List$1(String)();
+            var actualMatchIndexes = new Bridge.List$1(Bridge.Int32)();
+    
+            var pattern = "\\b\\w+es\\b";
+            var sentence = "Who writes these notes and uses our paper?";
+    
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", pattern);
+    
+            var match = rgx.match(sentence);
+            actualMatchValues.add(match.getValue());
+            actualMatchIndexes.add(match.getIndex());
+    
+            $t = Bridge.getEnumerator(rgx.matches$1(sentence, ((match.getIndex() + match.getLength()) | 0)));
+            while ($t.moveNext()) {
+                var m = $t.getCurrent();
+                actualMatchValues.add(m.getValue());
+                actualMatchIndexes.add(m.getIndex());
+            }
+    
+            this.validateCollection(String, expectedMatchValues, actualMatchValues.toArray(), "MatchValues");
+            this.validateCollection(Bridge.Int32, expectedMatchIndexes, actualMatchIndexes.toArray(), "MatchIndexes");
+        },
+        matchesStaticTest: function () {
+            var $t;
+            var expectedMatchValues = ["writes", "notes"];
+            var expectedMatchIndexes = [4, 17];
+    
+            var actualMatchValues = new Bridge.List$1(String)();
+            var actualMatchIndexes = new Bridge.List$1(Bridge.Int32)();
+    
+            var pattern = "\\b\\w+es\\b";
+            var sentence = "Who writes these notes?";
+    
+            $t = Bridge.getEnumerator(Bridge.Text.RegularExpressions.Regex.matches(sentence, pattern));
+            while ($t.moveNext()) {
+                var match = $t.getCurrent();
+                actualMatchValues.add(match.getValue());
+                actualMatchIndexes.add(match.getIndex());
+            }
+    
+            this.validateCollection(String, expectedMatchValues, actualMatchValues.toArray(), "MatchValues");
+            this.validateCollection(Bridge.Int32, expectedMatchIndexes, actualMatchIndexes.toArray(), "MatchIndexes");
+        },
+        matchesStaticWithOptionsTest: function () {
+            var $t, $t1;
+            var expectedMatchValues1 = ["notes"];
+            var expectedMatchIndexes1 = [11];
+    
+            var expectedMatchValues2 = ["NOTES", "notes"];
+            var expectedMatchIndexes2 = [0, 11];
+    
+            var actualMatchValues1 = new Bridge.List$1(String)();
+            var actualMatchIndexes1 = new Bridge.List$1(Bridge.Int32)();
+    
+            var actualMatchValues2 = new Bridge.List$1(String)();
+            var actualMatchIndexes2 = new Bridge.List$1(Bridge.Int32)();
+    
+            var pattern = "\\b\\w+es\\b";
+            var sentence = "NOTES: Any notes or comments are optional.";
+            $t = Bridge.getEnumerator(Bridge.Text.RegularExpressions.Regex.matches$1(sentence, pattern, 0));
+            while ($t.moveNext()) {
+                var match = $t.getCurrent();
+                actualMatchValues1.add(match.getValue());
+                actualMatchIndexes1.add(match.getIndex());
+            }
+    
+            $t1 = Bridge.getEnumerator(Bridge.Text.RegularExpressions.Regex.matches$1(sentence, pattern, 1));
+            while ($t1.moveNext()) {
+                var match1 = $t1.getCurrent();
+                actualMatchValues2.add(match1.getValue());
+                actualMatchIndexes2.add(match1.getIndex());
+            }
+    
+            this.validateCollection(String, expectedMatchValues1, actualMatchValues1.toArray(), "MatchValues1");
+            this.validateCollection(Bridge.Int32, expectedMatchIndexes1, actualMatchIndexes1.toArray(), "MatchIndexes1");
+    
+            this.validateCollection(String, expectedMatchValues2, actualMatchValues2.toArray(), "MatchValues2");
+            this.validateCollection(Bridge.Int32, expectedMatchIndexes2, actualMatchIndexes2.toArray(), "MatchIndexes2");
+        },
+        matchesStaticWithOptionsAndTimeoutTest: function () {
+            var $t, $t1;
+            var expectedMatchValues1 = ["notes"];
+            var expectedMatchIndexes1 = [11];
+    
+            var expectedMatchValues2 = ["NOTES", "notes"];
+            var expectedMatchIndexes2 = [0, 11];
+    
+            var actualMatchValues1 = new Bridge.List$1(String)();
+            var actualMatchIndexes1 = new Bridge.List$1(Bridge.Int32)();
+    
+            var actualMatchValues2 = new Bridge.List$1(String)();
+            var actualMatchIndexes2 = new Bridge.List$1(Bridge.Int32)();
+    
+            var pattern = "\\b\\w+es\\b";
+            var sentence = "NOTES: Any notes or comments are optional.";
+            $t = Bridge.getEnumerator(Bridge.Text.RegularExpressions.Regex.matches$2(sentence, pattern, 0, Bridge.TimeSpan.fromSeconds(1)));
+            while ($t.moveNext()) {
+                var match = $t.getCurrent();
+                actualMatchValues1.add(match.getValue());
+                actualMatchIndexes1.add(match.getIndex());
+            }
+    
+            $t1 = Bridge.getEnumerator(Bridge.Text.RegularExpressions.Regex.matches$2(sentence, pattern, 1, Bridge.TimeSpan.fromSeconds(1)));
+            while ($t1.moveNext()) {
+                var match1 = $t1.getCurrent();
+                actualMatchValues2.add(match1.getValue());
+                actualMatchIndexes2.add(match1.getIndex());
+            }
+    
+            this.validateCollection(String, expectedMatchValues1, actualMatchValues1.toArray(), "MatchValues1");
+            this.validateCollection(Bridge.Int32, expectedMatchIndexes1, actualMatchIndexes1.toArray(), "MatchIndexes1");
+    
+            this.validateCollection(String, expectedMatchValues2, actualMatchValues2.toArray(), "MatchValues2");
+            this.validateCollection(Bridge.Int32, expectedMatchIndexes2, actualMatchIndexes2.toArray(), "MatchIndexes2");
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexMatchTests', {
+        inherits: [Bridge.ClientTest.Text.RegularExpressions.RegexTestBase],
+        matchTest: function () {
+            var expectedGroupValues = ["One", "car", "red", "car", "blue", "car"];
+            var expectedCaptureValues = ["One", "car", "red", "car", "blue", "car"];
+            var expectedCaptureIndexes = [0, 4, 8, 12, 16, 21];
+    
+            var actualGroupValues = new Bridge.List$1(String)();
+            var actualCaptureValues = new Bridge.List$1(String)();
+            var actualCaptureIndexes = new Bridge.List$1(Bridge.Int32)();
+    
+            var text = "One car red car blue car";
+            var pat = "(\\w+)\\s+(car)";
+    
+            // Instantiate the regular expression object.
+            var r = new Bridge.Text.RegularExpressions.Regex("constructor$1", pat, 1);
+    
+            // Match the regular expression pattern against a text string.
+            var m = r.match(text);
+            while (m.getSuccess()) {
+                for (var i = 1; i <= 2; i = (i + 1) | 0) {
+                    var g = m.getGroups().get(i);
+                    actualGroupValues.add(g.toString());
+    
+                    var cc = g.getCaptures();
+                    for (var j = 0; j < cc.getCount(); j = (j + 1) | 0) {
+                        var c = cc.get(j);
+                        actualCaptureValues.add(c.toString());
+                        actualCaptureIndexes.add(c.getIndex());
+                    }
+                }
+                m = m.nextMatch();
+            }
+    
+            this.validateCollection(String, expectedGroupValues, actualGroupValues.toArray(), "GroupValues");
+            this.validateCollection(String, expectedCaptureValues, actualCaptureValues.toArray(), "CaptureValues");
+            this.validateCollection(Bridge.Int32, expectedCaptureIndexes, actualCaptureIndexes.toArray(), "CaptureIndexes");
+        },
+        matchAtPositionTest: function () {
+            var expectedGroupValues = ["red", "car", "blue", "car"];
+            var expectedCaptureValues = ["red", "car", "blue", "car"];
+            var expectedCaptureIndexes = [8, 12, 16, 21];
+    
+            var actualGroupValues = new Bridge.List$1(String)();
+            var actualCaptureValues = new Bridge.List$1(String)();
+            var actualCaptureIndexes = new Bridge.List$1(Bridge.Int32)();
+    
+            var text = "One car red car blue car";
+            var pat = "(\\w+)\\s+(car)";
+    
+            // Instantiate the regular expression object.
+            var r = new Bridge.Text.RegularExpressions.Regex("constructor$1", pat, 1);
+    
+            // Match the regular expression pattern against a text string.
+            var m = r.match$1(text, 3);
+            while (m.getSuccess()) {
+                for (var i = 1; i <= 2; i = (i + 1) | 0) {
+                    var g = m.getGroups().get(i);
+                    actualGroupValues.add(g.toString());
+    
+                    var cc = g.getCaptures();
+                    for (var j = 0; j < cc.getCount(); j = (j + 1) | 0) {
+                        var c = cc.get(j);
+                        actualCaptureValues.add(c.toString());
+                        actualCaptureIndexes.add(c.getIndex());
+                    }
+                }
+                m = m.nextMatch();
+            }
+    
+            this.validateCollection(String, expectedGroupValues, actualGroupValues.toArray(), "GroupValues");
+            this.validateCollection(String, expectedCaptureValues, actualCaptureValues.toArray(), "CaptureValues");
+            this.validateCollection(Bridge.Int32, expectedCaptureIndexes, actualCaptureIndexes.toArray(), "CaptureIndexes");
+        },
+        matchAtPositionAndLengthTest: function () {
+            var expectedGroupValues = ["red", "car"];
+            var expectedCaptureValues = ["red", "car"];
+            var expectedCaptureIndexes = [8, 12];
+    
+            var actualGroupValues = new Bridge.List$1(String)();
+            var actualCaptureValues = new Bridge.List$1(String)();
+            var actualCaptureIndexes = new Bridge.List$1(Bridge.Int32)();
+    
+            var text = "One car red car blue car";
+            var pat = "(\\w+)\\s+(car)";
+    
+            // Instantiate the regular expression object.
+            var r = new Bridge.Text.RegularExpressions.Regex("constructor$1", pat, 1);
+    
+            // Match the regular expression pattern against a text string.
+            var m = r.match$2(text, 3, 15);
+            while (m.getSuccess()) {
+                for (var i = 1; i <= 2; i = (i + 1) | 0) {
+                    var g = m.getGroups().get(i);
+                    actualGroupValues.add(g.toString());
+    
+                    var cc = g.getCaptures();
+                    for (var j = 0; j < cc.getCount(); j = (j + 1) | 0) {
+                        var c = cc.get(j);
+                        actualCaptureValues.add(c.toString());
+                        actualCaptureIndexes.add(c.getIndex());
+                    }
+                }
+                m = m.nextMatch();
+                if (m.getIndex() > 15) {
+                    break;
+                }
+            }
+    
+            this.validateCollection(String, expectedGroupValues, actualGroupValues.toArray(), "GroupValues");
+            this.validateCollection(String, expectedCaptureValues, actualCaptureValues.toArray(), "CaptureValues");
+            this.validateCollection(Bridge.Int32, expectedCaptureIndexes, actualCaptureIndexes.toArray(), "CaptureIndexes");
+        },
+        matchStaticTest: function () {
+            var expectedMatchValues = ["ablaze", "dozen", "glaze", "jazz", "pizza", "quiz", "whiz", "zealous"];
+            var expectedMatchIndexes = [0, 21, 46, 65, 104, 110, 157, 174];
+    
+            var actualMatchValues = new Bridge.List$1(String)();
+            var actualMatchIndexes = new Bridge.List$1(Bridge.Int32)();
+    
+            var pattern = "\\b\\w*z+\\w*\\b";
+            var input = "ablaze beagle choral dozen elementary fanatic glaze hunger inept jazz kitchen lemon minus night optical pizza quiz restoration stamina train unrest vertical whiz xray yellow zealous";
+    
+            var m = Bridge.Text.RegularExpressions.Regex.match(input, pattern);
+            while (m.getSuccess()) {
+                actualMatchValues.add(m.getValue());
+                actualMatchIndexes.add(m.getIndex());
+                m = m.nextMatch();
+            }
+    
+            this.validateCollection(String, expectedMatchValues, actualMatchValues.toArray(), "MatchValues");
+            this.validateCollection(Bridge.Int32, expectedMatchIndexes, actualMatchIndexes.toArray(), "MatchIndexes");
+        },
+        matchStaticWithOptionsTest: function () {
+            var expectedMatchValues = ["An"];
+            var expectedMatchIndexes = [0];
+    
+            var actualMatchValues = new Bridge.List$1(String)();
+            var actualMatchIndexes = new Bridge.List$1(Bridge.Int32)();
+    
+            var pattern = "\\ba\\w*\\b";
+            var input = "An extraordinary day dawns with each new day.";
+    
+            var m = Bridge.Text.RegularExpressions.Regex.match$1(input, pattern, 1);
+            while (m.getSuccess()) {
+                actualMatchValues.add(m.getValue());
+                actualMatchIndexes.add(m.getIndex());
+                m = m.nextMatch();
+            }
+    
+            this.validateCollection(String, expectedMatchValues, actualMatchValues.toArray(), "MatchValues");
+            this.validateCollection(Bridge.Int32, expectedMatchIndexes, actualMatchIndexes.toArray(), "MatchIndexes");
+        },
+        matchStaticWithOptionsAndTimeoutTest: function () {
+            var expectedMatchValues = ["An"];
+            var expectedMatchIndexes = [0];
+    
+            var actualMatchValues = new Bridge.List$1(String)();
+            var actualMatchIndexes = new Bridge.List$1(Bridge.Int32)();
+    
+            var pattern = "\\ba\\w*\\b";
+            var input = "An extraordinary day dawns with each new day.";
+    
+            var m = Bridge.Text.RegularExpressions.Regex.match$2(input, pattern, 1, Bridge.TimeSpan.fromSeconds(1));
+            while (m.getSuccess()) {
+                actualMatchValues.add(m.getValue());
+                actualMatchIndexes.add(m.getIndex());
+                m = m.nextMatch();
+            }
+    
+            this.validateCollection(String, expectedMatchValues, actualMatchValues.toArray(), "MatchValues");
+            this.validateCollection(Bridge.Int32, expectedMatchIndexes, actualMatchIndexes.toArray(), "MatchIndexes");
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Text.RegularExpressions.RegexCaptureCollectionTests', {
+        inherits: [Bridge.ClientTest.Text.RegularExpressions.RegexTestBase],
+        statics: {
+            Pattern: "((?:\\w)+[\\s\\.])+",
+            Text: "This is a sentance. This is another sentance.",
+            getTestDataMatch: function (matchIndex) {
+                if (matchIndex === void 0) { matchIndex = 1; }
+                var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", Bridge.ClientTest.Text.RegularExpressions.RegexCaptureCollectionTests.Pattern);
+                var m = rgx.match(Bridge.ClientTest.Text.RegularExpressions.RegexCaptureCollectionTests.Text);
+                for (var i = 1; i < matchIndex; i = (i + 1) | 0) {
+                    m = rgx.match$1(Bridge.ClientTest.Text.RegularExpressions.RegexCaptureCollectionTests.Text, ((m.getIndex() + m.getLength()) | 0));
+                }
+    
+                return m;
+            }
+        },
+        caseDataTest: function () {
+            var m1 = Bridge.ClientTest.Text.RegularExpressions.RegexCaptureCollectionTests.getTestDataMatch();
+    
+            this.validateMatch(m1, 0, 19, "This is a sentance.", 2, true);
+    
+            this.validateGroup(m1, 0, 0, 19, true, "This is a sentance.", 1);
+            this.validateCapture(m1, 0, 0, 0, 19, "This is a sentance.");
+    
+            this.validateGroup(m1, 1, 10, 9, true, "sentance.", 4);
+            this.validateCapture(m1, 1, 0, 0, 5, "This ");
+            this.validateCapture(m1, 1, 1, 5, 3, "is ");
+            this.validateCapture(m1, 1, 2, 8, 2, "a ");
+            this.validateCapture(m1, 1, 3, 10, 9, "sentance.");
+    
+            var m2 = Bridge.ClientTest.Text.RegularExpressions.RegexCaptureCollectionTests.getTestDataMatch(2);
+    
+            this.validateMatch(m2, 20, 25, "This is another sentance.", 2, true);
+    
+            this.validateGroup(m2, 0, 20, 25, true, "This is another sentance.", 1);
+            this.validateCapture(m2, 0, 0, 20, 25, "This is another sentance.");
+    
+            this.validateGroup(m2, 1, 36, 9, true, "sentance.", 4);
+            this.validateCapture(m2, 1, 0, 20, 5, "This ");
+            this.validateCapture(m2, 1, 1, 25, 3, "is ");
+            this.validateCapture(m2, 1, 2, 28, 8, "another ");
+            this.validateCapture(m2, 1, 3, 36, 9, "sentance.");
+        },
+        captureCollectionFieldsTest: function () {
+            var m = Bridge.ClientTest.Text.RegularExpressions.RegexCaptureCollectionTests.getTestDataMatch();
+            var group = m.getGroups().get(1);
+            var captures = group.getCaptures();
+    
+            Bridge.Test.Assert.areEqual$1(4, captures.getCount(), "Captures.Count");
+            Bridge.Test.Assert.areEqual$1(true, captures.getIsReadOnly(), "Captures.IsReadOnly");
+            Bridge.Test.Assert.areEqual$1(false, captures.getIsSynchronized(), "Captures.IsSynchronized");
+            Bridge.Test.Assert.areEqual$1(group, captures.getSyncRoot(), "Captures.SyncRoot");
+        },
+        captureCollectionForeachTest: function () {
+            var $t;
+            var m = Bridge.ClientTest.Text.RegularExpressions.RegexCaptureCollectionTests.getTestDataMatch();
+            var group = m.getGroups().get(1);
+            var captures = group.getCaptures();
+    
+            var i = 0;
+            $t = Bridge.getEnumerator(captures);
+            while ($t.moveNext()) {
+                var captureObj = $t.getCurrent();
+                var capture = Bridge.as(captureObj, Bridge.Text.RegularExpressions.Capture);
+                this.capturesAreEqual(captures.get(i), capture, "Captures[" + i + "]");
+                i = (i + 1) | 0;
+            }
+        },
+        captureCollectionEnumeratorTest: function () {
+            var m = Bridge.ClientTest.Text.RegularExpressions.RegexCaptureCollectionTests.getTestDataMatch();
+            var group = m.getGroups().get(1);
+            var captures = group.getCaptures();
+    
+            var en = captures.getEnumerator();
+    
+            Bridge.Test.Assert.true$1(en.moveNext(), "First call - MoveNext()");
+    
+            var i = 0;
+            do  {
+                var capture = Bridge.as(en.getCurrent(), Bridge.Text.RegularExpressions.Capture);
+                this.capturesAreEqual(captures.get(i), capture, "Captures[" + i + "]");
+                i = (i + 1) | 0;
+    
+            } while (en.moveNext());
+    
+            Bridge.Test.Assert.areEqual$1(captures.getCount(), i, "Captures.Count");
+        },
+        captureCollectionCopyToTest: function () {
+            var m = Bridge.ClientTest.Text.RegularExpressions.RegexCaptureCollectionTests.getTestDataMatch();
+            var group = m.getGroups().get(1);
+            var captures = group.getCaptures();
+    
+            var dstArray = Bridge.Array.init(captures.getCount(), null);
+            captures.copyTo(dstArray, 0);
+    
+            for (var i = 0; i < captures.getCount(); i = (i + 1) | 0) {
+                this.capturesAreEqual(captures.get(i), dstArray[i], "Captures[" + i + "]");
+            }
+    
+            Bridge.Test.Assert.throws$2(function () {
+                captures.copyTo(null, 0);
+            }, $_.Bridge.ClientTest.Text.RegularExpressions.RegexCaptureCollectionTests.f1, "Exception: Array is not null.");
+            Bridge.Test.Assert.throws$2(function () {
+                captures.copyTo(dstArray, 1);
+            }, $_.Bridge.ClientTest.Text.RegularExpressions.RegexCaptureCollectionTests.f2, "Exception: Out of range.");
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.Text.RegularExpressions.RegexCaptureCollectionTests", $_)
+    
+    Bridge.apply($_.Bridge.ClientTest.Text.RegularExpressions.RegexCaptureCollectionTests, {
+        f1: function (err) {
+            return Bridge.getTypeName(err) === Bridge.getTypeName(Bridge.ArgumentNullException);
+        },
+        f2: function (err) {
+            return Bridge.getTypeName(err) === Bridge.getTypeName(Bridge.IndexOutOfRangeException);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Text.RegularExpressions.RegexEntityTests', {
+        inherits: [Bridge.ClientTest.Text.RegularExpressions.RegexTestBase],
+        statics: {
+            Pattern: "((?:\\w)+[\\s\\.])+",
+            Text: "This is a sentance. This is another sentance.",
+            getTestDataMatch: function (matchIndex) {
+                if (matchIndex === void 0) { matchIndex = 1; }
+                var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", Bridge.ClientTest.Text.RegularExpressions.RegexEntityTests.Pattern);
+                var m = rgx.match(Bridge.ClientTest.Text.RegularExpressions.RegexEntityTests.Text);
+                for (var i = 1; i < matchIndex; i = (i + 1) | 0) {
+                    m = rgx.match$1(Bridge.ClientTest.Text.RegularExpressions.RegexEntityTests.Text, ((m.getIndex() + m.getLength()) | 0));
+                }
+    
+                return m;
+            }
+        },
+        caseDataTest: function () {
+            var m1 = Bridge.ClientTest.Text.RegularExpressions.RegexEntityTests.getTestDataMatch();
+    
+            this.validateMatch(m1, 0, 19, "This is a sentance.", 2, true);
+    
+            this.validateGroup(m1, 0, 0, 19, true, "This is a sentance.", 1);
+            this.validateCapture(m1, 0, 0, 0, 19, "This is a sentance.");
+    
+            this.validateGroup(m1, 1, 10, 9, true, "sentance.", 4);
+            this.validateCapture(m1, 1, 0, 0, 5, "This ");
+            this.validateCapture(m1, 1, 1, 5, 3, "is ");
+            this.validateCapture(m1, 1, 2, 8, 2, "a ");
+            this.validateCapture(m1, 1, 3, 10, 9, "sentance.");
+    
+            var m2 = Bridge.ClientTest.Text.RegularExpressions.RegexEntityTests.getTestDataMatch(2);
+    
+            this.validateMatch(m2, 20, 25, "This is another sentance.", 2, true);
+    
+            this.validateGroup(m2, 0, 20, 25, true, "This is another sentance.", 1);
+            this.validateCapture(m2, 0, 0, 20, 25, "This is another sentance.");
+    
+            this.validateGroup(m2, 1, 36, 9, true, "sentance.", 4);
+            this.validateCapture(m2, 1, 0, 20, 5, "This ");
+            this.validateCapture(m2, 1, 1, 25, 3, "is ");
+            this.validateCapture(m2, 1, 2, 28, 8, "another ");
+            this.validateCapture(m2, 1, 3, 36, 9, "sentance.");
+        },
+        getGroupNamesTest: function () {
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "");
+            var names = rgx.getGroupNames();
+            this.validateCollection(String, ["0"], names, "EmptyRegex");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "()");
+            names = rgx.getGroupNames();
+            this.validateCollection(String, ["0", "1"], names, "EmptyGroup");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "(group1)");
+            names = rgx.getGroupNames();
+            this.validateCollection(String, ["0", "1"], names, "Group1");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "(group1)(group2)");
+            names = rgx.getGroupNames();
+            this.validateCollection(String, ["0", "1", "2"], names, "Group2");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "(group1())(group2)");
+            names = rgx.getGroupNames();
+            this.validateCollection(String, ["0", "1", "2", "3"], names, "Group3");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "(?<name1>)");
+            names = rgx.getGroupNames();
+            this.validateCollection(String, ["0", "name1"], names, "NameGroup1");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "(?<name1>)(?'name2')");
+            names = rgx.getGroupNames();
+            this.validateCollection(String, ["0", "name1", "name2"], names, "NameGroup2");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "(?<name1>(?'inner1'))(?'name2')");
+            names = rgx.getGroupNames();
+            this.validateCollection(String, ["0", "name1", "inner1", "name2"], names, "NameGroup3");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "(?<test>)()");
+            names = rgx.getGroupNames();
+            this.validateCollection(String, ["0", "1", "test"], names, "NameGroupAndNoname1");
+        },
+        getGroupNumbersTest: function () {
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "");
+            var numbers = rgx.getGroupNumbers();
+            this.validateCollection(Bridge.Int32, [0], numbers, "EmptyRegex");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "()");
+            numbers = rgx.getGroupNumbers();
+            this.validateCollection(Bridge.Int32, [0, 1], numbers, "EmptyGroup");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "(group1)");
+            numbers = rgx.getGroupNumbers();
+            this.validateCollection(Bridge.Int32, [0, 1], numbers, "Group1");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "(group1)(group2)");
+            numbers = rgx.getGroupNumbers();
+            this.validateCollection(Bridge.Int32, [0, 1, 2], numbers, "Group2");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "(group1())(group2)");
+            numbers = rgx.getGroupNumbers();
+            this.validateCollection(Bridge.Int32, [0, 1, 2, 3], numbers, "Group3");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "(?<name1>)");
+            numbers = rgx.getGroupNumbers();
+            this.validateCollection(Bridge.Int32, [0, 1], numbers, "NameGroup1");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "(?<name1>)(?'name2')");
+            numbers = rgx.getGroupNumbers();
+            this.validateCollection(Bridge.Int32, [0, 1, 2], numbers, "NameGroup2");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "(?<name1>(?'inner1'))(?'name2')");
+            numbers = rgx.getGroupNumbers();
+            this.validateCollection(Bridge.Int32, [0, 1, 2, 3], numbers, "NameGroup3");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "(?<test>)()");
+            numbers = rgx.getGroupNumbers();
+            this.validateCollection(Bridge.Int32, [0, 1, 2], numbers, "NameGroupAndNoname1");
+        },
+        groupNameFromNumberTest: function () {
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "");
+            Bridge.Test.Assert.areEqual$1("0", rgx.groupNameFromNumber(0), "EmptyRegex.GroupNameFromNumber(0)");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "()");
+            Bridge.Test.Assert.areEqual$1("0", rgx.groupNameFromNumber(0), "EmptyGroup.GroupNameFromNumber(0)");
+            Bridge.Test.Assert.areEqual$1("1", rgx.groupNameFromNumber(1), "EmptyGroup.GroupNameFromNumber(1)");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "(group1)");
+            Bridge.Test.Assert.areEqual$1("0", rgx.groupNameFromNumber(0), "Group1.GroupNameFromNumber(0)");
+            Bridge.Test.Assert.areEqual$1("1", rgx.groupNameFromNumber(1), "Group1.GroupNameFromNumber(1)");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "(group1)(group2)");
+            Bridge.Test.Assert.areEqual$1("0", rgx.groupNameFromNumber(0), "Group2.GroupNameFromNumber(0)");
+            Bridge.Test.Assert.areEqual$1("1", rgx.groupNameFromNumber(1), "Group2.GroupNameFromNumber(1)");
+            Bridge.Test.Assert.areEqual$1("2", rgx.groupNameFromNumber(2), "Group2.GroupNameFromNumber(2)");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "(group1())(group2)");
+            Bridge.Test.Assert.areEqual$1("0", rgx.groupNameFromNumber(0), "Group3.GroupNameFromNumber(0)");
+            Bridge.Test.Assert.areEqual$1("1", rgx.groupNameFromNumber(1), "Group3.GroupNameFromNumber(1)");
+            Bridge.Test.Assert.areEqual$1("2", rgx.groupNameFromNumber(2), "Group3.GroupNameFromNumber(2)");
+            Bridge.Test.Assert.areEqual$1("3", rgx.groupNameFromNumber(3), "Group3.GroupNameFromNumber(3)");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "(?<name1>)");
+            Bridge.Test.Assert.areEqual$1("0", rgx.groupNameFromNumber(0), "NameGroup1.GroupNameFromNumber(0)");
+            Bridge.Test.Assert.areEqual$1("name1", rgx.groupNameFromNumber(1), "NameGroup1.GroupNameFromNumber(1)");
+    
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "(?<name1>)(?'name2')");
+            Bridge.Test.Assert.areEqual$1("0", rgx.groupNameFromNumber(0), "NameGroup2.GroupNameFromNumber(0)");
+            Bridge.Test.Assert.areEqual$1("name1", rgx.groupNameFromNumber(1), "NameGroup2.GroupNameFromNumber(1)");
+            Bridge.Test.Assert.areEqual$1("name2", rgx.groupNameFromNumber(2), "NameGroup2.GroupNameFromNumber(2)");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "(?<name1>(?'inner1'))(?'name2')");
+            Bridge.Test.Assert.areEqual$1("0", rgx.groupNameFromNumber(0), "NameGroup3.GroupNameFromNumber(0)");
+            Bridge.Test.Assert.areEqual$1("name1", rgx.groupNameFromNumber(1), "NameGroup3.GroupNameFromNumber(1)");
+            Bridge.Test.Assert.areEqual$1("inner1", rgx.groupNameFromNumber(2), "NameGroup3.GroupNameFromNumber(2)");
+            Bridge.Test.Assert.areEqual$1("name2", rgx.groupNameFromNumber(3), "NameGroup3.GroupNameFromNumber(3)");
+    
+            Bridge.Test.Assert.areEqual$1("", rgx.groupNameFromNumber(999), "NameGroup3.GroupNameFromNumber(999)");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "(?<test>)()");
+            Bridge.Test.Assert.areEqual$1("0", rgx.groupNameFromNumber(0), "NameGroupAndNoname1.GroupNameFromNumber(0)");
+            Bridge.Test.Assert.areEqual$1("1", rgx.groupNameFromNumber(1), "NameGroupAndNoname1.GroupNameFromNumber(1)");
+            Bridge.Test.Assert.areEqual$1("test", rgx.groupNameFromNumber(2), "NameGroupAndNoname1.GroupNameFromNumber(2)");
+        },
+        groupNumberFromNameTest: function () {
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "");
+            Bridge.Test.Assert.areEqual$1(0, rgx.groupNumberFromName("0"), "EmptyRegex.GroupNumberFromName(\"0\")");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "()");
+            Bridge.Test.Assert.areEqual$1(0, rgx.groupNumberFromName("0"), "EmptyGroup.GroupNumberFromName(\"0\")");
+            Bridge.Test.Assert.areEqual$1(1, rgx.groupNumberFromName("1"), "EmptyGroup.GroupNumberFromName(\"1\")");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "(group1)");
+            Bridge.Test.Assert.areEqual$1(0, rgx.groupNumberFromName("0"), "Group1.GroupNumberFromName(\"0\")");
+            Bridge.Test.Assert.areEqual$1(1, rgx.groupNumberFromName("1"), "Group1.GroupNumberFromName(\"1\")");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "(group1)(group2)");
+            Bridge.Test.Assert.areEqual$1("0", rgx.groupNameFromNumber(0), "Group2.GroupNameFromNumber(0)");
+            Bridge.Test.Assert.areEqual$1("1", rgx.groupNameFromNumber(1), "Group2.GroupNameFromNumber(1)");
+            Bridge.Test.Assert.areEqual$1("2", rgx.groupNameFromNumber(2), "Group2.GroupNameFromNumber(2)");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "(group1())(group2)");
+            Bridge.Test.Assert.areEqual$1(0, rgx.groupNumberFromName("0"), "Group3.GroupNumberFromName(\"0\")");
+            Bridge.Test.Assert.areEqual$1(1, rgx.groupNumberFromName("1"), "Group3.GroupNumberFromName(\"1\")");
+            Bridge.Test.Assert.areEqual$1(2, rgx.groupNumberFromName("2"), "Group3.GroupNumberFromName(\"2\")");
+            Bridge.Test.Assert.areEqual$1(3, rgx.groupNumberFromName("3"), "Group3.GroupNumberFromName(\"3\")");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "(?<name1>)");
+            Bridge.Test.Assert.areEqual$1(0, rgx.groupNumberFromName("0"), "NameGroup1.GroupNumberFromName(\"0\")");
+            Bridge.Test.Assert.areEqual$1(1, rgx.groupNumberFromName("name1"), "NameGroup1.GroupNumberFromName(\"name1\")");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "(?<name1>)(?'name2')");
+            Bridge.Test.Assert.areEqual$1(0, rgx.groupNumberFromName("0"), "NameGroup2.GroupNumberFromName(\"0\")");
+            Bridge.Test.Assert.areEqual$1(1, rgx.groupNumberFromName("name1"), "NameGroup2.GroupNumberFromName(\"name1\")");
+            Bridge.Test.Assert.areEqual$1(2, rgx.groupNumberFromName("name2"), "NameGroup2.GroupNumberFromName(\"name2\")");
+    
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "(?<name1>(?'inner1'))(?'name2')");
+            Bridge.Test.Assert.areEqual$1(0, rgx.groupNumberFromName("0"), "NameGroup3.GroupNumberFromName(\"0\")");
+            Bridge.Test.Assert.areEqual$1(1, rgx.groupNumberFromName("name1"), "NameGroup3.GroupNumberFromName(\"name1\")");
+            Bridge.Test.Assert.areEqual$1(2, rgx.groupNumberFromName("inner1"), "NameGroup3.GroupNumberFromName(\"inner1\")");
+            Bridge.Test.Assert.areEqual$1(3, rgx.groupNumberFromName("name2"), "NameGroup3.GroupNumberFromName(\"name2\")");
+    
+            Bridge.Test.Assert.areEqual$1(-1, rgx.groupNumberFromName("Fake"), "NameGroup3.GroupNumberFromName(\"Fake\")");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "(?<test>)()");
+            Bridge.Test.Assert.areEqual$1(0, rgx.groupNumberFromName("0"), "NameGroupAndNoname1.GroupNumberFromName(\"0\")");
+            Bridge.Test.Assert.areEqual$1(1, rgx.groupNumberFromName("1"), "NameGroupAndNoname1.GroupNumberFromName(\"1\")");
+            Bridge.Test.Assert.areEqual$1(2, rgx.groupNumberFromName("test"), "NameGroupAndNoname1.GroupNumberFromName(\"test\")");
+        },
+        supportedOptionsTest: function () {
+            var $t;
+            var supportedOptions = Bridge.merge(new Bridge.Dictionary$2(Bridge.Text.RegularExpressions.RegexOptions,Boolean)(), [
+                [0, true],
+                [1, true],
+                [2, true],
+                [4, false],
+                [8, false],
+                [16, false],
+                [32, false],
+                [64, false],
+                [256, false],
+                [512, false]
+            ] );
+    
+            $t = Bridge.getEnumerator(supportedOptions);
+            while ($t.moveNext()) {
+                (function () {
+                    var supportedOption = $t.getCurrent();
+                    if (supportedOption.value) {
+                        var rgx = new Bridge.Text.RegularExpressions.Regex("constructor$1", Bridge.ClientTest.Text.RegularExpressions.RegexEntityTests.Pattern, supportedOption.key);
+                    }
+                    else  {
+                        Bridge.Test.Assert.throws$6(Bridge.NotSupportedException, function () {
+                            new Bridge.Text.RegularExpressions.Regex("constructor$1", Bridge.ClientTest.Text.RegularExpressions.RegexEntityTests.Pattern, supportedOption.key);
+                        });
+                    }
+                }).call(this);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Text.RegularExpressions.RegexGroupCollectionTests', {
+        inherits: [Bridge.ClientTest.Text.RegularExpressions.RegexTestBase],
+        statics: {
+            Pattern: "((?:\\w)+[\\s\\.])+",
+            Text: "This is a sentance. This is another sentance.",
+            getTestDataMatch: function (matchIndex) {
+                if (matchIndex === void 0) { matchIndex = 1; }
+                var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", Bridge.ClientTest.Text.RegularExpressions.RegexGroupCollectionTests.Pattern);
+                var m = rgx.match(Bridge.ClientTest.Text.RegularExpressions.RegexGroupCollectionTests.Text);
+                for (var i = 1; i < matchIndex; i = (i + 1) | 0) {
+                    m = rgx.match$1(Bridge.ClientTest.Text.RegularExpressions.RegexGroupCollectionTests.Text, ((m.getIndex() + m.getLength()) | 0));
+                }
+    
+                return m;
+            }
+        },
+        caseDataTest: function () {
+            var m1 = Bridge.ClientTest.Text.RegularExpressions.RegexGroupCollectionTests.getTestDataMatch();
+    
+            this.validateMatch(m1, 0, 19, "This is a sentance.", 2, true);
+    
+            this.validateGroup(m1, 0, 0, 19, true, "This is a sentance.", 1);
+            this.validateCapture(m1, 0, 0, 0, 19, "This is a sentance.");
+    
+            this.validateGroup(m1, 1, 10, 9, true, "sentance.", 4);
+            this.validateCapture(m1, 1, 0, 0, 5, "This ");
+            this.validateCapture(m1, 1, 1, 5, 3, "is ");
+            this.validateCapture(m1, 1, 2, 8, 2, "a ");
+            this.validateCapture(m1, 1, 3, 10, 9, "sentance.");
+    
+            var m2 = Bridge.ClientTest.Text.RegularExpressions.RegexGroupCollectionTests.getTestDataMatch(2);
+    
+            this.validateMatch(m2, 20, 25, "This is another sentance.", 2, true);
+    
+            this.validateGroup(m2, 0, 20, 25, true, "This is another sentance.", 1);
+            this.validateCapture(m2, 0, 0, 20, 25, "This is another sentance.");
+    
+            this.validateGroup(m2, 1, 36, 9, true, "sentance.", 4);
+            this.validateCapture(m2, 1, 0, 20, 5, "This ");
+            this.validateCapture(m2, 1, 1, 25, 3, "is ");
+            this.validateCapture(m2, 1, 2, 28, 8, "another ");
+            this.validateCapture(m2, 1, 3, 36, 9, "sentance.");
+        },
+        groupCollectionFieldsTest: function () {
+            var m = Bridge.ClientTest.Text.RegularExpressions.RegexGroupCollectionTests.getTestDataMatch();
+            var groups = m.getGroups();
+    
+            Bridge.Test.Assert.areEqual$1(2, groups.getCount(), "Groups.Count");
+            Bridge.Test.Assert.areEqual$1(true, groups.getIsReadOnly(), "Groups.IsReadOnly");
+            Bridge.Test.Assert.areEqual$1(false, groups.getIsSynchronized(), "Groups.IsSynchronized");
+            Bridge.Test.Assert.areEqual$1(m, groups.getSyncRoot(), "Groups.SyncRoot");
+        },
+        groupCollectionForeachTest: function () {
+            var $t;
+            var m = Bridge.ClientTest.Text.RegularExpressions.RegexGroupCollectionTests.getTestDataMatch();
+            var groups = m.getGroups();
+    
+            var i = 0;
+            $t = Bridge.getEnumerator(groups);
+            while ($t.moveNext()) {
+                var groupObj = $t.getCurrent();
+                var group = Bridge.as(groupObj, Bridge.Text.RegularExpressions.Group);
+                this.groupsAreEqual(groups.get(i), group, "Groups[" + i + "]");
+                i = (i + 1) | 0;
+            }
+        },
+        groupCollectionEnumeratorTest: function () {
+            var m = Bridge.ClientTest.Text.RegularExpressions.RegexGroupCollectionTests.getTestDataMatch();
+            var groups = m.getGroups();
+    
+            var en = groups.getEnumerator();
+    
+            Bridge.Test.Assert.true$1(en.moveNext(), "First call - MoveNext()");
+    
+            var i = 0;
+            do  {
+                var group = Bridge.as(en.getCurrent(), Bridge.Text.RegularExpressions.Group);
+                this.groupsAreEqual(groups.get(i), group, "Groups[" + i + "]");
+                i = (i + 1) | 0;
+    
+            } while (en.moveNext());
+    
+            Bridge.Test.Assert.areEqual$1(groups.getCount(), i, "Groups.Count");
+        },
+        groupCollectionCopyToTest: function () {
+            var m = Bridge.ClientTest.Text.RegularExpressions.RegexGroupCollectionTests.getTestDataMatch();
+            var groups = m.getGroups();
+    
+            var dstArray = Bridge.Array.init(groups.getCount(), null);
+            groups.copyTo(dstArray, 0);
+    
+            for (var i = 0; i < groups.getCount(); i = (i + 1) | 0) {
+                this.groupsAreEqual(groups.get(i), dstArray[i], "Groups[" + i + "]");
+            }
+    
+            Bridge.Test.Assert.throws$2(function () {
+                groups.copyTo(null, 0);
+            }, $_.Bridge.ClientTest.Text.RegularExpressions.RegexGroupCollectionTests.f1, "Exception: Array is not null.");
+            Bridge.Test.Assert.throws$2(function () {
+                groups.copyTo(dstArray, 1);
+            }, $_.Bridge.ClientTest.Text.RegularExpressions.RegexGroupCollectionTests.f2, "Exception: Out of range.");
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.Text.RegularExpressions.RegexGroupCollectionTests", $_)
+    
+    Bridge.apply($_.Bridge.ClientTest.Text.RegularExpressions.RegexGroupCollectionTests, {
+        f1: function (err) {
+            return Bridge.getTypeName(err) === Bridge.getTypeName(Bridge.ArgumentNullException);
+        },
+        f2: function (err) {
+            return Bridge.getTypeName(err) === Bridge.getTypeName(Bridge.IndexOutOfRangeException);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests', {
+        inherits: [Bridge.ClientTest.Text.RegularExpressions.RegexTestBase],
+        statics: {
+            Pattern: "((?:\\w)+[\\s\\.])+",
+            Text: "This is a sentance. This is another sentance.",
+            getTestDataMatch: function (matchIndex) {
+                if (matchIndex === void 0) { matchIndex = 1; }
+                var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests.Pattern);
+                var m = rgx.match(Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests.Text);
+                for (var i = 1; i < matchIndex; i = (i + 1) | 0) {
+                    m = rgx.match$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests.Text, ((m.getIndex() + m.getLength()) | 0));
+                }
+    
+                return m;
+            },
+            getTestDataMatches: function () {
+                var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests.Pattern);
+                var m = rgx.matches(Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests.Text);
+                return m;
+            }
+        },
+        caseDataTest: function () {
+            var m1 = Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests.getTestDataMatch();
+    
+            this.validateMatch(m1, 0, 19, "This is a sentance.", 2, true);
+    
+            this.validateGroup(m1, 0, 0, 19, true, "This is a sentance.", 1);
+            this.validateCapture(m1, 0, 0, 0, 19, "This is a sentance.");
+    
+            this.validateGroup(m1, 1, 10, 9, true, "sentance.", 4);
+            this.validateCapture(m1, 1, 0, 0, 5, "This ");
+            this.validateCapture(m1, 1, 1, 5, 3, "is ");
+            this.validateCapture(m1, 1, 2, 8, 2, "a ");
+            this.validateCapture(m1, 1, 3, 10, 9, "sentance.");
+    
+            var m2 = Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests.getTestDataMatch(2);
+    
+            this.validateMatch(m2, 20, 25, "This is another sentance.", 2, true);
+    
+            this.validateGroup(m2, 0, 20, 25, true, "This is another sentance.", 1);
+            this.validateCapture(m2, 0, 0, 20, 25, "This is another sentance.");
+    
+            this.validateGroup(m2, 1, 36, 9, true, "sentance.", 4);
+            this.validateCapture(m2, 1, 0, 20, 5, "This ");
+            this.validateCapture(m2, 1, 1, 25, 3, "is ");
+            this.validateCapture(m2, 1, 2, 28, 8, "another ");
+            this.validateCapture(m2, 1, 3, 36, 9, "sentance.");
+        },
+        matchCollectionFieldsTest: function () {
+            var matches = Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests.getTestDataMatches();
+    
+            Bridge.Test.Assert.areEqual$1(2, matches.getCount(), "Matches.Count");
+            Bridge.Test.Assert.areEqual$1(true, matches.getIsReadOnly(), "Matches.IsReadOnly");
+            Bridge.Test.Assert.areEqual$1(false, matches.getIsSynchronized(), "Matches.IsSynchronized");
+            Bridge.Test.Assert.areEqual$1(matches, matches.getSyncRoot(), "Matches.SyncRoot");
+        },
+        matchCollectionItemsTest: function () {
+            var match1 = Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests.getTestDataMatch();
+            var match2 = Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests.getTestDataMatch(2);
+            var expected = [match1, match2];
+    
+            var matches = Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests.getTestDataMatches();
+    
+            Bridge.Test.Assert.areEqual(expected.length, matches.getCount());
+            for (var i = 0; i < expected.length; i = (i + 1) | 0) {
+                this.matchesAreEqual(expected[i], matches.get(i), "Matches[" + i + "]");
+            }
+        },
+        matchCollectionForeachTest: function () {
+            var $t;
+            var match1 = Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests.getTestDataMatch();
+            var match2 = Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests.getTestDataMatch(2);
+            var expected = [match1, match2];
+    
+            var matches = Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests.getTestDataMatches();
+            var i = 0;
+            $t = Bridge.getEnumerator(matches);
+            while ($t.moveNext()) {
+                var matchObj = $t.getCurrent();
+                var match = Bridge.as(matchObj, Bridge.Text.RegularExpressions.Match);
+                this.matchesAreEqual(expected[i], match, "Matches[" + i + "]");
+                i = (i + 1) | 0;
+            }
+        },
+        matchCollectionEnumeratorTest: function () {
+            var match1 = Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests.getTestDataMatch();
+            var match2 = Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests.getTestDataMatch(2);
+            var expected = [match1, match2];
+    
+            var matches = Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests.getTestDataMatches();
+    
+            var en = matches.getEnumerator();
+    
+            Bridge.Test.Assert.true$1(en.moveNext(), "First call - MoveNext()");
+    
+            var i = 0;
+            do  {
+                var match = Bridge.as(en.getCurrent(), Bridge.Text.RegularExpressions.Match);
+                this.matchesAreEqual(expected[i], match, "Matches[" + i + "]");
+                i = (i + 1) | 0;
+    
+            } while (en.moveNext());
+    
+            Bridge.Test.Assert.areEqual$1(expected.length, i, "Matches.Count");
+        },
+        matchCollectionCopyToTest: function () {
+            var matches = Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests.getTestDataMatches();
+            var dstArray = Bridge.Array.init(matches.getCount(), null);
+            matches.copyTo(dstArray, 0);
+    
+            for (var i = 0; i < matches.getCount(); i = (i + 1) | 0) {
+                this.matchesAreEqual(matches.get(i), dstArray[i], "Matches[" + i + "]");
+            }
+    
+            Bridge.Test.Assert.throws$2(function () {
+                matches.copyTo(null, 0);
+            }, $_.Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests.f1, "Exception: Array is not null.");
+            Bridge.Test.Assert.throws$2(function () {
+                matches.copyTo(dstArray, 1);
+            }, $_.Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests.f2, "Exception: Out of range.");
+        },
+        matchCollectionWithEmptyPatternTest: function () {
+            var pattern = "";
+            var tstText = "characters";
+    
+            var rx = new Bridge.Text.RegularExpressions.Regex("constructor", pattern);
+            var matches = rx.matches(tstText);
+    
+            Bridge.Test.Assert.areEqual(((tstText.length + 1) | 0), matches.getCount());
+            for (var i = 0; i < matches.getCount(); i = (i + 1) | 0) {
+                Bridge.Test.Assert.areEqual$1(i, matches.get(i).getIndex(), "Matches[" + i + "].Index");
+                Bridge.Test.Assert.areEqual$1(0, matches.get(i).getLength(), "Matches[" + i + "].Length");
+            }
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests", $_)
+    
+    Bridge.apply($_.Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests, {
+        f1: function (err) {
+            return Bridge.getTypeName(err) === Bridge.getTypeName(Bridge.ArgumentNullException);
+        },
+        f2: function (err) {
+            return Bridge.getTypeName(err) === Bridge.getTypeName(Bridge.IndexOutOfRangeException);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Text.RegularExpressions.RegexMatchEntityTests', {
+        inherits: [Bridge.ClientTest.Text.RegularExpressions.RegexTestBase],
+        statics: {
+            Pattern: "((?:\\w)+[\\s\\.])+",
+            Text: "This is a sentance. This is another sentance.",
+            getTestDataMatch: function (matchIndex) {
+                if (matchIndex === void 0) { matchIndex = 1; }
+                var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", Bridge.ClientTest.Text.RegularExpressions.RegexMatchEntityTests.Pattern);
+                var m = rgx.match(Bridge.ClientTest.Text.RegularExpressions.RegexMatchEntityTests.Text);
+                for (var i = 1; i < matchIndex; i = (i + 1) | 0) {
+                    m = rgx.match$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchEntityTests.Text, ((m.getIndex() + m.getLength()) | 0));
+                }
+    
+                return m;
+            }
+        },
+        caseDataTest: function () {
+            var m1 = Bridge.ClientTest.Text.RegularExpressions.RegexMatchEntityTests.getTestDataMatch();
+    
+            this.validateMatch(m1, 0, 19, "This is a sentance.", 2, true);
+    
+            this.validateGroup(m1, 0, 0, 19, true, "This is a sentance.", 1);
+            this.validateCapture(m1, 0, 0, 0, 19, "This is a sentance.");
+    
+            this.validateGroup(m1, 1, 10, 9, true, "sentance.", 4);
+            this.validateCapture(m1, 1, 0, 0, 5, "This ");
+            this.validateCapture(m1, 1, 1, 5, 3, "is ");
+            this.validateCapture(m1, 1, 2, 8, 2, "a ");
+            this.validateCapture(m1, 1, 3, 10, 9, "sentance.");
+    
+            var m2 = Bridge.ClientTest.Text.RegularExpressions.RegexMatchEntityTests.getTestDataMatch(2);
+    
+            this.validateMatch(m2, 20, 25, "This is another sentance.", 2, true);
+    
+            this.validateGroup(m2, 0, 20, 25, true, "This is another sentance.", 1);
+            this.validateCapture(m2, 0, 0, 20, 25, "This is another sentance.");
+    
+            this.validateGroup(m2, 1, 36, 9, true, "sentance.", 4);
+            this.validateCapture(m2, 1, 0, 20, 5, "This ");
+            this.validateCapture(m2, 1, 1, 25, 3, "is ");
+            this.validateCapture(m2, 1, 2, 28, 8, "another ");
+            this.validateCapture(m2, 1, 3, 36, 9, "sentance.");
+        },
+        matchEmptyPatternTest: function () {
+            var pattern = "";
+            var tstText = "characters";
+    
+            var rx = new Bridge.Text.RegularExpressions.Regex("constructor", pattern);
+            var m = rx.match(tstText);
+    
+            this.validateMatch(m, 0, 0, "", 1, true);
+        },
+        matchEmptyFieldsTest: function () {
+            var m = Bridge.Text.RegularExpressions.Match.getEmpty();
+            this.validateMatchNotFound(m);
+        },
+        matchNextMatchTest: function () {
+            var match1 = Bridge.ClientTest.Text.RegularExpressions.RegexMatchEntityTests.getTestDataMatch();
+            var match2 = Bridge.ClientTest.Text.RegularExpressions.RegexMatchEntityTests.getTestDataMatch(2);
+    
+            var actual = match1.nextMatch();
+            this.matchesAreEqual(match2, actual, "Matches[1]");
+    
+            actual = actual.nextMatch();
+            this.matchesAreEqual(Bridge.Text.RegularExpressions.Match.getEmpty(), actual, "Matches[1] is Empty");
+    
+            actual = Bridge.Text.RegularExpressions.Match.getEmpty().nextMatch();
+            this.matchesAreEqual(Bridge.Text.RegularExpressions.Match.getEmpty(), actual, "Empty.NextMatch()");
+        },
+        matchNextMatchWithEmptyPatternTest: function () {
+            var pattern = "";
+            var tstText = "characters";
+    
+            var rx = new Bridge.Text.RegularExpressions.Regex("constructor", pattern);
+            var m = rx.match(tstText);
+            this.validateMatch(m, 0, 0, "", 1, true);
+    
+            for (var i = 1; i < ((tstText.length + 1) | 0); i = (i + 1) | 0) {
+                m = m.nextMatch();
+                this.validateMatch(m, i, 0, "", 1, true);
+            }
+    
+            m = m.nextMatch();
+            this.validateMatchNotFound(m);
+        },
+        matchResultTest: function () {
+            var $t;
+            var expected = ["(decisively)", "(whatever time it was)"];
+            var actual = new Bridge.List$1(String)();
+    
+            var pattern = "--(.+?)--";
+            var replacement = "($1)";
+            var input = "He said--decisively--that the time--whatever time it was--had come.";
+            $t = Bridge.getEnumerator(Bridge.Text.RegularExpressions.Regex.matches(input, pattern));
+            while ($t.moveNext()) {
+                var match = $t.getCurrent();
+                var result = match.result(replacement);
+                actual.add(result);
+            }
+    
+            this.validateCollection(String, expected, actual.toArray(), "Result");
+        },
+        matchSearchGroupByNameTest: function () {
+            var groupNames = ["groupName1", "groupName2", "groupName3"];
+    
+            var pattern = "(?<" + groupNames[0] + ">\\d+)(?'" + groupNames[1] + "'ZZ)(?<" + groupNames[2] + ">\\s+)";
+            var tstText = "Number123ZZ   ";
+    
+            var rx = new Bridge.Text.RegularExpressions.Regex("constructor", pattern);
+            var m = rx.match(tstText);
+    
+            for (var i = 1; i < 4; i = (i + 1) | 0) {
+                var groupName = groupNames[((i - 1) | 0)];
+                var g = m.getGroups().getByName(groupName);
+                this.validateGroup(m, i, g.getIndex(), g.getLength(), g.getSuccess(), g.getValue(), g.getCaptures().getCount());
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests', {
+        inherits: [Bridge.ClientTest.Text.RegularExpressions.RegexTestBase],
+        statics: {
+            constructor: function () {
+                Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longText = "";
+                for (var i = 0; i < 10000; i = (i + 1) | 0) {
+                    Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longText += "TestStringForTimeout";
+                }
+    
+                Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortText = "";
+                for (var i1 = 0; i1 < 100; i1 = (i1 + 1) | 0) {
+                    Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortText += "TestStringWithNoTimeout";
+                }
+            },
+            pattern: "([0-9a-zA-Z]{1})+",
+            shortText: null,
+            longText: null,
+            config: {
+                init: function () {
+                    this.shortTimeoutMs = Bridge.TimeSpan.fromMilliseconds(1) || new Bridge.TimeSpan();
+                    this.longTimeoutMs = Bridge.TimeSpan.fromMilliseconds(3000) || new Bridge.TimeSpan();
+                }
+            }
+        },
+        regexTimeoutValidationWorks: function () {
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", "fakePattern");
+            Bridge.Test.Assert.areEqual$1(Bridge.TimeSpan.fromMilliseconds(-1), rgx.getMatchTimeout(), "Default Timeout #1");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor$1", "fakePattern", 0);
+            Bridge.Test.Assert.areEqual$1(Bridge.TimeSpan.fromMilliseconds(-1), rgx.getMatchTimeout(), "Default Timeout #2");
+    
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor$2", "fakePattern", 0, Bridge.TimeSpan.fromSeconds(123));
+            Bridge.Test.Assert.areEqual$1(Bridge.TimeSpan.fromSeconds(123), rgx.getMatchTimeout(), "Specified Timeout");
+    
+            Bridge.Test.Assert.throws$6(Bridge.ArgumentOutOfRangeException, $_.Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.f1);
+        },
+        regexIsMatchWorksWithShortTimeout: function () {
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor$2", Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, 0, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortTimeoutMs);
+            Bridge.Test.Assert.throws$6(Bridge.RegexMatchTimeoutException, function () {
+                rgx.isMatch(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longText);
+            });
+        },
+        regexIsMatchWorksWithLongTimeout: function () {
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor$2", Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, 0, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longTimeoutMs);
+            rgx.isMatch(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortText);
+            Bridge.Test.Assert.$true(Bridge.hasValue(rgx));
+        },
+        regexMatchWorksWithShortTimeout: function () {
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor$2", Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, 0, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortTimeoutMs);
+            Bridge.Test.Assert.throws$6(Bridge.RegexMatchTimeoutException, function () {
+                rgx.match(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longText);
+            });
+        },
+        regexMatchWorksWithLongTimeout: function () {
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor$2", Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, 0, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longTimeoutMs);
+            rgx.match(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortText);
+            Bridge.Test.Assert.$true(Bridge.hasValue(rgx));
+        },
+        regexNextMatchWorksWithShortTimeout: function () {
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor$2", "%%|" + Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, 0, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortTimeoutMs);
+    
+            Bridge.Test.Assert.throws$6(Bridge.RegexMatchTimeoutException, function () {
+                var result = rgx.match("%%" + Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longText);
+                result.nextMatch();
+            });
+        },
+        regexNextMatchWorksWithLongTimeout: function () {
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor$2", "%%| " + Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, 0, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longTimeoutMs);
+    
+            var result = rgx.match("%%" + Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortText);
+            result.nextMatch();
+    
+            Bridge.Test.Assert.$true(Bridge.hasValue(rgx));
+        },
+        regexReplaceWorksWithShortTimeout: function () {
+            Bridge.Test.Assert.throws$6(Bridge.RegexMatchTimeoutException, $_.Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.f2);
+    
+        },
+        regexReplaceWorksWithLongTimeout: function () {
+            Bridge.Text.RegularExpressions.Regex.replace$2(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortText, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, "fakeReplacement", 0, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longTimeoutMs);
+            Bridge.Test.Assert.$true(true);
+        },
+        regexReplaceEvaluatorWorksWithShortTimeout: function () {
+            Bridge.Test.Assert.throws$6(Bridge.RegexMatchTimeoutException, $_.Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.f4);
+        },
+        regexReplaceEvaluatorWorksWithLongTimeout: function () {
+            Bridge.Text.RegularExpressions.Regex.replace$5(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortText, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, $_.Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.f3, 0, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longTimeoutMs);
+            Bridge.Test.Assert.$true(true);
+        },
+        regexSplitWorksWithShortTimeout: function () {
+            Bridge.Test.Assert.throws$6(Bridge.RegexMatchTimeoutException, $_.Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.f5);
+        },
+        regexSplitWorksWithLongTimeout: function () {
+            Bridge.Text.RegularExpressions.Regex.split$2(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortText, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, 0, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longTimeoutMs);
+            Bridge.Test.Assert.$true(true);
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests", $_)
+    
+    Bridge.apply($_.Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests, {
+        f1: function () {
+            new Bridge.Text.RegularExpressions.Regex("constructor$2", "fakePattern", 0, Bridge.TimeSpan.fromMilliseconds(-5));
+        },
+        f2: function () {
+            Bridge.Text.RegularExpressions.Regex.replace$2(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longText, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, "fakeReplacement", 0, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortTimeoutMs);
+        },
+        f3: function (m) {
+            return "fakeReplacement";
+        },
+        f4: function () {
+            Bridge.Text.RegularExpressions.Regex.replace$5(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longText, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, $_.Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.f3, 0, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortTimeoutMs);
+        },
+        f5: function () {
+            Bridge.Text.RegularExpressions.Regex.split$2(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longText, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, 0, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortTimeoutMs);
+        }
     });
     
     Bridge.define('Bridge.ClientTest.BasicCSharp.TestAbstractClass.C', {
