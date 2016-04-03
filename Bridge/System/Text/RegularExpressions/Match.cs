@@ -5,7 +5,8 @@ namespace System.Text.RegularExpressions
     /// <summary>
     /// Represents the results from a single regular expression match.
     /// </summary>
-    [Name("Bridge.Text.RegularExpressions.Match")]
+    [Namespace("Bridge.Text.RegularExpressions")]
+    [External]
     public class Match : Group
     {
         internal Match(Regex regex, int capcount, String text, int begpos, int len, int startpos)

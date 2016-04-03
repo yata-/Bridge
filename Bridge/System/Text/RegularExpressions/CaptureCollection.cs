@@ -4,19 +4,15 @@ using Bridge;
 namespace System.Text.RegularExpressions
 {
     /// <summary>
-    /// Represents the set of successful matches found by iteratively applying a regular expression pattern to the input string.
+    /// Represents the set of captures made by a single capturing group.
     /// </summary>
+    [Namespace("Bridge.Text.RegularExpressions")]
     [External]
-    public class MatchCollection : ICollection
+    public class CaptureCollection : ICollection
     {
-        internal MatchCollection(Regex regex, string input, int beginning, int length, int startat)
+        internal CaptureCollection()
         {
         }
-
-        /// <summary>
-        /// Gets the number of matches.
-        /// </summary>
-        public extern int Count { get; }
 
         /// <summary>
         /// Gets an object that can be used to synchronize access to the collection.
@@ -24,7 +20,7 @@ namespace System.Text.RegularExpressions
         public extern object SyncRoot { get; }
 
         /// <summary>
-        /// Gets a value indicating whether access to the collection is synchronized (thread-safe).
+        /// Gets a value that indicates whether access to the collection is synchronized (thread-safe).
         /// </summary>
         public extern bool IsSynchronized { get; }
 
@@ -34,16 +30,22 @@ namespace System.Text.RegularExpressions
         public extern bool IsReadOnly { get; }
 
         /// <summary>
+        /// Gets the number of substrings captured by the group.
+        /// </summary>
+        public extern int Count { get; }
+
+        /// <summary>
         /// Gets an individual member of the collection.
         /// </summary>
-        public extern virtual Match this[int i]
+
+        public extern Capture this[int i]
         {
             [Template("get({0})")]
             get;
         }
 
         /// <summary>
-        /// Copies all the elements of the collection to the given array starting at the given index.
+        /// Copies all the elements of the collection to the given array beginning at the given index.
         /// </summary>
         public extern void CopyTo(Array array, int arrayIndex);
 

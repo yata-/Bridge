@@ -2,7 +2,7 @@
 
 namespace System.Text.RegularExpressions
 {
-    [Name("Bridge.Text.RegularExpressions.Regex")]
+    [Namespace("Bridge.Text.RegularExpressions")]
     public sealed class Regex
     {
         public Regex(string pattern)
