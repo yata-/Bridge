@@ -3952,6 +3952,21 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1083', {
+        statics: {
+            testExternalEnum: function () {
+                // simulate declaration of external enum 
+                Bridge.ClientTest.BridgeIssues.Bridge1083.Foo = {};
+                Bridge.ClientTest.BridgeIssues.Bridge1083.Foo.OK = 'OK';
+                Bridge.ClientTest.BridgeIssues.Bridge1083.Foo.FAIL = 'FAIL';
+    
+                var status = Bridge.ClientTest.BridgeIssues.Bridge1083.Foo.OK;
+    
+                Bridge.Test.Assert.areEqual("OK", Bridge.Enum.toString(Bridge.ClientTest.BridgeIssues.Bridge1083.Foo, status));
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1085', {
         statics: {
             testInlineArrayExpand: function () {
@@ -4073,6 +4088,15 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1105.Foo1.Item', {
         statics: {
             value: "Value1"
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1109', {
+        statics: {
+            testTemplateOnProperty: function () {
+                var gamedata1 = 1;
+                Bridge.Test.Assert.areEqual(1, gamedata1);
+            }
         }
     });
     
