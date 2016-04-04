@@ -3835,6 +3835,50 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1066', {
+        statics: {
+            testInlinePopertyWithValue: function () {
+                var dict = new Bridge.ClientTest.BridgeIssues.Bridge1066.MyDictionary();
+                Bridge.Test.Assert.notNull(dict.getAccessor);
+                Bridge.Test.Assert.notNull(dict.setAccessor);
+                Bridge.Test.Assert.areEqual(1, dict.getAccessor(0));
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1066.MyDictionary', {
+        inherits: [Bridge.Dictionary$2(Bridge.Int32,Bridge.Int32)],
+        getAccessor: function (key) {
+            return 1;
+        },
+        setAccessor: function (key, value) {
+    
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1067', {
+        statics: {
+            testInlinePopertyWithValue: function () {
+                var dict1 = new Bridge.ClientTest.BridgeIssues.Bridge1067.MyDictionary1();
+                var dict2 = new Bridge.ClientTest.BridgeIssues.Bridge1067.MyDictionary2();
+                Bridge.Test.Assert.$null(dict1.getAccessor);
+                Bridge.Test.Assert.$null(dict1.setAccessor);
+                Bridge.Test.Assert.$null(dict2.getAccessor);
+                Bridge.Test.Assert.$null(dict2.setAccessor);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1067.MyDictionary1', {
+        inherits: [Bridge.Dictionary$2(Bridge.Int32,Bridge.Int32)],
+    
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1067.MyDictionary2', {
+        inherits: [Bridge.Dictionary$2(Bridge.Int32,Bridge.Int32)],
+    
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1076', {
         statics: {
             testInlineConstantAsMemberReference: function () {
