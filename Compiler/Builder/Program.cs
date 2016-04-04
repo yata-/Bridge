@@ -172,16 +172,13 @@ namespace Bridge.Builder
         {
             if (bridgeOptions.ProjectLocation == null && bridgeOptions.Lib == null)
             {
-                logger.Info("hey");
                 if (arg.ToLower().EndsWith(".csproj"))
                 {
-                    logger.Info("prj");
                     bridgeOptions.ProjectLocation = arg;
                     return true;
                 }
                 else if (arg.ToLower().EndsWith(".dll"))
                 {
-                    logger.Info("lib");
                     bridgeOptions.Lib = arg;
                     return true;
                 }
