@@ -4399,6 +4399,32 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1160', {
+        statics: {
+            testBitwiseOrAnd: function () {
+                var x = new Bridge.ClientTest.BridgeIssues.Bridge1160A();
+    
+                var processor = x.getProcessor();
+                Bridge.Test.Assert.areEqual("Hello", processor("Hello"));
+                Bridge.Test.Assert.areEqual("Hello", x.getProcessor()("Hello"));
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1160A', {
+        getProcessor: function () {
+            return $_.Bridge.ClientTest.BridgeIssues.Bridge1160A.f1;
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1160A", $_)
+    
+    Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge1160A, {
+        f1: function (message) {
+            return message;
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
@@ -26573,7 +26599,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var aThen = this.getThens().getItem(i);
     
                 if (Bridge.hasValue(aThen.getProgress())) {
-                    aThen.Progress(args);
+                    aThen.getProgress()(args);
                 }
     
                 i = (i + 1) | 0;
@@ -26608,7 +26634,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 }
     
                 if (Bridge.hasValue(aThen.getProgress())) {
-                    aThen.Progress([100]);
+                    aThen.getProgress()([100]);
                 }
     
                 i = (i + 1) | 0;
