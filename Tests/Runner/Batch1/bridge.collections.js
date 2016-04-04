@@ -163,7 +163,7 @@
                 var last = (Bridge.Collections.BitArray.getArrayLength(this.m_length, Bridge.Collections.BitArray.BitsPerInt32) - 1) | 0;
                 var bits = this.m_length % 32;
                 if (bits > 0) {
-                    this.m_array[last] = this.m_array[last] & (((1 << bits) - 1) | 0);
+                    this.m_array[last] = this.m_array[last] & ((((1 << bits) - 1) | 0));
                 }
     
                 // clear remaining int values
