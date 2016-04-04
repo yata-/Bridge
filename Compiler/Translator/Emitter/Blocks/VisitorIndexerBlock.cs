@@ -1,5 +1,7 @@
 using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
+using ICSharpCode.NRefactory.Semantics;
+using ICSharpCode.NRefactory.TypeSystem;
 
 namespace Bridge.Translator
 {
@@ -20,13 +22,27 @@ namespace Bridge.Translator
 
         protected override void DoEmit()
         {
-            this.EmitIndexerMethod(this.IndexerDeclaration, this.IndexerDeclaration.Getter, false);
-            this.EmitIndexerMethod(this.IndexerDeclaration, this.IndexerDeclaration.Setter, true);
+            var rr = this.Emitter.Resolver.ResolveNode(this.IndexerDeclaration, this.Emitter) as MemberResolveResult;
+            IProperty prop = null;
+            if (rr != null)
+            {
+                prop = rr.Member as IProperty;
+
+                if (prop != null && this.Emitter.Validator.IsIgnoreType(prop))
+                {
+                    return;
+                }
+            }
+
+            this.EmitIndexerMethod(this.IndexerDeclaration, prop, this.IndexerDeclaration.Getter, prop == null ? null : prop.Getter, false);
+            this.EmitIndexerMethod(this.IndexerDeclaration, prop, this.IndexerDeclaration.Setter, prop == null ? null : prop.Setter, true);
         }
 
-        protected virtual void EmitIndexerMethod(IndexerDeclaration indexerDeclaration, Accessor accessor, bool setter)
+        protected virtual void EmitIndexerMethod(IndexerDeclaration indexerDeclaration, IProperty prop, Accessor accessor, IMethod propAccessor, bool setter)
         {
-            if (!accessor.IsNull && this.Emitter.GetInline(accessor) == null)
+            var isIgnore = propAccessor != null && this.Emitter.Validator.IsIgnoreType(propAccessor);
+
+            if (!accessor.IsNull && this.Emitter.GetInline(accessor) == null && !isIgnore)
             {
                 this.EnsureComma();
 
@@ -41,10 +57,22 @@ namespace Bridge.Translator
                 }
 
                 XmlToJsDoc.EmitComment(this, this.IndexerDeclaration);
-                var overloads = OverloadsCollection.Create(this.Emitter, indexerDeclaration, setter);
 
-                string name = overloads.GetOverloadName();
-                this.Write((setter ? "set" : "get") + name);
+                string accName = null;
+
+                
+                if (prop != null)
+                {
+                    accName = this.Emitter.GetEntityNameFromAttr(prop, setter);
+
+                    if (string.IsNullOrEmpty(accName))
+                    {
+                        var overloads = OverloadsCollection.Create(this.Emitter, indexerDeclaration, setter);
+                        accName = (setter ? "set" : "get") + overloads.GetOverloadName();
+                    }
+                }
+
+                this.Write(accName);
                 this.WriteColon();
                 this.WriteFunction();
                 this.EmitMethodParameters(indexerDeclaration.Parameters, null, indexerDeclaration, setter);

@@ -1039,6 +1039,8 @@
                 QUnit.test("#1059 - TestEnumNameModes", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1059.testEnumNameModes);
                 QUnit.test("#1061 - TestIsDigitFromLinq", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1061.testIsDigitFromLinq);
                 QUnit.test("#1065 - TestDecimalLongWithDictionary", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1065.testDecimalLongWithDictionary);
+                QUnit.test("#1066 - TestInlinePopertyWithValue", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1066.testInlinePopertyWithValue);
+                QUnit.test("#1067 - TestInlinePopertyWithValue", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1067.testInlinePopertyWithValue);
                 QUnit.test("#1071 - TestParamsForCtor", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1071.testParamsForCtor);
                 QUnit.test("#1076 - TestInlineConstantAsMemberReference", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1076.testInlineConstantAsMemberReference);
                 QUnit.test("#1076 - TestInlineBridgeNumericConstantsAsMemberReference", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1076.testInlineBridgeNumericConstantsAsMemberReference);
@@ -2734,6 +2736,26 @@
             testDecimalLongWithDictionary: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1065).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1065);
                 Bridge.ClientTest.BridgeIssues.Bridge1065.testDecimalLongWithDictionary();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1066', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1066)],
+        statics: {
+            testInlinePopertyWithValue: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1066).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1066);
+                Bridge.ClientTest.BridgeIssues.Bridge1066.testInlinePopertyWithValue();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1067', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1067)],
+        statics: {
+            testInlinePopertyWithValue: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1067).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1067);
+                Bridge.ClientTest.BridgeIssues.Bridge1067.testInlinePopertyWithValue();
             }
         }
     });
