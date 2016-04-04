@@ -132,6 +132,8 @@ namespace Bridge.Translator
                 {
                     this.Write(inlineCode);
                 }
+
+                return;
             }
 
             string appendAdditionalCode = null;
