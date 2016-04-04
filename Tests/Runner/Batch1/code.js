@@ -3922,6 +3922,21 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1083', {
+        statics: {
+            testExternalEnum: function () {
+                // simulate declaration of external enum 
+                Bridge.ClientTest.BridgeIssues.Bridge1083.Foo = {};
+                Bridge.ClientTest.BridgeIssues.Bridge1083.Foo.OK = 'OK';
+                Bridge.ClientTest.BridgeIssues.Bridge1083.Foo.FAIL = 'FAIL';
+    
+                var status = Bridge.ClientTest.BridgeIssues.Bridge1083.Foo.OK;
+    
+                Bridge.Test.Assert.areEqual("OK", Bridge.Enum.toString(Bridge.ClientTest.BridgeIssues.Bridge1083.Foo, status));
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1085', {
         statics: {
             testInlineArrayExpand: function () {
