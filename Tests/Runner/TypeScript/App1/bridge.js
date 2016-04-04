@@ -898,26 +898,6 @@
         }
     };
 
-    if (!Object.create) {
-        Object.create = function (o, properties) {
-            if (typeof o !== "object" && typeof o !== "function") {
-                throw new TypeError("Object prototype may only be an Object: " + o);
-            } else if (o === null) {
-                throw new Error("This browser's implementation of Object.create is a shim and doesn't support 'null' as the first argument");
-            }
-
-            if (typeof properties != "undefined") {
-                throw new Error("This browser's implementation of Object.create is a shim and doesn't support a second argument");
-            }
-
-            function F() { }
-
-            F.prototype = o;
-
-            return new F();
-        };
-    }
-
     globals.Bridge = core;
     globals.Bridge.caller = [];
 
@@ -2077,13 +2057,7 @@
 
             for (name in prop) {
                 keys.push(name);
-            }
-
-            if (Bridge.Browser.isIE8) {
-                if (prop.hasOwnProperty("constructor") && keys.indexOf("constructor") < 0) {
-                    keys.push("constructor");
-                }
-            }            
+            }          
 
             for (i = 0; i < keys.length; i++) {
                 name = keys[i];
@@ -2217,33 +2191,29 @@
                 for (key in exists) {
                     var o = exists[key];
                     if (typeof o === "function" && o.$$name) {
-                        if (Object.defineProperty && !Bridge.Browser.isIE8) {
-                            (function(cls, key, o) {
-                                Object.defineProperty(cls, key, {
-                                    get: function () {
-                                        if (Bridge.Class.staticInitAllow) {
-                                            if (o.$staticInit) {
-                                                o.$staticInit();
-                                            }
-                                            Bridge.Class.defineProperty(cls, key, o);
-                                        }
-                                        return o;
-                                    },
-                                    set: function (newValue) {
-                                        o = newValue;
-                                    },
-                                    enumerable: true,
-                                    configurable: true
-                                });
-                            })(cls, key, o);
-                        } else {
-                            cls[key] = o;
-                        }
+                        (function(cls, key, o) {
+							Object.defineProperty(cls, key, {
+								get: function () {
+									if (Bridge.Class.staticInitAllow) {
+										if (o.$staticInit) {
+											o.$staticInit();
+										}
+										Bridge.Class.defineProperty(cls, key, o);
+									}
+									return o;
+								},
+								set: function (newValue) {
+									o = newValue;
+								},
+								enumerable: true,
+								configurable: true
+							});
+						})(cls, key, o);
                     }
                 }
             }
 
-            if (Object.defineProperty && !Bridge.Browser.isIE8 && noDefineProp !== true) {
+            if (noDefineProp !== true) {
                 (function (scope, name, cls) {
                     Object.defineProperty(scope, name, {
                         get: function () {
@@ -7586,69 +7556,6 @@ var array = {
 };
 
 Bridge.Array = array;
-
-if (!Array.prototype.map) {
-    Array.prototype.map = function (callback, instance) {
-        var length = this.length;
-        var mapped = new Array(length);
-        for (var i = 0; i < length; i++) {
-            if (i in this) {
-                mapped[i] = callback.call(instance, this[i], i, this);
-            }
-        }
-        return mapped;
-    };
-}
-
-if (!Array.prototype.some) {
-    Array.prototype.some = function (callback, instance) {
-        var length = this.length;
-        for (var i = 0; i < length; i++) {
-            if (i in this && callback.call(instance, this[i], i, this)) {
-                return true;
-            }
-        }
-        return false;
-    };
-}
-
-if (!Array.prototype.indexOf) {
-    Array.prototype.indexOf = function (searchElement, fromIndex) {
-        var k;
-
-        if (this == null) {
-            throw new TypeError('"this" is null or not defined');
-        }
-
-        var O = Object(this);
-
-        var len = O.length >>> 0;
-
-        if (len === 0) {
-            return -1;
-        }
-
-        var n = +fromIndex || 0;
-
-        if (Math.abs(n) === Infinity) {
-            n = 0;
-        }
-
-        if (n >= len) {
-            return -1;
-        }
-
-        k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
-
-        while (k < len) {
-            if (k in O && O[k] === searchElement) {
-                return k;
-            }
-            k++;
-        }
-        return -1;
-    };
-}
 // @source /Collections/Interfaces.js
 
 Bridge.define('Bridge.IEnumerable');

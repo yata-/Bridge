@@ -16267,7 +16267,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.false$1(watch.isRunning, "IsRunning");
         },
         constantsWorks: function () {
-            Bridge.Test.Assert.true$1(Bridge.Stopwatch.frequency.gt(Bridge.Long(1000)), "Frequency");
+            Bridge.Test.Assert.true$1(Bridge.Stopwatch.frequency.gte(Bridge.Long(1000)), "Frequency");
             Bridge.Test.Assert.areEqual$1("boolean", typeof Bridge.Stopwatch.isHighResolution, "IsHighResolution");
         },
         startNewWorks: function () {
