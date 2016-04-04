@@ -1538,7 +1538,7 @@
                 throw new Bridge.ArgumentNullException("enumType");
             }
 
-            if (!enumType.prototype.$enum) {
+            if (enumType.prototype && !enumType.prototype.$enum) {
                 throw new Bridge.ArgumentException("", "enumType");
             }
         },
@@ -1552,7 +1552,7 @@
 
             Bridge.Enum.checkEnumType(enumType);
 
-            if (!enumType.prototype.$flags) {
+            if (!enumType.prototype || !enumType.prototype.$flags) {
                 for (var f in values) {
                     if (enumMethods.nameEquals(f, s, ignoreCase)) {
                         return values[f];
@@ -1597,7 +1597,7 @@
             Bridge.Enum.checkEnumType(enumType);
 
             var values = enumType;
-            if ((!enumType.prototype.$flags && forceFlags !== true) || (value === 0)) {
+            if (((!enumType.prototype || !enumType.prototype.$flags) && forceFlags !== true) || (value === 0)) {
                 for (var i in values) {
                     if (values[i] === value) {
                         return enumMethods.toName(i);

@@ -64,6 +64,8 @@ namespace Bridge.Translator
             var logger = this.Log;
             logger.Info("Translating...");
 
+            this.LogProductInfo();
+
             var config = this.ReadConfig();
 
             var l = logger as Bridge.Translator.Logging.Logger;
@@ -845,6 +847,52 @@ namespace Bridge.Translator
             catch (Exception ex)
             {
                 this.Log.Error("Exception occurred: " + ex.Message);
+            }
+        }
+
+        private void LogProductInfo()
+        {
+            System.Diagnostics.FileVersionInfo compilerInfo = null;
+            try
+            {
+                var compilerAssembly = System.Reflection.Assembly.GetExecutingAssembly();
+                compilerInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(compilerAssembly.Location);
+            }
+            catch (Exception ex)
+            {
+                this.Log.Error("Could not load executing assembly to get assembly info");
+                this.Log.Error(ex.ToString());
+            }
+
+            System.Diagnostics.FileVersionInfo bridgeInfo = null;
+            try
+            {
+                bridgeInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(this.BridgeLocation);
+            }
+            catch (Exception ex)
+            {
+                this.Log.Error("Could not load Bridge.dll to get assembly info");
+                this.Log.Error(ex.ToString());
+            }
+
+            this.Log.Info("Product info:");
+            if (compilerInfo != null)
+            {
+                this.Log.Info(string.Format("\t{0} version {1}", compilerInfo.ProductName, compilerInfo.ProductVersion));
+            }
+            else
+            {
+                this.Log.Info("Not found");
+            }
+
+            if (bridgeInfo != null)
+            {
+                this.Log.Info(string.Format("\t[{0} Framework, version {1}]", bridgeInfo.ProductName, bridgeInfo.ProductVersion));
+            }
+
+            if (compilerInfo != null)
+            {
+                this.Log.Info("\t" + compilerInfo.LegalCopyright);
             }
         }
     }
