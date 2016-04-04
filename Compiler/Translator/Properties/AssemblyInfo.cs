@@ -1,9 +1,9 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Bridge.Translator")]
-[assembly: AssemblyProduct("Bridge.Translator")]
-[assembly: AssemblyDescription("Bridge.NET Translator")]
+[assembly: AssemblyTitle("Bridge.Compiler")]
+[assembly: AssemblyProduct("Bridge.Compiler")]
+[assembly: AssemblyDescription("Bridge.NET Compiler")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
