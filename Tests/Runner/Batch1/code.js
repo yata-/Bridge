@@ -3835,6 +3835,36 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1071', {
+        statics: {
+            testParamsForCtor: function () {
+                var b = new Bridge.ClientTest.BridgeIssues.Bridge1071.B();
+                var test = new Bridge.ClientTest.BridgeIssues.Bridge1071.A$1(Bridge.ClientTest.BridgeIssues.Bridge1071.C)(b);
+                var test2 = new Bridge.ClientTest.BridgeIssues.Bridge1071.A$2(Bridge.ClientTest.BridgeIssues.Bridge1071.C,Bridge.ClientTest.BridgeIssues.Bridge1071.D)(b);
+    
+                Bridge.Test.Assert.areEqual(1, test._argumentTypes.length);
+                Bridge.Test.Assert.areEqual(2, test2._argumentTypes.length);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1071.A', {
+        _b: null,
+        _argumentTypes: null,
+        constructor: function (b, argumentTypes) {
+            if (argumentTypes === void 0) { argumentTypes = []; }
+    
+            this._b = b;
+            this._argumentTypes = argumentTypes;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1071.B');
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1071.C');
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1071.D');
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1076', {
         statics: {
             testInlineConstantAsMemberReference: function () {
@@ -28233,6 +28263,23 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.a;
         }
     });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1071.A$1', function (T) { return {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge1071.A],
+        constructor: function (b) {
+            Bridge.ClientTest.BridgeIssues.Bridge1071.A.prototype.$constructor.call(this, b, [T]);
+    
+        }
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1071.A$2', function (T, T2) { return {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge1071.A],
+        constructor: function (b) {
+            Bridge.ClientTest.BridgeIssues.Bridge1071.A.prototype.$constructor.call(this, b, [T, T2]);
+    
+    
+        }
+    }; });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1128.Foo1.Comparer', {
         inherits: [Bridge.IComparer$1(Bridge.ClientTest.BridgeIssues.Bridge1128.Foo1.Item)],
