@@ -34,9 +34,9 @@ namespace Bridge.Translator.Tests
                 outputPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(bridgeProjectPath), outputPath));
             }
 
-            var bridgeDllPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(outputPath), "Bridge.dll"));
+            outputPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(outputPath), "Bridge.dll"));
 
-            if (!File.Exists(bridgeDllPath))
+            if (!File.Exists(outputPath))
                 return null;
 
             return outputPath;
