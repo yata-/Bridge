@@ -4076,6 +4076,15 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1109', {
+        statics: {
+            testTemplateOnProperty: function () {
+                var gamedata1 = 1;
+                Bridge.Test.Assert.areEqual(1, gamedata1);
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1110', {
         statics: {
             testOverflowForConditionInParenthesized: function () {
