@@ -105,6 +105,13 @@ namespace Bridge.Translator
                 {
                     resolveResult = expressionResolveResult;
                 }
+                else if (expressionResolveResult is MemberResolveResult)
+                {
+                    if (((MemberResolveResult) expressionResolveResult).Member is IProperty)
+                    {
+                        resolveResult = expressionResolveResult;
+                    }
+                }
             }
             else
             {
