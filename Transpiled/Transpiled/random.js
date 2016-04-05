@@ -95,17 +95,17 @@
     
             var range = Bridge.Long(Bridge.Long(maxValue)).sub(Bridge.Long(minValue));
             if (range.lte(Bridge.Long(2147483647))) {
-                return ((((((this.sample() * Bridge.Long.toNumber(range))) | 0) + minValue) | 0));
+                return (((Bridge.Int.clip32(this.sample() * Bridge.Long.toNumber(range)) + minValue) | 0));
             }
             else  {
-                return Bridge.Long.clip32(Bridge.Int.clip64((this.getSampleForLargeRange() * Bridge.Long.toNumber(range))).add(Bridge.Long(minValue)));
+                return Bridge.Long.clip32(Bridge.Int.clip64(this.getSampleForLargeRange() * Bridge.Long.toNumber(range)).add(Bridge.Long(minValue)));
             }
         },
         next$1: function (maxValue) {
             if (maxValue < 0) {
                 throw new Bridge.ArgumentOutOfRangeException("maxValue", "'maxValue' must be greater than zero.");
             }
-            return (((this.sample() * maxValue)) | 0);
+            return Bridge.Int.clip32(this.sample() * maxValue);
         },
         getSampleForLargeRange: function () {
             // The distribution of double value returned by Sample 
