@@ -888,7 +888,7 @@
 
         sleep: function (ms, timeout) {
             if (Bridge.hasValue(timeout)) {
-                var ms = timeout.getTotalMilliseconds();
+                ms = timeout.getTotalMilliseconds();
             }
             
             if (isNaN(ms) || ms < -1 || ms > 2147483647) {
@@ -903,26 +903,6 @@
             }
         }
     };
-
-    if (!Object.create) {
-        Object.create = function (o, properties) {
-            if (typeof o !== "object" && typeof o !== "function") {
-                throw new TypeError("Object prototype may only be an Object: " + o);
-            } else if (o === null) {
-                throw new Error("This browser's implementation of Object.create is a shim and doesn't support 'null' as the first argument");
-            }
-
-            if (typeof properties != "undefined") {
-                throw new Error("This browser's implementation of Object.create is a shim and doesn't support a second argument");
-            }
-
-            function F() { }
-
-            F.prototype = o;
-
-            return new F();
-        };
-    }
 
     globals.Bridge = core;
     globals.Bridge.caller = [];

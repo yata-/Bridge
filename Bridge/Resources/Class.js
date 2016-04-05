@@ -239,13 +239,7 @@
 
             for (name in prop) {
                 keys.push(name);
-            }
-
-            if (Bridge.Browser.isIE8) {
-                if (prop.hasOwnProperty("constructor") && keys.indexOf("constructor") < 0) {
-                    keys.push("constructor");
-                }
-            }            
+            }          
 
             for (i = 0; i < keys.length; i++) {
                 name = keys[i];
@@ -379,33 +373,29 @@
                 for (key in exists) {
                     var o = exists[key];
                     if (typeof o === "function" && o.$$name) {
-                        if (Object.defineProperty && !Bridge.Browser.isIE8) {
-                            (function(cls, key, o) {
-                                Object.defineProperty(cls, key, {
-                                    get: function () {
-                                        if (Bridge.Class.staticInitAllow) {
-                                            if (o.$staticInit) {
-                                                o.$staticInit();
-                                            }
-                                            Bridge.Class.defineProperty(cls, key, o);
-                                        }
-                                        return o;
-                                    },
-                                    set: function (newValue) {
-                                        o = newValue;
-                                    },
-                                    enumerable: true,
-                                    configurable: true
-                                });
-                            })(cls, key, o);
-                        } else {
-                            cls[key] = o;
-                        }
+                        (function(cls, key, o) {
+							Object.defineProperty(cls, key, {
+								get: function () {
+									if (Bridge.Class.staticInitAllow) {
+										if (o.$staticInit) {
+											o.$staticInit();
+										}
+										Bridge.Class.defineProperty(cls, key, o);
+									}
+									return o;
+								},
+								set: function (newValue) {
+									o = newValue;
+								},
+								enumerable: true,
+								configurable: true
+							});
+						})(cls, key, o);
                     }
                 }
             }
 
-            if (Object.defineProperty && !Bridge.Browser.isIE8 && noDefineProp !== true) {
+            if (noDefineProp !== true) {
                 (function (scope, name, cls) {
                     Object.defineProperty(scope, name, {
                         get: function () {

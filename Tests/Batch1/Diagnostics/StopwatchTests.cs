@@ -20,7 +20,7 @@ namespace Bridge.ClientTest.Diagnostics
         [Test]
         public void ConstantsWorks()
         {
-            Assert.True(Stopwatch.Frequency > 1000, "Frequency");
+            Assert.True(Stopwatch.Frequency >= 1000, "Frequency");
             Assert.AreEqual("boolean", Script.TypeOf(Stopwatch.IsHighResolution), "IsHighResolution");
         }
 
