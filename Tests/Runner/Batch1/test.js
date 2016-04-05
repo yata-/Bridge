@@ -1017,6 +1017,9 @@
                 QUnit.test("#1000 - TestStaticViaChild", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1000.testStaticViaChild);
                 QUnit.test("#1001 - TestDefaultValues", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1001.testDefaultValues);
                 QUnit.test("#1003 - TestGenericLambdasToLifting", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1003.testGenericLambdasToLifting);
+                QUnit.test("#1012 - TestSleepInt", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1012.testSleepInt);
+                QUnit.test("#1012 - TestSleepTimeSpan", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1012.testSleepTimeSpan);
+                QUnit.test("#1012 - TestSleepThrows", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1012.testSleepThrows);
                 QUnit.test("#1020 - TestFlagEnumWithReference", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1020.testFlagEnumWithReference);
                 QUnit.test("#1020 - TestEnumWithReference", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1020.testEnumWithReference);
                 QUnit.test("#1024 - TestConstructorOptionalParameter", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1024.testConstructorOptionalParameter);
@@ -2567,6 +2570,24 @@
             testGenericLambdasToLifting: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1003).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1003, 3);
                 Bridge.ClientTest.BridgeIssues.Bridge1003.testGenericLambdasToLifting();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1012', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1012)],
+        statics: {
+            testSleepInt: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1012).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1012, 2);
+                Bridge.ClientTest.BridgeIssues.Bridge1012.testSleepInt();
+            },
+            testSleepTimeSpan: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1012).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1012, 2);
+                Bridge.ClientTest.BridgeIssues.Bridge1012.testSleepTimeSpan();
+            },
+            testSleepThrows: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1012).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1012, 3);
+                Bridge.ClientTest.BridgeIssues.Bridge1012.testSleepThrows();
             }
         }
     });
