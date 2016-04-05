@@ -901,19 +901,4 @@ namespace System.Threading
 
         public static extern void Exit(object obj);
     }
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    [External]
-    public class Thread
-    {
-        public extern int ManagedThreadId
-        {
-            get;
-        }
-
-        public static extern Thread CurrentThread
-        {
-            get;
-        }
-    }
 }

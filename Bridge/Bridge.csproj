@@ -147,6 +147,7 @@
     <Compile Include="System\Text\RegularExpressions\Regex.cs" />
     <Compile Include="System\Text\RegularExpressions\MatchEvaluator.cs" />
     <Compile Include="System\Text\RegularExpressions\RegexOptions.cs" />
+    <Compile Include="System\Threading\Thread.cs" />
     <Compile Include="System\Threading\CancellationToken.cs" />
     <Compile Include="System\Threading\CancellationTokenRegistration.cs" />
     <Compile Include="System\Threading\CancellationTokenSource.cs" />
