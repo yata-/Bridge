@@ -1,4 +1,6 @@
-﻿(function (globals) {
+﻿// @source timer.js
+
+(function (globals) {
     "use strict";
 
     Bridge.define('Bridge.Threading.Timer', {
