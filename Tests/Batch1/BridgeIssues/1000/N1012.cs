@@ -12,6 +12,23 @@ namespace Bridge.ClientTest.BridgeIssues
     public class Bridge1012
     {
         [Test(ExpectedCount = 2)]
+        public static void TestSleepIntMinus1()
+        {
+            var delay = -1;
+            var maxDelay = 100;
+
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            Thread.Sleep(delay);
+
+            stopwatch.Stop();
+
+            Assert.True(stopwatch.ElapsedMilliseconds >= delay, ">= " + delay);
+            Assert.True(stopwatch.ElapsedMilliseconds < maxDelay, "< " + maxDelay);
+        }
+
+        [Test(ExpectedCount = 2)]
         public static void TestSleepInt()
         {
             var delay = 100;
