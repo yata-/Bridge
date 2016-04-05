@@ -899,7 +899,7 @@
 
         sleep: function (ms, timeout) {
             if (Bridge.hasValue(timeout)) {
-                var ms = timeout.getTotalMilliseconds();
+                ms = timeout.getTotalMilliseconds();
             }
             
             if (isNaN(ms) || ms < -1 || ms > 2147483647) {
