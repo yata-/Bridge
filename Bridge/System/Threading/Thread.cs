@@ -8,7 +8,6 @@ namespace System.Threading
     [External]
     [Namespace("Bridge.Threading")]
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [External]
     public sealed class Thread
     {
         //public extern int ManagedThreadId
