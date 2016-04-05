@@ -2,6 +2,7 @@ using Bridge.Test;
 
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Bridge.ClientTest.Threading
 {
@@ -60,14 +61,17 @@ namespace Bridge.ClientTest.Threading
         }
 
         [Test]
-        public static void TestStaticCallbackWithDispose()
+        public async static void TestStaticCallbackWithDispose()
         {
+            var done = Assert.Async();
+
             StaticCounter = 0;
             StaticData = null;
 
             var timer = new Timer(StaticHandleTimer, "SomeState", 1, 1);
 
-            Thread.Sleep(200);
+            await Task.Delay(200);
+
             var count = StaticCounter;
             timer.Dispose();
 
@@ -75,43 +79,56 @@ namespace Bridge.ClientTest.Threading
             Assert.True(count > 0, "Ticks: " + count);
             Assert.AreEqual("SomeState", StaticData, "State works");
 
-            Thread.Sleep(200);
+            await Task.Delay(200);
+
             Assert.AreEqual(count, StaticCounter, "Timer disposed - no more ticks");
+
+            done();
         }
 
         [Test]
-        public void TestStaticCallbackWithChange()
+        public async void TestStaticCallbackWithChange()
         {
+            var done = Assert.Async();
+
             StaticCounter = 0;
             StaticData = null;
 
             Timer copy = null;
 
-            using (var timer = new Timer(StaticHandleTimer, "SomeState", 1, 1))
-            {
-                copy = timer;
+            var timer = new Timer(StaticHandleTimer, "SomeState", 1, 1);
 
-                Thread.Sleep(200);
-                var count = StaticCounter;
-                timer.Change(-1, 0);
+            copy = timer;
 
-                Assert.True(count > 0, "Ticks: " + count);
-                Assert.AreEqual("SomeState", StaticData, "State works");
+            await Task.Delay(200);
 
-                Thread.Sleep(200);
-                Assert.AreEqual(count, StaticCounter, "Timer disposed");
-            }
+            var count = StaticCounter;
+            timer.Change(-1, 0);
+
+            Assert.True(count > 0, "Ticks: " + count);
+            Assert.AreEqual("SomeState", StaticData, "State works");
+
+            await Task.Delay(200);
+
+            Assert.AreEqual(count, StaticCounter, "Timer disposed");
+
+            timer.Dispose();
 
             Assert.Throws<InvalidOperationException>(() => { copy.Change(1, 1); }, "No change after Dispose allowed");
+
+            done();
         }
 
         [Test]
-        public static void TestInstanceCallbackWithDispose()
+        public async static void TestInstanceCallbackWithDispose()
         {
+            var done = Assert.Async();
+
             var ts = new TimerState();
             var timer = new Timer(ts.HandleTimer, "SomeState", 1, 1);
 
-            Thread.Sleep(200);
+            await Task.Delay(200);
+
             var count = ts.Counter;
             timer.Dispose();
 
@@ -119,47 +136,62 @@ namespace Bridge.ClientTest.Threading
             Assert.True(count > 0, "Ticks: " + count);
             Assert.AreEqual("SomeState", ts.Data, "State works");
 
-            Thread.Sleep(200);
+            await Task.Delay(200);
+
             Assert.AreEqual(count, ts.Counter, "Timer disposed - no more ticks");
+
+            done();
         }
 
         [Test]
-        public void TestInstanceCallbackWithChange()
+        public async void TestInstanceCallbackWithChange()
         {
+            var done = Assert.Async();
+
             var ts = new TimerState();
 
             Timer copy = null;
 
-            using (var timer = new Timer(ts.HandleTimer, "SomeState", 1, 1))
-            {
-                copy = timer;
+            var timer = new Timer(ts.HandleTimer, "SomeState", 1, 1);
 
-                Thread.Sleep(200);
-                var count = ts.Counter;
-                timer.Change(-1, 0);
+            copy = timer;
 
-                Assert.True(count > 0, "Ticks: " + count);
-                Assert.AreEqual("SomeState", ts.Data, "State works");
+            await Task.Delay(200);
 
-                Thread.Sleep(200);
-                Assert.AreEqual(count, ts.Counter, "Timer disposed");
-            }
+            var count = ts.Counter;
+            timer.Change(-1, 0);
+
+            Assert.True(count > 0, "Ticks: " + count);
+            Assert.AreEqual("SomeState", ts.Data, "State works");
+
+            await Task.Delay(200);
+
+            timer.Dispose();
+
+            Assert.AreEqual(count, ts.Counter, "Timer disposed");
+
 
             Assert.Throws<InvalidOperationException>(() => { copy.Change(1, 1); }, "No change after Dispose allowed");
+
+            done();
         }
 
         [Test]
-        public void TestInfiniteTimer()
+        public async void TestInfiniteTimer()
         {
+            var done = Assert.Async();
+
             var ts = new TimerState();
 
             var timer = new Timer(ts.HandleTimer, null, -1, 1);
-            Thread.Sleep(100);
+            await Task.Delay(200);
             Assert.AreEqual(ts.Counter, 0, "new -1, 1");
 
             timer.Change(-1, -1);
-            Thread.Sleep(100);
+            await Task.Delay(200);
             Assert.AreEqual(ts.Counter, 0, "Change -1, -1");
+
+            done();
         }
 
     }
