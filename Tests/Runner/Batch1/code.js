@@ -3272,6 +3272,72 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     }; });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1012', {
+        statics: {
+            testSleepIntMinus1: function () {
+                var delay = -1;
+                var maxDelay = 100;
+    
+                var stopwatch = new Bridge.Stopwatch();
+                stopwatch.start();
+    
+                Bridge.sleep(delay);
+    
+                stopwatch.stop();
+    
+                Bridge.Test.Assert.true$1(stopwatch.milliseconds().gte(Bridge.Long(delay)), ">= " + delay);
+                Bridge.Test.Assert.true$1(stopwatch.milliseconds().lt(Bridge.Long(maxDelay)), "< " + maxDelay);
+            },
+            testSleepInt: function () {
+                var delay = 100;
+                var maxDelay = 200;
+    
+                var stopwatch = new Bridge.Stopwatch();
+                stopwatch.start();
+    
+                Bridge.sleep(delay);
+    
+                stopwatch.stop();
+    
+                Bridge.Test.Assert.true$1(stopwatch.milliseconds().gte(Bridge.Long(delay)), ">= " + delay);
+                Bridge.Test.Assert.true$1(stopwatch.milliseconds().lt(Bridge.Long(maxDelay)), "< " + maxDelay);
+            },
+            testSleepTimeSpan: function () {
+                var delay = 100;
+                var maxDelay = 200;
+    
+                var stopwatch = new Bridge.Stopwatch();
+                stopwatch.start();
+    
+                Bridge.sleep(null, Bridge.TimeSpan.fromMilliseconds(delay));
+    
+                stopwatch.stop();
+    
+                Bridge.Test.Assert.true$1(stopwatch.milliseconds().gte(Bridge.Long(delay)), ">= " + delay);
+                Bridge.Test.Assert.true$1(stopwatch.milliseconds().lt(Bridge.Long(maxDelay)), "< " + maxDelay);
+            },
+            testSleepThrows: function () {
+                Bridge.Test.Assert.throws$7(Bridge.ArgumentOutOfRangeException, $_.Bridge.ClientTest.BridgeIssues.Bridge1012.f1, "-2");
+                Bridge.Test.Assert.throws$7(Bridge.ArgumentOutOfRangeException, $_.Bridge.ClientTest.BridgeIssues.Bridge1012.f2, "FromMilliseconds(-2)");
+                Bridge.Test.Assert.throws$7(Bridge.ArgumentOutOfRangeException, $_.Bridge.ClientTest.BridgeIssues.Bridge1012.f3, "(long)int.MaxValue + 1");
+            }
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1012", $_)
+    
+    Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge1012, {
+        f1: function () {
+            Bridge.sleep(-2);
+        },
+        f2: function () {
+            Bridge.sleep(null, Bridge.TimeSpan.fromMilliseconds(-2));
+        },
+        f3: function () {
+            Bridge.sleep(null, Bridge.TimeSpan.fromMilliseconds(Bridge.Long([-2147483648,0])));
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1020', {
         statics: {
             testFlagEnumWithReference: function () {
