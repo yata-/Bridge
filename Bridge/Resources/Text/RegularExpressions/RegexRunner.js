@@ -86,7 +86,14 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
             var jsGroup = jsMatch.groups[i];
             for (var j = 0; j < jsGroup.captures.length; j++) {
                 var jsCapture = jsGroup.captures[j];
-                match._addMatch(i, jsCapture.capIndex, jsCapture.capLength);
+
+                // Paste group index/length according to group ordering:
+                var grOrder = 0;
+                if (jsGroup.descriptor != null) {
+                    grOrder = this._runregex.groupNumberFromName(jsGroup.descriptor.name);
+                }
+
+                match._addMatch(grOrder, jsCapture.capIndex, jsCapture.capLength);
             }
         }
 

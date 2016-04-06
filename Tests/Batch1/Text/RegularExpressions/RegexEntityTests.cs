@@ -265,5 +265,221 @@ namespace Bridge.ClientTest.Text.RegularExpressions
                 }
             }
         }
+
+        [Test]
+        public void MatchNamedGroupTest()
+        {
+            const string pattern = @"(?<test>A)(B)";
+            const string text = @"AB";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 0, 2, "AB", 3, true);
+
+            ValidateGroup(m, 0, 0, 2, true, "AB", 1);
+            ValidateCapture(m, 0, 0, 0, 2, "AB");
+
+            ValidateGroup(m, 1, 1, 1, true, "B", 1);
+            ValidateCapture(m, 1, 0, 1, 1, "B");
+
+            ValidateGroup(m, 2, 0, 1, true, "A", 1);
+            ValidateCapture(m, 2, 0, 0, 1, "A");
+
+            GroupsAreEqual(m.Groups[2], m.Groups["test"], "Named Group is correct");
+        }
+
+        [Test]
+        public void MatchInnerNamedGroupTest1()
+        {
+            const string pattern = @"((?<test>A)(B))";
+            const string text = @"AB";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 0, 2, "AB", 4, true);
+
+            ValidateGroup(m, 0, 0, 2, true, "AB", 1);
+            ValidateCapture(m, 0, 0, 0, 2, "AB");
+
+            ValidateGroup(m, 1, 0, 2, true, "AB", 1);
+            ValidateCapture(m, 1, 0, 0, 2, "AB");
+
+            ValidateGroup(m, 2, 1, 1, true, "B", 1);
+            ValidateCapture(m, 2, 0, 1, 1, "B");
+
+            ValidateGroup(m, 3, 0, 1, true, "A", 1);
+            ValidateCapture(m, 3, 0, 0, 1, "A");
+
+            GroupsAreEqual(m.Groups[3], m.Groups["test"], "Named Group is correct");
+        }
+
+        [Test]
+        public void MatchInnerNamedGroupTest2()
+        {
+            const string pattern = @"(?<outer>(C)(?<inner1>(?<inner2>A)+)(B))";
+            const string text = @"CAAAB";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 0, 5, "CAAAB", 6, true);
+
+            ValidateGroup(m, 0, 0, 5, true, "CAAAB", 1);
+            ValidateCapture(m, 0, 0, 0, 5, "CAAAB");
+
+            ValidateGroup(m, 1, 0, 1, true, "C", 1);
+            ValidateCapture(m, 1, 0, 0, 1, "C");
+
+            ValidateGroup(m, 2, 4, 1, true, "B", 1);
+            ValidateCapture(m, 2, 0, 4, 1, "B");
+
+            ValidateGroup(m, 3, 0, 5, true, "CAAAB", 1);
+            ValidateCapture(m, 3, 0, 0, 5, "CAAAB");
+
+            ValidateGroup(m, 4, 1, 3, true, "AAA", 1);
+            ValidateCapture(m, 4, 0, 1, 3, "AAA");
+
+            ValidateGroup(m, 5, 3, 1, true, "A", 3);
+            ValidateCapture(m, 5, 0, 1, 1, "A");
+            ValidateCapture(m, 5, 1, 2, 1, "A");
+            ValidateCapture(m, 5, 2, 3, 1, "A");
+
+            GroupsAreEqual(m.Groups[4], m.Groups["inner1"], "Named Group is correct");
+        }
+
+        [Test]
+        public void GroupOrderingTest()
+        {
+            const string pattern = @"(C)(?<group1>A)+(B)";
+            const string text = @"CAAAB";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 0, 5, "CAAAB", 4, true);
+
+            var expected = new List<string>();
+
+            ValidateGroup(m, 0, 0, 5, true, "CAAAB", 1);
+            ValidateCapture(m, 0, 0, 0, 5, "CAAAB");
+            expected.Add("CAAAB");
+
+            ValidateGroup(m, 1, 0, 1, true, "C", 1);
+            ValidateCapture(m, 1, 0, 0, 1, "C");
+            expected.Add("C");
+
+            ValidateGroup(m, 2, 4, 1, true, "B", 1);
+            ValidateCapture(m, 2, 0, 4, 1, "B");
+            expected.Add("B");
+
+            ValidateGroup(m, 3, 3, 1, true, "A", 3);
+            ValidateCapture(m, 3, 0, 1, 1, "A");
+            ValidateCapture(m, 3, 1, 2, 1, "A");
+            ValidateCapture(m, 3, 2, 3, 1, "A");
+            expected.Add("A");
+
+            var i = 0;
+            foreach (Group group in m.Groups)
+            {
+                Assert.AreEqual(expected[i], group.Value, "Group[" + i + "].Value is correct");
+                ++i;
+            }
+        }
+
+        [Test]
+        public void RepeatingGroupTest()
+        {
+            const string pattern = @"((A(\d)*A)x(B(\d)*B)+)";
+            const string text = @"A123AxBBB";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 0, 8, "A123AxBB", 6, true);
+
+            ValidateGroup(m, 0, 0, 8, true, "A123AxBB", 1);
+            ValidateCapture(m, 0, 0, 0, 8, "A123AxBB");
+
+            ValidateGroup(m, 1, 0, 8, true, "A123AxBB", 1);
+            ValidateCapture(m, 1, 0, 0, 8, "A123AxBB");
+
+            ValidateGroup(m, 2, 0, 5, true, "A123A", 1);
+            ValidateCapture(m, 2, 0, 0, 5, "A123A");
+
+            ValidateGroup(m, 3, 3, 1, true, "3", 3);
+            ValidateCapture(m, 3, 0, 1, 1, "1");
+            ValidateCapture(m, 3, 1, 2, 1, "2");
+            ValidateCapture(m, 3, 2, 3, 1, "3");
+
+            ValidateGroup(m, 4, 6, 2, true, "BB", 1);
+            ValidateCapture(m, 4, 0, 6, 2, "BB");
+
+            ValidateGroup(m, 5, 0, 0, false, "", 0);
+        }
+
+        [Test]
+        public void ZeroResultTest()
+        {
+            // Case 1:
+            var pattern = @"()";
+            var text = @"ABC";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 0, 0, "", 2, true);
+
+            ValidateGroup(m, 0, 0, 0, true, "", 1);
+            ValidateCapture(m, 0, 0, 0, 0, "");
+
+            ValidateGroup(m, 1, 0, 0, true, "", 1);
+            ValidateCapture(m, 1, 0, 0, 0, "");
+
+
+            // Case 2:
+            pattern = @"(B?)";
+            text = @"ABC";
+            rgx = new Regex(pattern);
+            m = rgx.Match(text);
+
+            ValidateMatch(m, 0, 0, "", 2, true);
+
+            ValidateGroup(m, 0, 0, 0, true, "", 1);
+            ValidateCapture(m, 0, 0, 0, 0, "");
+
+            ValidateGroup(m, 1, 0, 0, true, "", 1);
+            ValidateCapture(m, 1, 0, 0, 0, "");
+
+
+            // Case 3:
+            pattern = @"(B)?";
+            text = @"ABC";
+            rgx = new Regex(pattern);
+            m = rgx.Match(text);
+
+            ValidateMatch(m, 0, 0, "", 2, true);
+
+            ValidateGroup(m, 0, 0, 0, true, "", 1);
+            ValidateCapture(m, 0, 0, 0, 0, "");
+
+            ValidateGroup(m, 1, 0, 0, false, "", 0);
+        }
+
+        [Test]
+        public void NonCapturingGroupsTest()
+        {
+            const string pattern = @"(?:Q(?<noncapInner>A)Z)(B)(?:C)";
+            const string text = @"QAZBC";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 0, 5, "QAZBC", 3, true);
+
+            ValidateGroup(m, 0, 0, 5, true, "QAZBC", 1);
+            ValidateCapture(m, 0, 0, 0, 5, "QAZBC");
+
+            ValidateGroup(m, 1, 3, 1, true, "B", 1);
+            ValidateCapture(m, 1, 0, 3, 1, "B");
+
+            ValidateGroup(m, 2, 1, 1, true, "A", 1);
+            ValidateCapture(m, 2, 0, 1, 1, "A");
+
+        }
     }
 }
