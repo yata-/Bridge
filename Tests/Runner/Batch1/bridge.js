@@ -906,9 +906,13 @@
                 throw new Bridge.ArgumentOutOfRangeException("timeout", "Number must be either non-negative and less than or equal to Int32.MaxValue or -1");
             }
 
+            if (ms == -1) {
+                ms = 2147483647;
+            }
+
             var start = new Date().getTime();
-            for (var i = 0; i < 1e7; i++) {
-                if ((new Date().getTime() - start) > ms) {
+            while ((new Date().getTime() - start) < ms) {
+                if ((new Date().getTime() - start) > 2147483647) {
                     break;
                 }
             }
