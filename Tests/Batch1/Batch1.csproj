@@ -294,6 +294,7 @@
     <Compile Include="Text\RegularExpressions\RegexMatchCollectionTests.cs" />
     <Compile Include="Text\RegularExpressions\RegexMatchEntityTests.cs" />
     <Compile Include="Text\RegularExpressions\RegexTestBase.cs" />
+    <Compile Include="Threading\TimerTests.cs" />
     <Compile Include="Threading\CancellationTokenTests.cs" />
     <Compile Include="Threading\Tasks\AsyncTests.cs" />
     <Compile Include="Threading\Tasks\PromiseTests.cs" />

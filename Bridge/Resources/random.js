@@ -1,4 +1,6 @@
-﻿(function (globals) {
+﻿// @source random.js
+
+(function (globals) {
     "use strict";
 
     Bridge.define('Bridge.Random', {

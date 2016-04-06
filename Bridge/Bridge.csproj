@@ -147,6 +147,8 @@
     <Compile Include="System\Text\RegularExpressions\Regex.cs" />
     <Compile Include="System\Text\RegularExpressions\MatchEvaluator.cs" />
     <Compile Include="System\Text\RegularExpressions\RegexOptions.cs" />
+    <Compile Include="System\Threading\Timeout.cs" />
+    <Compile Include="System\Threading\Timer.cs" />
     <Compile Include="System\Threading\Thread.cs" />
     <Compile Include="System\Threading\CancellationToken.cs" />
     <Compile Include="System\Threading\CancellationTokenRegistration.cs" />
@@ -679,6 +681,7 @@
     <Content Include="Resources\Text\RegularExpressions\RegexParser.js" />
     <Content Include="Resources\Text\RegularExpressions\RegexReplacement.js" />
     <Content Include="Resources\Text\RegularExpressions\RegexRunner.js" />
+    <Content Include="Resources\timer.js" />
     <Content Include="Resources\Version.js" />
     <None Include="AdditionalCompilerOptions.txt" />
     <Content Include="Resources\Array.js" />

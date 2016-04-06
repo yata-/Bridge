@@ -2017,6 +2017,12 @@
                 QUnit.test("Tasks - ExceptionInManuallyCreatedTaskIsStoredOnTheTask", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_TaskTests.exceptionInManuallyCreatedTaskIsStoredOnTheTask);
                 QUnit.test("Tasks - ConstructorWithOnlyFunctionWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_TaskTests.constructorWithOnlyFunctionWorks);
                 QUnit.test("Tasks - ConstructorWithFunctionAndStateWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_TaskTests.constructorWithFunctionAndStateWorks);
+                QUnit.test("TimerTests - TestTimerThrows", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_TimerTests.testTimerThrows);
+                QUnit.test("TimerTests - TestStaticCallbackWithDispose", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_TimerTests.testStaticCallbackWithDispose);
+                QUnit.test("TimerTests - TestStaticCallbackWithChange", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_TimerTests.testStaticCallbackWithChange);
+                QUnit.test("TimerTests - TestInstanceCallbackWithDispose", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_TimerTests.testInstanceCallbackWithDispose);
+                QUnit.test("TimerTests - TestInstanceCallbackWithChange", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_TimerTests.testInstanceCallbackWithChange);
+                QUnit.test("TimerTests - TestInfiniteTimer", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_TimerTests.testInfiniteTimer);
                 QUnit.module("Utilities");
                 QUnit.test("Environment - NewLineIsAStringContainingOnlyTheNewLineChar", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_EnvironmentTests.newLineIsAStringContainingOnlyTheNewLineChar);
                 QUnit.module("СultureInfo");
@@ -11119,6 +11125,36 @@
             constructorWithFunctionAndStateWorks: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Threading.TaskTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_TaskTests, 9);
                 t.getFixture().constructorWithFunctionAndStateWorks();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_TimerTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Threading.TimerTests)],
+        statics: {
+            testTimerThrows: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Threading.TimerTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_TimerTests);
+                t.getFixture().testTimerThrows();
+            },
+            testStaticCallbackWithDispose: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Threading.TimerTests).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_TimerTests);
+                Bridge.ClientTest.Threading.TimerTests.testStaticCallbackWithDispose();
+            },
+            testStaticCallbackWithChange: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Threading.TimerTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_TimerTests);
+                t.getFixture().testStaticCallbackWithChange();
+            },
+            testInstanceCallbackWithDispose: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Threading.TimerTests).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_TimerTests);
+                Bridge.ClientTest.Threading.TimerTests.testInstanceCallbackWithDispose();
+            },
+            testInstanceCallbackWithChange: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Threading.TimerTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_TimerTests);
+                t.getFixture().testInstanceCallbackWithChange();
+            },
+            testInfiniteTimer: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Threading.TimerTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_TimerTests);
+                t.getFixture().testInfiniteTimer();
             }
         }
     });
