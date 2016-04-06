@@ -9,6 +9,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
         config: {
             init: function () {
                 var empty = new Bridge.Text.RegularExpressions.Match(null, 1, "", 0, 0, 0);
+
                 this.getEmpty = function () {
                     return empty;
                 }
@@ -26,6 +27,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
 
             for (var i = 0; i < groupsCount; i++) {
                 var group = groups.get(i);
+
                 Bridge.Text.RegularExpressions.Group.synchronized(group);
             }
 
@@ -45,14 +47,15 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
 
     constructor: function (regex, capcount, text, begpos, len, startpos) {
         var scope = Bridge.Text.RegularExpressions;
-
         var caps = [0, 0];
+
         scope.Group.prototype.$constructor.call(this, text, caps, 0);
 
         this._regex = regex;
 
         this._matchcount = [];
         this._matchcount.length = capcount;
+
         for (var i = 0; i < capcount; i++) {
             this._matchcount[i] = 0;
         }
@@ -71,6 +74,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
         if (this._groupColl == null) {
             this._groupColl = new Bridge.Text.RegularExpressions.GroupCollection(this, null);
         }
+
         return this._groupColl;
     },
 
@@ -83,7 +87,6 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
     },
 
     result: function (replacement) {
- 
         if (replacement == null) {
             throw new Bridge.ArgumentNullException("replacement");
         }
@@ -146,7 +149,6 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
 
                 var limit = this._matchcount[cap] * 2;
                 var matcharray = this._matches[cap];
-
                 var i;
                 var j;
 
@@ -160,8 +162,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
                     if (matcharray[i] < 0) {
                         // skip negative values
                         j--;
-                    }
-                    else {
+                    } else {
                         // but if we find something positive (an actual capture), copy it back to the last 
                         // unbalanced position. 
                         if (i !== j) {
@@ -178,16 +179,17 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
         }
     },
 
-    _groupToStringImpl: function(groupnum) {
+    _groupToStringImpl: function (groupnum) {
         var c = this._matchcount[groupnum];
+
         if (c === 0) {
             return "";
         }
  
         var matches = this._matches[groupnum];
-
         var capIndex = matches[(c - 1) * 2];
         var capLength = matches[(c * 2) - 1];
+
         return this._text.slice(capIndex, capIndex + capLength);
     },
 

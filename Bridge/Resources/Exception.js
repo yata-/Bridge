@@ -124,15 +124,15 @@
             this.constructor$1(message);
         },
 
-        getPattern: function() {
+        getPattern: function () {
             return this._regexPattern;
         },
 
-        getInput: function() {
+        getInput: function () {
             return this._regexInput;
         },
 
-        getMatchTimeout: function() {
+        getMatchTimeout: function () {
             return this._matchTimeout;
         }
     });

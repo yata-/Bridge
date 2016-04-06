@@ -224,7 +224,7 @@ Bridge.define("Bridge.ContractException", {
 	getUserMessage: function () {
 		return this._userMessage;
 	},
-	getCondition: function() {
+	getCondition: function () {
 		return this._condition;
 	}
 });

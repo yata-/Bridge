@@ -69,7 +69,7 @@
                 result = new Array(tasks.length);
 
                 for (i = 0; i < tasks.length; i++) {
-                    (function(i) {
+                    (function (i) {
                         tasks[i].continueWith(function (t) {
                             switch (t.status) {
                                 case Bridge.TaskStatus.ranToCompletion:
@@ -359,7 +359,7 @@
 
 
     Bridge.define("Bridge.TaskCompletionSource", {
-        constructor: function() {
+        constructor: function () {
             this.task = new Bridge.Task();
             this.task.status = Bridge.TaskStatus.running;
         },
@@ -370,27 +370,27 @@
             }
         },
 
-        setResult: function(result) {
+        setResult: function (result) {
             if (!this.task.complete(result)) {
                 throw new Bridge.InvalidOperationException("Task was already completed.");
             }
         },
 
-        setException: function(exception) {
+        setException: function (exception) {
             if (!this.trySetException(exception)) {
                 throw new Bridge.InvalidOperationException("Task was already completed.");
             }
         },
 
-        trySetCanceled: function() {
+        trySetCanceled: function () {
             return this.task.cancel();
         },
 
-        trySetResult: function(result) {
+        trySetResult: function (result) {
             return this.task.complete(result);
         },
 
-        trySetException: function(exception) {
+        trySetException: function (exception) {
             if (Bridge.is(exception, Bridge.Exception)) {
                 exception = [exception];
             }
@@ -429,7 +429,7 @@
         statics: {
             sourceTrue: {
                 isCancellationRequested: true, 
-                register: function(f, s) {
+                register: function (f, s) {
                     f(s); 
                     return new Bridge.CancellationTokenRegistration();
                 } 
@@ -437,7 +437,7 @@
             sourceFalse: {
                 uncancellable: true, 
                 isCancellationRequested: false, 
-                register: function() {
+                register: function () {
                      return new Bridge.CancellationTokenRegistration();
                 }
             },
@@ -450,7 +450,7 @@
     Bridge.CancellationToken.none = new Bridge.CancellationToken();
 
     Bridge.define("Bridge.CancellationTokenRegistration", {
-        inherits: function() {
+        inherits: function () {
             return [Bridge.IDisposable, Bridge.IEquatable$1(Bridge.CancellationTokenRegistration)];
         },
         constructor: function (cts, o) {
