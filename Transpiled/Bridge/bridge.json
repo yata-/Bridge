@@ -1,7 +1,7 @@
 ﻿{
-  "output": "Transpiled",
+  "output": "",
   "cleanOutputFolderBeforeBuild": true,
   "outputFormatting": "Formatted",
-  "outputBy": "Class",
+  "outputBy": "ClassPath",
   "loggerLevel": "Info"
 }

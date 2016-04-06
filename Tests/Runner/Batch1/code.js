@@ -28141,6 +28141,389 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Threading.TimerTests', {
+        statics: {
+            config: {
+                properties: {
+                    StaticCounter: 0,
+                    StaticData: null
+                }
+            },
+            staticHandleTimer: function (state) {
+                Bridge.ClientTest.Threading.TimerTests.setStaticCounter((Bridge.ClientTest.Threading.TimerTests.getStaticCounter() + 1) | 0);
+                Bridge.ClientTest.Threading.TimerTests.setStaticData(state);
+            },
+            testStaticCallbackWithDispose: function () {
+                var $step = 0,
+                    $task1, 
+                    $task2, 
+                    $jumpFromFinally, 
+                    done, 
+                    timer, 
+                    count, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        for (;;) {
+                            $step = Bridge.Array.min([0,1,2], $step);
+                            switch ($step) {
+                                case 0: {
+                                    done = Bridge.Test.Assert.async();
+                                    
+                                    Bridge.ClientTest.Threading.TimerTests.setStaticCounter(0);
+                                    Bridge.ClientTest.Threading.TimerTests.setStaticData(null);
+                                    
+                                    timer = new Bridge.Threading.Timer("constructor$1", Bridge.ClientTest.Threading.TimerTests.staticHandleTimer, "SomeState", 1, 1);
+                                    
+                                    $task2 = Bridge.Task.delay(200);
+                                    $step = 1;
+                                    $task2.continueWith($asyncBody, true);
+                                    return;
+                                }
+                                case 1: {
+                                    $task2.getAwaitedResult();
+                                    
+                                    count = Bridge.ClientTest.Threading.TimerTests.getStaticCounter();
+                                    timer.dispose();
+                                    
+                                    Bridge.Test.Assert.throws$7(Bridge.InvalidOperationException, function () {
+                                        timer.change(1, 1);
+                                    }, "No change after Dispose allowed");
+                                    Bridge.Test.Assert.true$1(count > 0, "Ticks: " + count);
+                                    Bridge.Test.Assert.areEqual$1("SomeState", Bridge.ClientTest.Threading.TimerTests.getStaticData(), "State works");
+                                    
+                                    $task1 = Bridge.Task.delay(200);
+                                    $step = 2;
+                                    $task1.continueWith($asyncBody, true);
+                                    return;
+                                }
+                                case 2: {
+                                    $task1.getAwaitedResult();
+                                    
+                                    Bridge.Test.Assert.areEqual$1(count, Bridge.ClientTest.Threading.TimerTests.getStaticCounter(), "Timer disposed - no more ticks");
+                                    
+                                    done();
+                                    return;
+                                }
+                                default: {
+                                    return;
+                                }
+                            }
+                        }
+                    }, arguments);
+    
+                $asyncBody();
+            },
+            testInstanceCallbackWithDispose: function () {
+                var $step = 0,
+                    $task1, 
+                    $task2, 
+                    $jumpFromFinally, 
+                    done, 
+                    ts, 
+                    timer, 
+                    count, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        for (;;) {
+                            $step = Bridge.Array.min([0,1,2], $step);
+                            switch ($step) {
+                                case 0: {
+                                    done = Bridge.Test.Assert.async();
+                                    
+                                    ts = new Bridge.ClientTest.Threading.TimerTests.TimerState();
+                                    timer = new Bridge.Threading.Timer("constructor$1", Bridge.fn.bind(ts, ts.handleTimer), "SomeState", 1, 1);
+                                    
+                                    $task2 = Bridge.Task.delay(200);
+                                    $step = 1;
+                                    $task2.continueWith($asyncBody, true);
+                                    return;
+                                }
+                                case 1: {
+                                    $task2.getAwaitedResult();
+                                    
+                                    count = ts.getCounter();
+                                    timer.dispose();
+                                    
+                                    Bridge.Test.Assert.throws$7(Bridge.InvalidOperationException, function () {
+                                        timer.change(1, 1);
+                                    }, "No change after Dispose allowed");
+                                    Bridge.Test.Assert.true$1(count > 0, "Ticks: " + count);
+                                    Bridge.Test.Assert.areEqual$1("SomeState", ts.getData(), "State works");
+                                    
+                                    $task1 = Bridge.Task.delay(200);
+                                    $step = 2;
+                                    $task1.continueWith($asyncBody, true);
+                                    return;
+                                }
+                                case 2: {
+                                    $task1.getAwaitedResult();
+                                    
+                                    Bridge.Test.Assert.areEqual$1(count, ts.getCounter(), "Timer disposed - no more ticks");
+                                    
+                                    done();
+                                    return;
+                                }
+                                default: {
+                                    return;
+                                }
+                            }
+                        }
+                    }, arguments);
+    
+                $asyncBody();
+            }
+        },
+        testTimerThrows: function () {
+            var ts = new Bridge.ClientTest.Threading.TimerTests.TimerState();
+            var tc = Bridge.fn.bind(ts, ts.handleTimer);
+    
+            var okSpan = Bridge.TimeSpan.fromMilliseconds(1);
+            var smallSpan = Bridge.TimeSpan.fromMilliseconds(-2);
+            var bigSpan = Bridge.TimeSpan.fromMilliseconds(Bridge.Long([0,1]));
+    
+            var small = -2;
+            var big = Bridge.Long([0,1]);
+    
+            Bridge.Test.Assert.throws$7(Bridge.ArgumentNullException, $_.Bridge.ClientTest.Threading.TimerTests.f1, "Null callback");
+    
+            Bridge.Test.Assert.throws$7(Bridge.ArgumentOutOfRangeException, function () {
+                new Bridge.Threading.Timer("constructor$1", tc, null, small, 1);
+            }, "Small due int");
+            Bridge.Test.Assert.throws$7(Bridge.ArgumentOutOfRangeException, function () {
+                new Bridge.Threading.Timer("constructor$1", tc, null, 1, small);
+            }, "Small period int ");
+    
+            Bridge.Test.Assert.throws$7(Bridge.ArgumentOutOfRangeException, function () {
+                new Bridge.Threading.Timer("constructor$2", tc, null, Bridge.Long(Bridge.Long(small)), Bridge.Long(1));
+            }, "Small due long");
+            Bridge.Test.Assert.throws$7(Bridge.ArgumentOutOfRangeException, function () {
+                new Bridge.Threading.Timer("constructor$2", tc, null, Bridge.Long(1), Bridge.Long(Bridge.Long(small)));
+            }, "Small period long");
+            Bridge.Test.Assert.throws$7(Bridge.ArgumentOutOfRangeException, function () {
+                new Bridge.Threading.Timer("constructor$2", tc, null, big, Bridge.Long(1));
+            }, "Big due long");
+            Bridge.Test.Assert.throws$7(Bridge.ArgumentOutOfRangeException, function () {
+                new Bridge.Threading.Timer("constructor$2", tc, null, Bridge.Long(1), big);
+            }, "Big period long");
+    
+            Bridge.Test.Assert.throws$7(Bridge.ArgumentOutOfRangeException, function () {
+                new Bridge.Threading.Timer("constructor$3", tc, null, smallSpan, okSpan);
+            }, "Small due TimeSpan");
+            Bridge.Test.Assert.throws$7(Bridge.ArgumentOutOfRangeException, function () {
+                new Bridge.Threading.Timer("constructor$3", tc, null, okSpan, smallSpan);
+            }, "Small period TimeSpan");
+            Bridge.Test.Assert.throws$7(Bridge.ArgumentOutOfRangeException, function () {
+                new Bridge.Threading.Timer("constructor$3", tc, null, bigSpan, okSpan);
+            }, "Big due TimeSpan");
+            Bridge.Test.Assert.throws$7(Bridge.ArgumentOutOfRangeException, function () {
+                new Bridge.Threading.Timer("constructor$3", tc, null, okSpan, bigSpan);
+            }, "Big period TimeSpan");
+        },
+        testStaticCallbackWithChange: function () {
+            var $step = 0,
+                $task1, 
+                $task2, 
+                $jumpFromFinally, 
+                done, 
+                copy, 
+                timer, 
+                count, 
+                $asyncBody = Bridge.fn.bind(this, function () {
+                    for (;;) {
+                        $step = Bridge.Array.min([0,1,2], $step);
+                        switch ($step) {
+                            case 0: {
+                                done = Bridge.Test.Assert.async();
+                                
+                                Bridge.ClientTest.Threading.TimerTests.setStaticCounter(0);
+                                Bridge.ClientTest.Threading.TimerTests.setStaticData(null);
+                                
+                                copy = null;
+                                
+                                timer = new Bridge.Threading.Timer("constructor$1", Bridge.ClientTest.Threading.TimerTests.staticHandleTimer, "SomeState", 1, 1);
+                                
+                                copy = timer;
+                                
+                                $task2 = Bridge.Task.delay(200);
+                                $step = 1;
+                                $task2.continueWith($asyncBody, true);
+                                return;
+                            }
+                            case 1: {
+                                $task2.getAwaitedResult();
+                                
+                                count = Bridge.ClientTest.Threading.TimerTests.getStaticCounter();
+                                timer.change(-1, 0);
+                                
+                                Bridge.Test.Assert.true$1(count > 0, "Ticks: " + count);
+                                Bridge.Test.Assert.areEqual$1("SomeState", Bridge.ClientTest.Threading.TimerTests.getStaticData(), "State works");
+                                
+                                $task1 = Bridge.Task.delay(200);
+                                $step = 2;
+                                $task1.continueWith($asyncBody, true);
+                                return;
+                            }
+                            case 2: {
+                                $task1.getAwaitedResult();
+                                
+                                Bridge.Test.Assert.areEqual$1(count, Bridge.ClientTest.Threading.TimerTests.getStaticCounter(), "Timer disposed");
+                                
+                                timer.dispose();
+                                
+                                Bridge.Test.Assert.throws$7(Bridge.InvalidOperationException, function () {
+                                    copy.change(1, 1);
+                                }, "No change after Dispose allowed");
+                                
+                                done();
+                                return;
+                            }
+                            default: {
+                                return;
+                            }
+                        }
+                    }
+                }, arguments);
+    
+            $asyncBody();
+        },
+        testInstanceCallbackWithChange: function () {
+            var $step = 0,
+                $task1, 
+                $task2, 
+                $jumpFromFinally, 
+                done, 
+                ts, 
+                copy, 
+                timer, 
+                count, 
+                $asyncBody = Bridge.fn.bind(this, function () {
+                    for (;;) {
+                        $step = Bridge.Array.min([0,1,2], $step);
+                        switch ($step) {
+                            case 0: {
+                                done = Bridge.Test.Assert.async();
+                                
+                                ts = new Bridge.ClientTest.Threading.TimerTests.TimerState();
+                                
+                                copy = null;
+                                
+                                timer = new Bridge.Threading.Timer("constructor$1", Bridge.fn.bind(ts, ts.handleTimer), "SomeState", 1, 1);
+                                
+                                copy = timer;
+                                
+                                $task2 = Bridge.Task.delay(200);
+                                $step = 1;
+                                $task2.continueWith($asyncBody, true);
+                                return;
+                            }
+                            case 1: {
+                                $task2.getAwaitedResult();
+                                
+                                count = ts.getCounter();
+                                timer.change(-1, 0);
+                                
+                                Bridge.Test.Assert.true$1(count > 0, "Ticks: " + count);
+                                Bridge.Test.Assert.areEqual$1("SomeState", ts.getData(), "State works");
+                                
+                                $task1 = Bridge.Task.delay(200);
+                                $step = 2;
+                                $task1.continueWith($asyncBody, true);
+                                return;
+                            }
+                            case 2: {
+                                $task1.getAwaitedResult();
+                                
+                                timer.dispose();
+                                
+                                Bridge.Test.Assert.areEqual$1(count, ts.getCounter(), "Timer disposed");
+                                
+                                
+                                Bridge.Test.Assert.throws$7(Bridge.InvalidOperationException, function () {
+                                    copy.change(1, 1);
+                                }, "No change after Dispose allowed");
+                                
+                                done();
+                                return;
+                            }
+                            default: {
+                                return;
+                            }
+                        }
+                    }
+                }, arguments);
+    
+            $asyncBody();
+        },
+        testInfiniteTimer: function () {
+            var $step = 0,
+                $task1, 
+                $task2, 
+                $jumpFromFinally, 
+                done, 
+                ts, 
+                timer, 
+                $asyncBody = Bridge.fn.bind(this, function () {
+                    for (;;) {
+                        $step = Bridge.Array.min([0,1,2], $step);
+                        switch ($step) {
+                            case 0: {
+                                done = Bridge.Test.Assert.async();
+                                
+                                ts = new Bridge.ClientTest.Threading.TimerTests.TimerState();
+                                
+                                timer = new Bridge.Threading.Timer("constructor$1", Bridge.fn.bind(ts, ts.handleTimer), null, -1, 1);
+                                $task2 = Bridge.Task.delay(200);
+                                $step = 1;
+                                $task2.continueWith($asyncBody, true);
+                                return;
+                            }
+                            case 1: {
+                                $task2.getAwaitedResult();
+                                Bridge.Test.Assert.areEqual$1(ts.getCounter(), 0, "new -1, 1");
+                                
+                                timer.change(-1, -1);
+                                $task1 = Bridge.Task.delay(200);
+                                $step = 2;
+                                $task1.continueWith($asyncBody, true);
+                                return;
+                            }
+                            case 2: {
+                                $task1.getAwaitedResult();
+                                Bridge.Test.Assert.areEqual$1(ts.getCounter(), 0, "Change -1, -1");
+                                
+                                done();
+                                return;
+                            }
+                            default: {
+                                return;
+                            }
+                        }
+                    }
+                }, arguments);
+    
+            $asyncBody();
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.Threading.TimerTests", $_)
+    
+    Bridge.apply($_.Bridge.ClientTest.Threading.TimerTests, {
+        f1: function () {
+            new Bridge.Threading.Timer("constructor$1", null, null, 1, 1);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Threading.TimerTests.TimerState', {
+        config: {
+            properties: {
+                Counter: 0,
+                Data: null
+            }
+        },
+        handleTimer: function (state) {
+            this.setCounter((this.getCounter() + 1) | 0);
+            this.setData(state);
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Utilities.BrowserHelper', {
         statics: {
             isPhantomJs: function () {
