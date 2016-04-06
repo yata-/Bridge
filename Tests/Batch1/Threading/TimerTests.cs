@@ -103,7 +103,7 @@ namespace Bridge.ClientTest.Threading
             await Task.Delay(200);
 
             var count = StaticCounter;
-            timer.Change(-1, 0);
+            timer.Change(Timeout.Infinite, 0);
 
             Assert.True(count > 0, "Ticks: " + count);
             Assert.AreEqual("SomeState", StaticData, "State works");
