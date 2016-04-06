@@ -198,7 +198,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         var i;
         var groupInfo;
 
-        // Add group withou names first (their names are indexes)
+        // Add group without names first (their names are indexes)
         for (i = 0; i < groupInfos.length; i++) {
             groupInfo = groupInfos[i];
             if (!groupInfo.hasName && !groupInfo.constructs.isNonCapturing) {

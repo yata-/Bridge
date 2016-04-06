@@ -31485,6 +31485,203 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     }
                 }).call(this);
             }
+        },
+        matchNamedGroupTest: function () {
+            var pattern = "(?<test>A)(B)";
+            var text = "AB";
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", pattern);
+            var m = rgx.match(text);
+    
+            this.validateMatch(m, 0, 2, "AB", 3, true);
+    
+            this.validateGroup(m, 0, 0, 2, true, "AB", 1);
+            this.validateCapture(m, 0, 0, 0, 2, "AB");
+    
+            this.validateGroup(m, 1, 1, 1, true, "B", 1);
+            this.validateCapture(m, 1, 0, 1, 1, "B");
+    
+            this.validateGroup(m, 2, 0, 1, true, "A", 1);
+            this.validateCapture(m, 2, 0, 0, 1, "A");
+    
+            this.groupsAreEqual(m.getGroups().get(2), m.getGroups().getByName("test"), "Named Group is correct");
+        },
+        matchInnerNamedGroupTest1: function () {
+            var pattern = "((?<test>A)(B))";
+            var text = "AB";
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", pattern);
+            var m = rgx.match(text);
+    
+            this.validateMatch(m, 0, 2, "AB", 4, true);
+    
+            this.validateGroup(m, 0, 0, 2, true, "AB", 1);
+            this.validateCapture(m, 0, 0, 0, 2, "AB");
+    
+            this.validateGroup(m, 1, 0, 2, true, "AB", 1);
+            this.validateCapture(m, 1, 0, 0, 2, "AB");
+    
+            this.validateGroup(m, 2, 1, 1, true, "B", 1);
+            this.validateCapture(m, 2, 0, 1, 1, "B");
+    
+            this.validateGroup(m, 3, 0, 1, true, "A", 1);
+            this.validateCapture(m, 3, 0, 0, 1, "A");
+    
+            this.groupsAreEqual(m.getGroups().get(3), m.getGroups().getByName("test"), "Named Group is correct");
+        },
+        matchInnerNamedGroupTest2: function () {
+            var pattern = "(?<outer>(C)(?<inner1>(?<inner2>A)+)(B))";
+            var text = "CAAAB";
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", pattern);
+            var m = rgx.match(text);
+    
+            this.validateMatch(m, 0, 5, "CAAAB", 6, true);
+    
+            this.validateGroup(m, 0, 0, 5, true, "CAAAB", 1);
+            this.validateCapture(m, 0, 0, 0, 5, "CAAAB");
+    
+            this.validateGroup(m, 1, 0, 1, true, "C", 1);
+            this.validateCapture(m, 1, 0, 0, 1, "C");
+    
+            this.validateGroup(m, 2, 4, 1, true, "B", 1);
+            this.validateCapture(m, 2, 0, 4, 1, "B");
+    
+            this.validateGroup(m, 3, 0, 5, true, "CAAAB", 1);
+            this.validateCapture(m, 3, 0, 0, 5, "CAAAB");
+    
+            this.validateGroup(m, 4, 1, 3, true, "AAA", 1);
+            this.validateCapture(m, 4, 0, 1, 3, "AAA");
+    
+            this.validateGroup(m, 5, 3, 1, true, "A", 3);
+            this.validateCapture(m, 5, 0, 1, 1, "A");
+            this.validateCapture(m, 5, 1, 2, 1, "A");
+            this.validateCapture(m, 5, 2, 3, 1, "A");
+    
+            this.groupsAreEqual(m.getGroups().get(4), m.getGroups().getByName("inner1"), "Named Group is correct");
+        },
+        groupOrderingTest: function () {
+            var $t;
+            var pattern = "(C)(?<group1>A)+(B)";
+            var text = "CAAAB";
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", pattern);
+            var m = rgx.match(text);
+    
+            this.validateMatch(m, 0, 5, "CAAAB", 4, true);
+    
+            var expected = new Bridge.List$1(String)();
+    
+            this.validateGroup(m, 0, 0, 5, true, "CAAAB", 1);
+            this.validateCapture(m, 0, 0, 0, 5, "CAAAB");
+            expected.add("CAAAB");
+    
+            this.validateGroup(m, 1, 0, 1, true, "C", 1);
+            this.validateCapture(m, 1, 0, 0, 1, "C");
+            expected.add("C");
+    
+            this.validateGroup(m, 2, 4, 1, true, "B", 1);
+            this.validateCapture(m, 2, 0, 4, 1, "B");
+            expected.add("B");
+    
+            this.validateGroup(m, 3, 3, 1, true, "A", 3);
+            this.validateCapture(m, 3, 0, 1, 1, "A");
+            this.validateCapture(m, 3, 1, 2, 1, "A");
+            this.validateCapture(m, 3, 2, 3, 1, "A");
+            expected.add("A");
+    
+            var i = 0;
+            $t = Bridge.getEnumerator(m.getGroups());
+            while ($t.moveNext()) {
+                var group = $t.getCurrent();
+                Bridge.Test.Assert.areEqual$1(expected.getItem(i), group.getValue(), "Group[" + i + "].Value is correct");
+                i = (i + 1) | 0;
+            }
+        },
+        repeatingGroupTest: function () {
+            var pattern = "((A(\\d)*A)x(B(\\d)*B)+)";
+            var text = "A123AxBBB";
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", pattern);
+            var m = rgx.match(text);
+    
+            this.validateMatch(m, 0, 8, "A123AxBB", 6, true);
+    
+            this.validateGroup(m, 0, 0, 8, true, "A123AxBB", 1);
+            this.validateCapture(m, 0, 0, 0, 8, "A123AxBB");
+    
+            this.validateGroup(m, 1, 0, 8, true, "A123AxBB", 1);
+            this.validateCapture(m, 1, 0, 0, 8, "A123AxBB");
+    
+            this.validateGroup(m, 2, 0, 5, true, "A123A", 1);
+            this.validateCapture(m, 2, 0, 0, 5, "A123A");
+    
+            this.validateGroup(m, 3, 3, 1, true, "3", 3);
+            this.validateCapture(m, 3, 0, 1, 1, "1");
+            this.validateCapture(m, 3, 1, 2, 1, "2");
+            this.validateCapture(m, 3, 2, 3, 1, "3");
+    
+            this.validateGroup(m, 4, 6, 2, true, "BB", 1);
+            this.validateCapture(m, 4, 0, 6, 2, "BB");
+    
+            this.validateGroup(m, 5, 0, 0, false, "", 0);
+        },
+        zeroResultTest: function () {
+            // Case 1:
+            var pattern = "()";
+            var text = "ABC";
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", pattern);
+            var m = rgx.match(text);
+    
+            this.validateMatch(m, 0, 0, "", 2, true);
+    
+            this.validateGroup(m, 0, 0, 0, true, "", 1);
+            this.validateCapture(m, 0, 0, 0, 0, "");
+    
+            this.validateGroup(m, 1, 0, 0, true, "", 1);
+            this.validateCapture(m, 1, 0, 0, 0, "");
+    
+    
+            // Case 2:
+            pattern = "(B?)";
+            text = "ABC";
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", pattern);
+            m = rgx.match(text);
+    
+            this.validateMatch(m, 0, 0, "", 2, true);
+    
+            this.validateGroup(m, 0, 0, 0, true, "", 1);
+            this.validateCapture(m, 0, 0, 0, 0, "");
+    
+            this.validateGroup(m, 1, 0, 0, true, "", 1);
+            this.validateCapture(m, 1, 0, 0, 0, "");
+    
+    
+            // Case 3:
+            pattern = "(B)?";
+            text = "ABC";
+            rgx = new Bridge.Text.RegularExpressions.Regex("constructor", pattern);
+            m = rgx.match(text);
+    
+            this.validateMatch(m, 0, 0, "", 2, true);
+    
+            this.validateGroup(m, 0, 0, 0, true, "", 1);
+            this.validateCapture(m, 0, 0, 0, 0, "");
+    
+            this.validateGroup(m, 1, 0, 0, false, "", 0);
+        },
+        nonCapturingGroupsTest: function () {
+            var pattern = "(?:Q(?<noncapInner>A)Z)(B)(?:C)";
+            var text = "QAZBC";
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", pattern);
+            var m = rgx.match(text);
+    
+            this.validateMatch(m, 0, 5, "QAZBC", 3, true);
+    
+            this.validateGroup(m, 0, 0, 5, true, "QAZBC", 1);
+            this.validateCapture(m, 0, 0, 0, 5, "QAZBC");
+    
+            this.validateGroup(m, 1, 3, 1, true, "B", 1);
+            this.validateCapture(m, 1, 0, 3, 1, "B");
+    
+            this.validateGroup(m, 2, 1, 1, true, "A", 1);
+            this.validateCapture(m, 2, 0, 1, 1, "A");
+    
         }
     });
     

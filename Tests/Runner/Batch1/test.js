@@ -1471,6 +1471,13 @@
                 QUnit.test("Regex Entity - GroupNameFromNumberTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests.groupNameFromNumberTest);
                 QUnit.test("Regex Entity - GroupNumberFromNameTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests.groupNumberFromNameTest);
                 QUnit.test("Regex Entity - SupportedOptionsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests.supportedOptionsTest);
+                QUnit.test("Regex Entity - MatchNamedGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests.matchNamedGroupTest);
+                QUnit.test("Regex Entity - MatchInnerNamedGroupTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests.matchInnerNamedGroupTest1);
+                QUnit.test("Regex Entity - MatchInnerNamedGroupTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests.matchInnerNamedGroupTest2);
+                QUnit.test("Regex Entity - GroupOrderingTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests.groupOrderingTest);
+                QUnit.test("Regex Entity - RepeatingGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests.repeatingGroupTest);
+                QUnit.test("Regex Entity - ZeroResultTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests.zeroResultTest);
+                QUnit.test("Regex Entity - NonCapturingGroupsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests.nonCapturingGroupsTest);
                 QUnit.test("RegexGroupCollection - CaseDataTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexGroupCollectionTests.caseDataTest);
                 QUnit.test("RegexGroupCollection - GroupCollectionFieldsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexGroupCollectionTests.groupCollectionFieldsTest);
                 QUnit.test("RegexGroupCollection - GroupCollectionForeachTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexGroupCollectionTests.groupCollectionForeachTest);
@@ -10531,6 +10538,34 @@
             supportedOptionsTest: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests);
                 t.getFixture().supportedOptionsTest();
+            },
+            matchNamedGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests);
+                t.getFixture().matchNamedGroupTest();
+            },
+            matchInnerNamedGroupTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests);
+                t.getFixture().matchInnerNamedGroupTest1();
+            },
+            matchInnerNamedGroupTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests);
+                t.getFixture().matchInnerNamedGroupTest2();
+            },
+            groupOrderingTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests);
+                t.getFixture().groupOrderingTest();
+            },
+            repeatingGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests);
+                t.getFixture().repeatingGroupTest();
+            },
+            zeroResultTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests);
+                t.getFixture().zeroResultTest();
+            },
+            nonCapturingGroupsTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests);
+                t.getFixture().nonCapturingGroupsTest();
             }
         }
     });
