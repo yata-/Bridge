@@ -11,10 +11,12 @@ namespace Bridge.ClientTest.BridgeIssues
     [TestFixture(TestNameFormat = "#1012 - {0}")]
     public class Bridge1012
     {
+        private const int DELTA = 3;
+
         [Test(ExpectedCount = 2)]
-        public static void TestSleepIntMinus1()
+        public static void TestSleepZero()
         {
-            var delay = -1;
+            var delay = 0;
             var maxDelay = 100;
 
             var stopwatch = new Stopwatch();
@@ -24,8 +26,8 @@ namespace Bridge.ClientTest.BridgeIssues
 
             stopwatch.Stop();
 
-            Assert.True(stopwatch.ElapsedMilliseconds >= delay, ">= " + delay);
-            Assert.True(stopwatch.ElapsedMilliseconds < maxDelay, "< " + maxDelay);
+            Assert.True(stopwatch.ElapsedMilliseconds >= delay - DELTA, ">= " + delay + ", elapsed " + stopwatch.ElapsedMilliseconds);
+            Assert.True(stopwatch.ElapsedMilliseconds < maxDelay, "< " + maxDelay + ", elapsed " + stopwatch.ElapsedMilliseconds);
         }
 
         [Test(ExpectedCount = 2)]
@@ -41,8 +43,8 @@ namespace Bridge.ClientTest.BridgeIssues
 
             stopwatch.Stop();
 
-            Assert.True(stopwatch.ElapsedMilliseconds >= delay, ">= " + delay);
-            Assert.True(stopwatch.ElapsedMilliseconds < maxDelay, "< " + maxDelay);
+            Assert.True(stopwatch.ElapsedMilliseconds >= delay - DELTA, ">= " + delay + ", elapsed " + stopwatch.ElapsedMilliseconds);
+            Assert.True(stopwatch.ElapsedMilliseconds < maxDelay, "< " + maxDelay + ", elapsed " + stopwatch.ElapsedMilliseconds);
         }
 
         [Test(ExpectedCount = 2)]
@@ -58,8 +60,8 @@ namespace Bridge.ClientTest.BridgeIssues
 
             stopwatch.Stop();
 
-            Assert.True(stopwatch.ElapsedMilliseconds >= delay, ">= " + delay);
-            Assert.True(stopwatch.ElapsedMilliseconds < maxDelay, "< " + maxDelay);
+            Assert.True(stopwatch.ElapsedMilliseconds >= delay - DELTA, ">= " + delay + ", elapsed " + stopwatch.ElapsedMilliseconds);
+            Assert.True(stopwatch.ElapsedMilliseconds < maxDelay, "< " + maxDelay + ", elapsed " + stopwatch.ElapsedMilliseconds);
         }
 
         [Test(ExpectedCount = 3)]
