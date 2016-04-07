@@ -74,10 +74,14 @@
             }
     
             if (Bridge.hasValue(this.timerCallback)) {
+                var myId = this.id;
                 this.timerCallback(this.state);
-            }
     
-            this.runTimer(this.period, false);
+                // timerCallback may call Change(). To prevent double call we can check if timer changed
+                if (Bridge.Nullable.eq(this.id, myId)) {
+                    this.runTimer(this.period, false);
+                }
+            }
         },
         runTimer: function (period, checkDispose) {
             if (checkDispose === void 0) { checkDispose = true; }

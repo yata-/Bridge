@@ -1,7 +1,7 @@
 ﻿/*
  * @version   : 1.12.0 - Bridge.NET
  * @author    : Object.NET, Inc. http://bridge.net/
- * @date      : 2016-04-06
+ * @date      : 2016-04-07
  * @copyright : Copyright (c) 2008-2016, Object.NET, Inc. (http://object.net/). All rights reserved.
  * @license   : See license.txt and https://github.com/bridgedotnet/Bridge.NET/blob/master/LICENSE.
  */
@@ -17420,10 +17420,14 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
             }
 
             if (Bridge.hasValue(this.timerCallback)) {
+                var myId = this.id;
                 this.timerCallback(this.state);
+    
+                // timerCallback may call Change(). To prevent double call we can check if timer changed
+                if (Bridge.Nullable.eq(this.id, myId)) {
+                    this.runTimer(this.period, false);
+                }
             }
-
-            this.runTimer(this.period, false);
         },
         runTimer: function (period, checkDispose) {
             if (checkDispose === void 0) { checkDispose = true; }

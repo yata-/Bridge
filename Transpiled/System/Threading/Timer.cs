@@ -100,10 +100,15 @@ namespace Transpiled.System.Threading
 
             if (this.timerCallback != null)
             {
+                var myId = this.id;
                 this.timerCallback(this.state);
-            }
 
-            this.RunTimer(this.period, false);
+                // timerCallback may call Change(). To prevent double call we can check if timer changed
+                if (this.id == myId)
+                {
+                    this.RunTimer(this.period, false);
+                }
+            }
         }
 
         private bool RunTimer(long period, bool checkDispose = true)
