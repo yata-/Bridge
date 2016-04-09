@@ -3976,6 +3976,26 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1071.D');
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1072', {
+        statics: {
+            testNameForProperty: function () {
+                var c = new Bridge.ClientTest.BridgeIssues.Bridge1072.Class1();
+                Bridge.Test.Assert.notNull(c.getAccessor);
+                Bridge.Test.Assert.notNull(c.setAccessor);
+                Bridge.Test.Assert.areEqual(1, c.getAccessor());
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1072.Class1', {
+        getAccessor: function () {
+            return 1;
+        },
+        setAccessor: function (value) {
+    
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1076', {
         statics: {
             testInlineConstantAsMemberReference: function () {
