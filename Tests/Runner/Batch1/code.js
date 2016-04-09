@@ -4492,6 +4492,49 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1171', {
+        statics: {
+            testLinqEnumerableInList: function () {
+                var $t;
+                var result = Bridge.Array.init(2, null);
+                result[0] = Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge1171.ObjectA(), {
+                    setFieldA: null
+                } );
+                result[1] = Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge1171.ObjectA(), {
+                    setFieldA: 2
+                } );
+    
+                var query = Bridge.Linq.Enumerable.from(result).where($_.Bridge.ClientTest.BridgeIssues.Bridge1171.f1).groupBy($_.Bridge.ClientTest.BridgeIssues.Bridge1171.f2);
+                Bridge.Test.Assert.areEqual(1, query.count());
+    
+                $t = Bridge.getEnumerator(query);
+                while ($t.moveNext()) {
+                    var key = $t.getCurrent();
+                    Bridge.Test.Assert.areEqual(1, new Bridge.List$1(Bridge.ClientTest.BridgeIssues.Bridge1171.ObjectA)(key).getCount());
+                }
+            }
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1171", $_)
+    
+    Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge1171, {
+        f1: function (x) {
+            return Bridge.Nullable.hasValue(x.getFieldA());
+        },
+        f2: function (x) {
+            return Bridge.Nullable.getValueOrDefault(x.getFieldA(), 0);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1171.ObjectA', {
+        config: {
+            properties: {
+                FieldA: null
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
