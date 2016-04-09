@@ -70,16 +70,18 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNode", {
         var wasLastString = false;
         var optionsLast = 0;
         var optionsAt;
+        var at;
+        var prev;
         var i;
         var j;
+        var k;
  
         if (this._children == null) {
             return new Bridge.Text.RegularExpression.RegexNode(Bridge.Text.RegularExpressions.RegexNode.Empty, this._options);
         }
 
         for (i = 0, j = 0; i < this._children.length; i++, j++) {
-            var at;
-            var prev;
+            
  
             at = this._children[i];
  
@@ -88,7 +90,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNode", {
             }
 
             if (at._type === Bridge.Text.RegularExpressions.RegexNode.Concatenate && at._isRightToLeft()) {
-                for (var k = 0; k < at._children.length; k++) {
+                for (k = 0; k < at._children.length; k++) {
                     at._children[k]._next = this;
                 }
 

@@ -66,8 +66,12 @@ Bridge.define("Bridge.Text.RegularExpressions.MatchCollection", {
             throw new Bridge.IndexOutOfRangeException();
         }
 
-        for (var i = arrayIndex, j = 0; j < count; i++, j++) {
-            var match = this._getMatch(j);
+        var match;
+        var i;
+        var j;
+
+        for (i = arrayIndex, j = 0; j < count; i++, j++) {
+            match = this._getMatch(j);
             Bridge.Array.set(array, match, [i]);
         }
     },

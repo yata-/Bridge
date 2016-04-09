@@ -54,8 +54,12 @@ Bridge.define("Bridge.Text.RegularExpressions.GroupCollection", {
             throw new Bridge.IndexOutOfRangeException();
         }
 
-        for (var i = arrayIndex, j = 0; j < count; i++, j++) {
-            var group = this._getGroup(j);
+        var group;
+        var i;
+        var j;
+
+        for (i = arrayIndex, j = 0; j < count; i++, j++) {
+            group = this._getGroup(j);
             Bridge.Array.set(array, group, [i]);
         }
     },
@@ -105,10 +109,15 @@ Bridge.define("Bridge.Text.RegularExpressions.GroupCollection", {
                 groups[0] = this._match;
             }
 
-            for (var i = 0; i < groups.length-1; i++) {
-                var matchText = this._match._text;
-                var matchCaps = this._match._matches[i + 1];
-                var matchCapcount = this._match._matchcount[i + 1];
+            var matchText;
+            var matchCaps;
+            var matchCapcount;
+            var i;
+
+            for (i = 0; i < groups.length-1; i++) {
+                matchText = this._match._text;
+                matchCaps = this._match._matches[i + 1];
+                matchCapcount = this._match._matchcount[i + 1];
                 groups[i+1] = new Bridge.Text.RegularExpressions.Group(matchText, matchCaps, matchCapcount);
             }
             this._groups = groups;

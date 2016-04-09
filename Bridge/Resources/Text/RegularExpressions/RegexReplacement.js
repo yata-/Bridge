@@ -76,7 +76,8 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
                         sb += sb.slice(0, prevat);
                     }
 
-                    for (var i = al.length - 1; i >= 0; i--) {
+                    var i;
+                    for (i = al.length - 1; i >= 0; i--) {
                         sb += al[i];
                     }
                 }
@@ -206,9 +207,11 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
         var strings = [];
         var rules = [];
         var slot;
+        var child;
+        var i;
 
-        for (var i = 0; i < concat.childCount(); i++) {
-            var child = concat.child(i);
+        for (i = 0; i < concat.childCount(); i++) {
+            child = concat.child(i);
 
             switch (child._type) {
                 case Bridge.Text.RegularExpressions.RegexNode.Multi:
@@ -321,7 +324,8 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
                     sb += sb.slice(0, prevat);
                 }
 
-                for (var i = al.length - 1; i >= 0; i--) {
+                var i;
+                for (i = al.length - 1; i >= 0; i--) {
                     sb += al[i];
                 }
             }
@@ -332,9 +336,11 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
 
     _replacementImpl: function (sb, match) {
         var specials = Bridge.Text.RegularExpressions.RegexReplacement.Specials;
+        var r;
+        var i;
 
-        for (var i = 0; i < this._rules.length; i++) {
-            var r = this._rules[i];
+        for (i = 0; i < this._rules.length; i++) {
+            r = this._rules[i];
 
             if (r >= 0) {
                 // string lookup
@@ -368,9 +374,11 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
 
     _replacementImplRTL: function (al, match) {
         var specials = Bridge.Text.RegularExpressions.RegexReplacement.Specials;
+        var r;
+        var i;
 
-        for (var i = _rules.length - 1; i >= 0; i--) {
-            var r = this._rules[i];
+        for (i = _rules.length - 1; i >= 0; i--) {
+            r = this._rules[i];
 
             if (r >= 0) {
                 // string lookup

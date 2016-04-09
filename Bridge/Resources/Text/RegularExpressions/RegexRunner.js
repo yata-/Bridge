@@ -81,18 +81,23 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
         }
 
         var match = new Bridge.Text.RegularExpressions.Match(this._runregex, jsMatch.groups.length, this._runtext, 0, this._runtext.length, this._runtextstart);
+        var jsGroup;
+        var jsCapture;
+        var grOrder;
+        var i;
+        var j;
 
-        for (var i = 0; i < jsMatch.groups.length; i++) {
-            var jsGroup = jsMatch.groups[i];
-            for (var j = 0; j < jsGroup.captures.length; j++) {
-                var jsCapture = jsGroup.captures[j];
+        for (i = 0; i < jsMatch.groups.length; i++) {
+            jsGroup = jsMatch.groups[i];
 
-                // Paste group index/length according to group ordering:
-                var grOrder = 0;
-                if (jsGroup.descriptor != null) {
-                    grOrder = this._runregex.groupNumberFromName(jsGroup.descriptor.name);
-                }
+            // Paste group index/length according to group ordering:
+            grOrder = 0;
+            if (jsGroup.descriptor != null) {
+                grOrder = this._runregex.groupNumberFromName(jsGroup.descriptor.name);
+            }
 
+            for (j = 0; j < jsGroup.captures.length; j++) {
+                jsCapture = jsGroup.captures[j];
                 match._addMatch(grOrder, jsCapture.capIndex, jsCapture.capLength);
             }
         }

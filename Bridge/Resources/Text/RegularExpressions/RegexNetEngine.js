@@ -55,14 +55,17 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
 
             var sBracketLvl = 0;
             var isEscape = false;
+            var parent;
+            var ch;
+            var i;
 
-            for (var i = 0; i < pattern.length; i++) {
+            for (i = 0; i < pattern.length; i++) {
                 if (isEscape) {
                     isEscape = false;
                     continue;
                 }
 
-                var ch = pattern[i];
+                ch = pattern[i];
                 if (ch === "\\") {
                     isEscape = true;
                     continue;
@@ -82,7 +85,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
 
                 if (ch === "(") {
                     if (sBracketLvl === 0) {
-                        var parent = nestedGroups.length > 0 ? nestedGroups[nestedGroups.length - 1] : null;
+                        parent = nestedGroups.length > 0 ? nestedGroups[nestedGroups.length - 1] : null;
 
                         group = {
                             exprIndex: i,
@@ -114,7 +117,9 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
             }
 
             var groupId = 1;
-            for (var j = 0; j < groups.length; j++) {
+            var j;
+
+            for (j = 0; j < groups.length; j++) {
                 if (groups[j].constructs.name1 != null) {
                     //TODO: check balancing case: name1-name2
                     groups[j].name = groups[j].constructs.name1;
@@ -237,9 +242,12 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
             return constructs;
         },
 
-        _parseImnsx: function(prefix, imnsxString, value) {
-            for (var i = 0; i < imnsxString.length; i++) {
-                var ch = imnsxString[i];
+        _parseImnsx: function (prefix, imnsxString, value) {
+            var ch;
+            var i;
+
+            for (i = 0; i < imnsxString.length; i++) {
+                ch = imnsxString[i];
                 if (ch === "i") {
                     prefix.isIgnoreCase = value;
                 }
@@ -317,11 +325,16 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
                 lastIndex: 0
             };
 
+            var ch;
+            var isAllowed;
+            var i;
+
+
             while (index < endIndex) {
 
-                var ch = str[index];
-                var isAllowed = false;
-                for (var i = 0; i < allowedChars.length; i++) {
+                ch = str[index];
+                isAllowed = false;
+                for (i = 0; i < allowedChars.length; i++) {
                     if (ch === allowedChars[i]) {
                         isAllowed = true;
                         break;
@@ -349,10 +362,13 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
                 lastIndex: 0
             };
 
+            var ch;
+            var i;
+
             while (index < endIndex) {
 
-                var ch = str[index];
-                for (var i = 0; i < unallowedChars.length; i++) {
+                ch = str[index];
+                for (i = 0; i < unallowedChars.length; i++) {
                     if (ch === unallowedChars[i]) {
                         res.lastCh = ch;
                         res.lastIndex = index;
@@ -451,7 +467,12 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
             };
 
             var nonCapturingCount = 0;
-            for (var i = 1; i < total.length + nonCapturingCount; i++) {
+            var group;
+            var parentCapture;
+            var i;
+            var j;
+
+            for (i = 1; i < total.length + nonCapturingCount; i++) {
                 this._checkTimeout();
 
                 var groupDesc = groupDescs[i - 1];
@@ -459,7 +480,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
                     nonCapturingCount++;
                 }
 
-                var group = {
+                group = {
                     descriptor: groupDesc,
                     capIndex: 0,
                     capLength: 0,
@@ -486,10 +507,10 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
                     var parentGroup = descToGroupMap[parentGroupDesc.exprIndex];
                     if (parentGroup.success === true) {
                         // Match the group in every single parent capture:
-                        for (var j = 0; j < parentGroup.captures.length; j++) {
+                        for (j = 0; j < parentGroup.captures.length; j++) {
                             this._checkTimeout();
 
-                            var parentCapture = parentGroup.captures[j];
+                            parentCapture = parentGroup.captures[j];
                             this._matchGroup(parentCapture.ctx, group, parentCapture.capIndex);
 
                             // Match the group's captures:
@@ -513,10 +534,14 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
             }
 
             // Remove internal fields:
-            for (var k = 0; k < match.groups.length; k++) {
-                var gr = match.groups[k];
+            var k;
+            var gr;
+            var m;
+
+            for (k = 0; k < match.groups.length; k++) {
+                gr = match.groups[k];
                 delete gr.ctx;
-                for (var m = 0; m < gr.captures.length; m++) {
+                for (m = 0; m < gr.captures.length; m++) {
                     delete gr.captures[m].ctx;
                 }
             }
@@ -587,8 +612,11 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
                     throw new Bridge.InvalidOperationException("Can't identify captures for the already matched group.");
                 }
 
-                for (var i = 0; i < capMatches.length; i++) {
-                    var capMatch = capMatches[i];
+                var capMatch;
+                var i;
+
+                for (i = 0; i < capMatches.length; i++) {
+                    capMatch = capMatches[i];
                     group.captures.push({
                         capIndex: capMatch.index + group.capIndex,
                         capLength: capMatch[0].length,
@@ -600,7 +628,8 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
 
         // Deep copy group context to the each capture:
         if (group.ctx != null) {
-            for (var j = 0; j < group.captures.length; j++) {
+            var j;
+            for (j = 0; j < group.captures.length; j++) {
                 group.captures[j].ctx = {
                     text: group.captures[j].value,
                     textOffset: 0,
@@ -663,18 +692,26 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
         // Remove group names (JS RegExp does not support them):
 
         var updatedPattern = this._pattern;
-        for (var i = 0; i < this._groupDescriptors.length; i++) {
-            var gr = this._groupDescriptors[i];
+        var gr;
+        var name;
+        var nameConstrLen;
+        var parent;
+        var nextGr;
+        var i;
+        var j;
+
+        for (i = 0; i < this._groupDescriptors.length; i++) {
+            gr = this._groupDescriptors[i];
             if (gr.hasName) {
                 // Remove name from the group:
-                var name = gr.constructs.name1;
-                var nameConstrLen = 3 + name.length;
+                name = gr.constructs.name1;
+                nameConstrLen = 3 + name.length;
                 gr.expr = this._removeSubstring(gr.expr, 1, nameConstrLen);
                 gr.exprFull = gr.expr + gr.quantifier;
                 gr.exprLength -= nameConstrLen;
 
                 // Update parent groups (remove name from their templates as well)
-                var parent = gr.parentGroup;
+                parent = gr.parentGroup;
                 while (parent != null) {
                     parent.exprLength -= nameConstrLen;
                     parent.expr = this._removeSubstring(parent.expr, gr.exprIndex + 1 - parent.exprIndex, nameConstrLen);
@@ -684,8 +721,8 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
 
                 // Update all consequent groups (shift their indexes according to the length of the removed group name)
                 updatedPattern = this._removeSubstring(updatedPattern, gr.exprIndex + 1, nameConstrLen);
-                for (var j = i + 1; j < this._groupDescriptors.length; j++) {
-                    var nextGr = this._groupDescriptors[j];
+                for (j = i + 1; j < this._groupDescriptors.length; j++) {
+                    nextGr = this._groupDescriptors[j];
                     nextGr.exprIndex -= nameConstrLen;
                 }
             }

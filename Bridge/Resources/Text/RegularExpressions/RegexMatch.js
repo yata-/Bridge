@@ -23,9 +23,11 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
             // Populate all groups by looking at each one
             var groups = match.getGroups();
             var groupsCount = groups.getCount();
+            var group;
+            var i;
 
-            for (var i = 0; i < groupsCount; i++) {
-                var group = groups.get(i);
+            for (i = 0; i < groupsCount; i++) {
+                group = groups.get(i);
                 Bridge.Text.RegularExpressions.Group.synchronized(group);
             }
 
@@ -53,7 +55,9 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
 
         this._matchcount = [];
         this._matchcount.length = capcount;
-        for (var i = 0; i < capcount; i++) {
+
+        var i;
+        for (i = 0; i < capcount; i++) {
             this._matchcount[i] = 0;
         }
 
@@ -112,8 +116,9 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
         if (capcount * 2 + 2 > this._matches[cap].length) {
             var oldmatches = this._matches[cap];
             var newmatches = new Array(capcount * 8);
+            var j;
 
-            for (var j = 0; j < capcount * 2; j++) {
+            for (j = 0; j < capcount * 2; j++) {
                 newmatches[j] = oldmatches[j];
             }
 
@@ -142,13 +147,14 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
             // until we find a balance captures.  Then we check each subsequent entry.  If it's a balance
             // capture (it's negative), we decrement j.  If it's a real capture, we increment j and copy 
             // it down to the last free position. 
-            for (var cap = 0; cap < this._matchcount.length; cap++) {
+            var cap;
+            var i;
+            var j;
+
+            for (cap = 0; cap < this._matchcount.length; cap++) {
 
                 var limit = this._matchcount[cap] * 2;
                 var matcharray = this._matches[cap];
-
-                var i;
-                var j;
 
                 for (i = 0; i < limit; i++) {
                     if (matcharray[i] < 0) {

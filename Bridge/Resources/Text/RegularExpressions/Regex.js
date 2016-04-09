@@ -297,7 +297,9 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
             var result = [];
             var max = this._capsize;
-            for (var i = 0; i < max; i++) {
+            var i;
+
+            for (i = 0; i < max; i++) {
                 result[i] = Bridge.Convert.toString(i, invariantCulture, Bridge.Convert.typeCodes.Int32);
             }
 
@@ -309,19 +311,22 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
     },
 
     getGroupNumbers: function () {
-        var result;
         var caps = this._caps;
- 
+        var result;
+        var key;
+        var max;
+        var i;
+
         if (caps == null) {
             result = [];
-            var max = this._capsize;
-            for (var i = 0; i < max; i++) {
+            max = this._capsize;
+            for (i = 0; i < max; i++) {
                 result.push(i);
             }
         }
         else {
             result = [];
-            for (var key in caps) {
+            for (key in caps) {
                 if(caps.hasOwnProperty(key)) {
                     result[caps[key]] = key;
                 }
@@ -331,17 +336,15 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         return result;
     },
 
-    groupNameFromNumber: function(i) {
-
+    groupNameFromNumber: function (i) {
         if (this._capslist == null) {
             if (i >= 0 && i < this._capsize) {
                 var invariantCulture = Bridge.CultureInfo.invariantCulture;
                 return Bridge.Convert.toString(i, invariantCulture, Bridge.Convert.typeCodes.Int32);
             }
+
             return "";
-
         } else {
-
             if (this._caps != null) {
                 var obj = this._caps[i];
                 if (obj == null) {
@@ -374,8 +377,11 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
         // convert to an int if it looks like a number
         var result = 0;
-        for (var i = 0; i < name.Length; i++) {
-            var ch = name[i];
+        var ch;
+        var i;
+
+        for (i = 0; i < name.Length; i++) {
+            ch = name[i];
 
             if (ch > "9" || ch < "0") {
                 return -1;

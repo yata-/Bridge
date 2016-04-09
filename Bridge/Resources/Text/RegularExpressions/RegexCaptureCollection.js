@@ -52,8 +52,12 @@ Bridge.define("Bridge.Text.RegularExpressions.CaptureCollection", {
             throw new Bridge.IndexOutOfRangeException();
         }
 
-        for (var i = arrayIndex, j = 0; j < this._capcount; i++, j++) {
-            var capture = this.get(j);
+        var capture;
+        var i;
+        var j;
+
+        for (i = arrayIndex, j = 0; j < this._capcount; i++, j++) {
+            capture = this.get(j);
             Bridge.Array.set(array, capture, [i]);
         }
     },
@@ -66,8 +70,10 @@ Bridge.define("Bridge.Text.RegularExpressions.CaptureCollection", {
         // first time a capture is accessed, compute them all
         if (this._captures == null) {
             var captures = [];
+            var j;
+
             captures.length = this._capcount;
-            for (var j = 0; j < this._capcount - 1; j++) {
+            for (j = 0; j < this._capcount - 1; j++) {
                 var index = this._group._caps[j * 2];
                 var length = this._group._caps[j * 2 + 1];
                 captures[j] = new Bridge.Text.RegularExpressions.Capture(this._group._text, index, length);

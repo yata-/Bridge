@@ -19,12 +19,16 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
             //  ' a b c d e f g h i j k l m n o p q r s t u v w x y z { | } ~ 
                 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,4,0,0,0],
 
-        escape: function(input) {
-            for (var i = 0; i < input.length; i++) {
+        escape: function (input) {
+            var sb;
+            var ch;
+            var lastpos;
+            var i;
+
+            for (i = 0; i < input.length; i++) {
                 if (Bridge.Text.RegularExpressions.RegexParser._isMetachar(input[i])) {
-                    var sb = "";
-                    var ch = input[i];
-                    var lastpos;
+                    sb = "";
+                    ch = input[i];
 
                     sb += input.slice(0, i);
 
@@ -69,14 +73,17 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
             return input;
         },
 
-        unescape: function(input) {
-            for (var i = 0; i < input.length; i++) {
-                if (input[i] === "\\") {
-                    var sb = "";
-                    var culture = Bridge.CultureInfo.invariantCulture;
-                    var p = new Bridge.Text.RegularExpressions.RegexParser(culture);
+        unescape: function (input) {
+            var culture = Bridge.CultureInfo.invariantCulture;
+            var sb;
+            var lastpos;
+            var i;
+            var p;
 
-                    var lastpos;
+            for (i = 0; i < input.length; i++) {
+                if (input[i] === "\\") {
+                    sb = "";
+                    p = new Bridge.Text.RegularExpressions.RegexParser(culture);
                     p._setPattern(input);
  
                     sb += input.slice(0, i);
@@ -159,14 +166,17 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
 
     _scanReplacement: function () {
         this._concatenation = new Bridge.Text.RegularExpressions.RegexNode(Bridge.Text.RegularExpressions.RegexNode.Concatenate, this._options);
+        var c;
+        var startpos;
+        var dollarNode;
 
         while (true) {
-            var c = this._charsRight();
+            c = this._charsRight();
             if (c === 0) {
                 break;
             }
 
-            var startpos = this._textpos();
+            startpos = this._textpos();
             while (c > 0 && this._rightChar() !== "$") {
                 this._moveRight();
                 c--;
@@ -176,7 +186,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
 
             if (c > 0) {
                 if (this._moveRightGetChar() === "$") {
-                    var dollarNode = this._scanDollar();
+                    dollarNode = this._scanDollar();
                     this._concatenation.addChild(dollarNode);
                 }
             }
@@ -237,6 +247,8 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
         // Try to parse backreference: \1 or \{1} or \{cap}
 
         var capnum;
+        var digit;
+
         if (ch >= "0" && ch <= "9") {
 
             if (!angled && this._useOptionE()) {
@@ -250,7 +262,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
                 }
 
                 while (this._charsRight() > 0 && (ch = this._rightChar()) >= "0" && ch <= "9") {
-                    var digit = ch - "0";
+                    digit = ch - "0";
                     if (newcapnum > (maxValueDiv10) || (newcapnum === (maxValueDiv10) && digit > (maxValueMod10))) {
                         throw this._makeException("Capture group is out of range.");
                     }
@@ -334,14 +346,16 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
         var maxValueDiv10 = 214748364;  // Int32.MaxValue / 10;
         var maxValueMod10 = 7;          // Int32.MaxValue % 10;
         var i = 0;
+        var ch;
+        var d;
 
         while (this._charsRight() > 0) {
-            var ch = this._rightChar();
+            ch = this._rightChar();
             if (ch < "0" || ch > "9") {
                 break;
             }
 
-            var d = ch - "0";
+            d = ch - "0";
 
             this._moveRight();
             if (i > (maxValueDiv10) || (i === (maxValueDiv10) && d > (maxValueMod10))) {
@@ -426,13 +440,11 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
     },
 
     _scanControl: function () {
-        var ch;
- 
         if (this._charsRight() <= 0) {
             throw this._makeException("Missing control character.");
         }
  
-        ch = this._moveRightGetChar();
+        var ch = this._moveRightGetChar();
  
         // \ca interpreted as \cA
 
