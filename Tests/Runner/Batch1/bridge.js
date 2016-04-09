@@ -11268,7 +11268,9 @@ Bridge.define('Bridge.ReadOnlyCollection$1', function (T) {
             }
         };
     };
-    IEnumerator.$$inheritors = [Bridge.IDisposable];
+    
+    Bridge.IDisposable.$$inheritors = Bridge.IDisposable.$$inheritors || [];
+    Bridge.IDisposable.$$inheritors.push(IEnumerator);
 
     // for tryGetNext
     var Yielder = function () {
@@ -11287,7 +11289,8 @@ Bridge.define('Bridge.ReadOnlyCollection$1', function (T) {
     var Enumerable = function (getEnumerator) {
         this.getEnumerator = getEnumerator;
     };
-    Enumerable.$$inheritors = [Bridge.IEnumerable];
+    Bridge.IEnumerable.$$inheritors = Bridge.IEnumerable.$$inheritors || [];
+    Bridge.IEnumerable.$$inheritors.push(Enumerable);
 
     // Utility
 
@@ -14001,7 +14004,9 @@ Bridge.define('Bridge.ReadOnlyCollection$1', function (T) {
             return this.toEnumerable().getEnumerator();
         };
     };
-    Lookup.$$inheritors = [Bridge.IEnumerable];
+    
+    Bridge.IEnumerable.$$inheritors = Bridge.IEnumerable.$$inheritors || [];
+    Bridge.IEnumerable.$$inheritors.push(Lookup);
 
     var Grouping = function (groupKey, elements) {
         this.key = function () {
