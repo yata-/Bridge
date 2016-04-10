@@ -1,8 +1,8 @@
-Bridge.define('Bridge.Comparer$1', function(T) {
+Bridge.define('Bridge.Comparer$1', function (T) {
     return {
         inherits: [Bridge.IComparer$1(T)],
 
-        constructor: function(fn) {
+        constructor: function (fn) {
             this.fn = fn;
             this.compare = fn;
         }

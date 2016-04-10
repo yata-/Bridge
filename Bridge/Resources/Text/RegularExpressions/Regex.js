@@ -134,7 +134,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
     _capslist: null,
 
     config: {
-        init: function() {
+        init: function () {
             this._options = Bridge.Text.RegularExpressions.RegexOptions.None;
         }
     },
@@ -173,6 +173,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
         // Check if the specified options are supported.
         var supportedOptions = Bridge.Text.RegularExpressions.RegexOptions.IgnoreCase | Bridge.Text.RegularExpressions.RegexOptions.Multiline;
+
         if ((options | supportedOptions) !== supportedOptions) {
             throw new Bridge.NotSupportedException("Specified Regex options are not supported.");
         }
@@ -201,6 +202,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         // Add group without names first (their names are indexes)
         for (i = 0; i < groupInfos.length; i++) {
             groupInfo = groupInfos[i];
+
             if (!groupInfo.hasName && !groupInfo.constructs.isNonCapturing) {
                 this._capslist.push(groupInfo.name);
                 this._capnames[groupInfo.name] = this._capslist.length - 1;
@@ -210,6 +212,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         // Then add named groups:
         for (i = 0; i < groupInfos.length; i++) {
             groupInfo = groupInfos[i];
+
             if (groupInfo.hasName) {
                 this._capslist.push(groupInfo.name);
                 this._capnames[groupInfo.name] = this._capslist.length - 1;
@@ -235,6 +238,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         }
 
         var startat = this.getRightToLeft() ? input.length : 0;
+
         return this.isMatch$1(input, startat);
     },
 
@@ -245,6 +249,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
 
         var match = this._runner.run(this, true, -1, input, 0, input.length, startat);
+
         return match == null;
     },
 
@@ -254,6 +259,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         }
 
         var startat = this.getRightToLeft() ? input.length : 0;
+
         return this.match$1(input, startat);
     },
 
@@ -271,6 +277,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         }
 
         var startat = this.getRightToLeft() ? beginning + length : beginning;
+
         return this._runner.run(this, false, -1, input, beginning, length, startat);
     },
 
@@ -280,6 +287,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         }
 
         var startat = this.getRightToLeft() ? input.length : 0;
+
         return this.matches$1(input, startat);
     },
 
@@ -297,13 +305,13 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
             var result = [];
             var max = this._capsize;
+
             for (var i = 0; i < max; i++) {
                 result[i] = Bridge.Convert.toString(i, invariantCulture, Bridge.Convert.typeCodes.Int32);
             }
 
             return result;
-        }
-        else {
+        } else {
             return this._capslist.slice();
         }
     },
@@ -315,14 +323,15 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         if (caps == null) {
             result = [];
             var max = this._capsize;
+
             for (var i = 0; i < max; i++) {
                 result.push(i);
             }
-        }
-        else {
+        } else {
             result = [];
+
             for (var key in caps) {
-                if(caps.hasOwnProperty(key)) {
+                if (caps.hasOwnProperty(key)) {
                     result[caps[key]] = key;
                 }
             }
@@ -331,22 +340,25 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         return result;
     },
 
-    groupNameFromNumber: function(i) {
+    groupNameFromNumber: function (i) {
 
         if (this._capslist == null) {
             if (i >= 0 && i < this._capsize) {
                 var invariantCulture = Bridge.CultureInfo.invariantCulture;
+
                 return Bridge.Convert.toString(i, invariantCulture, Bridge.Convert.typeCodes.Int32);
             }
+
             return "";
 
         } else {
-
             if (this._caps != null) {
                 var obj = this._caps[i];
+
                 if (obj == null) {
                     return "";
                 }
+
                 return parseInt(obj);
             }
 
@@ -358,7 +370,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         }
     },
 
-    groupNumberFromName: function(name) {
+    groupNumberFromName: function (name) {
         if (name == null) {
             throw new Bridge.ArgumentNullException("name");
         }
@@ -366,14 +378,17 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         // look up name if we have a hashtable of names
         if (this._capnames != null) {
             var ret = this._capnames[name];
+
             if (ret == null) {
                 return -1;
             }
+
             return parseInt(ret);
         }
 
         // convert to an int if it looks like a number
         var result = 0;
+
         for (var i = 0; i < name.Length; i++) {
             var ch = name[i];
 
@@ -399,6 +414,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         }
 
         var startat = this.getRightToLeft() ? input.length : 0;
+
         return this.replace$2(input, replacement, -1, startat);
     },
 
@@ -408,6 +424,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         }
 
         var startat = this.getRightToLeft() ? input.length : 0;
+
         return this.replace$2(input, replacement, count, startat);
     },
 
@@ -415,6 +432,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         if (input == null) {
             throw new Bridge.ArgumentNullException("input");
         }
+
         if (replacement == null) {
             throw new Bridge.ArgumentNullException("replacement");
         }
@@ -440,6 +458,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         }
 
         var startat = this.getRightToLeft() ? input.length : 0;
+
         return this.replace$5(input, evaluator, count, startat);
     },
 
@@ -457,6 +476,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         }
 
         var startat = this.getRightToLeft() ? input.length : 0;
+
         return this.split$2(input, 0, startat);
     },
 
@@ -466,6 +486,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         }
 
         var startat = this.getRightToLeft() ? input.length : 0;
+
         return this.split$2(input, count, startat);
     },
 
@@ -477,7 +498,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         return Bridge.Text.RegularExpressions.RegexReplacement.split(this, input, count, startat);
     },
 
-    _validateMatchTimeout: function(matchTimeout) {
+    _validateMatchTimeout: function (matchTimeout) {
         var ms = matchTimeout.getTotalMilliseconds();
 
         if (-1 === ms) {

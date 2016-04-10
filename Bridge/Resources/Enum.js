@@ -9,7 +9,7 @@
             return (n1.charAt(0).toLowerCase() + n1.slice(1)) === (n2.charAt(0).toLowerCase() + n2.slice(1));
         },
 
-        checkEnumType: function(enumType) {
+        checkEnumType: function (enumType) {
             if (!enumType) {
                 throw new Bridge.ArgumentNullException("enumType");
             }
@@ -19,11 +19,11 @@
             }
         },
 
-        toName: function(name) {
+        toName: function (name) {
             return name.charAt(0).toUpperCase() + name.slice(1);
         },
 
-        parse: function(enumType, s, ignoreCase, silent) {
+        parse: function (enumType, s, ignoreCase, silent) {
             var values = enumType;
 
             Bridge.Enum.checkEnumType(enumType);
@@ -157,7 +157,7 @@
             return null;
         },
 
-        hasFlag: function(value, flag) {
+        hasFlag: function (value, flag) {
             return !!(value & flag);
         },
 

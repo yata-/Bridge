@@ -34,7 +34,7 @@
     Bridge.Decimal.$$inherits = [];
     Bridge.Class.addExtend(Bridge.Decimal, [Bridge.IComparable, Bridge.IFormattable, Bridge.IComparable$1(Bridge.Decimal), Bridge.IEquatable$1(Bridge.Decimal)]);
 
-    Bridge.Decimal.instanceOf = function(instance) {
+    Bridge.Decimal.instanceOf = function (instance) {
         return instance instanceof Bridge.Decimal;
     };
 
@@ -132,7 +132,7 @@
         return d;
     };
 
-    Bridge.Decimal.toDecimalPlaces = function(obj, decimals, mode) {
+    Bridge.Decimal.toDecimalPlaces = function (obj, decimals, mode) {
         obj = Bridge.Decimal.create(obj);
         var d = new Bridge.Decimal(obj.value.toDecimalPlaces(decimals, mode));
         return d;

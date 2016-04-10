@@ -14,7 +14,7 @@ Bridge.define("Bridge.DayOfWeek", {
 });
 
 var date = {
-        getDefaultValue: function() {
+        getDefaultValue: function () {
             return new Date(-864e13);
         },
 
@@ -30,7 +30,7 @@ var date = {
             return new Date(d.getFullYear(), d.getMonth(), d.getDate());
         },
 
-        timeOfDay: function(dt) {
+        timeOfDay: function (dt) {
             return new Bridge.TimeSpan((dt - new Date(dt.getFullYear(), dt.getMonth(), dt.getDate())) * 10000);
         },
 
@@ -779,11 +779,11 @@ var date = {
             return result;
         },
 
-        subdt: function(d, t) {
+        subdt: function (d, t) {
             return Bridge.hasValue(d) && Bridge.hasValue(t) ? this.dateAddSubTimespan(d, t, -1) : null;
         },
 
-        adddt: function(d, t) {
+        adddt: function (d, t) {
             return Bridge.hasValue(d) && Bridge.hasValue(t) ? this.dateAddSubTimespan(d, t, 1) : null;
         },
 
