@@ -3980,19 +3980,23 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         statics: {
             testNameForProperty: function () {
                 var c = new Bridge.ClientTest.BridgeIssues.Bridge1072.Class1();
+    
                 Bridge.Test.Assert.notNull(c.getAccessor);
                 Bridge.Test.Assert.notNull(c.setAccessor);
-                Bridge.Test.Assert.areEqual(1, c.getAccessor());
+    
+                c.setAccessor(7);
+                Bridge.Test.Assert.areEqual(7, c.getAccessor());
             }
         }
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1072.Class1', {
+        data: 0,
         getAccessor: function () {
-            return 1;
+            return this.data;
         },
         setAccessor: function (value) {
-    
+            this.data = value;
         }
     });
     

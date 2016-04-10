@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Bridge.Test;
 
 namespace Bridge.ClientTest.BridgeIssues
@@ -12,24 +10,28 @@ namespace Bridge.ClientTest.BridgeIssues
         public static void TestNameForProperty()
         {
             var c = new Class1();
-           Assert.NotNull(c["getAccessor"]);
-           Assert.NotNull(c["setAccessor"]);
-           Assert.AreEqual(1, c.Prop1);
+
+            Assert.NotNull(c["getAccessor"]);
+            Assert.NotNull(c["setAccessor"]);
+
+            c.Prop1 = 7;
+            Assert.AreEqual(7, c.Prop1);
         }
 
         class Class1
         {
+            private int data;
             public int Prop1
             {
                 [Name("getAccessor")]
                 get
                 {
-                    return 1;
+                    return this.data;
                 }
                 [Name("setAccessor")]
                 set
                 {
-
+                    this.data = value;
                 }
             }
         }
