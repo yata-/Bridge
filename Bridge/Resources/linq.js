@@ -1865,7 +1865,7 @@
     // Overload:function (selector)
     Enumerable.prototype.sum = function (selector) {
         if (selector == null) selector = Functions.Identity;
-        return this.select(selector).aggregate(0, function(a, b) {
+        return this.select(selector).aggregate(0, function (a, b) {
              if (a instanceof Bridge.Decimal || Bridge.Long.is64Bit(a)) {
                  return a.add(b);
              }
