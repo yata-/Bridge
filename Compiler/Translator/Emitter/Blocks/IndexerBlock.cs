@@ -63,7 +63,7 @@ namespace Bridge.Translator
         protected void VisitIndexerExpression()
         {
             IndexerExpression indexerExpression = this.IndexerExpression;
-
+            int pos = this.Emitter.Output.Length;
             var resolveResult = this.Emitter.Resolver.ResolveNode(indexerExpression, this.Emitter);
             var memberResolveResult = resolveResult as MemberResolveResult;
 
@@ -72,6 +72,7 @@ namespace Bridge.Translator
             if (arrayAccess != null && arrayAccess.Indexes.Count > 1)
             {
                 this.EmitMultiDimArrayAccess(indexerExpression);
+                Helpers.CheckValueTypeClone(resolveResult, indexerExpression, this, pos);
                 return;
             }
 
@@ -108,6 +109,8 @@ namespace Bridge.Translator
             {
                 this.EmitSingleDimArrayIndexer(indexerExpression);
             }
+
+            Helpers.CheckValueTypeClone(resolveResult, indexerExpression, this, pos);
         }
 
         protected virtual IndexerAccessor GetIndexerAccessor(IProperty member, bool setter)
