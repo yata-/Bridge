@@ -3103,7 +3103,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     x: 5,
                     y: 7
                 } );
-                var c = b.test2(a.$clone());
+                var c = b.test2(a.$clone()).$clone();
     
                 Bridge.Test.Assert.areEqual$1(305, c.x, "c.x 305");
                 Bridge.Test.Assert.areEqual$1(407, c.y, "c.y 407");
@@ -4489,6 +4489,52 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge1160A, {
         f1: function (message) {
             return message;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1180', {
+        statics: {
+            testStructClone: function () {
+                var list = new Bridge.List$1(Bridge.ClientTest.BridgeIssues.Bridge1180.Vector2)();
+                list.add(Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge1180.Vector2(), {
+                    x: 0.0,
+                    y: 1.0
+                } ));
+    
+                var vec = list.getItem(0).$clone();
+                vec.x = 5.0;
+    
+                Bridge.Test.Assert.areEqual(0, list.getItem(0).x);
+                Bridge.Test.Assert.areEqual(5, vec.x);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1180.Vector2', {
+        statics: {
+            getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge1180.Vector2(); }
+        },
+        x: 0,
+        y: 0,
+        constructor: function () {
+        },
+        getHashCode: function () {
+            var hash = 17;
+            hash = hash * 23 + (this.x == null ? 0 : Bridge.getHashCode(this.x));
+            hash = hash * 23 + (this.y == null ? 0 : Bridge.getHashCode(this.y));
+            return hash;
+        },
+        equals: function (o) {
+            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge1180.Vector2)) {
+                return false;
+            }
+            return Bridge.equals(this.x, o.x) && Bridge.equals(this.y, o.y);
+        },
+        $clone: function (to) {
+            var s = to || new Bridge.ClientTest.BridgeIssues.Bridge1180.Vector2();
+            s.x = this.x;
+            s.y = this.y;
+            return s;
         }
     });
     
@@ -6272,7 +6318,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var a = Bridge.ClientTest.BridgeIssues.Bridge577.someMethodA(1);
                 Bridge.Test.Assert.notNull$1(a, "#577 Bridge577UnitA created");
     
-                var b = Bridge.ClientTest.BridgeIssues.Bridge577.someMethodB(7);
+                var b = Bridge.ClientTest.BridgeIssues.Bridge577.someMethodB(7).$clone();
                 Bridge.Test.Assert.areEqual$1(7, b.getNumber(), "#577 Bridge577UnitB created");
             }
         }
@@ -8629,7 +8675,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
                 var value1 = Bridge.Nullable.getValueOrDefault(test1, 0);
                 var value2 = Bridge.Nullable.getValueOrDefault(test2, new Bridge.ClientTest.BridgeIssues.Bridge762A());
-                var value3 = Bridge.Nullable.getValueOrDefault(test3, new Bridge.ClientTest.BridgeIssues.Bridge762B());
+                var value3 = Bridge.Nullable.getValueOrDefault(test3, new Bridge.ClientTest.BridgeIssues.Bridge762B()).$clone();
     
                 Bridge.Test.Assert.areEqual$1(0, value1, "Bridge762 int");
                 Bridge.Test.Assert.areNotEqual$1(null, value2, "Bridge762A struct");
