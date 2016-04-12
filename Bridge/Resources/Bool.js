@@ -18,15 +18,15 @@
             return typeof (instance) === "boolean";
         },
 
-        getDefaultValue: function() {
+        getDefaultValue: function () {
             return false;
         },
 
-        toString: function(v) {
+        toString: function (v) {
             return v ? Bridge.Boolean.trueString : Bridge.Boolean.falseString;
         },
 
-        parse: function(value) {
+        parse: function (value) {
             if (!Bridge.hasValue(value)) {
                 throw new Bridge.ArgumentNullException("value");
             }
@@ -39,7 +39,7 @@
             return result.v;
         },
 
-        tryParse: function(value, result) {
+        tryParse: function (value, result) {
             result.v = false;
             if (!Bridge.hasValue(value)) {
                 return false;

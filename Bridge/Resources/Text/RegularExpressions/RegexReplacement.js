@@ -2,13 +2,15 @@
 
 Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
     statics: {
-        replace: function(evaluator, regex, input, count, startat) {
+        replace: function (evaluator, regex, input, count, startat) {
             if (evaluator == null) {
                 throw new Bridge.ArgumentNullException("evaluator");
             }
+
             if (count < -1) {
                 throw new Bridge.ArgumentOutOfRangeException("count", "Count cannot be less than -1.");
             }
+
             if (startat < 0 || startat > input.length) {
                 throw new Bridge.ArgumentOutOfRangeException("startat", "Start index cannot be less than 0 or greater than input length.");
             }
@@ -18,6 +20,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
             }
 
             var match = regex.match$1(input, startat);
+
             if (!match.getSuccess()) {
                 return input;
             } else {
@@ -39,6 +42,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
 
                         prevat = matchIndex + matchLength;
                         sb += evaluator(match);
+
                         if (--count === 0) {
                             break;
                         }
@@ -51,6 +55,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
                     }
                 } else {
                     var al = [];
+
                     prevat = input.length;
 
                     do {
@@ -63,6 +68,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
 
                         prevat = matchIndex;
                         al.push(evaluator(match));
+
                         if (--count === 0) {
                             break;
                         }
@@ -85,26 +91,29 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
             }
         },
 
-        split: function(regex, input, count, startat) {
+        split: function (regex, input, count, startat) {
             if (count < 0) {
                 throw new Bridge.ArgumentOutOfRangeException("count", "Count can't be less than 0.");
             }
+
             if (startat < 0 || startat > input.length) {
                 throw new Bridge.ArgumentOutOfRangeException("startat", "Start index cannot be less than 0 or greater than input length.");
             }
 
             var result = [];
+
             if (count === 1) {
                 result.push(input);
+
                 return result;
             }
 
             --count;
             var match = regex.match$1(input, startat);
+
             if (!match.getSuccess()) {
 
                 result.push(input);
-
             } else {
 
                 var i;
@@ -139,6 +148,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
                         }
 
                         match = match.nextMatch();
+
                         if (!match.getSuccess()) {
                             break;
                         }
@@ -195,7 +205,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
     _strings: [], // table of string constants
     _rules: [], // negative -> group #, positive -> string #
 
-    constructor: function(rep, concat, caps) {
+    constructor: function (rep, concat, caps) {
         this._rep = rep;
 
         if (concat._type !== Bridge.Text.RegularExpressions.RegexNode.Concatenate) {
@@ -222,6 +232,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
                         strings.push(sb);
                         sb = "";
                     }
+
                     slot = child._m;
 
                     if (caps != null && slot >= 0) {
@@ -244,15 +255,15 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
         this._rules = rules;
     },
 
-    getPattern: function() {
+    getPattern: function () {
         return _rep;
     },
 
-    replacement: function(match) {
+    replacement: function (match) {
         return this._replacementImpl("", match);
     },
 
-    replace: function(regex, input, count, startat) {
+    replace: function (regex, input, count, startat) {
         if (count < -1) {
             throw new Bridge.ArgumentOutOfRangeException("count", "Count cannot be less than -1.");
         }
@@ -265,6 +276,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
         }
 
         var match = regex.match$1(input, startat);
+
         if (!match.getSuccess()) {
             return input;
         } else {
@@ -286,6 +298,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
 
                     prevat = matchIndex + matchLength;
                     sb = this._replacementImpl(sb, match);
+
                     if (--count === 0) {
                         break;
                     }
@@ -310,6 +323,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
 
                     prevat = matchIndex;
                     this._replacementImplRTL(al, match);
+
                     if (--count === 0) {
                         break;
                     }
