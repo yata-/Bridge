@@ -1071,6 +1071,7 @@
                 QUnit.test("#1149 - TestBitwiseOrAnd", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1149.testBitwiseOrAnd);
                 QUnit.test("#1160 - TestBitwiseOrAnd", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1160.testBitwiseOrAnd);
                 QUnit.test("#1171 - TestLinqEnumerableInList", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1171.testLinqEnumerableInList);
+                QUnit.test("#1177 - TestImplicitCast", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1177.testImplicitCast);
                 QUnit.test("#381 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge381.testUseCase);
                 QUnit.test("#447 - CheckInlineExpression", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineExpression);
                 QUnit.test("#447 - CheckInlineCalls", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineCalls);
@@ -3036,6 +3037,16 @@
             testLinqEnumerableInList: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1171).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1171);
                 Bridge.ClientTest.BridgeIssues.Bridge1171.testLinqEnumerableInList();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1177', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1177)],
+        statics: {
+            testImplicitCast: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1177).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1177);
+                Bridge.ClientTest.BridgeIssues.Bridge1177.testImplicitCast();
             }
         }
     });
