@@ -412,11 +412,11 @@
             return s.replace(chars ? new RegExp('[' + String.fromCharCode.apply(null, chars) + ']+$') : /\s*$/, '');
         },
 
-        trimStart: function(s, chars) {
+        trimStart: function (s, chars) {
             return s.replace(chars ? new RegExp('^[' + String.fromCharCode.apply(null, chars) + ']+') : /^\s*/, '');
         },
 
-        trim: function(s, chars) {
+        trim: function (s, chars) {
             return Bridge.String.trimStart(Bridge.String.trimEnd(s, chars), chars);
         }
     };

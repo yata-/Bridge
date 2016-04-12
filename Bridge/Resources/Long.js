@@ -364,7 +364,7 @@ Bridge.Long.prototype.toNumber = function () {
     return this.value.toNumber();
 };
 
-Bridge.Long.parse = function(str) {
+Bridge.Long.parse = function (str) {
     if (str == null) {
         throw new Bridge.ArgumentNullException("str");
     }
@@ -403,7 +403,7 @@ Bridge.Long.tryParse = function (str, v) {
     }
 };
 
-Bridge.Long.divRem = function(a, b, result) {
+Bridge.Long.divRem = function (a, b, result) {
     a = Bridge.Long(a);
     b = Bridge.Long(b);
     var remainder = a.mod(b);
@@ -526,7 +526,7 @@ Bridge.Long.check = function (v, tp) {
     return Bridge.Int.check(v.toNumber(), tp);
 };
 
-Bridge.Long.clip8 = function(x) {
+Bridge.Long.clip8 = function (x) {
     return x ? Bridge.Int.sxb(x.toNumber() & 0xff) : (Bridge.Int.isInfinite(x) ? Bridge.SByte.min : null);
 };
 

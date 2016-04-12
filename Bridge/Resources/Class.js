@@ -373,7 +373,7 @@
                 for (key in exists) {
                     var o = exists[key];
                     if (typeof o === "function" && o.$$name) {
-                        (function(cls, key, o) {
+                        (function (cls, key, o) {
 							Object.defineProperty(cls, key, {
 								get: function () {
 									if (Bridge.Class.staticInitAllow) {

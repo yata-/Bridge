@@ -612,7 +612,7 @@
                 return true;
             },
 
-            isInfinite: function(x) {
+            isInfinite: function (x) {
                 return x === Number.POSITIVE_INFINITY || x === Number.NEGATIVE_INFINITY;
             },
 

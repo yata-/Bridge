@@ -7,7 +7,7 @@ Bridge.define('Bridge.KeyValuePair$2', function (TKey, TValue) {
             this.value = value;
         },
 
-        toString: function() {
+        toString: function () {
             var s = "[";
             
             if (this.key != null) {

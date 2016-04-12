@@ -1046,6 +1046,7 @@
                 QUnit.test("#1066 - TestInlinePopertyWithValue", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1066.testInlinePopertyWithValue);
                 QUnit.test("#1067 - TestInlinePopertyWithValue", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1067.testInlinePopertyWithValue);
                 QUnit.test("#1071 - TestParamsForCtor", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1071.testParamsForCtor);
+                QUnit.test("#1172 - TestNameForProperty", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1072.testNameForProperty);
                 QUnit.test("#1076 - TestInlineConstantAsMemberReference", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1076.testInlineConstantAsMemberReference);
                 QUnit.test("#1076 - TestInlineBridgeNumericConstantsAsMemberReference", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1076.testInlineBridgeNumericConstantsAsMemberReference);
                 QUnit.test("#1083 - TestExternalEnum", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1083.testExternalEnum);
@@ -2809,6 +2810,16 @@
             testParamsForCtor: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1071).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1071);
                 Bridge.ClientTest.BridgeIssues.Bridge1071.testParamsForCtor();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1072', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1072)],
+        statics: {
+            testNameForProperty: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1072).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1072);
+                Bridge.ClientTest.BridgeIssues.Bridge1072.testNameForProperty();
             }
         }
     });
