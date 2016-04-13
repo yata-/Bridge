@@ -327,6 +327,10 @@ namespace Bridge.Contract
                 {
                     ret = false;
                 }
+                else if (expression.Parent is VariableInitializer)
+                {
+                    ret = false;
+                }
 
                 if (ret)
                 {
