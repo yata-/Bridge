@@ -4559,6 +4559,32 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1176', {
+        statics: {
+            testFunctionLifting: function () {
+                var scope = $_.Bridge.ClientTest.BridgeIssues.Bridge1176;
+                Bridge.Test.Assert.null$1(scope, "scope should not exists");
+    
+                var items = [new Bridge.ClientTest.BridgeIssues.Bridge1176.Item$1(Bridge.Int32)(), new Bridge.ClientTest.BridgeIssues.Bridge1176.Item$1(Bridge.Int32)()];
+                var values = Bridge.ClientTest.BridgeIssues.Bridge1176.getItemValues(Bridge.Int32, items);
+                Bridge.Test.Assert.areEqual("Item, Item", values.join(", "));
+            },
+            getItemValues: function (TValue, items) {
+                return Bridge.Linq.Enumerable.from(items).select(function (item) {
+                    return Bridge.ClientTest.BridgeIssues.Bridge1176.Item$1(TValue).op_Implicit(item);
+                }).toArray();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1176.Item$1', function (TValue) { return {
+        statics: {
+            op_Implicit: function (item) {
+                return "Item";
+            }
+        }
+    }; });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1177', {
         statics: {
             testImplicitCast: function () {
