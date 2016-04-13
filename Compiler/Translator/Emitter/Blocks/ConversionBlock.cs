@@ -120,6 +120,11 @@ namespace Bridge.Translator
                     return level;
                 }
 
+                if (conversion.IsUserDefined && expression.Parent is CastExpression && ((CastExpression)expression.Parent).Expression == expression)
+                {
+                    return level;
+                }
+
                 if (rr is ConstantResolveResult && expression is CastExpression && !conversion.IsUserDefined)
                 {
                     return level;

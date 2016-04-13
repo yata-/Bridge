@@ -502,6 +502,12 @@ namespace Bridge.Contract
 
         public static string GetEventRef(CustomEventDeclaration property, IEmitter emitter, bool remove = false, bool noOverload = false, bool ignoreInterface = false)
         {
+            ResolveResult resolveResult = emitter.Resolver.ResolveNode(property, emitter) as MemberResolveResult;
+            if (resolveResult != null && ((MemberResolveResult)resolveResult).Member != null)
+            {
+                return GetEventRef(((MemberResolveResult)resolveResult).Member, emitter, remove, noOverload, ignoreInterface);
+            }
+
             var name = emitter.GetEntityName(property, true, ignoreInterface);
 
             if (!noOverload)
@@ -516,6 +522,13 @@ namespace Bridge.Contract
 
         public static string GetEventRef(IMember property, IEmitter emitter, bool remove = false, bool noOverload = false, bool ignoreInterface = false)
         {
+            var attrName = emitter.GetEntityNameFromAttr(property, remove);
+
+            if (!string.IsNullOrEmpty(attrName))
+            {
+                return attrName;
+            }
+
             var name = emitter.GetEntityName(property, true, ignoreInterface);
 
             if (!noOverload)
@@ -529,6 +542,12 @@ namespace Bridge.Contract
 
         public static string GetPropertyRef(PropertyDeclaration property, IEmitter emitter, bool isSetter = false, bool noOverload = false, bool ignoreInterface = false)
         {
+            ResolveResult resolveResult = emitter.Resolver.ResolveNode(property, emitter) as MemberResolveResult;
+            if (resolveResult != null && ((MemberResolveResult)resolveResult).Member != null)
+            {
+                return GetPropertyRef(((MemberResolveResult)resolveResult).Member, emitter, isSetter, noOverload, ignoreInterface);
+            }
+
             var name = emitter.GetEntityName(property, true, ignoreInterface);
 
             if (!noOverload)
@@ -548,6 +567,12 @@ namespace Bridge.Contract
 
         public static string GetPropertyRef(IndexerDeclaration property, IEmitter emitter, bool isSetter = false, bool noOverload = false, bool ignoreInterface = false)
         {
+            ResolveResult resolveResult = emitter.Resolver.ResolveNode(property, emitter) as MemberResolveResult;
+            if (resolveResult != null && ((MemberResolveResult)resolveResult).Member != null)
+            {
+                return GetIndexerRef(((MemberResolveResult)resolveResult).Member, emitter, isSetter, noOverload, ignoreInterface);
+            }
+
             var name = emitter.GetEntityName(property, true, ignoreInterface);
 
             if (!noOverload)
@@ -562,6 +587,13 @@ namespace Bridge.Contract
 
         public static string GetIndexerRef(IMember property, IEmitter emitter, bool isSetter = false, bool noOverload = false, bool ignoreInterface = false)
         {
+            var attrName = emitter.GetEntityNameFromAttr(property, isSetter);
+
+            if (!string.IsNullOrEmpty(attrName))
+            {
+                return attrName;
+            }
+
             var name = emitter.GetEntityName(property, true, ignoreInterface);
 
             if (!noOverload)

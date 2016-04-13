@@ -6,27 +6,33 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
             if (text == null) {
                 throw new Bridge.ArgumentNullException("text");
             }
+
             if (textStart != null && (textStart < 0 || textStart > text.length)) {
                 throw new Bridge.ArgumentOutOfRangeException("textStart", "Start index cannot be less than 0 or greater than input length.");
             }
+
             if (pattern == null) {
                 throw new Bridge.ArgumentNullException("pattern");
             }
 
             var modifiers = "g"; // use "global" modifier by default to allow TextStart configuration
+
             if (isMultiLine) {
                 modifiers += "m";
             }
+
             if (isCaseInsensitive) {
                 modifiers += "i";
             }
 
             var jsRegExp = new RegExp(pattern, modifiers);
+
             if (textStart != null) {
                 jsRegExp.lastIndex = textStart;
             }
 
             var match = jsRegExp.exec(text);
+
             if (match == null || match.length === 0) {
                 return null;
             }
@@ -37,6 +43,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
                 do {
                     matches.push(match);
                     match = jsRegExp.exec(text);
+
                     if (match != null && re) {
                         re._checkTimeout();
                     }
@@ -52,24 +59,27 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
             var group;
             var groups = [];
             var nestedGroups = [];
-
             var sBracketLvl = 0;
             var isEscape = false;
 
             for (var i = 0; i < pattern.length; i++) {
                 if (isEscape) {
                     isEscape = false;
+
                     continue;
                 }
 
                 var ch = pattern[i];
+
                 if (ch === "\\") {
                     isEscape = true;
+
                     continue;
                 }
 
                 if (ch === "[") {
                     sBracketLvl++;
+
                     continue;
                 }
 
@@ -77,6 +87,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
                     if (sBracketLvl > 0) {
                         sBracketLvl--;
                     }
+
                     continue;
                 }
 
@@ -101,19 +112,23 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
                         group.constructs = Bridge.Text.RegularExpressions.RegexNetEngine._getGroupConstructs(pattern, i + 1);
                         i += group.constructs.exprLength; // Skip group Constructs in the pattern
                     }
+
                     continue;
                 }
+
                 if (ch === ")") {
                     if (sBracketLvl === 0 && nestedGroups.length > 0) {
                         group = nestedGroups.pop();
                         group.exprLength = 1 + i - group.exprIndex;
                         Bridge.Text.RegularExpressions.RegexNetEngine._fillPatternGroupInfo(group, pattern);
                     }
+
                     continue;
                 }
             }
 
             var groupId = 1;
+
             for (var j = 0; j < groups.length; j++) {
                 if (groups[j].constructs.name1 != null) {
                     //TODO: check balancing case: name1-name2
@@ -146,18 +161,15 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
                 name2: null,
 
                 isNonCapturing: false,
-
                 isIgnoreCase: null,
                 isMultiline: null,
                 isExplicitCapture: null,
                 isSingleLine: null,
                 isIgnoreWhitespace: null,
-
                 isPositiveLookahead: false,
                 isNegativeLookahead: false,
                 isPositiveLookbehind: false,
                 isNegativeLookbehind: false,
-
                 isNonbacktracking: false,
 
                 exprLength: 0
@@ -173,60 +185,79 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
 
             ++i;
             var sfx2 = pattern.slice(i, i + 2);
+
             if (sfx2.length === 2) {
                 if (sfx2 === "<=") {
                     constructs.isPositiveLookbehind = true;
                     constructs.exprLength = 3;
+
                     return constructs;
                 }
+
                 if (sfx2 === "<!") {
                     constructs.isNegativeLookbehind = true;
                     constructs.exprLength = 3;
+
                     return constructs;
                 }
             }
+
             var ch = pattern[i];
+
             if (ch === ":") {
                 constructs.isNonCapturing = true;
                 constructs.exprLength = 2;
+
                 return constructs;
             }
+
             if (ch === "=") {
                 constructs.isPositiveLookahead = true;
                 constructs.exprLength = 2;
+
                 return constructs;
             }
+
             if (ch === "!") {
                 constructs.isNegativeLookahead = true;
                 constructs.exprLength = 2;
+
                 return constructs;
             }
+
             if (ch === ">") {
                 constructs.isNonbacktracking = true;
                 constructs.exprLength = 2;
+
                 return constructs;
             }
+
             if (ch === "<" || ch === "'") {
                 var endBracket = ch === "<" ? ">" : "'";
                 var name1Match = Bridge.Text.RegularExpressions.RegexNetEngine._matchUntil(pattern, i + 1, pattern.length, ["-", endBracket]);
+
                 constructs.name1 = name1Match.matched;
                 constructs.exprLength = name1Match.lastIndex - i + 2;
                                                                     
                 if (name1Match.lastCh === "-") {
                     var name2Match = Bridge.Text.RegularExpressions.RegexNetEngine._matchUntil(pattern, name1Match.lastIndex + 1, pattern.length, [endBracket]);
+
                     constructs.name2 = name2Match.matched;
                     constructs.exprLength = name2Match.lastIndex - i + 2;
                 }
+
                 return constructs;
             }
 
             var imnsx = ["i", "m", "n", "s", "x"];
             var imnsx1Match = Bridge.Text.RegularExpressions.RegexNetEngine._matchAllowedChars(pattern, i + 1, pattern.length, imnsx);
+
             if (imnsx1Match.lastCh === "-" || imnsx1Match.lastCh === ":") {
                 Bridge.Text.RegularExpressions.RegexNetEngine._parseImnsx(constructs, imnsx1Match.matched, true);
 
                 if (imnsx1Match.lastCh === "-") {
                     var imnsx2Match = Bridge.Text.RegularExpressions.RegexNetEngine._matchAllowedChars(pattern, imnsx1Match.lastCh + 1, pattern.length, imnsx);
+
                     Bridge.Text.RegularExpressions.RegexNetEngine._parseImnsx(constructs, imnsx2Match.matched, false);
                     constructs.exprLength = imnsx2Match.lastIndex - i + 2;
                 } else {
@@ -237,22 +268,19 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
             return constructs;
         },
 
-        _parseImnsx: function(prefix, imnsxString, value) {
+        _parseImnsx: function (prefix, imnsxString, value) {
             for (var i = 0; i < imnsxString.length; i++) {
                 var ch = imnsxString[i];
+
                 if (ch === "i") {
                     prefix.isIgnoreCase = value;
-                }
-                else if (ch === "m") {
+                } else if (ch === "m") {
                     prefix.isMultiline = value;
-                }
-                else if (ch === "n") {
+                } else if (ch === "n") {
                     prefix.isExplicitCapture = value;
-                }
-                else if (ch === "s") {
+                } else if (ch === "s") {
                     prefix.isSingleLine = value;
-                }
-                else if (ch === "x") {
+                } else if (ch === "x") {
                     prefix.isIgnoreWhitespace = value;
                 }
             }
@@ -262,10 +290,10 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
             var quantifier = "";
             var basicQuantifiers = ["+", "*", "?"];
             var digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-
             var outerCh;
             var hasQuantifier = false;
             var outerIndex = group.exprIndex + group.exprLength;
+
             if (outerIndex < pattern.length) {
                 var res = Bridge.Text.RegularExpressions.RegexNetEngine._matchAllowedChars(pattern, outerIndex, outerIndex + 1, basicQuantifiers);
 
@@ -279,14 +307,15 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
 
                     if (outerCh === "{") {
                         var nRes = Bridge.Text.RegularExpressions.RegexNetEngine._matchAllowedChars(pattern, outerIndex, pattern.length, digits);
+
                         if (nRes.matched.length > 0) {
                             if (nRes.lastCh === "}") {
                                 quantifier = "{" + nRes.matched + "}";
                                 hasQuantifier = true;
                                 outerIndex = nRes.lastIndex + 1;
-                            }
-                            else if (nRes.lastCh === ",") {
+                            } else if (nRes.lastCh === ",") {
                                 var mRes = Bridge.Text.RegularExpressions.RegexNetEngine._matchAllowedChars(pattern, nRes.lastIndex + 1, pattern.length, digits);
+
                                 if (mRes.lastCh === "}") {
                                     quantifier = "{" + nRes.matched + "," + mRes.matched + "}";
                                     hasQuantifier = true;
@@ -299,6 +328,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
 
                 if (hasQuantifier && outerIndex < pattern.length) {
                     outerCh = pattern[outerIndex];
+
                     if (outerCh === "?") {
                         quantifier += "?";
                     }
@@ -321,9 +351,11 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
 
                 var ch = str[index];
                 var isAllowed = false;
+
                 for (var i = 0; i < allowedChars.length; i++) {
                     if (ch === allowedChars[i]) {
                         isAllowed = true;
+
                         break;
                     }
                 }
@@ -333,6 +365,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
                 } else {
                     res.lastCh = ch;
                     res.lastIndex = index;
+
                     break;
                 }
 
@@ -342,7 +375,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
             return res;
         },
 
-        _matchUntil: function(str, index, endIndex, unallowedChars) {
+        _matchUntil: function (str, index, endIndex, unallowedChars) {
             var res = {
                 matched: "",
                 lastCh: "",
@@ -352,10 +385,12 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
             while (index < endIndex) {
 
                 var ch = str[index];
+
                 for (var i = 0; i < unallowedChars.length; i++) {
                     if (ch === unallowedChars[i]) {
                         res.lastCh = ch;
                         res.lastIndex = index;
+
                         return res;
                     }
                 }
@@ -393,6 +428,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
         if (text == null) {
             throw new Bridge.ArgumentNullException("text");
         }
+
         if (textStart != null && (textStart < 0 || textStart > text.length)) {
             throw new Bridge.ArgumentOutOfRangeException("textStart", "Start index cannot be less than 0 or greater than input length.");
         }
@@ -416,6 +452,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
 
         // The 1st run (to know the total capture):
         var total = Bridge.Text.RegularExpressions.RegexNetEngine.jsRegex(this._text, this._textStart, this._pattern, this._isMultiLine, this._isCaseInsensitive, false, this);
+
         if (total == null) {
             return match;
         }
@@ -451,10 +488,12 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
             };
 
             var nonCapturingCount = 0;
+
             for (var i = 1; i < total.length + nonCapturingCount; i++) {
                 this._checkTimeout();
 
                 var groupDesc = groupDescs[i - 1];
+
                 if (groupDesc.constructs.isNonCapturing) {
                     nonCapturingCount++;
                 }
@@ -469,9 +508,11 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
                     captures: [],
                     ctx: null
                 };
+
                 descToGroupMap[groupDesc.exprIndex] = group;
 
                 var parentGroupDesc = groupDesc.parentGroup;
+
                 if (parentGroupDesc == null) { 
                     // Match a root group using the global context:
                     this._matchGroup(globalCtx, group, 0);
@@ -484,6 +525,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
                     // Use the parent group's context.
                     // However, don't match the group if the parent has not been matched successfully.
                     var parentGroup = descToGroupMap[parentGroupDesc.exprIndex];
+
                     if (parentGroup.success === true) {
                         // Match the group in every single parent capture:
                         for (var j = 0; j < parentGroup.captures.length; j++) {
@@ -502,6 +544,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
 
                 if (group.captures.length > 0) {
                     var lastCapture = group.captures[group.captures.length - 1];
+
                     group.capIndex = lastCapture.capIndex;
                     group.capLength = lastCapture.capLength;
                     group.value = lastCapture.value;
@@ -515,7 +558,9 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
             // Remove internal fields:
             for (var k = 0; k < match.groups.length; k++) {
                 var gr = match.groups[k];
+
                 delete gr.ctx;
+
                 for (var m = 0; m < gr.captures.length; m++) {
                     delete gr.captures[m].ctx;
                 }
@@ -534,6 +579,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
         // Use RegExp to determine the capture length for the subexpression to the left of the Group expression.
         if (groupDesc.exprIndex > ctx.patternStart) {
             var leftRes = this._matchSubExpr(ctx.text, ctx.textOffset, ctx.pattern, ctx.patternStart, ctx.patternEnd, ctx.patternStart, groupStart);
+
             if (leftRes != null) {
                 ctx.textOffset = leftRes.capIndex + leftRes.capLength;
             }
@@ -541,6 +587,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
 
         // Use RegExp to determine length and location of the captured Group
         var groupRes = this._matchSubExpr(ctx.text, ctx.textOffset, ctx.pattern, ctx.patternStart, ctx.patternEnd, groupStart, groupEndFull);
+
         if (groupRes != null && groupRes.captureGroup != null) {
             ctx.textOffset = groupRes.capIndex + groupRes.capLength;
 
@@ -552,6 +599,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
 
             // Save the current group conext for its children:
             var groupStartStep = groupDesc.constructs.isNonCapturing ? 3 : 1;
+
             if (groupDesc.innerGroups.length > 0) {
                 group.ctx = {
                     text: group.valueFull, //TODO: FULL OR NOT?
@@ -577,18 +625,20 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
                 capLength: group.capLength,
                 value: group.valueFull
             });
-
         } else {
             // For repeating groups - find all captures:
             var qCh = groupDesc.quantifier[0];
+
             if (qCh === "*" || qCh === "+" || qCh === "{") {
                 var capMatches = Bridge.Text.RegularExpressions.RegexNetEngine.jsRegex(group.valueFull, 0, groupDesc.expr, this._isMultiLine, this._isCaseInsensitive, true, this);
+
                 if (capMatches == null) {
                     throw new Bridge.InvalidOperationException("Can't identify captures for the already matched group.");
                 }
 
                 for (var i = 0; i < capMatches.length; i++) {
                     var capMatch = capMatches[i];
+
                     group.captures.push({
                         capIndex: capMatch.index + group.capIndex,
                         capLength: capMatch[0].length,
@@ -640,6 +690,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
         var transformedPattern = subExpr + "(?=" + restExpr + ")";
 
         var subExpRes = Bridge.Text.RegularExpressions.RegexNetEngine.jsRegex(text, textOffset, transformedPattern, this._isMultiLine, this._isCaseInsensitive, false, this);
+
         if (subExpRes != null) {
             return {
                 capture: subExpRes[0],
@@ -648,6 +699,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
                 capLength: subExpRes[0].length
             };
         }
+
         return null;
     },
 
@@ -656,15 +708,18 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
             this._groupDescriptors = Bridge.Text.RegularExpressions.RegexNetEngine.parsePatternGroups(this._pattern);
             this._removeGroupNamesFromPattern();
         }
+
         return this._groupDescriptors;
     },
 
-    _removeGroupNamesFromPattern: function() {
+    _removeGroupNamesFromPattern: function () {
         // Remove group names (JS RegExp does not support them):
 
         var updatedPattern = this._pattern;
+
         for (var i = 0; i < this._groupDescriptors.length; i++) {
             var gr = this._groupDescriptors[i];
+
             if (gr.hasName) {
                 // Remove name from the group:
                 var name = gr.constructs.name1;
@@ -675,6 +730,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
 
                 // Update parent groups (remove name from their templates as well)
                 var parent = gr.parentGroup;
+
                 while (parent != null) {
                     parent.exprLength -= nameConstrLen;
                     parent.expr = this._removeSubstring(parent.expr, gr.exprIndex + 1 - parent.exprIndex, nameConstrLen);
@@ -684,17 +740,21 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
 
                 // Update all consequent groups (shift their indexes according to the length of the removed group name)
                 updatedPattern = this._removeSubstring(updatedPattern, gr.exprIndex + 1, nameConstrLen);
+
                 for (var j = i + 1; j < this._groupDescriptors.length; j++) {
                     var nextGr = this._groupDescriptors[j];
+
                     nextGr.exprIndex -= nameConstrLen;
                 }
             }
         }
+
         this._pattern = updatedPattern;
     },
 
-    _removeSubstring: function(str, index, length) {
+    _removeSubstring: function (str, index, length) {
         var result = str.slice(0, index) + str.slice(index + length, str.length);
+
         return result;
     },
 
@@ -704,6 +764,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
         }
 
         var time = new Date().getTime();
+
         if (time >= this._timeoutTime) {
             throw new Bridge.RegexMatchTimeoutException(this._text, this._pattern, Bridge.TimeSpan.fromMilliseconds(this._timeoutMs));
         }

@@ -3976,6 +3976,30 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1071.D');
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1072', {
+        statics: {
+            testNameForProperty: function () {
+                var c = new Bridge.ClientTest.BridgeIssues.Bridge1072.Class1();
+    
+                Bridge.Test.Assert.notNull(c.getAccessor);
+                Bridge.Test.Assert.notNull(c.setAccessor);
+    
+                c.setAccessor(7);
+                Bridge.Test.Assert.areEqual(7, c.getAccessor());
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1072.Class1', {
+        data: 0,
+        getAccessor: function () {
+            return this.data;
+        },
+        setAccessor: function (value) {
+            this.data = value;
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1076', {
         statics: {
             testInlineConstantAsMemberReference: function () {
@@ -4489,6 +4513,97 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge1160A, {
         f1: function (message) {
             return message;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1171', {
+        statics: {
+            testLinqEnumerableInList: function () {
+                var $t;
+                var result = Bridge.Array.init(2, null);
+                result[0] = Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge1171.ObjectA(), {
+                    setFieldA: null
+                } );
+                result[1] = Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge1171.ObjectA(), {
+                    setFieldA: 2
+                } );
+    
+                var query = Bridge.Linq.Enumerable.from(result).where($_.Bridge.ClientTest.BridgeIssues.Bridge1171.f1).groupBy($_.Bridge.ClientTest.BridgeIssues.Bridge1171.f2);
+                Bridge.Test.Assert.areEqual(1, query.count());
+    
+                $t = Bridge.getEnumerator(query);
+                while ($t.moveNext()) {
+                    var key = $t.getCurrent();
+                    Bridge.Test.Assert.areEqual(1, new Bridge.List$1(Bridge.ClientTest.BridgeIssues.Bridge1171.ObjectA)(key).getCount());
+                }
+            }
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1171", $_)
+    
+    Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge1171, {
+        f1: function (x) {
+            return Bridge.Nullable.hasValue(x.getFieldA());
+        },
+        f2: function (x) {
+            return Bridge.Nullable.getValueOrDefault(x.getFieldA(), 0);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1171.ObjectA', {
+        config: {
+            properties: {
+                FieldA: null
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1176', {
+        statics: {
+            testFunctionLifting: function () {
+                var scope = $_.Bridge.ClientTest.BridgeIssues.Bridge1176;
+                Bridge.Test.Assert.null$1(scope, "scope should not exists");
+    
+                var items = [new Bridge.ClientTest.BridgeIssues.Bridge1176.Item$1(Bridge.Int32)(), new Bridge.ClientTest.BridgeIssues.Bridge1176.Item$1(Bridge.Int32)()];
+                var values = Bridge.ClientTest.BridgeIssues.Bridge1176.getItemValues(Bridge.Int32, items);
+                Bridge.Test.Assert.areEqual("Item, Item", values.join(", "));
+            },
+            getItemValues: function (TValue, items) {
+                return Bridge.Linq.Enumerable.from(items).select(function (item) {
+                    return Bridge.ClientTest.BridgeIssues.Bridge1176.Item$1(TValue).op_Implicit(item);
+                }).toArray();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1176.Item$1', function (TValue) { return {
+        statics: {
+            op_Implicit: function (item) {
+                return "Item";
+            }
+        }
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1177', {
+        statics: {
+            testImplicitCast: function () {
+                var item = new Bridge.ClientTest.BridgeIssues.Bridge1177.Item("Test1");
+                var s = Bridge.ClientTest.BridgeIssues.Bridge1177.Item.op_Implicit(item);
+                Bridge.Test.Assert.areEqual("Test1", s);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1177.Item', {
+        statics: {
+            op_Implicit: function (item) {
+                return item.value;
+            }
+        },
+        value: null,
+        constructor: function (value) {
+            this.value = value;
         }
     });
     
