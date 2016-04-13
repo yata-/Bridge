@@ -1060,7 +1060,7 @@
             }
         },
 
-        throwOverflow: function(typeName) {
+        throwOverflow: function (typeName) {
             throw new Bridge.OverflowException("Value was either too large or too small for '" + typeName + "'.");
         },
 

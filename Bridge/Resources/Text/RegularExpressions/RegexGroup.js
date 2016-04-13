@@ -9,6 +9,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Group", {
         config: {
             init: function () {
                 var empty = new Bridge.Text.RegularExpressions.Group("", [], 0);
+
                 this.getEmpty = function () {
                     return empty;
                 }
@@ -22,6 +23,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Group", {
 
             // force Captures to be computed.
             var captures = group.getCaptures();
+
             if (captures.getCount() > 0) {
                 captures.get(0);
             }
@@ -36,9 +38,9 @@ Bridge.define("Bridge.Text.RegularExpressions.Group", {
 
     constructor: function (text, caps, capcount) {
         var scope = Bridge.Text.RegularExpressions;
-
         var index = capcount === 0 ? 0 : caps[(capcount - 1) * 2];
         var length = capcount === 0 ? 0 : caps[(capcount * 2) - 1];
+
         scope.Capture.prototype.$constructor.call(this, text, index, length);
 
         this._caps = caps;

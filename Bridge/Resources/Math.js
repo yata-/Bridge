@@ -1,13 +1,13 @@
     // @source Math.js
 
     var math = {
-        divRem: function(a, b, result) {
+        divRem: function (a, b, result) {
             var remainder = a % b;
             result.v = remainder;
             return (a - remainder) / b;
         },
 
-        round: function(n, d, rounding) {
+        round: function (n, d, rounding) {
             var m = Math.pow(10, d || 0);
             n *= m;
             var sign = (n > 0) | -(n < 0);
