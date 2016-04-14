@@ -24,7 +24,7 @@ namespace Bridge.Html5
         /// <summary>
         /// Deletes a rule from the style sheet.
         /// </summary>
-        /// <param name="index"> is a long number representing the position of the rule.</param>
+        /// <param name="index"> is a number representing the position of the rule.</param>
         public virtual extern void DeleteRule(int index);
 
         /// <summary>

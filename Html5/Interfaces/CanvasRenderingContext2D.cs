@@ -667,7 +667,7 @@ namespace Bridge.Html5
         /// The Y coordinate in the destination canvas at which to place the top-left corner of the source image.
         /// </param>
         public virtual void DrawImage(Any<ImageElement, VideoElement, CanvasElement, CanvasRenderingContext2D> image,
-                                      Any<int, long, float, double> dx, Any<int, long, float, double> dy)
+                                      Any<int, int, float, double> dx, Any<int, int, float, double> dy)
         {
             return;
         }
@@ -694,8 +694,8 @@ namespace Bridge.Html5
         /// If null, the image is not scaled in height when drawn.
         /// </param>
         public virtual void DrawImage(Any<ImageElement, VideoElement, CanvasElement, CanvasRenderingContext2D> image,
-                                      Any<int, long, float, double> dx, Any<int, long, float, double> dy,
-                                      Any<int?, long?, float?, double?> dWidth, Any<int?, long?, float?, double?> dHeight)
+                                      Any<int, int, float, double> dx, Any<int, int, float, double> dy,
+                                      Any<int?, int?, float?, double?> dWidth, Any<int?, int?, float?, double?> dHeight)
         {
             return;
         }
@@ -736,12 +736,12 @@ namespace Bridge.Html5
         /// If not specified or null, the image is not scaled in height when drawn.
         /// </param>
         public virtual void DrawImage(Any<ImageElement, VideoElement, CanvasElement, CanvasRenderingContext2D> image,
-                                      Any<int, long, float, double> sx, Any<int, long, float, double> sy,
-                                      Any<int?, long?, float?, double?> sWidth,
-                                      Any<int?, long?, float?, double?> sHeight,
-                                      Any<int, long, float, double> dx, Any<int, long, float, double> dy,
-                                      Any<int?, long?, float?, double?> dWidth,
-                                      Any<int?, long?, float?, double?> dHeight)
+                                      Any<int, int, float, double> sx, Any<int, int, float, double> sy,
+                                      Any<int?, int?, float?, double?> sWidth,
+                                      Any<int?, int?, float?, double?> sHeight,
+                                      Any<int, int, float, double> dx, Any<int, int, float, double> dy,
+                                      Any<int?, int?, float?, double?> dWidth,
+                                      Any<int?, int?, float?, double?> dHeight)
         {
             return;
         }
