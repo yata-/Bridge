@@ -858,7 +858,7 @@ namespace Bridge.Translator
                 var compilerAssembly = System.Reflection.Assembly.GetExecutingAssembly();
                 compilerInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(compilerAssembly.Location);
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 this.Log.Error("Could not load executing assembly to get assembly info");
                 this.Log.Error(ex.ToString());
@@ -869,7 +869,7 @@ namespace Bridge.Translator
             {
                 bridgeInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(this.BridgeLocation);
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 this.Log.Error("Could not load Bridge.dll to get assembly info");
                 this.Log.Error(ex.ToString());
