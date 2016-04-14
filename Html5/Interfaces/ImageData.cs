@@ -26,13 +26,13 @@ namespace Bridge.Html5
         /// is not available there.
         /// </summary>
         /// <param name="array">A Uint8ClampedArray containing the underlying pixel representation of theimage.</param>
-        /// <param name="width">An unsigned long representing the width of the represented image.</param>
+        /// <param name="width">An unsigned number representing the width of the represented image.</param>
         /// <param name="height">
-        /// An unsigned long representing the height of the represented image. This value is optional
+        /// An unsigned number representing the height of the represented image. This value is optional
         /// if an array is given: it will be inferred from its size and the given width.
         /// </param>
         /// <remarks>This is experimental API that should not be used in production code.</remarks>
-        public ImageData(Uint8ClampedArray array, ulong width, ulong? height = null)
+        public ImageData(Uint8ClampedArray array, uint width, uint? height = null)
         {
         }
 
@@ -41,10 +41,10 @@ namespace Bridge.Html5
         /// a black rectangle is created. Note that this is the most common way to create such an object in
         /// workers as createImageData() is not available there.
         /// </summary>
-        /// <param name="width">An unsigned long representing the width of the represented image.</param>
-        /// <param name="height">An unsigned long representing the height of the represented image.</param>
+        /// <param name="width">An unsigned number representing the width of the represented image.</param>
+        /// <param name="height">An unsigned number representing the height of the represented image.</param>
         /// <remarks>This is experimental API that should not be used in production code.</remarks>
-        public ImageData(ulong width, ulong height)
+        public ImageData(uint width, uint height)
         {
         }
 
@@ -56,13 +56,13 @@ namespace Bridge.Html5
         public readonly Uint8ClampedArray Data;
 
         /// <summary>
-        /// An unsigned long representing the actual height, in pixels, of the ImageData.
+        /// An unsigned number representing the actual height, in pixels, of the ImageData.
         /// </summary>
-        public readonly ulong Height;
+        public readonly uint Height;
 
         /// <summary>
-        /// An unsigned long representing the actual width, in pixels, of the ImageData.
+        /// An unsigned number representing the actual width, in pixels, of the ImageData.
         /// </summary>
-        public readonly ulong Width;
+        public readonly uint Width;
     }
 }

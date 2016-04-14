@@ -79,7 +79,7 @@ namespace Bridge.Html5
         /// <summary>
         /// The size, in bytes, of the data contained in the Blob object.
         /// </summary>
-        public readonly ulong Size;
+        public readonly uint Size;
 
         /// <summary>
         /// A string indicating the MIME type of the data contained in the Blob. If the type is unknown, this string is empty.
