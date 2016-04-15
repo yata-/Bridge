@@ -84,6 +84,12 @@ namespace Bridge.Translator
             bool hasInline = !string.IsNullOrEmpty(inlineCode);
             bool hasThis = hasInline && inlineCode.Contains("{this}");
 
+            if (hasInline && inlineCode.StartsWith("<self>"))
+            {
+                hasThis = true;
+                inlineCode = inlineCode.Substring(6);
+            }
+
             if (hasThis)
             {
                 this.Write("");
@@ -107,12 +113,13 @@ namespace Bridge.Translator
                     this.WriteThis();
                 }
 
-                inlineCode = inlineCode.Replace("{this}", this.Emitter.Output.ToString());
+                var thisArg = this.Emitter.Output.ToString();
+                inlineCode = inlineCode.Replace("{this}", thisArg);
                 this.Emitter.Output = oldBuilder;
 
                 if (resolveResult is InvocationResolveResult)
                 {
-                    this.PushWriter(inlineCode);
+                    this.PushWriter(inlineCode, null, thisArg);
                 }
                 else
                 {

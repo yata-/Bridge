@@ -84,6 +84,7 @@
     <Compile Include="AbstractPlugin.cs" />
     <Compile Include="BridgeType.cs" />
     <Compile Include="ConfigHelper.cs" />
+    <Compile Include="IWriter.cs" />
     <Compile Include="OverflowMode.cs" />
     <Compile Include="EmitterException.cs" />
     <Compile Include="Helpers.Cecil.cs" />

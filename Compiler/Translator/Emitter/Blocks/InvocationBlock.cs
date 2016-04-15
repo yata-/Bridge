@@ -171,6 +171,12 @@ namespace Bridge.Translator
                         argsInfo.ThisArgument = "this";
                         bool noThis = !inlineScript.Contains("{this}");
 
+                        if (inlineScript.StartsWith("<self>"))
+                        {
+                            noThis = false;
+                            inlineScript = inlineScript.Substring(6);
+                        }
+
                         if (!isStaticMethod && noThis)
                         {
                             this.WriteThis();
@@ -515,7 +521,7 @@ namespace Bridge.Translator
 
                 if (this.Emitter.Writers.Count > count)
                 {
-                    var tuple = this.Emitter.Writers.Pop();
+                    var writer = this.Emitter.Writers.Pop();
 
                     if (method != null && method.IsExtensionMethod)
                     {
@@ -525,12 +531,21 @@ namespace Bridge.Translator
                         argsInfo.ThisArgument = this.Emitter.Output.ToString();
                         this.Emitter.Output = savedBuilder;
                     }
-
-                    new InlineArgumentsBlock(this.Emitter, argsInfo, tuple.Item1).Emit();
+                    else if (writer.ThisArg != null)
+                    {
+                        argsInfo.ThisArgument = writer.ThisArg;    
+                    }
+                    
+                    new InlineArgumentsBlock(this.Emitter, argsInfo, writer.InlineCode).Emit();
                     var result = this.Emitter.Output.ToString();
-                    this.Emitter.Output = tuple.Item2;
-                    this.Emitter.IsNewLine = tuple.Item3;
+                    this.Emitter.Output = writer.Output;
+                    this.Emitter.IsNewLine = writer.IsNewLine;
                     this.Write(result);
+
+                    if (writer.Callback != null)
+                    {
+                        writer.Callback.Invoke();
+                    }
                 }
                 else
                 {

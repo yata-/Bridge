@@ -116,7 +116,7 @@ namespace Bridge.Translator.TypeScript
 
         protected override void DoEmit()
         {
-            this.Emitter.Writers = new Stack<Tuple<string, StringBuilder, bool, Action>>();
+            this.Emitter.Writers = new Stack<IWriter>();
             this.Outputs = new Dictionary<string, StringBuilder>();
 
             var types = this.Emitter.Types.ToArray();

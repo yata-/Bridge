@@ -690,7 +690,7 @@ namespace Bridge.Translator
             this.LocalsStack = null;
             this.IteratorCount = 0;
             this.ThisRefCounter = 0;
-            this.Writers = new Stack<Tuple<string, StringBuilder, bool, Action>>();
+            this.Writers = new Stack<IWriter>();
             this.IsAssignment = false;
             this.Level = 0;
             this.IsNewLine = true;

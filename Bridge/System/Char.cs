@@ -17,13 +17,13 @@ namespace System
         [InlineConst]
         public const char MaxValue = '\xFFFF';
 
-        [Template("Bridge.Int.format({this}, {format})")]
+        [Template("Bridge.Char.format({this}, {format})")]
         public string Format(string format)
         {
             return null;
         }
 
-        [Template("Bridge.Int.format({this}, {format}, {provider})")]
+        [Template("Bridge.Char.format({this}, {format}, {provider})")]
         public string Format(string format, IFormatProvider provider)
         {
             return null;
@@ -41,13 +41,13 @@ namespace System
             return null;
         }
 
-        [Template("Bridge.Int.format({this}, {format})")]
+        [Template("Bridge.Char.format({this}, {format})")]
         public string ToString(string format)
         {
             return null;
         }
 
-        [Template("Bridge.Int.format({this}, {format}, {provider})")]
+        [Template("Bridge.Char.format({this}, {format}, {provider})")]
         public string ToString(string format, IFormatProvider provider)
         {
             return null;

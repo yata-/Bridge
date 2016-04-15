@@ -336,7 +336,21 @@ namespace Bridge.Translator
                                 type = ((MemberResolveResult) rr).TargetResult.Type;
                             }
 
-                            this.Write(BridgeTypes.ToJsName(type, this.Emitter));
+                            bool needName = this.NeedName(type);
+
+                            if (needName)
+                            {
+                                this.Write(BridgeTypes.ToJsName(type, this.Emitter));
+                            }
+                            else
+                            {
+                                string thisValue = argsInfo.GetThisValue();
+
+                                if (thisValue != null)
+                                {
+                                    this.Write("Bridge.getType(" + thisValue + ")");
+                                } 
+                            }
                         }
                     }
                     else
@@ -357,15 +371,19 @@ namespace Bridge.Translator
                     {
                         if (modifier == "type")
                         {
+                            IType type = null;
                             if (paramsName == key && paramsType != null)
                             {
-                                this.Write(BridgeTypes.ToJsName(paramsType, this.Emitter));
+                                type = paramsType;
                             }
                             else
                             {
                                 var rr = this.Emitter.Resolver.ResolveNode(exprs[0], this.Emitter);
-                                this.Write(BridgeTypes.ToJsName(rr.Type, this.Emitter));
+                                type = rr.Type;
                             }
+
+                            bool needName = this.NeedName(type);
+                            this.WriteGetType(needName, type, exprs[0], modifier);
                         }
                         else if (exprs.Count > 1 || paramsName == key)
                         {
@@ -470,6 +488,55 @@ namespace Bridge.Translator
             {
                 this.Write("; }");
             }
+        }
+
+        private void WriteGetType(bool needName, IType type, AstNode node, string modifier)
+        {
+            if (needName)
+            {
+                this.Write(BridgeTypes.ToJsName(type, this.Emitter));
+            }
+            else
+            {
+                string s;
+                if (node != null)
+                {
+                    var writer = this.SaveWriter();
+                    this.NewWriter();
+                    node.AcceptVisitor(this.Emitter);
+                    s = this.Emitter.Output.ToString();
+                    this.RestoreWriter(writer);
+
+                    if (modifier == "raw")
+                    {
+                        s = s.Trim('"');
+                    }
+                }
+                else
+                {
+                    s = "null";
+                }
+
+                this.Write(this.WriteIndentToString("Bridge.getType(" + s + ")"));
+            }
+        }
+
+        private bool NeedName(IType type)
+        {
+            var def = type.GetDefinition();
+            return (def != null && def.IsSealed)
+                   || type.Kind == TypeKind.Enum 
+                   || type.IsKnownType(KnownTypeCode.Enum)
+                   || Helpers.IsIntegerType(type, this.Emitter.Resolver)
+                   || Helpers.IsFloatType(type, this.Emitter.Resolver)
+                   || Helpers.IsKnownType(KnownTypeCode.Enum, type, this.Emitter.Resolver)
+                   || Helpers.IsKnownType(KnownTypeCode.Boolean, type, this.Emitter.Resolver)
+                   || Helpers.IsKnownType(KnownTypeCode.Type, type, this.Emitter.Resolver)
+                   || Helpers.IsKnownType(KnownTypeCode.Array, type, this.Emitter.Resolver)
+                   || Helpers.IsKnownType(KnownTypeCode.Char, type, this.Emitter.Resolver)
+                   || Helpers.IsKnownType(KnownTypeCode.DateTime, type, this.Emitter.Resolver)
+                   || Helpers.IsKnownType(KnownTypeCode.Delegate, type, this.Emitter.Resolver)
+                   || Helpers.IsKnownType(KnownTypeCode.String, type, this.Emitter.Resolver);
         }
 
         private void GetDefaultValue(object def, string modifier)

@@ -149,7 +149,7 @@ namespace Bridge.Translator
             set;
         }
 
-        public Stack<Tuple<string, StringBuilder, bool, Action>> Writers
+        public Stack<IWriter> Writers
         {
             get;
             set;
