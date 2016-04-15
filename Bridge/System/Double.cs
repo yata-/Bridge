@@ -3,7 +3,7 @@ using Bridge;
 namespace System
 {
     [External]
-    [Name("Number")]
+    [Name("Bridge.Double")]
     [Constructor("Number")]
     public struct Double : IComparable, IComparable<Double>, IEquatable<Double>, IFormattable
     {
@@ -11,31 +11,31 @@ namespace System
         {
         }
 
-        [Name("MAX_VALUE")]
+        [Name("max")]
         public static readonly double MaxValue = 0;
 
-        [Template("-Number.MAX_VALUE")]
+        [Name("min")]
         public static readonly double MinValue = 0;
 
         [InlineConst]
         public const double Epsilon = 4.94065645841247E-324;
 
-        [Name("NEGATIVE_INFINITY")]
+        [Template("Number.NEGATIVE_INFINITY")]
         public static readonly double NegativeInfinity = 0;
 
-        [Name("POSITIVE_INFINITY")]
+        [Template("Number.POSITIVE_INFINITY")]
         public static readonly double PositiveInfinity = 0;
 
-        [Name("NaN")]
+        [Template("Number.NaN")]
         public static readonly double NaN = 0;
 
-        [Template("Bridge.Int.format({this}, {format})")]
+        [Template("Bridge.Double.format({this}, {format})")]
         public string Format(string format)
         {
             return null;
         }
 
-        [Template("Bridge.Int.format({this}, {format}, {provider})")]
+        [Template("Bridge.Double.format({this}, {format}, {provider})")]
         public string Format(string format, IFormatProvider provider)
         {
             return null;
@@ -46,31 +46,31 @@ namespace System
             return null;
         }
 
-        [Template("Bridge.Int.format({this}, {format})")]
+        [Template("Bridge.Double.format({this}, {format})")]
         public string ToString(string format)
         {
             return null;
         }
 
-        [Template("Bridge.Int.format({this}, {format}, {provider})")]
+        [Template("Bridge.Double.format({this}, {format}, {provider})")]
         public string ToString(string format, IFormatProvider provider)
         {
             return null;
         }
 
-        [Template("Bridge.Int.format({this}, 'G')")]
+        [Template("Bridge.Double.format({this}, 'G')")]
         public override string ToString()
         {
             return null;
         }
 
-        [Template("Bridge.Int.format({this}, 'G', {provider})")]
+        [Template("Bridge.Double.format({this}, 'G', {provider})")]
         public string ToString(IFormatProvider provider)
         {
             return null;
         }
 
-        [Template("Bridge.Int.parseFloat({s})")]
+        [Template("Bridge.Double.parse({s})")]
         public static double Parse(string s)
         {
             return 0;
@@ -82,14 +82,14 @@ namespace System
             return 0;
         }
 
-        [Template("Bridge.Int.tryParseFloat({s}, null, {result})")]
+        [Template("Bridge.Double.tryParse({s}, null, {result})")]
         public static bool TryParse(string s, out double result)
         {
             result = 0;
             return false;
         }
 
-        [Template("Bridge.Int.tryParseFloat({s}, {provider}, {result})")]
+        [Template("Bridge.Double.tryParse({s}, {provider}, {result})")]
         public static bool TryParse(string s, IFormatProvider provider, out double result)
         {
             result = 0;

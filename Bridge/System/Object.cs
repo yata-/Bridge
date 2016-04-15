@@ -33,7 +33,7 @@ namespace System
 
         public virtual extern bool PropertyIsEnumerable(object v);
 
-        [Template("Bridge.getType({this})")]
+        [Template("<self>{this:type}")]
         public extern Type GetType();
 
         [Template("{a} === {b}")]

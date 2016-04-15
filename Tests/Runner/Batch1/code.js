@@ -1761,7 +1761,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 if (p === void 0) { p = []; }
                 var i = (Bridge.cast(p[0], Bridge.Int32) + 1000) | 0;
                 var s = Bridge.cast(p[1], String);
-                var d = Bridge.cast(p[2], Number);
+                var d = Bridge.cast(p[2], Bridge.Double);
     
                 return Bridge.ClientTest.BasicCSharp.ClassA.staticMethod1(i, s, d);
             },
@@ -1824,8 +1824,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 this.setBoolA(Bridge.cast(p[2], Boolean));
             }
     
-            if (Bridge.is(p[3], Number)) {
-                this.setDoubleA(Bridge.cast(p[3], Number));
+            if (Bridge.is(p[3], Bridge.Double)) {
+                this.setDoubleA(Bridge.cast(p[3], Bridge.Double));
             }
     
             if (Bridge.is(p[4], Bridge.Decimal)) {
@@ -4009,15 +4009,15 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var s;
     
                 s = Bridge.Int.format(Bridge.Decimal.MaxValue, 'G');
-                s = Bridge.Int.format(3.40282347E+38, 'G');
-                s = Bridge.Int.format(Number.MAX_VALUE, 'G');
+                s = Bridge.Single.format(3.40282347E+38, 'G');
+                s = Bridge.Double.format(Bridge.Double.max, 'G');
                 s = String.fromCharCode(65535);
     
                 s = Bridge.Int.format(Bridge.Decimal.MinValue, 'G');
-                s = Bridge.Int.format(-3.40282347E+38, 'G');
-                s = Bridge.Int.format(1.401298E-45, 'G');
-                s = Bridge.Int.format(-Number.MAX_VALUE, 'G');
-                s = Bridge.Int.format(4.94065645841247E-324, 'G');
+                s = Bridge.Single.format(-3.40282347E+38, 'G');
+                s = Bridge.Single.format(1.401298E-45, 'G');
+                s = Bridge.Double.format(Bridge.Double.min, 'G');
+                s = Bridge.Double.format(4.94065645841247E-324, 'G');
                 s = String.fromCharCode(0);
     
                 s = (255).toString();
@@ -4650,6 +4650,42 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             s.x = this.x;
             s.y = this.y;
             return s;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1184', {
+        statics: {
+            testGetTypeForNumberTypes: function () {
+                var b = 1;
+                Bridge.Test.Assert.areEqual(Bridge.Byte, Bridge.Byte);
+    
+                var sb = 1;
+                Bridge.Test.Assert.areEqual(Bridge.SByte, Bridge.SByte);
+    
+                var s = 1;
+                Bridge.Test.Assert.areEqual(Bridge.Int16, Bridge.Int16);
+    
+                var us = 1;
+                Bridge.Test.Assert.areEqual(Bridge.UInt16, Bridge.UInt16);
+    
+                var i = 1;
+                Bridge.Test.Assert.areEqual(Bridge.Int32, Bridge.Int32);
+    
+                var ui = 1;
+                Bridge.Test.Assert.areEqual(Bridge.UInt32, Bridge.UInt32);
+    
+                var d = 1.1;
+                Bridge.Test.Assert.areEqual(Bridge.Double, Bridge.Double);
+    
+                var f = 1.1;
+                Bridge.Test.Assert.areEqual(Bridge.Single, Bridge.Single);
+    
+                var o = b;
+                Bridge.Test.Assert.areEqual(Bridge.Int32, Bridge.getType(o));
+    
+                o = f;
+                Bridge.Test.Assert.areEqual(Bridge.Double, Bridge.getType(o));
+            }
         }
     });
     
@@ -5679,7 +5715,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var i = Bridge.merge(new Bridge.Int32(), JSON.parse("25"));
                 Bridge.Test.Assert.areEqual$1(25, i, "Bridge544 int");
     
-                var dbl = Bridge.merge(new Number(), JSON.parse("26.1"));
+                var dbl = Bridge.merge(new Bridge.Double(), JSON.parse("26.1"));
                 Bridge.Test.Assert.areEqual$1(26.1, dbl, "Bridge544 double");
     
                 var d = Bridge.merge(new Bridge.Decimal(), JSON.parse("27.2"));
@@ -6359,19 +6395,19 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.true$1(Bridge.hasValue(t2), "#565 t2");
     
                 var t3 = new Object();
-                Bridge.Test.Assert.true$1(Bridge.getType(t3) === Object, "#565 t3");
+                Bridge.Test.Assert.true$1(Object === Object, "#565 t3");
     
                 var t4 = new Object();
-                Bridge.Test.Assert.true$1(Bridge.getType(t4) === Object, "#565 t4");
+                Bridge.Test.Assert.true$1(Object === Object, "#565 t4");
     
                 var t5 = new Object();
                 Bridge.Test.Assert.true$1(Bridge.hasValue(t5), "#565 t5");
     
                 var t6 = new Object();
-                Bridge.Test.Assert.true$1(Bridge.getType(t6) === Object, "#565 t6");
+                Bridge.Test.Assert.true$1(Object === Object, "#565 t6");
     
                 var t7 = new Object();
-                Bridge.Test.Assert.true$1(Bridge.getType(t7) === Object, "#565 t7");
+                Bridge.Test.Assert.true$1(Object === Object, "#565 t7");
             }
         }
     });
@@ -8681,7 +8717,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     ["2"],
                     ["3"]
                 ] );
-                var converted = Bridge.ClientTest.BridgeIssues.Bridge743ObjectExtention.convertAllItems(String, Bridge.Int32, list, function (s) { return Bridge.Int.parseInt(s, -2147483648, 2147483647); });
+                var converted = Bridge.ClientTest.BridgeIssues.Bridge743ObjectExtention.convertAllItems(String, Bridge.Int32, list, function (s) { return Bridge.Int32.parse(s); });
                 Bridge.Test.Assert.areEqual(converted.getItem(0), 1);
                 Bridge.Test.Assert.areEqual(converted.getItem(1), 2);
                 Bridge.Test.Assert.areEqual(converted.getItem(2), 3);
@@ -8701,7 +8737,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var list1 = Bridge.merge(new Bridge.List$1(String)(), [
                 ["2147483648"]
             ] );
-            var converted1 = Bridge.ClientTest.BridgeIssues.Bridge743ObjectExtention.convertAllItems(String, Bridge.Int32, list1, function (s) { return Bridge.Int.parseInt(s, -2147483648, 2147483647); });
+            var converted1 = Bridge.ClientTest.BridgeIssues.Bridge743ObjectExtention.convertAllItems(String, Bridge.Int32, list1, function (s) { return Bridge.Int32.parse(s); });
         },
         f2: function (e) {
             return Bridge.is(e, Bridge.OverflowException);
@@ -9393,18 +9429,18 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     Bridge.CultureInfo.setCurrentCulture(defaultCulture);
     
                     var d1 = 1.25;
-                    Bridge.Test.Assert.areEqual("1.25", Bridge.Int.format(d1, 'G'));
-                    Bridge.Test.Assert.areEqual("1,25", Bridge.Int.format(d1, 'G', Bridge.CultureInfo.getCultureInfo("ru-RU")));
+                    Bridge.Test.Assert.areEqual("1.25", Bridge.Double.format(d1, 'G'));
+                    Bridge.Test.Assert.areEqual("1,25", Bridge.Double.format(d1, 'G', Bridge.CultureInfo.getCultureInfo("ru-RU")));
                     Bridge.CultureInfo.setCurrentCulture(Bridge.CultureInfo.getCultureInfo("ru-RU"));
-                    Bridge.Test.Assert.areEqual("1,25", Bridge.Int.format(d1, 'G'));
+                    Bridge.Test.Assert.areEqual("1,25", Bridge.Double.format(d1, 'G'));
     
                     Bridge.CultureInfo.setCurrentCulture(defaultCulture);
     
                     var f = 1.25;
-                    Bridge.Test.Assert.areEqual("1.25", Bridge.Int.format(f, 'G'));
-                    Bridge.Test.Assert.areEqual("1,25", Bridge.Int.format(f, 'G', Bridge.CultureInfo.getCultureInfo("ru-RU")));
+                    Bridge.Test.Assert.areEqual("1.25", Bridge.Single.format(f, 'G'));
+                    Bridge.Test.Assert.areEqual("1,25", Bridge.Single.format(f, 'G', Bridge.CultureInfo.getCultureInfo("ru-RU")));
                     Bridge.CultureInfo.setCurrentCulture(Bridge.CultureInfo.getCultureInfo("ru-RU"));
-                    Bridge.Test.Assert.areEqual("1,25", Bridge.Int.format(f, 'G'));
+                    Bridge.Test.Assert.areEqual("1,25", Bridge.Single.format(f, 'G'));
                 }
                 finally {
                     Bridge.CultureInfo.setCurrentCulture(defaultCulture);
@@ -10803,8 +10839,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge952', {
         statics: {
             testDoubleMinValue: function () {
-                Bridge.Test.Assert.areEqual$1(-1.7976931348623157E+308, -Number.MAX_VALUE, "Compare value");
-                Bridge.Test.Assert.areEqual$1("-1.79769313486232E+308", Bridge.Int.format(-Number.MAX_VALUE, 'G'), "Compare by ToString()");
+                Bridge.Test.Assert.areEqual$1(-1.7976931348623157E+308, Bridge.Double.min, "Compare value");
+                Bridge.Test.Assert.areEqual$1("-1.79769313486232E+308", Bridge.Double.format(Bridge.Double.min, 'G'), "Compare by ToString()");
             }
         }
     });
@@ -11048,7 +11084,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(e, a, message);
             },
             testClippingInDefaultOverflowMode: function () {
-                var x = Number.MAX_VALUE;
+                var x = Bridge.Double.max;
     
                 var y1 = Bridge.Int.clip32(Math.floor(x / 0.2));
                 Bridge.ClientTest.BridgeIssues.N1122.assertNumber(-2147483648, y1, "int");
@@ -11603,8 +11639,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(DecimalMinValue, "-7.9228162514264337593543950335e+28", "DecimalMinValuein expression");
     
                 // Double consts
-                var DoubleMaxValue = Number.MAX_VALUE;
-                var DoubleMinValue = -Number.MAX_VALUE;
+                var DoubleMaxValue = Bridge.Double.max;
+                var DoubleMinValue = Bridge.Double.min;
                 var DoubleEpsilon = 4.94065645841247E-324;
                 var DoubleNegativeInfinity = Number.NEGATIVE_INFINITY;
                 var DoublePositiveInfinity = Number.POSITIVE_INFINITY;
@@ -11618,8 +11654,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(DoubleNaN, "NaN", "DoubleNaN");
     
                 // Double consts in expressions
-                DoubleMaxValue = Number.MAX_VALUE + 0;
-                DoubleMinValue = -Number.MAX_VALUE + 0;
+                DoubleMaxValue = Bridge.Double.max + 0;
+                DoubleMinValue = Bridge.Double.min + 0;
                 DoubleEpsilon = 4.94065645841247E-324;
                 DoubleNegativeInfinity = Number.NEGATIVE_INFINITY + 0;
                 DoublePositiveInfinity = Number.POSITIVE_INFINITY + 0;
@@ -11726,8 +11762,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             },
             n435: function () {
                 var i = 0;
-                Bridge.Test.Assert.areEqual$1("0.000000E+000", Bridge.Int.format(i, "E"), "i.Format(\"E\")");
-                Bridge.Test.Assert.areEqual$1("a", Bridge.Int.format(i, "a"), "Test custom formatting in \"use strict\" mode");
+                Bridge.Test.Assert.areEqual$1("0.000000E+000", Bridge.Int32.format(i, "E"), "i.Format(\"E\")");
+                Bridge.Test.Assert.areEqual$1("a", Bridge.Int32.format(i, "a"), "Test custom formatting in \"use strict\" mode");
             },
             n436: function () {
                 var b1 = new Bridge.ClientTest.BridgeIssues.Bridge436First();
@@ -11774,7 +11810,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var number;
     
                 number = -12345.6789;
-                Bridge.Test.Assert.areEqual$1("-12345.6789", Bridge.Int.format(number, "G", Bridge.CultureInfo.invariantCulture), "ToString(\"G\") for negative numbers in InvariantCulture");
+                Bridge.Test.Assert.areEqual$1("-12345.6789", Bridge.Double.format(number, "G", Bridge.CultureInfo.invariantCulture), "ToString(\"G\") for negative numbers in InvariantCulture");
             },
             n467: function () {
                 var a = Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge467(), {
@@ -15698,7 +15734,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             },
             fromInt32Base10: function () {
                 var testValues = [-2147483648, 0, 2147483647];
-                var expectedValues = [Bridge.Int.format(-2147483648, null), "0", Bridge.Int.format(2147483647, null)];
+                var expectedValues = [Bridge.Int32.format(-2147483648, null), "0", Bridge.Int32.format(2147483647, null)];
     
                 for (var i = 0; i < testValues.length; i = (i + 1) | 0) {
                     Bridge.Test.Assert.areEqual(expectedValues[i], Bridge.Convert.toStringInBase(testValues[i], 10, 9));
@@ -15769,7 +15805,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     var result = Bridge.Convert.toString(testValues[i]);
                     Bridge.Test.Assert.areEqual(testValues[i].toString(), result);
                     result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
-                    Bridge.Test.Assert.areEqual(Bridge.Int.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
+                    Bridge.Test.Assert.areEqual(Bridge.SByte.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
                 }
             },
             fromByte: function () {
@@ -15779,7 +15815,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     var result = Bridge.Convert.toString(testValues[i]);
                     Bridge.Test.Assert.areEqual(testValues[i].toString(), result);
                     result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
-                    Bridge.Test.Assert.areEqual(Bridge.Int.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
+                    Bridge.Test.Assert.areEqual(Bridge.Byte.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
                 }
             },
             fromInt16Array: function () {
@@ -15789,7 +15825,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     var result = Bridge.Convert.toString(testValues[i]);
                     Bridge.Test.Assert.areEqual(testValues[i].toString(), result);
                     result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
-                    Bridge.Test.Assert.areEqual(Bridge.Int.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
+                    Bridge.Test.Assert.areEqual(Bridge.Int16.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
                 }
             },
             fromUInt16Array: function () {
@@ -15799,7 +15835,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     var result = Bridge.Convert.toString(testValues[i]);
                     Bridge.Test.Assert.areEqual(testValues[i].toString(), result);
                     result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
-                    Bridge.Test.Assert.areEqual(Bridge.Int.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
+                    Bridge.Test.Assert.areEqual(Bridge.UInt16.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
                 }
             },
             fromInt32Array: function () {
@@ -15809,7 +15845,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     var result = Bridge.Convert.toString(testValues[i]);
                     Bridge.Test.Assert.areEqual(testValues[i].toString(), result);
                     result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
-                    Bridge.Test.Assert.areEqual(Bridge.Int.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
+                    Bridge.Test.Assert.areEqual(Bridge.Int32.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
                 }
             },
             fromUInt32Array: function () {
@@ -15819,7 +15855,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     var result = Bridge.Convert.toString(testValues[i]);
                     Bridge.Test.Assert.areEqual(testValues[i].toString(), result);
                     result = Bridge.Convert.toString(testValues[i], Bridge.NumberFormatInfo.currentInfo);
-                    Bridge.Test.Assert.areEqual(Bridge.Int.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
+                    Bridge.Test.Assert.areEqual(Bridge.UInt32.format(testValues[i], null, Bridge.NumberFormatInfo.currentInfo), result);
                 }
             },
             fromInt64Array: function () {
@@ -15856,7 +15892,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 }
             },
             fromDoubleArray: function () {
-                var testValues = [-Number.MAX_VALUE, 0.0, 1.0, 1000.0, Number.MAX_VALUE, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, 4.94065645841247E-324, Number.NaN];
+                var testValues = [-Bridge.Double.max, 0.0, 1.0, 1000.0, Bridge.Double.max, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, 4.94065645841247E-324, Number.NaN];
                 var expectedValues = [Bridge.ClientTest.ConvertTests.ConvertConstants.DOUBLE_MIN_STRING, "0", "1", "1000", Bridge.ClientTest.ConvertTests.ConvertConstants.DOUBLE_MAX_STRING, "-Infinity", "Infinity", Bridge.ClientTest.ConvertTests.ConvertConstants.DOUBLE_EPSILON_STRING, "NaN"];
     
                 // Vanila Test Cases
@@ -17836,164 +17872,164 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     Bridge.define('Bridge.ClientTest.Format.NumberFormatSpecifiersTests', {
         currencyFormatSpecifierWorks: function () {
             var value = 12345.6789;
-            Bridge.Test.Assert.areEqual("¤12,345.68", Bridge.Int.format(value, "C"));
-            Bridge.Test.Assert.areEqual("¤12,345.68", Bridge.Int.format(value, "C2"));
-            Bridge.Test.Assert.areEqual("¤12,345.679", Bridge.Int.format(value, "C3"));
-            Bridge.Test.Assert.areEqual("12 345,679 ₽", Bridge.Int.format(value, "C3", Bridge.CultureInfo.getCultureInfo("ru-RU")));
+            Bridge.Test.Assert.areEqual("¤12,345.68", Bridge.Double.format(value, "C"));
+            Bridge.Test.Assert.areEqual("¤12,345.68", Bridge.Double.format(value, "C2"));
+            Bridge.Test.Assert.areEqual("¤12,345.679", Bridge.Double.format(value, "C3"));
+            Bridge.Test.Assert.areEqual("12 345,679 ₽", Bridge.Double.format(value, "C3", Bridge.CultureInfo.getCultureInfo("ru-RU")));
         },
         decimalFormatSpecifierWorks: function () {
             var value = 12345;
-            Bridge.Test.Assert.areEqual("12345", Bridge.Int.format(value, "D"));
-            Bridge.Test.Assert.areEqual("00012345", Bridge.Int.format(value, "D8"));
+            Bridge.Test.Assert.areEqual("12345", Bridge.Double.format(value, "D"));
+            Bridge.Test.Assert.areEqual("00012345", Bridge.Double.format(value, "D8"));
             value = -12345;
-            Bridge.Test.Assert.areEqual("-12345", Bridge.Int.format(value, "D"));
-            Bridge.Test.Assert.areEqual("-00012345", Bridge.Int.format(value, "D8"));
+            Bridge.Test.Assert.areEqual("-12345", Bridge.Double.format(value, "D"));
+            Bridge.Test.Assert.areEqual("-00012345", Bridge.Double.format(value, "D8"));
         },
         exponentialFormatSpecifierWorks: function () {
             var value = 12345.6789;
-            Bridge.Test.Assert.areEqual("1.234568E+004", Bridge.Int.format(value, "E"));
-            Bridge.Test.Assert.areEqual("1.2345678900E+004", Bridge.Int.format(value, "E10"));
-            Bridge.Test.Assert.areEqual("1.2346e+004", Bridge.Int.format(value, "e4"));
-            Bridge.Test.Assert.areEqual("1,234568E+004", Bridge.Int.format(value, "E", Bridge.CultureInfo.getCultureInfo("ru-RU")));
+            Bridge.Test.Assert.areEqual("1.234568E+004", Bridge.Double.format(value, "E"));
+            Bridge.Test.Assert.areEqual("1.2345678900E+004", Bridge.Double.format(value, "E10"));
+            Bridge.Test.Assert.areEqual("1.2346e+004", Bridge.Double.format(value, "e4"));
+            Bridge.Test.Assert.areEqual("1,234568E+004", Bridge.Double.format(value, "E", Bridge.CultureInfo.getCultureInfo("ru-RU")));
         },
         fixedPointFormatSpecifierWorks: function () {
             var integerNumber = 17843;
-            Bridge.Test.Assert.areEqual("17843.00", Bridge.Int.format(integerNumber, "F"));
+            Bridge.Test.Assert.areEqual("17843.00", Bridge.Int32.format(integerNumber, "F"));
     
             integerNumber = -29541;
-            Bridge.Test.Assert.areEqual("-29541.000", Bridge.Int.format(integerNumber, "F3"));
+            Bridge.Test.Assert.areEqual("-29541.000", Bridge.Int32.format(integerNumber, "F3"));
     
             var doubleNumber = 18934.1879;
-            Bridge.Test.Assert.areEqual("18934.19", Bridge.Int.format(doubleNumber, "F"));
-            Bridge.Test.Assert.areEqual("18934", Bridge.Int.format(doubleNumber, "F0"));
+            Bridge.Test.Assert.areEqual("18934.19", Bridge.Double.format(doubleNumber, "F"));
+            Bridge.Test.Assert.areEqual("18934", Bridge.Double.format(doubleNumber, "F0"));
     
             doubleNumber = -1898300.1987;
-            Bridge.Test.Assert.areEqual("-1898300.2", Bridge.Int.format(doubleNumber, "F1"));
-            Bridge.Test.Assert.areEqual("-1898300,199", Bridge.Int.format(doubleNumber, "F3", Bridge.CultureInfo.getCultureInfo("ru-RU")));
+            Bridge.Test.Assert.areEqual("-1898300.2", Bridge.Double.format(doubleNumber, "F1"));
+            Bridge.Test.Assert.areEqual("-1898300,199", Bridge.Double.format(doubleNumber, "F3", Bridge.CultureInfo.getCultureInfo("ru-RU")));
         },
         generalFormatSpecifierWorks: function () {
             var number = 12345.6789;
-            Bridge.Test.Assert.areEqual("12345.6789", Bridge.Int.format(number, "G"));
-            Bridge.Test.Assert.areEqual("12345,6789", Bridge.Int.format(number, "G", Bridge.CultureInfo.getCultureInfo("ru-RU")));
-            Bridge.Test.Assert.areEqual("12345.68", Bridge.Int.format(number, "G7"));
+            Bridge.Test.Assert.areEqual("12345.6789", Bridge.Double.format(number, "G"));
+            Bridge.Test.Assert.areEqual("12345,6789", Bridge.Double.format(number, "G", Bridge.CultureInfo.getCultureInfo("ru-RU")));
+            Bridge.Test.Assert.areEqual("12345.68", Bridge.Double.format(number, "G7"));
     
             number = 2.3E-06;
-            Bridge.Test.Assert.areEqual("2.3E-06", Bridge.Int.format(number, "G"));
-            Bridge.Test.Assert.areEqual("2,3E-06", Bridge.Int.format(number, "G", Bridge.CultureInfo.getCultureInfo("ru-RU")));
+            Bridge.Test.Assert.areEqual("2.3E-06", Bridge.Double.format(number, "G"));
+            Bridge.Test.Assert.areEqual("2,3E-06", Bridge.Double.format(number, "G", Bridge.CultureInfo.getCultureInfo("ru-RU")));
     
             number = 0.0023;
-            Bridge.Test.Assert.areEqual("0.0023", Bridge.Int.format(number, "G"));
+            Bridge.Test.Assert.areEqual("0.0023", Bridge.Double.format(number, "G"));
     
             number = 1234;
-            Bridge.Test.Assert.areEqual("1.2E+03", Bridge.Int.format(number, "G2"));
+            Bridge.Test.Assert.areEqual("1.2E+03", Bridge.Double.format(number, "G2"));
     
             number = Math.PI;
-            Bridge.Test.Assert.areEqual("3.1416", Bridge.Int.format(number, "G5"));
+            Bridge.Test.Assert.areEqual("3.1416", Bridge.Double.format(number, "G5"));
         },
         numericFormatSpecifierWorks: function () {
             var dblValue = -12445.6789;
-            Bridge.Test.Assert.areEqual("-12,445.68", Bridge.Int.format(dblValue, "N"));
-            Bridge.Test.Assert.areEqual("-12 445,7", Bridge.Int.format(dblValue, "N1", Bridge.CultureInfo.getCultureInfo("ru-RU")));
+            Bridge.Test.Assert.areEqual("-12,445.68", Bridge.Double.format(dblValue, "N"));
+            Bridge.Test.Assert.areEqual("-12 445,7", Bridge.Double.format(dblValue, "N1", Bridge.CultureInfo.getCultureInfo("ru-RU")));
     
             var intValue = 123456789;
-            Bridge.Test.Assert.areEqual("123,456,789.0", Bridge.Int.format(intValue, "N1"));
+            Bridge.Test.Assert.areEqual("123,456,789.0", Bridge.Int32.format(intValue, "N1"));
         },
         percentFormatSpecifierWorks: function () {
             var number = 0.2468013;
-            Bridge.Test.Assert.areEqual("24.68 %", Bridge.Int.format(number, "P"));
-            Bridge.Test.Assert.areEqual("24,68%", Bridge.Int.format(number, "P", Bridge.CultureInfo.getCultureInfo("ru-RU")));
-            Bridge.Test.Assert.areEqual("24.7 %", Bridge.Int.format(number, "P1"));
+            Bridge.Test.Assert.areEqual("24.68 %", Bridge.Double.format(number, "P"));
+            Bridge.Test.Assert.areEqual("24,68%", Bridge.Double.format(number, "P", Bridge.CultureInfo.getCultureInfo("ru-RU")));
+            Bridge.Test.Assert.areEqual("24.7 %", Bridge.Double.format(number, "P1"));
         },
         roundTripFormatSpecifierWorks: function () {
             var value = Math.PI;
-            Bridge.Test.Assert.areEqual("3.141592653589793", Bridge.Int.format(value, "r"));
-            Bridge.Test.Assert.areEqual("3,141592653589793", Bridge.Int.format(value, "r", Bridge.CultureInfo.getCultureInfo("ru-RU")));
+            Bridge.Test.Assert.areEqual("3.141592653589793", Bridge.Double.format(value, "r"));
+            Bridge.Test.Assert.areEqual("3,141592653589793", Bridge.Double.format(value, "r", Bridge.CultureInfo.getCultureInfo("ru-RU")));
     
             value = 1.623E-21;
-            Bridge.Test.Assert.areEqual("1.623E-21", Bridge.Int.format(value, "r"));
+            Bridge.Test.Assert.areEqual("1.623E-21", Bridge.Double.format(value, "r"));
         },
         hexadecimalFormatSpecifierWorks: function () {
             var value = 132190;
-            Bridge.Test.Assert.areEqual("2045e", Bridge.Int.format(value, "x"));
-            Bridge.Test.Assert.areEqual("2045E", Bridge.Int.format(value, "X"));
-            Bridge.Test.Assert.areEqual("0002045E", Bridge.Int.format(value, "X8"));
+            Bridge.Test.Assert.areEqual("2045e", Bridge.Int32.format(value, "x"));
+            Bridge.Test.Assert.areEqual("2045E", Bridge.Int32.format(value, "X"));
+            Bridge.Test.Assert.areEqual("0002045E", Bridge.Int32.format(value, "X8"));
     
             value = 123456789;
-            Bridge.Test.Assert.areEqual("75BCD15", Bridge.Int.format(value, "X"));
-            Bridge.Test.Assert.areEqual("75BCD15", Bridge.Int.format(value, "X2"));
+            Bridge.Test.Assert.areEqual("75BCD15", Bridge.Int32.format(value, "X"));
+            Bridge.Test.Assert.areEqual("75BCD15", Bridge.Int32.format(value, "X2"));
         },
         customZeroFormatSpecifierWorks: function () {
             var value = 123;
-            Bridge.Test.Assert.areEqual("00123", Bridge.Int.format(value, "00000"));
+            Bridge.Test.Assert.areEqual("00123", Bridge.Double.format(value, "00000"));
     
             value = 1.2;
-            Bridge.Test.Assert.areEqual("1.20", Bridge.Int.format(value, "0.00"));
-            Bridge.Test.Assert.areEqual("01.20", Bridge.Int.format(value, "00.00"));
-            Bridge.Test.Assert.areEqual("01,20", Bridge.Int.format(value, "00.00", Bridge.CultureInfo.getCultureInfo("ru-RU")));
+            Bridge.Test.Assert.areEqual("1.20", Bridge.Double.format(value, "0.00"));
+            Bridge.Test.Assert.areEqual("01.20", Bridge.Double.format(value, "00.00"));
+            Bridge.Test.Assert.areEqual("01,20", Bridge.Double.format(value, "00.00", Bridge.CultureInfo.getCultureInfo("ru-RU")));
     
             value = 0.56;
-            Bridge.Test.Assert.areEqual("0.6", Bridge.Int.format(value, "0.0"));
+            Bridge.Test.Assert.areEqual("0.6", Bridge.Double.format(value, "0.0"));
     
             value = 1234567890;
-            Bridge.Test.Assert.areEqual("1,234,567,890", Bridge.Int.format(value, "0,0"));
-            Bridge.Test.Assert.areEqual("1 234 567 890", Bridge.Int.format(value, "0,0", Bridge.CultureInfo.getCultureInfo("ru-RU")));
+            Bridge.Test.Assert.areEqual("1,234,567,890", Bridge.Double.format(value, "0,0"));
+            Bridge.Test.Assert.areEqual("1 234 567 890", Bridge.Double.format(value, "0,0", Bridge.CultureInfo.getCultureInfo("ru-RU")));
     
             value = 1234567890.123456;
-            Bridge.Test.Assert.areEqual("1,234,567,890.1", Bridge.Int.format(value, "0,0.0"));
+            Bridge.Test.Assert.areEqual("1,234,567,890.1", Bridge.Double.format(value, "0,0.0"));
     
             value = 1234.56789;
-            Bridge.Test.Assert.areEqual("1,234.57", Bridge.Int.format(value, "0,0.00"));
+            Bridge.Test.Assert.areEqual("1,234.57", Bridge.Double.format(value, "0,0.00"));
         },
         customHashFormatSpecifierWorks: function () {
             var value = 1.2;
-            Bridge.Test.Assert.areEqual("1.2", Bridge.Int.format(value, "#.##"));
+            Bridge.Test.Assert.areEqual("1.2", Bridge.Double.format(value, "#.##"));
     
             value = 123;
-            Bridge.Test.Assert.areEqual("123", Bridge.Int.format(value, "#####"));
+            Bridge.Test.Assert.areEqual("123", Bridge.Double.format(value, "#####"));
     
             value = 123456;
-            Bridge.Test.Assert.areEqual("[12-34-56]", Bridge.Int.format(value, "[##-##-##]"));
+            Bridge.Test.Assert.areEqual("[12-34-56]", Bridge.Double.format(value, "[##-##-##]"));
     
             value = 1234567890;
-            Bridge.Test.Assert.areEqual("1234567890", Bridge.Int.format(value, "#"));
-            Bridge.Test.Assert.areEqual("(123) 456-7890", Bridge.Int.format(value, "(###) ###-####"));
+            Bridge.Test.Assert.areEqual("1234567890", Bridge.Double.format(value, "#"));
+            Bridge.Test.Assert.areEqual("(123) 456-7890", Bridge.Double.format(value, "(###) ###-####"));
     
             value = 42;
-            Bridge.Test.Assert.areEqual("My Number = 42", Bridge.Int.format(value, "My Number = #"));
+            Bridge.Test.Assert.areEqual("My Number = 42", Bridge.Double.format(value, "My Number = #"));
         },
         customDotFormatSpecifierWorks: function () {
             var value = 1.2;
-            Bridge.Test.Assert.areEqual("1.20", Bridge.Int.format(value, "0.00"));
-            Bridge.Test.Assert.areEqual("01.20", Bridge.Int.format(value, "00.00"));
-            Bridge.Test.Assert.areEqual("01,20", Bridge.Int.format(value, "00.00", Bridge.CultureInfo.getCultureInfo("ru-RU")));
+            Bridge.Test.Assert.areEqual("1.20", Bridge.Double.format(value, "0.00"));
+            Bridge.Test.Assert.areEqual("01.20", Bridge.Double.format(value, "00.00"));
+            Bridge.Test.Assert.areEqual("01,20", Bridge.Double.format(value, "00.00", Bridge.CultureInfo.getCultureInfo("ru-RU")));
     
             value = 0.086;
-            Bridge.Test.Assert.areEqual("8.6%", Bridge.Int.format(value, "#0.##%"));
+            Bridge.Test.Assert.areEqual("8.6%", Bridge.Double.format(value, "#0.##%"));
         },
         customCommaFormatSpecifierWorks: function () {
             var value = 1234567890;
-            Bridge.Test.Assert.areEqual("1,234,567,890", Bridge.Int.format(value, "#,#"));
-            Bridge.Test.Assert.areEqual("1,235", Bridge.Int.format(value, "#,##0,,"));
+            Bridge.Test.Assert.areEqual("1,234,567,890", Bridge.Double.format(value, "#,#"));
+            Bridge.Test.Assert.areEqual("1,235", Bridge.Double.format(value, "#,##0,,"));
     
             value = 1234567890;
-            Bridge.Test.Assert.areEqual("1235", Bridge.Int.format(value, "#,,"));
-            Bridge.Test.Assert.areEqual("1", Bridge.Int.format(value, "#,,,"));
-            Bridge.Test.Assert.areEqual("1,235", Bridge.Int.format(value, "#,##0,,"));
+            Bridge.Test.Assert.areEqual("1235", Bridge.Double.format(value, "#,,"));
+            Bridge.Test.Assert.areEqual("1", Bridge.Double.format(value, "#,,,"));
+            Bridge.Test.Assert.areEqual("1,235", Bridge.Double.format(value, "#,##0,,"));
         },
         customPercentFormatSpecifierWorks: function () {
             var value = 0.086;
-            Bridge.Test.Assert.areEqual("8.6%", Bridge.Int.format(value, "#0.##%"));
+            Bridge.Test.Assert.areEqual("8.6%", Bridge.Double.format(value, "#0.##%"));
         },
         customPerMileFormatSpecifierWorks: function () {
             var value = 0.00354;
-            Bridge.Test.Assert.areEqual("3.54 ‰", Bridge.Int.format(value, "#0.## " + String.fromCharCode(8240)));
+            Bridge.Test.Assert.areEqual("3.54 ‰", Bridge.Double.format(value, "#0.## " + String.fromCharCode(8240)));
         },
         customEscapeFormatSpecifierWorks: function () {
             var value = 123;
-            Bridge.Test.Assert.areEqual("### 123 dollars and 00 cents ###", Bridge.Int.format(value, "\\#\\#\\# ##0 dollars and \\0\\0 cents \\#\\#\\#"));
-            Bridge.Test.Assert.areEqual("### 123 dollars and 00 cents ###", Bridge.Int.format(value, "\\#\\#\\# ##0 dollars and \\0\\0 cents \\#\\#\\#"));
-            Bridge.Test.Assert.areEqual("\\\\\\ 123 dollars and 00 cents \\\\\\", Bridge.Int.format(value, "\\\\\\\\\\\\ ##0 dollars and \\0\\0 cents \\\\\\\\\\\\"));
-            Bridge.Test.Assert.areEqual("\\\\\\ 123 dollars and 00 cents \\\\\\", Bridge.Int.format(value, "\\\\\\\\\\\\ ##0 dollars and \\0\\0 cents \\\\\\\\\\\\"));
+            Bridge.Test.Assert.areEqual("### 123 dollars and 00 cents ###", Bridge.Int32.format(value, "\\#\\#\\# ##0 dollars and \\0\\0 cents \\#\\#\\#"));
+            Bridge.Test.Assert.areEqual("### 123 dollars and 00 cents ###", Bridge.Int32.format(value, "\\#\\#\\# ##0 dollars and \\0\\0 cents \\#\\#\\#"));
+            Bridge.Test.Assert.areEqual("\\\\\\ 123 dollars and 00 cents \\\\\\", Bridge.Int32.format(value, "\\\\\\\\\\\\ ##0 dollars and \\0\\0 cents \\\\\\\\\\\\"));
+            Bridge.Test.Assert.areEqual("\\\\\\ 123 dollars and 00 cents \\\\\\", Bridge.Int32.format(value, "\\\\\\\\\\\\ ##0 dollars and \\0\\0 cents \\\\\\\\\\\\"));
         },
         customSemicolonFormatSpecifierWorks: function () {
             var posValue = 1234;
@@ -18003,9 +18039,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var fmt2 = "##;(##)";
             var fmt3 = "##;(##);**Zero**";
     
-            Bridge.Test.Assert.areEqual("1234", Bridge.Int.format(posValue, fmt2));
-            Bridge.Test.Assert.areEqual("(1234)", Bridge.Int.format(negValue, fmt2));
-            Bridge.Test.Assert.areEqual("**Zero**", Bridge.Int.format(zeroValue, fmt3));
+            Bridge.Test.Assert.areEqual("1234", Bridge.Double.format(posValue, fmt2));
+            Bridge.Test.Assert.areEqual("(1234)", Bridge.Double.format(negValue, fmt2));
+            Bridge.Test.Assert.areEqual("**Zero**", Bridge.Double.format(zeroValue, fmt3));
         }
     });
     
@@ -18062,9 +18098,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var lngValue = Bridge.Long(6985321);
             var ulngValue = Bridge.ULong.MaxValue;
     
-            Bridge.Test.Assert.areEqual("              00000254               000000FE", Bridge.String.format("{0,22} {1,22}", Bridge.Int.format(byteValue, "D8"), Bridge.Int.format(byteValue, "X8")));
-            Bridge.Test.Assert.areEqual("              00010342               00002866", Bridge.String.format("{0,22} {1,22}", Bridge.Int.format(shortValue, "D8"), Bridge.Int.format(shortValue, "X8")));
-            Bridge.Test.Assert.areEqual("              01023983               000F9FEF", Bridge.String.format("{0,22} {1,22}", Bridge.Int.format(intValue, "D8"), Bridge.Int.format(intValue, "X8")));
+            Bridge.Test.Assert.areEqual("              00000254               000000FE", Bridge.String.format("{0,22} {1,22}", Bridge.Byte.format(byteValue, "D8"), Bridge.Byte.format(byteValue, "X8")));
+            Bridge.Test.Assert.areEqual("              00010342               00002866", Bridge.String.format("{0,22} {1,22}", Bridge.Int16.format(shortValue, "D8"), Bridge.Int16.format(shortValue, "X8")));
+            Bridge.Test.Assert.areEqual("              01023983               000F9FEF", Bridge.String.format("{0,22} {1,22}", Bridge.Int32.format(intValue, "D8"), Bridge.Int32.format(intValue, "X8")));
             Bridge.Test.Assert.areEqual("              06985321               006A9669", Bridge.String.format("{0,22} {1,22}", lngValue.toString("D8"), lngValue.toString("X8")));
             Bridge.Test.Assert.areEqual("  18446744073709551615       FFFFFFFFFFFFFFFF", Bridge.String.format("{0,22} {1,22}", ulngValue.toString("D8"), ulngValue.toString("X8")));
             Bridge.Test.Assert.areEqual("              00000254               000000FE", Bridge.String.format("{0,22:D8} {0,22:X8}", byteValue));
@@ -18075,10 +18111,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         padIntegerWithSpecificNumberLeadingZeros: function () {
             var value = 160934;
-            var decimalLength = (Bridge.Int.format(value, "D").length + 5) | 0;
-            var hexLength = (Bridge.Int.format(value, "X").length + 5) | 0;
-            Bridge.Test.Assert.areEqual("00000160934", Bridge.String.format(Bridge.Int.format(value, "D" + decimalLength.toString()), null));
-            Bridge.Test.Assert.areEqual("00000274A6", Bridge.String.format(Bridge.Int.format(value, "X" + hexLength.toString()), null));
+            var decimalLength = (Bridge.Int32.format(value, "D").length + 5) | 0;
+            var hexLength = (Bridge.Int32.format(value, "X").length + 5) | 0;
+            Bridge.Test.Assert.areEqual("00000160934", Bridge.String.format(Bridge.Int32.format(value, "D" + decimalLength.toString()), null));
+            Bridge.Test.Assert.areEqual("00000274A6", Bridge.String.format(Bridge.Int32.format(value, "X" + hexLength.toString()), null));
         },
         padNumericWithLeadingZerosToLength: function () {
             var fmt = "00000000.##";
@@ -18103,12 +18139,12 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var decSeparator = Bridge.NumberFormatInfo.currentInfo.numberDecimalSeparator;
                 var fmt, formatString;
     
-                if (Bridge.String.contains(Bridge.Int.format(dblValue, 'G'),decSeparator)) {
-                    var digits = Bridge.String.indexOf(Bridge.Int.format(dblValue, 'G'), decSeparator);
+                if (Bridge.String.contains(Bridge.Double.format(dblValue, 'G'),decSeparator)) {
+                    var digits = Bridge.String.indexOf(Bridge.Double.format(dblValue, 'G'), decSeparator);
                     fmt = Bridge.String.fromCharCount(48, 5) + Bridge.String.fromCharCount(35, digits) + ".##";
                 }
                 else  {
-                    fmt = Bridge.String.fromCharCount(48, Bridge.Int.format(dblValue, 'G').length);
+                    fmt = Bridge.String.fromCharCount(48, Bridge.Double.format(dblValue, 'G').length);
                 }
                 formatString = "{0,20:" + fmt + "}";
     
@@ -18485,7 +18521,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 // TEST
                 var numbers = [null, 1.0, "two", 3, "four", 5, "six", 7.0];
     
-                var doubleNumbers = Bridge.Linq.Enumerable.from(numbers).ofType(Number).toArray();
+                var doubleNumbers = Bridge.Linq.Enumerable.from(numbers).ofType(Bridge.Double).toArray();
     
                 Bridge.Test.Assert.areDeepEqual$1([1.0, 3, 5, 7.0], doubleNumbers, "Issue #218. OfType<double> should get only double type items");
             }
@@ -19393,7 +19429,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         assertIsDoubleAndEqualTo: function (v, d, message) {
             if (message === void 0) { message = null; }
-            Bridge.Test.Assert.areStrictEqual$1(true, Bridge.is(v, Number), message);
+            Bridge.Test.Assert.areStrictEqual$1(true, Bridge.is(v, Bridge.Double), message);
             Bridge.Test.Assert.areStrictEqual$1(d.toString(), v.toString(), message);
         },
         constantsWork: function () {
@@ -20564,7 +20600,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.areEqual(false, this.getDefaultValue(Boolean));
         },
         creatingInstanceReturnsFalse: function () {
-            Bridge.Test.Assert.areEqual(false, new Boolean());
+            Bridge.Test.Assert.areEqual(false, Bridge.createInstance(Boolean));
         },
         defaultConstructorReturnsFalse: function () {
             Bridge.Test.Assert.areEqual(false, new Boolean());
@@ -20905,50 +20941,50 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.areStrictEqual(0, Number());
         },
         creatingInstanceReturnsZero: function () {
-            Bridge.Test.Assert.areEqual(0, new Bridge.Byte());
+            Bridge.Test.Assert.areEqual(0, Bridge.createInstance(Bridge.Byte));
         },
         constantsWork: function () {
             Bridge.Test.Assert.areEqual(0, 0);
             Bridge.Test.Assert.areEqual(255, 255);
         },
         formatWorks: function () {
-            Bridge.Test.Assert.areEqual("12", Bridge.Int.format((18), "x"));
+            Bridge.Test.Assert.areEqual("12", Bridge.Byte.format((18), "x"));
         },
         iFormattableToStringWorks: function () {
-            Bridge.Test.Assert.areEqual("12", Bridge.Int.format((18), "x"));
+            Bridge.Test.Assert.areEqual("12", Bridge.Byte.format((18), "x"));
         },
         tryParseWorks: function () {
             var numberResult = { };
-            var result = Bridge.Int.tryParseInt("234", numberResult, 0, 255);
+            var result = Bridge.Byte.tryParse("234", numberResult);
             Bridge.Test.Assert.$true(result);
             Bridge.Test.Assert.areEqual(234, numberResult.v);
     
-            result = Bridge.Int.tryParseInt("", numberResult, 0, 255);
+            result = Bridge.Byte.tryParse("", numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(0, numberResult.v);
     
-            result = Bridge.Int.tryParseInt(null, numberResult, 0, 255);
+            result = Bridge.Byte.tryParse(null, numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(0, numberResult.v);
     
-            result = Bridge.Int.tryParseInt("notanumber", numberResult, 0, 255);
+            result = Bridge.Byte.tryParse("notanumber", numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(0, numberResult.v);
     
-            result = Bridge.Int.tryParseInt("54768", numberResult, 0, 255);
+            result = Bridge.Byte.tryParse("54768", numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(54768, numberResult.v);
     
-            result = Bridge.Int.tryParseInt("-1", numberResult, 0, 255);
+            result = Bridge.Byte.tryParse("-1", numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(-1, numberResult.v);
     
-            result = Bridge.Int.tryParseInt("2.5", numberResult, 0, 255);
+            result = Bridge.Byte.tryParse("2.5", numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(0, numberResult.v);
         },
         parseWorks: function () {
-            Bridge.Test.Assert.areEqual(234, Bridge.Int.parseInt("234", 0, 255));
+            Bridge.Test.Assert.areEqual(234, Bridge.Byte.parse("234"));
             Bridge.Test.Assert.$throws($_.Bridge.ClientTest.SimpleTypes.ByteTests.f2);
             Bridge.Test.Assert.$throws($_.Bridge.ClientTest.SimpleTypes.ByteTests.f3);
             Bridge.Test.Assert.$throws($_.Bridge.ClientTest.SimpleTypes.ByteTests.f4);
@@ -21004,22 +21040,22 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return Bridge.is(err, Bridge.OverflowException);
         },
         f2: function () {
-            Bridge.Int.parseInt("", 0, 255);
+            Bridge.Byte.parse("");
         },
         f3: function () {
-            Bridge.Int.parseInt(null, 0, 255);
+            Bridge.Byte.parse(null);
         },
         f4: function () {
-            Bridge.Int.parseInt("notanumber", 0, 255);
+            Bridge.Byte.parse("notanumber");
         },
         f5: function () {
-            Bridge.Int.parseInt("54768", 0, 255);
+            Bridge.Byte.parse("54768");
         },
         f6: function () {
-            Bridge.Int.parseInt("-1", 0, 255);
+            Bridge.Byte.parse("-1");
         },
         f7: function () {
-            Bridge.Int.parseInt("2.5", 0, 255);
+            Bridge.Byte.parse("2.5");
         }
     });
     
@@ -21079,7 +21115,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.areStrictEqual(0, Number());
         },
         creatingInstanceReturnsZero: function () {
-            Bridge.Test.Assert.areStrictEqual(0, new Bridge.Char());
+            Bridge.Test.Assert.areStrictEqual(0, Bridge.createInstance(Bridge.Char));
         },
         constantsWork: function () {
             Bridge.Test.Assert.areEqual(0, 0);
@@ -21101,10 +21137,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.throws$5($_.Bridge.ClientTest.SimpleTypes.CharTests.f4, "Parse 4");
         },
         formatWorks: function () {
-            Bridge.Test.Assert.areEqual("0023", Bridge.Int.format((35), "x4"));
+            Bridge.Test.Assert.areEqual("0023", Bridge.Char.format((35), "x4"));
         },
         iFormattableToStringWorks: function () {
-            Bridge.Test.Assert.areEqual("0023", Bridge.Int.format((35), "x4"));
+            Bridge.Test.Assert.areEqual("0023", Bridge.Char.format((35), "x4"));
         },
         toStringWorks: function () {
             Bridge.Test.Assert.areEqual("A", String.fromCharCode((65)));
@@ -21203,7 +21239,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         assertIsDecimalAndEqualTo: function (v, d, message) {
             if (message === void 0) { message = null; }
             Bridge.Test.Assert.areStrictEqual$1(true, Bridge.is(v, Bridge.Decimal), message);
-            Bridge.Test.Assert.areStrictEqual$1(Bridge.Int.format(d, 'G'), v.toString(), message);
+            Bridge.Test.Assert.areStrictEqual$1(Bridge.Double.format(d, 'G'), v.toString(), message);
         },
         typePropertiesAreCorrect: function () {
             Bridge.Test.Assert.$true(Bridge.is(Bridge.Decimal(0.5), Bridge.Decimal));
@@ -21219,7 +21255,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             this.assertIsDecimalAndEqualTo(this.getDefaultValue(Bridge.Decimal), 0);
         },
         creatingInstanceReturnsZero: function () {
-            this.assertIsDecimalAndEqualTo(new Bridge.Decimal(), 0);
+            this.assertIsDecimalAndEqualTo(Bridge.createInstance(Bridge.Decimal), 0);
         },
         constantsWork: function () {
             this.assertIsDecimalAndEqualTo(Bridge.Decimal.One, 1);
@@ -21456,24 +21492,24 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.define('Bridge.ClientTest.SimpleTypes.DoubleTests', {
         typePropertiesAreCorrect: function () {
-            Bridge.Test.Assert.$true(Bridge.is(0.5, Number));
-            Bridge.Test.Assert.areEqual("Number", Bridge.getTypeName(Number));
+            Bridge.Test.Assert.$true(Bridge.is(0.5, Bridge.Double));
+            Bridge.Test.Assert.areEqual("Bridge.Double", Bridge.getTypeName(Bridge.Double));
             var d = 0.0;
-            Bridge.Test.Assert.$true(Bridge.is(d, Number));
+            Bridge.Test.Assert.$true(Bridge.is(d, Bridge.Double));
             Bridge.Test.Assert.$true(Bridge.is(d, Bridge.IFormattable));
         },
         getDefaultValue: function (T) {
             return Bridge.getDefaultValue(T);
         },
         defaultValueIs0: function () {
-            Bridge.Test.Assert.areStrictEqual(0, this.getDefaultValue(Number));
+            Bridge.Test.Assert.areStrictEqual(0, this.getDefaultValue(Bridge.Double));
         },
         creatingInstanceReturnsZero: function () {
-            Bridge.Test.Assert.areEqual(0, new Number());
+            Bridge.Test.Assert.areEqual(0, Bridge.createInstance(Bridge.Double));
         },
         constantsWork: function () {
             var zero = 0;
-            Bridge.Test.Assert.true$1(Number.MAX_VALUE > Bridge.cast(1.7E+308, Number), "MaxValue should be correct");
+            Bridge.Test.Assert.true$1(Bridge.Double.max > Bridge.cast(1.7E+308, Bridge.Double), "MaxValue should be correct");
             Bridge.Test.Assert.areEqual$1(4.94065645841247E-324, 4.94065645841247E-324, "MinValue should be correct");
             Bridge.Test.Assert.true$1(isNaN(Number.NaN), "NaN should be correct");
             Bridge.Test.Assert.areStrictEqual$1(1 / zero, Number.POSITIVE_INFINITY, "PositiveInfinity should be correct");
@@ -21483,13 +21519,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.areStrictEqual(0, Number());
         },
         formatWorks: function () {
-            Bridge.Test.Assert.areEqual("123", Bridge.Int.format((291.0), "x"));
+            Bridge.Test.Assert.areEqual("123", Bridge.Double.format((291.0), "x"));
         },
         iFormattableToStringWorks: function () {
-            Bridge.Test.Assert.areEqual("123", Bridge.Int.format((291.0), "x"));
+            Bridge.Test.Assert.areEqual("123", Bridge.Double.format((291.0), "x"));
         },
         toStringWorks: function () {
-            Bridge.Test.Assert.areEqual("123", Bridge.Int.format((123.0), 'G'));
+            Bridge.Test.Assert.areEqual("123", Bridge.Double.format((123.0), 'G'));
         },
         toExponentialWorks: function () {
             Bridge.Test.Assert.areEqual("1.23e+2", (123.0).toExponential());
@@ -21595,7 +21631,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.areStrictEqual(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.firstValue, Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.firstValue);
         },
         creatingInstanceOfEnumTypeReturnsZero: function () {
-            Bridge.Test.Assert.areStrictEqual(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.firstValue, new Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum());
+            Bridge.Test.Assert.areStrictEqual(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.firstValue, Bridge.createInstance(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum));
         },
         defaultExpressionWithEnumReturnsZero: function () {
             Bridge.Test.Assert.areStrictEqual(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.firstValue, Bridge.getDefaultValue(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum));
@@ -21693,50 +21729,50 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.areStrictEqual(0, Number());
         },
         creatingInstanceReturnsZero: function () {
-            Bridge.Test.Assert.areStrictEqual(0, new Bridge.Int16());
+            Bridge.Test.Assert.areStrictEqual(0, Bridge.createInstance(Bridge.Int16));
         },
         constantsWork: function () {
             Bridge.Test.Assert.areEqual(-32768, -32768);
             Bridge.Test.Assert.areEqual(32767, 32767);
         },
         formatWorks: function () {
-            Bridge.Test.Assert.areEqual("123", Bridge.Int.format((291), "x"));
+            Bridge.Test.Assert.areEqual("123", Bridge.Int16.format((291), "x"));
         },
         iFormattableToStringWorks: function () {
-            Bridge.Test.Assert.areEqual("123", Bridge.Int.format((291), "x"));
+            Bridge.Test.Assert.areEqual("123", Bridge.Int16.format((291), "x"));
         },
         tryParseWorks: function () {
             var numberResult = { };
-            var result = Bridge.Int.tryParseInt("234", numberResult, -32768, 32767);
+            var result = Bridge.Int16.tryParse("234", numberResult);
             Bridge.Test.Assert.$true(result);
             Bridge.Test.Assert.areEqual(234, numberResult.v);
     
-            result = Bridge.Int.tryParseInt("", numberResult, -32768, 32767);
+            result = Bridge.Int16.tryParse("", numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(0, numberResult.v);
     
-            result = Bridge.Int.tryParseInt(null, numberResult, -32768, 32767);
+            result = Bridge.Int16.tryParse(null, numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(0, numberResult.v);
     
-            result = Bridge.Int.tryParseInt("notanumber", numberResult, -32768, 32767);
+            result = Bridge.Int16.tryParse("notanumber", numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(0, numberResult.v);
     
-            result = Bridge.Int.tryParseInt("54768", numberResult, -32768, 32767);
+            result = Bridge.Int16.tryParse("54768", numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(54768, numberResult.v);
     
-            result = Bridge.Int.tryParseInt("-55678", numberResult, -32768, 32767);
+            result = Bridge.Int16.tryParse("-55678", numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(-55678, numberResult.v);
     
-            result = Bridge.Int.tryParseInt("2.5", numberResult, -32768, 32767);
+            result = Bridge.Int16.tryParse("2.5", numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(0, numberResult.v);
         },
         parseWorks: function () {
-            Bridge.Test.Assert.areEqual(234, Bridge.Int.parseInt("234", -32768, 32767));
+            Bridge.Test.Assert.areEqual(234, Bridge.Int16.parse("234"));
             Bridge.Test.Assert.$throws($_.Bridge.ClientTest.SimpleTypes.Int16Tests.f2);
             Bridge.Test.Assert.$throws($_.Bridge.ClientTest.SimpleTypes.Int16Tests.f3);
             Bridge.Test.Assert.$throws($_.Bridge.ClientTest.SimpleTypes.Int16Tests.f4);
@@ -21792,22 +21828,22 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return Bridge.is(err, Bridge.OverflowException);
         },
         f2: function () {
-            Bridge.Int.parseInt("", -32768, 32767);
+            Bridge.Int16.parse("");
         },
         f3: function () {
-            Bridge.Int.parseInt(null, -32768, 32767);
+            Bridge.Int16.parse(null);
         },
         f4: function () {
-            Bridge.Int.parseInt("notanumber", -32768, 32767);
+            Bridge.Int16.parse("notanumber");
         },
         f5: function () {
-            Bridge.Int.parseInt("54768", -32768, 32767);
+            Bridge.Int16.parse("54768");
         },
         f6: function () {
-            Bridge.Int.parseInt("-55678", -32768, 32767);
+            Bridge.Int16.parse("-55678");
         },
         f7: function () {
-            Bridge.Int.parseInt("2.5", -32768, 32767);
+            Bridge.Int16.parse("2.5");
         }
     });
     
@@ -21899,47 +21935,47 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.areStrictEqual(0, Number());
         },
         creatingInstanceReturnsZero: function () {
-            Bridge.Test.Assert.areStrictEqual(0, new Bridge.Int32());
+            Bridge.Test.Assert.areStrictEqual(0, Bridge.createInstance(Bridge.Int32));
         },
         constantsWork: function () {
             Bridge.Test.Assert.areEqual(-2147483648, -2147483648);
             Bridge.Test.Assert.areEqual(2147483647, 2147483647);
         },
         formatWorks: function () {
-            Bridge.Test.Assert.areEqual("123", Bridge.Int.format((291), "x"));
+            Bridge.Test.Assert.areEqual("123", Bridge.Int32.format((291), "x"));
         },
         iFormattableToStringWorks: function () {
-            Bridge.Test.Assert.areEqual("123", Bridge.Int.format((291), "x"));
+            Bridge.Test.Assert.areEqual("123", Bridge.Int32.format((291), "x"));
         },
         tryParseWorks: function () {
             var numberResult = { };
-            var result = Bridge.Int.tryParseInt("57574", numberResult, -2147483648, 2147483647);
+            var result = Bridge.Int32.tryParse("57574", numberResult);
             Bridge.Test.Assert.$true(result);
             Bridge.Test.Assert.areEqual(57574, numberResult.v);
     
-            result = Bridge.Int.tryParseInt("-14", numberResult, -2147483648, 2147483647);
+            result = Bridge.Int32.tryParse("-14", numberResult);
             Bridge.Test.Assert.$true(result);
             Bridge.Test.Assert.areEqual(-14, numberResult.v);
     
-            result = Bridge.Int.tryParseInt("", numberResult, -2147483648, 2147483647);
+            result = Bridge.Int32.tryParse("", numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(0, numberResult.v);
     
-            result = Bridge.Int.tryParseInt(null, numberResult, -2147483648, 2147483647);
+            result = Bridge.Int32.tryParse(null, numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(0, numberResult.v);
     
-            result = Bridge.Int.tryParseInt("notanumber", numberResult, -2147483648, 2147483647);
+            result = Bridge.Int32.tryParse("notanumber", numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(0, numberResult.v);
     
-            result = Bridge.Int.tryParseInt("2.5", numberResult, -2147483648, 2147483647);
+            result = Bridge.Int32.tryParse("2.5", numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(0, numberResult.v);
         },
         parseWorks: function () {
-            Bridge.Test.Assert.areEqual(57574, Bridge.Int.parseInt("57574", -2147483648, 2147483647));
-            Bridge.Test.Assert.areEqual(-14, Bridge.Int.parseInt("-14", -2147483648, 2147483647));
+            Bridge.Test.Assert.areEqual(57574, Bridge.Int32.parse("57574"));
+            Bridge.Test.Assert.areEqual(-14, Bridge.Int32.parse("-14"));
     
             Bridge.Test.Assert.$throws($_.Bridge.ClientTest.SimpleTypes.Int32Tests.f2);
             Bridge.Test.Assert.$throws($_.Bridge.ClientTest.SimpleTypes.Int32Tests.f3);
@@ -22032,22 +22068,22 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return Bridge.is(err, Bridge.OverflowException);
         },
         f2: function () {
-            Bridge.Int.parseInt("", -2147483648, 2147483647);
+            Bridge.Int32.parse("");
         },
         f3: function () {
-            Bridge.Int.parseInt(null, -2147483648, 2147483647);
+            Bridge.Int32.parse(null);
         },
         f4: function () {
-            Bridge.Int.parseInt("notanumber", -2147483648, 2147483647);
+            Bridge.Int32.parse("notanumber");
         },
         f5: function () {
-            Bridge.Int.parseInt("2147483648", -2147483648, 2147483647);
+            Bridge.Int32.parse("2147483648");
         },
         f6: function () {
-            Bridge.Int.parseInt("-2147483649", -2147483648, 2147483647);
+            Bridge.Int32.parse("-2147483649");
         },
         f7: function () {
-            Bridge.Int.parseInt("2.5", -2147483648, 2147483647);
+            Bridge.Int32.parse("2.5");
         }
     });
     
@@ -22159,8 +22195,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var l = Bridge.Long(100);
     
             this.assertLong("111", dcml.add(Bridge.Decimal(l)), null, "Bridge.Decimal");
-            this.assertLong("112", dbl + Bridge.Long.toNumber(l), null, "Number");
-            this.assertLong("113", flt + Bridge.Long.toNumber(l), null, "Number");
+            this.assertLong("112", dbl + Bridge.Long.toNumber(l), null, "Bridge.Int32");
+            this.assertLong("113", flt + Bridge.Long.toNumber(l), null, "Bridge.Int32");
         },
         getDefaultValue: function (T) {
             return Bridge.getDefaultValue(T);
@@ -22172,7 +22208,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$true(Bridge.Long(0).equals(Bridge.Long()));
         },
         creatingInstanceReturnsZero: function () {
-            Bridge.Test.Assert.$true(Bridge.Long(0).equals(new Bridge.Long()));
+            Bridge.Test.Assert.$true(Bridge.Long(0).equals(Bridge.createInstance(Bridge.Long)));
         },
         formatWorks: function () {
             Bridge.Test.Assert.areEqual("123", (Bridge.Long(291)).format("x"));
@@ -22372,8 +22408,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var dt = new Date();
             Bridge.Test.Assert.$true(dt.getFullYear() > 2011);
         },
-        creatingInstanceReturnsTodaysDate: function () {
-            Bridge.Test.Assert.$true(new Date().getFullYear() > 2011);
+        creatingInstanceReturnsDateZero: function () {
+            Bridge.Test.Assert.$true(Bridge.createInstance(Date).getFullYear() === 1970);
         },
         millisecondSinceEpochConstructorWorks: function () {
             var dt = new Date(Bridge.Long([250327040,10]).toNumber());
@@ -22803,51 +22839,51 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.areStrictEqual(0, Number());
         },
         creatingInstanceReturnsZero: function () {
-            Bridge.Test.Assert.areStrictEqual(0, new Bridge.SByte());
+            Bridge.Test.Assert.areStrictEqual(0, Bridge.createInstance(Bridge.SByte));
         },
         constantsWork: function () {
             Bridge.Test.Assert.areEqual(-128, -128);
             Bridge.Test.Assert.areEqual(127, 127);
         },
         formatWorks: function () {
-            Bridge.Test.Assert.areEqual("12", Bridge.Int.format((18), "x"));
+            Bridge.Test.Assert.areEqual("12", Bridge.SByte.format((18), "x"));
         },
         iFormattableToStringWorks: function () {
-            Bridge.Test.Assert.areEqual("12", Bridge.Int.format((18), "x"));
+            Bridge.Test.Assert.areEqual("12", Bridge.SByte.format((18), "x"));
         },
         tryParseWorks: function () {
             var numberResult = { };
-            var result = Bridge.Int.tryParseInt("124", numberResult, -128, 127);
+            var result = Bridge.SByte.tryParse("124", numberResult);
             Bridge.Test.Assert.$true(result);
             Bridge.Test.Assert.areEqual(124, numberResult.v);
     
-            result = Bridge.Int.tryParseInt("-123", numberResult, -128, 127);
+            result = Bridge.SByte.tryParse("-123", numberResult);
             Bridge.Test.Assert.$true(result);
             Bridge.Test.Assert.areEqual(-123, numberResult.v);
     
-            result = Bridge.Int.tryParseInt("", numberResult, -128, 127);
+            result = Bridge.SByte.tryParse("", numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(0, numberResult.v);
     
-            result = Bridge.Int.tryParseInt(null, numberResult, -128, 127);
+            result = Bridge.SByte.tryParse(null, numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(0, numberResult.v);
     
-            result = Bridge.Int.tryParseInt("notanumber", numberResult, -128, 127);
+            result = Bridge.SByte.tryParse("notanumber", numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(0, numberResult.v);
     
-            result = Bridge.Int.tryParseInt("54768", numberResult, -128, 127);
+            result = Bridge.SByte.tryParse("54768", numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(54768, numberResult.v);
     
-            result = Bridge.Int.tryParseInt("2.5", numberResult, -128, 127);
+            result = Bridge.SByte.tryParse("2.5", numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(0, numberResult.v);
         },
         parseWorks: function () {
-            Bridge.Test.Assert.areEqual(124, Bridge.Int.parseInt("124", -128, 127));
-            Bridge.Test.Assert.areEqual(-123, Bridge.Int.parseInt("-123", -128, 127));
+            Bridge.Test.Assert.areEqual(124, Bridge.SByte.parse("124"));
+            Bridge.Test.Assert.areEqual(-123, Bridge.SByte.parse("-123"));
             Bridge.Test.Assert.$throws($_.Bridge.ClientTest.SimpleTypes.SByteTests.f2);
             Bridge.Test.Assert.$throws($_.Bridge.ClientTest.SimpleTypes.SByteTests.f3);
             Bridge.Test.Assert.$throws($_.Bridge.ClientTest.SimpleTypes.SByteTests.f4);
@@ -22902,44 +22938,44 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return Bridge.is(err, Bridge.OverflowException);
         },
         f2: function () {
-            Bridge.Int.parseInt("", -128, 127);
+            Bridge.SByte.parse("");
         },
         f3: function () {
-            Bridge.Int.parseInt(null, -128, 127);
+            Bridge.SByte.parse(null);
         },
         f4: function () {
-            Bridge.Int.parseInt("notanumber", -128, 127);
+            Bridge.SByte.parse("notanumber");
         },
         f5: function () {
-            Bridge.Int.parseInt("54768", -128, 127);
+            Bridge.SByte.parse("54768");
         },
         f6: function () {
-            Bridge.Int.parseInt("2.5", -128, 127);
+            Bridge.SByte.parse("2.5");
         }
     });
     
     Bridge.define('Bridge.ClientTest.SimpleTypes.SingleTests', {
         typePropertiesAreCorrect: function () {
-            Bridge.Test.Assert.$true(Bridge.is(0.5, Number));
-            Bridge.Test.Assert.areEqual("Number", Bridge.getTypeName(Number));
+            Bridge.Test.Assert.$true(Bridge.is(0.5, Bridge.Single));
+            Bridge.Test.Assert.areEqual("Bridge.Single", Bridge.getTypeName(Bridge.Single));
     
             var f = 0.0;
-            Bridge.Test.Assert.$true(Bridge.is(f, Number));
+            Bridge.Test.Assert.$true(Bridge.is(f, Bridge.Single));
             Bridge.Test.Assert.$true(Bridge.is(f, Bridge.IFormattable));
         },
         getDefaultValue: function (T) {
             return Bridge.getDefaultValue(T);
         },
         defaultValueIs0: function () {
-            Bridge.Test.Assert.areStrictEqual(0, this.getDefaultValue(Number));
+            Bridge.Test.Assert.areStrictEqual(0, this.getDefaultValue(Bridge.Single));
         },
         creatingInstanceReturnsZero: function () {
-            Bridge.Test.Assert.areEqual(0, new Number());
+            Bridge.Test.Assert.areEqual(0, Bridge.createInstance(Bridge.Single));
         },
         constantsWork: function () {
             var zero = 0;
-            Bridge.Test.Assert.true$1(Bridge.cast(-3.40282347E+38, Number) < -3.4E+38 && Bridge.cast(-3.40282347E+38, Number) > -3.5E+38, "MinValue should be correct");
-            Bridge.Test.Assert.true$1(Bridge.cast(3.40282347E+38, Number) > 3.4E+38 && Bridge.cast(3.40282347E+38, Number) < 3.5E+38, "MaxValue should be correct");
+            Bridge.Test.Assert.true$1(Bridge.cast(-3.40282347E+38, Bridge.Single) < -3.4E+38 && Bridge.cast(-3.40282347E+38, Bridge.Single) > -3.5E+38, "MinValue should be correct");
+            Bridge.Test.Assert.true$1(Bridge.cast(3.40282347E+38, Bridge.Single) > 3.4E+38 && Bridge.cast(3.40282347E+38, Bridge.Single) < 3.5E+38, "MaxValue should be correct");
             Bridge.Test.Assert.areEqual$1(1.401298E-45, 1.401298E-45, "Epsilon should be correct");
             Bridge.Test.Assert.true$1(isNaN(Number.NaN), "NaN should be correct");
             Bridge.Test.Assert.areStrictEqual$1(1 / zero, Number.POSITIVE_INFINITY, "PositiveInfinity should be correct");
@@ -22949,13 +22985,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.areStrictEqual(0, Number());
         },
         formatWorks: function () {
-            Bridge.Test.Assert.areEqual("123", Bridge.Int.format((291.0), "x"));
+            Bridge.Test.Assert.areEqual("123", Bridge.Single.format((291.0), "x"));
         },
         iFormattableToStringWorks: function () {
-            Bridge.Test.Assert.areEqual("123", Bridge.Int.format((291.0), "x"));
+            Bridge.Test.Assert.areEqual("123", Bridge.Single.format((291.0), "x"));
         },
         toStringWorks: function () {
-            Bridge.Test.Assert.areEqual("123", Bridge.Int.format((123.0), 'G'));
+            Bridge.Test.Assert.areEqual("123", Bridge.Single.format((123.0), 'G'));
         },
         toExponentialWorks: function () {
             Bridge.Test.Assert.areEqual("1.23e+2", (123.0).toExponential());
@@ -24002,7 +24038,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$true(Bridge.Long(0).equals(ts.getTicks()));
         },
         creatingInstanceReturnsTimeSpanWithZeroValue: function () {
-            var ts = new Bridge.TimeSpan();
+            var ts = Bridge.createInstance(Bridge.TimeSpan);
             Bridge.Test.Assert.$true(Bridge.Long(0).equals(ts.getTicks()));
         },
         parameterConstructorsWorks: function () {
@@ -24352,50 +24388,50 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.areStrictEqual(0, Number());
         },
         creatingInstanceReturnsZero: function () {
-            Bridge.Test.Assert.areStrictEqual(0, new Bridge.UInt16());
+            Bridge.Test.Assert.areStrictEqual(0, Bridge.createInstance(Bridge.UInt16));
         },
         constantsWork: function () {
             Bridge.Test.Assert.areEqual(0, 0);
             Bridge.Test.Assert.areEqual(65535, 65535);
         },
         formatWorks: function () {
-            Bridge.Test.Assert.areEqual("123", Bridge.Int.format((291), "x"));
+            Bridge.Test.Assert.areEqual("123", Bridge.UInt16.format((291), "x"));
         },
         iFormattableToStringWorks: function () {
-            Bridge.Test.Assert.areEqual("123", Bridge.Int.format((291), "x"));
+            Bridge.Test.Assert.areEqual("123", Bridge.UInt16.format((291), "x"));
         },
         tryParseWorks: function () {
             var numberResult = { };
-            var result = Bridge.Int.tryParseInt("23445", numberResult, 0, 65535);
+            var result = Bridge.UInt16.tryParse("23445", numberResult);
             Bridge.Test.Assert.$true(result);
             Bridge.Test.Assert.areEqual(23445, numberResult.v);
     
-            result = Bridge.Int.tryParseInt("", numberResult, 0, 65535);
+            result = Bridge.UInt16.tryParse("", numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(0, numberResult.v);
     
-            result = Bridge.Int.tryParseInt(null, numberResult, 0, 65535);
+            result = Bridge.UInt16.tryParse(null, numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(0, numberResult.v);
     
-            result = Bridge.Int.tryParseInt("notanumber", numberResult, 0, 65535);
+            result = Bridge.UInt16.tryParse("notanumber", numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(0, numberResult.v);
     
-            result = Bridge.Int.tryParseInt("32768", numberResult, 0, 65535);
+            result = Bridge.UInt16.tryParse("32768", numberResult);
             Bridge.Test.Assert.$true(result);
             Bridge.Test.Assert.areEqual(32768, numberResult.v);
     
-            result = Bridge.Int.tryParseInt("-1", numberResult, 0, 65535);
+            result = Bridge.UInt16.tryParse("-1", numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(-1, numberResult.v);
     
-            result = Bridge.Int.tryParseInt("2.5", numberResult, 0, 65535);
+            result = Bridge.UInt16.tryParse("2.5", numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(0, numberResult.v);
         },
         parseWorks: function () {
-            Bridge.Test.Assert.areEqual(23445, Bridge.Int.parseInt("23445", 0, 65535));
+            Bridge.Test.Assert.areEqual(23445, Bridge.UInt16.parse("23445"));
             Bridge.Test.Assert.$throws($_.Bridge.ClientTest.SimpleTypes.UInt16Tests.f2);
             Bridge.Test.Assert.$throws($_.Bridge.ClientTest.SimpleTypes.UInt16Tests.f3);
             Bridge.Test.Assert.$throws($_.Bridge.ClientTest.SimpleTypes.UInt16Tests.f4);
@@ -24451,22 +24487,22 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return Bridge.is(err, Bridge.OverflowException);
         },
         f2: function () {
-            Bridge.Int.parseInt("", 0, 65535);
+            Bridge.UInt16.parse("");
         },
         f3: function () {
-            Bridge.Int.parseInt(null, 0, 65535);
+            Bridge.UInt16.parse(null);
         },
         f4: function () {
-            Bridge.Int.parseInt("notanumber", 0, 65535);
+            Bridge.UInt16.parse("notanumber");
         },
         f5: function () {
-            Bridge.Int.parseInt("65536", 0, 65535);
+            Bridge.UInt16.parse("65536");
         },
         f6: function () {
-            Bridge.Int.parseInt("-1", 0, 65535);
+            Bridge.UInt16.parse("-1");
         },
         f7: function () {
-            Bridge.Int.parseInt("2.5", 0, 65535);
+            Bridge.UInt16.parse("2.5");
         }
     });
     
@@ -24531,46 +24567,46 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.areStrictEqual(0, Number());
         },
         creatingInstanceReturnsZero: function () {
-            Bridge.Test.Assert.areStrictEqual(0, new Bridge.UInt32());
+            Bridge.Test.Assert.areStrictEqual(0, Bridge.createInstance(Bridge.UInt32));
         },
         constantsWork: function () {
             Bridge.Test.Assert.areEqual(0, 0);
             Bridge.Test.Assert.areEqual(4294967295, 4294967295);
         },
         formatWorks: function () {
-            Bridge.Test.Assert.areEqual("123", Bridge.Int.format((291), "x"));
+            Bridge.Test.Assert.areEqual("123", Bridge.UInt32.format((291), "x"));
         },
         iFormattableToStringWorks: function () {
-            Bridge.Test.Assert.areEqual("123", Bridge.Int.format((291), "x"));
+            Bridge.Test.Assert.areEqual("123", Bridge.UInt32.format((291), "x"));
         },
         tryParseWorks: function () {
             var numberResult = { };
-            var result = Bridge.Int.tryParseInt("23445", numberResult, 0, 4294967295);
+            var result = Bridge.UInt32.tryParse("23445", numberResult);
             Bridge.Test.Assert.$true(result);
             Bridge.Test.Assert.areEqual(23445, numberResult.v);
     
-            result = Bridge.Int.tryParseInt("", numberResult, 0, 4294967295);
+            result = Bridge.UInt32.tryParse("", numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(0, numberResult.v);
     
-            result = Bridge.Int.tryParseInt(null, numberResult, 0, 4294967295);
+            result = Bridge.UInt32.tryParse(null, numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(0, numberResult.v);
     
-            result = Bridge.Int.tryParseInt("notanumber", numberResult, 0, 4294967295);
+            result = Bridge.UInt32.tryParse("notanumber", numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(0, numberResult.v);
     
-            result = Bridge.Int.tryParseInt("-1", numberResult, 0, 4294967295);
+            result = Bridge.UInt32.tryParse("-1", numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(-1, numberResult.v);
     
-            result = Bridge.Int.tryParseInt("2.5", numberResult, 0, 4294967295);
+            result = Bridge.UInt32.tryParse("2.5", numberResult);
             Bridge.Test.Assert.$false(result);
             Bridge.Test.Assert.areEqual(0, numberResult.v);
         },
         parseWorks: function () {
-            Bridge.Test.Assert.areEqual(23445, Bridge.Int.parseInt("23445", 0, 4294967295));
+            Bridge.Test.Assert.areEqual(23445, Bridge.UInt32.parse("23445"));
             Bridge.Test.Assert.$throws($_.Bridge.ClientTest.SimpleTypes.UInt32Tests.f2);
             Bridge.Test.Assert.$throws($_.Bridge.ClientTest.SimpleTypes.UInt32Tests.f3);
             Bridge.Test.Assert.$throws($_.Bridge.ClientTest.SimpleTypes.UInt32Tests.f4);
@@ -24626,22 +24662,22 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return Bridge.is(err, Bridge.OverflowException);
         },
         f2: function () {
-            Bridge.Int.parseInt("", 0, 4294967295);
+            Bridge.UInt32.parse("");
         },
         f3: function () {
-            Bridge.Int.parseInt(null, 0, 4294967295);
+            Bridge.UInt32.parse(null);
         },
         f4: function () {
-            Bridge.Int.parseInt("notanumber", 0, 4294967295);
+            Bridge.UInt32.parse("notanumber");
         },
         f5: function () {
-            Bridge.Int.parseInt("4294967296", 0, 4294967295);
+            Bridge.UInt32.parse("4294967296");
         },
         f6: function () {
-            Bridge.Int.parseInt("-1", 0, 4294967295);
+            Bridge.UInt32.parse("-1");
         },
         f7: function () {
-            Bridge.Int.parseInt("2.5", 0, 4294967295);
+            Bridge.UInt32.parse("2.5");
         }
     });
     
@@ -24743,8 +24779,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var l = Bridge.Long(100);
     
             this.assertULong("111", dcml.add(Bridge.Decimal(l)), null, "Bridge.Decimal");
-            this.assertULong("112", dbl + Bridge.Long.toNumber(l), null, "Number");
-            this.assertULong("113", flt + Bridge.Long.toNumber(l), null, "Number");
+            this.assertULong("112", dbl + Bridge.Long.toNumber(l), null, "Bridge.Int32");
+            this.assertULong("113", flt + Bridge.Long.toNumber(l), null, "Bridge.Int32");
         },
         getDefaultValue: function (T) {
             return Bridge.getDefaultValue(T);
@@ -24756,7 +24792,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$true(Bridge.ULong(0).equals(Bridge.ULong()));
         },
         creatingInstanceReturnsZero: function () {
-            Bridge.Test.Assert.$true(Bridge.ULong(0).equals(new Bridge.ULong()));
+            Bridge.Test.Assert.$true(Bridge.ULong(0).equals(Bridge.createInstance(Bridge.ULong)));
         },
         constantsWork: function () {
             Bridge.Test.Assert.$true(true);
@@ -26132,7 +26168,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             ct.throwIfCancellationRequested();
         },
         activatorCreateForCancellationTokenReturnsACancellationTokenThatIsNotCancelled: function () {
-            var ct = new Bridge.CancellationToken();
+            var ct = Bridge.createInstance(Bridge.CancellationToken);
             Bridge.Test.Assert.false$1(ct.getCanBeCanceled(), "CanBeCanceled");
             Bridge.Test.Assert.false$1(ct.getIsCancellationRequested(), "IsCancellationRequested");
             ct.throwIfCancellationRequested();
@@ -28714,7 +28750,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             assertIsDecimalAndEqualTo$1: function (v, d, message) {
                 if (message === void 0) { message = null; }
                 Bridge.Test.Assert.areStrictEqual$1(true, Bridge.is(v, Bridge.Decimal), message);
-                Bridge.Test.Assert.areStrictEqual$1(Bridge.Int.format(d, 'G'), v.toString(), message);
+                Bridge.Test.Assert.areStrictEqual$1(Bridge.Double.format(d, 'G'), v.toString(), message);
             },
             assertIsDecimalAndEqualTo: function (v, d, message) {
                 if (message === void 0) { message = null; }
@@ -29213,9 +29249,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             this.verifyViaObj(Bridge.Decimal, function (value) { return Bridge.Convert.toBoolean(value); }, testValues, expectedValues);
         },
         fromDouble: function () {
-            var testValues = [4.94065645841247E-324, Number.MAX_VALUE, -Number.MAX_VALUE, Number.NaN, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, 0.0, 0.0, 1.5, -1.5, 1.5E+300, 0.0, -1.7E+300, -1.69958582169389E-320];
+            var testValues = [4.94065645841247E-324, Bridge.Double.max, Bridge.Double.min, Number.NaN, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, 0.0, 0.0, 1.5, -1.5, 1.5E+300, 0.0, -1.7E+300, -1.69958582169389E-320];
             var expectedValues = [true, true, true, true, true, true, false, false, true, true, true, false, true, true];
-            this.verifyViaObj(Number, function (value) { return Bridge.Convert.toBoolean(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.Double, function (value) { return Bridge.Convert.toBoolean(value); }, testValues, expectedValues);
         },
         fromInt16: function () {
             var testValues = [-32768, 32767, 0];
@@ -29256,7 +29292,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         fromSingle: function () {
             var testValues = [1.401298E-45, 3.40282347E+38, -3.40282347E+38, Number.NaN, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, 0.0, 0.0, 1.5, -1.5, 1.5E+30, 0.0, -1.7E+30, -1.699999E-40];
             var expectedValues = [true, true, true, true, true, true, false, false, true, true, true, false, true, true];
-            this.verifyViaObj(Number, function (value) { return Bridge.Convert.toBoolean(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.Single, function (value) { return Bridge.Convert.toBoolean(value); }, testValues, expectedValues);
         },
         fromUInt16: function () {
             var testValues = [0, 65535];
@@ -29301,10 +29337,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         fromDouble: function () {
             var testValues = [0, 255, 100.0, 254.9, 255.2];
             var expectedValues = [0, 255, 100, 255, 255];
-            this.verifyViaObj(Number, function (value) { return Bridge.Convert.toByte(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.Double, function (value) { return Bridge.Convert.toByte(value); }, testValues, expectedValues);
     
-            var overflowValues = [-Number.MAX_VALUE, Number.MAX_VALUE];
-            this.verifyThrowsViaObj(Bridge.OverflowException, Number, function (value) { return Bridge.Convert.toByte(value); }, overflowValues);
+            var overflowValues = [-Bridge.Double.max, Bridge.Double.max];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Double, function (value) { return Bridge.Convert.toByte(value); }, overflowValues);
         },
         fromInt16: function () {
             var testValues = [0, 255, 10, 2];
@@ -29349,10 +29385,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         fromSingle: function () {
             var testValues = [255, 0, 254.01, 254.9];
             var expectedValues = [255, 0, 254, 255];
-            this.verifyViaObj(Number, function (value) { return Bridge.Convert.toByte(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.Single, function (value) { return Bridge.Convert.toByte(value); }, testValues, expectedValues);
     
             var overflowValues = [-3.40282347E+38, 3.40282347E+38];
-            this.verifyThrowsViaObj(Bridge.OverflowException, Number, function (value) { return Bridge.Convert.toByte(value); }, overflowValues);
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Single, function (value) { return Bridge.Convert.toByte(value); }, overflowValues);
         },
         fromString: function () {
             var byteMinValue = 0;
@@ -29435,11 +29471,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             this.verifyFromObjectThrows(Bridge.InvalidCastException, function (value) { return Bridge.Convert.toChar(value, null, 1); }, function (value, provider) { return Bridge.Convert.toChar(value, provider, 1); }, invalidValues);
         },
         fromDouble: function () {
-            var invalidValues = [0.0, -Number.MAX_VALUE, Number.MAX_VALUE];
-            this.verifyThrows(Bridge.InvalidCastException, Number, function (value) { return Bridge.Convert.toChar(value, null, 14); }, invalidValues);
+            var invalidValues = [0.0, Bridge.Double.min, Bridge.Double.max];
+            this.verifyThrows(Bridge.InvalidCastException, Bridge.Double, function (value) { return Bridge.Convert.toChar(value, null, 14); }, invalidValues);
         },
         fromDoubleViaObject: function () {
-            var invalidValues = [0.0, -Number.MAX_VALUE, Number.MAX_VALUE];
+            var invalidValues = [0.0, Bridge.Double.min, Bridge.Double.max];
             this.verifyFromObjectThrows(Bridge.InvalidCastException, function (value) { return Bridge.Convert.toChar(value, null, 1); }, function (value, provider) { return Bridge.Convert.toChar(value, provider, 1); }, invalidValues);
         },
         fromInt16: function () {
@@ -29484,7 +29520,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         fromSingle: function () {
             var invalidValues = [0.0, -3.40282347E+38, 3.40282347E+38];
-            this.verifyThrows(Bridge.InvalidCastException, Number, function (value) { return Bridge.Convert.toChar(value, null, 13); }, invalidValues);
+            this.verifyThrows(Bridge.InvalidCastException, Bridge.Single, function (value) { return Bridge.Convert.toChar(value, null, 13); }, invalidValues);
         },
         fromSingleViaObject: function () {
             var invalidValues = [0.0, -3.40282347E+38, 3.40282347E+38];
@@ -29679,10 +29715,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         fromDouble: function () {
             var testValues = [1000.0, 100.0, 0.0, 0.001, -1000.0, -100.0];
             var expectedValues = [Bridge.Decimal(1000.0), Bridge.Decimal(100.0), Bridge.Decimal(0.0), Bridge.Decimal(0.001), Bridge.Decimal(-1000.0), Bridge.Decimal(-100.0)];
-            this.verifyViaObj(Number, function (value) { return Bridge.Convert.toDecimal(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.Double, function (value) { return Bridge.Convert.toDecimal(value); }, testValues, expectedValues);
     
-            var overflowValues = [Number.MAX_VALUE, -Number.MAX_VALUE];
-            this.verifyThrowsViaObj(Bridge.OverflowException, Number, function (value) { return Bridge.Convert.toDecimal(value); }, overflowValues);
+            var overflowValues = [Bridge.Double.max, -Bridge.Double.max];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Double, function (value) { return Bridge.Convert.toDecimal(value); }, overflowValues);
         },
         fromInt16: function () {
             var testValues = [32767, -32768, 0];
@@ -29718,10 +29754,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         fromSingle: function () {
             var testValues = [1000.0, 100.0, 0.0, -1.0, -100.0];
             var expectedValues = [Bridge.Decimal(1000.0), Bridge.Decimal(100.0), Bridge.Decimal(0.0), Bridge.Decimal(-1.0), Bridge.Decimal(-100.0)];
-            this.verifyViaObj(Number, function (value) { return Bridge.Convert.toDecimal(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.Single, function (value) { return Bridge.Convert.toDecimal(value); }, testValues, expectedValues);
     
             var overflowValues = [3.40282347E+38, -3.40282347E+38];
-            this.verifyThrowsViaObj(Bridge.OverflowException, Number, function (value) { return Bridge.Convert.toDecimal(value); }, overflowValues);
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Single, function (value) { return Bridge.Convert.toDecimal(value); }, overflowValues);
         },
         fromString: function () {
             var longMaxValue = Bridge.Long.MaxValue;
@@ -29760,7 +29796,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToDoubleTests', {
-        inherits: [Bridge.ClientTest.ConvertTests.ConvertTestBase$1(Number)],
+        inherits: [Bridge.ClientTest.ConvertTests.ConvertTestBase$1(Bridge.Double)],
         fromBoolean: function () {
             var testValues = [true, false];
             var expectedValues = [1.0, 0.0];
@@ -29777,9 +29813,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             this.verifyViaObj(Bridge.Decimal, function (value) { return Bridge.Convert.toDouble(value); }, testValues, expectedValues);
         },
         fromDouble: function () {
-            var testValues = [Number.MAX_VALUE, -Number.MAX_VALUE, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, 4.94065645841247E-324];
-            var expectedValues = [Number.MAX_VALUE, -Number.MAX_VALUE, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, 4.94065645841247E-324];
-            this.verifyViaObj(Number, function (value) { return Bridge.Convert.toDouble(value); }, testValues, expectedValues);
+            var testValues = [Bridge.Double.max, Bridge.Double.min, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, 4.94065645841247E-324];
+            var expectedValues = [Bridge.Double.max, Bridge.Double.min, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, 4.94065645841247E-324];
+            this.verifyViaObj(Bridge.Double, function (value) { return Bridge.Convert.toDouble(value); }, testValues, expectedValues);
         },
         fromInt16: function () {
             var testValues = [32767, -32768, 0];
@@ -29812,14 +29848,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         fromSingle: function () {
             var testValues = [3.40282347E+38, -3.40282347E+38, 0.0];
             var expectedValues = [3.40282347E+38, -3.40282347E+38, 0.0];
-            this.verifyViaObj(Number, function (value) { return Bridge.Convert.toDouble(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.Single, function (value) { return Bridge.Convert.toDouble(value); }, testValues, expectedValues);
         },
         fromString: function () {
-            var doubleMaxValue = Number.MAX_VALUE;
-            var doubleMinValue = -Number.MAX_VALUE;
+            var doubleMaxValue = Bridge.Double.max;
+            var doubleMinValue = -Bridge.Double.max;
     
-            var testValues = [Bridge.Int.format(doubleMinValue, "R"), Bridge.Int.format(doubleMaxValue, "R"), Bridge.Int.format((0.0), 'G'), Bridge.Int.format((10.0), 'G'), Bridge.Int.format((-10.0), 'G'), null];
-            var expectedValues = [-Number.MAX_VALUE, Number.MAX_VALUE, 0.0, 10.0, -10.0, 0.0];
+            var testValues = [Bridge.Double.format(doubleMinValue, "R"), Bridge.Double.format(doubleMaxValue, "R"), Bridge.Double.format((0.0), 'G'), Bridge.Double.format((10.0), 'G'), Bridge.Double.format((-10.0), 'G'), null];
+            var expectedValues = [-Bridge.Double.max, Bridge.Double.max, 0.0, 10.0, -10.0, 0.0];
             this.verifyFromString(function (value) { return Bridge.Convert.toDouble(value); }, function (value, provider) { return Bridge.Convert.toDouble(value, provider); }, testValues, expectedValues);
     
             var overflowValues = ["1.79769313486232E+308", "-1.79769313486232E+308"];
@@ -29873,10 +29909,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         fromDouble: function () {
             var testValues = [100.0, -100.0, 0];
             var expectedValues = [100, -100, 0];
-            this.verifyViaObj(Number, function (value) { return Bridge.Convert.toInt16(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.Double, function (value) { return Bridge.Convert.toInt16(value); }, testValues, expectedValues);
     
-            var overflowValues = [Number.MAX_VALUE, -Number.MAX_VALUE];
-            this.verifyThrowsViaObj(Bridge.OverflowException, Number, function (value) { return Bridge.Convert.toInt16(value); }, overflowValues);
+            var overflowValues = [Bridge.Double.max, -Bridge.Double.max];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Double, function (value) { return Bridge.Convert.toInt16(value); }, overflowValues);
         },
         fromInt16: function () {
             var testValues = [32767, -32768, 0];
@@ -29915,10 +29951,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         fromSingle: function () {
             var testValues = [100.0, -100.0, 0.0];
             var expectedValues = [100, -100, 0];
-            this.verifyViaObj(Number, function (value) { return Bridge.Convert.toInt16(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.Single, function (value) { return Bridge.Convert.toInt16(value); }, testValues, expectedValues);
     
             var overflowValues = [3.40282347E+38, -3.40282347E+38];
-            this.verifyThrowsViaObj(Bridge.OverflowException, Number, function (value) { return Bridge.Convert.toInt16(value); }, overflowValues);
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Single, function (value) { return Bridge.Convert.toInt16(value); }, overflowValues);
         },
         fromString: function () {
             var shortMinValue = -32768;
@@ -30008,10 +30044,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         fromDouble: function () {
             var testValues = [100.0, -100.0, 0];
             var expectedValues = [100, -100, 0];
-            this.verifyViaObj(Number, function (value) { return Bridge.Convert.toInt32(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.Double, function (value) { return Bridge.Convert.toInt32(value); }, testValues, expectedValues);
     
-            var overflowValues = [Number.MAX_VALUE, -Number.MAX_VALUE];
-            this.verifyThrowsViaObj(Bridge.OverflowException, Number, function (value) { return Bridge.Convert.toInt32(value); }, overflowValues);
+            var overflowValues = [Bridge.Double.max, -Bridge.Double.max];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Double, function (value) { return Bridge.Convert.toInt32(value); }, overflowValues);
         },
         fromInt16: function () {
             var testValues = [100, -100, 0];
@@ -30047,10 +30083,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         fromSingle: function () {
             var testValues = [100.0, -100.0, 0.0];
             var expectedValues = [100, -100, 0];
-            this.verifyViaObj(Number, function (value) { return Bridge.Convert.toInt32(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.Single, function (value) { return Bridge.Convert.toInt32(value); }, testValues, expectedValues);
     
             var overflowValues = [3.40282347E+38, -3.40282347E+38];
-            this.verifyThrowsViaObj(Bridge.OverflowException, Number, function (value) { return Bridge.Convert.toInt32(value); }, overflowValues);
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Single, function (value) { return Bridge.Convert.toInt32(value); }, overflowValues);
         },
         fromString: function () {
             var intMinValue = -2147483648;
@@ -30137,10 +30173,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         fromDouble: function () {
             var testValues = [100.0, -100.0, 0];
             var expectedValues = [Bridge.Long(100), Bridge.Long(-100), Bridge.Long(0)];
-            this.verifyViaObj(Number, function (value) { return Bridge.Convert.toInt64(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.Double, function (value) { return Bridge.Convert.toInt64(value); }, testValues, expectedValues);
     
-            var overflowValues = [Number.MAX_VALUE, -Number.MAX_VALUE];
-            this.verifyThrowsViaObj(Bridge.OverflowException, Number, function (value) { return Bridge.Convert.toInt64(value); }, overflowValues);
+            var overflowValues = [Bridge.Double.max, -Bridge.Double.max];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Double, function (value) { return Bridge.Convert.toInt64(value); }, overflowValues);
         },
         fromInt16: function () {
             var testValues = [100, -100, 0];
@@ -30173,10 +30209,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         fromSingle: function () {
             var testValues = [100.0, -100.0, 0.0];
             var expectedValues = [Bridge.Long(100), Bridge.Long(-100), Bridge.Long(0)];
-            this.verifyViaObj(Number, function (value) { return Bridge.Convert.toInt64(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.Single, function (value) { return Bridge.Convert.toInt64(value); }, testValues, expectedValues);
     
             var overflowValues = [3.40282347E+38, -3.40282347E+38];
-            this.verifyThrowsViaObj(Bridge.OverflowException, Number, function (value) { return Bridge.Convert.toInt64(value); }, overflowValues);
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Single, function (value) { return Bridge.Convert.toInt64(value); }, overflowValues);
         },
         fromString: function () {
             var longMinValue = Bridge.Long.MinValue;
@@ -30264,10 +30300,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         fromDouble: function () {
             var testValues = [100.0, -100.0, 0];
             var expectedValues = [100, -100, 0];
-            this.verifyViaObj(Number, function (value) { return Bridge.Convert.toSByte(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.Double, function (value) { return Bridge.Convert.toSByte(value); }, testValues, expectedValues);
     
-            var overflowValues = [Number.MAX_VALUE, -Number.MAX_VALUE];
-            this.verifyThrowsViaObj(Bridge.OverflowException, Number, function (value) { return Bridge.Convert.toSByte(value); }, overflowValues);
+            var overflowValues = [Bridge.Double.max, -Bridge.Double.max];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Double, function (value) { return Bridge.Convert.toSByte(value); }, overflowValues);
         },
         fromInt16: function () {
             var testValues = [100, -100, 0];
@@ -30309,10 +30345,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         fromSingle: function () {
             var testValues = [100.0, -100.0, 0.0];
             var expectedValues = [100, -100, 0];
-            this.verifyViaObj(Number, function (value) { return Bridge.Convert.toSByte(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.Single, function (value) { return Bridge.Convert.toSByte(value); }, testValues, expectedValues);
     
             var overflowValues = [3.40282347E+38, -3.40282347E+38];
-            this.verifyThrowsViaObj(Bridge.OverflowException, Number, function (value) { return Bridge.Convert.toSByte(value); }, overflowValues);
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Single, function (value) { return Bridge.Convert.toSByte(value); }, overflowValues);
         },
         fromString: function () {
             var sbyteMinValue = -128;
@@ -30388,7 +30424,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.ConvertTests.ConvertToSingleTests', {
-        inherits: [Bridge.ClientTest.ConvertTests.ConvertTestBase$1(Number)],
+        inherits: [Bridge.ClientTest.ConvertTests.ConvertTestBase$1(Bridge.Single)],
         fromBoolean: function () {
             var testValues = [false, true];
             var expectedValues = [0.0, 1.0];
@@ -30405,9 +30441,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             this.verifyViaObj(Bridge.Decimal, function (value) { return Bridge.Convert.toSingle(value); }, testValues, expectedValues);
         },
         fromDouble: function () {
-            var testValues = [1000.0, 100.0, 0.0, -100.0, -1000.0, Number.MAX_VALUE, -Number.MAX_VALUE];
+            var testValues = [1000.0, 100.0, 0.0, -100.0, -1000.0, Bridge.Double.max, -Bridge.Double.max];
             var expectedValues = [1000.0, 100.0, 0.0, -100.0, -1000.0, Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY];
-            this.verifyViaObj(Number, function (value) { return Bridge.Convert.toSingle(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.Double, function (value) { return Bridge.Convert.toSingle(value); }, testValues, expectedValues);
         },
         fromInt16: function () {
             var testValues = [32767, -32768, 0];
@@ -30440,16 +30476,16 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         fromSingle: function () {
             var testValues = [3.40282347E+38, -3.40282347E+38, Number(), Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, 1.401298E-45];
             var expectedValues = [3.40282347E+38, -3.40282347E+38, Number(), Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, 1.401298E-45];
-            this.verifyViaObj(Number, function (value) { return Bridge.Convert.toSingle(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.Single, function (value) { return Bridge.Convert.toSingle(value); }, testValues, expectedValues);
         },
         fromString: function () {
-            var testValues = [Bridge.Int.format(3.40282347E+38, "R"), Bridge.Int.format((0.0), 'G'), Bridge.Int.format(-3.40282347E+38, "R"), null];
+            var testValues = [Bridge.Single.format(3.40282347E+38, "R"), Bridge.Single.format((0.0), 'G'), Bridge.Single.format(-3.40282347E+38, "R"), null];
             var expectedValues = [3.40282347E+38, 0.0, -3.40282347E+38, 0.0];
             this.verifyFromString(function (value) { return Bridge.Convert.toSingle(value); }, function (value, provider) { return Bridge.Convert.toSingle(value, provider); }, testValues, expectedValues);
     
-            var doubleMaxValue = Number.MAX_VALUE;
-            var doubleMinValue = -Number.MAX_VALUE;
-            var overflowValues = [Bridge.Int.format(doubleMinValue, "R"), Bridge.Int.format(doubleMaxValue, "R")];
+            var doubleMaxValue = Bridge.Double.max;
+            var doubleMinValue = -Bridge.Double.max;
+            var overflowValues = [Bridge.Double.format(doubleMinValue, "R"), Bridge.Double.format(doubleMaxValue, "R")];
             this.verifyFromStringThrows(Bridge.OverflowException, function (value) { return Bridge.Convert.toSingle(value); }, function (value, provider) { return Bridge.Convert.toSingle(value, provider); }, overflowValues);
     
             var formatExceptionValues = ["1f2d"];
@@ -30500,10 +30536,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         fromDouble: function () {
             var testValues = [1000.0, 0.0];
             var expectedValues = [1000, 0];
-            this.verifyViaObj(Number, function (value) { return Bridge.Convert.toUInt16(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.Double, function (value) { return Bridge.Convert.toUInt16(value); }, testValues, expectedValues);
     
-            var overflowValues = [Number.MAX_VALUE, -100.0];
-            this.verifyThrowsViaObj(Bridge.OverflowException, Number, function (value) { return Bridge.Convert.toUInt16(value); }, overflowValues);
+            var overflowValues = [Bridge.Double.max, -100.0];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Double, function (value) { return Bridge.Convert.toUInt16(value); }, overflowValues);
         },
         fromInt16: function () {
             var testValues = [1000, 0, 32767];
@@ -30548,10 +30584,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         fromSingle: function () {
             var testValues = [1000.0, 0.0];
             var expectedValues = [1000, 0];
-            this.verifyViaObj(Number, function (value) { return Bridge.Convert.toUInt16(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.Single, function (value) { return Bridge.Convert.toUInt16(value); }, testValues, expectedValues);
     
             var values = [3.40282347E+38, -100.0];
-            this.verifyThrowsViaObj(Bridge.OverflowException, Number, function (value) { return Bridge.Convert.toUInt16(value); }, values);
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Single, function (value) { return Bridge.Convert.toUInt16(value); }, values);
         },
         fromString: function () {
             var ushortMaxValue = 65535;
@@ -30635,10 +30671,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         fromDouble: function () {
             var testValues = [1000.0, 0.0, -0.5, 4294967295.49999, 472.2, 472.6, 472.5, 471.5];
             var expectedValues = [1000, 0, 0, 4294967295, 472, 473, 472, 472];
-            this.verifyViaObj(Number, function (value) { return Bridge.Convert.toUInt32(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.Double, function (value) { return Bridge.Convert.toUInt32(value); }, testValues, expectedValues);
     
-            var overflowValues = [Number.MAX_VALUE, -0.500000000001, -100.0, Bridge.Long.toNumber(Bridge.Long([0,1])), 4294967295.5];
-            this.verifyThrowsViaObj(Bridge.OverflowException, Number, function (value) { return Bridge.Convert.toUInt32(value); }, overflowValues);
+            var overflowValues = [Bridge.Double.max, -0.500000000001, -100.0, Bridge.Long.toNumber(Bridge.Long([0,1])), 4294967295.5];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Double, function (value) { return Bridge.Convert.toUInt32(value); }, overflowValues);
         },
         fromInt16: function () {
             var testValues = [1000, 0, 32767];
@@ -30683,10 +30719,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         fromSingle: function () {
             var testValues = [1000.0, 0.0];
             var expectedValues = [1000, 0];
-            this.verifyViaObj(Number, function (value) { return Bridge.Convert.toUInt32(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.Single, function (value) { return Bridge.Convert.toUInt32(value); }, testValues, expectedValues);
     
             var overflowValues = [3.40282347E+38, -100.0];
-            this.verifyThrowsViaObj(Bridge.OverflowException, Number, function (value) { return Bridge.Convert.toUInt32(value); }, overflowValues);
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Single, function (value) { return Bridge.Convert.toUInt32(value); }, overflowValues);
         },
         fromString: function () {
             var ushortMaxValue = 65535;
@@ -30769,10 +30805,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         fromDouble: function () {
             var testValues = [1000.0, 0.0];
             var expectedValues = [Bridge.ULong(1000), Bridge.ULong(0)];
-            this.verifyViaObj(Number, function (value) { return Bridge.Convert.toUInt64(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.Double, function (value) { return Bridge.Convert.toUInt64(value); }, testValues, expectedValues);
     
-            var overflowValues = [Number.MAX_VALUE, -100.0];
-            this.verifyThrowsViaObj(Bridge.OverflowException, Number, function (value) { return Bridge.Convert.toUInt64(value); }, overflowValues);
+            var overflowValues = [Bridge.Double.max, -100.0];
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Double, function (value) { return Bridge.Convert.toUInt64(value); }, overflowValues);
         },
         fromInt16: function () {
             var testValues = [1000, 0, 32767];
@@ -30817,10 +30853,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         fromSingle: function () {
             var testValues = [1000.0, 0.0];
             var expectedValues = [Bridge.ULong(1000), Bridge.ULong(0)];
-            this.verifyViaObj(Number, function (value) { return Bridge.Convert.toUInt64(value); }, testValues, expectedValues);
+            this.verifyViaObj(Bridge.Single, function (value) { return Bridge.Convert.toUInt64(value); }, testValues, expectedValues);
     
             var overflowValues = [3.40282347E+38, -100.0];
-            this.verifyThrowsViaObj(Bridge.OverflowException, Number, function (value) { return Bridge.Convert.toUInt64(value); }, overflowValues);
+            this.verifyThrowsViaObj(Bridge.OverflowException, Bridge.Single, function (value) { return Bridge.Convert.toUInt64(value); }, overflowValues);
         },
         fromString: function () {
             var ushortMaxValue = 65535;

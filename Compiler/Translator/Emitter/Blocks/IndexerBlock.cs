@@ -151,8 +151,15 @@ namespace Bridge.Translator
             var oldIsAssignment = this.Emitter.IsAssignment;
             var oldUnary = this.Emitter.IsUnaryAccessor;
             var inlineCode = current.InlineCode;
+            bool hasThis = inlineCode != null && inlineCode.Contains("{this}");
 
-            if (!(current.InlineCode != null && current.InlineCode.Contains("{this}")) && current.InlineAttr != null)
+            if (inlineCode != null && inlineCode.StartsWith("<self>"))
+            {
+                hasThis = true;
+                inlineCode = inlineCode.Substring(6);
+            }
+
+            if (!hasThis && current.InlineAttr != null)
             {
                 this.Emitter.IsAssignment = false;
                 this.Emitter.IsUnaryAccessor = false;
@@ -161,7 +168,7 @@ namespace Bridge.Translator
                 this.Emitter.IsUnaryAccessor = oldUnary;
             }
 
-            if (inlineCode != null && inlineCode.Contains("{this}"))
+            if (hasThis)
             {
                 this.Write("");
                 var oldBuilder = this.Emitter.Output;

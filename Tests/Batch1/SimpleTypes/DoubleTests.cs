@@ -13,7 +13,7 @@ namespace Bridge.ClientTest.SimpleTypes
         public void TypePropertiesAreCorrect()
         {
             Assert.True((object)(double)0.5 is double);
-            Assert.AreEqual("Number", typeof(double).GetClassName());
+            Assert.AreEqual("Bridge.Double", typeof(double).GetClassName());
             object d = (double)0;
             Assert.True((object)d is double);
             Assert.True((object)d is IFormattable);

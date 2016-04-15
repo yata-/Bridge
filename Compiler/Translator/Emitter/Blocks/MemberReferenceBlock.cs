@@ -223,6 +223,12 @@ namespace Bridge.Translator
             bool hasInline = !string.IsNullOrEmpty(inline);
             bool hasThis = hasInline && inline.Contains("{this}");
 
+            if (hasInline && inline.StartsWith("<self>"))
+            {
+                hasThis = true;
+                inline = inline.Substring(6);
+            }
+
             if (hasThis)
             {
                 this.Write("");
@@ -242,12 +248,13 @@ namespace Bridge.Translator
                 this.Emitter.IsAssignment = oldIsAssignment;
                 this.Emitter.IsUnaryAccessor = oldUnary;
                 var oldInline = inline;
-                inline = inline.Replace("{this}", this.Emitter.Output.ToString());
+                var thisArg = this.Emitter.Output.ToString();
+                inline = inline.Replace("{this}", thisArg);
                 this.Emitter.Output = oldBuilder;
 
                 if (resolveResult is InvocationResolveResult)
                 {
-                    this.PushWriter(inline);
+                    this.PushWriter(inline, null, thisArg);
                 }
                 else
                 {

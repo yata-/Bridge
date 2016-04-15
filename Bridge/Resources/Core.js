@@ -45,6 +45,45 @@
             })(name);
         },
 
+        createInstance: function (type) {
+            if (type === Bridge.Decimal) {
+                return Bridge.Decimal.Zero;
+            }
+
+            if (type === Bridge.Long) {
+                return Bridge.Long.Zero;
+            }
+
+            if (type === Bridge.ULong) {
+                return Bridge.ULong.Zero;
+            }
+
+            if (type === Bridge.Double ||
+                type === Bridge.Single ||
+                type === Bridge.Byte ||
+	            type === Bridge.SByte ||
+	            type === Bridge.Int16 ||
+	            type === Bridge.UInt16 ||
+	            type === Bridge.Int32 ||
+	            type === Bridge.UInt32 ||
+                type === Bridge.Int) {
+                return 0;
+            }
+
+            if (typeof (type.getDefaultValue) === 'function')
+                return type.getDefaultValue();
+            else if (type === Boolean)
+                return false;
+            else if (type === Date)
+                return new Date(0);
+            else if (type === Number)
+                return 0;
+            else if (type === String)
+                return '';
+            else
+                return new type();
+        },
+
         clone: function (obj) {
             if (Bridge.isArray(obj)) {
                 return Bridge.Array.clone(obj);
@@ -383,6 +422,8 @@
                 to instanceof String ||
                 to instanceof Function ||
                 to instanceof Date ||
+                to instanceof Bridge.Double ||
+                to instanceof Bridge.Single ||
                 to instanceof Bridge.Byte ||
 	            to instanceof Bridge.SByte ||
 	            to instanceof Bridge.Int16 ||
@@ -692,6 +733,14 @@
         getType: function (instance) {
             if (!Bridge.isDefined(instance, true)) {
                 throw new Bridge.NullReferenceException("instance is null");
+            }
+
+            if (typeof(instance) === "number") {
+                if (Math.floor(instance, 0) === instance) {
+                    return Bridge.Int32;
+                } else {
+                    return Bridge.Double;
+                }
             }
 
             try {

@@ -127,8 +127,8 @@ namespace Bridge.ClientTest.SimpleTypes
             long l = 100;
 
             AssertULong("111", dcml + l, null, "Bridge.Decimal");
-            AssertULong("112", dbl + l, null, "Number");
-            AssertULong("113", flt + l, null, "Number");
+            AssertULong("112", dbl + l, null, "Bridge.Int32");
+            AssertULong("113", flt + l, null, "Bridge.Int32");
         }
 
         private T GetDefaultValue<T>()

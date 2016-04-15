@@ -17,26 +17,26 @@ namespace System
         [InlineConst]
         public const short MaxValue = 32767;
 
-        [Template("Bridge.Int.parseInt({s}, -32768, 32767)")]
+        [Template("Bridge.Int16.parse({s})")]
         public static short Parse(string s)
         {
             return 0;
         }
 
-        [Template("Bridge.Int.parseInt({s}, -32768, 32767, {radix})")]
+        [Template("Bridge.Int16.parse({s}, {radix})")]
         public static short Parse(string s, int radix)
         {
             return 0;
         }
 
-        [Template("Bridge.Int.tryParseInt({s}, {result}, -32768, 32767)")]
+        [Template("Bridge.Int16.tryParse({s}, {result})")]
         public static bool TryParse(string s, out short result)
         {
             result = 0;
             return false;
         }
 
-        [Template("Bridge.Int.tryParseInt({s}, {result}, -32768, 32767, {radix})")]
+        [Template("Bridge.Int16.tryParse({s}, {result}, {radix})")]
         public static bool TryParse(string s, out short result, int radix)
         {
             result = 0;
@@ -48,25 +48,25 @@ namespace System
             return null;
         }
 
-        [Template("Bridge.Int.format({this}, {format})")]
+        [Template("Bridge.Int16.format({this}, {format})")]
         public string Format(string format)
         {
             return null;
         }
 
-        [Template("Bridge.Int.format({this}, {format}, {provider})")]
+        [Template("Bridge.Int16.format({this}, {format}, {provider})")]
         public string Format(string format, IFormatProvider provider)
         {
             return null;
         }
 
-        [Template("Bridge.Int.format({this}, {format})")]
+        [Template("Bridge.Int16.format({this}, {format})")]
         public string ToString(string format)
         {
             return null;
         }
 
-        [Template("Bridge.Int.format({this}, {format}, {provider})")]
+        [Template("Bridge.Int16.format({this}, {format}, {provider})")]
         public string ToString(string format, IFormatProvider provider)
         {
             return null;
