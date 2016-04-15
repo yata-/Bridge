@@ -122,7 +122,7 @@ namespace Bridge.Html5
 		/// transmitted to the network. This value does not reset to zero when the connection is closed;
 		/// if you keep calling Send(), this will continue to climb.
 		/// </summary>
-		public readonly ulong BufferedAmount;
+		public readonly uint BufferedAmount;
 
 		/// <summary>
 		/// The extensions selected by the server.
