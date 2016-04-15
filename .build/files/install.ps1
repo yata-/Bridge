@@ -20,7 +20,7 @@ $project.Object.References | foreach-object {
 # Sets the NoStdLib setting to True for every project configuration.
 # See Issue #419 for more information on why.
 # https://github.com/bridgedotnet/Bridge/issues/419
-# Once Visual Studio or NuGet defect is fixed, lines 20-51 can be removed.
+# Once Visual Studio or NuGet defect is fixed, lines 20-52 can be removed.
 
 $projectMSBuild = [Microsoft.Build.Construction.ProjectRootElement]::Open($project.FullName)
  
@@ -47,7 +47,8 @@ Write-Host ("Added Property AddAdditionalExplicitAssemblyReferences")
 $propEnableNuGetImport = $projectMSBuild.AddProperty('AdditionalExplicitAssemblyReferences', $null);
 Write-Host ("Added Property AdditionalExplicitAssemblyReferences")
 
-$project.Save();
+# Save the project to force reloading to fix possible IntelliSense errors
+$projectMSBuild.Save();
 Write-Host ("Saved the project")
 
 Write-Host ("Bridge.NET installation was successful")
