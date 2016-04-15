@@ -25,9 +25,9 @@ namespace Bridge.ClientTest.SimpleTypes
         }
 
         [Test]
-        public void CreatingInstanceReturnsTodaysDate()
+        public void CreatingInstanceReturnsDateZero()
         {
-            Assert.True(Activator.CreateInstance<DateTime>().GetFullYear() > 2011);
+            Assert.True(Activator.CreateInstance<DateTime>().GetFullYear() == 1970);
         }
 
         [Test]

@@ -56,6 +56,45 @@
             })(name);
         },
 
+        createInstance: function (type) {
+            if (type === Bridge.Decimal) {
+                return Bridge.Decimal.Zero;
+            }
+
+            if (type === Bridge.Long) {
+                return Bridge.Long.Zero;
+            }
+
+            if (type === Bridge.ULong) {
+                return Bridge.ULong.Zero;
+            }
+
+            if (type === Bridge.Double ||
+                type === Bridge.Single ||
+                type === Bridge.Byte ||
+	            type === Bridge.SByte ||
+	            type === Bridge.Int16 ||
+	            type === Bridge.UInt16 ||
+	            type === Bridge.Int32 ||
+	            type === Bridge.UInt32 ||
+                type === Bridge.Int) {
+                return 0;
+            }
+
+            if (typeof (type.getDefaultValue) === 'function')
+                return type.getDefaultValue();
+            else if (type === Boolean)
+                return false;
+            else if (type === Date)
+                return new Date(0);
+            else if (type === Number)
+                return 0;
+            else if (type === String)
+                return '';
+            else
+                return new type();
+        },
+
         clone: function (obj) {
             if (Bridge.isArray(obj)) {
                 return Bridge.Array.clone(obj);
@@ -394,6 +433,8 @@
                 to instanceof String ||
                 to instanceof Function ||
                 to instanceof Date ||
+                to instanceof Bridge.Double ||
+                to instanceof Bridge.Single ||
                 to instanceof Bridge.Byte ||
 	            to instanceof Bridge.SByte ||
 	            to instanceof Bridge.Int16 ||
@@ -703,6 +744,14 @@
         getType: function (instance) {
             if (!Bridge.isDefined(instance, true)) {
                 throw new Bridge.NullReferenceException("instance is null");
+            }
+
+            if (typeof(instance) === "number") {
+                if (Math.floor(instance, 0) === instance) {
+                    return Bridge.Int32;
+                } else {
+                    return Bridge.Double;
+                }
             }
 
             try {
@@ -3366,6 +3415,7 @@ Bridge.Class.addExtend(Bridge.Char, [Bridge.IComparable$1(Bridge.Char), Bridge.I
         var createIntType = function (name, min, max) {
             var type = Bridge.define(name, {
                 inherits: [Bridge.IComparable, Bridge.IFormattable],
+
                 statics: {
                     min: min,
                     max: max,
@@ -3376,11 +3426,11 @@ Bridge.Class.addExtend(Bridge.Char, [Bridge.IComparable$1(Bridge.Char), Bridge.I
                     getDefaultValue: function () {
                         return 0;
                     },
-                    parse: function (s) {
-                        return Bridge.Int.parseInt(s, min, max);
+                    parse: function (s, radix) {
+                        return Bridge.Int.parseInt(s, min, max, radix);
                     },
-                    tryParse: function (s, result) {
-                        return Bridge.Int.tryParseInt(s, result, min, max);
+                    tryParse: function (s, result, radix) {
+                        return Bridge.Int.tryParseInt(s, result, min, max, radix);
                     },
                     format: function (number, format, provider) {
                         return Bridge.Int.format(number, format, provider);
@@ -4079,6 +4129,45 @@ Bridge.Class.addExtend(Bridge.Char, [Bridge.IComparable$1(Bridge.Char), Bridge.I
 
     Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEquatable$1(Bridge.Int)]);
 
+    Bridge.define("Bridge.Double", {
+        inherits: [Bridge.IComparable, Bridge.IFormattable],
+        statics: {
+            min: -Number.MAX_VALUE,
+            max: Number.MAX_VALUE,
+
+            instanceOf: function (instance) {
+                return typeof (instance) === "number";
+            },
+            getDefaultValue: function () {
+                return 0;
+            },
+            parse: function (s, provider) {
+                return Bridge.Int.parseFloat(s, provider);
+            },
+            tryParse: function (s, provider, result) {
+                return Bridge.Int.tryParseFloat(s, provider, result);
+            },
+            format: function (number, format, provider) {
+                return Bridge.Int.format(number, format, provider);
+            }
+        }
+    });
+    Bridge.Class.addExtend(Bridge.Double, [Bridge.IComparable$1(Bridge.Double), Bridge.IEquatable$1(Bridge.Double)]);
+
+    Bridge.define("Bridge.Single", {
+        inherits: [Bridge.IComparable, Bridge.IFormattable],
+        statics: {
+            min: -3.40282346638528859e+38,
+            max: 3.40282346638528859e+38,
+
+            instanceOf: Bridge.Double.instanceOf,
+            getDefaultValue: Bridge.Double.getDefaultValue,
+            parse: Bridge.Double.parse,
+            tryParse: Bridge.Double.tryParse,
+            format: Bridge.Double.format
+        }
+    });
+    Bridge.Class.addExtend(Bridge.Single, [Bridge.IComparable$1(Bridge.Single), Bridge.IEquatable$1(Bridge.Single)]);
 /* long.js https://github.com/dcodeIO/long.js/blob/master/LICENSE */
 (function (b) {
     function d(a, b, c) { this.low = a | 0; this.high = b | 0; this.unsigned = !!c } function g(a) { return !0 === (a && a.__isLong__) } function m(a, b) { var c, u; if (b) { a >>>= 0; if (u = 0 <= a && 256 > a) if (c = A[a]) return c; c = e(a, 0 > (a | 0) ? -1 : 0, !0); u && (A[a] = c) } else { a |= 0; if (u = -128 <= a && 128 > a) if (c = B[a]) return c; c = e(a, 0 > a ? -1 : 0, !1); u && (B[a] = c) } return c } function n(a, b) {

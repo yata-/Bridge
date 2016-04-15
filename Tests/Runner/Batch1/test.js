@@ -131,7 +131,7 @@
             },
             instanceFabric$1: function (type) {
                 if (!Bridge.hasValue(Bridge.Test.QUnit.TestFixture$1(T).instanceFabric)) {
-                    Bridge.Test.QUnit.TestFixture$1(T).instanceFabric = Bridge.cast(new type(), Bridge.Test.QUnit.TestFixture$1(T));
+                    Bridge.Test.QUnit.TestFixture$1(T).instanceFabric = Bridge.cast(Bridge.createInstance(type), Bridge.Test.QUnit.TestFixture$1(T));
                 }
     
                 return Bridge.Test.QUnit.TestFixture$1(T).instanceFabric;
@@ -760,7 +760,7 @@
                 QUnit.test("DateTimeFormatInfo - InvariantWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Format_DateTimeFormatInfoTests.invariantWorks);
                 QUnit.test("DateTime - TypePropertiesAreCorrect", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_JsDateTimeTests.typePropertiesAreCorrect);
                 QUnit.test("DateTime - DefaultConstructorReturnsTodaysDate", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_JsDateTimeTests.defaultConstructorReturnsTodaysDate);
-                QUnit.test("DateTime - CreatingInstanceReturnsTodaysDate", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_JsDateTimeTests.creatingInstanceReturnsTodaysDate);
+                QUnit.test("DateTime - CreatingInstanceReturnsDateZero", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_JsDateTimeTests.creatingInstanceReturnsDateZero);
                 QUnit.test("DateTime - MillisecondSinceEpochConstructorWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_JsDateTimeTests.millisecondSinceEpochConstructorWorks);
                 QUnit.test("DateTime - StringConstructorWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_JsDateTimeTests.stringConstructorWorks);
                 QUnit.test("DateTime - YMDConstructorWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_JsDateTimeTests.yMDConstructorWorks);
@@ -1074,6 +1074,7 @@
                 QUnit.test("#1176 - TestFunctionLifting", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1176.testFunctionLifting);
                 QUnit.test("#1177 - TestImplicitCast", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1177.testImplicitCast);
                 QUnit.test("#1180 - TestStructClone", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1180.testStructClone);
+                QUnit.test("#1184 - TestStructClone", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1184.testStructClone);
                 QUnit.test("#381 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge381.testUseCase);
                 QUnit.test("#447 - CheckInlineExpression", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineExpression);
                 QUnit.test("#447 - CheckInlineCalls", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineCalls);
@@ -1552,6 +1553,7 @@
                 QUnit.test("Byte - CastsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_ByteTests.castsWork);
                 QUnit.test("Byte - DefaultValueIs0", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_ByteTests.defaultValueIs0);
                 QUnit.test("Byte - DefaultConstructorReturnsZero", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_ByteTests.defaultConstructorReturnsZero);
+                QUnit.test("Byte - CreatingInstanceReturnsZero", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_ByteTests.creatingInstanceReturnsZero);
                 QUnit.test("Byte - ConstantsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_ByteTests.constantsWork);
                 QUnit.test("Byte - FormatWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_ByteTests.formatWorks);
                 QUnit.test("Byte - IFormattableToStringWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_ByteTests.iFormattableToStringWorks);
@@ -1568,6 +1570,7 @@
                 QUnit.test("Char - CastsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_CharTests.castsWork);
                 QUnit.test("Char - DefaultValueWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_CharTests.defaultValueWorks);
                 QUnit.test("Char - DefaultConstructorReturnsZero", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_CharTests.defaultConstructorReturnsZero);
+                QUnit.test("Char - CreatingInstanceReturnsZero", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_CharTests.creatingInstanceReturnsZero);
                 QUnit.test("Char - ConstantsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_CharTests.constantsWork);
                 QUnit.test("Char - CharComparisonWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_CharTests.charComparisonWorks);
                 QUnit.test("Char - ParseWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_CharTests.parseWorks);
@@ -1644,6 +1647,7 @@
                 QUnit.test("Int16 - CastsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int16Tests.castsWork);
                 QUnit.test("Int16 - DefaultValueIs0", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int16Tests.defaultValueIs0);
                 QUnit.test("Int16 - DefaultConstructorReturnsZero", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int16Tests.defaultConstructorReturnsZero);
+                QUnit.test("Int16 - CreatingInstanceReturnsZero", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int16Tests.creatingInstanceReturnsZero);
                 QUnit.test("Int16 - ConstantsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int16Tests.constantsWork);
                 QUnit.test("Int16 - FormatWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int16Tests.formatWorks);
                 QUnit.test("Int16 - IFormattableToStringWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int16Tests.iFormattableToStringWorks);
@@ -1663,6 +1667,7 @@
                 QUnit.test("Int32 - UnboxingWorksForInt32", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int32Tests.unboxingWorksForInt32);
                 QUnit.test("Int32 - DefaultValueIs0", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int32Tests.defaultValueIs0);
                 QUnit.test("Int32 - DefaultConstructorReturnsZero", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int32Tests.defaultConstructorReturnsZero);
+                QUnit.test("Int32 - CreatingInstanceReturnsZero", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int32Tests.creatingInstanceReturnsZero);
                 QUnit.test("Int32 - ConstantsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int32Tests.constantsWork);
                 QUnit.test("Int32 - FormatWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int32Tests.formatWorks);
                 QUnit.test("Int32 - IFormattableToStringWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int32Tests.iFormattableToStringWorks);
@@ -1713,6 +1718,7 @@
                 QUnit.test("SByte - CastsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_SByteTests.castsWork);
                 QUnit.test("SByte - DefaultValueIs0", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_SByteTests.defaultValueIs0);
                 QUnit.test("SByte - DefaultConstructorReturnsZero", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_SByteTests.defaultConstructorReturnsZero);
+                QUnit.test("SByte - CreatingInstanceReturnsZero", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_SByteTests.creatingInstanceReturnsZero);
                 QUnit.test("SByte - ConstantsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_SByteTests.constantsWork);
                 QUnit.test("SByte - FormatWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_SByteTests.formatWorks);
                 QUnit.test("SByte - IFormattableToStringWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_SByteTests.iFormattableToStringWorks);
@@ -1767,6 +1773,7 @@
                 QUnit.test("UInt16 - CastsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt16Tests.castsWork);
                 QUnit.test("UInt16 - DefaultValueIs0", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt16Tests.defaultValueIs0);
                 QUnit.test("UInt16 - DefaultConstructorReturnsZero", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt16Tests.defaultConstructorReturnsZero);
+                QUnit.test("UInt16 - CreatingInstanceReturnsZero", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt16Tests.creatingInstanceReturnsZero);
                 QUnit.test("UInt16 - ConstantsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt16Tests.constantsWork);
                 QUnit.test("UInt16 - FormatWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt16Tests.formatWorks);
                 QUnit.test("UInt16 - IFormattableToStringWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt16Tests.iFormattableToStringWorks);
@@ -1783,6 +1790,7 @@
                 QUnit.test("UInt32 - CastsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt32Tests.castsWork);
                 QUnit.test("UInt32 - DefaultValueIs0", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt32Tests.defaultValueIs0);
                 QUnit.test("UInt32 - DefaultConstructorReturnsZero", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt32Tests.defaultConstructorReturnsZero);
+                QUnit.test("UInt32 - CreatingInstanceReturnsZero", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt32Tests.creatingInstanceReturnsZero);
                 QUnit.test("UInt32 - ConstantsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt32Tests.constantsWork);
                 QUnit.test("UInt32 - FormatWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt32Tests.formatWorks);
                 QUnit.test("UInt32 - IFormattableToStringWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt32Tests.iFormattableToStringWorks);
@@ -3069,6 +3077,16 @@
             testStructClone: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1180).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1180);
                 Bridge.ClientTest.BridgeIssues.Bridge1180.testStructClone();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1184', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1184)],
+        statics: {
+            testStructClone: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1184).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1184);
+                Bridge.ClientTest.BridgeIssues.Bridge1184.testStructClone();
             }
         }
     });
@@ -8348,6 +8366,10 @@
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.ByteTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_ByteTests);
                 t.getFixture().defaultConstructorReturnsZero();
             },
+            creatingInstanceReturnsZero: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.ByteTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_ByteTests);
+                t.getFixture().creatingInstanceReturnsZero();
+            },
             constantsWork: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.ByteTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_ByteTests);
                 t.getFixture().constantsWork();
@@ -8417,6 +8439,10 @@
             defaultConstructorReturnsZero: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.CharTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_CharTests);
                 t.getFixture().defaultConstructorReturnsZero();
+            },
+            creatingInstanceReturnsZero: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.CharTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_CharTests);
+                t.getFixture().creatingInstanceReturnsZero();
             },
             constantsWork: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.CharTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_CharTests);
@@ -8762,6 +8788,10 @@
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.Int16Tests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int16Tests);
                 t.getFixture().defaultConstructorReturnsZero();
             },
+            creatingInstanceReturnsZero: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.Int16Tests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int16Tests);
+                t.getFixture().creatingInstanceReturnsZero();
+            },
             constantsWork: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.Int16Tests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int16Tests);
                 t.getFixture().constantsWork();
@@ -8843,6 +8873,10 @@
             defaultConstructorReturnsZero: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.Int32Tests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int32Tests);
                 t.getFixture().defaultConstructorReturnsZero();
+            },
+            creatingInstanceReturnsZero: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.Int32Tests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int32Tests);
+                t.getFixture().creatingInstanceReturnsZero();
             },
             constantsWork: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.Int32Tests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int32Tests);
@@ -9016,9 +9050,9 @@
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.JsDateTimeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_JsDateTimeTests);
                 t.getFixture().defaultConstructorReturnsTodaysDate();
             },
-            creatingInstanceReturnsTodaysDate: function (assert) {
+            creatingInstanceReturnsDateZero: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.JsDateTimeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_JsDateTimeTests);
-                t.getFixture().creatingInstanceReturnsTodaysDate();
+                t.getFixture().creatingInstanceReturnsDateZero();
             },
             millisecondSinceEpochConstructorWorks: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.JsDateTimeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_JsDateTimeTests);
@@ -9303,6 +9337,10 @@
             defaultConstructorReturnsZero: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.SByteTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_SByteTests);
                 t.getFixture().defaultConstructorReturnsZero();
+            },
+            creatingInstanceReturnsZero: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.SByteTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_SByteTests);
+                t.getFixture().creatingInstanceReturnsZero();
             },
             constantsWork: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.SByteTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_SByteTests);
@@ -10032,6 +10070,10 @@
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.UInt16Tests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt16Tests);
                 t.getFixture().defaultConstructorReturnsZero();
             },
+            creatingInstanceReturnsZero: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.UInt16Tests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt16Tests);
+                t.getFixture().creatingInstanceReturnsZero();
+            },
             constantsWork: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.UInt16Tests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt16Tests);
                 t.getFixture().constantsWork();
@@ -10101,6 +10143,10 @@
             defaultConstructorReturnsZero: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.UInt32Tests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt32Tests);
                 t.getFixture().defaultConstructorReturnsZero();
+            },
+            creatingInstanceReturnsZero: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.UInt32Tests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt32Tests);
+                t.getFixture().creatingInstanceReturnsZero();
             },
             constantsWork: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.UInt32Tests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt32Tests);

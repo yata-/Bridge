@@ -131,7 +131,7 @@
             },
             instanceFabric$1: function (type) {
                 if (!Bridge.hasValue(Bridge.Test.QUnit.TestFixture$1(T).instanceFabric)) {
-                    Bridge.Test.QUnit.TestFixture$1(T).instanceFabric = Bridge.cast(new type(), Bridge.Test.QUnit.TestFixture$1(T));
+                    Bridge.Test.QUnit.TestFixture$1(T).instanceFabric = Bridge.cast(Bridge.createInstance(type), Bridge.Test.QUnit.TestFixture$1(T));
                 }
     
                 return Bridge.Test.QUnit.TestFixture$1(T).instanceFabric;

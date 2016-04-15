@@ -4,7 +4,7 @@
     Bridge.define('Bridge.ClientTest.Batch2.BridgeIssues.N1122', {
         statics: {
             testClippingInJavaScriptOverflowMode: function () {
-                var x = Number.MAX_VALUE;
+                var x = Bridge.Double.max;
     
                 var y1 = Math.floor(x / 0.2);
                 Bridge.Test.Assert.areEqual$1(Number.POSITIVE_INFINITY, y1, "int");
