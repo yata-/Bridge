@@ -1177,7 +1177,7 @@ namespace Bridge.Html5
         /// The Document.createTreeWalker() creator method returns a newly created TreeWalker object.
         /// </summary>
         /// <param name="root">Is the root Node of this TreeWalker traversal. Typically this will be an element owned by the document.</param>
-        /// <param name="whatToShow">Is an optionale unsigned long representing a bitmask created by combining the constant properties of NodeFilter. It is a convenient way of filtering for certain types of node. It defaults to 0xFFFFFFFF representing the SHOW_ALL constant.</param>
+        /// <param name="whatToShow">Is an optionale unsigned int representing a bitmask created by combining the constant properties of NodeFilter. It is a convenient way of filtering for certain types of node. It defaults to 0xFFFFFFFF representing the SHOW_ALL constant.</param>
         /// <returns></returns>
         public static extern TreeWalker CreateTreeWalker(Node root, NodeFilter whatToShow);
 
@@ -1185,7 +1185,7 @@ namespace Bridge.Html5
         /// The Document.createTreeWalker() creator method returns a newly created TreeWalker object.
         /// </summary>
         /// <param name="root">Is the root Node of this TreeWalker traversal. Typically this will be an element owned by the document.</param>
-        /// <param name="whatToShow">Is an optionale unsigned long representing a bitmask created by combining the constant properties of NodeFilter. It is a convenient way of filtering for certain types of node. It defaults to 0xFFFFFFFF representing the SHOW_ALL constant.</param>
+        /// <param name="whatToShow">Is an optionale unsigned int representing a bitmask created by combining the constant properties of NodeFilter. It is a convenient way of filtering for certain types of node. It defaults to 0xFFFFFFFF representing the SHOW_ALL constant.</param>
         /// <param name="filter">Is an optional NodeFilter, that is an object with a method acceptNode, which is called by the TreeWalker to determine whether or not to accept a node that has passed the whatToShow check.</param>
         /// <returns></returns>
         public static extern TreeWalker CreateTreeWalker(Node root, NodeFilter whatToShow, INodeFilter filter);
