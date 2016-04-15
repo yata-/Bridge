@@ -6,22 +6,48 @@ Write-Host ("Bridge.NET is configuring " + $project.ProjectName)
 # Remove all references of object
 $project.Object.References | foreach-object {
     if ($_.Identity.ToLower().StartsWith("system") -or $_.Identity.ToLower().StartsWith("microsoft")) {
-        Write-Host ("Removing Reference to " + $_.Identity)
-        $_.Remove()
+        $name = $_.Identity
+        Try {
+            $_.Remove()
+            Write-Host ("Removed Reference to " + $name)
+        }
+        Catch {
+            Write-Host ("Failed to remove Reference to " + $name)
+        }
     }
 }
 
 # Sets the NoStdLib setting to True for every project configuration.
 # See Issue #419 for more information on why.
 # https://github.com/bridgedotnet/Bridge/issues/419
-# Once Visual Studio or NuGet defect is fixed, lines 14-25 can be removed.
+# Once Visual Studio or NuGet defect is fixed, lines 20-51 can be removed.
 
-$project.ConfigurationManager | ForEach-Object {
-    $nostdlib_setting = $_.Properties.Item("NoStdLib")
-
-    if (-not $nostdlib_setting.Value) {
-        $nostdlib_setting.Value = $true
+$projectMSBuild = [Microsoft.Build.Construction.ProjectRootElement]::Open($project.FullName)
+ 
+# Clean NoStdLib, AddAdditionalExplicitAssemblyReferences and AdditionalExplicitAssemblyReferences
+ForEach ($item in $projectMSBuild.Properties)
+{
+    #Write-Host ($item.Name + ":" + $item.Value)
+    if ($item.Name -ieq "NoStdLib" -or $item.Name -ieq "AddAdditionalExplicitAssemblyReferences" -or $item.Name -ieq "AdditionalExplicitAssemblyReferences"){
+        $name = $item.Name
+        Try {
+            $item.Parent.RemoveChild($item);
+            Write-Host ("Removed Property " + $name)
+        }
+        Catch {
+            Write-Host ("Failed to remove Property " + $name + "Error: " +  $_.Exception.Message)
+        }
     }
 }
+ 
+$propEnableNuGetImport = $projectMSBuild.AddProperty('NoStdLib', 'true');
+Write-Host ("Added Property NoStdLib")
+$propEnableNuGetImport = $projectMSBuild.AddProperty('AddAdditionalExplicitAssemblyReferences', 'false');
+Write-Host ("Added Property AddAdditionalExplicitAssemblyReferences")
+$propEnableNuGetImport = $projectMSBuild.AddProperty('AdditionalExplicitAssemblyReferences', $null);
+Write-Host ("Added Property AdditionalExplicitAssemblyReferences")
+
+# Save the project?
+#$projectMSBuild.Save()
 
 Write-Host ("Bridge.NET installation was successful")
