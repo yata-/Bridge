@@ -9,7 +9,7 @@ namespace Bridge.ClientTest.BridgeIssues
     public class Bridge1184
     {
         [Test]
-        public static void TestStructClone()
+        public static void TestGetTypeForNumberTypes()
         {
             byte b = 1;
             Assert.AreEqual(typeof(byte), b.GetType());

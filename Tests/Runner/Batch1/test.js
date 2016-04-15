@@ -1074,7 +1074,7 @@
                 QUnit.test("#1176 - TestFunctionLifting", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1176.testFunctionLifting);
                 QUnit.test("#1177 - TestImplicitCast", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1177.testImplicitCast);
                 QUnit.test("#1180 - TestStructClone", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1180.testStructClone);
-                QUnit.test("#1184 - TestStructClone", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1184.testStructClone);
+                QUnit.test("#1184 - TestGetTypeForNumberTypes", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1184.testGetTypeForNumberTypes);
                 QUnit.test("#381 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge381.testUseCase);
                 QUnit.test("#447 - CheckInlineExpression", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineExpression);
                 QUnit.test("#447 - CheckInlineCalls", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineCalls);
@@ -3084,9 +3084,9 @@
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1184', {
         inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1184)],
         statics: {
-            testStructClone: function (assert) {
+            testGetTypeForNumberTypes: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1184).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1184);
-                Bridge.ClientTest.BridgeIssues.Bridge1184.testStructClone();
+                Bridge.ClientTest.BridgeIssues.Bridge1184.testGetTypeForNumberTypes();
             }
         }
     });

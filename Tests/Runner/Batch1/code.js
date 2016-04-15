@@ -4655,7 +4655,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1184', {
         statics: {
-            testStructClone: function () {
+            testGetTypeForNumberTypes: function () {
                 var b = 1;
                 Bridge.Test.Assert.areEqual(Bridge.Byte, Bridge.Byte);
     
