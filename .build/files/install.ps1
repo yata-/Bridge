@@ -24,7 +24,7 @@ $project.Object.References | foreach-object {
 
 $projectMSBuild = [Microsoft.Build.Construction.ProjectRootElement]::Open($project.FullName)
  
-# Clean NoStdLib, AddAdditionalExplicitAssemblyReferences and AdditionalExplicitAssemblyReferences
+# Clean all NoStdLib, AddAdditionalExplicitAssemblyReferences and AdditionalExplicitAssemblyReferences to avoid duplicates
 ForEach ($item in $projectMSBuild.Properties)
 {
     #Write-Host ($item.Name + ":" + $item.Value)
@@ -47,7 +47,7 @@ Write-Host ("Added Property AddAdditionalExplicitAssemblyReferences")
 $propEnableNuGetImport = $projectMSBuild.AddProperty('AdditionalExplicitAssemblyReferences', $null);
 Write-Host ("Added Property AdditionalExplicitAssemblyReferences")
 
-# Save the project?
-#$projectMSBuild.Save()
+$project.Save();
+Write-Host ("Saved the project")
 
 Write-Host ("Bridge.NET installation was successful")
