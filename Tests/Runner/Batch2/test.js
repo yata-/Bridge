@@ -81,7 +81,7 @@
                     actual = Bridge.getTypeName(ex);
                 }
     
-                if (actual !== expected) {
+                if (!Bridge.referenceEquals(actual, expected)) {
                     Bridge.Test.Assert.assert.equal(actual, expected, message);
                 }
                 else  {
@@ -101,16 +101,16 @@
                 Bridge.Test.Assert.assert.throws(block, expected, message);
             },
             $null: function (anObject) {
-                Bridge.Test.Assert.assert.ok(!Bridge.hasValue(anObject));
+                Bridge.Test.Assert.assert.ok(anObject == null);
             },
             null$1: function (anObject, message) {
-                Bridge.Test.Assert.assert.ok(!Bridge.hasValue(anObject), message);
+                Bridge.Test.Assert.assert.ok(anObject == null, message);
             },
             notNull: function (anObject) {
-                Bridge.Test.Assert.assert.notOk(!Bridge.hasValue(anObject));
+                Bridge.Test.Assert.assert.notOk(anObject == null);
             },
             notNull$1: function (anObject, message) {
-                Bridge.Test.Assert.assert.notOk(!Bridge.hasValue(anObject), message);
+                Bridge.Test.Assert.assert.notOk(anObject == null, message);
             }
         }
     });
@@ -120,7 +120,7 @@
             instanceFabric: null,
             fixtureFabric: null,
             getFixtureFabric: function () {
-                if (!Bridge.hasValue(Bridge.Test.QUnit.TestFixture$1(T).fixtureFabric)) {
+                if (Bridge.Test.QUnit.TestFixture$1(T).fixtureFabric == null) {
                     Bridge.Test.QUnit.TestFixture$1(T).fixtureFabric = new T();
                 }
     
@@ -130,7 +130,7 @@
                 Bridge.Test.QUnit.TestFixture$1(T).fixtureFabric = value;
             },
             instanceFabric$1: function (type) {
-                if (!Bridge.hasValue(Bridge.Test.QUnit.TestFixture$1(T).instanceFabric)) {
+                if (Bridge.Test.QUnit.TestFixture$1(T).instanceFabric == null) {
                     Bridge.Test.QUnit.TestFixture$1(T).instanceFabric = Bridge.cast(Bridge.createInstance(type), Bridge.Test.QUnit.TestFixture$1(T));
                 }
     

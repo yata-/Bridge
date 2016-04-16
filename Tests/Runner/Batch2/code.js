@@ -147,7 +147,7 @@
         cloneWorks: function () {
             var arr = ["x", "y"];
             var arr2 = (Bridge.Array.clone(arr));
-            Bridge.Test.Assert.$false(arr === arr2);
+            Bridge.Test.Assert.$false(Bridge.referenceEquals(arr, arr2));
             Bridge.Test.Assert.areDeepEqual(arr2, arr);
         },
         concatWorks: function () {
