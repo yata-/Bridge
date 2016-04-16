@@ -128,29 +128,30 @@ namespace Bridge.Translator
             bool isUint = resolveOperator.Type.IsKnownType(KnownTypeCode.UInt16) ||
                           resolveOperator.Type.IsKnownType(KnownTypeCode.UInt32) ||
                           resolveOperator.Type.IsKnownType(KnownTypeCode.UInt64);
+            
+            var isFloatResult = Helpers.IsFloatType(resolveOperator.Type, this.Emitter.Resolver);
+            var leftExpected = this.Emitter.Resolver.Resolver.GetExpectedType(binaryOperatorExpression.Left);
+            var rightExpected = this.Emitter.Resolver.Resolver.GetExpectedType(binaryOperatorExpression.Right);
+            var strictNullChecks = this.Emitter.AssemblyInfo.StrictNullChecks;
 
-            if ((leftIsNull || rightIsNull) && (binaryOperatorExpression.Operator == BinaryOperatorType.Equality || binaryOperatorExpression.Operator == BinaryOperatorType.InEquality))
+            if (binaryOperatorExpression.Operator == BinaryOperatorType.Equality || binaryOperatorExpression.Operator == BinaryOperatorType.InEquality)
             {
-                if (binaryOperatorExpression.Operator == BinaryOperatorType.Equality)
-                {
-                    this.Write("!");
-                }
-
-                this.Write("Bridge.hasValue");
-                
-                this.WriteOpenParentheses();
-                
-                if (leftIsNull)
-                {
-                    binaryOperatorExpression.Right.AcceptVisitor(this.Emitter);
-                }
-                else
+                if (leftIsNull || rightIsNull)
                 {
                     binaryOperatorExpression.Left.AcceptVisitor(this.Emitter);
+
+                    if (binaryOperatorExpression.Operator == BinaryOperatorType.Equality)
+                    {
+                        this.Write(strictNullChecks ? " === " : " == ");
+                    }
+                    else
+                    {
+                        this.Write(strictNullChecks ? " !== " : " != ");
+                    }
+
+                    binaryOperatorExpression.Right.AcceptVisitor(this.Emitter);
+                    return;
                 }
-                
-                this.WriteCloseParentheses();
-                return;
             }
 
             if (orr != null && orr.Type.IsKnownType(KnownTypeCode.String))
@@ -183,9 +184,6 @@ namespace Bridge.Translator
                 return;
             }
             
-            var isFloatResult = Helpers.IsFloatType(resolveOperator.Type, this.Emitter.Resolver);
-            var leftExpected = this.Emitter.Resolver.Resolver.GetExpectedType(binaryOperatorExpression.Left);
-            var rightExpected = this.Emitter.Resolver.Resolver.GetExpectedType(binaryOperatorExpression.Right);
             var isLeftLong = Helpers.Is64Type(leftExpected, this.Emitter.Resolver);
             var isRightLong = Helpers.Is64Type(rightExpected, this.Emitter.Resolver);
 
@@ -249,11 +247,16 @@ namespace Bridge.Translator
             bool rootSpecial = nullable;
             bool isBool = NullableType.IsNullable(resolveOperator.Type) ? NullableType.GetUnderlyingType(resolveOperator.Type).IsKnownType(KnownTypeCode.Boolean) : resolveOperator.Type.IsKnownType(KnownTypeCode.Boolean);
             bool toBool = isBool && !rootSpecial && !delegateOperator && (binaryOperatorExpression.Operator == BinaryOperatorType.BitwiseAnd || binaryOperatorExpression.Operator == BinaryOperatorType.BitwiseOr);
+            bool isRefEquals = !isCoalescing && !strictNullChecks &&
+                    (binaryOperatorExpression.Operator == BinaryOperatorType.InEquality || binaryOperatorExpression.Operator == BinaryOperatorType.Equality) &&
+                    leftExpected.IsReferenceType.HasValue && leftExpected.IsReferenceType.Value &&
+                    rightExpected.IsReferenceType.HasValue && rightExpected.IsReferenceType.Value;
+            
             if (rootSpecial)
             {
                 this.Write(root);
             }
-            else
+            else if (!isRefEquals)
             {
                 if (isCoalescing)
                 {
@@ -276,15 +279,28 @@ namespace Bridge.Translator
 
                 if (isCoalescing)
                 {
-                    this.Write(", Bridge.hasValue(");
+                    this.Write(", ");
                     this.Write(variable);
-                    this.Write(") ? ");
+
+                    this.Write(strictNullChecks ? " !== null" : " != null");
+
+                    this.Write(" ? ");
                     this.Write(variable);
                 }
                 else if (charToString == 0)
                 {
                     this.Write(")");
                 }
+            }
+
+            if (isRefEquals)
+            {
+                if (binaryOperatorExpression.Operator == BinaryOperatorType.InEquality)
+                {
+                    this.Write("!");
+                }
+                this.Write("Bridge.referenceEquals");
+                special = true;
             }
 
             if (!delegateOperator)
@@ -340,7 +356,11 @@ namespace Bridge.Translator
                         break;
 
                     case BinaryOperatorType.Equality:
-                        this.Write(rootSpecial ? "eq" : "===");
+                        if (!isRefEquals)
+                        {
+                            this.Write(rootSpecial ? "eq" : "===");    
+                        }
+                        
                         break;
 
                     case BinaryOperatorType.ExclusiveOr:
@@ -356,7 +376,10 @@ namespace Bridge.Translator
                         break;
 
                     case BinaryOperatorType.InEquality:
-                        this.Write(rootSpecial ? "neq" : "!==");
+                        if (!isRefEquals)
+                        {
+                            this.Write(rootSpecial ? "neq" : "!==");
+                        }
                         break;
 
                     case BinaryOperatorType.LessThan:
