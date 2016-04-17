@@ -4689,6 +4689,27 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1197', {
+        statics: {
+            testGetHashCodeOnDictionary: function () {
+                var $t;
+                var dict = new Bridge.Dictionary$2(Bridge.Int32,String)();
+    
+                // Calling GetHashCode() breaks the dictionary.
+                var hash = Bridge.getHashCode(dict);
+    
+                // Count is still 0.
+                Bridge.Test.Assert.areEqual(0, dict.getCount());
+    
+                $t = Bridge.getEnumerator(dict);
+                while ($t.moveNext()) {
+                    var item = $t.getCurrent();
+                    Bridge.Test.Assert.fail$1("Dictionary should be empty");
+                }
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
