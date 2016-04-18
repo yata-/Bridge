@@ -3,6 +3,7 @@ using ICSharpCode.NRefactory.CSharp;
 using System.Collections.Generic;
 using System.Linq;
 using Bridge.Contract;
+using ICSharpCode.NRefactory.CSharp.Resolver;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 
@@ -34,7 +35,12 @@ namespace Bridge.Translator
                 unaryOperatorExpression.Operator == UnaryOperatorType.Decrement ||
                 unaryOperatorExpression.Operator == UnaryOperatorType.PostDecrement)
             {
-                this.Found = true;
+                var rr = this.Resolver.ResolveNode(unaryOperatorExpression, null);
+
+                if (Helpers.IsIntegerType(rr.Type, this.Resolver))
+                {
+                    this.Found = true;
+                }
             }
 
             base.VisitUnaryOperatorExpression(unaryOperatorExpression);
@@ -53,6 +59,18 @@ namespace Bridge.Translator
             }
 
             base.VisitAssignmentExpression(assignmentExpression);
+        }
+
+        public override void VisitInvocationExpression(InvocationExpression invocationExpression)
+        {
+            var rr = this.Resolver.ResolveNode(invocationExpression, null) as InvocationResolveResult;
+
+            if (rr != null && rr.IsError)
+            {
+                this.Found = true;
+            }
+
+            base.VisitInvocationExpression(invocationExpression);
         }
     }
 
@@ -105,6 +123,34 @@ namespace Bridge.Translator
             return result;
         }
 
+        public override AstNode VisitInvocationExpression(InvocationExpression invocationExpression)
+        {
+            var rr = this.Resolver.ResolveNode(invocationExpression, null) as CSharpInvocationResolveResult;
+
+            if (rr != null && rr.IsError)
+            {
+                var clonInvocationExpression = (InvocationExpression)base.VisitInvocationExpression(invocationExpression);
+
+                if (clonInvocationExpression == null)
+                {
+                    clonInvocationExpression = (InvocationExpression)invocationExpression.Clone();
+                }
+
+                var map = rr.GetArgumentToParameterMap();
+                var orig = clonInvocationExpression.Arguments.ToArray();
+                var result = clonInvocationExpression.Arguments.ToArray();
+                for (int i = 0; i < map.Count; i++)
+                {
+                    result[i] = orig[map[i]];
+                }
+
+                clonInvocationExpression.Arguments.ReplaceWith(result);
+                return clonInvocationExpression;
+            }
+
+            return base.VisitInvocationExpression(invocationExpression);
+        }
+
         public override AstNode VisitUnaryOperatorExpression(UnaryOperatorExpression unaryOperatorExpression)
         {
             if (unaryOperatorExpression.Operator == UnaryOperatorType.Increment ||
@@ -112,6 +158,12 @@ namespace Bridge.Translator
                 unaryOperatorExpression.Operator == UnaryOperatorType.Decrement ||
                 unaryOperatorExpression.Operator == UnaryOperatorType.PostDecrement)
             {
+                var rr = this.Resolver.ResolveNode(unaryOperatorExpression, null);
+                if (!Helpers.IsIntegerType(rr.Type, this.Resolver))
+                {
+                    return base.VisitUnaryOperatorExpression(unaryOperatorExpression);
+                }
+
                 var clonUnaryOperatorExpression = (UnaryOperatorExpression)base.VisitUnaryOperatorExpression(unaryOperatorExpression);
 
                 if (clonUnaryOperatorExpression == null)
