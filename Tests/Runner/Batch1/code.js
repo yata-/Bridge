@@ -4709,6 +4709,17 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1206', {
+        statics: {
+            testDocumentURLProperty: function () {
+                var raw = document.URL;
+                var actual = document.URL;
+    
+                Bridge.Test.Assert.areEqual(raw, actual);
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,

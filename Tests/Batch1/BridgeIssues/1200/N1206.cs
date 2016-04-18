@@ -1,4 +1,5 @@
 using Bridge.Html5;
+using Bridge.Test;
 
 namespace Bridge.ClientTest.BridgeIssues
 {
@@ -7,7 +8,7 @@ namespace Bridge.ClientTest.BridgeIssues
     public class Bridge1206
     {
         [Test]
-        public static void TestGetTypeForNumberTypes()
+        public static void TestDocumentURLProperty()
         {
             var raw = Script.Get<string>("document.URL");
             var actual = Document.URL;
