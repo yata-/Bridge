@@ -128,7 +128,7 @@
             return this.sample();
         },
         nextBytes: function (buffer) {
-            if (!Bridge.hasValue(buffer)) {
+            if (buffer == null) {
                 throw new Bridge.ArgumentNullException("buffer");
             }
             for (var i = 0; i < buffer.length; i = (i + 1) | 0) {
