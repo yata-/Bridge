@@ -203,6 +203,7 @@
                 QUnit.module("Issues");
                 QUnit.test("#1122 - Batch2 TestClippingInJavaScriptOverflowMode", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N1122.testClippingInJavaScriptOverflowMode);
                 QUnit.test("#1122 - Batch2 TestIntegerDivisionInJavaScriptOverflowMode", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N1122.testIntegerDivisionInJavaScriptOverflowMode);
+                QUnit.test("#1204 - Batch2 TestStrictNullChecksOptionForNulls", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N1204.testStrictNullChecksOptionForNulls);
                 QUnit.test("#772 - Batch2 TypePropertiesAreCorrect", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N772.typePropertiesAreCorrect);
                 QUnit.test("#772 - Batch2 LengthWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N772.lengthWorks);
                 QUnit.test("#772 - Batch2 RankIsOne", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N772.rankIsOne);
@@ -267,6 +268,16 @@
             testIntegerDivisionInJavaScriptOverflowMode: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch2.BridgeIssues.N1122).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N1122, 4);
                 Bridge.ClientTest.Batch2.BridgeIssues.N1122.testIntegerDivisionInJavaScriptOverflowMode();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N1204', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch2.BridgeIssues.N1204)],
+        statics: {
+            testStrictNullChecksOptionForNulls: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch2.BridgeIssues.N1204).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N1204);
+                Bridge.ClientTest.Batch2.BridgeIssues.N1204.testStrictNullChecksOptionForNulls();
             }
         }
     });

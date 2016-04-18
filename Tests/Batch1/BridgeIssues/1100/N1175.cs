@@ -19,10 +19,12 @@ namespace Bridge.ClientTest.BridgeIssues
             Assert.True(varNull == varUndefined, "varNull == varUndefined");
             Assert.True(varNull == null, "varNull == null");
             Assert.True(varUndefined == null, "varUndefined == null");
+            Assert.True(Script.Undefined == varUndefined, "Script.Undefined == varUndefined");
 
             Assert.True(varUndefined == varNull, "varUndefined == varNull");
             Assert.True(null == varNull, "null == varNull");
             Assert.True(null == varUndefined, "null == varUndefined");
+            Assert.True(varUndefined == Script.Undefined, "varUndefined == Script.Undefined");
         }
     }
 }
