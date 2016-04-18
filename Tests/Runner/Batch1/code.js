@@ -4709,6 +4709,20 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1220', {
+        statics: {
+            testConstInGenericClass: function () {
+                Bridge.Test.Assert.areEqual(1, Bridge.ClientTest.BridgeIssues.Bridge1220.Class1$1(Bridge.Int32).Const1);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1220.Class1$1', function (T) { return {
+        statics: {
+            Const1: 1
+        }
+    }; });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
