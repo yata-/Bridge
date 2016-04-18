@@ -4568,7 +4568,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
                 Bridge.Test.Assert.true$1(Bridge.referenceEquals(varNull, varUndefined), "varNull == varUndefined");
                 Bridge.Test.Assert.true$1(varNull == null, "varNull == null");
-                Bridge.Test.Assert.true$1(varNull == null, "varUndefined == null");
+                Bridge.Test.Assert.true$1(varUndefined == null, "varUndefined == null");
+    
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(varUndefined, varNull), "varUndefined == varNull");
+                Bridge.Test.Assert.true$1(null == varNull, "null == varNull");
+                Bridge.Test.Assert.true$1(null == varUndefined, "null == varUndefined");
             }
         }
     });
