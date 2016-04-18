@@ -14,10 +14,10 @@ namespace Bridge.ClientTest.BridgeIssues
         {
             var done = Assert.Async();
             var resultLong = await Bridge1189.FooLong();
-            Assert.True(-1 == resultLong);
+            Assert.True(-5 == resultLong, "Task<long>");
 
             var resultDecimal = await Bridge1189.FooDecimal();
-            Assert.True(-1 == resultDecimal);
+            Assert.True(-7 == resultDecimal, "Task<decimal>");
 
             done();
         }
@@ -25,13 +25,13 @@ namespace Bridge.ClientTest.BridgeIssues
         public static async Task<long> FooLong()
         {
             await Task.Delay(1);
-            return -1;
+            return -5;
         }
 
         public static async Task<decimal> FooDecimal()
         {
             await Task.Delay(1);
-            return -1;
+            return -7;
         }
     }
 }

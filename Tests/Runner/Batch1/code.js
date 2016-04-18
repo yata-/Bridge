@@ -91,7 +91,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         cloneWorks: function () {
             var arr = ["x", "y"];
             var arr2 = (Bridge.Array.clone(arr));
-            Bridge.Test.Assert.$false(arr === arr2);
+            Bridge.Test.Assert.$false(Bridge.referenceEquals(arr, arr2));
             Bridge.Test.Assert.areDeepEqual(arr2, arr);
         },
         concatWorks: function () {
@@ -1310,7 +1310,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             },
             arraysAreEqual: function (T, a, b, comparer) {
                 // If the same instances were passed, this is unlikely what the test intended.
-                Bridge.Test.Assert.$false(a === b);
+                Bridge.Test.Assert.$false(Bridge.referenceEquals(a, b));
     
                 if (a.length !== b.length) {
                     return false;
@@ -1600,7 +1600,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return Bridge.String.startsWith(s, "8");
         },
         f14: function (s) {
-            return s === "X";
+            return Bridge.referenceEquals(s, "X");
         },
         f15: function (i) {
             return i >= 43;
@@ -1713,13 +1713,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     Bridge.define('Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.StringComparer', {
         inherits: [Bridge.IComparer$1(String)],
         compare: function (x, y) {
-            if (x === y) {
+            if (Bridge.referenceEquals(x, y)) {
                 return 0;
             }
-            if (!Bridge.hasValue(x)) {
+            if (x == null) {
                 return -1;
             }
-            if (!Bridge.hasValue(y)) {
+            if (y == null) {
                 return 1;
             }
             return Bridge.String.compare(x, y);
@@ -1797,7 +1797,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor$1: function (d) {
             Bridge.ClientTest.BasicCSharp.ClassA.prototype.$constructor.call(this);
     
-            if (!Bridge.hasValue(d)) {
+            if (d == null) {
                 throw new Bridge.Exception("Related should not be null");
             }
     
@@ -1808,7 +1808,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
             Bridge.ClientTest.BasicCSharp.ClassA.prototype.$constructor.call(this);
     
-            if (!Bridge.hasValue(p) || p.length < 6) {
+            if (p == null || p.length < 6) {
                 throw new Bridge.Exception("Should pass six parameters");
             }
     
@@ -1856,7 +1856,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             a.setRelated(a);
         },
         method3: function () {
-            if (Bridge.hasValue(this.getData())) {
+            if (this.getData() != null) {
                 return this.getData().toString();
             }
     
@@ -1885,7 +1885,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             }
         },
         toString: function () {
-            return Bridge.String.format("{0} Has related {1}", this.getNumber(), Bridge.hasValue(this.getRelated()) ? this.getRelated().getNumber().toString() : "No");
+            return Bridge.String.format("{0} Has related {1}", this.getNumber(), this.getRelated() != null ? this.getRelated().getNumber().toString() : "No");
         }
     });
     
@@ -1996,26 +1996,26 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             testB: function () {
                 var b = new Bridge.ClientTest.BasicCSharp.TestAbstractClass.B();
     
-                Bridge.Test.Assert.true$1(Bridge.hasValue(b), "Instance of B created");
+                Bridge.Test.Assert.true$1(b != null, "Instance of B created");
                 Bridge.Test.Assert.areEqual$1("B", b.getString(), "b.GetString() = 'B'");
                 Bridge.Test.Assert.areEqual$1(1, b.getData(), "b.Data = 1");
             },
             testC: function () {
                 var c = new Bridge.ClientTest.BasicCSharp.TestAbstractClass.C();
     
-                Bridge.Test.Assert.true$1(Bridge.hasValue(c), "Instance of C created");
+                Bridge.Test.Assert.true$1(c != null, "Instance of C created");
                 Bridge.Test.Assert.areEqual$1("C", c.getString(), "c.GetString() = 'C'");
                 Bridge.Test.Assert.areEqual$1(-1, c.getData(), "c.Data = -1");
             },
             testBC: function () {
                 var b = new Bridge.ClientTest.BasicCSharp.TestAbstractClass.B();
     
-                Bridge.Test.Assert.true$1(Bridge.hasValue(b), "Instance of B created as instance of A");
+                Bridge.Test.Assert.true$1(b != null, "Instance of B created as instance of A");
                 Bridge.Test.Assert.areEqual$1("B", b.getString(), "b.GetString() = 'B'");
                 Bridge.Test.Assert.areEqual$1(1, b.getData(), "b.Data = 1");
     
                 var c = new Bridge.ClientTest.BasicCSharp.TestAbstractClass.C();
-                Bridge.Test.Assert.true$1(Bridge.hasValue(c), "Instance of C created as instance of A");
+                Bridge.Test.Assert.true$1(c != null, "Instance of C created as instance of A");
                 Bridge.Test.Assert.areEqual$1("C", c.getString(), "c.GetString() = 'C'");
                 Bridge.Test.Assert.areEqual$1(-1, c.getData(), "c.Data = -1");
             }
@@ -2194,7 +2194,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             testA: function () {
                 var a = new Bridge.ClientTest.BasicCSharp.TestInheritance.A(10);
     
-                Bridge.Test.Assert.true$1(Bridge.hasValue(a), "Instance of A created");
+                Bridge.Test.Assert.true$1(a != null, "Instance of A created");
                 Bridge.Test.Assert.areEqual$1(10, a.getX(), "a.X = 10");
                 Bridge.Test.Assert.areEqual$1(100, a.handleNumber(100), "a.HandleNumber(100) = 100");
                 Bridge.Test.Assert.areEqual$1("Hundred", a.handleString("Hundred"), "a.HandleString('Hundred') = 'Hundred'");
@@ -2202,7 +2202,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             testB: function () {
                 var b = new Bridge.ClientTest.BasicCSharp.TestInheritance.B(10, 20);
     
-                Bridge.Test.Assert.true$1(Bridge.hasValue(b), "Instance of B created");
+                Bridge.Test.Assert.true$1(b != null, "Instance of B created");
                 Bridge.Test.Assert.areEqual$1(10, b.getX(), "b.X = 10");
                 Bridge.Test.Assert.areEqual$1(20, b.getY(), "b.Y = 20");
                 Bridge.Test.Assert.areEqual$1(100, b.handleNumber$1(1), "b.HandleNumber(1) = 100");
@@ -2211,7 +2211,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             testAB: function () {
                 var b = new Bridge.ClientTest.BasicCSharp.TestInheritance.B(10, 20);
     
-                Bridge.Test.Assert.true$1(Bridge.hasValue(b), "Instance of B created as A type");
+                Bridge.Test.Assert.true$1(b != null, "Instance of B created as A type");
                 Bridge.Test.Assert.areEqual$1(10, b.getX(), "b.X = 10");
                 Bridge.Test.Assert.areEqual$1(10, b.handleNumber(10), "b.HandleNumber(10) = 10");
                 Bridge.Test.Assert.areEqual$1("Hundred", b.handleString("Hundred"), "b.HandleString('Hundred') = 'Hundred'");
@@ -2241,35 +2241,35 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             testInterfaceMethodAndProperty: function () {
                 var a = new Bridge.ClientTest.BasicCSharp.TestInterfaces.A();
     
-                Bridge.Test.Assert.true$1(Bridge.hasValue(a), "Instance of A created through ISimple interface");
+                Bridge.Test.Assert.true$1(a != null, "Instance of A created through ISimple interface");
                 Bridge.Test.Assert.areEqual$1("A.ISimple", a.getString(), "a.GetString() = A.ISimple  through interface");
                 Bridge.Test.Assert.areEqual$1(1, a.getData(), "a.Data = 1  through interface");
     
                 var b = Bridge.as(a, Bridge.ClientTest.BasicCSharp.TestInterfaces.A);
-                Bridge.Test.Assert.true$1(Bridge.hasValue(b), "Instance of ISimple as A");
+                Bridge.Test.Assert.true$1(b != null, "Instance of ISimple as A");
                 Bridge.Test.Assert.areEqual$1("A.ISimple", a.getString(), "a.GetString() = A.ISimple through instance");
                 Bridge.Test.Assert.areEqual$1(1, a.getData(), "a.Data = 1 through instance");
             },
             testExplicitInterfaceMethodAndProperty: function () {
                 var b = new Bridge.ClientTest.BasicCSharp.TestInterfaces.B();
-                Bridge.Test.Assert.true$1(Bridge.hasValue(b), "Instance of B created through ISimple interface explicitly");
+                Bridge.Test.Assert.true$1(b != null, "Instance of B created through ISimple interface explicitly");
                 Bridge.Test.Assert.areEqual$1("explicit B.ISimple", b.getString(), "b.GetString() = explicit B.ISimple");
                 Bridge.Test.Assert.areEqual$1(2, b.getData(), "a.Data = 2");
             },
             testTwoInterfaces: function () {
                 var c = new Bridge.ClientTest.BasicCSharp.TestInterfaces.C();
     
-                Bridge.Test.Assert.true$1(Bridge.hasValue(c), "Instance of C created through ISimpleAsWell interface");
+                Bridge.Test.Assert.true$1(c != null, "Instance of C created through ISimpleAsWell interface");
                 Bridge.Test.Assert.areEqual$1("C.ISimpleAsWell", c.getStringAsWell(), "a.GetStringAsWell() = A.ISimple through instance");
                 Bridge.Test.Assert.areEqual$1(4, c.getDataAsWell(), "c.DataAsWell = 4  through instance");
     
                 var a = Bridge.as(c, Bridge.ClientTest.BasicCSharp.TestInterfaces.ISimple);
-                Bridge.Test.Assert.true$1(Bridge.hasValue(a), "Instance of ISimple as C");
+                Bridge.Test.Assert.true$1(a != null, "Instance of ISimple as C");
                 Bridge.Test.Assert.areEqual$1("C.ISimple", a.getString(), "a.GetString() = C.ISimple  through interface");
                 Bridge.Test.Assert.areEqual$1(3, a.getData(), "a.Data = 3 through interface");
     
                 var b = Bridge.as(c, Bridge.ClientTest.BasicCSharp.TestInterfaces.ISimpleAsWell);
-                Bridge.Test.Assert.true$1(Bridge.hasValue(b), "Instance of ISimpleAsWell as C");
+                Bridge.Test.Assert.true$1(b != null, "Instance of ISimpleAsWell as C");
                 Bridge.Test.Assert.areEqual$1("C.ISimpleAsWell", b.getStringAsWell(), "b.GetStringAsWell() = C.ISimpleAsWell  through interface");
                 Bridge.Test.Assert.areEqual$1(4, b.getDataAsWell(), "b.DataAsWell = 4 through interface");
             }
@@ -2309,7 +2309,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             testInstance: function () {
                 var i = new Bridge.ClientTest.BasicCSharp.TestOverloadInstanceMethods.Instance();
     
-                Bridge.Test.Assert.true$1(Bridge.hasValue(i), "i created");
+                Bridge.Test.Assert.true$1(i != null, "i created");
                 Bridge.Test.Assert.areEqual$1("Foo(int x)", i.foo$2(1), "Instance Foo(int x)");
                 Bridge.Test.Assert.areEqual$1("Foo(string s)", i.foo$5("string"), "Instance Foo(string s)");
                 Bridge.Test.Assert.areEqual$1("Foo(double d)", i.foo(1.1), "Instance Foo(double d)");
@@ -2473,7 +2473,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(true, a.getBoolA(), "BoolA true");
                 Bridge.Test.Assert.true$1(a.getDoubleA() === Number.POSITIVE_INFINITY, "DoubleA Double.PositiveInfinity");
                 Bridge.Test.Assert.areDeepEqual$1(Bridge.Decimal(-1.0), a.getDecimalA(), "DecimalA Decimal.MinusOne");
-                Bridge.Test.Assert.true$1(Bridge.hasValue(a.getData()), "Data not null");
+                Bridge.Test.Assert.true$1(a.getData() != null, "Data not null");
                 Bridge.Test.Assert.areEqual$1(700, a.getData().getNumber(), "Data.Number 700");
     
                 // TEST
@@ -2493,16 +2493,16 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(true, a.getBoolA(), "BoolA true");
                 Bridge.Test.Assert.areEqual$1(1.53, a.getDoubleA(), "DoubleA Double.PositiveInfinity");
                 Bridge.Test.Assert.areDeepEqual$1(Bridge.Decimal(1.54), a.getDecimalA(), "DecimalA 154");
-                Bridge.Test.Assert.true$1(Bridge.hasValue(a.getData()), "Data not null");
+                Bridge.Test.Assert.true$1(a.getData() != null, "Data not null");
                 Bridge.Test.Assert.areEqual$1(155, a.getData().getNumber(), "Data.Number 155");
     
                 // TEST
                 // Check instance methods
                 var b = a.method1();
     
-                Bridge.Test.Assert.true$1(Bridge.hasValue(b), "b not null");
+                Bridge.Test.Assert.true$1(b != null, "b not null");
                 Bridge.Test.Assert.areEqual$1(2, b.getNumber(), "b Number 2");
-                Bridge.Test.Assert.true$1(Bridge.hasValue(b.getRelated()), "b.Related not null");
+                Bridge.Test.Assert.true$1(b.getRelated() != null, "b.Related not null");
                 Bridge.Test.Assert.areEqual$1(1, b.getRelated().getNumber(), "b.Related Number 1");
     
                 a.setData(b);
@@ -2571,14 +2571,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var c = b.getRelated();
     
                 a.method2(b);
-                Bridge.Test.Assert.true$1(Bridge.hasValue(b), "b not null");
+                Bridge.Test.Assert.true$1(b != null, "b not null");
                 Bridge.Test.Assert.areEqual$1(2, b.getNumber(), "b Number 2");
-                Bridge.Test.Assert.true$1(Bridge.hasValue(b.getRelated()), "b.Related not null");
+                Bridge.Test.Assert.true$1(b.getRelated() != null, "b.Related not null");
                 Bridge.Test.Assert.areEqual$1(2, b.getRelated().getNumber(), "b.Related Number 2");
     
-                Bridge.Test.Assert.true$1(Bridge.hasValue(c), "c not null");
+                Bridge.Test.Assert.true$1(c != null, "c not null");
                 Bridge.Test.Assert.areEqual$1(1, c.getNumber(), "c Number 1");
-                Bridge.Test.Assert.true$1(!Bridge.hasValue(c.getRelated()), "c.Related null");
+                Bridge.Test.Assert.true$1(c.getRelated() == null, "c.Related null");
     
                 // Check value local parameter
                 var input = 1;
@@ -2831,7 +2831,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.apply($_.Bridge.ClientTest.BasicCSharp.TestTryCatchBlocks, {
         f1: function (error) {
-            return error.toString() === "catch me";
+            return Bridge.referenceEquals(error.toString(), "catch me");
         }
     });
     
@@ -3056,7 +3056,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.apply($_.Bridge.ClientTest.BasicCSharp.TestTryCatchFinallyBlocks, {
         f1: function (error) {
-            return error.toString() === "catch me";
+            return Bridge.referenceEquals(error.toString(), "catch me");
         }
     });
     
@@ -3129,18 +3129,18 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             testB: function () {
                 var a = new Bridge.ClientTest.BasicCSharp.TestVirtualMethods.A();
     
-                Bridge.Test.Assert.true$1(Bridge.hasValue(a), "Instance of A created");
+                Bridge.Test.Assert.true$1(a != null, "Instance of A created");
                 Bridge.Test.Assert.areEqual$1("A", a.test(), "a.Test() = 'A'");
     
                 var b = new Bridge.ClientTest.BasicCSharp.TestVirtualMethods.B();
     
-                Bridge.Test.Assert.true$1(Bridge.hasValue(b), "Instance of B created");
+                Bridge.Test.Assert.true$1(b != null, "Instance of B created");
                 Bridge.Test.Assert.areEqual$1("B", b.test(), "b.Test() = 'B'");
                 Bridge.Test.Assert.areEqual$1("A", b.testA(), "b.TestA() = 'A'");
     
                 var c = new Bridge.ClientTest.BasicCSharp.TestVirtualMethods.B();
     
-                Bridge.Test.Assert.true$1(Bridge.hasValue(c), "Instance of C created");
+                Bridge.Test.Assert.true$1(c != null, "Instance of C created");
                 Bridge.Test.Assert.areEqual$1("B", c.test(), "c.Test() = 'B'");
             }
         }
@@ -4387,7 +4387,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         statics: {
             testJsonArrayParse: function () {
                 var o = Bridge.merge(new Array(), JSON.parse("[1]"));
-                Bridge.Test.Assert.$true(Bridge.hasValue(o));
+                Bridge.Test.Assert.$true(o != null);
                 Bridge.Test.Assert.areEqual(1, o.length);
                 Bridge.Test.Assert.areEqual(1, o[0]);
             }
@@ -4559,6 +4559,26 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1175', {
+        statics: {
+            testNullComparing: function () {
+                var temp = { };
+                var varNull = null;
+                var varUndefined = temp["this-prop-undefined"];
+    
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(varNull, varUndefined), "varNull == varUndefined");
+                Bridge.Test.Assert.true$1(varNull == null, "varNull == null");
+                Bridge.Test.Assert.true$1(varUndefined == null, "varUndefined == null");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(undefined, varUndefined), "Script.Undefined == varUndefined");
+    
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(varUndefined, varNull), "varUndefined == varNull");
+                Bridge.Test.Assert.true$1(null == varNull, "null == varNull");
+                Bridge.Test.Assert.true$1(null == varUndefined, "null == varUndefined");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(varUndefined, undefined), "varUndefined == Script.Undefined");
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1176', {
         statics: {
             testFunctionLifting: function () {
@@ -4689,6 +4709,36 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1186', {
+        statics: {
+            testLambdasInField: function () {
+                var c = new Bridge.ClientTest.BridgeIssues.Bridge1186();
+                Bridge.Test.Assert.areEqual(1, c.list.getItem(0)(1));
+                Bridge.Test.Assert.areEqual(3, c.list.getItem(1)(2));
+            }
+        },
+        list: null,
+        config: {
+            init: function () {
+                this.list = Bridge.merge(new Bridge.List$1(Function)(), [
+        [$_.Bridge.ClientTest.BridgeIssues.Bridge1186.f1],
+        [$_.Bridge.ClientTest.BridgeIssues.Bridge1186.f2]
+    ] );
+            }
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1186", $_)
+    
+    Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge1186, {
+        f1: function (value) {
+            return value;
+        },
+        f2: function (value) {
+            return ((value + 1) | 0);
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1189', {
         statics: {
             testTaskNumber: function () {
@@ -4715,7 +4765,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                 case 1: {
                                     $taskResult2 = $task2.getAwaitedResult();
                                     resultLong = $taskResult2;
-                                    Bridge.Test.Assert.$true(Bridge.Long(-1).equals(resultLong));
+                                    Bridge.Test.Assert.true$1(Bridge.Long(-5).equals(resultLong), "Task<long>");
                                     
                                     $task1 = Bridge.ClientTest.BridgeIssues.Bridge1189.fooDecimal();
                                     $step = 2;
@@ -4725,7 +4775,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                 case 2: {
                                     $taskResult1 = $task1.getAwaitedResult();
                                     resultDecimal = $taskResult1;
-                                    Bridge.Test.Assert.$true(Bridge.Decimal(-1).equalsT(resultDecimal));
+                                    Bridge.Test.Assert.true$1(Bridge.Decimal(-7).equalsT(resultDecimal), "Task<decimal>");
                                     
                                     done();
                                     return;
@@ -4759,7 +4809,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                     }
                                     case 1: {
                                         $task1.getAwaitedResult();
-                                        $tcs.setResult(Bridge.Long(-1));
+                                        $tcs.setResult(Bridge.Long(-5));
                                         return;
                                     }
                                     default: {
@@ -4797,7 +4847,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                     }
                                     case 1: {
                                         $task1.getAwaitedResult();
-                                        $tcs.setResult(Bridge.Decimal(-1));
+                                        $tcs.setResult(Bridge.Decimal(-7));
                                         return;
                                     }
                                     default: {
@@ -4814,6 +4864,17 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
                 $asyncBody();
                 return $tcs.task;
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1206', {
+        statics: {
+            testDocumentURLProperty: function () {
+                var raw = document.URL;
+                var actual = document.URL;
+    
+                Bridge.Test.Assert.areEqual(raw, actual);
             }
         }
     });
@@ -4963,10 +5024,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             }
         },
         equalsT: function (other) {
-            if (!Bridge.hasValue(other)) {
+            if (other == null) {
                 return false;
             }
-            return this.getStr() === other.getStr();
+            return Bridge.referenceEquals(this.getStr(), other.getStr());
         },
         getHashCode: function () {
             return Bridge.getHashCode(this.getStr());
@@ -5197,12 +5258,12 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         equals: function (obj) {
             var other = Bridge.as(obj, Bridge.ClientTest.BridgeIssues.Bridge467);
-            if (!Bridge.hasValue(other)) {
+            if (other == null) {
                 return false;
             }
     
             if (this.getMyProperty() < 0 || other.getMyProperty() < 0) {
-                return this === other;
+                return Bridge.referenceEquals(this, other);
             }
     
             return this.getMyProperty() === other.getMyProperty();
@@ -5538,7 +5599,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                         continue;
                                     }
                                     case 2: {
-                                        if ( Bridge.hasValue(np) ) {
+                                        if ( np != null ) {
                                             $step = 3;
                                             continue;
                                         }
@@ -5576,7 +5637,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                         continue;
                                     }
                                     case 8: {
-                                        if ( Bridge.hasValue(np1) ) {
+                                        if ( np1 != null ) {
                                             $step = 9;
                                             continue;
                                         }
@@ -5906,55 +5967,55 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
                 var v1 = new Float32Array(1);
                 var thisType = "Float32Array";
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v1), thisType + " created");
+                Bridge.Test.Assert.true$1(v1 != null, thisType + " created");
                 var thisName = isSpecialTypeName ? "Object" : thisType;
                 Bridge.Test.Assert.areEqual$1(thisName, Bridge.getTypeName(v1), thisType + " class name");
     
                 var v2 = new Float64Array(1);
                 thisType = "Float64Array";
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v2), thisType + " created");
+                Bridge.Test.Assert.true$1(v2 != null, thisType + " created");
                 thisName = isSpecialTypeName ? "Object" : thisType;
                 Bridge.Test.Assert.areEqual$1(thisName, Bridge.getTypeName(v2), thisType + " class name");
     
                 var v3 = new Int16Array(1);
                 thisType = "Int16Array";
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v3), thisType + " created");
+                Bridge.Test.Assert.true$1(v3 != null, thisType + " created");
                 thisName = isSpecialTypeName ? "Object" : thisType;
                 Bridge.Test.Assert.areEqual$1(thisName, Bridge.getTypeName(v3), thisType + " class name");
     
                 var v4 = new Int32Array(1);
                 thisType = "Int32Array";
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v4), thisType + " created");
+                Bridge.Test.Assert.true$1(v4 != null, thisType + " created");
                 thisName = isSpecialTypeName ? "Object" : thisType;
                 Bridge.Test.Assert.areEqual$1(thisName, Bridge.getTypeName(v4), thisType + " class name");
     
                 var v5 = new Int8Array(1);
                 thisType = "Int8Array";
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v5), thisType + " created");
+                Bridge.Test.Assert.true$1(v5 != null, thisType + " created");
                 thisName = isSpecialTypeName ? "Object" : thisType;
                 Bridge.Test.Assert.areEqual$1(thisName, Bridge.getTypeName(v5), thisType + " class name");
     
                 var v6 = new Uint16Array(1);
                 thisType = "Uint16Array";
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v6), thisType + " created");
+                Bridge.Test.Assert.true$1(v6 != null, thisType + " created");
                 thisName = isSpecialTypeName ? "Object" : thisType;
                 Bridge.Test.Assert.areEqual$1(thisName, Bridge.getTypeName(v6), thisType + " class name");
     
                 var v7 = new Uint32Array(1);
                 thisType = "Uint32Array";
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v7), thisType + " created");
+                Bridge.Test.Assert.true$1(v7 != null, thisType + " created");
                 thisName = isSpecialTypeName ? "Object" : thisType;
                 Bridge.Test.Assert.areEqual$1(thisName, Bridge.getTypeName(v7), thisType + " class name");
     
                 var v8 = new Uint8Array(1);
                 thisType = "Uint8Array";
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v8), thisType + " created");
+                Bridge.Test.Assert.true$1(v8 != null, thisType + " created");
                 thisName = isSpecialTypeName ? "Object" : thisType;
                 Bridge.Test.Assert.areEqual$1(thisName, Bridge.getTypeName(v8), thisType + " class name");
     
                 var v9 = new Uint8ClampedArray(1);
                 thisType = "Uint8ClampedArray";
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v9), thisType + " created");
+                Bridge.Test.Assert.true$1(v9 != null, thisType + " created");
                 thisName = isSpecialTypeName ? "Object" : thisType;
                 Bridge.Test.Assert.areEqual$1(thisName, Bridge.getTypeName(v9), thisType + " class name");
             }
@@ -5974,7 +6035,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var isToStringToTypeNameLogic = !Bridge.ClientTest.Utilities.BrowserHelper.isChrome();
     
                 var v1 = new Float32Array(10);
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v1), "Float32Array created");
+                Bridge.Test.Assert.true$1(v1 != null, "Float32Array created");
     
                 v1[1] = 11;
                 v1[5] = 5;
@@ -5983,7 +6044,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(99, v1[9], "Float32Array indexier works 9");
     
                 // Check just a select number of references inside the Prototype inheritance.
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v1.buffer), "Float32Array Buffer");
+                Bridge.Test.Assert.true$1(v1.buffer != null, "Float32Array Buffer");
                 Bridge.Test.Assert.areEqual$1(40, v1.byteLength, "Float32Array ByteLength");
                 Bridge.Test.Assert.areEqual$1(0, v1.byteOffset, "Float32Array ByteOffset");
                 Bridge.Test.Assert.areEqual$1(10, v1.length, "Float32Array Length");
@@ -6005,20 +6066,20 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 // At least 'begin' must be provided.
                 var subArray11 = v1.subarray(1);
                 var expectedToStringFloat32Array2 = isToStringToTypeNameLogic ? "[object Float32Array]" : "11,0,0,0,5,0,0,0,99";
-                Bridge.Test.Assert.true$1(Bridge.hasValue(subArray11), "Float32Array SubArray1");
+                Bridge.Test.Assert.true$1(subArray11 != null, "Float32Array SubArray1");
                 Bridge.Test.Assert.areEqual$1(9, subArray11.length, "Float32Array SubArray1 Length");
                 Bridge.Test.Assert.areEqual$1(expectedToStringFloat32Array2, subArray11.toString(), "Float32Array SubArray1 ToString");
                 Bridge.Test.Assert.areEqual$1(4, subArray11.byteOffset, "Float32Array SubArray1 ByteOffset");
     
                 var subArray12 = subArray11.subarray(2, 6);
                 var expectedToStringFloat32Array3 = isToStringToTypeNameLogic ? "[object Float32Array]" : "0,0,5,0";
-                Bridge.Test.Assert.true$1(Bridge.hasValue(subArray12), "Float32Array SubArray2");
+                Bridge.Test.Assert.true$1(subArray12 != null, "Float32Array SubArray2");
                 Bridge.Test.Assert.areEqual$1(4, subArray12.length, "Float32Array SubArray2 Length");
                 Bridge.Test.Assert.areEqual$1(expectedToStringFloat32Array3, subArray12.toString(), "Float32Array SubArray2 ToString");
                 Bridge.Test.Assert.areEqual$1(12, subArray12.byteOffset, "Float32Array SubArray2 ByteOffset");
     
                 var v2 = new Float64Array(10);
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v2), "Float64Array created");
+                Bridge.Test.Assert.true$1(v2 != null, "Float64Array created");
     
                 v2[1] = 11;
                 v2[5] = 5;
@@ -6026,7 +6087,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(11, v2[1], "Float64Array indexier works 1");
                 Bridge.Test.Assert.areEqual$1(99, v2[9], "Float64Array indexier works 9");
     
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v2.buffer), "Float64Array Buffer");
+                Bridge.Test.Assert.true$1(v2.buffer != null, "Float64Array Buffer");
                 Bridge.Test.Assert.areEqual$1(80, v2.byteLength, "Float64Array ByteLength");
                 Bridge.Test.Assert.areEqual$1(0, v2.byteOffset, "Float64Array ByteOffset");
                 Bridge.Test.Assert.areEqual$1(10, v2.length, "Float64Array Length");
@@ -6037,20 +6098,20 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
                 var subArray21 = v2.subarray(1);
                 var expectedToStringFloat64Array2 = isToStringToTypeNameLogic ? "[object Float64Array]" : "11,0,0,0,5,0,0,0,99";
-                Bridge.Test.Assert.true$1(Bridge.hasValue(subArray21), "Float64Array SubArray1");
+                Bridge.Test.Assert.true$1(subArray21 != null, "Float64Array SubArray1");
                 Bridge.Test.Assert.areEqual$1(9, subArray21.length, "Float64Array SubArray1 Length");
                 Bridge.Test.Assert.areEqual$1(expectedToStringFloat64Array2, subArray21.toString(), "Float64Array SubArray1 ToString");
                 Bridge.Test.Assert.areEqual$1(8, subArray21.byteOffset, "Float64Array SubArray1 ByteOffset");
     
                 var subArray22 = subArray21.subarray(2, 6);
                 var expectedToStringFloat64Array3 = isToStringToTypeNameLogic ? "[object Float64Array]" : "0,0,5,0";
-                Bridge.Test.Assert.true$1(Bridge.hasValue(subArray22), "Float64Array SubArray2");
+                Bridge.Test.Assert.true$1(subArray22 != null, "Float64Array SubArray2");
                 Bridge.Test.Assert.areEqual$1(4, subArray22.length, "Float64Array SubArray2 Length");
                 Bridge.Test.Assert.areEqual$1(expectedToStringFloat64Array3, subArray22.toString(), "Float64Array SubArray2 ToString");
                 Bridge.Test.Assert.areEqual$1(24, subArray22.byteOffset, "Float64Array SubArray2 ByteOffset");
     
                 var v3 = new Int16Array(10);
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v3), "Int16Array created");
+                Bridge.Test.Assert.true$1(v3 != null, "Int16Array created");
     
                 v3[1] = 11;
                 v3[5] = 5;
@@ -6058,7 +6119,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(11, v3[1], "Int16Array indexier works 1");
                 Bridge.Test.Assert.areEqual$1(99, v3[9], "Int16Array indexier works 9");
     
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v3.buffer), "Int16Array Buffer");
+                Bridge.Test.Assert.true$1(v3.buffer != null, "Int16Array Buffer");
                 Bridge.Test.Assert.areEqual$1(20, v3.byteLength, "Int16Array ByteLength");
                 Bridge.Test.Assert.areEqual$1(0, v3.byteOffset, "Int16Array ByteOffset");
                 Bridge.Test.Assert.areEqual$1(10, v3.length, "Int16Array Length");
@@ -6069,20 +6130,20 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
                 var subArray31 = v3.subarray(1);
                 var expectedToStringInt16Array2 = isToStringToTypeNameLogic ? "[object Int16Array]" : "11,0,0,0,5,0,0,0,99";
-                Bridge.Test.Assert.true$1(Bridge.hasValue(subArray31), "Int16Array SubArray1");
+                Bridge.Test.Assert.true$1(subArray31 != null, "Int16Array SubArray1");
                 Bridge.Test.Assert.areEqual$1(9, subArray31.length, "Int16Array SubArray1 Length");
                 Bridge.Test.Assert.areEqual$1(expectedToStringInt16Array2, subArray31.toString(), "Int16Array SubArray1 ToString");
                 Bridge.Test.Assert.areEqual$1(2, subArray31.byteOffset, "Int16Array SubArray1 ByteOffset");
     
                 var subArray32 = subArray31.subarray(2, 6);
                 var expectedToStringInt16Array3 = isToStringToTypeNameLogic ? "[object Int16Array]" : "0,0,5,0";
-                Bridge.Test.Assert.true$1(Bridge.hasValue(subArray32), "Int16Array SubArray2");
+                Bridge.Test.Assert.true$1(subArray32 != null, "Int16Array SubArray2");
                 Bridge.Test.Assert.areEqual$1(4, subArray32.length, "Int16Array SubArray2 Length");
                 Bridge.Test.Assert.areEqual$1(expectedToStringInt16Array3, subArray32.toString(), "Int16Array SubArray2 ToString");
                 Bridge.Test.Assert.areEqual$1(6, subArray32.byteOffset, "Int16Array SubArray2 ByteOffset");
     
                 var v4 = new Int32Array(10);
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v4), "Int32Array created");
+                Bridge.Test.Assert.true$1(v4 != null, "Int32Array created");
     
                 v4[1] = 11;
                 v4[5] = 5;
@@ -6090,7 +6151,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(11, v4[1], "Int32Array indexier works 1");
                 Bridge.Test.Assert.areEqual$1(99, v4[9], "Int32Array indexier works 9");
     
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v4.buffer), "Int32Array Buffer");
+                Bridge.Test.Assert.true$1(v4.buffer != null, "Int32Array Buffer");
                 Bridge.Test.Assert.areEqual$1(40, v4.byteLength, "Int32Array ByteLength");
                 Bridge.Test.Assert.areEqual$1(0, v4.byteOffset, "Int32Array ByteOffset");
                 Bridge.Test.Assert.areEqual$1(10, v4.length, "Int32Array Length");
@@ -6101,20 +6162,20 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
                 var subArray41 = v4.subarray(1);
                 var expectedToStringInt32Array2 = isToStringToTypeNameLogic ? "[object Int32Array]" : "11,0,0,0,5,0,0,0,99";
-                Bridge.Test.Assert.true$1(Bridge.hasValue(subArray41), "Int32Array SubArray1");
+                Bridge.Test.Assert.true$1(subArray41 != null, "Int32Array SubArray1");
                 Bridge.Test.Assert.areEqual$1(9, subArray41.length, "Int32Array SubArray1 Length");
                 Bridge.Test.Assert.areEqual$1(expectedToStringInt32Array2, subArray41.toString(), "Int32Array SubArray1 ToString");
                 Bridge.Test.Assert.areEqual$1(4, subArray41.byteOffset, "Int32Array SubArray1 ByteOffset");
     
                 var subArray42 = subArray41.subarray(2, 6);
                 var expectedToStringInt32Array3 = isToStringToTypeNameLogic ? "[object Int32Array]" : "0,0,5,0";
-                Bridge.Test.Assert.true$1(Bridge.hasValue(subArray42), "Int32Array SubArray2");
+                Bridge.Test.Assert.true$1(subArray42 != null, "Int32Array SubArray2");
                 Bridge.Test.Assert.areEqual$1(4, subArray42.length, "Int32Array SubArray2 Length");
                 Bridge.Test.Assert.areEqual$1(expectedToStringInt32Array3, subArray42.toString(), "Int32Array SubArray2 ToString");
                 Bridge.Test.Assert.areEqual$1(12, subArray42.byteOffset, "Int32Array SubArray2 ByteOffset");
     
                 var v5 = new Int8Array(10);
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v5), "Int8Array created");
+                Bridge.Test.Assert.true$1(v5 != null, "Int8Array created");
     
                 v5[1] = 11;
                 v5[5] = 5;
@@ -6122,7 +6183,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(11, v5[1], "Int8Array indexier works 1");
                 Bridge.Test.Assert.areEqual$1(99, v5[9], "Int8Array indexier works 9");
     
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v5.buffer), "Int8Array Buffer");
+                Bridge.Test.Assert.true$1(v5.buffer != null, "Int8Array Buffer");
                 Bridge.Test.Assert.areEqual$1(10, v5.byteLength, "Int8Array ByteLength");
                 Bridge.Test.Assert.areEqual$1(0, v5.byteOffset, "Int8Array ByteOffset");
                 Bridge.Test.Assert.areEqual$1(10, v5.length, "Int8Array Length");
@@ -6133,20 +6194,20 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
                 var subArray51 = v5.subarray(1);
                 var expectedToStringInt8Array2 = isToStringToTypeNameLogic ? "[object Int8Array]" : "11,0,0,0,5,0,0,0,99";
-                Bridge.Test.Assert.true$1(Bridge.hasValue(subArray51), "Int8Array SubArray1");
+                Bridge.Test.Assert.true$1(subArray51 != null, "Int8Array SubArray1");
                 Bridge.Test.Assert.areEqual$1(9, subArray51.length, "Int8Array SubArray1 Length");
                 Bridge.Test.Assert.areEqual$1(expectedToStringInt8Array2, subArray51.toString(), "Int8Array SubArray1 ToString");
                 Bridge.Test.Assert.areEqual$1(1, subArray51.byteOffset, "Int8Array SubArray1 ByteOffset");
     
                 var subArray52 = subArray51.subarray(2, 6);
                 var expectedToStringInt8Array3 = isToStringToTypeNameLogic ? "[object Int8Array]" : "0,0,5,0";
-                Bridge.Test.Assert.true$1(Bridge.hasValue(subArray52), "Int8Array SubArray2");
+                Bridge.Test.Assert.true$1(subArray52 != null, "Int8Array SubArray2");
                 Bridge.Test.Assert.areEqual$1(4, subArray52.length, "Int8Array SubArray2 Length");
                 Bridge.Test.Assert.areEqual$1(expectedToStringInt8Array3, subArray52.toString(), "Int8Array SubArray2 ToString");
                 Bridge.Test.Assert.areEqual$1(3, subArray52.byteOffset, "Int8Array SubArray2 ByteOffset");
     
                 var v6 = new Uint16Array(10);
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v6), "Uint16Array created");
+                Bridge.Test.Assert.true$1(v6 != null, "Uint16Array created");
     
                 v6[1] = 11;
                 v6[5] = 5;
@@ -6154,7 +6215,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(11, v6[1], "Uint16Array indexier works 1");
                 Bridge.Test.Assert.areEqual$1(99, v6[9], "Uint16Array indexier works 9");
     
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v6.buffer), "Uint16Array Buffer");
+                Bridge.Test.Assert.true$1(v6.buffer != null, "Uint16Array Buffer");
                 Bridge.Test.Assert.areEqual$1(20, v6.byteLength, "Uint16Array ByteLength");
                 Bridge.Test.Assert.areEqual$1(0, v6.byteOffset, "Uint16Array ByteOffset");
                 Bridge.Test.Assert.areEqual$1(10, v6.length, "Uint16Array Length");
@@ -6165,20 +6226,20 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
                 var subArray61 = v6.subarray(1);
                 var expectedToStringUint16Array2 = isToStringToTypeNameLogic ? "[object Uint16Array]" : "11,0,0,0,5,0,0,0,99";
-                Bridge.Test.Assert.true$1(Bridge.hasValue(subArray61), "Uint16Array SubArray1");
+                Bridge.Test.Assert.true$1(subArray61 != null, "Uint16Array SubArray1");
                 Bridge.Test.Assert.areEqual$1(9, subArray61.length, "Uint16Array SubArray1 Length");
                 Bridge.Test.Assert.areEqual$1(expectedToStringUint16Array2, subArray61.toString(), "Uint16Array SubArray1 ToString");
                 Bridge.Test.Assert.areEqual$1(2, subArray61.byteOffset, "Uint16Array SubArray1 ByteOffset");
     
                 var subArray62 = subArray61.subarray(2, 6);
                 var expectedToStringUint16Array3 = isToStringToTypeNameLogic ? "[object Uint16Array]" : "0,0,5,0";
-                Bridge.Test.Assert.true$1(Bridge.hasValue(subArray62), "Uint16Array SubArray2");
+                Bridge.Test.Assert.true$1(subArray62 != null, "Uint16Array SubArray2");
                 Bridge.Test.Assert.areEqual$1(4, subArray62.length, "Uint16Array SubArray2 Length");
                 Bridge.Test.Assert.areEqual$1(expectedToStringUint16Array3, subArray62.toString(), "Uint16Array SubArray2 ToString");
                 Bridge.Test.Assert.areEqual$1(6, subArray62.byteOffset, "Uint16Array SubArray2 ByteOffset");
     
                 var v7 = new Uint32Array(10);
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v7), "Uint32Array created");
+                Bridge.Test.Assert.true$1(v7 != null, "Uint32Array created");
     
                 v7[1] = 11;
                 v7[5] = 5;
@@ -6186,7 +6247,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(11, v7[1], "Uint32Array indexier works 1");
                 Bridge.Test.Assert.areEqual$1(99, v7[9], "Uint32Array indexier works 9");
     
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v7.buffer), "Uint32Array Buffer");
+                Bridge.Test.Assert.true$1(v7.buffer != null, "Uint32Array Buffer");
                 Bridge.Test.Assert.areEqual$1(40, v7.byteLength, "Uint32Array ByteLength");
                 Bridge.Test.Assert.areEqual$1(0, v7.byteOffset, "Uint32Array ByteOffset");
                 Bridge.Test.Assert.areEqual$1(10, v7.length, "Uint32Array Length");
@@ -6197,20 +6258,20 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
                 var subArray71 = v7.subarray(1);
                 var expectedToStringUint32Array2 = isToStringToTypeNameLogic ? "[object Uint32Array]" : "11,0,0,0,5,0,0,0,99";
-                Bridge.Test.Assert.true$1(Bridge.hasValue(subArray71), "Uint32Array SubArray1");
+                Bridge.Test.Assert.true$1(subArray71 != null, "Uint32Array SubArray1");
                 Bridge.Test.Assert.areEqual$1(9, subArray71.length, "Uint32Array SubArray1 Length");
                 Bridge.Test.Assert.areEqual$1(expectedToStringUint32Array2, subArray71.toString(), "Uint32Array SubArray1 ToString");
                 Bridge.Test.Assert.areEqual$1(4, subArray71.byteOffset, "Uint32Array SubArray1 ByteOffset");
     
                 var subArray72 = subArray71.subarray(2, 6);
                 var expectedToStringUint32Array3 = isToStringToTypeNameLogic ? "[object Uint32Array]" : "0,0,5,0";
-                Bridge.Test.Assert.true$1(Bridge.hasValue(subArray72), "Uint32Array SubArray2");
+                Bridge.Test.Assert.true$1(subArray72 != null, "Uint32Array SubArray2");
                 Bridge.Test.Assert.areEqual$1(4, subArray72.length, "Uint32Array SubArray2 Length");
                 Bridge.Test.Assert.areEqual$1(expectedToStringUint32Array3, subArray72.toString(), "Uint32Array SubArray2 ToString");
                 Bridge.Test.Assert.areEqual$1(12, subArray72.byteOffset, "Uint32Array SubArray2 ByteOffset");
     
                 var v8 = new Uint8Array(10);
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v8), "Uint8Array created");
+                Bridge.Test.Assert.true$1(v8 != null, "Uint8Array created");
     
                 v8[1] = 11;
                 v8[5] = 5;
@@ -6218,7 +6279,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(11, v8[1], "Uint8Array indexier works 1");
                 Bridge.Test.Assert.areEqual$1(99, v8[9], "Uint8Array indexier works 9");
     
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v8.buffer), "Uint8Array Buffer");
+                Bridge.Test.Assert.true$1(v8.buffer != null, "Uint8Array Buffer");
                 Bridge.Test.Assert.areEqual$1(10, v8.byteLength, "Uint8Array ByteLength");
                 Bridge.Test.Assert.areEqual$1(0, v8.byteOffset, "Uint8Array ByteOffset");
                 Bridge.Test.Assert.areEqual$1(10, v8.length, "Uint8Array Length");
@@ -6229,20 +6290,20 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
                 var subArray81 = v8.subarray(1);
                 var expectedToStringUint8Array2 = isToStringToTypeNameLogic ? "[object Uint8Array]" : "11,0,0,0,5,0,0,0,99";
-                Bridge.Test.Assert.true$1(Bridge.hasValue(subArray81), "Uint8Array SubArray1");
+                Bridge.Test.Assert.true$1(subArray81 != null, "Uint8Array SubArray1");
                 Bridge.Test.Assert.areEqual$1(9, subArray81.length, "Uint8Array SubArray1 Length");
                 Bridge.Test.Assert.areEqual$1(expectedToStringUint8Array2, subArray81.toString(), "Uint8Array SubArray1 ToString");
                 Bridge.Test.Assert.areEqual$1(1, subArray81.byteOffset, "Uint8Array SubArray1 ByteOffset");
     
                 var subArray82 = subArray81.subarray(2, 6);
                 var expectedToStringUint8Array3 = isToStringToTypeNameLogic ? "[object Uint8Array]" : "0,0,5,0";
-                Bridge.Test.Assert.true$1(Bridge.hasValue(subArray82), "Uint8Array SubArray2");
+                Bridge.Test.Assert.true$1(subArray82 != null, "Uint8Array SubArray2");
                 Bridge.Test.Assert.areEqual$1(4, subArray82.length, "Uint8Array SubArray2 Length");
                 Bridge.Test.Assert.areEqual$1(expectedToStringUint8Array3, subArray82.toString(), "Uint8Array SubArray2 ToString");
                 Bridge.Test.Assert.areEqual$1(3, subArray82.byteOffset, "Uint8Array SubArray2 ByteOffset");
     
                 var v9 = new Uint8ClampedArray(10);
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v9), "Uint8ClampedArray created");
+                Bridge.Test.Assert.true$1(v9 != null, "Uint8ClampedArray created");
     
                 v9[1] = 11;
                 v9[5] = 5;
@@ -6250,7 +6311,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(11, v9[1], "Uint8ClampedArray indexier works 1");
                 Bridge.Test.Assert.areEqual$1(99, v9[9], "Uint8ClampedArray indexier works 9");
     
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v9.buffer), "Uint8ClampedArray Buffer");
+                Bridge.Test.Assert.true$1(v9.buffer != null, "Uint8ClampedArray Buffer");
                 Bridge.Test.Assert.areEqual$1(10, v9.byteLength, "Uint8ClampedArray ByteLength");
                 Bridge.Test.Assert.areEqual$1(0, v9.byteOffset, "Uint8ClampedArray ByteOffset");
                 Bridge.Test.Assert.areEqual$1(10, v9.length, "Uint8ClampedArray Length");
@@ -6261,14 +6322,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
                 var subArray91 = v9.subarray(1);
                 var expectedToStringUint8ClampedArray2 = isToStringToTypeNameLogic ? "[object Uint8ClampedArray]" : "11,0,0,0,5,0,0,0,99";
-                Bridge.Test.Assert.true$1(Bridge.hasValue(subArray91), "Uint8ClampedArray SubArray1");
+                Bridge.Test.Assert.true$1(subArray91 != null, "Uint8ClampedArray SubArray1");
                 Bridge.Test.Assert.areEqual$1(9, subArray91.length, "Uint8ClampedArray SubArray1 Length");
                 Bridge.Test.Assert.areEqual$1(expectedToStringUint8ClampedArray2, subArray91.toString(), "Uint8ClampedArray SubArray1 ToString");
                 Bridge.Test.Assert.areEqual$1(1, subArray91.byteOffset, "Uint8ClampedArray SubArray1 ByteOffset");
     
                 var subArray92 = subArray91.subarray(2, 6);
                 var expectedToStringUint8ClampedArray3 = isToStringToTypeNameLogic ? "[object Uint8ClampedArray]" : "0,0,5,0";
-                Bridge.Test.Assert.true$1(Bridge.hasValue(subArray92), "Uint8ClampedArray SubArray2");
+                Bridge.Test.Assert.true$1(subArray92 != null, "Uint8ClampedArray SubArray2");
                 Bridge.Test.Assert.areEqual$1(4, subArray92.length, "Uint8ClampedArray SubArray2 Length");
                 Bridge.Test.Assert.areEqual$1(expectedToStringUint8ClampedArray3, subArray92.toString(), "Uint8ClampedArray SubArray2 ToString");
                 Bridge.Test.Assert.areEqual$1(3, subArray92.byteOffset, "Uint8ClampedArray SubArray2 ByteOffset");
@@ -6279,7 +6340,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge550', {
         statics: {
             testMethod: function (array, name) {
-                Bridge.Test.Assert.true$1(Bridge.hasValue(array), Bridge.String.format("ArrayBufferView is an alias of {0}", name));
+                Bridge.Test.Assert.true$1(array != null, Bridge.String.format("ArrayBufferView is an alias of {0}", name));
             },
             testUseCase: function () {
                 var array1 = new Int8Array(1);
@@ -6518,25 +6579,25 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         statics: {
             testUseCase: function () {
                 var t1 = new Function();
-                Bridge.Test.Assert.true$1(Bridge.hasValue(t1), "#565 t1");
+                Bridge.Test.Assert.true$1(t1 != null, "#565 t1");
     
                 var t2 = new Object();
-                Bridge.Test.Assert.true$1(Bridge.hasValue(t2), "#565 t2");
+                Bridge.Test.Assert.true$1(t2 != null, "#565 t2");
     
                 var t3 = new Object();
-                Bridge.Test.Assert.true$1(Object === Object, "#565 t3");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(Object, Object), "#565 t3");
     
                 var t4 = new Object();
-                Bridge.Test.Assert.true$1(Object === Object, "#565 t4");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(Object, Object), "#565 t4");
     
                 var t5 = new Object();
-                Bridge.Test.Assert.true$1(Bridge.hasValue(t5), "#565 t5");
+                Bridge.Test.Assert.true$1(t5 != null, "#565 t5");
     
                 var t6 = new Object();
-                Bridge.Test.Assert.true$1(Object === Object, "#565 t6");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(Object, Object), "#565 t6");
     
                 var t7 = new Object();
-                Bridge.Test.Assert.true$1(Object === Object, "#565 t7");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(Object, Object), "#565 t7");
             }
         }
     });
@@ -6913,18 +6974,18 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         statics: {
             testUseCase2: function () {
                 var c2 = new Bridge.ClientTest.BridgeIssues.Bridge588C.C2("C2 value");
-                Bridge.Test.Assert.true$1(Bridge.hasValue(c2), "Bridge588 C2");
+                Bridge.Test.Assert.true$1(c2 != null, "Bridge588 C2");
                 Bridge.Test.Assert.areEqual$1("C2 value", c2.getName(), "Bridge588 C2.Name");
     
                 var c1 = new Bridge.ClientTest.BridgeIssues.Bridge588C.C1(c2);
-                Bridge.Test.Assert.true$1(Bridge.hasValue(c1), "Bridge588 C1");
+                Bridge.Test.Assert.true$1(c1 != null, "Bridge588 C1");
                 Bridge.Test.Assert.areEqual$1("C2 value", c1.getValue().getName(), "Bridge588 C1.Value.Name");
     
-                Bridge.Test.Assert.true$1(Bridge.hasValue(Bridge.ClientTest.BridgeIssues.Bridge588C.C1.getDefault()), "Bridge588 C1.Default");
-                Bridge.Test.Assert.true$1(Bridge.hasValue(Bridge.ClientTest.BridgeIssues.Bridge588C.C1.getDefault().getValue()), "Bridge588 C1.Default.Value");
+                Bridge.Test.Assert.true$1(Bridge.ClientTest.BridgeIssues.Bridge588C.C1.getDefault() != null, "Bridge588 C1.Default");
+                Bridge.Test.Assert.true$1(Bridge.ClientTest.BridgeIssues.Bridge588C.C1.getDefault().getValue() != null, "Bridge588 C1.Default.Value");
                 Bridge.Test.Assert.areEqual$1("default", Bridge.ClientTest.BridgeIssues.Bridge588C.C1.getDefault().getValue().getName(), "Bridge588 C1.Default.Value.Name");
-                Bridge.Test.Assert.true$1(Bridge.hasValue(Bridge.ClientTest.BridgeIssues.Bridge588C.C2.getDefault()), "Bridge588 C2.Default");
-                Bridge.Test.Assert.true$1(Bridge.hasValue(Bridge.ClientTest.BridgeIssues.Bridge588C.C2.getDefault().getName()), "Bridge588 C2.Default.Name");
+                Bridge.Test.Assert.true$1(Bridge.ClientTest.BridgeIssues.Bridge588C.C2.getDefault() != null, "Bridge588 C2.Default");
+                Bridge.Test.Assert.true$1(Bridge.ClientTest.BridgeIssues.Bridge588C.C2.getDefault().getName() != null, "Bridge588 C2.Default.Name");
     
             }
         }
@@ -7117,7 +7178,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         statics: {
             op_Implicit: function (value) {
                 var $t;
-                value = ($t = value, Bridge.hasValue($t) ? $t : "[Null]");
+                value = ($t = value, $t != null ? $t : "[Null]");
                 return new Bridge.ClientTest.BridgeIssues.Bridge603A("constructor$1", value);
             },
             getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge603A(); }
@@ -7150,7 +7211,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         statics: {
             op_Implicit$2: function (value) {
                 var $t;
-                value = ($t = value, Bridge.hasValue($t) ? $t : "[Null]");
+                value = ($t = value, $t != null ? $t : "[Null]");
                 return new Bridge.ClientTest.BridgeIssues.Bridge603B("constructor$3", value);
             },
             op_Implicit$1: function (value) {
@@ -7158,7 +7219,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             },
             op_Implicit: function (value) {
                 var $t;
-                value = ($t = value, Bridge.hasValue($t) ? $t : Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge603Class(), {
+                value = ($t = value, $t != null ? $t : Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge603Class(), {
                     setData: "[Null]"
                 } ));
                 return new Bridge.ClientTest.BridgeIssues.Bridge603B("constructor$1", value);
@@ -7281,14 +7342,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge607A$1', function (T) { return {
         inherits: function () { return [Bridge.IEquatable$1(Bridge.ClientTest.BridgeIssues.Bridge607A$1(T))]; },
         equalsT: function (obj) {
-            return this === obj;
+            return Bridge.referenceEquals(this, obj);
         }
     }; });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge607B', {
         inherits: function () { return [Bridge.IEquatable$1(Bridge.ClientTest.BridgeIssues.Bridge607B)]; },
         equalsT: function (other) {
-            return this === other;
+            return Bridge.referenceEquals(this, other);
         }
     });
     
@@ -7324,7 +7385,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.equals$1(obj.toString());
         },
         equals$1: function (other) {
-            return other === this.field;
+            return Bridge.referenceEquals(other, this.field);
         },
         getHashCode: function () {
             return Bridge.getHashCode(this.field);
@@ -7777,13 +7838,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge655A', {
         statics: {
             isNullOrUndefined: function (subject) {
-                return subject === undefined || !Bridge.hasValue(subject);
+                return Bridge.referenceEquals(subject, undefined) || subject == null;
             },
             isNullOrUndefined$1: function (subject, i) {
-                return subject === undefined || !Bridge.hasValue(subject) || i === 0;
+                return Bridge.referenceEquals(subject, undefined) || subject == null || i === 0;
             },
             isNullOrUndefined$2: function (subject, s) {
-                if (subject === undefined || !Bridge.hasValue(subject) || Bridge.String.isNullOrEmpty(s)) {
+                if (Bridge.referenceEquals(subject, undefined) || subject == null || Bridge.String.isNullOrEmpty(s)) {
                     return "true";
                 }
     
@@ -7837,11 +7898,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         value: null,
         isDefined: false,
         constructor$1: function (value) {
-            Bridge.ClientTest.BridgeIssues.Bridge660Optional$1(T).prototype.constructor$2.call(this, value, Bridge.hasValue(value));
+            Bridge.ClientTest.BridgeIssues.Bridge660Optional$1(T).prototype.constructor$2.call(this, value, value != null);
     
         },
         constructor$2: function (value, isDefined) {
-            this.isDefined = (Bridge.hasValue(value));
+            this.isDefined = (value != null);
             this.value = value;
         },
         constructor: function () {
@@ -8031,14 +8092,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             testUseCase: function () {
                 var c = new Bridge.ClientTest.BridgeIssues.Bridge687A(null);
                 var case1 = false;
-                if (!Bridge.hasValue(c)) {
+                if (c == null) {
                     case1 = true;
                 }
                 Bridge.Test.Assert.areEqual$1(false, case1, "Bridge687 case1");
     
                 c = new Bridge.ClientTest.BridgeIssues.Bridge687A("test");
                 var case2 = false;
-                if (Bridge.ClientTest.BridgeIssues.Bridge687A.op_Implicit(c) === "test") {
+                if (Bridge.referenceEquals(Bridge.ClientTest.BridgeIssues.Bridge687A.op_Implicit(c), "test")) {
                     case2 = true;
                 }
                 Bridge.Test.Assert.areEqual$1(true, case2, "Bridge687 case2");
@@ -8937,7 +8998,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var a = null;
                 var b = 10;
     
-                var c = ($t = b, Bridge.hasValue($t) ? $t : Bridge.ClientTest.BridgeIssues.Bridge760.doSomething(a));
+                var c = ($t = b, $t != null ? $t : Bridge.ClientTest.BridgeIssues.Bridge760.doSomething(a));
                 Bridge.Test.Assert.areEqual$1(10, c, "Bridge760");
             },
             doSomething: function (test) {
@@ -9083,7 +9144,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         statics: {
             testUseCase: function () {
                 var o = { };
-                Bridge.Test.Assert.true$1(!Bridge.hasValue(o.__foo), "Bridge782");
+                Bridge.Test.Assert.true$1(o.__foo == null, "Bridge782");
             }
         }
     });
@@ -9280,7 +9341,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         statics: {
             testUseCase: function () {
                 var wrappedValue = new Bridge.ClientTest.BridgeIssues.Bridge795A("constructor$1", 1);
-                var wrappedValueIsNull = (!Bridge.hasValue(wrappedValue));
+                var wrappedValueIsNull = (wrappedValue == null);
     
                 Bridge.Test.Assert.areEqual$1(false, wrappedValueIsNull, "Bridge795");
             },
@@ -9625,7 +9686,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 return new Bridge.ClientTest.BridgeIssues.Bridge826A(val);
             },
             op_Implicit$1: function (val) {
-                return Bridge.hasValue(val) ? val._val : Bridge.Decimal(0);
+                return val != null ? val._val : Bridge.Decimal(0);
             }
         },
         _val: Bridge.Decimal(0.0),
@@ -9640,7 +9701,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 return new Bridge.ClientTest.BridgeIssues.Bridge826B(val);
             },
             op_Implicit$1: function (val) {
-                return Bridge.hasValue(val) ? val._val : 0;
+                return val != null ? val._val : 0;
             }
         },
         _val: 0,
@@ -9668,7 +9729,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                 $step = Bridge.Array.min([0,1,2,3,4], $step);
                                 switch ($step) {
                                     case 0: {
-                                        if (!Bridge.hasValue(method)) {
+                                        if (method == null) {
                                             throw new Bridge.ArgumentNullException("method");
                                         }
                                         $step = 1;
@@ -9941,7 +10002,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             }
         },
         invokeDelegates: function () {
-            if (Bridge.hasValue(this.getDelegates())) {
+            if (this.getDelegates() != null) {
                 this.getDelegates()(this);
             }
         }
@@ -11207,8 +11268,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         statics: {
             assertNumber: function (expected, actual, message) {
                 if (message === void 0) { message = null; }
-                var a = Bridge.hasValue(actual) ? actual.toString() : "null";
-                var e = Bridge.hasValue(expected) ? expected.toString() : "null";
+                var a = actual != null ? actual.toString() : "null";
+                var e = expected != null ? expected.toString() : "null";
     
                 Bridge.Test.Assert.areEqual$1(e, a, message);
             },
@@ -11402,7 +11463,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             n240: function () {
                 // TEST
                 var b = new Bridge.ClientTest.BridgeIssues.Bridge240B();
-                Bridge.Test.Assert.true$1(Bridge.hasValue(b), "Instance of B created");
+                Bridge.Test.Assert.true$1(b != null, "Instance of B created");
                 Bridge.Test.Assert.areEqual$1("B", b.getString(), "b.GetString() = 'B'");
                 Bridge.Test.Assert.areEqual$1(1, b.getData(), "b.Data = 1");
             },
@@ -11415,7 +11476,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             },
             n266: function () {
                 // TEST
-                Bridge.Test.Assert.true$1(Bridge.hasValue(Bridge.ClientTest.BridgeIssues.Bridge266A.test()), "new object() call transpiled");
+                Bridge.Test.Assert.true$1(Bridge.ClientTest.BridgeIssues.Bridge266A.test() != null, "new object() call transpiled");
             },
             n272: function () {
                 // TEST
@@ -11533,18 +11594,18 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             n339: function () {
                 var c = new Bridge.Comparer$1(Bridge.Int32)(Bridge.Comparer$1.$default.fn);
     
-                Bridge.Test.Assert.true$1(Bridge.hasValue(c), "Comparer<int>.Default works");
+                Bridge.Test.Assert.true$1(c != null, "Comparer<int>.Default works");
                 Bridge.Test.Assert.true$1(Bridge.is(c, Bridge.IComparer$1(Bridge.Int32)), "Comparer<T> declares it implemets IComparer<T>");
             },
             n340: function () {
                 var c = new Bridge.EqualityComparer$1(Bridge.Int32)();
     
-                Bridge.Test.Assert.true$1(Bridge.hasValue(c), "EqualityComparer<int>.Default works");
+                Bridge.Test.Assert.true$1(c != null, "EqualityComparer<int>.Default works");
                 Bridge.Test.Assert.true$1(c.equals(10, 10), "EqualityComparer<int>.Default.Equals(10, 10) works");
                 Bridge.Test.Assert.false$1(c.equals(10, 11), "EqualityComparer<int>.Default.Equals(10, 11) works");
     
                 var s = new Bridge.EqualityComparer$1(String)();
-                Bridge.Test.Assert.true$1(Bridge.hasValue(s), "EqualityComparer<string>.Default works");
+                Bridge.Test.Assert.true$1(s != null, "EqualityComparer<string>.Default works");
                 Bridge.Test.Assert.true$1(s.equals("a", "a"), "EqualityComparer<string>.Default.Equals(\"a\", \"a\") works");
                 Bridge.Test.Assert.false$1(s.equals("a", "b"), "EqualityComparer<string>.Default.Equals(\"a\", \"b\") works");
             },
@@ -11595,7 +11656,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var date = { };
                 var culture = new Bridge.CultureInfo("ru-RU");
     
-                Bridge.Test.Assert.true$1(Bridge.hasValue(culture), "Created CultureInfo(\"ru-RU\")");
+                Bridge.Test.Assert.true$1(culture != null, "Created CultureInfo(\"ru-RU\")");
     
                 var parsed = Bridge.Date.tryParse("22.08.2015", culture, date);
                 Bridge.Test.Assert.true$1(parsed, "Parsed \"22.08.2015\"");
@@ -13271,7 +13332,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             $t = Bridge.getEnumerator(d.getKeys());
             while ($t.moveNext()) {
                 var key = $t.getCurrent();
-                if (key !== "1" && key !== "2") {
+                if (!Bridge.referenceEquals(key, "1") && !Bridge.referenceEquals(key, "2")) {
                     Bridge.Test.Assert.fail$1("Unexpected key " + key);
                 }
                 count = (count + 1) | 0;
@@ -13296,7 +13357,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             $t = Bridge.getEnumerator(d.getValues());
             while ($t.moveNext()) {
                 var value = $t.getCurrent();
-                if (value !== "a" && value !== "b") {
+                if (!Bridge.referenceEquals(value, "a") && !Bridge.referenceEquals(value, "b")) {
                     Bridge.Test.Assert.fail$1("Unexpected key " + value);
                 }
                 count = (count + 1) | 0;
@@ -13395,11 +13456,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             $t = Bridge.getEnumerator(d);
             while ($t.moveNext()) {
                 var kvp = $t.getCurrent();
-                if (kvp.key === "1") {
+                if (Bridge.referenceEquals(kvp.key, "1")) {
                     Bridge.Test.Assert.areEqual("a", kvp.value);
                 }
                 else  {
-                    if (kvp.key === "2") {
+                    if (Bridge.referenceEquals(kvp.key, "2")) {
                         Bridge.Test.Assert.areEqual("b", kvp.value);
                     }
                     else  {
@@ -14296,19 +14357,19 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructingFromArrayWorks: function () {
             var arr = [1, 4, 7, 8];
             var l = new Bridge.List$1(Bridge.Int32)(arr);
-            Bridge.Test.Assert.$false(l === arr);
+            Bridge.Test.Assert.$false(Bridge.referenceEquals(l, arr));
             Bridge.Test.Assert.areDeepEqual(arr, l.toArray());
         },
         constructingFromListWorks: function () {
             var arr = new Bridge.List$1(Bridge.Int32)([1, 4, 7, 8]);
             var l = new Bridge.List$1(Bridge.Int32)(arr);
-            Bridge.Test.Assert.$false(l === arr);
+            Bridge.Test.Assert.$false(Bridge.referenceEquals(l, arr));
             Bridge.Test.Assert.areDeepEqual(arr, l);
         },
         constructingFromIEnumerableWorks: function () {
             var enm = Bridge.cast(new Bridge.List$1(Bridge.Int32)([1, 4, 7, 8]), Bridge.IEnumerable$1(Bridge.Int32));
             var l = new Bridge.List$1(Bridge.Int32)(enm);
-            Bridge.Test.Assert.$false(l === enm);
+            Bridge.Test.Assert.$false(Bridge.referenceEquals(l, enm));
             Bridge.Test.Assert.areDeepEqual([1, 4, 7, 8], l.toArray());
         },
         countWorks: function () {
@@ -14810,7 +14871,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             l.add("a");
             l.add("b");
             var actual = l.toArray();
-            Bridge.Test.Assert.$false(l === actual);
+            Bridge.Test.Assert.$false(Bridge.referenceEquals(l, actual));
             Bridge.Test.Assert.$true(Bridge.is(actual, Array));
             Bridge.Test.Assert.areDeepEqual(["a", "b"], actual);
         }
@@ -15170,7 +15231,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             verifyRoundtrip: function (input, expected, expectedLengthBytes) {
                 if (expected === void 0) { expected = null; }
                 if (expectedLengthBytes === void 0) { expectedLengthBytes = null; }
-                if (!Bridge.hasValue(expected)) {
+                if (expected == null) {
                     expected = input;
                 }
     
@@ -15195,7 +15256,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             },
             verify: function (input, action) {
                 if (action === void 0) { action = null; }
-                if (Bridge.hasValue(action)) {
+                if (action != null) {
                     action(Bridge.Convert.fromBase64CharArray(Bridge.String.toCharArray(input, 0, input.length), 0, input.length));
                     action(Bridge.Convert.fromBase64String(input));
                 }
@@ -15241,7 +15302,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
          */
         verify: function (TInput, convert, testValues, expectedValues, useTrue) {
             if (useTrue === void 0) { useTrue = false; }
-            if (!Bridge.hasValue(expectedValues) || !Bridge.hasValue(testValues) || expectedValues.length !== testValues.length) {
+            if (expectedValues == null || testValues == null || expectedValues.length !== testValues.length) {
                 Bridge.Test.Assert.fail$1("Test data should have the same lenght");
                 return;
             }
@@ -15282,7 +15343,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
          * @return  {void}
          */
         verifyViaObj: function (TInput, convert, testValues, expectedValues) {
-            if (!Bridge.hasValue(expectedValues) || !Bridge.hasValue(testValues) || expectedValues.length !== testValues.length) {
+            if (expectedValues == null || testValues == null || expectedValues.length !== testValues.length) {
                 Bridge.Test.Assert.fail$1("Test data should have the same lenght");
                 return;
             }
@@ -15359,7 +15420,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
          */
         verifyFromStringWithBase: function (convert, testValues, testBases, expectedValues, useTrue) {
             if (useTrue === void 0) { useTrue = false; }
-            if (!Bridge.hasValue(expectedValues) || !Bridge.hasValue(testBases) || !Bridge.hasValue(testValues) || expectedValues.length !== testValues.length || testBases.length !== testValues.length) {
+            if (expectedValues == null || testBases == null || testValues == null || expectedValues.length !== testValues.length || testBases.length !== testValues.length) {
                 Bridge.Test.Assert.fail$1("Test data should have the same lenghts");
                 return;
             }
@@ -15400,7 +15461,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
          * @return  {void}
          */
         verifyFromStringWithBaseThrows: function (TException, convert, testValues, testBases) {
-            if (!Bridge.hasValue(testBases) || !Bridge.hasValue(testValues) || testBases.length !== testValues.length) {
+            if (testBases == null || testValues == null || testBases.length !== testValues.length) {
                 Bridge.Test.Assert.fail$1("Test data should have the same lenght");
                 return;
             }
@@ -15411,7 +15472,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                         Bridge.Test.Assert.throws$2(function () {
                             convert(testValues[i], testBases[i]);
                         }, function (err) {
-                            return Bridge.getTypeName(err) === Bridge.getTypeName(TException);
+                            return Bridge.referenceEquals(Bridge.getTypeName(err), Bridge.getTypeName(TException));
                         }, "Value " + testValues[i] + " base " + testBases[i]);
                     }
                     catch (e) {
@@ -15442,7 +15503,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                         Bridge.Test.Assert.throws$2(function () {
                             convert(testValues[i]);
                         }, function (err) {
-                            return Bridge.getTypeName(err) === Bridge.getTypeName(TException);
+                            return Bridge.referenceEquals(Bridge.getTypeName(err), Bridge.getTypeName(TException));
                         }, "Value " + testValues[i]);
                     }
                     catch (e) {
@@ -15474,7 +15535,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                         Bridge.Test.Assert.throws$2(function () {
                             convert(testValues[i]);
                         }, function (err) {
-                            return Bridge.getTypeName(err) === Bridge.getTypeName(TException);
+                            return Bridge.referenceEquals(Bridge.getTypeName(err), Bridge.getTypeName(TException));
                         }, "Value " + testValues[i]);
                     }
                     catch (e) {
@@ -16113,7 +16174,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             this._value = value;
         },
         toString$1: function (provider) {
-            if (Bridge.hasValue(provider)) {
+            if (provider != null) {
                 return Bridge.String.format("{0}: {1}", provider, this._value);
             }
             else  {
@@ -16129,7 +16190,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             this._value = value;
         },
         toString$1: function (format, formatProvider) {
-            if (Bridge.hasValue(formatProvider)) {
+            if (formatProvider != null) {
                 return Bridge.String.format("{0}: {1}", Bridge.getTypeName(formatProvider), this._value);
             }
             else  {
@@ -16271,7 +16332,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             },
             parseDotNetDiff: function (input, i, lowerBound) {
                 var o = input.get([i, ((lowerBound + 1) | 0)]);
-                if (!Bridge.hasValue(o)) {
+                if (o == null) {
                     return Bridge.Decimal.lift(null);
                 }
     
@@ -16473,18 +16534,18 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             catch (ex) {
                 ex = Bridge.Exception.create(ex);
                 var cex = Bridge.as(ex, Bridge.ContractException);
-                if (!Bridge.hasValue(cex)) {
+                if (cex == null) {
                     Bridge.Test.Assert.fail$1("Unexpected Exception");
                 }
     
                 Bridge.Test.Assert.true$1(cex.getKind() === expectedKind, "Kind");
-                Bridge.Test.Assert.true$1(cex.getMessage() === expectedMessage, "Message");
-                Bridge.Test.Assert.true$1(cex.getUserMessage() === expectedUserMessage, "UserMessage");
-                if (Bridge.hasValue(cex.getInnerException())) {
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(cex.getMessage(), expectedMessage), "Message");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(cex.getUserMessage(), expectedUserMessage), "UserMessage");
+                if (cex.getInnerException() != null) {
                     Bridge.Test.Assert.true$1(Bridge.equals(cex.getInnerException(), expectedInnerException), "InnerException");
                 }
                 else  {
-                    if (!Bridge.hasValue(cex.getInnerException()) && Bridge.hasValue(expectedInnerException)) {
+                    if (cex.getInnerException() == null && expectedInnerException != null) {
                         Bridge.Test.Assert.fail$1("InnerException");
                     }
                 }
@@ -16740,7 +16801,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.AggregateException), "is AggregateException");
             Bridge.Test.Assert.true$1(Bridge.is(ex.innerExceptions, Bridge.ReadOnlyCollection$1(Bridge.Exception)), "InnerExceptions is ReadOnlyCollection");
             Bridge.Test.Assert.areEqual$1(0, ex.innerExceptions.getCount(), "InnerExceptions.Length");
-            Bridge.Test.Assert.true$1(!Bridge.hasValue(ex.getInnerException()), "InnerException");
+            Bridge.Test.Assert.true$1(ex.getInnerException() == null, "InnerException");
             Bridge.Test.Assert.areEqual$1(Bridge.ClientTest.Exceptions.AggregateExceptionTests.DefaultMessage, ex.getMessage(), "Message");
         },
         constructorWithIEnumerableInnerExceptionsWorks: function () {
@@ -16749,26 +16810,26 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
             var ex1 = new Bridge.AggregateException(null, this.makeEnumerable(Bridge.Exception));
             Bridge.Test.Assert.true$1(Bridge.is(ex1, Bridge.AggregateException), "ex1 is AggregateException");
-            Bridge.Test.Assert.true$1(!Bridge.hasValue(ex1.getInnerException()), "ex1 InnerException");
+            Bridge.Test.Assert.true$1(ex1.getInnerException() == null, "ex1 InnerException");
             Bridge.Test.Assert.true$1(Bridge.is(ex1.innerExceptions, Bridge.ReadOnlyCollection$1(Bridge.Exception)), "ex1 InnerExceptions is ReadOnlyCollection");
             Bridge.Test.Assert.areEqual$1(0, ex1.innerExceptions.getCount(), "ex1 InnerExceptions.Length");
             Bridge.Test.Assert.areEqual$1(Bridge.ClientTest.Exceptions.AggregateExceptionTests.DefaultMessage, ex1.getMessage(), "ex1 Message");
     
             var ex2 = new Bridge.AggregateException(null, this.makeEnumerable(Bridge.Exception, [inner1]));
             Bridge.Test.Assert.true$1(Bridge.is(ex2, Bridge.AggregateException), "ex2 is AggregateException");
-            Bridge.Test.Assert.true$1(ex2.getInnerException() === inner1, "ex2 InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex2.getInnerException(), inner1), "ex2 InnerException");
             Bridge.Test.Assert.true$1(Bridge.is(ex2.innerExceptions, Bridge.ReadOnlyCollection$1(Bridge.Exception)), "ex2 InnerExceptions is ReadOnlyCollection");
             Bridge.Test.Assert.areEqual$1(1, ex2.innerExceptions.getCount(), "ex2 InnerExceptions.Length");
-            Bridge.Test.Assert.true$1(ex2.innerExceptions.get(0) === inner1, "ex2 InnerExceptions[0]");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex2.innerExceptions.get(0), inner1), "ex2 InnerExceptions[0]");
             Bridge.Test.Assert.areEqual$1(Bridge.ClientTest.Exceptions.AggregateExceptionTests.DefaultMessage, ex2.getMessage(), "ex2 Message");
     
             var ex3 = new Bridge.AggregateException(null, this.makeEnumerable(Bridge.Exception, [inner1, inner2]));
             Bridge.Test.Assert.true$1(Bridge.is(ex3, Bridge.AggregateException), "ex3 is AggregateException");
-            Bridge.Test.Assert.true$1(ex3.getInnerException() === inner1, "ex3 InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex3.getInnerException(), inner1), "ex3 InnerException");
             Bridge.Test.Assert.true$1(Bridge.is(ex3.innerExceptions, Bridge.ReadOnlyCollection$1(Bridge.Exception)), "ex3 InnerExceptions is ReadOnlyCollection");
             Bridge.Test.Assert.areEqual$1(2, ex3.innerExceptions.getCount(), "ex3 InnerExceptions.Length");
-            Bridge.Test.Assert.true$1(ex3.innerExceptions.get(0) === inner1, "ex3 InnerExceptions[0]");
-            Bridge.Test.Assert.true$1(ex3.innerExceptions.get(1) === inner2, "ex3 InnerExceptions[1]");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex3.innerExceptions.get(0), inner1), "ex3 InnerExceptions[0]");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex3.innerExceptions.get(1), inner2), "ex3 InnerExceptions[1]");
             Bridge.Test.Assert.areEqual$1(Bridge.ClientTest.Exceptions.AggregateExceptionTests.DefaultMessage, ex3.getMessage(), "ex3 Message");
         },
         constructorWithInnerExceptionArrayWorks: function () {
@@ -16777,26 +16838,26 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
             var ex1 = new Bridge.AggregateException(null, Bridge.Array.init(0, null));
             Bridge.Test.Assert.true$1(Bridge.is(ex1, Bridge.AggregateException), "ex1 is AggregateException");
-            Bridge.Test.Assert.true$1(!Bridge.hasValue(ex1.getInnerException()), "ex1 InnerException");
+            Bridge.Test.Assert.true$1(ex1.getInnerException() == null, "ex1 InnerException");
             Bridge.Test.Assert.true$1(Bridge.is(ex1.innerExceptions, Bridge.ReadOnlyCollection$1(Bridge.Exception)), "ex1 InnerExceptions is ReadOnlyCollection");
             Bridge.Test.Assert.areEqual$1(0, ex1.innerExceptions.getCount(), "ex1 InnerExceptions.Length");
             Bridge.Test.Assert.areEqual$1(Bridge.ClientTest.Exceptions.AggregateExceptionTests.DefaultMessage, ex1.getMessage(), "ex1 Message");
     
             var ex2 = new Bridge.AggregateException(null, [inner1]);
             Bridge.Test.Assert.true$1(Bridge.is(ex2, Bridge.AggregateException), "ex2 is AggregateException");
-            Bridge.Test.Assert.true$1(ex2.getInnerException() === inner1, "ex2 InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex2.getInnerException(), inner1), "ex2 InnerException");
             Bridge.Test.Assert.true$1(Bridge.is(ex2.innerExceptions, Bridge.ReadOnlyCollection$1(Bridge.Exception)), "ex2 InnerExceptions is ReadOnlyCollection");
             Bridge.Test.Assert.areEqual$1(1, ex2.innerExceptions.getCount(), "ex2 InnerExceptions.Length");
-            Bridge.Test.Assert.true$1(ex2.innerExceptions.get(0) === inner1, "ex2 InnerExceptions[0]");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex2.innerExceptions.get(0), inner1), "ex2 InnerExceptions[0]");
             Bridge.Test.Assert.areEqual$1(Bridge.ClientTest.Exceptions.AggregateExceptionTests.DefaultMessage, ex2.getMessage(), "ex2 Message");
     
             var ex3 = new Bridge.AggregateException(null, [inner1, inner2]);
             Bridge.Test.Assert.true$1(Bridge.is(ex3, Bridge.AggregateException), "ex3 is AggregateException");
-            Bridge.Test.Assert.true$1(ex3.getInnerException() === inner1, "ex3 InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex3.getInnerException(), inner1), "ex3 InnerException");
             Bridge.Test.Assert.true$1(Bridge.is(ex3.innerExceptions, Bridge.ReadOnlyCollection$1(Bridge.Exception)), "ex3 InnerExceptions is ReadOnlyCollection");
             Bridge.Test.Assert.areEqual$1(2, ex3.innerExceptions.getCount(), "ex3 InnerExceptions.Length");
-            Bridge.Test.Assert.true$1(ex3.innerExceptions.get(0) === inner1, "ex3 InnerExceptions[0]");
-            Bridge.Test.Assert.true$1(ex3.innerExceptions.get(1) === inner2, "ex3 InnerExceptions[1]");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex3.innerExceptions.get(0), inner1), "ex3 InnerExceptions[0]");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex3.innerExceptions.get(1), inner2), "ex3 InnerExceptions[1]");
             Bridge.Test.Assert.areEqual$1(Bridge.ClientTest.Exceptions.AggregateExceptionTests.DefaultMessage, ex3.getMessage(), "ex3 Message");
         },
         constructorWithMessageWorks: function () {
@@ -16804,7 +16865,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.AggregateException), "is AggregateException");
             Bridge.Test.Assert.true$1(Bridge.is(ex.innerExceptions, Bridge.ReadOnlyCollection$1(Bridge.Exception)), "ex1 InnerExceptions is ReadOnlyCollection");
             Bridge.Test.Assert.areEqual$1(0, ex.innerExceptions.getCount(), "InnerExceptions.Length");
-            Bridge.Test.Assert.true$1(!Bridge.hasValue(ex.getInnerException()), "InnerException");
+            Bridge.Test.Assert.true$1(ex.getInnerException() == null, "InnerException");
             Bridge.Test.Assert.areEqual$1("Some message", ex.getMessage(), "Message");
         },
         constructorWithMessageAndIEnumerableInnerExceptionsWorks: function () {
@@ -16813,26 +16874,26 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
             var ex1 = new Bridge.AggregateException("Message #1", this.makeEnumerable(Bridge.Exception));
             Bridge.Test.Assert.true$1(Bridge.is(ex1, Bridge.AggregateException), "ex1 is AggregateException");
-            Bridge.Test.Assert.true$1(!Bridge.hasValue(ex1.getInnerException()), "ex1 InnerException");
+            Bridge.Test.Assert.true$1(ex1.getInnerException() == null, "ex1 InnerException");
             Bridge.Test.Assert.true$1(Bridge.is(ex1.innerExceptions, Bridge.ReadOnlyCollection$1(Bridge.Exception)), "ex1 InnerExceptions is ReadOnlyCollection");
             Bridge.Test.Assert.areEqual$1(0, ex1.innerExceptions.getCount(), "ex1 InnerExceptions.Length");
             Bridge.Test.Assert.areEqual$1("Message #1", ex1.getMessage(), "ex1 Message");
     
             var ex2 = new Bridge.AggregateException("Message #2", this.makeEnumerable(Bridge.Exception, [inner1]));
             Bridge.Test.Assert.true$1(Bridge.is(ex2, Bridge.AggregateException), "ex2 is AggregateException");
-            Bridge.Test.Assert.true$1(ex2.getInnerException() === inner1, "ex2 InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex2.getInnerException(), inner1), "ex2 InnerException");
             Bridge.Test.Assert.true$1(Bridge.is(ex2.innerExceptions, Bridge.ReadOnlyCollection$1(Bridge.Exception)), "ex2 InnerExceptions is ReadOnlyCollection");
             Bridge.Test.Assert.areEqual$1(1, ex2.innerExceptions.getCount(), "ex2 InnerExceptions.Length");
-            Bridge.Test.Assert.true$1(ex2.innerExceptions.get(0) === inner1, "ex2 InnerExceptions[0]");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex2.innerExceptions.get(0), inner1), "ex2 InnerExceptions[0]");
             Bridge.Test.Assert.areEqual$1("Message #2", ex2.getMessage(), "ex2 Message");
     
             var ex3 = new Bridge.AggregateException("Message #3", this.makeEnumerable(Bridge.Exception, [inner1, inner2]));
             Bridge.Test.Assert.true$1(Bridge.is(ex3, Bridge.AggregateException), "ex3 is AggregateException");
-            Bridge.Test.Assert.true$1(ex3.getInnerException() === inner1, "ex3 InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex3.getInnerException(), inner1), "ex3 InnerException");
             Bridge.Test.Assert.true$1(Bridge.is(ex3.innerExceptions, Bridge.ReadOnlyCollection$1(Bridge.Exception)), "ex3 InnerExceptions is ReadOnlyCollection");
             Bridge.Test.Assert.areEqual$1(2, ex3.innerExceptions.getCount(), "ex3 InnerExceptions.Length");
-            Bridge.Test.Assert.true$1(ex3.innerExceptions.get(0) === inner1, "ex3 InnerExceptions[0]");
-            Bridge.Test.Assert.true$1(ex3.innerExceptions.get(1) === inner2, "ex3 InnerExceptions[1]");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex3.innerExceptions.get(0), inner1), "ex3 InnerExceptions[0]");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex3.innerExceptions.get(1), inner2), "ex3 InnerExceptions[1]");
             Bridge.Test.Assert.areEqual$1("Message #3", ex3.getMessage(), "ex3 Message");
         },
         constructorWithMessageAndInnerExceptionArrayWorks: function () {
@@ -16841,26 +16902,26 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
             var ex1 = new Bridge.AggregateException("Message #1", Bridge.Array.init(0, null));
             Bridge.Test.Assert.true$1(Bridge.is(ex1, Bridge.AggregateException), "ex1 is AggregateException");
-            Bridge.Test.Assert.true$1(!Bridge.hasValue(ex1.getInnerException()), "ex1 InnerException");
+            Bridge.Test.Assert.true$1(ex1.getInnerException() == null, "ex1 InnerException");
             Bridge.Test.Assert.true$1(Bridge.is(ex1.innerExceptions, Bridge.ReadOnlyCollection$1(Bridge.Exception)), "ex1 InnerExceptions is ReadOnlyCollection");
             Bridge.Test.Assert.areEqual$1(0, ex1.innerExceptions.getCount(), "ex1 InnerExceptions.Length");
             Bridge.Test.Assert.areEqual$1("Message #1", ex1.getMessage(), "ex1 Message");
     
             var ex2 = new Bridge.AggregateException("Message #2", [inner1]);
             Bridge.Test.Assert.true$1(Bridge.is(ex2, Bridge.AggregateException), "ex2 is AggregateException");
-            Bridge.Test.Assert.true$1(ex2.getInnerException() === inner1, "ex2 InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex2.getInnerException(), inner1), "ex2 InnerException");
             Bridge.Test.Assert.areEqual$1(1, ex2.innerExceptions.getCount(), "ex2 InnerExceptions.Length");
             Bridge.Test.Assert.true$1(Bridge.is(ex2.innerExceptions, Bridge.ReadOnlyCollection$1(Bridge.Exception)), "ex2 InnerExceptions is ReadOnlyCollection");
-            Bridge.Test.Assert.true$1(ex2.innerExceptions.get(0) === inner1, "ex2 InnerExceptions[0]");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex2.innerExceptions.get(0), inner1), "ex2 InnerExceptions[0]");
             Bridge.Test.Assert.areEqual$1("Message #2", ex2.getMessage(), "ex2 Message");
     
             var ex3 = new Bridge.AggregateException("Message #3", [inner1, inner2]);
             Bridge.Test.Assert.true$1(Bridge.is(ex3, Bridge.AggregateException), "ex3 is AggregateException");
-            Bridge.Test.Assert.true$1(ex3.getInnerException() === inner1, "ex3 InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex3.getInnerException(), inner1), "ex3 InnerException");
             Bridge.Test.Assert.true$1(Bridge.is(ex3.innerExceptions, Bridge.ReadOnlyCollection$1(Bridge.Exception)), "ex3 InnerExceptions is ReadOnlyCollection");
             Bridge.Test.Assert.areEqual$1(2, ex3.innerExceptions.getCount(), "ex3 InnerExceptions.Length");
-            Bridge.Test.Assert.true$1(ex3.innerExceptions.get(0) === inner1, "ex3 InnerExceptions[0]");
-            Bridge.Test.Assert.true$1(ex3.innerExceptions.get(1) === inner2, "ex3 InnerExceptions[1]");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex3.innerExceptions.get(0), inner1), "ex3 InnerExceptions[0]");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex3.innerExceptions.get(1), inner2), "ex3 InnerExceptions[1]");
             Bridge.Test.Assert.areEqual$1("Message #3", ex3.getMessage(), "ex3 Message");
         },
         flattenWorks: function () {
@@ -16873,13 +16934,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.true$1(Bridge.is(actual, Bridge.AggregateException), "is AggregateException");
             Bridge.Test.Assert.areEqual$1("The message", actual.getMessage(), "message");
             Bridge.Test.Assert.areEqual$1(7, actual.innerExceptions.getCount(), "Count");
-            Bridge.Test.Assert.true$1(actual.innerExceptions.get(0) === ex0, "0");
-            Bridge.Test.Assert.true$1(actual.innerExceptions.get(1) === ex1, "1");
-            Bridge.Test.Assert.true$1(actual.innerExceptions.get(2) === ex2, "2");
-            Bridge.Test.Assert.true$1(actual.innerExceptions.get(3) === ex5, "5");
-            Bridge.Test.Assert.true$1(actual.innerExceptions.get(4) === ex6, "6");
-            Bridge.Test.Assert.true$1(actual.innerExceptions.get(5) === ex3, "3");
-            Bridge.Test.Assert.true$1(actual.innerExceptions.get(6) === ex4, "4");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(actual.innerExceptions.get(0), ex0), "0");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(actual.innerExceptions.get(1), ex1), "1");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(actual.innerExceptions.get(2), ex2), "2");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(actual.innerExceptions.get(3), ex5), "5");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(actual.innerExceptions.get(4), ex6), "6");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(actual.innerExceptions.get(5), ex3), "3");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(actual.innerExceptions.get(6), ex4), "4");
         }
     });
     
@@ -16927,7 +16988,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var ex = new Bridge.ArgumentException("The message", "someParam", inner);
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.ArgumentException), "is ArgumentException");
             Bridge.Test.Assert.areEqual$1("someParam", ex.getParamName(), "ParamName");
-            Bridge.Test.Assert.true$1(ex.getInnerException() === inner, "InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.getInnerException(), inner), "InnerException");
             Bridge.Test.Assert.areEqual$1(inner, ex.getInnerException(), "InnerException");
             Bridge.Test.Assert.areEqual("The message", ex.getMessage());
         }
@@ -17009,7 +17070,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var ex = new Bridge.ArgumentOutOfRangeException(null, "The message", inner);
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.ArgumentOutOfRangeException), "is ArgumentOutOfRangeException");
             Bridge.Test.Assert.null$1(ex.getParamName(), "ParamName");
-            Bridge.Test.Assert.true$1(ex.getInnerException() === inner, "InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.getInnerException(), inner), "InnerException");
             Bridge.Test.Assert.areEqual$1(null, ex.getActualValue(), "ActualValue");
             Bridge.Test.Assert.areEqual("The message", ex.getMessage());
         },
@@ -17066,7 +17127,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var inner = new Bridge.Exception("a");
             var ex = new Bridge.ArithmeticException("The message", inner);
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.ArithmeticException), "is OverflowException");
-            Bridge.Test.Assert.true$1(ex.getInnerException() === inner, "InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.getInnerException(), inner), "InnerException");
             Bridge.Test.Assert.areEqual("The message", ex.getMessage());
         }
     });
@@ -17228,7 +17289,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var ex = new Bridge.CultureNotFoundException(null, "fru", "The message", inner);
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.CultureNotFoundException), "is CultureNotFoundException");
             Bridge.Test.Assert.areEqual$1(null, ex.getParamName(), "ParamName");
-            Bridge.Test.Assert.true$1(ex.getInnerException() === inner, "InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.getInnerException(), inner), "InnerException");
             Bridge.Test.Assert.areEqual$1(inner, ex.getInnerException(), "InnerException");
             Bridge.Test.Assert.areEqual("The message", ex.getMessage());
             Bridge.Test.Assert.areEqual$1("fru", ex.getInvalidCultureName(), "InvalidCultureName");
@@ -17248,7 +17309,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var ex = new Bridge.CultureNotFoundException(null, null, "The message", inner, 1);
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.CultureNotFoundException), "is CultureNotFoundException");
             Bridge.Test.Assert.areEqual$1(null, ex.getParamName(), "ParamName");
-            Bridge.Test.Assert.true$1(ex.getInnerException() === inner, "InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.getInnerException(), inner), "InnerException");
             Bridge.Test.Assert.areEqual$1(inner, ex.getInnerException(), "InnerException");
             Bridge.Test.Assert.areEqual("The message", ex.getMessage());
             Bridge.Test.Assert.areEqual$1(null, ex.getInvalidCultureName(), "InvalidCultureName");
@@ -17288,7 +17349,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var inner = new Bridge.Exception("a");
             var ex = new Bridge.DivideByZeroException("The message", inner);
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.DivideByZeroException), "is DivideByZeroException");
-            Bridge.Test.Assert.true$1(ex.getInnerException() === inner, "InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.getInnerException(), inner), "InnerException");
             Bridge.Test.Assert.areEqual("The message", ex.getMessage());
         }
     });
@@ -17315,7 +17376,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var inner = new Bridge.Exception("a");
             var ex = new Bridge.Exception("The message", inner);
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.Exception), "is Exception");
-            Bridge.Test.Assert.true$1(ex.getInnerException() === inner, "InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.getInnerException(), inner), "InnerException");
             Bridge.Test.Assert.areEqual("The message", ex.getMessage());
         },
         messagePropertyCanBeOverridden: function () {
@@ -17325,7 +17386,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         innerExceptionPropertyCanBeOverridden: function () {
             var inner = new Bridge.Exception("a");
             var ex = Bridge.cast(new Bridge.ClientTest.Exceptions.ExceptionTests.MyException("Test message", inner), Bridge.Exception);
-            Bridge.Test.Assert.$true(ex.getInnerException() === inner);
+            Bridge.Test.Assert.$true(Bridge.referenceEquals(ex.getInnerException(), inner));
         }
     });
     
@@ -17370,7 +17431,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var inner = new Bridge.Exception("a");
             var ex = new Bridge.FormatException("The message", inner);
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.FormatException), "is FormatException");
-            Bridge.Test.Assert.true$1(ex.getInnerException() === inner, "InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.getInnerException(), inner), "InnerException");
             Bridge.Test.Assert.areEqual("The message", ex.getMessage());
         }
     });
@@ -17402,7 +17463,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var inner = new Bridge.Exception("a");
             var ex = new Bridge.IndexOutOfRangeException("The message", inner);
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.IndexOutOfRangeException), "is IndexOutOfRangeException");
-            Bridge.Test.Assert.true$1(ex.getInnerException() === inner, "InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.getInnerException(), inner), "InnerException");
             Bridge.Test.Assert.areEqual("The message", ex.getMessage());
         }
     });
@@ -17430,7 +17491,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var inner = new Bridge.Exception("a");
             var ex = new Bridge.InvalidCastException("The message", inner);
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.InvalidCastException), "is InvalidCastException");
-            Bridge.Test.Assert.true$1(ex.getInnerException() === inner, "InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.getInnerException(), inner), "InnerException");
             Bridge.Test.Assert.areEqual("The message", ex.getMessage());
         }
     });
@@ -17458,7 +17519,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var inner = new Bridge.Exception("a");
             var ex = new Bridge.InvalidOperationException("The message", inner);
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.InvalidOperationException), "is InvalidOperationException");
-            Bridge.Test.Assert.true$1(ex.getInnerException() === inner, "InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.getInnerException(), inner), "InnerException");
             Bridge.Test.Assert.areEqual("The message", ex.getMessage());
         }
     });
@@ -17486,7 +17547,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var inner = new Bridge.Exception("a");
             var ex = new Bridge.KeyNotFoundException("The message", inner);
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.KeyNotFoundException), "is KeyNotFoundException");
-            Bridge.Test.Assert.true$1(ex.getInnerException() === inner, "InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.getInnerException(), inner), "InnerException");
             Bridge.Test.Assert.areEqual("The message", ex.getMessage());
         }
     });
@@ -17514,7 +17575,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var inner = new Bridge.Exception("a");
             var ex = new Bridge.NotImplementedException("The message", inner);
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.NotImplementedException), "is NotImplementedException");
-            Bridge.Test.Assert.true$1(ex.getInnerException() === inner, "InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.getInnerException(), inner), "InnerException");
             Bridge.Test.Assert.areEqual("The message", ex.getMessage());
         }
     });
@@ -17542,7 +17603,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var inner = new Bridge.Exception("a");
             var ex = new Bridge.NotSupportedException("The message", inner);
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.NotSupportedException), "is NotSupportedException");
-            Bridge.Test.Assert.true$1(ex.getInnerException() === inner, "InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.getInnerException(), inner), "InnerException");
             Bridge.Test.Assert.areEqual("The message", ex.getMessage());
         }
     });
@@ -17570,7 +17631,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var inner = new Bridge.Exception("a");
             var ex = new Bridge.NullReferenceException("The message", inner);
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.NullReferenceException), "is NullReferenceException");
-            Bridge.Test.Assert.true$1(ex.getInnerException() === inner, "InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.getInnerException(), inner), "InnerException");
             Bridge.Test.Assert.areEqual("The message", ex.getMessage());
         },
         accessingAFieldOnANullObjectCausesANullReferenceException: function () {
@@ -17606,7 +17667,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var ex = new Bridge.OperationCanceledException();
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.OperationCanceledException), "is OperationCanceledException");
             Bridge.Test.Assert.areEqual$1("Operation was canceled.", ex.getMessage(), "Message");
-            Bridge.Test.Assert.true$1(ex.cancellationToken === Bridge.CancellationToken.none, "CancellationToken");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.cancellationToken, Bridge.CancellationToken.none), "CancellationToken");
             Bridge.Test.Assert.null$1(ex.getInnerException(), "InnerException");
         },
         cancellationTokenOnlyConstructorWorks: function () {
@@ -17614,14 +17675,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var ex = new Bridge.OperationCanceledException(null, ct);
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.OperationCanceledException), "is OperationCanceledException");
             Bridge.Test.Assert.areEqual$1("Operation was canceled.", ex.getMessage(), "Message");
-            Bridge.Test.Assert.true$1(ex.cancellationToken === ct, "CancellationToken");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.cancellationToken, ct), "CancellationToken");
             Bridge.Test.Assert.null$1(ex.getInnerException(), "InnerException");
         },
         messageOnlyConstructorWorks: function () {
             var ex = new Bridge.OperationCanceledException("Some message", Bridge.CancellationToken.none);
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.OperationCanceledException), "is OperationCanceledException");
             Bridge.Test.Assert.areEqual$1("Some message", ex.getMessage(), "Message");
-            Bridge.Test.Assert.true$1(ex.cancellationToken === Bridge.CancellationToken.none, "CancellationToken");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.cancellationToken, Bridge.CancellationToken.none), "CancellationToken");
             Bridge.Test.Assert.null$1(ex.getInnerException(), "InnerException");
         },
         messageAndInnerExceptionConstructorWorks: function () {
@@ -17629,15 +17690,15 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var ex = new Bridge.OperationCanceledException("Some message", Bridge.CancellationToken.none, innerException);
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.OperationCanceledException), "is OperationCanceledException");
             Bridge.Test.Assert.areEqual$1("Some message", ex.getMessage(), "Message");
-            Bridge.Test.Assert.true$1(ex.cancellationToken === Bridge.CancellationToken.none, "CancellationToken");
-            Bridge.Test.Assert.true$1(ex.getInnerException() === innerException, "InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.cancellationToken, Bridge.CancellationToken.none), "CancellationToken");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.getInnerException(), innerException), "InnerException");
         },
         messageAndCancellationTokenConstructorWorks: function () {
             var ct = new Bridge.CancellationToken();
             var ex = new Bridge.OperationCanceledException("Some message", ct);
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.OperationCanceledException), "is OperationCanceledException");
             Bridge.Test.Assert.areEqual$1("Some message", ex.getMessage(), "Message");
-            Bridge.Test.Assert.true$1(ex.cancellationToken === ct, "CancellationToken");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.cancellationToken, ct), "CancellationToken");
             Bridge.Test.Assert.null$1(ex.getInnerException(), "InnerException");
         },
         messageAndInnerExceptionAndCancellationTokenConstructorWorks: function () {
@@ -17646,8 +17707,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var ex = new Bridge.OperationCanceledException("Some message", ct, innerException);
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.OperationCanceledException), "is OperationCanceledException");
             Bridge.Test.Assert.areEqual$1("Some message", ex.getMessage(), "Message");
-            Bridge.Test.Assert.true$1(ex.cancellationToken === ct, "CancellationToken");
-            Bridge.Test.Assert.true$1(ex.getInnerException() === innerException, "InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.cancellationToken, ct), "CancellationToken");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.getInnerException(), innerException), "InnerException");
         }
     });
     
@@ -17678,7 +17739,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var inner = new Bridge.Exception("a");
             var ex = new Bridge.OutOfMemoryException("The message", inner);
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.OutOfMemoryException), "is OutOfMemoryException");
-            Bridge.Test.Assert.true$1(ex.getInnerException() === inner, "InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.getInnerException(), inner), "InnerException");
             Bridge.Test.Assert.areEqual("The message", ex.getMessage());
         }
     });
@@ -17706,7 +17767,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var inner = new Bridge.Exception("a");
             var ex = new Bridge.OverflowException("The message", inner);
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.OverflowException), "is OverflowException");
-            Bridge.Test.Assert.true$1(ex.getInnerException() === inner, "InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.getInnerException(), inner), "InnerException");
             Bridge.Test.Assert.areEqual("The message", ex.getMessage());
         }
     });
@@ -17723,14 +17784,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var ex = new Bridge.PromiseException(args);
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.PromiseException), "is PromiseException");
             Bridge.Test.Assert.areEqual$1(args, ex.arguments, "Arguments");
-            Bridge.Test.Assert.true$1(!Bridge.hasValue(ex.getInnerException()), "InnerException");
+            Bridge.Test.Assert.true$1(ex.getInnerException() == null, "InnerException");
             Bridge.Test.Assert.areEqual$1("a", ex.getMessage(), "Message");
         },
         argumentsAndMessageConstructorWorks: function () {
             var args = ["a", 1];
             var ex = new Bridge.PromiseException(args, "Some message");
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.PromiseException), "is PromiseException");
-            Bridge.Test.Assert.true$1(!Bridge.hasValue(ex.getInnerException()), "InnerException");
+            Bridge.Test.Assert.true$1(ex.getInnerException() == null, "InnerException");
             Bridge.Test.Assert.areEqual$1(args, ex.arguments, "Arguments");
             Bridge.Test.Assert.areEqual$1("Some message", ex.getMessage(), "Message");
         },
@@ -17739,7 +17800,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var args = ["a", 1];
             var ex = new Bridge.PromiseException(args, "Some message", inner);
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.PromiseException), "is PromiseException");
-            Bridge.Test.Assert.true$1(ex.getInnerException() === inner, "InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.getInnerException(), inner), "InnerException");
             Bridge.Test.Assert.areEqual$1(args, ex.arguments, "Arguments");
             Bridge.Test.Assert.areEqual$1("Some message", ex.getMessage(), "Message");
         }
@@ -17798,7 +17859,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var inner = new Bridge.Exception("a");
             var ex = new Bridge.RegexMatchTimeoutException("constructor$2", "The message", inner);
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.RegexMatchTimeoutException), "is RegexMatchTimeoutException");
-            Bridge.Test.Assert.true$1(ex.getInnerException() === inner, "InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.getInnerException(), inner), "InnerException");
             Bridge.Test.Assert.areEqual("The message", ex.getMessage());
         },
         constructorWithExceptionDetailsWorks: function () {
@@ -17838,7 +17899,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var inner = new Bridge.Exception("a");
             var ex = new Bridge.SystemException("The message", inner);
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.SystemException), "is SystemException");
-            Bridge.Test.Assert.true$1(ex.getInnerException() === inner, "InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.getInnerException(), inner), "InnerException");
             Bridge.Test.Assert.areEqual("The message", ex.getMessage());
         }
     });
@@ -17856,7 +17917,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.TaskCanceledException), "is TaskCanceledException");
             Bridge.Test.Assert.areEqual$1("A task was canceled.", ex.getMessage(), "Message");
             Bridge.Test.Assert.null$1(ex.task, "Task");
-            Bridge.Test.Assert.true$1(ex.cancellationToken === Bridge.CancellationToken.none, "CancellationToken");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.cancellationToken, Bridge.CancellationToken.none), "CancellationToken");
             Bridge.Test.Assert.null$1(ex.getInnerException(), "InnerException");
         },
         messageOnlyConstructorWorks: function () {
@@ -17864,7 +17925,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.TaskCanceledException), "is TaskCanceledException");
             Bridge.Test.Assert.areEqual$1("Some message", ex.getMessage(), "Message");
             Bridge.Test.Assert.null$1(ex.task, "Task");
-            Bridge.Test.Assert.true$1(ex.cancellationToken === Bridge.CancellationToken.none, "CancellationToken");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.cancellationToken, Bridge.CancellationToken.none), "CancellationToken");
             Bridge.Test.Assert.null$1(ex.getInnerException(), "InnerException");
         },
         taskOnlyConstructorWorks: function () {
@@ -17872,8 +17933,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var ex = new Bridge.TaskCanceledException(null, task);
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.TaskCanceledException), "is TaskCanceledException");
             Bridge.Test.Assert.areEqual$1("A task was canceled.", ex.getMessage(), "Message");
-            Bridge.Test.Assert.true$1(ex.task === task, "Task");
-            Bridge.Test.Assert.true$1(ex.cancellationToken === Bridge.CancellationToken.none, "CancellationToken");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.task, task), "Task");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.cancellationToken, Bridge.CancellationToken.none), "CancellationToken");
             Bridge.Test.Assert.null$1(ex.getInnerException(), "InnerException");
         },
         messageAndInnerExceptionConstructorWorks: function () {
@@ -17882,8 +17943,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.TaskCanceledException), "is TaskCanceledException");
             Bridge.Test.Assert.areEqual$1("Some message", ex.getMessage(), "Message");
             Bridge.Test.Assert.null$1(ex.task, "Task");
-            Bridge.Test.Assert.true$1(ex.cancellationToken === Bridge.CancellationToken.none, "CancellationToken");
-            Bridge.Test.Assert.true$1(ex.getInnerException() === innerException, "InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.cancellationToken, Bridge.CancellationToken.none), "CancellationToken");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.getInnerException(), innerException), "InnerException");
         }
     });
     
@@ -17914,7 +17975,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var inner = new Bridge.Exception("a");
             var ex = new Bridge.TimeoutException("The message", inner);
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.TimeoutException), "is TimeoutException");
-            Bridge.Test.Assert.true$1(ex.getInnerException() === inner, "InnerException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex.getInnerException(), inner), "InnerException");
             Bridge.Test.Assert.areEqual("The message", ex.getMessage());
         }
     });
@@ -18355,13 +18416,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     Bridge.define('Bridge.ClientTest.Linq.AnagramEqualityComparer', {
         inherits: [Bridge.EqualityComparer$1(String)],
         equals: function (x, y) {
-            return this.getCanonicalString(x) === this.getCanonicalString(y);
+            return Bridge.referenceEquals(this.getCanonicalString(x), this.getCanonicalString(y));
         },
         getHashCode: function (obj) {
             return Bridge.getHashCode(this.getCanonicalString(obj));
         },
         getCanonicalString: function (word) {
-            if (!Bridge.hasValue(word)) {
+            if (word == null) {
                 return null;
             }
     
@@ -18680,7 +18741,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return Bridge.String.equals(x, y);
         },
         getHashCode: function (obj) {
-            if (!Bridge.hasValue(obj)) {
+            if (obj == null) {
                 return 0;
             }
     
@@ -18787,13 +18848,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return x.getID() === 3;
         },
         f3: function (x) {
-            return x.getGroup() === "C";
+            return Bridge.referenceEquals(x.getGroup(), "C");
         },
         f4: function (x) {
             return x.getID() === -1;
         },
         f5: function (x) {
-            return x.getName() === "Nemo";
+            return Bridge.referenceEquals(x.getName(), "Nemo");
         },
         f6: function (p) {
             return p;
@@ -18802,7 +18863,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return x.getID() === 4;
         },
         f8: function (x) {
-            return x.getGroup() === "B";
+            return Bridge.referenceEquals(x.getGroup(), "B");
         },
         f9: function (n) {
             return n > 5;
@@ -18872,7 +18933,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
                 var complexGrouping = (Bridge.Linq.Enumerable.from(numbers).select(function (n) {
                     return { number: n, words: (Bridge.Linq.Enumerable.from(words).where(function (w) {
-                        return String.fromCharCode(w.charCodeAt(0)) === n.toString();
+                        return Bridge.referenceEquals(String.fromCharCode(w.charCodeAt(0)), n.toString());
                     }).groupBy($_.Bridge.ClientTest.Linq.TestLinqGroupingOperators.f3).select($_.Bridge.ClientTest.Linq.TestLinqGroupingOperators.f10)).toArray() };
                 })).toArray();
     
@@ -19013,7 +19074,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return Bridge.Linq.Enumerable.from(x0.pg).defaultIfEmpty(null);
         },
         f8: function (x1, ep) {
-            return { groupName: x1.g.getName(), personName: Bridge.hasValue(ep) ? ep.getName() : "" };
+            return { groupName: x1.g.getName(), personName: ep != null ? ep.getName() : "" };
         },
         f9: function (g) {
             return { name: g.getName(), digit: 1 };
@@ -19028,10 +19089,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return { x3: x3, ep: ep };
         },
         f13: function (x4) {
-            return Bridge.hasValue(x4.ep) ? x4.ep.getName() : null;
+            return x4.ep != null ? x4.ep.getName() : null;
         },
         f14: function (x5) {
-            return { groupName: Bridge.hasValue(x5.x3.g) ? x5.x3.g.getName() : null, personName: Bridge.hasValue(x5.ep) ? x5.ep.getName() : null };
+            return { groupName: x5.x3.g != null ? x5.x3.g.getName() : null, personName: x5.ep != null ? x5.ep.getName() : null };
         }
     });
     
@@ -19467,7 +19528,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return p.getCount();
         },
         f4: function (p) {
-            return p.getCount() < 501 && p.getGroup() === "A";
+            return p.getCount() < 501 && Bridge.referenceEquals(p.getGroup(), "A");
         },
         f5: function (p, index) {
             return p.getCount() < ((index * 100) | 0);
@@ -20249,8 +20310,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         boxingWorks: function () {
             var a = 3, b = null;
-            Bridge.Test.Assert.$true(Bridge.hasValue(a));
-            Bridge.Test.Assert.$false(Bridge.hasValue(b));
+            Bridge.Test.Assert.$true(a != null);
+            Bridge.Test.Assert.$false(b != null);
         },
         unboxingWorks: function () {
             var a = 3, b = null;
@@ -20443,11 +20504,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var $t, $t1, $t2, $t3, $t4;
             var v1 = null, v2 = 1, v3 = 0, v4 = 2;
             var s1 = null, s2 = "x";
-            Bridge.Test.Assert.areStrictEqual(null, ($t = v1, Bridge.hasValue($t) ? $t : v1));
-            Bridge.Test.Assert.areStrictEqual(1, ($t1 = v1, Bridge.hasValue($t1) ? $t1 : v2));
-            Bridge.Test.Assert.areStrictEqual(0, ($t2 = v3, Bridge.hasValue($t2) ? $t2 : v4));
-            Bridge.Test.Assert.areStrictEqual(null, ($t3 = s1, Bridge.hasValue($t3) ? $t3 : s1));
-            Bridge.Test.Assert.areStrictEqual("x", ($t4 = s1, Bridge.hasValue($t4) ? $t4 : s2));
+            Bridge.Test.Assert.areStrictEqual(null, ($t = v1, $t != null ? $t : v1));
+            Bridge.Test.Assert.areStrictEqual(1, ($t1 = v1, $t1 != null ? $t1 : v2));
+            Bridge.Test.Assert.areStrictEqual(0, ($t2 = v3, $t2 != null ? $t2 : v4));
+            Bridge.Test.Assert.areStrictEqual(null, ($t3 = s1, $t3 != null ? $t3 : s1));
+            Bridge.Test.Assert.areStrictEqual("x", ($t4 = s1, $t4 != null ? $t4 : s2));
         }
     });
     
@@ -21608,12 +21669,12 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         shortCoalesceWorks: function () {
             var $t, $t1;
             var c = Bridge.Decimal(1.0);
-            var d = ($t = c, Bridge.hasValue($t) ? $t : Bridge.Decimal(2.0));
+            var d = ($t = c, $t != null ? $t : Bridge.Decimal(2.0));
     
             this.assertIsDecimalAndEqualTo(d, 1);
     
             var e = Bridge.Decimal(3);
-            var f = ($t1 = e, Bridge.hasValue($t1) ? $t1 : Bridge.Decimal(0));
+            var f = ($t1 = e, $t1 != null ? $t1 : Bridge.Decimal(0));
     
             this.assertIsDecimalAndEqualTo(f, 3);
         }
@@ -22035,10 +22096,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$true(Bridge.is(1, Bridge.Int32));
         },
         typeAsWorksForInt32: function () {
-            Bridge.Test.Assert.$false(Bridge.hasValue((Bridge.as(null, Bridge.Int32, true))));
-            Bridge.Test.Assert.$false(Bridge.hasValue((Bridge.as({ }, Bridge.Int32, true))));
-            Bridge.Test.Assert.$false(Bridge.hasValue((Bridge.as(1.5, Bridge.Int32, true))));
-            Bridge.Test.Assert.$true(Bridge.hasValue((Bridge.as(1, Bridge.Int32, true))));
+            Bridge.Test.Assert.$false((Bridge.as(null, Bridge.Int32, true)) != null);
+            Bridge.Test.Assert.$false((Bridge.as({ }, Bridge.Int32, true)) != null);
+            Bridge.Test.Assert.$false((Bridge.as(1.5, Bridge.Int32, true)) != null);
+            Bridge.Test.Assert.$true((Bridge.as(1, Bridge.Int32, true)) != null);
         },
         unboxingWorksForInt32: function () {
             var _null = null;
@@ -22220,7 +22281,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         assertLong: function (expected, actual, message, checkedType) {
             if (message === void 0) { message = ""; }
             if (checkedType === void 0) { checkedType = "Bridge.Long"; }
-            if (!Bridge.hasValue(message)) {
+            if (message == null) {
                 message = "";
             }
     
@@ -22256,14 +22317,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.true$1(Bridge.Nullable.lifteq("equals", Bridge.Long(5754), Bridge.Long.clip64(ni3)), "nullable 5754 unchecked");
             Bridge.Test.Assert.true$1(Bridge.Nullable.lifteq("equals", Bridge.Long([-808,2147483647]), Bridge.Long.clip64(ni4)), "nullable 9223372036854775000 unchecked");
             Bridge.Test.Assert.true$1(Bridge.Nullable.liftcmp("lt", Bridge.Long.clip64(ni5), Bridge.Long(0)), "nullable 16223372036854776000 unchecked");
-            Bridge.Test.Assert.true$1(!Bridge.hasValue(Bridge.Long.clip64(ni6)), "null unchecked");
+            Bridge.Test.Assert.true$1(Bridge.Long.lift(null) == Bridge.Long.clip64(ni6), "null unchecked");
     
             Bridge.Test.Assert.true$1(Bridge.Long(5754).equals(Bridge.Long.check(i3, Bridge.Long)), "5754 checked");
             Bridge.Test.Assert.true$1(Bridge.Long([-808,2147483647]).equals(Bridge.Long.check(i4, Bridge.Long)), "9223372036854775000 checked");
     
             Bridge.Test.Assert.true$1(Bridge.Nullable.lifteq("equals", Bridge.Long(5754), Bridge.Long.check(ni3, Bridge.Long)), "nullable 5754 checked");
             Bridge.Test.Assert.true$1(Bridge.Nullable.lifteq("equals", Bridge.Long([-808,2147483647]), Bridge.Long.check(ni4, Bridge.Long)), "nullable 9223372036854775000 checked");
-            Bridge.Test.Assert.true$1(!Bridge.hasValue(Bridge.Long.check(ni6, Bridge.Long)), "null checked");
+            Bridge.Test.Assert.true$1(Bridge.Long.lift(null) == Bridge.Long.check(ni6, Bridge.Long), "null checked");
         },
         overflowWorks: function () {
             var min = Bridge.Long.MinValue;
@@ -22888,12 +22949,12 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         referenceEqualsWorks: function () {
             var o1 = { }, o2 = { }, n = null;
-            Bridge.Test.Assert.true$1(n === n, "n, n");
-            Bridge.Test.Assert.false$1(n === undefined, "n, Script.Undefined");
-            Bridge.Test.Assert.false$1(o1 === o2, "o1, o2");
-            Bridge.Test.Assert.false$1(o1 === n, "o1, n");
-            Bridge.Test.Assert.false$1(o1 === undefined, "o1, Script.Undefined");
-            Bridge.Test.Assert.true$1(o1 === o1, "o1, o1");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(n, n), "n, n");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(n, undefined), "n, Script.Undefined");
+            Bridge.Test.Assert.false$1(Bridge.referenceEquals(o1, o2), "o1, o2");
+            Bridge.Test.Assert.false$1(Bridge.referenceEquals(o1, n), "o1, n");
+            Bridge.Test.Assert.false$1(Bridge.referenceEquals(o1, undefined), "o1, Script.Undefined");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(o1, o1), "o1, o1");
         },
         toStringOverride: function () {
             var c1 = new Bridge.ClientTest.SimpleTypes.ObjectTests.C1(), c2 = new Bridge.ClientTest.SimpleTypes.ObjectTests.C2();
@@ -23826,17 +23887,17 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         stringEqualityWorks: function () {
             var s1 = "abc", s2 = null, s3 = null;
-            Bridge.Test.Assert.$true(s1 === "abc");
-            Bridge.Test.Assert.$false(s1 === "aBc");
-            Bridge.Test.Assert.$false(s1 === s2);
-            Bridge.Test.Assert.$true(s2 === s3);
+            Bridge.Test.Assert.$true(Bridge.referenceEquals(s1, "abc"));
+            Bridge.Test.Assert.$false(Bridge.referenceEquals(s1, "aBc"));
+            Bridge.Test.Assert.$false(Bridge.referenceEquals(s1, s2));
+            Bridge.Test.Assert.$true(Bridge.referenceEquals(s2, s3));
         },
         stringInequalityWorks: function () {
             var s1 = "abc", s2 = null, s3 = null;
-            Bridge.Test.Assert.$false(s1 !== "abc");
-            Bridge.Test.Assert.$true(s1 !== "aBc");
-            Bridge.Test.Assert.$true(s1 !== s2);
-            Bridge.Test.Assert.$false(s2 !== s3);
+            Bridge.Test.Assert.$false(!Bridge.referenceEquals(s1, "abc"));
+            Bridge.Test.Assert.$true(!Bridge.referenceEquals(s1, "aBc"));
+            Bridge.Test.Assert.$true(!Bridge.referenceEquals(s1, s2));
+            Bridge.Test.Assert.$false(!Bridge.referenceEquals(s2, s3));
         },
         stringIndexingWorks: function () {
             var s = "abcd";
@@ -23929,7 +23990,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.apply($_.Bridge.ClientTest.SimpleTypes.StringTests, {
         f1: function (s) {
-            return s === "a" ? "x" : "y";
+            return Bridge.referenceEquals(s, "a") ? "x" : "y";
         }
     });
     
@@ -23952,7 +24013,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             testConstructors: function () {
                 var v1 = new Bridge.Version("constructor");
     
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v1), "v1 created");
+                Bridge.Test.Assert.true$1(v1 != null, "v1 created");
                 Bridge.Test.Assert.areEqual$1(0, v1.getMajor(), "v1.Major 0");
                 Bridge.Test.Assert.areEqual$1(0, v1.getMinor(), "v1.Minor 0");
                 Bridge.Test.Assert.areEqual$1(-1, v1.getBuild(), "v1.Build -1");
@@ -23961,7 +24022,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(-1, v1.getMinorRevision(), "v1.MinorRevision -1");
     
                 var v2 = new Bridge.Version("constructor$4", "2.4.1128.2");
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v2), "v2 created");
+                Bridge.Test.Assert.true$1(v2 != null, "v2 created");
                 Bridge.Test.Assert.areEqual$1(2, v2.getMajor(), "v2.Major 2");
                 Bridge.Test.Assert.areEqual$1(4, v2.getMinor(), "v2.Minor 4");
                 Bridge.Test.Assert.areEqual$1(1128, v2.getBuild(), "v2.Build 1128");
@@ -23970,7 +24031,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(2, v2.getMinorRevision(), "v2.MinorRevision 2");
     
                 var v3 = new Bridge.Version("constructor$4", "2.4.1128.65537");
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v3), "v3 created");
+                Bridge.Test.Assert.true$1(v3 != null, "v3 created");
                 Bridge.Test.Assert.areEqual$1(2, v3.getMajor(), "v3.Major 2");
                 Bridge.Test.Assert.areEqual$1(4, v3.getMinor(), "v3.Minor 4");
                 Bridge.Test.Assert.areEqual$1(1128, v3.getBuild(), "v3.Build 1128");
@@ -23979,7 +24040,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(1, v3.getMinorRevision(), "v3.MinorRevision 1");
     
                 var v4 = new Bridge.Version("constructor$1", 20, 10);
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v4), "v4 created");
+                Bridge.Test.Assert.true$1(v4 != null, "v4 created");
                 Bridge.Test.Assert.areEqual$1(20, v4.getMajor(), "v4.Major 20");
                 Bridge.Test.Assert.areEqual$1(10, v4.getMinor(), "v4.Minor 10");
                 Bridge.Test.Assert.areEqual$1(-1, v4.getBuild(), "v4.Build -1");
@@ -23988,7 +24049,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(-1, v4.getMinorRevision(), "v4.MinorRevision -1");
     
                 var v5 = new Bridge.Version("constructor$2", 200, 100, 300);
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v5), "v5 created");
+                Bridge.Test.Assert.true$1(v5 != null, "v5 created");
                 Bridge.Test.Assert.areEqual$1(200, v5.getMajor(), "v5.Major 200");
                 Bridge.Test.Assert.areEqual$1(100, v5.getMinor(), "v5.Minor 100");
                 Bridge.Test.Assert.areEqual$1(300, v5.getBuild(), "v5.Build 300");
@@ -23997,7 +24058,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(-1, v5.getMinorRevision(), "v5.MinorRevision -1");
     
                 var v6 = new Bridge.Version("constructor$3", 2000, 1000, 3000, 22613920);
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v6), "v6 created");
+                Bridge.Test.Assert.true$1(v6 != null, "v6 created");
                 Bridge.Test.Assert.areEqual$1(2000, v6.getMajor(), "v6.Major 2000");
                 Bridge.Test.Assert.areEqual$1(1000, v6.getMinor(), "v6.Minor 1000");
                 Bridge.Test.Assert.areEqual$1(3000, v6.getBuild(), "v6.Build 3000");
@@ -24009,10 +24070,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var v1 = new Bridge.Version("constructor$3", 1, 2, 3, 262149);
     
                 var o = v1.clone();
-                Bridge.Test.Assert.true$1(Bridge.hasValue(o), "v1 Cloned");
+                Bridge.Test.Assert.true$1(o != null, "v1 Cloned");
     
                 var v2 = Bridge.as(o, Bridge.Version);
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v2), "v1 Cloned as Version");
+                Bridge.Test.Assert.true$1(v2 != null, "v1 Cloned as Version");
     
                 Bridge.Test.Assert.areEqual$1(1, v2.getMajor(), "v2.Major 1");
                 Bridge.Test.Assert.areEqual$1(2, v2.getMinor(), "v2.Minor 2");
@@ -24111,15 +24172,15 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.true$1(Bridge.Version.op_LessThan(v1, v3), "v1 < v3");
                 Bridge.Test.Assert.true$1(Bridge.Version.op_LessThanOrEqual(v1, v3), "v1 <= v3");
     
-                Bridge.Test.Assert.false$1(!Bridge.hasValue(v1), "v1 == null");
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v1), "v1 != null");
+                Bridge.Test.Assert.false$1(v1 == null, "v1 == null");
+                Bridge.Test.Assert.true$1(v1 != null, "v1 != null");
                 Bridge.Test.Assert.true$1(Bridge.Version.op_GreaterThan(v1, null), "v1 > null");
                 Bridge.Test.Assert.true$1(Bridge.Version.op_GreaterThanOrEqual(v1, null), "v1 >= null");
                 Bridge.Test.Assert.false$1(Bridge.Version.op_LessThan(v1, null), "v1 < null");
                 Bridge.Test.Assert.false$1(Bridge.Version.op_LessThanOrEqual(v1, null), "v1 <= null");
     
-                Bridge.Test.Assert.false$1(!Bridge.hasValue(v3), "null == v3");
-                Bridge.Test.Assert.true$1(Bridge.hasValue(v3), "null != v3");
+                Bridge.Test.Assert.false$1(null == v3, "null == v3");
+                Bridge.Test.Assert.true$1(null != v3, "null != v3");
                 Bridge.Test.Assert.false$1(Bridge.Version.op_GreaterThan(null, v3), "null > v3");
                 Bridge.Test.Assert.false$1(Bridge.Version.op_GreaterThanOrEqual(null, v3), "null >= v3");
                 Bridge.Test.Assert.true$1(Bridge.Version.op_LessThan(null, v3), "null < v3");
@@ -24814,7 +24875,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         assertULong: function (expected, actual, message, checkedType) {
             if (message === void 0) { message = ""; }
             if (checkedType === void 0) { checkedType = "Bridge.ULong"; }
-            if (!Bridge.hasValue(message)) {
+            if (message == null) {
                 message = "";
             }
     
@@ -24848,7 +24909,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.true$1(Bridge.Nullable.lifteq("equals", Bridge.ULong(0), Bridge.Long.clipu64(ni2)), "nullable 0 unchecked");
             Bridge.Test.Assert.true$1(Bridge.Nullable.lifteq("equals", Bridge.ULong(234), Bridge.Long.clipu64(ni3)), "nullable 234 unchecked");
             Bridge.Test.Assert.true$1(Bridge.Nullable.lifteq("equals", Bridge.ULong(Bridge.Long([-808,2147483647])), Bridge.Long.clipu64(ni4)), "nullable 9223372036854775000 unchecked");
-            Bridge.Test.Assert.true$1(!Bridge.hasValue(Bridge.Long.clipu64(ni6)), "null unchecked");
+            Bridge.Test.Assert.true$1(Bridge.ULong.lift(null) == Bridge.Long.clipu64(ni6), "null unchecked");
     
             Bridge.Test.Assert.true$1(Bridge.ULong(0).equals(Bridge.Long.check(i2, Bridge.ULong)), "0 checked");
             Bridge.Test.Assert.true$1(Bridge.ULong(234).equals(Bridge.Long.check(i3, Bridge.ULong)), "234 checked");
@@ -24857,7 +24918,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.true$1(Bridge.Nullable.lifteq("equals", Bridge.ULong(0), Bridge.Long.check(ni2, Bridge.ULong)), "nullable 0 checked");
             Bridge.Test.Assert.true$1(Bridge.Nullable.lifteq("equals", Bridge.ULong(234), Bridge.Long.check(ni3, Bridge.ULong)), "nullable 234 checked");
             Bridge.Test.Assert.true$1(Bridge.Nullable.lifteq("equals", Bridge.ULong(Bridge.Long([-808,2147483647])), Bridge.Long.check(ni4, Bridge.ULong)), "nullable 9223372036854775000 checked");
-            Bridge.Test.Assert.true$1(!Bridge.hasValue(Bridge.Long.check(ni6, Bridge.ULong)), "null checked");
+            Bridge.Test.Assert.true$1(Bridge.ULong.lift(null) == Bridge.Long.check(ni6, Bridge.ULong), "null checked");
         },
         overflowWorks: function () {
             var min = Bridge.ULong.MinValue;
@@ -25157,7 +25218,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.areEqual$1(value, capture.toString(), descr + ".ToString()");
         },
         capturesAreEqual: function (expected, actual, descr) {
-            if (!Bridge.hasValue(expected)) {
+            if (expected == null) {
                 Bridge.Test.Assert.null$1(actual, descr + " is NULL");
             }
             else  {
@@ -25170,7 +25231,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             }
         },
         groupsAreEqual: function (expected, actual, descr) {
-            if (!Bridge.hasValue(expected)) {
+            if (expected == null) {
                 Bridge.Test.Assert.null$1(actual, descr + " is NULL");
             }
             else  {
@@ -25179,7 +25240,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 this.capturesAreEqual(expected, actual, descr);
                 Bridge.Test.Assert.areEqual$1(expected.getSuccess(), actual.getSuccess(), descr + ".Success");
     
-                if (!Bridge.hasValue(expected.getCaptures())) {
+                if (expected.getCaptures() == null) {
                     Bridge.Test.Assert.null$1(actual.getCaptures(), descr + ".Captures is NULL");
                 }
                 else  {
@@ -25192,14 +25253,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             }
         },
         matchesAreEqual: function (expected, actual, descr) {
-            if (!Bridge.hasValue(expected)) {
+            if (expected == null) {
                 Bridge.Test.Assert.null$1(actual, descr + " is NULL");
             }
             else  {
                 Bridge.Test.Assert.notNull$1(actual, descr + " is not NULL");
                 this.groupsAreEqual(expected, actual, descr);
     
-                if (!Bridge.hasValue(expected.getGroups())) {
+                if (expected.getGroups() == null) {
                     Bridge.Test.Assert.null$1(actual.getGroups(), descr + ".Groups is NULL");
                 }
                 else  {
@@ -25212,7 +25273,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             }
         },
         validateCollection: function (T, expected, actual, msg) {
-            if (!Bridge.hasValue(expected)) {
+            if (expected == null) {
                 Bridge.Test.Assert.null$1(actual, msg + " is NULL");
             }
             else  {
@@ -25773,49 +25834,49 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         appendBoolWorks: function () {
             var sb = new Bridge.Text.StringBuilder("|");
-            Bridge.Test.Assert.$true(sb.append(true) === sb);
+            Bridge.Test.Assert.$true(Bridge.referenceEquals(sb.append(true), sb));
             Bridge.Test.Assert.areEqual$1("|true", sb.toString(), "Text");
             Bridge.Test.Assert.areEqual$1(5, sb.getLength(), "Length");
         },
         appendCharWorks: function () {
             var sb = new Bridge.Text.StringBuilder("|");
-            Bridge.Test.Assert.$true(sb.append(String.fromCharCode(99)) === sb);
+            Bridge.Test.Assert.$true(Bridge.referenceEquals(sb.append(String.fromCharCode(99)), sb));
             Bridge.Test.Assert.areEqual$1("|c", sb.toString(), "Text");
             Bridge.Test.Assert.areEqual$1(2, sb.getLength(), "Length");
         },
         appendIntWorks: function () {
             var sb = new Bridge.Text.StringBuilder("|");
-            Bridge.Test.Assert.$true(sb.append(123) === sb);
+            Bridge.Test.Assert.$true(Bridge.referenceEquals(sb.append(123), sb));
             Bridge.Test.Assert.areEqual$1("|123", sb.toString(), "Text");
             Bridge.Test.Assert.areEqual$1(4, sb.getLength(), "Length");
         },
         appendDoubleWorks: function () {
             var sb = new Bridge.Text.StringBuilder("|");
-            Bridge.Test.Assert.$true(sb.append(123.0) === sb);
+            Bridge.Test.Assert.$true(Bridge.referenceEquals(sb.append(123.0), sb));
             Bridge.Test.Assert.areEqual$1("|123", sb.toString(), "Text");
             Bridge.Test.Assert.areEqual$1(4, sb.getLength(), "Length");
         },
         appendObjectWorks: function () {
             var sb = new Bridge.Text.StringBuilder("|");
-            Bridge.Test.Assert.$true(sb.append(new Bridge.ClientTest.Text.StringBuilderTests.SomeClass()) === sb);
+            Bridge.Test.Assert.$true(Bridge.referenceEquals(sb.append(new Bridge.ClientTest.Text.StringBuilderTests.SomeClass()), sb));
             Bridge.Test.Assert.areEqual$1("|some text", sb.toString(), "Text");
             Bridge.Test.Assert.areEqual$1(10, sb.getLength(), "Length");
         },
         appendStringWorks: function () {
             var sb = new Bridge.Text.StringBuilder("|");
-            Bridge.Test.Assert.$true(sb.append("some text") === sb);
+            Bridge.Test.Assert.$true(Bridge.referenceEquals(sb.append("some text"), sb));
             Bridge.Test.Assert.areEqual$1("|some text", sb.toString(), "Text");
             Bridge.Test.Assert.areEqual$1(10, sb.getLength(), "Length");
         },
         appendLineWorks: function () {
             var sb = new Bridge.Text.StringBuilder("|");
-            Bridge.Test.Assert.$true(sb.appendLine() === sb);
+            Bridge.Test.Assert.$true(Bridge.referenceEquals(sb.appendLine(), sb));
             Bridge.Test.Assert.areEqual$1("|\r\n", sb.toString(), "Text");
             Bridge.Test.Assert.areEqual$1(3, sb.getLength(), "Length");
         },
         appendLineStringWorks: function () {
             var sb = new Bridge.Text.StringBuilder("|");
-            Bridge.Test.Assert.$true(sb.appendLine("some text") === sb);
+            Bridge.Test.Assert.$true(Bridge.referenceEquals(sb.appendLine("some text"), sb));
             Bridge.Test.Assert.areEqual$1("|some text\r\n", sb.toString(), "Text");
             Bridge.Test.Assert.areEqual$1(12, sb.getLength(), "Length");
         },
@@ -25949,7 +26010,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
             asyncTask.continueWith(function (x) {
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, asyncTask.status, "asyncTask should run to completion");
-                Bridge.Test.Assert.true$1(!Bridge.hasValue(asyncTask.exception), "asyncTask should not throw an exception");
+                Bridge.Test.Assert.true$1(asyncTask.exception == null, "asyncTask should not throw an exception");
                 Bridge.Test.Assert.areEqual$1(2, state, "Async method should finish after the task is finished");
     
                 done();
@@ -26017,8 +26078,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
             asyncTask.continueWith(function (x) {
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.faulted, asyncTask.status, "asyncTask should fault");
-                Bridge.Test.Assert.true$1(Bridge.hasValue(asyncTask.exception), "asyncTask should have an exception");
-                Bridge.Test.Assert.true$1(asyncTask.exception.innerExceptions.get(0) === ex, "asyncTask should throw the correct exception");
+                Bridge.Test.Assert.true$1(asyncTask.exception != null, "asyncTask should have an exception");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(asyncTask.exception.innerExceptions.get(0), ex), "asyncTask should throw the correct exception");
                 Bridge.Test.Assert.areEqual$1(2, state, "Async method should finish after the task is finished");
     
                 done();
@@ -26085,8 +26146,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
             asyncTask.continueWith(function (x) {
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.faulted, asyncTask.status, "asyncTask should fault");
-                Bridge.Test.Assert.true$1(Bridge.hasValue(asyncTask.exception), "asyncTask should have an exception");
-                Bridge.Test.Assert.true$1(asyncTask.exception.innerExceptions.get(0) === ex, "asyncTask should throw the correct exception");
+                Bridge.Test.Assert.true$1(asyncTask.exception != null, "asyncTask should have an exception");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(asyncTask.exception.innerExceptions.get(0), ex), "asyncTask should throw the correct exception");
                 Bridge.Test.Assert.areEqual$1(1, state, "Async method should not have reach anything after the faulting await");
     
                 done();
@@ -26135,7 +26196,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                         continue;
                                     }
                                     case 3: {
-                                        Bridge.Test.Assert.true$1(ex === ex2, "The exception should be correct");
+                                        Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex, ex2), "The exception should be correct");
                                         $step = 4;
                                         continue;
                                     }
@@ -26229,7 +26290,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
             asyncTask.continueWith(function (x) {
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, asyncTask.status, "asyncTask should run to completion");
-                Bridge.Test.Assert.true$1(!Bridge.hasValue(asyncTask.exception), "asyncTask should not throw an exception");
+                Bridge.Test.Assert.true$1(asyncTask.exception == null, "asyncTask should not throw an exception");
                 Bridge.Test.Assert.areEqual$1(2, state, "Async method should finish after the task is finished");
                 Bridge.Test.Assert.areEqual$1(42, asyncTask.getResult(), "Result should be correct");
     
@@ -26438,7 +26499,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             }
             catch (ex) {
                 ex = Bridge.Exception.create(ex);
-                Bridge.Test.Assert.true$1(ex === ex1, "ex");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex, ex1), "ex");
             }
     
             Bridge.Test.Assert.areEqual$1(2, calledHandlers.getCount(), "called handler count");
@@ -26459,7 +26520,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             cts.cancel();
             var state = 0;
             cts.token.register(function (c) {
-                Bridge.Test.Assert.true$1(context === c, "context");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(context, c), "context");
                 state = 1;
             }, context);
             Bridge.Test.Assert.areEqual(1, state);
@@ -26476,7 +26537,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             }
             catch (ex) {
                 ex = Bridge.Exception.create(ex);
-                Bridge.Test.Assert.true$1(ex === ex1, "Exception");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex, ex1), "Exception");
             }
         },
         registerOnACancelledSourceWithContextRethrowsAThrownException: function () {
@@ -26486,14 +26547,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             cts.cancel();
             try {
                 cts.token.register(function (c) {
-                    Bridge.Test.Assert.true$1(context === c, "context");
+                    Bridge.Test.Assert.true$1(Bridge.referenceEquals(context, c), "context");
                     throw ex1;
                 }, context);
                 Bridge.Test.Assert.fail$1("Should have thrown");
             }
             catch (ex) {
                 ex = Bridge.Exception.create(ex);
-                Bridge.Test.Assert.true$1(ex === ex1, "Exception");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex, ex1), "Exception");
             }
         },
         registerOverloadsWithUseSynchronizationContextWork: function () {
@@ -26508,11 +26569,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.identity(numCalled, (numCalled = (numCalled + 1) | 0));
             }, false);
             cts.token.register(function (c) {
-                Bridge.Test.Assert.true$1(context === c, "context");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(context, c), "context");
                 numCalled = (numCalled + 1) | 0;
             }, context);
             cts.token.register(function (c) {
-                Bridge.Test.Assert.true$1(context === c, "context");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(context, c), "context");
                 numCalled = (numCalled + 1) | 0;
             }, context);
             Bridge.Test.Assert.areEqual(4, numCalled);
@@ -26543,7 +26604,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             });
             Bridge.Test.Assert.areEqual$1(1, state, "state 1");
             ct.register(function (c) {
-                Bridge.Test.Assert.true$1(context === c, "context");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(context, c), "context");
                 state = 2;
             }, context);
             Bridge.Test.Assert.areEqual$1(2, state, "state 2");
@@ -26686,7 +26747,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var continuationRun = false;
     
             var task1 = task.continueWith(function (t) {
-                Bridge.Test.Assert.true$1(t === task, "ContinueWith parameter should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(t, task), "ContinueWith parameter should be correct");
                 continuationRun = true;
             });
     
@@ -26715,7 +26776,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var continuationRun = false;
     
             var task1 = task.continueWith(function (t) {
-                Bridge.Test.Assert.true$1(t === task, "ContinueWith parameter should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(t, task), "ContinueWith parameter should be correct");
                 continuationRun = true;
             });
     
@@ -26746,7 +26807,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var continuationRun = false;
     
             var task1 = task.continueWith(function (t) {
-                Bridge.Test.Assert.true$1(t === task, "ContinueWith parameter should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(t, task), "ContinueWith parameter should be correct");
                 continuationRun = true;
             });
     
@@ -26786,11 +26847,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                 result = null;
                                 
                                 task = Bridge.Task.run(function () {
-                                    Bridge.Test.Assert.true$1(!Bridge.hasValue(result), "Await should not finish too early (a).");
+                                    Bridge.Test.Assert.true$1(result == null, "Await should not finish too early (a).");
                                     promise.resolve([42, "result 123", 101]);
                                 });
                                 
-                                Bridge.Test.Assert.true$1(!Bridge.hasValue(result), "Await should not finish too early (b).");
+                                Bridge.Test.Assert.true$1(result == null, "Await should not finish too early (b).");
                                 
                                 $task1 = Bridge.Task.fromPromise(promise);
                                 $step = 1;
@@ -26923,7 +26984,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var continuationRun = false;
     
             var task1 = task.continueWith(function (t) {
-                Bridge.Test.Assert.true$1(t === task, "ContinueWith parameter should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(t, task), "ContinueWith parameter should be correct");
                 continuationRun = true;
             });
     
@@ -26991,7 +27052,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             while (i < this.getThens().getCount()) {
                 var aThen = this.getThens().getItem(i);
     
-                if (Bridge.hasValue(aThen.getProgress())) {
+                if (aThen.getProgress() != null) {
                     aThen.getProgress()(args);
                 }
     
@@ -27016,17 +27077,17 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var aThen = this.getThens().getItem(i);
     
                 if (which === Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which.resolve) {
-                    if (Bridge.hasValue(aThen.getFilled())) {
+                    if (aThen.getFilled() != null) {
                         aThen.getFilled().apply(null, args);
                     }
                 }
                 else  {
-                    if (Bridge.hasValue(aThen.getError())) {
+                    if (aThen.getError() != null) {
                         aThen.getError().apply(null, args);
                     }
                 }
     
-                if (Bridge.hasValue(aThen.getProgress())) {
+                if (aThen.getProgress() != null) {
                     aThen.getProgress()([100]);
                 }
     
@@ -27113,7 +27174,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var task = tcs.task;
     
             task.continueWith(function (t) {
-                Bridge.Test.Assert.true$1(t === task, "Callback parameter should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(t, task), "Callback parameter should be correct");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, task.status, "Task should be completed when in the callback");
                 Bridge.Test.Assert.areEqual$1(1, task.getResult(), "Result should be 1 after the callback");
                 Bridge.Test.Assert.areEqual$1(null, task.exception, "Exception should be null in the callback");
@@ -27146,10 +27207,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var ex = new Bridge.Exception("Some text");
     
             task.continueWith(function (t) {
-                Bridge.Test.Assert.true$1(t === task, "Callback parameter should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(t, task), "Callback parameter should be correct");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.faulted, task.status, "Task should be faulted in the callback");
                 Bridge.Test.Assert.$true(Bridge.is(task.exception, Bridge.AggregateException));
-                Bridge.Test.Assert.true$1(task.exception.innerExceptions.get(0) === ex, "The exception should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(task.exception.innerExceptions.get(0), ex), "The exception should be correct");
                 Bridge.Test.Assert.throws$5(function () {
                     var x = task.getResult();
                 }, "Getting the result property in the callback should throw");
@@ -27164,7 +27225,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
             Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.faulted, task.status, "The task should be faulted immediately after the SetException() call");
             Bridge.Test.Assert.$true(Bridge.is(task.exception, Bridge.AggregateException));
-            Bridge.Test.Assert.true$1(task.exception.innerExceptions.get(0) === ex, "The exception should be correct immediately after SetException()");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(task.exception.innerExceptions.get(0), ex), "The exception should be correct immediately after SetException()");
             Bridge.Test.Assert.throws$5(function () {
                 var x = task.getResult();
             }, "Getting the result property after SetException() should throw");
@@ -27185,11 +27246,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var ex2 = new Bridge.Exception("Some other text");
     
             task.continueWith(function (t) {
-                Bridge.Test.Assert.true$1(t === task, "Callback parameter should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(t, task), "Callback parameter should be correct");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.faulted, task.status, "Task should be faulted in the callback");
                 Bridge.Test.Assert.$true(Bridge.is(task.exception, Bridge.AggregateException));
-                Bridge.Test.Assert.true$1(task.exception.innerExceptions.get(0) === ex1, "InnerExceptions[0] should be correct in callback");
-                Bridge.Test.Assert.true$1(task.exception.innerExceptions.get(1) === ex2, "InnerExceptions[1] should be correct in callback");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(task.exception.innerExceptions.get(0), ex1), "InnerExceptions[0] should be correct in callback");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(task.exception.innerExceptions.get(1), ex2), "InnerExceptions[1] should be correct in callback");
                 Bridge.Test.Assert.throws$5(function () {
                     var x = task.getResult();
                 }, "Getting the result property in the callback should throw");
@@ -27204,8 +27265,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
             Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.faulted, task.status, "The task should be faulted immediately after the SetException() call");
             Bridge.Test.Assert.$true(Bridge.is(task.exception, Bridge.AggregateException));
-            Bridge.Test.Assert.true$1(task.exception.innerExceptions.get(0) === ex1, "InnerExceptions[0] should be correct immediately after SetException");
-            Bridge.Test.Assert.true$1(task.exception.innerExceptions.get(1) === ex2, "InnerExceptions[1] should be correct immediately after SetException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(task.exception.innerExceptions.get(0), ex1), "InnerExceptions[0] should be correct immediately after SetException");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(task.exception.innerExceptions.get(1), ex2), "InnerExceptions[1] should be correct immediately after SetException");
             Bridge.Test.Assert.throws$5(function () {
                 var x = task.getResult();
             }, "Getting the result property after SetException() should throw");
@@ -27224,9 +27285,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var task = tcs.task;
     
             var task1 = task.continueWith(function (t) {
-                Bridge.Test.Assert.true$1(t === task, "Callback parameter should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(t, task), "Callback parameter should be correct");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.canceled, task.status, "Task should be cancelled in the callback");
-                Bridge.Test.Assert.true$1(!Bridge.hasValue(task.exception), "Exception should be null in the callback");
+                Bridge.Test.Assert.true$1(task.exception == null, "Exception should be null in the callback");
                 Bridge.Test.Assert.throws$5(function () {
                     var x = task.getResult();
                 }, "Getting the result property in the callback should throw");
@@ -27240,7 +27301,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             tcs.setCanceled();
     
             Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.canceled, task.status, "The task should be cancelled immediately after the SetCanceled() call");
-            Bridge.Test.Assert.true$1(!Bridge.hasValue(task.exception), "The exception should be correct immediately after SetCanceled()");
+            Bridge.Test.Assert.true$1(task.exception == null, "The exception should be correct immediately after SetCanceled()");
             Bridge.Test.Assert.throws$5(function () {
                 var x = task.getResult();
             }, "Getting the result property after SetCanceled() should throw");
@@ -27321,7 +27382,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
             Bridge.Task.run(function () {
                 Bridge.Test.Assert.notNull$1(caughtException, "Should catch");
-                Bridge.Test.Assert.$true(tcs.task === caughtException.task);
+                Bridge.Test.Assert.$true(Bridge.referenceEquals(tcs.task, caughtException.task));
     
                 completeAsync();
             });
@@ -27343,7 +27404,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     Bridge.Test.Assert.areEqual$1(1, ex.innerExceptions.getCount(), "InnerExceptions.Count");
                     var tce = Bridge.as(ex.innerExceptions.get(0), Bridge.TaskCanceledException);
                     Bridge.Test.Assert.notNull$1(tce, "is TaskCanceledException");
-                    Bridge.Test.Assert.true$1(tcs.task === tce.task, "Task");
+                    Bridge.Test.Assert.true$1(Bridge.referenceEquals(tcs.task, tce.task), "Task");
                 }
                 else {
                     throw $e1;
@@ -27421,16 +27482,16 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var continuedTask = null;
     
             continuedTask = task.continueWith(function (t) {
-                Bridge.Test.Assert.true$1(t === task, "argument to task.ContinueWith callback should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(t, task), "argument to task.ContinueWith callback should be correct");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, task.status, "task should have run to completion at point 2");
                 Bridge.Test.Assert.areEqual$1(null, task.exception, "task should not have an exception");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.running, continuedTask.status, "continuedTask should be running at point 2");
             });
     
-            Bridge.Test.Assert.false$1(task === continuedTask, "task and continuedTask should not be the same");
+            Bridge.Test.Assert.false$1(Bridge.referenceEquals(task, continuedTask), "task and continuedTask should not be the same");
     
             var continuedTask1 = continuedTask.continueWith(function (t) {
-                Bridge.Test.Assert.true$1(t === continuedTask, "argument to continuedTask.ContinueWith callback should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(t, continuedTask), "argument to continuedTask.ContinueWith callback should be correct");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, continuedTask.status, "continuedTask should have run to completion at point 3");
                 Bridge.Test.Assert.areEqual$1(null, continuedTask.exception, "continuedTask should not have an exception");
     
@@ -27490,10 +27551,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
             continuedTask = task.continueWith($_.Bridge.ClientTest.Threading.TaskTests.f1);
     
-            Bridge.Test.Assert.false$1(task === continuedTask, "task and continuedTask should not be the same");
+            Bridge.Test.Assert.false$1(Bridge.referenceEquals(task, continuedTask), "task and continuedTask should not be the same");
     
             var continuedTask1 = continuedTask.continueWith(function (t) {
-                Bridge.Test.Assert.true$1(t === continuedTask, "argument to continuedTask.ContinueWith callback should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(t, continuedTask), "argument to continuedTask.ContinueWith callback should be correct");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.faulted, continuedTask.status, "continuedTask should have run to completion at point 3");
                 Bridge.Test.Assert.areNotEqual$1(null, continuedTask.exception, "continuedTask should have an exception");
                 Bridge.Test.Assert.$true(Bridge.is(continuedTask.exception, Bridge.AggregateException));
@@ -27521,7 +27582,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
             var continuedTask = null;
             continuedTask = task.continueWith(function (t) {
-                Bridge.Test.Assert.true$1(t === task, "argument to task.ContinueWith callback should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(t, task), "argument to task.ContinueWith callback should be correct");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, task.status, "task should have run to completion at point 2");
                 Bridge.Test.Assert.areEqual$1(null, task.exception, "task should not have an exception");
     
@@ -27530,10 +27591,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 return 42;
             });
     
-            Bridge.Test.Assert.false$1(task === continuedTask, "task and continuedTask should not be the same");
+            Bridge.Test.Assert.false$1(Bridge.referenceEquals(task, continuedTask), "task and continuedTask should not be the same");
     
             var continuedTask1 = continuedTask.continueWith(function (t) {
-                Bridge.Test.Assert.true$1(t === continuedTask, "argument to continuedTask.ContinueWith callback should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(t, continuedTask), "argument to continuedTask.ContinueWith callback should be correct");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, continuedTask.status, "continuedTask should have run to completion at point 3");
                 Bridge.Test.Assert.areEqual$1(null, continuedTask.exception, "continuedTask should not have an exception");
                 Bridge.Test.Assert.areEqual(42, t.getResult());
@@ -27561,16 +27622,16 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var continuedTask = null;
     
             continuedTask = task.continueWith(function (t) {
-                Bridge.Test.Assert.true$1(t === task, "argument to task.ContinueWith callback should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(t, task), "argument to task.ContinueWith callback should be correct");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, task.status, "task should have run to completion at point 2");
                 Bridge.Test.Assert.areEqual$1(null, task.exception, "task should not have an exception");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.running, continuedTask.status, "continuedTask should be running at point 2");
             });
     
-            Bridge.Test.Assert.false$1(task === continuedTask, "task and continuedTask should not be the same");
+            Bridge.Test.Assert.false$1(Bridge.referenceEquals(task, continuedTask), "task and continuedTask should not be the same");
     
             var continuedTask1 = continuedTask.continueWith(function (t) {
-                Bridge.Test.Assert.true$1(t === continuedTask, "argument to continuedTask.ContinueWith callback should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(t, continuedTask), "argument to continuedTask.ContinueWith callback should be correct");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, continuedTask.status, "continuedTask should have run to completion at point 3");
                 Bridge.Test.Assert.areEqual$1(null, continuedTask.exception, "continuedTask should not have an exception");
     
@@ -27597,7 +27658,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var continuedTask = null;
     
             continuedTask = task.continueWith(function (t) {
-                Bridge.Test.Assert.true$1(t === task, "argument to task.ContinueWith callback should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(t, task), "argument to task.ContinueWith callback should be correct");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, task.status, "task should have run to completion at point 2");
                 Bridge.Test.Assert.areEqual$1(null, task.exception, "task should not have an exception");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.running, continuedTask.status, "continuedTask should be running at point 2");
@@ -27605,10 +27666,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 return t.getResult() + "_";
             });
     
-            Bridge.Test.Assert.false$1(task === continuedTask, "task and continuedTask should not be the same");
+            Bridge.Test.Assert.false$1(Bridge.referenceEquals(task, continuedTask), "task and continuedTask should not be the same");
     
             var doneTask = continuedTask.continueWith(function (t) {
-                Bridge.Test.Assert.true$1(t === continuedTask, "argument to continuedTask.ContinueWith callback should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(t, continuedTask), "argument to continuedTask.ContinueWith callback should be correct");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, continuedTask.status, "continuedTask should have run to completion at point 3");
                 Bridge.Test.Assert.areEqual$1(null, continuedTask.exception, "continuedTask should not have an exception");
                 Bridge.Test.Assert.areEqual("42_", t.getResult());
@@ -27638,7 +27699,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.running, delay.status, "delay should be running at point 1");
     
             var afterDelay = delay.continueWith(function (t) {
-                Bridge.Test.Assert.true$1(t === delay, "argument to delay.ContinueWith callback should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(t, delay), "argument to delay.ContinueWith callback should be correct");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, delay.status, "delay should have run to completion at point 2");
                 Bridge.Test.Assert.areEqual$1(null, delay.exception, "delay should not have an exception");
     
@@ -27668,7 +27729,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.running, task.status, "task should be running at point 1");
     
             var doneTask = task.continueWith(function (t) {
-                Bridge.Test.Assert.true$1(t === task, "argument to task.ContinueWith callback should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(t, task), "argument to task.ContinueWith callback should be correct");
                 Bridge.Test.Assert.true$1(bodyRun, "Body should be run before continuation");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, task.status, "task should have run to completion at point 2");
                 Bridge.Test.Assert.areEqual$1(null, task.exception, "task should not have an exception");
@@ -27694,7 +27755,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.running, task.status, "task should be running at point 1");
     
             var doneTask = task.continueWith(function (t) {
-                Bridge.Test.Assert.true$1(t === task, "argument to task.ContinueWith callback should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(t, task), "argument to task.ContinueWith callback should be correct");
                 Bridge.Test.Assert.true$1(bodyRun, "Body should be run before continuation");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, task.status, "task should have run to completion at point 2");
                 Bridge.Test.Assert.areEqual(42, task.getResult());
@@ -27721,7 +27782,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.running, task.status, "task should be running at point 1");
     
             var doneTask = task.continueWith(function (t) {
-                Bridge.Test.Assert.true$1(t === task, "argument to task.ContinueWith callback should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(t, task), "argument to task.ContinueWith callback should be correct");
                 Bridge.Test.Assert.true$1(bodyRun, "Body should be run before continuation");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.faulted, task.status, "task should have faulted at point 2");
                 Bridge.Test.Assert.$true(Bridge.is(task.exception, Bridge.AggregateException));
@@ -27764,7 +27825,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, tcs2.task.status, "Task2 should have run to completion");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, tcs3.task.status, "Task3 should have run to completion");
     
-                Bridge.Test.Assert.true$1(task === t, "Callback parameter should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(task, t), "Callback parameter should be correct");
     
                 Bridge.Test.Assert.areEqual$1([101, 3, 42], t.getResult(), "Result should be correct");
                 Bridge.Test.Assert.areEqual$1(null, t.exception, "Exception for the aggregate task should be null");
@@ -27813,7 +27874,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, tcs2.task.status, "Task2 should have run to completion");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, tcs3.task.status, "Task3 should have run to completion");
     
-                Bridge.Test.Assert.true$1(task === t, "Callback parameter should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(task, t), "Callback parameter should be correct");
     
                 Bridge.Test.Assert.areEqual$1([101, 3, 42], t.getResult(), "Result should be correct");
                 Bridge.Test.Assert.areEqual$1(null, t.exception, "Exception for the aggregate task should be null");
@@ -27862,7 +27923,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, tcs2.task.status, "Task2 should have run to completion");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, tcs3.task.status, "Task3 should have run to completion");
     
-                Bridge.Test.Assert.true$1(task === t, "Callback parameter should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(task, t), "Callback parameter should be correct");
     
                 Bridge.Test.Assert.areEqual$1(null, t.exception, "Exception for the aggregate task should be null");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, t.status, "Aggregate task should have run to completion");
@@ -27910,7 +27971,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, tcs2.task.status, "Task2 should have run to completion");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, tcs3.task.status, "Task3 should have run to completion");
     
-                Bridge.Test.Assert.true$1(task === t, "Callback parameter should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(task, t), "Callback parameter should be correct");
     
                 Bridge.Test.Assert.areEqual$1(null, t.exception, "Exception for the aggregate task should be null");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, t.status, "Aggregate task should have run to completion");
@@ -27967,7 +28028,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.faulted, tcs3.task.status, "Task3 should be faulted");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.canceled, tcs4.task.status, "Task4 should be cancelled");
     
-                Bridge.Test.Assert.true$1(task === t, "Callback parameter should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(task, t), "Callback parameter should be correct");
     
                 Bridge.Test.Assert.true$1(true, "Exception for the aggregate task should be null");
                 Bridge.Test.Assert.areEqual$1(2, t.exception.innerExceptions.getCount(), "Should be 2 inner exceptions");
@@ -28018,7 +28079,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, tcs2.task.status, "Task2 should have run to completion");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, tcs3.task.status, "Task3 should have run to completion");
     
-                Bridge.Test.Assert.true$1(task === t, "Callback parameter should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(task, t), "Callback parameter should be correct");
     
                 Bridge.Test.Assert.areEqual$1(null, t.exception, "Exception for the aggregate task should be null");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.canceled, t.status, "Aggregate task should have run to completion");
@@ -28053,9 +28114,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.false$1(continuationRun, "Continuation should only be run once.");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, tcs2.task.status, "Task2 should have run to completion");
     
-                Bridge.Test.Assert.true$1(task === t, "Callback parameter should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(task, t), "Callback parameter should be correct");
     
-                Bridge.Test.Assert.true$1(t.getResult() === tcs2.task, "Result should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(t.getResult(), tcs2.task), "Result should be correct");
                 Bridge.Test.Assert.areEqual$1(3, t.getResult().getResult(), "Result should be correct");
                 Bridge.Test.Assert.areEqual$1(null, t.exception, "Exception for the aggregate task should be null");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, t.status, "Aggregate task should have run to completion");
@@ -28094,9 +28155,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.false$1(continuationRun, "Continuation should only be run once.");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, tcs2.task.status, "Task2 should have run to completion");
     
-                Bridge.Test.Assert.true$1(task === t, "Callback parameter should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(task, t), "Callback parameter should be correct");
     
-                Bridge.Test.Assert.true$1(t.getResult() === tcs2.task, "Result should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(t.getResult(), tcs2.task), "Result should be correct");
                 Bridge.Test.Assert.areEqual$1(3, t.getResult().getResult(), "Result should be correct");
                 Bridge.Test.Assert.areEqual$1(null, t.exception, "Exception for the aggregate task should be null");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, t.status, "Aggregate task should have run to completion");
@@ -28136,9 +28197,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.false$1(continuationRun, "Continuation should only be run once.");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, tcs2.task.status, "Task2 should have run to completion");
     
-                Bridge.Test.Assert.true$1(task === t, "Callback parameter should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(task, t), "Callback parameter should be correct");
     
-                Bridge.Test.Assert.true$1(t.getResult() === tcs2.task, "Result should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(t.getResult(), tcs2.task), "Result should be correct");
                 Bridge.Test.Assert.areEqual$1(null, t.exception, "Exception for the aggregate task should be null");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, t.status, "Aggregate task should have run to completion");
     
@@ -28177,9 +28238,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.false$1(continuationRun, "Continuation should only be run once.");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, tcs2.task.status, "Task2 should have run to completion");
     
-                Bridge.Test.Assert.true$1(task === t, "Callback parameter should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(task, t), "Callback parameter should be correct");
     
-                Bridge.Test.Assert.true$1(t.getResult() === tcs2.task, "Result should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(t.getResult(), tcs2.task), "Result should be correct");
                 Bridge.Test.Assert.areEqual$1(null, t.exception, "Exception for the aggregate task should be null");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, task.status, "Aggregate task should have run to completion");
     
@@ -28219,10 +28280,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.false$1(continuationRun, "Continuation should only be run once.");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.faulted, tcs2.task.status, "Task2 should have faulted");
     
-                Bridge.Test.Assert.true$1(task === t, "Callback parameter should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(task, t), "Callback parameter should be correct");
     
                 Bridge.Test.Assert.areEqual$1(1, t.exception.innerExceptions.getCount(), "There should be one inner exception");
-                Bridge.Test.Assert.true$1(t.exception.innerExceptions.get(0) === ex, "Exception for the aggregate task should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(t.exception.innerExceptions.get(0), ex), "Exception for the aggregate task should be correct");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.faulted, task.status, "Aggregate task should have faulted");
     
                 continuationRun = true;
@@ -28259,7 +28320,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.false$1(continuationRun, "Continuation should only be run once.");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.canceled, tcs2.task.status, "Task2 should be cancelled");
     
-                Bridge.Test.Assert.true$1(task === t, "Callback parameter should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(task, t), "Callback parameter should be correct");
     
                 Bridge.Test.Assert.areEqual$1(null, t.exception, "Aggregate task should not have exception");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.canceled, task.status, "Aggregate task should be cancelled");
@@ -28296,7 +28357,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var task1 = task.continueWith(function (t) {
                 Bridge.Test.Assert.true$1(taskRun, "Task should be run before continuation");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, task.status, "Task should have run to completion");
-                Bridge.Test.Assert.true$1(!Bridge.hasValue(task.exception), "Exception should be null");
+                Bridge.Test.Assert.true$1(task.exception == null, "Exception should be null");
     
                 continuationRun = true;
             });
@@ -28323,14 +28384,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var state = { };
     
             var task = new Bridge.Task(function (s) {
-                Bridge.Test.Assert.true$1(state === s, "The state should be correct.");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(state, s), "The state should be correct.");
                 taskRun = true;
             }, state);
     
             var task1 = task.continueWith(function (t) {
                 Bridge.Test.Assert.true$1(taskRun, "Task should be run before continuation");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, task.status, "Task should have run to completion");
-                Bridge.Test.Assert.true$1(!Bridge.hasValue(task.exception), "Exception should be null");
+                Bridge.Test.Assert.true$1(task.exception == null, "Exception should be null");
     
                 continuationRun = true;
             });
@@ -28367,7 +28428,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.faulted, task.status, "Task should be faulted");
                 Bridge.Test.Assert.true$1(Bridge.is(task.exception, Bridge.AggregateException), "Exception should be correct");
                 Bridge.Test.Assert.areEqual$1(1, task.exception.innerExceptions.getCount(), "There should be one inner exception");
-                Bridge.Test.Assert.true$1(task.exception.innerExceptions.get(0) === ex, "InnerException should be correct");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(task.exception.innerExceptions.get(0), ex), "InnerException should be correct");
     
                 continuationRun = true;
             });
@@ -28400,7 +28461,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.true$1(taskRun, "Task should be run before continuation");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, task.status, "Task should have run to completion");
                 Bridge.Test.Assert.areEqual$1(42, task.getResult(), "Result should be correct");
-                Bridge.Test.Assert.true$1(!Bridge.hasValue(task.exception), "Exception should be null");
+                Bridge.Test.Assert.true$1(task.exception == null, "Exception should be null");
     
                 continuationRun = true;
             });
@@ -28428,7 +28489,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var state = { };
     
             var task = new Bridge.Task(function (s) {
-                Bridge.Test.Assert.true$1(state === s, "The state should be correct.");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(state, s), "The state should be correct.");
                 taskRun = true;
                 return 42;
             }, state);
@@ -28437,7 +28498,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.true$1(taskRun, "Task should be run before continuation");
                 Bridge.Test.Assert.areEqual$1(Bridge.TaskStatus.ranToCompletion, task.status, "Task should have run to completion");
                 Bridge.Test.Assert.areEqual$1(42, task.getResult(), "Result should be correct");
-                Bridge.Test.Assert.true$1(!Bridge.hasValue(task.exception), "Exception should be null");
+                Bridge.Test.Assert.true$1(task.exception == null, "Exception should be null");
     
                 continuationRun = true;
             });
@@ -31567,10 +31628,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.apply($_.Bridge.ClientTest.Text.RegularExpressions.RegexCaptureCollectionTests, {
         f1: function (err) {
-            return Bridge.getTypeName(err) === Bridge.getTypeName(Bridge.ArgumentNullException);
+            return Bridge.referenceEquals(Bridge.getTypeName(err), Bridge.getTypeName(Bridge.ArgumentNullException));
         },
         f2: function (err) {
-            return Bridge.getTypeName(err) === Bridge.getTypeName(Bridge.IndexOutOfRangeException);
+            return Bridge.referenceEquals(Bridge.getTypeName(err), Bridge.getTypeName(Bridge.IndexOutOfRangeException));
         }
     });
     
@@ -32120,10 +32181,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.apply($_.Bridge.ClientTest.Text.RegularExpressions.RegexGroupCollectionTests, {
         f1: function (err) {
-            return Bridge.getTypeName(err) === Bridge.getTypeName(Bridge.ArgumentNullException);
+            return Bridge.referenceEquals(Bridge.getTypeName(err), Bridge.getTypeName(Bridge.ArgumentNullException));
         },
         f2: function (err) {
-            return Bridge.getTypeName(err) === Bridge.getTypeName(Bridge.IndexOutOfRangeException);
+            return Bridge.referenceEquals(Bridge.getTypeName(err), Bridge.getTypeName(Bridge.IndexOutOfRangeException));
         }
     });
     
@@ -32267,10 +32328,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.apply($_.Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests, {
         f1: function (err) {
-            return Bridge.getTypeName(err) === Bridge.getTypeName(Bridge.ArgumentNullException);
+            return Bridge.referenceEquals(Bridge.getTypeName(err), Bridge.getTypeName(Bridge.ArgumentNullException));
         },
         f2: function (err) {
-            return Bridge.getTypeName(err) === Bridge.getTypeName(Bridge.IndexOutOfRangeException);
+            return Bridge.referenceEquals(Bridge.getTypeName(err), Bridge.getTypeName(Bridge.IndexOutOfRangeException));
         }
     });
     
@@ -32438,7 +32499,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         regexIsMatchWorksWithLongTimeout: function () {
             var rgx = new Bridge.Text.RegularExpressions.Regex("constructor$2", Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, 0, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longTimeoutMs);
             rgx.isMatch(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortText);
-            Bridge.Test.Assert.$true(Bridge.hasValue(rgx));
+            Bridge.Test.Assert.$true(rgx != null);
         },
         regexMatchWorksWithShortTimeout: function () {
             var rgx = new Bridge.Text.RegularExpressions.Regex("constructor$2", Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, 0, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortTimeoutMs);
@@ -32449,7 +32510,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         regexMatchWorksWithLongTimeout: function () {
             var rgx = new Bridge.Text.RegularExpressions.Regex("constructor$2", Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, 0, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longTimeoutMs);
             rgx.match(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortText);
-            Bridge.Test.Assert.$true(Bridge.hasValue(rgx));
+            Bridge.Test.Assert.$true(rgx != null);
         },
         regexNextMatchWorksWithShortTimeout: function () {
             var rgx = new Bridge.Text.RegularExpressions.Regex("constructor$2", "%%|" + Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, 0, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortTimeoutMs);
@@ -32465,7 +32526,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var result = rgx.match("%%" + Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortText);
             result.nextMatch();
     
-            Bridge.Test.Assert.$true(Bridge.hasValue(rgx));
+            Bridge.Test.Assert.$true(rgx != null);
         },
         regexReplaceWorksWithShortTimeout: function () {
             Bridge.Test.Assert.throws$6(Bridge.RegexMatchTimeoutException, $_.Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.f2);
