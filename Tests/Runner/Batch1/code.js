@@ -4709,6 +4709,36 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1186', {
+        statics: {
+            testLambdasInField: function () {
+                var c = new Bridge.ClientTest.BridgeIssues.Bridge1186();
+                Bridge.Test.Assert.areEqual(1, c.list.getItem(0)(1));
+                Bridge.Test.Assert.areEqual(3, c.list.getItem(1)(2));
+            }
+        },
+        list: null,
+        config: {
+            init: function () {
+                this.list = Bridge.merge(new Bridge.List$1(Function)(), [
+        [$_.Bridge.ClientTest.BridgeIssues.Bridge1186.f1],
+        [$_.Bridge.ClientTest.BridgeIssues.Bridge1186.f2]
+    ] );
+            }
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1186", $_)
+    
+    Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge1186, {
+        f1: function (value) {
+            return value;
+        },
+        f2: function (value) {
+            return ((value + 1) | 0);
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1206', {
         statics: {
             testDocumentURLProperty: function () {
