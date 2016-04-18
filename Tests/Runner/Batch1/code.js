@@ -7720,6 +7720,22 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge637', {
+        statics: {
+            testUseCase: function () {
+                var Operator = 0;
+                Bridge.Test.Assert.areEqual(Bridge.ClientTest.BridgeIssues.Bridge637.Operator.add, Operator);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge637.Operator', {
+        statics: {
+            add: 0
+        },
+        $enum: true
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge647', {
         statics: {
             testUseCase: function () {

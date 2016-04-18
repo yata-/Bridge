@@ -1144,6 +1144,7 @@
                 QUnit.test("#634 - TestUseCase2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge634.testUseCase2);
                 QUnit.test("#634 - TestUseCaseFor658", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge634.testUseCaseFor658);
                 QUnit.test("#635 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge635.testUseCase);
+                QUnit.test("#637 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge637.testUseCase);
                 QUnit.test("#647 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge647.testUseCase);
                 QUnit.test("#648 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge648.testUseCase);
                 QUnit.test("#652 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge652.testUseCase);
@@ -3692,6 +3693,16 @@
             testUseCase: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge635).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge635, 4);
                 Bridge.ClientTest.BridgeIssues.Bridge635.testUseCase();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge637', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge637)],
+        statics: {
+            testUseCase: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge637).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge637);
+                Bridge.ClientTest.BridgeIssues.Bridge637.testUseCase();
             }
         }
     });
