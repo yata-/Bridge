@@ -1077,6 +1077,7 @@
                 QUnit.test("#1180 - TestStructClone", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1180.testStructClone);
                 QUnit.test("#1184 - TestGetTypeForNumberTypes", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1184.testGetTypeForNumberTypes);
                 QUnit.test("#1186 - TestLambdasInField", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1186.testLambdasInField);
+                QUnit.test("#1189 - TestTaskNumber", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1189.testTaskNumber);
                 QUnit.test("#1206 - TestDocumentURLProperty", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1206.testDocumentURLProperty);
                 QUnit.test("#381 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge381.testUseCase);
                 QUnit.test("#447 - CheckInlineExpression", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineExpression);
@@ -3110,6 +3111,16 @@
             testLambdasInField: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1186).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1186);
                 Bridge.ClientTest.BridgeIssues.Bridge1186.testLambdasInField();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1189', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1189)],
+        statics: {
+            testTaskNumber: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1189).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1189);
+                Bridge.ClientTest.BridgeIssues.Bridge1189.testTaskNumber();
             }
         }
     });

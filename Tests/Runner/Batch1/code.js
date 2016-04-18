@@ -4739,6 +4739,135 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1189', {
+        statics: {
+            testTaskNumber: function () {
+                var $step = 0,
+                    $task1, 
+                    $taskResult1, 
+                    $task2, 
+                    $taskResult2, 
+                    $jumpFromFinally, 
+                    done, 
+                    resultLong, 
+                    resultDecimal, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        for (;;) {
+                            $step = Bridge.Array.min([0,1,2], $step);
+                            switch ($step) {
+                                case 0: {
+                                    done = Bridge.Test.Assert.async();
+                                    $task2 = Bridge.ClientTest.BridgeIssues.Bridge1189.fooLong();
+                                    $step = 1;
+                                    $task2.continueWith($asyncBody, true);
+                                    return;
+                                }
+                                case 1: {
+                                    $taskResult2 = $task2.getAwaitedResult();
+                                    resultLong = $taskResult2;
+                                    Bridge.Test.Assert.true$1(Bridge.Long(-5).equals(resultLong), "Task<long>");
+                                    
+                                    $task1 = Bridge.ClientTest.BridgeIssues.Bridge1189.fooDecimal();
+                                    $step = 2;
+                                    $task1.continueWith($asyncBody, true);
+                                    return;
+                                }
+                                case 2: {
+                                    $taskResult1 = $task1.getAwaitedResult();
+                                    resultDecimal = $taskResult1;
+                                    Bridge.Test.Assert.true$1(Bridge.Decimal(-7).equalsT(resultDecimal), "Task<decimal>");
+                                    
+                                    done();
+                                    return;
+                                }
+                                default: {
+                                    return;
+                                }
+                            }
+                        }
+                    }, arguments);
+    
+                $asyncBody();
+            },
+            fooLong: function () {
+                var $step = 0,
+                    $task1, 
+                    $jumpFromFinally, 
+                    $tcs = new Bridge.TaskCompletionSource(), 
+                    $returnValue, 
+                    $async_e, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        try {
+                            for (;;) {
+                                $step = Bridge.Array.min([0,1], $step);
+                                switch ($step) {
+                                    case 0: {
+                                        $task1 = Bridge.Task.delay(1);
+                                        $step = 1;
+                                        $task1.continueWith($asyncBody);
+                                        return;
+                                    }
+                                    case 1: {
+                                        $task1.getAwaitedResult();
+                                        $tcs.setResult(Bridge.Long(-5));
+                                        return;
+                                    }
+                                    default: {
+                                        $tcs.setResult(null);
+                                        return;
+                                    }
+                                }
+                            }
+                        } catch($async_e1) {
+                            $async_e = Bridge.Exception.create($async_e1);
+                            $tcs.setException($async_e);
+                        }
+                    }, arguments);
+    
+                $asyncBody();
+                return $tcs.task;
+            },
+            fooDecimal: function () {
+                var $step = 0,
+                    $task1, 
+                    $jumpFromFinally, 
+                    $tcs = new Bridge.TaskCompletionSource(), 
+                    $returnValue, 
+                    $async_e, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        try {
+                            for (;;) {
+                                $step = Bridge.Array.min([0,1], $step);
+                                switch ($step) {
+                                    case 0: {
+                                        $task1 = Bridge.Task.delay(1);
+                                        $step = 1;
+                                        $task1.continueWith($asyncBody);
+                                        return;
+                                    }
+                                    case 1: {
+                                        $task1.getAwaitedResult();
+                                        $tcs.setResult(Bridge.Decimal(-7));
+                                        return;
+                                    }
+                                    default: {
+                                        $tcs.setResult(null);
+                                        return;
+                                    }
+                                }
+                            }
+                        } catch($async_e1) {
+                            $async_e = Bridge.Exception.create($async_e1);
+                            $tcs.setException($async_e);
+                        }
+                    }, arguments);
+    
+                $asyncBody();
+                return $tcs.task;
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1206', {
         statics: {
             testDocumentURLProperty: function () {
