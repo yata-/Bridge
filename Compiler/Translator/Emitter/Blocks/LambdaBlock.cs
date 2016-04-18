@@ -81,6 +81,11 @@ namespace Bridge.Translator
 
         protected override void DoEmit()
         {
+            if (this.Emitter.TempVariables == null)
+            {
+                this.ResetLocals();
+            }
+
             var oldParentVariables = this.Emitter.ParentTempVariables;
             if (this.Emitter.ParentTempVariables == null)
             {

@@ -601,7 +601,15 @@
             return o;
         },
 
+        referenceEquals: function(a, b) {
+            return Bridge.hasValue(a) ? a === b : !Bridge.hasValue(b);
+        },
+
         equals: function (a, b) {
+            if (a == null && b == null) {
+                return true;
+            }
+
             if (a && Bridge.isFunction(a.equals) && a.equals.length === 1) {
                 return a.equals(b);
             }
