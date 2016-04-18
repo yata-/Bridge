@@ -70,7 +70,7 @@ namespace Bridge.ClientTest.SimpleTypes
         {
             object o1 = new object(), o2 = new object(), n = null;
             Assert.True(ReferenceEquals(n, n), "n, n");
-            Assert.False(ReferenceEquals(n, Script.Undefined), "n, Script.Undefined");
+            Assert.True(ReferenceEquals(n, Script.Undefined), "n, Script.Undefined");
             Assert.False(ReferenceEquals(o1, o2), "o1, o2");
             Assert.False(ReferenceEquals(o1, n), "o1, n");
             Assert.False(ReferenceEquals(o1, Script.Undefined), "o1, Script.Undefined");

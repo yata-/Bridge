@@ -273,5 +273,10 @@ namespace Bridge.Contract
             get;
             set;
         }
+
+        bool StrictNullChecks
+        {
+            get; set;
+        }
     }
 }
