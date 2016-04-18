@@ -290,5 +290,11 @@ namespace Bridge.Translator
             get;
             set;
         }
+
+        public bool StrictNullChecks
+        {
+            get;
+            set;
+        }
     }
 }
