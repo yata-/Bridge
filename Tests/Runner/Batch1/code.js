@@ -3469,6 +3469,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 }
             },
             testPropertyOps: function () {
+                var $t;
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(Bridge.Decimal(5.0));
     
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().div(Bridge.Decimal(2)));
@@ -3477,10 +3478,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().add(Bridge.Decimal(2)));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.5), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1());
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().add(Bridge.Decimal(1)));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().inc());
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(5.5), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1());
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().add(Bridge.Decimal(1)));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().inc());
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.5), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1());
     
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(3.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method((Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().div(Bridge.Decimal(2))), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1())));
@@ -3489,13 +3490,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method((Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().add(Bridge.Decimal(1))), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1())));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1());
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(Bridge.identity(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1(), (Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().add(Bridge.Decimal(1))), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1()))));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1(), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1($t.inc()), $t)));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(5.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1());
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(((Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().add(Bridge.Decimal(1))), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1()))));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1(), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1($t.inc()), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1())));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1());
             },
             testIndexerOps: function () {
+                var $t;
                 var app = new Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal();
                 app.setItem(0, Bridge.Decimal(5.0));
     
@@ -3505,10 +3507,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 app.setItem(0, app.getItem(0).add(Bridge.Decimal(2)));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.5), app.getItem(0));
     
-                app.setItem(0, app.getItem(0).add(Bridge.Decimal(1)));
+                app.setItem(0, app.getItem(0).inc());
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(5.5), app.getItem(0));
     
-                app.setItem(0, app.getItem(0).add(Bridge.Decimal(1)));
+                app.setItem(0, app.getItem(0).inc());
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.5), app.getItem(0));
     
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(3.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method((app.setItem(0, app.getItem(0).div(Bridge.Decimal(2))), app.getItem(0))));
@@ -3517,13 +3519,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method((app.setItem(0, app.getItem(0).add(Bridge.Decimal(1))), app.getItem(0))));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), app.getItem(0));
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(Bridge.identity(app.getItem(0), (app.setItem(0, app.getItem(0).add(Bridge.Decimal(1))), app.getItem(0)))));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = app.getItem(0), app.setItem(0, $t.inc()), $t)));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(5.25), app.getItem(0));
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(((app.setItem(0, app.getItem(0).add(Bridge.Decimal(1))), app.getItem(0)))));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = app.getItem(0), app.setItem(0, $t.inc()), app.getItem(0))));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.25), app.getItem(0));
             },
             testDictOps: function () {
+                var $t;
                 var dict = Bridge.merge(new Bridge.Dictionary$2(Bridge.Int32,Bridge.Decimal)(), [
                     [0, Bridge.Decimal(5.0)]
                 ] );
@@ -3534,10 +3537,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 dict.set(0, dict.get(0).add(Bridge.Decimal(2)));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.5), dict.get(0));
     
-                dict.set(0, dict.get(0).add(Bridge.Decimal(1)));
+                dict.set(0, dict.get(0).inc());
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(5.5), dict.get(0));
     
-                dict.set(0, dict.get(0).add(Bridge.Decimal(1)));
+                dict.set(0, dict.get(0).inc());
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.5), dict.get(0));
     
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(3.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method((dict.set(0, dict.get(0).div(Bridge.Decimal(2))), dict.get(0))));
@@ -3546,13 +3549,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method((dict.set(0, dict.get(0).add(Bridge.Decimal(1))), dict.get(0))));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), dict.get(0));
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(Bridge.identity(dict.get(0), (dict.set(0, dict.get(0).add(Bridge.Decimal(1))), dict.get(0)))));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = dict.get(0), dict.set(0, $t.inc()), $t)));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(5.25), dict.get(0));
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(((dict.set(0, dict.get(0).add(Bridge.Decimal(1))), dict.get(0)))));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = dict.get(0), dict.set(0, $t.inc()), dict.get(0))));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.25), dict.get(0));
             },
             testVariableOps: function () {
+                var $t;
                 var i1 = Bridge.Decimal(5);
     
                 i1 = i1.div(Bridge.Decimal(2));
@@ -3561,10 +3565,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 i1 = i1.add(Bridge.Decimal(2));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.5), i1);
     
-                i1 = i1.add(Bridge.Decimal(1));
+                (i1 = i1.add(1));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(5.5), i1);
     
-                i1 = i1.add(Bridge.Decimal(1));
+                (i1 = i1.add(1));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.5), i1);
     
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(3.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method((i1 = i1.div(Bridge.Decimal(2)))));
@@ -3573,10 +3577,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method((i1 = i1.add(Bridge.Decimal(1)))));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), i1);
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(Bridge.identity(i1, (i1 = i1.add(Bridge.Decimal(1))))));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = i1, i1 = i1.add(1), $t)));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(5.25), i1);
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(((i1 = i1.add(Bridge.Decimal(1))))));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method((i1 = i1.add(1))));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.25), i1);
             },
             method: function (i) {
@@ -4688,6 +4692,40 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             }
         }
     });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1217', {
+        statics: {
+            testTypeInferenceWithNamedArguments: function () {
+                var r1 = Bridge.ClientTest.BridgeIssues.Bridge1217.getNavigatorToTest1(Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator, "", "", $_.Bridge.ClientTest.BridgeIssues.Bridge1217.f1);
+                Bridge.Test.Assert.areEqual(Bridge.getTypeName(Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator), r1);
+    
+                var r2 = Bridge.ClientTest.BridgeIssues.Bridge1217.getNavigatorToTest1(Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator, "", "", $_.Bridge.ClientTest.BridgeIssues.Bridge1217.f1);
+                Bridge.Test.Assert.areEqual(Bridge.getTypeName(Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator), r2);
+    
+                var r3 = Bridge.ClientTest.BridgeIssues.Bridge1217.getNavigatorToTest2(Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator, "", "", Bridge.cast(null, Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator));
+                Bridge.Test.Assert.areEqual(Bridge.getTypeName(Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator), r3);
+    
+                var r4 = Bridge.ClientTest.BridgeIssues.Bridge1217.getNavigatorToTest2(Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator, "", "", Bridge.cast(null, Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator));
+                Bridge.Test.Assert.areEqual(Bridge.getTypeName(Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator), r4);
+            },
+            getNavigatorToTest1: function (TNavigator, initialUrl, assert, navigatorGenerator) {
+                return Bridge.getTypeName(TNavigator);
+            },
+            getNavigatorToTest2: function (TNavigator, initialUrl, assert, navigatorGenerator) {
+                return Bridge.getTypeName(TNavigator);
+            }
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1217", $_)
+    
+    Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge1217, {
+        f1: function () {
+            return Bridge.cast(null, Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1217.Navigator');
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
@@ -21322,15 +21360,16 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.areEqual(11.5, Bridge.Decimal.toFloat(Bridge.Decimal((x + 11.5))));
         },
         operatorsWork: function () {
+            var $t;
             var x = Bridge.Decimal(3);
             this.assertIsDecimalAndEqualTo(x.clone(), 3);
             this.assertIsDecimalAndEqualTo(x.neg(), -3);
             this.assertIsDecimalAndEqualTo(x.add(Bridge.Decimal(4.0)), 7);
             this.assertIsDecimalAndEqualTo(x.sub(Bridge.Decimal(2.0)), 1);
-            this.assertIsDecimalAndEqualTo(Bridge.identity(x, (x = x.add(Bridge.Decimal(1)))), 3);
-            this.assertIsDecimalAndEqualTo(((x = x.add(Bridge.Decimal(1)))), 5);
-            this.assertIsDecimalAndEqualTo(Bridge.identity(x, (x = x.sub(Bridge.Decimal(1)))), 5);
-            this.assertIsDecimalAndEqualTo(((x = x.sub(Bridge.Decimal(1)))), 3);
+            this.assertIsDecimalAndEqualTo(($t = x, x = x.add(1), $t), 3);
+            this.assertIsDecimalAndEqualTo((x = x.add(1)), 5);
+            this.assertIsDecimalAndEqualTo(($t = x, x = x.sub(1), $t), 5);
+            this.assertIsDecimalAndEqualTo((x = x.sub(1)), 3);
             this.assertIsDecimalAndEqualTo(x.mul(Bridge.Decimal(3.0)), 9);
             this.assertIsDecimalAndEqualTo(x.div(Bridge.Decimal(2.0)), 1.5);
             this.assertIsDecimalAndEqualTo(Bridge.Decimal(14.0).mod(x), 2);
@@ -29027,6 +29066,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         compare: function (x, y) {
             return Bridge.String.compare(x.value, y.value);
         }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge1217.Navigator]
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge240B', {
