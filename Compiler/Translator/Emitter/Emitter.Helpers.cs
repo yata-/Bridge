@@ -433,7 +433,7 @@ namespace Bridge.Translator
             }
 
 
-            if (member is IMember && this.IsMemberConst((IMember)member)/* || member.DeclaringType.Kind == TypeKind.Anonymous*/)
+            if (member is IMember && this.IsMemberConst((IMember)member) || member is IEvent)
             {
                 preserveMemberChange = true;
             }
