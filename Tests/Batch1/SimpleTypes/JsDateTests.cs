@@ -27,7 +27,8 @@ namespace Bridge.ClientTest.SimpleTypes
         [Test]
         public void CreatingInstanceReturnsDateZero()
         {
-            Assert.True(Activator.CreateInstance<DateTime>().GetFullYear() == 1970);
+            var fullYear = Activator.CreateInstance<DateTime>().GetFullYear();
+            Assert.AreEqual(1970, fullYear);
         }
 
         [Test]
