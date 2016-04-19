@@ -92,13 +92,7 @@ namespace Bridge.Translator
                 }
                 else
                 {
-                    var typeDef = this.Emitter.GetTypeDefinition();
-                    string structName = this.Emitter.Validator.GetCustomTypeName(typeDef, this.Emitter);
-
-                    if (structName.IsEmpty())
-                    {
-                        structName = BridgeTypes.ToJsName(this.TypeInfo.Type, this.Emitter);
-                    }
+                    string structName = BridgeTypes.ToJsName(this.TypeInfo.Type, this.Emitter);
 
                     this.EnsureComma();
                     this.Write("getDefaultValue: function () { return new " + structName + "(); }");
@@ -110,12 +104,7 @@ namespace Bridge.Translator
         protected virtual void EmitStructMethods()
         {
             var typeDef = this.Emitter.GetTypeDefinition();
-            string structName = this.Emitter.Validator.GetCustomTypeName(typeDef, this.Emitter);
-
-            if (structName.IsEmpty())
-            {
-                structName = BridgeTypes.ToJsName(this.TypeInfo.Type, this.Emitter);
-            }
+            string structName = BridgeTypes.ToJsName(this.TypeInfo.Type, this.Emitter);
 
             bool immutable = this.Emitter.Validator.IsImmutableType(typeDef);
 
