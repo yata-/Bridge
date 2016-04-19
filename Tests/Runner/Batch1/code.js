@@ -4889,6 +4889,26 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    (function(){
+        var Bridge1203_a2 = function () {
+        };
+    })();
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1203', {
+        statics: {
+            initMethod1: function () {
+                var Bridge1203_a1 = function () {
+                };
+            },
+            testLiftedFunctionsInsideInitMethod: function () {
+                var scope = $_.Bridge.ClientTest.BridgeIssues.Bridge1203;
+                Bridge.Test.Assert.null$1(scope, "scope should not exists");
+            }
+        }
+    });
+    
+    Bridge.ClientTest.BridgeIssues.Bridge1203.initMethod1();
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1206', {
         statics: {
             testDocumentURLProperty: function () {
@@ -4899,6 +4919,20 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             }
         }
     });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1220', {
+        statics: {
+            testConstInGenericClass: function () {
+                Bridge.Test.Assert.areEqual(1, Bridge.ClientTest.BridgeIssues.Bridge1220.Class1$1(Bridge.Int32).Const1);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1220.Class1$1', function (T) { return {
+        statics: {
+            Const1: 1
+        }
+    }; });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
