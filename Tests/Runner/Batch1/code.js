@@ -5004,35 +5004,111 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1232', {
         statics: {
             testParamsInThisCtorInit: function () {
-                var t = new Bridge.ClientTest.BridgeIssues.Bridge1232.Test("constructor$1", ["a", "b"]);
-                Bridge.Test.Assert.areEqual(2, t.getA().length);
-                Bridge.Test.Assert.areEqual("a", t.getA()[0]);
-                Bridge.Test.Assert.areEqual("b", t.getA()[1]);
+                var t1 = new Bridge.ClientTest.BridgeIssues.Bridge1232.ClassA("constructor$1", ["a", "b"]);
+                Bridge.Test.Assert.areEqual$1(2, t1.getA().length, "Length ab");
+                Bridge.Test.Assert.areEqual$1("a", t1.getA()[0], "First ab");
+                Bridge.Test.Assert.areEqual$1("b", t1.getA()[1], "Second ab");
+                Bridge.Test.Assert.areEqual$1(1, t1.getNumber(), "Number ab");
     
-                t = new Bridge.ClientTest.BridgeIssues.Bridge1232.Test("constructor$1", ["a", "b"]);
-                Bridge.Test.Assert.areEqual(2, t.getA().length);
-                Bridge.Test.Assert.areEqual("a", t.getA()[0]);
-                Bridge.Test.Assert.areEqual("b", t.getA()[1]);
+                var t2 = new Bridge.ClientTest.BridgeIssues.Bridge1232.ClassA("constructor$1", ["a", "b", "c"]);
+                Bridge.Test.Assert.areEqual$1(3, t2.getA().length, "Length abc");
+                Bridge.Test.Assert.areEqual$1("a", t2.getA()[0], "First abc");
+                Bridge.Test.Assert.areEqual$1("b", t2.getA()[1], "Second abc");
+                Bridge.Test.Assert.areEqual$1("c", t2.getA()[2], "Third abc");
+                Bridge.Test.Assert.areEqual$1(1, t2.getNumber(), "Number abc");
+    
+                var t3 = new Bridge.ClientTest.BridgeIssues.Bridge1232.ClassA("constructor", 3, ["a", "b", "c", "d"]);
+                Bridge.Test.Assert.areEqual$1(4, t3.getA().length, "Length abcd");
+                Bridge.Test.Assert.areEqual$1("a", t3.getA()[0], "First abcd");
+                Bridge.Test.Assert.areEqual$1("b", t3.getA()[1], "Second abcd");
+                Bridge.Test.Assert.areEqual$1("c", t3.getA()[2], "Third abcd");
+                Bridge.Test.Assert.areEqual$1("d", t3.getA()[3], "Forth abcd");
+                Bridge.Test.Assert.areEqual$1(3, t3.getNumber(), "Number abcd");
+            },
+            testExtendedParamsInThisCtorInit: function () {
+                var t1 = new Bridge.ClientTest.BridgeIssues.Bridge1232.ClassB("constructor$1", "a", ["b"]);
+                Bridge.Test.Assert.areEqual$1(1, t1.getA().length, "Length ab");
+                Bridge.Test.Assert.areEqual$1("b", t1.getA()[0], "First ab");
+                Bridge.Test.Assert.areEqual$1("a", t1.getS(), "S ab");
+                Bridge.Test.Assert.areEqual$1(1, t1.getNumber(), "Number ab");
+    
+                var t2 = new Bridge.ClientTest.BridgeIssues.Bridge1232.ClassB("constructor$2", ["a", "b", "c"]);
+                Bridge.Test.Assert.areEqual$1(3, t2.getA().length, "Length abc");
+                Bridge.Test.Assert.areEqual$1("a", t2.getA()[0], "First abc");
+                Bridge.Test.Assert.areEqual$1("b", t2.getA()[1], "Second abc");
+                Bridge.Test.Assert.areEqual$1("c", t2.getA()[2], "Third abc");
+                Bridge.Test.Assert.areEqual$1(null, t2.getS(), "S abc");
+                Bridge.Test.Assert.areEqual$1(1, t2.getNumber(), "Number abc");
+    
+                var t3 = new Bridge.ClientTest.BridgeIssues.Bridge1232.ClassB("constructor$1", "e", ["a", "b", "c", "d"]);
+                Bridge.Test.Assert.areEqual$1(4, t3.getA().length, "Length abcd");
+                Bridge.Test.Assert.areEqual$1("a", t3.getA()[0], "First abcd");
+                Bridge.Test.Assert.areEqual$1("b", t3.getA()[1], "Second abcd");
+                Bridge.Test.Assert.areEqual$1("c", t3.getA()[2], "Third abcd");
+                Bridge.Test.Assert.areEqual$1("d", t3.getA()[3], "Forth abcd");
+                Bridge.Test.Assert.areEqual$1("e", t3.getS(), "S abcd");
+                Bridge.Test.Assert.areEqual$1(1, t3.getNumber(), "Number abcd");
+    
+                var t4 = new Bridge.ClientTest.BridgeIssues.Bridge1232.ClassB("constructor", 7, ["a", "b", "c", "d", "e"]);
+                Bridge.Test.Assert.areEqual$1(5, t4.getA().length, "Length abcde");
+                Bridge.Test.Assert.areEqual$1("a", t4.getA()[0], "First abcde");
+                Bridge.Test.Assert.areEqual$1("b", t4.getA()[1], "Second abcde");
+                Bridge.Test.Assert.areEqual$1("c", t4.getA()[2], "Third abcde");
+                Bridge.Test.Assert.areEqual$1("d", t4.getA()[3], "Forth abcde");
+                Bridge.Test.Assert.areEqual$1("e", t4.getA()[4], "Fifth abcde");
+                Bridge.Test.Assert.areEqual$1(null, t4.getS(), "S abcde");
+                Bridge.Test.Assert.areEqual$1(7, t4.getNumber(), "Number abcde");
             }
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1232.Test', {
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1232.ClassA', {
         config: {
             properties: {
-                A: null
+                A: null,
+                Number: 0
             }
         },
         constructor: function (a, str) {
             if (str === void 0) { str = []; }
     
             this.setA(str);
+            this.setNumber(a);
         },
         constructor$1: function (str) {
             if (str === void 0) { str = []; }
     
-            Bridge.ClientTest.BridgeIssues.Bridge1232.Test.prototype.$constructor.call(this, 1, str);
+            Bridge.ClientTest.BridgeIssues.Bridge1232.ClassA.prototype.$constructor.call(this, 1, str);
     
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1232.ClassB', {
+        config: {
+            properties: {
+                A: null,
+                S: null,
+                Number: 0
+            }
+        },
+        constructor: function (a, str) {
+            if (str === void 0) { str = []; }
+    
+            this.setA(str);
+            this.setNumber(a);
+        },
+        constructor$2: function (str) {
+            if (str === void 0) { str = []; }
+    
+            Bridge.ClientTest.BridgeIssues.Bridge1232.ClassB.prototype.$constructor.call(this, 1, str);
+    
+        },
+        constructor$1: function (s, str) {
+            if (str === void 0) { str = []; }
+    
+            Bridge.ClientTest.BridgeIssues.Bridge1232.ClassB.prototype.constructor$2.call(this, str);
+    
+            this.setS(s);
         }
     });
     
