@@ -5001,6 +5001,27 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     }; });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1231', {
+        statics: {
+            testConstInGenericClass: function () {
+                var struct1 = new Demo.Bridge1231.Class1$1.MyStruct(String)("constructor$1", 1);
+                var struct2 = struct1.$clone();
+                struct2.field = 2;
+    
+                Bridge.Test.Assert.areEqual(1, struct1.field);
+                Bridge.Test.Assert.areEqual(2, struct2.field);
+            }
+        }
+    });
+    
+    Bridge.define('Demo.Bridge1231.Class1$1', function (T) { return {
+    
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1231.I1$1', function (T) { return {
+    
+    }; });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
@@ -29512,6 +29533,35 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator', {
         inherits: [Bridge.ClientTest.BridgeIssues.Bridge1217.Navigator]
     });
+    
+    Bridge.define('Demo.Bridge1231.Class1$1.MyStruct', function (T) { return {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge1231.I1$1(T)],
+        statics: {
+            getDefaultValue: function () { return new Demo.Bridge1231.Class1$1.MyStruct(T)(); }
+        },
+        field: 0,
+        constructor$1: function (field) {
+            this.field = field;
+        },
+        constructor: function () {
+        },
+        getHashCode: function () {
+            var hash = 17;
+            hash = hash * 23 + (this.field == null ? 0 : Bridge.getHashCode(this.field));
+            return hash;
+        },
+        equals: function (o) {
+            if (!Bridge.is(o,Demo.Bridge1231.Class1$1.MyStruct(T))) {
+                return false;
+            }
+            return Bridge.equals(this.field, o.field);
+        },
+        $clone: function (to) {
+            var s = to || new Demo.Bridge1231.Class1$1.MyStruct(T)();
+            s.field = this.field;
+            return s;
+        }
+    }; });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge240B', {
         inherits: [Bridge.ClientTest.BridgeIssues.Bridge240A],

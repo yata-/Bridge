@@ -1101,6 +1101,7 @@
                 QUnit.test("#1206 - TestDocumentURLProperty", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1206.testDocumentURLProperty);
                 QUnit.test("#1217 - TestTypeInferenceWithNamedArguments", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1217.testTypeInferenceWithNamedArguments);
                 QUnit.test("#1220 - TestConstInGenericClass", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1220.testConstInGenericClass);
+                QUnit.test("#1231 - TestConstInGenericClass", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1231.testConstInGenericClass);
                 QUnit.test("#381 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge381.testUseCase);
                 QUnit.test("#447 - CheckInlineExpression", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineExpression);
                 QUnit.test("#447 - CheckInlineCalls", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineCalls);
@@ -3204,6 +3205,16 @@
             testConstInGenericClass: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1220).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1220);
                 Bridge.ClientTest.BridgeIssues.Bridge1220.testConstInGenericClass();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1231', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1231)],
+        statics: {
+            testConstInGenericClass: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1231).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1231);
+                Bridge.ClientTest.BridgeIssues.Bridge1231.testConstInGenericClass();
             }
         }
     });
