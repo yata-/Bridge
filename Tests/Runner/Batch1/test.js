@@ -1081,6 +1081,7 @@
                 QUnit.test("#1197 - TestGetHashCodeOnDictionary", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1197.testGetHashCodeOnDictionary);
                 QUnit.test("#1203 - TestLiftedFunctionsInsideInitMethod", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1203.testLiftedFunctionsInsideInitMethod);
                 QUnit.test("#1206 - TestDocumentURLProperty", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1206.testDocumentURLProperty);
+                QUnit.test("#1220 - TestConstInGenericClass", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1220.testConstInGenericClass);
                 QUnit.test("#381 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge381.testUseCase);
                 QUnit.test("#447 - CheckInlineExpression", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineExpression);
                 QUnit.test("#447 - CheckInlineCalls", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineCalls);
@@ -3153,6 +3154,16 @@
             testDocumentURLProperty: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1206).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1206);
                 Bridge.ClientTest.BridgeIssues.Bridge1206.testDocumentURLProperty();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1220', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1220)],
+        statics: {
+            testConstInGenericClass: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1220).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1220);
+                Bridge.ClientTest.BridgeIssues.Bridge1220.testConstInGenericClass();
             }
         }
     });
