@@ -455,8 +455,7 @@ namespace Bridge.Translator
                 if (binaryOpRr != null && isType(binaryOpRr.Operands[idx].Type, block.Emitter.Resolver) && !isType(rr.Type, block.Emitter.Resolver))
                 {
                     var isNullable = NullableType.IsNullable(binaryOpRr.Operands[idx].Type);
-                    var isRight = binaryOpExpr.Right == expression;
-                    if (expression.IsNull || (isRight && !isNullable))
+                    if (expression.IsNull)
                     {
                         return false;
                     }
