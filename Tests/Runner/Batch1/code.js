@@ -5001,6 +5001,36 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     }; });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1232', {
+        statics: {
+            testParamsInThisCtorInit: function () {
+                var t = new Bridge.ClientTest.BridgeIssues.Bridge1232.Test("constructor$1", ["a", "b"]);
+                Bridge.Test.Assert.areEqual(2, t.getA().length);
+                Bridge.Test.Assert.areEqual("a", t.getA()[0]);
+                Bridge.Test.Assert.areEqual("b", t.getA()[1]);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1232.Test', {
+        config: {
+            properties: {
+                A: null
+            }
+        },
+        constructor: function (a, str) {
+            if (str === void 0) { str = []; }
+    
+            this.setA(str);
+        },
+        constructor$1: function (str) {
+            if (str === void 0) { str = []; }
+    
+            Bridge.ClientTest.BridgeIssues.Bridge1232.Test.prototype.$constructor.call(this, 1, str);
+    
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
