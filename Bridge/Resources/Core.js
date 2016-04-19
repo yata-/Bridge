@@ -193,7 +193,7 @@
             }
         },
 
-        getHashCode: function (value, safe) {
+        getHashCode: function (value, safe, store) {
             if (Bridge.isEmpty(value, true)) {
                 if (safe) {
                     return 0;
@@ -267,7 +267,7 @@
 
                 for (var property in value) {
                     if (value.hasOwnProperty(property) && property !== "__insideHashCode") {
-                        temp = Bridge.isEmpty(value[property], true) ? 0 : Bridge.getHashCode(value[property]);
+                        temp = Bridge.isEmpty(value[property], true) ? 0 : Bridge.getHashCode(value[property], safe, false);
                         result = 29 * result + temp;
                     }
                 }
@@ -281,6 +281,10 @@
                 if (result !== 0) {
                     return result;
                 }
+            }
+
+            if (store === false) {
+                return value.$$hashCode || ((Math.random() * 0x100000000) | 0);
             }
 
             return value.$$hashCode || (value.$$hashCode = (Math.random() * 0x100000000) | 0);
@@ -597,7 +601,15 @@
             return o;
         },
 
+        referenceEquals: function(a, b) {
+            return Bridge.hasValue(a) ? a === b : !Bridge.hasValue(b);
+        },
+
         equals: function (a, b) {
+            if (a == null && b == null) {
+                return true;
+            }
+
             if (a && Bridge.isFunction(a.equals) && a.equals.length === 1) {
                 return a.equals(b);
             }

@@ -7,5 +7,6 @@
   "loggerLevel": "Info",
 
   "useTypedArrays": true,
-  "overflowMode":  "Javascript"
+  "overflowMode": "Javascript",
+  "strictNullChecks": true
 }

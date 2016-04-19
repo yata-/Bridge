@@ -36,6 +36,39 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Batch2.BridgeIssues.N1204', {
+        statics: {
+            testStrictNullChecksOptionForNulls: function () {
+                var temp = { };
+                var temp1 = temp;
+                var temp2 = { };
+                var l = Bridge.Long(5);
+                var ol = Bridge.Long(5);
+                var oi = 5;
+                var varNull = null;
+                var varUndefined = temp["this-prop-undefined"];
+    
+                Bridge.Test.Assert.false$1(varNull === varUndefined, "varNull == varUndefined");
+                Bridge.Test.Assert.true$1(varNull === null, "varNull == null");
+                Bridge.Test.Assert.false$1(varUndefined === null, "varUndefined == null");
+                Bridge.Test.Assert.true$1(undefined === varUndefined, "Script.Undefined == varUndefined");
+                Bridge.Test.Assert.true$1(temp === temp1, "temp == temp1");
+                Bridge.Test.Assert.false$1(temp === temp2, "temp == temp2");
+                Bridge.Test.Assert.true$1(l.equals(5), "l == 5");
+                Bridge.Test.Assert.false$1(ol === oi, "ol == oi");
+    
+                Bridge.Test.Assert.false$1(varUndefined === varNull, "varUndefined == varNull");
+                Bridge.Test.Assert.true$1(null === varNull, "null == varNull");
+                Bridge.Test.Assert.false$1(null === varUndefined, "null == varUndefined");
+                Bridge.Test.Assert.true$1(varUndefined === undefined, "varUndefined == Script.Undefined");
+                Bridge.Test.Assert.true$1(temp1 === temp, "temp1 == temp");
+                Bridge.Test.Assert.false$1(temp2 === temp, "temp2 == temp");
+                Bridge.Test.Assert.true$1(Bridge.Long(5).equals(l), "5 == l");
+                Bridge.Test.Assert.false$1(oi === ol, "oi == ol");
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Batch2.BridgeIssues.N772', {
         statics: {
             testUseCase: function () {
