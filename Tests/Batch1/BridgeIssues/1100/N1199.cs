@@ -1,12 +1,10 @@
-using System;
 using Bridge.Test;
-using System.Collections.Generic;
 
 namespace Bridge.ClientTest.BridgeIssues
 {
     [Category(Constants.MODULE_ISSUES)]
-    [TestFixture(TestNameFormat = "#1200 - {0}")]
-    public class Bridge1200
+    [TestFixture(TestNameFormat = "#1199 - {0}")]
+    public class Bridge1199
     {
         public delegate string SomeDel();
 

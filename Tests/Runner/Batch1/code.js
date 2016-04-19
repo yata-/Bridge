@@ -4893,25 +4893,25 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1200', {
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1199', {
         statics: {
             testEventNameCase: function () {
-                var wrong = new Bridge.ClientTest.BridgeIssues.Bridge1200.NotWorking$1(Bridge.Int32)();
-                wrong.IsNotWorking = Bridge.fn.combine(wrong.IsNotWorking, $_.Bridge.ClientTest.BridgeIssues.Bridge1200.f1);
+                var wrong = new Bridge.ClientTest.BridgeIssues.Bridge1199.NotWorking$1(Bridge.Int32)();
+                wrong.IsNotWorking = Bridge.fn.combine(wrong.IsNotWorking, $_.Bridge.ClientTest.BridgeIssues.Bridge1199.f1);
                 Bridge.Test.Assert.areEqual("somevalue", wrong.validate());
             }
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1200", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1199", $_)
     
-    Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge1200, {
+    Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge1199, {
         f1: function () {
             return "somevalue";
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1200.NotWorking$1', function (T) { return {
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1199.NotWorking$1', function (T) { return {
         config: {
             events: {
                 IsNotWorking: null
