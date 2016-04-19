@@ -4709,6 +4709,217 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1186', {
+        statics: {
+            testLambdasInField: function () {
+                var c = new Bridge.ClientTest.BridgeIssues.Bridge1186();
+                Bridge.Test.Assert.areEqual(1, c.list.getItem(0)(1));
+                Bridge.Test.Assert.areEqual(3, c.list.getItem(1)(2));
+            }
+        },
+        list: null,
+        config: {
+            init: function () {
+                this.list = Bridge.merge(new Bridge.List$1(Function)(), [
+        [$_.Bridge.ClientTest.BridgeIssues.Bridge1186.f1],
+        [$_.Bridge.ClientTest.BridgeIssues.Bridge1186.f2]
+    ] );
+            }
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1186", $_)
+    
+    Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge1186, {
+        f1: function (value) {
+            return value;
+        },
+        f2: function (value) {
+            return ((value + 1) | 0);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1189', {
+        statics: {
+            testTaskNumber: function () {
+                var $step = 0,
+                    $task1, 
+                    $taskResult1, 
+                    $task2, 
+                    $taskResult2, 
+                    $jumpFromFinally, 
+                    done, 
+                    resultLong, 
+                    resultDecimal, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        for (;;) {
+                            $step = Bridge.Array.min([0,1,2], $step);
+                            switch ($step) {
+                                case 0: {
+                                    done = Bridge.Test.Assert.async();
+                                    $task2 = Bridge.ClientTest.BridgeIssues.Bridge1189.fooLong();
+                                    $step = 1;
+                                    $task2.continueWith($asyncBody, true);
+                                    return;
+                                }
+                                case 1: {
+                                    $taskResult2 = $task2.getAwaitedResult();
+                                    resultLong = $taskResult2;
+                                    Bridge.Test.Assert.true$1(Bridge.Long(-5).equals(resultLong), "Task<long>");
+                                    
+                                    $task1 = Bridge.ClientTest.BridgeIssues.Bridge1189.fooDecimal();
+                                    $step = 2;
+                                    $task1.continueWith($asyncBody, true);
+                                    return;
+                                }
+                                case 2: {
+                                    $taskResult1 = $task1.getAwaitedResult();
+                                    resultDecimal = $taskResult1;
+                                    Bridge.Test.Assert.true$1(Bridge.Decimal(-7).equalsT(resultDecimal), "Task<decimal>");
+                                    
+                                    done();
+                                    return;
+                                }
+                                default: {
+                                    return;
+                                }
+                            }
+                        }
+                    }, arguments);
+    
+                $asyncBody();
+            },
+            fooLong: function () {
+                var $step = 0,
+                    $task1, 
+                    $jumpFromFinally, 
+                    $tcs = new Bridge.TaskCompletionSource(), 
+                    $returnValue, 
+                    $async_e, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        try {
+                            for (;;) {
+                                $step = Bridge.Array.min([0,1], $step);
+                                switch ($step) {
+                                    case 0: {
+                                        $task1 = Bridge.Task.delay(1);
+                                        $step = 1;
+                                        $task1.continueWith($asyncBody);
+                                        return;
+                                    }
+                                    case 1: {
+                                        $task1.getAwaitedResult();
+                                        $tcs.setResult(Bridge.Long(-5));
+                                        return;
+                                    }
+                                    default: {
+                                        $tcs.setResult(null);
+                                        return;
+                                    }
+                                }
+                            }
+                        } catch($async_e1) {
+                            $async_e = Bridge.Exception.create($async_e1);
+                            $tcs.setException($async_e);
+                        }
+                    }, arguments);
+    
+                $asyncBody();
+                return $tcs.task;
+            },
+            fooDecimal: function () {
+                var $step = 0,
+                    $task1, 
+                    $jumpFromFinally, 
+                    $tcs = new Bridge.TaskCompletionSource(), 
+                    $returnValue, 
+                    $async_e, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        try {
+                            for (;;) {
+                                $step = Bridge.Array.min([0,1], $step);
+                                switch ($step) {
+                                    case 0: {
+                                        $task1 = Bridge.Task.delay(1);
+                                        $step = 1;
+                                        $task1.continueWith($asyncBody);
+                                        return;
+                                    }
+                                    case 1: {
+                                        $task1.getAwaitedResult();
+                                        $tcs.setResult(Bridge.Decimal(-7));
+                                        return;
+                                    }
+                                    default: {
+                                        $tcs.setResult(null);
+                                        return;
+                                    }
+                                }
+                            }
+                        } catch($async_e1) {
+                            $async_e = Bridge.Exception.create($async_e1);
+                            $tcs.setException($async_e);
+                        }
+                    }, arguments);
+    
+                $asyncBody();
+                return $tcs.task;
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1197', {
+        statics: {
+            testGetHashCodeOnDictionary: function () {
+                var $t;
+                var dict = new Bridge.Dictionary$2(Bridge.Int32,String)();
+    
+                // Calling GetHashCode() breaks the dictionary.
+                var hash = Bridge.getHashCode(dict);
+    
+                // Count is still 0.
+                Bridge.Test.Assert.areEqual(0, dict.getCount());
+    
+                $t = Bridge.getEnumerator(dict);
+                while ($t.moveNext()) {
+                    var item = $t.getCurrent();
+                    Bridge.Test.Assert.fail$1("Dictionary should be empty");
+                }
+            }
+        }
+    });
+    
+    (function(){
+        var Bridge1203_a2 = function () {
+        };
+    })();
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1203', {
+        statics: {
+            initMethod1: function () {
+                var Bridge1203_a1 = function () {
+                };
+            },
+            testLiftedFunctionsInsideInitMethod: function () {
+                var scope = $_.Bridge.ClientTest.BridgeIssues.Bridge1203;
+                Bridge.Test.Assert.null$1(scope, "scope should not exists");
+            }
+        }
+    });
+    
+    Bridge.ClientTest.BridgeIssues.Bridge1203.initMethod1();
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1206', {
+        statics: {
+            testDocumentURLProperty: function () {
+                var raw = document.URL;
+                var actual = document.URL;
+    
+                Bridge.Test.Assert.areEqual(raw, actual);
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1220', {
         statics: {
             testConstInGenericClass: function () {
