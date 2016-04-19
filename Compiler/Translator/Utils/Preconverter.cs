@@ -37,7 +37,7 @@ namespace Bridge.Translator
             {
                 var rr = this.Resolver.ResolveNode(unaryOperatorExpression, null);
 
-                if (Helpers.IsIntegerType(rr.Type, this.Resolver))
+                if (!Helpers.IsFloatType(rr.Type, this.Resolver) || Helpers.IsDecimalType(rr.Type, this.Resolver))
                 {
                     this.Found = true;
                 }
@@ -159,7 +159,7 @@ namespace Bridge.Translator
                 unaryOperatorExpression.Operator == UnaryOperatorType.PostDecrement)
             {
                 var rr = this.Resolver.ResolveNode(unaryOperatorExpression, null);
-                if (!Helpers.IsIntegerType(rr.Type, this.Resolver))
+                if (Helpers.IsFloatType(rr.Type, this.Resolver) && !Helpers.IsDecimalType(rr.Type, this.Resolver))
                 {
                     return base.VisitUnaryOperatorExpression(unaryOperatorExpression);
                 }
