@@ -30,6 +30,11 @@ namespace Bridge.ClientTest.BridgeIssues
             Assert.AreEqual(2, t.A.Length);
             Assert.AreEqual("a", t.A[0]);
             Assert.AreEqual("b", t.A[1]);
+
+            t = new Test(new string[]{"a", "b"});
+            Assert.AreEqual(2, t.A.Length);
+            Assert.AreEqual("a", t.A[0]);
+            Assert.AreEqual("b", t.A[1]);
         }
     }
 }

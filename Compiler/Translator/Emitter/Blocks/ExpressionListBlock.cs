@@ -7,18 +7,12 @@ namespace Bridge.Translator
 {
     public class ExpressionListBlock : AbstractEmitterBlock
     {
-        public ExpressionListBlock(IEmitter emitter, IEnumerable<Expression> expressions, Expression paramArg, InvocationExpression invocation = null)
+        public ExpressionListBlock(IEmitter emitter, IEnumerable<Expression> expressions, Expression paramArg, AstNode invocation = null)
             : base(emitter, null)
         {
             this.Emitter = emitter;
             this.Expressions = expressions;
             this.ParamExpression = paramArg;
-            this.InvocationExpression = invocation;
-        }
-
-        public ExpressionListBlock(IEmitter emitter, IEnumerable<Expression> expressions, Expression paramArg, ConstructorInitializer invocation)
-            : this(emitter, expressions, paramArg)
-        {
             this.InvocationExpression = invocation;
         }
 

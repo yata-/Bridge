@@ -149,7 +149,7 @@ namespace Bridge.Translator
                         }
                     }
 
-                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
+                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, objectCreateExpression).Emit();
                     this.WriteCloseParentheses();
                 }
 

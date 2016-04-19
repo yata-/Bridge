@@ -2610,7 +2610,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 new Bridge.ClientTest.BasicCSharp.ClassA("constructor$1", Bridge.cast(null, Bridge.ClientTest.BasicCSharp.ClassA.Aux1));
             },
             testConstructor2Failure: function () {
-                var t = new Bridge.ClientTest.BasicCSharp.ClassA("constructor$2", [Bridge.Array.init(2, null)]);
+                var t = new Bridge.ClientTest.BasicCSharp.ClassA("constructor$2", Bridge.Array.init(2, null));
             },
             staticMethod2Failure: function () {
                 Bridge.ClientTest.BasicCSharp.ClassA.staticMethod2(["1", "some string", "345.345435"]);
@@ -5005,6 +5005,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         statics: {
             testParamsInThisCtorInit: function () {
                 var t = new Bridge.ClientTest.BridgeIssues.Bridge1232.Test("constructor$1", ["a", "b"]);
+                Bridge.Test.Assert.areEqual(2, t.getA().length);
+                Bridge.Test.Assert.areEqual("a", t.getA()[0]);
+                Bridge.Test.Assert.areEqual("b", t.getA()[1]);
+    
+                t = new Bridge.ClientTest.BridgeIssues.Bridge1232.Test("constructor$1", ["a", "b"]);
                 Bridge.Test.Assert.areEqual(2, t.getA().length);
                 Bridge.Test.Assert.areEqual("a", t.getA()[0]);
                 Bridge.Test.Assert.areEqual("b", t.getA()[1]);
