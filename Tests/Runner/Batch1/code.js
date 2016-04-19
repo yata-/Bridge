@@ -4893,6 +4893,35 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1200', {
+        statics: {
+            testEventNameCase: function () {
+                var wrong = new Bridge.ClientTest.BridgeIssues.Bridge1200.NotWorking$1(Bridge.Int32)();
+                wrong.IsNotWorking = Bridge.fn.combine(wrong.IsNotWorking, $_.Bridge.ClientTest.BridgeIssues.Bridge1200.f1);
+                Bridge.Test.Assert.areEqual("somevalue", wrong.validate());
+            }
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1200", $_)
+    
+    Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge1200, {
+        f1: function () {
+            return "somevalue";
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1200.NotWorking$1', function (T) { return {
+        config: {
+            events: {
+                IsNotWorking: null
+            }
+        },
+        validate: function () {
+            return this.IsNotWorking == null ? "no subscribers" : this.IsNotWorking();
+        }
+    }; });
+    
     (function(){
         var Bridge1203_a2 = function () {
         };
@@ -4957,6 +4986,20 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1217.Navigator');
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1220', {
+        statics: {
+            testConstInGenericClass: function () {
+                Bridge.Test.Assert.areEqual(1, Bridge.ClientTest.BridgeIssues.Bridge1220.Class1$1(Bridge.Int32).Const1);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1220.Class1$1', function (T) { return {
+        statics: {
+            Const1: 1
+        }
+    }; });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
@@ -7776,6 +7819,22 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         internalFunc1: function () {
             return "A.Test1";
         }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge637', {
+        statics: {
+            testUseCase: function () {
+                var Operator = 0;
+                Bridge.Test.Assert.areEqual(Bridge.ClientTest.BridgeIssues.Bridge637.Operator.add, Operator);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge637.Operator', {
+        statics: {
+            add: 0
+        },
+        $enum: true
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge647', {

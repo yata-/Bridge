@@ -18,16 +18,16 @@
         testDecimal: function () {
             var $t;
             var v = Bridge.Decimal(0);
-            (v = v.add(1));
-            (v = v.sub(1));
-            v = ($t = v, v = v.sub(1), $t);
-            v = (v = v.sub(1));
-            v = ($t = v, v = v.add(1), $t);
-            v = (v = v.add(1));
-            var v1 = ($t = v, v = v.add(1), $t);
-            var v2 = ($t = v, v = v.sub(1), $t);
-            var v3 = (v = v.add(1));
-            var v4 = (v = v.sub(1));
+            v = v.inc();
+            v = v.dec();
+            v = ($t = v, v = v.dec(), $t);
+            v = (v = v.dec());
+            v = ($t = v, v = v.inc(), $t);
+            v = (v = v.inc());
+            var v1 = ($t = v, v = v.inc(), $t);
+            var v2 = ($t = v, v = v.dec(), $t);
+            var v3 = (v = v.inc());
+            var v4 = (v = v.dec());
         },
         testSingle: function () {
             var v = 0;
@@ -43,17 +43,18 @@
             var v4 = --v;
         },
         testLong: function () {
+            var $t;
             var v = Bridge.Long(0);
-            v = v.add(Bridge.Long(1));
-            v = v.sub(Bridge.Long(1));
-            v = Bridge.identity(v, (v = v.sub(Bridge.Long(1))));
-            v = ((v = v.sub(Bridge.Long(1))));
-            v = Bridge.identity(v, (v = v.add(Bridge.Long(1))));
-            v = ((v = v.add(Bridge.Long(1))));
-            var v1 = Bridge.identity(v, (v = v.add(Bridge.Long(1))));
-            var v2 = Bridge.identity(v, (v = v.sub(Bridge.Long(1))));
-            var v3 = ((v = v.add(Bridge.Long(1))));
-            var v4 = ((v = v.sub(Bridge.Long(1))));
+            v = v.inc();
+            v = v.dec();
+            v = ($t = v, v = v.dec(), $t);
+            v = (v = v.dec());
+            v = ($t = v, v = v.inc(), $t);
+            v = (v = v.inc());
+            var v1 = ($t = v, v = v.inc(), $t);
+            var v2 = ($t = v, v = v.dec(), $t);
+            var v3 = (v = v.inc());
+            var v4 = (v = v.dec());
         }
     });
     
