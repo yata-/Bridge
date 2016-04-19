@@ -16,6 +16,12 @@ namespace Bridge.Translator
             this.InvocationExpression = invocation;
         }
 
+        public ExpressionListBlock(IEmitter emitter, IEnumerable<Expression> expressions, Expression paramArg, ConstructorInitializer invocation)
+            : this(emitter, expressions, paramArg)
+        {
+            this.InvocationExpression = invocation;
+        }
+
         public IEnumerable<Expression> Expressions
         {
             get;
@@ -28,7 +34,7 @@ namespace Bridge.Translator
             set;
         }
 
-        public InvocationExpression InvocationExpression
+        public AstNode InvocationExpression
         {
             get;
             set;
