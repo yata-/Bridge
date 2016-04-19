@@ -1002,6 +1002,7 @@ namespace Bridge.Html5
         /// <summary>
         /// Returns a string containing the URL of the current document.
         /// </summary>
+        [Name("URL")]
         public static readonly string URL;
 
         /// <summary>

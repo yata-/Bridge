@@ -436,6 +436,11 @@ namespace Bridge.Contract
             bool isAuto = propertyMember.Attributes.Any(a => a.AttributeType.FullName == "Bridge.FieldPropertyAttribute");
             if (!isAuto && assemblyInfo.AutoPropertyToField && propertyMember is IProperty)
             {
+                var isIgnore = propertyMember.DeclaringTypeDefinition.Attributes.Any(a => a.AttributeType.FullName == "Bridge.ExternalAttribute");
+                if (isIgnore)
+                {
+                    return false;
+                }
                 return propertyMember.DeclaringType.Kind == TypeKind.Interface || Helpers.IsAutoProperty((IProperty)propertyMember);
             }
 
@@ -448,6 +453,10 @@ namespace Bridge.Contract
             if (!isAuto && emitter.AssemblyInfo.AutoPropertyToField)
             {
                 var typeDef = emitter.GetTypeDefinition(propertyMember.DeclaringType);
+                if (emitter.Validator.IsIgnoreType(typeDef))
+                {
+                    return false;
+                }
                 var propDef = typeDef.Properties.FirstOrDefault(p => p.Name == propertyMember.Name);
                 return typeDef.IsInterface || Helpers.IsAutoProperty(propDef);
             }
@@ -459,6 +468,11 @@ namespace Bridge.Contract
             bool isAuto = property.CustomAttributes.Any(a => a.AttributeType.FullName == "Bridge.FieldPropertyAttribute");
             if (!isAuto && emitter.AssemblyInfo.AutoPropertyToField)
             {
+                var typeDef = property.DeclaringType;
+                if (emitter.Validator.IsIgnoreType(typeDef))
+                {
+                    return false;
+                }
                 return Helpers.IsAutoProperty((PropertyDefinition)property);
             }
             return isAuto;

@@ -3,9 +3,9 @@
 (function (globals) {
     "use strict";
 
-    Bridge.init(function(){
+    (function(){
         TestIssue434.Issue434A.doSomething(2);
-    });
+    })();
     
     Bridge.define('TestIssue434.Issue434A', {
         statics: {
@@ -24,13 +24,13 @@
         }
     });
     
-    Bridge.init(TestIssue434.Issue434A.method1);
-    Bridge.init(TestIssue434.Issue434A.method3);
-    Bridge.init(TestIssue434.Issue434A.method4);
+    TestIssue434.Issue434A.method1();
+    TestIssue434.Issue434A.method3();
+    TestIssue434.Issue434A.method4();
     
-    Bridge.init(function(){
+    (function(){
         TestIssue434.Issue434B.doSomething(2);
-    });
+    })();
     
     Bridge.define('TestIssue434.Issue434B', {
         statics: {
@@ -49,9 +49,9 @@
         }
     });
     
-    Bridge.init(TestIssue434.Issue434B.method1);
-    Bridge.init(TestIssue434.Issue434B.method3);
-    Bridge.init(TestIssue434.Issue434B.method4);
+    TestIssue434.Issue434B.method1();
+    TestIssue434.Issue434B.method3();
+    TestIssue434.Issue434B.method4();
     
     Bridge.define('TestIssue434.Issue434C', {
         statics: {
