@@ -100,7 +100,7 @@ namespace Bridge.Translator
                 isDecimalExpected = true;
             }
 
-            if (isDecimal && isDecimalExpected)
+            if (isDecimal && isDecimalExpected && unaryOperatorExpression.Operator != UnaryOperatorType.Await)
             {
                 this.HandleDecimal(resolveOperator);
                 return;
@@ -117,7 +117,7 @@ namespace Bridge.Translator
                 isLongExpected = true;
             }
 
-            if (isLong && isLongExpected)
+            if (isLong && isLongExpected && unaryOperatorExpression.Operator != UnaryOperatorType.Await)
             {
                 this.HandleDecimal(resolveOperator, true);
                 return;

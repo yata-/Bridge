@@ -663,12 +663,24 @@ namespace Bridge.Translator
 
         public virtual bool IsMemberConst(IMember member)
         {
-            return (member is DefaultResolvedField) && (((DefaultResolvedField)member).IsConst && member.DeclaringType.Kind != TypeKind.Enum);
+            var specializedField = member as SpecializedField;
+            if (specializedField != null)
+            {
+                return specializedField.IsConst && member.DeclaringType.Kind != TypeKind.Enum;
+            }
+
+            var defaultResolvedField = member as DefaultResolvedField;
+            if (defaultResolvedField != null)
+            {
+                return defaultResolvedField.IsConst && member.DeclaringType.Kind != TypeKind.Enum;
+            }
+
+            return false;
         }
 
         public virtual bool IsInlineConst(IMember member)
         {
-            bool isConst = (member is DefaultResolvedField) && (((DefaultResolvedField)member).IsConst && member.DeclaringType.Kind != TypeKind.Enum);
+            bool isConst = IsMemberConst(member);
 
             if (isConst)
             {

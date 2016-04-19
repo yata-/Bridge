@@ -20,7 +20,7 @@ namespace Bridge.ClientTest.BridgeIssues
         }
 
         [Test]
-        public static void TestIEvent()
+        public static void TestEventNameCase()
         {
             var wrong = new NotWorking<int>();
             wrong.IsNotWorking += () => "somevalue";
