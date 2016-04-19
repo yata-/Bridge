@@ -454,13 +454,14 @@ namespace Bridge.Translator
 
                 if (binaryOpRr != null && isType(binaryOpRr.Operands[idx].Type, block.Emitter.Resolver) && !isType(rr.Type, block.Emitter.Resolver))
                 {
+                    var isNullable = NullableType.IsNullable(binaryOpRr.Operands[idx].Type);
                     if (expression.IsNull)
                     {
                         return false;
                     }
 
                     block.Write(typeName);
-                    if (NullableType.IsNullable(binaryOpRr.Operands[idx].Type) && ConversionBlock.ShouldBeLifted(expression))
+                    if (isNullable && ConversionBlock.ShouldBeLifted(expression))
                     {
                         block.Write(".lift");
                     }

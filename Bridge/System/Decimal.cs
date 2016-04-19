@@ -167,10 +167,10 @@ namespace System
         [Template("{d1}.sub({d2})")]
         public static extern decimal operator -(decimal d1, decimal d2);
 
-        [Template("{d}.add(1)")]
+        [Template("{d}.inc()")]
         public static extern decimal operator ++(decimal d);
 
-        [Template("{d}.sub(1)")]
+        [Template("{d}.dec()")]
         public static extern decimal operator --(decimal d);
 
         [Template("{d1}.mul({d2})")]

@@ -3469,6 +3469,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 }
             },
             testPropertyOps: function () {
+                var $t;
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(Bridge.Decimal(5.0));
     
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().div(Bridge.Decimal(2)));
@@ -3477,10 +3478,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().add(Bridge.Decimal(2)));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.5), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1());
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().add(Bridge.Decimal(1)));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().inc());
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(5.5), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1());
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().add(Bridge.Decimal(1)));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().inc());
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.5), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1());
     
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(3.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method((Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().div(Bridge.Decimal(2))), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1())));
@@ -3489,13 +3490,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method((Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().add(Bridge.Decimal(1))), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1())));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1());
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(Bridge.identity(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1(), (Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().add(Bridge.Decimal(1))), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1()))));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1(), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1($t.inc()), $t)));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(5.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1());
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(((Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().add(Bridge.Decimal(1))), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1()))));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1(), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1($t.inc()), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1())));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1());
             },
             testIndexerOps: function () {
+                var $t;
                 var app = new Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal();
                 app.setItem(0, Bridge.Decimal(5.0));
     
@@ -3505,10 +3507,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 app.setItem(0, app.getItem(0).add(Bridge.Decimal(2)));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.5), app.getItem(0));
     
-                app.setItem(0, app.getItem(0).add(Bridge.Decimal(1)));
+                app.setItem(0, app.getItem(0).inc());
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(5.5), app.getItem(0));
     
-                app.setItem(0, app.getItem(0).add(Bridge.Decimal(1)));
+                app.setItem(0, app.getItem(0).inc());
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.5), app.getItem(0));
     
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(3.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method((app.setItem(0, app.getItem(0).div(Bridge.Decimal(2))), app.getItem(0))));
@@ -3517,13 +3519,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method((app.setItem(0, app.getItem(0).add(Bridge.Decimal(1))), app.getItem(0))));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), app.getItem(0));
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(Bridge.identity(app.getItem(0), (app.setItem(0, app.getItem(0).add(Bridge.Decimal(1))), app.getItem(0)))));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = app.getItem(0), app.setItem(0, $t.inc()), $t)));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(5.25), app.getItem(0));
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(((app.setItem(0, app.getItem(0).add(Bridge.Decimal(1))), app.getItem(0)))));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = app.getItem(0), app.setItem(0, $t.inc()), app.getItem(0))));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.25), app.getItem(0));
             },
             testDictOps: function () {
+                var $t;
                 var dict = Bridge.merge(new Bridge.Dictionary$2(Bridge.Int32,Bridge.Decimal)(), [
                     [0, Bridge.Decimal(5.0)]
                 ] );
@@ -3534,10 +3537,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 dict.set(0, dict.get(0).add(Bridge.Decimal(2)));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.5), dict.get(0));
     
-                dict.set(0, dict.get(0).add(Bridge.Decimal(1)));
+                dict.set(0, dict.get(0).inc());
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(5.5), dict.get(0));
     
-                dict.set(0, dict.get(0).add(Bridge.Decimal(1)));
+                dict.set(0, dict.get(0).inc());
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.5), dict.get(0));
     
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(3.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method((dict.set(0, dict.get(0).div(Bridge.Decimal(2))), dict.get(0))));
@@ -3546,13 +3549,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method((dict.set(0, dict.get(0).add(Bridge.Decimal(1))), dict.get(0))));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), dict.get(0));
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(Bridge.identity(dict.get(0), (dict.set(0, dict.get(0).add(Bridge.Decimal(1))), dict.get(0)))));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = dict.get(0), dict.set(0, $t.inc()), $t)));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(5.25), dict.get(0));
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(((dict.set(0, dict.get(0).add(Bridge.Decimal(1))), dict.get(0)))));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = dict.get(0), dict.set(0, $t.inc()), dict.get(0))));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.25), dict.get(0));
             },
             testVariableOps: function () {
+                var $t;
                 var i1 = Bridge.Decimal(5);
     
                 i1 = i1.div(Bridge.Decimal(2));
@@ -3561,10 +3565,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 i1 = i1.add(Bridge.Decimal(2));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.5), i1);
     
-                i1 = i1.add(Bridge.Decimal(1));
+                i1 = i1.inc();
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(5.5), i1);
     
-                i1 = i1.add(Bridge.Decimal(1));
+                i1 = i1.inc();
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.5), i1);
     
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(3.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method((i1 = i1.div(Bridge.Decimal(2)))));
@@ -3573,10 +3577,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method((i1 = i1.add(Bridge.Decimal(1)))));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), i1);
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(Bridge.identity(i1, (i1 = i1.add(Bridge.Decimal(1))))));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = i1, i1 = i1.inc(), $t)));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(5.25), i1);
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(((i1 = i1.add(Bridge.Decimal(1))))));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method((i1 = i1.inc())));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.Decimal(6.25), i1);
             },
             method: function (i) {
@@ -4889,25 +4893,25 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1200', {
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1199', {
         statics: {
             testEventNameCase: function () {
-                var wrong = new Bridge.ClientTest.BridgeIssues.Bridge1200.NotWorking$1(Bridge.Int32)();
-                wrong.IsNotWorking = Bridge.fn.combine(wrong.IsNotWorking, $_.Bridge.ClientTest.BridgeIssues.Bridge1200.f1);
+                var wrong = new Bridge.ClientTest.BridgeIssues.Bridge1199.NotWorking$1(Bridge.Int32)();
+                wrong.IsNotWorking = Bridge.fn.combine(wrong.IsNotWorking, $_.Bridge.ClientTest.BridgeIssues.Bridge1199.f1);
                 Bridge.Test.Assert.areEqual("somevalue", wrong.validate());
             }
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1200", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1199", $_)
     
-    Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge1200, {
+    Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge1199, {
         f1: function () {
             return "somevalue";
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1200.NotWorking$1', function (T) { return {
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1199.NotWorking$1', function (T) { return {
         config: {
             events: {
                 IsNotWorking: null
@@ -4948,6 +4952,40 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             }
         }
     });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1217', {
+        statics: {
+            testTypeInferenceWithNamedArguments: function () {
+                var r1 = Bridge.ClientTest.BridgeIssues.Bridge1217.getNavigatorToTest1(Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator, "", "", $_.Bridge.ClientTest.BridgeIssues.Bridge1217.f1);
+                Bridge.Test.Assert.areEqual(Bridge.getTypeName(Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator), r1);
+    
+                var r2 = Bridge.ClientTest.BridgeIssues.Bridge1217.getNavigatorToTest1(Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator, "", "", $_.Bridge.ClientTest.BridgeIssues.Bridge1217.f1);
+                Bridge.Test.Assert.areEqual(Bridge.getTypeName(Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator), r2);
+    
+                var r3 = Bridge.ClientTest.BridgeIssues.Bridge1217.getNavigatorToTest2(Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator, "", "", Bridge.cast(null, Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator));
+                Bridge.Test.Assert.areEqual(Bridge.getTypeName(Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator), r3);
+    
+                var r4 = Bridge.ClientTest.BridgeIssues.Bridge1217.getNavigatorToTest2(Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator, "", "", Bridge.cast(null, Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator));
+                Bridge.Test.Assert.areEqual(Bridge.getTypeName(Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator), r4);
+            },
+            getNavigatorToTest1: function (TNavigator, initialUrl, assert, navigatorGenerator) {
+                return Bridge.getTypeName(TNavigator);
+            },
+            getNavigatorToTest2: function (TNavigator, initialUrl, assert, navigatorGenerator) {
+                return Bridge.getTypeName(TNavigator);
+            }
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1217", $_)
+    
+    Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge1217, {
+        f1: function () {
+            return Bridge.cast(null, Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1217.Navigator');
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1220', {
         statics: {
@@ -12358,10 +12396,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     var r = max.add(Bridge.Long(1), 1);
                 }, "Through identifier +");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    var r = Bridge.identity(max1, (max1 = max1.add(Bridge.Long(1), 1)));
+                    var $t;
+                    var r = ($t = max1, max1 = max1.inc(1), $t);
                 }, "Through identifier post++");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    var r = ((max2 = max2.add(Bridge.Long(1), 1)));
+                    var r = (max2 = max2.inc(1));
                 }, "Through identifier ++pre");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
                     var r = Bridge.Long(2).mul(max, 1);
@@ -12371,10 +12410,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     Bridge.ClientTest.CheckedUncheckedTests.bypass(max.add(Bridge.Long(1), 1));
                 }, "Through parameter +");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.identity(max3, (max3 = max3.add(Bridge.Long(1), 1))));
+                    var $t;
+                    Bridge.ClientTest.CheckedUncheckedTests.bypass(($t = max3, max3 = max3.inc(1), $t));
                 }, "Through parameter post++");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    Bridge.ClientTest.CheckedUncheckedTests.bypass(((max4 = max4.add(Bridge.Long(1), 1))));
+                    Bridge.ClientTest.CheckedUncheckedTests.bypass((max4 = max4.inc(1)));
                 }, "Through parameter ++pre");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
                     Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.Long(2).mul(max, 1));
@@ -12391,10 +12431,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     var r = min.sub(Bridge.Long(1), 1);
                 }, "Through identifier -");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    var r = Bridge.identity(min1, (min1 = min1.sub(Bridge.Long(1), 1)));
+                    var $t;
+                    var r = ($t = min1, min1 = min1.dec(1), $t);
                 }, "Through identifier post--");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    var r = ((min2 = min2.sub(Bridge.Long(1), 1)));
+                    var r = (min2 = min2.dec(1));
                 }, "Through identifier pre--");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
                     var r = min.neg(1);
@@ -12404,10 +12445,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     Bridge.ClientTest.CheckedUncheckedTests.bypass(min.sub(Bridge.Long(1), 1));
                 }, "Through parameter -");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.identity(min3, (min3 = min3.sub(Bridge.Long(1), 1))));
+                    var $t;
+                    Bridge.ClientTest.CheckedUncheckedTests.bypass(($t = min3, min3 = min3.dec(1), $t));
                 }, "Through parameter post--");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    Bridge.ClientTest.CheckedUncheckedTests.bypass(((min4 = min4.sub(Bridge.Long(1), 1))));
+                    Bridge.ClientTest.CheckedUncheckedTests.bypass((min4 = min4.dec(1)));
                 }, "Through parameter --pre");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
                     Bridge.ClientTest.CheckedUncheckedTests.bypass(min.neg(1));
@@ -12425,10 +12467,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     var r = max.add(Bridge.ULong(1), 1);
                 }, "Through identifier +");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    var r = Bridge.identity(max1, (max1 = max1.add(Bridge.ULong(1), 1)));
+                    var $t;
+                    var r = ($t = max1, max1 = max1.inc(1), $t);
                 }, "Through identifier post++");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    var r = ((max2 = max2.add(Bridge.ULong(1), 1)));
+                    var r = (max2 = max2.inc(1));
                 }, "Through identifier ++pre");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
                     var r = Bridge.ULong(2).mul(max, 1);
@@ -12438,10 +12481,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     Bridge.ClientTest.CheckedUncheckedTests.bypass(max.add(Bridge.ULong(1), 1));
                 }, "Through parameter +");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.identity(max3, (max3 = max3.add(Bridge.ULong(1), 1))));
+                    var $t;
+                    Bridge.ClientTest.CheckedUncheckedTests.bypass(($t = max3, max3 = max3.inc(1), $t));
                 }, "Through parameter post++");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    Bridge.ClientTest.CheckedUncheckedTests.bypass(((max4 = max4.add(Bridge.ULong(1), 1))));
+                    Bridge.ClientTest.CheckedUncheckedTests.bypass((max4 = max4.inc(1)));
                 }, "Through parameter ++pre");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
                     Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.ULong(2).mul(max, 1));
@@ -12458,20 +12502,22 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     var r = min.sub(Bridge.ULong(1), 1);
                 }, "Through identifier -");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    var r = Bridge.identity(min1, (min1 = min1.sub(Bridge.ULong(1), 1)));
+                    var $t;
+                    var r = ($t = min1, min1 = min1.dec(1), $t);
                 }, "Through identifier post--");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    var r = ((min2 = min2.sub(Bridge.ULong(1), 1)));
+                    var r = (min2 = min2.dec(1));
                 }, "Through identifier pre--");
     
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
                     Bridge.ClientTest.CheckedUncheckedTests.bypass(min.sub(Bridge.ULong(1), 1));
                 }, "Through parameter -");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.identity(min3, (min3 = min3.sub(Bridge.ULong(1), 1))));
+                    var $t;
+                    Bridge.ClientTest.CheckedUncheckedTests.bypass(($t = min3, min3 = min3.dec(1), $t));
                 }, "Through parameter post--");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    Bridge.ClientTest.CheckedUncheckedTests.bypass(((min4 = min4.sub(Bridge.ULong(1), 1))));
+                    Bridge.ClientTest.CheckedUncheckedTests.bypass((min4 = min4.dec(1)));
                 }, "Through parameter --pre");
             }
         }
@@ -12619,10 +12665,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     var r = max.add(Bridge.Long(1), 1);
                 }, "Through identifier +");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    var r = Bridge.identity(max1, (max1 = max1.add(Bridge.Long(1), 1)));
+                    var $t;
+                    var r = ($t = max1, max1 = max1.inc(1), $t);
                 }, "Through identifier post++");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    var r = ((max2 = max2.add(Bridge.Long(1), 1)));
+                    var r = (max2 = max2.inc(1));
                 }, "Through identifier ++pre");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
                     var r = Bridge.Long(2).mul(max, 1);
@@ -12632,10 +12679,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     Bridge.ClientTest.CheckedUncheckedTests.bypass(max.add(Bridge.Long(1), 1));
                 }, "Through parameter +");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.identity(max3, (max3 = max3.add(Bridge.Long(1), 1))));
+                    var $t;
+                    Bridge.ClientTest.CheckedUncheckedTests.bypass(($t = max3, max3 = max3.inc(1), $t));
                 }, "Through parameter post++");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    Bridge.ClientTest.CheckedUncheckedTests.bypass(((max4 = max4.add(Bridge.Long(1), 1))));
+                    Bridge.ClientTest.CheckedUncheckedTests.bypass((max4 = max4.inc(1)));
                 }, "Through parameter ++pre");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
                     Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.Long(2).mul(max, 1));
@@ -12652,10 +12700,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     var r = min.sub(Bridge.Long(1), 1);
                 }, "Through identifier -");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    var r = Bridge.identity(min1, (min1 = min1.sub(Bridge.Long(1), 1)));
+                    var $t;
+                    var r = ($t = min1, min1 = min1.dec(1), $t);
                 }, "Through identifier post--");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    var r = ((min2 = min2.sub(Bridge.Long(1), 1)));
+                    var r = (min2 = min2.dec(1));
                 }, "Through identifier pre--");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
                     var r = min.neg(1);
@@ -12665,10 +12714,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     Bridge.ClientTest.CheckedUncheckedTests.bypass(min.sub(Bridge.Long(1), 1));
                 }, "Through parameter -");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.identity(min3, (min3 = min3.sub(Bridge.Long(1), 1))));
+                    var $t;
+                    Bridge.ClientTest.CheckedUncheckedTests.bypass(($t = min3, min3 = min3.dec(1), $t));
                 }, "Through parameter post--");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    Bridge.ClientTest.CheckedUncheckedTests.bypass(((min4 = min4.sub(Bridge.Long(1), 1))));
+                    Bridge.ClientTest.CheckedUncheckedTests.bypass((min4 = min4.dec(1)));
                 }, "Through parameter --pre");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
                     Bridge.ClientTest.CheckedUncheckedTests.bypass(min.neg(1));
@@ -12686,10 +12736,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     var r = max.add(Bridge.ULong(1), 1);
                 }, "Through identifier +");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    var r = Bridge.identity(max1, (max1 = max1.add(Bridge.ULong(1), 1)));
+                    var $t;
+                    var r = ($t = max1, max1 = max1.inc(1), $t);
                 }, "Through identifier post++");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    var r = ((max2 = max2.add(Bridge.ULong(1), 1)));
+                    var r = (max2 = max2.inc(1));
                 }, "Through identifier ++pre");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
                     var r = Bridge.ULong(2).mul(max, 1);
@@ -12699,10 +12750,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     Bridge.ClientTest.CheckedUncheckedTests.bypass(max.add(Bridge.ULong(1), 1));
                 }, "Through parameter +");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.identity(max3, (max3 = max3.add(Bridge.ULong(1), 1))));
+                    var $t;
+                    Bridge.ClientTest.CheckedUncheckedTests.bypass(($t = max3, max3 = max3.inc(1), $t));
                 }, "Through parameter post++");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    Bridge.ClientTest.CheckedUncheckedTests.bypass(((max4 = max4.add(Bridge.ULong(1), 1))));
+                    Bridge.ClientTest.CheckedUncheckedTests.bypass((max4 = max4.inc(1)));
                 }, "Through parameter ++pre");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
                     Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.ULong(2).mul(max, 1));
@@ -12719,20 +12771,22 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     var r = min.sub(Bridge.ULong(1), 1);
                 }, "Through identifier -");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    var r = Bridge.identity(min1, (min1 = min1.sub(Bridge.ULong(1), 1)));
+                    var $t;
+                    var r = ($t = min1, min1 = min1.dec(1), $t);
                 }, "Through identifier post--");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    var r = ((min2 = min2.sub(Bridge.ULong(1), 1)));
+                    var r = (min2 = min2.dec(1));
                 }, "Through identifier pre--");
     
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
                     Bridge.ClientTest.CheckedUncheckedTests.bypass(min.sub(Bridge.ULong(1), 1));
                 }, "Through parameter -");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.identity(min3, (min3 = min3.sub(Bridge.ULong(1), 1))));
+                    var $t;
+                    Bridge.ClientTest.CheckedUncheckedTests.bypass(($t = min3, min3 = min3.dec(1), $t));
                 }, "Through parameter post--");
                 Bridge.Test.Assert.throws$7(Bridge.OverflowException, function () {
-                    Bridge.ClientTest.CheckedUncheckedTests.bypass(((min4 = min4.sub(Bridge.ULong(1), 1))));
+                    Bridge.ClientTest.CheckedUncheckedTests.bypass((min4 = min4.dec(1)));
                 }, "Through parameter --pre");
             }
         }
@@ -12827,6 +12881,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("0", Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.Long(min).neg()), "Through parameter unary -");
             },
             testLong: function () {
+                var $t;
                 var max = Bridge.Long.MaxValue;
     
                 var max1 = max;
@@ -12835,8 +12890,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var max4 = max;
     
                 var rMax1 = max.add(Bridge.Long(1));
-                var rMax2 = Bridge.identity(max1, (max1 = max1.add(Bridge.Long(1))));
-                var rMax3 = ((max2 = max2.add(Bridge.Long(1))));
+                var rMax2 = ($t = max1, max1 = max1.inc(), $t);
+                var rMax3 = (max2 = max2.inc());
                 var rMax4 = Bridge.Long(2).mul(max);
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-9223372036854775808", rMax1, "Through identifier +");
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("9223372036854775807", rMax2, "Through identifier post++");
@@ -12844,8 +12899,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-2", rMax4, "Through identifier *");
     
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-9223372036854775808", Bridge.ClientTest.CheckedUncheckedTests.bypass(max.add(Bridge.Long(1))), "Through parameter +");
-                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("9223372036854775807", Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.identity(max3, (max3 = max3.add(Bridge.Long(1))))), "Through parameter post++");
-                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-9223372036854775808", Bridge.ClientTest.CheckedUncheckedTests.bypass(((max4 = max4.add(Bridge.Long(1))))), "Through parameter ++pre");
+                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("9223372036854775807", Bridge.ClientTest.CheckedUncheckedTests.bypass(($t = max3, max3 = max3.inc(), $t)), "Through parameter post++");
+                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-9223372036854775808", Bridge.ClientTest.CheckedUncheckedTests.bypass((max4 = max4.inc())), "Through parameter ++pre");
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-2", Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.Long(2).mul(max)), "Through parameter *");
     
                 var min = Bridge.Long.MinValue;
@@ -12856,8 +12911,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var min4 = min;
     
                 var rMin1 = min.sub(Bridge.Long(1));
-                var rMin2 = Bridge.identity(min1, (min1 = min1.sub(Bridge.Long(1))));
-                var rMin3 = ((min2 = min2.sub(Bridge.Long(1))));
+                var rMin2 = ($t = min1, min1 = min1.dec(), $t);
+                var rMin3 = (min2 = min2.dec());
                 var rMin4 = min.neg();
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("9223372036854775807", rMin1, "Through identifier -");
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-9223372036854775808", rMin2, "Through identifier post--");
@@ -12865,11 +12920,12 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-9223372036854775808", rMin4, "Through identifier unary -");
     
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("9223372036854775807", Bridge.ClientTest.CheckedUncheckedTests.bypass(min.sub(Bridge.Long(1))), "Through parameter -");
-                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-9223372036854775808", Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.identity(min3, (min3 = min3.sub(Bridge.Long(1))))), "Through parameter post--");
-                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("9223372036854775807", Bridge.ClientTest.CheckedUncheckedTests.bypass(((min4 = min4.sub(Bridge.Long(1))))), "Through parameter --pre");
+                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-9223372036854775808", Bridge.ClientTest.CheckedUncheckedTests.bypass(($t = min3, min3 = min3.dec(), $t)), "Through parameter post--");
+                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("9223372036854775807", Bridge.ClientTest.CheckedUncheckedTests.bypass((min4 = min4.dec())), "Through parameter --pre");
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-9223372036854775808", Bridge.ClientTest.CheckedUncheckedTests.bypass(min.neg()), "Through parameter unary -");
             },
             testULong: function () {
+                var $t;
                 var max = Bridge.ULong.MaxValue;
     
                 var max1 = max;
@@ -12878,8 +12934,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var max4 = max;
     
                 var rMax1 = max.add(Bridge.ULong(1));
-                var rMax2 = Bridge.identity(max1, (max1 = max1.add(Bridge.ULong(1))));
-                var rMax3 = ((max2 = max2.add(Bridge.ULong(1))));
+                var rMax2 = ($t = max1, max1 = max1.inc(), $t);
+                var rMax3 = (max2 = max2.inc());
                 var rMax4 = Bridge.ULong(2).mul(max);
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("0", rMax1, "Through identifier +");
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("18446744073709551615", rMax2, "Through identifier post++");
@@ -12887,8 +12943,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("18446744073709551614", rMax4, "Through identifier *");
     
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("0", Bridge.ClientTest.CheckedUncheckedTests.bypass(max.add(Bridge.ULong(1))), "Through parameter +");
-                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("18446744073709551615", Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.identity(max3, (max3 = max3.add(Bridge.ULong(1))))), "Through parameter post++");
-                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("0", Bridge.ClientTest.CheckedUncheckedTests.bypass(((max4 = max4.add(Bridge.ULong(1))))), "Through parameter ++pre");
+                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("18446744073709551615", Bridge.ClientTest.CheckedUncheckedTests.bypass(($t = max3, max3 = max3.inc(), $t)), "Through parameter post++");
+                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("0", Bridge.ClientTest.CheckedUncheckedTests.bypass((max4 = max4.inc())), "Through parameter ++pre");
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("18446744073709551614", Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.ULong(2).mul(max)), "Through parameter *");
     
                 var min = Bridge.ULong.MinValue;
@@ -12899,15 +12955,15 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var min4 = min;
     
                 var rMin1 = min.sub(Bridge.ULong(1));
-                var rMin2 = Bridge.identity(min1, (min1 = min1.sub(Bridge.ULong(1))));
-                var rMin3 = ((min2 = min2.sub(Bridge.ULong(1))));
+                var rMin2 = ($t = min1, min1 = min1.dec(), $t);
+                var rMin3 = (min2 = min2.dec());
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("18446744073709551615", rMin1, "Through identifier -");
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("0", rMin2, "Through identifier post--");
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("18446744073709551615", rMin3, "Through identifier --pre");
     
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("18446744073709551615", Bridge.ClientTest.CheckedUncheckedTests.bypass(min.sub(Bridge.ULong(1))), "Through parameter -");
-                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("0", Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.identity(min3, (min3 = min3.sub(Bridge.ULong(1))))), "Through parameter post--");
-                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("18446744073709551615", Bridge.ClientTest.CheckedUncheckedTests.bypass(((min4 = min4.sub(Bridge.ULong(1))))), "Through parameter --pre");
+                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("0", Bridge.ClientTest.CheckedUncheckedTests.bypass(($t = min3, min3 = min3.dec(), $t)), "Through parameter post--");
+                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("18446744073709551615", Bridge.ClientTest.CheckedUncheckedTests.bypass((min4 = min4.dec())), "Through parameter --pre");
             }
         }
     });
@@ -13001,6 +13057,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("0", Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.Long(min).neg()), "Through parameter unary -");
             },
             testLong: function () {
+                var $t;
                 var max = Bridge.Long.MaxValue;
     
                 var max1 = max;
@@ -13009,8 +13066,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var max4 = max;
     
                 var rMax1 = max.add(Bridge.Long(1));
-                var rMax2 = Bridge.identity(max1, (max1 = max1.add(Bridge.Long(1))));
-                var rMax3 = ((max2 = max2.add(Bridge.Long(1))));
+                var rMax2 = ($t = max1, max1 = max1.inc(), $t);
+                var rMax3 = (max2 = max2.inc());
                 var rMax4 = Bridge.Long(2).mul(max);
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-9223372036854775808", rMax1, "Through identifier +");
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("9223372036854775807", rMax2, "Through identifier post++");
@@ -13018,8 +13075,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-2", rMax4, "Through identifier *");
     
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-9223372036854775808", Bridge.ClientTest.CheckedUncheckedTests.bypass(max.add(Bridge.Long(1))), "Through parameter +");
-                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("9223372036854775807", Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.identity(max3, (max3 = max3.add(Bridge.Long(1))))), "Through parameter post++");
-                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-9223372036854775808", Bridge.ClientTest.CheckedUncheckedTests.bypass(((max4 = max4.add(Bridge.Long(1))))), "Through parameter ++pre");
+                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("9223372036854775807", Bridge.ClientTest.CheckedUncheckedTests.bypass(($t = max3, max3 = max3.inc(), $t)), "Through parameter post++");
+                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-9223372036854775808", Bridge.ClientTest.CheckedUncheckedTests.bypass((max4 = max4.inc())), "Through parameter ++pre");
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-2", Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.Long(2).mul(max)), "Through parameter *");
     
                 var min = Bridge.Long.MinValue;
@@ -13030,8 +13087,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var min4 = min;
     
                 var rMin1 = min.sub(Bridge.Long(1));
-                var rMin2 = Bridge.identity(min1, (min1 = min1.sub(Bridge.Long(1))));
-                var rMin3 = ((min2 = min2.sub(Bridge.Long(1))));
+                var rMin2 = ($t = min1, min1 = min1.dec(), $t);
+                var rMin3 = (min2 = min2.dec());
                 var rMin4 = min.neg();
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("9223372036854775807", rMin1, "Through identifier -");
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-9223372036854775808", rMin2, "Through identifier post--");
@@ -13039,11 +13096,12 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-9223372036854775808", rMin4, "Through identifier unary -");
     
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("9223372036854775807", Bridge.ClientTest.CheckedUncheckedTests.bypass(min.sub(Bridge.Long(1))), "Through parameter -");
-                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-9223372036854775808", Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.identity(min3, (min3 = min3.sub(Bridge.Long(1))))), "Through parameter post--");
-                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("9223372036854775807", Bridge.ClientTest.CheckedUncheckedTests.bypass(((min4 = min4.sub(Bridge.Long(1))))), "Through parameter --pre");
+                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-9223372036854775808", Bridge.ClientTest.CheckedUncheckedTests.bypass(($t = min3, min3 = min3.dec(), $t)), "Through parameter post--");
+                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("9223372036854775807", Bridge.ClientTest.CheckedUncheckedTests.bypass((min4 = min4.dec())), "Through parameter --pre");
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-9223372036854775808", Bridge.ClientTest.CheckedUncheckedTests.bypass(min.neg()), "Through parameter unary -");
             },
             testULong: function () {
+                var $t;
                 var max = Bridge.ULong.MaxValue;
     
                 var max1 = max;
@@ -13052,8 +13110,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var max4 = max;
     
                 var rMax1 = max.add(Bridge.ULong(1));
-                var rMax2 = Bridge.identity(max1, (max1 = max1.add(Bridge.ULong(1))));
-                var rMax3 = ((max2 = max2.add(Bridge.ULong(1))));
+                var rMax2 = ($t = max1, max1 = max1.inc(), $t);
+                var rMax3 = (max2 = max2.inc());
                 var rMax4 = Bridge.ULong(2).mul(max);
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("0", rMax1, "Through identifier +");
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("18446744073709551615", rMax2, "Through identifier post++");
@@ -13061,8 +13119,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("18446744073709551614", rMax4, "Through identifier *");
     
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("0", Bridge.ClientTest.CheckedUncheckedTests.bypass(max.add(Bridge.ULong(1))), "Through parameter +");
-                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("18446744073709551615", Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.identity(max3, (max3 = max3.add(Bridge.ULong(1))))), "Through parameter post++");
-                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("0", Bridge.ClientTest.CheckedUncheckedTests.bypass(((max4 = max4.add(Bridge.ULong(1))))), "Through parameter ++pre");
+                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("18446744073709551615", Bridge.ClientTest.CheckedUncheckedTests.bypass(($t = max3, max3 = max3.inc(), $t)), "Through parameter post++");
+                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("0", Bridge.ClientTest.CheckedUncheckedTests.bypass((max4 = max4.inc())), "Through parameter ++pre");
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("18446744073709551614", Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.ULong(2).mul(max)), "Through parameter *");
     
                 var min = Bridge.ULong.MinValue;
@@ -13073,15 +13131,15 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var min4 = min;
     
                 var rMin1 = min.sub(Bridge.ULong(1));
-                var rMin2 = Bridge.identity(min1, (min1 = min1.sub(Bridge.ULong(1))));
-                var rMin3 = ((min2 = min2.sub(Bridge.ULong(1))));
+                var rMin2 = ($t = min1, min1 = min1.dec(), $t);
+                var rMin3 = (min2 = min2.dec());
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("18446744073709551615", rMin1, "Through identifier -");
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("0", rMin2, "Through identifier post--");
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("18446744073709551615", rMin3, "Through identifier --pre");
     
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("18446744073709551615", Bridge.ClientTest.CheckedUncheckedTests.bypass(min.sub(Bridge.ULong(1))), "Through parameter -");
-                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("0", Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.identity(min3, (min3 = min3.sub(Bridge.ULong(1))))), "Through parameter post--");
-                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("18446744073709551615", Bridge.ClientTest.CheckedUncheckedTests.bypass(((min4 = min4.sub(Bridge.ULong(1))))), "Through parameter --pre");
+                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("0", Bridge.ClientTest.CheckedUncheckedTests.bypass(($t = min3, min3 = min3.dec(), $t)), "Through parameter post--");
+                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("18446744073709551615", Bridge.ClientTest.CheckedUncheckedTests.bypass((min4 = min4.dec())), "Through parameter --pre");
             }
         }
     });
@@ -13175,6 +13233,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("0", Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.Long(min).neg()), "Through parameter unary -");
             },
             testLong: function () {
+                var $t;
                 var max = Bridge.Long.MaxValue;
     
                 var max1 = max;
@@ -13183,8 +13242,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var max4 = max;
     
                 var rMax1 = max.add(Bridge.Long(1));
-                var rMax2 = Bridge.identity(max1, (max1 = max1.add(Bridge.Long(1))));
-                var rMax3 = ((max2 = max2.add(Bridge.Long(1))));
+                var rMax2 = ($t = max1, max1 = max1.inc(), $t);
+                var rMax3 = (max2 = max2.inc());
                 var rMax4 = Bridge.Long(2).mul(max);
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-9223372036854775808", rMax1, "Through identifier +");
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("9223372036854775807", rMax2, "Through identifier post++");
@@ -13192,8 +13251,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-2", rMax4, "Through identifier *");
     
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-9223372036854775808", Bridge.ClientTest.CheckedUncheckedTests.bypass(max.add(Bridge.Long(1))), "Through parameter +");
-                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("9223372036854775807", Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.identity(max3, (max3 = max3.add(Bridge.Long(1))))), "Through parameter post++");
-                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-9223372036854775808", Bridge.ClientTest.CheckedUncheckedTests.bypass(((max4 = max4.add(Bridge.Long(1))))), "Through parameter ++pre");
+                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("9223372036854775807", Bridge.ClientTest.CheckedUncheckedTests.bypass(($t = max3, max3 = max3.inc(), $t)), "Through parameter post++");
+                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-9223372036854775808", Bridge.ClientTest.CheckedUncheckedTests.bypass((max4 = max4.inc())), "Through parameter ++pre");
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-2", Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.Long(2).mul(max)), "Through parameter *");
     
                 var min = Bridge.Long.MinValue;
@@ -13204,8 +13263,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var min4 = min;
     
                 var rMin1 = min.sub(Bridge.Long(1));
-                var rMin2 = Bridge.identity(min1, (min1 = min1.sub(Bridge.Long(1))));
-                var rMin3 = ((min2 = min2.sub(Bridge.Long(1))));
+                var rMin2 = ($t = min1, min1 = min1.dec(), $t);
+                var rMin3 = (min2 = min2.dec());
                 var rMin4 = min.neg();
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("9223372036854775807", rMin1, "Through identifier -");
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-9223372036854775808", rMin2, "Through identifier post--");
@@ -13213,11 +13272,12 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-9223372036854775808", rMin4, "Through identifier unary -");
     
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("9223372036854775807", Bridge.ClientTest.CheckedUncheckedTests.bypass(min.sub(Bridge.Long(1))), "Through parameter -");
-                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-9223372036854775808", Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.identity(min3, (min3 = min3.sub(Bridge.Long(1))))), "Through parameter post--");
-                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("9223372036854775807", Bridge.ClientTest.CheckedUncheckedTests.bypass(((min4 = min4.sub(Bridge.Long(1))))), "Through parameter --pre");
+                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-9223372036854775808", Bridge.ClientTest.CheckedUncheckedTests.bypass(($t = min3, min3 = min3.dec(), $t)), "Through parameter post--");
+                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("9223372036854775807", Bridge.ClientTest.CheckedUncheckedTests.bypass((min4 = min4.dec())), "Through parameter --pre");
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("-9223372036854775808", Bridge.ClientTest.CheckedUncheckedTests.bypass(min.neg()), "Through parameter unary -");
             },
             testULong: function () {
+                var $t;
                 var max = Bridge.ULong.MaxValue;
     
                 var max1 = max;
@@ -13226,8 +13286,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var max4 = max;
     
                 var rMax1 = max.add(Bridge.ULong(1));
-                var rMax2 = Bridge.identity(max1, (max1 = max1.add(Bridge.ULong(1))));
-                var rMax3 = ((max2 = max2.add(Bridge.ULong(1))));
+                var rMax2 = ($t = max1, max1 = max1.inc(), $t);
+                var rMax3 = (max2 = max2.inc());
                 var rMax4 = Bridge.ULong(2).mul(max);
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("0", rMax1, "Through identifier +");
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("18446744073709551615", rMax2, "Through identifier post++");
@@ -13235,8 +13295,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("18446744073709551614", rMax4, "Through identifier *");
     
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("0", Bridge.ClientTest.CheckedUncheckedTests.bypass(max.add(Bridge.ULong(1))), "Through parameter +");
-                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("18446744073709551615", Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.identity(max3, (max3 = max3.add(Bridge.ULong(1))))), "Through parameter post++");
-                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("0", Bridge.ClientTest.CheckedUncheckedTests.bypass(((max4 = max4.add(Bridge.ULong(1))))), "Through parameter ++pre");
+                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("18446744073709551615", Bridge.ClientTest.CheckedUncheckedTests.bypass(($t = max3, max3 = max3.inc(), $t)), "Through parameter post++");
+                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("0", Bridge.ClientTest.CheckedUncheckedTests.bypass((max4 = max4.inc())), "Through parameter ++pre");
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("18446744073709551614", Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.ULong(2).mul(max)), "Through parameter *");
     
                 var min = Bridge.ULong.MinValue;
@@ -13247,15 +13307,15 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var min4 = min;
     
                 var rMin1 = min.sub(Bridge.ULong(1));
-                var rMin2 = Bridge.identity(min1, (min1 = min1.sub(Bridge.ULong(1))));
-                var rMin3 = ((min2 = min2.sub(Bridge.ULong(1))));
+                var rMin2 = ($t = min1, min1 = min1.dec(), $t);
+                var rMin3 = (min2 = min2.dec());
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("18446744073709551615", rMin1, "Through identifier -");
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("0", rMin2, "Through identifier post--");
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("18446744073709551615", rMin3, "Through identifier --pre");
     
                 Bridge.ClientTest.CheckedUncheckedTests.assertEqual("18446744073709551615", Bridge.ClientTest.CheckedUncheckedTests.bypass(min.sub(Bridge.ULong(1))), "Through parameter -");
-                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("0", Bridge.ClientTest.CheckedUncheckedTests.bypass(Bridge.identity(min3, (min3 = min3.sub(Bridge.ULong(1))))), "Through parameter post--");
-                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("18446744073709551615", Bridge.ClientTest.CheckedUncheckedTests.bypass(((min4 = min4.sub(Bridge.ULong(1))))), "Through parameter --pre");
+                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("0", Bridge.ClientTest.CheckedUncheckedTests.bypass(($t = min3, min3 = min3.dec(), $t)), "Through parameter post--");
+                Bridge.ClientTest.CheckedUncheckedTests.assertEqual("18446744073709551615", Bridge.ClientTest.CheckedUncheckedTests.bypass((min4 = min4.dec())), "Through parameter --pre");
             }
         }
     });
@@ -21612,15 +21672,16 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.areEqual(11.5, Bridge.Decimal.toFloat(Bridge.Decimal((x + 11.5))));
         },
         operatorsWork: function () {
+            var $t;
             var x = Bridge.Decimal(3);
             this.assertIsDecimalAndEqualTo(x.clone(), 3);
             this.assertIsDecimalAndEqualTo(x.neg(), -3);
             this.assertIsDecimalAndEqualTo(x.add(Bridge.Decimal(4.0)), 7);
             this.assertIsDecimalAndEqualTo(x.sub(Bridge.Decimal(2.0)), 1);
-            this.assertIsDecimalAndEqualTo(Bridge.identity(x, (x = x.add(Bridge.Decimal(1)))), 3);
-            this.assertIsDecimalAndEqualTo(((x = x.add(Bridge.Decimal(1)))), 5);
-            this.assertIsDecimalAndEqualTo(Bridge.identity(x, (x = x.sub(Bridge.Decimal(1)))), 5);
-            this.assertIsDecimalAndEqualTo(((x = x.sub(Bridge.Decimal(1)))), 3);
+            this.assertIsDecimalAndEqualTo(($t = x, x = x.inc(), $t), 3);
+            this.assertIsDecimalAndEqualTo((x = x.inc()), 5);
+            this.assertIsDecimalAndEqualTo(($t = x, x = x.dec(), $t), 5);
+            this.assertIsDecimalAndEqualTo((x = x.dec()), 3);
             this.assertIsDecimalAndEqualTo(x.mul(Bridge.Decimal(3.0)), 9);
             this.assertIsDecimalAndEqualTo(x.div(Bridge.Decimal(2.0)), 1.5);
             this.assertIsDecimalAndEqualTo(Bridge.Decimal(14.0).mod(x), 2);
@@ -29317,6 +29378,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         compare: function (x, y) {
             return Bridge.String.compare(x.value, y.value);
         }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge1217.Navigator]
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge240B', {
