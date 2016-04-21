@@ -127,7 +127,7 @@
             return value.add(Bridge.Decimal(1));
         },
         f11: function (value, index) {
-            return value.add(this.computeValue(Bridge.Decimal(Bridge.Decimal(index))));
+            return value.add(this.computeValue(Bridge.Decimal(index)));
         },
         f12: function (value) {
             return value.add(this.computeValue(Bridge.Decimal(100.0)));

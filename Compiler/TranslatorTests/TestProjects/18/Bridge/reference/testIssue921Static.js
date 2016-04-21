@@ -111,7 +111,7 @@
             return value.add(Bridge.Decimal(1));
         },
         f10: function (value, index) {
-            return value.add(TestIssue921Static.Issue921Static.computeValue(Bridge.Decimal(Bridge.Decimal(index))));
+            return value.add(TestIssue921Static.Issue921Static.computeValue(Bridge.Decimal(index)));
         },
         f11: function (value) {
             return value.add(TestIssue921Static.Issue921Static.computeValue(Bridge.Decimal(100.0)));

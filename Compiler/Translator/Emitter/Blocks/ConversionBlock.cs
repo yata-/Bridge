@@ -115,10 +115,10 @@ namespace Bridge.Translator
                     return level;
                 }
 
-                if (expression is ParenthesizedExpression && expression.Parent is CastExpression)
+                /*if (expression is ParenthesizedExpression && expression.Parent is CastExpression)
                 {
                     return level;
-                }
+                }*/
 
                 if (conversion.IsUserDefined && expression.Parent is CastExpression && ((CastExpression)expression.Parent).Expression == expression)
                 {
@@ -321,6 +321,17 @@ namespace Bridge.Translator
                 if (isType(m.ReturnType, block.Emitter.Resolver))
                 {
                     return false;
+                }
+            }
+
+            if (expression is CastExpression)
+            {
+                var nestedExpr = ((CastExpression) expression).Expression;
+                var nested_rr = block.Emitter.Resolver.ResolveNode(nestedExpr, block.Emitter);
+
+                if (!(nested_rr is ConversionResolveResult))
+                {
+                    return false;    
                 }
             }
 
